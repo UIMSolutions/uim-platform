@@ -1,0 +1,23 @@
+name "uim-servers"
+description "V in MVC"
+authors "ONS"
+copyright "Copyright © 2018 - 2025, ONS"
+license "Apache-2.0"
+
+// target
+targetName "uim-servers"
+targetType "library"
+
+dependency "uim-infralevel" path="../../infralevel"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_servers" {
+	versions "test_uim_servers"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop"
+}

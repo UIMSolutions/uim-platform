@@ -5,17 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.factories.context;
 
-import uim.views;
+mixin(Version!("test_uim_views"));
 
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
-
 
 class DFormContextFactory : DFactory!DFormContext {
     static DFormContextFactory factory;
