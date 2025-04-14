@@ -5,14 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.entity;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-}
 
 /**
  * Provides a form context around a single entity and its relations.
