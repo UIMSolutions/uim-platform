@@ -5,15 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.views.negotiationrequired;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-}
-
 
 /** A view class that responds to any content-type and can be used to create
  * an empty body 406 status code response.

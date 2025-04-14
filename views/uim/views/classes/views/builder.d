@@ -5,15 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.views.builder;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-}
-
 
 /**
  * Provides an API for iteratively building a view up.
