@@ -5,8 +5,9 @@
 *****************************************************************************************************************/
 module uim.css.classes.css;
 
-import uim.css;
+mixin(Version!("test_uim_css"));
 
+import uim.css;
 @safe:
 class DCSS {
   this() {}

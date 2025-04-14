@@ -1,8 +1,10 @@
 ﻿module uim.css.rules;
 
-import uim.css;
+mixin(Version!("test_uim_css"));
 
+import uim.css;
 @safe:
+
 class DCSSRules : DCSSObj {
 	this() { super(); }
 	this(DCSSRule[] someRules) { this().rules(someRules); }
