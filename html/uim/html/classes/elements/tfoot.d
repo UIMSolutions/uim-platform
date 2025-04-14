@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.tfoot;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -13,7 +15,7 @@ class DH5Tfoot : DH5Obj {
 }
 mixin(H5Short!"Tfoot");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Tfoot, "tfoot");
 	assert(H5Tfoot.tr == "<tfoot><tr></tr></tfoot>");
 	assert(H5Tfoot.row == "<tfoot><tr></tr></tfoot>");
@@ -21,4 +23,4 @@ version(test_uim_html) { unittest {
 	assert(H5Tfoot.row.row == "<tfoot><tr></tr><tr></tr></tfoot>");
 	assert(H5Tfoot.tr.row == "<tfoot><tr></tr><tr></tr></tfoot>");
 	assert(H5Tfoot.row.tr == "<tfoot><tr></tr><tr></tr></tfoot>");
-}}
+}

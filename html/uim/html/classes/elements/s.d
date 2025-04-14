@@ -1,7 +1,9 @@
 ﻿module uim.html.classes.elements.s;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
-@safe: 
+@safe:
 
 class DH5S : DH5Obj {
 	mixin(H5This!"s");
