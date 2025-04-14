@@ -22,3 +22,6 @@ docs/
 
 # Code coverage
 *.lst
+css/css-test-library.pdb
+gui/gui-test-library.pdb
+web/web-test-library.pdb
