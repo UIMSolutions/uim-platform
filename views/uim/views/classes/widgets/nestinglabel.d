@@ -5,15 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.nestinglabel;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
-
 
 /* * Form "widget" for creating labels that contain their input.
  *
