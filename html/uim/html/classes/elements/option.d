@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.option;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -21,5 +23,5 @@ enum option_modes : string {
 unittest {
   testH5Obj(H5Option, "option");
 	// mixin(testH5DoubleAttributes!("H5Option", "option", ["disabled", "selected", "value"]));
-}}
+}
 
