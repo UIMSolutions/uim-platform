@@ -895,8 +895,7 @@ class DH5Obj {
     return result;
   }
 
-  version (test_uim_html) {
-    unittest {
+unittest {
       /*
 		writeln(H5Obj.tag("div").toPretty);
 		writeln("---------");
