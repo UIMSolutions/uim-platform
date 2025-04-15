@@ -9,6 +9,6 @@ class DH5Figure : DH5Obj {
 }
 mixin(H5Short!"Figure");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Figure, "figure");
 }}

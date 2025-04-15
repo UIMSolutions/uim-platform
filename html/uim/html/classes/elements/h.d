@@ -33,7 +33,7 @@ class DH5H6 : DH5Obj {
 }
 mixin(H5Short!"H6");
 
-version(test_uim_html) { unittest {
+unittest {
 	// TODO
 	
 }}
