@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.br;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -12,4 +14,4 @@ alias Br = H5Br; // Shortcut of shortcut
 
 unittest {
   assert(H5Br,"<br>");
-}}
+}

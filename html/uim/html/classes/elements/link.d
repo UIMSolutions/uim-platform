@@ -1,7 +1,8 @@
 ﻿module uim.html.classes.elements.link;
 
-import uim.html;
+mixin(Version!("test_uim_html"));
 
+import uim.html;
 @safe:
 
 class DH5Link : DH5Obj {

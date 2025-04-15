@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.nav;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 

@@ -1,8 +1,10 @@
 module uim.apps.classes.apps.app;
 
-import uim.apps;
+mixin(Version!("test_uim_apps"));
 
+import uim.apps;
 @safe:
+
 class DApp : UIMObject, IApp {
   mixin(ApplicationThis!());
 

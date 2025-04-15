@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.label;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -16,10 +18,10 @@ class DH5Label : DH5Obj {
 	unittest {
 		assert(H5Label.form("aForm") == `<label form="aForm"></label>`);
 		assert(H5Label.form("aForm").content("text") == `<label form="aForm">text</label>`);
-	}}
+	}
 }
 mixin(H5Short!"Label");
 
 unittest {
   testH5Obj(H5Label, `label`);
-}}
+}

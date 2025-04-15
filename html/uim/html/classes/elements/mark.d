@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.mark;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -11,4 +13,4 @@ mixin(H5Short!"Mark");
 
 unittest {
   testH5Obj(H5Mark, "mark");
-}}
+}

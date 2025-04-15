@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.cite;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -12,5 +14,5 @@ mixin(H5Short!"Cite");
 unittest {
   assert(H5Cite);
   assert(H5Cite == "<cite></cite>");
-}}
+}
 
