@@ -1,14 +1,9 @@
 module uim.views.classes.components.component;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-}
-
 class DViewComponent : UIMObject, IViewComponent {
   mixin(ViewThis!());
 

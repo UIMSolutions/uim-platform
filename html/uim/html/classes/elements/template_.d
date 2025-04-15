@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.template_;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -9,6 +11,6 @@ class DH5Template : DH5Obj {
 }
 mixin(H5Short!"Template");
 
-version(test_uim_html) { unittest {
+unittest {
     assert(H5Template == "<template></template>");
 }}

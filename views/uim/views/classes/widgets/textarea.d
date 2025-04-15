@@ -5,15 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.textarea;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
-
 
 /**
  * Input widget class for generating a textarea control.

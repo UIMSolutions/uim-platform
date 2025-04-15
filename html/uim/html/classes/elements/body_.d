@@ -11,7 +11,7 @@ class DH5Body : DH5Obj {
 }
 mixin(H5Short!"Body");
 
-version(test_uim_html) { unittest {
+unittest {
 	assert(H5Body);
 	assert(H5Body == "<body></body>");
 }}

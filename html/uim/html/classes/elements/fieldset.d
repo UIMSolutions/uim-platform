@@ -8,6 +8,6 @@ class DH5Fieldset : DH5Obj {
 }
 mixin(H5Short!"Fieldset");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Fieldset, "fieldset");
 }}

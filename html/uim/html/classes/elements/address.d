@@ -9,7 +9,7 @@ class DH5Address : DH5Obj {
 }
 mixin(H5Short!"Address");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Address, "address");
 
   assert(H5Address = `<address></address>`);

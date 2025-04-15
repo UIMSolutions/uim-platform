@@ -22,7 +22,7 @@ enum ButtonTypes : string {
 	Reset = "reset"
 }
 
-version(test_uim_html) { unittest {
+unittest {
 	assert(H5Button,"<button></button>");
 
 	//	assert(H5Button.type(ButtonTypes.Button).attributes.getString("type") == "button");

@@ -8,6 +8,6 @@ class DH5InputFile : DH5Input {
 }
 mixin(H5Short!"InputFile"); 
 
-version(test_uim_html) { unittest {
+	unittest {
 		// TODO Add Test
-		}}
+		}

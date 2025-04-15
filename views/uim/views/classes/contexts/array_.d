@@ -5,14 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.array_;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-    unittest {
-        writeln("-----  ", __MODULE__, "\t  -----");
-    }
-}
 
 /**
  * Provides a basic array based context provider for FormHelper.

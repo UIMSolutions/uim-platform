@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.ul;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -16,7 +18,7 @@ class DH5Ul : DH5Obj {
 }
 mixin(H5Short!"Ul");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Ul, "ul");
 	assert(H5Ul.item == "<ul><li></li></ul>");
 	assert(H5Ul.item.item == "<ul><li></li><li></li></ul>");

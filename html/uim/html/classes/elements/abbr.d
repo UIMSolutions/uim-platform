@@ -9,7 +9,7 @@ class DH5Abbr : DH5Obj {
 }
 mixin(H5Short!"Abbr");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Abbr, "abbr");
   
   assert(H5Abbr == `<abbr><abbr>`);

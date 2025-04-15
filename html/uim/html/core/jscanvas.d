@@ -166,6 +166,6 @@ import uim.html;
 //}
 //mixin(Shortcut!("DJSCanvas", "JSCanvas", "name", "string name"));
 
-version(test_uim_html) { unittest {
+unittest {
 		// TODO Add Test
 		}}

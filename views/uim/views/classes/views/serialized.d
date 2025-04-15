@@ -5,15 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.views.serialized;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-}
-
 
 // Parent class for view classes generating serialized outputs like JsonView and XmlView.
 class DSerializedView : DView {

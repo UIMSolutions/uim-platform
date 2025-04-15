@@ -1,8 +1,13 @@
 ﻿module uim.html.classes.elements.a;
 
+mixin(Version!"test_uim_html");
+
 import uim.html;
 @safe:
 
+// <a> - Hyperlink
+// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
+// https://www.w3schools.com/tags/tag_a.asp
 // Wrapper for <a> - defines a hyperlink to link from one page to another.
 class DH5A : DH5Obj {
 	mixin(H5This!"a");
@@ -45,12 +50,12 @@ class DH5A : DH5Obj {
 }
 mixin(H5Short!"A");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5A, "a");
   assert(H5A == `<a></a>`);
   
 	mixin(TestH5DoubleAttributes!("H5A", "a", [
 		"download", "href", "hreflang", "ping", "referrerpolicy", "rel", "target", "type"
 	]));
-}}
+}
 

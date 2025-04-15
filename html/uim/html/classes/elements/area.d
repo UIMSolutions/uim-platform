@@ -47,7 +47,7 @@ class DH5Area : DH5Obj {
 }
 mixin(H5Short!"Area");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Area, "area");
 	assert(H5Area == `<area></area>`);
 

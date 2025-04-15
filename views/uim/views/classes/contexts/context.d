@@ -5,11 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.context;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-unittest {
-  writeln("-----  ", __MODULE__, "\t  -----");
-}
 
 // Provides a context provider for form instances.
 class DFormContext : UIMObject, IFormContext {

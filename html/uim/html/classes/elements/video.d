@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.video;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -25,7 +27,7 @@ class DH5Video : DH5Obj {
 }
 mixin(H5Short!"Video");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Video, "video");
 	// mixin(testH5DoubleAttributes!("H5Video", "video", [	"autoplay", "buffered", "controls", "crossorigin", "height", "loop", "muted", "played", "preload", "poster", "src", "width", "playsinline"]));
 }}

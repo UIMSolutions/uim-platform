@@ -5,12 +5,12 @@ import uim.html;
 
 class DH5Input : DH5Obj {
 	mixin(H5This!("input", null, null, true));
-	version(test_uim_html) { unittest {
+	unittest {
 		assert(H5Input == "<input>");
 	}}
 
 	mixin(MyAttribute!("type"))	;
-	version(test_uim_html) { unittest {
+	unittest {
 		assert(H5Input.type("text") == `<input type="text">`);
 	}}
 
@@ -50,7 +50,7 @@ class DH5Input : DH5Obj {
 }
 mixin(H5Short!("Input"));
 
-version(test_uim_html) { unittest {
+unittest {
 	/* mixin(testH5SingleAttributes!("H5Input", "input", 
     [	"accept", "autoComplete",
 			"autofocus", "capture", "checked", "disabled", "form", "formAction", "formEnctype", "formMethod", "formNoValidate", "formTarget",

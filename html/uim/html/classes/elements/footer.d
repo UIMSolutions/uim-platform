@@ -8,6 +8,6 @@ class DH5Footer : DH5Obj {
 }
 mixin(H5Short!"Footer");
 
-version(test_uim_html) { unittest {	
+unittest {	
 	testH5Obj(H5Footer, "footer");
 }}

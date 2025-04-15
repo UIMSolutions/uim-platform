@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.select;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -15,7 +17,7 @@ class DH5Select : DH5Obj {
 }
 mixin(H5Short!"Select");
 
-version(test_uim_html) { unittest {
+unittest {
 	testH5Obj(H5Select, "select");
 	
 	assert(H5Select.option(["value":"aValue"]) == `<select><option value="aValue"></option></select>`);
