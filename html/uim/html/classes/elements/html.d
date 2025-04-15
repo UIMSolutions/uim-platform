@@ -1,4 +1,9 @@
-﻿module uim.html.classes.elements.html;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.html;
 
 import uim.html;
 @safe:
@@ -75,4 +80,4 @@ mixin(H5Short!"Html");
 unittest {
 	assert(H5Html == "<!doctype html><html><head></head><body></body></html>");
 	assert(H5Html(["lang":"en"]) == "<!doctype html><html lang=\"en\"><head></head><body></body></html>");
-}}
+}

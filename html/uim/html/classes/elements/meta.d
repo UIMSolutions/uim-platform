@@ -1,4 +1,9 @@
-﻿module uim.html.classes.elements.meta;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.meta;
 
 import uim.html;
 @safe:
@@ -18,7 +23,7 @@ string toString(DH5Meta[] metas) {
 }
 unittest {
     // assert([H5Meta, H5Meta].toString == "<meta><meta>");
-}}
+}
 
 DH5Meta[] H5Metas(string[string][] metas...) { return H5Metas(metas.dup); }
 DH5Meta[] H5Metas(string[string][] metas) { 
@@ -27,4 +32,4 @@ DH5Meta[] H5Metas(string[string][] metas) {
 	return results; }
 unittest {
 	/// TODO
-}}
+}
