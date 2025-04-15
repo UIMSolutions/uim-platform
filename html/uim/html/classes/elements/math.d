@@ -5,14 +5,19 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.math;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
+// This module defines the Math element in HTML5.
+// The MathML element is used to include mathematical notation in HTML documents.
 class DH5Math : DH5Obj {
-	mixin(H5This!"math");
+  mixin(H5This!"math");
 }
+
 mixin(H5Short!"Math");
 
 unittest {
-    testH5Obj(H5Math, "math");
+  testH5Obj(H5Math, "math");
 }

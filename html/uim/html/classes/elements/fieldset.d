@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.fieldset;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 

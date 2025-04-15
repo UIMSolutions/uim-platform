@@ -5,10 +5,12 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.meta;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
-@safe:
+/* TODO: Add meta tags for charset, name, content, http-equiv, property, scheme, etc. */
 class DH5Meta : DH5Obj {
 	mixin(H5This!("meta", null, null, true));
 }
@@ -16,7 +18,7 @@ mixin(H5Short!("Meta"));
 
 unittest {
   assert(H5Meta == "<meta>");
-}}
+}
 
 string toString(DH5Meta[] metas) {
 	return metas.map!(meta => meta.toString).join;
