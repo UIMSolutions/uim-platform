@@ -5,10 +5,12 @@
 *****************************************************************************************************************/
 module uim.css.parser;
 
-import uim.css;
+mixin(Version!("test_uim_css"));
 
+import uim.css;
 @safe:
 
+// Parses a CSS string and returns an array of strings.
 string[] parse(string css) {
   string[] results;
 
