@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.small;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -9,7 +11,7 @@ class DH5Small : DH5Obj {
 }
 mixin(H5Short!"Small");
 
-version(test_uim_html) { unittest {
+unittest {
     testH5Obj(H5Small, "small");
 }}
 

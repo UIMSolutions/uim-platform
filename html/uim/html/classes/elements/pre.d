@@ -10,6 +10,6 @@ class DH5Pre : DH5Obj {
 }
 mixin(H5Short!"Pre");
 
-version(test_uim_html) { unittest {
+unittest {
     assert(H5Pre == "<pre></pre>");
 }}
