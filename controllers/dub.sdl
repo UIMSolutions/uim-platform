@@ -1,0 +1,25 @@
+name "uim-controllers"
+description "C in MVC"
+authors "ONS"
+copyright "Copyright © 2024, ONS"
+license "Apache-2.0"
+
+
+// Target
+targetName "uim-controllers"
+targetType "library"
+
+dependency "uim-infralevel" path="../../infralevel"
+dependency "uim-mvc" path="../mvc"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_oop" {
+	versions "test_uim_oop"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop" "test_uim_models" "test_uim_views"
+}
