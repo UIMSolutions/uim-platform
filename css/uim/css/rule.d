@@ -1,9 +1,9 @@
 ﻿module uim.css.rule;
+mixin(Version!("test_uim_css"));
 
 import uim.css;
-import std.algorithm.sorting;
-
 @safe:
+import std.algorithm.sorting;
 
 /// A single CSS rule with one or more selectors, and a declaration block.
 class DCSSRule : DCSSObj {

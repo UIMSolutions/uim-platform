@@ -1,0 +1,15 @@
+name "uim-css"
+description "D-Library for working with CSS"
+homepage "https://www.sueel.de/uim"
+license "Apache-2.0"
+copyright "Copyright © 2018-2025, Ozan Nurettin Süel"
+authors "Ozan Nurettin Süel"
+
+targetName "uim-css"
+targetType "library"
+
+dependency "uim-infralevel" path="../../infralevel"
+
+sourcePaths "."
+importPaths "."
+
