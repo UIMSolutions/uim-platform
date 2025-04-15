@@ -1,0 +1,24 @@
+name "uim-models"
+description "M in MVC"
+authors "ONS"
+copyright "Copyright © 2018 - 2025, ONS"
+license "Apache-2.0"
+
+// target
+targetName "uim-models"
+targetType "library"
+
+dependency "uim-infralevel" path="../../infralevel"
+dependency "uim-mvc" path="../mvc"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_models" {
+	versions "test_uim_models"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop"
+}
