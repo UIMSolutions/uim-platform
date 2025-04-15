@@ -12,6 +12,6 @@ class DH5Optgroup : DH5Obj {
 }
 mixin(H5Short!"Optgroup");
 
-version(test_uim_html) { unittest {
+unittest {
     assert(H5Optgroup == "<optgroup></optgroup>");
 }}

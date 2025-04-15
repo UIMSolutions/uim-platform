@@ -8,6 +8,6 @@ class DH5Output : DH5Obj {
 }
 mixin(H5Short!"Output");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Output, "output");
 }}
