@@ -1,0 +1,27 @@
+name "uim-apps"
+description "Apps Library"
+authors "ONS"
+copyright "Copyright © 2018 - 2025, ONS"
+license "Apache-2.0"
+
+targetType "library"
+targetName "uim-apps"
+
+dependency "uim-infralevel" path="../../infralevel"
+
+dependency "uim-mvc" path="../mvc"
+dependency "uim-controllers" path="../controllers"
+dependency "uim-models" path="../models"
+dependency "uim-views" path="../views"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_apps" {
+	versions "test_uim_apps"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop"
+}

@@ -1,0 +1,22 @@
+name "uim-ai"
+description "V in MVC"
+authors "ONS"
+copyright "Copyright © 2018 - 2025, ONS"
+license "Apache-2.0"
+
+targetType "library"
+targetName "uim-ai"
+
+dependency "uim-infralevel" path="../../infralevel/"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_ai" {
+	versions "test_uim_ai"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop"
+}
