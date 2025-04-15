@@ -18,6 +18,6 @@ class DH5Dl : DH5Obj {
 }
 mixin(H5Short!"Dl");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Dl, "dl");
 }}

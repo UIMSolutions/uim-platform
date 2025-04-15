@@ -8,6 +8,6 @@ class DH5Dialog : DH5Obj {
 }
 mixin(H5Short!"Dialog");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Dialog, "dialog");
 }}

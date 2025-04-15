@@ -8,7 +8,7 @@ class DH5Div : DH5Obj {
 }
 mixin(H5Short!"Div");
 
-version(test_uim_html) { unittest {
+unittest {
   assert(H5Div);
   assert(H5Div == `<div></div>`);
 
