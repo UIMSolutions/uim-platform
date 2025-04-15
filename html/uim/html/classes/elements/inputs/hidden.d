@@ -16,10 +16,11 @@ import uim.html;
  * The `mixin` statement is used to generate the HTML representation of the input element with the specified attributes.
  */
 class DH5InputHidden : DH5Input {
-	mixin(H5This!("Input", null, `["type":"hidden"]`, true)); 
+  mixin(H5This!("Input", null, `["type":"hidden"]`, true));
 }
-mixin(H5Short!"InputHidden"); 
+
+mixin(H5Short!"InputHidden");
 
 unittest {
-		// TODO Add Test
-		}
+  // TODO Add Test
+}

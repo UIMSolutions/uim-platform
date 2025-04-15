@@ -5,7 +5,10 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.inputs.image;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
+
 @safe:
 
 /* Add Image Input Class
@@ -15,10 +18,11 @@ import uim.html;
  * The alt attribute specifies an alternate text for the image, if the image for some reason cannot be displayed.
  */
 class DH5InputIMAGE : DH5Input {
-	mixin(H5This!("Input", null, `["type":"image"]`, true)); 
+  mixin(H5This!("Input", null, `["type":"image"]`, true));
 }
-mixin(H5Short!"InputIMAGE"); 
+
+mixin(H5Short!"InputIMAGE");
 
 unittest {
-		// TODO Add Test
+  // TODO Add Test
 }
