@@ -8,6 +8,6 @@ class DH5Checkbox : DH5Input {
 }
 mixin(H5Short!"Checkbox");
 
-version(test_uim_html) { unittest {
+unittest {
 		// TODO Add Test
 		}}
