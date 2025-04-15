@@ -8,36 +8,52 @@ module uim.css.classes.css;
 mixin(Version!("test_uim_css"));
 
 import uim.css;
+
 @safe:
 
 class DCSS {
-  this() {}
-  this(string newContent) { this.content(newContent); }
+  this() {
+  }
+
+  this(string newContent) {
+    this.content(newContent);
+  }
 
   // Resulting contet
   mixin(XString!("content"));
-  unittest {}}
+  unittest {
+
+  }
 
   O rule(this O)(string selector, string[string] values) {
     return content("%s%s".format(selector, values.toCss));
   }
+
   unittest {
-// TODO
-}
+    // TODO
+  }
 
   // Compare with toString result
-  bool opEquals(string txt) { return (txt == toString); }
+  bool opEquals(string txt) {
+    return (txt == toString);
+  }
 
   string toHTML() {
-    return `<style>`~content~`</style>`;
+    return `<style>` ~ content ~ `</style>`;
   }
 
   override string toString() {
     return content;
   }
 }
-auto CSS() { return new DCSS(); }
-auto CSS(string newContent) { return new DCSS(newContent); }
+
+auto CSS() {
+  return new DCSS();
+}
+
+auto CSS(string newContent) {
+  return new DCSS(newContent);
+}
 
 unittest {
   assert(CSS("test").toHTML == `<style>test</style>`);

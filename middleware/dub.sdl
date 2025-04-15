@@ -1,4 +1,4 @@
-name "uim-middleware"
+name "uim-middlewares"
 description "middleware library"
 authors "ONS"
 copyright "Copyright © 2018 - 2025, ONS"
