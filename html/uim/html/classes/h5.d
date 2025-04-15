@@ -929,8 +929,11 @@ class DH5 {
 
   /*    mixin(H5Def!"slot");
 <<<<<<< HEAD
+<<<<<<< HEAD
     unittest { 
 =======
+=======
+>>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
     version(test_uim_html) { unittest { 
 >>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
         assert(H5.slot == "<slot></slot>");
