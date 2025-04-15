@@ -12,4 +12,4 @@ mixin(H5Short!"Var");
 
 unittest {
     assert(H5Var,"<var></var>");
-}}
+}

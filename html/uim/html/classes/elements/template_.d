@@ -13,4 +13,4 @@ mixin(H5Short!"Template");
 
 unittest {
     assert(H5Template == "<template></template>");
-}}
+}

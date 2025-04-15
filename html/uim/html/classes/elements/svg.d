@@ -12,4 +12,4 @@ mixin(H5Short!"Svg");
 
 unittest {
     assert(H5Svg == "<svg></svg>");
-}}
+}

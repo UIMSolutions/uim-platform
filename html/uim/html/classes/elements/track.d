@@ -19,4 +19,4 @@ unittest {
   testH5Obj(H5Track, `track`);
 
 	// mixin(testH5DoubleAttributes!("H5Track", "track", ["label", "src", "srclang"]));
-}}
+}

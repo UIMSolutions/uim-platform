@@ -20,4 +20,4 @@ mixin(H5Short!"Time");
 
 unittest {
   testH5Obj(H5Time, "time");
-}}
+}

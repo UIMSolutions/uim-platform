@@ -1,13 +1,17 @@
 ﻿module uim.html.classes.elements.p;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
+
 @safe:
 
 class DH5P : DH5Obj {
-	mixin(H5This!("P"));
+  mixin(H5This!("P"));
 }
+
 mixin(H5Short!"P");
 
 unittest {
-    assert(H5P == "<p></p>");
-}}
+  assert(H5P == "<p></p>");
+}

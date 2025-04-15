@@ -12,4 +12,4 @@ mixin(H5Short!"Rp");
 
 unittest {
     assert(H5Rp == "<rp></rp>");
-}}
+}
