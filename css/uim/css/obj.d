@@ -1,5 +1,7 @@
 ﻿module uim.css.obj;
 
+mixin(Version!("test_uim_css"));
+
 import uim.css;
 @safe:
 

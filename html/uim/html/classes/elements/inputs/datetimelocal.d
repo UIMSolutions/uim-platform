@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.inputs.datetimelocal;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 

@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.kbd;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -10,4 +12,4 @@ mixin(H5Short!"Kbd");
 
 unittest {
   testH5Obj(H5Kbd, "kbd");
-}}
+}

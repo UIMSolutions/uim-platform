@@ -12,4 +12,4 @@ mixin(H5Short!"Map");
 
 unittest {
     testH5Obj(H5Map, "map");
-}}
+}

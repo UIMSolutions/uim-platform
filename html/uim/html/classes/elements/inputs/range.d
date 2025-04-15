@@ -8,7 +8,6 @@ module uim.html.classes.elements.inputs.range;
 mixin(Version!"test_uim_html");
 
 import uim.html;
-
 @safe:
 
 /**
