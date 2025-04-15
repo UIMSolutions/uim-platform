@@ -1,5 +1,7 @@
 ﻿module uim.html.classes.elements.tr;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 
@@ -7,7 +9,7 @@ class DH5Tr : DH5Obj {
 	mixin(H5This!"tr");
 
 	mixin(MyContent!("th", "H5Th"));
-	version(test_uim_html) { unittest {
+	unittest {
 			assert(H5Tr.th, "<tr><th></th></tr>");
 	}}
 
@@ -16,7 +18,7 @@ class DH5Tr : DH5Obj {
 }
 mixin(H5Calls!("H5Tr", "DH5Tr"));
 
-version(test_uim_html) { unittest {
+unittest {
     testH5Obj(H5Tr, "tr");
 		assert(H5Tr.td == "<tr><td></td></tr>");
 		assert(H5Tr.cell == "<tr><td></td></tr>");
