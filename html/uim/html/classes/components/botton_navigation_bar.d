@@ -15,8 +15,7 @@ class DH5SidebarDropdown : DH5Component {
   }
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     // TODO
   }
 }

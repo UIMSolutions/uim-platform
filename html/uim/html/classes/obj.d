@@ -1047,8 +1047,7 @@ auto H5Obj(string[string] newAttributes, DH5 newContent) {
   return new DH5Obj(newAttributes, newContent);
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     assert(H5Obj);
     assert(H5Obj.tag("testTag").tag == "testTag");
     assert(H5Obj.id("testId").id == "testId");

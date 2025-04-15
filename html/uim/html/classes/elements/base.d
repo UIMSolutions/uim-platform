@@ -1,4 +1,9 @@
-﻿module uim.html.classes.elements.base;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.base;
 
 import uim.html;
 @safe:
@@ -19,4 +24,4 @@ unittest {
   testH5Obj(H5Base, "base");
 	mixin(TestH5DoubleAttributes!("H5Base", "base", [
     "autoplay", "buffered", "controls", "crossorigin", "disableremoteplayback", "loop", "muted", "preload", "src"]));
-}}
+}

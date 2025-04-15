@@ -1,4 +1,9 @@
-﻿module uim.html.classes.elements.dd;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.dd;
 
 import uim.html;
 @safe:
@@ -11,4 +16,4 @@ mixin(H5Short!"Dd");
 
 unittest {
   testH5Obj(H5Dd, "dd");
-}}
+}
