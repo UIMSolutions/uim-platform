@@ -10,7 +10,7 @@ class DH5Aside : DH5Obj {
 }
 mixin(H5Short!"Aside");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Aside, "aside");
   assert(H5Aside == `<aside></aside>`);
 }}

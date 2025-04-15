@@ -15,7 +15,7 @@ class DH5Base : DH5Obj {
 }
 mixin(H5Short!"Base");
 
-version(test_uim_html) { unittest {
+unittest {
   testH5Obj(H5Base, "base");
 	mixin(TestH5DoubleAttributes!("H5Base", "base", [
     "autoplay", "buffered", "controls", "crossorigin", "disableremoteplayback", "loop", "muted", "preload", "src"]));
