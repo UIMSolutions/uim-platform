@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module html.uim.html.parsers.parser;
+module uim.html.parsers.parser;
 
 mixin(Version!("test_uim_html"));
 
