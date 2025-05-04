@@ -22,3 +22,14 @@ docs/
 
 # Code coverage
 *.lst
+css/css-test-library.pdb
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+gui/gui-test-library.pdb
+web/web-test-library.pdb
+>>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
+=======
+gui/gui-test-library.pdb
+web/web-test-library.pdb
+>>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
