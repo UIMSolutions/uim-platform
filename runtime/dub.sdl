@@ -1,0 +1,23 @@
+name "uim-runtime"
+description "Library for runtime"
+authors "ONS"
+copyright "Copyright © 2018 - 2025, ONS"
+license "Apache-2.0"
+
+// target
+targetName "uim-runtime"
+targetType "library"
+
+dependency "uim-infralevel" path="../../infralevel"
+
+sourcePaths "."
+importPaths "."
+
+// configuration "default" {}
+
+configuration "test_uim_runtime" {
+	versions "test_uim_runtime"
+}
+configuration "test_all" {
+	versions "test_uim_core" "test_uim_oop"
+}
