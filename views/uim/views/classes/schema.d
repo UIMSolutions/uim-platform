@@ -67,17 +67,18 @@ class DSchema : UIMObject {
         return this;
     }
 
-    bool hasAnyFields(string[] fieldNames) {
-        return fieldNames.any!(field => hasField(field));
-    }
-
-    bool hasAllFields(string[] fieldNames) {
-        return fieldNames.all!(field => hasField(field));
-    }
+    // #region has
+    mixin(HasMethods!("Fields", "Field", "string"));
 
     bool hasField(string fieldName) {
         return fieldName in _fields ? true : false;
     }
+    unittest {
+/*         assert(!hasField("a"), "Field a is missing");
+        assert(!hasField("b"), "Field b is missing");
+        assert(!hasField("c"), "Field c is missing"); */
+    }
+    // #endregion has
 
     // Get the type of the named field.
     string fieldType(string key) {

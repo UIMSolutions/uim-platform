@@ -5,14 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.locator;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
 
 /**
  * A registry/factory for input widgets.

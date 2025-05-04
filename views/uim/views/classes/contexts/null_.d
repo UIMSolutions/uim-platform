@@ -1,15 +1,14 @@
 /****************************************************************************************************************
-* Copyright: © 2017-2024 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
 module uim.views.classes.contexts.null_;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
- unittest {
-  writeln("-----  ", __MODULE__ , "\t  -----");
-}
 
 /** Provides a context provider that does nothing.
  * This context provider simply fulfils the interface requirements that FormHelper has.

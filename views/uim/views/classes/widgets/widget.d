@@ -1,13 +1,9 @@
 module uim.views.classes.widgets.widget;
 
+mixin(Version!("test_uim_views"));
+
 import uim.views;
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
 
 class DWidget : UIMObject, IWidget { 
   mixin(WidgetThis!());
