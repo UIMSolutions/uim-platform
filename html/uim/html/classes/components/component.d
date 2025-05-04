@@ -33,8 +33,7 @@ auto H5Component() {
   return new DH5Component();
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     assert(H5Component);
   }
 }

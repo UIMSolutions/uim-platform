@@ -3,10 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.html.parser;
+module uim.html.parsers.parser;
+
+mixin(Version!("test_uim_html"));
 
 import uim.html;
-
 @safe:
 
 size_t[] posOfAll(string text, string searchTxt) {
@@ -46,11 +47,9 @@ size_t[] posOfAll(string text, string searchTxt, size_t startPos, size_t endPos)
   return results;
 }
 
-version (test_uim_html) {
-  unittest {
-    writeln("x x x x".posOfAll(" ", 2, 6));
-    // assert("x x x x".posOfAll(" ", 2, 6) == [3, 5]);
-  }
+unittest {
+  writeln("x x x x".posOfAll(" ", 2, 6));
+  // assert("x x x x".posOfAll(" ", 2, 6) == [3, 5]);
 }
 
 string fillWith(string txt, string addTxt, size_t startPos, size_t endPos) {

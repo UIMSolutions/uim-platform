@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.snippets.product;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 @safe:
 

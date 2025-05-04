@@ -1,7 +1,13 @@
-﻿module uim.html.classes.obj;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.obj;
+
+mixin(Version!("test_uim_html"));
 
 import uim.html;
-
 @safe:
 
 class DH5Obj {
@@ -1047,8 +1053,7 @@ auto H5Obj(string[string] newAttributes, DH5 newContent) {
   return new DH5Obj(newAttributes, newContent);
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     assert(H5Obj);
     assert(H5Obj.tag("testTag").tag == "testTag");
     assert(H5Obj.id("testId").id == "testId");

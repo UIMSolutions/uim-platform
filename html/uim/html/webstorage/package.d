@@ -5,8 +5,9 @@
 *****************************************************************************************************************/
 module uim.html.webstorage;
 
-import uim.html;
+mixin(Version!("test_uim_html"));
 
+import uim.html;
 @safe:
 
 public {
@@ -18,8 +19,7 @@ string h5LocalStorageSetItem(string name, string data) {
   return "localStorage.setItem(%s, %s);".format(name, data);
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     //assert(H5LocalStorageSetItem("'test'", "values") == "localStorage.setItem('test', values);");
   }
 }
@@ -28,8 +28,7 @@ string h5LocalStorageGetItem(string target, string name) {
   return "%s=localStorage.getItem(%s);".format(target, name);
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     //assert(H5LocalStorageGetItem("var test", "'test'") == "var test=localStorage.getItem('test');");
   }
 }
@@ -38,8 +37,7 @@ string h5LocalStorageremoveKey(string name) {
   return "localStorage.removeKey(%s);".format(name);
 }
 
-version (test_uim_html) {
-  unittest {
+unittest {
     //assert(H5LocalStorageGetItem("var test", "'test'") == "var test=localStorage.getItem('test');");
   }
 }

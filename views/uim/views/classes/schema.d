@@ -68,17 +68,27 @@ class DSchema : UIMObject {
     }
 
     // #region has
+<<<<<<< HEAD
+=======
+    // Returns true if the map has value(s)
+>>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
     mixin(HasMethods!("Fields", "Field", "string"));
 
     bool hasField(string fieldName) {
         return fieldName in _fields ? true : false;
     }
     unittest {
+<<<<<<< HEAD
 /*         assert(!hasField("a"), "Field a is missing");
         assert(!hasField("b"), "Field b is missing");
         assert(!hasField("c"), "Field c is missing"); */
     }
     // #endregion has
+=======
+        // TODO: Add unittest for hasField
+    }
+    // #region has
+>>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
 
     // Get the type of the named field.
     string fieldType(string key) {

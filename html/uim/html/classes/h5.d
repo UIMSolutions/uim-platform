@@ -5,6 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.h5;
 
+mixin(Version!("test_uim_html"));
+
 import uim.html;
 
 @safe:
@@ -839,8 +841,16 @@ unittest {
 
   /*    mixin(H5Def!"slot");
 <<<<<<< HEAD
+<<<<<<< HEAD
     unittest { 
 =======
+=======
+<<<<<<< HEAD
+    unittest { 
+=======
+=======
+>>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
+>>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
     version(test_uim_html) { unittest { 
 >>>>>>> 5f80c7562e6efb544ff1318787717849b13b8be0
         assert(H5.slot == "<slot></slot>");

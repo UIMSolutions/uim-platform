@@ -12,4 +12,4 @@ mixin(H5Short!"Wbr");
 
 unittest {
 	testH5Obj(H5Wbr, "wbr");
-}}
+}
