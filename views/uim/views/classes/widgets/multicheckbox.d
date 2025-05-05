@@ -123,7 +123,7 @@ class DMultiCheckboxWidget : DWidget {
     /* auto mycheckbox = MapHelper.create!(string, Json)
       .set("value", kv.key)
       .set("text", kv.value);
-    if (kv.value.isArray && kv.value.hasAllKeys("text", "value")) {
+    if (kv.value.isArray && kv.value.hasAllKeys(["text", "value"])) {
       mycheckbox = kv.value;
     }
     if (!mycheckbox.hasKey("templateVars")) {
@@ -137,7 +137,7 @@ class DMultiCheckboxWidget : DWidget {
           .get("templateVars")));
     }
 
-    mycheckbox.set(mydata.getKeys("name", "escape"));
+    mycheckbox.set(mydata.getKeys(["name", "escape"]));
     mycheckbox.set("checked", _isSelected(mycheckbox.getString("value"), data
         .get("val")));
     mycheckbox.set("disabled", _isDisabled(

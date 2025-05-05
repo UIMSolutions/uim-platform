@@ -180,7 +180,7 @@ class DSelectBoxWidget : DWidget {
   ) {
     /* auto myopts = myoptgroup;
     auto myattrs = null;
-    if (myoptgroup.hasKeys("options", "text")) {
+    if (myoptgroup.hasKeys(["options", "text"])) {
       myopts = myoptgroup["options"];
       labelText = myoptgroup.getString("text");
       myattrs = /* (array) * / myoptgroup;
@@ -227,7 +227,7 @@ class DSelectBoxWidget : DWidget {
           "text": kv.value,
           "templateVars": Json.emptyArray,
         ];
-        if (kv.value.isArray && kv.value.hasAllKeys("text", "value")) {
+        if (kv.value.isArray && kv.value.hasAllKeys(["text", "value"])) {
           myoptAttrs = kv.value;
           kv.key = myoptAttrs["value"];
         }

@@ -429,7 +429,7 @@ class DPaginatorHelper : DHelper {
             options.set("page", Json(null));
         }
         if (
-            mypaging.hasAllKeys("sortDefault", "directionDefault")
+            mypaging.hasAllKeys(["sortDefault", "directionDefault"])
             && options.hasAllKeys(
                 "sort", "direction")
             && options.get("sort") == mypaging["sortDefault"]

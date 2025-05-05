@@ -1159,11 +1159,11 @@ class FormHelper : DHelper {
             outputText = hidden(fieldName, hiddenOptions);
         } */
     /* if (options.getString("hiddenField") == "_split") {
-            options.removeKey("hiddenField", "type");
+            options.removeKeys(["hiddenField", "type"]);
 
             return ["hidden": outputText, "input": widget("checkbox", options)];
         } */
-    options.removeKeys("hiddenField", "type");
+    options.removeKeys(["hiddenField", "type"]);
 
     // return outputText ~ widget("checkbox", options);
     return null;
@@ -1615,7 +1615,7 @@ class FormHelper : DHelper {
             attributes.set("empty", myrequired.isNull ? false : !myrequired); */
     }
     /* if (attributes.getString("multiple") == "checkbox") {
-      attributes.removeKeys("multiple", "empty");
+      attributes.removeKeys(["multiple", "empty"]);
       return _multiCheckbox(fieldName, options, attributes);
     } */
     attributes.removeKey("label");
@@ -1623,7 +1623,7 @@ class FormHelper : DHelper {
     // Secure the field if there are options, or it"s a multi select.
     // Single selects with no options don"t submit, but multiselects do.
     /* if (attributes.hasKey("secure") && options.isEmpty &&
-      attributes.isAllEmpty("empty", "multiple")
+      attributes.isAllEmpty(["empty", "multiple"])
       ) {
       attributes.set("secure", false);
     } */
@@ -1631,7 +1631,7 @@ class FormHelper : DHelper {
     // attributes.set("options", options);
 
     string hidden = "";
-    if (attributes.hasAllKeys("multiple", "hiddenField")) {
+    if (attributes.hasAllKeys(["multiple", "hiddenField"])) {
       /* hiddenAttributes
         .merge("name", attributes.getString)
         .merge("value", "")
@@ -1639,7 +1639,7 @@ class FormHelper : DHelper {
         .merge("secure", false);
       hidden = hidden(fieldName, hiddenAttributes); */
     }
-    attributes.removeKeys("hiddenField", "type");
+    attributes.removeKeys(["hiddenField", "type"]);
 
     return hidden ~ widget("select", attributes);
   }
