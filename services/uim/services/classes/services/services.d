@@ -10,6 +10,6 @@ mixin(Version!("test_uim_services"));
 import uim.services;
 @safe:
 
-class DServices : UIMObject {
+class DService : UIMObject, IService {
     mixin(ServiceThis!());
 }
