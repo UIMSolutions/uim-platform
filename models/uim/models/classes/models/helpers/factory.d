@@ -9,3 +9,15 @@ mixin(Version!"test_uim_models");
 
 import uim.models;
 @safe:
+
+class DModelFactory : DObjectFactory!IModel {
+    mixin(FactoryThis!"Model");
+}
+mixin(FactoryCalls!"Model");
+
+unittest {
+    auto factory = new DModelFactory();
+    assert(factory !is null, "ModelFactory is null!");
+
+    assert(testFactory(factory, "ModelFactory"), "Model test failed!");
+}

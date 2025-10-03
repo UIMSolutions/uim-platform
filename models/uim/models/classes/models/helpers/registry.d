@@ -9,3 +9,15 @@ mixin(Version!"test_uim_models");
 
 import uim.models;
 @safe:
+
+class DModelRegistry : DObjectRegistry!IModel {
+    mixin(RegistryThis!"Model");
+}
+mixin(RegistryCalls!"Model");
+
+unittest {
+    auto registry = new DModelRegistry();
+    assert(registry !is null, "Model registry is null!");
+
+    assert(testModel(registry, "Model"), "Model test failed!");
+}
