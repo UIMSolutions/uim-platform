@@ -5,9 +5,11 @@
 *****************************************************************************************************************/
 module uim.models.classes.models.model;
 
-import uim.models;
+mixin(Version!"test_uim_models");
 
+import uim.models;
 @safe:
+
 class DModel : UIMObject, IModel {
     mixin(ModelThis!());
 }

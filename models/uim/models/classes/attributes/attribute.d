@@ -1,8 +1,10 @@
 module uim.models.classes.attributes.attribute;
 
-import uim.models;
+mixin(Version!"test_uim_models");
 
+import uim.models;
 @safe:
+
 class DAttribute : UIMObject, IAttribute {
     mixin(AttributeThis!());
     this(DAttributeBuilder builder) {
