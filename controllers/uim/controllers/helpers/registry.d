@@ -1,2 +1,2 @@
-module uim-platform.controllers.uim.controllers.helpers.registry;
+module uim.controllers.helpers.registry;
 

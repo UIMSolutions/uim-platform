@@ -16,3 +16,10 @@ class DAttributeRegistry : DObjectRegistry!IAttribute {
 }
 
 mixin(RegistryCalls!"Attribute");
+
+unittest {
+  auto registry = new DAttributeRegistry();
+  assert(registry !is null, "AttributeRegistry is null!");
+
+  assert(testRegistry(registry, "Attribute"), "AttributeRegistry test failed!");
+}

@@ -1,2 +1,2 @@
-module uim-platform.apps.uim.apps.helpers.registry;
+module uim.apps.helpers.registry;
 

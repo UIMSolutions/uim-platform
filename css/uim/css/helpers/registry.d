@@ -1,2 +1,2 @@
-module uim-platform.css.uim.css.helpers.registry;
+module uim.css.helpers.registry;
 

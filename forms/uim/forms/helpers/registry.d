@@ -1,2 +1,2 @@
-module uim.securities.helpers.registry;
+module uim.forms.helpers.registry;
 
