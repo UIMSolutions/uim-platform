@@ -1,2 +1,2 @@
-module uim-platform.controllers.uim.controllers.helpers.factory;
+module uim.controllers.helpers.factory;
 

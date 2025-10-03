@@ -1,2 +1,2 @@
-module uim-platform.controllers.uim.controllers.helpers.mixins;
+module uim.controllers.helpers.mixins;
 

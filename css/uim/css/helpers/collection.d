@@ -1,2 +1,2 @@
-module uim-platform.css.uim.css.helpers.collection;
+module uim.css.helpers.collection;
 

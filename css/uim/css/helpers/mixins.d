@@ -1,2 +1,2 @@
-module uim-platform.css.uim.css.helpers.mixins;
+module uim.css.helpers.mixins;
 

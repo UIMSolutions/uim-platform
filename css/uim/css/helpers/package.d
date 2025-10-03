@@ -1,5 +1,3 @@
 module uim.css.helpers;
 
-public {
-    import uim.css.helpers;
-}
+mixin(ImportHelpers!"uim.css");

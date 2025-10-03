@@ -1,2 +1,2 @@
-module uim-platform.css.uim.css.helpers.factory;
+module uim.css.helpers.factory;
 

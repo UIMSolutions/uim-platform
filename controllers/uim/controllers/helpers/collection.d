@@ -1,2 +1,2 @@
-module uim-platform.controllers.uim.controllers.helpers.collection;
+module uim.controllers.helpers.collection;
 
