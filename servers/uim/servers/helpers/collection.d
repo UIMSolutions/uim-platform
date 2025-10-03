@@ -3,5 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim-platform.servers.uim.servers.helpers.collection;
+module uim.servers.helpers.collection;
 
+mixin(Version!"test_uim_servers");
+
+import uim.servers;
+@safe:

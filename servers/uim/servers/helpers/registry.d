@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.servers.helpers.registry;
 
+mixin(Version!"test_uim_servers");
+
+import uim.servers;
+@safe:
