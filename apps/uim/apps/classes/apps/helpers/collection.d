@@ -1,2 +1,2 @@
-module uim-platform.apps.uim.apps.classes.apps.helpers.collection;
+module uim.apps.classes.apps.helpers.collection;
 

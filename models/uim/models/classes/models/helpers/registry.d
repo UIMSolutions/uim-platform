@@ -21,3 +21,8 @@ unittest {
 
     assert(testModel(registry, "Model"), "Model test failed!");
 }
+
+// Attribute factories are not needed, as attributes are not instantiated like models.
+// Thus, the files related to attribute factories have been removed.
+// If needed in the future, they can be reintroduced with similar structure as model factories.
+// Note: Attribute factories are not used anywhere currently, hence no registry is implemented for them.

@@ -1,2 +1,2 @@
-module uim-platform.apps.uim.apps.classes.apps.helpers.factory;
+module uim.apps.classes.apps.helpers.factory;
 
