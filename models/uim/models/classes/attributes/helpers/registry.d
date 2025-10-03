@@ -8,4 +8,11 @@ module uim.models.classes.attributes.helpers.registry;
 mixin(Version!"test_uim_models");
 
 import uim.models;
+
 @safe:
+
+class DAttributeRegistry : DObjectRegistry!IAttribute {
+  mixin(RegistryThis!"Attribute");
+}
+
+mixin(RegistryCalls!"Attribute");

@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.securities.helpers.factory;
 
+mixin(Version!"test_uim_models");
+
+import uim.models;
+@safe:

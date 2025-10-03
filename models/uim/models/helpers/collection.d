@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.securities.helpers.collection;
 
+mixin(Version!"test_uim_models");
+
+import uim.models;
+@safe:
