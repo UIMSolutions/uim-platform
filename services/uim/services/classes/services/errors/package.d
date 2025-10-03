@@ -1,2 +1,2 @@
-module uim-platform.services.uim.services.classes.services.errors;
+module uim.services.classes.services.errors;
 
