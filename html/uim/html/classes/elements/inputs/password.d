@@ -15,15 +15,3 @@ import uim.html;
 class DH5InputPASSWORD : DH5Input {
   mixin(H5This!("Input", null, `["type":"password"]`, true));
 }
-
-<<<<<<< HEAD
-unittest {
-		// TODO Add Test
-		}}
-=======
-mixin(H5Short!"InputPASSWORD");
-
-unittest {
-  // TODO Add Test
-}
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

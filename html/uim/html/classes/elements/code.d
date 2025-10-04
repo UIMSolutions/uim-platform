@@ -18,4 +18,4 @@ mixin(H5Short!"Code");
 
 unittest {
   testH5Obj(H5Code, "code");
-}}
+}
