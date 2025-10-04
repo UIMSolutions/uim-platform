@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.controllers.classes.components.helpers.factory;
+ uim.controllers.classes.components.helpers.factory;
 
 import uim.apps;
 mixin(Version!"test_uim_apps");

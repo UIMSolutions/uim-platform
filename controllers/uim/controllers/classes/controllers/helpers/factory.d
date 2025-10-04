@@ -6,6 +6,19 @@
 module uim.controllers.classes.controllers.helpers.factory;
 
 import uim.apps;
-mixin(Version!"test_uim_apps");
 
+mixin(Version!"test_uim_apps");
 @safe:
+
+class DControllerFactory : DFactory!IController {
+  mixin(FactoryThis!("Controller"));
+}
+
+mixin(FactoryCalls!("Controller"));
+
+unittest {
+  auto factory = new DControllerFactory();
+  assert(factory !is null, "ControllerFactory is null");
+
+  assert(testFactory(factory, "Controller"), "Test ControllerFactory failed");
+}

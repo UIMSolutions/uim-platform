@@ -6,6 +6,19 @@
 module uim.services.helpers.factory;
 
 import uim.services;
-mixin(Version!("test_uim_services"));
 
+mixin(Version!("test_uim_services"));
 @safe:
+
+class DServiceFactory : DFactory!IService {
+  mixin(FactoryThis!("Service"));
+}
+
+mixin(FactoryCalls!("Service"));
+
+unittest {
+  auto factory = new DServiceFactory();
+  assert(factory !is null, "ServiceFactory is null");
+
+  assert(testFactory(factory, "Service"), "Test ServiceFactory failed");
+}
