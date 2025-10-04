@@ -1,8 +1,7 @@
 ﻿module uim.html.classes.elements.rt;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class DH5Rt : DH5Obj {
