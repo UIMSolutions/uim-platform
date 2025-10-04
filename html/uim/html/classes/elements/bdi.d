@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.bdi;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for bdi tag - tells the browser's bidirectional algorithm to treat the text it contains in isolation from its surrounding text.

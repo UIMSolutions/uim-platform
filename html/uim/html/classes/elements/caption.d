@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.caption;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for caption tag = specifies the caption (or title) of a table. 

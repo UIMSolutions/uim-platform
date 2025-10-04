@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.aside;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for aside tag - represents a portion of a document whose content is only indirectly related to the document's main content. 

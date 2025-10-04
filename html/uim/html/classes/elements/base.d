@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.base;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for the base tag - specifies the base URL and/or target for all relative URLs in a document. 

@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.code;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for code tag - displays its contents styled in a fashion intended to indicate that the text is a short fragment of computer code.

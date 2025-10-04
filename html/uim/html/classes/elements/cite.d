@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.cite;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for cite tag - used to describe a reference to a cited creative work, and must include the title of that work. 
