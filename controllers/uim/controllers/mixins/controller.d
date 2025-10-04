@@ -6,6 +6,7 @@
 module uim.controllers.mixins.controller;
 
 import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 

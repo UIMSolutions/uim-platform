@@ -6,8 +6,8 @@
 module uim.css.obj;
 
 import uim.css;
-mixin(Version!"test_uim_css");
 
+mixin(Version!"test_uim_css");
 @safe:
 
 class DCSSObj {
