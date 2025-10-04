@@ -1,2 +1,2 @@
-module uim-platform.sites.uim.sites.interfaces;
+module uim.sites.interfaces;
 
