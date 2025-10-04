@@ -5,3 +5,5 @@
 *****************************************************************************************************************/
 module uim.models.classes.attributes.helpers;
 
+import uim.models;
+mixin(ImportHelpers!"uim.models.classes.attributes");

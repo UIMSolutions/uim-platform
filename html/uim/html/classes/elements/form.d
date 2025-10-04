@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.form;
 
+import uim.html;
 mixin(Version!("test_uim_html"));
 
-import uim.html;
 @safe:
 
 class DH5Form : DH5Obj {

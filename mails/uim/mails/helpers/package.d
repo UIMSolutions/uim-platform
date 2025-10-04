@@ -5,3 +5,5 @@
 *****************************************************************************************************************/
 module uim.mails.helpers;
 
+import uim.mails;
+mixin(ImportHelpers!"uim.mails");
