@@ -6,7 +6,9 @@
 module uim.models.mixins.element;
 
 import uim.models;
-@safe: 
+mixin(Version!"test_uim_models");
+
+@safe:
 
 string elementThis(string name = null) {
     string fullName = name ~ "Element";

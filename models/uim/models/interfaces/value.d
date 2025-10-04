@@ -5,6 +5,11 @@
 *****************************************************************************************************************/
 module uim.models.interfaces.value;
 
+import uim.models;
+mixin(Version!"test_uim_models");
+
+@safe:
+
 interface IValue {
 
 }

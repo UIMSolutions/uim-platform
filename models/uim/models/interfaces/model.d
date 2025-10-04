@@ -6,6 +6,8 @@
 module uim.models.interfaces.model;
 
 import uim.models;
+mixin(Version!"test_uim_models");
+
 @safe:
 
 /* interface IModel {

@@ -6,6 +6,8 @@
 module uim.models.mixins.model;
 
 import uim.models;
+mixin(Version!"test_uim_models");
+
 @safe:
 
 string modelThis(string name = null) {

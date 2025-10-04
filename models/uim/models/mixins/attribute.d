@@ -6,5 +6,7 @@
 module uim.models.mixins.attribute;
 
 import uim.models;
+mixin(Version!"test_uim_models");
+
 @safe:
 
