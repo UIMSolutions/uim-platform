@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.mark;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <mark> - represents text which is marked or highlighted for reference or notation purposes, due to the marked passage's relevance or importance in the enclosing context.

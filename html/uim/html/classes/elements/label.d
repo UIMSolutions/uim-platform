@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.label;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class DH5Label : DH5Obj {

@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.main_;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <main> - represents the dominant content of the <body> of a document.
