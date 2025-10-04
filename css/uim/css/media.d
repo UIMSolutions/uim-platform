@@ -6,6 +6,8 @@
 module uim.css.media;
 
 import uim.css;
+mixin(Version!"test_uim_css");
+
 @safe:
 
 class DCSSMedia : DCSSRules {

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.css.interfaces.css;
 
-mixin(Version!("test_uim_html"));
-
 import uim.css;
+mixin(Version!"test_uim_css");
+
 @safe:
 
 interface ICss {

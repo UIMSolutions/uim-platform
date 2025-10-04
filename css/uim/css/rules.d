@@ -5,20 +5,10 @@
 *****************************************************************************************************************/
 module uim.css.rules;
 
-mixin(Version!("test_uim_css"));
-
-mixin(Version!("test_uim_css"));
-
 import uim.css;
-@safe:
-<<<<<<< HEAD
+mixin(Version!"test_uim_css");
 
-class DCSSRules : DCSSObj {
-	this() { super(); }
-	this(DCSSRule[] someRules) { this().rules(someRules); }
-	this(DCSSRules aRules) { this().rules(aRules); }
-=======
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
+@safe:
 
 class DCSSRules : DCSSObj {
 	this() {
