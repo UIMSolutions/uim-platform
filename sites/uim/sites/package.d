@@ -18,6 +18,5 @@ public { // uim.filesystem libraries
   import uim.sites.exceptions;
   import uim.sites.helpers;
   import uim.sites.interfaces;
-  import uim.sites.mixins;
   import uim.sites.tests;
 }
