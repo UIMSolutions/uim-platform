@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.abbr;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <abbr> - represents an abbreviation or acronym.

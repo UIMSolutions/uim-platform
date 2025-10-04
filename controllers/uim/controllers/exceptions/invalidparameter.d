@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.controllers.exceptions.invalidparameter;
 
+import uim.controllers;
 mixin(Version!("test_uim_controllers"));
 
-import uim.controllers;
 @safe:
 
 // Used when a passed parameter or action parameter type declaration is missing or invalid.

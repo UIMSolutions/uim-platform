@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.article;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <article> - represents a self-contained composition in a document, page, application, or site, 

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.css.classes.containers.container;
 
+import uim.css;
 mixin(Version!("test_uim_css"));
 
-import uim.css;
 @safe:
 
 class DCSSContainer : UIMObject {
