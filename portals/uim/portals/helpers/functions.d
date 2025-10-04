@@ -1,6 +1,11 @@
-module uim-platform.portals.uim.portals.helpers.functions;
+/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.portals.helpers.functions;
 
-import uim.neural;
-mixin(Version!"test_uim_neural");
+import uim.portals;
+mixin(Version!"test_uim_portals");
 
 @safe:
