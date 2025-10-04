@@ -6,13 +6,9 @@
 module uim.views.classes.schema;
 
 import uim.views;
-@safe:
+mixin(Version!("test_uim_views"));
 
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
+@safe:
 
 // Contains the schema information for Form instances.
 class DSchema : UIMObject {

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim-platform.services.uim.services.classes.services.service;
 
+import uim.services;
 mixin(Version!("test_uim_services"));
 
-import uim.services;
 @safe:
 
 class DService : UIMObject, IService {

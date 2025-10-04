@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.sites.helpers.collection;
 
+import uim.sites;
+mixin(Version!("test_uim_sites"));
+
+@safe:
