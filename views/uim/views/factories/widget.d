@@ -6,14 +6,9 @@
 module uim.views.factories.widget;
 
 import uim.views;
+mixin(Version!("test_uim_views"));
+
 @safe:
-
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
-
 
 // An object Factory for Widget.
 class DWidgetFactory : DFactory!DWidget {

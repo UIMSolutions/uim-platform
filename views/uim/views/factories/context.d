@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.views.factories.context;
 
+import uim.views;
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 class DFormContextFactory : DFactory!DFormContext {

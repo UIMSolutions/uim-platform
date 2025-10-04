@@ -1,15 +1,9 @@
 module uim.views.helpers.form;
 
 import uim.views;
-@safe:
+mixin(Version!("test_uim_views"));
 
-version (test_uim_views) {
-  import std.stdio;
-  
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
+@safe:
 
 /**
  * Form helper library.

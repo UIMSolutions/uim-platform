@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.null_;
 
+import uim.views;
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 /** Provides a context provider that does nothing.

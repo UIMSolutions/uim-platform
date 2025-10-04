@@ -6,9 +6,12 @@
 module uim.views.registries.view;
 
 import uim.views;
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 class DViewRegistry : DObjectRegistry!DView {
+
 }
 
 auto ViewRegistry() { // for Singleton

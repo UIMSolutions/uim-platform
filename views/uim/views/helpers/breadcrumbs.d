@@ -1,13 +1,9 @@
 module uim.views.helpers.breadcrumbs;
 
 import uim.views;
-@safe:
+mixin(Version!("test_uim_views"));
 
-version (test_uim_views) {
-  unittest {
-    writeln("-----  ", __MODULE__, "\t  -----");
-  }
-} 
+@safe:
 
 // BreadcrumbsHelper to register and display a breadcrumb trail for your views
 class BreadcrumbsHelper : DHelper {

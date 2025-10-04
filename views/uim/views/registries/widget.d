@@ -6,6 +6,8 @@
 module uim.views.registries.widget;
 
 import uim.views;
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 // An object registry for Widget.

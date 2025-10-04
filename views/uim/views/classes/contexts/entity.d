@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.entity;
 
+import uim.views;
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 /**
