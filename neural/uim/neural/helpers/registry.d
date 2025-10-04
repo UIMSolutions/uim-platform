@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.neural.helpers.registry;
 
-mixin(Version!"test_uim_neural");
-
 import uim.neural;
+mixin(Version!"test_uim_neural");
 
 @safe:

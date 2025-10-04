@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
 module uim.portals.classes.portals.portal;
+
+import uim.portals;
+mixin(Version!"test_uim_portals");
+
+@safe:
