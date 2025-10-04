@@ -7,19 +7,15 @@ module uim.genetics;
 
 mixin(ImportPhobos!());
 
-public { // Required uim libraries 
+public { // Moduls 
   import uim.infralevel;
   import uim.models;
 }
 
-public { // uim.genetics packages
+public { // Packages
   import uim.genetics.classes;
-  import uim.genetics.collections;
   import uim.genetics.exceptions;
-  import uim.genetics.factories;
   import uim.genetics.interfaces;
   import uim.genetics.helpers;
-  import uim.genetics.mixins;
-  import uim.genetics.registries;
   import uim.genetics.tests; 
 }
