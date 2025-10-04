@@ -6,8 +6,9 @@
 module uim.mvc.interfaces.controller;
 
 import uim.mvc;
+mixin(Version!"test_uim_mvc");
 
-@safe: 
+@safe:
 interface IController {
     void process(HTTPServerRequest request, HTTPServerResponse response);
 }
