@@ -1,8 +1,8 @@
 module uim.forms.helpers.registry;
 
+import uim.forms;
 mixin(Version!"test_uim_forms");
 
-import uim.forms;
 @safe:
 
 class DFormRegistry : DObjectRegistry!IForm {

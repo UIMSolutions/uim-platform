@@ -6,6 +6,8 @@
 module uim.css.mixins.css;
 
 import uim.css;
+mixin(Version!"test_uim_css");
+
 @safe:
 
 string cssThis(string name = null) {
