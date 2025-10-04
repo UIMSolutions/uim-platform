@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.select;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class DH5Select : DH5Obj {

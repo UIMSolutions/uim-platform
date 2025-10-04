@@ -5,11 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.table;
 
-mixin(Version!("test_uim_html"));
-
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 
 @safe:
 

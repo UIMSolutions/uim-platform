@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.strong;
 
-mixin(Version!("test_uim_html"));
-
-import uim.html; 
+import uim.html;
+mixin(Version!("test_uim_html")); 
 @safe:
 
 // Wrapper for <strong> -  indicates that its contents have strong importance, seriousness, or urgency. 
