@@ -1,4 +1,4 @@
-module uim.controllers.helpers.mixins;
+module uim.controllers.helpers.functions;
 
 import uim.controllers;
 mixin(Version!"test_uim_controllers");

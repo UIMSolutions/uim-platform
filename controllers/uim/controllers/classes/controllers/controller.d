@@ -6,6 +6,7 @@
 module uim.controllers.classes.controllers.controller;
 
 import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 class DController : UIMObject, IController {

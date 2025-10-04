@@ -1,6 +1,7 @@
 module uim.controllers.classes.controllers.error;
 
 import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 

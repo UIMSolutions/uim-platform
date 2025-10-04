@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.css.declaration;
 
+import uim.css;
 mixin(Version!("test_uim_css"));
 
-import uim.css;
 @safe:
 
 class DCSSDeclaration : DCSSObj {
