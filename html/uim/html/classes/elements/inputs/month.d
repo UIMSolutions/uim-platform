@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.inputs.month;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 /* TODO: Add support for the following attributes:
