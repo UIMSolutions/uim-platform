@@ -18,6 +18,5 @@ public { // uim.filesystem libraries
   import uim.mvc.exceptions;
   import uim.mvc.helpers;
   import uim.mvc.interfaces;
-  import uim.mvc.mixins;
   import uim.mvc.tests;
 }
