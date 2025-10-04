@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.figcaption;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for figcaption tag - represents a caption or legend describing the rest of the contents of its parent <figure> element.

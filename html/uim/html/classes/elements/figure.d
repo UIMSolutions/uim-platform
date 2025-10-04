@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.figure;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for the figure tag - represents self-contained content, potentially with an optional caption, which is specified using the <figcaption> element.
