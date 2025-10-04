@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.securities.helpers.mixins;
 
+import uim.ai;
+mixin(Version!"test_uim_ai");
+
+@safe:

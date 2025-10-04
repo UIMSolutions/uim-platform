@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.securities.helpers.registry;
 
+import uim.ai;
+mixin(Version!"test_uim_ai");
+
+@safe:
