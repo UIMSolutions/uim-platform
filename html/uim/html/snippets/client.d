@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.snippets.client;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class clientOrPartnersLogoSlider : DH5Component {

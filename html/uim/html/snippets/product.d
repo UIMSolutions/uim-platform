@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.snippets.product;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 auto css = `h3.h3{text-align:center;margin:1em;text-transform:capitalize;font-size:1.7em;}
