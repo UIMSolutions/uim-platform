@@ -1,18 +1,23 @@
-module uim.forms.helpers.registry;
+mo/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+moduledule uim.genetics.helpers.registry;
 
-import uim.forms;
-mixin(Version!"test_uim_forms");
+import uim.genetics;
+mixin(Version!"test_uim_geneticss");
 
 @safe:
 
-class DFormRegistry : DObjectRegistry!IForm {
-    mixin(RegistryThis!"Form");
+class DGeneticsRegistry : DObjectRegistry!IGenetics {
+    mixin(RegistryThis!"Genetics");
 }
-mixin(RegistryCalls!"Form");
+mixin(RegistryCalls!"Genetics");
 
 unittest {
-    auto registry = new DFormRegistry();
-    assert(registry !is null, "Form registry is null!");
+    auto registry = new DGeneticsRegistry();
+    assert(registry !is null, "Genetics registry is null!");
 
-    assert(testForm(registry, "Form"), "Form test failed!");
+    assert(testGenetics(registry, "Genetics"), "Genetics test failed!");
 }

@@ -1,6 +1,11 @@
-module uim.forms.helpers.functions;
+/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.genetics.helpers.functions;
 
-import uim.forms;
-mixin(Version!"test_uim_forms");
+import uim.genetics;
+mixin(Version!"test_uim_genetics");
 
 @safe:
