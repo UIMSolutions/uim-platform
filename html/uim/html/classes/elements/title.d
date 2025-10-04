@@ -1,8 +1,7 @@
 ﻿module uim.html.classes.elements.title;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class DH5Title : DH5Obj {

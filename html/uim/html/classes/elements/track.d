@@ -5,11 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.track;
 
-mixin(Version!("test_uim_html"));
-
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 class DH5Track : DH5Obj {

@@ -5,11 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.template_;
 
-mixin(Version!("test_uim_html"));
-
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <template> - s a mechanism for holding HTML that is not to be rendered immediately when a page is loaded but may be instantiated subsequently during runtime using JavaScript.
