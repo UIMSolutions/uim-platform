@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.meta;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 /* TODO: Add meta tags for charset, name, content, http-equiv, property, scheme, etc. */

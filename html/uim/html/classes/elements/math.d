@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.math;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // This module defines the Math element in HTML5.

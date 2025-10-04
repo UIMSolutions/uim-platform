@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.meter;
 
-mixin(Version!("test_uim_html"));
-
 import uim.html;
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <meter> - represents either a scalar value within a known range or a fractional value.
