@@ -5,9 +5,8 @@
 *****************************************************************************************************************/
 module uim.services.helpers.registry;
 
-mixin(Version!"test_uim_services");
-
 import uim.services;
+mixin(Version!("test_uim_services"));
 
 @safe:
 
