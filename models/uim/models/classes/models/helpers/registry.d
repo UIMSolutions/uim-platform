@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.models.classes.models.helpers.registry;
 
+import uim.models;
 mixin(Version!"test_uim_models");
 
-import uim.models;
 @safe:
 
 class DModelRegistry : DObjectRegistry!IModel {
