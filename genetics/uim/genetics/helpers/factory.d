@@ -5,3 +5,8 @@
 *****************************************************************************************************************/
 module uim.genetics.helpers.factory;
 
+import uim.genetics;
+
+mixin(Version!"test_uim_genetics");
+
+@safe:

@@ -6,6 +6,7 @@
 module uim.genetics.helpers.functions;
 
 import uim.genetics;
+
 mixin(Version!"test_uim_genetics");
 
 @safe:

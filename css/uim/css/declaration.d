@@ -11,26 +11,51 @@ mixin(Version!("test_uim_css"));
 @safe:
 
 class DCSSDeclaration : DCSSObj {
-  this() { super(); }
-  this(string aName) { this.name(aName); }
-  this(string aName, string aValue) { this.name(aName).value(aValue); }
+  this() {
+    super();
+  }
 
-  override protected void _init() { super._init; }
+  this(string aName) {
+    this.name(aName);
+  }
+
+  this(string aName, string aValue) {
+    this.name(aName).value(aValue);
+  }
+
+  override protected void _init() {
+    super._init;
+  }
 
   mixin(OProperty!("string", "name"));
   mixin(OProperty!("string", "value"));
 
-alias opEquals = Object.opEquals;
-  bool opEquals(string css) { return toString == css; }
-  bool opEquals(DCSSDeclaration obj) { return toString == obj.toString; }
+  alias opEquals = Object.opEquals;
+  bool opEquals(string css) {
+    return toString == css;
+  }
+
+  bool opEquals(DCSSDeclaration obj) {
+    return toString == obj.toString;
+  }
 
   override string toString() {
-    return name~": "~value;
+    return name ~ ": " ~ value;
   }
 }
-auto CSSDeclaration() { return new DCSSDeclaration(); }
-auto CSSDeclaration(string aName) { return new DCSSDeclaration(aName); }
-auto CSSDeclaration(string aName, string aValue) { return new DCSSDeclaration(aName,aValue); }
+
+auto CSSDeclaration() {
+  return new DCSSDeclaration();
+}
+
+auto CSSDeclaration(string aName) {
+  return new DCSSDeclaration(aName);
+}
+
+auto CSSDeclaration(string aName, string aValue) {
+  return new DCSSDeclaration(aName, aValue);
+}
 
 unittest {
-    assert(CSSDeclaration("background-color", "lightgreen") == "background-color:lightgreen"); }}
+  assert(CSSDeclaration("background-color", "lightgreen") == "background-color:lightgreen");
+}
