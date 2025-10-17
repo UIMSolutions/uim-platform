@@ -7,8 +7,6 @@ module uim.html.classes.elements.a;
 
 mixin(Version!"test_uim_html");
 
-mixin(Version!"test_uim_html");
-
 import uim.html;
 @safe:
 
