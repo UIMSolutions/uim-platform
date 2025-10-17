@@ -16,4 +16,4 @@ mixin(H5Short!"Sub");
 
 unittest {
   testH5Obj(H5Sub, "sub");
-}}
+}

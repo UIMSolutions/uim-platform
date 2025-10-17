@@ -1,4 +1,9 @@
-﻿module uim.html.classes.elements.source;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.source;
 
 import uim.html;
 @safe:
@@ -18,4 +23,4 @@ unittest {
 	testH5Obj(H5Source, "source");
 	mixin(testH5DoubleAttributes!("H5Source", "source", [
     "sizes", "src", "srcset", "type", "media"]));
-}}
+}
