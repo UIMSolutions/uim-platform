@@ -15,14 +15,14 @@ mixin(H5Short!"Script");
 
 unittest {
   assert(H5Script == "<script></script>");
-}}
+}
 
 string toString(DH5Script[] scripts) {
 	return scripts.map!(s => s.toString).join;
 }
 unittest {
     // assert([H5Script, H5Script].toString == "<script></script><script></script>");
-}}
+}
 
 DH5Script[] H5Scripts(string[string][] scripts...) { 
 	return H5Scripts(scripts.dup); 
@@ -33,4 +33,4 @@ DH5Script[] H5Scripts(string[string][] scripts) {
 }
 unittest {
 		// TODO
-}}
+}

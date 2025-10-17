@@ -45,14 +45,3 @@ class DH5H6 : DH5Obj {
 
 mixin(H5Short!"H6");
 
-unittest {
-<<<<<<< HEAD
-	// TODO
-	
-}}
-=======
-  // TODO
-
-}
-}
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

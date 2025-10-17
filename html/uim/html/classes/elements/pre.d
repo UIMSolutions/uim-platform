@@ -3,8 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module
-import uim.html;
+module uim.html.classes.elements.pre;
 @safe:
 
 /* Das Element pre erlaubt es, Text so darzustellen, wie er im Editor eingegeben wird, pre steht dabei für preformatted, also präformatiert, vorformatiert. 
@@ -16,4 +15,4 @@ mixin(H5Short!"Pre");
 
 unittest {
     assert(H5Pre == "<pre></pre>");
-}}
+}

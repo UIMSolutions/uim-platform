@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <rp> HTML element is used to provide fall-back parentheses for browsers that do not support ruby annotations.
 class DH5Rp : DH5Obj {
 	mixin(H5This!"rp");
 }

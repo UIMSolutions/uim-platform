@@ -6,6 +6,7 @@
 module uim.html.classes.obj;
 
 import uim.html;
+
 mixin(Version!("test_uim_html"));
 @safe:
 
@@ -185,7 +186,7 @@ class DH5Obj {
 
   O js(this O)(string[] codes...) {
     codes.each!(code => _js ~= c).array;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   /* 	O js(this O)(DJS[] codes...) {
@@ -203,7 +204,7 @@ class DH5Obj {
   // Set classes
   O classes(this O)(string[] values...) {
     this.classes(values.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O classes(this O)(string[] values) {
@@ -216,17 +217,17 @@ class DH5Obj {
         
 
     ).array; // back as []
-    return cast(O) this;
+    return cast(O)this;
   }
   // Change classes
   O addClasses(this O)(string[] values...) {
     this.addClasses(values.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O addClasses(this O)(string[] values) {
     this.classes(classes ~ values);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // #region remove
@@ -243,7 +244,7 @@ class DH5Obj {
 
   O clearClasses(this O)() {
     _classes = null;
-    return cast(O) this;
+    return cast(O)this;
   }
   // #endregion remove
 
@@ -253,7 +254,7 @@ class DH5Obj {
     foreach (k, v; newAttributes) {
       _attributes[k] = v;
     }
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // Work with single Attribute
@@ -263,7 +264,7 @@ class DH5Obj {
 
   O attribute(this O)(string name, string value) {
     _attributes[name] = value;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O attribute(this O)(string name, bool value) {
@@ -271,91 +272,91 @@ class DH5Obj {
       attribute(name, "true");
     else
       attribute(name, "false");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O removeAttribute(this O)(string name) {
     _attributes.removeKey(name);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // Global HTML attributes	
   O accesskey(this O)(string value) {
     if (value.length > 0)
       attributes.set("accesskey", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O contenteditable(this O)(bool value) {
     if (value)
       attributes.set("contenteditable", "true");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O contextmenu(this O)(string value) {
     if (value.length > 0)
       attributes.set("contextmenu", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O dir(this O)(string value) {
     if (value.length > 0)
       attributes.set("dir", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O draggable(this O)(bool value) {
     if (value)
       attributes.set("draggable", "true");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O dropzone(this O)(string value) {
     if (value.length > 0)
       attributes.set("dropzone", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O hidden(this O)(bool value) {
     if (value)
       attributes.set("hidden", "true");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O lang(this O)(string value) {
     if (value.length > 0)
       attributes.set("lang", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O spellcheck(this O)(bool value) {
     if (value)
       attributes.set("spellcheck", "true");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O style(this O)(string value) {
     if (value.length > 0)
       attributes.set("style", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O tabindex(this O)(string value) {
     if (value.length > 0)
       attributes.set("tabindex", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O title(this O)(string value) {
     if (value.length > 0)
       attributes.set("title", value);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O translate(this O)(bool value) {
     if (value)
       attributes.set("translate", "true");
-    return cast(O) this;
+    return cast(O)this;
   }
 
   //	Should be @safe ...bool opEquals(DH5Obj value) { return (this == value); }
@@ -404,59 +405,59 @@ class DH5Obj {
   // Setting content
   O content(this O)(string[] newContent...) {
     this.content(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O content(this O)(string[] newContent) {
-    this.content(newContent.map!(c => c.length > 0 ? cast(DH5Obj) H5String(c) : null).array);
-    return cast(O) this;
+    this.content(newContent.map!(c => c.length > 0 ? cast(DH5Obj)H5String(c) : null).array);
+    return cast(O)this;
   }
 
   O content(this O)(DH5Obj[] newContent...) {
     this.content(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O content(this O)(DH5Obj[] newContent) {
     _html = newContent.filter!(a => a !is null).array;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O content(this O)(DH5 newContent) {
     _html = newContent.objs;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // Changing content
   O addContent(this O)(string[] newContent...) {
     this.addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O addContent(this O)(string[] newContent) {
-    this.addContent(newContent.map!(c => c.length > 0 ? cast(DH5Obj) H5String(c) : null).array);
-    return cast(O) this;
+    this.addContent(newContent.map!(c => c.length > 0 ? cast(DH5Obj)H5String(c) : null).array);
+    return cast(O)this;
   }
 
   O addContent(this O)(DH5Obj[] newContent...) {
     this.addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O addContent(this O)(DH5Obj[] newContent) {
     _html ~= newContent.filter!(a => a !is null).array;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O addContent(this O)(DH5 newContent) {
     _html ~= newContent.objs;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // Clear content
   O clearContent(this O)() {
     _html = [];
-    return cast(O) this;
+    return cast(O)this;
   }
 
   DCSSRules _css;
@@ -466,7 +467,7 @@ class DH5Obj {
 
   O clearCss(this O)() {
     _css = CSSRules;
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O css(this O)(string aSelector, string name, string value) {
@@ -487,163 +488,163 @@ class DH5Obj {
 
   O css(this O)(DCSSRule aRule) {
     _css(aRule);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O css(this O)(DCSSRules aRules) {
     _css(aRules);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   // Using OpCalls is adding, not setting
   O opCall(this O)(string newContent) {
     this.addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(DH5Obj[] newContent...) {
     this.addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(DH5Obj[] newContent) {
     this.addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses) {
     this.addClasses(newClasses);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, string newContent) {
     this(newClasses).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, DH5Obj[] newContent...) {
     this(newClasses).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, DH5Obj[] newContent) {
     this(newClasses).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[string] newAttributes) {
     add(someAttributes);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[string] newAttributes, string newContent) {
     this(newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[string] newAttributes, DH5Obj[] newContent...) {
     this(newAttributes).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[string] newAttributes, DH5Obj[] newContent) {
     this(newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, string[string] newAttributes) {
     this(newClasses).addAttributes(someAttributes);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, string[string] newAttributes, string newContent) {
     this(newClasses, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, string[string] newAttributes, DH5Obj[] newContent...) {
     this(newClasses, newAttributes).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string[] newClasses, string[string] newAttributes, DH5Obj[] newContent) {
     this(newClasses, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, DH5Obj[] newContent...) {
     this(newContent.dup).id(newId);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, DH5Obj[] newContent) {
     this(newContent).id(newId);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses) {
     this(newClasses).id(newId);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, string newContent) {
     this(newId, newClasses).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, DH5Obj[] newContent...) {
     this(newId, newClasses).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, DH5Obj[] newContent) {
     this(newId, newClasses).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[string] newAttributes) {
     this(someAttributes).id(newId);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[string] newAttributes, string newContent) {
     this(newId, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[string] newAttributes, DH5Obj[] newContent...) {
     this(newId, newAttributes).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[string] newAttributes, DH5Obj[] newContent) {
     this(newId, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, string[string] newAttributes) {
     this(newId, newClasses).addAttributes(newAttributes);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, string[string] newAttributes, string newContent) {
     this(newId, newClasses, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, string[string] newAttributes, DH5Obj[] newContent...) {
     this(newId, newClasses, newAttributes).addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(string newId, string[] newClasses, string[string] newAttributes, DH5Obj[] newContent) {
     this(newId, newClasses, newAttributes).addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O opCall(this O)(DH5 newContent) {
     add(newContent.objs);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   /* 	O opCall(this O)(DJS code) {
@@ -654,49 +655,49 @@ class DH5Obj {
   // Shorties for lazy people ;-) - For Best Practice use long names
   O add(this O)(string[] newClasses) {
     this.addClasses(newClasses);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O add(this O)(string[string] newAttributes) {
     this.addAttributes(someAttributes);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O add(this O)(string newContent) {
     this.addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O add(this O)(DH5Obj[] newContent...) {
     this.addContent(newContent.dup);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O add(this O)(DH5Obj[] newContent) {
     this.addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O add(this O)(DH5 newContent) {
     this.addContent(newContent);
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O clear(this O)() {
     _css = CSSRules;
     _html = [];
     _js = "";
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O clearHtml(this O)() {
     _html = [];
-    return cast(O) this;
+    return cast(O)this;
   }
 
   O clearJs(this O)() {
     _js = "";
-    return cast(O) this;
+    return cast(O)this;
   }
 
   /* accesskey - specifies a shortcut key to activate/focus an element. */
@@ -900,16 +901,16 @@ class DH5Obj {
     return result;
   }
 
-unittest {
-      /*
+  unittest {
+    /*
 		writeln(H5Obj.tag("div").toPretty);
 		writeln("---------");
 		writeln(H5Obj.tag("div")(H5Obj.tag("div")).toPretty);
 		writeln("---------");
 		writeln(H5Obj.tag("div")(H5Obj.tag("div")(H5Obj.tag("div"))).toPretty);
 		*/
-    }
   }
+}
 }
 
 auto H5Obj() {
@@ -1053,12 +1054,12 @@ auto H5Obj(string[string] newAttributes, DH5 newContent) {
 }
 
 unittest {
-    assert(H5Obj);
-    assert(H5Obj.tag("testTag").tag == "testTag");
-    assert(H5Obj.id("testId").id == "testId");
-    assert(H5Obj(["classA", "classB"]).classes == ["classA", "classB"]);
+  assert(H5Obj);
+  assert(H5Obj.tag("testTag").tag == "testTag");
+  assert(H5Obj.id("testId").id == "testId");
+  assert(H5Obj(["classA", "classB"]).classes == ["classA", "classB"]);
 
-    /* 
+  /* 
 	h5 = H5Obj("content");
 	assert(H5Obj.id == null);
 	assert(H5Obj(["classA", "classB"]).id == null);
@@ -1066,8 +1067,8 @@ unittest {
 	assert(H5Obj(["classA", "classB"], ["a":"x", "b":"y"], "content1").id == null);
 	assert(H5Obj(["a":"x", "b":"y"]).id == null);
 	assert(H5Obj(["a":"x", "b":"y"], "content1").id == null); */
-  }
 }
+
 
 string toPretty(DH5Obj[] objs, int intendSpace = 0, int step = 2) {
   return objs.map!(a => a ? a.toPretty : "").join;
