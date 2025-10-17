@@ -6,14 +6,17 @@
 module uim.html.classes.elements.s;
 
 import uim.html;
+
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <s> HTML element renders text with a strikethrough, or a line through it, to indicate that the text is no longer relevant or accurate.
 class DH5S : DH5Obj {
-	mixin(H5This!"s");
+  mixin(H5This!"s");
 }
+
 mixin(H5Short!"S");
 
 unittest {
-    testH5Obj(H5S, "s");
-}}
+  testH5Obj(H5S, "s");
+}

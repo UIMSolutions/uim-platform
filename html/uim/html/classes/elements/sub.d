@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// HTML <sub> element
 class DH5Sub : DH5Obj {
 	mixin(H5This!"sub");
 }

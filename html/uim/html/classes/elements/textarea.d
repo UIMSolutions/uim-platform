@@ -10,6 +10,8 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <textarea> HTML element represents a multi-line plain-text editing control
+// for the user to enter text.
 class DH5Textarea : DH5Obj {
   mixin(H5This!"textarea");
 

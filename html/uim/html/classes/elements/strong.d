@@ -6,15 +6,17 @@
 module uim.html.classes.elements.strong;
 
 import uim.html;
-mixin(Version!("test_uim_html")); 
+
+mixin(Version!("test_uim_html"));
 @safe:
 
 // Wrapper for <strong> -  indicates that its contents have strong importance, seriousness, or urgency. 
 class DH5Strong : DH5Obj {
-	mixin(H5This!"strong");
+  mixin(H5This!"strong");
 }
+
 mixin(H5Short!"Strong");
 
 unittest {
-    assert(H5Strong == "<strong></strong>");
+  assert(H5Strong == "<strong></strong>");
 }

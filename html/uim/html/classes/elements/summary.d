@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// HTML <summary> element - Represents a summary, caption, or legend for a <details> element's disclosure box.
 class DH5Summary : DH5Obj {
 	mixin(H5This!"summary");
 }

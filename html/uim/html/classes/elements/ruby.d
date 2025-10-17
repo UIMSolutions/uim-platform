@@ -9,6 +9,8 @@ import uim.html;
 mixin(Version!("test_uim_html")); 
 @safe:
 
+// The <ruby> HTML element represents a ruby annotation, which is a short run of text alongside the base text,
+// typically used in East Asian typography to show the pronunciation of Chinese characters.
 class DH5Ruby : DH5Obj {
 	mixin(H5This!"ruby");
 }

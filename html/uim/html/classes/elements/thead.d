@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <thead> HTML element represents a group of introductory or navigational aids in a table.
 class DH5Thead : DH5Obj {
   mixin(H5This!"thead");
 

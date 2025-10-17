@@ -10,6 +10,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <ul> HTML element represents an unordered list of items, typically rendered as a bulleted list.
 class DH5Ul : DH5Obj {
   mixin(H5This!"ul");
 

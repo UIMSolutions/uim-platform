@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <var> HTML element represents a variable in a mathematical expression or a programming context.
 class DH5Var : DH5Obj {
 	mixin(H5This!"var");
 }
