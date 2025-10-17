@@ -5,8 +5,9 @@
 *****************************************************************************************************************/
 module uim.html.classes.elements.audio;
 
-import uim.html;
 mixin(Version!("test_uim_html"));
+
+import uim.html;
 @safe:
 
 // The <audio> tag defines sound, such as music or other audio streams.

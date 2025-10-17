@@ -5,9 +5,6 @@ mixin(Version!"test_uim_html");
 import uim.html;
 @safe:
 
-import uim.html;
-@safe:
-
 /*
  * @class DH5Blockquote
  * @brief Blockquote element

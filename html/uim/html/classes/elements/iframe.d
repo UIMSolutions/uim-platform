@@ -16,10 +16,5 @@ class DH5Iframe : DH5Obj {
 mixin(H5Short!"Iframe");
 
 unittest {
-<<<<<<< HEAD
-    assert(H5Iframe == "<iframe></iframe>");
-}}
-=======
   assert(H5Iframe == "<iframe></iframe>");
 }
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

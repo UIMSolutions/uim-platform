@@ -1,12 +1,14 @@
-﻿module uim.html.classes.elements.canvas;
-
-import std.stdio;
-import std.conv;
-import std.string;
+﻿/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)                                                  *
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.html.classes.elements.canvas;
 
 import uim.html;
-
+mixin(Version!("test_uim_html"));
 @safe:
+
 class DH5Canvas : DH5Obj {
 	string pre = "context.";
 	mixin(H5This!"canvas");
