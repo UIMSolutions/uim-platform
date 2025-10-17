@@ -8,6 +8,7 @@ module uim.html.classes.elements.source;
 import uim.html;
 @safe:
 
+// The <source> HTML element is used to specify multiple media resources for media elements, such as <video> and <audio>. It is an empty element that contains attributes only.
 class DH5Source : DH5Obj {
 	mixin(H5This!"source");
 	

@@ -31,11 +31,3 @@ DH5Style[] H5Styles(string[string][] someStyles...) {
 DH5Style[] H5Styles(string[string][] someStyles) { 
 	return someStyles.map!(s => H5Style(s)).array;
 }
-unittest {
-<<<<<<< HEAD
-	/// TODO
-}}
-=======
-	// TODO
-}
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

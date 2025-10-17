@@ -15,4 +15,4 @@ mixin(H5Short!"Td");
 
 unittest {
   testH5Obj(H5Td, "td");
-}}
+}

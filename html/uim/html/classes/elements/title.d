@@ -17,4 +17,4 @@ mixin(H5Short!"Title");
 unittest {
   testH5Obj(H5Title, "title");
   // mixin(testH5DoubleClasses!("H5Title", "title"));
-}}
+}

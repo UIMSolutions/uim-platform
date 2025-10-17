@@ -17,5 +17,5 @@ mixin(H5Short!"Small");
 
 unittest {
     testH5Obj(H5Small, "small");
-}}
+}
 
