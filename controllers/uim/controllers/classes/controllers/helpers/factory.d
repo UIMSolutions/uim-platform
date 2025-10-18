@@ -13,7 +13,6 @@ mixin(Version!"test_uim_apps");
 class DControllerFactory : DFactory!IController {
   mixin(FactoryThis!("Controller"));
 }
-
 mixin(FactoryCalls!("Controller"));
 
 unittest {
