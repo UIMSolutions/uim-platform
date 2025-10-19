@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <wbr> HTML element represents a word break opportunity, which is a position within text where the browser may optionally break a line if needed for better text layout. It is used to suggest potential line break points in long words or phrases without forcing a break, allowing for improved readability and formatting of content, especially in responsive designs where space may be limited.	
 class DH5Wbr : DH5Obj {
 	mixin(H5This!"wbr");
 }

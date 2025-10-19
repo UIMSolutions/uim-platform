@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <video> HTML element is used to embed video content in a web page. It provides a standard way to display video files, allowing users to play, pause, and control the playback of the video directly within the browser. The <video> element supports various attributes to customize its behavior, such as autoplay, controls, loop, and preload. It can also include multiple source elements to provide different video formats for better compatibility across different browsers. Additionally, the <video> element can contain track elements for subtitles or captions, enhancing accessibility for users with hearing impairments.
 class DH5Video : DH5Obj {
 	mixin(H5This!"video");
 

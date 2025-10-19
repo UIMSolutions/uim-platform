@@ -10,6 +10,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <u> HTML element represents a span of text that should be stylistically different from normal text, typically rendered with an underline. It is often used to indicate non-emphatic text that has a specific meaning or context, such as proper names, technical terms, or other special phrases. The <u> element can enhance the readability and visual distinction of certain text segments within a web page.
 class DH5U : DH5Obj {
   mixin(H5This!"u");
 }

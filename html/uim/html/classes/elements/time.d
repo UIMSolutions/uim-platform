@@ -11,7 +11,7 @@ mixin(Version!("test_uim_html"));
 
 import std.datetime;
 
-// Wrapper for <time> - represents a specific period in time. It may include the datetime attribute to translate dates into machine-readable format, allowing for better search engine results or custom features such as reminders.
+// The <time> HTML element represents a specific period in time. It can be used to encode dates, times, or both, and is often utilized for events, deadlines, or timestamps. The element can include a datetime attribute that provides a machine-readable format of the date and time, enhancing accessibility and interoperability with other systems. This allows browsers and assistive technologies to better understand and present temporal information to users.
 class DH5Time : DH5Obj {
 	mixin(H5This!"time");
 	

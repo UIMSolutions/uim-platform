@@ -10,8 +10,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// The <textarea> HTML element represents a multi-line plain-text editing control
-// for the user to enter text.
+// The <textarea> HTML element represents a multi-line plain-text editing control, commonly used in forms to allow users to input large amounts of text. It provides a scrollable area where users can enter and edit text, making it suitable for comments, messages, or any other type of textual input that exceeds a single line. The <textarea> element can be customized with attributes such as rows and cols to define its visible size, and it can also support features like placeholder text, character limits, and automatic resizing.
 class DH5Textarea : DH5Obj {
   mixin(H5This!"textarea");
 

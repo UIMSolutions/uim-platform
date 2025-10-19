@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// 
+// The <title> HTML element defines the title of the document, which is displayed in the browser's title bar or tab. It is an essential element for SEO (Search Engine Optimization) as it provides a concise description of the page's content. The title is also used when bookmarking or sharing the page, making it important for user experience and accessibility.
 class DH5Title : DH5Obj {
 	mixin(H5This!("title"));
 }

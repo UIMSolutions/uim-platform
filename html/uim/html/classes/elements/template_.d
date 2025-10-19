@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <template> - s a mechanism for holding HTML that is not to be rendered immediately when a page is loaded but may be instantiated subsequently during runtime using JavaScript.
+// The <template> HTML element is a mechanism for holding client-side content that is not to be rendered when a page is loaded but can be instantiated later on at runtime using JavaScript. It is used to declare fragments of HTML that can be cloned and inserted into the document as needed, allowing for dynamic content generation and manipulation. The content inside a <template> element is inert, meaning it does not affect the document until it is explicitly activated, making it useful for defining reusable components or structures in web applications.
 class DH5Template : DH5Obj {
 	mixin(H5This!"template");
 }

@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <track> HTML element is used as a child of the <video> and <audio> elements to specify text tracks for media content. These text tracks can include subtitles, captions, descriptions, chapters, or metadata that enhance the accessibility and usability of the media for users. The <track> element allows web developers to provide multiple language options and additional information for their media content, improving the overall user experience.
 class DH5Track : DH5Obj {
 	mixin(H5This!"track");
 	

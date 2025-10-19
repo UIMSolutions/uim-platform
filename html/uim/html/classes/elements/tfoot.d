@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <tfoot> HTML element is used to group the footer content in an HTML table. It typically contains summary information or totals for the columns in the table and is displayed at the bottom of the table. The <tfoot> element helps improve the structure and readability of tables by separating footer content from the main body of the table, which is defined by the <tbody> element. Additionally, it can enhance accessibility by providing a clear distinction between different sections of the table for screen readers and other assistive technologies.
 class DH5Tfoot : DH5Obj {
 	mixin(H5This!"tfoot");
 
