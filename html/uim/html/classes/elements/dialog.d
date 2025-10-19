@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <dialog> HTML element represents a dialog box or other interactive component, such as a window. It is used to create modal or non-modal dialogs that can contain content like forms, messages, or other interactive elements.
 class DH5Dialog : DH5Obj {
 	mixin(H5This!"dialog");
 }

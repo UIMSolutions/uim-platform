@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <embed> HTML element is used to embed external content, such as multimedia files or interactive applications, into a web page. It allows for the inclusion of various types of media, such as audio, video, or plugins, providing a way to display rich content within the HTML document.
 class DH5Embed : DH5Obj {
 	mixin(H5This!"embed");
 }

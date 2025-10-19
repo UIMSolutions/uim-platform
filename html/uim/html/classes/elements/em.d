@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <em> HTML element is used to emphasize text, typically rendering it in italics. It indicates that the content has stress emphasis, which can affect the meaning of a sentence.
 class DH5Em: DH5Obj {
 	mixin(H5This!"em");
 }

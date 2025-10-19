@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <dt> HTML element is used to specify a term or name in a description list. It is typically paired with the <dd> element, which provides the definition or description of the term defined by the <dt> element.
 class DH5Dt : DH5Obj {
 	mixin(H5This!"dt");
 }
@@ -16,4 +17,4 @@ mixin(H5Short!"Dt");
 
 unittest {
   testH5Obj(H5Dt, "dt");
-}}
+}

@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <fieldset> HTML element is used to group related elements within a form, typically for better organization and visual separation. It often includes a <legend> element to provide a caption or title for the grouped content.
 class DH5Fieldset : DH5Obj {
 	mixin(H5This!"fieldset");
 }

@@ -8,6 +8,7 @@ module uim.html.classes.elements.div;
 import uim.html;
 @safe:
 
+// The <div> HTML element is a generic container used to group together other HTML elements. It has no specific semantic meaning but is commonly used for styling and layout purposes, allowing developers to apply CSS styles or JavaScript functionality to a section of content.
 class DH5Div : DH5Obj {
 	mixin(H5This!"div");
 }
@@ -21,4 +22,4 @@ unittest {
   
 	// mixin(testH5Double!("H5Div", "div", true));	
 	// mixin(testH5DoubleClasses!("H5Div", "div", true));	
-}}
+}

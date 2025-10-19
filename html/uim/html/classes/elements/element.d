@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <element> HTML element is a generic container that can be used to represent any HTML element. It serves as a base class for other specific HTML elements, providing common functionality and structure.
 class DH5Element : DH5Obj {
   mixin(H5This!"element");
 }
@@ -16,10 +17,5 @@ class DH5Element : DH5Obj {
 mixin(H5Short!"Element");
 
 unittest {
-<<<<<<< HEAD
-	assert(H5Element, "element");
-}}
-=======
-  assert(H5Element, "element");
+  testH5Obj(H5Element, "element");
 }
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
