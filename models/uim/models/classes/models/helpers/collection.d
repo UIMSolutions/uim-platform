@@ -9,3 +9,13 @@ import uim.models;
 mixin(Version!"test_uim_models");
 
 @safe:
+
+class DModelCollection : DCollection!IModel {
+  mixin(CollectionThis!("Model"));
+}
+mixin(CollectionCalls!("Model"));
+
+unittest {
+  auto collection = ModelCollection;
+  assert(testCollection(collection, "Model"), "Test ModelCollection failed");
+}

@@ -9,3 +9,13 @@ import uim.sites;
 mixin(Version!("test_uim_sites"));
 
 @safe:
+
+class DSiteCollection : DCollection!ISite {
+  mixin(CollectionThis!("Site"));
+}
+mixin(CollectionCalls!("Site"));
+
+unittest {
+  auto collection = SiteCollection;
+  assert(testCollection(collection, "Site"), "Test SiteCollection failed");
+}

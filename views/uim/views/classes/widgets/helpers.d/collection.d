@@ -5,16 +5,12 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-// An object Collection for Widget.
-class DWidgetCollection : DCollection!DWidget {
+class DWidgetCollection : DCollection!IWidget {
+  mixin(CollectionThis!("Widget"));
 }
-
-auto WidgetCollection() {
-  return new DWidgetCollection;
-}
+mixin(CollectionCalls!("Widget"));
 
 unittest {
-  assert(WidgetCollection);
-
-  auto widgets = WidgetCollection;
+  auto collection = WidgetCollection;
+  assert(testCollection(collection, "Widget"), "Test WidgetCollection failed");
 }

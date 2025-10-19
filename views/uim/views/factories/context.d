@@ -10,7 +10,7 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DFormContextFactory : DFactory!DFormContext {
+class DFormContextFactory : DFactory!IFormContext {
     static DFormContextFactory factory;
 }
 

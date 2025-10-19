@@ -9,3 +9,13 @@ import uim.services;
 mixin(Version!("test_uim_services"));
 
 @safe:
+
+class DServiceCollection : DCollection!IService {
+  mixin(CollectionThis!("Service"));
+}
+mixin(CollectionCalls!("Service"));
+
+unittest {
+  auto collection = ServiceCollection;
+  assert(testCollection(collection, "Service"), "Test ServiceCollection failed");
+}
