@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <style> HTML element is used to define internal CSS (Cascading Style Sheets) styles for a web document. It allows authors to embed CSS rules directly within the HTML file, enabling them to control the presentation and layout of the content on the page. The <style> element is typically placed within the <head> section of the HTML document and can contain various CSS properties and selectors to style elements such as fonts, colors, spacing, and more. By using the <style> element, developers can create visually appealing and consistent designs for their web pages.
 class DH5Style : DH5Obj {
 	mixin(H5This!("style"));
 }

@@ -8,7 +8,7 @@ module uim.html.classes.elements.sup;
 import uim.html;
 @safe:
 
-// Wrapper for <sup> - specifies inline text which is to be displayed as superscript for solely typographical reasons. 
+// The <sup> HTML element represents a superscript text, which is typically displayed as smaller text positioned slightly above the normal line of text. It is commonly used for footnotes, mathematical exponents, and other annotations that require a raised position relative to the surrounding text. The <sup> element helps improve the readability and clarity of content by visually distinguishing superscripted information from the main body of text.
 class DH5Sup : DH5Obj {
 	mixin(H5This!"sup");
 }

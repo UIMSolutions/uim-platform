@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <small> - represents side-comments and small print, like copyright and legal text, independent of its styled presentation.
+// The <small> HTML element is used to represent side comments, disclaimers, or fine print text that is typically displayed in a smaller font size compared to the surrounding content. It is often used for legal disclaimers, copyright information, or other secondary text that is not the main focus of the document. The <small> element helps to visually differentiate this type of content from the primary text, making it easier for readers to identify and understand its purpose within the context of the webpage.
 class DH5Small : DH5Obj {
 	mixin(H5This!"small");
 }

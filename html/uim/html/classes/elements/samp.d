@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// HTML <samp> element - Represents sample output from a computer program.
+// The <samp> HTML element is used to represent sample output from a computer program or system. It is typically displayed in a monospaced font to distinguish it from regular text, making it easier to read and understand the output. The <samp> element is commonly used in documentation, tutorials, and technical articles to showcase examples of command-line output, error messages, or other program-generated text. By using the <samp> element, authors can clearly indicate that the enclosed text is intended to represent sample output, enhancing the clarity and usability of the content.
 class DH5Samp : DH5Obj {
 	mixin(H5This!"samp");
 }

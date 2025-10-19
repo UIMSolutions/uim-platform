@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <select> HTML element represents a control that provides a menu of options for the user to choose from. It is commonly used in forms to allow users to select one or more options from a predefined list. The <select> element can be configured to allow single or multiple selections, and it can include various attributes such as "selected" to indicate the default selected option, "options" to define the available choices, and "sorted" to specify whether the options should be displayed in a sorted order. The <select> element enhances user interaction by providing a convenient way to present and select options within a web page.
 class DH5Select : DH5Obj {
 	mixin(H5This!"select");
 

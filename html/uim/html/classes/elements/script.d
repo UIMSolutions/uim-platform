@@ -4,6 +4,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <script> HTML element is used to embed or reference executable code within a web document. It is commonly used to include JavaScript code that adds interactivity, dynamic content, and functionality to web pages. The <script> element can either contain inline code directly within the element or reference an external script file using the "src" attribute. When the browser encounters a <script> element, it executes the code, allowing developers to manipulate the Document Object Model (DOM), handle events, and perform various tasks to enhance the user experience on the web page.
 class DH5Script : DH5Obj {
 	mixin(H5This!"script");
 
