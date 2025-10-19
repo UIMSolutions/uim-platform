@@ -9,3 +9,10 @@ import uim.models;
 mixin(Version!"test_uim_models");
 
 @safe:
+
+bool isModel(Object obj) {
+  if (obj is null) {
+    return false;
+  }
+  return cast(IModel)obj !is null;
+}

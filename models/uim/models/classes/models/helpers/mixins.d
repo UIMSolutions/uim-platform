@@ -5,7 +5,25 @@
 *****************************************************************************************************************/
 module uim.models.classes.models.helpers.mixins;
 
+import uim.models;
 mixin(Version!"test_uim_models");
 
-import uim.models;
 @safe:
+
+string modelThis(string name = null) {
+    string fullName = name ~ "Model";
+    return objThis(fullName);
+}
+
+template ModelThis(string name = null) {
+    const char[] ModelThis = modelThis(name);
+}
+
+string modelCalls(string name) {
+    string fullName = name ~ "Model";
+    return objCalls(fullName);
+}
+
+template ModelCalls(string name) {
+    const char[] ModelCalls = modelCalls(name);
+}
