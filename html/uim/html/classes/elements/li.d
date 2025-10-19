@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <li> - represent an item in a list.
+// The <li> HTML element represents a list item within an ordered (<ol>) or unordered (<ul>) list. It is used to define individual items in a list structure, allowing for the organization and presentation of related content. Each <li> element can contain text, images, links, or other HTML elements, making it a versatile component for creating lists in web documents.
 class DH5Li : DH5Obj {
 	mixin(H5This!"li");
 }

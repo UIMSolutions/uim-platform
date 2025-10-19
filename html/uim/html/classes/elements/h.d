@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <h1> to <h6> HTML elements represent six levels of section headings. <h1> defines the most important heading, while <h6> defines the least important. These elements are used to structure content hierarchically, making it easier for users and search engines to understand the organization of the document.
 class DH5H1 : DH5Obj {
   mixin(H5This!("h1"));
 }

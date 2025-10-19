@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <img> HTML element is used to embed images in a web page. It is a self-closing tag that requires the 'src' attribute to specify the path to the image file. The <img> element can also include attributes such as 'alt' for alternative text, 'width' and 'height' for defining the dimensions of the image, and 'title' for providing additional information about the image. It is an essential element for adding visual content to web pages, enhancing user experience and engagement.
 class DH5Img : DH5Obj {
 	mixin(H5This!("img", null, null, true));
 }

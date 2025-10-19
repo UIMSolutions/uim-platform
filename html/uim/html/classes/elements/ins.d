@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <ins> - represents a range of text that has been added to a document.
+// The <ins> HTML element represents a range of text that has been inserted into a document. It is typically displayed with an underline to indicate the addition. The <ins> element is often used in conjunction with the <del> element, which represents deleted text, to show changes made to a document.
 class DH5Ins : DH5Obj {
 	mixin(H5This!"ins");
 }

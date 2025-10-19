@@ -10,6 +10,7 @@ mixin(Version!("test_uim_html"));
 
 @safe:
 
+// The <form> HTML element is used to create an HTML form for user input. It serves as a container for various input elements, such as text fields, checkboxes, radio buttons, and submit buttons, allowing users to enter and submit data to a server for processing. The <form> element can also specify attributes like the submission method (GET or POST), the target URL for form submission, and other settings that control how the form behaves.
 class DH5Form : DH5Obj {
   mixin(H5This!"form");
   string _targetIFrame;

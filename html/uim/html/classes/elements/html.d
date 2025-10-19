@@ -9,11 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-/**
- * DH5Html - Wrapper for the html-Element
- * Das html-Element, auch root(-Element) oder Wurzelelement enthält den vollständigen Inhalt einer Internetseite. 
- * Date: January 09, 2015
- */
+// The <html> HTML element represents the root of an HTML document. It serves as the container for all other HTML elements, including the <head> and <body> sections. The <html> element defines the overall structure and content of the web page, and it is essential for proper rendering and interpretation by web browsers.
 class DH5Html : DH5Obj {
 	mixin(H5This!"html");
 

@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <i> tag - represents a range of text that is set off from the normal text for some reason, such as idiomatic text, technical terms, taxonomical designations, among others.
+// The <i> HTML element represents a range of text that is set off from the normal text for some reason, such as idiomatic expressions, technical terms, or other text that requires emphasis without conveying extra importance. It is typically displayed in italics by default.
 class DH5I : DH5Obj {
 	mixin(H5This!"I");
 }
@@ -17,4 +17,4 @@ mixin(H5Short!"I");
 
 unittest {
   testH5Obj(H5I, "i");
-}}     
+}    
