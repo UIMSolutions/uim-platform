@@ -11,14 +11,11 @@ mixin(Version!("test_uim_sites"));
 @safe:
 
 class DSiteFactory : DFactory!ISite {
-  mixin(FactoryThis!("Site"));
+    mixin(FactoryThis!("Site"));
 }
-
 mixin(FactoryCalls!("Site"));
 
 unittest {
   auto factory = new DSiteFactory();
-  assert(factory !is null, "SiteFactory is null");
-
   assert(testFactory(factory, "Site"), "Test SiteFactory failed");
 }

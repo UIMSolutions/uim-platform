@@ -18,7 +18,5 @@ mixin(FactoryCalls!("Portal"));
 
 unittest {
   auto factory = new DPortalFactory();
-  assert(factory !is null, "PortalFactory is null");
-
   assert(testFactory(factory, "Portal"), "Test PortalFactory failed");
 }

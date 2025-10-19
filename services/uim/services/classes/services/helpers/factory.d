@@ -18,7 +18,5 @@ mixin(FactoryCalls!("Service"));
 
 unittest {
   auto factory = new DServiceFactory();
-  assert(factory !is null, "ServiceFactory is null");
-
   assert(testFactory(factory, "Service"), "Test ServiceFactory failed");
 }

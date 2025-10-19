@@ -17,7 +17,5 @@ mixin(FactoryCalls!"Model");
 
 unittest {
     auto factory = new DModelFactory();
-    assert(factory !is null, "ModelFactory is null!");
-
     assert(testFactory(factory, "ModelFactory"), "Model test failed!");
 }

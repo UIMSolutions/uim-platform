@@ -18,7 +18,5 @@ mixin(FactoryCalls!("Mail"));
 
 unittest {
   auto factory = new DMailFactory();
-  assert(factory !is null, "MailFactory is null");
-
   assert(testFactory(factory, "Mail"), "Test MailFactory failed");
 }

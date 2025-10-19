@@ -1,2 +1,2 @@
-module uim.securities.helpers.mixins;
+module uim.portals.classes.portals.helpers.mixinsx;
 

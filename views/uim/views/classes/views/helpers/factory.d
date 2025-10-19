@@ -5,15 +5,13 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewFactory : DFactory!DView {
-    static DViewFactory factory;
+class DViewFactory : DFactory!IView {
+    mixin(FactoryThis!("View"));
 }
-
-auto ViewFactory() {
-    return DViewFactory.factory is null
-        ? DViewFactory.factory = new DViewFactory() : DViewFactory.factory;
-}
+mixin(FactoryCalls!("View"));
 
 unittest {
-
+  auto factory = new DViewFactory();
+  assert(testFactory(factory, "View"), "Test ViewFactory failed");
 }
+

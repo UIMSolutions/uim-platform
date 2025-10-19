@@ -17,7 +17,5 @@ mixin(FactoryCalls!("Controller"));
 
 unittest {
   auto factory = new DControllerFactory();
-  assert(factory !is null, "ControllerFactory is null");
-
   assert(testFactory(factory, "Controller"), "Test ControllerFactory failed");
 }

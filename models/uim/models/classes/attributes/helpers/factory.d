@@ -19,8 +19,5 @@ mixin(FactoryCalls!"Attribute");
 
 unittest {
   auto factory = new DAttributeFactory();
-  assert(factory !is null, "AttributeFactory is null!");
-
   assert(testFactory(factory, "Attribute"), "AttributeFactory test failed!");
 }
-// Note: Attribute factories are not used anywhere currently, hence no registry is implemented for them.    

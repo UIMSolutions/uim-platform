@@ -9,3 +9,13 @@ mixin(Version!"test_uim_servers");
 
 import uim.servers;
 @safe:
+
+class DServersFactory : DFactory!IServer {
+    mixin(FactoryThis!("Server"));
+}
+mixin(FactoryCalls!("Server"));
+
+unittest {
+  auto factory = new DServersFactory();
+  assert(testFactory(factory, "Server"), "Test ServersFactory failed");
+}
