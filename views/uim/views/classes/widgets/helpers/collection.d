@@ -3,17 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
-module uim.views.classes.widgets.helpers.d.factory,;
+module uim.views.classes.widgets.helpers.collection;
 
-// An object Factory for Widget.
-class DWidgetFactory : DFactory!IWidget {
-mixin(Factorythis!("DWidgetFactory"));
+import uim.views;
+mixin(Version!("test_uim_views"));
 
-  IWidget widget(string name, Json[string] options) {
-    switch(name.lower) {
-      case "hidden": return null; 
-      default: return null; 
-    }
-  }
+@safe:
+
+class DWidgetCollection : DCollection!IWidget {
+  mixin(CollectionThis!("Widget"));
 }
-mixin(FactoryCalls!("DWidgetFactory"));
+mixin(CollectionCalls!("Widget"));
+
+unittest {
+  auto collection = WidgetCollection;
+  assert(testCollection(collection, "Widget"), "Test WidgetCollection failed");
+}
