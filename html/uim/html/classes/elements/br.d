@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for the br tag - produces a line break in text (carriage-return).
+// The <br> HTML element produces a line break in text (carriage-return). It is useful for writing poems or addresses where the division of lines is significant.
 class DH5Br : DH5Obj {
 	mixin(H5This!("br", null, null, true));
 }

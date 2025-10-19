@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-/* Dd-Elemente enthalten eine Beschreibung eines zu beschreibenden Ausdrucks in einer Beschreibungsliste (Dd = description list data) */
+// The <dd> HTML element is used to describe a term or name in a description list. It provides the definition or value associated with the preceding <dt> (definition term) element.
 class DH5Dd : DH5Obj {
 	mixin(H5This!"dd");
 }

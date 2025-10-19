@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for cite tag - used to describe a reference to a cited creative work, and must include the title of that work. 
+// The <cite> HTML element is used to describe a reference to a creative work, such as a book, paper, essay, poem, song, film, or TV show. It is typically displayed in italics by default.
 class DH5Cite : DH5Obj {
 	mixin(H5This!"cite");
 }

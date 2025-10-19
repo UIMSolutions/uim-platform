@@ -3,6 +3,7 @@
 import uim.html;
 @safe:
 
+// The <body> HTML element represents the content of an HTML document. It contains all the contents of an HTML document, such as text, hyperlinks, images, tables, lists, etc.
 class DH5Body : DH5Obj {
 	mixin(H5This!("body"));
 

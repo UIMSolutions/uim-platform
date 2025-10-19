@@ -9,26 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-/* 
- * The <colgroup> element is used to group columns in a table for formatting purposes.
- * It can be used to apply styles to a group of columns, such as setting their width or background color.
- * The <colgroup> element can contain one or more <col> elements, which define the properties of each column in the group.
- * 
- * Example:
- * ```html
- * <table>
- *   <colgroup>
- *     <col style="background-color: yellow;">
- *     <col style="background-color: lightblue;">
- *   </colgroup>
- *   <tr>
- *     <td>Column 1</td>
- *     <td>Column 2</td>
- *   </tr>
- * </table>
- * ```
- */
-
+// The <colgroup> HTML element defines a group of one or more columns in a table for formatting. It is used to apply styles or attributes to entire columns, such as width or background color.
 class DH5Colgroup : DH5Obj {
 	mixin(H5This!"Colgroup");
 }

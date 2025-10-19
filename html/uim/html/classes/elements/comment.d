@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <comment> HTML element is used to insert comments in the HTML code. These comments are not displayed in the browser but can be useful for developers to leave notes or explanations within the code.
 class DH5Comment : DH5Obj {
 	mixin(H5This!"comment");
 

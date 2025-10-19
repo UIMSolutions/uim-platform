@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <datalist> HTML element contains a set of <option> elements that represent the permissible or recommended options available to users in other controls. It is typically used in conjunction with an <input> element to provide autocomplete functionality.
 class DH5Datalist : DH5Obj {
 	mixin(H5This!"datalist");
 

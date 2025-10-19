@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <data> HTML element links a given content with a machine-readable translation. It is used to provide a machine-readable equivalent for human-readable content, making it easier for software to process and understand the data.
 class DH5Data : DH5Obj {
 	mixin(H5This!"data");
 }

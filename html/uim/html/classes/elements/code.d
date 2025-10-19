@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for code tag - displays its contents styled in a fashion intended to indicate that the text is a short fragment of computer code.
+// The <code> HTML element is used to define a fragment of computer code. The content inside is typically displayed in a monospaced font.
 class DH5Code : DH5Obj {
 	mixin(H5This!"code");
 }

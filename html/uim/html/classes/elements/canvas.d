@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <canvas> HTML element is used to draw graphics on a web page via scripting (usually JavaScript). It can be used for rendering graphs, game graphics, or other visual images on the fly.
 class DH5Canvas : DH5Obj {
 	string pre = "context.";
 	mixin(H5This!"canvas");
