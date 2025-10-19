@@ -1,4 +1,4 @@
-module uim.securities.helpers.mixins;
+module uim.forms.helpers.mixins;
 
 import uim.forms;
 mixin(Version!"test_uim_forms");

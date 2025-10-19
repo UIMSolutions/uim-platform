@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <button> HTML element represents a clickable button.
 class DH5Button : DH5Obj {
 	mixin(H5This!"button");
 

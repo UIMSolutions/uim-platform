@@ -28,6 +28,7 @@ mixin(Version!("test_uim_html"));
  * </table>
  * ```
  */
+
 class DH5Colgroup : DH5Obj {
 	mixin(H5This!"Colgroup");
 }
