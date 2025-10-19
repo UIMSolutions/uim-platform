@@ -9,13 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-/**
- * The <area> tag defines an area inside an image-map (an image-map is an image with clickable areas).
-
-The <area> element is always nested inside a <map> tag.
-
-Note: The usemap attribute in the <img> tag is associated with the <map> element's name attribute, and creates a relationship between the image and the map.
-*/
+// The <area> HTML element defines a hot-spot region on an image, and optionally associates it with a hypertext link.
 class DH5Area : DH5Obj {
 	mixin(H5This!"area");
 

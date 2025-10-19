@@ -10,7 +10,7 @@ mixin(Version!("test_uim_html"));
 import uim.html;
 @safe:
 
-// The <audio> tag defines sound, such as music or other audio streams.
+// The <audio> HTML element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element; the browser will choose the most suitable one. It can also contain fallback content, such as a text message, for browsers that do not support the audio element.
 class DH5Audio : DH5Obj {
   mixin(H5This!"Audio");
 

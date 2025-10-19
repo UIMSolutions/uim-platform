@@ -3,7 +3,7 @@
 import uim.html;
 @safe:
 
-// Wrapper for the bdo tag - overrides the current directionality of text, so that the text within is rendered in a different direction.
+// The <bdo> HTML element (short for "bidirectional override") is used to override the current text direction.
 class DH5Bdo : DH5Obj {
 	mixin(H5This!"bdo");
 }
@@ -11,4 +11,4 @@ mixin(H5Short!"Bdo");
 
 unittest {
   testH5Obj(H5Bdo, "bdo");
-}}
+}

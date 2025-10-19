@@ -8,15 +8,16 @@ module uim.html.classes.elements.bdi;
 mixin(Version!("test_uim_html"));
 
 import uim.html;
+
 @safe:
 
-// Wrapper for bdi tag - tells the browser's bidirectional algorithm to treat the text it contains in isolation from its surrounding text.
+// The <bdi> HTML element stands for Bi-Directional Isolation. It tells the browser to treat the text it contains in isolation from its surrounding text, so that the directionality of the text does not affect the surrounding text and vice versa.
 class DH5Bdi : DH5Obj {
-	mixin(H5This!"bdi");
+  mixin(H5This!"bdi");
 }
+
 mixin(H5Short!"Bdi");
 
 unittest {
-	testH5Obj(H5Bdi, "bdi");
+  testH5Obj(H5Bdi, "bdi");
 }
-

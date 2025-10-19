@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for the base tag - specifies the base URL and/or target for all relative URLs in a document. 
+// The <base> HTML element specifies the base URL to use for all relative URLs in a document. There can be only one <base> element in a document. 
 class DH5Base : DH5Obj {
 	mixin(H5This!("base"));
 

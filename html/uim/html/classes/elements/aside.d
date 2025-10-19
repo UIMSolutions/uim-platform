@@ -9,8 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for aside tag - represents a portion of a document whose content is only indirectly related to the document's main content. 
-// Asides are frequently presented as sidebars or call-out boxes.
+// The <aside> HTML element represents a portion of a document whose content is only indirectly related to the document's main content.
 class DH5Aside : DH5Obj {
 	mixin(H5This!"aside");
 }

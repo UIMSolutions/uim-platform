@@ -10,8 +10,7 @@ mixin(Version!("test_uim_html"));
 import uim.html;
 @safe:
 
-// Wrapper for <article> - represents a self-contained composition in a document, page, application, or site, 
-// which is intended to be independently distributable or reusable (e.g., in syndication)
+// The <article> HTML element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable.
 class DH5Article : DH5Obj {
   mixin(H5This!"article");
 }

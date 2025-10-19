@@ -3,7 +3,7 @@
 import uim.html;
 @safe:
 
-// Wrapper for <address> - indicates that the enclosed HTML provides contact information for a person or people, or for an organization.
+// The <address> HTML element indicates that the enclosed HTML provides contact information for a person or people, or for an organization.
 class DH5Address : DH5Obj {
 	mixin(H5This!"address");
 }

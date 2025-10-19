@@ -3,16 +3,7 @@
 @safe:
 import uim.html;
 
-// Wrapper for the <b> tag - specifies bold text.
-
-/* 
- * @class DH5B
- * @brief Bold text element
- * 
- * This class represents the <b> HTML element, which is used to 
- * display text in bold. It is a simple wrapper around the 
- * DH5Obj class.
- */
+// The <b> HTML element is used to draw attention to the element's contents without conveying any extra importance or emphasis.
 class DH5B : DH5Obj {
   mixin(H5This!"b");
 }
