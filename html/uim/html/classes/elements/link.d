@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <link> HTML element defines the relationship between the current document and an external resource. It is commonly used to link to external stylesheets, icons, and other resources that enhance the functionality and appearance of a web page. The <link> element is placed within the <head> section of an HTML document and typically includes attributes such as 'rel' (to specify the relationship type), 'href' (to provide the URL of the linked resource), and 'type' (to indicate the MIME type of the resource).
 class DH5Link : DH5Obj {
   mixin(H5This!("link", null, null, true));
 

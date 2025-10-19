@@ -9,8 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <nav>
-// DH5Nav/H5Nav represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents.
+// The <nav> HTML element represents a section of a page that links to other pages or to parts within the page: a section with navigation links. It is intended to be used for major navigational blocks such as primary site navigation, table of contents, or other significant groups of links that help users navigate through the content of a website or application.
 class DH5Nav : DH5Obj {
 	mixin(H5This!("nav"));
 }

@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <optgroup> HTML element is used to group related options within a <select> dropdown list. It provides a way to organize options into categories, making it easier for users to navigate and select from a long list of choices. The <optgroup> element contains one or more <option> elements, and it can have a label attribute to specify the name of the group. This enhances the usability and accessibility of dropdown menus in web forms.
 class DH5Optgroup : DH5Obj {
   mixin(H5This!"optgroup");
 

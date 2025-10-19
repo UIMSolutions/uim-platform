@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <map> HTML element is used to define an image map, which is a clickable area within an image that can link to different destinations. The <map> element contains one or more <area> elements that specify the coordinates and shapes of the clickable regions, as well as the URLs they link to. Image maps are useful for creating interactive images where different parts of the image can lead to different web pages or actions.
 class DH5Map : DH5Obj {
 	mixin(H5This!("map"));
 }

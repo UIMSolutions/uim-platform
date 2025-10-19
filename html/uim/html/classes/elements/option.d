@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <option> HTML element is used to define an individual option within a <select> dropdown list or a <datalist>. It represents a single choice that a user can select from a list of options. The <option> element can have attributes such as "value" to specify the value associated with the option, "selected" to indicate if the option is pre-selected, and "disabled" to make the option unselectable. This element is essential for creating interactive forms and user interfaces that require selection from multiple choices.
 class DH5Option : DH5Obj {
 	mixin(H5This!"option");
 

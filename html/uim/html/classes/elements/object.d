@@ -10,6 +10,7 @@ mixin(Version!("test_uim_html"));
 
 @safe:
 
+// The <object> HTML element represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin. It is commonly used to embed multimedia content such as images, videos, audio files, PDFs, and interactive applications within a web page. The <object> element allows for greater flexibility and control over how the embedded content is displayed and interacted with compared to other embedding methods like <img> or <iframe>.
 class DH5Object : DH5Obj {
   mixin(H5This!"object");
 }

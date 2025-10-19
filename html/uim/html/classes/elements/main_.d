@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <main> - represents the dominant content of the <body> of a document.
+// The <main> HTML element represents the dominant content of the <body> of a document. It is used to encapsulate the primary content that is unique to the document, excluding repeated elements such as sidebars, navigation links, and footers. The <main> element helps improve accessibility by allowing assistive technologies to quickly identify and navigate to the main content of a page.
 class DH5Main : DH5Obj {
   mixin(H5This!("main"));
 }
@@ -17,10 +17,5 @@ class DH5Main : DH5Obj {
 mixin(H5Short!"Main");
 
 unittest {
-<<<<<<< HEAD
-    testH5Obj(H5Main, "main");
-}}
-=======
   testH5Obj(H5Main, "main");
 }
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

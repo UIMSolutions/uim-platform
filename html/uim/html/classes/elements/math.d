@@ -9,8 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// This module defines the Math element in HTML5.
-// The MathML element is used to include mathematical notation in HTML documents.
+// The <math> HTML element is used to embed mathematical expressions and notations within a web page. It is part of the MathML (Mathematical Markup Language) specification, which provides a way to represent complex mathematical formulas in a structured and semantically meaningful manner. The <math> element allows for the inclusion of various mathematical symbols, operators, and structures, enabling the display of equations and mathematical content in a way that is both visually appealing and accessible to assistive technologies.
 class DH5Math : DH5Obj {
   mixin(H5This!"math");
 }
@@ -18,10 +17,5 @@ class DH5Math : DH5Obj {
 mixin(H5Short!"Math");
 
 unittest {
-<<<<<<< HEAD
-    testH5Obj(H5Math, "math");
-}}
-=======
   testH5Obj(H5Math, "math");
 }
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200
