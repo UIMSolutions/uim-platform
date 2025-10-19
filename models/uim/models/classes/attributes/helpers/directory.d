@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.models.classes.attributes.helpers.collection;
+module uim.models.classes.attributes.helpers.directory;
 
 mixin(Version!"test_uim_models");
 
@@ -11,13 +11,13 @@ import uim.models;
 
 @safe:
 
-class DAttributeCollection : DObjectCollection!IAttribute {
-  mixin(CollectionThis!"Attribute");
+class DAttributeDirectory : DObjectDirectory!IAttribute {
+  mixin(DirectoryThis!"Attribute");
 }
 
-mixin(CollectionCalls!"Attribute");
+mixin(DirectoryCalls!"Attribute");
 
 unittest {
-  auto collection = new DAttributeCollection();
-  assert(testCollection(collection, "Attribute"), "AttributeCollection test failed!");
+  auto directory = new DAttributeDirectory();
+  assert(testDirectory(directory, "Attribute"), "AttributeDirectory test failed!");
 }
