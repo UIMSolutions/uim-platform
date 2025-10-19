@@ -10,10 +10,7 @@ mixin(Version!"test_uim_html");
 import uim.html;
 @safe:
 
-// <a> - Hyperlink
-// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a
-// https://www.w3schools.com/tags/tag_a.asp
-// Wrapper for <a> - defines a hyperlink to link from one page to another.
+// The <a> HTML element (or anchor element), with its href attribute, creates a hyperlink to web pages, files, email addresses, locations in the same page, or anything else a URL can address.
 class DH5A : DH5Obj {
 	mixin(H5This!"a");
 
