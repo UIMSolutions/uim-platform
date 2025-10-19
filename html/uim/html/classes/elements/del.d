@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <del> HTML element represents a range of text that has been deleted from a document.
 class DH5Del : DH5Obj {
 	mixin(H5This!"del");
 }

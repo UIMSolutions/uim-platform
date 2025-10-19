@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <meter> - represents either a scalar value within a known range or a fractional value.
+// The <meter> HTML element represents a scalar measurement within a known range, or a fractional value; for example, disk usage, the relevance of a query result, or the fraction of a voting population that supports a particular candidate.
 class DH5Meter : DH5Obj {
   mixin(H5This!"meter");
 }
@@ -17,10 +17,5 @@ class DH5Meter : DH5Obj {
 mixin(H5Short!"Meter");
 
 unittest {
-<<<<<<< HEAD
-    testH5Obj(H5Meter, "meter");
-}}
-=======
   testH5Obj(H5Meter, "meter");
 }
->>>>>>> 8504c0aa77a642ca4cdfc94f5177dce259b60200

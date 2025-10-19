@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <details> HTML element creates a disclosure widget in which information is visible only when the widget is toggled into an "open" state.
 class DH5Details: DH5Obj {
 	mixin(H5This!"details");
 }

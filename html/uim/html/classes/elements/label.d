@@ -9,6 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
+// The <label> HTML element represents a caption for an item in a user interface.
 class DH5Label : DH5Obj {
 	mixin(H5This!"label");
 

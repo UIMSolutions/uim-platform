@@ -9,7 +9,7 @@ import uim.html;
 mixin(Version!("test_uim_html"));
 @safe:
 
-// Wrapper for <mark> - represents text which is marked or highlighted for reference or notation purposes, due to the marked passage's relevance or importance in the enclosing context.
+// The <mark> HTML element represents text highlighted for reference purposes, due to its relevance in a particular context.
 class DH5Mark : DH5Obj {
 	mixin(H5This!"Mark");
 }
