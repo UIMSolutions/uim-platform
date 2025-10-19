@@ -3,21 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.forms.helpers.registry;
+module uim.controllers.helpers.directory;
 
-import uim.forms;
-mixin(Version!"test_uim_forms");
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 
-class DFormRegistry : DObjectRegistry!IForm {
-    mixin(RegistryThis!"Form");
+class DControllerDirectory : DDirectory!IController {
+  mixin(DirectoryThis!("Controller"));
 }
-mixin(RegistryCalls!"Form");
+mixin(DirectoryCalls!("Controller"));
 
 unittest {
-    auto registry = new DFormRegistry();
-    assert(registry !is null, "Form registry is null!");
-
-    assert(testForm(registry, "Form"), "Form test failed!");
+  auto directory = ControllerDirectory;
+  assert(testDirectory(directory, "Controller"), "Test ControllerDirectory failed");
 }
