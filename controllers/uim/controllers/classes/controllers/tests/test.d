@@ -3,4 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.servers.utils;
+module uim.controllers.classes.controllers.tests.test;
+
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
+
+@safe:
+
+bool testController(IController controllerToTest) {
+    assert(controllerToTest !is null, "In testController: controllerToTest is null");
+
+    return true;
+}
