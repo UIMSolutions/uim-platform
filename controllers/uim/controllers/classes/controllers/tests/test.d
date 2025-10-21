@@ -6,12 +6,14 @@
 module uim.controllers.classes.controllers.tests.test;
 
 import uim.controllers;
+
 mixin(Version!"test_uim_controllers");
 
 @safe:
 
-bool testController(IController controllerToTest) {
-    assert(controllerToTest !is null, "In testController: controllerToTest is null");
+bool testController(IController controller, string expectedName) {
+  assert(controller !is null, "In testController: controller is null");
+  assert(controller.name == expectedName, "In testController: controller.name != expectedName");
 
-    return true;
+  return true;
 }

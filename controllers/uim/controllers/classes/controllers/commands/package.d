@@ -4,3 +4,26 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers.commands;
+
+public {
+  import uim.controllers.classes.controllers.commands.controller;
+}
+
+static this() {
+  import uim.controllers;
+
+  ControllerFactory.setPath(["controller", "register"], (Json[string] options = null) @safe {
+    import uim.controllers.classes.controllers.commands.register;
+
+    return RegisterControllerCommand(options);
+  });
+
+  ControllerFactory.setPath(["controller", "unregister"], (Json[string] options = null) @safe {
+    import uim.controllers.classes.controllers.commands.unregister;
+
+    return UnregisterControllerCommand(options);
+  });
+
+  ControllerRegistry.register(ControllerFactory.create("controller.register"));
+  ControllerRegistry.register(ControllerFactory.create("controller.unregister"));
+}
