@@ -7,6 +7,12 @@ module uim.services.classes.services.interfaces;
 
 import uim.services;
 
+mixin(Version!("test_uim_services"));
+
 @safe:
 
-interface IServices {}
+interface IServices {
+  /* IService getService(string name);
+    IService getService(size_t index);
+    size_t getServiceCount(); */
+}

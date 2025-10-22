@@ -6,7 +6,17 @@
 module uim.services.helpers.registry;
 
 import uim.services;
+
 mixin(Version!("test_uim_services"));
 
 @safe:
 
+class DServiceRegistry : DRegistry!IService {
+  mixin(RegistryThis!("Service"));
+}
+mixin(RegistryCalls!("Service"));
+
+unittest {
+  auto registry = ServiceRegistry;
+  assert(testRegistry(registry, "Service"), "Test ServiceRegistry failed");
+}

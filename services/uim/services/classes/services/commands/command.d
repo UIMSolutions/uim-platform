@@ -1,4 +1,4 @@
-module uim.services.classes.services.errors.error;
+module uim.services.classes.services.commands.command;
 
 import uim.services;
 
