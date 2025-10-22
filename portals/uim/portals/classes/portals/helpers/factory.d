@@ -8,6 +8,7 @@ module uim.portals.classes.portals.helpers.factory;
 import uim.portals;
 
 mixin(Version!"test_uim_portals");
+
 @safe:
 
 class DPortalFactory : DFactory!IPortal {

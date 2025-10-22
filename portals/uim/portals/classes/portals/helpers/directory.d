@@ -11,12 +11,12 @@ mixin(Version!"test_uim_portals");
 
 @safe:
 
-class DPortalCollection : DCollection!IPortal {
-  mixin(CollectionThis!("Portal"));
+class DPortalDirectory : DDirectory!IPortal {
+  mixin(DirectoryThis!("Portal"));
 }
-mixin(CollectionCalls!("Portal"));
+mixin(DirectoryCalls!("Portal"));
 
 unittest {
-  auto collection = PortalCollection;
-  assert(testCollection(collection, "Portal"), "Test PortalCollection failed");
+  auto directory = new DPortalDirectory;
+  assert(testDirectory(directory, "Portal"), "Test PortalDirectory failed");
 }

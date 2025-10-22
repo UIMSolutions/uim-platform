@@ -10,3 +10,13 @@ import uim.portals;
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+class DPortalRegistry : DRegistry!IPortal {
+  mixin(RegistryThis!("Portal"));
+}
+mixin(RegistryCalls!("Portal"));
+
+unittest {
+  auto registry = new DPortalRegistry;
+  assert(testRegistry(registry, "Portal"), "Test PortalRegistry failed");
+}

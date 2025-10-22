@@ -17,6 +17,6 @@ class DPortalCollection : DCollection!IPortal {
 mixin(CollectionCalls!("Portal"));
 
 unittest {
-  auto collection = PortalCollection;
+  auto collection = new DPortalCollection;
   assert(testCollection(collection, "Portal"), "Test PortalCollection failed");
 }

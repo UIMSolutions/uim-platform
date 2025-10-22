@@ -6,7 +6,7 @@ mixin(Version!"test_uim_portals");
 
 @safe:
 
-interfaces IPortal {
+interface IPortal {
   /* string getPortalName();
   void setPortalName(string name);
   void openPortal();

@@ -10,3 +10,21 @@ import uim.portals;
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+string portalThis(string name = null) {
+    string fullName = name ~ "Portal";
+    return objThis(fullName);
+}
+
+template PortalThis(string name = null) {
+    const char[] PortalThis = portalThis(name);
+}
+
+string portalCalls(string name) {
+    string fullName = name ~ "Portal";
+    return objCalls(fullName);
+}
+
+template PortalCalls(string name) {
+    const char[] PortalCalls = portalCalls(name);
+}
