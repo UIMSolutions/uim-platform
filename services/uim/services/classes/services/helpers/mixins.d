@@ -5,6 +5,12 @@
 *****************************************************************************************************************/
 module uim.services.helpers.mixins;
 
+import uim.services;
+
+mixin(Version!("test_uim_services"));
+
+@safe:
+
 string serviceThis(string name = null) {
     string fullName = name ~ "Service";
     return objThis(fullName);

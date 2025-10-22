@@ -10,3 +10,14 @@ import uim.portals;
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+class DPortalError : DError {
+  mixin(ErrorThis!("Portal"));
+}
+
+mixin(ErrorCalls!("Portal"));
+
+unittest {
+  auto error = new DPortalError();
+  assert(testError(error, "Portal"), "DPortalError unittest failed!");
+}

@@ -8,6 +8,7 @@ module uim.services.helpers.factory;
 import uim.services;
 
 mixin(Version!("test_uim_services"));
+
 @safe:
 
 class DServiceFactory : DFactory!IService {

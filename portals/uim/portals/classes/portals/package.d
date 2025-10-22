@@ -11,6 +11,9 @@ public {
 }
 
 public {
+    import uim.portals.classes.portals.commands;
+    import uim.portals.classes.portals.errors;
+    import uim.portals.classes.portals.exceptions;
     import uim.portals.classes.portals.helpers;
     import uim.portals.classes.portals.tests;
 }

@@ -10,3 +10,14 @@ import uim.portals;
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+class DPortalCommand : DCommand {
+  mixin(CommandThis!("Portal"));
+}
+
+mixin(CommandCalls!("Portal"));
+
+unittest {
+  auto command = new DPortalCommand();
+  assert(testCommand(command, "Portal"), "DPortalCommand unittest failed!");
+}

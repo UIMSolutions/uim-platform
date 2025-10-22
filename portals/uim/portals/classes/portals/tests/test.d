@@ -10,3 +10,11 @@ import uim.portals;
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+bool testPortal(IPortal portal, string instanceName) {
+  assert(portal !is null, "Portal instance is null!");
+  assert(portal.name == instanceName, "Portal instance name does not match! Expected: " ~ instanceName ~ ", Found: " ~ portal
+      .name);
+
+  return true;
+}

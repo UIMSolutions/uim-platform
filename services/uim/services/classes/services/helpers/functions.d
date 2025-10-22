@@ -6,6 +6,7 @@
 module uim.services.helpers.functions;
 
 import uim.services;
+
 mixin(Version!("test_uim_services"));
 
 @safe:
