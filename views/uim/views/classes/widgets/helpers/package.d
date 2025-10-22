@@ -5,3 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.helpers.d;
 
+public {
+    import uim.views.classes.widgets.helpers.collection;
+    import uim.views.classes.widgets.helpers.directory;
+    import uim.views.classes.widgets.helpers.factory;
+    import uim.views.classes.widgets.helpers.mixins;
+    import uim.views.classes.widgets.helpers.registry;
+}

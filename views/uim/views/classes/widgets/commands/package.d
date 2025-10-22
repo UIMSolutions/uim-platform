@@ -3,4 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.servers.commands;
+module uim.views.classes.widgets.commands.packagex;
+
+public {
+  import uim.views.classes.widgets.commands.command;
+}

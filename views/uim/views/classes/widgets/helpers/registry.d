@@ -5,3 +5,17 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.helpers.registry;
 
+import uim.views;
+mixin(Version!("test_uim_views"));
+
+@safe:
+
+class DWidgetRegistry : DRegistry!IWidget {
+  mixin(RegistryThis!("Widget"));
+}
+mixin(RegistryCalls!("Widget"));
+
+unittest {
+  auto registry = WidgetRegistry;
+  assert(testRegistry(registry, "Widget"), "Test WidgetRegistry failed");
+}

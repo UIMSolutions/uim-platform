@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.tests;
 
+public {
+    import uim.views.classes.widgets.tests.mixins;
+    import uim.views.classes.widgets.tests.test;
+}

@@ -9,15 +9,13 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
-// An object Factory for Widget.
-class DWidgetFactory : DFactory!IWidget {
-mixin(Factorythis!("DWidgetFactory"));
 
-  IWidget widget(string name, Json[string] options) {
-    switch(name.lower) {
-      case "hidden": return null; 
-      default: return null; 
-    }
-  }
+class DWidgetFactory : DFactory!IWidget {
+  mixin(FactoryThis!("Widget"));
 }
-mixin(FactoryCalls!("DWidgetFactory"));
+mixin(FactoryCalls!("Widget"));
+
+unittest {
+  auto factory = WidgetFactory;
+  assert(testFactory(factory, "Widget"), "Test WidgetFactory failed");
+}
