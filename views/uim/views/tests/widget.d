@@ -6,10 +6,13 @@
 module uim.views.tests.widget;
 
 import uim.views;
+
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 bool testWidget(IWidget widget) {
-    assert(widget !is null, "Widget is null");
-    
-    return true;
+  assert(widget !is null, "Widget is null");
+
+  return true;
 }

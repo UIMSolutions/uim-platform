@@ -6,6 +6,9 @@
 module uim.views.tests.form;
 
 import uim.views;
+
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 bool testForm(IForm form) {

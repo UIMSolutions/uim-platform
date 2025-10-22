@@ -6,10 +6,13 @@
 module uim.views.tests.helper;
 
 import uim.views;
+
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 bool testHelper(IFormHelper formHelper) {
-    assert(formHelper !is null, "FormHelper is null");
-    
-    return true;
+  assert(formHelper !is null, "FormHelper is null");
+
+  return true;
 }

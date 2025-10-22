@@ -5,9 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.cell;
 
+import uim.views;
+
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 abstract class DCell : UIMObject { // : IEventDispatcher {
