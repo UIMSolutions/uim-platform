@@ -5,5 +5,11 @@
 *****************************************************************************************************************/
 module uim.portals.classes.portals.helpers.packagex;
 
-import uim.neural;
-mixin(ImportHelpers!"uim.neural");
+public {
+    import uim.portals.classes.portals.helpers.collection;
+    import uim.portals.classes.portals.helpers.directory;
+    import uim.portals.classes.portals.helpers.factory;
+    import uim.portals.classes.portals.helpers.functions;
+    import uim.portals.classes.portals.helpers.mixins;
+    import uim.portals.classes.portals.helpers.registry;
+}
