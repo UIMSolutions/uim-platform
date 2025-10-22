@@ -6,6 +6,7 @@
 module uim.mvc.helpers.mixins;
 
 import uim.mvc;
+
 mixin(Version!"test_uim_mvc");
 
 @safe:

@@ -6,6 +6,7 @@
 module uim.mvc.interfaces.controller;
 
 import uim.mvc;
+
 mixin(Version!"test_uim_mvc");
 
 @safe:
