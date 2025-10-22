@@ -6,6 +6,11 @@
 module uim.portals.classes.portals.portal;
 
 import uim.portals;
+
 mixin(Version!"test_uim_portals");
 
 @safe:
+
+class DPortal : UIMObject, IPortal {
+  mixin(PortalThis!());
+}

@@ -4,3 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
 module uim.portals.classes.portals;
+
+public {
+    import uim.portals.classes.portals.interfaces;
+    import uim.portals.classes.portals.portal;
+}
+
+public {
+    import uim.portals.classes.portals.helpers;
+    import uim.portals.classes.portals.tests;
+}

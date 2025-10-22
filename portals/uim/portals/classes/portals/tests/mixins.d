@@ -1,4 +1,4 @@
-module uim.portals.classes.portals.tests.test;
+module uim.portals.classes.portals.tests.mixins;
 
 import uim.portals;
 

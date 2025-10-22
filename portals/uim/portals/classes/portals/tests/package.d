@@ -3,8 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim-platform.portals.uim.portals.classes.portals.tests.packagex;
+module uim.portals.classes.portals.tests;
 
 public {
-    import uim.portals.tests.test;
+    import uim.portals.classes.portals.tests.mixins;
+    import uim.portals.classes.portals.tests.test;
 }
