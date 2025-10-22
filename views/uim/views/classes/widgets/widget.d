@@ -5,9 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.widgets.widget;
 
+import uim.views;
+
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 class DWidget : UIMObject, IWidget { 

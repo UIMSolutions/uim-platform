@@ -1,6 +1,7 @@
 module uim.views.classes.widgets.helpers.d.directory;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:

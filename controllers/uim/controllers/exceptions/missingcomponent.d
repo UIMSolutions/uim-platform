@@ -6,10 +6,10 @@
 module uim.controllers.exceptions.missingcomponent;
 
 import uim.controllers;
+
 mixin(Version!"test_uim_controllers");
 
 @safe:
-
 // Used when a component cannot be found.
 class DMissingComponentException : DControllersException {
   mixin(ExceptionThis!("MissingComponent"));

@@ -6,6 +6,9 @@
 module uim.views.classes.widgets.interfaces;
 
 import uim.views;
+
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 // Interface for input widgets.
