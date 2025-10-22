@@ -6,6 +6,8 @@
 module uim.views.classes.contexts.tests.test;
 
 import uim.views;
+mixin(Version!("test_uim_views"));
+
 @safe:
 
 bool testFormContext(IFormContext context) {

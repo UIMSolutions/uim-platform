@@ -1,2 +1,6 @@
-module uim-platform.views.uim.views.classes.contexts.helpers.collection;
+module uim.views.classes.contexts.helpers.collection;
 
+import uim.views;
+mixin(Version!("test_uim_views"));
+
+@safe:
