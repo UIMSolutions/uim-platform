@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.controllers.errors.error;
+module uim.controllers.classes.controllers.errors.errorx;
 
 mixin(Version!"test_uim_controllers");
 
@@ -12,13 +12,14 @@ import uim.controllers;
 @safe:
 
 class DControllerError : DError {
-  mixin(ErrorThis!("Controller"));
+  mixin(ControllerThis!("Controller"));
 }
-mixin(ErrorClass!("Controller"));
+
+mixin(ControllerClass!("Controller"));
 
 unittest {
-  auto error = new DControllerError("Test error message");
-  assert(err.msg == "Test error message");
+  auto error = new DControllerError("Test Error Message");
+  assert(error.message == "Test Error Message");
 
   assert(testError(error, "Controller"), "Test ControllerError failed");
 }

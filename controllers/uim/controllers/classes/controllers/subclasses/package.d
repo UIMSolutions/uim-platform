@@ -3,21 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.controllers.classes.controllers.helpers.collection;
+module uim.controllers.classes.controllers.subclasses;
 
-import uim.controllers;
-
-mixin(Version!"test_uim_controllers");
-
-@safe:
-
-class DControllerCollection : DCollection!IController {
-  mixin(CollectionThis!("Controller"));
-}
-
-mixin(CollectionCalls!("Controller"));
-
-unittest {
-  auto collection = new DControllerCollection();
-  assert(testCollection(collection, "Controller"), "Test ControllerCollection failed");
+public {
+  import uim.controllers.classes.controllers.subclasses.error;
 }

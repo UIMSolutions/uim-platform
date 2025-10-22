@@ -3,22 +3,22 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.controllers.classes.controllers.commands.controller;
+module uim.controllers.classes.controllers.commands.component;
 
 import uim.controllers;
 
 mixin(Version!"test_uim_controllers");
 
 @safe:
-class DControllerCommand : DCommand {
-  mixin(CommandThis!("Controller"));
+class DControllerComponentCommand : DCommand {
+  mixin(CommandThis!("ControllerComponent"));
 
   override bool initialize(Json[string] initData = null) {
     if (!super.initialize(initData)) {
       return false;
     }
 
-    _commandPath ~= ["controllers"];
+    _commandPath ~= ["controller", "component"];
     return true;
   }
 
@@ -32,9 +32,9 @@ class DControllerCommand : DCommand {
   }
 }
 
-mixin(CommandCalls!("Controller"));
+mixin(CommandCalls!("ControllerComponent"));
 
 unittest {
-  auto command = new uim.controllers.classes.controllers.commands.controller.DControllerCommand();
-  assert(testCommand(command, "DControllerCommand initialization failed"));
+  auto command = new uim.controllers.classes.controllers.commands.component.DControllerComponentCommand();
+  assert(testCommand(command, "DControllerComponentCommand initialization failed"));
 }
