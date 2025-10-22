@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.models.classes.attributes.helpers.directory;
 
-mixin(Version!"test_uim_models");
-
 import uim.models;
+
+mixin(Version!"test_uim_models");
 
 @safe:
 

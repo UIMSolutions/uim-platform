@@ -8,6 +8,7 @@ module uim.models.classes.attributes.helpers.registry;
 import uim.models;
 
 mixin(Version!"test_uim_models");
+
 @safe:
 
 class DAttributeRegistry : DObjectRegistry!IAttribute {
@@ -18,7 +19,5 @@ mixin(RegistryCalls!"Attribute");
 
 unittest {
   auto registry = new DAttributeRegistry();
-  assert(registry !is null, "AttributeRegistry is null!");
-
   assert(testRegistry(registry, "Attribute"), "AttributeRegistry test failed!");
 }

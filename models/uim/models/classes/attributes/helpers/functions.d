@@ -1,8 +1,9 @@
 module uim.models.classes.attributes.helpers.functions;
 
+import uim.models;
+
 mixin(Version!"test_uim_models");
 
-import uim.models;
 @safe:
 
 bool isAttribute(Object obj) {
