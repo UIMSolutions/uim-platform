@@ -3,16 +3,13 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.views.registries.widget;
+module uim.views.classes.contexts.tests.test;
 
 import uim.views;
-mixin(Version!("test_uim_views"));
-
 @safe:
 
-// An object registry for Widget.
-class DWidgetRegistry : DObjectRegistry!DWidget {
+bool testFormContext(IFormContext context) {
+    assert(context !is null, "FormContext is null");
+    
+    return true;
 }
-/* auto WidgetRegistry() { // Singleton
-  return DWidgetRegistry.registration;
-} */
