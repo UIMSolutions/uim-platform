@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers.helpers.factory;
 
-import uim.apps;
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
-mixin(Version!"test_uim_apps");
 @safe:
 
 class DControllerFactory : DFactory!IController {

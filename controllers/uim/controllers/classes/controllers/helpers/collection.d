@@ -5,7 +5,19 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers.helpers.collection;
 
-import uim.apps;
-mixin(Version!"test_uim_apps");
+import uim.controllers;
+
+mixin(Version!"test_uim_controllers");
 
 @safe:
+
+class DControllerCollection : DCollection!IController {
+  mixin(ControllerThis!("Controller"));
+}
+
+mixin(ControllerCalls!("Controller"));
+
+unittest {
+  auto collection = new DControllerCollection();
+  assert(testCollection(collection, "Controller"), "Test ControllerCollection failed");
+}

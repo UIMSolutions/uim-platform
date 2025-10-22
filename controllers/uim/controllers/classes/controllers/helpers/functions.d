@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers.helpers.functions;
 
-import uim.apps;
-mixin(Version!"test_uim_apps");
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:

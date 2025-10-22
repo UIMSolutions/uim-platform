@@ -6,6 +6,7 @@
 module uim.controllers.exceptions.exception;
 
 import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 

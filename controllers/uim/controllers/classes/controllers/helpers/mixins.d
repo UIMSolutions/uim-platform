@@ -9,3 +9,22 @@ import uim.apps;
 mixin(Version!"test_uim_apps");
 
 @safe:
+
+string controllerThis(string name = null) {
+    string fullName = name ~ "Controller";
+    return objThis(fullName);
+
+}
+
+template ControllerThis(string name = null) {
+    const char[] ControllerThis = controllerThis(name);
+}
+
+string controllerCalls(string name) {
+    string fullName = name ~ "Controller";
+    return objCalls(fullName);
+}
+
+template ControllerCalls(string name) {
+    const char[] ControllerCalls = controllerCalls(name);
+}

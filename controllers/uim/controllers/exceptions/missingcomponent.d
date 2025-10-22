@@ -6,6 +6,7 @@
 module uim.controllers.exceptions.missingcomponent;
 
 import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
 

@@ -5,3 +5,6 @@
 *****************************************************************************************************************/
 module uim.controllers.errors;
 
+public {
+    import uim.controllers.errors.error;
+}
