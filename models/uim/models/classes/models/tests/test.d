@@ -1,2 +1,2 @@
-module uim-platform.models.uim.models.classes.models.tests.test;
+module uim.models.classes.models.tests.test;
 

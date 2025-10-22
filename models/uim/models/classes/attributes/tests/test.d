@@ -1,4 +1,4 @@
-module uim-platform.models.uim.models.classes.attributes.tests.test;
+module uim.models.classes.attributes.tests.test;
 
 bool testAttribute(IAttribute attribute) {
     assert(attribute !is null, "attribute is null");

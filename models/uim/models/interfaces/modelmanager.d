@@ -6,6 +6,7 @@
 module uim.models.interfaces.modelmanager;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:

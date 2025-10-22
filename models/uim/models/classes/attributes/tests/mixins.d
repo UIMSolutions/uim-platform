@@ -1,2 +1,2 @@
-module uim-platform.models.uim.models.classes.attributes.tests.mixins;
+module uim.models.classes.attributes.tests.mixins;
 
