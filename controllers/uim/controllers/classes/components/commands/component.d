@@ -1,10 +1,16 @@
-module uim-platform.controllers.uim.controllers.classes.components.commands.component;
+/****************************************************************************************************************
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+*****************************************************************************************************************/
+module uim.controllers.classes.components.commands.component;
 
 import uim.controllers;
 
 mixin(Version!"test_uim_controllers");
 
 @safe:
+
 class DControllerComponentCommand : DCommand {
   mixin(CommandThis!("ControllerComponent"));
 

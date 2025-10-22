@@ -7,9 +7,10 @@ module uim.controllers.classes.controllers.commands.register;
 
 import uim.controllers;
 
-mixin(Version!"test_uim_controllers");
+mixin(Version!("test_uim_controllers"));
 
 @safe:
+
 class DRegisterControllerCommand : DControllerCommand {
   mixin(CommandThis!("RegisterController"));
 

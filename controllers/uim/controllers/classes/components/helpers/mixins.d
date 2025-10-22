@@ -5,11 +5,11 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.components.helpers.mixins;
 
-import uim.apps;
-mixin(Version!"test_uim_apps");
+import uim.controllers;
+
+mixin(Version!("test_uim_controllers"));
 
 @safe:
-
 string controllerComponentThis(string name = null) {
     string fullName = name ~ "ControllerComponent";
     return objThis(fullName);

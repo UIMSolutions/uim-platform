@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers.errors.errorx;
 
-mixin(Version!"test_uim_controllers");
-
 import uim.controllers;
+
+mixin(Version!("test_uim_controllers"));
 
 @safe:
 

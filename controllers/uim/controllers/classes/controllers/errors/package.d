@@ -6,5 +6,5 @@
 module uim.controllers.classes.controllers.errors.packagec;
 
 public {
-    import uim.controllers.errors.error;
+  import uim.controllers.errors.error;
 }

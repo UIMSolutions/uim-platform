@@ -10,6 +10,7 @@ import uim.controllers;
 mixin(Version!"test_uim_controllers");
 
 @safe:
+
 class DControllerCommand : DCommand {
   mixin(CommandThis!("Controller"));
 
