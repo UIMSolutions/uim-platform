@@ -5,6 +5,9 @@
 *****************************************************************************************************************/
 module uim.views.mixins.context;
 
-import uim.views;
-@safe: 
+import uim.models;
+
+mixin(Version!"test_uim_models");
+
+@safe:
 
