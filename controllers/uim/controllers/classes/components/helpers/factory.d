@@ -3,9 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
- uim.controllers.classes.components.helpers.factory;
+module uim.controllers.classes.components.helpers.factory;
 
-import uim.apps;
-mixin(Version!"test_uim_apps");
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
+
+class DControllerComponentFactory : DFactory!IControllerComponent {
+  mixin(FactoryThis!("ControllerComponent"));
+}
+mixin(FactoryCalls!("ControllerComponent"));
+
+unittest {
+  auto factory = new DControllerComponentFactory();
+  assert(testFactory(factory, "ControllerComponent"), "Test ControllerComponentFactory failed");
+}

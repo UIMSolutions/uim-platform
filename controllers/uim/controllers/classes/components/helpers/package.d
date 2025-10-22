@@ -5,4 +5,11 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.components.helpers;
 
-mixin(ImportHelpers!"uim.io.apps");
+public {
+  import uim.controllers.classes.components.helpers.collection;
+  import uim.controllers.classes.components.helpers.directory;
+  import uim.controllers.classes.components.helpers.factory;
+  import uim.controllers.classes.components.helpers.functions;
+  import uim.controllers.classes.components.helpers.mixins;
+  import uim.controllers.classes.components.helpers.registry;
+}

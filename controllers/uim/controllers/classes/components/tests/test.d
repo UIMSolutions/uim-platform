@@ -12,8 +12,8 @@ mixin(Version!"test_uim_controllers");
 @safe:
 
 bool testControllerComponent(IControllerComponent component, string expectedName) {
-	assert(component !is null, "In testController: component is null");
-	assert(component.name == expectedName, "In testController: component.name != expectedName");
+  assert(component !is null, "In testController: component is null");
+  assert(component.name == expectedName, "In testController: component.name != expectedName");
 
-	return true;
+  return true;
 }

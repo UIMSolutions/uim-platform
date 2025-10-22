@@ -5,7 +5,17 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.components.helpers.registry;
 
-import uim.apps;
-mixin(Version!"test_uim_apps");
+import uim.controllers;
+mixin(Version!"test_uim_controllers");
 
 @safe:
+
+class DControllerComponentRegistry : DRegistry!IControllerComponent {
+  mixin(RegistryThis!("ControllerComponent"));
+}
+mixin(RegistryCalls!("ControllerComponent"));
+
+unittest {
+  auto registry = new DControllerComponentRegistry();
+  assert(testRegistry(registry, "ControllerComponent"), "Test ControllerComponentRegistry failed");
+}

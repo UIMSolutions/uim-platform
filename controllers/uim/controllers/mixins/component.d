@@ -10,21 +10,3 @@ mixin(Version!"test_uim_controllers");
 
 @safe:
 
-string controllerComponentThis(string name = null) {
-    string fullName = name ~ "ControllerComponent";
-    return objThis(fullName);
-
-}
-
-template ControllerComponentThis(string name = null) {
-    const char[] ControllerComponentThis = controllerComponentThis(name);
-}
-
-string controllerComponentCalls(string name) {
-    string fullName = name ~ "ControllerComponent";
-    return objCalls(fullName);
-}
-
-template ControllerComponentCalls(string name) {
-    const char[] ControllerComponentCalls = controllerComponentCalls(name);
-}
