@@ -1,4 +1,4 @@
-module uim.views.interfaces.component;
+module uim.views.classes.components.interfaces;
 
 import uim.views;
 @safe: 
