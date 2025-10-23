@@ -11,9 +11,9 @@ mixin(Version!"test_uim_controllers");
 
 @safe:
 
-bool testController(IController controller, string expectedName) {
+bool testController(IController controller, string instanceName) {
   assert(controller !is null, "In testController: controller is null");
-  assert(controller.name == expectedName, "In testController: controller.name != expectedName");
+  assert(controller.name == instanceName, "In testController: controller.name != instanceName (" ~ instanceName ~ ")");
 
   return true;
 }

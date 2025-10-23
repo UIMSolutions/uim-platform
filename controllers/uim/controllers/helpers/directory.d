@@ -5,17 +5,3 @@
 *****************************************************************************************************************/
 module uim.controllers.helpers.directory;
 
-import uim.controllers;
-mixin(Version!"test_uim_controllers");
-
-@safe:
-
-class DControllerDirectory : DDirectory!IController {
-  mixin(DirectoryThis!("Controller"));
-}
-mixin(DirectoryCalls!("Controller"));
-
-unittest {
-  auto directory = ControllerDirectory;
-  assert(testDirectory(directory, "Controller"), "Test ControllerDirectory failed");
-}

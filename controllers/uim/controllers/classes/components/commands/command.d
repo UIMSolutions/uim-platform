@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.controllers.classes.controllers.commands.component;
+module uim.controllers.classes.components.commands.command;
 
 import uim.controllers;
 
@@ -21,15 +21,6 @@ class DControllerComponentCommand : DCommand {
 
     _commandPath ~= ["controller", "component"];
     return true;
-  }
-
-  // Unregisters a controller by name
-  override bool execute(Json[string] arguments) {
-    if (!arguments.hasKey("name")) {
-      return ControllerRegistry.unregister(arguments.getString("name"));
-    }
-
-    return false;
   }
 }
 

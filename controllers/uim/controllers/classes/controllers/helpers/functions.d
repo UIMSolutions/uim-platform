@@ -10,3 +10,7 @@ import uim.controllers;
 mixin(Version!"test_uim_controllers");
 
 @safe:
+
+bool isController(Object obj) {
+  return obj is null ? false : is(typeof(cast(IController)obj));
+}

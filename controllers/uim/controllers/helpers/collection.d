@@ -5,17 +5,3 @@
 *****************************************************************************************************************/
 module uim.controllers.helpers.collection;
 
-import uim.controllers;
-mixin(Version!"test_uim_controllers");
-
-@safe:
-
-class DControllerCollection : DCollection!IController {
-  mixin(CollectionThis!("Controller"));
-}
-mixin(CollectionCalls!("Controller"));
-
-unittest {
-  auto collection = ControllerCollection;
-  assert(testCollection(collection, "Controller"), "Test ControllerCollection failed");
-}
