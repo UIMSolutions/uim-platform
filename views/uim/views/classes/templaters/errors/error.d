@@ -1,2 +1,2 @@
-module uim-platform.views.uim.views.classes.templaters.errors.error;
+module uim.views.classes.templaters.errors.error;
 

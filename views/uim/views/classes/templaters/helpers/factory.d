@@ -3,20 +3,20 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
-module uim.views.classes.views.helpers.factory;
+module uim.views.classes.templaters.helpers.factory;
 
 import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewFactory : DFactory!IView {
-    mixin(FactoryThis!("View"));
+class DTemplaterFactory : DFactory!ITemplater {
+    mixin(FactoryThis!("Templater"));
 }
-mixin(FactoryCalls!("View"));
+mixin(FactoryCalls!("Templater"));
 
 unittest {
-  auto factory = new DViewFactory();
-  assert(testFactory(factory, "View"), "Test ViewFactory failed");
+  auto factory = new DTemplaterFactory();
+  assert(testFactory(factory, "Templater"), "Test TemplaterFactory failed");
 }
 

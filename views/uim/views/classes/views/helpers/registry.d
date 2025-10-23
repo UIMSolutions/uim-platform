@@ -10,10 +10,13 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewRegistry : DObjectRegistry!DView {
+class DViewRegistry : DRegistry!IView {
+    mixin(RegistryThis!("View"));
+}
+mixin(RegistryCalls!("View"));
 
+unittest {
+  auto registry = new DViewRegistry();
+  assert(testRegistry(registry, "View"), "Test ViewRegistry failed");
 }
 
-auto ViewRegistry() { // for Singleton
-    return DViewRegistry.registration;
-}

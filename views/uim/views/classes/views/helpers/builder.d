@@ -5,9 +5,10 @@
 *****************************************************************************************************************/
 module uim.views.classes.views.helpers.builder;
 
+import uim.views;
+
 mixin(Version!("test_uim_views"));
 
-import uim.views;
 @safe:
 
 /**
