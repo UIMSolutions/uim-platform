@@ -22,15 +22,6 @@ class DControllerComponentCommand : DCommand {
     _commandPath ~= ["controller", "component"];
     return true;
   }
-
-  // Unregisters a controller by name
-  override bool execute(Json[string] arguments) {
-    if (!arguments.hasKey("name")) {
-      return ControllerRegistry.unregister(arguments.getString("name"));
-    }
-
-    return false;
-  }
 }
 
 mixin(CommandCalls!("ControllerComponent"));
