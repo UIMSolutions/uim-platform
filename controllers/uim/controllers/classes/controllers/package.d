@@ -5,7 +5,14 @@
 *****************************************************************************************************************/
 module uim.controllers.classes.controllers;
 
-public {
-    import uim.controllers.classes.controllers.controller;
-    import uim.controllers.classes.controllers.error;
+public { // Modules
+  import uim.controllers.classes.controllers.controller;
+  import uim.controllers.classes.controllers.interfaces;
+}
+
+public { // Packages
+  import uim.controllers.classes.controllers.commands;
+  import uim.controllers.classes.controllers.errors;
+  import uim.controllers.classes.controllers.helpers;
+  import uim.controllers.classes.controllers.tests;
 }

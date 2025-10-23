@@ -7,6 +7,7 @@ module uim.controllers.classes.components;
 
 public { // Modules
   import uim.controllers.classes.components.component;
+  import uim.controllers.classes.components.interfaces;
 }
 
 public { // Packages
