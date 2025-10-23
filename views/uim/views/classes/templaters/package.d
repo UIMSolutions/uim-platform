@@ -5,7 +5,14 @@
 *****************************************************************************************************************/
 module uim.views.classes.templaters;
 
-public {
-    import uim.views.classes.templaters.templater;
-    import uim.views.classes.templaters.html;
+public { // Modules
+  import uim.views.classes.templaters.templater;
+  import uim.views.classes.templaters.interfaces;
+}
+
+public { // Packages
+  import uim.views.classes.templaters.commands;
+  import uim.views.classes.templaters.errors;
+  import uim.views.classes.templaters.helpers;
+  import uim.views.classes.templaters.tests;
 }
