@@ -6,6 +6,7 @@
 module uim.views.classes.widgets.commands.command;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:

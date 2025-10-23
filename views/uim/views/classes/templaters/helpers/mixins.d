@@ -3,10 +3,13 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.views.mixins.view;
+module uim-platform.views.uim.views.classes.templaters.helpers.mixins;
 
 import uim.views;
-@safe: 
+
+mixin(Version!("test_uim_views"));
+
+@safe:
 
 string viewThis(string name = null) {
     string fullName = name ~ "View";
