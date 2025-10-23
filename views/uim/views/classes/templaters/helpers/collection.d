@@ -1,12 +1,11 @@
 /****************************************************************************************************************
-* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur)
-* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
-* Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
+* Copyright: © 2018-2025 Ozan Nurettin Süel (aka UIManufaktur) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UIManufaktur)
 *****************************************************************************************************************/
-module uim.views.classes.components.helpers.collection;
+module uim.views.classes.views.helpers.collection;
 
 import uim.views;
-
 mixin(Version!("test_uim_views"));
 
 @safe:
@@ -17,6 +16,6 @@ class DViewCollection : DCollection!IView {
 mixin(CollectionCalls!("View"));
 
 unittest {
-  auto collection = new DViewCollection;
+  auto collection = ViewCollection;
   assert(testCollection(collection, "View"), "Test ViewCollection failed");
 }

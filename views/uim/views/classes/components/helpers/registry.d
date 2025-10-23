@@ -5,3 +5,18 @@
 *****************************************************************************************************************/
 module uim.views.classes.components.helpers.registry;
 
+import uim.views;
+
+mixin(Version!("test_uim_views"));
+
+@safe:
+
+class DViewRegistry : DRegistry!IView {
+  mixin(RegistryThis!("View"));
+}
+mixin(RegistryCalls!("View"));
+
+unittest {
+  auto registry = new DViewRegistry;
+  assert(testRegistry(registry, "View"), "Test ViewRegistry failed");
+}
