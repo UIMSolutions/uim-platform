@@ -11,7 +11,6 @@ mixin(Version!"test_uim_models");
 
 @safe:
 
-
 class DModelDirectory : DDirectory!IModel {
   mixin(DirectoryThis!("Model"));
 }

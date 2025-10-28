@@ -11,7 +11,6 @@ mixin(Version!"test_uim_models");
 
 @safe:
 
-
 class DAttribute : UIMObject, IAttribute {
     mixin(AttributeThis!());
     this(DAttributeBuilder builder) {

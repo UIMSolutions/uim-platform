@@ -11,7 +11,6 @@ mixin(Version!"test_uim_models");
 
 @safe:
 
-
 class DModel : UIMObject, IModel {
     mixin(ModelThis!());
 }

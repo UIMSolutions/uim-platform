@@ -11,7 +11,6 @@ mixin(Version!("test_uim_html"));
 
 @safe:
 
-
 class DH5Table : DH5Obj {
   mixin(H5This!"table");
 
