@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.models.classes.attributes.tests.test;
 
+import uim.models;
+
+mixin(Version!"test_uim_models");
+
+@safe:
+
 bool testAttribute(IAttribute attribute) {
-    assert(attribute !is null, "Attribute is null");
-    
-    return true;
+  assert(attribute !is null, "In testAttribute: attribute is null");
+
+  return true;
 }

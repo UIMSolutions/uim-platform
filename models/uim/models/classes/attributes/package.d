@@ -6,6 +6,13 @@
 module uim.models.classes.attributes;
 
 public {
-    import uim.models.classes.attributes.attribute;
-    import uim.models.classes.attributes.builder;
+  import uim.models.classes.attributes.attribute;
+  import uim.models.classes.attributes.interfaces;
+  import uim.models.classes.attributes.builder;
+}
+
+public {
+  import uim.models.classes.attributes.commands;
+  import uim.models.classes.attributes.helpers;
+  import uim.models.classes.attributes.tests;
 }

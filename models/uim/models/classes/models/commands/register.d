@@ -10,3 +10,13 @@ import uim.models;
 mixin(Version!"test_uim_models");
 
 @safe:
+
+class DRegisterModelCommand : DModelCommand {
+  mixin(CommandThis!("RegisterModel"));
+}
+mixin(CommandCalls!("RegisterModel"));
+
+unittest {
+  auto command = RegisterModelCommand;
+  assert(testCollection(command, "RegisterModel"), "Test RegisterModelCommand failed");
+}

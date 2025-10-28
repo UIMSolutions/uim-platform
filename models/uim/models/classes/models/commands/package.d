@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
 module uim.servers.commands;
+
+public {
+  import uim.servers.commands.command;
+  import uim.servers.commands.register;
+  import uim.servers.commands.unregister;
+}

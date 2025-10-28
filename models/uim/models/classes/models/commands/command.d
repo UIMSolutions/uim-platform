@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.models.classes.models.commands.unregister;
+module uim.models.classes.models.commands.command;
 
 import uim.models;
 
@@ -11,12 +11,12 @@ mixin(Version!"test_uim_models");
 
 @safe:
 
-class DUnregisterModelCommand : DModelCommand {
-  mixin(CommandThis!("UnregisterModel"));
+class DModelCommand : DCommand {
+  mixin(CommandThis!("Model"));
 }
-mixin(CommandCalls!("UnregisterModel"));
+mixin(CommandCalls!("Model"));
 
 unittest {
-  auto command = UnregisterModelCommand;
-  assert(testCollection(command, "UnregisterModel"), "Test UnregisterModelCommand failed");
+  auto commmand = ModelCommand;
+  assert(testCollection(command, "Model"), "Test ModelCommand failed");
 }

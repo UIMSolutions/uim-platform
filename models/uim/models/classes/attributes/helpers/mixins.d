@@ -5,26 +5,26 @@
 *****************************************************************************************************************/
 module uim.models.classes.attributes.helpers.mixins;
 
+import uim.models;
+
 mixin(Version!"test_uim_models");
 
-import uim.models;
 @safe:
 
 string attributeThis(string name = null) {
-    string fullName = name ~ "Attribute";
-    return objThis(fullName);
+  string fullName = name ~ "Attribute";
+  return objThis(fullName);
 }
 
 template AttributeThis(string name = null) {
-    const char[] AttributeThis = attributeThis(name);
+  const char[] AttributeThis = attributeThis(name);
 }
 
 string attributeCalls(string name) {
-    string fullName = name ~ "Attribute";
-    return objCalls(fullName);
+  string fullName = name ~ "Attribute";
+  return objCalls(fullName);
 }
 
 template AttributeCalls(string name) {
-    const char[] AttributeCalls = attributeCalls(name);
+  const char[] AttributeCalls = attributeCalls(name);
 }
-
