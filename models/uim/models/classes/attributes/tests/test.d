@@ -6,7 +6,7 @@
 module uim.models.classes.attributes.tests.test;
 
 bool testAttribute(IAttribute attribute) {
-    assert(attribute !is null, "attribute is null");
+    assert(attribute !is null, "Attribute is null");
     
     return true;
 }
