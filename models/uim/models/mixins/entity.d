@@ -6,9 +6,11 @@
 module uim.models.mixins.entity;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:
+
 
 // #region EntityThis
 string entityThis(string name = null) {

@@ -3,16 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.         *
 * Authors: Ozan Nurettin Süel (aka UIManufaktur)                                                                *
 *****************************************************************************************************************/
-module uim.views.tests.form;
+module uim-platform.controllers.uim.controllers.classes.checks.helpers.directory;
 
-import uim.views;
-
-mixin(Version!("test_uim_views"));
+import uim.apps;
+mixin(Version!"test_uim_apps");
 
 @safe:
-
-bool testForm(IForm form) {
-    assert(form !is null, "Form is null");
-
-    return true;
-}

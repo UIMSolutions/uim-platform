@@ -6,9 +6,11 @@
 module uim.models.classes.attributes.interfaces;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:
+
 
 interface IAttribute : IObject {
   // Data formats of the attribute. 

@@ -6,9 +6,11 @@
 module uim.models.classes.models.helpers.factory;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:
+
 
 class DModelFactory : DObjectFactory!IModel {
     mixin(FactoryThis!"Model");

@@ -6,9 +6,11 @@
 module uim.models.classes.models.helpers.collection;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:
+
 
 class DModelCollection : DCollection!IModel {
   mixin(CollectionThis!("Model"));

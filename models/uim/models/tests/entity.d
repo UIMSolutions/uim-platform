@@ -6,9 +6,11 @@
 module uim.models.tests.entity;
 
 import uim.models;
+
 mixin(Version!"test_uim_models");
 
 @safe:
+
 
 /* bool testAttribute(IAttribute attributeToTest) {
     assert(attributeToTest !is null, "In testAttribute: attributeToTest is null");
