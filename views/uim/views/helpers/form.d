@@ -1,6 +1,7 @@
 module uim.views.helpers.form;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:

@@ -6,6 +6,7 @@
 module uuim.views.classes.views.helpers.registry;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:
