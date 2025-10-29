@@ -6,7 +6,10 @@
 module uim.views.classes.templaters.interfaces;
 
 import uim.views;
-@safe: 
+
+mixin(Version!("test_uim_views"));
+
+@safe:
 
 interface ITemplater {
     // string render(string templatePath, immutable uim.views.IView view);
