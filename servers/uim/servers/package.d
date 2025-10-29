@@ -11,13 +11,18 @@ public { // uim libraries
   import uim.infralevel;
 }
 
-public { // uim.filesystem libraries
+public { // Modules
+  import uim.servers.interfaces;
+  import uim.servers.server;
+}
+
+public { // Packages
+  import uim.servers.commands;
   import uim.servers.classes;
   import uim.servers.enumerations;
   import uim.servers.errors;
   import uim.servers.exceptions;
   import uim.servers.helpers;
-  import uim.servers.interfaces;
   import uim.servers.mixins;
   import uim.servers.tests;
 }

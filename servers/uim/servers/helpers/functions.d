@@ -6,6 +6,14 @@
 module uim.servers.helpers.functions;
 
 import uim.servers;
+
 mixin(Version!"test_uim_servers");
 
 @safe:
+
+bool isServer(Object obj) {
+  if (obj is null) {
+    return false;
+  }
+  return cast(IServer)obj !is null;
+}

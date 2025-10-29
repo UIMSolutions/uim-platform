@@ -5,14 +5,16 @@
 *****************************************************************************************************************/
 module uim.servers.helpers.factory;
 
+import uim.servers;
+
 mixin(Version!"test_uim_servers");
 
-import uim.servers;
 @safe:
 
 class DServersFactory : DFactory!IServer {
-    mixin(FactoryThis!("Server"));
+  mixin(FactoryThis!("Server"));
 }
+
 mixin(FactoryCalls!("Server"));
 
 unittest {
