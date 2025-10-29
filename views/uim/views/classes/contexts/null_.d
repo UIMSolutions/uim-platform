@@ -6,6 +6,7 @@
 module uim.views.classes.contexts.null_;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:

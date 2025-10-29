@@ -6,6 +6,7 @@
 module uim.views.classes.stringcontents;
 
 import uim.views;
+
 mixin(Version!("test_uim_views"));
 
 @safe:

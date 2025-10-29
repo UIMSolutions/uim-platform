@@ -6,6 +6,7 @@
 module uim.sites.helpers.directory;
 
 import uim.sites;
+
 mixin(Version!("test_uim_sites"));
 
 @safe:
