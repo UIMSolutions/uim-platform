@@ -10,3 +10,8 @@ import uim.servers;
 mixin(Version!"test_uim_servers");
 
 @safe:
+
+class DServer : UIMObject, IServer {
+  mixin(ServerThis!());
+}
+

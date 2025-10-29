@@ -9,3 +9,13 @@ import uim.servers;
 mixin(Version!"test_uim_servers");
 
 @safe:
+
+class DServerRegistry : DRegistry!IServer {
+  mixin(RegistryThis!("Server"));
+}
+mixin(RegistryCalls!("Server"));
+
+unittest {
+  auto registry = ServerRegistry;
+  assert(testRegistry(registry, "Server"), "Test ServerRegistry failed");
+}

@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.servers.helpers.mixins;
 
-mixin(Version!"test_uim_servers");
-
 import uim.servers;
+
+mixin(Version!"test_uim_servers");
 
 @safe:
 

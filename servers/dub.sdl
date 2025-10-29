@@ -1,5 +1,5 @@
 name "uim-servers"
-description "V in MVC"
+description "Library for UIM Servers"
 authors "ONS"
 copyright "Copyright © 2018 - 2025, ONS"
 license "Apache-2.0"
