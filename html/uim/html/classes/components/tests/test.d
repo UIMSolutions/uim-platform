@@ -1,2 +1,2 @@
-module uim-platform.html.uim.html.classes.components.tests.test;
+module uim.html.classes.components.tests.test;
 
