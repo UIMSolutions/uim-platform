@@ -10,3 +10,13 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
+
+class DFormContextFactory : DFactory!IFormContext {
+  mixin(FactoryThis!("FormContext"));
+}
+mixin(FactoryCalls!("FormContext"));
+
+unittest {
+  auto factory = DFormContextFactory();
+  assert(testFactory(factory, "FormContext"), "Test DFormContextFactory failed");
+}

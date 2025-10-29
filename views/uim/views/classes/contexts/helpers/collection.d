@@ -10,3 +10,13 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
+
+class DFormContextCollection : DCollection!IFormContext {
+  mixin(CollectionThis!("FormContext"));
+}
+mixin(CollectionCalls!("FormContext"));
+
+unittest {
+  auto collection = DFormContextCollection();
+  assert(testCollection(collection, "FormContext"), "Test DFormContextCollection failed");
+}

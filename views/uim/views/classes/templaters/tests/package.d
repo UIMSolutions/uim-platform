@@ -5,3 +5,7 @@
 *****************************************************************************************************************/
 module uim.views.classes.templaters.tests;
 
+public {
+  import uim.views.classes.templaters.tests.mixins;
+  import uim.views.classes.templaters.tests.test;
+}

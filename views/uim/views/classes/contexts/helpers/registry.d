@@ -10,3 +10,13 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
+
+class DFormContextRegistry : DRegistry!IFormContext {
+  mixin(RegistryThis!("FormContext"));
+}
+mixin(RegistryCalls!("FormContext"));
+
+unittest {
+  auto registry = DFormContextRegistry();
+  assert(testRegistry(registry, "FormContext"), "Test DFormContextRegistry failed");
+}

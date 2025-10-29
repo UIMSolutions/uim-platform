@@ -5,3 +5,11 @@
 *****************************************************************************************************************/
 module uim.views.classes.contexts.helpers;
 
+public {
+  import uim.views.classes.contexts.helpers.collection;
+  import uim.views.classes.contexts.helpers.directory;
+  import uim.views.classes.contexts.helpers.factory;
+  import uim.views.classes.contexts.helpers.functions;
+  import uim.views.classes.contexts.helpers.mixins;
+  import uim.views.classes.contexts.helpers.registry;
+}

@@ -5,3 +5,18 @@
 *****************************************************************************************************************/
 module uim.views.classes.templaters.errors.error;
 
+import uim.views;
+
+mixin(Version!("test_uim_views"));
+
+@safe:
+
+class DTemplaterError : DError {
+  mixin(ErrorThis!("Templater"));
+}
+mixin(ErrorCalls!("Templater"));
+
+unittest {
+  auto error = new DTemplaterError("Test error");
+  assert(testError(error), "In DTemplaterError: Test failed");
+}

@@ -10,3 +10,13 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
+
+class DFormContextDirectory : DDirectory!IFormContext {
+  mixin(DirectoryThis!("FormContext"));
+}
+mixin(DirectoryCalls!("FormContext"));
+
+unittest {
+  auto directory = DFormContextDirectory();
+  assert(testDirectory(directory, "FormContext"), "Test DFormContextDirectory failed");
+}

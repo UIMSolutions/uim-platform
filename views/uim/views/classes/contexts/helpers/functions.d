@@ -10,3 +10,15 @@ import uim.views;
 mixin(Version!("test_uim_views"));
 
 @safe:
+
+bool isFormContext(Object obj) {
+  return obj is null ? false : cast(bool)obj !is null;
+}
+
+unittest {
+  IFormContext formContext = null;
+  assert(!isFormContext(formContext), "Test isFormContext with null failed");
+
+  formContext = IFormContext(cast(Object)Object());
+  assert(isFormContext(formContext), "Test isFormContext with valid instance failed");
+}
