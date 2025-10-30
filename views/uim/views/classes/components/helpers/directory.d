@@ -11,12 +11,12 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewDirectory : DDirectory!IView {
-  mixin(DirectoryThis!("View"));
+class DViewComponentDirectory : DDirectory!IViewComponent {
+  mixin(DirectoryThis!("ViewComponent"));
 }
-mixin(DirectoryCalls!("View"));
+mixin(DirectoryCalls!("ViewComponent"));
 
 unittest {
-  auto directory = new DViewDirectory;
-  assert(testDirectory(directory, "View"), "Test ViewDirectory failed");
+  auto directory = new DViewComponentDirectory;
+  assert(testDirectory(directory, "ViewComponent"), "Test ViewComponentDirectory failed");
 }

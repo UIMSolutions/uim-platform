@@ -12,7 +12,7 @@ mixin(Version!("test_uim_views"));
 @safe:
 
 bool testFormContext(IFormContext context) {
-    assert(context !is null, "FormContext is null");
-    
-    return true;
+  assert(context !is null, "FormContext is null");
+  
+  return true;
 }

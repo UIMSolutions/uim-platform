@@ -7,7 +7,7 @@ mixin(Version!("test_uim_views"));
 @safe:
 
 class DViewComponent : UIMObject, IViewComponent {
-  mixin(ViewThis!());
+  mixin(ViewComponentThis!());
 
   string render(string[string] data) {
     return "";

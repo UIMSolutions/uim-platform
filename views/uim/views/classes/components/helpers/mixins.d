@@ -5,3 +5,26 @@
 *****************************************************************************************************************/
 module uim.views.classes.components.helpers.mixins;
 
+import uim.views;
+
+mixin(Version!("test_uim_views"));
+
+@safe:
+
+string viewComponentThis(string name = null) {
+    string fullName = name ~ "ViewComponent";
+    return objThis(fullName);
+}
+
+template ViewComponentThis(string name = null) {
+    const char[] ViewComponentThis = viewComponentThis(name);
+}
+
+string viewComponentCalls(string name) {
+    string fullName = name ~ "ViewComponent";
+    return objCalls(fullName);
+}
+
+template ViewComponentCalls(string name) {
+    const char[] ViewComponentCalls = viewComponentCalls(name);
+}

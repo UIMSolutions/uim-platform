@@ -11,12 +11,12 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewCollection : DCollection!IView {
-  mixin(CollectionThis!("View"));
+class DViewComponentCollection : DCollection!IViewComponent {
+  mixin(CollectionThis!("ViewComponent"));
 }
-mixin(CollectionCalls!("View"));
+mixin(CollectionCalls!("ViewComponent"));
 
 unittest {
-  auto collection = new DViewCollection;
-  assert(testCollection(collection, "View"), "Test ViewCollection failed");
+  auto collection = new DViewComponentCollection;
+  assert(testCollection(collection, "ViewComponent"), "Test ViewComponentCollection failed");
 }

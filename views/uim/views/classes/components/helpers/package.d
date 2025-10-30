@@ -5,3 +5,11 @@
 *****************************************************************************************************************/
 module uim.views.classes.components.helpers;
 
+public {
+  import uim.views.classes.components.helpers.collection;
+  import uim.views.classes.components.helpers.directory;
+  import uim.views.classes.components.helpers.factory;
+  import uim.views.classes.components.helpers.functions;
+  import uim.views.classes.components.helpers.mixins;
+  import uim.views.classes.components.helpers.registry;
+}

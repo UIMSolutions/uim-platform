@@ -11,12 +11,12 @@ mixin(Version!("test_uim_views"));
 
 @safe:
 
-class DViewRegistry : DRegistry!IView {
-  mixin(RegistryThis!("View"));
+class DViewComponentRegistry : DRegistry!IViewComponent {
+  mixin(RegistryThis!("ViewComponent"));
 }
-mixin(RegistryCalls!("View"));
+mixin(RegistryCalls!("ViewComponent"));
 
 unittest {
-  auto registry = new DViewRegistry;
-  assert(testRegistry(registry, "View"), "Test ViewRegistry failed");
+  auto registry = new DViewComponentRegistry;
+  assert(testRegistry(registry, "ViewComponent"), "Test ViewComponentRegistry failed");
 }

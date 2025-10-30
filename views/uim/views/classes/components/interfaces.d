@@ -6,7 +6,11 @@
 module uim.views.classes.components.interfaces;
 
 import uim.views;
-@safe: 
+
+mixin(Version!("test_uim_views"));
+
+@safe:
+
 interface IViewComponent {
-    string render(string[string] data); 
+  string render(string[string] data);
 }
