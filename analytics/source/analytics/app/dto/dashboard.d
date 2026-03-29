@@ -1,4 +1,4 @@
-module analytics.app.dto.dashboard_dto;
+module analytics.app.dto.dashboard;
 
 import std.conv : to;
 import analytics.domain.entities.dashboard;

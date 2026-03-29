@@ -1,9 +1,9 @@
 module analytics.app.usecases.data_sources;
 
-import analytics.domain.entities.data_source;
-import analytics.domain.repositories.data_source_repository;
+import analytics.domain.entities.datasource;
+import analytics.domain.repositories.datasource;
 import analytics.domain.values.common;
-import analytics.app.dto.data_source_dto;
+import analytics.app.dto.datasource;
 import analytics.app.ports.data_connector;
 import std.conv : to;
 

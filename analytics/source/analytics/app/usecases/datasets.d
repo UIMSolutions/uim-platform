@@ -3,7 +3,7 @@ module analytics.app.usecases.datasets;
 import analytics.domain.entities.dataset;
 import analytics.domain.repositories.dataset_repository;
 import analytics.domain.values.common;
-import analytics.app.dto.dataset_dto;
+import analytics.app.dto.dataset;
 
 class DatasetUseCases {
     private DatasetRepository repo;

@@ -1,9 +1,9 @@
 module analytics.app.usecases.dashboards;
 
 import analytics.domain.entities.dashboard;
-import analytics.domain.repositories.dashboard_repository;
+import analytics.domain.repositories.dashboard;
 import analytics.domain.values.common;
-import analytics.app.dto.dashboard_dto;
+import analytics.app.dto.dashboard;
 
 /// Application service: dashboard use cases.
 class DashboardUseCases {

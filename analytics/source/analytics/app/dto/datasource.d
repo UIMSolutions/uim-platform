@@ -1,4 +1,4 @@
-module analytics.app.dto.data_source_dto;
+module analytics.app.dto.datasource;
 
 import std.conv : to;
 import analytics.domain.entities.data_source;

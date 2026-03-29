@@ -1,9 +1,9 @@
 module analytics.domain.repositories;
 
-public import analytics.domain.repositories.dashboard_repository;
-public import analytics.domain.repositories.story_repository;
-public import analytics.domain.repositories.dataset_repository;
-public import analytics.domain.repositories.widget_repository;
-public import analytics.domain.repositories.data_source_repository;
-public import analytics.domain.repositories.planning_repository;
-public import analytics.domain.repositories.prediction_repository;
+public import analytics.domain.repositories.dashboard;
+public import analytics.domain.repositories.story;
+public import analytics.domain.repositories.dataset;
+public import analytics.domain.repositories.widget;
+public import analytics.domain.repositories.datasource;
+public import analytics.domain.repositories.planningmodel;
+public import analytics.domain.repositories.prediction;
