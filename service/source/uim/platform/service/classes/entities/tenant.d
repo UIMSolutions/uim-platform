@@ -6,8 +6,8 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMTenantEntity : SAPEntity {
-  mixin(SAPEntityTemplate!SAPTenantEntity);
+class UIMTenantEntity : UIMEntity {
+  mixin(UIMEntityTemplate!UIMTenantEntity);
 
   this(UUID tenantId) {
     super();
@@ -38,7 +38,7 @@ class UIMTenantEntity : SAPEntity {
   ///
   unittest {
     UUID id = randomUUID();
-    SAPTenantEntity obj = new SAPTenantEntity(id);
+    UIMTenantEntity obj = new UIMTenantEntity(id);
     Json json = obj.toJson();
     assert(json["tenantId"].get!string == obj.tenantId.toString());
   }
@@ -55,7 +55,7 @@ class UIMTenantEntity : SAPEntity {
   ///
   unittest {
     UUID id = randomUUID();
-    SAPTenantEntity obj = new SAPTenantEntity(id);
+    UIMTenantEntity obj = new UIMTenantEntity(id);
     assert(obj.tenantId == id);
 
     UUID id2 = randomUUID();

@@ -45,7 +45,7 @@ class UIMEntity {
   }
   /// 
   unittest {
-    auto obj = new SAPEntity();
+    auto obj = new UIMEntity();
 
     auto now = Clock.currTime;
     obj.createdAt(now);
@@ -63,7 +63,7 @@ class UIMEntity {
   }
   /// 
   unittest {
-    auto obj = new SAPEntity();
+    auto obj = new UIMEntity();
     auto now = Clock.currTime;
     obj.updatedAt(now);
     assert(obj.updatedAt == now);

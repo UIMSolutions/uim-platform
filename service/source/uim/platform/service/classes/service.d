@@ -7,7 +7,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMService : ISAPService {
+class UIMService : IUIMService {
   this() {
     initialize();
   }

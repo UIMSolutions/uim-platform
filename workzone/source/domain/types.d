@@ -117,7 +117,7 @@ enum AppStatus
 {
     active,
     inactive,
-    deprecated,
+    deprecated_,
 }
 
 /// Widget size on a workspace page.

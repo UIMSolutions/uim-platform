@@ -8,7 +8,7 @@ private Json toJsonArray(string[] values) {
   return values.map!(v => v.toJson()).array.toJson;
 }
 
-Json toJsonArray(SAPEntity[] metrics) {
+Json toJsonArray(UIMEntity[] metrics) {
   return metrics.map!(m => m.toJson()).array.toJson;
 }
 

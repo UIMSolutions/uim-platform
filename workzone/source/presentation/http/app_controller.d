@@ -118,7 +118,7 @@ class AppController
 
             auto sStr = jsonStr(j, "status");
             if (sStr == "inactive") r.status = AppStatus.inactive;
-            else if (sStr == "deprecated") r.status = AppStatus.deprecated;
+            else if (sStr == "deprecated") r.status = AppStatus.deprecated_;
             else r.status = AppStatus.active;
 
             auto result = useCase.updateApp(r);

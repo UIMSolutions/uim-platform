@@ -34,7 +34,7 @@ class UIMServer {
     initialize(initData);
   }
 
-  this(ISAPService service) {
+  this(IUIMService service) {
     _service = service;
   }
 
@@ -44,7 +44,7 @@ class UIMServer {
     return true;
   }
 
-  protected ISAPService _service;
+  protected IUIMService _service;
   // -- host --
   protected string _host;
   string host() const {

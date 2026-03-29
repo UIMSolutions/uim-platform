@@ -5,8 +5,8 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class UIMTenant : SAPEntity, ISAPTenant {
-  mixin(SAPEntityTemplate!SAPTenant);
+class UIMTenant : UIMEntity, IUIMTenant {
+  mixin(UIMEntityTemplate!SAPTenant);
 
   override bool initialize(Json[string] initData = null) {
     if (!super.initialize(initData)) {
