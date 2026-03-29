@@ -1,0 +1,71 @@
+module infrastructure.persistence.in_memory_role_repo;
+
+import domain.entities.role;
+import domain.types;
+import domain.ports.role_repository;
+
+import std.algorithm : canFind;
+
+class InMemoryRoleRepository : RoleRepository
+{
+    private Role[RoleId] store;
+
+    Role findById(RoleId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return Role.init;
+    }
+
+    Role findByName(TenantId tenantId, string name)
+    {
+        foreach (r; store.byValue())
+        {
+            if (r.tenantId == tenantId && r.name == name)
+                return r;
+        }
+        return Role.init;
+    }
+
+    Role[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
+    {
+        Role[] result;
+        uint idx;
+        foreach (r; store.byValue())
+        {
+            if (r.tenantId == tenantId)
+            {
+                if (idx >= offset && result.length < limit)
+                    result ~= r;
+                idx++;
+            }
+        }
+        return result;
+    }
+
+    Role[] findByUser(string userId)
+    {
+        Role[] result;
+        foreach (r; store.byValue())
+        {
+            if (r.userIds.canFind(userId))
+                result ~= r;
+        }
+        return result;
+    }
+
+    void save(Role role)
+    {
+        store[role.id] = role;
+    }
+
+    void update(Role role)
+    {
+        store[role.id] = role;
+    }
+
+    void remove(RoleId id)
+    {
+        store.remove(id);
+    }
+}

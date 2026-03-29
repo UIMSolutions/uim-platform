@@ -1,0 +1,54 @@
+module infrastructure.persistence.in_memory_menu_item_repo;
+
+import domain.entities.menu_item;
+import domain.types;
+import domain.ports.menu_item_repository;
+
+class InMemoryMenuItemRepository : MenuItemRepository
+{
+    private MenuItem[MenuItemId] store;
+
+    MenuItem findById(MenuItemId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return MenuItem.init;
+    }
+
+    MenuItem[] findBySite(SiteId siteId)
+    {
+        MenuItem[] result;
+        foreach (m; store.byValue())
+        {
+            if (m.siteId == siteId)
+                result ~= m;
+        }
+        return result;
+    }
+
+    MenuItem[] findChildren(MenuItemId parentId)
+    {
+        MenuItem[] result;
+        foreach (m; store.byValue())
+        {
+            if (m.parentId == parentId)
+                result ~= m;
+        }
+        return result;
+    }
+
+    void save(MenuItem item)
+    {
+        store[item.id] = item;
+    }
+
+    void update(MenuItem item)
+    {
+        store[item.id] = item;
+    }
+
+    void remove(MenuItemId id)
+    {
+        store.remove(id);
+    }
+}

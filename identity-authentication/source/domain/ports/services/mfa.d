@@ -1,4 +1,4 @@
-module domain.ports.mfa_service;
+module uim.platform.identity_authentication.domain.ports.mfa_service;
 
 import domain.types;
 

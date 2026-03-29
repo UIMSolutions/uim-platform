@@ -1,4 +1,4 @@
-module domain.ports.password_service;
+module uim.platform.identity_authentication.domain.ports.password_service;
 
 /// Port: outgoing — password hashing adapter.
 interface PasswordService

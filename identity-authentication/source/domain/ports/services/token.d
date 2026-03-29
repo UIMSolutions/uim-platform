@@ -1,4 +1,4 @@
-module domain.ports.token_service;
+module uim.platform.identity_authentication.domain.ports.token_service;
 
 import domain.entities.user;
 import domain.entities.application;
