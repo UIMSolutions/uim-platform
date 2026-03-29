@@ -1,0 +1,56 @@
+module infrastructure.persistence.in_memory_workspace_repo;
+
+import domain.types;
+import domain.entities.workspace;
+import domain.ports.workspace_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryWorkspaceRepository : WorkspaceRepository
+{
+    private Workspace[WorkspaceId] store;
+
+    Workspace[] findByTenant(TenantId tenantId)
+    {
+        return store.byValue().filter!(w => w.tenantId == tenantId).array;
+    }
+
+    Workspace* findById(WorkspaceId id, TenantId tenantId)
+    {
+        if (auto p = id in store)
+            if (p.tenantId == tenantId)
+                return p;
+        return null;
+    }
+
+    Workspace* findByAlias(string alias_, TenantId tenantId)
+    {
+        foreach (ref w; store.byValue())
+            if (w.tenantId == tenantId && w.alias_ == alias_)
+                return &w;
+        return null;
+    }
+
+    Workspace[] findByMember(UserId userId, TenantId tenantId)
+    {
+        Workspace[] result;
+        foreach (ref w; store.byValue())
+        {
+            if (w.tenantId != tenantId)
+                continue;
+            foreach (ref m; w.members)
+                if (m.userId == userId) { result ~= w; break; }
+        }
+        return result;
+    }
+
+    void save(Workspace workspace) { store[workspace.id] = workspace; }
+    void update(Workspace workspace) { store[workspace.id] = workspace; }
+    void remove(WorkspaceId id, TenantId tenantId)
+    {
+        if (auto p = id in store)
+            if (p.tenantId == tenantId)
+                store.remove(id);
+    }
+}
