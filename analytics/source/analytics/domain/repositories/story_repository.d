@@ -1,0 +1,12 @@
+module analytics.domain.repositories.story_repository;
+
+import analytics.domain.entities.story;
+import analytics.domain.values.common;
+
+interface StoryRepository {
+    Story findById(EntityId id);
+    Story[] findByOwner(EntityId ownerId);
+    Story[] findAll();
+    void save(Story story);
+    void remove(EntityId id);
+}

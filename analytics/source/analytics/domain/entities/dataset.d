@@ -1,0 +1,76 @@
+module analytics.domain.entities.dataset;
+
+import analytics.domain.values.common;
+import analytics.domain.values.aggregation;
+
+/// A Dataset (data model) defines the structure for analytical consumption.
+/// Combines dimensions and measures — similar to SAC "Models".
+class Dataset {
+    EntityId id;
+    string name;
+    string description;
+    EntityId dataSourceId;
+    Column[] columns;
+    AuditInfo audit;
+    ArtifactStatus status;
+
+    this() { }
+
+    static Dataset create(string name, string description, string dataSourceId, string userId) {
+        auto d = new Dataset();
+        d.id = EntityId.generate();
+        d.name = name;
+        d.description = description;
+        d.dataSourceId = EntityId(dataSourceId);
+        d.columns = [];
+        d.status = ArtifactStatus.Draft;
+        d.audit = AuditInfo.create(userId);
+        return d;
+    }
+
+    void addDimension(string colName, ColumnDataType dataType) {
+        columns ~= Column(colName, ColumnRole.Dimension, dataType, AggregationType.Count);
+    }
+
+    void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg) {
+        columns ~= Column(colName, ColumnRole.Measure, dataType, defaultAgg);
+    }
+
+    Column[] dimensions() {
+        Column[] result;
+        foreach (c; columns)
+            if (c.role == ColumnRole.Dimension)
+                result ~= c;
+        return result;
+    }
+
+    Column[] measures() {
+        Column[] result;
+        foreach (c; columns)
+            if (c.role == ColumnRole.Measure)
+                result ~= c;
+        return result;
+    }
+}
+
+enum ColumnRole {
+    Dimension,
+    Measure,
+    Attribute,
+}
+
+enum ColumnDataType {
+    String,
+    Integer,
+    Decimal,
+    Date,
+    DateTime,
+    Boolean,
+}
+
+struct Column {
+    string name;
+    ColumnRole role;
+    ColumnDataType dataType;
+    AggregationType defaultAggregation;
+}

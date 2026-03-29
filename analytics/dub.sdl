@@ -1,0 +1,12 @@
+name "analytics"
+description "UIM Analytics Platform Service - SAP Analytics Cloud-like BI, Planning and Predictive Analytics"
+authors "UIM Platform Team"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+dependency "vibe-d:tls" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
