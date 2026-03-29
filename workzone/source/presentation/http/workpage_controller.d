@@ -1,0 +1,163 @@
+module presentation.http.workpage_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import application.use_cases.manage_workpages;
+import application.dto;
+import domain.types;
+import domain.entities.workpage;
+import presentation.http.json_utils;
+
+class WorkpageController
+{
+    private ManageWorkpagesUseCase useCase;
+
+    this(ManageWorkpagesUseCase useCase)
+    {
+        this.useCase = useCase;
+    }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/workpages", &handleCreate);
+        router.get("/api/v1/workpages", &handleList);
+        router.get("/api/v1/workpages/*", &handleGet);
+        router.put("/api/v1/workpages/*", &handleUpdate);
+        router.delete_("/api/v1/workpages/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            auto r = CreateWorkpageRequest();
+            r.workspaceId = jsonStr(j, "workspaceId");
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.title = jsonStr(j, "title");
+            r.description = jsonStr(j, "description");
+            r.sortOrder = jsonInt(j, "sortOrder");
+            r.isDefault = jsonBool(j, "isDefault");
+
+            auto result = useCase.createWorkpage(r);
+            if (result.isSuccess())
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+            {
+                writeError(res, 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto workspaceId = req.params.get("workspaceId", "");
+            auto pages = useCase.listByWorkspace(workspaceId, tenantId);
+            auto arr = Json.emptyArray;
+            foreach (ref p; pages)
+                arr ~= serializePage(p);
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) pages.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto page = useCase.getWorkpage(id, tenantId);
+            if (page is null)
+            {
+                writeError(res, 404, "Page not found");
+                return;
+            }
+            res.writeJsonBody(serializePage(*page), 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            auto r = UpdateWorkpageRequest();
+            r.id = extractIdFromPath(req.requestURI);
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.title = jsonStr(j, "title");
+            r.description = jsonStr(j, "description");
+            r.sortOrder = jsonInt(j, "sortOrder");
+            r.visible = jsonBool(j, "visible", true);
+
+            auto result = useCase.updateWorkpage(r);
+            if (result.isSuccess())
+            {
+                auto resp = Json.emptyObject;
+                resp["status"] = Json("updated");
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, 404, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            useCase.deleteWorkpage(id, tenantId);
+            res.writeBody("", 204);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}
+
+private Json serializePage(ref Workpage p)
+{
+    auto j = Json.emptyObject;
+    j["id"] = Json(p.id);
+    j["workspaceId"] = Json(p.workspaceId);
+    j["tenantId"] = Json(p.tenantId);
+    j["title"] = Json(p.title);
+    j["description"] = Json(p.description);
+    j["sortOrder"] = Json(p.sortOrder);
+    j["visible"] = Json(p.visible);
+    j["isDefault"] = Json(p.isDefault);
+    j["createdAt"] = Json(p.createdAt);
+    j["updatedAt"] = Json(p.updatedAt);
+    return j;
+}

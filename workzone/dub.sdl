@@ -1,0 +1,10 @@
+name "workzone"
+description "Workzone Service - Collaborative workspaces, integration cards, content management, feeds, notifications, tasks, channels, and app integration"
+authors "UIM Platform Team"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+mainSourceFile "source/app.d"

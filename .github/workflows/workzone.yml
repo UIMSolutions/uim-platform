@@ -1,0 +1,26 @@
+name: workzone
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: dlang-community/setup-dlang@v2
+
+    - name: 'Build & Test'
+      run: |
+        cd ./workzone/
+        dub upgrade
+        dub build --compiler=$DC
+        dub test --compiler=$DC
