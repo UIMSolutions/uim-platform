@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_risk_rule;
+module uim.platform.identity_authentication.infrastructure.persistence.in_memory_risk_rule;
 
 import domain.entities.risk_rule;
 import domain.types;

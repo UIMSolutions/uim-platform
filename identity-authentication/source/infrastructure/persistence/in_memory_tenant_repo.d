@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_tenant;
+module uim.platform.identity_authentication.infrastructure.persistence.in_memory_tenant;
 
 import domain.entities.tenant;
 import domain.types;

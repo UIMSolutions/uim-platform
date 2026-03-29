@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_token;
+module uim.platform.identity_authentication.infrastructure.persistence.in_memory_token;
 
 import domain.entities.token;
 import domain.types;

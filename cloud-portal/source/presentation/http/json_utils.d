@@ -1,6 +1,7 @@
 module presentation.http.json_utils;
 
 import vibe.data.json;
+import vibe.http.server;
 import std.traits;
 
 /// Serialize a struct to JSON.

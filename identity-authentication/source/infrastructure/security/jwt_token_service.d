@@ -1,4 +1,4 @@
-module infrastructure.security.jwt_token_service;
+module uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
 
 import domain.entities.user;
 import domain.entities.application;

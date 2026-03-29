@@ -1,4 +1,4 @@
-module infrastructure.security.totp_mfa_service;
+module uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
 
 import domain.types;
 import domain.ports.mfa_service;

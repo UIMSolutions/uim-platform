@@ -1,4 +1,4 @@
-module infrastructure.config;
+module uim.platform.identity_authentication.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig

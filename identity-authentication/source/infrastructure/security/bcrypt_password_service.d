@@ -1,4 +1,4 @@
-module infrastructure.security.bcrypt_password_service;
+module uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;
 
 import domain.ports.password_service;
 

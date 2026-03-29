@@ -1,4 +1,4 @@
-module infrastructure.container;
+module uim.platform.identity_authentication.infrastructure.container;
 
 import infrastructure.config;
 

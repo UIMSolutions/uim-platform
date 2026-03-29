@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_idp_config;
+module uim.platform.identity_authentication.infrastructure.persistence.in_memory_idp_config;
 
 import domain.entities.idp_config;
 import domain.types;

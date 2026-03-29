@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_session;
+module uim.platform.identity_authentication.infrastructure.persistence.in_memory_session;
 
 import domain.entities.session;
 import domain.types;
