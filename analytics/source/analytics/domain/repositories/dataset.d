@@ -1,4 +1,4 @@
-module analytics.domain.repositories.dataset_repository;
+module analytics.domain.repositories.dataset;
 
 import analytics.domain.entities.dataset;
 import analytics.domain.values.common;

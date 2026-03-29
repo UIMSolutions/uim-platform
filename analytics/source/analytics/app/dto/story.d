@@ -1,4 +1,4 @@
-module analytics.app.dto.story_dto;
+module analytics.app.dto.story;
 
 import std.conv : to;
 import analytics.domain.entities.story;

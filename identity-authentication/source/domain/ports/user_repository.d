@@ -1,4 +1,4 @@
-module domain.ports.user_repository;
+module domain.ports.user;
 
 import domain.entities.user;
 import domain.types;

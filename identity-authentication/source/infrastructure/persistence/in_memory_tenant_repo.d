@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_tenant_repo;
 
 import domain.entities.tenant;
 import domain.types;
-import domain.ports.tenant_repository;
+import domain.ports.tenant;
 
 /// In-memory adapter for tenant persistence.
 class InMemoryTenantRepository : TenantRepository

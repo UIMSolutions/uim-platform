@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_policy_repo;
 
 import domain.entities.policy;
 import domain.types;
-import domain.ports.policy_repository;
+import domain.ports.policy;
 
 import std.algorithm : canFind;
 

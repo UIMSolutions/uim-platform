@@ -1,10 +1,10 @@
 module analytics.app.usecases.planning;
 
 import analytics.domain.entities.planning_model;
-import analytics.domain.repositories.planning_repository;
+import analytics.domain.repositories.planning;
 import analytics.domain.values.common;
 import analytics.domain.values.time_granularity;
-import analytics.app.dto.planning_dto;
+import analytics.app.dto.planning;
 import std.conv : to;
 
 class PlanningUseCases {

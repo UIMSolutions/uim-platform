@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_group_repo;
 
 import domain.entities.group;
 import domain.types;
-import domain.ports.group_repository;
+import domain.ports.group;
 
 /// In-memory adapter for group persistence.
 class InMemoryGroupRepository : GroupRepository

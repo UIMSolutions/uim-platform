@@ -4,10 +4,10 @@ import domain.entities.user;
 import domain.entities.application;
 import domain.entities.token;
 import domain.types;
-import domain.ports.user_repository;
-import domain.ports.application_repository;
-import domain.ports.token_repository;
-import domain.ports.session_repository;
+import domain.ports.user;
+import domain.ports.application;
+import domain.ports.token;
+import domain.ports.session;
 import domain.ports.token_service;
 
 import std.uuid;

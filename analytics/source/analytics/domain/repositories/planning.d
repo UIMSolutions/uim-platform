@@ -1,4 +1,4 @@
-module analytics.domain.repositories.planning_repository;
+module analytics.domain.repositories.planning;
 
 import analytics.domain.entities.planning_model;
 import analytics.domain.values.common;

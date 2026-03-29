@@ -2,7 +2,7 @@ module application.use_cases.manage_users;
 
 import domain.entities.user;
 import domain.types;
-import domain.ports.user_repository;
+import domain.ports.user;
 import domain.ports.password_service;
 import application.dto;
 

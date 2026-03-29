@@ -1,4 +1,4 @@
-module domain.ports.session_repository;
+module domain.ports.session;
 
 import domain.entities.session;
 import domain.types;

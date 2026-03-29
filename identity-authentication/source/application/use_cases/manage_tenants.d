@@ -2,7 +2,7 @@ module application.use_cases.manage_tenants;
 
 import domain.entities.tenant;
 import domain.types;
-import domain.ports.tenant_repository;
+import domain.ports.tenant;
 import application.dto;
 
 import std.uuid;

@@ -1,10 +1,10 @@
 module analytics.infrastructure.web.handlers;
 
-public import analytics.infrastructure.web.handlers.dashboard_handler;
-public import analytics.infrastructure.web.handlers.story_handler;
-public import analytics.infrastructure.web.handlers.dataset_handler;
-public import analytics.infrastructure.web.handlers.widget_handler;
-public import analytics.infrastructure.web.handlers.planning_handler;
-public import analytics.infrastructure.web.handlers.prediction_handler;
-public import analytics.infrastructure.web.handlers.data_source_handler;
-public import analytics.infrastructure.web.handlers.health_handler;
+public import analytics.infrastructure.web.handlers.dashboard;
+public import analytics.infrastructure.web.handlers.story;
+public import analytics.infrastructure.web.handlers.dataset;
+public import analytics.infrastructure.web.handlers.widget;
+public import analytics.infrastructure.web.handlers.planning;
+public import analytics.infrastructure.web.handlers.prediction;
+public import analytics.infrastructure.web.handlers.data_source;
+public import analytics.infrastructure.web.handlers.health;

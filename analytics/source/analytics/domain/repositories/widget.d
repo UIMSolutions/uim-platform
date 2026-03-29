@@ -1,4 +1,4 @@
-module analytics.domain.repositories.widget_repository;
+module analytics.domain.repositories.widget;
 
 import analytics.domain.entities.widget;
 import analytics.domain.values.common;

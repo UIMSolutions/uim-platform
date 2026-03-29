@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_idp_config_repo;
 
 import domain.entities.idp_config;
 import domain.types;
-import domain.ports.idp_config_repository;
+import domain.ports.idp_config;
 
 import std.algorithm : canFind;
 

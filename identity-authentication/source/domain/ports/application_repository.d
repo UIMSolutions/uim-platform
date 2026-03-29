@@ -1,4 +1,4 @@
-module domain.ports.application_repository;
+module domain.ports.application;
 
 import domain.entities.application;
 import domain.types;

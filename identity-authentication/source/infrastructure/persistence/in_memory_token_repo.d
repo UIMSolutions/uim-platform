@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_token_repo;
 
 import domain.entities.token;
 import domain.types;
-import domain.ports.token_repository;
+import domain.ports.token;
 
 /// In-memory adapter for token persistence.
 class InMemoryTokenRepository : TokenRepository

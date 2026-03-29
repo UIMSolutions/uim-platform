@@ -1,4 +1,4 @@
-module domain.ports.risk_rule_repository;
+module domain.ports.risk_rule;
 
 import domain.entities.risk_rule;
 import domain.types;

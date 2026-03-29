@@ -2,7 +2,7 @@ module application.use_cases.manage_applications;
 
 import domain.entities.application;
 import domain.types;
-import domain.ports.application_repository;
+import domain.ports.application;
 import application.dto;
 
 import std.uuid;

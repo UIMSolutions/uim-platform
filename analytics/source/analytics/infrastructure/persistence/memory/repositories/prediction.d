@@ -1,7 +1,7 @@
 module analytics.infrastructure.persistence.memory.prediction_repo;
 
 import analytics.domain.entities.prediction;
-import analytics.domain.repositories.prediction_repository;
+import analytics.domain.repositories.prediction;
 import analytics.domain.values.common;
 
 class InMemoryPredictionRepository : PredictionRepository {

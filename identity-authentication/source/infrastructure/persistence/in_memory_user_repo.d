@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_user_repo;
 
 import domain.entities.user;
 import domain.types;
-import domain.ports.user_repository;
+import domain.ports.user;
 
 /// In-memory adapter for user persistence (swap for DB adapter in production).
 class InMemoryUserRepository : UserRepository

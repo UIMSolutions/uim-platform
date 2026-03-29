@@ -2,8 +2,8 @@ module application.use_cases.manage_groups;
 
 import domain.entities.group;
 import domain.types;
-import domain.ports.group_repository;
-import domain.ports.user_repository;
+import domain.ports.group;
+import domain.ports.user;
 import application.dto;
 
 import std.uuid;

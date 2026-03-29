@@ -1,10 +1,10 @@
 module analytics.app.usecases.widgets;
 
 import analytics.domain.entities.widget;
-import analytics.domain.repositories.widget_repository;
+import analytics.domain.repositories.widget;
 import analytics.domain.values.common;
 import analytics.domain.values.chart_type;
-import analytics.app.dto.widget_dto;
+import analytics.app.dto.widget;
 import std.conv : to;
 
 class WidgetUseCases {

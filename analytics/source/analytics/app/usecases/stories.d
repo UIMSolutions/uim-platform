@@ -3,7 +3,7 @@ module analytics.app.usecases.stories;
 import analytics.domain.entities.story;
 import analytics.domain.repositories.story;
 import analytics.domain.values.common;
-import analytics.app.dto.story_dto;
+import analytics.app.dto.story;
 
 class StoryUseCases {
     private StoryRepository repo;

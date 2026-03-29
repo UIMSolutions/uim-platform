@@ -3,8 +3,8 @@ module application.use_cases.delegated_auth;
 import domain.entities.idp_config;
 import domain.entities.user;
 import domain.types;
-import domain.ports.idp_config_repository;
-import domain.ports.user_repository;
+import domain.ports.idp_config;
+import domain.ports.user;
 
 import std.string : split;
 

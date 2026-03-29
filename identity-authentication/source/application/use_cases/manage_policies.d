@@ -2,7 +2,7 @@ module application.use_cases.manage_policies;
 
 import domain.entities.policy;
 import domain.types;
-import domain.ports.policy_repository;
+import domain.ports.policy;
 import application.dto;
 
 import std.uuid;

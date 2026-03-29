@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.prediction_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.predictions;
-import analytics.app.dto.prediction_dto;
+import analytics.app.dto.prediction;
 import analytics.infrastructure.web.json_utils;
 
 class PredictionHandler {

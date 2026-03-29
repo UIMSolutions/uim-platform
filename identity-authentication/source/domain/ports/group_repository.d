@@ -1,4 +1,4 @@
-module domain.ports.group_repository;
+module domain.ports.group;
 
 import domain.entities.group;
 import domain.types;

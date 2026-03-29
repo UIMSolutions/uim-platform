@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.story_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.stories;
-import analytics.app.dto.story_dto;
+import analytics.app.dto.story;
 import analytics.infrastructure.web.json_utils;
 
 class StoryHandler {

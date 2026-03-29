@@ -1,4 +1,4 @@
-module domain.ports.tenant_repository;
+module domain.ports.tenant;
 
 import domain.entities.tenant;
 import domain.types;

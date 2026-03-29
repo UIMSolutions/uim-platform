@@ -1,4 +1,4 @@
-module analytics.app.dto.prediction_dto;
+module analytics.app.dto.prediction;
 
 import std.conv : to;
 import analytics.domain.entities.prediction;

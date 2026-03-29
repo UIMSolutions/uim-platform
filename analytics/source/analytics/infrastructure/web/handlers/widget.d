@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.widget_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.widgets;
-import analytics.app.dto.widget_dto;
+import analytics.app.dto.widget;
 import analytics.infrastructure.web.json_utils;
 
 class WidgetHandler {

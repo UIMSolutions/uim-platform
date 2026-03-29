@@ -1,9 +1,9 @@
 module analytics.app.usecases.predictions;
 
 import analytics.domain.entities.prediction;
-import analytics.domain.repositories.prediction_repository;
+import analytics.domain.repositories.prediction;
 import analytics.domain.values.common;
-import analytics.app.dto.prediction_dto;
+import analytics.app.dto.prediction;
 import std.conv : to;
 
 class PredictionUseCases {

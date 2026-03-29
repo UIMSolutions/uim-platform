@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_session_repo;
 
 import domain.entities.session;
 import domain.types;
-import domain.ports.session_repository;
+import domain.ports.session;
 
 import std.datetime.systime : Clock;
 

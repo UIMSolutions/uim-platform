@@ -2,7 +2,7 @@ module infrastructure.persistence.in_memory_app_repo;
 
 import domain.entities.application;
 import domain.types;
-import domain.ports.application_repository;
+import domain.ports.application;
 
 /// In-memory adapter for application/service provider persistence.
 class InMemoryApplicationRepository : ApplicationRepository

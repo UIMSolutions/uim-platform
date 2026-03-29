@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.dataset_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.datasets;
-import analytics.app.dto.dataset_dto;
+import analytics.app.dto.dataset;
 import analytics.infrastructure.web.json_utils;
 
 class DatasetHandler {

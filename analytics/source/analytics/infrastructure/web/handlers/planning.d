@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.planning_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.planning;
-import analytics.app.dto.planning_dto;
+import analytics.app.dto.planning;
 import analytics.infrastructure.web.json_utils;
 
 class PlanningHandler {

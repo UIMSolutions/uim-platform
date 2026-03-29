@@ -1,4 +1,4 @@
-module domain.ports.policy_repository;
+module domain.ports.policy;
 
 import domain.entities.policy;
 import domain.types;

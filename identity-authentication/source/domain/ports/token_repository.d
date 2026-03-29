@@ -1,4 +1,4 @@
-module domain.ports.token_repository;
+module domain.ports.token;
 
 import domain.entities.token;
 import domain.types;

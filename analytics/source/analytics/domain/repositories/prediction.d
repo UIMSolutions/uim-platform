@@ -1,4 +1,4 @@
-module analytics.domain.repositories.prediction_repository;
+module analytics.domain.repositories.prediction;
 
 import analytics.domain.entities.prediction;
 import analytics.domain.values.common;
