@@ -1,9 +1,9 @@
-module analytics.infrastructure.web.handlers.data_source_handler;
+module analytics.infrastructure.web.handlers.datasource;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.data_sources;
-import analytics.app.dto.data_source;
+import analytics.app.usecases.datasources;
+import analytics.app.dto.datasource;
 import analytics.infrastructure.web.json_utils;
 
 class DataSourceHandler {

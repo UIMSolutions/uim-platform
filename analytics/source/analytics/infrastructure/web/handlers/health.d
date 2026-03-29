@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.handlers.health_handler;
+module analytics.infrastructure.web.handlers.health;
 
 import vibe.http.server;
 import vibe.data.json;

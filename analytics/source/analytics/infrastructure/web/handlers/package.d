@@ -6,5 +6,5 @@ public import analytics.infrastructure.web.handlers.dataset;
 public import analytics.infrastructure.web.handlers.widget;
 public import analytics.infrastructure.web.handlers.planning;
 public import analytics.infrastructure.web.handlers.prediction;
-public import analytics.infrastructure.web.handlers.data_source;
+public import analytics.infrastructure.web.handlers.datasource;
 public import analytics.infrastructure.web.handlers.health;

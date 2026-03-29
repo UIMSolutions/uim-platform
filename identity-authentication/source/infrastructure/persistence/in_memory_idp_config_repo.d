@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_idp_config_repo;
+module infrastructure.persistence.in_memory_idp_config;
 
 import domain.entities.idp_config;
 import domain.types;

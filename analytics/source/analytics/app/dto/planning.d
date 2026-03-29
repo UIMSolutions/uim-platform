@@ -1,7 +1,7 @@
 module analytics.app.dto.planning;
 
 import std.conv : to;
-import analytics.domain.entities.planning_model;
+import analytics.domain.entities.planning;
 import analytics.domain.values.time_granularity;
 
 struct CreatePlanningModelRequest {

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_token_repo;
+module infrastructure.persistence.in_memory_token;
 
 import domain.entities.token;
 import domain.types;

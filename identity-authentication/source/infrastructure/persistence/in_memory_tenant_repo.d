@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_tenant_repo;
+module infrastructure.persistence.in_memory_tenant;
 
 import domain.entities.tenant;
 import domain.types;

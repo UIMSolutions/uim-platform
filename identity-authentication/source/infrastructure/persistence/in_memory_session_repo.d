@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_session_repo;
+module infrastructure.persistence.in_memory_session;
 
 import domain.entities.session;
 import domain.types;

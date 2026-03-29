@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_user_repo;
+module infrastructure.persistence.in_memory_user;
 
 import domain.entities.user;
 import domain.types;

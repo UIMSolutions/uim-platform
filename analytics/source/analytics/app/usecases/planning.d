@@ -1,6 +1,6 @@
 module analytics.app.usecases.planning;
 
-import analytics.domain.entities.planning_model;
+import analytics.domain.entities.planning;
 import analytics.domain.repositories.planning;
 import analytics.domain.values.common;
 import analytics.domain.values.time_granularity;

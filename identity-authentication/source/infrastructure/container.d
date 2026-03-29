@@ -3,15 +3,15 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_user_repo;
-import infrastructure.persistence.in_memory_group_repo;
-import infrastructure.persistence.in_memory_tenant_repo;
-import infrastructure.persistence.in_memory_app_repo;
-import infrastructure.persistence.in_memory_session_repo;
-import infrastructure.persistence.in_memory_token_repo;
-import infrastructure.persistence.in_memory_policy_repo;
-import infrastructure.persistence.in_memory_idp_config_repo;
-import infrastructure.persistence.in_memory_risk_rule_repo;
+import infrastructure.persistence.in_memory_user;
+import infrastructure.persistence.in_memory_group;
+import infrastructure.persistence.in_memory_tenant;
+import infrastructure.persistence.in_memory_app;
+import infrastructure.persistence.in_memory_session;
+import infrastructure.persistence.in_memory_token;
+import infrastructure.persistence.in_memory_policy;
+import infrastructure.persistence.in_memory_idp_config;
+import infrastructure.persistence.in_memory_risk_rule;
 
 // Services
 import infrastructure.security.bcrypt_password_service;

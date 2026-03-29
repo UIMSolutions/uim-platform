@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.prediction_repo;
+module analytics.infrastructure.persistence.memory.prediction;
 
 import analytics.domain.entities.prediction;
 import analytics.domain.repositories.prediction;

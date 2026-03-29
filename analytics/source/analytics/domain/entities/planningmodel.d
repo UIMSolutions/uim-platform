@@ -1,4 +1,4 @@
-module analytics.domain.entities.planning_model;
+module analytics.domain.entities.planning;
 
 import analytics.domain.values.common;
 import analytics.domain.values.time_granularity;

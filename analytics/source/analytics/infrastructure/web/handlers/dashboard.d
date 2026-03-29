@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.handlers.dashboard_handler;
+module analytics.infrastructure.web.handlers.dashboard;
 
 import vibe.http.server;
 import vibe.data.json;
