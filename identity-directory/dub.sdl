@@ -1,0 +1,11 @@
+name "identity-directory"
+description "Identity Directory Service - SCIM 2.0 compliant user and group directory with custom schemas, password policies, and audit logging"
+authors "UIM Platform Team"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+dependency "vibe-d:crypto" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+mainSourceFile "source/app.d"
