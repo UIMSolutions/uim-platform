@@ -1,6 +1,0 @@
-module uim.securities.helpers.factory;
-
-import uim.ai;
-mixin(Version!"test_uim_ai");
-
-@safe:

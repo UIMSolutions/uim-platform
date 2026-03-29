@@ -1,6 +1,0 @@
-module uim.forms.helpers.factory;
-
-import uim.forms;
-mixin(Version!"test_uim_forms");
-
-@safe:
