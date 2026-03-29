@@ -1,10 +1,10 @@
-module application.use_cases.manage_users;
+module uim.platform.identity_authentication.application.use_cases.manage_users;
 
-import domain.entities.user;
-import domain.types;
-import domain.ports.user;
-import domain.ports.password_service;
-import application.dto;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.user;
+import uim.platform.identity_authentication.domain.ports.password_service;
+import uim.platform.identity_authentication.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

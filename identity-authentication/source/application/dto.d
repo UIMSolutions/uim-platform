@@ -1,7 +1,7 @@
-module application.dto;
+module uim.platform.identity_authentication.application.dto;
 
-import domain.types;
-import domain.entities.policy : PolicyRule;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.entities.policy : PolicyRule;
 
 /// --- Authentication DTOs ---
 

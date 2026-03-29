@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.application;
 
-import domain.entities.application;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — application/service provider persistence.
 interface ApplicationRepository

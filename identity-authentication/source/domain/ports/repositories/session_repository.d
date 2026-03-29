@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.session;
 
-import domain.entities.session;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.session;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — session persistence.
 interface SessionRepository

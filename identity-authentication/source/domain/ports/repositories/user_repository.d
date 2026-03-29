@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.user;
 
-import domain.entities.user;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — user persistence.
 interface UserRepository

@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.token;
 
-import domain.entities.token;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.token;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — token persistence.
 interface TokenRepository

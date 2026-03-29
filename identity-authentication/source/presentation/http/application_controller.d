@@ -3,10 +3,10 @@ module presentation.http.application_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_applications;
-import application.dto;
-import domain.entities.application;
-import domain.types;
+import uim.platform.identity_authentication.application.use_cases.manage_applications;
+import uim.platform.identity_authentication.application.dto;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.types;
 import presentation.http.json_utils;
 
 /// HTTP controller for application (service provider) management.

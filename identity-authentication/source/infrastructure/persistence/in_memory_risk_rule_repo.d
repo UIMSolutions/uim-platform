@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_risk_rule;
 
-import domain.entities.risk_rule;
-import domain.types;
-import domain.ports.risk_rule;
+import uim.platform.identity_authentication.domain.entities.risk_rule;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.risk_rule;
 
 /// In-memory adapter for risk rule persistence.
 class InMemoryRiskRuleRepository : RiskRuleRepository

@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_idp_config;
 
-import domain.entities.idp_config;
-import domain.types;
-import domain.ports.idp_config;
+import uim.platform.identity_authentication.domain.entities.idp_config;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.idp_config;
 
 import std.algorithm : canFind;
 

@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.session;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Authenticated session.
 struct Session {

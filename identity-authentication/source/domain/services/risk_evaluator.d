@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.domain.services.risk_evaluator;
 
-import domain.entities.risk_rule;
-import domain.entities.user;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.risk_rule;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
 
 /// Domain service: evaluates risk level for an authentication attempt.
 struct RiskEvaluationContext

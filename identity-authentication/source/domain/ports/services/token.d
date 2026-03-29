@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.domain.ports.token_service;
 
-import domain.entities.user;
-import domain.entities.application;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — token generation and validation.
 interface TokenService

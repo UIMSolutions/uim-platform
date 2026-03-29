@@ -1,9 +1,9 @@
-module application.use_cases.manage_policies;
+module uim.platform.identity_authentication.application.use_cases.manage_policies;
 
-import domain.entities.policy;
-import domain.types;
-import domain.ports.policy;
-import application.dto;
+import uim.platform.identity_authentication.domain.entities.policy;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.policy;
+import uim.platform.identity_authentication.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

@@ -19,14 +19,14 @@ import infrastructure.security.jwt_token_service;
 import infrastructure.security.totp_mfa_service;
 
 // Use Cases
-import application.use_cases.authenticate_user;
-import application.use_cases.issue_token;
-import application.use_cases.manage_users;
-import application.use_cases.manage_groups;
-import application.use_cases.manage_applications;
-import application.use_cases.manage_tenants;
-import application.use_cases.manage_policies;
-import application.use_cases.delegated_auth;
+import uim.platform.identity_authentication.application.use_cases.authenticate_user;
+import uim.platform.identity_authentication.application.use_cases.issue_token;
+import uim.platform.identity_authentication.application.use_cases.manage_users;
+import uim.platform.identity_authentication.application.use_cases.manage_groups;
+import uim.platform.identity_authentication.application.use_cases.manage_applications;
+import uim.platform.identity_authentication.application.use_cases.manage_tenants;
+import uim.platform.identity_authentication.application.use_cases.manage_policies;
+import uim.platform.identity_authentication.application.use_cases.delegated_auth;
 
 // Controllers
 import presentation.http.auth_controller;

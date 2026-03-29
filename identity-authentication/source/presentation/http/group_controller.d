@@ -3,9 +3,9 @@ module presentation.http.group_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_groups;
-import application.dto;
-import domain.entities.group;
+import uim.platform.identity_authentication.application.use_cases.manage_groups;
+import uim.platform.identity_authentication.application.dto;
+import uim.platform.identity_authentication.domain.entities.group;
 import presentation.http.json_utils;
 
 /// HTTP controller for group management API.

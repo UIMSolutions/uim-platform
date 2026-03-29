@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.policy;
 
-import domain.entities.policy;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.policy;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — authorization policy persistence.
 interface PolicyRepository

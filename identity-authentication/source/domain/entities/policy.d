@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.policy;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Authorization policy for controlling access to applications.
 struct AuthorizationPolicy

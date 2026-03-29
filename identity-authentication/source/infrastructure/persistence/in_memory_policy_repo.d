@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_policy;
 
-import domain.entities.policy;
-import domain.types;
-import domain.ports.policy;
+import uim.platform.identity_authentication.domain.entities.policy;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.policy;
 
 import std.algorithm : canFind;
 

@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.idp_config;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// External Identity Provider configuration for delegated authentication.
 struct IdpConfig

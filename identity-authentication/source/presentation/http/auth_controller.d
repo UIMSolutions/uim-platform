@@ -3,9 +3,9 @@ module presentation.http.auth_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.authenticate_user;
-import application.use_cases.issue_token;
-import application.dto;
+import uim.platform.identity_authentication.application.use_cases.authenticate_user;
+import uim.platform.identity_authentication.application.use_cases.issue_token;
+import uim.platform.identity_authentication.application.dto;
 import presentation.http.json_utils;
 
 /// HTTP controller for authentication endpoints.

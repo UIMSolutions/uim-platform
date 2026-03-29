@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.group;
 
-import domain.entities.group;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.group;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — group persistence.
 interface GroupRepository

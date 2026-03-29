@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_group;
 
-import domain.entities.group;
-import domain.types;
-import domain.ports.group;
+import uim.platform.identity_authentication.domain.entities.group;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.group;
 
 /// In-memory adapter for group persistence.
 class InMemoryGroupRepository : GroupRepository

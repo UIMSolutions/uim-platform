@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.risk_rule;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Risk-based authentication rule.
 struct RiskRule

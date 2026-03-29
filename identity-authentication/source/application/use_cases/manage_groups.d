@@ -1,10 +1,10 @@
-module application.use_cases.manage_groups;
+module uim.platform.identity_authentication.application.use_cases.manage_groups;
 
-import domain.entities.group;
-import domain.types;
-import domain.ports.group;
-import domain.ports.user;
-import application.dto;
+import uim.platform.identity_authentication.domain.entities.group;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.group;
+import uim.platform.identity_authentication.domain.ports.user;
+import uim.platform.identity_authentication.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -50,7 +50,7 @@ class ManageGroupsUseCase
 
     string addMember(GroupId groupId, UserId userId)
     {
-        import domain.entities.user : User;
+        import uim.platform.identity_authentication.domain.entities.user : User;
 
         auto group = groupRepo.findById(groupId);
         if (group == Group.init)

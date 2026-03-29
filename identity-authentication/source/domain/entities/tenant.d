@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.tenant;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Tenant represents an isolated identity namespace.
 struct Tenant {

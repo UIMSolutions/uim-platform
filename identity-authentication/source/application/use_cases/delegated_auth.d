@@ -1,10 +1,10 @@
-module application.use_cases.delegated_auth;
+module uim.platform.identity_authentication.application.use_cases.delegated_auth;
 
-import domain.entities.idp_config;
-import domain.entities.user;
-import domain.types;
-import domain.ports.idp_config;
-import domain.ports.user;
+import uim.platform.identity_authentication.domain.entities.idp_config;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.idp_config;
+import uim.platform.identity_authentication.domain.ports.user;
 
 import std.string : split;
 

@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.user;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Core user entity in the identity directory.
 struct User

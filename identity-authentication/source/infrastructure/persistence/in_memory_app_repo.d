@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_app;
 
-import domain.entities.application;
-import domain.types;
-import domain.ports.application;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.application;
 
 /// In-memory adapter for application/service provider persistence.
 class InMemoryApplicationRepository : ApplicationRepository

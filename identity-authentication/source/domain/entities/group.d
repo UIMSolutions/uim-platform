@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.group;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Group entity for organizing users.
 struct Group

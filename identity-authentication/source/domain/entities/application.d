@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.application;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Application (Service Provider) registered for SSO.
 struct Application

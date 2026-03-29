@@ -1,14 +1,14 @@
-module application.use_cases.issue_token;
+module uim.platform.identity_authentication.application.use_cases.issue_token;
 
-import domain.entities.user;
-import domain.entities.application;
-import domain.entities.token;
-import domain.types;
-import domain.ports.user;
-import domain.ports.application;
-import domain.ports.token;
-import domain.ports.session;
-import domain.ports.token_service;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.entities.token;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.user;
+import uim.platform.identity_authentication.domain.ports.application;
+import uim.platform.identity_authentication.domain.ports.token;
+import uim.platform.identity_authentication.domain.ports.session;
+import uim.platform.identity_authentication.domain.ports.token_service;
 
 import std.uuid;
 import core.time;
@@ -38,7 +38,7 @@ class IssueTokenUseCase
     {
         // Validate session
         auto session = sessionRepo.findById(req.sessionId);
-        import domain.entities.session : Session;
+        import uim.platform.identity_authentication.domain.entities.session : Session;
         if (session == Session.init || session.revoked)
             return TokenResponse("", "", "", "Invalid session");
 

@@ -1,9 +1,9 @@
-module application.use_cases.manage_tenants;
+module uim.platform.identity_authentication.application.use_cases.manage_tenants;
 
-import domain.entities.tenant;
-import domain.types;
-import domain.ports.tenant;
-import application.dto;
+import uim.platform.identity_authentication.domain.entities.tenant;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.tenant;
+import uim.platform.identity_authentication.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

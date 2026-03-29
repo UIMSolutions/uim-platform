@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_tenant;
 
-import domain.entities.tenant;
-import domain.types;
-import domain.ports.tenant;
+import uim.platform.identity_authentication.domain.entities.tenant;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.tenant;
 
 /// In-memory adapter for tenant persistence.
 class InMemoryTenantRepository : TenantRepository

@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_token;
 
-import domain.entities.token;
-import domain.types;
-import domain.ports.token;
+import uim.platform.identity_authentication.domain.entities.token;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.token;
 
 /// In-memory adapter for token persistence.
 class InMemoryTokenRepository : TokenRepository

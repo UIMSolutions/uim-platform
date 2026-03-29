@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_user;
 
-import domain.entities.user;
-import domain.types;
-import domain.ports.user;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.user;
 
 /// In-memory adapter for user persistence (swap for DB adapter in production).
 class InMemoryUserRepository : UserRepository

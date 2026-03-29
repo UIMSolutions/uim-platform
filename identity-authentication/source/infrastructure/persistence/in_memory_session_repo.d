@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.infrastructure.persistence.in_memory_session;
 
-import domain.entities.session;
-import domain.types;
-import domain.ports.session;
+import uim.platform.identity_authentication.domain.entities.session;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.session;
 
 import std.datetime.systime : Clock;
 

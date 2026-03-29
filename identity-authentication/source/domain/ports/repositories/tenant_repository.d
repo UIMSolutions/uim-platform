@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.domain.ports.tenant;
 
-import domain.entities.tenant;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.tenant;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — tenant persistence.
 interface TenantRepository

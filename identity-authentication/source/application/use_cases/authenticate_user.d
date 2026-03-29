@@ -1,16 +1,16 @@
-module application.use_cases.authenticate_user;
+module uim.platform.identity_authentication.application.use_cases.authenticate_user;
 
-import domain.entities.user;
-import domain.entities.session;
-import domain.entities.risk_rule;
-import domain.types;
-import domain.ports.user;
-import domain.ports.password_service;
-import domain.ports.session;
-import domain.ports.risk_rule;
-import domain.ports.mfa_service;
-import domain.services.risk_evaluator;
-import application.dto;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.entities.session;
+import uim.platform.identity_authentication.domain.entities.risk_rule;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.user;
+import uim.platform.identity_authentication.domain.ports.password_service;
+import uim.platform.identity_authentication.domain.ports.session;
+import uim.platform.identity_authentication.domain.ports.risk_rule;
+import uim.platform.identity_authentication.domain.ports.mfa_service;
+import uim.platform.identity_authentication.domain.services.risk_evaluator;
+import uim.platform.identity_authentication.application.dto;
 
 import std.uuid;
 import core.time;

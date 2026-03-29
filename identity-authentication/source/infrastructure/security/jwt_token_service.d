@@ -1,9 +1,9 @@
 module uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
 
-import domain.entities.user;
-import domain.entities.application;
-import domain.types;
-import domain.ports.token_service;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.entities.application;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.token_service;
 
 import std.uuid;
 import std.conv : to;

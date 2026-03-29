@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
 
-import domain.types;
-import domain.ports.mfa_service;
+import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication.domain.ports.mfa_service;
 
 import std.uuid;
 import std.conv : to;

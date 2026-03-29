@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.entities.token;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Issued security token.
 struct Token

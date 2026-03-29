@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.domain.services.policy_evaluator;
 
-import domain.entities.policy;
-import domain.entities.user;
-import domain.types;
+import uim.platform.identity_authentication.domain.entities.policy;
+import uim.platform.identity_authentication.domain.entities.user;
+import uim.platform.identity_authentication.domain.types;
 
 /// Domain service: evaluates authorization policies against a user.
 struct PolicyEvaluationContext

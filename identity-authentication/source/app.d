@@ -1,13 +1,6 @@
 module app;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.core.core : runApplication;
-
-import infrastructure.config;
-import infrastructure.container;
-
-import std.stdio : writefln;
+import uim.platform.identity_authentication;
 
 void main()
 {

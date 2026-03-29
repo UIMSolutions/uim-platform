@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.domain.ports.mfa_service;
 
-import domain.types;
+import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — multi-factor authentication adapter.
 interface MfaService
