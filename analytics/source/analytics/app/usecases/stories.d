@@ -1,7 +1,7 @@
 module analytics.app.usecases.stories;
 
 import analytics.domain.entities.story;
-import analytics.domain.repositories.story_repository;
+import analytics.domain.repositories.story;
 import analytics.domain.values.common;
 import analytics.app.dto.story_dto;
 

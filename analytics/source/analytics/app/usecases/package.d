@@ -6,4 +6,4 @@ public import analytics.app.usecases.datasets;
 public import analytics.app.usecases.widgets;
 public import analytics.app.usecases.planning;
 public import analytics.app.usecases.predictions;
-public import analytics.app.usecases.data_sources;
+public import analytics.app.usecases.datasources;

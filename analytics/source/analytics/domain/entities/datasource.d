@@ -1,4 +1,4 @@
-module analytics.domain.entities.data_source;
+module analytics.domain.entities.datasource;
 
 import analytics.domain.values.common;
 

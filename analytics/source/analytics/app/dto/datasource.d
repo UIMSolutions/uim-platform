@@ -1,7 +1,7 @@
 module analytics.app.dto.datasource;
 
 import std.conv : to;
-import analytics.domain.entities.data_source;
+import analytics.domain.entities.datasource;
 
 struct CreateDataSourceRequest {
     string name;

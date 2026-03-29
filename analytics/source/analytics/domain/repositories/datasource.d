@@ -1,6 +1,6 @@
-module analytics.domain.repositories.data_source_repository;
+module analytics.domain.repositories.datasource;
 
-import analytics.domain.entities.data_source;
+import analytics.domain.entities.datasource;
 import analytics.domain.values.common;
 
 interface DataSourceRepository {
