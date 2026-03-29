@@ -5,8 +5,8 @@ mixin(ShowModule!());
 
 @safe:
 interface IUIMService {
-  ISAPConfig config();
-  void config(ISAPConfig cfg);
+  IUIMConfig config();
+  void config(IUIMConfig cfg);
 
   Json health();
   Json ready();

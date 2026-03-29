@@ -203,9 +203,13 @@ class SiteController
             jsonStr(s, "logoUrl"),
             jsonStr(s, "faviconUrl"),
             jsonStr(s, "footerText"),
-            jsonStrArray(s, "supportedLanguages"),
+            jsonStr(s, "copyrightText"),
             jsonStr(s, "defaultLanguage"),
-            jsonBool(s, "personalizationEnabled", false),
+            jsonStrArray(s, "supportedLanguages"),
+            jsonBool(s, "showPersonalization", false),
+            jsonBool(s, "showNotifications", false),
+            jsonBool(s, "showSearch", true),
+            jsonBool(s, "showUserActions", true),
         );
     }
 }

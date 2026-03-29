@@ -46,6 +46,7 @@ class ManageSitesUseCase
             req.settings,
             now,
             now,
+            "",  // createdBy
         );
         siteRepo.save(site);
         return SiteResponse(id, "");

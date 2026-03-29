@@ -5,7 +5,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class UIMValidationException : SAPException {
+class UIMValidationException : UIMException {
   this(string message) {
     super("Validation error: " ~ message);
   }

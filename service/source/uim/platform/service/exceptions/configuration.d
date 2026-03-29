@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMConfigurationException : SAPException {
+class UIMConfigurationException : UIMException {
   this(string message) {
     super("Configuration error: " ~ message);
   }

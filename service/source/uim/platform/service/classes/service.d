@@ -22,7 +22,7 @@ class UIMService : ISAPService {
     initialize(initData);
   }
 
-  this(ISAPConfig config) {
+  this(IUIMConfig config) {
     config.validate();
     _config = config;
     this.initialize();
@@ -35,12 +35,12 @@ class UIMService : ISAPService {
     return true;
   }
 
-  protected ISAPConfig _config;
-  ISAPConfig config() {
+  protected IUIMConfig _config;
+  IUIMConfig config() {
     return _config;
   }
 
-  void config(ISAPConfig cfg) {
+  void config(IUIMConfig cfg) {
     _config = cfg;
   }
 

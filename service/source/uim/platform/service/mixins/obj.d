@@ -5,7 +5,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-string sapEntityTemplate() {
+string uimEntityTemplate() {
   return q{
     this() {
       super();
@@ -23,10 +23,10 @@ string sapEntityTemplate() {
 }
 
 template UIMEntityTemplate(alias Symbol) {
-  const char[] SAPEntityTemplate = sapEntityTemplate();
+  const char[] UIMEntityTemplate = uimEntityTemplate();
 }
 
-string sapTenantEntityTemplate() {
+string uimTenantEntityTemplate() {
   return q{
     this() {
       super();
@@ -53,5 +53,5 @@ string sapTenantEntityTemplate() {
 }
 
 template UIMTenantEntityTemplate(alias Symbol) {
-  const char[] SAPTenantEntityTemplate = sapTenantEntityTemplate();
+  const char[] UIMTenantEntityTemplate = uimTenantEntityTemplate();
 }

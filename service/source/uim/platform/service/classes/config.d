@@ -29,7 +29,7 @@ mixin(ShowModule!());
   *   }
   * }
   */
-class UIMConfig : ISAPConfig {
+class UIMConfig : IUIMConfig {
   this() {
     initialize();
   }

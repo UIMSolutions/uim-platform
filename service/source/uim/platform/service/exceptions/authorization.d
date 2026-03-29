@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMAuthorizationException : SAPException {
+class UIMAuthorizationException : UIMException {
   this(string message) {
     super("Unauthorized: " ~ message);
   }

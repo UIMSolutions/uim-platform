@@ -41,6 +41,8 @@ class ManageTilesUseCase
             req.keywords,
             req.allowedRoleIds,
             req.configuration,
+            0,     // sortOrder
+            true,  // visible
             now,
             now,
         );
@@ -86,7 +88,7 @@ class ManageTilesUseCase
         tile.navigationTarget = req.navigationTarget;
         tile.keywords = req.keywords;
         tile.allowedRoleIds = req.allowedRoleIds;
-        tile.configuration = req.configuration;
+        tile.config = req.configuration;
         tile.updatedAt = Clock.currStdTime();
         tileRepo.update(tile);
         return "";

@@ -36,7 +36,7 @@ bool validateId(UUID value, string fieldName) {
   * If the config does not require an auth token, this function does nothing.
   * Throws SAPAuthorizationException if validation fails.
   */
-bool validateAuth(HTTPServerRequest req, ISAPConfig cfg) {
+bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
   if (!cfg.requireAuthToken) {
     return true; // No auth required, allow all requests
   }
