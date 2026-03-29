@@ -8,7 +8,7 @@ mixin(ShowModule!());
 
 bool validateTenant(string tenantId) {
   if (tenantId.length == 0) {
-    throw new SAPValidationException("Tenant ID cannot be empty");
+    throw new UIMValidationException("Tenant ID cannot be empty");
   }
 
   return validateTenant(UUID(tenantId));
@@ -20,21 +20,21 @@ bool validateTenant(UUID tenantId) {
 
 bool validateId(string value, string fieldName) {
   if (value.length == 0) {
-    throw new SAPValidationException(fieldName ~ " cannot be empty");
+    throw new UIMValidationException(fieldName ~ " cannot be empty");
   }
   return true;
 }
 
 bool validateId(UUID value, string fieldName) {
   if (value == NULLUUID) {
-    throw new SAPValidationException(fieldName ~ " should be a valid UUID");
+    throw new UIMValidationException(fieldName ~ " should be a valid UUID");
   }
   return true;
 }
 /**
   * Validates the Authorization header in the request against the expected token in the config.
   * If the config does not require an auth token, this function does nothing.
-  * Throws SAPAuthorizationException if validation fails.
+  * Throws UIMAuthorizationException if validation fails.
   */
 bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
   if (!cfg.requireAuthToken) {
@@ -42,12 +42,12 @@ bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
   }
 
   if (!("Authorization" in req.headers)) { // Missing header
-    throw new SAPAuthorizationException("Missing Authorization header");
+    throw new UIMAuthorizationException("Missing Authorization header");
   }
 
   auto expected = "Bearer " ~ cfg.authToken;
   if (req.headers["Authorization"] != expected) { // Invalid token
-    throw new SAPAuthorizationException("Invalid Authorization token");
+    throw new UIMAuthorizationException("Invalid Authorization token");
   }
 
   // Auth is valid
@@ -76,7 +76,7 @@ bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
 
   bool validateString(string value, string fieldName) {
   if (value.length == 0) {
-    throw new SAPValidationException(fieldName ~ " cannot be empty");
+    throw new UIMValidationException(fieldName ~ " cannot be empty");
   }
   return true;
 }

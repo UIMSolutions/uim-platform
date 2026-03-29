@@ -16,10 +16,10 @@ class UIMValidationException : UIMException {
 }
 ///
 unittest {
-  SAPValidationException ex1 = new SAPValidationException("Test message");
+  UIMValidationException ex1 = new UIMValidationException("Test message");
   assert(ex1.message == "Validation error: Test message");
 
-  SAPValidationException ex2 = new SAPValidationException("Test message", "testfile.d", 123);
+  UIMValidationException ex2 = new UIMValidationException("Test message", "testfile.d", 123);
   assert(ex2.message == "Validation error: Test message");
   assert(ex2.file == "testfile.d");
   assert(ex2.line == 123);

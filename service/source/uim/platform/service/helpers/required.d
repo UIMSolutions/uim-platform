@@ -12,7 +12,7 @@ UUID requiredUUID(Json request, string key) {
 
   auto value = request[key].getString;
   if (value.length == 0 || !value.isUUID) {
-    throw new SAPValidationException(key ~ " must be a valid UUID");
+    throw new UIMValidationException(key ~ " must be a valid UUID");
   }
 
   return UUID(value);
@@ -20,7 +20,7 @@ UUID requiredUUID(Json request, string key) {
 
 /**
   * Validates that the specified key exists in the JSON object and is a non-empty string.
-  * Returns the string value if valid, otherwise throws SAPValidationException.
+  * Returns the string value if valid, otherwise throws UIMValidationException.
   */
 string requiredString(Json data, string key) {
   requiredKey(data, key);
@@ -28,7 +28,7 @@ string requiredString(Json data, string key) {
 
   auto value = data[key].getString;
   if (value.length == 0) {
-    throw new SAPValidationException(key ~ " cannot be empty");
+    throw new UIMValidationException(key ~ " cannot be empty");
   }
 
   return value;
@@ -36,30 +36,30 @@ string requiredString(Json data, string key) {
 
 void requiredBooleanType(Json data, string key) {
   if (!data[key].isBoolean) {
-    throw new SAPValidationException(key ~ " must be a boolean");
+    throw new UIMValidationException(key ~ " must be a boolean");
   }
 }
 
 void requiredStringType(Json data, string key) {
   if (!data[key].isString) {
-    throw new SAPValidationException(key ~ " must be string");
+    throw new UIMValidationException(key ~ " must be string");
   }
 }
 
 void requiredArrayType(Json data, string key) {
   if (!data[key].isArray) {
-    throw new SAPValidationException(key ~ " must be array");
+    throw new UIMValidationException(key ~ " must be array");
   }
 }
 
 void requiredObjectType(Json data, string key) {
   if (!data[key].isObject) {
-    throw new SAPValidationException(key ~ " must be object");
+    throw new UIMValidationException(key ~ " must be object");
   }
 }
 
 void requiredKey(Json data, string key) {
   if (!(key in data)) {
-    throw new SAPValidationException(key ~ " is required");
+    throw new UIMValidationException(key ~ " is required");
   }
 }

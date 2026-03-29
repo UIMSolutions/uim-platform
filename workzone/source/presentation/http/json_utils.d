@@ -24,10 +24,8 @@ bool jsonBool(Json j, string key, bool default_ = false)
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).type == Json.Type.true_)
-        return true;
-    if ((*v).type == Json.Type.false_)
-        return false;
+    if ((*v).type == Json.Type.bool_)
+        return (*v).get!bool;
     return default_;
 }
 
@@ -39,7 +37,7 @@ long jsonLong(Json j, string key, long default_ = 0)
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).type == Json.Type.integer)
+    if ((*v).type == Json.Type.int_)
         return (*v).get!long;
     return default_;
 }

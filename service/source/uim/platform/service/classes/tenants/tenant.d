@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 class UIMTenant : UIMEntity, IUIMTenant {
-  mixin(UIMEntityTemplate!SAPTenant);
+  mixin(UIMEntityTemplate!UIMTenant);
 
   override bool initialize(Json[string] initData = null) {
     if (!super.initialize(initData)) {

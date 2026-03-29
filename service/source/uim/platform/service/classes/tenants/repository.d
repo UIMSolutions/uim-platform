@@ -7,23 +7,23 @@ mixin(ShowModule!());
 @safe:
 /*
 class UIMTenantRepository {
-  private ISAPTenant[UUID] tenants;
+  private IUIMTenant[UUID] tenants;
 
   this() {
     // Load tenants from a data source or initialize an empty array
     tenants = null;
   }
 
-  void addTenant(ISAPTenant tenant) {
+  void addTenant(IUIMTenant tenant) {
     tenants[tenant.id] = tenant;
     writeln("Tenant added: ", tenant.name);
   }
 
-  ISAPTenant getTenant(UUID tenantId) {
+  IUIMTenant getTenant(UUID tenantId) {
     return tenantId in tenants ? tenants[tenantId] : null;
   }
 
-  void updateTenant(UUID tenantId, ISAPTenant updatedTenant) {
+  void updateTenant(UUID tenantId, IUIMTenant updatedTenant) {
     if (tenantId in tenants) {
       tenants[tenantId] = updatedTenant;
       writeln("Tenant updated: ", updatedTenant.name);
@@ -41,7 +41,7 @@ class UIMTenantRepository {
     writeln("Tenant not found: ", tenantId);
   }
 
-  ISAPTenant[] getAllTenants() {
+  IUIMTenant[] getAllTenants() {
     return tenants.values.array;
   }
 

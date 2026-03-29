@@ -28,7 +28,7 @@ string[] readStringArray(Json data, string key) {
 
   foreach (item; data[key].toArray) {
     if (!item.isString)
-      throw new SAPValidationException(key ~ " must contain strings");
+      throw new UIMValidationException(key ~ " must contain strings");
 
     values ~= item.getString;
   }
