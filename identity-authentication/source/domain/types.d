@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.identity_authentication.domain.types;
 
 /// Unique identifier type alias for type safety.
 alias UserId = string;

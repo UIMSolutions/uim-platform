@@ -1,4 +1,4 @@
-module domain.ports.group;
+module uim.platform.identity_authentication.domain.ports.group;
 
 import domain.entities.group;
 import domain.types;

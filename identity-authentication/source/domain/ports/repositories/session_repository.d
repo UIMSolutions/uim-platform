@@ -1,4 +1,4 @@
-module domain.ports.session;
+module uim.platform.identity_authentication.domain.ports.session;
 
 import domain.entities.session;
 import domain.types;

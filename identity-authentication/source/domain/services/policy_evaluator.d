@@ -1,4 +1,4 @@
-module domain.services.policy_evaluator;
+module uim.platform.identity_authentication.domain.services.policy_evaluator;
 
 import domain.entities.policy;
 import domain.entities.user;

@@ -1,4 +1,4 @@
-module domain.ports.policy;
+module uim.platform.identity_authentication.domain.ports.policy;
 
 import domain.entities.policy;
 import domain.types;

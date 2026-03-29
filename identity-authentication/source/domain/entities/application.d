@@ -1,4 +1,4 @@
-module domain.entities.application;
+module uim.platform.identity_authentication.domain.entities.application;
 
 import domain.types;
 

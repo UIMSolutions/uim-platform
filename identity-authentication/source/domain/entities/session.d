@@ -1,4 +1,4 @@
-module domain.entities.session;
+module uim.platform.identity_authentication.domain.entities.session;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.tenant;
+module uim.platform.identity_authentication.domain.entities.tenant;
 
 import domain.types;
 

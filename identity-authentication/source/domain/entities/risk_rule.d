@@ -1,4 +1,4 @@
-module domain.entities.risk_rule;
+module uim.platform.identity_authentication.domain.entities.risk_rule;
 
 import domain.types;
 

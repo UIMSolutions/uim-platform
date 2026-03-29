@@ -1,4 +1,4 @@
-module domain.services.risk_evaluator;
+module uim.platform.identity_authentication.domain.services.risk_evaluator;
 
 import domain.entities.risk_rule;
 import domain.entities.user;

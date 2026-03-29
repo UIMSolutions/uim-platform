@@ -1,4 +1,4 @@
-module domain.entities.token;
+module uim.platform.identity_authentication.domain.entities.token;
 
 import domain.types;
 

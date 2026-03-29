@@ -1,4 +1,4 @@
-module domain.ports.idp_config;
+module uim.platform.identity_authentication.domain.ports.idp_config;
 
 import domain.entities.idp_config;
 import domain.types;
