@@ -1,0 +1,157 @@
+module presentation.http.application_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import application.use_cases.manage_applications;
+import application.dto;
+import domain.entities.application;
+import domain.types;
+import presentation.http.json_utils;
+
+/// HTTP controller for application (service provider) management.
+class ApplicationController
+{
+    private ManageApplicationsUseCase useCase;
+
+    this(ManageApplicationsUseCase useCase)
+    {
+        this.useCase = useCase;
+    }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/applications", &handleCreate);
+        router.get("/api/v1/applications", &handleList);
+        router.get("/api/v1/applications/*", &handleGet);
+        router.put("/api/v1/applications/*", &handleUpdate);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            auto createReq = CreateAppRequest(
+                jsonStr(j, "tenantId"),
+                jsonStr(j, "name"),
+                jsonStr(j, "description"),
+                SsoProtocol.oidc,
+                jsonStrArray(j, "redirectUris"),
+                jsonStrArray(j, "allowedScopes"),
+                jsonStr(j, "samlEntityId"),
+                jsonStr(j, "samlAcsUrl")
+            );
+
+            auto result = useCase.createApplication(createReq);
+            auto response = Json.emptyObject;
+
+            if (result.isSuccess())
+            {
+                response["applicationId"] = Json(result.applicationId);
+                response["clientId"] = Json(result.clientId);
+                response["clientSecret"] = Json(result.clientSecret);
+                res.writeJsonBody(response, 201);
+            }
+            else
+            {
+                response["error"] = Json(result.error);
+                res.writeJsonBody(response, 400);
+            }
+        }
+        catch (Exception e)
+        {
+            auto errRes = Json.emptyObject;
+            errRes["error"] = Json("Internal server error");
+            res.writeJsonBody(errRes, 500);
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto apps = useCase.listApplications(tenantId);
+            auto response = Json.emptyObject;
+            response["totalResults"] = Json(cast(long) apps.length);
+            response["resources"] = toJsonArray(apps);
+            res.writeJsonBody(response, 200);
+        }
+        catch (Exception e)
+        {
+            auto errRes = Json.emptyObject;
+            errRes["error"] = Json("Internal server error");
+            res.writeJsonBody(errRes, 500);
+        }
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            import std.string : lastIndexOf;
+            auto path = req.requestURI;
+            auto idx = path.lastIndexOf('/');
+            auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+            auto app = useCase.getApplication(appId);
+            if (app == Application.init)
+            {
+                auto errRes = Json.emptyObject;
+                errRes["error"] = Json("Application not found");
+                res.writeJsonBody(errRes, 404);
+                return;
+            }
+
+            auto response = toJsonValue(app);
+            response.remove("clientSecret"); // Don't expose secret on GET
+            res.writeJsonBody(response, 200);
+        }
+        catch (Exception e)
+        {
+            auto errRes = Json.emptyObject;
+            errRes["error"] = Json("Internal server error");
+            res.writeJsonBody(errRes, 500);
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            import std.string : lastIndexOf;
+            auto path = req.requestURI;
+            auto idx = path.lastIndexOf('/');
+            auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
+
+            auto j = req.json;
+            auto updateReq = UpdateAppRequest(
+                appId,
+                jsonStr(j, "name"),
+                jsonStrArray(j, "redirectUris"),
+                jsonStrArray(j, "allowedScopes")
+            );
+
+            auto error = useCase.updateApplication(updateReq);
+            if (error.length > 0)
+            {
+                auto errRes = Json.emptyObject;
+                errRes["error"] = Json(error);
+                res.writeJsonBody(errRes, 404);
+            }
+            else
+            {
+                auto resp = Json.emptyObject;
+                resp["status"] = Json("updated");
+                res.writeJsonBody(resp, 200);
+            }
+        }
+        catch (Exception e)
+        {
+            auto errRes = Json.emptyObject;
+            errRes["error"] = Json("Internal server error");
+            res.writeJsonBody(errRes, 500);
+        }
+    }
+}

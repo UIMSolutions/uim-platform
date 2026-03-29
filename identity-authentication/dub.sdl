@@ -1,0 +1,11 @@
+name "identity-authentication"
+description "Identity Authentication Service"
+authors "UIM"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+dependency "vibe-d:crypto" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+mainSourceFile "source/app.d"
