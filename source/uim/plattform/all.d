@@ -1,1 +1,1 @@
-module uim.sap.all;
+module uim.platform.all;
