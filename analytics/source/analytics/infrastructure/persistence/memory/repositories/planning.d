@@ -1,7 +1,7 @@
-module analytics.infrastructure.persistence.memory.planning_repo;
+module analytics.infrastructure.persistence.memory.repositories.planning;
 
 import analytics.domain.entities.planning_model;
-import analytics.domain.repositories.planning_repository;
+import analytics.domain.repositories.planning;
 import analytics.domain.values.common;
 
 class InMemoryPlanningRepository : PlanningRepository {

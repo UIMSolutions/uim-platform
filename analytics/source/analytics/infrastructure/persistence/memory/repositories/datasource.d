@@ -1,7 +1,7 @@
-module analytics.infrastructure.persistence.memory.data_source_repo;
+module analytics.infrastructure.persistence.memory.repositories.datasource;
 
-import analytics.domain.entities.data_source;
-import analytics.domain.repositories.data_source_repository;
+import analytics.domain.entities.datasource;
+import analytics.domain.repositories.datasource;
 import analytics.domain.values.common;
 
 class InMemoryDataSourceRepository : DataSourceRepository {

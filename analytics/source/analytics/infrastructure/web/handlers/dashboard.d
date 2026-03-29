@@ -3,7 +3,7 @@ module analytics.infrastructure.web.handlers.dashboard_handler;
 import vibe.http.server;
 import vibe.data.json;
 import analytics.app.usecases.dashboards;
-import analytics.app.dto.dashboard_dto;
+import analytics.app.dto.dashboard;
 import analytics.infrastructure.web.json_utils;
 
 class DashboardHandler {

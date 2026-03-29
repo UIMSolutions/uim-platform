@@ -1,7 +1,7 @@
-module analytics.infrastructure.persistence.memory.dashboard_repo;
+module analytics.infrastructure.persistence.memory.repositories.dashboard;
 
 import analytics.domain.entities.dashboard;
-import analytics.domain.repositories.dashboard_repository;
+import analytics.domain.repositories.dashboard;
 import analytics.domain.values.common;
 
 /// In-memory adapter implementing DashboardRepository port.

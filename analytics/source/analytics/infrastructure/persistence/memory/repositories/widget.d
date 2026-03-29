@@ -1,7 +1,7 @@
-module analytics.infrastructure.persistence.memory.widget_repo;
+module analytics.infrastructure.persistence.memory.repositories.widget;
 
 import analytics.domain.entities.widget;
-import analytics.domain.repositories.widget_repository;
+import analytics.domain.repositories.widget;
 import analytics.domain.values.common;
 
 class InMemoryWidgetRepository : WidgetRepository {
