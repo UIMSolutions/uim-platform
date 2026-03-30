@@ -1,5 +1,7 @@
 module app;
 
+import std.stdio;
+import std.conv;
 import uim.platform.identity_authentication;
 
 void main()

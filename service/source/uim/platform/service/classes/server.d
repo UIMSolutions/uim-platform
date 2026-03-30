@@ -133,7 +133,7 @@ class UIMServer {
       res.headers[key] = value;
 
     _basePath = _service.config.basePath;
-    auto path = req.path;
+    auto path = req.requestPath.toString();
     if (!path.startsWith(_basePath)) {
       respondError(res, "Not found", 404);
       return;
