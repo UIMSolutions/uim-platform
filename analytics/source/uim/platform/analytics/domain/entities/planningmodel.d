@@ -1,7 +1,11 @@
 module uim.platform.analytics.domain.entities.planning;
 
-import uim.platform.analytics.domain.values.common;
-import uim.platform.analytics.domain.values.time_granularity;
+// import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.values.time_granularity;
+import uim.platform.analytics;
+
+mixin(ShowModule!());
+@safe:
 
 /// A PlanningModel supports budget planning, forecasting, and what-if scenarios (SAC Planning).
 class PlanningModel {

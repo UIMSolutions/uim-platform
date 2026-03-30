@@ -1,7 +1,10 @@
 module uim.platform.analytics.domain.entities.dashboard;
 
-import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics;
 
+mixin(ShowModule!());
+@safe:
 /// A Dashboard is a collection of pages, each containing analytical widgets.
 /// Corresponds to an "Analytic Application" in SAP Analytics Cloud.
 class Dashboard {

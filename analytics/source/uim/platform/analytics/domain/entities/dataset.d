@@ -1,8 +1,11 @@
 module uim.platform.analytics.domain.entities.dataset;
 
-import uim.platform.analytics.domain.values.common;
-import uim.platform.analytics.domain.values.aggregation;
+// import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.values.aggregation;
+import uim.platform.analytics;
 
+mixin(ShowModule!());
+@safe:
 /// A Dataset (data model) defines the structure for analytical consumption.
 /// Combines dimensions and measures — similar to SAC "Models".
 class Dataset {

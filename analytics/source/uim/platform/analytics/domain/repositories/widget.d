@@ -1,7 +1,11 @@
 module uim.platform.analytics.domain.repositories.widget;
 
-import uim.platform.analytics.domain.entities.widget;
-import uim.platform.analytics.domain.values.common;
+// import uim.platform.analytics.domain.entities.widget;
+// import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics;
+
+mixin(ShowModule!());
+@safe:
 
 interface WidgetRepository {
     Widget findById(EntityId id);

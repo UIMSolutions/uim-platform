@@ -1,0 +1,231 @@
+module presentation.http.personal_data_model_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.use_cases.manage_personal_data_models;
+import application.dto;
+import domain.types;
+import domain.entities.personal_data_model;
+import presentation.http.json_utils;
+
+class PersonalDataModelController
+{
+    private ManagePersonalDataModelsUseCase uc;
+
+    this(ManagePersonalDataModelsUseCase uc) { this.uc = uc; }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/personal-data-models", &handleCreate);
+        router.get("/api/v1/personal-data-models", &handleList);
+        router.get("/api/v1/personal-data-models/special", &handleListSpecial);
+        router.get("/api/v1/personal-data-models/*", &handleGetById);
+        router.put("/api/v1/personal-data-models/*", &handleUpdate);
+        router.delete_("/api/v1/personal-data-models/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            CreatePersonalDataModelRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.fieldName = jsonStr(j, "fieldName");
+            r.fieldDescription = jsonStr(j, "fieldDescription");
+            r.category = parseCategory(jsonStr(j, "category"));
+            r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
+            r.sourceSystem = jsonStr(j, "sourceSystem");
+            r.sourceEntity = jsonStr(j, "sourceEntity");
+            r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
+            r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
+            r.legalReference = jsonStr(j, "legalReference");
+
+            auto result = uc.createModel(r);
+            if (result.isSuccess())
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto catParam = req.headers.get("X-Category-Filter", "");
+
+            PersonalDataModel[] items;
+            if (catParam.length > 0)
+                items = uc.listByCategory(tenantId, parseCategory(catParam));
+            else
+                items = uc.listModels(tenantId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref e; items)
+                arr ~= serialize(e);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) items.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto items = uc.listSpecialCategories(tenantId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref e; items)
+                arr ~= serialize(e);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) items.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto entry = uc.getModel(id, tenantId);
+            if (entry is null)
+            {
+                writeError(res, 404, "Personal data model not found");
+                return;
+            }
+            res.writeJsonBody(serialize(*entry), 200);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            UpdatePersonalDataModelRequest r;
+            r.id = extractIdFromPath(req.requestURI);
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.fieldName = jsonStr(j, "fieldName");
+            r.fieldDescription = jsonStr(j, "fieldDescription");
+            r.category = parseCategory(jsonStr(j, "category"));
+            r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
+            r.sourceSystem = jsonStr(j, "sourceSystem");
+            r.sourceEntity = jsonStr(j, "sourceEntity");
+            r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
+            r.legalReference = jsonStr(j, "legalReference");
+
+            auto result = uc.updateModel(r);
+            if (result.isSuccess())
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            uc.deleteModel(id, tenantId);
+            res.writeJsonBody(Json.emptyObject, 204);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private static Json serialize(ref const PersonalDataModel e)
+    {
+        auto j = Json.emptyObject;
+        j["id"] = Json(e.id);
+        j["tenantId"] = Json(e.tenantId);
+        j["fieldName"] = Json(e.fieldName);
+        j["fieldDescription"] = Json(e.fieldDescription);
+        j["category"] = Json(e.category.to!string);
+        j["sensitivity"] = Json(e.sensitivity.to!string);
+        j["sourceSystem"] = Json(e.sourceSystem);
+        j["sourceEntity"] = Json(e.sourceEntity);
+        j["subjectType"] = Json(e.subjectType.to!string);
+        j["isSpecialCategory"] = Json(e.isSpecialCategory);
+        j["legalReference"] = Json(e.legalReference);
+        j["createdAt"] = Json(e.createdAt);
+        j["updatedAt"] = Json(e.updatedAt);
+        return j;
+    }
+
+    private static PersonalDataCategory parseCategory(string s)
+    {
+        switch (s)
+        {
+            case "identification": return PersonalDataCategory.identification;
+            case "contact": return PersonalDataCategory.contact;
+            case "financial": return PersonalDataCategory.financial;
+            case "health": return PersonalDataCategory.health;
+            case "biometric": return PersonalDataCategory.biometric;
+            case "ethnic": return PersonalDataCategory.ethnic;
+            case "political": return PersonalDataCategory.political;
+            case "religious": return PersonalDataCategory.religious;
+            case "tradeUnion": return PersonalDataCategory.tradeUnion;
+            case "genetic": return PersonalDataCategory.genetic;
+            case "criminal": return PersonalDataCategory.criminal;
+            case "location": return PersonalDataCategory.location;
+            case "behavioral": return PersonalDataCategory.behavioral;
+            default: return PersonalDataCategory.identification;
+        }
+    }
+
+    private static DataSensitivity parseSensitivity(string s)
+    {
+        switch (s)
+        {
+            case "sensitive": return DataSensitivity.sensitive;
+            case "highlyConfidential": return DataSensitivity.highlyConfidential;
+            default: return DataSensitivity.standard;
+        }
+    }
+
+    private static DataSubjectType parseSubjectType(string s)
+    {
+        switch (s)
+        {
+            case "employee": return DataSubjectType.employee;
+            case "customer": return DataSubjectType.customer;
+            case "vendor": return DataSubjectType.vendor;
+            case "partner": return DataSubjectType.partner;
+            case "applicant": return DataSubjectType.applicant;
+            default: return DataSubjectType.naturalPerson;
+        }
+    }
+}
