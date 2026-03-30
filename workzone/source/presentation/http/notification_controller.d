@@ -1,4 +1,4 @@
-module presentation.http.notification_controller;
+module uim.platform.identity_authentication.presentation.http.notification_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_notifications;
 import application.dto;
 import domain.types;
 import domain.entities.notification;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class NotificationController
 {

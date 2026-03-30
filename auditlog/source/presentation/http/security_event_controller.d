@@ -1,4 +1,4 @@
-module presentation.http.security_event_controller;
+module uim.platform.identity_authentication.presentation.http.security_event_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -8,7 +8,7 @@ import std.conv : to;
 import application.use_cases.write_security_event;
 import application.dto;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SecurityEventController
 {

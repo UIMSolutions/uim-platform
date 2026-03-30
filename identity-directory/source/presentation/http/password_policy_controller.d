@@ -1,4 +1,4 @@
-module presentation.http.password_policy_controller;
+module uim.platform.identity_authentication.presentation.http.password_policy_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -6,7 +6,7 @@ import vibe.data.json;
 import application.use_cases.manage_password_policies;
 import application.dto;
 import domain.entities.password_policy;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for password policy management.
 class PasswordPolicyController

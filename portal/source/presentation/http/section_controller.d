@@ -1,4 +1,4 @@
-module presentation.http.section_controller;
+module uim.platform.identity_authentication.presentation.http.section_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_sections;
 import application.dto;
 import domain.entities.section;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SectionController
 {

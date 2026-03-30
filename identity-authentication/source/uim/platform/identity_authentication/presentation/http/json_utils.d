@@ -1,4 +1,4 @@
-module presentation.http.json_utils;
+module uim.platform.identity_authentication.presentation.http.json_utils;
 
 import vibe.data.json;
 import std.traits;

@@ -1,4 +1,4 @@
-module presentation.http.page_controller;
+module uim.platform.identity_authentication.presentation.http.page_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_pages;
 import application.dto;
 import domain.entities.page;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class PageController
 {

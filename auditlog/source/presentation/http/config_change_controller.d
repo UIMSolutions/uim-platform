@@ -1,4 +1,4 @@
-module presentation.http.config_change_controller;
+module uim.platform.identity_authentication.presentation.http.config_change_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -8,7 +8,7 @@ import application.use_cases.write_config_change;
 import application.dto;
 import domain.types;
 import domain.entities.audit_log_entry : AuditAttribute;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ConfigChangeController
 {

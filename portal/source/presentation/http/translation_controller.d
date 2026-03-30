@@ -1,4 +1,4 @@
-module presentation.http.translation_controller;
+module uim.platform.identity_authentication.presentation.http.translation_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_translations;
 import application.dto;
 import domain.entities.translation;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class TranslationController
 {

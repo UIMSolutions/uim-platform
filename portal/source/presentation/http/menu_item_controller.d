@@ -1,4 +1,4 @@
-module presentation.http.menu_item_controller;
+module uim.platform.identity_authentication.presentation.http.menu_item_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_menu_items;
 import application.dto;
 import domain.entities.menu_item;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class MenuItemController
 {

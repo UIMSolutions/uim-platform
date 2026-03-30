@@ -1,4 +1,4 @@
-module presentation.http.content_controller;
+module uim.platform.identity_authentication.presentation.http.content_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_content;
 import application.dto;
 import domain.types;
 import domain.entities.content_item;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ContentController
 {

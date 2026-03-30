@@ -1,4 +1,4 @@
-module presentation.http.application_controller;
+module uim.platform.identity_authentication.presentation.http.application_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import uim.platform.identity_authentication.application.use_cases.manage_applica
 import uim.platform.identity_authentication.application.dto;
 import uim.platform.identity_authentication.domain.entities.application;
 import uim.platform.identity_authentication.domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for application (service provider) management.
 class ApplicationController

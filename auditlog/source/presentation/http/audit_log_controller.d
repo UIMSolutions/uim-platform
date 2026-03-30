@@ -1,4 +1,4 @@
-module presentation.http.audit_log_controller;
+module uim.platform.identity_authentication.presentation.http.audit_log_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -10,7 +10,7 @@ import application.use_cases.retrieve_audit_logs;
 import application.dto;
 import domain.types;
 import domain.entities.audit_log_entry;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class AuditLogController
 {

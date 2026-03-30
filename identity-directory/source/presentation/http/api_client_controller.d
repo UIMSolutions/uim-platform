@@ -1,4 +1,4 @@
-module presentation.http.api_client_controller;
+module uim.platform.identity_authentication.presentation.http.api_client_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -6,7 +6,7 @@ import vibe.data.json;
 import application.use_cases.manage_api_clients;
 import application.dto;
 import domain.entities.api_client;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.
 class ApiClientController

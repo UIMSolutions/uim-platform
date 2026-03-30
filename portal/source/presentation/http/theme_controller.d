@@ -1,4 +1,4 @@
-module presentation.http.theme_controller;
+module uim.platform.identity_authentication.presentation.http.theme_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_themes;
 import application.dto;
 import domain.entities.theme;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ThemeController
 {

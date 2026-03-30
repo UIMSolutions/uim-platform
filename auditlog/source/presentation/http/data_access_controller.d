@@ -1,4 +1,4 @@
-module presentation.http.data_access_controller;
+module uim.platform.identity_authentication.presentation.http.data_access_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import vibe.data.json;
 import application.use_cases.write_data_access_log;
 import application.dto;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class DataAccessController
 {

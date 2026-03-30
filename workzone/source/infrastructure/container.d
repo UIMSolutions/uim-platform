@@ -27,17 +27,17 @@ import application.use_cases.manage_apps;
 import application.use_cases.manage_widgets;
 
 // Controllers
-import presentation.http.workspace_controller;
-import presentation.http.workpage_controller;
-import presentation.http.card_controller;
-import presentation.http.content_controller;
-import presentation.http.feed_controller;
-import presentation.http.notification_controller;
-import presentation.http.task_controller;
-import presentation.http.channel_controller;
-import presentation.http.app_controller;
-import presentation.http.widget_controller;
-import presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.workspace_controller;
+import uim.platform.identity_authentication.presentation.http.workpage_controller;
+import uim.platform.identity_authentication.presentation.http.card_controller;
+import uim.platform.identity_authentication.presentation.http.content_controller;
+import uim.platform.identity_authentication.presentation.http.feed_controller;
+import uim.platform.identity_authentication.presentation.http.notification_controller;
+import uim.platform.identity_authentication.presentation.http.task_controller;
+import uim.platform.identity_authentication.presentation.http.channel_controller;
+import uim.platform.identity_authentication.presentation.http.app_controller;
+import uim.platform.identity_authentication.presentation.http.widget_controller;
+import uim.platform.identity_authentication.presentation.http.health_controller;
 
 /// Dependency injection container — wires all layers together.
 struct Container

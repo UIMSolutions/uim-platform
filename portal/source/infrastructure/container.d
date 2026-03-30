@@ -27,17 +27,17 @@ import application.use_cases.manage_menu_items;
 import application.use_cases.manage_translations;
 
 // Controllers
-import presentation.http.site_controller;
-import presentation.http.page_controller;
-import presentation.http.section_controller;
-import presentation.http.tile_controller;
-import presentation.http.catalog_controller;
-import presentation.http.provider_controller;
-import presentation.http.role_controller;
-import presentation.http.theme_controller;
-import presentation.http.menu_item_controller;
-import presentation.http.translation_controller;
-import presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.site_controller;
+import uim.platform.identity_authentication.presentation.http.page_controller;
+import uim.platform.identity_authentication.presentation.http.section_controller;
+import uim.platform.identity_authentication.presentation.http.tile_controller;
+import uim.platform.identity_authentication.presentation.http.catalog_controller;
+import uim.platform.identity_authentication.presentation.http.provider_controller;
+import uim.platform.identity_authentication.presentation.http.role_controller;
+import uim.platform.identity_authentication.presentation.http.theme_controller;
+import uim.platform.identity_authentication.presentation.http.menu_item_controller;
+import uim.platform.identity_authentication.presentation.http.translation_controller;
+import uim.platform.identity_authentication.presentation.http.health_controller;
 
 /// Dependency injection container — wires all layers together.
 struct Container

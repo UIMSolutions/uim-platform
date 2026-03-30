@@ -1,4 +1,4 @@
-module presentation.http.policy_controller;
+module uim.platform.identity_authentication.presentation.http.policy_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -6,7 +6,7 @@ import vibe.data.json;
 import uim.platform.identity_authentication.application.use_cases.manage_policies;
 import uim.platform.identity_authentication.application.dto;
 import uim.platform.identity_authentication.domain.entities.policy;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for authorization policy management.
 class PolicyController

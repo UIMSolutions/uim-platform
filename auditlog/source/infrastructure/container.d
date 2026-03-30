@@ -22,14 +22,14 @@ import application.use_cases.write_data_access_log;
 import application.use_cases.write_config_change;
 
 // Controllers
-import presentation.http.audit_log_controller;
-import presentation.http.retention_controller;
-import presentation.http.audit_config_controller;
-import presentation.http.export_controller;
-import presentation.http.security_event_controller;
-import presentation.http.data_access_controller;
-import presentation.http.config_change_controller;
-import presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.audit_log_controller;
+import uim.platform.identity_authentication.presentation.http.retention_controller;
+import uim.platform.identity_authentication.presentation.http.audit_config_controller;
+import uim.platform.identity_authentication.presentation.http.export_controller;
+import uim.platform.identity_authentication.presentation.http.security_event_controller;
+import uim.platform.identity_authentication.presentation.http.data_access_controller;
+import uim.platform.identity_authentication.presentation.http.config_change_controller;
+import uim.platform.identity_authentication.presentation.http.health_controller;
 
 /// Dependency injection container — wires all layers together.
 struct Container

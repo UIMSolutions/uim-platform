@@ -1,4 +1,4 @@
-module presentation.http.controllers.auth;
+module uim.platform.identity_authentication.presentation.http.controllers.auth;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -6,7 +6,7 @@ import vibe.data.json;
 import uim.platform.identity_authentication.application.use_cases.authenticate_user;
 import uim.platform.identity_authentication.application.use_cases.issue_token;
 import uim.platform.identity_authentication.application.dto;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for authentication endpoints.
 class AuthController

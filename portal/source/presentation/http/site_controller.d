@@ -1,4 +1,4 @@
-module presentation.http.site_controller;
+module uim.platform.identity_authentication.presentation.http.site_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -7,7 +7,7 @@ import application.use_cases.manage_sites;
 import application.dto;
 import domain.entities.site;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SiteController
 {

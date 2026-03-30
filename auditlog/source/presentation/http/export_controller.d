@@ -1,4 +1,4 @@
-module presentation.http.export_controller;
+module uim.platform.identity_authentication.presentation.http.export_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -9,7 +9,7 @@ import application.use_cases.manage_exports;
 import application.dto;
 import domain.types;
 import domain.entities.export_job;
-import presentation.http.json_utils;
+import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ExportController
 {
