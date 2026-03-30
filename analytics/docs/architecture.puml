@@ -1,0 +1,402 @@
+@startuml "UIM Analytics Platform Service – Architecture"
+
+!define ENTITY_COLOR #E8F5E9
+!define PORT_COLOR #E3F2FD
+!define SERVICE_COLOR #FFF3E0
+!define USECASE_COLOR #F3E5F5
+!define INFRA_COLOR #ECEFF1
+!define HTTP_COLOR #FCE4EC
+!define VALUE_COLOR #FFFDE7
+
+skinparam packageStyle rectangle
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype ortho
+skinparam packageBorderColor #666
+skinparam packageFontSize 13
+skinparam packageFontStyle bold
+skinparam classFontSize 10
+
+title UIM Analytics Platform Service\nClean + Hexagonal Architecture
+
+' ============================================================
+' PRESENTATION LAYER (Driving Adapters)
+' ============================================================
+
+package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
+  skinparam packageBackgroundColor HTTP_COLOR
+
+  class HealthHandler << (H,#EF9A9A) >>
+  class DashboardHandler << (H,#EF9A9A) >>
+  class StoryHandler << (H,#EF9A9A) >>
+  class DatasetHandler << (H,#EF9A9A) >>
+  class WidgetHandler << (H,#EF9A9A) >>
+  class DataSourceHandler << (H,#EF9A9A) >>
+  class PlanningHandler << (H,#EF9A9A) >>
+  class PredictionHandler << (H,#EF9A9A) >>
+
+  class "Middleware" as MW << (M,#EF9A9A) >> {
+    CORS
+    RequestLogger
+  }
+}
+
+' ============================================================
+' APPLICATION LAYER (Use Cases + Ports)
+' ============================================================
+
+package "Application Layer  «use cases & ports»" as APP <<Rectangle>> {
+  skinparam packageBackgroundColor USECASE_COLOR
+
+  class DashboardUseCases << (U,#CE93D8) >> {
+    + create(req) : DashboardResponse
+    + getById(id) : DashboardResponse
+    + list() : DashboardResponse[]
+    + addPage(id, title)
+    + publish(id)
+    + remove(id)
+  }
+
+  class StoryUseCases << (U,#CE93D8) >> {
+    + create(req) : StoryResponse
+    + getById(id) : StoryResponse
+    + list() : StoryResponse[]
+    + addSection(id, heading, narrative)
+    + publish(id)
+    + remove(id)
+  }
+
+  class DatasetUseCases << (U,#CE93D8) >> {
+    + create(req) : DatasetResponse
+    + getById(id) / list() / remove(id)
+  }
+
+  class WidgetUseCases << (U,#CE93D8) >> {
+    + create(req) : WidgetResponse
+    + getById(id) / list() / remove(id)
+  }
+
+  class DataSourceUseCases << (U,#CE93D8) >> {
+    + create(req) : DataSourceResponse
+    + getById(id) / list() / remove(id)
+    + testConnection(id) : bool
+  }
+
+  class PlanningUseCases << (U,#CE93D8) >> {
+    + create(req) : PlanningModelResponse
+    + getById(id) / list() / remove(id)
+    + lock(id) / approve(id)
+  }
+
+  class PredictionUseCases << (U,#CE93D8) >> {
+    + create(req) : PredictionResponse
+    + getById(id) / list() / remove(id)
+    + train(id)
+  }
+
+  package "Outgoing Ports" as OUT_PORTS <<Rectangle>> {
+    skinparam packageBackgroundColor PORT_COLOR
+
+    interface DataConnector << (P,#42A5F5) >> {
+      + fetchData(connStr, query)
+      + testConnection(connStr) : bool
+    }
+
+    interface ExportPort << (P,#42A5F5) >> {
+      + exportPdf(id, type) : ubyte[]
+      + exportCsv(id, columns) : string
+      + exportExcel(id, columns) : ubyte[]
+    }
+
+    interface NotificationPort << (P,#42A5F5) >> {
+      + notify(userId, subject, body)
+      + notifyGroup(userIds, subject, body)
+    }
+  }
+}
+
+' ============================================================
+' DOMAIN LAYER (Core Business Logic)
+' ============================================================
+
+package "Domain Layer  «core»" as DOM <<Rectangle>> {
+
+  package "Entities" as ENT <<Rectangle>> {
+    skinparam packageBackgroundColor ENTITY_COLOR
+
+    class Dashboard << (E,#66BB6A) >> {
+      id : EntityId
+      name, description : string
+      ownerId : EntityId
+      visibility : Visibility
+      status : ArtifactStatus
+      pages : Page[]
+      tags : string[]
+      audit : AuditInfo
+    }
+
+    class Story << (E,#66BB6A) >> {
+      id : EntityId
+      title, description : string
+      ownerId : EntityId
+      visibility : Visibility
+      status : ArtifactStatus
+      sections : Section[]
+      tags : string[]
+      audit : AuditInfo
+    }
+
+    class Dataset << (E,#66BB6A) >> {
+      id : EntityId
+      name, description : string
+      dataSourceId : EntityId
+      columns : Column[]
+      status : ArtifactStatus
+      audit : AuditInfo
+    }
+
+    class Widget << (E,#66BB6A) >> {
+      id : EntityId
+      title : string
+      chartType : ChartType
+      datasetId : EntityId
+      dimensions : WidgetBinding[]
+      measures : WidgetBinding[]
+      filters : FilterSpec[]
+      style : WidgetStyle
+      audit : AuditInfo
+    }
+
+    class DataSource << (E,#66BB6A) >> {
+      id : EntityId
+      name : string
+      sourceType : DataSourceType
+      connection : ConnectionInfo
+      schedule : ImportSchedule
+      connStatus : DataSourceStatus
+      audit : AuditInfo
+    }
+
+    class PlanningModel << (E,#66BB6A) >> {
+      id : EntityId
+      name, description : string
+      datasetId : EntityId
+      versions : PlanningVersion[]
+      granularity : TimeGranularity
+      planStatus : PlanningStatus
+      audit : AuditInfo
+    }
+
+    class Prediction << (E,#66BB6A) >> {
+      id : EntityId
+      name, description : string
+      datasetId : EntityId
+      predictionType : PredictionType
+      config : PredictionConfig
+      lastResult : PredictionResult
+      predStatus : PredictionStatus
+      audit : AuditInfo
+    }
+  }
+
+  package "Repository Interfaces  «ports»" as REPOS <<Rectangle>> {
+    skinparam packageBackgroundColor PORT_COLOR
+
+    interface DashboardRepository << (P,#42A5F5) >> {
+      findById() / findByOwner()
+      findByStatus() / findAll()
+      save() / remove()
+    }
+
+    interface StoryRepository << (P,#42A5F5) >>
+    interface DatasetRepository << (P,#42A5F5) >>
+    interface WidgetRepository << (P,#42A5F5) >>
+    interface DataSourceRepository << (P,#42A5F5) >>
+    interface PlanningRepository << (P,#42A5F5) >>
+    interface PredictionRepository << (P,#42A5F5) >>
+  }
+
+  package "Domain Services" as DSVC <<Rectangle>> {
+    skinparam packageBackgroundColor SERVICE_COLOR
+
+    class AnalyticsEngine << (S,#FFB74D) >> {
+      {static} + aggregate(values, type) : double
+      {static} + sum() / median() / variance()
+      {static} + unique(values) : double[]
+    }
+
+    class ForecastingEngine << (S,#FFB74D) >> {
+      {static} + forecast(data, periods, alpha) : double[]
+      {static} + forecastWithTrend(data, periods, alpha, beta) : double[]
+      {static} + movingAverage(data, window) : double[]
+    }
+  }
+
+  package "Value Objects" as VALS <<Rectangle>> {
+    skinparam packageBackgroundColor VALUE_COLOR
+
+    class EntityId << (V,#FDD835) >> {
+      value : string
+      {static} + generate() : EntityId
+    }
+
+    class AuditInfo << (V,#FDD835) >> {
+      createdAt, updatedAt : SysTime
+      createdBy, updatedBy : string
+    }
+
+    enum Visibility {
+      Private
+      Team
+      Organization
+      Public
+    }
+
+    enum ArtifactStatus {
+      Draft
+      Published
+      Archived
+    }
+
+    enum ChartType {
+      Bar, Column, Line, Area
+      Pie, Donut, Scatter, Bubble
+      Heatmap, Treemap, Waterfall
+      Gauge, KPI, Table, CrossTab
+      GeoMap, Sankey, BoxPlot
+      Histogram, Combo
+    }
+
+    enum AggregationType {
+      Sum, Average, Count
+      CountDistinct, Min, Max
+      Median, Variance, StdDev
+      First, Last, RunningTotal
+      WeightedAverage
+    }
+
+    enum TimeGranularity {
+      Yearly, Quarterly
+      Monthly, Weekly
+      Daily, Hourly
+    }
+  }
+}
+
+' ============================================================
+' INFRASTRUCTURE LAYER (Driven Adapters)
+' ============================================================
+
+package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
+  skinparam packageBackgroundColor INFRA_COLOR
+
+  class ServiceConfig << (F,#90A4AE) >> {
+    host : string = "0.0.0.0"
+    port : ushort = 8082
+  }
+
+  package "In-Memory Persistence" as PERSIST <<Rectangle>> {
+    class InMemoryDashboardRepository << (A,#B0BEC5) >>
+    class InMemoryStoryRepository << (A,#B0BEC5) >>
+    class InMemoryDatasetRepository << (A,#B0BEC5) >>
+    class InMemoryWidgetRepository << (A,#B0BEC5) >>
+    class InMemoryDataSourceRepository << (A,#B0BEC5) >>
+    class InMemoryPlanningRepository << (A,#B0BEC5) >>
+    class InMemoryPredictionRepository << (A,#B0BEC5) >>
+  }
+
+  package "External Adapters" as EXT_ADAPT <<Rectangle>> {
+    class StubDataConnector << (A,#B0BEC5) >> {
+      Hardcoded test data
+    }
+    class CsvExportAdapter << (A,#B0BEC5) >> {
+      CSV real / PDF+Excel stubs
+    }
+    class ConsoleNotificationAdapter << (A,#B0BEC5) >> {
+      Logs to console
+    }
+  }
+}
+
+' ============================================================
+' RELATIONSHIPS – Handler → Use Case
+' ============================================================
+
+DashboardHandler  --> DashboardUseCases
+StoryHandler      --> StoryUseCases
+DatasetHandler    --> DatasetUseCases
+WidgetHandler     --> WidgetUseCases
+DataSourceHandler --> DataSourceUseCases
+PlanningHandler   --> PlanningUseCases
+PredictionHandler --> PredictionUseCases
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Repository Port
+' ============================================================
+
+DashboardUseCases  --> DashboardRepository
+StoryUseCases      --> StoryRepository
+DatasetUseCases    --> DatasetRepository
+WidgetUseCases     --> WidgetRepository
+DataSourceUseCases --> DataSourceRepository
+PlanningUseCases   --> PlanningRepository
+PredictionUseCases --> PredictionRepository
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Outgoing Port
+' ============================================================
+
+DataSourceUseCases --> DataConnector : tests connections
+
+' ============================================================
+' RELATIONSHIPS – Adapter implements Port
+' ============================================================
+
+InMemoryDashboardRepository   ..|> DashboardRepository
+InMemoryStoryRepository       ..|> StoryRepository
+InMemoryDatasetRepository     ..|> DatasetRepository
+InMemoryWidgetRepository      ..|> WidgetRepository
+InMemoryDataSourceRepository  ..|> DataSourceRepository
+InMemoryPlanningRepository    ..|> PlanningRepository
+InMemoryPredictionRepository  ..|> PredictionRepository
+
+StubDataConnector             ..|> DataConnector
+CsvExportAdapter              ..|> ExportPort
+ConsoleNotificationAdapter    ..|> NotificationPort
+
+' ============================================================
+' ENTITY ASSOCIATIONS
+' ============================================================
+
+Dashboard "1" *-- "0..*" Page : pages
+Story "1" *-- "0..*" Section : sections
+Dataset "1" *-- "1..*" Column : columns
+Widget "0..*" --> "1" Dataset : datasetId
+Widget "1" *-- "0..*" WidgetBinding : dimensions/measures
+DataSource "1" <-- "0..*" Dataset : dataSourceId
+PlanningModel "1" --> "1" Dataset : datasetId
+PlanningModel "1" *-- "1..*" PlanningVersion : versions
+Prediction "1" --> "1" Dataset : datasetId
+
+' ============================================================
+' LEGEND
+' ============================================================
+
+legend bottom right
+  | Symbol | Layer |
+  | (H) | Handler (Presentation) |
+  | (U) | Use Case (Application) |
+  | (E) | Entity (Domain) |
+  | (P) | Port / Interface |
+  | (S) | Domain Service |
+  | (V) | Value Object |
+  | (A) | Adapter (Infrastructure) |
+  | (F) | Framework / Config |
+  |—→| depends on |
+  |..|>| implements |
+  |*--| composition |
+endlegend
+
+footer UIM Platform – Analytics Service\n© 2018-2026 UIM Platform Team
+
+@enduml
