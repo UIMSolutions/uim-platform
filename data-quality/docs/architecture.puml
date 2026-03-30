@@ -1,0 +1,276 @@
+@startuml "Data Quality Management Service – Architecture"
+
+!define ENTITY_COLOR #E8F5E9
+!define PORT_COLOR #E3F2FD
+!define SERVICE_COLOR #FFF3E0
+!define USECASE_COLOR #F3E5F5
+!define INFRA_COLOR #ECEFF1
+!define HTTP_COLOR #FCE4EC
+
+skinparam packageStyle rectangle
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype ortho
+skinparam packageBorderColor #666
+skinparam packageFontSize 13
+skinparam packageFontStyle bold
+skinparam classFontSize 10
+
+title Data Quality Management Service\nClean + Hexagonal Architecture
+
+' ============================================================
+' PRESENTATION LAYER (Driving Adapters)
+' ============================================================
+
+package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
+  skinparam packageBackgroundColor HTTP_COLOR
+
+  class HealthController << (C,#EF9A9A) >>
+  class ValidationRuleController << (C,#EF9A9A) >>
+  class ValidateController << (C,#EF9A9A) >>
+  class AddressController << (C,#EF9A9A) >>
+  class DuplicateController << (C,#EF9A9A) >>
+  class ProfileController << (C,#EF9A9A) >>
+  class CleansingRuleController << (C,#EF9A9A) >>
+  class CleansingJobController << (C,#EF9A9A) >>
+  class DashboardController << (C,#EF9A9A) >>
+}
+
+' ============================================================
+' APPLICATION LAYER (Use Cases)
+' ============================================================
+
+package "Application Layer  «use cases»" as APP <<Rectangle>> {
+  skinparam packageBackgroundColor USECASE_COLOR
+
+  class ManageValidationRulesUseCase << (U,#CE93D8) >>
+  class ValidateDataUseCase << (U,#CE93D8) >>
+  class CleanseAddressesUseCase << (U,#CE93D8) >>
+  class DetectDuplicatesUseCase << (U,#CE93D8) >>
+  class ProfileDataUseCase << (U,#CE93D8) >>
+  class ManageCleansingRulesUseCase << (U,#CE93D8) >>
+  class ManageCleansingJobsUseCase << (U,#CE93D8) >>
+  class ComputeDashboardUseCase << (U,#CE93D8) >>
+}
+
+' ============================================================
+' DOMAIN LAYER (Core Business Logic)
+' ============================================================
+
+package "Domain Layer  «core»" as DOM <<Rectangle>> {
+
+  package "Entities" as ENT <<Rectangle>> {
+    skinparam packageBackgroundColor ENTITY_COLOR
+
+    class ValidationRule << (E,#66BB6A) >> {
+      id : RuleId
+      tenantId : TenantId
+      name : string
+      ruleType : RuleType
+      severity : RuleSeverity
+      status : RuleStatus
+    }
+
+    class ValidationResult << (E,#66BB6A) >> {
+      recordId : RecordId
+      tenantId : TenantId
+      isValid : bool
+      qualityScore : double
+      violations : RuleViolation[]
+    }
+
+    class AddressRecord << (E,#66BB6A) >> {
+      id : AddressId
+      tenantId : TenantId
+      addressType : AddressType
+      quality : AddressQuality
+      latitude : double
+      longitude : double
+    }
+
+    class MatchGroup << (E,#66BB6A) >> {
+      id : MatchGroupId
+      tenantId : TenantId
+      candidates : MatchCandidate[]
+      survivorId : RecordId
+      resolved : bool
+    }
+
+    class DataProfile << (E,#66BB6A) >> {
+      id : ProfileId
+      tenantId : TenantId
+      datasetId : DatasetId
+      columns : ColumnProfile[]
+      totalRecords : long
+      completenessScore : double
+    }
+
+    class CleansingRule << (E,#66BB6A) >> {
+      id : RuleId
+      tenantId : TenantId
+      action : CleansingAction
+      priority : int
+      active : bool
+    }
+
+    class CleansingJob << (E,#66BB6A) >> {
+      id : CleansingJobId
+      tenantId : TenantId
+      status : JobStatus
+      totalRecords : long
+      processedRecords : long
+    }
+
+    class QualityDashboard << (E,#66BB6A) >> {
+      tenantId : TenantId
+      overallScore : double
+      rating : QualityRating
+      dimensions : 5 weighted scores
+    }
+  }
+
+  package "Ports  «interfaces»" as PORTS <<Rectangle>> {
+    skinparam packageBackgroundColor PORT_COLOR
+
+    interface IValidationRuleRepository << (P,#42A5F5) >>
+    interface IValidationResultRepository << (P,#42A5F5) >>
+    interface IAddressRepository << (P,#42A5F5) >>
+    interface IMatchGroupRepository << (P,#42A5F5) >>
+    interface IDataProfileRepository << (P,#42A5F5) >>
+    interface ICleansingRuleRepository << (P,#42A5F5) >>
+    interface ICleansingJobRepository << (P,#42A5F5) >>
+  }
+
+  package "Domain Services" as DSVC <<Rectangle>> {
+    skinparam packageBackgroundColor SERVICE_COLOR
+
+    class ValidationEngine << (S,#FFB74D) >> {
+      + validate(record, rules) : ValidationResult
+      - evaluateRule(record, rule) : RuleViolation?
+    }
+
+    class AddressCleanser << (S,#FFB74D) >> {
+      + cleanse(address) : AddressRecord
+      - normalizeCountry(code) : string
+      - formatPostalCode(code, country) : string
+    }
+
+    class DuplicateDetector << (S,#FFB74D) >> {
+      + detect(records, strategy, threshold) : MatchGroup[]
+      - jaroWinkler(a, b) : double
+      - soundex(s) : string
+    }
+
+    class QualityScorer << (S,#FFB74D) >> {
+      + computeDashboard(profiles, results) : QualityDashboard
+      - weightedScore(dimensions) : double
+    }
+  }
+}
+
+' ============================================================
+' INFRASTRUCTURE LAYER (Driven Adapters)
+' ============================================================
+
+package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
+  skinparam packageBackgroundColor INFRA_COLOR
+
+  class AppConfig << (F,#90A4AE) >> {
+    host : string = "0.0.0.0"
+    port : ushort = 8086
+  }
+
+  class Container << (F,#90A4AE) >> {
+    + buildContainer() : Container
+  }
+
+  package "In-Memory Persistence" as PERSIST <<Rectangle>> {
+    class InMemoryValidationRuleRepo << (A,#B0BEC5) >>
+    class InMemoryValidationResultRepo << (A,#B0BEC5) >>
+    class InMemoryAddressRepo << (A,#B0BEC5) >>
+    class InMemoryMatchGroupRepo << (A,#B0BEC5) >>
+    class InMemoryDataProfileRepo << (A,#B0BEC5) >>
+    class InMemoryCleansingRuleRepo << (A,#B0BEC5) >>
+    class InMemoryCleansingJobRepo << (A,#B0BEC5) >>
+  }
+}
+
+' ============================================================
+' RELATIONSHIPS – Controller → Use Case
+' ============================================================
+
+ValidationRuleController  --> ManageValidationRulesUseCase
+ValidateController        --> ValidateDataUseCase
+AddressController         --> CleanseAddressesUseCase
+DuplicateController       --> DetectDuplicatesUseCase
+ProfileController         --> ProfileDataUseCase
+CleansingRuleController   --> ManageCleansingRulesUseCase
+CleansingJobController    --> ManageCleansingJobsUseCase
+DashboardController       --> ComputeDashboardUseCase
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Domain Services
+' ============================================================
+
+ValidateDataUseCase       --> ValidationEngine
+CleanseAddressesUseCase   --> AddressCleanser
+DetectDuplicatesUseCase   --> DuplicateDetector
+ComputeDashboardUseCase   --> QualityScorer
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Ports
+' ============================================================
+
+ManageValidationRulesUseCase --> IValidationRuleRepository
+ValidateDataUseCase          --> IValidationRuleRepository
+ValidateDataUseCase          --> IValidationResultRepository
+CleanseAddressesUseCase      --> IAddressRepository
+DetectDuplicatesUseCase      --> IMatchGroupRepository
+ProfileDataUseCase           --> IDataProfileRepository
+ManageCleansingRulesUseCase  --> ICleansingRuleRepository
+ManageCleansingJobsUseCase   --> ICleansingJobRepository
+ComputeDashboardUseCase      --> IDataProfileRepository
+ComputeDashboardUseCase      --> IValidationResultRepository
+
+' ============================================================
+' RELATIONSHIPS – Adapter implements Port
+' ============================================================
+
+InMemoryValidationRuleRepo   ..|> IValidationRuleRepository
+InMemoryValidationResultRepo ..|> IValidationResultRepository
+InMemoryAddressRepo          ..|> IAddressRepository
+InMemoryMatchGroupRepo       ..|> IMatchGroupRepository
+InMemoryDataProfileRepo      ..|> IDataProfileRepository
+InMemoryCleansingRuleRepo    ..|> ICleansingRuleRepository
+InMemoryCleansingJobRepo     ..|> ICleansingJobRepository
+
+' ============================================================
+' ENTITY ASSOCIATIONS
+' ============================================================
+
+ValidationResult "0..*" -- "1" ValidationRule : evaluated by >
+MatchGroup "1" *-- "2..*" MatchCandidate
+DataProfile "1" *-- "1..*" ColumnProfile
+QualityDashboard ..> DataProfile : reads
+QualityDashboard ..> ValidationResult : reads
+
+' ============================================================
+' LEGEND
+' ============================================================
+
+legend bottom right
+  | Symbol | Layer |
+  | (C) | Controller (Presentation) |
+  | (U) | Use Case (Application) |
+  | (E) | Entity (Domain) |
+  | (P) | Port / Interface (Domain) |
+  | (S) | Domain Service |
+  | (A) | Adapter (Infrastructure) |
+  | (F) | Framework / Config |
+  |—→| depends on |
+  |..|>| implements |
+endlegend
+
+footer UIM Platform – Data Quality Management Service\n© 2018-2026 UIM Platform Team
+
+@enduml

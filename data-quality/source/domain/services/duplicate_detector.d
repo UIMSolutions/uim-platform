@@ -205,7 +205,7 @@ class DuplicateDetector
             return "0000";
 
         auto input = toLowerStr(s);
-        char[4] result = "0000";
+        char[] result = ['0', '0', '0', '0'];
         result[0] = cast(char)(input[0] - 32); // uppercase first letter
 
         int idx = 1;
@@ -224,7 +224,7 @@ class DuplicateDetector
             lastCode = code;
         }
 
-        return cast(string) result[0 .. 4];
+        return cast(string) result;
     }
 
     private static char soundexCode(char c)

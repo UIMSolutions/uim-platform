@@ -1,5 +1,5 @@
 // Metadata
-name "uim-plattform"
+name "uim-platform"
 description "UIM Plattform"
 homepage "https://www.sueel.de/uim/sap"
 authors "Ozan Nurettin Süel" "UI Manufaktur"
@@ -8,7 +8,7 @@ license "Apache-2.0"
 
 // Target
 targetType "library"
-targetName "uim-plattform"
+targetName "uim-platform"
 
 // External dependencies
 dependency "uim-framework" version="~>26.3.5"
@@ -17,7 +17,12 @@ dependency "uim-framework" version="~>26.3.5"
 dependency ":service" version="*"
 
 dependency ":analytics" version="*"
+dependency ":auditlog" version="*"
+dependency ":data-quality" version="*"
 dependency ":identity-authentication" version="*"
+dependency ":identity-directory" version="*"
+dependency ":portal" version="*"
+dependency ":workzone" version="*"
 
 // Source files
 sourceFiles "./source/uim/sap/all.d"
@@ -26,7 +31,12 @@ sourceFiles "./source/uim/sap/all.d"
 subPackage "service"
 
 subPackage "analytics"
+subPackage "auditlog"
+subPackage "data-quality"
 subPackage "identity-authentication"
+subPackage "identity-directory"
+subPackage "portal"
+subPackage "workzone"
 
 buildRequirements "allowWarnings" "silenceDeprecations"
 buildOptions "ignoreDeprecations" "debugInfo"
