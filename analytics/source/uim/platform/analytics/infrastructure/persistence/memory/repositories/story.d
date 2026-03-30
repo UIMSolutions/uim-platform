@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.story;
 
-import analytics.domain.entities.story;
-import analytics.domain.repositories.story;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.story;
+import uim.platform.analytics.domain.repositories.story;
+import uim.platform.analytics.domain.values.common;
 
 class InMemoryStoryRepository : StoryRepository {
     private Story[string] store;

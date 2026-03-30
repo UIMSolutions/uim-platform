@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.repositories.dataset;
 
-import analytics.domain.entities.dataset;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.dataset;
+import uim.platform.analytics.domain.values.common;
 
 interface DatasetRepository {
     Dataset findById(EntityId id);

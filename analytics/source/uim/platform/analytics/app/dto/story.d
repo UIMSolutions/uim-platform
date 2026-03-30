@@ -1,7 +1,7 @@
 module uim.platform.analytics.app.dto.story;
 
 import std.conv : to;
-import analytics.domain.entities.story;
+import uim.platform.analytics.domain.entities.story;
 
 struct CreateStoryRequest {
     string title;

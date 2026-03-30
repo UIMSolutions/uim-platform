@@ -6,17 +6,17 @@ import vibe.core.core;
 import vibe.core.log;
 
 // Infrastructure — persistence adapters (driven / outgoing)
-import analytics.infrastructure.persistence.memory;
+import uim.platform.analytics.infrastructure.persistence.memory;
 // Infrastructure — external service adapters
-import analytics.infrastructure.adapters;
+import uim.platform.analytics.infrastructure.adapters;
 // Infrastructure — web layer
-import analytics.infrastructure.web.routes;
-import analytics.infrastructure.web.handlers;
+import uim.platform.analytics.infrastructure.web.routes;
+import uim.platform.analytics.infrastructure.web.handlers;
 // Infrastructure — configuration
-import analytics.infrastructure.config;
+import uim.platform.analytics.infrastructure.config;
 
 // Application — use cases
-import analytics.app.usecases;
+import uim.platform.analytics.app.usecases;
 
 void main() {
     auto cfg = ServiceConfig.load();

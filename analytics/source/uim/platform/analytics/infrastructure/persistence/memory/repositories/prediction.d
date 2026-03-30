@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.prediction;
 
-import analytics.domain.entities.prediction;
-import analytics.domain.repositories.prediction;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.prediction;
+import uim.platform.analytics.domain.repositories.prediction;
+import uim.platform.analytics.domain.values.common;
 
 class InMemoryPredictionRepository : PredictionRepository {
     private Prediction[string] store;

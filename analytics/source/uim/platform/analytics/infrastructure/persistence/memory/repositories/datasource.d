@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.datasource;
 
-import analytics.domain.entities.datasource;
-import analytics.domain.repositories.datasource;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.datasource;
+import uim.platform.analytics.domain.repositories.datasource;
+import uim.platform.analytics.domain.values.common;
 
 class InMemoryDataSourceRepository : DataSourceRepository {
     private DataSource[string] store;

@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.planning;
 
-import analytics.domain.entities.planning;
-import analytics.domain.repositories.planning;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.planning;
+import uim.platform.analytics.domain.repositories.planning;
+import uim.platform.analytics.domain.values.common;
 
 class InMemoryPlanningRepository : PlanningRepository {
     private PlanningModel[string] store;

@@ -1,7 +1,7 @@
 module uim.platform.analytics.app.dto.prediction;
 
 import std.conv : to;
-import analytics.domain.entities.prediction;
+import uim.platform.analytics.domain.entities.prediction;
 
 struct CreatePredictionRequest {
     string name;

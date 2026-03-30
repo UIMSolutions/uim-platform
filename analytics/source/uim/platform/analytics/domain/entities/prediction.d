@@ -1,6 +1,6 @@
 module uim.platform.analytics.domain.entities.prediction;
 
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.values.common;
 
 /// A Prediction encapsulates a predictive/ML model run (SAC Smart Predict).
 class Prediction {

@@ -1,6 +1,6 @@
 module uim.platform.analytics.infrastructure.adapters.csv_export;
 
-import analytics.app.ports.export_port;
+import uim.platform.analytics.app.ports.export_port;
 
 /// Adapter: simple CSV export implementation.
 class CsvExportAdapter : ExportPort {

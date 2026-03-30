@@ -1,6 +1,6 @@
 module uim.platform.analytics.domain.entities.story;
 
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.values.common;
 
 /// A Story is a narrative-driven analytical report (SAC "Story" mode).
 /// Contains sections with embedded visualizations, text, and images.

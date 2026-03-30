@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.repositories.dashboard;
 
-import analytics.domain.entities.dashboard;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.dashboard;
+import uim.platform.analytics.domain.values.common;
 
 /// Port: outgoing repository interface for Dashboard persistence.
 interface DashboardRepository {

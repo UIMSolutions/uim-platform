@@ -1,10 +1,10 @@
 module uim.platform.analytics.app.usecases.widgets;
 
-import analytics.domain.entities.widget;
-import analytics.domain.repositories.widget;
-import analytics.domain.values.common;
-import analytics.domain.values.chart_type;
-import analytics.app.dto.widget;
+import uim.platform.analytics.domain.entities.widget;
+import uim.platform.analytics.domain.repositories.widget;
+import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics.domain.values.chart_type;
+import uim.platform.analytics.app.dto.widget;
 import std.conv : to;
 
 class WidgetUseCases {

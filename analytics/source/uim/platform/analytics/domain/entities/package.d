@@ -1,11 +1,11 @@
 module uim.platform.analytics.domain.entities;
 
 public {
-    import analytics.domain.entities.dashboard;
-    import analytics.domain.entities.story;
-    import analytics.domain.entities.dataset;
-    import analytics.domain.entities.widget;
-    import analytics.domain.entities.datasource;
-    import analytics.domain.entities.planning;
-    import analytics.domain.entities.prediction;
+    import uim.platform.analytics.domain.entities.dashboard;
+    import uim.platform.analytics.domain.entities.story;
+    import uim.platform.analytics.domain.entities.dataset;
+    import uim.platform.analytics.domain.entities.widget;
+    import uim.platform.analytics.domain.entities.datasource;
+    import uim.platform.analytics.domain.entities.planning;
+    import uim.platform.analytics.domain.entities.prediction;
 }

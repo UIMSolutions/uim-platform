@@ -1,9 +1,9 @@
 module uim.platform.analytics.app.usecases.dashboards;
 
-import analytics.domain.entities.dashboard;
-import analytics.domain.repositories.dashboard;
-import analytics.domain.values.common;
-import analytics.app.dto.dashboard;
+import uim.platform.analytics.domain.entities.dashboard;
+import uim.platform.analytics.domain.repositories.dashboard;
+import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics.app.dto.dashboard;
 
 /// Application service: dashboard use cases.
 class DashboardUseCases {

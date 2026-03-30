@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.widget;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.widgets;
-import analytics.app.dto.widget;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.widgets;
+import uim.platform.analytics.app.dto.widget;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class WidgetHandler {
     private WidgetUseCases useCases;

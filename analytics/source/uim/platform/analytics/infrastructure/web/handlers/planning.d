@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.planning;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.planning;
-import analytics.app.dto.planning;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.planning;
+import uim.platform.analytics.app.dto.planning;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class PlanningHandler {
     private PlanningUseCases useCases;

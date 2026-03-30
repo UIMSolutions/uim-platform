@@ -1,6 +1,6 @@
 module uim.platform.analytics.domain;
 
-public import analytics.domain.entities;
-public import analytics.domain.values;
-public import analytics.domain.repositories;
-public import analytics.domain.services;
+public import uim.platform.analytics.domain.entities;
+public import uim.platform.analytics.domain.values;
+public import uim.platform.analytics.domain.repositories;
+public import uim.platform.analytics.domain.services;

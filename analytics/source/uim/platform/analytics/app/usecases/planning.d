@@ -1,10 +1,10 @@
 module uim.platform.analytics.app.usecases.planning;
 
-import analytics.domain.entities.planning;
-import analytics.domain.repositories.planning;
-import analytics.domain.values.common;
-import analytics.domain.values.time_granularity;
-import analytics.app.dto.planning;
+import uim.platform.analytics.domain.entities.planning;
+import uim.platform.analytics.domain.repositories.planning;
+import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics.domain.values.time_granularity;
+import uim.platform.analytics.app.dto.planning;
 import std.conv : to;
 
 class PlanningUseCases {

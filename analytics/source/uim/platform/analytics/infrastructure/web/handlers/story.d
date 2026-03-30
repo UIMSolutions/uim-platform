@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.story;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.stories;
-import analytics.app.dto.story;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.stories;
+import uim.platform.analytics.app.dto.story;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class StoryHandler {
     private StoryUseCases useCases;

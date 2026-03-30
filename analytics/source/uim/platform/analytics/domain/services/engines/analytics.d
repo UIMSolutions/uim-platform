@@ -1,6 +1,6 @@
 module uim.platform.analytics.domain.services.engines.analytics;
 
-import analytics.domain.values.aggregation;
+import uim.platform.analytics.domain.values.aggregation;
 
 /// Domain service: performs analytical computations on raw data rows.
 struct AnalyticsEngine {

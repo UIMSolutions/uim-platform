@@ -1,5 +1,5 @@
 module uim.platform.analytics.app.ports;
 
-public import analytics.app.ports.data_connector;
-public import analytics.app.ports.notification_port;
-public import analytics.app.ports.export_port;
+public import uim.platform.analytics.app.ports.data_connector;
+public import uim.platform.analytics.app.ports.notification_port;
+public import uim.platform.analytics.app.ports.export_port;

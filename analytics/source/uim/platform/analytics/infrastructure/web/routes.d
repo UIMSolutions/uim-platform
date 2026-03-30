@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.web.routes;
 
 import vibe.http.router;
-import analytics.infrastructure.web.handlers;
-import analytics.infrastructure.web.middleware;
+import uim.platform.analytics.infrastructure.web.handlers;
+import uim.platform.analytics.infrastructure.web.middleware;
 
 /// Register all REST API routes on the given router.
 void registerRoutes(URLRouter router,

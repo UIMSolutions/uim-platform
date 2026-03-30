@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.datasource;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.datasources;
-import analytics.app.dto.datasource;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.datasources;
+import uim.platform.analytics.app.dto.datasource;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class DataSourceHandler {
     private DataSourceUseCases useCases;

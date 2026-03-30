@@ -1,3 +1,3 @@
 module uim.platform.analytics.infrastructure.persistence.memory;
 
-public import analytics.infrastructure.persistence.memory.repositories;
+public import uim.platform.analytics.infrastructure.persistence.memory.repositories;

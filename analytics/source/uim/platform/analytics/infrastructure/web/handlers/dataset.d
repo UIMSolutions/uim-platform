@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.dataset;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.datasets;
-import analytics.app.dto.dataset;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.datasets;
+import uim.platform.analytics.app.dto.dataset;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class DatasetHandler {
     private DatasetUseCases useCases;

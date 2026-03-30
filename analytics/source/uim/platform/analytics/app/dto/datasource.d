@@ -1,7 +1,7 @@
 module uim.platform.analytics.app.dto.datasource;
 
 import std.conv : to;
-import analytics.domain.entities.datasource;
+import uim.platform.analytics.domain.entities.datasource;
 
 struct CreateDataSourceRequest {
     string name;

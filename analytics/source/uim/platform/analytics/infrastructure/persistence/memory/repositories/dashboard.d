@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.dashboard;
 
-import analytics.domain.entities.dashboard;
-import analytics.domain.repositories.dashboard;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.dashboard;
+import uim.platform.analytics.domain.repositories.dashboard;
+import uim.platform.analytics.domain.values.common;
 
 /// In-memory adapter implementing DashboardRepository port.
 class InMemoryDashboardRepository : DashboardRepository {

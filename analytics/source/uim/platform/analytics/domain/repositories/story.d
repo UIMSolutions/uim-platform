@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.repositories.story;
 
-import analytics.domain.entities.story;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.story;
+import uim.platform.analytics.domain.values.common;
 
 interface StoryRepository {
     Story findById(EntityId id);

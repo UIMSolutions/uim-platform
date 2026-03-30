@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.dashboard;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.dashboards;
-import analytics.app.dto.dashboard;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.dashboards;
+import uim.platform.analytics.app.dto.dashboard;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class DashboardHandler {
     private DashboardUseCases useCases;

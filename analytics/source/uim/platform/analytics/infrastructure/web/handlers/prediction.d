@@ -2,9 +2,9 @@ module uim.platform.analytics.infrastructure.web.handlers.prediction;
 
 import vibe.http.server;
 import vibe.data.json;
-import analytics.app.usecases.predictions;
-import analytics.app.dto.prediction;
-import analytics.infrastructure.web.json_utils;
+import uim.platform.analytics.app.usecases.predictions;
+import uim.platform.analytics.app.dto.prediction;
+import uim.platform.analytics.infrastructure.web.json_utils;
 
 class PredictionHandler {
     private PredictionUseCases useCases;

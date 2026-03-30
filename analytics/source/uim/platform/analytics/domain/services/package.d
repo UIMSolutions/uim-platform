@@ -1,5 +1,5 @@
 module uim.platform.analytics.domain.services;
 
 public {
-    import analytics.domain.services.engines;
+    import uim.platform.analytics.domain.services.engines;
 }

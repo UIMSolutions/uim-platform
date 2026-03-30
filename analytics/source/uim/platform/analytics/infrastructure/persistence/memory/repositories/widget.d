@@ -1,8 +1,8 @@
 module uim.platform.analytics.infrastructure.persistence.memory.repositories.widget;
 
-import analytics.domain.entities.widget;
-import analytics.domain.repositories.widget;
-import analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.widget;
+import uim.platform.analytics.domain.repositories.widget;
+import uim.platform.analytics.domain.values.common;
 
 class InMemoryWidgetRepository : WidgetRepository {
     private Widget[string] store;
