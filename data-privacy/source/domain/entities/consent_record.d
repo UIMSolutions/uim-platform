@@ -1,0 +1,22 @@
+module domain.entities.consent_record;
+
+import domain.types;
+
+/// A consent record — tracks a data subject's consent for a specific purpose.
+struct ConsentRecord
+{
+    ConsentRecordId id;
+    TenantId tenantId;
+    DataSubjectId dataSubjectId;
+    ProcessingPurpose purpose;
+    PersonalDataCategory[] categories;
+    ConsentStatus status = ConsentStatus.pending;
+    string channel;                 // how consent was obtained: "web", "email", "paper"
+    string consentText;             // text the data subject agreed to
+    string version_;                // consent form version
+    string ipAddress;               // IP at time of consent (for proof)
+    long grantedAt;
+    long revokedAt;
+    long expiresAt;                 // 0 = no expiry
+    long createdAt;
+}
