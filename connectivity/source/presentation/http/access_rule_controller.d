@@ -1,0 +1,176 @@
+module presentation.http.access_rule_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.use_cases.manage_access_rules;
+import application.dto;
+import domain.entities.access_rule;
+import presentation.http.json_utils;
+
+class AccessRuleController
+{
+    private ManageAccessRulesUseCase uc;
+
+    this(ManageAccessRulesUseCase uc)
+    {
+        this.uc = uc;
+    }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/access-rules", &handleCreate);
+        router.get("/api/v1/access-rules", &handleList);
+        router.get("/api/v1/access-rules/*", &handleGetById);
+        router.put("/api/v1/access-rules/*", &handleUpdate);
+        router.delete_("/api/v1/access-rules/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            auto r = CreateAccessRuleRequest();
+            r.connectorId = jsonStr(j, "connectorId");
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.description = jsonStr(j, "description");
+            r.protocol = jsonStr(j, "protocol");
+            r.virtualHost = jsonStr(j, "virtualHost");
+            r.virtualPort = jsonUshort(j, "virtualPort");
+            r.urlPathPrefix = jsonStr(j, "urlPathPrefix");
+            r.policy = jsonStr(j, "policy");
+            r.principalPropagation = jsonBool(j, "principalPropagation");
+
+            auto result = uc.createRule(r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+            {
+                writeError(res, 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto rules = uc.listByTenant(tenantId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref r; rules)
+                arr ~= serializeRule(r);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) rules.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto rule = uc.getRule(id);
+            if (rule.id.length == 0)
+            {
+                writeError(res, 404, "Access rule not found");
+                return;
+            }
+            res.writeJsonBody(serializeRule(rule), 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto j = req.json;
+            auto r = UpdateAccessRuleRequest();
+            r.description = jsonStr(j, "description");
+            r.urlPathPrefix = jsonStr(j, "urlPathPrefix");
+            r.policy = jsonStr(j, "policy");
+            r.principalPropagation = jsonBool(j, "principalPropagation");
+
+            auto result = uc.updateRule(id, r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, result.error == "Access rule not found" ? 404 : 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.deleteRule(id);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["deleted"] = Json(true);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, 404, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private static Json serializeRule(ref const AccessRule r)
+    {
+        auto j = Json.emptyObject;
+        j["id"] = Json(r.id);
+        j["connectorId"] = Json(r.connectorId);
+        j["tenantId"] = Json(r.tenantId);
+        j["description"] = Json(r.description);
+        j["protocol"] = Json(r.protocol.to!string);
+        j["virtualHost"] = Json(r.virtualHost);
+        j["virtualPort"] = Json(cast(long) r.virtualPort);
+        j["urlPathPrefix"] = Json(r.urlPathPrefix);
+        j["policy"] = Json(r.policy.to!string);
+        j["principalPropagation"] = Json(r.principalPropagation);
+        j["createdAt"] = Json(r.createdAt);
+        j["updatedAt"] = Json(r.updatedAt);
+        return j;
+    }
+}

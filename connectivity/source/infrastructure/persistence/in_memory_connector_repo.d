@@ -1,0 +1,42 @@
+module infrastructure.persistence.in_memory_connector_repo;
+
+import domain.types;
+import domain.entities.cloud_connector;
+import domain.ports.connector_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryConnectorRepository : ConnectorRepository
+{
+    private CloudConnector[ConnectorId] store;
+
+    CloudConnector findById(ConnectorId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return CloudConnector.init;
+    }
+
+    CloudConnector findByLocationId(SubaccountId subaccountId, string locationId)
+    {
+        foreach (ref e; store.byValue())
+            if (e.subaccountId == subaccountId && e.locationId == locationId)
+                return e;
+        return CloudConnector.init;
+    }
+
+    CloudConnector[] findBySubaccount(SubaccountId subaccountId)
+    {
+        return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    }
+
+    CloudConnector[] findByTenant(TenantId tenantId)
+    {
+        return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    }
+
+    void save(CloudConnector entity) { store[entity.id] = entity; }
+    void update(CloudConnector entity) { store[entity.id] = entity; }
+    void remove(ConnectorId id) { store.remove(id); }
+}
