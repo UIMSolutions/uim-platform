@@ -1,4 +1,4 @@
-module analytics.domain.entities.prediction;
+module uim.platform.analytics.domain.entities.prediction;
 
 import analytics.domain.values.common;
 

@@ -1,4 +1,4 @@
-module analytics.infrastructure.adapters.stub_data_connector;
+module uim.platform.analytics.infrastructure.adapters.stub_data_connector;
 
 import analytics.app.ports.data_connector;
 

@@ -1,4 +1,4 @@
-module analytics.domain;
+module uim.platform.analytics.domain;
 
 public import analytics.domain.entities;
 public import analytics.domain.values;

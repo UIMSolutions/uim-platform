@@ -1,4 +1,4 @@
-module analytics.domain.services.engines.analytics;
+module uim.platform.analytics.domain.services.engines.analytics;
 
 import analytics.domain.values.aggregation;
 

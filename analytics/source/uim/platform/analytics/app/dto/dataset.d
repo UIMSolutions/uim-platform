@@ -1,4 +1,4 @@
-module analytics.app.dto.dataset;
+module uim.platform.analytics.app.dto.dataset;
 
 import std.conv : to;
 import analytics.domain.entities.dataset;

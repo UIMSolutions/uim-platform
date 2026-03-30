@@ -1,4 +1,4 @@
-module analytics.infrastructure.config;
+module uim.platform.analytics.infrastructure.config;
 
 /// Service configuration (read from environment or defaults).
 struct ServiceConfig {

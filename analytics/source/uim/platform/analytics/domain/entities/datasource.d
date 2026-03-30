@@ -1,4 +1,4 @@
-module analytics.domain.entities.datasource;
+module uim.platform.analytics.domain.entities.datasource;
 
 import analytics.domain.values.common;
 

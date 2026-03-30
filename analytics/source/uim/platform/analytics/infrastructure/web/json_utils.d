@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.json_utils;
+module uim.platform.analytics.infrastructure.web.json_utils;
 
 import vibe.data.json;
 import std.traits;

@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories.dataset;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories.dataset;
 
 import analytics.domain.entities.dataset;
 import analytics.domain.repositories.dataset;

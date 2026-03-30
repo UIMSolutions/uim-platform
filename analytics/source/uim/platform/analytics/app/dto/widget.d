@@ -1,4 +1,4 @@
-module analytics.app.dto.widget;
+module uim.platform.analytics.app.dto.widget;
 
 import std.conv : to;
 import analytics.domain.entities.widget;

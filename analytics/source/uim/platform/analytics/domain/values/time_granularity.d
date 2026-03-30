@@ -1,4 +1,4 @@
-module analytics.domain.values.time_granularity;
+module uim.platform.analytics.domain.values.time_granularity;
 
 /// Time granularity for planning and time-series analytics.
 enum TimeGranularity {

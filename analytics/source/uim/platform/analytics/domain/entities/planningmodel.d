@@ -1,4 +1,4 @@
-module analytics.domain.entities.planning;
+module uim.platform.analytics.domain.entities.planning;
 
 import analytics.domain.values.common;
 import analytics.domain.values.time_granularity;

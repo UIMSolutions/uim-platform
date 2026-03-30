@@ -1,4 +1,4 @@
-module analytics.app.usecases;
+module uim.platform.analytics.app.usecases;
 
 public import analytics.app.usecases.dashboards;
 public import analytics.app.usecases.stories;

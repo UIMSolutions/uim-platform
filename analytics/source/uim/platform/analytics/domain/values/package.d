@@ -1,4 +1,4 @@
-module analytics.domain.values;
+module uim.platform.analytics.domain.values;
 
 public import analytics.domain.values.common;
 public import analytics.domain.values.chart_type;

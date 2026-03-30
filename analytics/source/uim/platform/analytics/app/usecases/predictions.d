@@ -1,4 +1,4 @@
-module analytics.app.usecases.predictions;
+module uim.platform.analytics.app.usecases.predictions;
 
 import analytics.domain.entities.prediction;
 import analytics.domain.repositories.prediction;

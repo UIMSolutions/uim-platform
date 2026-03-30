@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories.story;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories.story;
 
 import analytics.domain.entities.story;
 import analytics.domain.repositories.story;

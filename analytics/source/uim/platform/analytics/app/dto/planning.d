@@ -1,4 +1,4 @@
-module analytics.app.dto.planning;
+module uim.platform.analytics.app.dto.planning;
 
 import std.conv : to;
 import analytics.domain.entities.planning;

@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.handlers;
+module uim.platform.analytics.infrastructure.web.handlers;
 
 public import analytics.infrastructure.web.handlers.dashboard;
 public import analytics.infrastructure.web.handlers.story;

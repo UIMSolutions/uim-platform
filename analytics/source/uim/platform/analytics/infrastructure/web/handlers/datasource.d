@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.handlers.datasource;
+module uim.platform.analytics.infrastructure.web.handlers.datasource;
 
 import vibe.http.server;
 import vibe.data.json;

@@ -1,4 +1,4 @@
-module analytics.domain.entities.dataset;
+module uim.platform.analytics.domain.entities.dataset;
 
 import analytics.domain.values.common;
 import analytics.domain.values.aggregation;

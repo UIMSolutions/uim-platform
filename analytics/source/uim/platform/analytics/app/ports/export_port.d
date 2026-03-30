@@ -1,4 +1,4 @@
-module analytics.app.ports.export_port;
+module uim.platform.analytics.app.ports.export_port;
 
 /// Outgoing port: export analytics artifacts to various formats.
 interface ExportPort {

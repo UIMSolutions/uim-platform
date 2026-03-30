@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories;
 
 public import analytics.infrastructure.persistence.memory.repositories.dashboard;
 public import analytics.infrastructure.persistence.memory.repositories.story;

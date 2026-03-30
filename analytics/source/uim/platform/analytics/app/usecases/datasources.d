@@ -1,4 +1,4 @@
-module analytics.app.usecases.datasources;
+module uim.platform.analytics.app.usecases.datasources;
 
 import analytics.domain.entities.datasource;
 import analytics.domain.repositories.datasource;

@@ -1,4 +1,4 @@
-module analytics.infrastructure.adapters.console_notification;
+module uim.platform.analytics.infrastructure.adapters.console_notification;
 
 import analytics.app.ports.notification_port;
 import vibe.core.log;

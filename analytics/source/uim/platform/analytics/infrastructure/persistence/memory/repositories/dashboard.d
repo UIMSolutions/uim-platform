@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories.dashboard;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories.dashboard;
 
 import analytics.domain.entities.dashboard;
 import analytics.domain.repositories.dashboard;

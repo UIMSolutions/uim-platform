@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.middleware;
+module uim.platform.analytics.infrastructure.web.middleware;
 
 import vibe.http.server;
 import vibe.core.log;

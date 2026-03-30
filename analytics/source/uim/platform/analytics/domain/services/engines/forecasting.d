@@ -1,4 +1,4 @@
-module analytics.domain.services.engines.forecasting;
+module uim.platform.analytics.domain.services.engines.forecasting;
 
 import std.math : exp, pow;
 

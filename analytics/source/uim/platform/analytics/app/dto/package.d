@@ -1,4 +1,4 @@
-module analytics.app.dto;
+module uim.platform.analytics.app.dto;
 
 public {
     import analytics.app.dto.dashboard;

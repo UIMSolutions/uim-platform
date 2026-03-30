@@ -1,4 +1,4 @@
-module analytics.domain.services.engines;
+module uim.platform.analytics.domain.services.engines;
 
 public {
     import analytics.domain.services.engines.analytics;

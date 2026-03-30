@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.routes;
+module uim.platform.analytics.infrastructure.web.routes;
 
 import vibe.http.router;
 import analytics.infrastructure.web.handlers;

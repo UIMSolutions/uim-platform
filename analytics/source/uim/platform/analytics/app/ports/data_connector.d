@@ -1,4 +1,4 @@
-module analytics.app.ports.data_connector;
+module uim.platform.analytics.app.ports.data_connector;
 
 /// Outgoing port: abstracts fetching raw data from external sources.
 interface DataConnector {

@@ -1,4 +1,4 @@
-module analytics.domain.entities;
+module uim.platform.analytics.domain.entities;
 
 public {
     import analytics.domain.entities.dashboard;

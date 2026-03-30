@@ -1,4 +1,4 @@
-module analytics.domain.entities.widget;
+module uim.platform.analytics.domain.entities.widget;
 
 import analytics.domain.values.common;
 import analytics.domain.values.chart_type;

@@ -1,4 +1,4 @@
-module analytics.infrastructure.web.handlers.prediction;
+module uim.platform.analytics.infrastructure.web.handlers.prediction;
 
 import vibe.http.server;
 import vibe.data.json;

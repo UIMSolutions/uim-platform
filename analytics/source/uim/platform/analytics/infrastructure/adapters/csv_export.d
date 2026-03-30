@@ -1,4 +1,4 @@
-module analytics.infrastructure.adapters.csv_export;
+module uim.platform.analytics.infrastructure.adapters.csv_export;
 
 import analytics.app.ports.export_port;
 

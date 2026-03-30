@@ -1,4 +1,4 @@
-module analytics.infrastructure.web;
+module uim.platform.analytics.infrastructure.web;
 
 public import analytics.infrastructure.web.routes;
 public import analytics.infrastructure.web.middleware;

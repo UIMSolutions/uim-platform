@@ -1,4 +1,4 @@
-module analytics.domain.repositories.story;
+module uim.platform.analytics.domain.repositories.story;
 
 import analytics.domain.entities.story;
 import analytics.domain.values.common;

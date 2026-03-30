@@ -1,4 +1,4 @@
-module analytics.app.usecases.widgets;
+module uim.platform.analytics.app.usecases.widgets;
 
 import analytics.domain.entities.widget;
 import analytics.domain.repositories.widget;

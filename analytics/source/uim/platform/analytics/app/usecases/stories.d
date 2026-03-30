@@ -1,4 +1,4 @@
-module analytics.app.usecases.stories;
+module uim.platform.analytics.app.usecases.stories;
 
 import analytics.domain.entities.story;
 import analytics.domain.repositories.story;

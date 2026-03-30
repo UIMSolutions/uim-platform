@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories.datasource;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories.datasource;
 
 import analytics.domain.entities.datasource;
 import analytics.domain.repositories.datasource;

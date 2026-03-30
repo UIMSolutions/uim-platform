@@ -1,4 +1,4 @@
-module analytics.app.ports.notification_port;
+module uim.platform.analytics.app.ports.notification_port;
 
 /// Outgoing port: send notifications (email, in-app, webhook).
 interface NotificationPort {

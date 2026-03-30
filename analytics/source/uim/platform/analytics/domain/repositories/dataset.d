@@ -1,4 +1,4 @@
-module analytics.domain.repositories.dataset;
+module uim.platform.analytics.domain.repositories.dataset;
 
 import analytics.domain.entities.dataset;
 import analytics.domain.values.common;

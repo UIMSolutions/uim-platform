@@ -1,4 +1,4 @@
-module analytics.domain.entities.dashboard;
+module uim.platform.analytics.domain.entities.dashboard;
 
 import analytics.domain.values.common;
 

@@ -1,4 +1,4 @@
-module analytics.infrastructure.persistence.memory.repositories.widget;
+module uim.platform.analytics.infrastructure.persistence.memory.repositories.widget;
 
 import analytics.domain.entities.widget;
 import analytics.domain.repositories.widget;

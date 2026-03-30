@@ -1,4 +1,4 @@
-module analytics.domain.values.aggregation;
+module uim.platform.analytics.domain.values.aggregation;
 
 /// Aggregation functions available for measures.
 enum AggregationType {

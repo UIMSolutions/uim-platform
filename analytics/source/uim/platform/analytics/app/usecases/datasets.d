@@ -1,4 +1,4 @@
-module analytics.app.usecases.datasets;
+module uim.platform.analytics.app.usecases.datasets;
 
 import analytics.domain.entities.dataset;
 import analytics.domain.repositories.dataset;

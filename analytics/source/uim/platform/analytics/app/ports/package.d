@@ -1,4 +1,4 @@
-module analytics.app.ports;
+module uim.platform.analytics.app.ports;
 
 public import analytics.app.ports.data_connector;
 public import analytics.app.ports.notification_port;

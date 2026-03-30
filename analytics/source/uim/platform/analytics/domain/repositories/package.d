@@ -1,4 +1,4 @@
-module analytics.domain.repositories;
+module uim.platform.analytics.domain.repositories;
 
 public import analytics.domain.repositories.dashboard;
 public import analytics.domain.repositories.story;

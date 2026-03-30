@@ -1,4 +1,4 @@
-module analytics.app.usecases.planning;
+module uim.platform.analytics.app.usecases.planning;
 
 import analytics.domain.entities.planning;
 import analytics.domain.repositories.planning;

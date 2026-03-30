@@ -1,4 +1,4 @@
-module analytics.app.usecases.dashboards;
+module uim.platform.analytics.app.usecases.dashboards;
 
 import analytics.domain.entities.dashboard;
 import analytics.domain.repositories.dashboard;

@@ -1,4 +1,4 @@
-module analytics.infrastructure;
+module uim.platform.analytics.infrastructure;
 
 public import analytics.infrastructure.persistence;
 public import analytics.infrastructure.web;

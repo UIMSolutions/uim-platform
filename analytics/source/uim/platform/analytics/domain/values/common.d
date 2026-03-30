@@ -1,4 +1,4 @@
-module analytics.domain.values.common;
+module uim.platform.analytics.domain.values.common;
 
 import std.uuid;
 import std.datetime;
