@@ -1,0 +1,10 @@
+name "auditlog"
+description "AuditLog Service - Security and compliance audit logging, retention policies, data access and configuration change tracking"
+authors "UIM Platform Team"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+mainSourceFile "source/app.d"
