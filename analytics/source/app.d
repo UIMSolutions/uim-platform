@@ -18,6 +18,8 @@ import uim.platform.analytics.infrastructure.config;
 // Application — use cases
 import uim.platform.analytics.app.usecases;
 
+version (unittest) {
+} else {
 void main() {
     auto cfg = ServiceConfig.load();
 
@@ -88,4 +90,5 @@ void main() {
     logInfo("═══════════════════════════════════════════════════");
 
     runApplication();
+}
 }

@@ -1,0 +1,16 @@
+module domain.ports.data_access_log_repository;
+
+import domain.types;
+import domain.entities.data_access_log;
+
+/// Port for persisting data access log records.
+interface DataAccessLogRepository
+{
+    DataAccessLog[] findByTenant(TenantId tenantId);
+    DataAccessLog* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
+    DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy);
+    DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject);
+    DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+    void save(DataAccessLog log);
+    void removeOlderThan(TenantId tenantId, long beforeTimestamp);
+}
