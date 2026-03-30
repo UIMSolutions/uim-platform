@@ -1,22 +1,22 @@
 module uim.platform.identity_authentication.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.identity_authentication.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_user;
-import infrastructure.persistence.in_memory_group;
-import infrastructure.persistence.in_memory_tenant;
-import infrastructure.persistence.in_memory_app;
-import infrastructure.persistence.in_memory_session;
-import infrastructure.persistence.in_memory_token;
-import infrastructure.persistence.in_memory_policy;
-import infrastructure.persistence.in_memory_idp_config;
-import infrastructure.persistence.in_memory_risk_rule;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_user;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_group;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_tenant;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_app;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_session;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_token;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_policy;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_idp_config;
+import uim.platform.identity_authentication.infrastructure.persistence.in_memory_risk_rule;
 
 // Services
-import infrastructure.security.bcrypt_password_service;
-import infrastructure.security.jwt_token_service;
-import infrastructure.security.totp_mfa_service;
+import uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;
+import uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
+import uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
 
 // Use Cases
 import uim.platform.identity_authentication.application.use_cases.authenticate_user;
@@ -29,12 +29,12 @@ import uim.platform.identity_authentication.application.use_cases.manage_policie
 import uim.platform.identity_authentication.application.use_cases.delegated_auth;
 
 // Controllers
-import presentation.http.auth_controller;
-import presentation.http.user_controller;
-import presentation.http.group_controller;
-import presentation.http.application_controller;
-import presentation.http.tenant_controller;
-import presentation.http.policy_controller;
+import uim.platform.identity_authentication.presentation.http.controllers.auth;
+import uim.platform.identity_authentication.presentation.http.controllers.user;
+import uim.platform.identity_authentication.presentation.http.controllers.group;
+import uim.platform.identity_authentication.presentation.http.controllers.application;
+import uim.platform.identity_authentication.presentation.http.controllers.tenant;
+import uim.platform.identity_authentication.presentation.http.controllers.policy;
 
 /// Dependency injection container — wires all layers together.
 struct Container

@@ -1,4 +1,4 @@
-module presentation.http.auth_controller;
+module presentation.http.controllers.auth;
 
 import vibe.http.server;
 import vibe.http.router;
