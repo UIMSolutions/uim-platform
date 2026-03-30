@@ -1,0 +1,109 @@
+module domain.services.auth_flow_resolver;
+
+import domain.entities.destination;
+import domain.entities.certificate;
+import domain.types;
+
+/// Result of resolving an authentication flow for a destination.
+struct AuthFlowResult
+{
+    bool valid;
+    string[] errors;
+    string resolvedAuthHeader;  // e.g., "Bearer <token>" or "Basic <b64>"
+}
+
+/// Domain service: validates and resolves authentication configuration for destinations.
+struct AuthFlowResolver
+{
+    /// Validate that the destination has the required fields for its auth type.
+    static AuthFlowResult validate(const ref Destination dest)
+    {
+        string[] errors;
+
+        final switch (dest.authType)
+        {
+        case AuthenticationType.noAuthentication:
+            break;
+
+        case AuthenticationType.basicAuthentication:
+            if (dest.user.length == 0)
+                errors ~= "Basic authentication requires 'user'";
+            if (dest.password.length == 0)
+                errors ~= "Basic authentication requires 'password'";
+            break;
+
+        case AuthenticationType.oauth2ClientCredentials:
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 Client Credentials requires 'clientId'";
+            if (dest.clientSecret.length == 0)
+                errors ~= "OAuth2 Client Credentials requires 'clientSecret'";
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 Client Credentials requires 'tokenServiceUrl'";
+            break;
+
+        case AuthenticationType.oauth2SAMLBearerAssertion:
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 SAML Bearer requires 'tokenServiceUrl'";
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 SAML Bearer requires 'clientId'";
+            break;
+
+        case AuthenticationType.oauth2UserTokenExchange:
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 User Token Exchange requires 'clientId'";
+            if (dest.clientSecret.length == 0)
+                errors ~= "OAuth2 User Token Exchange requires 'clientSecret'";
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 User Token Exchange requires 'tokenServiceUrl'";
+            break;
+
+        case AuthenticationType.oauth2JWTBearer:
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 JWT Bearer requires 'clientId'";
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 JWT Bearer requires 'tokenServiceUrl'";
+            break;
+
+        case AuthenticationType.oauth2Password:
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 Password requires 'clientId'";
+            if (dest.user.length == 0)
+                errors ~= "OAuth2 Password requires 'user'";
+            if (dest.password.length == 0)
+                errors ~= "OAuth2 Password requires 'password'";
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 Password requires 'tokenServiceUrl'";
+            break;
+
+        case AuthenticationType.oauth2AuthorizationCode:
+            if (dest.clientId.length == 0)
+                errors ~= "OAuth2 Authorization Code requires 'clientId'";
+            if (dest.clientSecret.length == 0)
+                errors ~= "OAuth2 Authorization Code requires 'clientSecret'";
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "OAuth2 Authorization Code requires 'tokenServiceUrl'";
+            break;
+
+        case AuthenticationType.clientCertificateAuthentication:
+            if (dest.certificateId.length == 0)
+                errors ~= "Client Certificate authentication requires 'certificateId'";
+            break;
+
+        case AuthenticationType.principalPropagation:
+            if (dest.proxyType != ProxyType.onPremise)
+                errors ~= "Principal Propagation is only supported with ProxyType.onPremise";
+            break;
+
+        case AuthenticationType.samlAssertion:
+            if (dest.tokenServiceUrl.length == 0)
+                errors ~= "SAML Assertion requires 'tokenServiceUrl'";
+            break;
+        }
+
+        // On-premise destinations require cloud connector location
+        if (dest.proxyType == ProxyType.onPremise && dest.cloudConnectorLocationId.length == 0)
+            errors ~= "On-premise destinations require 'cloudConnectorLocationId'";
+
+        return AuthFlowResult(errors.length == 0, errors, "");
+    }
+}

@@ -17,8 +17,7 @@ import core.time;
 import std.datetime.systime : Clock;
 
 /// Application use case: authenticate a user with form-based credentials.
-class AuthenticateUserUseCase
-{
+class AuthenticateUserUseCase {
     private UserRepository userRepo;
     private PasswordService passwordSvc;
     private SessionRepository sessionRepo;
@@ -27,8 +26,7 @@ class AuthenticateUserUseCase
 
     this(UserRepository userRepo, PasswordService passwordSvc,
         SessionRepository sessionRepo, RiskRuleRepository riskRuleRepo,
-        MfaService mfaSvc)
-    {
+        MfaService mfaSvc) {
         this.userRepo = userRepo;
         this.passwordSvc = passwordSvc;
         this.sessionRepo = sessionRepo;
@@ -36,8 +34,7 @@ class AuthenticateUserUseCase
         this.mfaSvc = mfaSvc;
     }
 
-    AuthResult execute(AuthRequest req)
-    {
+    AuthResult execute(AuthRequest req) {
         // Find user
         auto user = userRepo.findByEmail(req.tenantId, req.email);
         if (user == User.init)
@@ -60,8 +57,7 @@ class AuthenticateUserUseCase
         auto requiredMfa = requiredMfaForRisk(riskRules, user, riskCtx);
 
         // Check if MFA is required but not provided
-        if (requiredMfa != MfaType.none || user.hasMfa())
-        {
+        if (requiredMfa != MfaType.none || user.hasMfa()) {
             auto effectiveMfa = requiredMfa != MfaType.none ? requiredMfa : user.mfaType;
             if (req.mfaCode.length == 0)
                 return AuthResult(false, "MFA code required", true, effectiveMfa);
@@ -88,6 +84,7 @@ class AuthenticateUserUseCase
         );
         sessionRepo.save(session);
 
-        return AuthResult(true, "Authentication successful", false, MfaType.none, session.id, user.id);
+        return AuthResult(true, "Authentication successful", false, MfaType.none, session.id, user
+                .id);
     }
 }

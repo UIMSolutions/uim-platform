@@ -1,0 +1,135 @@
+module application.dto;
+
+import domain.types;
+import domain.entities.destination : DestinationProperty;
+
+/// --- Command result ---
+
+struct CommandResult
+{
+    bool success;
+    string id;
+    string error;
+}
+
+/// --- Destination DTOs ---
+
+struct CreateDestinationRequest
+{
+    TenantId tenantId;
+    string name;
+    string description;
+    string url;
+    string destinationType;     // "http", "rfc", "mail", "ldap"
+    string authType;            // "noAuthentication", "basicAuthentication", ...
+    string proxyType;           // "internet", "onPremise", "privateLink"
+    string user;
+    string password;
+    string clientId;
+    string clientSecret;
+    string tokenServiceUrl;
+    string tokenServiceUser;
+    string tokenServicePassword;
+    string certificateId;
+    string cloudConnectorLocationId;
+    DestinationProperty[] properties;
+    DestinationProperty[] additionalHeaders;
+}
+
+struct UpdateDestinationRequest
+{
+    string description;
+    string url;
+    string authType;
+    string proxyType;
+    string user;
+    string password;
+    string clientId;
+    string clientSecret;
+    string tokenServiceUrl;
+    string tokenServiceUser;
+    string tokenServicePassword;
+    string certificateId;
+    string cloudConnectorLocationId;
+    DestinationProperty[] properties;
+    DestinationProperty[] additionalHeaders;
+}
+
+/// --- Cloud Connector DTOs ---
+
+struct RegisterConnectorRequest
+{
+    SubaccountId subaccountId;
+    TenantId tenantId;
+    string locationId;
+    string description;
+    string connectorVersion;
+    string host;
+    ushort port;
+    string tunnelEndpoint;
+}
+
+struct HeartbeatRequest
+{
+    string connectorVersion;
+}
+
+/// --- Service Channel DTOs ---
+
+struct CreateChannelRequest
+{
+    ConnectorId connectorId;
+    TenantId tenantId;
+    string name;
+    string channelType;     // "http", "rfc", "tcp"
+    string virtualHost;
+    ushort virtualPort;
+    string backendHost;
+    ushort backendPort;
+}
+
+/// --- Access Rule DTOs ---
+
+struct CreateAccessRuleRequest
+{
+    ConnectorId connectorId;
+    TenantId tenantId;
+    string description;
+    string protocol;        // "http", "https", "rfc", "tcp", "ldap"
+    string virtualHost;
+    ushort virtualPort;
+    string urlPathPrefix;
+    string policy;          // "allow", "deny"
+    bool principalPropagation;
+}
+
+struct UpdateAccessRuleRequest
+{
+    string description;
+    string urlPathPrefix;
+    string policy;
+    bool principalPropagation;
+}
+
+/// --- Certificate DTOs ---
+
+struct CreateCertificateRequest
+{
+    TenantId tenantId;
+    string name;
+    string description;
+    string certType;        // "x509", "pkcs12", "pem", "jks"
+    string usage;           // "authentication", "signing", "encryption"
+    string subjectDN;
+    string issuerDN;
+    string serialNumber;
+    string fingerprint;
+    long validFrom;
+    long validTo;
+}
+
+struct UpdateCertificateRequest
+{
+    string description;
+    bool active;
+}
