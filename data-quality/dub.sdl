@@ -1,0 +1,10 @@
+name "data-quality"
+description "Data Quality Management Service - Address cleansing, validation rules, duplicate detection, data profiling, geocoding and quality monitoring"
+authors "UIM Platform Team"
+license "proprietary"
+
+dependency "vibe-d" version="~>0.10.1"
+
+targetType "executable"
+targetPath "build"
+mainSourceFile "source/app.d"

@@ -1,0 +1,1 @@
+module uim.platform.identity_authentication.presentation.http.controllers;

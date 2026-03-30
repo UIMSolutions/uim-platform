@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.tenant_controller;
+module uim.platform.identity_authentication.presentation.http.controllers.tenant;
 
 import vibe.http.server;
 import vibe.http.router;
