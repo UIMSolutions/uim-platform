@@ -1,0 +1,403 @@
+@startuml "UIM Cloud Portal Service – Architecture"
+
+!define ENTITY_COLOR #E8F5E9
+!define PORT_COLOR #E3F2FD
+!define SERVICE_COLOR #FFF3E0
+!define USECASE_COLOR #F3E5F5
+!define INFRA_COLOR #ECEFF1
+!define HTTP_COLOR #FCE4EC
+
+skinparam packageStyle rectangle
+skinparam defaultFontSize 11
+skinparam shadowing false
+skinparam linetype ortho
+skinparam packageBorderColor #666
+skinparam packageFontSize 13
+skinparam packageFontStyle bold
+skinparam classFontSize 10
+
+title UIM Cloud Portal Service\nClean + Hexagonal Architecture
+
+' ============================================================
+' PRESENTATION LAYER (Driving Adapters)
+' ============================================================
+
+package "Presentation Layer  <<driving adapters>>" as PRES <<Rectangle>> {
+  skinparam packageBackgroundColor HTTP_COLOR
+
+  class HealthController << (C,#EF9A9A) >>
+  class SiteController << (C,#EF9A9A) >>
+  class PageController << (C,#EF9A9A) >>
+  class SectionController << (C,#EF9A9A) >>
+  class TileController << (C,#EF9A9A) >>
+  class CatalogController << (C,#EF9A9A) >>
+  class ProviderController << (C,#EF9A9A) >>
+  class RoleController << (C,#EF9A9A) >>
+  class ThemeController << (C,#EF9A9A) >>
+  class MenuItemController << (C,#EF9A9A) >>
+  class TranslationController << (C,#EF9A9A) >>
+}
+
+' ============================================================
+' APPLICATION LAYER (Use Cases)
+' ============================================================
+
+package "Application Layer  <<use cases>>" as APP <<Rectangle>> {
+  skinparam packageBackgroundColor USECASE_COLOR
+
+  class ManageSitesUseCase << (U,#CE93D8) >> {
+    + create(req) : SiteResponse
+    + getById(id) : Site
+    + list(tenantId) : Site[]
+    + update(req) : SiteResponse
+    + remove(id) : SiteResponse
+    + publish(id) : SiteResponse
+  }
+
+  class ManagePagesUseCase << (U,#CE93D8) >> {
+    + create(req) : PageResponse
+    + getById(id) : Page
+    + list(tenantId) : Page[]
+    + update(req) : PageResponse
+    + remove(id) : PageResponse
+  }
+
+  class ManageSectionsUseCase << (U,#CE93D8) >> {
+    + create(req) : SectionResponse
+    + getById(id) : Section
+    + list(tenantId) : Section[]
+    + update(req) : SectionResponse
+    + remove(id) : SectionResponse
+  }
+
+  class ManageTilesUseCase << (U,#CE93D8) >> {
+    + create(req) : TileResponse
+    + getById(id) : Tile
+    + list(tenantId) : Tile[]
+    + update(req) : TileResponse
+    + remove(id) : TileResponse
+  }
+
+  class ManageCatalogsUseCase << (U,#CE93D8) >> {
+    + create(req) : CatalogResponse
+    + getById(id) : Catalog
+    + list(tenantId) : Catalog[]
+    + update(req) : CatalogResponse
+    + remove(id) : CatalogResponse
+  }
+
+  class ManageProvidersUseCase << (U,#CE93D8) >> {
+    + create(req) : ProviderResponse
+    + getById(id) : ContentProvider
+    + list(tenantId) : ContentProvider[]
+    + update(req) : ProviderResponse
+    + remove(id) : ProviderResponse
+  }
+
+  class ManageRolesUseCase << (U,#CE93D8) >> {
+    + create(req) : RoleResponse
+    + getById(id) : Role
+    + list(tenantId) : Role[]
+    + update(req) : RoleResponse
+    + remove(id) : RoleResponse
+  }
+
+  class ManageThemesUseCase << (U,#CE93D8) >> {
+    + create(req) : ThemeResponse
+    + getById(id) : Theme
+    + list(tenantId) : Theme[]
+    + update(req) : ThemeResponse
+    + remove(id) : ThemeResponse
+  }
+
+  class ManageMenuItemsUseCase << (U,#CE93D8) >> {
+    + create(req) : MenuItemResponse
+    + getById(id) : MenuItem
+    + list(tenantId) : MenuItem[]
+    + update(req) : MenuItemResponse
+    + remove(id) : MenuItemResponse
+  }
+
+  class ManageTranslationsUseCase << (U,#CE93D8) >> {
+    + create(req) : TranslationResponse
+    + getById(id) : Translation
+    + list(tenantId) : Translation[]
+    + update(req) : TranslationResponse
+    + remove(id) : TranslationResponse
+  }
+}
+
+' ============================================================
+' DOMAIN LAYER (Core Business Logic)
+' ============================================================
+
+package "Domain Layer  <<core>>" as DOM <<Rectangle>> {
+
+  package "Entities" as ENT <<Rectangle>> {
+    skinparam packageBackgroundColor ENTITY_COLOR
+
+    class Site << (E,#66BB6A) >> {
+      id : SiteId
+      tenantId : TenantId
+      name, description : string
+      alias_ : string
+      status : SiteStatus
+      themeId : ThemeId
+      pageIds : string[]
+      menuItemIds : MenuItemId[]
+      allowedRoleIds : RoleId[]
+      settings : SiteSettings
+    }
+
+    class Page << (E,#66BB6A) >> {
+      id : PageId
+      siteId : SiteId
+      tenantId : TenantId
+      title, description : string
+      alias_ : string
+      layout : PageLayout
+      sectionIds : SectionId[]
+      allowedRoleIds : RoleId[]
+      sortOrder : int
+      visible : bool
+    }
+
+    class Section << (E,#66BB6A) >> {
+      id : SectionId
+      pageId : PageId
+      tenantId : TenantId
+      title : string
+      tileIds : TileId[]
+      sortOrder : int
+      columns : int
+      visible : bool
+    }
+
+    class Tile << (E,#66BB6A) >> {
+      id : TileId
+      tenantId : TenantId
+      catalogId : CatalogId
+      title, subtitle : string
+      tileType : TileType
+      appType : AppType
+      url, appId : string
+      navigationTarget : NavigationTarget
+      config : TileConfiguration
+      allowedRoleIds : RoleId[]
+    }
+
+    class Catalog << (E,#66BB6A) >> {
+      id : CatalogId
+      tenantId : TenantId
+      title, description : string
+      providerId : ProviderId
+      tileIds : TileId[]
+      allowedRoleIds : RoleId[]
+      active : bool
+    }
+
+    class ContentProvider << (E,#66BB6A) >> {
+      id : ProviderId
+      tenantId : TenantId
+      name, description : string
+      providerType : ProviderType
+      contentEndpointUrl : string
+      authToken : string
+      catalogIds : CatalogId[]
+      active : bool
+    }
+
+    class Role << (E,#66BB6A) >> {
+      id : RoleId
+      tenantId : TenantId
+      name, description : string
+      scope_ : RoleScope
+      userIds : string[]
+      groupIds : string[]
+    }
+
+    class Theme << (E,#66BB6A) >> {
+      id : ThemeId
+      tenantId : TenantId
+      name : string
+      mode : ThemeMode
+      baseTheme : string
+      colors : ThemeColors
+      fonts : ThemeFonts
+      customCss : string
+      isDefault : bool
+    }
+
+    class MenuItem << (E,#66BB6A) >> {
+      id : MenuItemId
+      siteId : SiteId
+      tenantId : TenantId
+      title, icon : string
+      parentId : MenuItemId
+      targetPageId : PageId
+      targetUrl : string
+      navigationTarget : NavigationTarget
+      allowedRoleIds : RoleId[]
+      sortOrder : int
+    }
+
+    class Translation << (E,#66BB6A) >> {
+      id : TranslationId
+      tenantId : TenantId
+      resourceType : string
+      resourceId : string
+      fieldName : string
+      language : string
+      value : string
+    }
+  }
+
+  package "Ports  <<interfaces>>" as PORTS <<Rectangle>> {
+    skinparam packageBackgroundColor PORT_COLOR
+
+    interface ISiteRepository << (P,#42A5F5) >>
+    interface IPageRepository << (P,#42A5F5) >>
+    interface ISectionRepository << (P,#42A5F5) >>
+    interface ITileRepository << (P,#42A5F5) >>
+    interface ICatalogRepository << (P,#42A5F5) >>
+    interface IProviderRepository << (P,#42A5F5) >>
+    interface IRoleRepository << (P,#42A5F5) >>
+    interface IThemeRepository << (P,#42A5F5) >>
+    interface IMenuItemRepository << (P,#42A5F5) >>
+    interface ITranslationRepository << (P,#42A5F5) >>
+  }
+
+  package "Domain Services" as DSVC <<Rectangle>> {
+    skinparam packageBackgroundColor SERVICE_COLOR
+
+    class ContentResolver << (S,#FFB74D) >> {
+      ResolvedSite : Site + Pages + Sections + Tiles + MenuItems
+    }
+
+    class SitePublisher << (S,#FFB74D) >> {
+      + validateForPublish(site) : PublishValidationResult
+      - checks name, pages, non-archived status
+    }
+  }
+}
+
+' ============================================================
+' INFRASTRUCTURE LAYER (Driven Adapters)
+' ============================================================
+
+package "Infrastructure Layer  <<driven adapters>>" as INFRA <<Rectangle>> {
+  skinparam packageBackgroundColor INFRA_COLOR
+
+  class AppConfig << (F,#90A4AE) >> {
+    host : string = "0.0.0.0"
+    port : ushort = 8083
+  }
+
+  class Container << (F,#90A4AE) >> {
+    + buildContainer(config) : Container
+  }
+
+  package "In-Memory Persistence" as PERSIST <<Rectangle>> {
+    class InMemorySiteRepo << (A,#B0BEC5) >>
+    class InMemoryPageRepo << (A,#B0BEC5) >>
+    class InMemorySectionRepo << (A,#B0BEC5) >>
+    class InMemoryTileRepo << (A,#B0BEC5) >>
+    class InMemoryCatalogRepo << (A,#B0BEC5) >>
+    class InMemoryProviderRepo << (A,#B0BEC5) >>
+    class InMemoryRoleRepo << (A,#B0BEC5) >>
+    class InMemoryThemeRepo << (A,#B0BEC5) >>
+    class InMemoryMenuItemRepo << (A,#B0BEC5) >>
+    class InMemoryTranslationRepo << (A,#B0BEC5) >>
+  }
+}
+
+' ============================================================
+' RELATIONSHIPS – Controller → Use Case
+' ============================================================
+
+SiteController        --> ManageSitesUseCase
+PageController        --> ManagePagesUseCase
+SectionController     --> ManageSectionsUseCase
+TileController        --> ManageTilesUseCase
+CatalogController     --> ManageCatalogsUseCase
+ProviderController    --> ManageProvidersUseCase
+RoleController        --> ManageRolesUseCase
+ThemeController       --> ManageThemesUseCase
+MenuItemController    --> ManageMenuItemsUseCase
+TranslationController --> ManageTranslationsUseCase
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Domain Services
+' ============================================================
+
+ManageSitesUseCase --> SitePublisher
+
+' ============================================================
+' RELATIONSHIPS – Use Case → Ports
+' ============================================================
+
+ManageSitesUseCase        --> ISiteRepository
+ManagePagesUseCase        --> IPageRepository
+ManageSectionsUseCase     --> ISectionRepository
+ManageTilesUseCase        --> ITileRepository
+ManageCatalogsUseCase     --> ICatalogRepository
+ManageProvidersUseCase    --> IProviderRepository
+ManageRolesUseCase        --> IRoleRepository
+ManageThemesUseCase       --> IThemeRepository
+ManageMenuItemsUseCase    --> IMenuItemRepository
+ManageTranslationsUseCase --> ITranslationRepository
+
+' ============================================================
+' RELATIONSHIPS – Adapter implements Port
+' ============================================================
+
+InMemorySiteRepo        ..|> ISiteRepository
+InMemoryPageRepo        ..|> IPageRepository
+InMemorySectionRepo     ..|> ISectionRepository
+InMemoryTileRepo        ..|> ITileRepository
+InMemoryCatalogRepo     ..|> ICatalogRepository
+InMemoryProviderRepo    ..|> IProviderRepository
+InMemoryRoleRepo        ..|> IRoleRepository
+InMemoryThemeRepo       ..|> IThemeRepository
+InMemoryMenuItemRepo    ..|> IMenuItemRepository
+InMemoryTranslationRepo ..|> ITranslationRepository
+
+' ============================================================
+' ENTITY ASSOCIATIONS
+' ============================================================
+
+Site "1" *-- "0..*" Page : contains >
+Page "1" *-- "0..*" Section : contains >
+Section "1" *-- "0..*" Tile : contains >
+Tile "0..*" -- "1" Catalog : belongs to >
+Catalog "0..*" -- "1" ContentProvider : sourced from >
+Site "1" -- "0..1" Theme : themed by >
+Site "1" *-- "0..*" MenuItem : navigates >
+MenuItem "0..*" -- "0..1" MenuItem : parent >
+Translation "0..*" ..> Site : translates
+Translation "0..*" ..> Page : translates
+Translation "0..*" ..> Tile : translates
+Role "0..*" -- "0..*" Site : gates access >
+Role "0..*" -- "0..*" Page : gates access >
+Role "0..*" -- "0..*" Tile : gates access >
+
+' ============================================================
+' LEGEND
+' ============================================================
+
+legend bottom right
+  | Symbol | Layer |
+  | (C) | Controller (Presentation) |
+  | (U) | Use Case (Application) |
+  | (E) | Entity (Domain) |
+  | (P) | Port / Interface (Domain) |
+  | (S) | Domain Service |
+  | (A) | Adapter (Infrastructure) |
+  | (F) | Framework / Config |
+  |-->| depends on |
+  |..|>| implements |
+endlegend
+
+footer UIM Platform - Cloud Portal Service\n(c) 2018-2026 UIM Platform Team
+
+@enduml
