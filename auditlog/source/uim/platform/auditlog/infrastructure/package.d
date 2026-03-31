@@ -1,7 +1,7 @@
 module uim.platform.auditlog.infrastructure;
 
 public {
-    import uim.platform.auditlog.infrastructure.database;
-    import uim.platform.auditlog.infrastructure.logging;
-    import uim.platform.auditlog.infrastructure.retention;
+    import uim.platform.auditlog.infrastructure.persistence;
+    import uim.platform.auditlog.infrastructure.config;
+    import uim.platform.auditlog.infrastructure.container;
 }
