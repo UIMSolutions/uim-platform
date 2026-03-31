@@ -5,6 +5,7 @@ import vibe.data.json;
 import uim.platform.analytics.app.usecases.datasets;
 import uim.platform.analytics.app.dto.dataset;
 import uim.platform.analytics.infrastructure.web.json_utils;
+@safe:
 
 class DatasetHandler {
     private DatasetUseCases useCases;

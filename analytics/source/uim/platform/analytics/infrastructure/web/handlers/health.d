@@ -2,6 +2,7 @@ module uim.platform.analytics.infrastructure.web.handlers.health;
 
 import vibe.http.server;
 import vibe.data.json;
+@safe:
 
 class HealthHandler {
     void check(scope HTTPServerRequest req, scope HTTPServerResponse res) {

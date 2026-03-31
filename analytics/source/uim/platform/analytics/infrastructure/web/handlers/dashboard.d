@@ -5,6 +5,7 @@ import vibe.data.json;
 import uim.platform.analytics.app.usecases.dashboards;
 import uim.platform.analytics.app.dto.dashboard;
 import uim.platform.analytics.infrastructure.web.json_utils;
+@safe:
 
 class DashboardHandler {
     private DashboardUseCases useCases;

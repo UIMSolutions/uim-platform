@@ -5,6 +5,7 @@ import vibe.data.json;
 import uim.platform.analytics.app.usecases.widgets;
 import uim.platform.analytics.app.dto.widget;
 import uim.platform.analytics.infrastructure.web.json_utils;
+@safe:
 
 class WidgetHandler {
     private WidgetUseCases useCases;

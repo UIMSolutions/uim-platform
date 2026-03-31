@@ -5,6 +5,7 @@ import vibe.data.json;
 import uim.platform.analytics.app.usecases.predictions;
 import uim.platform.analytics.app.dto.prediction;
 import uim.platform.analytics.infrastructure.web.json_utils;
+@safe:
 
 class PredictionHandler {
     private PredictionUseCases useCases;

@@ -1,5 +1,8 @@
 module uim.platform.analytics.infrastructure.config;
 
+import uim.platform.analytics;
+
+@safe:
 /// Service configuration (read from environment or defaults).
 struct ServiceConfig {
     string host = "0.0.0.0";

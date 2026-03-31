@@ -1,22 +1,26 @@
 module app;
 
-import vibe.http.router;
-import vibe.http.server;
-import vibe.core.core;
-import vibe.core.log;
+// import vibe.http.router;
+// import vibe.http.server;
+// import vibe.core.core;
+// import vibe.core.log;
+// 
+// // Infrastructure — persistence adapters (driven / outgoing)
+// import uim.platform.analytics.infrastructure.persistence.memory;
+// // Infrastructure — external service adapters
+// import uim.platform.analytics.infrastructure.adapters;
+// // Infrastructure — web layer
+// import uim.platform.analytics.infrastructure.web.routes;
+// import uim.platform.analytics.infrastructure.web.handlers;
+// // Infrastructure — configuration
+// import uim.platform.analytics.infrastructure.config;
+// 
+// // Application — use cases
+// import uim.platform.analytics.app.usecases;
 
-// Infrastructure — persistence adapters (driven / outgoing)
-import uim.platform.analytics.infrastructure.persistence.memory;
-// Infrastructure — external service adapters
-import uim.platform.analytics.infrastructure.adapters;
-// Infrastructure — web layer
-import uim.platform.analytics.infrastructure.web.routes;
-import uim.platform.analytics.infrastructure.web.handlers;
-// Infrastructure — configuration
-import uim.platform.analytics.infrastructure.config;
+import uim.platform.analytics;
 
-// Application — use cases
-import uim.platform.analytics.app.usecases;
+@safe:
 
 version (unittest) {
 } else {
