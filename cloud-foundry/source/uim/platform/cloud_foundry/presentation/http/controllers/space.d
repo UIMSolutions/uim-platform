@@ -1,4 +1,4 @@
-module presentation.http.space;
+module presentation.http.controllers.space;
 
 import vibe.http.server;
 import vibe.http.router;

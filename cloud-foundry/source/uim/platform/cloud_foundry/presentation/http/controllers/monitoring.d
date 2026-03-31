@@ -1,4 +1,4 @@
-module presentation.http.monitoring;
+module presentation.http.controllers.monitoring;
 
 import vibe.http.server;
 import vibe.http.router;
