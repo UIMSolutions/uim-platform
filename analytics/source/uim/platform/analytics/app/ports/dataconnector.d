@@ -1,5 +1,6 @@
-module uim.platform.analytics.app.ports.data_connector;
+module uim.platform.analytics.app.ports.dataconnector;
 
+@safe:
 /// Outgoing port: abstracts fetching raw data from external sources.
 interface DataConnector {
     /// Retrieve rows from source; returns an array of associative-array rows.

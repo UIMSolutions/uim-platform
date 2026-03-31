@@ -4,7 +4,7 @@ import uim.platform.analytics.domain.entities.datasource;
 import uim.platform.analytics.domain.repositories.datasource;
 import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics.app.dto.datasource;
-import uim.platform.analytics.app.ports.data_connector;
+import uim.platform.analytics.app.ports.dataconnector;
 import std.conv : to;
 import uim.platform.analytics;
 
