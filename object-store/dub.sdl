@@ -1,0 +1,53 @@
+name "object-store"
+description "SAP Object Store on SAP BTP style service using D, uim-framework and vibe.d"
+homepage "https://github.com/UIMSolutions/uim/platform/object-store"
+authors "Ozan Nurettin Suel" "UI Manufaktur"
+copyright "Copyright 2018-2026, Ozan Nurettin Suel"
+license "Apache-2.0"
+
+targetType "executable"
+targetName "uim-object-store-platform-service"
+targetPath "build"
+sourcePaths "source"
+importPaths "source"
+
+// Dependency on the core framework
+dependency "uim-platform:service" path=".."
+
+// Build settings
+buildRequirements "allowWarnings" "silenceDeprecations"
+buildOptions "ignoreDeprecations" "debugInfo"
+
+// Configurations
+configuration "defaultRun" {
+  targetType "executable"
+}
+
+configuration "defaultTest" {
+  targetType "library"
+}
+
+configuration "modules" {
+  targetType "library"
+  versions "show_module"
+}
+
+configuration "tests" {
+  targetType "library"
+  versions "show_module" "show_test"
+}
+
+configuration "inits" {
+  targetType "library"
+  versions "show_module" "show_init"
+}
+
+configuration "calls" {
+  targetType "library"
+  versions "show_module" "show_test" "show_function"
+}
+
+configuration "verbose" {
+  targetType "library"
+  versions "show_module" "show_test" "show_function" "show_verbose"
+}

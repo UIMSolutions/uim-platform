@@ -1,0 +1,111 @@
+module application.use_cases.manage_service_bindings;
+
+import application.dto;
+import domain.entities.service_binding;
+import domain.ports.service_binding_repository;
+import domain.ports.bucket_repository;
+import domain.types;
+
+import std.conv : to;
+
+/// Application service for service binding management (credentials for programmatic access).
+class ManageServiceBindingsUseCase
+{
+    private ServiceBindingRepository bindingRepo;
+    private BucketRepository bucketRepo;
+
+    this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo)
+    {
+        this.bindingRepo = bindingRepo;
+        this.bucketRepo = bucketRepo;
+    }
+
+    CommandResult createBinding(CreateServiceBindingRequest req)
+    {
+        if (req.name.length == 0)
+            return CommandResult(false, "", "Binding name is required");
+        if (req.bucketId.length == 0)
+            return CommandResult(false, "", "Bucket ID is required");
+
+        auto bucket = bucketRepo.findById(req.bucketId);
+        if (bucket is null || bucket.id.length == 0)
+            return CommandResult(false, "", "Bucket not found");
+
+        import std.uuid : randomUUID;
+        auto id = randomUUID().toString();
+        auto accessKeyId = randomUUID().toString();
+        auto secretKey = randomUUID().toString();
+        auto ts = currentTimestamp();
+
+        auto binding = new ServiceBinding();
+        binding.id = id;
+        binding.tenantId = req.tenantId;
+        binding.name = req.name;
+        binding.bucketId = req.bucketId;
+        binding.accessKeyId = accessKeyId;
+        binding.secretAccessKeyHash = hashSecret(secretKey);
+        binding.permission = parsePermission(req.permission);
+        binding.status = BindingStatus.active;
+        binding.expiresAt = req.expiresAt;
+        binding.createdBy = req.createdBy;
+        binding.createdAt = ts;
+
+        bindingRepo.save(binding);
+        return CommandResult(true, id, "");
+    }
+
+    ServiceBinding getBinding(ServiceBindingId id)
+    {
+        return bindingRepo.findById(id);
+    }
+
+    ServiceBinding[] listBindings(BucketId bucketId)
+    {
+        return bindingRepo.findByBucket(bucketId);
+    }
+
+    CommandResult revokeBinding(ServiceBindingId id)
+    {
+        auto binding = bindingRepo.findById(id);
+        if (binding is null || binding.id.length == 0)
+            return CommandResult(false, "", "Binding not found");
+
+        binding.status = BindingStatus.revoked;
+        bindingRepo.update(binding);
+        return CommandResult(true, id, "");
+    }
+
+    CommandResult deleteBinding(ServiceBindingId id)
+    {
+        auto binding = bindingRepo.findById(id);
+        if (binding is null || binding.id.length == 0)
+            return CommandResult(false, "", "Binding not found");
+
+        bindingRepo.remove(id);
+        return CommandResult(true, id, "");
+    }
+}
+
+private BindingPermission parsePermission(string s)
+{
+    switch (s)
+    {
+    case "readWrite": return BindingPermission.readWrite;
+    case "admin": return BindingPermission.admin;
+    default: return BindingPermission.readOnly;
+    }
+}
+
+private string hashSecret(string secret)
+{
+    import std.digest.md : md5Of, toHexString;
+    import std.string : representation;
+    auto hash = md5Of(secret.representation);
+    return toHexString(hash).idup;
+}
+
+private long currentTimestamp()
+{
+    import std.datetime.systime : Clock;
+    return Clock.currStdTime();
+}

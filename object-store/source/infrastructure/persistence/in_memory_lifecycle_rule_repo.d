@@ -1,0 +1,29 @@
+module infrastructure.persistence.in_memory_lifecycle_rule_repo;
+
+import domain.types;
+import domain.entities.lifecycle_rule;
+import domain.ports.lifecycle_rule_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryLifecycleRuleRepository : LifecycleRuleRepository
+{
+    private LifecycleRule[LifecycleRuleId] store;
+
+    LifecycleRule findById(LifecycleRuleId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return null;
+    }
+
+    LifecycleRule[] findByBucket(BucketId bucketId)
+    {
+        return store.byValue().filter!(e => e.bucketId == bucketId).array;
+    }
+
+    void save(LifecycleRule entity) { store[entity.id] = entity; }
+    void update(LifecycleRule entity) { store[entity.id] = entity; }
+    void remove(LifecycleRuleId id) { store.remove(id); }
+}

@@ -1,0 +1,34 @@
+module infrastructure.persistence.in_memory_access_policy_repo;
+
+import domain.types;
+import domain.entities.access_policy;
+import domain.ports.access_policy_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryAccessPolicyRepository : AccessPolicyRepository
+{
+    private AccessPolicy[AccessPolicyId] store;
+
+    AccessPolicy findById(AccessPolicyId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return null;
+    }
+
+    AccessPolicy[] findByBucket(BucketId bucketId)
+    {
+        return store.byValue().filter!(e => e.bucketId == bucketId).array;
+    }
+
+    AccessPolicy[] findByTenant(TenantId tenantId)
+    {
+        return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    }
+
+    void save(AccessPolicy entity) { store[entity.id] = entity; }
+    void update(AccessPolicy entity) { store[entity.id] = entity; }
+    void remove(AccessPolicyId id) { store.remove(id); }
+}
