@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.group_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_groups;
+import application.usecases.manage_groups;
 import application.dto;
 import domain.entities.group;
 import uim.platform.identity_authentication.presentation.http.json_utils;

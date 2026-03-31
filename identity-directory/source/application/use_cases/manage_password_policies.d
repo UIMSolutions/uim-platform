@@ -1,4 +1,4 @@
-module application.use_cases.manage_password_policies;
+module application.usecases.manage_password_policies;
 
 import domain.entities.password_policy;
 import domain.entities.audit_event;

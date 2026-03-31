@@ -1,4 +1,4 @@
-module application.use_cases.manage_schemas;
+module application.usecases.manage_schemas;
 
 import domain.entities.schema;
 import domain.entities.audit_event;

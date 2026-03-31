@@ -1,4 +1,4 @@
-module application.use_cases.query_audit_log;
+module application.usecases.query_audit_log;
 
 import domain.entities.audit_event;
 import domain.types;

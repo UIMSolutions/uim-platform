@@ -1,4 +1,4 @@
-module application.use_cases.manage_groups;
+module application.usecases.manage_groups;
 
 import domain.entities.group;
 import domain.entities.user;

@@ -1,4 +1,4 @@
-module application.use_cases.manage_api_clients;
+module application.usecases.manage_api_clients;
 
 import domain.entities.api_client;
 import domain.entities.audit_event;

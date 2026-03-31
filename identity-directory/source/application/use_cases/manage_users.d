@@ -1,4 +1,4 @@
-module application.use_cases.manage_users;
+module application.usecases.manage_users;
 
 import domain.entities.user;
 import domain.entities.audit_event;
