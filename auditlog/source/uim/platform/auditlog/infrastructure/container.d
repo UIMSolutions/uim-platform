@@ -22,14 +22,14 @@ import uim.platform.auditlog.application.usecases.write.data_access_log;
 import uim.platform.auditlog.application.usecases.write.config_change;
 
 // Controllers
-import uim.platform.identity_authentication.presentation.http.controllers.audit_log;
-import uim.platform.identity_authentication.presentation.http.controllers.retention;
-import uim.platform.identity_authentication.presentation.http.controllers.audit_config;
-import uim.platform.identity_authentication.presentation.http.controllers.export_;
-import uim.platform.identity_authentication.presentation.http.controllers.security_event;
-import uim.platform.identity_authentication.presentation.http.controllers.data_access;
-import uim.platform.identity_authentication.presentation.http.controllers.config_change;
-import uim.platform.identity_authentication.presentation.http.controllers.health;
+import uim.platform.auditlog.presentation.http.controllers.audit_log;
+import uim.platform.auditlog.presentation.http.controllers.retention;
+import uim.platform.auditlog.presentation.http.controllers.audit_config;
+import uim.platform.auditlog.presentation.http.controllers.export_;
+import uim.platform.auditlog.presentation.http.controllers.security_event;
+import uim.platform.auditlog.presentation.http.controllers.data_access;
+import uim.platform.auditlog.presentation.http.controllers.config_change;
+import uim.platform.auditlog.presentation.http.controllers.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

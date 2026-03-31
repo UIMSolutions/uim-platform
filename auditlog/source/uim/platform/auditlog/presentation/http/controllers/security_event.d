@@ -8,7 +8,7 @@ import std.conv : to;
 import uim.platform.auditlog.application.usecases.write_security_event;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.auditlog.presentation.http.json_utils;
 
 class SecurityEventController
 {

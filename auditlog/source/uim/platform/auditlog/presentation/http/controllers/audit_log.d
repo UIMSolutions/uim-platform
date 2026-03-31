@@ -10,7 +10,7 @@ import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.auditlog.presentation.http.json_utils;
 
 class AuditLogController
 {

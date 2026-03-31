@@ -9,7 +9,7 @@ import uim.platform.auditlog.application.usecases.manage_exports;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.export_job;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.auditlog.presentation.http.json_utils;
 
 class ExportController
 {
