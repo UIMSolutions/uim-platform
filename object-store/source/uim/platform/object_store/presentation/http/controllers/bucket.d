@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_buckets;
-import application.dto;
+import uim.platform.object_store.application.use_cases.manage_buckets;
+import uim.platform.object_store.application.dto;
 import domain.entities.bucket;
 import presentation.http.json_utils;
 

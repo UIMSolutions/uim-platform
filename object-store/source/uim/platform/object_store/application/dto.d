@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.object_store.application.dto;
 
 import domain.types;
 

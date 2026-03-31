@@ -1,6 +1,6 @@
-module application.use_cases.manage_cors_rules;
+module uim.platform.object_store.application.use_cases.manage_cors_rules;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.cors_rule;
 import domain.ports.cors_rule_repository;
 import domain.ports.bucket_repository;

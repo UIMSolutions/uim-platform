@@ -1,6 +1,6 @@
-module application.use_cases.manage_service_bindings;
+module uim.platform.object_store.application.use_cases.manage_service_bindings;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.service_binding;
 import domain.ports.service_binding_repository;
 import domain.ports.bucket_repository;

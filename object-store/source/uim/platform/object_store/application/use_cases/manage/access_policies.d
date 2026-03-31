@@ -1,6 +1,6 @@
-module application.use_cases.manage_access_policies;
+module uim.platform.object_store.application.use_cases.manage_access_policies;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.access_policy;
 import domain.ports.access_policy_repository;
 import domain.ports.bucket_repository;

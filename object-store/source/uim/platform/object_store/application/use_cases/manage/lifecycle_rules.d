@@ -1,6 +1,6 @@
-module application.use_cases.manage_lifecycle_rules;
+module uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.lifecycle_rule;
 import domain.ports.lifecycle_rule_repository;
 import domain.ports.bucket_repository;

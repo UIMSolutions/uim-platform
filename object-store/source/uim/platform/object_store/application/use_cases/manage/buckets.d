@@ -1,6 +1,6 @@
-module application.use_cases.manage_buckets;
+module uim.platform.object_store.application.use_cases.manage_buckets;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.bucket;
 import domain.ports.bucket_repository;
 import domain.services.encryption_policy;

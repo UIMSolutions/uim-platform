@@ -12,12 +12,12 @@ import infrastructure.persistence.in_memory_cors_rule_repo;
 import infrastructure.persistence.in_memory_service_binding_repo;
 
 // Use Cases
-import application.use_cases.manage_buckets;
-import application.use_cases.manage_objects;
-import application.use_cases.manage_access_policies;
-import application.use_cases.manage_lifecycle_rules;
-import application.use_cases.manage_cors_rules;
-import application.use_cases.manage_service_bindings;
+import uim.platform.object_store.application.use_cases.manage_buckets;
+import uim.platform.object_store.application.use_cases.manage_objects;
+import uim.platform.object_store.application.use_cases.manage_access_policies;
+import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
+import uim.platform.object_store.application.use_cases.manage_cors_rules;
+import uim.platform.object_store.application.use_cases.manage_service_bindings;
 
 // Controllers
 import presentation.http.bucket_controller;

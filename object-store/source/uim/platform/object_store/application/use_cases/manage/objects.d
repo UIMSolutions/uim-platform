@@ -1,6 +1,6 @@
-module application.use_cases.manage_objects;
+module uim.platform.object_store.application.use_cases.manage_objects;
 
-import application.dto;
+import uim.platform.object_store.application.dto;
 import domain.entities.bucket;
 import domain.entities.storage_object;
 import domain.entities.object_version;
