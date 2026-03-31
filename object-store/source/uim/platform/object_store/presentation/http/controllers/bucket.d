@@ -1,4 +1,4 @@
-module presentation.http.bucket_controller;
+module uim.platform.object_store.presentation.http.controllers.bucket;
 
 import vibe.http.server;
 import vibe.http.router;

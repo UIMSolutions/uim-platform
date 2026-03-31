@@ -2,26 +2,23 @@ module uim.platform.object_store.application.use_cases.manage_service_bindings;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.service_binding;
-import uim.platform.object_store.domain.ports.service_binding_repository;
-import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.ports.repositories.service_binding;
+import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 import std.conv : to;
 
 /// Application service for service binding management (credentials for programmatic access).
-class ManageServiceBindingsUseCase
-{
+class ManageServiceBindingsUseCase {
     private ServiceBindingRepository bindingRepo;
     private BucketRepository bucketRepo;
 
-    this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo)
-    {
+    this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo) {
         this.bindingRepo = bindingRepo;
         this.bucketRepo = bucketRepo;
     }
 
-    CommandResult createBinding(CreateServiceBindingRequest req)
-    {
+    CommandResult createBinding(CreateServiceBindingRequest req) {
         if (req.name.length == 0)
             return CommandResult(false, "", "Binding name is required");
         if (req.bucketId.length == 0)
@@ -32,6 +29,7 @@ class ManageServiceBindingsUseCase
             return CommandResult(false, "", "Bucket not found");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
         auto accessKeyId = randomUUID().toString();
         auto secretKey = randomUUID().toString();
@@ -54,18 +52,15 @@ class ManageServiceBindingsUseCase
         return CommandResult(true, id, "");
     }
 
-    ServiceBinding getBinding(ServiceBindingId id)
-    {
+    ServiceBinding getBinding(ServiceBindingId id) {
         return bindingRepo.findById(id);
     }
 
-    ServiceBinding[] listBindings(BucketId bucketId)
-    {
+    ServiceBinding[] listBindings(BucketId bucketId) {
         return bindingRepo.findByBucket(bucketId);
     }
 
-    CommandResult revokeBinding(ServiceBindingId id)
-    {
+    CommandResult revokeBinding(ServiceBindingId id) {
         auto binding = bindingRepo.findById(id);
         if (binding is null || binding.id.length == 0)
             return CommandResult(false, "", "Binding not found");
@@ -75,8 +70,7 @@ class ManageServiceBindingsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult deleteBinding(ServiceBindingId id)
-    {
+    CommandResult deleteBinding(ServiceBindingId id) {
         auto binding = bindingRepo.findById(id);
         if (binding is null || binding.id.length == 0)
             return CommandResult(false, "", "Binding not found");
@@ -86,26 +80,27 @@ class ManageServiceBindingsUseCase
     }
 }
 
-private BindingPermission parsePermission(string s)
-{
-    switch (s)
-    {
-    case "readWrite": return BindingPermission.readWrite;
-    case "admin": return BindingPermission.admin;
-    default: return BindingPermission.readOnly;
+private BindingPermission parsePermission(string s) {
+    switch (s) {
+    case "readWrite":
+        return BindingPermission.readWrite;
+    case "admin":
+        return BindingPermission.admin;
+    default:
+        return BindingPermission.readOnly;
     }
 }
 
-private string hashSecret(string secret)
-{
+private string hashSecret(string secret) {
     import std.digest.md : md5Of, toHexString;
     import std.string : representation;
+
     auto hash = md5Of(secret.representation);
     return toHexString(hash).idup;
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
     import std.datetime.systime : Clock;
+
     return Clock.currStdTime();
 }

@@ -2,24 +2,21 @@ module uim.platform.object_store.application.use_cases.manage_access_policies;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.access_policy;
-import uim.platform.object_store.domain.ports.access_policy_repository;
-import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.ports.repositories.access_policy;
+import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for bucket access policy management.
-class ManageAccessPoliciesUseCase
-{
+class ManageAccessPoliciesUseCase {
     private AccessPolicyRepository policyRepo;
     private BucketRepository bucketRepo;
 
-    this(AccessPolicyRepository policyRepo, BucketRepository bucketRepo)
-    {
+    this(AccessPolicyRepository policyRepo, BucketRepository bucketRepo) {
         this.policyRepo = policyRepo;
         this.bucketRepo = bucketRepo;
     }
 
-    CommandResult createPolicy(CreateAccessPolicyRequest req)
-    {
+    CommandResult createPolicy(CreateAccessPolicyRequest req) {
         if (req.name.length == 0)
             return CommandResult(false, "", "Policy name is required");
         if (req.bucketId.length == 0)
@@ -30,6 +27,7 @@ class ManageAccessPoliciesUseCase
             return CommandResult(false, "", "Bucket not found");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
         auto ts = currentTimestamp();
 
@@ -50,35 +48,36 @@ class ManageAccessPoliciesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req)
-    {
+    CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
         auto policy = policyRepo.findById(id);
         if (policy is null || policy.id.length == 0)
             return CommandResult(false, "", "Policy not found");
 
-        if (req.name.length > 0) policy.name = req.name;
-        if (req.effect.length > 0) policy.effect = parseEffect(req.effect);
-        if (req.principal.length > 0) policy.principal = req.principal;
-        if (req.actions.length > 0) policy.actions = req.actions;
-        if (req.resources.length > 0) policy.resources = req.resources;
+        if (req.name.length > 0)
+            policy.name = req.name;
+        if (req.effect.length > 0)
+            policy.effect = parseEffect(req.effect);
+        if (req.principal.length > 0)
+            policy.principal = req.principal;
+        if (req.actions.length > 0)
+            policy.actions = req.actions;
+        if (req.resources.length > 0)
+            policy.resources = req.resources;
         policy.updatedAt = currentTimestamp();
 
         policyRepo.update(policy);
         return CommandResult(true, id, "");
     }
 
-    AccessPolicy getPolicy(AccessPolicyId id)
-    {
+    AccessPolicy getPolicy(AccessPolicyId id) {
         return policyRepo.findById(id);
     }
 
-    AccessPolicy[] listPolicies(BucketId bucketId)
-    {
+    AccessPolicy[] listPolicies(BucketId bucketId) {
         return policyRepo.findByBucket(bucketId);
     }
 
-    CommandResult deletePolicy(AccessPolicyId id)
-    {
+    CommandResult deletePolicy(AccessPolicyId id) {
         auto policy = policyRepo.findById(id);
         if (policy is null || policy.id.length == 0)
             return CommandResult(false, "", "Policy not found");
@@ -88,17 +87,17 @@ class ManageAccessPoliciesUseCase
     }
 }
 
-private PolicyEffect parseEffect(string s)
-{
-    switch (s)
-    {
-    case "deny": return PolicyEffect.deny;
-    default: return PolicyEffect.allow;
+private PolicyEffect parseEffect(string s) {
+    switch (s) {
+    case "deny":
+        return PolicyEffect.deny;
+    default:
+        return PolicyEffect.allow;
     }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
     import std.datetime.systime : Clock;
+
     return Clock.currStdTime();
 }

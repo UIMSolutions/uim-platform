@@ -2,24 +2,21 @@ module uim.platform.object_store.application.use_cases.manage_cors_rules;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.cors_rule;
-import uim.platform.object_store.domain.ports.cors_rule_repository;
-import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.ports.repositories.cors_rule;
+import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for CORS rule management.
-class ManageCorsRulesUseCase
-{
+class ManageCorsRulesUseCase {
     private CorsRuleRepository corsRepo;
     private BucketRepository bucketRepo;
 
-    this(CorsRuleRepository corsRepo, BucketRepository bucketRepo)
-    {
+    this(CorsRuleRepository corsRepo, BucketRepository bucketRepo) {
         this.corsRepo = corsRepo;
         this.bucketRepo = bucketRepo;
     }
 
-    CommandResult createRule(CreateCorsRuleRequest req)
-    {
+    CommandResult createRule(CreateCorsRuleRequest req) {
         if (req.bucketId.length == 0)
             return CommandResult(false, "", "Bucket ID is required");
 
@@ -28,6 +25,7 @@ class ManageCorsRulesUseCase
             return CommandResult(false, "", "Bucket not found");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
         auto ts = currentTimestamp();
 
@@ -47,35 +45,36 @@ class ManageCorsRulesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req)
-    {
+    CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
         auto rule = corsRepo.findById(id);
         if (rule is null || rule.id.length == 0)
             return CommandResult(false, "", "CORS rule not found");
 
-        if (req.allowedOrigins.length > 0) rule.allowedOrigins = req.allowedOrigins;
-        if (req.allowedMethods.length > 0) rule.allowedMethods = req.allowedMethods;
-        if (req.allowedHeaders.length > 0) rule.allowedHeaders = req.allowedHeaders;
-        if (req.exposedHeaders.length > 0) rule.exposedHeaders = req.exposedHeaders;
-        if (req.maxAgeSeconds > 0) rule.maxAgeSeconds = req.maxAgeSeconds;
+        if (req.allowedOrigins.length > 0)
+            rule.allowedOrigins = req.allowedOrigins;
+        if (req.allowedMethods.length > 0)
+            rule.allowedMethods = req.allowedMethods;
+        if (req.allowedHeaders.length > 0)
+            rule.allowedHeaders = req.allowedHeaders;
+        if (req.exposedHeaders.length > 0)
+            rule.exposedHeaders = req.exposedHeaders;
+        if (req.maxAgeSeconds > 0)
+            rule.maxAgeSeconds = req.maxAgeSeconds;
         rule.updatedAt = currentTimestamp();
 
         corsRepo.update(rule);
         return CommandResult(true, id, "");
     }
 
-    CorsRule getRule(CorsRuleId id)
-    {
+    CorsRule getRule(CorsRuleId id) {
         return corsRepo.findById(id);
     }
 
-    CorsRule[] listRules(BucketId bucketId)
-    {
+    CorsRule[] listRules(BucketId bucketId) {
         return corsRepo.findByBucket(bucketId);
     }
 
-    CommandResult deleteRule(CorsRuleId id)
-    {
+    CommandResult deleteRule(CorsRuleId id) {
         auto rule = corsRepo.findById(id);
         if (rule is null || rule.id.length == 0)
             return CommandResult(false, "", "CORS rule not found");
@@ -85,8 +84,8 @@ class ManageCorsRulesUseCase
     }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
     import std.datetime.systime : Clock;
+
     return Clock.currStdTime();
 }

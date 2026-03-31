@@ -1,4 +1,4 @@
-module presentation.http.lifecycle_rule_controller;
+module uim.platform.object_store.presentation.http.lifecycle_rule_controller;
 
 import vibe.http.server;
 import vibe.http.router;

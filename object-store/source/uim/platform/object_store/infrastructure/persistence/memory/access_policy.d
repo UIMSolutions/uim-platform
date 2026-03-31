@@ -1,8 +1,8 @@
-module uim.platform.object_store.infrastructure.persistence.memory.access_policy_repo;
+module uim.platform.object_store.infrastructure.persistence.memory.access_policy;
 
 import uim.platform.object_store.domain.types;
 import uim.platform.object_store.domain.entities.access_policy;
-import uim.platform.object_store.domain.ports.access_policy_repository;
+import uim.platform.object_store.domain.ports.repositories.access_policy;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,4 +1,4 @@
-module presentation.http.json_utils;
+module uim.platform.object_store.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;

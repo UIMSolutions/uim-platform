@@ -1,4 +1,4 @@
-module presentation.http.controllers;
+module uim.platform.object_store.presentation.http.controllers;
 
 public {
     import uim.platform.object_store.presentation.http.controllers.access_policy;
