@@ -1,4 +1,4 @@
-module uim.platform.auditlog.presentation.http.controllers.export_controller;
+module uim.platform.auditlog.presentation.http.controllers.export_;
 
 import vibe.http.server;
 import vibe.http.router;

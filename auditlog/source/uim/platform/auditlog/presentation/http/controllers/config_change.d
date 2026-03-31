@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.config_change;
+module uim.platform.auditlog.presentation.http.controllers.config_change;
 
 import vibe.http.server;
 import vibe.http.router;

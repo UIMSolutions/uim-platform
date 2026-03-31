@@ -1,4 +1,4 @@
-module uim.platform.auditlog.presentation.http.controllers.security_event_controller;
+module uim.platform.auditlog.presentation.http.controllers.security_event;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module uim.platform.auditlog.presentation.http.controllers.health_controller;
+module uim.platform.auditlog.presentation.http.controllers.health;
 
 import vibe.http.server;
 import vibe.http.router;
