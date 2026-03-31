@@ -1,7 +1,7 @@
 module uim.platform.analytics.domain.repositories.prediction;
 
-// import uim.platform.analytics.domain.entities.prediction;
-// import uim.platform.analytics.domain.values.common;
+import uim.platform.analytics.domain.entities.prediction;
+import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

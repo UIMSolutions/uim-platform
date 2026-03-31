@@ -5,3 +5,4 @@ public {
     import uim.platform.analytics.infrastructure.web;
     import uim.platform.analytics.infrastructure.adapters;
     import uim.platform.analytics.infrastructure.config;
+}
