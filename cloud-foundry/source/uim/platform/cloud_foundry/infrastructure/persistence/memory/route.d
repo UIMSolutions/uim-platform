@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_route_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.memory.route;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.route;

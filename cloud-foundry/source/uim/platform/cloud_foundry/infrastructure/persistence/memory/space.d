@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.infrastructure.persistence.memory.space_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.memory.space;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.space;
