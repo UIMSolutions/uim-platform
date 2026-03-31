@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.data_access_log;
 
 /// Port for persisting data access log records.
-interface DataAccessLogRepository
+@safe: interface  DataAccessLogRepository
 {
     DataAccessLog[] findByTenant(TenantId tenantId);
     DataAccessLog* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);

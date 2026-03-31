@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 
 /// Port for persisting and querying audit log entries.
-interface AuditLogRepository
+@safe: interface  AuditLogRepository
 {
     AuditLogEntry[] findByTenant(TenantId tenantId);
     AuditLogEntry* findById(AuditLogId id, TenantId tenantId);

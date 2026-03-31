@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.config_change_log;
 
 /// Port for persisting configuration change log records.
-interface ConfigChangeLogRepository
+@safe: interface  ConfigChangeLogRepository
 {
     ConfigChangeLog[] findByTenant(TenantId tenantId);
     ConfigChangeLog* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);

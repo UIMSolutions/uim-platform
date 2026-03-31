@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.security_event;
 import uim.platform.auditlog.domain.types;
 
 /// Enriched security event — login/logout, auth failures, privilege changes.
-struct SecurityEvent
+@safe: struct SecurityEvent
 {
     AuditLogId auditLogId;      // references the parent audit entry
     TenantId tenantId;

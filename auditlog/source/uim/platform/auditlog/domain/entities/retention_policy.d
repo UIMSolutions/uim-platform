@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog.domain.types;
 
 /// Retention policy — how long audit data is kept.
-struct RetentionPolicy
+@safe: struct RetentionPolicy
 {
     RetentionPolicyId id;
     TenantId tenantId;

@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.types;
 
 /// Core audit log record — an immutable chronological entry.
-struct AuditLogEntry
+@safe: struct AuditLogEntry
 {
     AuditLogId id;              // message_uuid
     TenantId tenantId;
@@ -28,7 +28,7 @@ struct AuditLogEntry
 }
 
 /// Key/value pair describing a changed or accessed attribute.
-struct AuditAttribute
+@safe: struct AuditAttribute
 {
     string name;
     string oldValue;

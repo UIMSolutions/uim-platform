@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog.domain.types;
 
 /// Tenant-level audit logging configuration.
-struct AuditConfig
+@safe: struct AuditConfig
 {
     AuditConfigId id;
     TenantId tenantId;

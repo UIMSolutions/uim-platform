@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.export_job;
 import uim.platform.auditlog.domain.types;
 
 /// An audit log export job.
-struct ExportJob
+@safe: struct ExportJob
 {
     ExportJobId id;
     TenantId tenantId;

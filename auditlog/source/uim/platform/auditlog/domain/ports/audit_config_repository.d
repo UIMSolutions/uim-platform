@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_config;
 
 /// Port for persisting tenant-level audit configurations.
-interface AuditConfigRepository
+@safe: interface  AuditConfigRepository
 {
     AuditConfig[] findAll();
     AuditConfig* findByTenant(TenantId tenantId);

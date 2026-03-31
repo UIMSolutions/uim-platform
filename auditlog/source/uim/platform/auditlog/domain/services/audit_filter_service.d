@@ -5,7 +5,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 
 /// Domain service — provides search and filtering over audit logs.
-class AuditFilterService
+@safe: class AuditFilterService
 {
     private AuditLogRepository repo;
 

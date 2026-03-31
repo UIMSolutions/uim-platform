@@ -5,7 +5,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 
 /// Tracks security-critical configuration changes.
-struct ConfigChangeLog {
+@safe: struct ConfigChangeLog {
     AuditLogId auditLogId; // references parent audit entry
     TenantId tenantId;
     UserId changedBy;

@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.security_event;
 
 /// Port for persisting enriched security events.
-interface SecurityEventRepository
+@safe: interface  SecurityEventRepository
 {
     SecurityEvent[] findByTenant(TenantId tenantId);
     SecurityEvent* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);

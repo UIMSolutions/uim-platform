@@ -3,7 +3,7 @@ module uim.platform.auditlog.domain.entities.data_access_log;
 import uim.platform.auditlog.domain.types;
 
 /// Tracks read-access to sensitive / personal data.
-struct DataAccessLog {
+@safe: struct DataAccessLog {
     AuditLogId auditLogId; // references parent audit entry
     TenantId tenantId;
     UserId accessedBy;

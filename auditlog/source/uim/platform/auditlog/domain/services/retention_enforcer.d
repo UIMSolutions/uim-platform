@@ -8,7 +8,7 @@ import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import uim.platform.auditlog.domain.ports.config_change_log_repository;
 
 /// Domain service — enforces retention policies by purging expired entries.
-class RetentionEnforcer
+@safe: class RetentionEnforcer
 {
     private AuditLogRepository auditRepo;
     private RetentionPolicyRepository policyRepo;

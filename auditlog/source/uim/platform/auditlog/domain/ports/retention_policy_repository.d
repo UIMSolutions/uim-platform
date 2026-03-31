@@ -4,7 +4,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;
 
 /// Port for persisting retention policies.
-interface RetentionPolicyRepository
+@safe: interface  RetentionPolicyRepository
 {
     RetentionPolicy[] findByTenant(TenantId tenantId);
     RetentionPolicy* findById(RetentionPolicyId id, TenantId tenantId);
