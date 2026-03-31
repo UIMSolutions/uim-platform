@@ -1,4 +1,4 @@
-module application.use_cases.manage_notifications;
+module application.usecases.manage_notifications;
 
 import std.uuid;
 import std.datetime.systime : Clock;

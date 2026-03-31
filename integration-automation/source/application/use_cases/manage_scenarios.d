@@ -1,4 +1,4 @@
-module application.use_cases.manage_scenarios;
+module application.usecases.manage_scenarios;
 
 import std.uuid;
 import std.datetime.systime : Clock;

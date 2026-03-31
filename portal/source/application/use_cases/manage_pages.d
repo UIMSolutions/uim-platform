@@ -1,4 +1,4 @@
-module application.use_cases.manage_pages;
+module application.usecases.manage_pages;
 
 import domain.entities.page;
 import domain.entities.site;

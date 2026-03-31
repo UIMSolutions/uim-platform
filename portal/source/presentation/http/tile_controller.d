@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.tile_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_tiles;
+import application.usecases.manage_tiles;
 import application.dto;
 import domain.entities.tile;
 import domain.types;

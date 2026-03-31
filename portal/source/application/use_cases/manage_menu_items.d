@@ -1,4 +1,4 @@
-module application.use_cases.manage_menu_items;
+module application.usecases.manage_menu_items;
 
 import domain.entities.menu_item;
 import domain.entities.site;

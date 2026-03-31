@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.section_controller
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_sections;
+import application.usecases.manage_sections;
 import application.dto;
 import domain.entities.section;
 import domain.types;

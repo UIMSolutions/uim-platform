@@ -1,4 +1,4 @@
-module application.use_cases.manage_channels;
+module application.usecases.manage_channels;
 
 import std.uuid;
 import std.datetime.systime : Clock;

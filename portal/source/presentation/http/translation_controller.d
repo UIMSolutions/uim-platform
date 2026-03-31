@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.translation_contro
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_translations;
+import application.usecases.manage_translations;
 import application.dto;
 import domain.entities.translation;
 import domain.types;

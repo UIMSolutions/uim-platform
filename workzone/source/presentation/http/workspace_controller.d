@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.workspace_controll
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_workspaces;
+import application.usecases.manage_workspaces;
 import application.dto;
 import domain.types;
 import domain.entities.workspace;

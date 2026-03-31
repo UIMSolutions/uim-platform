@@ -1,4 +1,4 @@
-module application.use_cases.manage_workspaces;
+module application.usecases.manage_workspaces;
 
 import std.uuid;
 import std.datetime.systime : Clock;

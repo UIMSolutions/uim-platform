@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.role_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_roles;
+import application.usecases.manage_roles;
 import application.dto;
 import domain.entities.role;
 import domain.types;

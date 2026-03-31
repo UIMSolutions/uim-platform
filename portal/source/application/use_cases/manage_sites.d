@@ -1,4 +1,4 @@
-module application.use_cases.manage_sites;
+module application.usecases.manage_sites;
 
 import domain.entities.site;
 import domain.types;

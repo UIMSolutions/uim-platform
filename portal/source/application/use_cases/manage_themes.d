@@ -1,4 +1,4 @@
-module application.use_cases.manage_themes;
+module application.usecases.manage_themes;
 
 import domain.entities.theme;
 import domain.types;

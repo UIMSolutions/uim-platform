@@ -1,4 +1,4 @@
-module application.use_cases.manage_sections;
+module application.usecases.manage_sections;
 
 import domain.entities.section;
 import domain.entities.page;

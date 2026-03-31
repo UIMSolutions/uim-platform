@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.theme_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_themes;
+import application.usecases.manage_themes;
 import application.dto;
 import domain.entities.theme;
 import domain.types;

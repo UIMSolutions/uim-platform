@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.workpage_controlle
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_workpages;
+import application.usecases.manage_workpages;
 import application.dto;
 import domain.types;
 import domain.entities.workpage;

@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.card_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_cards;
+import application.usecases.manage_cards;
 import application.dto;
 import domain.types;
 import domain.entities.card;

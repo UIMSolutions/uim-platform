@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.menu_item_controll
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_menu_items;
+import application.usecases.manage_menu_items;
 import application.dto;
 import domain.entities.menu_item;
 import domain.types;

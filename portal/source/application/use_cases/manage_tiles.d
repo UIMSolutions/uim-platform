@@ -1,4 +1,4 @@
-module application.use_cases.manage_tiles;
+module application.usecases.manage_tiles;
 
 import domain.entities.tile;
 import domain.types;

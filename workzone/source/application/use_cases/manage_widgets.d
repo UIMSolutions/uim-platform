@@ -1,4 +1,4 @@
-module application.use_cases.manage_widgets;
+module application.usecases.manage_widgets;
 
 import std.uuid;
 import std.datetime.systime : Clock;

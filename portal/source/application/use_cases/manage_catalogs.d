@@ -1,4 +1,4 @@
-module application.use_cases.manage_catalogs;
+module application.usecases.manage_catalogs;
 
 import domain.entities.catalog;
 import domain.types;

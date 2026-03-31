@@ -1,4 +1,4 @@
-module application.use_cases.manage_roles;
+module application.usecases.manage_roles;
 
 import domain.entities.role;
 import domain.types;

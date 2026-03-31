@@ -1,4 +1,4 @@
-module application.use_cases.monitor_executions;
+module application.usecases.monitor_executions;
 
 import domain.types;
 import domain.entities.execution_log;

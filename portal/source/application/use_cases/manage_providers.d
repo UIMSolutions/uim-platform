@@ -1,4 +1,4 @@
-module application.use_cases.manage_providers;
+module application.usecases.manage_providers;
 
 import domain.entities.content_provider;
 import domain.types;

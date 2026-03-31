@@ -1,4 +1,4 @@
-module application.use_cases.manage_workflows;
+module application.usecases.manage_workflows;
 
 import std.uuid;
 import std.datetime.systime : Clock;

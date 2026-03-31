@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.catalog_controller
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_catalogs;
+import application.usecases.manage_catalogs;
 import application.dto;
 import domain.entities.catalog;
 import domain.types;

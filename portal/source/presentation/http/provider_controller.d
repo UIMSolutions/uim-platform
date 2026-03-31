@@ -3,7 +3,7 @@ module uim.platform.identity_authentication.presentation.http.provider_controlle
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.use_cases.manage_providers;
+import application.usecases.manage_providers;
 import application.dto;
 import domain.entities.content_provider;
 import domain.types;

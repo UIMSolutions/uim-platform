@@ -15,12 +15,12 @@ import domain.services.workflow_engine;
 import domain.services.step_executor;
 
 // Use Cases
-import application.use_cases.manage_scenarios;
-import application.use_cases.manage_workflows;
-import application.use_cases.manage_steps;
-import application.use_cases.manage_systems;
-import application.use_cases.manage_destinations;
-import application.use_cases.monitor_executions;
+import application.usecases.manage_scenarios;
+import application.usecases.manage_workflows;
+import application.usecases.manage_steps;
+import application.usecases.manage_systems;
+import application.usecases.manage_destinations;
+import application.usecases.monitor_executions;
 
 // Controllers
 import presentation.http.scenario_controller;

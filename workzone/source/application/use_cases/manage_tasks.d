@@ -1,4 +1,4 @@
-module application.use_cases.manage_tasks;
+module application.usecases.manage_tasks;
 
 import std.uuid;
 import std.datetime.systime : Clock;

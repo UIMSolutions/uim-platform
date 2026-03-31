@@ -15,16 +15,16 @@ import infrastructure.persistence.in_memory_menu_item_repo;
 import infrastructure.persistence.in_memory_translation_repo;
 
 // Use Cases
-import application.use_cases.manage_sites;
-import application.use_cases.manage_pages;
-import application.use_cases.manage_sections;
-import application.use_cases.manage_tiles;
-import application.use_cases.manage_catalogs;
-import application.use_cases.manage_providers;
-import application.use_cases.manage_roles;
-import application.use_cases.manage_themes;
-import application.use_cases.manage_menu_items;
-import application.use_cases.manage_translations;
+import application.usecases.manage_sites;
+import application.usecases.manage_pages;
+import application.usecases.manage_sections;
+import application.usecases.manage_tiles;
+import application.usecases.manage_catalogs;
+import application.usecases.manage_providers;
+import application.usecases.manage_roles;
+import application.usecases.manage_themes;
+import application.usecases.manage_menu_items;
+import application.usecases.manage_translations;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.site_controller;

@@ -15,16 +15,16 @@ import infrastructure.persistence.in_memory_app_repo;
 import infrastructure.persistence.in_memory_widget_repo;
 
 // Use Cases
-import application.use_cases.manage_workspaces;
-import application.use_cases.manage_workpages;
-import application.use_cases.manage_cards;
-import application.use_cases.manage_content;
-import application.use_cases.manage_feeds;
-import application.use_cases.manage_notifications;
-import application.use_cases.manage_tasks;
-import application.use_cases.manage_channels;
-import application.use_cases.manage_apps;
-import application.use_cases.manage_widgets;
+import application.usecases.manage_workspaces;
+import application.usecases.manage_workpages;
+import application.usecases.manage_cards;
+import application.usecases.manage_content;
+import application.usecases.manage_feeds;
+import application.usecases.manage_notifications;
+import application.usecases.manage_tasks;
+import application.usecases.manage_channels;
+import application.usecases.manage_apps;
+import application.usecases.manage_widgets;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.workspace_controller;

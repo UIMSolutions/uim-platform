@@ -1,4 +1,4 @@
-module application.use_cases.manage_translations;
+module application.usecases.manage_translations;
 
 import domain.entities.translation;
 import domain.types;
