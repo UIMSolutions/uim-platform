@@ -1,4 +1,4 @@
-module infrastructure.container;
+module uim.platform.auditlog.infrastructure.container;
 
 import infrastructure.config;
 

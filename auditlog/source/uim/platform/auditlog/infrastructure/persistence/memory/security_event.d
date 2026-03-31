@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_security_event_repo;
+module uim.platform.auditlog.infrastructure.persistence.in_memory_security_event_repo;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.security_event;

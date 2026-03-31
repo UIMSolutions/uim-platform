@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_retention_repo;
+module uim.platform.auditlog.infrastructure.persistence.in_memory_retention_repo;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;

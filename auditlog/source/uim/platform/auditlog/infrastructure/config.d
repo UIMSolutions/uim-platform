@@ -1,4 +1,4 @@
-module infrastructure.config;
+module uim.platform.auditlog.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig

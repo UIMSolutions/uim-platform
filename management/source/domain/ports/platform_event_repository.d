@@ -1,0 +1,17 @@
+module domain.ports.platform_event_repository;
+
+import domain.entities.platform_event;
+import domain.types;
+
+/// Port: outgoing — platform event persistence.
+interface PlatformEventRepository
+{
+    PlatformEvent findById(PlatformEventId id);
+    PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId);
+    PlatformEvent[] findBySubaccount(SubaccountId subaccountId);
+    PlatformEvent[] findByCategory(GlobalAccountId globalAccountId, PlatformEventCategory category);
+    PlatformEvent[] findBySeverity(GlobalAccountId globalAccountId, PlatformEventSeverity severity);
+    PlatformEvent[] findSince(GlobalAccountId globalAccountId, long sinceTimestamp);
+    void save(PlatformEvent event);
+    void remove(PlatformEventId id);
+}
