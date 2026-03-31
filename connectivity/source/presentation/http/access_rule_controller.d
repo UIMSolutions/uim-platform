@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_access_rules;
+import application.usecases.manage_access_rules;
 import application.dto;
 import domain.entities.access_rule;
 import presentation.http.json_utils;

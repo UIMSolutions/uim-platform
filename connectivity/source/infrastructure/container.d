@@ -11,12 +11,12 @@ import infrastructure.persistence.in_memory_certificate_repo;
 import infrastructure.persistence.in_memory_connectivity_log_repo;
 
 // Use Cases
-import application.use_cases.manage_destinations;
-import application.use_cases.manage_connectors;
-import application.use_cases.manage_channels;
-import application.use_cases.manage_access_rules;
-import application.use_cases.manage_certificates;
-import application.use_cases.monitor_connectivity;
+import application.usecases.manage_destinations;
+import application.usecases.manage_connectors;
+import application.usecases.manage_channels;
+import application.usecases.manage_access_rules;
+import application.usecases.manage_certificates;
+import application.usecases.monitor_connectivity;
 
 // Controllers
 import presentation.http.destination_controller;

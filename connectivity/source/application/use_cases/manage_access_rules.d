@@ -1,4 +1,4 @@
-module application.use_cases.manage_access_rules;
+module application.usecases.manage_access_rules;
 
 import application.dto;
 import domain.entities.access_rule;

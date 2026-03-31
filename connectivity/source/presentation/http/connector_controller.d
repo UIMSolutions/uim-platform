@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_connectors;
+import application.usecases.manage_connectors;
 import application.dto;
 import domain.entities.cloud_connector;
 import presentation.http.json_utils;

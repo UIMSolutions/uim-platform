@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_channels;
+import application.usecases.manage_channels;
 import application.dto;
 import domain.entities.service_channel;
 import presentation.http.json_utils;

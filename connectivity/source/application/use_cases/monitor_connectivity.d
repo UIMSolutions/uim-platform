@@ -1,4 +1,4 @@
-module application.use_cases.monitor_connectivity;
+module application.usecases.monitor_connectivity;
 
 import domain.entities.connectivity_log;
 import domain.ports.connectivity_log_repository;

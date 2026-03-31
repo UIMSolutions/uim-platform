@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.monitor_connectivity;
+import application.usecases.monitor_connectivity;
 import domain.entities.connectivity_log;
 import domain.types;
 import presentation.http.json_utils;

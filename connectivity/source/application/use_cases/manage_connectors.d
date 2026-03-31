@@ -1,4 +1,4 @@
-module application.use_cases.manage_connectors;
+module application.usecases.manage_connectors;
 
 import application.dto;
 import domain.entities.cloud_connector;

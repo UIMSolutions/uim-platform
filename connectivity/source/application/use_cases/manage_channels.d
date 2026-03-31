@@ -1,4 +1,4 @@
-module application.use_cases.manage_channels;
+module application.usecases.manage_channels;
 
 import application.dto;
 import domain.entities.service_channel;
