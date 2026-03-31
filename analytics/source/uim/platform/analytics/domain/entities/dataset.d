@@ -20,15 +20,15 @@ class Dataset {
     this() { }
 
     static Dataset create(string name, string description, string dataSourceId, string userId) {
-        auto d = new Dataset();
-        d.id = EntityId.generate();
-        d.name = name;
-        d.description = description;
-        d.dataSourceId = EntityId(dataSourceId);
-        d.columns = [];
-        d.status = ArtifactStatus.Draft;
-        d.audit = AuditInfo.create(userId);
-        return d;
+        auto dataset = new Dataset();
+        dataset.id = EntityId.generate();
+        dataset.name = name;
+        dataset.description = description;
+        dataset.dataSourceId = EntityId(dataSourceId);
+        dataset.columns = [];
+        dataset.status = ArtifactStatus.Draft;
+        dataset.audit = AuditInfo.create(userId);
+        return dataset;
     }
 
     void addDimension(string colName, ColumnDataType dataType) {

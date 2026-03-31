@@ -3,6 +3,7 @@ module uim.platform.analytics.domain.values.common;
 import std.uuid;
 import std.datetime;
 
+@safe:
 /// Strongly-typed identifier wrapping a UUID string.
 struct EntityId {
     string value;
