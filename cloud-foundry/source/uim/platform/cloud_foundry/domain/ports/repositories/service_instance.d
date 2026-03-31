@@ -4,7 +4,7 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.service_instance;
 
 /// Port for persisting and querying service instances.
-interface ServiceInstanceRepository {
+interface IServiceInstanceRepository {
   ServiceInstance[] findBySpace(SpaceId spaceId, TenantId tenantId);
   ServiceInstance* findById(ServiceInstanceId id, TenantId tenantId);
   ServiceInstance* findByName(SpaceId spaceId, TenantId tenantId, string name);

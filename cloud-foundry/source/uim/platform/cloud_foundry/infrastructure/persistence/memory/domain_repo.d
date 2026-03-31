@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_domain_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.memory.domain_repo;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.cf_domain;

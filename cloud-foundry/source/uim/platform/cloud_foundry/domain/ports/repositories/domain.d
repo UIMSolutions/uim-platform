@@ -4,7 +4,7 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.cf_domain;
 
 /// Port for persisting and querying Cloud Foundry domains.
-interface DomainRepository {
+interface IDomainRepository {
   CfDomain[] findByOrg(OrgId orgId, TenantId tenantId);
   CfDomain* findById(DomainId id, TenantId tenantId);
   CfDomain* findByName(TenantId tenantId, string name);
