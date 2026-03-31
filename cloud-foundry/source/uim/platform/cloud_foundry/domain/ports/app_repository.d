@@ -4,8 +4,7 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
 
 /// Port for persisting and querying applications.
-interface AppRepository
-{
+interface AppRepository {
   Application[] findBySpace(SpaceId spaceId, TenantId tenantId);
   Application* findById(AppId id, TenantId tenantId);
   Application* findByName(SpaceId spaceId, TenantId tenantId, string name);

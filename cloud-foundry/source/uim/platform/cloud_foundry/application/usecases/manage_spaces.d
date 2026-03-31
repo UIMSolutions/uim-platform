@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.space;
 import uim.platform.cloud_foundry.domain.ports.space_repository;
 import uim.platform.cloud_foundry.domain.ports.org_repository;
-import application.dto;
+import uim.platform.cloud_foundry.application.dto;
 
 class ManageSpacesUseCase
 {

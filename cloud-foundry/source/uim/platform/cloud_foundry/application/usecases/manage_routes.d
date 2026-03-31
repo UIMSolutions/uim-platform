@@ -9,7 +9,7 @@ import uim.platform.cloud_foundry.domain.entities.cf_domain;
 import uim.platform.cloud_foundry.domain.ports.route_repository;
 import uim.platform.cloud_foundry.domain.ports.domain_repository;
 import uim.platform.cloud_foundry.domain.services.route_resolver;
-import application.dto;
+import uim.platform.cloud_foundry.application.dto;
 
 class ManageRoutesUseCase
 {

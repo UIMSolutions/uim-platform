@@ -8,7 +8,7 @@ import uim.platform.cloud_foundry.domain.entities.service_instance;
 import uim.platform.cloud_foundry.domain.entities.service_binding;
 import uim.platform.cloud_foundry.domain.ports.service_instance_repository;
 import uim.platform.cloud_foundry.domain.ports.service_binding_repository;
-import application.dto;
+import uim.platform.cloud_foundry.application.dto;
 
 class ManageServicesUseCase
 {
