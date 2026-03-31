@@ -1,4 +1,4 @@
-module presentation.http.access_policy_controller;
+module presentation.http.controllers.access_policy;
 
 import vibe.http.server;
 import vibe.http.router;
