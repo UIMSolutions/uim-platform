@@ -47,8 +47,19 @@ struct PredictionResponse {
       p.lastResult.modelSummary,
     );
   }
+
+  Json toJson() {
+    return Json.emptyObject
+      .set("id", id)
+      .set("name", name)
+      .set("description", description)
+      .set("datasetId", datasetId)
+      .set("predictionType", predictionType)
+      .set("status", status)
+      .set("accuracy", accuracy)
+      .set("rmse", rmse)
+      .set("modelSummary", modelSummary);
+  }
 }
 
-Json toJson(PredictionResponse response) {
-  return serializeToJson(response);
-}
+

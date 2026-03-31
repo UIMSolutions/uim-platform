@@ -25,11 +25,10 @@ struct EntityId {
   bool empty() const {
     return value.length == 0;
   }
-
-  Json toJson(EntityId id) {
-  return serializeJson(value);
 }
 
+Json toJson(EntityId id) {
+  return serializeToJson(id);
 }
 
 /// Audit metadata attached to every domain entity.
@@ -48,19 +47,15 @@ struct AuditInfo {
     return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
   }
 
-  Json toJson() const {
-    return Json([
-      "createdAt": createdAt.toISOExtString(),
-      "createdBy": createdBy,
-      "updatedAt": updatedAt.toISOExtString(),
-      "updatedBy": updatedBy
-    ]);
+  Json toJson() {
+    return Json.emptyObject
+      .set("createdAt", createdAt.toISOExtString())
+      .set("createdBy", createdBy)
+      .set("updatedAt", updatedAt.toISOExtString())
+      .set("updatedBy", updatedBy);
   }
 }
 
-Json toJson(AuditInfo info) {
-  return serializeToJson(info);
-}
 /// Sharing / visibility scope.
 enum Visibility {
   Private,

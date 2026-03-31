@@ -51,7 +51,7 @@ class Dashboard {
     auto jPages = pages.map!(p => Json.emptyObject
         .set("id", p.id.value)
         .set("title", p.title)
-        .set("widgetIds", p.widgetIds.map!(wid => wid).array)
+        .set("widgetIds", p.widgetIds.map!(wid => wid.value).array)
     ).array;
 
     return Json.emptyObject
@@ -59,14 +59,14 @@ class Dashboard {
       .set("name", name)
       .set("description", description)
       .set("ownerId", ownerId.value)
-      .set("visibility", visibility.toString)
-      .set("status", status.toString)
+      .set("visibility", to!string(visibility))
+      .set("status", to!string(status))
       .set("pages", jPages)
       .set("audit", Json.emptyObject
           .set("createdBy", audit.createdBy)
-          .set("createdAt", audit.createdAt)
+          .set("createdAt", audit.createdAt.toISOExtString())
           .set("updatedBy", audit.updatedBy)
-          .set("updatedAt", audit.updatedAt)
+          .set("updatedAt", audit.updatedAt.toISOExtString())
       )
       .set("tags", tags);
   }
