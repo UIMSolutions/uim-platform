@@ -1,7 +1,7 @@
 module uim.platform.analytics.app.dto.prediction;
 
-import std.conv : to;
-import uim.platform.analytics.domain.entities.prediction;
+// import std.conv : to;
+// import uim.platform.analytics.domain.entities.prediction;
 import uim.platform.analytics;
 
 mixin(ShowModule!());
@@ -14,6 +14,10 @@ struct CreatePredictionRequest {
   string targetColumn;
   string[] featureColumns;
   string userId;
+}
+
+Json toJson(CreatePredictionRequest request) {
+  return serializeToJson(request);
 }
 
 struct PredictionResponse {
@@ -43,4 +47,8 @@ struct PredictionResponse {
       p.lastResult.modelSummary,
     );
   }
+}
+
+Json toJson(PredictionResponse response) {
+  return serializeToJson(response);
 }

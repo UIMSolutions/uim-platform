@@ -17,7 +17,7 @@ class PredictionHandler {
     }
 
     void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        res.writeJsonBody(toJsonArray(useCases.list()));
+        res.writeJsonBody(useCases.list().toJson);
     }
 
     void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {

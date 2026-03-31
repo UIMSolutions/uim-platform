@@ -5,70 +5,71 @@ import uim.platform.analytics;
 @safe:
 /// Strongly-typed identifier wrapping a UUID string.
 struct EntityId {
-    string value;
+  string value;
 
-    static EntityId generate() {
-        return EntityId(randomUUID().toString());
-    }
+  static EntityId generate() {
+    return EntityId(randomUUID().toString());
+  }
 
-    bool opEquals(const EntityId other) const {
-        return value == other.value;
-    }
+  bool opEquals(const EntityId other) const {
+    return value == other.value;
+  }
 
-    size_t toHash() const nothrow @safe {
-        size_t hash;
-        foreach (c; value)
-            hash = hash * 31 + c;
-        return hash;
-    }
+  size_t toHash() const nothrow @safe {
+    size_t hash;
+    foreach (c; value)
+      hash = hash * 31 + c;
+    return hash;
+  }
 
-    bool empty() const {
-        return value.length == 0;
-    }
-
-    Json toJson() const {
-        return value.toJson;
-    }
+  bool empty() const {
+    return value.length == 0;
+  }
 }
 
+Json toJson(EntityId id) {
+  return serializeJson(id);
+}
 /// Audit metadata attached to every domain entity.
 struct AuditInfo {
-    SysTime createdAt;
-    string createdBy;
-    SysTime updatedAt;
-    string updatedBy;
+  SysTime createdAt;
+  string createdBy;
+  SysTime updatedAt;
+  string updatedBy;
 
-    static AuditInfo create(string userId) {
-        auto now = Clock.currTime();
-        return AuditInfo(now, userId, now, userId);
-    }
+  static AuditInfo create(string userId) {
+    auto now = Clock.currTime();
+    return AuditInfo(now, userId, now, userId);
+  }
 
-    AuditInfo touch(string userId) const {
-        return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
-    }
+  AuditInfo touch(string userId) const {
+    return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
+  }
 
-
-    Json toJson() const {
-        return Json([
-            "createdAt": createdAt.toISOExtString(),
-            "createdBy": createdBy,
-            "updatedAt": updatedAt.toISOExtString(),
-            "updatedBy": updatedBy
-        ]);
-    }
+  Json toJson() const {
+    return Json([
+      "createdAt": createdAt.toISOExtString(),
+      "createdBy": createdBy,
+      "updatedAt": updatedAt.toISOExtString(),
+      "updatedBy": updatedBy
+    ]);
+  }
 }
 
+Json toJson(AuditInfo info) {
+  return serializeJson(info);
+}
 /// Sharing / visibility scope.
 enum Visibility {
-    Private,
-    Team,
-    Organization,
-    Public,
+  Private,
+  Team,
+  Organization,
+  Public,
 }
 
 /// Status of an analytical artifact.
 enum ArtifactStatus {
-    Draft,
-    Published,
-    Archived,
+  Draft,
+  Published,
+  Archived,
 }
