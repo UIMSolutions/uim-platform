@@ -1,0 +1,223 @@
+module presentation.http.subaccount_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+
+import application.use_cases.manage_subaccounts;
+import application.dto;
+import domain.entities.subaccount;
+import domain.types;
+import presentation.http.json_utils;
+
+class SubaccountController
+{
+    private ManageSubaccountsUseCase uc;
+
+    this(ManageSubaccountsUseCase uc) { this.uc = uc; }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/subaccounts", &handleCreate);
+        router.get("/api/v1/subaccounts", &handleList);
+        router.get("/api/v1/subaccounts/*", &handleGet);
+        router.put("/api/v1/subaccounts/*", &handleUpdate);
+        router.post("/api/v1/subaccounts/move/*", &handleMove);
+        router.post("/api/v1/subaccounts/suspend/*", &handleSuspend);
+        router.post("/api/v1/subaccounts/reactivate/*", &handleReactivate);
+        router.delete_("/api/v1/subaccounts/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            CreateSubaccountRequest r;
+            r.globalAccountId = jsonStr(j, "globalAccountId");
+            r.parentDirectoryId = jsonStr(j, "parentDirectoryId");
+            r.displayName = jsonStr(j, "displayName");
+            r.description = jsonStr(j, "description");
+            r.subdomain = jsonStr(j, "subdomain");
+            r.region = jsonStr(j, "region");
+            r.usage = jsonStr(j, "usage");
+            r.betaEnabled = jsonBool(j, "betaEnabled");
+            r.usedForProduction = jsonBool(j, "usedForProduction");
+            r.createdBy = req.headers.get("X-User-Id", "");
+            r.labels = jsonStrMap(j, "labels");
+            r.customProperties = jsonStrMap(j, "customProperties");
+
+            auto result = uc.create(r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto gaId = req.params.get("globalAccountId");
+            auto dirId = req.params.get("directoryId");
+            auto region = req.params.get("region");
+
+            Subaccount[] items;
+            if (dirId.length > 0)
+                items = uc.listByDirectory(dirId);
+            else if (region.length > 0 && gaId.length > 0)
+                items = uc.listByRegion(gaId, region);
+            else if (gaId.length > 0)
+                items = uc.listByGlobalAccount(gaId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref s; items)
+                arr ~= serializeSubaccount(s);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) items.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto s = uc.getById(id);
+            if (s.id.length == 0)
+            {
+                writeError(res, 404, "Subaccount not found");
+                return;
+            }
+            res.writeJsonBody(serializeSubaccount(s), 200);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto j = req.json;
+            UpdateSubaccountRequest r;
+            r.displayName = jsonStr(j, "displayName");
+            r.description = jsonStr(j, "description");
+            r.usage = jsonStr(j, "usage");
+            r.betaEnabled = jsonBool(j, "betaEnabled");
+            r.usedForProduction = jsonBool(j, "usedForProduction");
+            r.labels = jsonStrMap(j, "labels");
+            r.customProperties = jsonStrMap(j, "customProperties");
+
+            auto result = uc.update(id, r);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 404, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto j = req.json;
+            MoveSubaccountRequest r;
+            r.targetDirectoryId = jsonStr(j, "targetDirectoryId");
+
+            auto result = uc.moveSubaccount(id, r);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto result = uc.suspend(id);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto result = uc.reactivate(id);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractId(req.requestURI);
+            auto result = uc.remove(id);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 204);
+            else
+                writeError(res, 404, result.error);
+        }
+        catch (Exception e)
+            writeError(res, 500, "Internal server error");
+    }
+}
+
+private Json serializeSubaccount(ref Subaccount s)
+{
+    auto j = Json.emptyObject;
+    j["id"] = Json(s.id);
+    j["globalAccountId"] = Json(s.globalAccountId);
+    j["parentDirectoryId"] = Json(s.parentDirectoryId);
+    j["displayName"] = Json(s.displayName);
+    j["description"] = Json(s.description);
+    j["subdomain"] = Json(s.subdomain);
+    j["region"] = Json(s.region);
+    j["status"] = Json(s.status.to!string);
+    j["usage"] = Json(s.usage.to!string);
+    j["betaEnabled"] = Json(s.betaEnabled);
+    j["usedForProduction"] = Json(s.usedForProduction);
+    j["tenantId"] = Json(s.tenantId);
+    j["createdAt"] = Json(s.createdAt);
+    j["modifiedAt"] = Json(s.modifiedAt);
+    j["createdBy"] = Json(s.createdBy);
+    j["labels"] = serializeStrMap(s.labels);
+    j["customProperties"] = serializeStrMap(s.customProperties);
+    return j;
+}
+
+private string to(E)(E val) { import std.conv : to; return val.to!string; }
