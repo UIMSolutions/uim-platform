@@ -1,0 +1,105 @@
+module application.use_cases.manage_spaces;
+
+import std.uuid;
+import std.datetime.systime : Clock;
+
+import domain.types;
+import domain.entities.space;
+import domain.ports.space_repository;
+import domain.ports.org_repository;
+import application.dto;
+
+class ManageSpacesUseCase
+{
+  private SpaceRepository repo;
+  private OrgRepository orgRepo;
+
+  this(SpaceRepository repo, OrgRepository orgRepo)
+  {
+    this.repo = repo;
+    this.orgRepo = orgRepo;
+  }
+
+  CommandResult createSpace(CreateSpaceRequest req)
+  {
+    if (req.tenantId.length == 0)
+      return CommandResult("", "Tenant ID is required");
+    if (req.orgId.length == 0)
+      return CommandResult("", "Organization ID is required");
+    if (req.name.length == 0)
+      return CommandResult("", "Space name is required");
+
+    // Validate org exists
+    auto org = orgRepo.findById(req.orgId, req.tenantId);
+    if (org is null)
+      return CommandResult("", "Organization not found");
+    if (org.status == OrgStatus.suspended)
+      return CommandResult("", "Organization is suspended");
+
+    // Unique name within org
+    auto existing = repo.findByName(req.orgId, req.tenantId, req.name);
+    if (existing !is null)
+      return CommandResult("", "Space with this name already exists in org");
+
+    auto now = Clock.currStdTime();
+    auto space = Space();
+    space.id = randomUUID().toString();
+    space.orgId = req.orgId;
+    space.tenantId = req.tenantId;
+    space.name = req.name;
+    space.status = SpaceStatus.active;
+    space.allowSsh = req.allowSsh;
+    space.createdBy = req.createdBy;
+    space.createdAt = now;
+    space.updatedAt = now;
+
+    repo.save(space);
+    return CommandResult(space.id, "");
+  }
+
+  Space* getSpace(SpaceId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
+
+  Space[] listSpaces(TenantId tenantId)
+  {
+    return repo.findByTenant(tenantId);
+  }
+
+  Space[] listByOrg(OrgId orgId, TenantId tenantId)
+  {
+    return repo.findByOrg(orgId, tenantId);
+  }
+
+  CommandResult updateSpace(UpdateSpaceRequest req)
+  {
+    if (req.id.length == 0)
+      return CommandResult("", "Space ID is required");
+    if (req.tenantId.length == 0)
+      return CommandResult("", "Tenant ID is required");
+
+    auto existing = repo.findById(req.id, req.tenantId);
+    if (existing is null)
+      return CommandResult("", "Space not found");
+
+    auto updated = *existing;
+    if (req.name.length > 0) updated.name = req.name;
+    updated.status = req.status;
+    updated.allowSsh = req.allowSsh;
+    updated.updatedAt = Clock.currStdTime();
+
+    repo.update(updated);
+    return CommandResult(updated.id, "");
+  }
+
+  CommandResult deleteSpace(SpaceId id, TenantId tenantId)
+  {
+    auto existing = repo.findById(id, tenantId);
+    if (existing is null)
+      return CommandResult("", "Space not found");
+
+    repo.remove(id, tenantId);
+    return CommandResult(id, "");
+  }
+}
