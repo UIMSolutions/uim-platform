@@ -1,7 +1,7 @@
 module uim.platform.object_store.domain.ports.repositories.object_version;
 
-import domain.entities.object_version;
-import domain.types;
+import uim.platform.object_store.domain.entities.object_version;
+import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - object version persistence.
 interface ObjectVersionRepository {

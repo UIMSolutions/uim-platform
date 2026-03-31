@@ -1,10 +1,10 @@
 module uim.platform.object_store.application.use_cases.manage_service_bindings;
 
 import uim.platform.object_store.application.dto;
-import domain.entities.service_binding;
-import domain.ports.service_binding_repository;
-import domain.ports.bucket_repository;
-import domain.types;
+import uim.platform.object_store.domain.entities.service_binding;
+import uim.platform.object_store.domain.ports.service_binding_repository;
+import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.types;
 
 import std.conv : to;
 

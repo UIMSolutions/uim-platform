@@ -1,10 +1,10 @@
 module uim.platform.object_store.application.use_cases.manage_buckets;
 
 import uim.platform.object_store.application.dto;
-import domain.entities.bucket;
-import domain.ports.bucket_repository;
-import domain.services.encryption_policy;
-import domain.types;
+import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.services.encryption_policy;
+import uim.platform.object_store.domain.types;
 
 import std.conv : to;
 

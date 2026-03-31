@@ -1,6 +1,6 @@
 module uim.platform.object_store.domain.entities.bucket;
 
-import domain.types;
+import uim.platform.object_store.domain.types;
 
 class Bucket
 {

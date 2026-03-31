@@ -1,7 +1,7 @@
 module uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
 
-import domain.entities.lifecycle_rule;
-import domain.types;
+import uim.platform.object_store.domain.entities.lifecycle_rule;
+import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - lifecycle rule persistence.
 interface LifecycleRuleRepository

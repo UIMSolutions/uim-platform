@@ -1,10 +1,10 @@
 module uim.platform.object_store.application.use_cases.manage_access_policies;
 
 import uim.platform.object_store.application.dto;
-import domain.entities.access_policy;
-import domain.ports.access_policy_repository;
-import domain.ports.bucket_repository;
-import domain.types;
+import uim.platform.object_store.domain.entities.access_policy;
+import uim.platform.object_store.domain.ports.access_policy_repository;
+import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.types;
 
 /// Application service for bucket access policy management.
 class ManageAccessPoliciesUseCase

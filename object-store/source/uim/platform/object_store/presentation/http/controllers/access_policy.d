@@ -7,7 +7,7 @@ import std.conv : to;
 
 import uim.platform.object_store.application.use_cases.manage_access_policies;
 import uim.platform.object_store.application.dto;
-import domain.entities.access_policy;
+import uim.platform.object_store.domain.entities.access_policy;
 import uim.platform.object_store.presentation.http.json_utils;
 
 class AccessPolicyController

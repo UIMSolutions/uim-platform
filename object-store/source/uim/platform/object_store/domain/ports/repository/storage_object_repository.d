@@ -1,7 +1,7 @@
 module uim.platform.object_store.domain.ports.repositories.storage_object;
 
-import domain.entities.storage_object;
-import domain.types;
+import uim.platform.object_store.domain.entities.storage_object;
+import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - storage object persistence.
 interface StorageObjectRepository

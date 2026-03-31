@@ -1,7 +1,7 @@
 module uim.platform.object_store.domain.services.encryption_policy;
 
-import domain.entities.bucket;
-import domain.types;
+import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store.domain.types;
 
 /// Domain service: validates encryption configuration.
 struct EncryptionValidationResult

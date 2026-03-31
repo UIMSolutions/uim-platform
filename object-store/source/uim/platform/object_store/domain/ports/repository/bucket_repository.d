@@ -1,7 +1,7 @@
 module uim.platform.object_store.domain.ports.repositories.bucket;
 
-import domain.entities.bucket;
-import domain.types;
+import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - bucket persistence.
 interface BucketRepository

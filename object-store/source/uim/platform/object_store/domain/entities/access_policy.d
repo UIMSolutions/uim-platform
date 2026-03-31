@@ -1,6 +1,6 @@
 module uim.platform.object_store.domain.entities.access_policy;
 
-import domain.types;
+import uim.platform.object_store.domain.types;
 
 class AccessPolicy
 {

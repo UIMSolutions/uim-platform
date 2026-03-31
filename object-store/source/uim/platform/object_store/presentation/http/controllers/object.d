@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.object_store.application.use_cases.manage_objects;
 import uim.platform.object_store.application.dto;
-import domain.entities.storage_object;
-import domain.entities.object_version;
+import uim.platform.object_store.domain.entities.storage_object;
+import uim.platform.object_store.domain.entities.object_version;
 import uim.platform.object_store.presentation.http.json_utils;
 
 class ObjectController

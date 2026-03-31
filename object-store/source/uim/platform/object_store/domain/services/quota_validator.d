@@ -1,6 +1,6 @@
 module uim.platform.object_store.domain.services.quota_validator;
 
-import domain.entities.bucket;
+import uim.platform.object_store.domain.entities.bucket;
 
 /// Domain service: validates storage quota constraints.
 struct QuotaValidationResult

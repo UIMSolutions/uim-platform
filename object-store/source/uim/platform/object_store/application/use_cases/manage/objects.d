@@ -1,14 +1,14 @@
 module uim.platform.object_store.application.use_cases.manage_objects;
 
 import uim.platform.object_store.application.dto;
-import domain.entities.bucket;
-import domain.entities.storage_object;
-import domain.entities.object_version;
-import domain.ports.bucket_repository;
-import domain.ports.storage_object_repository;
-import domain.ports.object_version_repository;
-import domain.services.quota_validator;
-import domain.types;
+import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store.domain.entities.storage_object;
+import uim.platform.object_store.domain.entities.object_version;
+import uim.platform.object_store.domain.ports.bucket_repository;
+import uim.platform.object_store.domain.ports.storage_object_repository;
+import uim.platform.object_store.domain.ports.object_version_repository;
+import uim.platform.object_store.domain.services.quota_validator;
+import uim.platform.object_store.domain.types;
 
 import std.conv : to;
 

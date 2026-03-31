@@ -1,6 +1,6 @@
 module uim.platform.object_store.application.dto;
 
-import domain.types;
+import uim.platform.object_store.domain.types;
 
 /// --- Command result ---
 
