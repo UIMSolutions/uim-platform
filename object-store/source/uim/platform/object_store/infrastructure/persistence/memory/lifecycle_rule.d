@@ -1,4 +1,4 @@
-module uim.platform.object_store.infrastructure.persistence.in_memory_lifecycle_rule_repo;
+module uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule_repo;
 
 import domain.types;
 import domain.entities.lifecycle_rule;

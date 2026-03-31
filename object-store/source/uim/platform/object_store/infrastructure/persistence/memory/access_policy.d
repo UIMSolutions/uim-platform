@@ -1,4 +1,4 @@
-module uim.platform.object_store.infrastructure.persistence.in_memory_access_policy_repo;
+module uim.platform.object_store.infrastructure.persistence.memory.access_policy_repo;
 
 import domain.types;
 import domain.entities.access_policy;
