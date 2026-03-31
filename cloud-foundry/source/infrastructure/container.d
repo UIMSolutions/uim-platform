@@ -88,7 +88,7 @@ Container buildContainer(AppConfig config)
   c.buildpackRepo = new InMemoryBuildpackRepository();
 
   // Domain services
-  c.appLifecycle = new AppLifecycleManager(c.appRepo, c.orgRepo);
+  c.appLifecycle = new AppLifecycleManager(c.appRepo, c.orgRepo, c.spaceRepo);
   c.routeResolver = new RouteResolver(c.routeRepo, c.domainRepo);
 
   // Application use cases
