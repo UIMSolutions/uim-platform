@@ -1,0 +1,17 @@
+module domain.ports.module_repository;
+
+import domain.entities.kyma_module;
+import domain.types;
+
+/// Port: outgoing — Kyma module persistence.
+interface ModuleRepository
+{
+    KymaModule findById(ModuleId id);
+    KymaModule findByName(KymaEnvironmentId envId, string name);
+    KymaModule[] findByEnvironment(KymaEnvironmentId envId);
+    KymaModule[] findByStatus(ModuleStatus status);
+    KymaModule[] findByType(ModuleType moduleType);
+    void save(KymaModule mod);
+    void update(KymaModule mod);
+    void remove(ModuleId id);
+}
