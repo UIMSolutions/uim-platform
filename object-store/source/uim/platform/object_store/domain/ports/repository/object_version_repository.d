@@ -1,4 +1,4 @@
-module uim.platform.object_store.domain.ports.object_version_repository;
+module uim.platform.object_store.domain.ports.repositories.object_version_repository;
 
 import domain.entities.object_version;
 import domain.types;

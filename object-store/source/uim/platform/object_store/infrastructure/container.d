@@ -1,15 +1,15 @@
-module infrastructure.container;
+module uim.platform.object_store.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.object_store.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_bucket_repo;
-import infrastructure.persistence.in_memory_storage_object_repo;
-import infrastructure.persistence.in_memory_object_version_repo;
-import infrastructure.persistence.in_memory_access_policy_repo;
-import infrastructure.persistence.in_memory_lifecycle_rule_repo;
-import infrastructure.persistence.in_memory_cors_rule_repo;
-import infrastructure.persistence.in_memory_service_binding_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_bucket_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_storage_object_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_object_version_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_access_policy_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_lifecycle_rule_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_cors_rule_repo;
+import uim.platform.object_store.infrastructure.persistence.in_memory_service_binding_repo;
 
 // Use Cases
 import uim.platform.object_store.application.use_cases.manage_buckets;

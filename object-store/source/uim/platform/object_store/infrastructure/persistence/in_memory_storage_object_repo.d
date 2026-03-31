@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_storage_object_repo;
+module uim.platform.object_store.infrastructure.persistence.in_memory_storage_object_repo;
 
 import domain.types;
 import domain.entities.storage_object;

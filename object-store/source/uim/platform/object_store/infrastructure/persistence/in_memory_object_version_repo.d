@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_object_version_repo;
+module uim.platform.object_store.infrastructure.persistence.in_memory_object_version_repo;
 
 import domain.types;
 import domain.entities.object_version;

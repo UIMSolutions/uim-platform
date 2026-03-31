@@ -1,4 +1,4 @@
-module uim.platform.object_store.domain.ports.cors_rule_repository;
+module uim.platform.object_store.domain.ports.repositories.cors_rule_repository;
 
 import domain.entities.cors_rule;
 import domain.types;
