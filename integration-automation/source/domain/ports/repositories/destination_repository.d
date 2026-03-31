@@ -1,4 +1,4 @@
-module domain.ports.destination_repository;
+module domain.ports.repositories.destination_repository;
 
 import domain.types;
 import domain.entities.destination;

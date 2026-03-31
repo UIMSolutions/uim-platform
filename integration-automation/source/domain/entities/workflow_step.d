@@ -4,8 +4,7 @@ import domain.types;
 
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).
-struct WorkflowStep
-{
+struct WorkflowStep {
   StepId id;
   WorkflowId workflowId;
   TenantId tenantId;
@@ -15,15 +14,15 @@ struct WorkflowStep
   StepStatus status = StepStatus.pending;
   StepPriority priority = StepPriority.medium;
   int sequenceNumber;
-  string assignedTo;              // userId of assigned person
-  string assignedRole;            // role required for the task
-  string instructions;            // detailed step-by-step instructions
-  string automationEndpoint;      // endpoint for automated execution
-  string automationPayload;       // payload for automated execution
+  string assignedTo; // userId of assigned person
+  string assignedRole; // role required for the task
+  string instructions; // detailed step-by-step instructions
+  string automationEndpoint; // endpoint for automated execution
+  string automationPayload; // payload for automated execution
   SystemId sourceSystemId;
   SystemId targetSystemId;
-  StepId[] dependencies;          // IDs of steps that must complete first
-  string result;                  // outcome details / response
+  StepId[] dependencies; // IDs of steps that must complete first
+  string result; // outcome details / response
   string errorMessage;
   long startedAt;
   long completedAt;
