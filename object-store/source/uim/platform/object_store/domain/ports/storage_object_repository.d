@@ -1,4 +1,4 @@
-module domain.ports.storage_object_repository;
+module uim.platform.object_store.domain.ports.storage_object_repository;
 
 import domain.entities.storage_object;
 import domain.types;

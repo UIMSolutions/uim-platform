@@ -1,4 +1,4 @@
-module domain.services.quota_validator;
+module uim.platform.object_store.domain.services.quota_validator;
 
 import domain.entities.bucket;
 

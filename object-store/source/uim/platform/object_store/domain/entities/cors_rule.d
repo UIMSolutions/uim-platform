@@ -1,4 +1,4 @@
-module domain.entities.cors_rule;
+module uim.platform.object_store.domain.entities.cors_rule;
 
 import domain.types;
 

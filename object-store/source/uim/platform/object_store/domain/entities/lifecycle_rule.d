@@ -1,4 +1,4 @@
-module domain.entities.lifecycle_rule;
+module uim.platform.object_store.domain.entities.lifecycle_rule;
 
 import domain.types;
 

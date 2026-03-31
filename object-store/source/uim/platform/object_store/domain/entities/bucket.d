@@ -1,4 +1,4 @@
-module domain.entities.bucket;
+module uim.platform.object_store.domain.entities.bucket;
 
 import domain.types;
 

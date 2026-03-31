@@ -1,4 +1,4 @@
-module domain.entities.access_policy;
+module uim.platform.object_store.domain.entities.access_policy;
 
 import domain.types;
 

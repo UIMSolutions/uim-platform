@@ -1,4 +1,4 @@
-module domain.services.encryption_policy;
+module uim.platform.object_store.domain.services.encryption_policy;
 
 import domain.entities.bucket;
 import domain.types;

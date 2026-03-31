@@ -1,4 +1,4 @@
-module domain.entities.service_binding;
+module uim.platform.object_store.domain.entities.service_binding;
 
 import domain.types;
 

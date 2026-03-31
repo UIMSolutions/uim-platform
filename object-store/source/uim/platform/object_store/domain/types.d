@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.object_store.domain.types;
 
 
 // --- ID type aliases ---

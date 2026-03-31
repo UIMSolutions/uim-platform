@@ -1,4 +1,4 @@
-module domain.entities.object_version;
+module uim.platform.object_store.domain.entities.object_version;
 
 import domain.types;
 

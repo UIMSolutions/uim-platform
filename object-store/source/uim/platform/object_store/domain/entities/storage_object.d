@@ -1,4 +1,4 @@
-module domain.entities.storage_object;
+module uim.platform.object_store.domain.entities.storage_object;
 
 import domain.types;
 
