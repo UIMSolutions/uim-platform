@@ -12,24 +12,24 @@ import uim.platform.auditlog.infrastructure.persistence.memory.data_access;
 import uim.platform.auditlog.infrastructure.persistence.memory.config_change;
 
 // Use Cases
-import uim.platform.auditlog.application.usecases.write_audit_log;
+import uim.platform.auditlog.application.usecases.write.audit_log;
 import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
-import uim.platform.auditlog.application.usecases.manage_retention;
-import uim.platform.auditlog.application.usecases.manage_audit_config;
-import uim.platform.auditlog.application.usecases.manage_exports;
-import uim.platform.auditlog.application.usecases.write_security_event;
-import uim.platform.auditlog.application.usecases.write_data_access_log;
-import uim.platform.auditlog.application.usecases.write_config_change;
+import uim.platform.auditlog.application.usecases.manage.retention;
+import uim.platform.auditlog.application.usecases.manage.audit_config;
+import uim.platform.auditlog.application.usecases.manage.exports;
+import uim.platform.auditlog.application.usecases.write.security_event;
+import uim.platform.auditlog.application.usecases.write.data_access_log;
+import uim.platform.auditlog.application.usecases.write.config_change;
 
 // Controllers
-import uim.platform.identity_authentication.presentation.http.audit_log;
-import uim.platform.identity_authentication.presentation.http.retention;
-import uim.platform.identity_authentication.presentation.http.audit_config;
-import uim.platform.identity_authentication.presentation.http.export_;
-import uim.platform.identity_authentication.presentation.http.security_event;
-import uim.platform.identity_authentication.presentation.http.data_access;
-import uim.platform.identity_authentication.presentation.http.config_change;
-import uim.platform.identity_authentication.presentation.http.health;
+import uim.platform.identity_authentication.presentation.http.controllers.audit_log;
+import uim.platform.identity_authentication.presentation.http.controllers.retention;
+import uim.platform.identity_authentication.presentation.http.controllers.audit_config;
+import uim.platform.identity_authentication.presentation.http.controllers.export_;
+import uim.platform.identity_authentication.presentation.http.controllers.security_event;
+import uim.platform.identity_authentication.presentation.http.controllers.data_access;
+import uim.platform.identity_authentication.presentation.http.controllers.config_change;
+import uim.platform.identity_authentication.presentation.http.controllers.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container
