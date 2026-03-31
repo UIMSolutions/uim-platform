@@ -13,7 +13,7 @@ struct LifecycleValidation
 struct SystemLifecycleValidator
 {
     /// Check whether a status transition is permitted.
-    static LifecycleValidation validateTransition(SystemStatus from, SystemStatus to)
+    static LifecycleValidation validateTransition(SystemStatus from, SystemStatus target)
     {
         // Allowed transitions:
         //   provisioning -> active | error
@@ -26,27 +26,27 @@ struct SystemLifecycleValidator
         switch (from)
         {
         case SystemStatus.provisioning:
-            if (to == SystemStatus.active || to == SystemStatus.error)
+            if (target == SystemStatus.active || target == SystemStatus.error)
                 return LifecycleValidation(true, "");
             break;
         case SystemStatus.active:
-            if (to == SystemStatus.updating || to == SystemStatus.suspended || to == SystemStatus.deleting)
+            if (target == SystemStatus.updating || target == SystemStatus.suspended || target == SystemStatus.deleting)
                 return LifecycleValidation(true, "");
             break;
         case SystemStatus.updating:
-            if (to == SystemStatus.active || to == SystemStatus.error)
+            if (target == SystemStatus.active || target == SystemStatus.error)
                 return LifecycleValidation(true, "");
             break;
         case SystemStatus.suspended:
-            if (to == SystemStatus.active || to == SystemStatus.deleting)
+            if (target == SystemStatus.active || target == SystemStatus.deleting)
                 return LifecycleValidation(true, "");
             break;
         case SystemStatus.deleting:
-            if (to == SystemStatus.deleted || to == SystemStatus.error)
+            if (target == SystemStatus.deleted || target == SystemStatus.error)
                 return LifecycleValidation(true, "");
             break;
         case SystemStatus.error:
-            if (to == SystemStatus.deleting)
+            if (target == SystemStatus.deleting)
                 return LifecycleValidation(true, "");
             break;
         default:
@@ -55,7 +55,7 @@ struct SystemLifecycleValidator
 
         import std.conv : to;
         return LifecycleValidation(false,
-            "Invalid transition from '" ~ from.to!string ~ "' to '" ~ to.to!string ~ "'");
+            "Invalid transition from '" ~ from.to!string ~ "' to '" ~ target.to!string ~ "'");
     }
 
     /// Validate that a system SID is exactly 3 uppercase characters.

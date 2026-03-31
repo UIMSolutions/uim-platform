@@ -16,11 +16,15 @@ dependency "uim-framework" version="~>26.3.5"
 // Internal Dependencies
 dependency ":service" version="*"
 
+dependency ":abap-enviroment" version="*"
 dependency ":analytics" version="*"
 dependency ":auditlog" version="*"
+dependency ":connectivity" version="*"
+dependency ":data-privacy" version="*"
 dependency ":data-quality" version="*"
 dependency ":identity-authentication" version="*"
 dependency ":identity-directory" version="*"
+dependency ":integration-automation" version="*"
 dependency ":portal" version="*"
 dependency ":workzone" version="*"
 
@@ -30,11 +34,15 @@ sourceFiles "./source/uim/platform/all.d"
 // Subpackages
 subPackage "service"
 
+subPackage "abap-enviroment"
 subPackage "analytics"
 subPackage "auditlog"
+subPackage "connectivity"
+subPackage "data-privacy"
 subPackage "data-quality"
 subPackage "identity-authentication"
 subPackage "identity-directory"
+subPackage "integration-automation"
 subPackage "portal"
 subPackage "workzone"
 
