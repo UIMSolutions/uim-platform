@@ -1,0 +1,43 @@
+module infrastructure.persistence.in_memory_environment_instance_repo;
+
+import domain.types;
+import domain.entities.environment_instance;
+import domain.ports.environment_instance_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository
+{
+    private EnvironmentInstance[EnvironmentInstanceId] store;
+
+    EnvironmentInstance findById(EnvironmentInstanceId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return EnvironmentInstance.init;
+    }
+
+    EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId)
+    {
+        return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
+    }
+
+    EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType)
+    {
+        return store.byValue()
+            .filter!(e => e.subaccountId == subaccountId && e.environmentType == envType)
+            .array;
+    }
+
+    EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status)
+    {
+        return store.byValue()
+            .filter!(e => e.subaccountId == subaccountId && e.status == status)
+            .array;
+    }
+
+    void save(EnvironmentInstance inst) { store[inst.id] = inst; }
+    void update(EnvironmentInstance inst) { store[inst.id] = inst; }
+    void remove(EnvironmentInstanceId id) { store.remove(id); }
+}

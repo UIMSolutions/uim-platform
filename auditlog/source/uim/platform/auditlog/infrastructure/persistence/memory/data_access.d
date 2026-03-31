@@ -1,4 +1,4 @@
-module uim.platform.auditlog.infrastructure.persistence.in_memory_data_access_repo;
+module uim.platform.auditlog.infrastructure.persistence.memory.data_access;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.data_access_log;
