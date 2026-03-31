@@ -1,4 +1,4 @@
-module presentation.http.transformation_controller;
+module presentation.http.transformation;
 
 import vibe.http.server;
 import vibe.http.router;

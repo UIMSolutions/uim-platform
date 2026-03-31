@@ -1,4 +1,4 @@
-module presentation.http.legal_ground_controller;
+module presentation.http.legal_ground;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.communication_arrangement_controller;
+module presentation.http.communication_arrangement;
 
 import vibe.http.server;
 import vibe.http.router;

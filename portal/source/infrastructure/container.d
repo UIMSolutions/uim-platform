@@ -27,17 +27,17 @@ import application.usecases.manage_menu_items;
 import application.usecases.manage_translations;
 
 // Controllers
-import uim.platform.identity_authentication.presentation.http.site_controller;
-import uim.platform.identity_authentication.presentation.http.page_controller;
-import uim.platform.identity_authentication.presentation.http.section_controller;
-import uim.platform.identity_authentication.presentation.http.tile_controller;
-import uim.platform.identity_authentication.presentation.http.catalog_controller;
-import uim.platform.identity_authentication.presentation.http.provider_controller;
-import uim.platform.identity_authentication.presentation.http.role_controller;
-import uim.platform.identity_authentication.presentation.http.theme_controller;
-import uim.platform.identity_authentication.presentation.http.menu_item_controller;
-import uim.platform.identity_authentication.presentation.http.translation_controller;
-import uim.platform.identity_authentication.presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.site;
+import uim.platform.identity_authentication.presentation.http.page;
+import uim.platform.identity_authentication.presentation.http.section;
+import uim.platform.identity_authentication.presentation.http.tile;
+import uim.platform.identity_authentication.presentation.http.catalog;
+import uim.platform.identity_authentication.presentation.http.provider;
+import uim.platform.identity_authentication.presentation.http.role;
+import uim.platform.identity_authentication.presentation.http.theme;
+import uim.platform.identity_authentication.presentation.http.menu_item;
+import uim.platform.identity_authentication.presentation.http.translation;
+import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

@@ -1,4 +1,4 @@
-module presentation.http.repository_controller;
+module presentation.http.repository;
 
 import vibe.http.server;
 import vibe.http.router;

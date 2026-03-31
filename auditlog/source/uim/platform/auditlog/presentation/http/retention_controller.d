@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.retention_controller;
+module uim.platform.identity_authentication.presentation.http.retention;
 
 import vibe.http.server;
 import vibe.http.router;

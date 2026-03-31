@@ -24,13 +24,13 @@ import application.usecases.process_inference;
 import application.usecases.monitor_training;
 
 // Controllers
-import presentation.http.dataset_controller;
-import presentation.http.data_record_controller;
-import presentation.http.model_controller;
-import presentation.http.deployment_controller;
-import presentation.http.inference_controller;
-import presentation.http.monitoring_controller;
-import presentation.http.health_controller;
+import presentation.http.dataset;
+import presentation.http.data_record;
+import presentation.http.model;
+import presentation.http.deployment;
+import presentation.http.inference;
+import presentation.http.monitoring;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

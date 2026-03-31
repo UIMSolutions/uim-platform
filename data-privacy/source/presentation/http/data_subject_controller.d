@@ -1,4 +1,4 @@
-module presentation.http.data_subject_controller;
+module presentation.http.data_subject;
 
 import vibe.http.server;
 import vibe.http.router;

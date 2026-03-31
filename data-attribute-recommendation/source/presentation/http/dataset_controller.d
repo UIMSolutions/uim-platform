@@ -1,4 +1,4 @@
-module presentation.http.dataset_controller;
+module presentation.http.dataset;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.cleansing_rule_controller;
+module presentation.http.cleansing_rule;
 
 import vibe.http.server;
 import vibe.http.router;

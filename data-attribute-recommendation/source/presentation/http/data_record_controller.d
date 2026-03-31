@@ -1,4 +1,4 @@
-module presentation.http.data_record_controller;
+module presentation.http.data_record;
 
 import vibe.http.server;
 import vibe.http.router;

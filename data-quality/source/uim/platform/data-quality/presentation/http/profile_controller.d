@@ -1,4 +1,4 @@
-module presentation.http.profile_controller;
+module presentation.http.profile;
 
 import vibe.http.server;
 import vibe.http.router;

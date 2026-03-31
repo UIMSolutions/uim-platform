@@ -1,4 +1,4 @@
-module presentation.http.buildpack_controller;
+module presentation.http.buildpack;
 
 import vibe.http.server;
 import vibe.http.router;

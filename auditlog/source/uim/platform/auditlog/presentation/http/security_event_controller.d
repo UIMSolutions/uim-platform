@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.security_event_controller;
+module uim.platform.identity_authentication.presentation.http.security_event;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -19,13 +19,13 @@ import application.usecases.manage_certificates;
 import application.usecases.monitor_connectivity;
 
 // Controllers
-import presentation.http.destination_controller;
-import presentation.http.connector_controller;
-import presentation.http.channel_controller;
-import presentation.http.access_rule_controller;
-import presentation.http.certificate_controller;
-import presentation.http.monitoring_controller;
-import presentation.http.health_controller;
+import presentation.http.destination;
+import presentation.http.connector;
+import presentation.http.channel;
+import presentation.http.access_rule;
+import presentation.http.certificate;
+import presentation.http.monitoring;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

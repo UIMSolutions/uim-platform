@@ -1,4 +1,4 @@
-module presentation.http.deployment_controller;
+module presentation.http.deployment;
 
 import vibe.http.server;
 import vibe.http.router;

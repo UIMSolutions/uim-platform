@@ -1,4 +1,4 @@
-module presentation.http.validation_rule_controller;
+module presentation.http.validation_rule;
 
 import vibe.http.server;
 import vibe.http.router;

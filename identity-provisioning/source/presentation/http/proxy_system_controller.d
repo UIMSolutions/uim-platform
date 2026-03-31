@@ -1,4 +1,4 @@
-module presentation.http.proxy_system_controller;
+module presentation.http.proxy_system;
 
 import vibe.http.server;
 import vibe.http.router;

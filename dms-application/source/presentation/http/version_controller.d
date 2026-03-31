@@ -1,4 +1,4 @@
-module presentation.http.version_controller;
+module presentation.http.version;
 
 import vibe.http.server;
 import vibe.http.router;

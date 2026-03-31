@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.password_policy_controller;
+module uim.platform.identity_authentication.presentation.http.password_policy;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.scenario_controller;
+module presentation.http.scenario;
 
 import vibe.http.server;
 import vibe.http.router;

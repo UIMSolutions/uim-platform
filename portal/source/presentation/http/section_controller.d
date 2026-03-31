@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.section_controller;
+module uim.platform.identity_authentication.presentation.http.section;
 
 import vibe.http.server;
 import vibe.http.router;

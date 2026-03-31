@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.workpage_controller;
+module uim.platform.identity_authentication.presentation.http.workpage;
 
 import vibe.http.server;
 import vibe.http.router;

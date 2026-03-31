@@ -25,14 +25,14 @@ import application.usecases.manage_permissions;
 import application.usecases.browse_content;
 
 // Controllers
-import presentation.http.repository_controller;
-import presentation.http.folder_controller;
-import presentation.http.document_controller;
-import presentation.http.version_controller;
-import presentation.http.share_controller;
-import presentation.http.permission_controller;
-import presentation.http.browse_controller;
-import presentation.http.health_controller;
+import presentation.http.repository;
+import presentation.http.folder;
+import presentation.http.document;
+import presentation.http.version;
+import presentation.http.share;
+import presentation.http.permission;
+import presentation.http.browse;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

@@ -23,13 +23,13 @@ import application.usecases.manage_destinations;
 import application.usecases.monitor_executions;
 
 // Controllers
-import presentation.http.scenario_controller;
-import presentation.http.workflow_controller;
-import presentation.http.step_controller;
-import presentation.http.system_controller;
-import presentation.http.destination_controller;
-import presentation.http.monitoring_controller;
-import presentation.http.health_controller;
+import presentation.http.scenario;
+import presentation.http.workflow;
+import presentation.http.step;
+import presentation.http.system;
+import presentation.http.destination;
+import presentation.http.monitoring;
+import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

@@ -1,4 +1,4 @@
-module presentation.http.cleansing_job_controller;
+module presentation.http.cleansing_job;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -23,15 +23,15 @@ import application.usecases.manage_consent_records;
 import application.usecases.manage_data_retrievals;
 
 // Controllers
-import presentation.http.data_subject_controller;
-import presentation.http.personal_data_model_controller;
-import presentation.http.deletion_controller;
-import presentation.http.blocking_controller;
-import presentation.http.legal_ground_controller;
-import presentation.http.retention_rule_controller;
-import presentation.http.consent_controller;
-import presentation.http.data_retrieval_controller;
-import presentation.http.health_controller;
+import presentation.http.data_subject;
+import presentation.http.personal_data_model;
+import presentation.http.deletion;
+import presentation.http.blocking;
+import presentation.http.legal_ground;
+import presentation.http.retention_rule;
+import presentation.http.consent;
+import presentation.http.data_retrieval;
+import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

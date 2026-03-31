@@ -1,4 +1,4 @@
-module presentation.http.deletion_controller;
+module presentation.http.deletion;
 
 import vibe.http.server;
 import vibe.http.router;

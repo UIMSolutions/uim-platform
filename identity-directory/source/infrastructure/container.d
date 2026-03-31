@@ -22,13 +22,13 @@ import application.usecases.manage_api_clients;
 import application.usecases.query_audit_log;
 
 // Controllers
-import uim.platform.identity_authentication.presentation.http.user_controller;
-import uim.platform.identity_authentication.presentation.http.group_controller;
-import uim.platform.identity_authentication.presentation.http.schema_controller;
-import uim.platform.identity_authentication.presentation.http.password_policy_controller;
-import uim.platform.identity_authentication.presentation.http.api_client_controller;
-import uim.platform.identity_authentication.presentation.http.audit_controller;
-import uim.platform.identity_authentication.presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.user;
+import uim.platform.identity_authentication.presentation.http.group;
+import uim.platform.identity_authentication.presentation.http.schema;
+import uim.platform.identity_authentication.presentation.http.password_policy;
+import uim.platform.identity_authentication.presentation.http.api_client;
+import uim.platform.identity_authentication.presentation.http.audit;
+import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

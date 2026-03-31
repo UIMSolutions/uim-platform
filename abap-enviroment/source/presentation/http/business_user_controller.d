@@ -1,4 +1,4 @@
-module presentation.http.business_user_controller;
+module presentation.http.business_user;
 
 import vibe.http.server;
 import vibe.http.router;

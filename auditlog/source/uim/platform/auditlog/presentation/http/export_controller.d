@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.export_controller;
+module uim.platform.identity_authentication.presentation.http.export;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.business_role_controller;
+module presentation.http.business_role;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.role_controller;
+module uim.platform.identity_authentication.presentation.http.role;
 
 import vibe.http.server;
 import vibe.http.router;

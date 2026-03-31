@@ -1,4 +1,4 @@
-module presentation.http.personal_data_model_controller;
+module presentation.http.personal_data_model;
 
 import vibe.http.server;
 import vibe.http.router;

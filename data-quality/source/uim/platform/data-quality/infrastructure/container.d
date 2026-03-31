@@ -28,15 +28,15 @@ import application.usecases.manage_cleansing_jobs;
 import application.usecases.compute_dashboard;
 
 // Controllers
-import presentation.http.validation_rule_controller;
-import presentation.http.validate_controller;
-import presentation.http.address_controller;
-import presentation.http.duplicate_controller;
-import presentation.http.profile_controller;
-import presentation.http.cleansing_rule_controller;
-import presentation.http.cleansing_job_controller;
-import presentation.http.dashboard_controller;
-import presentation.http.health_controller;
+import presentation.http.validation_rule;
+import presentation.http.validate;
+import presentation.http.address;
+import presentation.http.duplicate;
+import presentation.http.profile;
+import presentation.http.cleansing_rule;
+import presentation.http.cleansing_job;
+import presentation.http.dashboard;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

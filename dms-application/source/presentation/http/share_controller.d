@@ -1,4 +1,4 @@
-module presentation.http.share_controller;
+module presentation.http.share;
 
 import vibe.http.server;
 import vibe.http.router;

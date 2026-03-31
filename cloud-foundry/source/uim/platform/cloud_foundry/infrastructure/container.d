@@ -26,14 +26,14 @@ import application.usecases.manage_buildpacks;
 import application.usecases.monitor_apps;
 
 // Controllers
-import presentation.http.org_controller;
-import presentation.http.space_controller;
-import presentation.http.app_controller;
-import presentation.http.service_controller;
-import presentation.http.route_controller;
-import presentation.http.buildpack_controller;
-import presentation.http.monitoring_controller;
-import presentation.http.health_controller;
+import presentation.http.org;
+import presentation.http.space;
+import presentation.http.app;
+import presentation.http.service;
+import presentation.http.route;
+import presentation.http.buildpack;
+import presentation.http.monitoring;
+import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

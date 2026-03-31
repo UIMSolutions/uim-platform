@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.notification_controller;
+module uim.platform.identity_authentication.presentation.http.notification;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.channel_controller;
+module presentation.http.channel;
 
 import vibe.http.server;
 import vibe.http.router;

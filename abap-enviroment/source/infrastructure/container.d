@@ -23,15 +23,15 @@ import application.use_cases.manage_transport_requests;
 import application.use_cases.manage_application_jobs;
 
 // Controllers
-import presentation.http.system_instance_controller;
-import presentation.http.software_component_controller;
-import presentation.http.communication_arrangement_controller;
-import presentation.http.service_binding_controller;
-import presentation.http.business_user_controller;
-import presentation.http.business_role_controller;
-import presentation.http.transport_request_controller;
-import presentation.http.application_job_controller;
-import presentation.http.health_controller;
+import presentation.http.system_instance;
+import presentation.http.software_component;
+import presentation.http.communication_arrangement;
+import presentation.http.service_binding;
+import presentation.http.business_user;
+import presentation.http.business_role;
+import presentation.http.transport_request;
+import presentation.http.application_job;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

@@ -1,4 +1,4 @@
-module presentation.http.validate_controller;
+module presentation.http.validate;
 
 import vibe.http.server;
 import vibe.http.router;

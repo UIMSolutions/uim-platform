@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.theme_controller;
+module uim.platform.identity_authentication.presentation.http.theme;
 
 import vibe.http.server;
 import vibe.http.router;

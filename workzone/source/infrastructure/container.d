@@ -27,17 +27,17 @@ import application.usecases.manage_apps;
 import application.usecases.manage_widgets;
 
 // Controllers
-import uim.platform.identity_authentication.presentation.http.workspace_controller;
-import uim.platform.identity_authentication.presentation.http.workpage_controller;
-import uim.platform.identity_authentication.presentation.http.card_controller;
-import uim.platform.identity_authentication.presentation.http.content_controller;
-import uim.platform.identity_authentication.presentation.http.feed_controller;
-import uim.platform.identity_authentication.presentation.http.notification_controller;
-import uim.platform.identity_authentication.presentation.http.task_controller;
-import uim.platform.identity_authentication.presentation.http.channel_controller;
-import uim.platform.identity_authentication.presentation.http.app_controller;
-import uim.platform.identity_authentication.presentation.http.widget_controller;
-import uim.platform.identity_authentication.presentation.http.health_controller;
+import uim.platform.identity_authentication.presentation.http.workspace;
+import uim.platform.identity_authentication.presentation.http.workpage;
+import uim.platform.identity_authentication.presentation.http.card;
+import uim.platform.identity_authentication.presentation.http.content;
+import uim.platform.identity_authentication.presentation.http.feed;
+import uim.platform.identity_authentication.presentation.http.notification;
+import uim.platform.identity_authentication.presentation.http.task;
+import uim.platform.identity_authentication.presentation.http.channel;
+import uim.platform.identity_authentication.presentation.http.app;
+import uim.platform.identity_authentication.presentation.http.widget;
+import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

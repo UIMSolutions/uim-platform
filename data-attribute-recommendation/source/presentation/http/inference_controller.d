@@ -1,4 +1,4 @@
-module presentation.http.inference_controller;
+module presentation.http.inference;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.workflow_controller;
+module presentation.http.workflow;
 
 import vibe.http.server;
 import vibe.http.router;

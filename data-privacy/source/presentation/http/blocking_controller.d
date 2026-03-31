@@ -1,4 +1,4 @@
-module presentation.http.blocking_controller;
+module presentation.http.blocking;
 
 import vibe.http.server;
 import vibe.http.router;

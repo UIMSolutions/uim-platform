@@ -1,4 +1,4 @@
-module presentation.http.permission_controller;
+module presentation.http.permission;
 
 import vibe.http.server;
 import vibe.http.router;

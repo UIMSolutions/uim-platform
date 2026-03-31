@@ -1,4 +1,4 @@
-module presentation.http.provisioning_job_controller;
+module presentation.http.provisioning_job;
 
 import vibe.http.server;
 import vibe.http.router;

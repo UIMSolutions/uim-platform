@@ -1,4 +1,4 @@
-module presentation.http.transport_request_controller;
+module presentation.http.transport_request;
 
 import vibe.http.server;
 import vibe.http.router;

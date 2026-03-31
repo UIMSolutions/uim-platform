@@ -1,4 +1,4 @@
-module presentation.http.duplicate_controller;
+module presentation.http.duplicate;
 
 import vibe.http.server;
 import vibe.http.router;

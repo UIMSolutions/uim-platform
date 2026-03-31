@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.task_controller;
+module uim.platform.identity_authentication.presentation.http.task;
 
 import vibe.http.server;
 import vibe.http.router;
