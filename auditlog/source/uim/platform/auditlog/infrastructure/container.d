@@ -12,14 +12,14 @@ import infrastructure.persistence.in_memory_data_access_repo;
 import infrastructure.persistence.in_memory_config_change_repo;
 
 // Use Cases
-import application.use_cases.write_audit_log;
-import application.use_cases.retrieve_audit_logs;
-import application.use_cases.manage_retention;
-import application.use_cases.manage_audit_config;
-import application.use_cases.manage_exports;
-import application.use_cases.write_security_event;
-import application.use_cases.write_data_access_log;
-import application.use_cases.write_config_change;
+import application.usecases.write_audit_log;
+import application.usecases.retrieve_audit_logs;
+import application.usecases.manage_retention;
+import application.usecases.manage_audit_config;
+import application.usecases.manage_exports;
+import application.usecases.write_security_event;
+import application.usecases.write_data_access_log;
+import application.usecases.write_config_change;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.audit_log_controller;

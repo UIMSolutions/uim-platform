@@ -1,4 +1,4 @@
-module application.use_cases.manage_audit_config;
+module application.usecases.manage_audit_config;
 
 import std.uuid;
 import std.datetime.systime : Clock;

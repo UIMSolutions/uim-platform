@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.write_security_event;
+import application.usecases.write_security_event;
 import application.dto;
 import domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;

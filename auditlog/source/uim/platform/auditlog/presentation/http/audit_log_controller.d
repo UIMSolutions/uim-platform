@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.write_audit_log;
-import application.use_cases.retrieve_audit_logs;
+import application.usecases.write_audit_log;
+import application.usecases.retrieve_audit_logs;
 import application.dto;
 import domain.types;
 import domain.entities.audit_log_entry;

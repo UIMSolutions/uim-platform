@@ -1,4 +1,4 @@
-module application.use_cases.retrieve_audit_logs;
+module application.usecases.retrieve_audit_logs;
 
 import domain.types;
 import domain.entities.audit_log_entry;

@@ -1,4 +1,4 @@
-module application.use_cases.write_security_event;
+module application.usecases.write_security_event;
 
 import std.uuid;
 import std.datetime.systime : Clock;

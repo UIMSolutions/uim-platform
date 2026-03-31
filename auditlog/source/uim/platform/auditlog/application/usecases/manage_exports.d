@@ -1,4 +1,4 @@
-module application.use_cases.manage_exports;
+module application.usecases.manage_exports;
 
 import std.uuid;
 import std.datetime.systime : Clock;

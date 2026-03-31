@@ -1,4 +1,4 @@
-module application.use_cases.write_data_access_log;
+module application.usecases.write_data_access_log;
 
 import std.uuid;
 import std.datetime.systime : Clock;

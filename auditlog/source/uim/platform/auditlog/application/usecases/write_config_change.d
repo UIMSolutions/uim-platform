@@ -1,4 +1,4 @@
-module application.use_cases.write_config_change;
+module application.usecases.write_config_change;
 
 import std.uuid;
 import std.datetime.systime : Clock;
