@@ -1,14 +1,14 @@
-module application.usecases.manage_routes;
+module uim.platform.cloud_foundry.application.usecases.manage_routes;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.route;
-import domain.entities.cf_domain;
-import domain.ports.route_repository;
-import domain.ports.domain_repository;
-import domain.services.route_resolver;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.route;
+import uim.platform.cloud_foundry.domain.entities.cf_domain;
+import uim.platform.cloud_foundry.domain.ports.route_repository;
+import uim.platform.cloud_foundry.domain.ports.domain_repository;
+import uim.platform.cloud_foundry.domain.services.route_resolver;
 import application.dto;
 
 class ManageRoutesUseCase

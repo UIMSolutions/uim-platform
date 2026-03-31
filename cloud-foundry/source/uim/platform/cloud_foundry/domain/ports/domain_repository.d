@@ -1,7 +1,7 @@
-module domain.ports.domain_repository;
+module uim.platform.cloud_foundry.domain.ports.domain_repository;
 
-import domain.types;
-import domain.entities.cf_domain;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.cf_domain;
 
 /// Port for persisting and querying Cloud Foundry domains.
 interface DomainRepository

@@ -1,6 +1,6 @@
-module domain.entities.service_instance;
+module uim.platform.cloud_foundry.domain.entities.service_instance;
 
-import domain.types;
+import uim.platform.cloud_foundry.domain.types;
 
 /// A service instance — a provisioned instance of a marketplace service
 /// (e.g. XSUAA, HANA, Destination Service) within a space.

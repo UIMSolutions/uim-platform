@@ -1,6 +1,6 @@
-module application.dto;
+module uim.platform.cloud_foundry.application.dto;
 
-import domain.types;
+import uim.platform.cloud_foundry.domain.types;
 
 // ──────────────── Organization DTOs ────────────────
 

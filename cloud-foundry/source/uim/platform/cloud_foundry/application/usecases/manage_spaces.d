@@ -1,12 +1,12 @@
-module application.usecases.manage_spaces;
+module uim.platform.cloud_foundry.application.usecases.manage_spaces;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.space;
-import domain.ports.space_repository;
-import domain.ports.org_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.space;
+import uim.platform.cloud_foundry.domain.ports.space_repository;
+import uim.platform.cloud_foundry.domain.ports.org_repository;
 import application.dto;
 
 class ManageSpacesUseCase

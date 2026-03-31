@@ -1,7 +1,7 @@
-module domain.ports.service_instance_repository;
+module uim.platform.cloud_foundry.domain.ports.service_instance_repository;
 
-import domain.types;
-import domain.entities.service_instance;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.service_instance;
 
 /// Port for persisting and querying service instances.
 interface ServiceInstanceRepository

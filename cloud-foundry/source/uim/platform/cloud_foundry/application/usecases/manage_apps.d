@@ -1,12 +1,12 @@
-module application.usecases.manage_apps;
+module uim.platform.cloud_foundry.application.usecases.manage_apps;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.application;
-import domain.ports.app_repository;
-import domain.services.app_lifecycle_manager;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.application;
+import uim.platform.cloud_foundry.domain.ports.app_repository;
+import uim.platform.cloud_foundry.domain.services.app_lifecycle_manager;
 import application.dto;
 
 class ManageAppsUseCase

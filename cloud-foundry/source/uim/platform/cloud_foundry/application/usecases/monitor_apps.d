@@ -1,12 +1,12 @@
-module application.usecases.monitor_apps;
+module uim.platform.cloud_foundry.application.usecases.monitor_apps;
 
-import domain.types;
-import domain.entities.application;
-import domain.entities.service_instance;
-import domain.entities.route;
-import domain.ports.app_repository;
-import domain.ports.service_instance_repository;
-import domain.ports.route_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.application;
+import uim.platform.cloud_foundry.domain.entities.service_instance;
+import uim.platform.cloud_foundry.domain.entities.route;
+import uim.platform.cloud_foundry.domain.ports.app_repository;
+import uim.platform.cloud_foundry.domain.ports.service_instance_repository;
+import uim.platform.cloud_foundry.domain.ports.route_repository;
 
 /// Read-only summaries for application health and space resource usage.
 struct AppHealthSummary

@@ -1,7 +1,7 @@
-module domain.ports.buildpack_repository;
+module uim.platform.cloud_foundry.domain.ports.buildpack_repository;
 
-import domain.types;
-import domain.entities.buildpack;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.buildpack;
 
 /// Port for persisting and querying buildpacks.
 interface BuildpackRepository

@@ -1,7 +1,7 @@
-module domain.ports.route_repository;
+module uim.platform.cloud_foundry.domain.ports.route_repository;
 
-import domain.types;
-import domain.entities.route;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.route;
 
 /// Port for persisting and querying routes.
 interface RouteRepository

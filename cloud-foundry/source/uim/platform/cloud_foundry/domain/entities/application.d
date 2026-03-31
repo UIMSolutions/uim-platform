@@ -1,6 +1,6 @@
-module domain.entities.application;
+module uim.platform.cloud_foundry.domain.entities.application;
 
-import domain.types;
+import uim.platform.cloud_foundry.domain.types;
 
 /// A Cloud Foundry application — represents a deployed unit with scaling,
 /// health checks, and environment configuration.

@@ -1,6 +1,6 @@
-module domain.entities.organization;
+module uim.platform.cloud_foundry.domain.entities.organization;
 
-import domain.types;
+import uim.platform.cloud_foundry.domain.types;
 
 /// An organization — the top-level grouping for spaces, users, and quotas
 /// within a Cloud Foundry environment.

@@ -1,7 +1,7 @@
-module domain.ports.org_repository;
+module uim.platform.cloud_foundry.domain.ports.org_repository;
 
-import domain.types;
-import domain.entities.organization;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.organization;
 
 /// Port for persisting and querying organizations.
 interface OrgRepository

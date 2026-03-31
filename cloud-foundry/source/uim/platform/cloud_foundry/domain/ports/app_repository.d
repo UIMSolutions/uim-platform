@@ -1,7 +1,7 @@
-module domain.ports.app_repository;
+module uim.platform.cloud_foundry.domain.ports.app_repository;
 
-import domain.types;
-import domain.entities.application;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.application;
 
 /// Port for persisting and querying applications.
 interface AppRepository
