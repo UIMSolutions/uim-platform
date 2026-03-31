@@ -1,0 +1,16 @@
+module domain.ports.model_config_repository;
+
+import domain.types;
+import domain.entities.model_configuration;
+
+interface ModelConfigRepository
+{
+  ModelConfiguration[] findByTenant(TenantId tenantId);
+  ModelConfiguration* findById(ModelConfigId id, TenantId tenantId);
+  ModelConfiguration* findByName(TenantId tenantId, string name);
+  ModelConfiguration[] findByDataset(DatasetId datasetId, TenantId tenantId);
+  ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status);
+  void save(ModelConfiguration config);
+  void update(ModelConfiguration config);
+  void remove(ModelConfigId id, TenantId tenantId);
+}

@@ -1,0 +1,194 @@
+module presentation.http.deployment_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.usecases.manage_deployments;
+import application.dto;
+import domain.entities.model_deployment;
+import domain.types;
+import presentation.http.json_utils;
+
+class DeploymentController
+{
+  private ManageDeploymentsUseCase uc;
+
+  this(ManageDeploymentsUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/deployments", &handleCreate);
+    router.get("/api/v1/deployments", &handleList);
+    router.get("/api/v1/deployments/*", &handleGetById);
+    router.post("/api/v1/deployments/activate/*", &handleActivate);
+    router.post("/api/v1/deployments/deactivate/*", &handleDeactivate);
+    router.delete_("/api/v1/deployments/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateDeploymentRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.trainingJobId = jsonStr(j, "trainingJobId");
+      r.name = jsonStr(j, "name");
+      r.replicas = jsonInt(j, "replicas", 1);
+      r.createdBy = req.headers.get("X-User-Id", "system");
+
+      auto result = uc.createDeployment(r);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto items = uc.listDeployments(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref d; items)
+        arr ~= serializeDeployment(d);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto dep = uc.getDeployment(id, tenantId);
+      if (dep is null)
+      {
+        writeError(res, 404, "Deployment not found");
+        return;
+      }
+      res.writeJsonBody(serializeDeployment(*dep), 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.activateDeployment(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("active");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Deployment not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.deactivateDeployment(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("inactive");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Deployment not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.deleteDeployment(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["deleted"] = Json(true);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 404, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private static Json serializeDeployment(ref const ModelDeployment d)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(d.id);
+    j["tenantId"] = Json(d.tenantId);
+    j["trainingJobId"] = Json(d.trainingJobId);
+    j["modelConfigId"] = Json(d.modelConfigId);
+    j["name"] = Json(d.name);
+    j["status"] = Json(d.status.to!string);
+    j["endpointUrl"] = Json(d.endpointUrl);
+    j["version"] = Json(d.version_);
+    j["replicas"] = Json(cast(long) d.replicas);
+    j["createdBy"] = Json(d.createdBy);
+    j["createdAt"] = Json(d.createdAt);
+    j["updatedAt"] = Json(d.updatedAt);
+    return j;
+  }
+}

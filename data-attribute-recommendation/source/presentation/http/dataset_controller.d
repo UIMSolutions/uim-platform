@@ -1,0 +1,228 @@
+module presentation.http.dataset_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.usecases.manage_datasets;
+import application.dto;
+import domain.entities.dataset;
+import domain.types;
+import presentation.http.json_utils;
+
+class DatasetController
+{
+  private ManageDatasetsUseCase uc;
+
+  this(ManageDatasetsUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/datasets", &handleCreate);
+    router.get("/api/v1/datasets", &handleList);
+    router.get("/api/v1/datasets/*", &handleGetById);
+    router.put("/api/v1/datasets/*", &handleUpdate);
+    router.delete_("/api/v1/datasets/*", &handleDelete);
+    router.post("/api/v1/datasets/validate/*", &handleValidate);
+    router.post("/api/v1/datasets/process/*", &handleProcess);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateDatasetRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = jsonStr(j, "name");
+      r.description = jsonStr(j, "description");
+      r.dataType = parseDataType(jsonStr(j, "dataType"));
+      r.columnDefinitions = jsonStr(j, "columnDefinitions");
+      r.createdBy = req.headers.get("X-User-Id", "system");
+
+      auto result = uc.createDataset(r);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto items = uc.listDatasets(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref d; items)
+        arr ~= serializeDataset(d);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto ds = uc.getDataset(id, tenantId);
+      if (ds is null)
+      {
+        writeError(res, 404, "Dataset not found");
+        return;
+      }
+      res.writeJsonBody(serializeDataset(*ds), 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto j = req.json;
+      auto r = UpdateDatasetRequest();
+      r.id = id;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = jsonStr(j, "name");
+      r.description = jsonStr(j, "description");
+      r.columnDefinitions = jsonStr(j, "columnDefinitions");
+
+      auto result = uc.updateDataset(r);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Dataset not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.validateDataset(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("ready");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Dataset not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.processDataset(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("completed");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Dataset not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.deleteDataset(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["deleted"] = Json(true);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 404, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private static Json serializeDataset(ref const Dataset d)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(d.id);
+    j["tenantId"] = Json(d.tenantId);
+    j["name"] = Json(d.name);
+    j["description"] = Json(d.description);
+    j["status"] = Json(d.status.to!string);
+    j["dataType"] = Json(d.dataType.to!string);
+    j["columnDefinitions"] = Json(d.columnDefinitions);
+    j["rowCount"] = Json(cast(long) d.rowCount);
+    j["validationMessage"] = Json(d.validationMessage);
+    j["createdBy"] = Json(d.createdBy);
+    j["createdAt"] = Json(d.createdAt);
+    j["updatedAt"] = Json(d.updatedAt);
+    return j;
+  }
+}

@@ -1,0 +1,70 @@
+module infrastructure.persistence.in_memory_deployment_repo;
+
+import domain.types;
+import domain.entities.model_deployment;
+import domain.ports.deployment_repository;
+
+class InMemoryDeploymentRepository : DeploymentRepository
+{
+  private ModelDeployment[string] store;
+
+  void save(ModelDeployment entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(ModelDeployment entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(DeploymentId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
+
+  ModelDeployment* findById(DeploymentId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
+
+  ModelDeployment[] findByTenant(TenantId tenantId)
+  {
+    ModelDeployment[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId)
+  {
+    ModelDeployment[] result;
+    foreach (ref e; store)
+      if (e.modelConfigId == configId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status)
+  {
+    ModelDeployment[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId && e.status == status)
+        result ~= e;
+    return result;
+  }
+
+  ModelDeployment* findByTrainingJob(TrainingJobId jobId, TenantId tenantId)
+  {
+    foreach (ref e; store)
+      if (e.trainingJobId == jobId && e.tenantId == tenantId)
+        return &e;
+    return null;
+  }
+}
