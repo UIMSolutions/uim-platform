@@ -5,7 +5,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 
 // ──────────────── Audit Log Entry DTOs ────────────────
 
-struct WriteAuditLogRequest
+@safe: struct WriteAuditLogRequest
 {
     TenantId tenantId;
     UserId userId;
@@ -26,7 +26,7 @@ struct WriteAuditLogRequest
     string originApp;
 }
 
-struct AuditLogQueryRequest
+@safe: struct AuditLogQueryRequest
 {
     TenantId tenantId;
     AuditCategory[] categories;
@@ -38,7 +38,7 @@ struct AuditLogQueryRequest
 
 // ──────────────── Retention Policy DTOs ────────────────
 
-struct CreateRetentionPolicyRequest
+@safe: struct CreateRetentionPolicyRequest
 {
     TenantId tenantId;
     string name;
@@ -48,7 +48,7 @@ struct CreateRetentionPolicyRequest
     bool isDefault;
 }
 
-struct UpdateRetentionPolicyRequest
+@safe: struct UpdateRetentionPolicyRequest
 {
     RetentionPolicyId id;
     TenantId tenantId;
@@ -61,7 +61,7 @@ struct UpdateRetentionPolicyRequest
 
 // ──────────────── Audit Config DTOs ────────────────
 
-struct CreateAuditConfigRequest
+@safe: struct CreateAuditConfigRequest
 {
     TenantId tenantId;
     string name;
@@ -76,7 +76,7 @@ struct CreateAuditConfigRequest
     int rateLimitPerSecond;
 }
 
-struct UpdateAuditConfigRequest
+@safe: struct UpdateAuditConfigRequest
 {
     AuditConfigId id;
     TenantId tenantId;
@@ -95,7 +95,7 @@ struct UpdateAuditConfigRequest
 
 // ──────────────── Export Job DTOs ────────────────
 
-struct CreateExportJobRequest
+@safe: struct CreateExportJobRequest
 {
     TenantId tenantId;
     UserId requestedBy;
@@ -107,7 +107,7 @@ struct CreateExportJobRequest
 
 // ──────────────── Security Event DTOs ────────────────
 
-struct WriteSecurityEventRequest
+@safe: struct WriteSecurityEventRequest
 {
     TenantId tenantId;
     UserId userId;
@@ -125,7 +125,7 @@ struct WriteSecurityEventRequest
 
 // ──────────────── Data Access Log DTOs ────────────────
 
-struct WriteDataAccessLogRequest
+@safe: struct WriteDataAccessLogRequest
 {
     TenantId tenantId;
     UserId accessedBy;
@@ -139,7 +139,7 @@ struct WriteDataAccessLogRequest
 
 // ──────────────── Config Change Log DTOs ────────────────
 
-struct WriteConfigChangeLogRequest
+@safe: struct WriteConfigChangeLogRequest
 {
     TenantId tenantId;
     UserId changedBy;
@@ -151,7 +151,7 @@ struct WriteConfigChangeLogRequest
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult
+@safe: struct CommandResult
 {
     string id;
     string error;

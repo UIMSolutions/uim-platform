@@ -10,7 +10,7 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import uim.platform.auditlog.application.dto;
 
-class WriteDataAccessLogUseCase
+@safe: class WriteDataAccessLogUseCase
 {
     private AuditLogRepository auditRepo;
     private DataAccessLogRepository dalRepo;

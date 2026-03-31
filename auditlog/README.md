@@ -216,7 +216,7 @@ AL_HOST=127.0.0.1 AL_PORT=9090 ./build/uim-auditlog-platform-service
 !define PORT_COLOR         #E1F5FE
 !define SERVICE_COLOR      #FFF8E1
 
-skinparam class {
+skinparam @safe: class {
   BackgroundColor    WHITE
   BorderColor        #37474F
   ArrowColor         #37474F
@@ -238,13 +238,13 @@ title UIM AuditLog Platform Service\nClean + Hexagonal Architecture
 package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
   skinparam packageBackgroundColor PRESENTATION_COLOR
 
-  class AuditLogController << (H,#EF5350) >> {
+  @safe: class AuditLogController << (H,#EF5350) >> {
     POST   /api/v1/auditlog
     GET    /api/v1/auditlog
     GET    /api/v1/auditlog/{id}
   }
 
-  class RetentionController << (H,#EF5350) >> {
+  @safe: class RetentionController << (H,#EF5350) >> {
     POST   /api/v1/retention
     GET    /api/v1/retention
     GET    /api/v1/retention/{id}
@@ -252,7 +252,7 @@ package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
     DELETE /api/v1/retention/{id}
   }
 
-  class AuditConfigController << (H,#EF5350) >> {
+  @safe: class AuditConfigController << (H,#EF5350) >> {
     POST   /api/v1/configs
     GET    /api/v1/configs
     GET    /api/v1/configs/{tenantId}
@@ -260,26 +260,26 @@ package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
     DELETE /api/v1/configs/{id}
   }
 
-  class ExportController << (H,#EF5350) >> {
+  @safe: class ExportController << (H,#EF5350) >> {
     POST   /api/v1/exports
     GET    /api/v1/exports
     GET    /api/v1/exports/{id}
     DELETE /api/v1/exports/{id}
   }
 
-  class SecurityEventController << (H,#EF5350) >> {
+  @safe: class SecurityEventController << (H,#EF5350) >> {
     POST /api/v1/security-events
   }
 
-  class DataAccessController << (H,#EF5350) >> {
+  @safe: class DataAccessController << (H,#EF5350) >> {
     POST /api/v1/data-access
   }
 
-  class ConfigChangeController << (H,#EF5350) >> {
+  @safe: class ConfigChangeController << (H,#EF5350) >> {
     POST /api/v1/config-changes
   }
 
-  class HealthController << (H,#EF5350) >> {
+  @safe: class HealthController << (H,#EF5350) >> {
     GET /api/v1/health
   }
 }
@@ -291,11 +291,11 @@ package "Presentation Layer  «driving adapters»" as PRES <<Rectangle>> {
 package "Application Layer  «use cases»" as APP <<Rectangle>> {
   skinparam packageBackgroundColor APPLICATION_COLOR
 
-  class WriteAuditLogUseCase << (U,#FF7043) >> {
+  @safe: class WriteAuditLogUseCase << (U,#FF7043) >> {
     + writeLog(req) : CommandResult
   }
 
-  class RetrieveAuditLogsUseCase << (U,#FF7043) >> {
+  @safe: class RetrieveAuditLogsUseCase << (U,#FF7043) >> {
     + query(req) : AuditLogEntry[]
     + getById(id, tenantId) : AuditLogEntry*
     + getByCategory(tenantId, cat) : AuditLogEntry[]
@@ -304,7 +304,7 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     + count(tenantId) : long
   }
 
-  class ManageRetentionUseCase << (U,#FF7043) >> {
+  @safe: class ManageRetentionUseCase << (U,#FF7043) >> {
     + createPolicy(req) : CommandResult
     + getPolicy(id, tenantId) : RetentionPolicy*
     + listPolicies(tenantId) : RetentionPolicy[]
@@ -312,7 +312,7 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     + deletePolicy(id, tenantId) : void
   }
 
-  class ManageAuditConfigUseCase << (U,#FF7043) >> {
+  @safe: class ManageAuditConfigUseCase << (U,#FF7043) >> {
     + createConfig(req) : CommandResult
     + getConfig(tenantId) : AuditConfig*
     + listConfigs() : AuditConfig[]
@@ -320,22 +320,22 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     + deleteConfig(id, tenantId) : void
   }
 
-  class ManageExportsUseCase << (U,#FF7043) >> {
+  @safe: class ManageExportsUseCase << (U,#FF7043) >> {
     + createExport(req) : CommandResult
     + getExport(id, tenantId) : ExportJob*
     + listExports(tenantId) : ExportJob[]
     + deleteExport(id, tenantId) : void
   }
 
-  class WriteSecurityEventUseCase << (U,#FF7043) >> {
+  @safe: class WriteSecurityEventUseCase << (U,#FF7043) >> {
     + writeEvent(req) : CommandResult
   }
 
-  class WriteDataAccessLogUseCase << (U,#FF7043) >> {
+  @safe: class WriteDataAccessLogUseCase << (U,#FF7043) >> {
     + writeLog(req) : CommandResult
   }
 
-  class WriteConfigChangeUseCase << (U,#FF7043) >> {
+  @safe: class WriteConfigChangeUseCase << (U,#FF7043) >> {
     + writeChange(req) : CommandResult
   }
 }
@@ -348,7 +348,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   skinparam packageBackgroundColor DOMAIN_COLOR
 
   package "Entities" as ENT {
-    class AuditLogEntry << (E,#66BB6A) >> {
+    @safe: class AuditLogEntry << (E,#66BB6A) >> {
       id : AuditLogId
       tenantId : TenantId
       userId : UserId
@@ -361,7 +361,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       timestamp : long
     }
 
-    class AuditConfig << (E,#66BB6A) >> {
+    @safe: class AuditConfig << (E,#66BB6A) >> {
       id : AuditConfigId
       tenantId : TenantId
       status : ConfigStatus
@@ -376,7 +376,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       rateLimitPerSecond : int
     }
 
-    class RetentionPolicy << (E,#66BB6A) >> {
+    @safe: class RetentionPolicy << (E,#66BB6A) >> {
       id : RetentionPolicyId
       tenantId : TenantId
       retentionDays : int
@@ -385,7 +385,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       isDefault : bool
     }
 
-    class ExportJob << (E,#66BB6A) >> {
+    @safe: class ExportJob << (E,#66BB6A) >> {
       id : ExportJobId
       tenantId : TenantId
       format_ : ExportFormat
@@ -395,7 +395,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       downloadUrl : string
     }
 
-    class SecurityEvent << (E,#66BB6A) >> {
+    @safe: class SecurityEvent << (E,#66BB6A) >> {
       auditLogId : AuditLogId
       tenantId : TenantId
       userId : UserId
@@ -405,7 +405,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       riskLevel : string
     }
 
-    class DataAccessLog << (E,#66BB6A) >> {
+    @safe: class DataAccessLog << (E,#66BB6A) >> {
       auditLogId : AuditLogId
       tenantId : TenantId
       accessedBy : UserId
@@ -415,7 +415,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       channel : string
     }
 
-    class ConfigChangeLog << (E,#66BB6A) >> {
+    @safe: class ConfigChangeLog << (E,#66BB6A) >> {
       auditLogId : AuditLogId
       tenantId : TenantId
       changedBy : UserId
@@ -426,7 +426,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   }
 
   package "Ports  «interfaces»" as PORTS {
-    interface AuditLogRepository << (P,#42A5F5) >> {
+    @safe: interface  AuditLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : AuditLogEntry[]
       + findById(id, tenantId) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
@@ -435,7 +435,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeOlderThan(tenantId, before) : void
     }
 
-    interface AuditConfigRepository << (P,#42A5F5) >> {
+    @safe: interface  AuditConfigRepository << (P,#42A5F5) >> {
       + findAll() : AuditConfig[]
       + findByTenant(tenantId) : AuditConfig*
       + findById(id) : AuditConfig*
@@ -444,7 +444,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + remove(id, tenantId) : void
     }
 
-    interface RetentionPolicyRepository << (P,#42A5F5) >> {
+    @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : RetentionPolicy[]
       + findById(id, tenantId) : RetentionPolicy*
       + findDefault(tenantId) : RetentionPolicy*
@@ -453,7 +453,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + remove(id, tenantId) : void
     }
 
-    interface ExportJobRepository << (P,#42A5F5) >> {
+    @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : ExportJob[]
       + findById(id, tenantId) : ExportJob*
       + save(job) : void
@@ -461,7 +461,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + remove(id, tenantId) : void
     }
 
-    interface SecurityEventRepository << (P,#42A5F5) >> {
+    @safe: interface  SecurityEventRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : SecurityEvent[]
       + findByUser(tenantId, userId) : SecurityEvent[]
       + findByOutcome(tenantId, outcome) : SecurityEvent[]
@@ -469,7 +469,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeOlderThan(tenantId, before) : void
     }
 
-    interface DataAccessLogRepository << (P,#42A5F5) >> {
+    @safe: interface  DataAccessLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : DataAccessLog[]
       + findByAccessor(tenantId, userId) : DataAccessLog[]
       + findByDataSubject(tenantId, subject) : DataAccessLog[]
@@ -477,7 +477,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + removeOlderThan(tenantId, before) : void
     }
 
-    interface ConfigChangeLogRepository << (P,#42A5F5) >> {
+    @safe: interface  ConfigChangeLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : ConfigChangeLog[]
       + findByUser(tenantId, userId) : ConfigChangeLog[]
       + findByConfigType(tenantId, type) : ConfigChangeLog[]
@@ -487,13 +487,13 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   }
 
   package "Domain Services" as DSVC {
-    class AuditFilterService << (S,#FFCA28) >> {
+    @safe: class AuditFilterService << (S,#FFCA28) >> {
       + search(tenantId, categories, from, to, limit, offset)
       + findCorrelated(correlationId)
       + countForTenant(tenantId)
     }
 
-    class RetentionEnforcer << (S,#FFCA28) >> {
+    @safe: class RetentionEnforcer << (S,#FFCA28) >> {
       + enforceForTenant(tenantId) : long
     }
   }
@@ -506,13 +506,13 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   skinparam packageBackgroundColor INFRA_COLOR
 
-  class InMemoryAuditLogRepository << (A,#AB47BC) >>
-  class InMemoryAuditConfigRepository << (A,#AB47BC) >>
-  class InMemoryRetentionPolicyRepository << (A,#AB47BC) >>
-  class InMemoryExportJobRepository << (A,#AB47BC) >>
-  class InMemorySecurityEventRepository << (A,#AB47BC) >>
-  class InMemoryDataAccessLogRepository << (A,#AB47BC) >>
-  class InMemoryConfigChangeLogRepository << (A,#AB47BC) >>
+  @safe: class InMemoryAuditLogRepository << (A,#AB47BC) >>
+  @safe: class InMemoryAuditConfigRepository << (A,#AB47BC) >>
+  @safe: class InMemoryRetentionPolicyRepository << (A,#AB47BC) >>
+  @safe: class InMemoryExportJobRepository << (A,#AB47BC) >>
+  @safe: class InMemorySecurityEventRepository << (A,#AB47BC) >>
+  @safe: class InMemoryDataAccessLogRepository << (A,#AB47BC) >>
+  @safe: class InMemoryConfigChangeLogRepository << (A,#AB47BC) >>
 }
 
 ' ============================================================

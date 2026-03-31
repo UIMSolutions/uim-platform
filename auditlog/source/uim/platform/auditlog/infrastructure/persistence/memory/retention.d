@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.retention_policy_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryRetentionPolicyRepository : RetentionPolicyRepository
+@safe: class InMemoryRetentionPolicyRepository : RetentionPolicyRepository
 {
     private RetentionPolicy[RetentionPolicyId] store;
 

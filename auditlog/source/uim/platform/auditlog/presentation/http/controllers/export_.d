@@ -11,7 +11,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.export_job;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class ExportController
+@safe: class ExportController
 {
     private ManageExportsUseCase useCase;
 

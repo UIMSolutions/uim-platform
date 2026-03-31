@@ -9,7 +9,7 @@ import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class DataAccessController
+@safe: class DataAccessController
 {
     private WriteDataAccessLogUseCase useCase;
 

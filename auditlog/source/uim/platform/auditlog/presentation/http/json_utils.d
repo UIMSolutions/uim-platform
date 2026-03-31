@@ -2,7 +2,7 @@ module uim.platform.auditlog.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;
-
+@safe:
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)
 {

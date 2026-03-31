@@ -10,7 +10,7 @@ import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class SecurityEventController
+@safe: class SecurityEventController
 {
     private WriteSecurityEventUseCase useCase;
 

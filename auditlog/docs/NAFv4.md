@@ -115,7 +115,7 @@ NSOV-1  AuditLog Services
 
 ### NSOV-2 – Service Definitions
 
-| Service ID | Name | Interface | Protocol | Path | Methods |
+| Service ID | Name | @safe: interface  | Protocol | Path | Methods |
 |---|---|---|---|---|---|
 | SVC-LOG-WRITE | Write Audit Log | REST | HTTP/JSON | `/api/v1/auditlog` | POST |
 | SVC-LOG-QUERY | Query Audit Logs | REST | HTTP/JSON | `/api/v1/auditlog` | GET |

@@ -12,7 +12,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class AuditLogController
+@safe: class AuditLogController
 {
     private WriteAuditLogUseCase writeUC;
     private RetrieveAuditLogsUseCase retrieveUC;

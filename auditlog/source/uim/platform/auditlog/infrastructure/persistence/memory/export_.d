@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.export_job_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryExportJobRepository : ExportJobRepository
+@safe: class InMemoryExportJobRepository : ExportJobRepository
 {
     private ExportJob[ExportJobId] store;
 

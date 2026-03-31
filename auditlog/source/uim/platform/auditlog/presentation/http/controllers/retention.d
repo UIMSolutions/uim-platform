@@ -11,7 +11,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class RetentionController
+@safe: class RetentionController
 {
     private ManageRetentionUseCase useCase;
 

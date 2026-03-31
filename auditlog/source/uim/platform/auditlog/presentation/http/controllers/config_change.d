@@ -4,13 +4,13 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import uim.platform.auditlog.application.usecases.write_config_change;
+import uim.platform.auditlog.application.usecases.write.config_change;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-class ConfigChangeController
+@safe: class ConfigChangeController
 {
     private WriteConfigChangeUseCase useCase;
 

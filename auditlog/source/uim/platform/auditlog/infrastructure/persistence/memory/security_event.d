@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.security_event_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemorySecurityEventRepository : SecurityEventRepository
+@safe: class InMemorySecurityEventRepository : SecurityEventRepository
 {
     private SecurityEvent[] store;
 

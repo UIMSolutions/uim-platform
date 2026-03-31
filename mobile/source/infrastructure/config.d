@@ -1,11 +1,11 @@
-module uim.platform.auditlog.infrastructure.config;
+module infrastructure.config;
 
 /// Service configuration.
-@safe: struct AppConfig
+struct AppConfig
 {
     string host = "0.0.0.0";
-    ushort port = 8085;
-    string serviceName = "AuditLog Service";
+    ushort port = 8099;
+    string serviceName = "Mobile Services";
 }
 
 /// Load configuration from environment variables.
@@ -15,11 +15,11 @@ AppConfig loadConfig()
 
     AppConfig config;
 
-    auto host = environment.get("AL_HOST", "");
+    auto host = environment.get("MOBILE_HOST", "");
     if (host.length > 0)
         config.host = host;
 
-    auto portStr = environment.get("AL_PORT", "");
+    auto portStr = environment.get("MOBILE_PORT", "");
     if (portStr.length > 0)
     {
         import std.conv : to;

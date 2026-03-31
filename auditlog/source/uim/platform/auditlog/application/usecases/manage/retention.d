@@ -8,17 +8,15 @@ import uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog.domain.ports.retention_policy_repository;
 import uim.platform.auditlog.application.dto;
 
-class ManageRetentionUseCase
-{
+@safe:
+class ManageRetentionUseCase {
     private RetentionPolicyRepository repo;
 
-    this(RetentionPolicyRepository repo)
-    {
+    this(RetentionPolicyRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult createPolicy(CreateRetentionPolicyRequest req)
-    {
+    CommandResult createPolicy(CreateRetentionPolicyRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
         if (req.name.length == 0)
@@ -43,26 +41,27 @@ class ManageRetentionUseCase
         return CommandResult(policy.id, "");
     }
 
-    RetentionPolicy* getPolicy(RetentionPolicyId id, TenantId tenantId)
-    {
+    RetentionPolicy* getPolicy(RetentionPolicyId id, TenantId tenantId) {
         return repo.findById(id, tenantId);
     }
 
-    RetentionPolicy[] listPolicies(TenantId tenantId)
-    {
+    RetentionPolicy[] listPolicies(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CommandResult updatePolicy(UpdateRetentionPolicyRequest req)
-    {
+    CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
         auto policy = repo.findById(req.id, req.tenantId);
         if (policy is null)
             return CommandResult("", "Retention policy not found");
 
-        if (req.name.length > 0) policy.name = req.name;
-        if (req.description.length > 0) policy.description = req.description;
-        if (req.retentionDays > 0) policy.retentionDays = req.retentionDays;
-        if (req.categories.length > 0) policy.categories = req.categories;
+        if (req.name.length > 0)
+            policy.name = req.name;
+        if (req.description.length > 0)
+            policy.description = req.description;
+        if (req.retentionDays > 0)
+            policy.retentionDays = req.retentionDays;
+        if (req.categories.length > 0)
+            policy.categories = req.categories;
         policy.status = req.status;
         policy.updatedAt = Clock.currStdTime();
 
@@ -70,8 +69,7 @@ class ManageRetentionUseCase
         return CommandResult(policy.id, "");
     }
 
-    void deletePolicy(RetentionPolicyId id, TenantId tenantId)
-    {
+    void deletePolicy(RetentionPolicyId id, TenantId tenantId) {
         repo.remove(id, tenantId);
     }
 }

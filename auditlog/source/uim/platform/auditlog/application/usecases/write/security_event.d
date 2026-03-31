@@ -10,7 +10,7 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.security_event_repository;
 import uim.platform.auditlog.application.dto;
 
-class WriteSecurityEventUseCase
+@safe: class WriteSecurityEventUseCase
 {
     private AuditLogRepository auditRepo;
     private SecurityEventRepository secRepo;

@@ -9,7 +9,7 @@ import uim.platform.auditlog.domain.ports.export_job_repository;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.application.dto;
 
-class ManageExportsUseCase
+@safe: class ManageExportsUseCase
 {
     private ExportJobRepository jobRepo;
     private AuditLogRepository auditRepo;

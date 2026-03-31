@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryAuditLogRepository : AuditLogRepository {
+@safe: class InMemoryAuditLogRepository : AuditLogRepository {
     private AuditLogEntry[AuditLogId] store;
 
     AuditLogEntry[] findByTenant(TenantId tenantId) {

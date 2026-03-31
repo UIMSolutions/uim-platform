@@ -8,6 +8,7 @@ import uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog.domain.ports.audit_config_repository;
 import uim.platform.auditlog.application.dto;
 
+@safe:
 class ManageAuditConfigUseCase {
     private AuditConfigRepository repo;
 

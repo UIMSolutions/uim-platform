@@ -32,7 +32,7 @@ import uim.platform.auditlog.presentation.http.controllers.config_change;
 import uim.platform.auditlog.presentation.http.controllers.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
+@safe: struct Container
 {
     // Repositories (driven adapters)
     InMemoryAuditLogRepository auditLogRepo;

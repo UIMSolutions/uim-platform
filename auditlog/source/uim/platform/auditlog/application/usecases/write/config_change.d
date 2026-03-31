@@ -10,7 +10,7 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.config_change_log_repository;
 import uim.platform.auditlog.application.dto;
 
-class WriteConfigChangeUseCase
+@safe: class WriteConfigChangeUseCase
 {
     private AuditLogRepository auditRepo;
     private ConfigChangeLogRepository cclRepo;

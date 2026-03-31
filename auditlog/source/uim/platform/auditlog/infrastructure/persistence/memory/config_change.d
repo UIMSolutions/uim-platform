@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.config_change_log_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryConfigChangeLogRepository : ConfigChangeLogRepository
+@safe: class InMemoryConfigChangeLogRepository : ConfigChangeLogRepository
 {
     private ConfigChangeLog[] store;
 

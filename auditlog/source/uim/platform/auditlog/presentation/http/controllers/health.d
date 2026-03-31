@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-class HealthController
+@safe: class HealthController
 {
     void registerRoutes(URLRouter router)
     {

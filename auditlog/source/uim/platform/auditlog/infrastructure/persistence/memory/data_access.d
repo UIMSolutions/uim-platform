@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDataAccessLogRepository : DataAccessLogRepository
+@safe: class InMemoryDataAccessLogRepository : DataAccessLogRepository
 {
     private DataAccessLog[] store;
 

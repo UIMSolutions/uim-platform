@@ -11,6 +11,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog.presentation.http.json_utils;
 
+@safe:
 class AuditConfigController {
   private ManageAuditConfigUseCase useCase;
 

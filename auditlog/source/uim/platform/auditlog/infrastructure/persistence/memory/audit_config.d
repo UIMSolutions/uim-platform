@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.ports.audit_config_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAuditConfigRepository : AuditConfigRepository
+@safe: class InMemoryAuditConfigRepository : AuditConfigRepository
 {
     private AuditConfig[AuditConfigId] store;
 
