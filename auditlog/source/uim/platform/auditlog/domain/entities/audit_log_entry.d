@@ -1,6 +1,6 @@
-module domain.entities.audit_log_entry;
+module uim.platform.auditlog.domain.entities.audit_log_entry;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
 /// Core audit log record — an immutable chronological entry.
 struct AuditLogEntry

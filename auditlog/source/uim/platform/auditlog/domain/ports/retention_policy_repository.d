@@ -1,7 +1,7 @@
-module domain.ports.retention_policy_repository;
+module uim.platform.auditlog.domain.ports.retention_policy_repository;
 
-import domain.types;
-import domain.entities.retention_policy;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.retention_policy;
 
 /// Port for persisting retention policies.
 interface RetentionPolicyRepository

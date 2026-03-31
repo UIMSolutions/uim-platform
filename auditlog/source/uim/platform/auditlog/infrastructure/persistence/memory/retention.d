@@ -1,8 +1,8 @@
 module infrastructure.persistence.in_memory_retention_repo;
 
-import domain.types;
-import domain.entities.retention_policy;
-import domain.ports.retention_policy_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.retention_policy;
+import uim.platform.auditlog.domain.ports.retention_policy_repository;
 
 import std.algorithm : filter;
 import std.array : array;

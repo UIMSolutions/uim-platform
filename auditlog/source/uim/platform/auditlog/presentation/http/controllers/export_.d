@@ -7,8 +7,8 @@ import std.conv : to;
 
 import application.usecases.manage_exports;
 import application.dto;
-import domain.types;
-import domain.entities.export_job;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.export_job;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ExportController

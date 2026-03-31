@@ -1,7 +1,7 @@
-module domain.ports.data_access_log_repository;
+module uim.platform.auditlog.domain.ports.data_access_log_repository;
 
-import domain.types;
-import domain.entities.data_access_log;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.data_access_log;
 
 /// Port for persisting data access log records.
 interface DataAccessLogRepository

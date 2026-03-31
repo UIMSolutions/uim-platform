@@ -1,7 +1,7 @@
-module domain.ports.export_job_repository;
+module uim.platform.auditlog.domain.ports.export_job_repository;
 
-import domain.types;
-import domain.entities.export_job;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.export_job;
 
 /// Port for persisting export job records.
 interface ExportJobRepository

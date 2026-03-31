@@ -1,7 +1,7 @@
-module domain.ports.security_event_repository;
+module uim.platform.auditlog.domain.ports.security_event_repository;
 
-import domain.types;
-import domain.entities.security_event;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.security_event;
 
 /// Port for persisting enriched security events.
 interface SecurityEventRepository

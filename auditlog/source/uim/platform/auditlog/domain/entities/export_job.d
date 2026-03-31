@@ -1,6 +1,6 @@
-module domain.entities.export_job;
+module uim.platform.auditlog.domain.entities.export_job;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
 /// An audit log export job.
 struct ExportJob

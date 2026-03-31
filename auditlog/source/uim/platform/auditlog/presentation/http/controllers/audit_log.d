@@ -8,8 +8,8 @@ import std.conv : to;
 import application.usecases.write_audit_log;
 import application.usecases.retrieve_audit_logs;
 import application.dto;
-import domain.types;
-import domain.entities.audit_log_entry;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class AuditLogController

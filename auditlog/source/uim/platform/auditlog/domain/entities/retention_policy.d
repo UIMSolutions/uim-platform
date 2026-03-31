@@ -1,6 +1,6 @@
-module domain.entities.retention_policy;
+module uim.platform.auditlog.domain.entities.retention_policy;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
 /// Retention policy — how long audit data is kept.
 struct RetentionPolicy

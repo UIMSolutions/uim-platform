@@ -1,8 +1,8 @@
 module uim.platform.auditlog.infrastructure.persistence.memory.audit_config;
 
-import domain.types;
-import domain.entities.audit_config;
-import domain.ports.audit_config_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_config;
+import uim.platform.auditlog.domain.ports.audit_config_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.auditlog.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias AuditLogId = string;

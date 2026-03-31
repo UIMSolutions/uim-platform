@@ -3,10 +3,10 @@ module application.usecases.manage_exports;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.export_job;
-import domain.ports.export_job_repository;
-import domain.ports.audit_log_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.export_job;
+import uim.platform.auditlog.domain.ports.export_job_repository;
+import uim.platform.auditlog.domain.ports.audit_log_repository;
 import application.dto;
 
 class ManageExportsUseCase

@@ -1,8 +1,8 @@
 module infrastructure.persistence.in_memory_security_event_repo;
 
-import domain.types;
-import domain.entities.security_event;
-import domain.ports.security_event_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.security_event;
+import uim.platform.auditlog.domain.ports.security_event_repository;
 
 import std.algorithm : filter;
 import std.array : array;

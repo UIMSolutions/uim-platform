@@ -3,9 +3,9 @@ module application.usecases.manage_audit_config;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.audit_config;
-import domain.ports.audit_config_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_config;
+import uim.platform.auditlog.domain.ports.audit_config_repository;
 import application.dto;
 
 class ManageAuditConfigUseCase

@@ -1,7 +1,7 @@
-module domain.ports.config_change_log_repository;
+module uim.platform.auditlog.domain.ports.config_change_log_repository;
 
-import domain.types;
-import domain.entities.config_change_log;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.config_change_log;
 
 /// Port for persisting configuration change log records.
 interface ConfigChangeLogRepository

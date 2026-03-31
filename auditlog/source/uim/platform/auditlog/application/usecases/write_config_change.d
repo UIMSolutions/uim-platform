@@ -3,11 +3,11 @@ module application.usecases.write_config_change;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.audit_log_entry;
-import domain.entities.config_change_log;
-import domain.ports.audit_log_repository;
-import domain.ports.config_change_log_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry;
+import uim.platform.auditlog.domain.entities.config_change_log;
+import uim.platform.auditlog.domain.ports.audit_log_repository;
+import uim.platform.auditlog.domain.ports.config_change_log_repository;
 import application.dto;
 
 class WriteConfigChangeUseCase

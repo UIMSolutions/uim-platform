@@ -3,11 +3,11 @@ module application.usecases.write_security_event;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.audit_log_entry;
-import domain.entities.security_event;
-import domain.ports.audit_log_repository;
-import domain.ports.security_event_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry;
+import uim.platform.auditlog.domain.entities.security_event;
+import uim.platform.auditlog.domain.ports.audit_log_repository;
+import uim.platform.auditlog.domain.ports.security_event_repository;
 import application.dto;
 
 class WriteSecurityEventUseCase

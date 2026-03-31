@@ -1,7 +1,7 @@
-module domain.ports.audit_log_repository;
+module uim.platform.auditlog.domain.ports.audit_log_repository;
 
-import domain.types;
-import domain.entities.audit_log_entry;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry;
 
 /// Port for persisting and querying audit log entries.
 interface AuditLogRepository

@@ -6,7 +6,7 @@ import vibe.data.json;
 
 import application.usecases.write_data_access_log;
 import application.dto;
-import domain.types;
+import uim.platform.auditlog.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class DataAccessController

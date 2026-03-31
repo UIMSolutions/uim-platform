@@ -1,6 +1,6 @@
-module domain.entities.security_event;
+module uim.platform.auditlog.domain.entities.security_event;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
 /// Enriched security event — login/logout, auth failures, privilege changes.
 struct SecurityEvent

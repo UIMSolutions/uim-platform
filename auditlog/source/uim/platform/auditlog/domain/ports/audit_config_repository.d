@@ -1,7 +1,7 @@
-module domain.ports.audit_config_repository;
+module uim.platform.auditlog.domain.ports.audit_config_repository;
 
-import domain.types;
-import domain.entities.audit_config;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_config;
 
 /// Port for persisting tenant-level audit configurations.
 interface AuditConfigRepository

@@ -1,6 +1,6 @@
-module domain.entities.audit_config;
+module uim.platform.auditlog.domain.entities.audit_config;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
 /// Tenant-level audit logging configuration.
 struct AuditConfig

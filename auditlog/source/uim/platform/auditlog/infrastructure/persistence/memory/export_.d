@@ -1,8 +1,8 @@
 module infrastructure.persistence.in_memory_export_repo;
 
-import domain.types;
-import domain.entities.export_job;
-import domain.ports.export_job_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.export_job;
+import uim.platform.auditlog.domain.ports.export_job_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,7 +1,7 @@
 module application.dto;
 
-import domain.types;
-import domain.entities.audit_log_entry : AuditAttribute;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 
 // ──────────────── Audit Log Entry DTOs ────────────────
 

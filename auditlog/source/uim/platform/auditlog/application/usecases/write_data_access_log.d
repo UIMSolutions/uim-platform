@@ -3,11 +3,11 @@ module application.usecases.write_data_access_log;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.audit_log_entry;
-import domain.entities.data_access_log;
-import domain.ports.audit_log_repository;
-import domain.ports.data_access_log_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.entities.audit_log_entry;
+import uim.platform.auditlog.domain.entities.data_access_log;
+import uim.platform.auditlog.domain.ports.audit_log_repository;
+import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import application.dto;
 
 class WriteDataAccessLogUseCase

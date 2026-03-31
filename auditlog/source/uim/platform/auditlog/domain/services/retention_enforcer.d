@@ -1,11 +1,11 @@
-module domain.services.retention_enforcer;
+module uim.platform.auditlog.domain.services.retention_enforcer;
 
-import domain.types;
-import domain.ports.audit_log_repository;
-import domain.ports.retention_policy_repository;
-import domain.ports.security_event_repository;
-import domain.ports.data_access_log_repository;
-import domain.ports.config_change_log_repository;
+import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog.domain.ports.audit_log_repository;
+import uim.platform.auditlog.domain.ports.retention_policy_repository;
+import uim.platform.auditlog.domain.ports.security_event_repository;
+import uim.platform.auditlog.domain.ports.data_access_log_repository;
+import uim.platform.auditlog.domain.ports.config_change_log_repository;
 
 /// Domain service — enforces retention policies by purging expired entries.
 class RetentionEnforcer

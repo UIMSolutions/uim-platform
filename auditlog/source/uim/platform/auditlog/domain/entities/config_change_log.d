@@ -1,8 +1,8 @@
-module domain.entities.config_change_log;
+module uim.platform.auditlog.domain.entities.config_change_log;
 
-import domain.types;
+import uim.platform.auditlog.domain.types;
 
-import domain.entities.audit_log_entry : AuditAttribute;
+import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 
 /// Tracks security-critical configuration changes.
 struct ConfigChangeLog
