@@ -1,8 +1,8 @@
 module uim.platform.object_store.infrastructure.persistence.memory.bucket_repo;
 
-import domain.types;
-import domain.entities.bucket;
-import domain.ports.bucket_repository;
+import uim.platform.object_store.domain.types;
+import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store.domain.ports.bucket_repository;
 
 import std.algorithm : filter;
 import std.array : array;

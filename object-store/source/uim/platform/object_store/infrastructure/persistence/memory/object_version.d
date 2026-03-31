@@ -1,8 +1,8 @@
 module uim.platform.object_store.infrastructure.persistence.memory.object_version_repo;
 
-import domain.types;
-import domain.entities.object_version;
-import domain.ports.object_version_repository;
+import uim.platform.object_store.domain.types;
+import uim.platform.object_store.domain.entities.object_version;
+import uim.platform.object_store.domain.ports.object_version_repository;
 
 import std.algorithm : filter;
 import std.array : array;

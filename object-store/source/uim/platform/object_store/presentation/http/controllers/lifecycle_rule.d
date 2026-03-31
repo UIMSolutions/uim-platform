@@ -8,7 +8,7 @@ import std.conv : to;
 import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
 import uim.platform.object_store.application.dto;
 import domain.entities.lifecycle_rule;
-import presentation.http.json_utils;
+import uim.platform.object_store.presentation.http.json_utils;
 
 class LifecycleRuleController
 {

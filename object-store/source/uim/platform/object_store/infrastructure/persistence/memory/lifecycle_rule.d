@@ -1,8 +1,8 @@
 module uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule_repo;
 
-import domain.types;
-import domain.entities.lifecycle_rule;
-import domain.ports.lifecycle_rule_repository;
+import uim.platform.object_store.domain.types;
+import uim.platform.object_store.domain.entities.lifecycle_rule;
+import uim.platform.object_store.domain.ports.lifecycle_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

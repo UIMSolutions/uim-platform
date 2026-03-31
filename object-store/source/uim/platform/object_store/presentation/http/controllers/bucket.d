@@ -8,7 +8,7 @@ import std.conv : to;
 import uim.platform.object_store.application.use_cases.manage_buckets;
 import uim.platform.object_store.application.dto;
 import domain.entities.bucket;
-import presentation.http.json_utils;
+import uim.platform.object_store.presentation.http.json_utils;
 
 class BucketController
 {

@@ -1,8 +1,8 @@
 module uim.platform.object_store.infrastructure.persistence.memory.service_binding_repo;
 
-import domain.types;
-import domain.entities.service_binding;
-import domain.ports.service_binding_repository;
+import uim.platform.object_store.domain.types;
+import uim.platform.object_store.domain.entities.service_binding;
+import uim.platform.object_store.domain.ports.service_binding_repository;
 
 import std.algorithm : filter;
 import std.array : array;

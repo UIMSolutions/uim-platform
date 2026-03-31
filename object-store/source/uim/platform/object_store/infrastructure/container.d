@@ -20,13 +20,13 @@ import uim.platform.object_store.application.use_cases.manage_cors_rules;
 import uim.platform.object_store.application.use_cases.manage_service_bindings;
 
 // Controllers
-import presentation.http.bucket_controller;
-import presentation.http.object_controller;
-import presentation.http.access_policy_controller;
-import presentation.http.lifecycle_rule_controller;
-import presentation.http.cors_rule_controller;
-import presentation.http.service_binding_controller;
-import presentation.http.health_controller;
+import uim.platform.object_store.presentation.http.bucket_controller;
+import uim.platform.object_store.presentation.http.object_controller;
+import uim.platform.object_store.presentation.http.access_policy_controller;
+import uim.platform.object_store.presentation.http.lifecycle_rule_controller;
+import uim.platform.object_store.presentation.http.cors_rule_controller;
+import uim.platform.object_store.presentation.http.service_binding_controller;
+import uim.platform.object_store.presentation.http.health_controller;
 
 /// Dependency injection container - wires all layers together.
 struct Container

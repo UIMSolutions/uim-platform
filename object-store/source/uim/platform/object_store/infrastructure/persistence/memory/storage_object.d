@@ -1,8 +1,8 @@
 module uim.platform.object_store.infrastructure.persistence.memory.storage_object_repo;
 
-import domain.types;
-import domain.entities.storage_object;
-import domain.ports.storage_object_repository;
+import uim.platform.object_store.domain.types;
+import uim.platform.object_store.domain.entities.storage_object;
+import uim.platform.object_store.domain.ports.storage_object_repository;
 
 import std.algorithm : filter, startsWith;
 import std.array : array;
