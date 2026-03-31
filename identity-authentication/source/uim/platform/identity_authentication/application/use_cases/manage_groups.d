@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.manage_groups;
+module uim.platform.identity_authentication.application.usecases.manage_groups;
 
 import uim.platform.identity_authentication.domain.entities.group;
 import uim.platform.identity_authentication.domain.types;

@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.delegated_auth;
+module uim.platform.identity_authentication.application.usecases.delegated_auth;
 
 import uim.platform.identity_authentication.domain.entities.idp_config;
 import uim.platform.identity_authentication.domain.entities.user;

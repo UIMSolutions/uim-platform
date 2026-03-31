@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.authenticate_user;
+module uim.platform.identity_authentication.application.usecases.authenticate_user;
 
 import uim.platform.identity_authentication.domain.entities.user;
 import uim.platform.identity_authentication.domain.entities.session;

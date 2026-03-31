@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.issue_token;
+module uim.platform.identity_authentication.application.usecases.issue_token;
 
 import uim.platform.identity_authentication.domain.entities.user;
 import uim.platform.identity_authentication.domain.entities.application;

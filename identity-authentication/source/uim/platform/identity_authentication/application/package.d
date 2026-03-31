@@ -1,2 +1,2 @@
-module uim.platform.identity_authentication.application.use_cases;
+module uim.platform.identity_authentication.application.usecases;
 

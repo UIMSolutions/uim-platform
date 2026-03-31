@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.manage_users;
+module uim.platform.identity_authentication.application.usecases.manage_users;
 
 import uim.platform.identity_authentication.domain.entities.user;
 import uim.platform.identity_authentication.domain.types;

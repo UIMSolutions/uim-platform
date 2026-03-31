@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.application.use_cases.manage_tenants;
+module uim.platform.identity_authentication.application.usecases.manage_tenants;
 
 import uim.platform.identity_authentication.domain.entities.tenant;
 import uim.platform.identity_authentication.domain.types;
