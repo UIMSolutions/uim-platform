@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_app_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_app_repo;
 
 import domain.types;
 import domain.entities.application;

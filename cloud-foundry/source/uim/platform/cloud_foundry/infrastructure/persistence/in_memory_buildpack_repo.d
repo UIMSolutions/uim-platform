@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_buildpack_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_buildpack_repo;
 
 import domain.types;
 import domain.entities.buildpack;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_service_instance_repo;
+module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_service_instance_repo;
 
 import domain.types;
 import domain.entities.service_instance;

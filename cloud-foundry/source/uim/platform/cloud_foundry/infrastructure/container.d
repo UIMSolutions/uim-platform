@@ -1,4 +1,4 @@
-module infrastructure.container;
+module uim.platform.cloud_foundry.infrastructure.container;
 
 import infrastructure.config;
 
