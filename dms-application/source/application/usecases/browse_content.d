@@ -1,0 +1,116 @@
+module application.usecases.browse_content;
+
+import std.datetime.systime : Clock;
+import std.uuid : randomUUID;
+
+import application.dto;
+import domain.entities.document;
+import domain.entities.folder;
+import domain.entities.favorite;
+import domain.ports.document_repository;
+import domain.ports.folder_repository;
+import domain.ports.favorite_repository;
+import domain.ports.repository_repository;
+import domain.types;
+
+/// Browsing summary for a repository.
+struct RepositorySummary
+{
+  string repositoryId;
+  string name;
+  long totalDocuments;
+  long totalFolders;
+  RepositoryStatus status;
+}
+
+/// Use case for browsing content, searching, and managing favorites.
+class BrowseContentUseCase
+{
+  private IDocumentRepository docRepo;
+  private IFolderRepository folderRepo;
+  private IFavoriteRepository favRepo;
+  private IRepositoryRepository repoRepo;
+
+  this(IDocumentRepository docRepo, IFolderRepository folderRepo,
+    IFavoriteRepository favRepo, IRepositoryRepository repoRepo)
+  {
+    this.docRepo = docRepo;
+    this.folderRepo = folderRepo;
+    this.favRepo = favRepo;
+    this.repoRepo = repoRepo;
+  }
+
+  /// Search documents by name.
+  Document[] searchDocuments(string query, TenantId tenantId)
+  {
+    return docRepo.findByName(query, tenantId);
+  }
+
+  /// Browse folder contents (subfolders + documents).
+  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId)
+  {
+    FolderContents result;
+    result.subfolders = folderRepo.findByParent(folderId, tenantId);
+    result.documents = docRepo.findByFolder(folderId, tenantId);
+    return result;
+  }
+
+  /// Get repository summary.
+  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId)
+  {
+    RepositorySummary summary;
+    auto repo = repoRepo.findById(repositoryId, tenantId);
+    if (repo is null)
+      return summary;
+
+    summary.repositoryId = repositoryId;
+    summary.name = repo.name;
+    summary.totalDocuments = docRepo.countByRepository(repositoryId, tenantId);
+    summary.totalFolders = cast(long) folderRepo.findByRepository(repositoryId, tenantId).length;
+    summary.status = repo.status;
+    return summary;
+  }
+
+  /// Add a favorite.
+  CommandResult addFavorite(CreateFavoriteRequest r)
+  {
+    // Check for duplicate
+    auto existing = favRepo.findByUserAndResource(r.userId, r.resourceId, r.tenantId);
+    if (existing !is null)
+      return CommandResult(existing.id, "");
+
+    auto fav = new Favorite();
+    fav.id = randomUUID().toString();
+    fav.tenantId = r.tenantId;
+    fav.userId = r.userId;
+    fav.resourceId = r.resourceId;
+    fav.resourceType = r.resourceType;
+    fav.createdAt = Clock.currStdTime();
+
+    favRepo.save(fav);
+    return CommandResult(fav.id, "");
+  }
+
+  /// Get user favorites.
+  Favorite[] getFavorites(UserId userId, TenantId tenantId)
+  {
+    return favRepo.findByUser(userId, tenantId);
+  }
+
+  /// Remove a favorite.
+  CommandResult removeFavorite(FavoriteId id, TenantId tenantId)
+  {
+    auto fav = favRepo.findById(id, tenantId);
+    if (fav is null)
+      return CommandResult("", "Favorite not found");
+
+    favRepo.remove(id, tenantId);
+    return CommandResult(id, "");
+  }
+}
+
+struct FolderContents
+{
+  Folder[] subfolders;
+  Document[] documents;
+}
