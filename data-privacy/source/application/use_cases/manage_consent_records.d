@@ -1,4 +1,4 @@
-module application.use_cases.manage_consent_records;
+module application.usecases.manage_consent_records;
 
 import std.uuid;
 import std.datetime.systime : Clock;

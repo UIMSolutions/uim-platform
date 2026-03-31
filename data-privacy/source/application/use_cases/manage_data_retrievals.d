@@ -1,4 +1,4 @@
-module application.use_cases.manage_data_retrievals;
+module application.usecases.manage_data_retrievals;
 
 import std.uuid;
 import std.datetime.systime : Clock;

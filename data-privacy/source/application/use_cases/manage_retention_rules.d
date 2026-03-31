@@ -1,4 +1,4 @@
-module application.use_cases.manage_retention_rules;
+module application.usecases.manage_retention_rules;
 
 import std.uuid;
 import std.datetime.systime : Clock;

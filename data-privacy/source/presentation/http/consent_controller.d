@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_consent_records;
+import application.usecases.manage_consent_records;
 import application.dto;
 import domain.types;
 import domain.entities.consent_record;

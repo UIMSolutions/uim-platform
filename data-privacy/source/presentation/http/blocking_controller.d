@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_blocking_requests;
+import application.usecases.manage_blocking_requests;
 import application.dto;
 import domain.types;
 import domain.entities.blocking_request;

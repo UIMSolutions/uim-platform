@@ -1,4 +1,4 @@
-module application.use_cases.manage_legal_grounds;
+module application.usecases.manage_legal_grounds;
 
 import std.uuid;
 import std.datetime.systime : Clock;

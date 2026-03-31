@@ -1,4 +1,4 @@
-module application.use_cases.manage_blocking_requests;
+module application.usecases.manage_blocking_requests;
 
 import std.uuid;
 import std.datetime.systime : Clock;

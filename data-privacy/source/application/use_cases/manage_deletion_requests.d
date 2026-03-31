@@ -1,4 +1,4 @@
-module application.use_cases.manage_deletion_requests;
+module application.usecases.manage_deletion_requests;
 
 import std.uuid;
 import std.datetime.systime : Clock;

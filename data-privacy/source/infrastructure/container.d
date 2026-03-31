@@ -13,14 +13,14 @@ import infrastructure.persistence.in_memory_consent_record_repo;
 import infrastructure.persistence.in_memory_data_retrieval_repo;
 
 // Use Cases
-import application.use_cases.manage_data_subjects;
-import application.use_cases.manage_personal_data_models;
-import application.use_cases.manage_deletion_requests;
-import application.use_cases.manage_blocking_requests;
-import application.use_cases.manage_legal_grounds;
-import application.use_cases.manage_retention_rules;
-import application.use_cases.manage_consent_records;
-import application.use_cases.manage_data_retrievals;
+import application.usecases.manage_data_subjects;
+import application.usecases.manage_personal_data_models;
+import application.usecases.manage_deletion_requests;
+import application.usecases.manage_blocking_requests;
+import application.usecases.manage_legal_grounds;
+import application.usecases.manage_retention_rules;
+import application.usecases.manage_consent_records;
+import application.usecases.manage_data_retrievals;
 
 // Controllers
 import presentation.http.data_subject_controller;

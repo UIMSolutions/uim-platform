@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_deletion_requests;
+import application.usecases.manage_deletion_requests;
 import application.dto;
 import domain.types;
 import domain.entities.deletion_request;
