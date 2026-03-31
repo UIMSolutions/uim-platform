@@ -1,4 +1,4 @@
-module uim.platform.object_store.presentation.http.object_controller;
+module uim.platform.object_store.presentation.http.controllers.object;
 
 import vibe.http.server;
 import vibe.http.router;

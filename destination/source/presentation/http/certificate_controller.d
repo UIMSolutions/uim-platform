@@ -1,0 +1,242 @@
+module presentation.http.certificate_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.use_cases.manage_certificates;
+import application.dto;
+import domain.entities.certificate;
+import domain.types;
+import presentation.http.json_utils;
+
+class CertificateController
+{
+    private ManageCertificatesUseCase uc;
+
+    this(ManageCertificatesUseCase uc)
+    {
+        this.uc = uc;
+    }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/certificates", &handleUpload);
+        router.get("/api/v1/certificates", &handleList);
+        router.get("/api/v1/certificates/expiring", &handleListExpiring);
+        router.get("/api/v1/certificates/*", &handleGetById);
+        router.put("/api/v1/certificates/*", &handleUpdate);
+        router.delete_("/api/v1/certificates/*", &handleDelete);
+        router.post("/api/v1/certificates/validate/*", &handleValidate);
+    }
+
+    private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            UploadCertificateRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.certificateType = jsonStr(j, "type");
+            r.format_ = jsonStr(j, "format");
+            r.content = jsonStr(j, "content");
+            r.password = jsonStr(j, "password");
+            r.subject = jsonStr(j, "subject");
+            r.issuer = jsonStr(j, "issuer");
+            r.serialNumber = jsonStr(j, "serialNumber");
+            r.validFrom = jsonLong(j, "validFrom");
+            r.validTo = jsonLong(j, "validTo");
+            r.uploadedBy = req.headers.get("X-User-Id", "");
+
+            auto result = uc.upload(r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+            {
+                writeError(res, 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+            auto typeFilter = req.params.get("type");
+
+            Certificate[] certs;
+            if (typeFilter.length > 0)
+                certs = uc.listByType(tenantId, subaccountId, typeFilter);
+            else
+                certs = uc.listBySubaccount(tenantId, subaccountId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref c; certs)
+                arr ~= serializeCertificate(c);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) certs.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            import std.datetime.systime : Clock;
+            auto now = Clock.currTime().toUnixTime();
+            auto thirtyDays = now + 30 * 86_400;
+
+            auto certs = uc.listExpiring(tenantId, thirtyDays);
+
+            auto arr = Json.emptyArray;
+            foreach (ref c; certs)
+                arr ~= serializeCertificate(c);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) certs.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto c = uc.getCertificate(id);
+            if (c.id.length == 0)
+            {
+                writeError(res, 404, "Certificate not found");
+                return;
+            }
+            res.writeJsonBody(serializeCertificate(c), 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto j = req.json;
+            UpdateCertificateRequest r;
+            r.description = jsonStr(j, "description");
+            r.content = jsonStr(j, "content");
+            r.password = jsonStr(j, "password");
+            r.validFrom = jsonLong(j, "validFrom");
+            r.validTo = jsonLong(j, "validTo");
+
+            auto result = uc.updateCertificate(id, r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.removeCertificate(id);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["deleted"] = Json(true);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, 404, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.validateCertificate(id);
+
+            auto resp = Json.emptyObject;
+            resp["isValid"] = Json(result.isValid);
+            resp["status"] = Json(result.status.to!string);
+            resp["message"] = Json(result.message);
+            resp["daysUntilExpiry"] = Json(result.daysUntilExpiry);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private static Json serializeCertificate(const ref Certificate c)
+    {
+        auto j = Json.emptyObject;
+        j["id"] = Json(c.id);
+        j["tenantId"] = Json(c.tenantId);
+        j["subaccountId"] = Json(c.subaccountId);
+        j["name"] = Json(c.name);
+        j["description"] = Json(c.description);
+        j["type"] = Json(c.certificateType.to!string);
+        j["format"] = Json(c.format_.to!string);
+        j["status"] = Json(c.status.to!string);
+        j["subject"] = Json(c.subject);
+        j["issuer"] = Json(c.issuer);
+        j["serialNumber"] = Json(c.serialNumber);
+        j["validFrom"] = Json(c.validFrom);
+        j["validTo"] = Json(c.validTo);
+        j["uploadedBy"] = Json(c.uploadedBy);
+        j["uploadedAt"] = Json(c.uploadedAt);
+        j["modifiedAt"] = Json(c.modifiedAt);
+        return j;
+    }
+}

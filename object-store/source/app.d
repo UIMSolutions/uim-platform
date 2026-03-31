@@ -9,8 +9,9 @@ import uim.platform.object_store.infrastructure.container;
 
 import std.stdio : writefln;
 
-void main()
-{
+version (unittest) {
+} else {
+  void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -49,4 +50,5 @@ void main()
     writefln("==========================================================");
 
     runApplication();
+  }
 }

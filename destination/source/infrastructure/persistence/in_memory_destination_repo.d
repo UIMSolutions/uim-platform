@@ -1,0 +1,58 @@
+module infrastructure.persistence.in_memory_destination_repo;
+
+import domain.types;
+import domain.entities.destination;
+import domain.ports.destination_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryDestinationRepository : DestinationRepository
+{
+    private Destination[DestinationId] store;
+
+    Destination findById(DestinationId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return Destination.init;
+    }
+
+    Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name)
+    {
+        foreach (ref e; store.byValue())
+            if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
+                return e;
+        return Destination.init;
+    }
+
+    Destination[] findByTenant(TenantId tenantId)
+    {
+        return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    }
+
+    Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.subaccountId == subaccountId)
+            .array;
+    }
+
+    Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.serviceInstanceId == instanceId)
+            .array;
+    }
+
+    Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.level == level)
+            .array;
+    }
+
+    void save(Destination dest) { store[dest.id] = dest; }
+    void update(Destination dest) { store[dest.id] = dest; }
+    void remove(DestinationId id) { store.remove(id); }
+}
