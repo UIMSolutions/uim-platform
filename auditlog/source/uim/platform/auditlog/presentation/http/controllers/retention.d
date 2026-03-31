@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.auditlog.application.usecases.manage_retention;
+import uim.platform.auditlog.application.usecases.manage.retention;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;

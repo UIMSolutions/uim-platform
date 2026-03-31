@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.auditlog.application.usecases.manage_audit_config;
+import uim.platform.auditlog.application.usecases.manage.audit_config;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_config;
