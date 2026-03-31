@@ -1,4 +1,4 @@
-module application.use_cases.manage_cleansing_jobs;
+module application.usecases.manage_cleansing_jobs;
 
 import std.uuid;
 import std.datetime.systime : Clock;

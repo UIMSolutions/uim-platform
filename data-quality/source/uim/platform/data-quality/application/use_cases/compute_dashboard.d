@@ -1,4 +1,4 @@
-module application.use_cases.compute_dashboard;
+module application.usecases.compute_dashboard;
 
 import domain.types;
 import domain.entities.quality_dashboard;

@@ -1,4 +1,4 @@
-module application.use_cases.profile_data;
+module application.usecases.profile_data;
 
 import std.uuid;
 import std.conv : to;

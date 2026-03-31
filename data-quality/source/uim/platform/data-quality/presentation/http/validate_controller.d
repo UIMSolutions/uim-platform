@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.validate_data;
+import application.usecases.validate_data;
 import application.dto;
 import domain.types;
 import domain.entities.validation_result;

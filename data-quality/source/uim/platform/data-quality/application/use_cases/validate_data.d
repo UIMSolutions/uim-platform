@@ -1,4 +1,4 @@
-module application.use_cases.validate_data;
+module application.usecases.validate_data;
 
 import domain.types;
 import domain.entities.validation_rule;

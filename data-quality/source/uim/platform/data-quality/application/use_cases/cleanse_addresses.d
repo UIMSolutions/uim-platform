@@ -1,4 +1,4 @@
-module application.use_cases.cleanse_addresses;
+module application.usecases.cleanse_addresses;
 
 import std.uuid;
 

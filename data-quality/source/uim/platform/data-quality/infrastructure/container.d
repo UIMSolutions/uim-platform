@@ -18,14 +18,14 @@ import domain.services.duplicate_detector;
 import domain.services.quality_scorer;
 
 // Use cases
-import application.use_cases.manage_validation_rules;
-import application.use_cases.validate_data;
-import application.use_cases.cleanse_addresses;
-import application.use_cases.detect_duplicates;
-import application.use_cases.profile_data;
-import application.use_cases.manage_cleansing_rules;
-import application.use_cases.manage_cleansing_jobs;
-import application.use_cases.compute_dashboard;
+import application.usecases.manage_validation_rules;
+import application.usecases.validate_data;
+import application.usecases.cleanse_addresses;
+import application.usecases.detect_duplicates;
+import application.usecases.profile_data;
+import application.usecases.manage_cleansing_rules;
+import application.usecases.manage_cleansing_jobs;
+import application.usecases.compute_dashboard;
 
 // Controllers
 import presentation.http.validation_rule_controller;

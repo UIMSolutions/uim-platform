@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.cleanse_addresses;
+import application.usecases.cleanse_addresses;
 import application.dto;
 import domain.types;
 import domain.entities.address_record;

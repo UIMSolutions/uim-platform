@@ -1,4 +1,4 @@
-module application.use_cases.detect_duplicates;
+module application.usecases.detect_duplicates;
 
 import domain.types;
 import domain.entities.match_group;
