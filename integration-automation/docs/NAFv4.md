@@ -237,56 +237,81 @@ NSOV-1  Integration Automation Services
 ┌──────────────────────────────────────────────────────────────────┐
 │  Scenario Domain                                                  │
 │                                                                   │
-│  ┌──────────────────────────┐                                    │
-│  │  IntegrationScenario      │                                    │
-│  ├──────────────────────────┤                                    │
-│  │ id : ScenarioId           │                                    │
-│  │ name, description         │                                    │
-│  │ category : ScenarioCategory│                                   │
-│  │ status : ScenarioStatus   │       ┌──────────────────────┐   │
-│  │ tenantId : TenantId       │──1:N──│ ScenarioStepTemplate  │   │
-│  │ tags : string[]           │       ├──────────────────────┤   │
-│  │ createdBy : UserId        │       │ name, description     │   │
-│  │ createdAt, updatedAt      │       │ stepType : StepType   │   │
-│  └──────────────────────────┘       │ priority : StepPriority│   │
-│                                      │ order : uint           │   │
-│                                      └──────────────────────┘   │
+│  ┌─────────────────────────────┐                                 │
+│  │  IntegrationScenario         │                                 │
+│  ├─────────────────────────────┤                                 │
+│  │ id : ScenarioId              │                                 │
+│  │ tenantId : TenantId          │    ┌───────────────────────┐   │
+│  │ name, description : string   │1:N │ ScenarioStepTemplate   │   │
+│  │ category : ScenarioCategory  │───▸├───────────────────────┤   │
+│  │ version_ : string            │    │ name, description      │   │
+│  │ status : ScenarioStatus      │    │ type_ : StepType       │   │
+│  │ sourceSystemType : SystemType│    │ priority : StepPriority │   │
+│  │ targetSystemType : SystemType│    │ sequenceNumber : int    │   │
+│  │ prerequisites : string[]     │    │ assignedRole : string   │   │
+│  │ createdBy : string           │    │ instructions : string   │   │
+│  │ createdAt, updatedAt : long  │    │ automationEndpoint      │   │
+│  └─────────────────────────────┘    │ automationPayload       │   │
+│                                      │ requiresSourceSystem    │   │
+│                                      │ requiresTargetSystem    │   │
+│                                      │ dependsOnSteps : int[]  │   │
+│                                      │ estimatedDurationMinutes│   │
+│                                      └───────────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────┐
 │  Workflow Domain                                                  │
 │                                                                   │
-│  ┌──────────────────────────┐       ┌──────────────────────┐   │
-│  │  Workflow                 │──1:N──│  WorkflowStep         │   │
-│  ├──────────────────────────┤       ├──────────────────────┤   │
-│  │ id : WorkflowId           │       │ id : StepId           │   │
-│  │ scenarioId : ScenarioId   │       │ workflowId : WorkflowId│  │
-│  │ name : string             │       │ name, description     │   │
-│  │ status : WorkflowStatus   │       │ stepType : StepType   │   │
-│  │ tenantId : TenantId       │       │ status : StepStatus   │   │
-│  │ startedBy : UserId        │       │ priority : StepPriority│  │
-│  │ createdAt, updatedAt      │       │ assignee : UserId     │   │
-│  └──────────────────────────┘       │ dependsOn : StepId[]  │   │
-│                                      │ completedAt           │   │
-│                                      │ resultNotes : string  │   │
-│                                      └──────────────────────┘   │
+│  ┌─────────────────────────────┐    ┌────────────────────────┐   │
+│  │  Workflow                    │1:N │  WorkflowStep           │   │
+│  ├─────────────────────────────┤───▸├────────────────────────┤   │
+│  │ id : WorkflowId              │    │ id : StepId             │   │
+│  │ tenantId : TenantId          │    │ workflowId : WorkflowId │   │
+│  │ scenarioId : ScenarioId      │    │ tenantId : TenantId     │   │
+│  │ name, description : string   │    │ name, description       │   │
+│  │ status : WorkflowStatus      │    │ type_ : StepType        │   │
+│  │ currentStepIndex : int       │    │ status : StepStatus     │   │
+│  │ totalSteps : int             │    │ priority : StepPriority  │   │
+│  │ completedSteps : int         │    │ sequenceNumber : int    │   │
+│  │ sourceSystemId : SystemId    │    │ assignedTo : UserId     │   │
+│  │ targetSystemId : SystemId    │    │ assignedRole : string   │   │
+│  │ createdBy : UserId           │    │ instructions : string   │   │
+│  │ startedAt, completedAt       │    │ automationEndpoint      │   │
+│  │ createdAt, updatedAt : long  │    │ automationPayload       │   │
+│  └─────────────────────────────┘    │ sourceSystemId          │   │
+│                                      │ targetSystemId          │   │
+│                                      │ dependencies : StepId[] │   │
+│                                      │ result : string         │   │
+│                                      │ errorMessage : string   │   │
+│                                      │ startedAt, completedAt  │   │
+│                                      │ createdAt : long        │   │
+│                                      │ estimatedDurationMinutes│   │
+│                                      └────────────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────┐
 │  System Landscape Domain                                          │
 │                                                                   │
-│  ┌──────────────────────────┐       ┌──────────────────────┐   │
-│  │  SystemConnection         │──1:N──│  Destination          │   │
-│  ├──────────────────────────┤       ├──────────────────────┤   │
-│  │ id : SystemId             │       │ id : DestinationId    │   │
-│  │ name, description         │       │ name, description     │   │
-│  │ systemType : SystemType   │       │ url : string          │   │
-│  │ host : string             │       │ destinationType       │   │
-│  │ port : ushort             │       │ authType              │   │
-│  │ tenantId : TenantId       │       │ proxyType             │   │
-│  │ connectionStatus          │       │ systemId : SystemId   │   │
-│  │ tags : string[]           │       │ tenantId : TenantId   │   │
-│  └──────────────────────────┘       └──────────────────────┘   │
+│  ┌─────────────────────────────┐    ┌────────────────────────┐   │
+│  │  SystemConnection            │1:N │  Destination            │   │
+│  ├─────────────────────────────┤───▸├────────────────────────┤   │
+│  │ id : SystemId                │    │ id : DestinationId      │   │
+│  │ tenantId : TenantId          │    │ tenantId : TenantId     │   │
+│  │ name, description : string   │    │ name, description       │   │
+│  │ systemType : SystemType      │    │ systemId : SystemId     │   │
+│  │ host : string                │    │ destinationType         │   │
+│  │ port : ushort                │    │ url : string            │   │
+│  │ client : string              │    │ authenticationType      │   │
+│  │ protocol : string            │    │ proxyType : ProxyType   │   │
+│  │ status : ConnectionStatus    │    │ cloudConnectorLocationId│   │
+│  │ environment : string         │    │ user : string           │   │
+│  │ region : string              │    │ tokenServiceUrl         │   │
+│  │ systemId : string (SID)      │    │ tokenServiceUser        │   │
+│  │ tenant : string              │    │ audience, scope_        │   │
+│  │ createdBy : string           │    │ isEnabled : bool        │   │
+│  │ createdAt, updatedAt : long  │    │ createdBy : string      │   │
+│  └─────────────────────────────┘    │ createdAt, updatedAt    │   │
+│                                      └────────────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────────┐
@@ -298,10 +323,26 @@ NSOV-1  Integration Automation Services
 │  │ id : ExecutionLogId                       │                    │
 │  │ workflowId : WorkflowId                   │                    │
 │  │ stepId : StepId                           │                    │
+│  │ tenantId : TenantId                       │                    │
+│  │ action : string                           │                    │
 │  │ outcome : ExecutionOutcome                │                    │
 │  │ message : string                          │                    │
-│  │ executedBy : UserId                       │                    │
-│  │ executedAt : string                       │                    │
+│  │ details : string                          │                    │
+│  │ executedBy : string                       │                    │
+│  │ durationMs : long                         │                    │
+│  │ timestamp : long                          │                    │
+│  └──────────────────────────────────────────┘                    │
+│                                                                   │
+│  ┌──────────────────────────────────────────┐                    │
+│  │  WorkflowSummary  «read model»            │                    │
+│  ├──────────────────────────────────────────┤                    │
+│  │ workflowId : WorkflowId                   │                    │
+│  │ workflowName : string                     │                    │
+│  │ status : WorkflowStatus                   │                    │
+│  │ totalSteps, completedSteps : int          │                    │
+│  │ inProgressSteps, pendingSteps : int       │                    │
+│  │ failedSteps, skippedSteps : int           │                    │
+│  │ totalLogEntries : long                    │                    │
 │  └──────────────────────────────────────────┘                    │
 └──────────────────────────────────────────────────────────────────┘
 ```
@@ -375,6 +416,7 @@ NSOV-1  Integration Automation Services
 | DC-2 | In-memory persistence is non-durable; data is lost on restart |
 | DC-3 | Swapping to durable persistence requires implementing 6 repository interfaces |
 | DC-4 | 15-concurrent-workflow limit is enforced per tenant in memory; external store needed for multi-instance deployments |
+| DC-5 | WorkflowSummary is a computed read model aggregated from Workflow, WorkflowStep, and ExecutionLog data at query time |
 
 ---
 
@@ -392,20 +434,22 @@ NSOV-1  Integration Automation Services
 | IF-4 | Client | SystemController | System registration (type, host, port), connection test requests | JSON | Admin action |
 | IF-5 | Client | DestinationController | Destination config (URL, auth, proxy, linked system) | JSON | Admin action |
 | IF-6 | Client | MonitoringController | Query for logs, failures, summaries | JSON | On demand |
-| IF-7 | StepExecutor | ExecutionLogRepo | Execution log entry (outcome, message, timestamp) | Internal | Per step transition |
+| IF-7 | StepExecutor | ExecutionLogRepo | Execution log entry (outcome, message, durationMs, timestamp) | Internal | Per step transition |
 | IF-8 | ManageWorkflowsUseCase | ScenarioRepo | Read scenario template to generate workflow steps | Internal | On workflow create |
 | IF-9 | ManageDestinationsUseCase | SystemRepo | Validate that linked systemId exists | Internal | On destination create |
 | IF-10 | WorkflowEngine | WorkflowRepo | Count active workflows per tenant for limit check | Internal | On workflow start |
+| IF-11 | MonitorExecutionsUseCase | StepRepo + LogRepo | Aggregate per-workflow summary (completed, failed, skipped counts) | Internal | On demand |
 
 **Data Sensitivity:**
 
 | Data Element | Classification | Handling |
 |---|---|---|
 | Destination credentials (auth config) | Secret | AuthenticationType stored; actual secrets not persisted in this layer |
-| System connection details (host, port) | Infrastructure-internal | Used for connection testing; access restricted to admin roles |
-| Workflow execution logs | Operational | Retained for audit; may contain error messages |
-| Scenario templates | Business-internal | Reusable across tenants; category-scoped |
-| Tenant identifiers | PII-adjacent | Used for multi-tenant isolation of workflows and systems |
+| System connection details (host, port, client, SID) | Infrastructure-internal | Used for connection testing; access restricted to admin roles |
+| Workflow execution logs | Operational | Retained for audit; may contain error messages and duration metrics |
+| Scenario templates & step templates | Business-internal | Reusable across tenants; category-scoped |
+| Tenant identifiers | PII-adjacent | Used for multi-tenant isolation via X-Tenant-Id header |
+| User identifiers | PII-adjacent | Stored in createdBy, assignedTo, executedBy fields for audit trail |
 
 ---
 
@@ -421,7 +465,7 @@ NSOV-1  Integration Automation Services
 | C1.3 Step Lifecycle | (internal) | WorkflowStep, ExecutionLog | — | StepExecutor |
 | C1.4 System Landscape | SVC-SYS-* | SystemConnection | SystemController | ManageSystemsUseCase |
 | C1.5 Destinations | SVC-DEST-* | Destination | DestinationController | ManageDestinationsUseCase |
-| C1.6 Monitoring | SVC-MON-* | ExecutionLog | MonitoringController | MonitorExecutionsUseCase |
+| C1.6 Monitoring | SVC-MON-* | ExecutionLog, WorkflowSummary | MonitoringController | MonitorExecutionsUseCase |
 
 ---
 

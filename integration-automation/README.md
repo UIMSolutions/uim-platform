@@ -78,14 +78,26 @@ integration-automation/
 └── dub.sdl
 ```
 
+## Multi-Tenancy
+
+Every request must include the `X-Tenant-Id` HTTP header to scope data to a
+specific tenant. Step-level operations also use `X-User-Id` for task assignment
+and audit trail purposes.
+
+| Header | Required | Description |
+|---|---|---|
+| `X-Tenant-Id` | **Yes** | Tenant identifier — all reads/writes are scoped to this tenant |
+| `X-User-Id` | Contextual | User identifier — required for step start/complete/fail/skip and my-tasks |
+
 ## REST API
 
-All endpoints are prefixed with `/api/v1/`.
+All endpoints are prefixed with `/api/v1/`. Request and response bodies use
+`Content-Type: application/json`.
 
 ### Health
 
 ```
-GET  /api/v1/health                         → {"status":"healthy","service":"integration-automation","version":"1.0.0"}
+GET  /api/v1/health                         → {"status":"UP","service":"integration-automation"}
 ```
 
 ### Integration Scenarios
@@ -212,3 +224,336 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 
 - **WorkflowEngine** — advances a workflow through its steps based on dependency resolution, enforces the 15-concurrent-workflow limit per tenant
 - **StepExecutor** — manages step lifecycle transitions (start → complete / fail / skip) and automatically records execution log entries
+
+### Entities
+
+#### IntegrationScenario
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `ScenarioId` | Unique scenario identifier |
+| `tenantId` | `TenantId` | Owning tenant |
+| `name` | `string` | Scenario name (e.g. "SAP S/4HANA Cloud Integration") |
+| `description` | `string` | Detailed description |
+| `category` | `ScenarioCategory` | Taxonomy category |
+| `version_` | `string` | Version string (default `"1.0"`) |
+| `status` | `ScenarioStatus` | Lifecycle state (default `draft`) |
+| `sourceSystemType` | `SystemType` | Source system type for this scenario |
+| `targetSystemType` | `SystemType` | Target system type for this scenario |
+| `prerequisites` | `string[]` | Prerequisite descriptions |
+| `stepTemplates` | `ScenarioStepTemplate[]` | Ordered step definitions |
+| `createdBy` | `string` | Creator user ID |
+| `createdAt` | `long` | Creation timestamp (hnsecs) |
+| `updatedAt` | `long` | Last update timestamp |
+
+#### ScenarioStepTemplate
+
+| Field | Type | Description |
+|---|---|---|
+| `name` | `string` | Step name |
+| `description` | `string` | Step description |
+| `type_` | `StepType` | Manual, Automated, Approval, or Notification |
+| `priority` | `StepPriority` | Priority level (default `medium`) |
+| `sequenceNumber` | `int` | Execution order number |
+| `assignedRole` | `string` | Role responsible for the task |
+| `instructions` | `string` | Detailed task instructions |
+| `automationEndpoint` | `string` | API endpoint for automated steps |
+| `automationPayload` | `string` | Payload template for automation |
+| `requiresSourceSystem` | `bool` | Whether step uses source system |
+| `requiresTargetSystem` | `bool` | Whether step uses target system |
+| `dependsOnSteps` | `int[]` | Sequence numbers of prerequisite steps |
+| `estimatedDurationMinutes` | `int` | Estimated time to complete |
+
+#### Workflow
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `WorkflowId` | Unique workflow identifier |
+| `tenantId` | `TenantId` | Owning tenant |
+| `scenarioId` | `ScenarioId` | Parent scenario template |
+| `name` | `string` | Workflow name |
+| `description` | `string` | Description |
+| `status` | `WorkflowStatus` | State machine state (default `planned`) |
+| `currentStepIndex` | `int` | 0-based index of current step |
+| `totalSteps` | `int` | Total number of steps |
+| `completedSteps` | `int` | Count of completed steps |
+| `sourceSystemId` | `SystemId` | Selected source system |
+| `targetSystemId` | `SystemId` | Selected target system |
+| `createdBy` | `string` | Creator user ID |
+| `startedAt` | `long` | Workflow start timestamp |
+| `completedAt` | `long` | Workflow completion timestamp |
+| `createdAt` | `long` | Creation timestamp |
+| `updatedAt` | `long` | Last update timestamp |
+
+#### WorkflowStep
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `StepId` | Unique step identifier |
+| `workflowId` | `WorkflowId` | Parent workflow |
+| `tenantId` | `TenantId` | Owning tenant |
+| `name` | `string` | Step name |
+| `description` | `string` | Step description |
+| `type_` | `StepType` | Step type |
+| `status` | `StepStatus` | Current status (default `pending`) |
+| `priority` | `StepPriority` | Priority level (default `medium`) |
+| `sequenceNumber` | `int` | Execution order number |
+| `assignedTo` | `string` | Assigned user ID |
+| `assignedRole` | `string` | Required role |
+| `instructions` | `string` | Detailed instructions |
+| `automationEndpoint` | `string` | Endpoint for automated execution |
+| `automationPayload` | `string` | Payload for automated execution |
+| `sourceSystemId` | `SystemId` | Source system reference |
+| `targetSystemId` | `SystemId` | Target system reference |
+| `dependencies` | `StepId[]` | IDs of steps that must complete first |
+| `result` | `string` | Outcome details / response |
+| `errorMessage` | `string` | Error message on failure |
+| `startedAt` | `long` | Step start timestamp |
+| `completedAt` | `long` | Step completion timestamp |
+| `createdAt` | `long` | Creation timestamp |
+| `estimatedDurationMinutes` | `int` | Estimated time to complete |
+
+#### SystemConnection
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `SystemId` | Unique system identifier |
+| `tenantId` | `TenantId` | Owning tenant |
+| `name` | `string` | System display name (e.g. "Production S/4HANA") |
+| `description` | `string` | Description |
+| `systemType` | `SystemType` | Type of SAP or third-party system |
+| `host` | `string` | Hostname or IP |
+| `port` | `ushort` | Port number |
+| `client` | `string` | SAP client number |
+| `protocol` | `string` | Protocol (default `"https"`) |
+| `status` | `ConnectionStatus` | Connection status (default `inactive`) |
+| `environment` | `string` | e.g. "production", "staging", "dev" |
+| `region` | `string` | e.g. "eu10", "us20" |
+| `systemId` | `string` | SAP System ID (SID) |
+| `tenant` | `string` | Subaccount / tenant identifier |
+| `createdBy` | `string` | Creator user ID |
+| `createdAt` | `long` | Creation timestamp |
+| `updatedAt` | `long` | Last update timestamp |
+
+#### Destination
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `DestinationId` | Unique destination identifier |
+| `tenantId` | `TenantId` | Owning tenant |
+| `name` | `string` | Unique destination name per tenant |
+| `description` | `string` | Description |
+| `systemId` | `SystemId` | Linked system connection |
+| `destinationType` | `DestinationType` | Protocol (HTTP, RFC, OData, SOAP, RestApi) |
+| `url` | `string` | Full URL for the destination |
+| `authenticationType` | `AuthenticationType` | Authentication method |
+| `proxyType` | `ProxyType` | Routing (default `internet`) |
+| `cloudConnectorLocationId` | `string` | For on-premise routing |
+| `user` | `string` | Basic auth user |
+| `tokenServiceUrl` | `string` | OAuth token endpoint |
+| `tokenServiceUser` | `string` | OAuth token service user |
+| `audience` | `string` | OAuth audience |
+| `scope_` | `string` | OAuth scope |
+| `isEnabled` | `bool` | Whether destination is active (default `true`) |
+| `createdBy` | `string` | Creator user ID |
+| `createdAt` | `long` | Creation timestamp |
+| `updatedAt` | `long` | Last update timestamp |
+
+#### ExecutionLog
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `ExecutionLogId` | Unique log identifier |
+| `workflowId` | `WorkflowId` | Parent workflow |
+| `stepId` | `StepId` | Related step |
+| `tenantId` | `TenantId` | Owning tenant |
+| `action` | `string` | Action name (e.g. "step.started", "step.completed") |
+| `outcome` | `ExecutionOutcome` | Execution outcome |
+| `message` | `string` | Human-readable message |
+| `details` | `string` | Extended info (JSON payload, error trace) |
+| `executedBy` | `string` | User ID or "system" |
+| `durationMs` | `long` | Execution duration in milliseconds |
+| `timestamp` | `long` | Event timestamp |
+
+### Business Rules
+
+| Rule | Description |
+|---|---|
+| **Workflow Limit** | Max 15 active (in-progress) workflows per tenant |
+| **Scenario Must Be Active** | A workflow can only be created from a scenario in `active` status |
+| **Dependency Resolution** | A step cannot start until all steps in its `dependencies` list are `completed` |
+| **Step State Machine** | `pending` → `inProgress` → `completed` / `failed` / `skipped`; steps in `blocked` state wait for dependencies |
+| **Workflow Advancement** | After a step completes or is skipped, the `WorkflowEngine` checks if the next pending step's dependencies are met and advances `currentStepIndex` |
+| **Workflow Completion** | When all steps are completed or skipped, the workflow automatically transitions to `completed` |
+| **Unique Destination Names** | Destination names must be unique within a tenant |
+| **System Validation** | When creating a destination with a `systemId`, the referenced system must exist |
+| **Connection Testing** | `POST /api/v1/systems/test/{id}` simulates a test and sets the system status to `active` |
+
+### Error Response Format
+
+All error responses return a JSON body:
+
+```json
+{
+  "error": "Human-readable error message",
+  "status": 400
+}
+```
+
+| HTTP Status | Meaning |
+|---|---|
+| `200` | Success |
+| `201` | Created (POST with new resource) |
+| `400` | Validation error or business rule violation |
+| `404` | Resource not found |
+| `500` | Internal server error |
+
+### Request / Response Examples
+
+#### Create a Scenario
+
+```bash
+curl -X POST http://localhost:8090/api/v1/scenarios \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: tenant-001" \
+  -d '{
+    "name": "S/4HANA Cloud Migration",
+    "description": "End-to-end S/4HANA Cloud integration setup",
+    "category": "s4HanaIntegration",
+    "version": "1.0",
+    "sourceSystemType": "sapS4Hana",
+    "targetSystemType": "sapS4HanaCloud",
+    "createdBy": "admin",
+    "prerequisites": ["VPN connectivity established", "SAP user accounts provisioned"],
+    "stepTemplates": [
+      {
+        "name": "Configure RFC Connection",
+        "description": "Set up RFC destination in SM59",
+        "type_": "manual",
+        "priority": "high",
+        "sequenceNumber": 1,
+        "assignedRole": "BASIS_ADMIN",
+        "instructions": "Open SM59 and create a new RFC destination..."
+      }
+    ]
+  }'
+```
+
+Response (`201`):
+
+```json
+{ "id": "550e8400-e29b-41d4-a716-446655440000" }
+```
+
+#### Create a Workflow from Scenario
+
+```bash
+curl -X POST http://localhost:8090/api/v1/workflows \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: tenant-001" \
+  -d '{
+    "scenarioId": "550e8400-e29b-41d4-a716-446655440000",
+    "name": "Q1 Migration Workflow",
+    "sourceSystemId": "sys-001",
+    "targetSystemId": "sys-002",
+    "createdBy": "project-manager"
+  }'
+```
+
+#### Start and Complete a Step
+
+```bash
+# Start a step
+curl -X POST http://localhost:8090/api/v1/steps/start/step-uuid \
+  -H "X-Tenant-Id: tenant-001" \
+  -H "X-User-Id: basis-admin-01"
+
+# Complete a step
+curl -X POST http://localhost:8090/api/v1/steps/complete/step-uuid \
+  -H "Content-Type: application/json" \
+  -H "X-Tenant-Id: tenant-001" \
+  -d '{ "completedBy": "basis-admin-01", "result": "RFC destination created successfully" }'
+```
+
+#### Get Workflow Summary
+
+```bash
+curl http://localhost:8090/api/v1/monitoring/summary/workflow-uuid \
+  -H "X-Tenant-Id: tenant-001"
+```
+
+Response:
+
+```json
+{
+  "workflowId": "workflow-uuid",
+  "workflowName": "Q1 Migration Workflow",
+  "status": "inProgress",
+  "totalSteps": 5,
+  "completedSteps": 2,
+  "inProgressSteps": 1,
+  "pendingSteps": 2,
+  "failedSteps": 0,
+  "skippedSteps": 0,
+  "totalLogEntries": 5
+}
+```
+
+---
+
+## Component Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        HTTP Clients                              │
+│               (Browser / CLI / API Consumer)                     │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ HTTP/JSON + X-Tenant-Id header
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Presentation Layer  «driving adapters»                          │
+│                                                                  │
+│  ScenarioController · WorkflowController · StepController        │
+│  SystemController · DestinationController · MonitoringController │
+│  HealthController                                                │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ delegates to
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Application Layer  «use cases»                                  │
+│                                                                  │
+│  ManageScenariosUseCase · ManageWorkflowsUseCase                 │
+│  ManageStepsUseCase     · ManageSystemsUseCase                   │
+│  ManageDestinationsUseCase · MonitorExecutionsUseCase             │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ depends on ports + domain services
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Domain Layer  «pure business logic»                             │
+│                                                                  │
+│  Entities:  IntegrationScenario · Workflow · WorkflowStep        │
+│             SystemConnection · Destination · ExecutionLog         │
+│                                                                  │
+│  Ports:     ScenarioRepository · WorkflowRepository              │
+│             StepRepository · SystemRepository                    │
+│             DestinationRepository · ExecutionLogRepository        │
+│                                                                  │
+│  Services:  WorkflowEngine · StepExecutor                        │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ implemented by
+                           ▼
+┌─────────────────────────────────────────────────────────────────┐
+│  Infrastructure Layer  «driven adapters»                         │
+│                                                                  │
+│  AppConfig (CIA_HOST/CIA_PORT)  ·  Container (DI wiring)         │
+│                                                                  │
+│  InMemoryScenarioRepo · InMemoryWorkflowRepo                    │
+│  InMemoryStepRepo     · InMemorySystemRepo                      │
+│  InMemoryDestinationRepo · InMemoryExecutionLogRepo              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+*Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.*
+*© 2018–2026, Ozan Nurettin Suel, UI Manufaktur — Apache-2.0*

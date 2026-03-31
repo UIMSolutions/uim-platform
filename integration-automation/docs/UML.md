@@ -125,12 +125,13 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
       + createStep(req) : CommandResult
       + getStep(id) : WorkflowStep
       + listSteps() : WorkflowStep[]
-      + startStep(id) : CommandResult
-      + completeStep(id, req) : CommandResult
-      + failStep(id, req) : CommandResult
-      + skipStep(id, req) : CommandResult
+      + startStep(id, userId) : CommandResult
+      + completeStep(req) : CommandResult
+      + failStep(req) : CommandResult
+      + skipStep(req) : CommandResult
+      + assignStep(req) : CommandResult
       + getMyTasks(userId) : WorkflowStep[]
-      + deleteStep(id) : CommandResult
+      + getTasksByRole(role) : WorkflowStep[]
     }
 
     class ManageSystemsUseCase << (U,#FF7043) >> {
@@ -151,8 +152,11 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     }
 
     class MonitorExecutionsUseCase << (U,#FF7043) >> {
-      + listLogs() : ExecutionLog[]
-      + listFailures() : ExecutionLog[]
+      + getAllLogs(tenantId) : ExecutionLog[]
+      + getWorkflowLogs(workflowId) : ExecutionLog[]
+      + getStepLogs(stepId) : ExecutionLog[]
+      + getFailures(tenantId) : ExecutionLog[]
+      + getLogsByTimeRange(from, to) : ExecutionLog[]
       + getWorkflowSummary(id) : WorkflowSummary
     }
   }
@@ -168,62 +172,122 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
   package "Entities" as ENTITIES <<Rectangle>> {
     class IntegrationScenario << (E,#66BB6A) >> {
       id : ScenarioId
+      tenantId : TenantId
       name, description : string
       category : ScenarioCategory
+      version_ : string
       status : ScenarioStatus
-      tenantId : TenantId
-      tags : string[]
+      sourceSystemType : SystemType
+      targetSystemType : SystemType
+      prerequisites : string[]
       stepTemplates : ScenarioStepTemplate[]
+      createdBy : string
+      createdAt, updatedAt : long
+    }
+
+    class ScenarioStepTemplate << (V,#FDD835) >> {
+      name, description : string
+      type_ : StepType
+      priority : StepPriority
+      sequenceNumber : int
+      assignedRole : string
+      instructions : string
+      automationEndpoint : string
+      automationPayload : string
+      requiresSourceSystem : bool
+      requiresTargetSystem : bool
+      dependsOnSteps : int[]
+      estimatedDurationMinutes : int
     }
 
     class Workflow << (E,#66BB6A) >> {
       id : WorkflowId
-      scenarioId : ScenarioId
-      name : string
-      status : WorkflowStatus
       tenantId : TenantId
-      startedBy : UserId
+      scenarioId : ScenarioId
+      name, description : string
+      status : WorkflowStatus
+      currentStepIndex : int
+      totalSteps : int
+      completedSteps : int
+      sourceSystemId : SystemId
+      targetSystemId : SystemId
+      createdBy : string
+      startedAt, completedAt : long
+      createdAt, updatedAt : long
     }
 
     class WorkflowStep << (E,#66BB6A) >> {
       id : StepId
       workflowId : WorkflowId
+      tenantId : TenantId
       name, description : string
-      stepType : StepType
+      type_ : StepType
       status : StepStatus
       priority : StepPriority
-      assignee : UserId
-      dependsOn : StepId[]
+      sequenceNumber : int
+      assignedTo : UserId
+      assignedRole : string
+      instructions : string
+      automationEndpoint : string
+      automationPayload : string
+      sourceSystemId : SystemId
+      targetSystemId : SystemId
+      dependencies : StepId[]
+      result : string
+      errorMessage : string
+      startedAt, completedAt : long
+      createdAt : long
+      estimatedDurationMinutes : int
     }
 
     class SystemConnection << (E,#66BB6A) >> {
       id : SystemId
+      tenantId : TenantId
       name, description : string
       systemType : SystemType
       host : string
       port : ushort
-      tenantId : TenantId
-      connectionStatus : ConnectionStatus
+      client : string
+      protocol : string
+      status : ConnectionStatus
+      environment : string
+      region : string
+      systemId : string
+      tenant : string
+      createdBy : string
+      createdAt, updatedAt : long
     }
 
     class Destination << (E,#66BB6A) >> {
       id : DestinationId
-      name, description : string
-      url : string
-      destinationType : DestinationType
-      authType : AuthenticationType
-      proxyType : ProxyType
-      systemId : SystemId
       tenantId : TenantId
+      name, description : string
+      systemId : SystemId
+      destinationType : DestinationType
+      url : string
+      authenticationType : AuthenticationType
+      proxyType : ProxyType
+      cloudConnectorLocationId : string
+      user : string
+      tokenServiceUrl : string
+      tokenServiceUser : string
+      audience, scope_ : string
+      isEnabled : bool
+      createdBy : string
+      createdAt, updatedAt : long
     }
 
     class ExecutionLog << (E,#66BB6A) >> {
       id : ExecutionLogId
       workflowId : WorkflowId
       stepId : StepId
+      tenantId : TenantId
+      action : string
       outcome : ExecutionOutcome
-      message : string
-      executedBy : UserId
+      message, details : string
+      executedBy : string
+      durationMs : long
+      timestamp : long
     }
   }
 
@@ -231,39 +295,61 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     skinparam packageBackgroundColor PORT_COLOR
 
     interface ScenarioRepository << (P,#42A5F5) >> {
-      findById() / findAll()
-      save() / remove()
+      findByTenant(tenantId)
+      findById(id, tenantId)
+      findByCategory(tenantId, category)
+      findByStatus(tenantId, status)
+      findBySystemType(tenantId, systemType)
+      save() / update() / remove()
     }
 
     interface WorkflowRepository << (P,#42A5F5) >> {
-      findById() / findAll()
-      findByTenantId()
-      save() / remove()
+      findByTenant(tenantId)
+      findById(id, tenantId)
+      findByScenario(tenantId, scenarioId)
+      findByStatus(tenantId, status)
+      findByCreator(tenantId, createdBy)
+      countByTenant() / countActiveByTenant()
+      save() / update() / remove()
     }
 
     interface StepRepository << (P,#42A5F5) >> {
-      findById() / findAll()
-      findByWorkflowId()
-      findByAssignee()
-      save() / remove()
+      findByWorkflow(workflowId, tenantId)
+      findById(id, tenantId)
+      findByAssignee(tenantId, assignedTo)
+      findByRole(tenantId, assignedRole)
+      findByStatus(workflowId, tenantId, status)
+      findBySequence(workflowId, tenantId, seq)
+      save() / update() / remove()
+      removeByWorkflow(workflowId, tenantId)
     }
 
     interface SystemRepository << (P,#42A5F5) >> {
-      findById() / findAll()
-      save() / remove()
+      findByTenant(tenantId)
+      findById(id, tenantId)
+      findByType(tenantId, systemType)
+      findByStatus(tenantId, status)
+      save() / update() / remove()
     }
 
     interface DestinationRepository << (P,#42A5F5) >> {
-      findById() / findAll()
-      findByName() / findBySystemId()
-      save() / remove()
+      findByTenant(tenantId)
+      findById(id, tenantId)
+      findBySystem(tenantId, systemId)
+      findByName(tenantId, name)
+      findEnabled(tenantId)
+      save() / update() / remove()
     }
 
     interface ExecutionLogRepository << (P,#42A5F5) >> {
-      findAll()
-      findByOutcome()
-      findByWorkflowId()
-      save()
+      findByWorkflow(workflowId, tenantId)
+      findByStep(stepId, tenantId)
+      findByTenant(tenantId)
+      findByOutcome(tenantId, outcome)
+      findByTimeRange(tenantId, from, to)
+      countByWorkflow(workflowId, tenantId)
+      save() / removeByWorkflow()
+      removeOlderThan(tenantId, before)
     }
   }
 
@@ -271,20 +357,22 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     skinparam packageBackgroundColor SERVICE_COLOR
 
     class WorkflowEngine << (S,#FFB74D) >> {
-      + advanceWorkflow(workflow, steps) : void
-      + areDependenciesMet(step, steps) : bool
+      + areDependenciesMet(step, tenantId) : bool
+      + advanceWorkflow(workflowId, tenantId) : bool
       + isWorkflowLimitReached(tenantId) : bool
       --
       Max 15 concurrent workflows per tenant
+      Dependency-based step progression
     }
 
     class StepExecutor << (S,#FFB74D) >> {
-      + startStep(step) : void
-      + completeStep(step, userId) : void
-      + failStep(step, message) : void
-      + skipStep(step, reason) : void
+      + startStep(stepId, tenantId, userId) : bool
+      + completeStep(stepId, tenantId, userId, result) : bool
+      + failStep(stepId, tenantId, userId, errorMsg) : bool
+      + skipStep(stepId, tenantId, userId, reason) : bool
       --
-      Automatically records ExecutionLog
+      Automatically records ExecutionLog entries
+      Tracks durationMs for completed steps
     }
   }
 
@@ -339,6 +427,44 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
       RecruitToRetire, DesignToOperate
       BtpServices, S4HanaIntegration
       CommunicationManagement, Custom
+    }
+
+    enum StepPriority {
+      Low, Medium
+      High, Critical
+    }
+
+    enum ConnectionStatus {
+      Active, Inactive
+      Error, Testing
+    }
+
+    enum ProxyType {
+      Internet, OnPremise
+      PrivateLink
+    }
+
+    enum ExecutionOutcome {
+      Success, Failure
+      Skipped, Timeout
+      Error
+    }
+  }
+
+  package "Read Models" as READS <<Rectangle>> {
+    skinparam packageBackgroundColor #E8EAF6
+
+    class WorkflowSummary << (R,#7986CB) >> {
+      workflowId : WorkflowId
+      workflowName : string
+      status : WorkflowStatus
+      totalSteps : int
+      completedSteps : int
+      inProgressSteps : int
+      pendingSteps : int
+      failedSteps : int
+      skippedSteps : int
+      totalLogEntries : long
     }
   }
 }
@@ -395,6 +521,8 @@ ManageSystemsUseCase      --> SystemRepository
 ManageDestinationsUseCase --> DestinationRepository
 ManageDestinationsUseCase --> SystemRepository : validates system
 MonitorExecutionsUseCase  --> ExecutionLogRepository
+MonitorExecutionsUseCase  --> WorkflowRepository : reads workflow
+MonitorExecutionsUseCase  --> StepRepository : counts steps
 
 ' ============================================================
 ' RELATIONSHIPS – Use Case → Domain Service
@@ -408,6 +536,8 @@ ManageStepsUseCase     --> StepExecutor : lifecycle transitions
 ' ============================================================
 
 WorkflowEngine --> WorkflowRepository : checks tenant limit
+WorkflowEngine --> StepRepository : reads step status
+StepExecutor   --> StepRepository : updates step status
 StepExecutor   --> ExecutionLogRepository : records logs
 
 ' ============================================================
@@ -425,12 +555,13 @@ InMemoryExecutionLogRepo ..|> ExecutionLogRepository
 ' ENTITY ASSOCIATIONS
 ' ============================================================
 
-IntegrationScenario "1" *-- "0..*" WorkflowStep : stepTemplates
+IntegrationScenario "1" *-- "0..*" ScenarioStepTemplate : stepTemplates
 Workflow "1" --> "1" IntegrationScenario : scenarioId
 WorkflowStep "0..*" --> "1" Workflow : workflowId
 Destination "0..*" --> "0..1" SystemConnection : systemId
 ExecutionLog "0..*" --> "1" Workflow : workflowId
 ExecutionLog "0..*" --> "1" WorkflowStep : stepId
+MonitorExecutionsUseCase ..> WorkflowSummary : produces
 
 ' ============================================================
 ' LEGEND
@@ -443,11 +574,13 @@ legend bottom right
   | (E) | Entity (Domain) |
   | (P) | Port / Interface |
   | (S) | Domain Service |
-  | (V) | Value Object |
+  | (V) | Value Object / Struct |
+  | (R) | Read Model |
   | (A) | Adapter (Infrastructure) |
   | (F) | Framework / Config |
   |→| depends on |
   |..|>| implements |
+  |..>| produces |
   |*--| composition |
 endlegend
 
