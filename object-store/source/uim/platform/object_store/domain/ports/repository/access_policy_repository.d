@@ -1,4 +1,4 @@
-module uim.platform.object_store.domain.ports.repositories.access_policy_repository;
+module uim.platform.object_store.domain.ports.repositories.access_policy;
 
 import domain.entities.access_policy;
 import domain.types;

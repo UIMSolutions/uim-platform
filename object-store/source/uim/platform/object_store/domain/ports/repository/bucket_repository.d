@@ -1,4 +1,4 @@
-module uim.platform.object_store.domain.ports.repositories.bucket_repository;
+module uim.platform.object_store.domain.ports.repositories.bucket;
 
 import domain.entities.bucket;
 import domain.types;
