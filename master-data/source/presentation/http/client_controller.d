@@ -1,0 +1,207 @@
+module presentation.http.client_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.use_cases.manage_clients;
+import application.dto;
+import domain.entities.client;
+import domain.types;
+import presentation.http.json_utils;
+
+class ClientController
+{
+    private ManageClientsUseCase uc;
+
+    this(ManageClientsUseCase uc) { this.uc = uc; }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/clients", &handleCreate);
+        router.get("/api/v1/clients", &handleList);
+        router.get("/api/v1/clients/*", &handleGetById);
+        router.put("/api/v1/clients/*", &handleUpdate);
+        router.delete_("/api/v1/clients/*", &handleDelete);
+        router.post("/api/v1/clients/connect/*", &handleConnect);
+        router.post("/api/v1/clients/disconnect/*", &handleDisconnect);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            CreateClientRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.clientType = jsonStr(j, "clientType");
+            r.systemUrl = jsonStr(j, "systemUrl");
+            r.destinationName = jsonStr(j, "destinationName");
+            r.communicationArrangement = jsonStr(j, "communicationArrangement");
+            r.supportedCategories = jsonStrArray(j, "supportedCategories");
+            r.supportsInitialLoad = jsonBool(j, "supportsInitialLoad");
+            r.supportsDeltaReplication = jsonBool(j, "supportsDeltaReplication");
+            r.supportsKeyMapping = jsonBool(j, "supportsKeyMapping");
+            r.authType = jsonStr(j, "authType");
+            r.clientIdRef = jsonStr(j, "clientIdRef");
+            r.certificateRef = jsonStr(j, "certificateRef");
+            r.createdBy = req.headers.get("X-User-Id", "");
+
+            auto result = uc.create(r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto status = req.params.get("status", "");
+            auto type = req.params.get("type", "");
+
+            Client[] clients;
+            if (status.length > 0)
+                clients = uc.listByStatus(tenantId, status);
+            else if (type.length > 0)
+                clients = uc.listByType(tenantId, type);
+            else
+                clients = uc.listByTenant(tenantId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref c; clients)
+                arr ~= serializeClient(c);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) clients.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto client = uc.getClient(id);
+            if (client.id.length == 0)
+            {
+                writeError(res, 404, "Client not found");
+                return;
+            }
+            res.writeJsonBody(serializeClient(client), 200);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto j = req.json;
+            UpdateClientRequest r;
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.status = jsonStr(j, "status");
+            r.systemUrl = jsonStr(j, "systemUrl");
+            r.destinationName = jsonStr(j, "destinationName");
+            r.communicationArrangement = jsonStr(j, "communicationArrangement");
+            r.supportedCategories = jsonStrArray(j, "supportedCategories");
+            r.authType = jsonStr(j, "authType");
+            r.clientIdRef = jsonStr(j, "clientIdRef");
+            r.certificateRef = jsonStr(j, "certificateRef");
+
+            auto result = uc.updateClient(id, r);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.deleteClient(id);
+            if (result.success)
+                res.writeBody("", 204);
+            else
+                writeError(res, 404, result.error);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.connect(id);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.disconnect(id);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        }
+        catch (Exception e) { writeError(res, 500, "Internal server error"); }
+    }
+
+    private Json serializeClient(ref Client c)
+    {
+        auto j = Json.emptyObject;
+        j["id"] = Json(c.id);
+        j["tenantId"] = Json(c.tenantId);
+        j["name"] = Json(c.name);
+        j["description"] = Json(c.description);
+        j["clientType"] = Json(c.clientType.to!string);
+        j["status"] = Json(c.status.to!string);
+        j["systemUrl"] = Json(c.systemUrl);
+        j["destinationName"] = Json(c.destinationName);
+        j["communicationArrangement"] = Json(c.communicationArrangement);
+
+        auto catsArr = Json.emptyArray;
+        foreach (ref cat; c.supportedCategories)
+            catsArr ~= Json(cat.to!string);
+        j["supportedCategories"] = catsArr;
+
+        j["supportsInitialLoad"] = Json(c.supportsInitialLoad);
+        j["supportsDeltaReplication"] = Json(c.supportsDeltaReplication);
+        j["supportsKeyMapping"] = Json(c.supportsKeyMapping);
+        j["authType"] = Json(c.authType);
+        j["createdBy"] = Json(c.createdBy);
+        j["createdAt"] = Json(c.createdAt);
+        j["modifiedAt"] = Json(c.modifiedAt);
+        j["lastSyncAt"] = Json(c.lastSyncAt);
+        return j;
+    }
+}

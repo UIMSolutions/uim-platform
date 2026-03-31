@@ -25,11 +25,13 @@ struct EntityId {
   bool empty() const {
     return value.length == 0;
   }
+
+  Json toJson(EntityId id) {
+  return serializeJson(value);
 }
 
-Json toJson(EntityId id) {
-  return serializeJson(id);
 }
+
 /// Audit metadata attached to every domain entity.
 struct AuditInfo {
   SysTime createdAt;
@@ -57,7 +59,7 @@ struct AuditInfo {
 }
 
 Json toJson(AuditInfo info) {
-  return serializeJson(info);
+  return serializeToJson(info);
 }
 /// Sharing / visibility scope.
 enum Visibility {

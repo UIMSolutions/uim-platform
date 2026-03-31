@@ -49,7 +49,7 @@ Json set(Json json, string key, UUID value) {
 Json set(T)(Json json, string key, T[] values) {
   Json jArray = Json.emptyArray;
   foreach (v; values) {
-    jArray ~= v.toJson;
+    jArray ~= toJson(v);
   }
   json[key] = jArray;
   return json;

@@ -49,16 +49,16 @@ class Dashboard {
 
   Json toJson() {
     auto jPages = pages.map!(p => Json.emptyObject
-        .set("id", p.id.toJson)
+        .set("id", p.id.value)
         .set("title", p.title)
         .set("widgetIds", p.widgetIds.map!(wid => wid).array)
     ).array;
 
     return Json.emptyObject
-      .set("id", id.toJson)
+      .set("id", id.value)
       .set("name", name)
       .set("description", description)
-      .set("ownerId", ownerId.toString)
+      .set("ownerId", ownerId.value)
       .set("visibility", visibility.toString)
       .set("status", status.toString)
       .set("pages", jPages)

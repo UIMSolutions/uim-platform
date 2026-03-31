@@ -1,0 +1,60 @@
+module infrastructure.persistence.in_memory_master_data_object_repo;
+
+import domain.types;
+import domain.entities.master_data_object;
+import domain.ports.master_data_object_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryMasterDataObjectRepository : MasterDataObjectRepository
+{
+    private MasterDataObject[MasterDataObjectId] store;
+
+    MasterDataObject findById(MasterDataObjectId id)
+    {
+        if (auto p = id in store)
+            return *p;
+        return MasterDataObject.init;
+    }
+
+    MasterDataObject[] findByTenant(TenantId tenantId)
+    {
+        return store.byValue().filter!(e => e.tenantId == tenantId).array;
+    }
+
+    MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.category == category)
+            .array;
+    }
+
+    MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.dataModelId == dataModelId)
+            .array;
+    }
+
+    MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem)
+    {
+        return store.byValue()
+            .filter!(e => e.tenantId == tenantId && e.sourceSystem == sourceSystem)
+            .array;
+    }
+
+    MasterDataObject findByGlobalId(TenantId tenantId, string globalId)
+    {
+        foreach (ref obj; store.byValue())
+        {
+            if (obj.tenantId == tenantId && obj.globalId == globalId)
+                return obj;
+        }
+        return MasterDataObject.init;
+    }
+
+    void save(MasterDataObject obj) { store[obj.id] = obj; }
+    void update(MasterDataObject obj) { store[obj.id] = obj; }
+    void remove(MasterDataObjectId id) { store.remove(id); }
+}
