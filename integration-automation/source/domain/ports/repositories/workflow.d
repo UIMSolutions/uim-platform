@@ -1,4 +1,4 @@
-module domain.ports.workflow_repository;
+module domain.ports.repositories.workflow;
 
 import domain.types;
 import domain.entities.workflow;

@@ -4,9 +4,10 @@ import domain.types;
 import domain.entities.execution_log;
 import domain.entities.workflow;
 import domain.entities.workflow_step;
-import domain.ports.execution_log_repository;
-import domain.ports.workflow_repository;
-import domain.ports.step_repository;
+// import domain.ports.execution_log_repository;
+// import domain.ports.workflow_repository;
+// import domain.ports.step_repository;
+import domain.ports;
 
 class MonitorExecutionsUseCase {
   private ExecutionLogRepository logRepo;

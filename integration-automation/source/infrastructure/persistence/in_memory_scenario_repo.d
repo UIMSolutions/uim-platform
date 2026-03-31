@@ -2,7 +2,8 @@ module infrastructure.persistence.in_memory_scenario_repo;
 
 import domain.types;
 import domain.entities.integration_scenario;
-import domain.ports.scenario_repository;
+// import domain.ports.scenario_repository;
+import domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

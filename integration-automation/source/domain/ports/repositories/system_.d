@@ -1,4 +1,4 @@
-module domain.ports.system_repository;
+module domain.ports.repositories.system_;
 
 import domain.types;
 import domain.entities.system_connection;

@@ -5,7 +5,8 @@ import std.datetime.systime : Clock;
 
 import domain.types;
 import domain.entities.integration_scenario;
-import domain.ports.scenario_repository;
+// import domain.ports.scenario_repository;
+import domain.ports;
 import application.dto;
 
 class ManageScenariosUseCase {

@@ -1,11 +1,10 @@
-module domain.ports.step_repository;
+module domain.ports.repositories.step;
 
 import domain.types;
 import domain.entities.workflow_step;
 
 /// Port for persisting and querying workflow steps.
-interface StepRepository
-{
+interface StepRepository {
   WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId);
   WorkflowStep* findById(StepId id, TenantId tenantId);
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo);

@@ -5,8 +5,9 @@ import std.datetime.systime : Clock;
 
 import domain.types;
 import domain.entities.destination;
-import domain.ports.destination_repository;
-import domain.ports.system_repository;
+// import domain.ports.destination_repository;
+// import domain.ports.system_repository;
+import domain.ports;
 import application.dto;
 
 class ManageDestinationsUseCase {

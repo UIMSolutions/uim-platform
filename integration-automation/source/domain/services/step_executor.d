@@ -3,8 +3,9 @@ module domain.services.step_executor;
 import domain.types;
 import domain.entities.workflow_step;
 import domain.entities.execution_log;
-import domain.ports.step_repository;
-import domain.ports.execution_log_repository;
+// import domain.ports.step_repository;
+// import domain.ports.execution_log_repository;
+import domain.ports;
 
 import std.uuid;
 import std.datetime.systime : Clock;

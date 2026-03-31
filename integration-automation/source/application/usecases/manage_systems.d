@@ -5,7 +5,8 @@ import std.datetime.systime : Clock;
 
 import domain.types;
 import domain.entities.system_connection;
-import domain.ports.system_repository;
+// import domain.ports.system_repository;
+import domain.ports;
 import application.dto;
 
 class ManageSystemsUseCase {

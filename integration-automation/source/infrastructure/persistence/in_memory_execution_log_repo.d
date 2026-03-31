@@ -2,7 +2,8 @@ module infrastructure.persistence.in_memory_execution_log_repo;
 
 import domain.types;
 import domain.entities.execution_log;
-import domain.ports.execution_log_repository;
+// import domain.ports.execution_log_repository;
+import domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

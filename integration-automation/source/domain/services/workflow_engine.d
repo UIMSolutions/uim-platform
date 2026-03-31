@@ -3,8 +3,9 @@ module domain.services.workflow_engine;
 import domain.types;
 import domain.entities.workflow;
 import domain.entities.workflow_step;
-import domain.ports.workflow_repository;
-import domain.ports.step_repository;
+// import domain.ports.workflow_repository;
+// import domain.ports.step_repository;
+import domain.ports;
 
 /// Domain service that orchestrates workflow progression —
 /// advances to the next step, checks dependencies, and updates status.

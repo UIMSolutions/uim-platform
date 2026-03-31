@@ -2,7 +2,8 @@ module infrastructure.persistence.in_memory_destination_repo;
 
 import domain.types;
 import domain.entities.destination;
-import domain.ports.destination_repository;
+// import domain.ports.destination_repository;
+import domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

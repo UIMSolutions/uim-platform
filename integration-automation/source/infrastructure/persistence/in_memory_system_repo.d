@@ -2,7 +2,8 @@ module infrastructure.persistence.in_memory_system_repo;
 
 import domain.types;
 import domain.entities.system_connection;
-import domain.ports.system_repository;
+// import domain.ports.system_repository;
+import domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

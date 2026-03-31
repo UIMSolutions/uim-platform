@@ -1,0 +1,275 @@
+module presentation.http.service_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.usecases.manage_services;
+import application.dto;
+import domain.types;
+import domain.entities.service_instance;
+import domain.entities.service_binding;
+import presentation.http.json_utils;
+
+class ServiceController
+{
+  private ManageServicesUseCase useCase;
+
+  this(ManageServicesUseCase useCase)
+  {
+    this.useCase = useCase;
+  }
+
+  void registerRoutes(URLRouter router)
+  {
+    // Service instances
+    router.post("/api/v1/service-instances", &handleCreateInstance);
+    router.get("/api/v1/service-instances", &handleListInstances);
+    router.get("/api/v1/service-instances/*", &handleGetInstance);
+    router.put("/api/v1/service-instances/*", &handleUpdateInstance);
+    router.delete_("/api/v1/service-instances/*", &handleDeleteInstance);
+    // Service bindings
+    router.post("/api/v1/service-bindings", &handleCreateBinding);
+    router.get("/api/v1/service-bindings", &handleListBindings);
+    router.delete_("/api/v1/service-bindings/*", &handleDeleteBinding);
+  }
+
+  // --- Service Instances ---
+
+  private void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateServiceInstanceRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.spaceId = jsonStr(j, "spaceId");
+      r.name = jsonStr(j, "name");
+      r.serviceName = jsonStr(j, "serviceName");
+      r.servicePlanName = jsonStr(j, "servicePlanName");
+      r.parameters = jsonStr(j, "parameters");
+      r.tags = jsonStr(j, "tags");
+      r.createdBy = jsonStr(j, "createdBy");
+
+      auto result = useCase.createInstance(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto items = useCase.listInstances(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref si; items)
+        arr ~= serializeInstance(si);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto si = useCase.getInstance(id, tenantId);
+      if (si is null)
+      {
+        writeError(res, 404, "Service instance not found");
+        return;
+      }
+      res.writeJsonBody(serializeInstance(*si), 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto j = req.json;
+      auto r = UpdateServiceInstanceRequest();
+      r.id = id;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = jsonStr(j, "name");
+      r.parameters = jsonStr(j, "parameters");
+      r.tags = jsonStr(j, "tags");
+
+      auto result = useCase.updateInstance(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = useCase.deleteInstance(id, tenantId);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 404, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // --- Service Bindings ---
+
+  private void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateServiceBindingRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.appId = jsonStr(j, "appId");
+      r.serviceInstanceId = jsonStr(j, "serviceInstanceId");
+      r.name = jsonStr(j, "name");
+      r.bindingOptions = jsonStr(j, "bindingOptions");
+      r.createdBy = jsonStr(j, "createdBy");
+
+      auto result = useCase.createBinding(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto items = useCase.listBindings(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref b; items)
+        arr ~= serializeBinding(b);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = useCase.deleteBinding(id, tenantId);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 404, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  // --- Serializers ---
+
+  private static Json serializeInstance(ref const ServiceInstance si)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(si.id);
+    j["spaceId"] = Json(si.spaceId);
+    j["tenantId"] = Json(si.tenantId);
+    j["name"] = Json(si.name);
+    j["serviceName"] = Json(si.serviceName);
+    j["servicePlanName"] = Json(si.servicePlanName);
+    j["status"] = Json(si.status.to!string);
+    j["parameters"] = Json(si.parameters);
+    j["dashboardUrl"] = Json(si.dashboardUrl);
+    j["tags"] = Json(si.tags);
+    j["createdBy"] = Json(si.createdBy);
+    j["createdAt"] = Json(si.createdAt);
+    j["updatedAt"] = Json(si.updatedAt);
+    return j;
+  }
+
+  private static Json serializeBinding(ref const ServiceBinding b)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(b.id);
+    j["appId"] = Json(b.appId);
+    j["serviceInstanceId"] = Json(b.serviceInstanceId);
+    j["tenantId"] = Json(b.tenantId);
+    j["name"] = Json(b.name);
+    j["status"] = Json(b.status.to!string);
+    j["credentials"] = Json(b.credentials);
+    j["bindingOptions"] = Json(b.bindingOptions);
+    j["createdBy"] = Json(b.createdBy);
+    j["createdAt"] = Json(b.createdAt);
+    return j;
+  }
+}

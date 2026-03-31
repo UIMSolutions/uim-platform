@@ -1,4 +1,4 @@
-module domain.ports.execution_log_repository;
+module domain.ports.repositories.execution_log;
 
 import domain.types;
 import domain.entities.execution_log;
