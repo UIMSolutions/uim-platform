@@ -1,0 +1,226 @@
+module presentation.http.provisioning_job_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.usecases.run_provisioning_jobs;
+import application.dto;
+import domain.entities.provisioning_job;
+import domain.types;
+import presentation.http.json_utils;
+
+class ProvisioningJobController
+{
+  private RunProvisioningJobsUseCase uc;
+
+  this(RunProvisioningJobsUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/provisioning-jobs", &handleCreate);
+    router.get("/api/v1/provisioning-jobs", &handleList);
+    router.get("/api/v1/provisioning-jobs/*", &handleGetById);
+    router.post("/api/v1/provisioning-jobs/run/*", &handleRun);
+    router.post("/api/v1/provisioning-jobs/run-now", &handleCreateAndRun);
+    router.post("/api/v1/provisioning-jobs/cancel/*", &handleCancel);
+    router.delete_("/api/v1/provisioning-jobs/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateProvisioningJobRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.sourceSystemId = jsonStr(j, "sourceSystemId");
+      r.targetSystemId = jsonStr(j, "targetSystemId");
+      r.jobType = parseJobType(jsonStr(j, "jobType"));
+      r.schedule = jsonStr(j, "schedule");
+      r.createdBy = req.headers.get("X-User-Id", "system");
+
+      auto result = uc.createJob(r);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("scheduled");
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto items = uc.listJobs(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref j; items)
+        arr ~= serializeJob(j);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto job = uc.getJob(id, tenantId);
+      if (job is null)
+      {
+        writeError(res, 404, "Provisioning job not found");
+        return;
+      }
+      res.writeJsonBody(serializeJob(*job), 200);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.runJob(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("completed");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateProvisioningJobRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.sourceSystemId = jsonStr(j, "sourceSystemId");
+      r.targetSystemId = jsonStr(j, "targetSystemId");
+      r.jobType = parseJobType(jsonStr(j, "jobType"));
+      r.schedule = jsonStr(j, "schedule");
+      r.createdBy = req.headers.get("X-User-Id", "system");
+
+      auto result = uc.createAndRunJob(r);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("completed");
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.cancelJob(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("cancelled");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto result = uc.deleteJob(id, tenantId);
+      if (result.isSuccess)
+      {
+        auto resp = Json.emptyObject;
+        resp["deleted"] = Json(true);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        auto status = result.error == "Provisioning job not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private static Json serializeJob(ref const ProvisioningJob j)
+  {
+    auto o = Json.emptyObject;
+    o["id"] = Json(j.id);
+    o["tenantId"] = Json(j.tenantId);
+    o["sourceSystemId"] = Json(j.sourceSystemId);
+    o["targetSystemId"] = Json(j.targetSystemId);
+    o["jobType"] = Json(j.jobType.to!string);
+    o["status"] = Json(j.status.to!string);
+    o["schedule"] = Json(j.schedule);
+    o["totalEntities"] = Json(j.totalEntities);
+    o["processedEntities"] = Json(j.processedEntities);
+    o["failedEntities"] = Json(j.failedEntities);
+    o["startedAt"] = Json(j.startedAt);
+    o["completedAt"] = Json(j.completedAt);
+    o["createdBy"] = Json(j.createdBy);
+    o["createdAt"] = Json(j.createdAt);
+    return o;
+  }
+}

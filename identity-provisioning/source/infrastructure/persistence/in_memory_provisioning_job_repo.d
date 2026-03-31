@@ -1,0 +1,71 @@
+module infrastructure.persistence.in_memory_provisioning_job_repo;
+
+import domain.types;
+import domain.entities.provisioning_job;
+import domain.ports.provisioning_job_repository;
+
+class InMemoryProvisioningJobRepository : ProvisioningJobRepository
+{
+  private ProvisioningJob[string] store;
+
+  void save(ProvisioningJob entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(ProvisioningJob entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(ProvisioningJobId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
+
+  ProvisioningJob* findById(ProvisioningJobId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
+
+  ProvisioningJob[] findByTenant(TenantId tenantId)
+  {
+    ProvisioningJob[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ProvisioningJob[] findBySource(SourceSystemId sourceId, TenantId tenantId)
+  {
+    ProvisioningJob[] result;
+    foreach (ref e; store)
+      if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ProvisioningJob[] findByTarget(TargetSystemId targetId, TenantId tenantId)
+  {
+    ProvisioningJob[] result;
+    foreach (ref e; store)
+      if (e.targetSystemId == targetId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status)
+  {
+    ProvisioningJob[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId && e.status == status)
+        result ~= e;
+    return result;
+  }
+}

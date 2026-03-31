@@ -1,0 +1,62 @@
+module infrastructure.persistence.in_memory_transformation_repo;
+
+import domain.types;
+import domain.entities.transformation;
+import domain.ports.transformation_repository;
+
+class InMemoryTransformationRepository : TransformationRepository
+{
+  private Transformation[string] store;
+
+  void save(Transformation entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(Transformation entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(TransformationId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
+
+  Transformation* findById(TransformationId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
+
+  Transformation[] findByTenant(TenantId tenantId)
+  {
+    Transformation[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  Transformation[] findBySystem(string systemId, TenantId tenantId)
+  {
+    Transformation[] result;
+    foreach (ref e; store)
+      if (e.systemId == systemId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  Transformation[] findBySystemRole(TenantId tenantId, SystemRole role)
+  {
+    Transformation[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId && e.systemRole == role)
+        result ~= e;
+    return result;
+  }
+}

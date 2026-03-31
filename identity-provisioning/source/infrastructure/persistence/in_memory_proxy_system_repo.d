@@ -1,0 +1,70 @@
+module infrastructure.persistence.in_memory_proxy_system_repo;
+
+import domain.types;
+import domain.entities.proxy_system;
+import domain.ports.proxy_system_repository;
+
+class InMemoryProxySystemRepository : ProxySystemRepository
+{
+  private ProxySystem[string] store;
+
+  void save(ProxySystem entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(ProxySystem entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(ProxySystemId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
+
+  ProxySystem* findById(ProxySystemId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
+
+  ProxySystem* findByName(TenantId tenantId, string name)
+  {
+    foreach (ref e; store)
+      if (e.tenantId == tenantId && e.name == name)
+        return &e;
+    return null;
+  }
+
+  ProxySystem[] findByTenant(TenantId tenantId)
+  {
+    ProxySystem[] result;
+    foreach (ref e; store)
+      if (e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ProxySystem[] findBySource(SourceSystemId sourceId, TenantId tenantId)
+  {
+    ProxySystem[] result;
+    foreach (ref e; store)
+      if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+
+  ProxySystem[] findByTarget(TargetSystemId targetId, TenantId tenantId)
+  {
+    ProxySystem[] result;
+    foreach (ref e; store)
+      if (e.targetSystemId == targetId && e.tenantId == tenantId)
+        result ~= e;
+    return result;
+  }
+}
