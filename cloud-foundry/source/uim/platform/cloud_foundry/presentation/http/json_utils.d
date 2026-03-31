@@ -1,4 +1,4 @@
-module presentation.http.json_utils;
+module uim.platform.cloud_foundry.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;

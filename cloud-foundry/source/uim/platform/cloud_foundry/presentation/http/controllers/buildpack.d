@@ -1,4 +1,4 @@
-module presentation.http.controllers.buildpack;
+module uim.platform.cloud_foundry.presentation.http.controllers.buildpack;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.controllers;
+module uim.platform.cloud_foundry.presentation.http.controllers;
 
 public {
   import presentation.http.controllers.app;

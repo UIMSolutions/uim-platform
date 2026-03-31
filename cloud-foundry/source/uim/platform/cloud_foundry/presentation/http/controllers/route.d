@@ -1,4 +1,4 @@
-module presentation.http.controllers.route;
+module uim.platform.cloud_foundry.presentation.http.controllers.route;
 
 import vibe.http.server;
 import vibe.http.router;

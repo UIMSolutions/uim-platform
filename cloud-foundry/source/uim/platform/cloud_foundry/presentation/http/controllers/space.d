@@ -1,4 +1,4 @@
-module presentation.http.controllers.space;
+module uim.platform.cloud_foundry.presentation.http.controllers.space;
 
 import vibe.http.server;
 import vibe.http.router;
