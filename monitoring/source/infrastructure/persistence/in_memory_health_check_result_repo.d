@@ -1,0 +1,65 @@
+module infrastructure.persistence.in_memory_health_check_result_repo;
+
+import domain.types;
+import domain.entities.health_check_result;
+import domain.ports.health_check_result_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class InMemoryHealthCheckResultRepository : HealthCheckResultRepository
+{
+    private HealthCheckResult[] store;
+
+    HealthCheckResult findById(HealthCheckResultId id)
+    {
+        foreach (ref r; store)
+            if (r.id == id)
+                return r;
+        return HealthCheckResult.init;
+    }
+
+    HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId)
+    {
+        return store.filter!(r => r.tenantId == tenantId && r.checkId == checkId).array;
+    }
+
+    HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId)
+    {
+        return store.filter!(r => r.tenantId == tenantId && r.resourceId == resourceId).array;
+    }
+
+    HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId)
+    {
+        HealthCheckResult latest;
+        foreach (ref r; store)
+        {
+            if (r.tenantId == tenantId && r.checkId == checkId)
+            {
+                if (latest.id.length == 0 || r.executedAt > latest.executedAt)
+                    latest = r;
+            }
+        }
+        return latest;
+    }
+
+    HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
+        long startTime, long endTime)
+    {
+        return store.filter!(r =>
+            r.tenantId == tenantId &&
+            r.checkId == checkId &&
+            r.executedAt >= startTime &&
+            r.executedAt <= endTime
+        ).array;
+    }
+
+    void save(HealthCheckResult result) { store ~= result; }
+
+    void removeOlderThan(TenantId tenantId, long beforeTimestamp)
+    {
+        store = store.filter!(r =>
+            !(r.tenantId == tenantId && r.executedAt < beforeTimestamp)
+        ).array;
+    }
+}

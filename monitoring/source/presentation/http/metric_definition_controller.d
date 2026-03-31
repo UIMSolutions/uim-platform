@@ -1,0 +1,176 @@
+module presentation.http.metric_definition_controller;
+
+import vibe.http.server;
+import vibe.http.router;
+import vibe.data.json;
+import std.conv : to;
+
+import application.use_cases.manage_metrics;
+import application.dto;
+import domain.entities.metric_definition;
+import domain.types;
+import presentation.http.json_utils;
+
+class MetricDefinitionController
+{
+    private ManageMetricsUseCase uc;
+
+    this(ManageMetricsUseCase uc)
+    {
+        this.uc = uc;
+    }
+
+    void registerRoutes(URLRouter router)
+    {
+        router.post("/api/v1/metric-definitions", &handleCreate);
+        router.get("/api/v1/metric-definitions", &handleList);
+        router.get("/api/v1/metric-definitions/*", &handleGetById);
+        router.put("/api/v1/metric-definitions/*", &handleUpdate);
+        router.delete_("/api/v1/metric-definitions/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto j = req.json;
+            CreateMetricDefinitionRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.name = jsonStr(j, "name");
+            r.displayName = jsonStr(j, "displayName");
+            r.description = jsonStr(j, "description");
+            r.category = jsonStr(j, "category");
+            r.unit = jsonStr(j, "unit");
+            r.aggregation = jsonStr(j, "aggregation");
+            r.createdBy = req.headers.get("X-User-Id", "");
+
+            auto result = uc.createDefinition(r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 201);
+            }
+            else
+            {
+                writeError(res, 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto defs = uc.listDefinitions(tenantId);
+
+            auto arr = Json.emptyArray;
+            foreach (ref d; defs)
+                arr ~= serializeDefinition(d);
+
+            auto resp = Json.emptyObject;
+            resp["items"] = arr;
+            resp["totalCount"] = Json(cast(long) defs.length);
+            res.writeJsonBody(resp, 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto d = uc.getDefinition(id);
+            if (d.id.length == 0)
+            {
+                writeError(res, 404, "Metric definition not found");
+                return;
+            }
+            res.writeJsonBody(serializeDefinition(d), 200);
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto j = req.json;
+            UpdateMetricDefinitionRequest r;
+            r.displayName = jsonStr(j, "displayName");
+            r.description = jsonStr(j, "description");
+            r.aggregation = jsonStr(j, "aggregation");
+            r.isEnabled = jsonBool(j, "isEnabled", true);
+
+            auto result = uc.updateDefinition(id, r);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, result.error == "Metric definition not found" ? 404 : 400, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    {
+        try
+        {
+            auto id = extractIdFromPath(req.requestURI);
+            auto result = uc.removeDefinition(id);
+            if (result.success)
+            {
+                auto resp = Json.emptyObject;
+                resp["deleted"] = Json(true);
+                res.writeJsonBody(resp, 200);
+            }
+            else
+            {
+                writeError(res, 404, result.error);
+            }
+        }
+        catch (Exception e)
+        {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private static Json serializeDefinition(const ref MetricDefinition d)
+    {
+        auto j = Json.emptyObject;
+        j["id"] = Json(d.id);
+        j["tenantId"] = Json(d.tenantId);
+        j["name"] = Json(d.name);
+        j["displayName"] = Json(d.displayName);
+        j["description"] = Json(d.description);
+        j["category"] = Json(d.category.to!string);
+        j["unit"] = Json(d.unit.to!string);
+        j["aggregation"] = Json(d.aggregation.to!string);
+        j["isCustom"] = Json(d.isCustom);
+        j["isEnabled"] = Json(d.isEnabled);
+        j["createdBy"] = Json(d.createdBy);
+        j["createdAt"] = Json(d.createdAt);
+        return j;
+    }
+}
