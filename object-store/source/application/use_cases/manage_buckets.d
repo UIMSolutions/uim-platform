@@ -46,7 +46,7 @@ class ManageBucketsUseCase
         bucket.createdAt = currentTimestamp();
         bucket.updatedAt = bucket.createdAt;
 
-        auto encResult = EncryptionPolicy.validate(*bucket);
+        auto encResult = EncryptionPolicy.validate(bucket);
         if (!encResult.valid)
             return CommandResult(false, "", encResult.error);
 
@@ -71,7 +71,7 @@ class ManageBucketsUseCase
             bucket.quotaBytes = req.quotaBytes;
         bucket.updatedAt = currentTimestamp();
 
-        auto encResult = EncryptionPolicy.validate(*bucket);
+        auto encResult = EncryptionPolicy.validate(bucket);
         if (!encResult.valid)
             return CommandResult(false, "", encResult.error);
 

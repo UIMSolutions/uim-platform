@@ -4,8 +4,7 @@ import uim.platform.cloud_foundry.domain.types;
 
 /// A Cloud Foundry application — represents a deployed unit with scaling,
 /// health checks, and environment configuration.
-struct Application
-{
+struct Application {
   AppId id;
   SpaceId spaceId;
   TenantId tenantId;
@@ -17,14 +16,14 @@ struct Application
   BuildpackId buildpackId;
   string detectedBuildpack;
   string stack = "cflinuxfs4";
-  string command;                     // custom start command
+  string command; // custom start command
   HealthCheckType healthCheckType = HealthCheckType.port;
   string healthCheckEndpoint = "/";
   int healthCheckTimeoutSec = 60;
-  string environmentVariables;        // JSON string of user-provided env vars
+  string environmentVariables; // JSON string of user-provided env vars
   string dockerImage;
   string dockerCredentials;
-  int runningInstances;               // actual running instance count
+  int runningInstances; // actual running instance count
   string createdBy;
   long createdAt;
   long updatedAt;

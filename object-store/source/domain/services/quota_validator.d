@@ -11,7 +11,7 @@ struct QuotaValidationResult
 
 struct QuotaValidator
 {
-    static QuotaValidationResult validate(ref const Bucket bucket, long additionalBytes)
+    static QuotaValidationResult validate(const Bucket bucket, long additionalBytes)
     {
         if (bucket.quotaBytes == 0)
             return QuotaValidationResult(true, "");

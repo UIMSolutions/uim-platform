@@ -4,9 +4,10 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
 import uim.platform.cloud_foundry.domain.entities.service_instance;
 import uim.platform.cloud_foundry.domain.entities.route;
-import uim.platform.cloud_foundry.domain.ports.app;
-import uim.platform.cloud_foundry.domain.ports.service_instance;
-import uim.platform.cloud_foundry.domain.ports.route;
+// import uim.platform.cloud_foundry.domain.ports.app;
+// import uim.platform.cloud_foundry.domain.ports.service_instance;
+// import uim.platform.cloud_foundry.domain.ports.route;
+import uim.platform.cloud_foundry.domain.ports;
 
 /// Read-only summaries for application health and space resource usage.
 struct AppHealthSummary

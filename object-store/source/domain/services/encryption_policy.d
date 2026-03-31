@@ -12,7 +12,7 @@ struct EncryptionValidationResult
 
 struct EncryptionPolicy
 {
-    static EncryptionValidationResult validate(ref const Bucket bucket)
+    static EncryptionValidationResult validate(const Bucket bucket)
     {
         if (bucket.encryptionType == EncryptionType.sse_kms || bucket.encryptionType == EncryptionType.sse_c)
         {

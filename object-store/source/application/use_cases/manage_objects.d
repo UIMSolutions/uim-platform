@@ -40,7 +40,7 @@ class ManageObjectsUseCase
             return CommandResult(false, "", "Bucket is not active");
 
         // Quota check
-        auto quotaResult = QuotaValidator.validate(*bucket, req.size);
+        auto quotaResult = QuotaValidator.validate(bucket, req.size);
         if (!quotaResult.valid)
             return CommandResult(false, "", quotaResult.error);
 
@@ -200,7 +200,7 @@ class ManageObjectsUseCase
         if (destBucket is null || destBucket.id.length == 0)
             return CommandResult(false, "", "Destination bucket not found");
 
-        auto quotaResult = QuotaValidator.validate(*destBucket, sourceObj.size);
+        auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);
         if (!quotaResult.valid)
             return CommandResult(false, "", quotaResult.error);
 
