@@ -1,4 +1,4 @@
-module application.usecases.manage_retention;
+module uim.platform.auditlog.application.usecases.manage_retention;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;
 import uim.platform.auditlog.domain.ports.retention_policy_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class ManageRetentionUseCase
 {

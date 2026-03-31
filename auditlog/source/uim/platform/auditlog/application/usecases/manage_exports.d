@@ -1,4 +1,4 @@
-module application.usecases.manage_exports;
+module uim.platform.auditlog.application.usecases.manage_exports;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.export_job;
 import uim.platform.auditlog.domain.ports.export_job_repository;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class ManageExportsUseCase
 {

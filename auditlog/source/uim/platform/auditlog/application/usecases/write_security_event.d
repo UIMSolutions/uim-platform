@@ -1,4 +1,4 @@
-module application.usecases.write_security_event;
+module uim.platform.auditlog.application.usecases.write_security_event;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -8,7 +8,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.entities.security_event;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.security_event_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class WriteSecurityEventUseCase
 {

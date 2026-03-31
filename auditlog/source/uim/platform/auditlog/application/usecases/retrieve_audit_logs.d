@@ -1,9 +1,9 @@
-module application.usecases.retrieve_audit_logs;
+module uim.platform.auditlog.application.usecases.retrieve_audit_logs;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class RetrieveAuditLogsUseCase
 {

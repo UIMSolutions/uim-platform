@@ -1,4 +1,4 @@
-module application.usecases.write_config_change;
+module uim.platform.auditlog.application.usecases.write_config_change;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -8,7 +8,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.entities.config_change_log;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.config_change_log_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class WriteConfigChangeUseCase
 {

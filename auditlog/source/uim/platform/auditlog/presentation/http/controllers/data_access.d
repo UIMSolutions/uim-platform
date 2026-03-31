@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.usecases.write_data_access_log;
-import application.dto;
+import uim.platform.auditlog.application.usecases.write_data_access_log;
+import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 

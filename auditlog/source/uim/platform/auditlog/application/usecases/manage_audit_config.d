@@ -1,4 +1,4 @@
-module application.usecases.manage_audit_config;
+module uim.platform.auditlog.application.usecases.manage_audit_config;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -6,19 +6,16 @@ import std.datetime.systime : Clock;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_config;
 import uim.platform.auditlog.domain.ports.audit_config_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
-class ManageAuditConfigUseCase
-{
+class ManageAuditConfigUseCase {
     private AuditConfigRepository repo;
 
-    this(AuditConfigRepository repo)
-    {
+    this(AuditConfigRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult createConfig(CreateAuditConfigRequest req)
-    {
+    CommandResult createConfig(CreateAuditConfigRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
 
@@ -49,23 +46,21 @@ class ManageAuditConfigUseCase
         return CommandResult(cfg.id, "");
     }
 
-    AuditConfig* getConfig(TenantId tenantId)
-    {
+    AuditConfig* getConfig(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    AuditConfig[] listConfigs()
-    {
+    AuditConfig[] listConfigs() {
         return repo.findAll();
     }
 
-    CommandResult updateConfig(UpdateAuditConfigRequest req)
-    {
+    CommandResult updateConfig(UpdateAuditConfigRequest req) {
         auto cfg = repo.findById(req.id);
         if (cfg is null)
             return CommandResult("", "Audit config not found");
 
-        if (req.name.length > 0) cfg.name = req.name;
+        if (req.name.length > 0)
+            cfg.name = req.name;
         cfg.status = req.status;
         cfg.logDataAccess = req.logDataAccess;
         cfg.logDataModification = req.logDataModification;
@@ -75,15 +70,15 @@ class ManageAuditConfigUseCase
         cfg.maskedFields = req.maskedFields;
         cfg.excludedServices = req.excludedServices;
         cfg.minimumSeverity = req.minimumSeverity;
-        if (req.rateLimitPerSecond > 0) cfg.rateLimitPerSecond = req.rateLimitPerSecond;
+        if (req.rateLimitPerSecond > 0)
+            cfg.rateLimitPerSecond = req.rateLimitPerSecond;
         cfg.updatedAt = Clock.currStdTime();
 
         repo.update(*cfg);
         return CommandResult(cfg.id, "");
     }
 
-    void deleteConfig(AuditConfigId id, TenantId tenantId)
-    {
+    void deleteConfig(AuditConfigId id, TenantId tenantId) {
         repo.remove(id, tenantId);
     }
 }

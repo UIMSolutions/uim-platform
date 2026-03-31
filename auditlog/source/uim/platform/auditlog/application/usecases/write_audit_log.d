@@ -1,4 +1,4 @@
-module application.usecases.write_audit_log;
+module uim.platform.auditlog.application.usecases.write_audit_log;
 
 import std.uuid;
 import std.datetime.systime : Clock;
@@ -7,7 +7,7 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.audit_config_repository;
-import application.dto;
+import uim.platform.auditlog.application.dto;
 
 class WriteAuditLogUseCase
 {
