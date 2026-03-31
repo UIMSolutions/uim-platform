@@ -7,8 +7,8 @@ import std.conv : to;
 
 import application.usecases.manage_apps;
 import application.dto;
-import domain.types;
-import domain.entities.application;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.application;
 import presentation.http.json_utils;
 
 class AppController

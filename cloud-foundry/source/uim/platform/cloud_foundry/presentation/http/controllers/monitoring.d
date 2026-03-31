@@ -6,7 +6,7 @@ import vibe.data.json;
 import std.conv : to;
 
 import application.usecases.monitor_apps;
-import domain.types;
+import uim.platform.cloud_foundry.domain.types;
 import presentation.http.json_utils;
 
 class MonitoringController

@@ -1,8 +1,8 @@
 module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_buildpack_repo;
 
-import domain.types;
-import domain.entities.buildpack;
-import domain.ports.buildpack_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.buildpack;
+import uim.platform.cloud_foundry.domain.ports.buildpack_repository;
 
 import std.algorithm : filter;
 import std.array : array;

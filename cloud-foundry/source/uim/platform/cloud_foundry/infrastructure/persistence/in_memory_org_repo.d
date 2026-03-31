@@ -1,8 +1,8 @@
 module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_org_repo;
 
-import domain.types;
-import domain.entities.organization;
-import domain.ports.org_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.organization;
+import uim.platform.cloud_foundry.domain.ports.org_repository;
 
 import std.algorithm : filter;
 import std.array : array;

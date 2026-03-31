@@ -13,8 +13,8 @@ import infrastructure.persistence.in_memory_domain_repo;
 import infrastructure.persistence.in_memory_buildpack_repo;
 
 // Domain Services
-import domain.services.app_lifecycle_manager;
-import domain.services.route_resolver;
+import uim.platform.cloud_foundry.domain.services.app_lifecycle_manager;
+import uim.platform.cloud_foundry.domain.services.route_resolver;
 
 // Use Cases
 import application.usecases.manage_orgs;

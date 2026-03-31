@@ -1,8 +1,8 @@
 module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_space_repo;
 
-import domain.types;
-import domain.entities.space;
-import domain.ports.space_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.space;
+import uim.platform.cloud_foundry.domain.ports.space_repository;
 
 import std.algorithm : filter;
 import std.array : array;

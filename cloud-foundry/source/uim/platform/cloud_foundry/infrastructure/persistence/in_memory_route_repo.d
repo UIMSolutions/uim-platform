@@ -1,8 +1,8 @@
 module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_route_repo;
 
-import domain.types;
-import domain.entities.route;
-import domain.ports.route_repository;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.route;
+import uim.platform.cloud_foundry.domain.ports.route_repository;
 
 import std.algorithm : canFind, filter;
 import std.array : array;

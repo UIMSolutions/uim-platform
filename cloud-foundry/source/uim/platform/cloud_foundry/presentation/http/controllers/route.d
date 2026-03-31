@@ -7,9 +7,9 @@ import std.conv : to;
 
 import application.usecases.manage_routes;
 import application.dto;
-import domain.types;
-import domain.entities.route;
-import domain.entities.cf_domain;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.route;
+import uim.platform.cloud_foundry.domain.entities.cf_domain;
 import presentation.http.json_utils;
 
 class RouteController

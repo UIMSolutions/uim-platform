@@ -7,9 +7,9 @@ import std.conv : to;
 
 import application.usecases.manage_services;
 import application.dto;
-import domain.types;
-import domain.entities.service_instance;
-import domain.entities.service_binding;
+import uim.platform.cloud_foundry.domain.types;
+import uim.platform.cloud_foundry.domain.entities.service_instance;
+import uim.platform.cloud_foundry.domain.entities.service_binding;
 import presentation.http.json_utils;
 
 class ServiceController
