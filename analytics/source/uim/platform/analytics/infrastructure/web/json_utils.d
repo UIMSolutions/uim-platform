@@ -2,7 +2,7 @@ module uim.platform.analytics.infrastructure.web.json_utils;
 
 import vibe.data.json;
 import std.traits;
-
+@safe:
 /// Serialize a struct to a Json value.
 Json toJsonValue(T)(T obj) if (is(T == struct)) {
     return serializeToJson(obj);

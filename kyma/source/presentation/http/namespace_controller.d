@@ -64,9 +64,8 @@ class NamespaceController
     {
         try
         {
-            auto envId = req.params.get("environmentId");
-            if (envId.length == 0)
-                envId = req.headers.get("X-Environment-Id", "");
+            auto envIdParam = req.params.get("environmentId");
+            string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
             auto items = uc.listByEnvironment(envId);
             auto arr = Json.emptyArray;

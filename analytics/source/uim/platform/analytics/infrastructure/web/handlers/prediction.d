@@ -1,10 +1,12 @@
 module uim.platform.analytics.infrastructure.web.handlers.prediction;
 
-import vibe.http.server;
-import vibe.data.json;
-import uim.platform.analytics.app.usecases.predictions;
-import uim.platform.analytics.app.dto.prediction;
-import uim.platform.analytics.infrastructure.web.json_utils;
+// import vibe.http.server;
+// import vibe.data.json;
+// import uim.platform.analytics.app.usecases.predictions;
+// import uim.platform.analytics.app.dto.prediction;
+// import uim.platform.analytics.infrastructure.web.json_utils;
+import uim.platform.analytics;
+
 @safe:
 
 class PredictionHandler {
@@ -20,9 +22,15 @@ class PredictionHandler {
 
     void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto id = extractIdFromPath(req.requestURI, "predictions");
-        if (id.length == 0) { res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest); return; }
+        if (id.length == 0) {
+            res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
+            return;
+        }
         auto item = useCases.getById(id);
-        if (item.id.length == 0) { res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound); return; }
+        if (item.id.length == 0) {
+            res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+            return;
+        }
         res.writeJsonBody(toJsonValue(item));
     }
 
@@ -31,17 +39,16 @@ class PredictionHandler {
             auto json = req.json;
             string[] features;
             if ("featureColumns" in json) {
-                foreach (f; json["featureColumns"])
-                    features ~= f.get!string;
+                features = json["featureColumns"].toArray.map!(f => f.get!string).array;
             }
             auto cmd = CreatePredictionRequest(
-                json["name"].get!string,
-                json["description"].get!string,
-                json["datasetId"].get!string,
-                json["predictionType"].get!string,
-                json["targetColumn"].get!string,
+                json.getString("name"),
+                json.getString("description"),
+                json.getString("datasetId"),
+                json.getString("predictionType"),
+                json.getString("targetColumn"),
                 features,
-                json["userId"].get!string,
+                json.getString("userId")
             );
             res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
         } catch (Exception e) {
@@ -52,7 +59,10 @@ class PredictionHandler {
     void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto id = extractIdFromPath(req.requestURI, "predictions");
         auto result = useCases.train(id);
-        if (result.id.length == 0) { res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound); return; }
+        if (result.id.length == 0) {
+            res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
+            return;
+        }
         res.writeJsonBody(toJsonValue(result));
     }
 
@@ -65,6 +75,7 @@ class PredictionHandler {
 
 private string extractIdFromPath(string uri, string resource) {
     import std.string : split;
+
     auto parts = uri.split("/");
     foreach (i, part; parts)
         if (part == resource && i + 1 < parts.length) {

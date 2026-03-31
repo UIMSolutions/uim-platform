@@ -1,0 +1,34 @@
+module domain.entities.change_log_entry;
+
+import domain.types;
+
+/// A change log entry for tracking master data modifications.
+struct ChangeLogEntry
+{
+    ChangeLogEntryId id;
+    TenantId tenantId;
+    MasterDataObjectId objectId;
+    DataModelId dataModelId;
+    MasterDataCategory category = MasterDataCategory.businessPartner;
+    ChangeType changeType = ChangeType.create_;
+
+    // What changed
+    string objectType;
+    string[] changedFields;
+    string[string] oldValues;
+    string[string] newValues;
+
+    // Source system
+    string sourceSystem;
+    string sourceClient;
+    string changedBy;
+
+    // Version info
+    long fromVersion;
+    long toVersion;
+
+    // Delta token for incremental reads
+    string deltaToken;
+
+    long timestamp;
+}

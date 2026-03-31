@@ -1,7 +1,6 @@
 module uim.platform.analytics.domain.values.common;
 
-import std.uuid;
-import std.datetime;
+import uim.platform.analytics;
 
 @safe:
 /// Strongly-typed identifier wrapping a UUID string.
@@ -23,7 +22,13 @@ struct EntityId {
         return hash;
     }
 
-    bool empty() const { return value.length == 0; }
+    bool empty() const {
+        return value.length == 0;
+    }
+
+    Json toJson() const {
+        return value.toJson;
+    }
 }
 
 /// Audit metadata attached to every domain entity.
@@ -40,6 +45,16 @@ struct AuditInfo {
 
     AuditInfo touch(string userId) const {
         return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
+    }
+
+
+    Json toJson() const {
+        return Json([
+            "createdAt": createdAt.toISOExtString(),
+            "createdBy": createdBy,
+            "updatedAt": updatedAt.toISOExtString(),
+            "updatedBy": updatedBy
+        ]);
     }
 }
 
