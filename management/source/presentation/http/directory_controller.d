@@ -145,7 +145,7 @@ private Json serializeDirectory(ref Directory d)
     j["parentDirectoryId"] = Json(d.parentDirectoryId);
     j["displayName"] = Json(d.displayName);
     j["description"] = Json(d.description);
-    j["status"] = Json(d.status.to!string);
+    j["status"] = Json(enumStr(d.status));
     j["manageEntitlements"] = Json(d.manageEntitlements);
     j["manageAuthorizations"] = Json(d.manageAuthorizations);
     j["createdBy"] = Json(d.createdBy);
@@ -158,4 +158,4 @@ private Json serializeDirectory(ref Directory d)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

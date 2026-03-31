@@ -137,7 +137,7 @@ private Json serializeSubscription(ref Subscription s)
     j["appName"] = Json(s.appName);
     j["appDisplayName"] = Json(s.appDisplayName);
     j["planName"] = Json(s.planName);
-    j["status"] = Json(s.status.to!string);
+    j["status"] = Json(enumStr(s.status));
     j["appUrl"] = Json(s.appUrl);
     j["tenantId"] = Json(s.tenantId);
     j["isSubscriptionDone"] = Json(s.isSubscriptionDone);
@@ -149,4 +149,4 @@ private Json serializeSubscription(ref Subscription s)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

@@ -165,8 +165,8 @@ private Json serializeEntitlement(ref Entitlement e)
     j["serviceName"] = Json(e.serviceName);
     j["planName"] = Json(e.planName);
     j["planDisplayName"] = Json(e.planDisplayName);
-    j["category"] = Json(e.category.to!string);
-    j["status"] = Json(e.status.to!string);
+    j["category"] = Json(enumStr(e.category));
+    j["status"] = Json(enumStr(e.status));
     j["quotaAssigned"] = Json(cast(long) e.quotaAssigned);
     j["quotaUsed"] = Json(cast(long) e.quotaUsed);
     j["quotaRemaining"] = Json(cast(long) e.quotaRemaining);
@@ -178,4 +178,4 @@ private Json serializeEntitlement(ref Entitlement e)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

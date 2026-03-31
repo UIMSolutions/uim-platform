@@ -159,8 +159,8 @@ private Json serializeServicePlan(ref ServicePlan p)
     j["planName"] = Json(p.planName);
     j["planDisplayName"] = Json(p.planDisplayName);
     j["description"] = Json(p.description);
-    j["category"] = Json(p.category.to!string);
-    j["pricingModel"] = Json(p.pricingModel.to!string);
+    j["category"] = Json(enumStr(p.category));
+    j["pricingModel"] = Json(enumStr(p.pricingModel));
     j["isFree"] = Json(p.isFree);
     j["isBeta"] = Json(p.isBeta);
     j["availableRegions"] = serializeStrArray(p.availableRegions);
@@ -175,4 +175,4 @@ private Json serializeServicePlan(ref ServicePlan p)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

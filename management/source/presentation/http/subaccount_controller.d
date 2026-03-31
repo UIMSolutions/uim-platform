@@ -207,8 +207,8 @@ private Json serializeSubaccount(ref Subaccount s)
     j["description"] = Json(s.description);
     j["subdomain"] = Json(s.subdomain);
     j["region"] = Json(s.region);
-    j["status"] = Json(s.status.to!string);
-    j["usage"] = Json(s.usage.to!string);
+    j["status"] = Json(enumStr(s.status));
+    j["usage"] = Json(enumStr(s.usage));
     j["betaEnabled"] = Json(s.betaEnabled);
     j["usedForProduction"] = Json(s.usedForProduction);
     j["tenantId"] = Json(s.tenantId);
@@ -220,4 +220,4 @@ private Json serializeSubaccount(ref Subaccount s)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

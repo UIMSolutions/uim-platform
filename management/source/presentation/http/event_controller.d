@@ -78,8 +78,8 @@ private Json serializeEvent(ref PlatformEvent ev)
     j["globalAccountId"] = Json(ev.globalAccountId);
     j["subaccountId"] = Json(ev.subaccountId);
     j["directoryId"] = Json(ev.directoryId);
-    j["category"] = Json(ev.category.to!string);
-    j["severity"] = Json(ev.severity.to!string);
+    j["category"] = Json(enumStr(ev.category));
+    j["severity"] = Json(enumStr(ev.severity));
     j["eventType"] = Json(ev.eventType);
     j["description"] = Json(ev.description);
     j["resourceId"] = Json(ev.resourceId);
@@ -91,4 +91,4 @@ private Json serializeEvent(ref PlatformEvent ev)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

@@ -1,15 +1,15 @@
 module uim.platform.auditlog.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.auditlog.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_audit_log_repo;
-import infrastructure.persistence.in_memory_retention_repo;
-import infrastructure.persistence.in_memory_audit_config_repo;
-import infrastructure.persistence.in_memory_export_repo;
-import infrastructure.persistence.in_memory_security_event_repo;
-import infrastructure.persistence.in_memory_data_access_repo;
-import infrastructure.persistence.in_memory_config_change_repo;
+import uim.platform.auditlog.infrastructure.persistence.memory.audit_log;
+import uim.platform.auditlog.infrastructure.persistence.memory.retention;
+import uim.platform.auditlog.infrastructure.persistence.memory.audit_config;
+import uim.platform.auditlog.infrastructure.persistence.memory.export_;
+import uim.platform.auditlog.infrastructure.persistence.memory.security_event;
+import uim.platform.auditlog.infrastructure.persistence.memory.data_access;
+import uim.platform.auditlog.infrastructure.persistence.memory.config_change;
 
 // Use Cases
 import uim.platform.auditlog.application.usecases.write_audit_log;

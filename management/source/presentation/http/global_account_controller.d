@@ -180,8 +180,8 @@ private Json serializeGlobalAccount(ref GlobalAccount ga)
     j["displayName"] = Json(ga.displayName);
     j["description"] = Json(ga.description);
     j["contractNumber"] = Json(ga.contractNumber);
-    j["licenseType"] = Json(ga.licenseType.to!string);
-    j["status"] = Json(ga.status.to!string);
+    j["licenseType"] = Json(enumStr(ga.licenseType));
+    j["status"] = Json(enumStr(ga.status));
     j["region"] = Json(ga.region);
     j["costCenter"] = Json(ga.costCenter);
     j["companyName"] = Json(ga.companyName);
@@ -197,4 +197,4 @@ private Json serializeGlobalAccount(ref GlobalAccount ga)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

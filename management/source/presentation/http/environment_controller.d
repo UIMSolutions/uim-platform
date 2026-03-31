@@ -150,8 +150,8 @@ private Json serializeEnvironment(ref EnvironmentInstance inst)
     j["globalAccountId"] = Json(inst.globalAccountId);
     j["name"] = Json(inst.name);
     j["description"] = Json(inst.description);
-    j["environmentType"] = Json(inst.environmentType.to!string);
-    j["status"] = Json(inst.status.to!string);
+    j["environmentType"] = Json(enumStr(inst.environmentType));
+    j["status"] = Json(enumStr(inst.status));
     j["planName"] = Json(inst.planName);
     j["landscapeLabel"] = Json(inst.landscapeLabel);
     j["technicalKey"] = Json(inst.technicalKey);
@@ -167,4 +167,4 @@ private Json serializeEnvironment(ref EnvironmentInstance inst)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }

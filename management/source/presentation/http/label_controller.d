@@ -134,7 +134,7 @@ private Json serializeLabel(ref Label l)
 {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
-    j["resourceType"] = Json(l.resourceType.to!string);
+    j["resourceType"] = Json(enumStr(l.resourceType));
     j["resourceId"] = Json(l.resourceId);
     j["key"] = Json(l.key);
     j["values"] = serializeStrArray(l.values);
@@ -144,4 +144,4 @@ private Json serializeLabel(ref Label l)
     return j;
 }
 
-private string to(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
