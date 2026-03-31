@@ -5,20 +5,19 @@ import std.datetime.systime : Clock;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.buildpack;
-import uim.platform.cloud_foundry.domain.ports.buildpack_repository;
+
+// import uim.platform.cloud_foundry.domain.ports.buildpack;
+import uim.platform.cloud_foundry.domain.ports;
 import uim.platform.cloud_foundry.application.dto;
 
-class ManageBuildpacksUseCase
-{
+class ManageBuildpacksUseCase {
   private BuildpackRepository repo;
 
-  this(BuildpackRepository repo)
-  {
+  this(BuildpackRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createBuildpack(CreateBuildpackRequest req)
-  {
+  CommandResult createBuildpack(CreateBuildpackRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -47,23 +46,19 @@ class ManageBuildpacksUseCase
     return CommandResult(bp.id, "");
   }
 
-  Buildpack* getBuildpack(BuildpackId id, TenantId tenantId)
-  {
+  Buildpack* getBuildpack(BuildpackId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Buildpack[] listBuildpacks(TenantId tenantId)
-  {
+  Buildpack[] listBuildpacks(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Buildpack[] listEnabled(TenantId tenantId)
-  {
+  Buildpack[] listEnabled(TenantId tenantId) {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult updateBuildpack(UpdateBuildpackRequest req)
-  {
+  CommandResult updateBuildpack(UpdateBuildpackRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Buildpack ID is required");
     if (req.tenantId.length == 0)
@@ -74,10 +69,14 @@ class ManageBuildpacksUseCase
       return CommandResult("", "Buildpack not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.position > 0) updated.position = req.position;
-    if (req.stack.length > 0) updated.stack = req.stack;
-    if (req.filename.length > 0) updated.filename = req.filename;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.position > 0)
+      updated.position = req.position;
+    if (req.stack.length > 0)
+      updated.stack = req.stack;
+    if (req.filename.length > 0)
+      updated.filename = req.filename;
     updated.enabled = req.enabled;
     updated.locked = req.locked;
     updated.updatedAt = Clock.currStdTime();
@@ -86,8 +85,7 @@ class ManageBuildpacksUseCase
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteBuildpack(BuildpackId id, TenantId tenantId)
-  {
+  CommandResult deleteBuildpack(BuildpackId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Buildpack not found");

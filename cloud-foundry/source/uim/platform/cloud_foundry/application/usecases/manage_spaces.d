@@ -5,23 +5,22 @@ import std.datetime.systime : Clock;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.space;
-import uim.platform.cloud_foundry.domain.ports.space_repository;
-import uim.platform.cloud_foundry.domain.ports.org_repository;
+
+// import uim.platform.cloud_foundry.domain.ports.space;
+// import uim.platform.cloud_foundry.domain.ports.org;
+import uim.platform.cloud_foundry.domain.ports;
 import uim.platform.cloud_foundry.application.dto;
 
-class ManageSpacesUseCase
-{
+class ManageSpacesUseCase {
   private SpaceRepository repo;
   private OrgRepository orgRepo;
 
-  this(SpaceRepository repo, OrgRepository orgRepo)
-  {
+  this(SpaceRepository repo, OrgRepository orgRepo) {
     this.repo = repo;
     this.orgRepo = orgRepo;
   }
 
-  CommandResult createSpace(CreateSpaceRequest req)
-  {
+  CommandResult createSpace(CreateSpaceRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.orgId.length == 0)
@@ -57,23 +56,19 @@ class ManageSpacesUseCase
     return CommandResult(space.id, "");
   }
 
-  Space* getSpace(SpaceId id, TenantId tenantId)
-  {
+  Space* getSpace(SpaceId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Space[] listSpaces(TenantId tenantId)
-  {
+  Space[] listSpaces(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Space[] listByOrg(OrgId orgId, TenantId tenantId)
-  {
+  Space[] listByOrg(OrgId orgId, TenantId tenantId) {
     return repo.findByOrg(orgId, tenantId);
   }
 
-  CommandResult updateSpace(UpdateSpaceRequest req)
-  {
+  CommandResult updateSpace(UpdateSpaceRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Space ID is required");
     if (req.tenantId.length == 0)
@@ -84,7 +79,8 @@ class ManageSpacesUseCase
       return CommandResult("", "Space not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
+    if (req.name.length > 0)
+      updated.name = req.name;
     updated.status = req.status;
     updated.allowSsh = req.allowSsh;
     updated.updatedAt = Clock.currStdTime();
@@ -93,8 +89,7 @@ class ManageSpacesUseCase
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSpace(SpaceId id, TenantId tenantId)
-  {
+  CommandResult deleteSpace(SpaceId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Space not found");

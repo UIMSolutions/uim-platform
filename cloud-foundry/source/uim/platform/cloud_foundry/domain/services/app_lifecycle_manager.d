@@ -3,9 +3,10 @@ module uim.platform.cloud_foundry.domain.services.app_lifecycle_manager;
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
 import uim.platform.cloud_foundry.domain.entities.organization;
-import uim.platform.cloud_foundry.domain.ports.app_repository;
-import uim.platform.cloud_foundry.domain.ports.org_repository;
-import uim.platform.cloud_foundry.domain.ports.space_repository;
+// import uim.platform.cloud_foundry.domain.ports.repositories.app;
+// import uim.platform.cloud_foundry.domain.ports.repositories.org;
+// import uim.platform.cloud_foundry.domain.ports.repositories.space;
+import uim.platform.cloud_foundry.domain.ports;
 
 import std.datetime.systime : Clock;
 

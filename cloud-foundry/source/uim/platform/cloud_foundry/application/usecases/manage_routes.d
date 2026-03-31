@@ -6,8 +6,9 @@ import std.datetime.systime : Clock;
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.route;
 import uim.platform.cloud_foundry.domain.entities.cf_domain;
-import uim.platform.cloud_foundry.domain.ports.route_repository;
-import uim.platform.cloud_foundry.domain.ports.domain_repository;
+// import uim.platform.cloud_foundry.domain.ports.route;
+// import uim.platform.cloud_foundry.domain.ports.domain;
+import uim.platform.cloud_foundry.domain.ports;
 import uim.platform.cloud_foundry.domain.services.route_resolver;
 import uim.platform.cloud_foundry.application.dto;
 

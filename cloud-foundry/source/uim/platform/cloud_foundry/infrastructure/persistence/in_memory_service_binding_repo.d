@@ -2,7 +2,7 @@ module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_service_b
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.service_binding;
-import uim.platform.cloud_foundry.domain.ports.service_binding_repository;
+import uim.platform.cloud_foundry.domain.ports.service_binding;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,11 +1,10 @@
-module uim.platform.cloud_foundry.domain.ports.buildpack_repository;
+module uim.platform.cloud_foundry.domain.ports.buildpack;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.buildpack;
 
 /// Port for persisting and querying buildpacks.
-interface BuildpackRepository
-{
+interface BuildpackRepository {
   Buildpack[] findByTenant(TenantId tenantId);
   Buildpack* findById(BuildpackId id, TenantId tenantId);
   Buildpack* findByName(TenantId tenantId, string name);

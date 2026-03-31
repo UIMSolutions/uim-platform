@@ -2,7 +2,7 @@ module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_app_repo;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
-import uim.platform.cloud_foundry.domain.ports.app_repository;
+import uim.platform.cloud_foundry.domain.ports.app;
 
 import std.algorithm : filter;
 import std.array : array;

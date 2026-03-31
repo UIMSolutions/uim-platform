@@ -5,8 +5,9 @@ import std.datetime.systime : Clock;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.organization;
-import uim.platform.cloud_foundry.domain.ports.org_repository;
-import uim.platform.cloud_foundry.domain.ports.space_repository;
+// import uim.platform.cloud_foundry.domain.ports.org;
+// import uim.platform.cloud_foundry.domain.ports.space;
+import uim.platform.cloud_foundry.domain.ports;
 import uim.platform.cloud_foundry.application.dto;
 
 class ManageOrgsUseCase

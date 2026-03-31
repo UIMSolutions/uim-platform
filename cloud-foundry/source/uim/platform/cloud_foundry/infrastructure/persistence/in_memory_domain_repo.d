@@ -2,7 +2,7 @@ module uim.platform.cloud_foundry.infrastructure.persistence.in_memory_domain_re
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.cf_domain;
-import uim.platform.cloud_foundry.domain.ports.domain_repository;
+import uim.platform.cloud_foundry.domain.ports.domain;
 
 import std.algorithm : filter;
 import std.array : array;

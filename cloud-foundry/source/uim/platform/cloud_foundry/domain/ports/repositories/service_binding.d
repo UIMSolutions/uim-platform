@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.domain.ports.service_binding_repository;
+module uim.platform.cloud_foundry.domain.ports.service_binding;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.service_binding;

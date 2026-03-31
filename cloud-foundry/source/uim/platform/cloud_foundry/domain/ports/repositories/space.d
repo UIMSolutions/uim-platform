@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.domain.ports.space_repository;
+module uim.platform.cloud_foundry.domain.ports.space;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.space;

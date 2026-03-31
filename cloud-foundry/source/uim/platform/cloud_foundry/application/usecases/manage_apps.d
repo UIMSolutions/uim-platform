@@ -5,7 +5,8 @@ import std.datetime.systime : Clock;
 
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
-import uim.platform.cloud_foundry.domain.ports.app_repository;
+// import uim.platform.cloud_foundry.domain.ports.app;
+import uim.platform.cloud_foundry.domain.ports;
 import uim.platform.cloud_foundry.domain.services.app_lifecycle_manager;
 import uim.platform.cloud_foundry.application.dto;
 
