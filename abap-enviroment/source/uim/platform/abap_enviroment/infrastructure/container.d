@@ -1,16 +1,16 @@
-module infrastructure.container;
+module uim.platform.abap_enviroment.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.abap_enviroment.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_system_instance_repo;
-import infrastructure.persistence.in_memory_software_component_repo;
-import infrastructure.persistence.in_memory_communication_arrangement_repo;
-import infrastructure.persistence.in_memory_service_binding_repo;
-import infrastructure.persistence.in_memory_business_user_repo;
-import infrastructure.persistence.in_memory_business_role_repo;
-import infrastructure.persistence.in_memory_transport_request_repo;
-import infrastructure.persistence.in_memory_application_job_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_system_instance_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_software_component_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_communication_arrangement_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_service_binding_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_business_user_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_business_role_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_transport_request_repo;
+import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_application_job_repo;
 
 // Use Cases
 import application.use_cases.manage_system_instances;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_business_user_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_business_user_repo;
 
 import domain.types;
 import domain.entities.business_user;

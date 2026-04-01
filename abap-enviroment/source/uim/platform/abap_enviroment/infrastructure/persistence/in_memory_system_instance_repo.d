@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_system_instance_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_system_instance_repo;
 
 import domain.types;
 import domain.entities.system_instance;

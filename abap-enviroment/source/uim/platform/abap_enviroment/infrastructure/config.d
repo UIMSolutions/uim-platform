@@ -1,4 +1,4 @@
-module infrastructure.config;
+module uim.platform.abap_enviroment.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig
