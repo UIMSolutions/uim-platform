@@ -111,7 +111,7 @@ class DataSubjectController
             r.sourceSystem = j.getString("sourceSystem");
             r.country = j.getString("country");
             r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
-            r.isActive = jsonBool(j, "isActive", true);
+            r.isActive = j.getBoolean("isActive", true);
 
             auto result = uc.updateSubject(r);
             if (result.isSuccess())

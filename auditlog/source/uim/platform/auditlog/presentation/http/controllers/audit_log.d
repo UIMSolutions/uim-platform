@@ -26,7 +26,7 @@ class AuditLogController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/auditlog", &handleWrite);
         router.get("/api/v1/auditlog", &handleQuery);
         router.get("/api/v1/auditlog/*", &handleGetById);
@@ -88,9 +88,7 @@ class AuditLogController : SAPController {
             queryReq.offset = 0;
 
             auto entries = retrieveUC.query(queryReq);
-            auto arr = Json.emptyArray;
-            foreach (ref e; entries)
-                arr ~= serializeEntry(e);
+            auto arr = entries.map!(e => serializeEntry(e)).array.toJson;
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
@@ -105,11 +103,12 @@ class AuditLogController : SAPController {
         try {
             auto id = extractIdFromPath(req.requestURI);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto entry = retrieveUC.getById(id, tenantId);
-            if (entry is null) {
+            if (!retrieveUC.existsById(id, tenantId)) {
                 writeError(res, 404, "Audit log entry not found");
                 return;
             }
+
+            auto entry = retrieveUC.getById(id, tenantId);
             res.writeJsonBody(serializeEntry(*entry), 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");

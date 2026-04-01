@@ -38,7 +38,7 @@ class RetentionRuleController
             r.purpose = parsePurpose(jsonStr(j, "purpose"));
             r.retentionDays = j.getInteger("retentionDays");
             r.legalReference = j.getString("legalReference");
-            r.isDefault = jsonBool(j, "isDefault");
+            r.isDefault = j.getBoolean("isDefault");
 
             auto result = uc.createRule(r);
             if (result.isSuccess())

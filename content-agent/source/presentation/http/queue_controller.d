@@ -41,7 +41,7 @@ class QueueController
             r.queueType = j.getString("queueType");
             r.endpoint = j.getString("endpoint");
             r.authToken = j.getString("authToken");
-            r.isDefault = jsonBool(j, "isDefault");
+            r.isDefault = j.getBoolean("isDefault");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createQueue(r);
@@ -113,7 +113,7 @@ class QueueController
             r.description = j.getString("description");
             r.endpoint = j.getString("endpoint");
             r.authToken = j.getString("authToken");
-            r.isDefault = jsonBool(j, "isDefault");
+            r.isDefault = j.getBoolean("isDefault");
 
             auto result = uc.updateQueue(id, r);
             if (result.success)

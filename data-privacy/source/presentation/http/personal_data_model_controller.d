@@ -41,7 +41,7 @@ class PersonalDataModelController
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceEntity = j.getString("sourceEntity");
             r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
-            r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
+            r.isSpecialCategory = j.getBoolean("isSpecialCategory");
             r.legalReference = j.getString("legalReference");
 
             auto result = uc.createModel(r);
@@ -136,7 +136,7 @@ class PersonalDataModelController
             r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceEntity = j.getString("sourceEntity");
-            r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
+            r.isSpecialCategory = j.getBoolean("isSpecialCategory");
             r.legalReference = j.getString("legalReference");
 
             auto result = uc.updateModel(r);

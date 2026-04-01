@@ -113,7 +113,7 @@ class CertificateController
             auto j = req.json;
             auto r = UpdateCertificateRequest();
             r.description = j.getString("description");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
 
             auto result = uc.updateCertificate(id, r);
             if (result.success)

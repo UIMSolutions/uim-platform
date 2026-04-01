@@ -112,7 +112,7 @@ class CardController
             r.subtitle = j.getString("subtitle");
             r.description = j.getString("description");
             r.icon = j.getString("icon");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.dataSource = parseDataSource(j);
             r.manifest = parseManifest(j);
 

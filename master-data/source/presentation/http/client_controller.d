@@ -42,9 +42,9 @@ class ClientController
             r.destinationName = j.getString("destinationName");
             r.communicationArrangement = j.getString("communicationArrangement");
             r.supportedCategories = jsonStrArray(j, "supportedCategories");
-            r.supportsInitialLoad = jsonBool(j, "supportsInitialLoad");
-            r.supportsDeltaReplication = jsonBool(j, "supportsDeltaReplication");
-            r.supportsKeyMapping = jsonBool(j, "supportsKeyMapping");
+            r.supportsInitialLoad = j.getBoolean("supportsInitialLoad");
+            r.supportsDeltaReplication = j.getBoolean("supportsDeltaReplication");
+            r.supportsKeyMapping = j.getBoolean("supportsKeyMapping");
             r.authType = j.getString("authType");
             r.clientIdRef = j.getString("clientIdRef");
             r.certificateRef = j.getString("certificateRef");

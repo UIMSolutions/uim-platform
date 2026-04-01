@@ -41,8 +41,8 @@ class SubaccountController
             r.subdomain = j.getString("subdomain");
             r.region = j.getString("region");
             r.usage = j.getString("usage");
-            r.betaEnabled = jsonBool(j, "betaEnabled");
-            r.usedForProduction = jsonBool(j, "usedForProduction");
+            r.betaEnabled = j.getBoolean("betaEnabled");
+            r.usedForProduction = j.getBoolean("usedForProduction");
             r.createdBy = req.headers.get("X-User-Id", "");
             r.labels = jsonStrMap(j, "labels");
             r.customProperties = jsonStrMap(j, "customProperties");
@@ -117,8 +117,8 @@ class SubaccountController
             r.displayName = j.getString("displayName");
             r.description = j.getString("description");
             r.usage = j.getString("usage");
-            r.betaEnabled = jsonBool(j, "betaEnabled");
-            r.usedForProduction = jsonBool(j, "usedForProduction");
+            r.betaEnabled = j.getBoolean("betaEnabled");
+            r.usedForProduction = j.getBoolean("usedForProduction");
             r.labels = jsonStrMap(j, "labels");
             r.customProperties = jsonStrMap(j, "customProperties");
 

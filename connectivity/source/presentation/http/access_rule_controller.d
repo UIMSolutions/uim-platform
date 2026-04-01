@@ -42,7 +42,7 @@ class AccessRuleController
             r.virtualPort = jsonUshort(j, "virtualPort");
             r.urlPathPrefix = j.getString("urlPathPrefix");
             r.policy = j.getString("policy");
-            r.principalPropagation = jsonBool(j, "principalPropagation");
+            r.principalPropagation = j.getBoolean("principalPropagation");
 
             auto result = uc.createRule(r);
             if (result.success)
@@ -113,7 +113,7 @@ class AccessRuleController
             r.description = j.getString("description");
             r.urlPathPrefix = j.getString("urlPathPrefix");
             r.policy = j.getString("policy");
-            r.principalPropagation = jsonBool(j, "principalPropagation");
+            r.principalPropagation = j.getBoolean("principalPropagation");
 
             auto result = uc.updateRule(id, r);
             if (result.success)

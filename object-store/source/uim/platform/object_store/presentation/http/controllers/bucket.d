@@ -40,7 +40,7 @@ class BucketController : SAPController {
       r.name = j.getString("name");
       r.region = j.getString("region");
       r.storageClass = j.getString("storageClass");
-      r.versioningEnabled = jsonBool(j, "versioningEnabled");
+      r.versioningEnabled = j.getBoolean("versioningEnabled");
       r.encryptionType = j.getString("encryptionType");
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");
@@ -90,7 +90,7 @@ class BucketController : SAPController {
         writeError(res, 404, "Bucket not valid");
         return;
       }
-      
+
       res.writeJsonBody(serializeBucket(bucket), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -103,7 +103,7 @@ class BucketController : SAPController {
       auto j = req.json;
       auto r = UpdateBucketRequest();
       r.storageClass = j.getString("storageClass");
-      r.versioningEnabled = jsonBool(j, "versioningEnabled");
+      r.versioningEnabled = j.getBoolean("versioningEnabled");
       r.encryptionType = j.getString("encryptionType");
       r.encryptionKeyId = j.getString("encryptionKeyId");
       r.quotaBytes = jsonLong(j, "quotaBytes");

@@ -23,7 +23,7 @@ class AuditConfigController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/configs", &handleCreate);
     router.get("/api/v1/configs", &handleList);
     router.get("/api/v1/configs/*", &handleGetByTenant);
@@ -37,11 +37,11 @@ class AuditConfigController : SAPController {
       auto request = CreateAuditConfigRequest();
       request.tenantId = req.headers.get("X-Tenant-Id", "");
       request.name = j.getString("name");
-      request.logDataAccess = jsonBool(j, "logDataAccess", true);
-      request.logDataModification = jsonBool(j, "logDataModification", true);
-      request.logSecurityEvents = jsonBool(j, "logSecurityEvents", true);
-      request.logConfigurationChanges = jsonBool(j, "logConfigurationChanges", true);
-      request.enableDataMasking = jsonBool(j, "enableDataMasking");
+      request.logDataAccess = j.getBoolean("logDataAccess", true);
+      request.logDataModification = j.getBoolean("logDataModification", true);
+      request.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
+      request.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
+      request.enableDataMasking = j.getBoolean("enableDataMasking");
       request.maskedFields = jsonStrArray(j, "maskedFields");
       request.excludedServices = jsonStrArray(j, "excludedServices");
 
@@ -106,11 +106,11 @@ class AuditConfigController : SAPController {
       r.id = extractIdFromPath(req.requestURI);
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
-      r.logDataAccess = jsonBool(j, "logDataAccess", true);
-      r.logDataModification = jsonBool(j, "logDataModification", true);
-      r.logSecurityEvents = jsonBool(j, "logSecurityEvents", true);
-      r.logConfigurationChanges = jsonBool(j, "logConfigurationChanges", true);
-      r.enableDataMasking = jsonBool(j, "enableDataMasking");
+      r.logDataAccess = j.getBoolean("logDataAccess", true);
+      r.logDataModification = j.getBoolean("logDataModification", true);
+      r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
+      r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
+      r.enableDataMasking = j.getBoolean("enableDataMasking");
       r.maskedFields = jsonStrArray(j, "maskedFields");
       r.excludedServices = jsonStrArray(j, "excludedServices");
       r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);

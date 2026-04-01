@@ -109,7 +109,7 @@ class FilterRuleController
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.logicOperator = j.getString("logicOperator");
-            r.isActive = jsonBool(j, "isActive", true);
+            r.isActive = j.getBoolean("isActive", true);
             r.conditions = parseConditions(j);
 
             auto result = uc.updateRule(id, r);

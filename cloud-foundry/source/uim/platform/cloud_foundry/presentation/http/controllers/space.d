@@ -38,7 +38,7 @@ class SpaceController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.orgId = j.getString("orgId");
       r.name = j.getString("name");
-      r.allowSsh = jsonBool(j, "allowSsh", true);
+      r.allowSsh = j.getBoolean("allowSsh", true);
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createSpace(r);
@@ -109,7 +109,7 @@ class SpaceController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
-      r.allowSsh = jsonBool(j, "allowSsh", true);
+      r.allowSsh = j.getBoolean("allowSsh", true);
 
       auto result = useCase.updateSpace(r);
       if (result.isSuccess())

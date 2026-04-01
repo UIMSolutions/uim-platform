@@ -46,7 +46,7 @@ class EventSubscriptionController
             r.sinkServiceName = j.getString("sinkServiceName");
             r.sinkServicePort = j.getInteger("sinkServicePort");
             r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
-            r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);
+            r.exactTypeMatching = j.getBoolean("exactTypeMatching", true);
             r.filterAttributes = jsonStrMap(j, "filterAttributes");
             r.labels = jsonStrMap(j, "labels");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -119,7 +119,7 @@ class EventSubscriptionController
             r.sinkServiceName = j.getString("sinkServiceName");
             r.sinkServicePort = j.getInteger("sinkServicePort");
             r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
-            r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);
+            r.exactTypeMatching = j.getBoolean("exactTypeMatching", true);
             r.filterAttributes = jsonStrMap(j, "filterAttributes");
             r.labels = jsonStrMap(j, "labels");
 

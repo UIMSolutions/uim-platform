@@ -115,7 +115,7 @@ class ChannelController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.config = parseChannelConfig(j);
 
             auto result = useCase.updateChannel(r);

@@ -129,7 +129,7 @@ class ContentController
             r.body_ = j.getString("body");
             r.summary = j.getString("summary");
             r.tags = jsonStrArray(j, "tags");
-            r.pinned = jsonBool(j, "pinned");
+            r.pinned = j.getBoolean("pinned");
 
             auto statusStr = j.getString("status");
             if (statusStr == "published") r.status = ContentStatus.published;

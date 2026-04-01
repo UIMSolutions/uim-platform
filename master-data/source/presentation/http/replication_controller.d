@@ -42,7 +42,7 @@ class ReplicationController
             r.categories = jsonStrArray(j, "categories");
             r.sourceClientId = j.getString("sourceClientId");
             r.targetClientIds = jsonStrArray(j, "targetClientIds");
-            r.isInitialLoad = jsonBool(j, "isInitialLoad");
+            r.isInitialLoad = j.getBoolean("isInitialLoad");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);

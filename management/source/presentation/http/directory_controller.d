@@ -36,8 +36,8 @@ class DirectoryController
             r.displayName = j.getString("displayName");
             r.description = j.getString("description");
             r.features = jsonStrArray(j, "features");
-            r.manageEntitlements = jsonBool(j, "manageEntitlements");
-            r.manageAuthorizations = jsonBool(j, "manageAuthorizations");
+            r.manageEntitlements = j.getBoolean("manageEntitlements");
+            r.manageAuthorizations = j.getBoolean("manageAuthorizations");
             r.createdBy = req.headers.get("X-User-Id", "");
             r.labels = jsonStrMap(j, "labels");
             r.customProperties = jsonStrMap(j, "customProperties");

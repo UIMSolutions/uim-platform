@@ -121,7 +121,7 @@ class WidgetController
             r.row = j.getInteger("row");
             r.col = j.getInteger("col");
             r.sortOrder = j.getInteger("sortOrder");
-            r.visible = jsonBool(j, "visible", true);
+            r.visible = j.getBoolean("visible", true);
             r.config = parseWidgetConfig(j);
 
             auto sStr = j.getString("size");

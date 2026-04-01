@@ -113,7 +113,7 @@ class ApplicationJobController
             r.frequency = j.getString("frequency");
             r.scheduledAt = jsonLong(j, "scheduledAt");
             r.cronExpression = j.getString("cronExpression");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
 
             auto result = uc.updateJob(id, r);
             if (result.isSuccess())

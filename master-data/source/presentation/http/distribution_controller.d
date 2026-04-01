@@ -43,7 +43,7 @@ class DistributionController
             r.categories = jsonStrArray(j, "categories");
             r.dataModelIds = jsonStrArray(j, "dataModelIds");
             r.filterRuleIds = jsonStrArray(j, "filterRuleIds");
-            r.autoReplicate = jsonBool(j, "autoReplicate");
+            r.autoReplicate = j.getBoolean("autoReplicate");
             r.cronSchedule = j.getString("cronSchedule");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -115,7 +115,7 @@ class DistributionController
             r.categories = jsonStrArray(j, "categories");
             r.dataModelIds = jsonStrArray(j, "dataModelIds");
             r.filterRuleIds = jsonStrArray(j, "filterRuleIds");
-            r.autoReplicate = jsonBool(j, "autoReplicate");
+            r.autoReplicate = j.getBoolean("autoReplicate");
             r.cronSchedule = j.getString("cronSchedule");
 
             auto result = uc.updateModel(id, r);

@@ -41,9 +41,9 @@ class ApiRuleController
             r.servicePort = j.getInteger("servicePort");
             r.gateway = j.getString("gateway");
             r.host = j.getString("host");
-            r.tlsEnabled = jsonBool(j, "tlsEnabled", true);
+            r.tlsEnabled = j.getBoolean("tlsEnabled", true);
             r.tlsSecretName = j.getString("tlsSecretName");
-            r.corsEnabled = jsonBool(j, "corsEnabled");
+            r.corsEnabled = j.getBoolean("corsEnabled");
             r.corsAllowOrigins = jsonStrArray(j, "corsAllowOrigins");
             r.corsAllowMethods = jsonStrArray(j, "corsAllowMethods");
             r.corsAllowHeaders = jsonStrArray(j, "corsAllowHeaders");
@@ -116,9 +116,9 @@ class ApiRuleController
             r.serviceName = j.getString("serviceName");
             r.servicePort = j.getInteger("servicePort");
             r.host = j.getString("host");
-            r.tlsEnabled = jsonBool(j, "tlsEnabled", true);
+            r.tlsEnabled = j.getBoolean("tlsEnabled", true);
             r.tlsSecretName = j.getString("tlsSecretName");
-            r.corsEnabled = jsonBool(j, "corsEnabled");
+            r.corsEnabled = j.getBoolean("corsEnabled");
             r.corsAllowOrigins = jsonStrArray(j, "corsAllowOrigins");
             r.corsAllowMethods = jsonStrArray(j, "corsAllowMethods");
             r.corsAllowHeaders = jsonStrArray(j, "corsAllowHeaders");

@@ -36,8 +36,8 @@ class ServicePlanController {
             r.description = j.getString("description");
             r.category = j.getString("category");
             r.pricingModel = j.getString("pricingModel");
-            r.isFree = jsonBool(j, "isFree");
-            r.isBeta = jsonBool(j, "isBeta");
+            r.isFree = j.getBoolean("isFree");
+            r.isBeta = j.getBoolean("isBeta");
             r.availableRegions = jsonStrArray(j, "availableRegions");
             r.maxQuota = j.getInteger("maxQuota");
             r.unit = j.getString("unit");
@@ -106,8 +106,8 @@ class ServicePlanController {
             r.description = j.getString("description");
             r.availableRegions = jsonStrArray(j, "availableRegions");
             r.maxQuota = j.getInteger("maxQuota");
-            r.isBeta = jsonBool(j, "isBeta");
-            r.provisionable = jsonBool(j, "provisionable", true);
+            r.isBeta = j.getBoolean("isBeta");
+            r.provisionable = j.getBoolean("provisionable", true);
             r.metadata = jsonStrMap(j, "metadata");
 
             auto result = uc.update(id, r);

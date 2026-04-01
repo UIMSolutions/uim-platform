@@ -122,7 +122,7 @@ class AlertRuleController
             r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
             r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
             r.severity = j.getString("severity");
-            r.isEnabled = jsonBool(j, "isEnabled", true);
+            r.isEnabled = j.getBoolean("isEnabled", true);
             r.channelIds = jsonStrArray(j, "channelIds");
 
             auto result = uc.updateRule(id, r);

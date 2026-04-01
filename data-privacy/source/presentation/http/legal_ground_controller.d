@@ -115,7 +115,7 @@ class LegalGroundController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.description = j.getString("description");
             r.legalReference = j.getString("legalReference");
-            r.isActive = jsonBool(j, "isActive", true);
+            r.isActive = j.getBoolean("isActive", true);
             r.validUntil = jsonLong(j, "validUntil");
 
             auto result = uc.updateGround(r);

@@ -199,7 +199,7 @@ class RouteController
       r.ownerOrgId = j.getString("ownerOrgId");
       r.name = j.getString("name");
       r.scope_ = parseDomainScope(jsonStr(j, "scope"));
-      r.isInternal = jsonBool(j, "isInternal");
+      r.isInternal = j.getBoolean("isInternal");
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createDomain(r);

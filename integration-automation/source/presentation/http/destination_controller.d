@@ -134,7 +134,7 @@ class DestinationController
       r.tokenServiceUser = j.getString("tokenServiceUser");
       r.audience = j.getString("audience");
       r.scope_ = j.getString("scope");
-      r.isEnabled = jsonBool(j, "isEnabled", true);
+      r.isEnabled = j.getBoolean("isEnabled", true);
 
       auto result = useCase.updateDestination(r);
       if (result.isSuccess())

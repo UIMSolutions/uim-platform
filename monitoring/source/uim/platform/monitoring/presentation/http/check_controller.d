@@ -101,7 +101,7 @@ class CheckController {
             auto j = req.json;
             UpdateHealthCheckRequest r;
             r.description = j.getString("description");
-            r.isEnabled = jsonBool(j, "isEnabled", true);
+            r.isEnabled = j.getBoolean("isEnabled", true);
             r.intervalSeconds = j.getInteger("intervalSeconds");
             r.url = j.getString("url");
             r.expectedStatus = j.getString("expectedStatus");

@@ -63,7 +63,7 @@ class VersionController
       r.documentId = j.getString("documentId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.userId = req.headers.get("X-User-Id", "system");
-      r.isMajor = jsonBool(j, "isMajor", true);
+      r.isMajor = j.getBoolean("isMajor", true);
       r.comment = j.getString("comment");
       r.fileName = j.getString("fileName");
       r.mimeType = j.getString("mimeType");

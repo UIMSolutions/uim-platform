@@ -21,7 +21,9 @@ class SecurityEventController : SAPController {
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/security-events", &handleWrite);
     }
 

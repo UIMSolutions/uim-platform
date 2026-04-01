@@ -113,7 +113,7 @@ class MetricDefinitionController
             r.displayName = j.getString("displayName");
             r.description = j.getString("description");
             r.aggregation = j.getString("aggregation");
-            r.isEnabled = jsonBool(j, "isEnabled", true);
+            r.isEnabled = j.getBoolean("isEnabled", true);
 
             auto result = uc.updateDefinition(id, r);
             if (result.success)

@@ -38,7 +38,7 @@ class WorkpageController
             r.title = j.getString("title");
             r.description = j.getString("description");
             r.sortOrder = j.getInteger("sortOrder");
-            r.isDefault = jsonBool(j, "isDefault");
+            r.isDefault = j.getBoolean("isDefault");
 
             auto result = useCase.createWorkpage(r);
             if (result.isSuccess())
@@ -110,7 +110,7 @@ class WorkpageController
             r.title = j.getString("title");
             r.description = j.getString("description");
             r.sortOrder = j.getInteger("sortOrder");
-            r.visible = jsonBool(j, "visible", true);
+            r.visible = j.getBoolean("visible", true);
 
             auto result = useCase.updateWorkpage(r);
             if (result.isSuccess())

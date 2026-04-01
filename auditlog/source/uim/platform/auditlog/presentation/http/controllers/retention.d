@@ -23,7 +23,7 @@ class RetentionController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/retention", &handleCreate);
         router.get("/api/v1/retention", &handleList);
         router.get("/api/v1/retention/*", &handleGet);
@@ -39,7 +39,7 @@ class RetentionController : SAPController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.retentionDays = j.getInteger("retentionDays");
-            r.isDefault = jsonBool(j, "isDefault");
+            r.isDefault = j.getBoolean("isDefault");
             r.categories = parseCategoryArray(j);
 
             auto result = useCase.createPolicy(r);

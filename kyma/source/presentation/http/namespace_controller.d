@@ -42,7 +42,7 @@ class NamespaceController
             r.memoryRequest = j.getString("memoryRequest");
             r.podLimit = j.getInteger("podLimit");
             r.quotaEnforcement = j.getString("quotaEnforcement");
-            r.istioInjection = jsonBool(j, "istioInjection", true);
+            r.istioInjection = j.getBoolean("istioInjection", true);
             r.labels = jsonStrMap(j, "labels");
             r.annotations = jsonStrMap(j, "annotations");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -106,7 +106,7 @@ class NamespaceController
             r.memoryRequest = j.getString("memoryRequest");
             r.podLimit = j.getInteger("podLimit");
             r.quotaEnforcement = j.getString("quotaEnforcement");
-            r.istioInjection = jsonBool(j, "istioInjection", true);
+            r.istioInjection = j.getBoolean("istioInjection", true);
             r.labels = jsonStrMap(j, "labels");
             r.annotations = jsonStrMap(j, "annotations");
 
