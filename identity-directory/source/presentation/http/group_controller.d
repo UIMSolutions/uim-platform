@@ -209,7 +209,7 @@ private GroupMember[] parseMembers(Json j)
 {
     import domain.entities.group : GroupMember;
     GroupMember[] result;
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return result;
     auto val = "members" in j;
     if (val is null || (*val).type != Json.Type.array)

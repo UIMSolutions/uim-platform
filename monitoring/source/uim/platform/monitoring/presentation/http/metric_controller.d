@@ -74,7 +74,7 @@ class MetricController
             {
                 foreach (mj; *metricsVal)
                 {
-                    if (mj.type != Json.Type.object)
+                    if (m!j.isObject)
                         continue;
                     PushMetricRequest r;
                     r.tenantId = tenantId;

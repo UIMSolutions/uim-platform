@@ -6,7 +6,7 @@ import vibe.http.server;
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return "";
     auto v = key in j;
     if (v is null)
@@ -19,7 +19,7 @@ string jsonStr(Json j, string key)
 /// Extract a boolean field from a Json object.
 bool jsonBool(Json j, string key, bool default_ = false)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return default_;
     auto v = key in j;
     if (v is null)
@@ -32,7 +32,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return default_;
     auto v = key in j;
     if (v is null)
@@ -51,7 +51,7 @@ int jsonInt(Json j, string key, int default_ = 0)
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return [];
     auto v = key in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -69,7 +69,7 @@ string[] jsonStrArray(Json j, string key)
 /// Extract a string-to-string map from a Json object.
 string[string] jsonStrMap(Json j, string key)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return (string[string]).init;
     auto v = key in j;
     if (v is null || (*v).type != Json.Type.object)
@@ -126,7 +126,7 @@ Json serializeStrMap(string[string] map)
 /// Extract a Json array of objects (generic).
 Json[] jsonObjArray(Json j, string key)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return [];
     auto v = key in j;
     if (v is null || (*v).type != Json.Type.array)

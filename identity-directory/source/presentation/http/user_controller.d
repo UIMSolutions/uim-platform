@@ -294,7 +294,7 @@ private Json serializeUsers(User[] users)
 
 private UserName parseUserName(Json j)
 {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return UserName.init;
 
     auto nameVal = "name" in j;
@@ -315,7 +315,7 @@ private UserName parseUserName(Json j)
 private Email[] parseEmails(Json j)
 {
     Email[] result;
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return result;
     auto val = "emails" in j;
     if (val is null || (*val).type != Json.Type.array)
@@ -334,7 +334,7 @@ private Email[] parseEmails(Json j)
 private PhoneNumber[] parsePhoneNumbers(Json j)
 {
     PhoneNumber[] result;
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return result;
     auto val = "phoneNumbers" in j;
     if (val is null || (*val).type != Json.Type.array)
@@ -353,7 +353,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j)
 private Address[] parseAddresses(Json j)
 {
     Address[] result;
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return result;
     auto val = "addresses" in j;
     if (val is null || (*val).type != Json.Type.array)

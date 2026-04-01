@@ -8,7 +8,7 @@ import uim.platform.auditlog;
 @safe:
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return "";
     auto v = key in j;
     if (v is null)
@@ -20,7 +20,7 @@ string jsonStr(Json j, string key) {
 
 /// Extract a boolean field from a Json object.
 bool jsonBool(Json j, string key, bool default_ = false) {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return default_;
     auto v = key in j;
     if (v is null)
@@ -32,7 +32,7 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0) {
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return default_;
     auto v = key in j;
     if (v is null)

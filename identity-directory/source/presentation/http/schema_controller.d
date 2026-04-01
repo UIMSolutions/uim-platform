@@ -143,7 +143,7 @@ class SchemaController
 private SchemaAttribute[] parseSchemaAttributes(Json j)
 {
     SchemaAttribute[] result;
-    if (j.type != Json.Type.object)
+    if (!j.isObject)
         return result;
     auto val = "attributes" in j;
     if (val is null || (*val).type != Json.Type.array)
