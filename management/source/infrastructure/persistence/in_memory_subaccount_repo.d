@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_subaccount_repo;
+module infrastructure.persistence.memory.subaccount_repo;
 
 import domain.types;
 import domain.entities.subaccount;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_label_repo;
+module infrastructure.persistence.memory.label_repo;
 
 import domain.types;
 import domain.entities.label;

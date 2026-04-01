@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_subscription_repo;
+module infrastructure.persistence.memory.subscription_repo;
 
 import domain.types;
 import domain.entities.subscription;

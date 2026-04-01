@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_platform_event_repo;
+module infrastructure.persistence.memory.platform_event_repo;
 
 import domain.types;
 import domain.entities.platform_event;

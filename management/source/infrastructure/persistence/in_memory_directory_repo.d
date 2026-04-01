@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_directory_repo;
+module infrastructure.persistence.memory.directory_repo;
 
 import domain.types;
 import domain.entities.directory;

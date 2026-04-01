@@ -3,14 +3,14 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_master_data_object_repo;
-import infrastructure.persistence.in_memory_data_model_repo;
-import infrastructure.persistence.in_memory_distribution_model_repo;
-import infrastructure.persistence.in_memory_key_mapping_repo;
-import infrastructure.persistence.in_memory_change_log_repo;
-import infrastructure.persistence.in_memory_client_repo;
-import infrastructure.persistence.in_memory_replication_job_repo;
-import infrastructure.persistence.in_memory_filter_rule_repo;
+import infrastructure.persistence.memory.master_data_object_repo;
+import infrastructure.persistence.memory.data_model_repo;
+import infrastructure.persistence.memory.distribution_model_repo;
+import infrastructure.persistence.memory.key_mapping_repo;
+import infrastructure.persistence.memory.change_log_repo;
+import infrastructure.persistence.memory.client_repo;
+import infrastructure.persistence.memory.replication_job_repo;
+import infrastructure.persistence.memory.filter_rule_repo;
 
 // Domain services
 import domain.services.key_mapping_resolver;

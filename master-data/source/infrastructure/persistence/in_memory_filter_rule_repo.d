@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_filter_rule_repo;
+module infrastructure.persistence.memory.filter_rule_repo;
 
 import domain.types;
 import domain.entities.filter_rule;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_distribution_model_repo;
+module infrastructure.persistence.memory.distribution_model_repo;
 
 import domain.types;
 import domain.entities.distribution_model;

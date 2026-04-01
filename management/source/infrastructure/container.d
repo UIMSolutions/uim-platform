@@ -3,15 +3,15 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_global_account_repo;
-import infrastructure.persistence.in_memory_directory_repo;
-import infrastructure.persistence.in_memory_subaccount_repo;
-import infrastructure.persistence.in_memory_entitlement_repo;
-import infrastructure.persistence.in_memory_environment_instance_repo;
-import infrastructure.persistence.in_memory_subscription_repo;
-import infrastructure.persistence.in_memory_service_plan_repo;
-import infrastructure.persistence.in_memory_platform_event_repo;
-import infrastructure.persistence.in_memory_label_repo;
+import infrastructure.persistence.memory.global_account_repo;
+import infrastructure.persistence.memory.directory_repo;
+import infrastructure.persistence.memory.subaccount_repo;
+import infrastructure.persistence.memory.entitlement_repo;
+import infrastructure.persistence.memory.environment_instance_repo;
+import infrastructure.persistence.memory.subscription_repo;
+import infrastructure.persistence.memory.service_plan_repo;
+import infrastructure.persistence.memory.platform_event_repo;
+import infrastructure.persistence.memory.label_repo;
 
 // Domain Services
 import domain.services.entitlement_evaluator;

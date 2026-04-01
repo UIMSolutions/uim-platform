@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_environment_instance_repo;
+module infrastructure.persistence.memory.environment_instance_repo;
 
 import domain.types;
 import domain.entities.environment_instance;

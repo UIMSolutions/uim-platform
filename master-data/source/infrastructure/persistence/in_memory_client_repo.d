@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_client_repo;
+module infrastructure.persistence.memory.client_repo;
 
 import domain.types;
 import domain.entities.client;

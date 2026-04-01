@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_replication_job_repo;
+module infrastructure.persistence.memory.replication_job_repo;
 
 import domain.types;
 import domain.entities.replication_job;
