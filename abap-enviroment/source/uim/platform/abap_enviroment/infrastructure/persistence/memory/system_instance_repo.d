@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_system_instance_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.memory.system_instance_repo;
 
 // import uim.platform.abap_enviroment.domain.types;
 // import uim.platform.abap_enviroment.domain.entities.system_instance;
@@ -13,21 +13,21 @@ mixin(ShowModule!());
 class InMemorySystemInstanceRepository : SystemInstanceRepository {
     private SystemInstance[SystemInstanceId] store;
 
-    SystemInstance* findById(SystemInstanceId id) {
-        if (auto p = id in store)
-            return p;
-        return null;
+    SystemInstance findById(SystemInstanceId id) {
+        if (id in store)
+            return store[id];
+        return SystemInstance.init;
     }
 
     SystemInstance[] findByTenant(TenantId tenantId) {
         return store.byValue().filter!(e => e.tenantId == tenantId).array;
     }
 
-    SystemInstance* findByName(TenantId tenantId, string name) {
-        foreach (ref e; store.byValue())
+    SystemInstance findByName(TenantId tenantId, string name) {
+        foreach (e; store.byValue())
             if (e.tenantId == tenantId && e.name == name)
-                return &store[e.id];
-        return null;
+                return e;
+        return SystemInstance.init;
     }
 
     SystemInstance[] findByStatus(TenantId tenantId, SystemStatus status) {

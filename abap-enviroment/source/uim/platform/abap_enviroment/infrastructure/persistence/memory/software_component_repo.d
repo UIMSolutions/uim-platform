@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_software_component_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.memory.software_component_repo;
 
 import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.domain.entities.software_component;

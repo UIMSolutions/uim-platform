@@ -13,17 +13,19 @@ module uim.platform.abap_enviroment.presentation.http.business_user;
 
 import uim.platform.abap_enviroment.presentation.http;
 
-Mixin(ShowModule!());
+mixin(ShowModule!());
 
 @safe:
-class BusinessUserController {
+class BusinessUserController : SAPController {
     private ManageBusinessUsersUseCase uc;
 
     this(ManageBusinessUsersUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/business-users", &handleCreate);
         router.get("/api/v1/business-users", &handleList);
         router.get("/api/v1/business-users/*", &handleGetById);

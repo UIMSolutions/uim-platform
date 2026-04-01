@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_communication_arrangement_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.memory.communication_arrangement_repo;
 
 import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;

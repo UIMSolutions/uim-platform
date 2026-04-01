@@ -1,27 +1,31 @@
 module uim.platform.abap_enviroment.presentation.http.communication_arrangement;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
+// import uim.platform.abap_enviroment.application.dto;
+// import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
+// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
-import uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
-import uim.platform.abap_enviroment.application.dto;
-import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
-import uim.platform.abap_enviroment.domain.types;
-import uim.platform.abap_enviroment.presentation.http.json_utils;
+import uim.platform.abap_enviroment;
 
-class CommunicationArrangementController
-{
+mixin(ShowModule!());
+@safe:
+
+class CommunicationArrangementController : SAPController {
     private ManageCommunicationArrangementsUseCase uc;
 
-    this(ManageCommunicationArrangementsUseCase uc)
-    {
+    this(ManageCommunicationArrangementsUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/communication-arrangements", &handleCreate);
         router.get("/api/v1/communication-arrangements", &handleList);
         router.get("/api/v1/communication-arrangements/*", &handleGetById);
@@ -29,10 +33,8 @@ class CommunicationArrangementController
         router.delete_("/api/v1/communication-arrangements/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateCommunicationArrangementRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -50,27 +52,20 @@ class CommunicationArrangementController
             r.certificateId = j.getString("certificateId");
 
             auto result = uc.createArrangement(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto systemId = req.headers.get("X-System-Id", "");
             auto arrangements = uc.listArrangements(systemId);
             auto arr = Json.emptyArray;
@@ -78,38 +73,29 @@ class CommunicationArrangementController
                 arr ~= serializeArrangement(a);
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) arrangements.length);
+            resp["totalCount"] = Json(cast(long)arrangements.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto arrangement = uc.getArrangement(id);
-            if (arrangement is null)
-            {
+            if (arrangement is null) {
                 writeError(res, 404, "Communication arrangement not found");
                 return;
             }
             res.writeJsonBody(serializeArrangement(*arrangement), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateCommunicationArrangementRequest r;
@@ -123,48 +109,35 @@ class CommunicationArrangementController
             r.tokenEndpoint = j.getString("tokenEndpoint");
 
             auto result = uc.updateArrangement(id, r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("updated");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteArrangement(id);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("deleted");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeArrangement(ref const CommunicationArrangement a)
-    {
+    private static Json serializeArrangement(ref const CommunicationArrangement a) {
         auto j = Json.emptyObject;
         j["id"] = Json(a.id);
         j["tenantId"] = Json(a.tenantId);

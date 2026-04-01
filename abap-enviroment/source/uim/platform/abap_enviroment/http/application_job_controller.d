@@ -1,15 +1,19 @@
 module uim.platform.abap_enviroment.presentation.http.application_job;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
+// import uim.platform.abap_enviroment.application.dto;
+// import uim.platform.abap_enviroment.domain.entities.application_job;
+// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
-import uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
-import uim.platform.abap_enviroment.application.dto;
-import uim.platform.abap_enviroment.domain.entities.application_job;
-import uim.platform.abap_enviroment.domain.types;
-import uim.platform.abap_enviroment.presentation.http.json_utils;
+import uim.platform.abap_enviroment;
+mixin(ShowModule!());
+@safe:
 
 class ApplicationJobController
 {
