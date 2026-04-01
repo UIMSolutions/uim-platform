@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_section_repo;
+module infrastructure.persistence.memory.section_repo;
 
 import domain.entities.section;
 import domain.types;

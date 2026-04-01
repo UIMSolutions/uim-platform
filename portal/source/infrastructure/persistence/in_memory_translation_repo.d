@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_translation_repo;
+module infrastructure.persistence.memory.translation_repo;
 
 import domain.entities.translation;
 import domain.types;

@@ -3,16 +3,16 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_workspace_repo;
-import infrastructure.persistence.in_memory_workpage_repo;
-import infrastructure.persistence.in_memory_card_repo;
-import infrastructure.persistence.in_memory_content_repo;
-import infrastructure.persistence.in_memory_feed_repo;
-import infrastructure.persistence.in_memory_notification_repo;
-import infrastructure.persistence.in_memory_task_repo;
-import infrastructure.persistence.in_memory_channel_repo;
-import infrastructure.persistence.in_memory_app_repo;
-import infrastructure.persistence.in_memory_widget_repo;
+import infrastructure.persistence.memory.workspace_repo;
+import infrastructure.persistence.memory.workpage_repo;
+import infrastructure.persistence.memory.card_repo;
+import infrastructure.persistence.memory.content_repo;
+import infrastructure.persistence.memory.feed_repo;
+import infrastructure.persistence.memory.notification_repo;
+import infrastructure.persistence.memory.task_repo;
+import infrastructure.persistence.memory.channel_repo;
+import infrastructure.persistence.memory.app_repo;
+import infrastructure.persistence.memory.widget_repo;
 
 // Use Cases
 import application.usecases.manage_workspaces;

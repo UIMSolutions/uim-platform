@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_catalog_repo;
+module infrastructure.persistence.memory.catalog_repo;
 
 import domain.entities.catalog;
 import domain.types;

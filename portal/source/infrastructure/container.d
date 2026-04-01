@@ -3,16 +3,16 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_site_repo;
-import infrastructure.persistence.in_memory_page_repo;
-import infrastructure.persistence.in_memory_section_repo;
-import infrastructure.persistence.in_memory_tile_repo;
-import infrastructure.persistence.in_memory_catalog_repo;
-import infrastructure.persistence.in_memory_provider_repo;
-import infrastructure.persistence.in_memory_role_repo;
-import infrastructure.persistence.in_memory_theme_repo;
-import infrastructure.persistence.in_memory_menu_item_repo;
-import infrastructure.persistence.in_memory_translation_repo;
+import infrastructure.persistence.memory.site_repo;
+import infrastructure.persistence.memory.page_repo;
+import infrastructure.persistence.memory.section_repo;
+import infrastructure.persistence.memory.tile_repo;
+import infrastructure.persistence.memory.catalog_repo;
+import infrastructure.persistence.memory.provider_repo;
+import infrastructure.persistence.memory.role_repo;
+import infrastructure.persistence.memory.theme_repo;
+import infrastructure.persistence.memory.menu_item_repo;
+import infrastructure.persistence.memory.translation_repo;
 
 // Use Cases
 import application.usecases.manage_sites;

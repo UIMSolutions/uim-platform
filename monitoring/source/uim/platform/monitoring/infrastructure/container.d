@@ -3,14 +3,14 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_monitored_resource_repo;
-import infrastructure.persistence.in_memory_metric_definition_repo;
-import infrastructure.persistence.in_memory_metric_repo;
-import infrastructure.persistence.in_memory_health_check_repo;
-import infrastructure.persistence.in_memory_health_check_result_repo;
-import infrastructure.persistence.in_memory_alert_rule_repo;
-import infrastructure.persistence.in_memory_alert_repo;
-import infrastructure.persistence.in_memory_notification_channel_repo;
+import infrastructure.persistence.memory.monitored_resource_repo;
+import infrastructure.persistence.memory.metric_definition_repo;
+import infrastructure.persistence.memory.metric_repo;
+import infrastructure.persistence.memory.health_check_repo;
+import infrastructure.persistence.memory.health_check_result_repo;
+import infrastructure.persistence.memory.alert_rule_repo;
+import infrastructure.persistence.memory.alert_repo;
+import infrastructure.persistence.memory.notification_channel_repo;
 
 // Use Cases
 import application.use_cases.manage_monitored_resources;

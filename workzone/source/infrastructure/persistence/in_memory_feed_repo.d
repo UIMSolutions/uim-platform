@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_feed_repo;
+module infrastructure.persistence.memory.feed_repo;
 
 import domain.types;
 import domain.entities.feed_entry;

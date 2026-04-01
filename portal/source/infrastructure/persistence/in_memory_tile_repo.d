@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_tile_repo;
+module infrastructure.persistence.memory.tile_repo;
 
 import domain.entities.tile;
 import domain.types;

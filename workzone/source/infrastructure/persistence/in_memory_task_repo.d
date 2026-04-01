@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_task_repo;
+module infrastructure.persistence.memory.task_repo;
 
 import domain.types;
 import domain.entities.task;

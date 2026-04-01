@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_metric_definition_repo;
+module infrastructure.persistence.memory.metric_definition_repo;
 
 import domain.types;
 import domain.entities.metric_definition;

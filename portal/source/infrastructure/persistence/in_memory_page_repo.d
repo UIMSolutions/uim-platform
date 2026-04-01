@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_page_repo;
+module infrastructure.persistence.memory.page_repo;
 
 import domain.entities.page;
 import domain.types;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_provider_repo;
+module infrastructure.persistence.memory.provider_repo;
 
 import domain.entities.content_provider;
 import domain.types;

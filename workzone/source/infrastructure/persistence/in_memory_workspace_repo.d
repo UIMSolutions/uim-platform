@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_workspace_repo;
+module infrastructure.persistence.memory.workspace_repo;
 
 import domain.types;
 import domain.entities.workspace;

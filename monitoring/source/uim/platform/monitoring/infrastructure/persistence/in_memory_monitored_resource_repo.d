@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_monitored_resource_repo;
+module infrastructure.persistence.memory.monitored_resource_repo;
 
 import domain.types;
 import domain.entities.monitored_resource;

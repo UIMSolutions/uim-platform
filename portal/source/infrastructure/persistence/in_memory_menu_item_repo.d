@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_menu_item_repo;
+module infrastructure.persistence.memory.menu_item_repo;
 
 import domain.entities.menu_item;
 import domain.types;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_role_repo;
+module infrastructure.persistence.memory.role_repo;
 
 import domain.entities.role;
 import domain.types;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_alert_rule_repo;
+module infrastructure.persistence.memory.alert_rule_repo;
 
 import domain.types;
 import domain.entities.alert_rule;

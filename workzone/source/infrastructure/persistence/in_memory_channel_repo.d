@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_channel_repo;
+module infrastructure.persistence.memory.channel_repo;
 
 import domain.types;
 import domain.entities.channel;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_workpage_repo;
+module infrastructure.persistence.memory.workpage_repo;
 
 import domain.types;
 import domain.entities.workpage;

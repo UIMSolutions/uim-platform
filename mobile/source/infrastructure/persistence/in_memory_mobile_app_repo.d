@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_mobile_app_repo;
+module infrastructure.persistence.memory.mobile_app_repo;
 
 import domain.types;
 import domain.entities.mobile_app;
