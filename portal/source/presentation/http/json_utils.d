@@ -90,7 +90,7 @@ long jsonLong(Json j, string key, long default_ = 0)
     if (j.type == Json.Type.object)
     {
         auto val = key in j;
-        if (val !is null && (*val).type == Json.Type.int_)
+        if (val !is null && (*val).isInteger)
             return (*val).get!long;
     }
     return default_;

@@ -38,7 +38,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).type == Json.Type.int_)
+    if ((*v).isInteger)
         return (*v).get!long;
     return default_;
 }
