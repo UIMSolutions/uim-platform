@@ -3,7 +3,7 @@ module application.usecases.manage_documents;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import application.dto;
+import  uim.platform.dms_application.application.dto;
 import  uim.platform.dms_application.domain.entities.document;
 import  uim.platform.dms_application.domain.entities.document_version;
 import  uim.platform.dms_application.domain.ports.document_repository;

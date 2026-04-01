@@ -1,15 +1,13 @@
 module infrastructure.persistence.memory.favorite_repo;
 
-import  uim.platform.dms_application.domain.entities.favorite;
-import  uim.platform.dms_application.domain.ports.favorite_repository;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.entities.favorite;
+import uim.platform.dms_application.domain.ports.favorite_repository;
+import uim.platform.dms_application.domain.types;
 
-class InMemoryFavoriteRepository : IFavoriteRepository
-{
+class InMemoryFavoriteRepository : IFavoriteRepository {
   private Favorite[string] store;
 
-  Favorite[] findByTenant(TenantId tenantId)
-  {
+  Favorite[] findByTenant(TenantId tenantId) {
     Favorite[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -17,16 +15,14 @@ class InMemoryFavoriteRepository : IFavoriteRepository
     return result;
   }
 
-  Favorite findById(FavoriteId id, TenantId tenantId)
-  {
+  Favorite findById(FavoriteId id, TenantId tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Favorite[] findByUser(UserId userId, TenantId tenantId)
-  {
+  Favorite[] findByUser(UserId userId, TenantId tenantId) {
     Favorite[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId)
@@ -34,19 +30,22 @@ class InMemoryFavoriteRepository : IFavoriteRepository
     return result;
   }
 
-  Favorite findByUserAndResource(UserId userId, string resourceId, TenantId tenantId)
-  {
+  Favorite findByUserAndResource(UserId userId, string resourceId, TenantId tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId && e.resourceId == resourceId)
         return e;
     return null;
   }
 
-  void save(Favorite fav) { store[fav.id] = fav; }
-  void remove(FavoriteId id, TenantId tenantId) { store.remove(id); }
+  void save(Favorite fav) {
+    store[fav.id] = fav;
+  }
 
-  void removeByResource(string resourceId, TenantId tenantId)
-  {
+  void remove(FavoriteId id, TenantId tenantId) {
+    store.remove(id);
+  }
+
+  void removeByResource(string resourceId, TenantId tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId)

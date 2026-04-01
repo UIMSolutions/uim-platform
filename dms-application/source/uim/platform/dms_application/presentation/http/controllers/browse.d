@@ -5,8 +5,8 @@ module uim.platform.dms_application.presentation.http.controllers.browse_control
 // import vibe.data.json;
 // import std.conv : to;
 // 
-// import application.usecases.browse_content;
-// import application.dto;
+// import  uim.platform.dms_application.application.usecases.browse_content;
+// import  uim.platform.dms_application.application.dto;
 // import  uim.platform.dms_application.domain.entities.document;
 // import  uim.platform.dms_application.domain.entities.folder;
 // import  uim.platform.dms_application.domain.entities.favorite;

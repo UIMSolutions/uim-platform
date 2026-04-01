@@ -3,7 +3,7 @@ module application.usecases.browse_content;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import application.dto;
+import  uim.platform.dms_application.application.dto;
 import  uim.platform.dms_application.domain.entities.document;
 import  uim.platform.dms_application.domain.entities.folder;
 import  uim.platform.dms_application.domain.entities.favorite;

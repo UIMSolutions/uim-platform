@@ -1,6 +1,6 @@
 module application.usecases.manage_versions;
 
-import application.dto;
+import  uim.platform.dms_application.application.dto;
 import  uim.platform.dms_application.domain.entities.document_version;
 import  uim.platform.dms_application.domain.services.versioning_service;
 import  uim.platform.dms_application.domain.types;
