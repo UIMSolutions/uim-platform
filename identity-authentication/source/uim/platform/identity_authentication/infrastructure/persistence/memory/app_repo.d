@@ -1,9 +1,13 @@
-module uim.platform.identity_authentication.infrastructure.persistence.memory.in_memory_app_repo;
+module uim.platform.identity_authentication.infrastructure.persistence.memory.app_repo;
 
-import uim.platform.identity_authentication.domain.entities.application;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.application;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.application;
 
+import uim.platform.identity_authentication;
+
+mixin(ShowModule!());
+@safe:
 /// In-memory adapter for application/service provider persistence.
 class MemoryApplicationRepository : ApplicationRepository {
     private Application[ApplicationId] store;

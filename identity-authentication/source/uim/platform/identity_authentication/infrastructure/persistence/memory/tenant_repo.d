@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.infrastructure.persistence.memory.tenant;
+module uim.platform.identity_authentication.infrastructure.persistence.memory.tenant_repo;
 
 import uim.platform.identity_authentication.domain.entities.tenant;
 import uim.platform.identity_authentication.domain.types;

@@ -1,13 +1,17 @@
 module uim.platform.identity_authentication.presentation.http.controllers.group;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import uim.platform.identity_authentication.application.usecases.manage_groups;
-import uim.platform.identity_authentication.application.dto;
-import uim.platform.identity_authentication.domain.entities.group;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import uim.platform.identity_authentication.application.usecases.manage_groups;
+// import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.domain.entities.group;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
 
+import uim.platform.identity_authentication;
+
+mixin(ShowModule!());
+@safe:
 /// HTTP controller for group management API.
 class GroupController
 {

@@ -1,13 +1,16 @@
 module uim.platform.identity_authentication.presentation.http.controllers.auth;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import uim.platform.identity_authentication.application.usecases.authenticate_user;
-import uim.platform.identity_authentication.application.usecases.issue_token;
-import uim.platform.identity_authentication.application.dto;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import uim.platform.identity_authentication.application.usecases.authenticate_user;
+// import uim.platform.identity_authentication.application.usecases.issue_token;
+// import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// HTTP controller for authentication endpoints.
 class AuthController
 {

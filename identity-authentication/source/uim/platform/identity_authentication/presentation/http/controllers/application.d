@@ -1,36 +1,34 @@
 module uim.platform.identity_authentication.presentation.http.controllers.application;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import uim.platform.identity_authentication.application.usecases.manage_applications;
-import uim.platform.identity_authentication.application.dto;
-import uim.platform.identity_authentication.domain.entities.application;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import uim.platform.identity_authentication.application.usecases.manage_applications;
+// import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// HTTP controller for application (service provider) management.
-class ApplicationController
-{
+class ApplicationController {
     private ManageApplicationsUseCase useCase;
 
-    this(ManageApplicationsUseCase useCase)
-    {
+    this(ManageApplicationsUseCase useCase) {
         this.useCase = useCase;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/applications", &handleCreate);
         router.get("/api/v1/applications", &handleList);
         router.get("/api/v1/applications/*", &handleGet);
         router.put("/api/v1/applications/*", &handleUpdate);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto createReq = CreateAppRequest(
                 jsonStr(j, "tenantId"),
@@ -46,58 +44,47 @@ class ApplicationController
             auto result = useCase.createApplication(createReq);
             auto response = Json.emptyObject;
 
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 response["applicationId"] = Json(result.applicationId);
                 response["clientId"] = Json(result.clientId);
                 response["clientSecret"] = Json(result.clientSecret);
                 res.writeJsonBody(response, 201);
-            }
-            else
-            {
+            } else {
                 response["error"] = Json(result.error);
                 res.writeJsonBody(response, 400);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto apps = useCase.listApplications(tenantId);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long) apps.length);
+            response["totalResults"] = Json(cast(long)apps.length);
             response["resources"] = toJsonArray(apps);
             res.writeJsonBody(response, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
         }
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             import std.string : lastIndexOf;
+
             auto path = req.requestURI;
             auto idx = path.lastIndexOf('/');
             auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
             auto app = useCase.getApplication(appId);
-            if (app == Application.init)
-            {
+            if (app == Application.init) {
                 auto errRes = Json.emptyObject;
                 errRes["error"] = Json("Application not found");
                 res.writeJsonBody(errRes, 404);
@@ -107,20 +94,17 @@ class ApplicationController
             auto response = toJsonValue(app);
             response.remove("clientSecret"); // Don't expose secret on GET
             res.writeJsonBody(response, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             import std.string : lastIndexOf;
+
             auto path = req.requestURI;
             auto idx = path.lastIndexOf('/');
             auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
@@ -134,21 +118,16 @@ class ApplicationController
             );
 
             auto error = useCase.updateApplication(updateReq);
-            if (error.length > 0)
-            {
+            if (error.length > 0) {
                 auto errRes = Json.emptyObject;
                 errRes["error"] = Json(error);
                 res.writeJsonBody(errRes, 404);
-            }
-            else
-            {
+            } else {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("updated");
                 res.writeJsonBody(resp, 200);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
