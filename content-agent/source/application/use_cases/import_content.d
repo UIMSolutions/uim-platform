@@ -1,4 +1,4 @@
-module application.use_cases.import_content;
+module application.usecases.import_content;
 
 import application.dto;
 import domain.entities.import_job;

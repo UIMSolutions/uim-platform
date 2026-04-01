@@ -1,4 +1,4 @@
-module application.use_cases.manage_transport_requests;
+module application.usecases.manage_transport_requests;
 
 import application.dto;
 import domain.entities.transport_request;

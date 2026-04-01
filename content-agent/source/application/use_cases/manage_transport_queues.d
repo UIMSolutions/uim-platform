@@ -1,4 +1,4 @@
-module application.use_cases.manage_transport_queues;
+module application.usecases.manage_transport_queues;
 
 import application.dto;
 import domain.entities.transport_queue;

@@ -1,4 +1,4 @@
-module application.use_cases.monitor_activities;
+module application.usecases.monitor_activities;
 
 import application.dto;
 import domain.entities.content_activity;

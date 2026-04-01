@@ -12,13 +12,13 @@ import infrastructure.persistence.memory.transport_queue_repo;
 import infrastructure.persistence.memory.content_activity_repo;
 
 // Use Cases
-import application.use_cases.manage_content_packages;
-import application.use_cases.manage_content_providers;
-import application.use_cases.manage_transport_requests;
-import application.use_cases.export_content;
-import application.use_cases.import_content;
-import application.use_cases.manage_transport_queues;
-import application.use_cases.monitor_activities;
+import application.usecases.manage_content_packages;
+import application.usecases.manage_content_providers;
+import application.usecases.manage_transport_requests;
+import application.usecases.export_content;
+import application.usecases.import_content;
+import application.usecases.manage_transport_queues;
+import application.usecases.monitor_activities;
 
 // Controllers
 import presentation.http.package_controller;

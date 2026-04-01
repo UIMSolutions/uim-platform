@@ -1,4 +1,4 @@
-module application.use_cases.manage_content_packages;
+module application.usecases.manage_content_packages;
 
 import application.dto;
 import domain.entities.content_package;
