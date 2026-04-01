@@ -12,8 +12,8 @@ import infrastructure.persistence.memory.permission_repo;
 import infrastructure.persistence.memory.favorite_repo;
 
 // Domain services
-import domain.services.versioning_service;
-import domain.services.access_control_service;
+import  uim.platform.dms_application.domain.services.versioning_service;
+import  uim.platform.dms_application.domain.services.access_control_service;
 
 // Use cases
 import application.usecases.manage_repositories;

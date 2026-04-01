@@ -1,6 +1,6 @@
-module domain.entities.favorite;
+module  uim.platform.dms_application.domain.entities.favorite;
 
-import domain.types;
+import  uim.platform.dms_application.domain.types;
 
 class Favorite
 {

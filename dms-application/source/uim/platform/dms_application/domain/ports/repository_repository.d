@@ -1,7 +1,7 @@
-module domain.ports.repository_repository;
+module  uim.platform.dms_application.domain.ports.repository_repository;
 
-import domain.entities.repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.repository;
+import  uim.platform.dms_application.domain.types;
 
 interface IRepositoryRepository
 {

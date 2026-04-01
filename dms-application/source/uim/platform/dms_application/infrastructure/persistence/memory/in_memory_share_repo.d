@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.share_repo;
 
-import domain.entities.share;
-import domain.ports.share_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.share;
+import  uim.platform.dms_application.domain.ports.share_repository;
+import  uim.platform.dms_application.domain.types;
 
 class InMemoryShareRepository : IShareRepository
 {

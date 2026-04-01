@@ -4,14 +4,14 @@ import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
 import application.dto;
-import domain.entities.document;
-import domain.entities.folder;
-import domain.entities.favorite;
-import domain.ports.document_repository;
-import domain.ports.folder_repository;
-import domain.ports.favorite_repository;
-import domain.ports.repository_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document;
+import  uim.platform.dms_application.domain.entities.folder;
+import  uim.platform.dms_application.domain.entities.favorite;
+import  uim.platform.dms_application.domain.ports.document_repository;
+import  uim.platform.dms_application.domain.ports.folder_repository;
+import  uim.platform.dms_application.domain.ports.favorite_repository;
+import  uim.platform.dms_application.domain.ports.repository_repository;
+import  uim.platform.dms_application.domain.types;
 
 /// Browsing summary for a repository.
 struct RepositorySummary

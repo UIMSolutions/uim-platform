@@ -7,8 +7,8 @@ module uim.platform.dms_application.presentation.http.share;
 // 
 // import application.usecases.manage_shares;
 // import application.dto;
-// import domain.entities.share;
-// import domain.types;
+// import  uim.platform.dms_application.domain.entities.share;
+// import  uim.platform.dms_application.domain.types;
 // import uim.platform.dms_application.presentation.http.json_utils;
 
 import uim.platform.dms_application;
@@ -25,7 +25,7 @@ class ShareController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/shares", &handleCreate);
     router.get("/api/v1/shares", &handleList);
     router.get("/api/v1/shares/*", &handleGetById);

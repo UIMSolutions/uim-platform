@@ -7,10 +7,10 @@ module uim.platform.dms_application.presentation.http.controllers.browse_control
 // 
 // import application.usecases.browse_content;
 // import application.dto;
-// import domain.entities.document;
-// import domain.entities.folder;
-// import domain.entities.favorite;
-// import domain.types;
+// import  uim.platform.dms_application.domain.entities.document;
+// import  uim.platform.dms_application.domain.entities.folder;
+// import  uim.platform.dms_application.domain.entities.favorite;
+// import  uim.platform.dms_application.domain.types;
 // import uim.platform.dms_application.presentation.http.json_utils;
 
 import uim.platform.dms_application;
@@ -27,7 +27,7 @@ class BrowseController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/browse/folder/*", &handleBrowseFolder);
     router.get("/api/v1/browse/repository/*", &handleRepositorySummary);
     router.post("/api/v1/favorites", &handleAddFavorite);

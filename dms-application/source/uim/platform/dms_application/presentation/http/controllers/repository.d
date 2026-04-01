@@ -7,8 +7,8 @@ import std.conv : to;
 
 import application.usecases.manage_repositories;
 import application.dto;
-import domain.entities.repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.repository;
+import  uim.platform.dms_application.domain.types;
 import uim.platform.dms_application.presentation.http.json_utils;
 
 class RepositoryController

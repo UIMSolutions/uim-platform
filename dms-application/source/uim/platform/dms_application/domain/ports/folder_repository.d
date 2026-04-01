@@ -1,7 +1,7 @@
-module domain.ports.folder_repository;
+module  uim.platform.dms_application.domain.ports.folder_repository;
 
-import domain.entities.folder;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.folder;
+import  uim.platform.dms_application.domain.types;
 
 interface IFolderRepository
 {

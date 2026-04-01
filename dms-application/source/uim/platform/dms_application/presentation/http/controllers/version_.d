@@ -7,8 +7,8 @@ module uim.platform.dms_application.presentation.http.controllers.version_;
 // 
 // import application.usecases.manage_versions;
 // import application.dto;
-// import domain.entities.document_version;
-// import domain.types;
+// import  uim.platform.dms_application.domain.entities.document_version;
+// import  uim.platform.dms_application.domain.types;
 // import uim.platform.dms_application.presentation.http.json_utils;
 
 import uim.platform.dms_application;
@@ -24,7 +24,7 @@ class VersionController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/versions/checkout/*", &handleCheckOut);
     router.post("/api/v1/versions/checkin", &handleCheckIn);
     router.post("/api/v1/versions/cancel-checkout/*", &handleCancelCheckOut);

@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.document_version_repo;
 
-import domain.entities.document_version;
-import domain.ports.document_version_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document_version;
+import  uim.platform.dms_application.domain.ports.document_version_repository;
+import  uim.platform.dms_application.domain.types;
 
 class InMemoryDocumentVersionRepository : IDocumentVersionRepository
 {

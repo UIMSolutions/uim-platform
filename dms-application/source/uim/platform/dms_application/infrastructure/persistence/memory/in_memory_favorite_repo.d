@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.favorite_repo;
 
-import domain.entities.favorite;
-import domain.ports.favorite_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.favorite;
+import  uim.platform.dms_application.domain.ports.favorite_repository;
+import  uim.platform.dms_application.domain.types;
 
 class InMemoryFavoriteRepository : IFavoriteRepository
 {

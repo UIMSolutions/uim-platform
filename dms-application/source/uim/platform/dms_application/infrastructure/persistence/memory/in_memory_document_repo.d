@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.document_repo;
 
-import domain.entities.document;
-import domain.ports.document_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document;
+import  uim.platform.dms_application.domain.ports.document_repository;
+import  uim.platform.dms_application.domain.types;
 
 class InMemoryDocumentRepository : IDocumentRepository
 {

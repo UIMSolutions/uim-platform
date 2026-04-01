@@ -1,8 +1,8 @@
-module domain.services.access_control_service;
+module  uim.platform.dms_application.domain.services.access_control_service;
 
-import domain.entities.permission;
-import domain.ports.permission_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.permission;
+import  uim.platform.dms_application.domain.ports.permission_repository;
+import  uim.platform.dms_application.domain.types;
 
 /// Domain service for access control checks.
 class AccessControlService

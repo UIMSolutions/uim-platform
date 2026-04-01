@@ -1,6 +1,6 @@
-module domain.entities.folder;
+module  uim.platform.dms_application.domain.entities.folder;
 
-import domain.types;
+import  uim.platform.dms_application.domain.types;
 
 class Folder
 {

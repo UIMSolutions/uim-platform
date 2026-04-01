@@ -3,7 +3,7 @@ module uim.platform.dms_application.presentation.http.json_utils;
 import vibe.data.json;
 import vibe.http.server;
 
-import domain.types;
+import  uim.platform.dms_application.domain.types;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)

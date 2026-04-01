@@ -7,8 +7,8 @@ import std.conv : to;
 
 import application.usecases.manage_permissions;
 import application.dto;
-import domain.entities.permission;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.permission;
+import  uim.platform.dms_application.domain.types;
 import uim.platform.dms_application.presentation.http.json_utils;
 
 class PermissionController

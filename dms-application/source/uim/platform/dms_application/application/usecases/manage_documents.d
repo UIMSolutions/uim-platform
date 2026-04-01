@@ -4,12 +4,12 @@ import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
 import application.dto;
-import domain.entities.document;
-import domain.entities.document_version;
-import domain.ports.document_repository;
-import domain.ports.document_version_repository;
-import domain.ports.folder_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document;
+import  uim.platform.dms_application.domain.entities.document_version;
+import  uim.platform.dms_application.domain.ports.document_repository;
+import  uim.platform.dms_application.domain.ports.document_version_repository;
+import  uim.platform.dms_application.domain.ports.folder_repository;
+import  uim.platform.dms_application.domain.types;
 
 class ManageDocumentsUseCase
 {

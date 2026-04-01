@@ -1,6 +1,6 @@
-module domain.entities.document;
+module  uim.platform.dms_application.domain.entities.document;
 
-import domain.types;
+import  uim.platform.dms_application.domain.types;
 
 class Document
 {

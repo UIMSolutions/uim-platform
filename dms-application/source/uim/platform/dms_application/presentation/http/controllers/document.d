@@ -7,8 +7,8 @@ import std.conv : to;
 
 import application.usecases.manage_documents;
 import application.dto;
-import domain.entities.document;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document;
+import  uim.platform.dms_application.domain.types;
 import uim.platform.dms_application.presentation.http.json_utils;
 
 class DocumentController

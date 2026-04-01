@@ -1,14 +1,14 @@
-module domain.services.versioning_service;
+module  uim.platform.dms_application.domain.services.versioning_service;
 
 import std.conv : to;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import domain.entities.document;
-import domain.entities.document_version;
-import domain.ports.document_repository;
-import domain.ports.document_version_repository;
-import domain.types;
+import  uim.platform.dms_application.domain.entities.document;
+import  uim.platform.dms_application.domain.entities.document_version;
+import  uim.platform.dms_application.domain.ports.document_repository;
+import  uim.platform.dms_application.domain.ports.document_version_repository;
+import  uim.platform.dms_application.domain.types;
 
 /// Domain service for document version management (checkout/checkin model).
 class VersioningService
