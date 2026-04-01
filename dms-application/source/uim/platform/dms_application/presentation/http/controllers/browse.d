@@ -1,4 +1,4 @@
-module presentation.http.controllers.browse_controller;
+module uim.platform.dms-application.presentation.http.controllers.browse_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,7 +11,7 @@ import domain.entities.document;
 import domain.entities.folder;
 import domain.entities.favorite;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.dms-application.presentation.http.json_utils;
 
 class BrowseController
 {

@@ -1,4 +1,4 @@
-module presentation.http.folder;
+module uim.platform.dms-application.presentation.http.folder;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -9,7 +9,7 @@ import application.usecases.manage_folders;
 import application.dto;
 import domain.entities.folder;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.dms-application.presentation.http.json_utils;
 
 class FolderController
 {
