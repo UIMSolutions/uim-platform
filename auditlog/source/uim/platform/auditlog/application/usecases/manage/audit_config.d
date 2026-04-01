@@ -1,13 +1,15 @@
 module uim.platform.auditlog.application.usecases.manage.audit_config;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
+// 
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.audit_config;
+// import uim.platform.auditlog.domain.ports.audit_config_repository;
+// import uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.audit_config;
-import uim.platform.auditlog.domain.ports.audit_config_repository;
-import uim.platform.auditlog.application.dto;
-
+import uim.platform.auditlog;
+mixin(ShowModule!());
 @safe:
 class ManageAuditConfigUseCase {
     private AuditConfigRepository configRepo;

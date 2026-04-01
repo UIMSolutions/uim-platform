@@ -1,8 +1,10 @@
 module uim.platform.auditlog.domain.ports.config_change_log_repository;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.config_change_log;
+// import uim.platform.auditlog.domain.types;
+// 
+import uim.platform.auditlog;import uim.platform.auditlog.domain.entities.config_change_log;
 
+mixin(ShowModule!());
 /// Port for persisting configuration change log records.
 @safe:
 interface ConfigChangeLogRepository {
@@ -13,7 +15,7 @@ interface ConfigChangeLogRepository {
     ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy);
     ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType);
     ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
-    
+
     void save(ConfigChangeLog log);
     void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

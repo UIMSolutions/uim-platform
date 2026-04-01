@@ -1,15 +1,17 @@
 module uim.platform.auditlog.application.usecases.write.security_event;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
+// 
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.audit_log_entry;
+// import uim.platform.auditlog.domain.entities.security_event;
+// import uim.platform.auditlog.domain.ports.audit_log_repository;
+// import uim.platform.auditlog.domain.ports.security_event_repository;
+// import uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.audit_log_entry;
-import uim.platform.auditlog.domain.entities.security_event;
-import uim.platform.auditlog.domain.ports.audit_log_repository;
-import uim.platform.auditlog.domain.ports.security_event_repository;
-import uim.platform.auditlog.application.dto;
-
+import uim.platform.auditlog;
+mixin(ShowModule!());
 @safe:
 class WriteSecurityEventUseCase {
     private AuditLogRepository auditRepo;
@@ -23,7 +25,7 @@ class WriteSecurityEventUseCase {
     CommandResult writeEvent(WriteSecurityEventRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
-            
+
         if (req.eventType.length == 0)
             return CommandResult("", "Event type is required");
 

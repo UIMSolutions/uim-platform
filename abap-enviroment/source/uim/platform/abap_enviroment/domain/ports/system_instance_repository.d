@@ -4,8 +4,7 @@ import uim.platform.abap_enviroment.domain.entities.system_instance;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - system instance persistence.
-interface SystemInstanceRepository
-{
+interface SystemInstanceRepository {
     SystemInstance* findById(SystemInstanceId id);
     SystemInstance[] findByTenant(TenantId tenantId);
     SystemInstance* findByName(TenantId tenantId, string name);
