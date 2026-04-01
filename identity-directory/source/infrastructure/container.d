@@ -3,12 +3,12 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_user_repo;
-import infrastructure.persistence.in_memory_group_repo;
-import infrastructure.persistence.in_memory_schema_repo;
-import infrastructure.persistence.in_memory_password_policy_repo;
-import infrastructure.persistence.in_memory_api_client_repo;
-import infrastructure.persistence.in_memory_audit_repo;
+import infrastructure.persistence.memory.user_repo;
+import infrastructure.persistence.memory.group_repo;
+import infrastructure.persistence.memory.schema_repo;
+import infrastructure.persistence.memory.password_policy_repo;
+import infrastructure.persistence.memory.api_client_repo;
+import infrastructure.persistence.memory.audit_repo;
 
 // Services
 import infrastructure.security.sha256_password_service;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_schema_repo;
+module infrastructure.persistence.memory.schema_repo;
 
 import domain.entities.schema;
 import domain.types;

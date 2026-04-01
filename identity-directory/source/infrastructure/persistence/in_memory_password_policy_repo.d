@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_password_policy_repo;
+module infrastructure.persistence.memory.password_policy_repo;
 
 import domain.entities.password_policy;
 import domain.types;

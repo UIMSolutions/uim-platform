@@ -3,15 +3,15 @@ module uim.platform.identity_authentication.infrastructure.container;
 import uim.platform.identity_authentication.infrastructure.config;
 
 // Repositories
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_user;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_group;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_tenant;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_app;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_session;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_token;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_policy;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_idp_config;
-import uim.platform.identity_authentication.infrastructure.persistence.in_memory_risk_rule;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.user;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.group;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.tenant;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.app;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.session;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.token;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.policy;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.idp_config;
+import uim.platform.identity_authentication.infrastructure.persistence.memory.risk_rule;
 
 // Services
 import uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;

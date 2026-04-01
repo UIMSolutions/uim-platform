@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.infrastructure.persistence.in_memory_session;
+module uim.platform.identity_authentication.infrastructure.persistence.memory.session;
 
 import uim.platform.identity_authentication.domain.entities.session;
 import uim.platform.identity_authentication.domain.types;

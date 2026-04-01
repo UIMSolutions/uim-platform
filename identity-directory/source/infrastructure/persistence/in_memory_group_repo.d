@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_group_repo;
+module infrastructure.persistence.memory.group_repo;
 
 import domain.entities.group;
 import domain.types;
