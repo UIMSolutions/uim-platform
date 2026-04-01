@@ -1,4 +1,4 @@
-module uim.platform.dms-application.presentation.http.repository;
+module uim.platform.dms_application.presentation.http.repository;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -9,7 +9,7 @@ import application.usecases.manage_repositories;
 import application.dto;
 import domain.entities.repository;
 import domain.types;
-import uim.platform.dms-application.presentation.http.json_utils;
+import uim.platform.dms_application.presentation.http.json_utils;
 
 class RepositoryController
 {

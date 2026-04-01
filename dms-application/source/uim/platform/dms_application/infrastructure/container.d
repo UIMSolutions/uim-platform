@@ -25,14 +25,14 @@ import application.usecases.manage_permissions;
 import application.usecases.browse_content;
 
 // Controllers
-import uim.platform.dms-application.presentation.http.repository;
-import uim.platform.dms-application.presentation.http.folder;
-import uim.platform.dms-application.presentation.http.document;
-import uim.platform.dms-application.presentation.http.version;
-import uim.platform.dms-application.presentation.http.share;
-import uim.platform.dms-application.presentation.http.permission;
-import uim.platform.dms-application.presentation.http.browse;
-import uim.platform.dms-application.presentation.http.health;
+import uim.platform.dms_application.presentation.http.repository;
+import uim.platform.dms_application.presentation.http.folder;
+import uim.platform.dms_application.presentation.http.document;
+import uim.platform.dms_application.presentation.http.version;
+import uim.platform.dms_application.presentation.http.share;
+import uim.platform.dms_application.presentation.http.permission;
+import uim.platform.dms_application.presentation.http.browse;
+import uim.platform.dms_application.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container {

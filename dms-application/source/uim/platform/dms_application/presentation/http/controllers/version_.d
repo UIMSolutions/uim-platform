@@ -1,24 +1,30 @@
-module uim.platform.dms-application.presentation.http.controllers.version_controller;
+module uim.platform.dms_application.presentation.http.controllers.version_;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import application.usecases.manage_versions;
+// import application.dto;
+// import domain.entities.document_version;
+// import domain.types;
+// import uim.platform.dms_application.presentation.http.json_utils;
 
-import application.usecases.manage_versions;
-import application.dto;
-import domain.entities.document_version;
-import domain.types;
-import uim.platform.dms-application.presentation.http.json_utils;
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 
-class VersionController {
+class VersionController : SAPController {
   private ManageVersionsUseCase uc;
 
   this(ManageVersionsUseCase uc) {
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/versions/checkout/*", &handleCheckOut);
     router.post("/api/v1/versions/checkin", &handleCheckIn);
     router.post("/api/v1/versions/cancel-checkout/*", &handleCancelCheckOut);

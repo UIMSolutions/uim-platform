@@ -1,29 +1,33 @@
-module uim.platform.dms-application.presentation.http.controllers.browse_controller;
+module uim.platform.dms_application.presentation.http.controllers.browse_controller;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import application.usecases.browse_content;
+// import application.dto;
+// import domain.entities.document;
+// import domain.entities.folder;
+// import domain.entities.favorite;
+// import domain.types;
+// import uim.platform.dms_application.presentation.http.json_utils;
 
-import application.usecases.browse_content;
-import application.dto;
-import domain.entities.document;
-import domain.entities.folder;
-import domain.entities.favorite;
-import domain.types;
-import uim.platform.dms-application.presentation.http.json_utils;
+import uim.platform.dms_application;
 
-class BrowseController
-{
+mixin(ShowModule!());
+@safe:
+
+class BrowseController : SAPController {
   private BrowseContentUseCase uc;
 
-  this(BrowseContentUseCase uc)
-  {
+  this(BrowseContentUseCase uc) {
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/browse/folder/*", &handleBrowseFolder);
     router.get("/api/v1/browse/repository/*", &handleRepositorySummary);
     router.post("/api/v1/favorites", &handleAddFavorite);
@@ -31,10 +35,8 @@ class BrowseController
     router.delete_("/api/v1/favorites/*", &handleRemoveFavorite);
   }
 
-  private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto folderId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto contents = uc.browseFolderContents(folderId, tenantId);
@@ -50,26 +52,21 @@ class BrowseController
       auto resp = Json.emptyObject;
       resp["subfolders"] = fArr;
       resp["documents"] = dArr;
-      resp["totalSubfolders"] = Json(cast(long) contents.subfolders.length);
-      resp["totalDocuments"] = Json(cast(long) contents.documents.length);
+      resp["totalSubfolders"] = Json(cast(long)contents.subfolders.length);
+      resp["totalDocuments"] = Json(cast(long)contents.documents.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto repoId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getRepositorySummary(repoId, tenantId);
 
-      if (summary.repositoryId.length == 0)
-      {
+      if (summary.repositoryId.length == 0) {
         writeError(res, 404, "Repository not found");
         return;
       }
@@ -81,17 +78,13 @@ class BrowseController
       j["totalFolders"] = Json(summary.totalFolders);
       j["status"] = Json(summary.status.to!string);
       res.writeJsonBody(j, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto r = CreateFavoriteRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -100,25 +93,19 @@ class BrowseController
       r.resourceType = parseResourceType(jsonStr(j, "resourceType"));
 
       auto result = uc.addFavorite(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto userId = req.headers.get("X-User-Id", "system");
       auto items = uc.getFavorites(userId, tenantId);
@@ -129,39 +116,30 @@ class BrowseController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.removeFavorite(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeFolder(ref const Folder f)
-  {
+  private static Json serializeFolder(ref const Folder f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["name"] = Json(f.name);
@@ -170,8 +148,7 @@ class BrowseController
     return j;
   }
 
-  private static Json serializeDoc(ref const Document d)
-  {
+  private static Json serializeDoc(ref const Document d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["name"] = Json(d.name);
@@ -181,8 +158,7 @@ class BrowseController
     return j;
   }
 
-  private static Json serializeFavorite(ref const Favorite f)
-  {
+  private static Json serializeFavorite(ref const Favorite f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["userId"] = Json(f.userId);

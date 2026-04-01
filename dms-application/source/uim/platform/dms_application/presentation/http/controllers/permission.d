@@ -1,4 +1,4 @@
-module uim.platform.dms-application.presentation.http.controllers.permission_controller;
+module uim.platform.dms_application.presentation.http.controllers.permission_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -9,7 +9,7 @@ import application.usecases.manage_permissions;
 import application.dto;
 import domain.entities.permission;
 import domain.types;
-import uim.platform.dms-application.presentation.http.json_utils;
+import uim.platform.dms_application.presentation.http.json_utils;
 
 class PermissionController
 {

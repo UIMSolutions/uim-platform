@@ -1,27 +1,30 @@
-module uim.platform.dms-application.presentation.http.folder;
+module uim.platform.dms_application.presentation.http.folder;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import application.usecases.manage_folders;
+// import application.dto;
+// import domain.entities.folder;
+// import domain.types;
+// import uim.platform.dms_application.presentation.http.json_utils;
 
-import application.usecases.manage_folders;
-import application.dto;
-import domain.entities.folder;
-import domain.types;
-import uim.platform.dms-application.presentation.http.json_utils;
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 
-class FolderController
-{
+class FolderController : SAPController {
   private ManageFoldersUseCase uc;
 
-  this(ManageFoldersUseCase uc)
-  {
+  this(ManageFoldersUseCase uc) {
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/folders", &handleCreate);
     router.get("/api/v1/folders", &handleList);
     router.get("/api/v1/folders/*", &handleGetById);
@@ -31,10 +34,8 @@ class FolderController
     router.get("/api/v1/folders/children/*", &handleListChildren);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto r = CreateFolderRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,25 +46,19 @@ class FolderController
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createFolder(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listFolders(tenantId);
 
@@ -73,39 +68,30 @@ class FolderController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto f = uc.getFolder(id, tenantId);
-      if (f is null)
-      {
+      if (f is null) {
         writeError(res, 404, "Folder not found");
         return;
       }
       res.writeJsonBody(serializeFolder(f), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateFolderRequest();
@@ -115,28 +101,21 @@ class FolderController
       r.description = j.getString("description");
 
       auto result = uc.updateFolder(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Folder not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = MoveFolderRequest();
@@ -145,28 +124,21 @@ class FolderController
       r.newParentFolderId = j.getString("newParentFolderId");
 
       auto result = uc.moveFolder(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Folder not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto parentId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listChildren(parentId, tenantId);
@@ -177,39 +149,30 @@ class FolderController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteFolder(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeFolder(const Folder f)
-  {
+  private static Json serializeFolder(const Folder f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["tenantId"] = Json(f.tenantId);
