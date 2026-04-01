@@ -1,16 +1,19 @@
 module uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.entities.application;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.token_service;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.token_service;
+// 
+// import std.uuid;
+// import std.conv : to;
+// import std.datetime.systime : Clock;
+// import core.time;
+// import std.digest.sha : SHA256, toHexString;
+import uim.platform.identity_authentication;
 
-import std.uuid;
-import std.conv : to;
-import std.datetime.systime : Clock;
-import core.time;
-import std.digest.sha : SHA256, toHexString;
-
+mixin(ShowModule!());
+@safe:
 /// Adapter: JWT-like token generation service.
 /// In production, use proper JWT signing with RS256/ES256.
 class JwtTokenService : TokenService

@@ -25,7 +25,7 @@ class ManageGroupsUseCase {
 
     GroupResponse createGroup(CreateGroupRequest req) {
         auto now = Clock.currStdTime();
-        auto group = Group(
+        auto group = IdaGroup(
             randomUUID().toString(),
             req.tenantId,
             req.name,
@@ -38,11 +38,11 @@ class ManageGroupsUseCase {
         return GroupResponse(group.id, "");
     }
 
-    Group getGroup(GroupId id) {
+    IdaGroup getGroup(GroupId id) {
         return groupRepo.findById(id);
     }
 
-    Group[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100) {
+    IdaGroup[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100) {
         return groupRepo.findByTenant(tenantId, offset, limit);
     }
 
@@ -50,8 +50,8 @@ class ManageGroupsUseCase {
         import uim.platform.identity_authentication.domain.entities.user : User;
 
         auto group = groupRepo.findById(groupId);
-        if (group == Group.init)
-            return "Group not found";
+        if (group == IdaGroup.init)
+            return "IdaGroup not found";
 
         auto user = userRepo.findById(userId);
         if (user == User.init)
@@ -73,8 +73,8 @@ class ManageGroupsUseCase {
 
     string removeMember(GroupId groupId, UserId userId) {
         auto group = groupRepo.findById(groupId);
-        if (group == Group.init)
-            return "Group not found";
+        if (group == IdaGroup.init)
+            return "IdaGroup not found";
 
         string[] updated;
         foreach (mid; group.memberUserIds) {

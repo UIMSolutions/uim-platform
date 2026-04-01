@@ -1,12 +1,14 @@
-module uim.platform.identity_authentication.domain.ports.token_service;
+module uim.platform.identity_authentication.domain.ports.services.token;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.entities.application;
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Port: outgoing — token generation and validation.
-interface TokenService
-{
+interface TokenService {
     /// Generate an access/id/refresh token.
     string generateToken(User user, Application app, TokenType tokenType, string[] scopes);
 

@@ -92,10 +92,10 @@ class GroupController
             auto groupId = idx >= 0 ? path[idx + 1 .. $] : "";
 
             auto group = useCase.getGroup(groupId);
-            if (group == Group.init)
+            if (group == IdaGroup.init)
             {
                 auto errRes = Json.emptyObject;
-                errRes["error"] = Json("Group not found");
+                errRes["error"] = Json("IdaGroup not found");
                 res.writeJsonBody(errRes, 404);
                 return;
             }

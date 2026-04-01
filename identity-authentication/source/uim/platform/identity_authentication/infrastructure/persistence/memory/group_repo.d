@@ -10,16 +10,16 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
 class MemoryGroupRepository : GroupRepository {
-    private Group[GroupId] store;
+    private IdaGroup[GroupId] store;
 
-    Group findById(GroupId id) {
+    IdaGroup findById(GroupId id) {
         if (auto p = id in store)
             return *p;
-        return Group.init;
+        return IdaGroup.init;
     }
 
-    Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-        Group[] result;
+    IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
+        IdaGroup[] result;
         uint idx;
         foreach (g; store.byValue()) {
             if (g.tenantId == tenantId) {
@@ -31,11 +31,11 @@ class MemoryGroupRepository : GroupRepository {
         return result;
     }
 
-    void save(Group group) {
+    void save(IdaGroup group) {
         store[group.id] = group;
     }
 
-    void update(Group group) {
+    void update(IdaGroup group) {
         store[group.id] = group;
     }
 

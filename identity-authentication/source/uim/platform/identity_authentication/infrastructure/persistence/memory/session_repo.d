@@ -12,23 +12,23 @@ mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
 class MemorySessionRepository : SessionRepository {
-    private Session[SessionId] store;
+    private IdaSession[SessionId] store;
 
     bool existsById(SessionId id) {
         return (id in store);
     }
 
-    Session findById(SessionId id) {
+    IdaSession findById(SessionId id) {
         if (existsById(id))
             return store[id];
-        return Session.init;
+        return IdaSession.init;
     }
 
-    Session[] findByUser(UserId userId) {
+    IdaSession[] findByUser(UserId userId) {
         return store.byValue().filter!(s => s.userId == userId).array;
     }
 
-    void save(Session session) {
+    void save(IdaSession session) {
         store[session.id] = session;
     }
 

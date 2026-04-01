@@ -8,7 +8,7 @@ module uim.platform.identity_authentication.presentation.http.controllers.applic
 // import uim.platform.identity_authentication.domain.entities.application;
 // import uim.platform.identity_authentication.domain.types;
 // import uim.platform.identity_authentication.presentation.http.json_utils;
-// import uim.platform.identity_authentication;
+import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 @safe:

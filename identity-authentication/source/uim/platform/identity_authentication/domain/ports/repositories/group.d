@@ -8,9 +8,9 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — group persistence.
 interface GroupRepository {
-    Group findById(GroupId id);
-    Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
-    void save(Group group);
-    void update(Group group);
+    IdaGroup findById(GroupId id);
+    IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+    void save(IdaGroup group);
+    void update(IdaGroup group);
     void remove(GroupId id);
 }

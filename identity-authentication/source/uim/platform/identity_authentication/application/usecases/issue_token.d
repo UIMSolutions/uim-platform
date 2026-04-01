@@ -40,8 +40,8 @@ class IssueTokenUseCase {
     {
         // Validate session
         auto session = sessionRepo.findById(req.sessionId);
-        import uim.platform.identity_authentication.domain.entities.session : Session;
-        if (session == Session.init || session.revoked)
+        import uim.platform.identity_authentication.domain.entities.session : IdaSession;
+        if (session == IdaSession.init || session.revoked)
             return TokenResponse("", "", "", "Invalid session");
 
         auto user = userRepo.findById(session.userId);

@@ -1,8 +1,10 @@
 module uim.platform.identity_authentication.domain.ports.repositories.user;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.types;
-
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
+mixin(ShowModule!());
+@safe:
 /// Port: outgoing — user persistence.
 interface UserRepository {
     User findById(UserId id);

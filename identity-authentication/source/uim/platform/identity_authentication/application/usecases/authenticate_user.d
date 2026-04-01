@@ -71,7 +71,7 @@ class AuthenticateUserUseCase {
 
         // Create session
         auto now = Clock.currStdTime();
-        auto session = Session(
+        auto session = IdaSession(
             randomUUID().toString(),
             user.id,
             req.tenantId,

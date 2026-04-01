@@ -58,7 +58,7 @@ struct UserResponse
     }
 }
 
-/// --- Group DTOs ---
+/// --- IdaGroup DTOs ---
 
 struct CreateGroupRequest
 {
