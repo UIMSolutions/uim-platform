@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_api_rule_repo;
+module infrastructure.persistence.memory.api_rule_repo;
 
 import domain.types;
 import domain.entities.api_rule;

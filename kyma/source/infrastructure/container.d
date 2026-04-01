@@ -3,15 +3,15 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_environment_repo;
-import infrastructure.persistence.in_memory_namespace_repo;
-import infrastructure.persistence.in_memory_function_repo;
-import infrastructure.persistence.in_memory_api_rule_repo;
-import infrastructure.persistence.in_memory_service_instance_repo;
-import infrastructure.persistence.in_memory_service_binding_repo;
-import infrastructure.persistence.in_memory_event_subscription_repo;
-import infrastructure.persistence.in_memory_module_repo;
-import infrastructure.persistence.in_memory_application_repo;
+import infrastructure.persistence.memory.environment_repo;
+import infrastructure.persistence.memory.namespace_repo;
+import infrastructure.persistence.memory.function_repo;
+import infrastructure.persistence.memory.api_rule_repo;
+import infrastructure.persistence.memory.service_instance_repo;
+import infrastructure.persistence.memory.service_binding_repo;
+import infrastructure.persistence.memory.event_subscription_repo;
+import infrastructure.persistence.memory.module_repo;
+import infrastructure.persistence.memory.application_repo;
 
 // Domain services
 import domain.services.module_dependency_resolver;

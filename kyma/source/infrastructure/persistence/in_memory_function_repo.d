@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_function_repo;
+module infrastructure.persistence.memory.function_repo;
 
 import domain.types;
 import domain.entities.serverless_function;

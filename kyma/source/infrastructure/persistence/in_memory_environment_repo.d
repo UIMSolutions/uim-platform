@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_environment_repo;
+module infrastructure.persistence.memory.environment_repo;
 
 import domain.types;
 import domain.entities.kyma_environment;

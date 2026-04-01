@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_event_subscription_repo;
+module infrastructure.persistence.memory.event_subscription_repo;
 
 import domain.types;
 import domain.entities.event_subscription;

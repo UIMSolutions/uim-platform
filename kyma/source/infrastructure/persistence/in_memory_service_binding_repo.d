@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_service_binding_repo;
+module infrastructure.persistence.memory.service_binding_repo;
 
 import domain.types;
 import domain.entities.service_binding;

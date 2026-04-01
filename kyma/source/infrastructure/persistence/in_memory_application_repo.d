@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_application_repo;
+module infrastructure.persistence.memory.application_repo;
 
 import domain.types;
 import domain.entities.application;

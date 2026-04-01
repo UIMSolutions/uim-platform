@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_namespace_repo;
+module infrastructure.persistence.memory.namespace_repo;
 
 import domain.types;
 import domain.entities.namespace;
