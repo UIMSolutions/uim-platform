@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.application_job;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.application_job;
+import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class ApplicationJobController

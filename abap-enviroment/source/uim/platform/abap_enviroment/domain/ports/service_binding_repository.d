@@ -1,7 +1,7 @@
-module domain.ports.service_binding_repository;
+module uim.platform.abap_enviroment.domain.ports.service_binding_repository;
 
-import domain.entities.service_binding;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.service_binding;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - service binding persistence.
 interface ServiceBindingRepository

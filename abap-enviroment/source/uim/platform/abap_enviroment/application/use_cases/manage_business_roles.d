@@ -1,9 +1,9 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_business_roles;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.business_role;
-import domain.ports.business_role_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.business_role;
+import uim.platform.abap_enviroment.domain.ports.business_role_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

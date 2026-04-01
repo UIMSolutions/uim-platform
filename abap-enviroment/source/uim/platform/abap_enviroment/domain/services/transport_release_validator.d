@@ -1,7 +1,7 @@
-module domain.services.transport_release_validator;
+module uim.platform.abap_enviroment.domain.services.transport_release_validator;
 
-import domain.entities.transport_request;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.transport_request;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Validation result for transport operations.
 struct TransportValidation

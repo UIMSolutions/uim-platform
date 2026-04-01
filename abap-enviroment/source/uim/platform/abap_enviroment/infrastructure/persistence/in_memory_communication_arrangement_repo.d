@@ -1,8 +1,8 @@
 module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_communication_arrangement_repo;
 
-import domain.types;
-import domain.entities.communication_arrangement;
-import domain.ports.communication_arrangement_repository;
+import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
+import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
 
 import std.algorithm : filter;
 import std.array : array;

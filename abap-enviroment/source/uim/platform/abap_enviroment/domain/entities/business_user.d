@@ -1,6 +1,6 @@
-module domain.entities.business_user;
+module uim.platform.abap_enviroment.domain.entities.business_user;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Business role assignment carried by a user.
 struct RoleAssignment

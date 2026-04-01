@@ -1,6 +1,6 @@
-module domain.entities.communication_arrangement;
+module uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Inbound/outbound communication endpoint configuration.
 struct CommunicationEndpoint

@@ -1,8 +1,8 @@
 module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_software_component_repo;
 
-import domain.types;
-import domain.entities.software_component;
-import domain.ports.software_component_repository;
+import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment.domain.entities.software_component;
+import uim.platform.abap_enviroment.domain.ports.software_component_repository;
 
 import std.algorithm : filter;
 import std.array : array;

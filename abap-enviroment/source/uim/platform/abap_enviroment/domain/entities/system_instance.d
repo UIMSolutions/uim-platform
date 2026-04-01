@@ -1,6 +1,6 @@
-module domain.entities.system_instance;
+module uim.platform.abap_enviroment.domain.entities.system_instance;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Provisioned ABAP Cloud system instance.
 struct SystemInstance

@@ -1,6 +1,6 @@
-module domain.entities.software_component;
+module uim.platform.abap_enviroment.domain.entities.software_component;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Commit entry in a software component's history.
 struct ComponentCommit

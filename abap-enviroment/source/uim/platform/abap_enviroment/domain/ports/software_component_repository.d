@@ -1,7 +1,7 @@
-module domain.ports.software_component_repository;
+module uim.platform.abap_enviroment.domain.ports.software_component_repository;
 
-import domain.entities.software_component;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.software_component;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - software component persistence.
 interface SoftwareComponentRepository

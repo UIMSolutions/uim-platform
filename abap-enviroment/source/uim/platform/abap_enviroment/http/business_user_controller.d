@@ -7,8 +7,8 @@ module uim.platform.abap_enviroment.presentation.http.business_user;
 // 
 // import uim.platform.abap_enviroment.application.use_cases.manage_business_users;
 // import uim.platform.abap_enviroment.application.dto;
-// import domain.entities.business_user;
-// import domain.types;
+// import uim.platform.abap_enviroment.domain.entities.business_user;
+// import uim.platform.abap_enviroment.domain.types;
 // import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 import uim.platform.abap_enviroment.presentation.http;

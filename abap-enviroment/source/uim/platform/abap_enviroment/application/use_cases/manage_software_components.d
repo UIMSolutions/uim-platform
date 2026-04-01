@@ -1,10 +1,10 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_software_components;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.software_component;
-import domain.ports.software_component_repository;
-import domain.ports.system_instance_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.software_component;
+import uim.platform.abap_enviroment.domain.ports.software_component_repository;
+import uim.platform.abap_enviroment.domain.ports.system_instance_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

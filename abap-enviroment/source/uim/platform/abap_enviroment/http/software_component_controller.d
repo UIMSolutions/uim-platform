@@ -1,27 +1,29 @@
 module uim.platform.abap_enviroment.presentation.http.software_component;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.abap_enviroment.application.use_cases.manage_software_components;
+// import uim.platform.abap_enviroment.application.dto;
+// import uim.platform.abap_enviroment.domain.entities.software_component;
+// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
-import uim.platform.abap_enviroment.application.use_cases.manage_software_components;
-import uim.platform.abap_enviroment.application.dto;
-import domain.entities.software_component;
-import domain.types;
-import uim.platform.abap_enviroment.presentation.http.json_utils;
-
-class SoftwareComponentController
-{
+import uim.platform.abap_enviroment;
+mixin(ShowModule!());
+@safe:
+class SoftwareComponentController : SAPController {
     private ManageSoftwareComponentsUseCase uc;
 
-    this(ManageSoftwareComponentsUseCase uc)
-    {
+    this(ManageSoftwareComponentsUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/software-components", &handleCreate);
         router.get("/api/v1/software-components", &handleList);
         router.get("/api/v1/software-components/*", &handleGetById);
@@ -30,44 +32,35 @@ class SoftwareComponentController
         router.delete_("/api/v1/software-components/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
-            CreateSoftwareComponentRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = j.getString("systemInstanceId");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.componentType = j.getString("componentType");
-            r.repositoryUrl = j.getString("repositoryUrl");
-            r.branch = j.getString("branch");
-            r.branchStrategy = j.getString("branchStrategy");
-            r.namespace = j.getString("namespace");
+            CreateSoftwareComponentRequest request;
+            request.tenantId = req.headers.get("X-Tenant-Id", "");
+            request.systemInstanceId = j.getString("systemInstanceId");
+            request.name = j.getString("name");
+            request.description = j.getString("description");
+            request.componentType = j.getString("componentType");
+            request.repositoryUrl = j.getString("repositoryUrl");
+            request.branch = j.getString("branch");
+            request.branchStrategy = j.getString("branchStrategy");
+            request.namespace = j.getString("namespace");
 
-            auto result = uc.createComponent(r);
-            if (result.isSuccess())
-            {
+            auto result = uc.createComponent(request);
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto systemId = jsonStr(req.json, "systemInstanceId");
             if (systemId.length == 0)
                 systemId = req.headers.get("X-System-Id", "");
@@ -77,38 +70,29 @@ class SoftwareComponentController
                 arr ~= serializeComponent(comp);
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) components.length);
+            resp["totalCount"] = Json(cast(long)components.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto comp = uc.getComponent(id);
-            if (comp is null)
-            {
+            if (comp is null) {
                 writeError(res, 404, "Software component not found");
                 return;
             }
             res.writeJsonBody(serializeComponent(*comp), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             CloneSoftwareComponentRequest r;
@@ -116,75 +100,55 @@ class SoftwareComponentController
             r.commitId = j.getString("commitId");
 
             auto result = uc.cloneComponent(id, r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("cloned");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             PullSoftwareComponentRequest r;
             r.commitId = j.getString("commitId");
 
             auto result = uc.pullComponent(id, r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("pulled");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteComponent(id);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("deleted");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeComponent(ref const SoftwareComponent comp)
-    {
+    private static Json serializeComponent(ref const SoftwareComponent comp) {
         auto j = Json.emptyObject;
         j["id"] = Json(comp.id);
         j["tenantId"] = Json(comp.tenantId);
@@ -203,11 +167,9 @@ class SoftwareComponentController
         j["createdAt"] = Json(comp.createdAt);
         j["updatedAt"] = Json(comp.updatedAt);
 
-        if (comp.commitHistory.length > 0)
-        {
+        if (comp.commitHistory.length > 0) {
             auto hist = Json.emptyArray;
-            foreach (ref c; comp.commitHistory)
-            {
+            foreach (ref c; comp.commitHistory) {
                 auto hj = Json.emptyObject;
                 hj["commitId"] = Json(c.commitId);
                 hj["message"] = Json(c.message);

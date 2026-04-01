@@ -1,9 +1,9 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_service_bindings;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.service_binding;
-import domain.ports.service_binding_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.service_binding;
+import uim.platform.abap_enviroment.domain.ports.service_binding_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

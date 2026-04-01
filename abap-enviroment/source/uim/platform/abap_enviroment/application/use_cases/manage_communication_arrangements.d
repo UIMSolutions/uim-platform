@@ -1,9 +1,9 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.communication_arrangement;
-import domain.ports.communication_arrangement_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
+import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

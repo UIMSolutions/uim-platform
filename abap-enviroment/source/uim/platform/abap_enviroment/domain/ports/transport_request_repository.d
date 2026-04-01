@@ -1,7 +1,7 @@
-module domain.ports.transport_request_repository;
+module uim.platform.abap_enviroment.domain.ports.transport_request_repository;
 
-import domain.entities.transport_request;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.transport_request;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository

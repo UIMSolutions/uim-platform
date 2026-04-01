@@ -1,7 +1,7 @@
-module domain.ports.communication_arrangement_repository;
+module uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
 
-import domain.entities.communication_arrangement;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - communication arrangement persistence.
 interface CommunicationArrangementRepository

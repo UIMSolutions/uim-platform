@@ -1,9 +1,9 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.application_job;
-import domain.ports.application_job_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.application_job;
+import uim.platform.abap_enviroment.domain.ports.application_job_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

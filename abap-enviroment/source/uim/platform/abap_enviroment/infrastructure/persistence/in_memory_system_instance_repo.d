@@ -1,8 +1,8 @@
 module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_system_instance_repo;
 
-import domain.types;
-import domain.entities.system_instance;
-import domain.ports.system_instance_repository;
+import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment.domain.entities.system_instance;
+import uim.platform.abap_enviroment.domain.ports.system_instance_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,11 +1,11 @@
 module uim.platform.abap_enviroment.application.dto;
 
-import domain.types;
-import domain.entities.communication_arrangement : CommunicationEndpoint;
-import domain.entities.service_binding : ExposedEndpoint;
-import domain.entities.business_user : RoleAssignment;
-import domain.entities.business_role : CatalogAssignment;
-import domain.entities.transport_request : TransportTask;
+import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment.domain.entities.communication_arrangement : CommunicationEndpoint;
+import uim.platform.abap_enviroment.domain.entities.service_binding : ExposedEndpoint;
+import uim.platform.abap_enviroment.domain.entities.business_user : RoleAssignment;
+import uim.platform.abap_enviroment.domain.entities.business_role : CatalogAssignment;
+import uim.platform.abap_enviroment.domain.entities.transport_request : TransportTask;
 
 /// --- Command result ---
 

@@ -1,10 +1,10 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_transport_requests;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.transport_request;
-import domain.ports.transport_request_repository;
-import domain.services.transport_release_validator;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.transport_request;
+import uim.platform.abap_enviroment.domain.ports.transport_request_repository;
+import uim.platform.abap_enviroment.domain.services.transport_release_validator;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

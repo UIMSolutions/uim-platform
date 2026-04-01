@@ -1,10 +1,10 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.system_instance;
-import domain.ports.system_instance_repository;
-import domain.services.system_lifecycle_validator;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.system_instance;
+import uim.platform.abap_enviroment.domain.ports.system_instance_repository;
+import uim.platform.abap_enviroment.domain.services.system_lifecycle_validator;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

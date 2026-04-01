@@ -1,7 +1,7 @@
-module domain.ports.system_instance_repository;
+module uim.platform.abap_enviroment.domain.ports.system_instance_repository;
 
-import domain.entities.system_instance;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.system_instance;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - system instance persistence.
 interface SystemInstanceRepository

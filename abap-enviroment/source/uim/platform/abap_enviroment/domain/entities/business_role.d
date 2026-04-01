@@ -1,6 +1,6 @@
-module domain.entities.business_role;
+module uim.platform.abap_enviroment.domain.entities.business_role;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Catalog assignment attached to a role.
 struct CatalogAssignment

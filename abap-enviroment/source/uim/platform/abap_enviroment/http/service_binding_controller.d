@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.abap_enviroment.application.use_cases.manage_service_bindings;
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.service_binding;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.service_binding;
+import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class ServiceBindingController

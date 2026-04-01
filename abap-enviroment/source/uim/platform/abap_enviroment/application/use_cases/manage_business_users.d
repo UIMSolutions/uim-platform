@@ -1,10 +1,10 @@
 module uim.platform.abap_enviroment.application.use_cases.manage_business_users;
 
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.business_user;
-import domain.ports.business_user_repository;
-import domain.ports.business_role_repository;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.business_user;
+import uim.platform.abap_enviroment.domain.ports.business_user_repository;
+import uim.platform.abap_enviroment.domain.ports.business_role_repository;
+import uim.platform.abap_enviroment.domain.types;
 
 import std.conv : to;
 import std.uuid : randomUUID;

@@ -1,8 +1,8 @@
 module uim.platform.abap_enviroment.infrastructure.persistence.in_memory_business_user_repo;
 
-import domain.types;
-import domain.entities.business_user;
-import domain.ports.business_user_repository;
+import uim.platform.abap_enviroment.domain.types;
+import uim.platform.abap_enviroment.domain.entities.business_user;
+import uim.platform.abap_enviroment.domain.ports.business_user_repository;
 
 import std.algorithm : filter;
 import std.array : array;

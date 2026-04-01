@@ -1,24 +1,29 @@
 module uim.platform.abap_enviroment.presentation.http.system_instance;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;^
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;^
+// 
+// import uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
+// import uim.platform.abap_enviroment.application.dto;
+// import uim.platform.abap_enviroment.domain.entities.system_instance;
+// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
-import uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
-import uim.platform.abap_enviroment.application.dto;
-import domain.entities.system_instance;
-import domain.types;
-import uim.platform.abap_enviroment.presentation.http.json_utils;
-
-class SystemInstanceController {
+import uim.platform.abap_enviroment;
+mixin(ShowModule!());
+@safe:
+class SystemInstanceController : SAPController {
     private ManageSystemInstancesUseCase uc;
 
     this(ManageSystemInstancesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/systems", &handleCreate);
         router.get("/api/v1/systems", &handleList);
         router.get("/api/v1/systems/*", &handleGetById);
@@ -29,21 +34,21 @@ class SystemInstanceController {
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             auto j = req.json;
-            CreateSystemInstanceRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.subaccountId = j.getString("subaccountId");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.plan = j.getString("plan");
-            r.region = j.getString("region");
-            r.sapSystemId = j.getString("sapSystemId");
-            r.adminEmail = j.getString("adminEmail");
-            r.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
-            r.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
-            r.softwareVersion = j.getString("softwareVersion");
-            r.stackVersion = j.getString("stackVersion");
+            CreateSystemInstanceRequest request;
+            request.tenantId = req.headers.get("X-Tenant-Id", "");
+            request.subaccountId = j.getString("subaccountId");
+            request.name = j.getString("name");
+            request.description = j.getString("description");
+            request.plan = j.getString("plan");
+            request.region = j.getString("region");
+            request.sapSystemId = j.getString("sapSystemId");
+            request.adminEmail = j.getString("adminEmail");
+            request.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
+            request.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
+            request.softwareVersion = j.getString("softwareVersion");
+            request.stackVersion = j.getString("stackVersion");
 
-            auto result = uc.createInstance(r);
+            auto result = uc.createInstance(request);
             if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);

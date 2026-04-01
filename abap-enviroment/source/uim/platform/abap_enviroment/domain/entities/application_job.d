@@ -1,6 +1,6 @@
-module domain.entities.application_job;
+module uim.platform.abap_enviroment.domain.entities.application_job;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Execution log entry for a job run.
 struct JobExecutionLog

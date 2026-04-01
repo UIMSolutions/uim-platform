@@ -1,6 +1,6 @@
-module domain.entities.transport_request;
+module uim.platform.abap_enviroment.domain.entities.transport_request;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Individual task within a transport request.
 struct TransportTask

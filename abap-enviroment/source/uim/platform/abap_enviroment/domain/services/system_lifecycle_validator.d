@@ -1,6 +1,6 @@
-module domain.services.system_lifecycle_validator;
+module uim.platform.abap_enviroment.domain.services.system_lifecycle_validator;
 
-import domain.types;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Validation result for system lifecycle transitions.
 struct LifecycleValidation

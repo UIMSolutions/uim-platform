@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
 import uim.platform.abap_enviroment.application.dto;
-import domain.entities.communication_arrangement;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
+import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class CommunicationArrangementController

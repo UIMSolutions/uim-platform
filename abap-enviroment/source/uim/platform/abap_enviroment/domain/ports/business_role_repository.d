@@ -1,7 +1,7 @@
-module domain.ports.business_role_repository;
+module uim.platform.abap_enviroment.domain.ports.business_role_repository;
 
-import domain.entities.business_role;
-import domain.types;
+import uim.platform.abap_enviroment.domain.entities.business_role;
+import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - business role persistence.
 interface BusinessRoleRepository
