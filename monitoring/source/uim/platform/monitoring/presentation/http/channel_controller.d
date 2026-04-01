@@ -18,7 +18,7 @@ class ChannelController {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/channels", &handleCreate);
         router.get("/api/v1/channels", &handleList);
         router.get("/api/v1/channels/*", &handleGetById);

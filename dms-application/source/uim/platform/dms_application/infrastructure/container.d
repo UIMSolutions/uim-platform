@@ -1,4 +1,4 @@
-module infrastructure.container;
+module uim.platform.dms_application.infrastructure.container;
 
 // import infrastructure.config;
 // 

@@ -18,7 +18,7 @@ class SchemaController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/scim/Schemas", &handleCreate);
         router.get("/scim/Schemas", &handleList);

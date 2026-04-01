@@ -18,7 +18,7 @@ class MonitoringController
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.get("/api/v1/monitoring/jobs", &handleListJobs);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJob);

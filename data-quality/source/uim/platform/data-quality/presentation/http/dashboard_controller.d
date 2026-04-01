@@ -20,7 +20,7 @@ class DashboardController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/dashboard", &handleCompute);
     }

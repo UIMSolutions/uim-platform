@@ -17,7 +17,7 @@ class FilterRuleController
 
     this(ManageFilterRulesUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/filter-rules", &handleCreate);
         router.get("/api/v1/filter-rules", &handleList);

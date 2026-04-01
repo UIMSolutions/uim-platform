@@ -21,7 +21,7 @@ class RouteController
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     // Routes
     router.post("/api/v1/routes", &handleCreateRoute);

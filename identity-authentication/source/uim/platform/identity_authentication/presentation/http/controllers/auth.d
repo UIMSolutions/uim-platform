@@ -20,7 +20,7 @@ class AuthController
         this.tokenUseCase = tokenUseCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/auth/login", &handleLogin);
         router.post("/api/v1/auth/token", &handleToken);

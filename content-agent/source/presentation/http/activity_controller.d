@@ -19,7 +19,7 @@ class ActivityController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.get("/api/v1/activities", &handleList);
         router.get("/api/v1/activities/summary", &handleSummary);

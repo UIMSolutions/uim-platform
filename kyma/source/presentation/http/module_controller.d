@@ -17,7 +17,7 @@ class ModuleController
 
     this(ManageModulesUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/modules", &handleEnable);
         router.get("/api/v1/modules", &handleList);

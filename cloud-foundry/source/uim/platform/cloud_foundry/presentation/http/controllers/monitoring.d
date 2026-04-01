@@ -18,7 +18,7 @@ class MonitoringController
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.get("/api/v1/monitoring/apps", &handleListAppHealth);
     router.get("/api/v1/monitoring/spaces/*", &handleSpaceUsage);

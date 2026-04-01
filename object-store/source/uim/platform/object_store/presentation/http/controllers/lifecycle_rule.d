@@ -24,7 +24,7 @@ class LifecycleRuleController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/lifecycle-rules", &handleCreate);
         router.get("/api/v1/buckets/*/lifecycle-rules", &handleListByBucket);
         router.get("/api/v1/lifecycle-rules/*", &handleGetById);

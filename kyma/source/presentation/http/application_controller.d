@@ -17,7 +17,7 @@ class ApplicationController
 
     this(ManageApplicationsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/applications", &handleRegister);
         router.get("/api/v1/applications", &handleList);

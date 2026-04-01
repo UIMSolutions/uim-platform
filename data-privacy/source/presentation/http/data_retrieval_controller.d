@@ -17,7 +17,7 @@ class DataRetrievalController
 
     this(ManageDataRetrievalsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/data-retrievals", &handleCreate);
         router.get("/api/v1/data-retrievals", &handleList);

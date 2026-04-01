@@ -26,7 +26,7 @@ class SAPController {
     return true;
   }
 
-  void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router) {
     // Register HTTP routes and handlers here
   }
 }

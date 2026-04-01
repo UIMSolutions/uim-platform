@@ -1,15 +1,16 @@
 module infrastructure.persistence.memory.share_repo;
 
-import uim.platform.dms_application.domain.entities.share;
-import uim.platform.dms_application.domain.ports.share_repository;
-import uim.platform.dms_application.domain.types;
+// import uim.platform.dms_application.domain.entities.share;
+// import uim.platform.dms_application.domain.ports.share_repository;
+// import uim.platform.dms_application.domain.types;
 
-class InMemoryShareRepository : IShareRepository
-{
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
+class InMemoryShareRepository : IShareRepository {
   private Share[string] store;
 
-  Share[] findByTenant(TenantId tenantId)
-  {
+  Share[] findByTenant(TenantId tenantId) {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -17,16 +18,14 @@ class InMemoryShareRepository : IShareRepository
     return result;
   }
 
-  Share findById(ShareId id, TenantId tenantId)
-  {
+  Share findById(ShareId id, TenantId tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Share[] findByDocument(DocumentId documentId, TenantId tenantId)
-  {
+  Share[] findByDocument(DocumentId documentId, TenantId tenantId) {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
@@ -34,8 +33,7 @@ class InMemoryShareRepository : IShareRepository
     return result;
   }
 
-  Share[] findBySharedWith(string sharedWith, TenantId tenantId)
-  {
+  Share[] findBySharedWith(string sharedWith, TenantId tenantId) {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.sharedWith == sharedWith)
@@ -43,8 +41,7 @@ class InMemoryShareRepository : IShareRepository
     return result;
   }
 
-  Share[] findByStatus(ShareStatus status, TenantId tenantId)
-  {
+  Share[] findByStatus(ShareStatus status, TenantId tenantId) {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)
@@ -52,12 +49,19 @@ class InMemoryShareRepository : IShareRepository
     return result;
   }
 
-  void save(Share share) { store[share.id] = share; }
-  void update(Share share) { store[share.id] = share; }
-  void remove(ShareId id, TenantId tenantId) { store.remove(id); }
+  void save(Share share) {
+    store[share.id] = share;
+  }
 
-  void removeByDocument(DocumentId documentId, TenantId tenantId)
-  {
+  void update(Share share) {
+    store[share.id] = share;
+  }
+
+  void remove(ShareId id, TenantId tenantId) {
+    store.remove(id);
+  }
+
+  void removeByDocument(DocumentId documentId, TenantId tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)

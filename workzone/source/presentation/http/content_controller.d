@@ -18,7 +18,7 @@ class ContentController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/content", &handleCreate);
         router.get("/api/v1/content", &handleList);

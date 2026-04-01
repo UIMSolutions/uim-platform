@@ -20,7 +20,7 @@ class SourceSystemController
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.post("/api/v1/source-systems", &handleCreate);
     router.get("/api/v1/source-systems", &handleList);

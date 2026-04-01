@@ -16,7 +16,7 @@ class SubscriptionController
 
     this(ManageSubscriptionsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/subscriptions", &handleSubscribe);
         router.get("/api/v1/subscriptions", &handleList);

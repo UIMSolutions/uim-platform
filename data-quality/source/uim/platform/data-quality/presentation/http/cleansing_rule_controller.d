@@ -18,7 +18,7 @@ class CleansingRuleController {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/cleansing-rules", &handleCreate);
         router.get("/api/v1/cleansing-rules", &handleList);
         router.get("/api/v1/cleansing-rules/*", &handleGetById);

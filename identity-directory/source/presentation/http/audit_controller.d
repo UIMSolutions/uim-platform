@@ -17,7 +17,7 @@ class AuditController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.get("/api/v1/audit-logs", &handleList);
         router.get("/api/v1/audit-logs/actor/*", &handleByActor);

@@ -21,7 +21,7 @@ class DuplicateController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/duplicates/detect", &handleDetect);
         router.post("/api/v1/duplicates/resolve", &handleResolve);

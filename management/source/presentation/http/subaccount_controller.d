@@ -16,7 +16,7 @@ class SubaccountController
 
     this(ManageSubaccountsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/subaccounts", &handleCreate);
         router.get("/api/v1/subaccounts", &handleList);

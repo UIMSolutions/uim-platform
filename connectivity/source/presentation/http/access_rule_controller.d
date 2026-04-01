@@ -19,7 +19,7 @@ class AccessRuleController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/access-rules", &handleCreate);
         router.get("/api/v1/access-rules", &handleList);

@@ -18,7 +18,7 @@ class UserController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/scim/Users", &handleCreate);
         router.get("/scim/Users", &handleList);

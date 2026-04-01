@@ -20,7 +20,7 @@ class WorkflowController
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.post("/api/v1/workflows", &handleCreate);
     router.get("/api/v1/workflows", &handleList);

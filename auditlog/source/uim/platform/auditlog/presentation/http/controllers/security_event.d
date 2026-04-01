@@ -23,7 +23,7 @@ class SecurityEventController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/security-events", &handleWrite);
     }
 

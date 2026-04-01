@@ -20,7 +20,7 @@ class AlertController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.get("/api/v1/alerts", &handleList);
         router.get("/api/v1/alerts/*", &handleGetById);

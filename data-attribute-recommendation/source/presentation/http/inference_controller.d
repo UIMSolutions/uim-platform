@@ -21,7 +21,7 @@ class InferenceController
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.post("/api/v1/inference", &handleSubmit);
     router.get("/api/v1/inference/results/*", &handleGetResult);

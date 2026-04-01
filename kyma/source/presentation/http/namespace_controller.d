@@ -17,7 +17,7 @@ class NamespaceController
 
     this(ManageNamespacesUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/namespaces", &handleCreate);
         router.get("/api/v1/namespaces", &handleList);

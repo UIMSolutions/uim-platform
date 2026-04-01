@@ -20,7 +20,7 @@ class MetricController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/metrics", &handlePush);
         router.post("/api/v1/metrics/batch", &handleBatchPush);

@@ -20,7 +20,7 @@ class StepController
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.get("/api/v1/steps", &handleListByWorkflow);
     router.get("/api/v1/steps/*", &handleGetById);

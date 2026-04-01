@@ -21,7 +21,7 @@ class ServiceController
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     // Service instances
     router.post("/api/v1/service-instances", &handleCreateInstance);

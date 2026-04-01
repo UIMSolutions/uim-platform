@@ -17,7 +17,7 @@ class ReplicationController
 
     this(ManageReplicationJobsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/replication-jobs", &handleCreate);
         router.get("/api/v1/replication-jobs", &handleList);

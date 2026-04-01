@@ -17,7 +17,7 @@ class EventSubscriptionController
 
     this(ManageEventSubscriptionsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/event-subscriptions", &handleCreate);
         router.get("/api/v1/event-subscriptions", &handleList);

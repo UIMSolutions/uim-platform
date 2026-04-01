@@ -20,7 +20,7 @@ class FragmentController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/fragments", &handleCreate);
         router.get("/api/v1/fragments", &handleList);

@@ -20,7 +20,7 @@ class DataRecordController
     this.uc = uc;
   }
 
-  void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
   {
     router.post("/api/v1/data-records", &handleCreate);
     router.get("/api/v1/data-records/*", &handleGetById);

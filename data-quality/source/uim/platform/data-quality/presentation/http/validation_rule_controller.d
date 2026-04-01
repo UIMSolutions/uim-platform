@@ -18,7 +18,7 @@ class ValidationRuleController {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/validation-rules", &handleCreate);
         router.get("/api/v1/validation-rules", &handleList);
         router.get("/api/v1/validation-rules/*", &handleGetById);

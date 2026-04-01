@@ -16,7 +16,7 @@ class EntitlementController
 
     this(ManageEntitlementsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/entitlements", &handleAssign);
         router.get("/api/v1/entitlements", &handleList);

@@ -1,8 +1,12 @@
 module infrastructure.persistence.memory.document_repo;
 
-import uim.platform.dms_application.domain.entities.document;
-import uim.platform.dms_application.domain.ports.document_repository;
-import uim.platform.dms_application.domain.types;
+// import uim.platform.dms_application.domain.entities.document;
+// import uim.platform.dms_application.domain.ports.document_repository;
+// import uim.platform.dms_application.domain.types;
+
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 
 class InMemoryDocumentRepository : IDocumentRepository {
   private Document[string] store;

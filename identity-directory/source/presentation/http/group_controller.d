@@ -18,7 +18,7 @@ class GroupController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/scim/Groups", &handleCreate);
         router.get("/scim/Groups", &handleList);

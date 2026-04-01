@@ -23,7 +23,7 @@ class ServiceBindingController {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/service-bindings", &handleCreate);
         router.get("/api/v1/service-bindings", &handleList);
         router.get("/api/v1/service-bindings/*", &handleGetById);

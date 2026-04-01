@@ -17,7 +17,7 @@ class LegalGroundController
 
     this(ManageLegalGroundsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/legal-grounds", &handleCreate);
         router.get("/api/v1/legal-grounds", &handleList);

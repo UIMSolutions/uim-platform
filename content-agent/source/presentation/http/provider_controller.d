@@ -20,7 +20,7 @@ class ProviderController
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/providers", &handleRegister);
         router.get("/api/v1/providers", &handleList);

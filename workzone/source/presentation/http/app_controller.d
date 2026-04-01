@@ -18,7 +18,7 @@ class AppController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/apps", &handleCreate);
         router.get("/api/v1/apps", &handleList);

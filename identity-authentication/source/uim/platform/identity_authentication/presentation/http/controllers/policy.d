@@ -18,7 +18,7 @@ class PolicyController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/policies", &handleCreate);
         router.get("/api/v1/policies", &handleList);

@@ -17,7 +17,7 @@ class ChangeLogController
 
     this(QueryChangeLogUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.get("/api/v1/change-log", &handleQuery);
         router.get("/api/v1/change-log/*", &handleGetById);

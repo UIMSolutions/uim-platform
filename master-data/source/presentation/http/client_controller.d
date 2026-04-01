@@ -17,7 +17,7 @@ class ClientController
 
     this(ManageClientsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/clients", &handleCreate);
         router.get("/api/v1/clients", &handleList);

@@ -17,7 +17,7 @@ class DeletionController
 
     this(ManageDeletionRequestsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/deletion-requests", &handleCreate);
         router.get("/api/v1/deletion-requests", &handleList);

@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 
 class HealthController {
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
         router.get("/api/v1/health", &handleHealth);
     }
 

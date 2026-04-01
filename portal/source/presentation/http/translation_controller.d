@@ -18,7 +18,7 @@ class TranslationController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/translations", &handleCreate);
         router.get("/api/v1/translations", &handleList);

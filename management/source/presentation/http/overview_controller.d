@@ -14,7 +14,7 @@ class OverviewController
 
     this(GetAccountOverviewUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.get("/api/v1/overview", &handleOverview);
     }

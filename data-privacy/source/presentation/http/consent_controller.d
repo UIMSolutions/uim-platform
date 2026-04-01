@@ -17,7 +17,7 @@ class ConsentController
 
     this(ManageConsentRecordsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/consents", &handleGrant);
         router.get("/api/v1/consents", &handleList);

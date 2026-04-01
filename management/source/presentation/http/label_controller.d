@@ -16,7 +16,7 @@ class LabelController
 
     this(ManageLabelsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/labels", &handleCreate);
         router.get("/api/v1/labels", &handleList);

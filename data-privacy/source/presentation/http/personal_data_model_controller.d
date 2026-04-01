@@ -17,7 +17,7 @@ class PersonalDataModelController
 
     this(ManagePersonalDataModelsUseCase uc) { this.uc = uc; }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/personal-data-models", &handleCreate);
         router.get("/api/v1/personal-data-models", &handleList);

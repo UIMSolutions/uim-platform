@@ -18,7 +18,7 @@ class SectionController
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
+    override void registerRoutes(URLRouter router)
     {
         router.post("/api/v1/sections", &handleCreate);
         router.get("/api/v1/sections", &handleList);
