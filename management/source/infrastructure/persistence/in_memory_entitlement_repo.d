@@ -7,7 +7,7 @@ import domain.ports.entitlement_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryEntitlementRepository : EntitlementRepository
+class MemoryEntitlementRepository : EntitlementRepository
 {
     private Entitlement[EntitlementId] store;
 

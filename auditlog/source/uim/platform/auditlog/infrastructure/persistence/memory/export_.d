@@ -8,7 +8,7 @@ import std.algorithm : filter;
 import std.array : array;
 
 @safe:
-class InMemoryExportJobRepository : ExportJobRepository {
+class MemoryExportJobRepository : ExportJobRepository {
     private ExportJob[ExportJobId] store;
 
     bool existsById(ExportJobId id, TenantId tenantId) {

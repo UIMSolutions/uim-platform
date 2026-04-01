@@ -11,7 +11,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class InMemoryAuditConfigRepository : AuditConfigRepository {
+class MemoryAuditConfigRepository : AuditConfigRepository {
   private AuditConfig[AuditConfigId] store;
 
   AuditConfig[] findAll() {

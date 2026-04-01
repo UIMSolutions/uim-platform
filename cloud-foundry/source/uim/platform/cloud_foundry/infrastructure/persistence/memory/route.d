@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.route;
 import std.algorithm : canFind, filter;
 import std.array : array;
 
-class InMemoryRouteRepository : RouteRepository
+class MemoryRouteRepository : RouteRepository
 {
   private Route[RouteId] store;
 

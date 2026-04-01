@@ -4,7 +4,7 @@ import domain.entities.site;
 import domain.types;
 import domain.ports.site_repository;
 
-class InMemorySiteRepository : SiteRepository
+class MemorySiteRepository : SiteRepository
 {
     private Site[SiteId] store;
 

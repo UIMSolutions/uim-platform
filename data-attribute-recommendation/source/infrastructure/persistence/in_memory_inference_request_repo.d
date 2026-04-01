@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.inference_request;
 import domain.ports.inference_request_repository;
 
-class InMemoryInferenceRequestRepository : InferenceRequestRepository
+class MemoryInferenceRequestRepository : InferenceRequestRepository
 {
   private InferenceRequest[string] store;
 

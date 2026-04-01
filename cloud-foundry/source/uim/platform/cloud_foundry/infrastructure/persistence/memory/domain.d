@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.domain;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDomainRepository : DomainRepository {
+class MemoryDomainRepository : DomainRepository {
   private CfDomain[DomainId] store;
 
   CfDomain[] findByOrg(OrgId orgId, TenantId tenantId) {

@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.risk_rule;
 
 /// In-memory adapter for risk rule persistence.
-class InMemoryRiskRuleRepository : RiskRuleRepository
+class MemoryRiskRuleRepository : RiskRuleRepository
 {
     private RiskRule[string] store;
 

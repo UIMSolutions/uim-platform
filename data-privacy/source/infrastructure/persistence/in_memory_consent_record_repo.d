@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.consent_record;
 import domain.ports.consent_record_repository;
 
-class InMemoryConsentRecordRepository : ConsentRecordRepository
+class MemoryConsentRecordRepository : ConsentRecordRepository
 {
     private ConsentRecord[] store;
 

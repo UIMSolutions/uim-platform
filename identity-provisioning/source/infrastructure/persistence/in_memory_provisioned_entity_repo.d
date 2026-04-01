@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.provisioned_entity;
 import domain.ports.provisioned_entity_repository;
 
-class InMemoryProvisionedEntityRepository : ProvisionedEntityRepository
+class MemoryProvisionedEntityRepository : ProvisionedEntityRepository
 {
   private ProvisionedEntity[string] store;
 

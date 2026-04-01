@@ -11,7 +11,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class InMemorySecurityEventRepository : SecurityEventRepository {
+class MemorySecurityEventRepository : SecurityEventRepository {
   private SecurityEvent[] store;
 
   bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {

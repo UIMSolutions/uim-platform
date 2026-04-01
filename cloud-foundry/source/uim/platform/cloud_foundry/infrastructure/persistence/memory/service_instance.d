@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.service_instance;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryServiceInstanceRepository : ServiceInstanceRepository
+class MemoryServiceInstanceRepository : ServiceInstanceRepository
 {
   private ServiceInstance[ServiceInstanceId] store;
 

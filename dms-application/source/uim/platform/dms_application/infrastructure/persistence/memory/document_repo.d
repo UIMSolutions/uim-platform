@@ -8,7 +8,7 @@ import uim.platform.dms_application;
 mixin(ShowModule!());
 @safe:
 
-class InMemoryDocumentRepository : IDocumentRepository {
+class MemoryDocumentRepository : IDocumentRepository {
   private Document[string] store;
 
   Document[] findByTenant(TenantId tenantId) {

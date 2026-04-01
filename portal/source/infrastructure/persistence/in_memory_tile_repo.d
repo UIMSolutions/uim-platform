@@ -6,7 +6,7 @@ import domain.ports.tile_repository;
 
 import std.string : toLower, indexOf;
 
-class InMemoryTileRepository : TileRepository
+class MemoryTileRepository : TileRepository
 {
     private Tile[TileId] store;
 

@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryLifecycleRuleRepository : LifecycleRuleRepository
+class MemoryLifecycleRuleRepository : LifecycleRuleRepository
 {
     private LifecycleRule[LifecycleRuleId] store;
 

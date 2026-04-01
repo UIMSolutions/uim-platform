@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.service_binding;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryServiceBindingRepository : ServiceBindingRepository {
+class MemoryServiceBindingRepository : ServiceBindingRepository {
     private ServiceBinding[ServiceBindingId] store;
 
     ServiceBinding findById(ServiceBindingId id) {

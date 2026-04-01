@@ -7,7 +7,7 @@ import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repos
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCommunicationArrangementRepository : CommunicationArrangementRepository
+class MemoryCommunicationArrangementRepository : CommunicationArrangementRepository
 {
     private CommunicationArrangement[CommunicationArrangementId] store;
 

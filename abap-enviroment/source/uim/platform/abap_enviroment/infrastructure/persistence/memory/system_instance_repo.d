@@ -10,7 +10,7 @@ import uim.platform.abap_enviroment;
 
 mixin(ShowModule!());
 @safe:
-class InMemorySystemInstanceRepository : SystemInstanceRepository {
+class MemorySystemInstanceRepository : SystemInstanceRepository {
     private SystemInstance[SystemInstanceId] store;
 
     SystemInstance findById(SystemInstanceId id) {

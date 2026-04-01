@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.data_record;
 import domain.ports.data_record_repository;
 
-class InMemoryDataRecordRepository : DataRecordRepository
+class MemoryDataRecordRepository : DataRecordRepository
 {
   private DataRecord[string] store;
 

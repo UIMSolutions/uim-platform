@@ -8,7 +8,7 @@ import std.algorithm : filter;
 import std.array : array;
 
 @safe:
-class InMemoryConfigChangeLogRepository : ConfigChangeLogRepository {
+class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
     private ConfigChangeLog[] store;
 
     bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {

@@ -11,7 +11,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class InMemoryRetentionPolicyRepository : RetentionPolicyRepository {
+class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
     private RetentionPolicy[RetentionPolicyId] store;
 
     bool existsById(RetentionPolicyId id, TenantId tenantId) {

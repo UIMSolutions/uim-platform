@@ -7,7 +7,7 @@ import domain.ports.platform_event_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryPlatformEventRepository : PlatformEventRepository
+class MemoryPlatformEventRepository : PlatformEventRepository
 {
     private PlatformEvent[PlatformEventId] store;
 

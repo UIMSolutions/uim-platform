@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.application;
 
 /// In-memory adapter for application/service provider persistence.
-class InMemoryApplicationRepository : ApplicationRepository {
+class MemoryApplicationRepository : ApplicationRepository {
     private Application[ApplicationId] store;
 
     Application findById(ApplicationId id) {

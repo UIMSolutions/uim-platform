@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.transformation;
 import domain.ports.transformation_repository;
 
-class InMemoryTransformationRepository : TransformationRepository
+class MemoryTransformationRepository : TransformationRepository
 {
   private Transformation[string] store;
 

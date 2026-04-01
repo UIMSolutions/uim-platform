@@ -7,7 +7,7 @@ import uim.platform.identity_authentication.domain.ports.idp_config;
 import std.algorithm : canFind;
 
 /// In-memory adapter for external IdP configuration persistence.
-class InMemoryIdpConfigRepository : IdpConfigRepository
+class MemoryIdpConfigRepository : IdpConfigRepository
 {
     private IdpConfig[string] store;
 

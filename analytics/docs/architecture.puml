@@ -296,13 +296,13 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   }
 
   package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class InMemoryDashboardRepository << (A,#B0BEC5) >>
-    class InMemoryStoryRepository << (A,#B0BEC5) >>
-    class InMemoryDatasetRepository << (A,#B0BEC5) >>
-    class InMemoryWidgetRepository << (A,#B0BEC5) >>
-    class InMemoryDataSourceRepository << (A,#B0BEC5) >>
-    class InMemoryPlanningRepository << (A,#B0BEC5) >>
-    class InMemoryPredictionRepository << (A,#B0BEC5) >>
+    class MemoryDashboardRepository << (A,#B0BEC5) >>
+    class MemoryStoryRepository << (A,#B0BEC5) >>
+    class MemoryDatasetRepository << (A,#B0BEC5) >>
+    class MemoryWidgetRepository << (A,#B0BEC5) >>
+    class MemoryDataSourceRepository << (A,#B0BEC5) >>
+    class MemoryPlanningRepository << (A,#B0BEC5) >>
+    class MemoryPredictionRepository << (A,#B0BEC5) >>
   }
 
   package "External Adapters" as EXT_ADAPT <<Rectangle>> {

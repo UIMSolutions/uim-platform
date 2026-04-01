@@ -7,7 +7,7 @@ import domain.ports.connector_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryConnectorRepository : ConnectorRepository
+class MemoryConnectorRepository : ConnectorRepository
 {
     private CloudConnector[ConnectorId] store;
 

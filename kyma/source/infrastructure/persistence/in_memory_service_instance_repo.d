@@ -7,7 +7,7 @@ import domain.ports.service_instance_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryServiceInstanceRepository : ServiceInstanceRepository
+class MemoryServiceInstanceRepository : ServiceInstanceRepository
 {
     private ServiceInstance[ServiceInstanceId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.label_repository;
 import std.algorithm : filter, canFind;
 import std.array : array;
 
-class InMemoryLabelRepository : LabelRepository
+class MemoryLabelRepository : LabelRepository
 {
     private Label[LabelId] store;
 

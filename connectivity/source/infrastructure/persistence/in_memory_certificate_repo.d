@@ -7,7 +7,7 @@ import domain.ports.certificate_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCertificateRepository : CertificateRepository
+class MemoryCertificateRepository : CertificateRepository
 {
     private Certificate[CertificateId] store;
 

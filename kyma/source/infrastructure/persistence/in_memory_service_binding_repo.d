@@ -7,7 +7,7 @@ import domain.ports.service_binding_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryServiceBindingRepository : ServiceBindingRepository
+class MemoryServiceBindingRepository : ServiceBindingRepository
 {
     private ServiceBinding[ServiceBindingId] store;
 

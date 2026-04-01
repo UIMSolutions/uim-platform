@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.inference_result;
 import domain.ports.inference_result_repository;
 
-class InMemoryInferenceResultRepository : InferenceResultRepository
+class MemoryInferenceResultRepository : InferenceResultRepository
 {
   private InferenceResult[string] store;
 

@@ -7,7 +7,7 @@ import domain.ports.access_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAccessRuleRepository : AccessRuleRepository
+class MemoryAccessRuleRepository : AccessRuleRepository
 {
     private AccessRule[RuleId] store;
 

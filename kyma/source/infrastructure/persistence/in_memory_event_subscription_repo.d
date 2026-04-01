@@ -7,7 +7,7 @@ import domain.ports.event_subscription_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryEventSubscriptionRepository : EventSubscriptionRepository
+class MemoryEventSubscriptionRepository : EventSubscriptionRepository
 {
     private EventSubscription[EventSubscriptionId] store;
 

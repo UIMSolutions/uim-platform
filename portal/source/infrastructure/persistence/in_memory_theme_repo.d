@@ -4,7 +4,7 @@ import domain.entities.theme;
 import domain.types;
 import domain.ports.theme_repository;
 
-class InMemoryThemeRepository : ThemeRepository
+class MemoryThemeRepository : ThemeRepository
 {
     private Theme[ThemeId] store;
 

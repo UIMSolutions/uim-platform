@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.token;
 
 /// In-memory adapter for token persistence.
-class InMemoryTokenRepository : TokenRepository
+class MemoryTokenRepository : TokenRepository
 {
     private Token[TokenId] store;
 

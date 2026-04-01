@@ -7,7 +7,7 @@ import domain.ports.validation_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryValidationRuleRepository : ValidationRuleRepository
+class MemoryValidationRuleRepository : ValidationRuleRepository
 {
     private ValidationRule[RuleId] store;
 

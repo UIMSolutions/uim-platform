@@ -7,7 +7,7 @@ import domain.ports.transport_queue_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryTransportQueueRepository : TransportQueueRepository
+class MemoryTransportQueueRepository : TransportQueueRepository
 {
     private TransportQueue[TransportQueueId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.data_model_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDataModelRepository : DataModelRepository
+class MemoryDataModelRepository : DataModelRepository
 {
     private DataModel[DataModelId] store;
 

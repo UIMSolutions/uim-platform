@@ -7,7 +7,7 @@ import domain.ports.app_version_repository;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryAppVersionRepository : AppVersionRepository
+class MemoryAppVersionRepository : AppVersionRepository
 {
     private AppVersion[AppVersionId] store;
 

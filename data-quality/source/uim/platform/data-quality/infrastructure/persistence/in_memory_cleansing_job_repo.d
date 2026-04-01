@@ -7,7 +7,7 @@ import domain.ports.cleansing_job_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCleansingJobRepository : CleansingJobRepository
+class MemoryCleansingJobRepository : CleansingJobRepository
 {
     private CleansingJob[CleansingJobId] store;
 

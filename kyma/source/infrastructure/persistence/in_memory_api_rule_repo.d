@@ -7,7 +7,7 @@ import domain.ports.api_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryApiRuleRepository : ApiRuleRepository
+class MemoryApiRuleRepository : ApiRuleRepository
 {
     private ApiRule[ApiRuleId] store;
 

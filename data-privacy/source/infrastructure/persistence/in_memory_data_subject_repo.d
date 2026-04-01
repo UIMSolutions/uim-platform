@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.data_subject;
 import domain.ports.data_subject_repository;
 
-class InMemoryDataSubjectRepository : DataSubjectRepository
+class MemoryDataSubjectRepository : DataSubjectRepository
 {
     private DataSubject[] store;
 

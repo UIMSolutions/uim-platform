@@ -11,7 +11,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class InMemoryApplicationJobRepository : ApplicationJobRepository {
+class MemoryApplicationJobRepository : ApplicationJobRepository {
     private ApplicationJob[ApplicationJobId] store;
 
     ApplicationJob findById(ApplicationJobId id) {

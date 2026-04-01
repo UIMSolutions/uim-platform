@@ -7,7 +7,7 @@ module infrastructure.persistence.memory.folder_repo;
 import uim.platform.dms_application;
 mixin(ShowModule!());
 @safe:
-class InMemoryFolderRepository : IFolderRepository {
+class MemoryFolderRepository : IFolderRepository {
   private Folder[string] store;
 
   Folder[] findByTenant(TenantId tenantId) {

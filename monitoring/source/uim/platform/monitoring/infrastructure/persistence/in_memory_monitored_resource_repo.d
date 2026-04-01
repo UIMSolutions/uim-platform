@@ -7,7 +7,7 @@ import domain.ports.monitored_resource_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryMonitoredResourceRepository : MonitoredResourceRepository
+class MemoryMonitoredResourceRepository : MonitoredResourceRepository
 {
     private MonitoredResource[MonitoredResourceId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.workpage_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryWorkpageRepository : WorkpageRepository
+class MemoryWorkpageRepository : WorkpageRepository
 {
     private Workpage[WorkpageId] store;
 

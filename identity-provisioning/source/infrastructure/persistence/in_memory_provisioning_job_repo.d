@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.provisioning_job;
 import domain.ports.provisioning_job_repository;
 
-class InMemoryProvisioningJobRepository : ProvisioningJobRepository
+class MemoryProvisioningJobRepository : ProvisioningJobRepository
 {
   private ProvisioningJob[string] store;
 

@@ -7,7 +7,7 @@ import domain.ports.channel_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryChannelRepository : ChannelRepository
+class MemoryChannelRepository : ChannelRepository
 {
     private ServiceChannel[ChannelId] store;
 

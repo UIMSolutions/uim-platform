@@ -379,12 +379,12 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   }
 
   package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class InMemoryUserRepository << (A,#B0BEC5) >>
-    class InMemoryGroupRepository << (A,#B0BEC5) >>
-    class InMemorySchemaRepository << (A,#B0BEC5) >>
-    class InMemoryPasswordPolicyRepository << (A,#B0BEC5) >>
-    class InMemoryApiClientRepository << (A,#B0BEC5) >>
-    class InMemoryAuditRepository << (A,#B0BEC5) >>
+    class MemoryUserRepository << (A,#B0BEC5) >>
+    class MemoryGroupRepository << (A,#B0BEC5) >>
+    class MemorySchemaRepository << (A,#B0BEC5) >>
+    class MemoryPasswordPolicyRepository << (A,#B0BEC5) >>
+    class MemoryApiClientRepository << (A,#B0BEC5) >>
+    class MemoryAuditRepository << (A,#B0BEC5) >>
   }
 
   package "Security Adapters" as SEC_ADAPT <<Rectangle>> {

@@ -7,7 +7,7 @@ import domain.ports.module_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryModuleRepository : ModuleRepository
+class MemoryModuleRepository : ModuleRepository
 {
     private KymaModule[ModuleId] store;
 

@@ -1,4 +1,4 @@
-module uim.platform.dms_application.presentation.http.share;
+module uim.platform.dms_application.presentation.http.controllers.share;
 
 // import vibe.http.server;
 // import vibe.http.router;

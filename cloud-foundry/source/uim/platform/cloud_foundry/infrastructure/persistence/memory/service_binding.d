@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.service_binding;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryServiceBindingRepository : ServiceBindingRepository
+class MemoryServiceBindingRepository : ServiceBindingRepository
 {
   private ServiceBinding[ServiceBindingId] store;
 

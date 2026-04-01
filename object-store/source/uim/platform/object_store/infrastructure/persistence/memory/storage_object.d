@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.storage_object;
 import std.algorithm : filter, startsWith;
 import std.array : array;
 
-class InMemoryStorageObjectRepository : StorageObjectRepository
+class MemoryStorageObjectRepository : StorageObjectRepository
 {
     private StorageObject[ObjectId] store;
 

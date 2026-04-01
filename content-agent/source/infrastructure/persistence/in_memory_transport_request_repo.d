@@ -7,7 +7,7 @@ import domain.ports.transport_request_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryTransportRequestRepository : TransportRequestRepository
+class MemoryTransportRequestRepository : TransportRequestRepository
 {
     private TransportRequest[TransportRequestId] store;
 

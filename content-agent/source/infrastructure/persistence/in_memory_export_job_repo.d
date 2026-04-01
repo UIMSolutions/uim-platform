@@ -7,7 +7,7 @@ import domain.ports.export_job_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryExportJobRepository : ExportJobRepository
+class MemoryExportJobRepository : ExportJobRepository
 {
     private ExportJob[ExportJobId] store;
 

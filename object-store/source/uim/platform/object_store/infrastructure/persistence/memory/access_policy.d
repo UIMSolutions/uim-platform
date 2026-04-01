@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.access_policy;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAccessPolicyRepository : AccessPolicyRepository
+class MemoryAccessPolicyRepository : AccessPolicyRepository
 {
     private AccessPolicy[AccessPolicyId] store;
 

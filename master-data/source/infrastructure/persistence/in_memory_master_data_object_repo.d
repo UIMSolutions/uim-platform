@@ -7,7 +7,7 @@ import domain.ports.master_data_object_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryMasterDataObjectRepository : MasterDataObjectRepository
+class MemoryMasterDataObjectRepository : MasterDataObjectRepository
 {
     private MasterDataObject[MasterDataObjectId] store;
 

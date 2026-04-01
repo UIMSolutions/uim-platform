@@ -1,4 +1,4 @@
-module uim.platform.dms_application.presentation.http.controllersfolder;
+module uim.platform.dms_application.presentation.http.controllers.folder;
 
 // import vibe.http.server;
 // import vibe.http.router;

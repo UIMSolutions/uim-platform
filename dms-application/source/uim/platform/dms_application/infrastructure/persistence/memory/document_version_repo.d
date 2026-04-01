@@ -8,7 +8,7 @@ import uim.platform.dms_application;
 mixin(ShowModule!());
 @safe:
 
-class InMemoryDocumentVersionRepository : IDocumentVersionRepository {
+class MemoryDocumentVersionRepository : IDocumentVersionRepository {
   private DocumentVersion[string] store;
 
   DocumentVersion[] findByTenant(TenantId tenantId) {

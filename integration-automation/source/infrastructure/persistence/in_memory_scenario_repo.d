@@ -8,7 +8,7 @@ import domain.ports;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryScenarioRepository : ScenarioRepository
+class MemoryScenarioRepository : ScenarioRepository
 {
   private IntegrationScenario[ScenarioId] store;
 

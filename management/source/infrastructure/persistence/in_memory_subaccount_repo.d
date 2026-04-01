@@ -7,7 +7,7 @@ import domain.ports.subaccount_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemorySubaccountRepository : SubaccountRepository
+class MemorySubaccountRepository : SubaccountRepository
 {
     private Subaccount[SubaccountId] store;
 

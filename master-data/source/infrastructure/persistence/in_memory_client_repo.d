@@ -7,7 +7,7 @@ import domain.ports.client_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryClientRepository : ClientRepository
+class MemoryClientRepository : ClientRepository
 {
     private Client[ClientId] store;
 

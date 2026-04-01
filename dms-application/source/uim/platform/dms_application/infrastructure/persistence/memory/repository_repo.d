@@ -7,7 +7,7 @@ module infrastructure.persistence.memory.repository_repo;
 import uim.platform.dms_application;
 mixin(ShowModule!());
 @safe:
-class InMemoryRepositoryRepository : IRepositoryRepository {
+class MemoryRepositoryRepository : IRepositoryRepository {
   private Repository[string] store;
 
   Repository[] findByTenant(TenantId tenantId) {

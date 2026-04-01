@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.dataset;
 import domain.ports.dataset_repository;
 
-class InMemoryDatasetRepository : DatasetRepository
+class MemoryDatasetRepository : DatasetRepository
 {
   private Dataset[string] store;
 

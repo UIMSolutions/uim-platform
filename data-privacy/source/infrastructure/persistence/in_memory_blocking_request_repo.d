@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.blocking_request;
 import domain.ports.blocking_request_repository;
 
-class InMemoryBlockingRequestRepository : BlockingRequestRepository
+class MemoryBlockingRequestRepository : BlockingRequestRepository
 {
     private BlockingRequest[] store;
 

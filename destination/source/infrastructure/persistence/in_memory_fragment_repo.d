@@ -7,7 +7,7 @@ import domain.ports.fragment_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryFragmentRepository : FragmentRepository
+class MemoryFragmentRepository : FragmentRepository
 {
     private DestinationFragment[FragmentId] store;
 

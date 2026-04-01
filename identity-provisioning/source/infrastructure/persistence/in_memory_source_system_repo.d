@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.source_system;
 import domain.ports.source_system_repository;
 
-class InMemorySourceSystemRepository : SourceSystemRepository
+class MemorySourceSystemRepository : SourceSystemRepository
 {
   private SourceSystem[string] store;
 

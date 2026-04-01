@@ -7,7 +7,7 @@ import domain.ports.distribution_model_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDistributionModelRepository : DistributionModelRepository
+class MemoryDistributionModelRepository : DistributionModelRepository
 {
     private DistributionModel[DistributionModelId] store;
 

@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.model_deployment;
 import domain.ports.deployment_repository;
 
-class InMemoryDeploymentRepository : DeploymentRepository
+class MemoryDeploymentRepository : DeploymentRepository
 {
   private ModelDeployment[string] store;
 

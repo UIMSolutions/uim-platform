@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryBucketRepository : BucketRepository {
+class MemoryBucketRepository : BucketRepository {
     private Bucket[BucketId] store;
 
     Bucket findById(BucketId id) {

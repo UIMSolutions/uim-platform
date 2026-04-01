@@ -7,7 +7,7 @@ import domain.ports.feed_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryFeedRepository : FeedRepository
+class MemoryFeedRepository : FeedRepository
 {
     private FeedEntry[FeedEntryId] store;
 

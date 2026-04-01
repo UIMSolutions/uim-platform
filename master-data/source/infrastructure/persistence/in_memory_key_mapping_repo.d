@@ -7,7 +7,7 @@ import domain.ports.key_mapping_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryKeyMappingRepository : KeyMappingRepository
+class MemoryKeyMappingRepository : KeyMappingRepository
 {
     private KeyMapping[KeyMappingId] store;
 

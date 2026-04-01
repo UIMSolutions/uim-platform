@@ -7,7 +7,7 @@ import domain.ports.directory_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDirectoryRepository : DirectoryRepository
+class MemoryDirectoryRepository : DirectoryRepository
 {
     private Directory[DirectoryId] store;
 

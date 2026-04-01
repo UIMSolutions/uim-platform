@@ -7,7 +7,7 @@ import domain.ports.metric_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryMetricRepository : MetricRepository
+class MemoryMetricRepository : MetricRepository
 {
     private Metric[] store;
 

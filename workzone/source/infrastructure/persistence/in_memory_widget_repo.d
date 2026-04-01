@@ -7,7 +7,7 @@ import domain.ports.widget_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryWidgetRepository : WidgetRepository
+class MemoryWidgetRepository : WidgetRepository
 {
     private Widget[WidgetId] store;
 

@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.proxy_system;
 import domain.ports.proxy_system_repository;
 
-class InMemoryProxySystemRepository : ProxySystemRepository
+class MemoryProxySystemRepository : ProxySystemRepository
 {
   private ProxySystem[string] store;
 

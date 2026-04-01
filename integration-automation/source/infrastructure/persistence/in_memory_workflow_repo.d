@@ -8,7 +8,7 @@ import domain.ports;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryWorkflowRepository : WorkflowRepository
+class MemoryWorkflowRepository : WorkflowRepository
 {
   private Workflow[WorkflowId] store;
 

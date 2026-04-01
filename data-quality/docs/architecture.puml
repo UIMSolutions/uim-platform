@@ -185,13 +185,13 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   }
 
   package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class InMemoryValidationRuleRepo << (A,#B0BEC5) >>
-    class InMemoryValidationResultRepo << (A,#B0BEC5) >>
-    class InMemoryAddressRepo << (A,#B0BEC5) >>
-    class InMemoryMatchGroupRepo << (A,#B0BEC5) >>
-    class InMemoryDataProfileRepo << (A,#B0BEC5) >>
-    class InMemoryCleansingRuleRepo << (A,#B0BEC5) >>
-    class InMemoryCleansingJobRepo << (A,#B0BEC5) >>
+    class MemoryValidationRuleRepo << (A,#B0BEC5) >>
+    class MemoryValidationResultRepo << (A,#B0BEC5) >>
+    class MemoryAddressRepo << (A,#B0BEC5) >>
+    class MemoryMatchGroupRepo << (A,#B0BEC5) >>
+    class MemoryDataProfileRepo << (A,#B0BEC5) >>
+    class MemoryCleansingRuleRepo << (A,#B0BEC5) >>
+    class MemoryCleansingJobRepo << (A,#B0BEC5) >>
   }
 }
 

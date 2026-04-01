@@ -4,7 +4,7 @@ import domain.entities.catalog;
 import domain.types;
 import domain.ports.catalog_repository;
 
-class InMemoryCatalogRepository : CatalogRepository
+class MemoryCatalogRepository : CatalogRepository
 {
     private Catalog[CatalogId] store;
 

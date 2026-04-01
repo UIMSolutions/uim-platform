@@ -7,7 +7,7 @@ import domain.ports.match_group_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryMatchGroupRepository : MatchGroupRepository
+class MemoryMatchGroupRepository : MatchGroupRepository
 {
     private MatchGroup[MatchGroupId] store;
 

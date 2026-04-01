@@ -5,7 +5,7 @@ import domain.types;
 import domain.ports.password_policy_repository;
 
 /// In-memory adapter for password policy persistence.
-class InMemoryPasswordPolicyRepository : PasswordPolicyRepository
+class MemoryPasswordPolicyRepository : PasswordPolicyRepository
 {
     private PasswordPolicy[string] store;
 

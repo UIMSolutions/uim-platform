@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.object_version;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryObjectVersionRepository : ObjectVersionRepository
+class MemoryObjectVersionRepository : ObjectVersionRepository
 {
     private ObjectVersion[ObjectVersionId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.health_check_result_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryHealthCheckResultRepository : HealthCheckResultRepository
+class MemoryHealthCheckResultRepository : HealthCheckResultRepository
 {
     private HealthCheckResult[] store;
 

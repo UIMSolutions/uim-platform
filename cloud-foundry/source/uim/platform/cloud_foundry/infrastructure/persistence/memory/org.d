@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.org;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryOrgRepository : OrgRepository
+class MemoryOrgRepository : OrgRepository
 {
   private Organization[OrgId] store;
 

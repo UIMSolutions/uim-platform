@@ -7,7 +7,7 @@ import uim.platform.identity_authentication.domain.ports.session;
 import std.datetime.systime : Clock;
 
 /// In-memory adapter for session persistence.
-class InMemorySessionRepository : SessionRepository
+class MemorySessionRepository : SessionRepository
 {
     private Session[SessionId] store;
 

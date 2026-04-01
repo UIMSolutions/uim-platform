@@ -489,12 +489,12 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   }
 
   package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class InMemoryScenarioRepo << (A,#B0BEC5) >>
-    class InMemoryWorkflowRepo << (A,#B0BEC5) >>
-    class InMemoryStepRepo << (A,#B0BEC5) >>
-    class InMemorySystemRepo << (A,#B0BEC5) >>
-    class InMemoryDestinationRepo << (A,#B0BEC5) >>
-    class InMemoryExecutionLogRepo << (A,#B0BEC5) >>
+    class MemoryScenarioRepo << (A,#B0BEC5) >>
+    class MemoryWorkflowRepo << (A,#B0BEC5) >>
+    class MemoryStepRepo << (A,#B0BEC5) >>
+    class MemorySystemRepo << (A,#B0BEC5) >>
+    class MemoryDestinationRepo << (A,#B0BEC5) >>
+    class MemoryExecutionLogRepo << (A,#B0BEC5) >>
   }
 }
 

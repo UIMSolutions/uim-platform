@@ -7,7 +7,7 @@ import domain.ports.namespace_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryNamespaceRepository : NamespaceRepository
+class MemoryNamespaceRepository : NamespaceRepository
 {
     private Namespace[NamespaceId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.workspace_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryWorkspaceRepository : WorkspaceRepository
+class MemoryWorkspaceRepository : WorkspaceRepository
 {
     private Workspace[WorkspaceId] store;
 

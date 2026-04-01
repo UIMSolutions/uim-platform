@@ -7,7 +7,7 @@ import domain.ports.destination_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryDestinationRepository : DestinationRepository
+class MemoryDestinationRepository : DestinationRepository
 {
     private Destination[DestinationId] store;
 

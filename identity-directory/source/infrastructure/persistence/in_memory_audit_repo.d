@@ -5,7 +5,7 @@ import domain.types;
 import domain.ports.audit_repository;
 
 /// In-memory adapter for audit event persistence (append-only).
-class InMemoryAuditRepository : AuditRepository
+class MemoryAuditRepository : AuditRepository
 {
     private AuditEvent[] store;
 

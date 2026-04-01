@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.deletion_request;
 import domain.ports.deletion_request_repository;
 
-class InMemoryDeletionRequestRepository : DeletionRequestRepository
+class MemoryDeletionRequestRepository : DeletionRequestRepository
 {
     private DeletionRequest[] store;
 

@@ -7,7 +7,7 @@ import uim.platform.identity_authentication.domain.ports.policy;
 import std.algorithm : canFind;
 
 /// In-memory adapter for authorization policy persistence.
-class InMemoryPolicyRepository : PolicyRepository
+class MemoryPolicyRepository : PolicyRepository
 {
     private AuthorizationPolicy[PolicyId] store;
 

@@ -7,7 +7,7 @@ module infrastructure.persistence.memory.share_repo;
 import uim.platform.dms_application;
 mixin(ShowModule!());
 @safe:
-class InMemoryShareRepository : IShareRepository {
+class MemoryShareRepository : IShareRepository {
   private Share[string] store;
 
   Share[] findByTenant(TenantId tenantId) {

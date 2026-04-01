@@ -7,7 +7,7 @@ import domain.ports.address_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAddressRepository : AddressRepository
+class MemoryAddressRepository : AddressRepository
 {
     private AddressRecord[AddressId] store;
 

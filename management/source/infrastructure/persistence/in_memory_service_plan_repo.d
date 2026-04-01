@@ -7,7 +7,7 @@ import domain.ports.service_plan_repository;
 import std.algorithm : filter, canFind;
 import std.array : array;
 
-class InMemoryServicePlanRepository : ServicePlanRepository
+class MemoryServicePlanRepository : ServicePlanRepository
 {
     private ServicePlan[ServicePlanId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.change_log_repository;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryChangeLogRepository : ChangeLogRepository
+class MemoryChangeLogRepository : ChangeLogRepository
 {
     private ChangeLogEntry[ChangeLogEntryId] store;
 

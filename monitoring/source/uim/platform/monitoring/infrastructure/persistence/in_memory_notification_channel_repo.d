@@ -7,7 +7,7 @@ import domain.ports.notification_channel_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryNotificationChannelRepository : NotificationChannelRepository
+class MemoryNotificationChannelRepository : NotificationChannelRepository
 {
     private NotificationChannel[NotificationChannelId] store;
 

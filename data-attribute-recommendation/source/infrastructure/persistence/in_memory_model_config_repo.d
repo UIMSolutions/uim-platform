@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.model_configuration;
 import domain.ports.model_config_repository;
 
-class InMemoryModelConfigRepository : ModelConfigRepository
+class MemoryModelConfigRepository : ModelConfigRepository
 {
   private ModelConfiguration[string] store;
 

@@ -7,7 +7,7 @@ import domain.ports.content_provider_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryContentProviderRepository : ContentProviderRepository
+class MemoryContentProviderRepository : ContentProviderRepository
 {
     private ContentProvider[ContentProviderId] store;
 

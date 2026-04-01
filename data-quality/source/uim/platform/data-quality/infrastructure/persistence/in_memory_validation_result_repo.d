@@ -7,7 +7,7 @@ import domain.ports.validation_result_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryValidationResultRepository : ValidationResultRepository
+class MemoryValidationResultRepository : ValidationResultRepository
 {
     private ValidationResult[RecordId] store;
 

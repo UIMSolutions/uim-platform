@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.app;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAppRepository : AppRepository {
+class MemoryAppRepository : AppRepository {
   private Application[AppId] store;
 
   Application[] findBySpace(SpaceId spaceId, TenantId tenantId) {

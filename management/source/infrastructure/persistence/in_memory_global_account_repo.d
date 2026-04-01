@@ -7,7 +7,7 @@ import domain.ports.global_account_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryGlobalAccountRepository : GlobalAccountRepository
+class MemoryGlobalAccountRepository : GlobalAccountRepository
 {
     private GlobalAccount[GlobalAccountId] store;
 

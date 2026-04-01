@@ -7,7 +7,7 @@ import domain.ports.function_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryFunctionRepository : FunctionRepository
+class MemoryFunctionRepository : FunctionRepository
 {
     private ServerlessFunction[FunctionId] store;
 

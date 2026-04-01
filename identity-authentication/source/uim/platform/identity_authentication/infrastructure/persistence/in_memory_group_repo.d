@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.group;
 
 /// In-memory adapter for group persistence.
-class InMemoryGroupRepository : GroupRepository
+class MemoryGroupRepository : GroupRepository
 {
     private Group[GroupId] store;
 

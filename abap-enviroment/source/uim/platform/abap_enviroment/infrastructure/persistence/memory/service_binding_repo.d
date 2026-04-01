@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.infrastructure.persistence.memory.service_bi
 import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
-class InMemoryServiceBindingRepository : ServiceBindingRepository {
+class MemoryServiceBindingRepository : ServiceBindingRepository {
     private ServiceBinding[ServiceBindingId] store;
 
     ServiceBinding* findById(ServiceBindingId id) {

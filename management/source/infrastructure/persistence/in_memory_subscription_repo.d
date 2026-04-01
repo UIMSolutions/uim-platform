@@ -7,7 +7,7 @@ import domain.ports.subscription_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemorySubscriptionRepository : SubscriptionRepository
+class MemorySubscriptionRepository : SubscriptionRepository
 {
     private Subscription[SubscriptionId] store;
 

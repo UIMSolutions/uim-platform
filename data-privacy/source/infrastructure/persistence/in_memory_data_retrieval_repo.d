@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.data_retrieval_request;
 import domain.ports.data_retrieval_request_repository;
 
-class InMemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository
+class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository
 {
     private DataRetrievalRequest[] store;
 

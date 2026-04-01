@@ -11,7 +11,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class InMemoryBusinessUserRepository : BusinessUserRepository {
+class MemoryBusinessUserRepository : BusinessUserRepository {
     private BusinessUser[BusinessUserId] store;
 
     BusinessUser* findById(BusinessUserId id) {

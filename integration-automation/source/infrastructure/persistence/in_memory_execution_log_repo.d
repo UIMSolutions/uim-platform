@@ -8,7 +8,7 @@ import domain.ports;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryExecutionLogRepository : ExecutionLogRepository
+class MemoryExecutionLogRepository : ExecutionLogRepository
 {
   private ExecutionLog[] store;
 

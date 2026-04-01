@@ -5,7 +5,7 @@ import domain.types;
 import domain.ports.group_repository;
 
 /// In-memory adapter for group persistence.
-class InMemoryGroupRepository : GroupRepository
+class MemoryGroupRepository : GroupRepository
 {
     private Group[GroupId] store;
 

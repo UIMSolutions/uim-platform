@@ -7,7 +7,7 @@ import domain.ports.connectivity_log_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryConnectivityLogRepository : ConnectivityLogRepository
+class MemoryConnectivityLogRepository : ConnectivityLogRepository
 {
     private ConnectivityLog[] logs;
 

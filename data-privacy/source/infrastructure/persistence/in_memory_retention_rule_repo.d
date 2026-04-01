@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.retention_rule;
 import domain.ports.retention_rule_repository;
 
-class InMemoryRetentionRuleRepository : RetentionRuleRepository
+class MemoryRetentionRuleRepository : RetentionRuleRepository
 {
     private RetentionRule[] store;
 

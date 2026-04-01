@@ -7,7 +7,7 @@ import domain.ports.data_profile_repository;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryDataProfileRepository : DataProfileRepository
+class MemoryDataProfileRepository : DataProfileRepository
 {
     private DataProfile[ProfileId] store;
 

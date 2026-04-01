@@ -4,7 +4,7 @@ import domain.entities.section;
 import domain.types;
 import domain.ports.section_repository;
 
-class InMemorySectionRepository : SectionRepository
+class MemorySectionRepository : SectionRepository
 {
     private Section[SectionId] store;
 

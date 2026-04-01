@@ -7,7 +7,7 @@ import domain.ports.card_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCardRepository : CardRepository
+class MemoryCardRepository : CardRepository
 {
     private Card[CardId] store;
 

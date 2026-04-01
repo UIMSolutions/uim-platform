@@ -7,7 +7,7 @@ import domain.ports.replication_job_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryReplicationJobRepository : ReplicationJobRepository
+class MemoryReplicationJobRepository : ReplicationJobRepository
 {
     private ReplicationJob[ReplicationJobId] store;
 

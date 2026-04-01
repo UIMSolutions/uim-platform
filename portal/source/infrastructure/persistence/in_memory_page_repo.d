@@ -4,7 +4,7 @@ import domain.entities.page;
 import domain.types;
 import domain.ports.page_repository;
 
-class InMemoryPageRepository : PageRepository
+class MemoryPageRepository : PageRepository
 {
     private Page[PageId] store;
 

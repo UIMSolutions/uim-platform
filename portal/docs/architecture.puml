@@ -298,16 +298,16 @@ package "Infrastructure Layer  <<driven adapters>>" as INFRA <<Rectangle>> {
   }
 
   package "In-Memory Persistence" as PERSIST <<Rectangle>> {
-    class InMemorySiteRepo << (A,#B0BEC5) >>
-    class InMemoryPageRepo << (A,#B0BEC5) >>
-    class InMemorySectionRepo << (A,#B0BEC5) >>
-    class InMemoryTileRepo << (A,#B0BEC5) >>
-    class InMemoryCatalogRepo << (A,#B0BEC5) >>
-    class InMemoryProviderRepo << (A,#B0BEC5) >>
-    class InMemoryRoleRepo << (A,#B0BEC5) >>
-    class InMemoryThemeRepo << (A,#B0BEC5) >>
-    class InMemoryMenuItemRepo << (A,#B0BEC5) >>
-    class InMemoryTranslationRepo << (A,#B0BEC5) >>
+    class MemorySiteRepo << (A,#B0BEC5) >>
+    class MemoryPageRepo << (A,#B0BEC5) >>
+    class MemorySectionRepo << (A,#B0BEC5) >>
+    class MemoryTileRepo << (A,#B0BEC5) >>
+    class MemoryCatalogRepo << (A,#B0BEC5) >>
+    class MemoryProviderRepo << (A,#B0BEC5) >>
+    class MemoryRoleRepo << (A,#B0BEC5) >>
+    class MemoryThemeRepo << (A,#B0BEC5) >>
+    class MemoryMenuItemRepo << (A,#B0BEC5) >>
+    class MemoryTranslationRepo << (A,#B0BEC5) >>
   }
 }
 

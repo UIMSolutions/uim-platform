@@ -7,7 +7,7 @@ import domain.ports.application_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryApplicationRepository : ApplicationRepository
+class MemoryApplicationRepository : ApplicationRepository
 {
     private Application[ApplicationId] store;
 

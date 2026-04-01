@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.infrastructure.persistence.memory.software_c
 import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
-class InMemorySoftwareComponentRepository : SoftwareComponentRepository {
+class MemorySoftwareComponentRepository : SoftwareComponentRepository {
     private SoftwareComponent[SoftwareComponentId] store;
 
     SoftwareComponent* findById(SoftwareComponentId id) {

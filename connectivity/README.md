@@ -527,12 +527,12 @@ package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
     + buildContainer(config) : Container
   }
 
-  class InMemoryDestinationRepo << (A,#AB47BC) >>
-  class InMemoryConnectorRepo << (A,#AB47BC) >>
-  class InMemoryChannelRepo << (A,#AB47BC) >>
-  class InMemoryAccessRuleRepo << (A,#AB47BC) >>
-  class InMemoryCertificateRepo << (A,#AB47BC) >>
-  class InMemoryConnectivityLogRepo << (A,#AB47BC) >>
+  class MemoryDestinationRepo << (A,#AB47BC) >>
+  class MemoryConnectorRepo << (A,#AB47BC) >>
+  class MemoryChannelRepo << (A,#AB47BC) >>
+  class MemoryAccessRuleRepo << (A,#AB47BC) >>
+  class MemoryCertificateRepo << (A,#AB47BC) >>
+  class MemoryConnectivityLogRepo << (A,#AB47BC) >>
 }
 
 ' ============================================================

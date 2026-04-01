@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SAPController : SAPController {
+class SAPController {
   this() {
     initialize();
   }
@@ -26,7 +26,7 @@ class SAPController : SAPController {
     return true;
   }
 
-  override void registerRoutes(URLRouter router) {
+  void registerRoutes(URLRouter router) {
     // Register HTTP routes and handlers here
   }
 }

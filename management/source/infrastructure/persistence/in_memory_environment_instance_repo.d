@@ -7,7 +7,7 @@ import domain.ports.environment_instance_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository
+class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository
 {
     private EnvironmentInstance[EnvironmentInstanceId] store;
 

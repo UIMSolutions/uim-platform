@@ -7,7 +7,7 @@ import domain.ports.environment_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryEnvironmentRepository : EnvironmentRepository
+class MemoryEnvironmentRepository : EnvironmentRepository
 {
     private KymaEnvironment[KymaEnvironmentId] store;
 

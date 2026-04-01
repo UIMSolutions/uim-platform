@@ -4,7 +4,7 @@ import domain.entities.content_provider;
 import domain.types;
 import domain.ports.provider_repository;
 
-class InMemoryProviderRepository : ProviderRepository
+class MemoryProviderRepository : ProviderRepository
 {
     private ContentProvider[ProviderId] store;
 

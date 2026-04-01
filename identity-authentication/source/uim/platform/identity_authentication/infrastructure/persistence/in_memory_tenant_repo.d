@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.tenant;
 
 /// In-memory adapter for tenant persistence.
-class InMemoryTenantRepository : TenantRepository
+class MemoryTenantRepository : TenantRepository
 {
     private Tenant[TenantId] store;
 

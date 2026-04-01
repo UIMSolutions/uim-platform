@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.legal_ground;
 import domain.ports.legal_ground_repository;
 
-class InMemoryLegalGroundRepository : LegalGroundRepository
+class MemoryLegalGroundRepository : LegalGroundRepository
 {
     private LegalGround[] store;
 

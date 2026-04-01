@@ -5,7 +5,7 @@ import domain.types;
 import domain.ports.api_client_repository;
 
 /// In-memory adapter for API client persistence.
-class InMemoryApiClientRepository : ApiClientRepository
+class MemoryApiClientRepository : ApiClientRepository
 {
     private ApiClient[ApiClientId] store;
 

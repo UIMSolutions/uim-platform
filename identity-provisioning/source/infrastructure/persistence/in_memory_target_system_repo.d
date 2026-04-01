@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.target_system;
 import domain.ports.target_system_repository;
 
-class InMemoryTargetSystemRepository : TargetSystemRepository
+class MemoryTargetSystemRepository : TargetSystemRepository
 {
   private TargetSystem[string] store;
 

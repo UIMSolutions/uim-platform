@@ -5,7 +5,7 @@ import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication.domain.ports.user;
 
 /// In-memory adapter for user persistence (swap for DB adapter in production).
-class InMemoryUserRepository : UserRepository
+class MemoryUserRepository : UserRepository
 {
     private User[UserId] store;
 

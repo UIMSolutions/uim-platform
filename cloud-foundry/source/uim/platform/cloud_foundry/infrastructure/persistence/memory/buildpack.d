@@ -7,7 +7,7 @@ import uim.platform.cloud_foundry.domain.ports.buildpack;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryBuildpackRepository : BuildpackRepository {
+class MemoryBuildpackRepository : BuildpackRepository {
   private Buildpack[BuildpackId] store;
 
   Buildpack[] findByTenant(TenantId tenantId) {

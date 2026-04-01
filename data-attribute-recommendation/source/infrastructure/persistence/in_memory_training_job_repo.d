@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.training_job;
 import domain.ports.training_job_repository;
 
-class InMemoryTrainingJobRepository : TrainingJobRepository
+class MemoryTrainingJobRepository : TrainingJobRepository
 {
   private TrainingJob[string] store;
 

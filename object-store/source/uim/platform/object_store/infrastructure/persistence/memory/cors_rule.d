@@ -7,7 +7,7 @@ import uim.platform.object_store.domain.ports.repositories.cors_rule;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCorsRuleRepository : CorsRuleRepository {
+class MemoryCorsRuleRepository : CorsRuleRepository {
     private CorsRule[CorsRuleId] store;
 
     CorsRule findById(CorsRuleId id) {

@@ -4,7 +4,7 @@ import domain.entities.translation;
 import domain.types;
 import domain.ports.translation_repository;
 
-class InMemoryTranslationRepository : TranslationRepository
+class MemoryTranslationRepository : TranslationRepository
 {
     private Translation[TranslationId] store;
 

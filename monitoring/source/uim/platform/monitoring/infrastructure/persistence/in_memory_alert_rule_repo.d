@@ -7,7 +7,7 @@ import domain.ports.alert_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryAlertRuleRepository : AlertRuleRepository
+class MemoryAlertRuleRepository : AlertRuleRepository
 {
     private AlertRule[AlertRuleId] store;
 

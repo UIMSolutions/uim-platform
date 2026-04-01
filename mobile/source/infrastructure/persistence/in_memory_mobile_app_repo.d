@@ -7,7 +7,7 @@ import domain.ports.mobile_app_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryMobileAppRepository : MobileAppRepository
+class MemoryMobileAppRepository : MobileAppRepository
 {
     private MobileApp[MobileAppId] store;
 

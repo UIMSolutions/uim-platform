@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.provisioning_log;
 import domain.ports.provisioning_log_repository;
 
-class InMemoryProvisioningLogRepository : ProvisioningLogRepository
+class MemoryProvisioningLogRepository : ProvisioningLogRepository
 {
   private ProvisioningLog[string] store;
 

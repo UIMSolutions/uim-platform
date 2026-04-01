@@ -506,13 +506,13 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
 package "Infrastructure Layer  «driven adapters»" as INFRA <<Rectangle>> {
   skinparam packageBackgroundColor INFRA_COLOR
 
-  @safe: class InMemoryAuditLogRepository << (A,#AB47BC) >>
-  @safe: class InMemoryAuditConfigRepository << (A,#AB47BC) >>
-  @safe: class InMemoryRetentionPolicyRepository << (A,#AB47BC) >>
-  @safe: class InMemoryExportJobRepository << (A,#AB47BC) >>
-  @safe: class InMemorySecurityEventRepository << (A,#AB47BC) >>
-  @safe: class InMemoryDataAccessLogRepository << (A,#AB47BC) >>
-  @safe: class InMemoryConfigChangeLogRepository << (A,#AB47BC) >>
+  @safe: class MemoryAuditLogRepository << (A,#AB47BC) >>
+  @safe: class MemoryAuditConfigRepository << (A,#AB47BC) >>
+  @safe: class MemoryRetentionPolicyRepository << (A,#AB47BC) >>
+  @safe: class MemoryExportJobRepository << (A,#AB47BC) >>
+  @safe: class MemorySecurityEventRepository << (A,#AB47BC) >>
+  @safe: class MemoryDataAccessLogRepository << (A,#AB47BC) >>
+  @safe: class MemoryConfigChangeLogRepository << (A,#AB47BC) >>
 }
 
 ' ============================================================

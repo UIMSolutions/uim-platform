@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.personal_data_model;
 import domain.ports.personal_data_model_repository;
 
-class InMemoryPersonalDataModelRepository : PersonalDataModelRepository
+class MemoryPersonalDataModelRepository : PersonalDataModelRepository
 {
     private PersonalDataModel[] store;
 

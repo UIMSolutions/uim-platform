@@ -6,7 +6,7 @@ import domain.ports.role_repository;
 
 import std.algorithm : canFind;
 
-class InMemoryRoleRepository : RoleRepository
+class MemoryRoleRepository : RoleRepository
 {
     private Role[RoleId] store;
 

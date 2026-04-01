@@ -8,7 +8,7 @@ import domain.ports;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryStepRepository : StepRepository
+class MemoryStepRepository : StepRepository
 {
   private WorkflowStep[StepId] store;
 

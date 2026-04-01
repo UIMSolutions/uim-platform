@@ -8,7 +8,7 @@ import std.algorithm : canFind;
 import std.string : toLower, indexOf;
 
 /// In-memory adapter for user persistence.
-class InMemoryUserRepository : UserRepository
+class MemoryUserRepository : UserRepository
 {
     private User[UserId] store;
 

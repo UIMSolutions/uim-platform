@@ -7,7 +7,7 @@ import domain.ports.filter_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryFilterRuleRepository : FilterRuleRepository
+class MemoryFilterRuleRepository : FilterRuleRepository
 {
     private FilterRule[FilterRuleId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.content_package_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryContentPackageRepository : ContentPackageRepository
+class MemoryContentPackageRepository : ContentPackageRepository
 {
     private ContentPackage[ContentPackageId] store;
 

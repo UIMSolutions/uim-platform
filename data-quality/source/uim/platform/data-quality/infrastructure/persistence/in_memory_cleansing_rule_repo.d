@@ -7,7 +7,7 @@ import domain.ports.cleansing_rule_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryCleansingRuleRepository : CleansingRuleRepository
+class MemoryCleansingRuleRepository : CleansingRuleRepository
 {
     private CleansingRule[RuleId] store;
 

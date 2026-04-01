@@ -12,7 +12,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class InMemoryBusinessRoleRepository : BusinessRoleRepository {
+class MemoryBusinessRoleRepository : BusinessRoleRepository {
     private BusinessRole[BusinessRoleId] store;
 
     BusinessRole findById(BusinessRoleId id) {

@@ -7,7 +7,7 @@ import domain.ports.content_activity_repository;
 import std.algorithm : filter, sort;
 import std.array : array;
 
-class InMemoryContentActivityRepository : ContentActivityRepository
+class MemoryContentActivityRepository : ContentActivityRepository
 {
     private ContentActivity[] store;
 

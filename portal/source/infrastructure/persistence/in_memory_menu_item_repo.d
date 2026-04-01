@@ -4,7 +4,7 @@ import domain.entities.menu_item;
 import domain.types;
 import domain.ports.menu_item_repository;
 
-class InMemoryMenuItemRepository : MenuItemRepository
+class MemoryMenuItemRepository : MenuItemRepository
 {
     private MenuItem[MenuItemId] store;
 

@@ -7,7 +7,7 @@ import domain.ports.task_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-class InMemoryTaskRepository : TaskRepository
+class MemoryTaskRepository : TaskRepository
 {
     private Task[TaskId] store;
 

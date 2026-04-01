@@ -5,7 +5,7 @@ import domain.types;
 import domain.ports.schema_repository;
 
 /// In-memory adapter for custom schema persistence.
-class InMemorySchemaRepository : SchemaRepository
+class MemorySchemaRepository : SchemaRepository
 {
     private Schema[SchemaId] store;
 
