@@ -1,5 +1,9 @@
 module uim.platform.auditlog.domain.types;
 
+import uim.platform.auditlog;
+mixin(ShowModule!());
+@safe:
+
 /// Unique identifier type aliases for type safety.
 alias AuditLogId = string;
 alias RetentionPolicyId = string;

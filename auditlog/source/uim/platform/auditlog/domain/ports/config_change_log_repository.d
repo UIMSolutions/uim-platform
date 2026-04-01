@@ -2,7 +2,10 @@ module uim.platform.auditlog.domain.ports.config_change_log_repository;
 
 // import uim.platform.auditlog.domain.types;
 // 
-import uim.platform.auditlog;import uim.platform.auditlog.domain.entities.config_change_log;
+// import uim.platform.auditlog;import uim.platform.auditlog.domain.entities.config_change_log;
+
+import uim.platform.auditlog;
+mixin(ShowModule!());
 
 mixin(ShowModule!());
 /// Port for persisting configuration change log records.
