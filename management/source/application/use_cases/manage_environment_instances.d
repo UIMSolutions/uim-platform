@@ -1,4 +1,4 @@
-module application.use_cases.manage_environment_instances;
+module application.usecases.manage_environment_instances;
 
 import application.dto;
 import domain.entities.environment_instance;

@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_labels;
+import application.usecases.manage_labels;
 import application.dto;
 import domain.entities.label;
 import domain.types;

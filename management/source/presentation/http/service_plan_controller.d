@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_service_plans;
+import application.usecases.manage_service_plans;
 import application.dto;
 import domain.entities.service_plan;
 import domain.types;

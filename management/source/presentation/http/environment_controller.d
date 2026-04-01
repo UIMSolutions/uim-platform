@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_environment_instances;
+import application.usecases.manage_environment_instances;
 import application.dto;
 import domain.entities.environment_instance;
 import domain.types;

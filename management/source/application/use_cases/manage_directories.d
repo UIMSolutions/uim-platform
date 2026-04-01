@@ -1,4 +1,4 @@
-module application.use_cases.manage_directories;
+module application.usecases.manage_directories;
 
 import application.dto;
 import domain.entities.directory;

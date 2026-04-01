@@ -1,4 +1,4 @@
-module application.use_cases.get_account_overview;
+module application.usecases.get_account_overview;
 
 import application.dto;
 import domain.ports.global_account_repository;

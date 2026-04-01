@@ -18,16 +18,16 @@ import domain.services.entitlement_evaluator;
 import domain.services.environment_provisioner;
 
 // Use Cases
-import application.use_cases.manage_global_accounts;
-import application.use_cases.manage_directories;
-import application.use_cases.manage_subaccounts;
-import application.use_cases.manage_entitlements;
-import application.use_cases.manage_environment_instances;
-import application.use_cases.manage_subscriptions;
-import application.use_cases.manage_service_plans;
-import application.use_cases.manage_labels;
-import application.use_cases.query_platform_events;
-import application.use_cases.get_account_overview;
+import application.usecases.manage_global_accounts;
+import application.usecases.manage_directories;
+import application.usecases.manage_subaccounts;
+import application.usecases.manage_entitlements;
+import application.usecases.manage_environment_instances;
+import application.usecases.manage_subscriptions;
+import application.usecases.manage_service_plans;
+import application.usecases.manage_labels;
+import application.usecases.query_platform_events;
+import application.usecases.get_account_overview;
 
 // Controllers
 import presentation.http.global_account_controller;

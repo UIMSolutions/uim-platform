@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_directories;
+import application.usecases.manage_directories;
 import application.dto;
 import domain.entities.directory;
 import domain.types;

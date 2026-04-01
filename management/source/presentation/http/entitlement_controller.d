@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_entitlements;
+import application.usecases.manage_entitlements;
 import application.dto;
 import domain.entities.entitlement;
 import domain.types;

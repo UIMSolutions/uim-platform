@@ -1,4 +1,4 @@
-module application.use_cases.manage_service_plans;
+module application.usecases.manage_service_plans;
 
 import application.dto;
 import domain.entities.service_plan;

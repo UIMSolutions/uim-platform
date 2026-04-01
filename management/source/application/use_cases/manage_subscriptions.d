@@ -1,4 +1,4 @@
-module application.use_cases.manage_subscriptions;
+module application.usecases.manage_subscriptions;
 
 import application.dto;
 import domain.entities.subscription;

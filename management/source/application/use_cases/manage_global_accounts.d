@@ -1,4 +1,4 @@
-module application.use_cases.manage_global_accounts;
+module application.usecases.manage_global_accounts;
 
 import application.dto;
 import domain.entities.global_account;

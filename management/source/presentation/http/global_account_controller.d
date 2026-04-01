@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.manage_global_accounts;
+import application.usecases.manage_global_accounts;
 import application.dto;
 import domain.entities.global_account;
 import domain.types;

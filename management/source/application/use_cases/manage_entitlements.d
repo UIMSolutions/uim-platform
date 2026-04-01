@@ -1,4 +1,4 @@
-module application.use_cases.manage_entitlements;
+module application.usecases.manage_entitlements;
 
 import application.dto;
 import domain.entities.entitlement;

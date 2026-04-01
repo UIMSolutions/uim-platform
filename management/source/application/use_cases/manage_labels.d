@@ -1,4 +1,4 @@
-module application.use_cases.manage_labels;
+module application.usecases.manage_labels;
 
 import application.dto;
 import domain.entities.label;

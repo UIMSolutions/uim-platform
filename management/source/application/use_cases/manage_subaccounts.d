@@ -1,4 +1,4 @@
-module application.use_cases.manage_subaccounts;
+module application.usecases.manage_subaccounts;
 
 import application.dto;
 import domain.entities.subaccount;

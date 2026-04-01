@@ -1,4 +1,4 @@
-module application.use_cases.query_platform_events;
+module application.usecases.query_platform_events;
 
 import application.dto;
 import domain.entities.platform_event;
