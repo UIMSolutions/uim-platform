@@ -1,14 +1,16 @@
 module uim.platform.auditlog.presentation.http.controllers.data_access;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// 
+// import uim.platform.auditlog.application.usecases.write.data_access_log;
+// import uim.platform.auditlog.application.dto;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.presentation.http.json_utils;
 
-import uim.platform.auditlog.application.usecases.write.data_access_log;
-import uim.platform.auditlog.application.dto;
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.presentation.http.json_utils;
-
+import uim.platform.auditlog;
+mixin(ShowModule!());
 @safe:
 class DataAccessController {
     private WriteDataAccessLogUseCase useCase;

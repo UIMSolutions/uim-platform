@@ -1,33 +1,32 @@
 module uim.platform.auditlog.presentation.http.controllers.security_event;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.auditlog.application.usecases.write.security_event;
+// import uim.platform.auditlog.application.dto;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.presentation.http.json_utils;
+import uim.platform.auditlog;
 
-import uim.platform.auditlog.application.usecases.write.security_event;
-import uim.platform.auditlog.application.dto;
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.presentation.http.json_utils;
+mixin(ShowModule!());
 
-@safe: class SecurityEventController
-{
+@safe:
+class SecurityEventController : SAPController {
     private WriteSecurityEventUseCase useCase;
 
-    this(WriteSecurityEventUseCase useCase)
-    {
+    this(WriteSecurityEventUseCase useCase) {
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/security-events", &handleWrite);
     }
 
-    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = WriteSecurityEventRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -43,25 +42,24 @@ import uim.platform.auditlog.presentation.http.json_utils;
             r.riskLevel = j.getString("riskLevel");
 
             auto outcomeStr = j.getString("outcome");
-            if (outcomeStr == "failure") r.outcome = AuditOutcome.failure;
-            else if (outcomeStr == "denied") r.outcome = AuditOutcome.denied;
-            else if (outcomeStr == "error") r.outcome = AuditOutcome.error;
-            else r.outcome = AuditOutcome.success;
+            if (outcomeStr == "failure")
+                r.outcome = AuditOutcome.failure;
+            else if (outcomeStr == "denied")
+                r.outcome = AuditOutcome.denied;
+            else if (outcomeStr == "error")
+                r.outcome = AuditOutcome.error;
+            else
+                r.outcome = AuditOutcome.success;
 
             auto result = useCase.writeEvent(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }

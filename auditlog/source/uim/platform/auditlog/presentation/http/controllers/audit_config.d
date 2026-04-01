@@ -1,25 +1,29 @@
 module uim.platform.auditlog.presentation.http.controllers.audit_config;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.auditlog.application.usecases.manage.audit_config;
+// import uim.platform.auditlog.application.dto;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.audit_config;
+// import uim.platform.auditlog.presentation.http.json_utils;
 
-import uim.platform.auditlog.application.usecases.manage.audit_config;
-import uim.platform.auditlog.application.dto;
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.audit_config;
-import uim.platform.auditlog.presentation.http.json_utils;
-
+import uim.platform.auditlog;
+mixin(ShowModule!());
 @safe:
-class AuditConfigController {
+class AuditConfigController : SAPController {
   private ManageAuditConfigUseCase useCase;
 
   this(ManageAuditConfigUseCase useCase) {
     this.useCase = useCase;
   }
 
-  void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/configs", &handleCreate);
     router.get("/api/v1/configs", &handleList);
     router.get("/api/v1/configs/*", &handleGetByTenant);

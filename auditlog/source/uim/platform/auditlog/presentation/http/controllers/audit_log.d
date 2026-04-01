@@ -1,19 +1,21 @@
 module uim.platform.auditlog.presentation.http.controllers.audit_log;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.auditlog.application.usecases.write.audit_log;
+// import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
+// import uim.platform.auditlog.application.dto;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.audit_log_entry;
+// import uim.platform.auditlog.presentation.http.json_utils;
 
-import uim.platform.auditlog.application.usecases.write.audit_log;
-import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
-import uim.platform.auditlog.application.dto;
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.audit_log_entry;
-import uim.platform.auditlog.presentation.http.json_utils;
-
+import uim.platform.auditlog;
+mixin(ShowModule!());
 @safe:
-class AuditLogController {
+class AuditLogController : SAPController {
     private WriteAuditLogUseCase writeUC;
     private RetrieveAuditLogsUseCase retrieveUC;
 
@@ -22,7 +24,9 @@ class AuditLogController {
         this.retrieveUC = retrieveUC;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/auditlog", &handleWrite);
         router.get("/api/v1/auditlog", &handleQuery);
         router.get("/api/v1/auditlog/*", &handleGetById);

@@ -13,4 +13,5 @@ public {
 
   import uim.platform.service.classes.entities;
   import uim.platform.service.classes.tenants;
+  import uim.platform.service.classes.controller;
 }

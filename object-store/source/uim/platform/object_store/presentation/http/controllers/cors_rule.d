@@ -10,14 +10,16 @@ import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.cors_rule;
 import uim.platform.object_store.presentation.http.json_utils;
 
-class CorsRuleController {
+class CorsRuleController : SAPController {
     private ManageCorsRulesUseCase uc;
 
     this(ManageCorsRulesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/cors-rules", &handleCreate);
         router.get("/api/v1/buckets/*/cors-rules", &handleListByBucket);
         router.get("/api/v1/cors-rules/*", &handleGetById);
@@ -55,9 +57,7 @@ class CorsRuleController {
             auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
             auto rules = uc.listRules(bucketId);
 
-            auto arr = Json.emptyArray;
-            foreach (ref r; rules)
-                arr ~= serializeRule(r);
+            auto arr = rules.map!(r => serializeRule(r)).array.toJson;
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;

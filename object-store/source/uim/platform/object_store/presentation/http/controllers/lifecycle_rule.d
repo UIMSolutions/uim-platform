@@ -1,23 +1,30 @@
 module uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
-import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.lifecycle_rule;
-import uim.platform.object_store.presentation.http.json_utils;
+// import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.lifecycle_rule;
+// import uim.platform.object_store.presentation.http.json_utils;
 
-class LifecycleRuleController {
+import uim.platform.object_store;
+
+mixin(ShowModule!());
+
+@safe:
+class LifecycleRuleController : SAPController {
     private ManageLifecycleRulesUseCase uc;
 
     this(ManageLifecycleRulesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/lifecycle-rules", &handleCreate);
         router.get("/api/v1/buckets/*/lifecycle-rules", &handleListByBucket);
         router.get("/api/v1/lifecycle-rules/*", &handleGetById);

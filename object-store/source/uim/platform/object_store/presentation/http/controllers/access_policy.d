@@ -1,23 +1,30 @@
 module uim.platform.object_store.presentation.http.controllers.access_policy;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
+// 
+// import uim.platform.object_store.application.use_cases.manage_access_policies;
+// import uim.platform.object_store.application.dto;
+// import uim.platform.object_store.domain.entities.access_policy;
+// import uim.platform.object_store.presentation.http.json_utils;
 
-import uim.platform.object_store.application.use_cases.manage_access_policies;
-import uim.platform.object_store.application.dto;
-import uim.platform.object_store.domain.entities.access_policy;
-import uim.platform.object_store.presentation.http.json_utils;
+import uim.platform.object_store;
 
-class AccessPolicyController {
+mixin(ShowModule!());
+
+@safe:
+class AccessPolicyController : SAPController {
     private ManageAccessPoliciesUseCase uc;
 
     this(ManageAccessPoliciesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router) {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/access-policies", &handleCreate);
         router.get("/api/v1/buckets/*/access-policies", &handleListByBucket);
         router.get("/api/v1/access-policies/*", &handleGetById);
