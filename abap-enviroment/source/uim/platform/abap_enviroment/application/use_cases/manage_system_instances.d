@@ -1,6 +1,6 @@
-module application.use_cases.manage_system_instances;
+module uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.system_instance;
 import domain.ports.system_instance_repository;
 import domain.services.system_lifecycle_validator;

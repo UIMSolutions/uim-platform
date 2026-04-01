@@ -5,11 +5,11 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_software_components;
-import application.dto;
+import uim.platform.abap_enviroment.application.use_cases.manage_software_components;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.software_component;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class SoftwareComponentController
 {

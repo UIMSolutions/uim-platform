@@ -1,6 +1,6 @@
-module application.use_cases.manage_business_users;
+module uim.platform.abap_enviroment.application.use_cases.manage_business_users;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.business_user;
 import domain.ports.business_user_repository;
 import domain.ports.business_role_repository;

@@ -1,6 +1,6 @@
-module application.use_cases.manage_business_roles;
+module uim.platform.abap_enviroment.application.use_cases.manage_business_roles;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.business_role;
 import domain.ports.business_role_repository;
 import domain.types;

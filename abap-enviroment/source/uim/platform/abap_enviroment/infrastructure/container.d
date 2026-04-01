@@ -13,25 +13,25 @@ import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_transpo
 import uim.platform.abap_enviroment.infrastructure.persistence.in_memory_application_job_repo;
 
 // Use Cases
-import application.use_cases.manage_system_instances;
-import application.use_cases.manage_software_components;
-import application.use_cases.manage_communication_arrangements;
-import application.use_cases.manage_service_bindings;
-import application.use_cases.manage_business_users;
-import application.use_cases.manage_business_roles;
-import application.use_cases.manage_transport_requests;
-import application.use_cases.manage_application_jobs;
+import uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
+import uim.platform.abap_enviroment.application.use_cases.manage_software_components;
+import uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
+import uim.platform.abap_enviroment.application.use_cases.manage_service_bindings;
+import uim.platform.abap_enviroment.application.use_cases.manage_business_users;
+import uim.platform.abap_enviroment.application.use_cases.manage_business_roles;
+import uim.platform.abap_enviroment.application.use_cases.manage_transport_requests;
+import uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
 
 // Controllers
-import presentation.http.system_instance;
-import presentation.http.software_component;
-import presentation.http.communication_arrangement;
-import presentation.http.service_binding;
-import presentation.http.business_user;
-import presentation.http.business_role;
-import presentation.http.transport_request;
-import presentation.http.application_job;
-import presentation.http.health;
+import uim.platform.abap_enviroment.presentation.http.system_instance;
+import uim.platform.abap_enviroment.presentation.http.software_component;
+import uim.platform.abap_enviroment.presentation.http.communication_arrangement;
+import uim.platform.abap_enviroment.presentation.http.service_binding;
+import uim.platform.abap_enviroment.presentation.http.business_user;
+import uim.platform.abap_enviroment.presentation.http.business_role;
+import uim.platform.abap_enviroment.presentation.http.transport_request;
+import uim.platform.abap_enviroment.presentation.http.application_job;
+import uim.platform.abap_enviroment.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

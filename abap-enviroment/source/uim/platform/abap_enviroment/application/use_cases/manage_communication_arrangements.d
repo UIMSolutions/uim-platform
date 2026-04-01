@@ -1,6 +1,6 @@
-module application.use_cases.manage_communication_arrangements;
+module uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.communication_arrangement;
 import domain.ports.communication_arrangement_repository;
 import domain.types;

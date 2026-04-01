@@ -1,6 +1,6 @@
-module application.use_cases.manage_software_components;
+module uim.platform.abap_enviroment.application.use_cases.manage_software_components;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.software_component;
 import domain.ports.software_component_repository;
 import domain.ports.system_instance_repository;

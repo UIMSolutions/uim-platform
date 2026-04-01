@@ -5,11 +5,11 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_service_bindings;
-import application.dto;
+import uim.platform.abap_enviroment.application.use_cases.manage_service_bindings;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.service_binding;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class ServiceBindingController
 {

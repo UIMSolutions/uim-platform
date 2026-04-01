@@ -1,6 +1,6 @@
-module application.use_cases.manage_transport_requests;
+module uim.platform.abap_enviroment.application.use_cases.manage_transport_requests;
 
-import application.dto;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.transport_request;
 import domain.ports.transport_request_repository;
 import domain.services.transport_release_validator;

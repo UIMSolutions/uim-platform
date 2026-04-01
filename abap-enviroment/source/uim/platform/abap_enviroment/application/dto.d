@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.abap_enviroment.application.dto;
 
 import domain.types;
 import domain.entities.communication_arrangement : CommunicationEndpoint;

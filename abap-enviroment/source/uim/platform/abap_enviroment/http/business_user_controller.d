@@ -5,13 +5,13 @@ module uim.platform.abap_enviroment.presentation.http.business_user;
 // import vibe.data.json;
 // import std.conv : to;
 // 
-// import application.use_cases.manage_business_users;
-// import application.dto;
+// import uim.platform.abap_enviroment.application.use_cases.manage_business_users;
+// import uim.platform.abap_enviroment.application.dto;
 // import domain.entities.business_user;
 // import domain.types;
-// import presentation.http.json_utils;
+// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
-import presentation.http;
+import uim.platform.abap_enviroment.presentation.http;
 
 Mixin(ShowModule!());
 

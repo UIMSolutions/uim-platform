@@ -3,13 +3,13 @@ module uim.platform.abap_enviroment.presentation.http.system_instance;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import std.conv : to;
+import std.conv : to;^
 
-import application.use_cases.manage_system_instances;
-import application.dto;
+import uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
+import uim.platform.abap_enviroment.application.dto;
 import domain.entities.system_instance;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class SystemInstanceController {
     private ManageSystemInstancesUseCase uc;
