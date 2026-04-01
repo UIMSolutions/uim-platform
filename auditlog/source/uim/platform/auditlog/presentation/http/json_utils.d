@@ -25,7 +25,7 @@ bool jsonBool(Json j, string key, bool default_ = false) {
     auto v = key in j;
     if (v is null)
         return default_;
-    if ((*v).type == Json.Type.bool_)
+    if ((*v).isBoolean)
         return (*v).get!bool;
     return default_;
 }
