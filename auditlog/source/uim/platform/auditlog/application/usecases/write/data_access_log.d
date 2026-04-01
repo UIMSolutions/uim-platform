@@ -10,21 +10,20 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import uim.platform.auditlog.application.dto;
 
-@safe: class WriteDataAccessLogUseCase
-{
+@safe:
+class WriteDataAccessLogUseCase {
     private AuditLogRepository auditRepo;
     private DataAccessLogRepository dalRepo;
 
-    this(AuditLogRepository auditRepo, DataAccessLogRepository dalRepo)
-    {
+    this(AuditLogRepository auditRepo, DataAccessLogRepository dalRepo) {
         this.auditRepo = auditRepo;
         this.dalRepo = dalRepo;
     }
 
-    CommandResult writeLog(WriteDataAccessLogRequest req)
-    {
+    CommandResult writeLog(WriteDataAccessLogRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
+            
         if (req.dataSubject.length == 0)
             return CommandResult("", "Data subject is required");
 

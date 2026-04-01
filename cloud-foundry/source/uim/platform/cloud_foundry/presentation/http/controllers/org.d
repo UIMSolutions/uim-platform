@@ -39,11 +39,11 @@ class OrgController
       auto r = CreateOrgRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = jsonStr(j, "name");
-      r.memoryQuotaMb = jsonInt(j, "memoryQuotaMb");
-      r.instanceMemoryLimitMb = jsonInt(j, "instanceMemoryLimitMb");
-      r.totalRoutes = jsonInt(j, "totalRoutes");
-      r.totalServices = jsonInt(j, "totalServices");
-      r.totalAppInstances = jsonInt(j, "totalAppInstances");
+      r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
+      r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
+      r.totalRoutes = j.getInteger("totalRoutes", 0);
+      r.totalServices = j.getInteger("totalServices", 0);
+      r.totalAppInstances = j.getInteger("totalAppInstances", 0);
       r.createdBy = jsonStr(j, "createdBy");
 
       auto result = useCase.createOrg(r);
@@ -114,11 +114,11 @@ class OrgController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = jsonStr(j, "name");
-      r.memoryQuotaMb = jsonInt(j, "memoryQuotaMb");
-      r.instanceMemoryLimitMb = jsonInt(j, "instanceMemoryLimitMb");
-      r.totalRoutes = jsonInt(j, "totalRoutes");
-      r.totalServices = jsonInt(j, "totalServices");
-      r.totalAppInstances = jsonInt(j, "totalAppInstances");
+      r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
+      r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
+      r.totalRoutes = j.getInteger("totalRoutes", 0);
+      r.totalServices = j.getInteger("totalServices", 0);
+      r.totalAppInstances = j.getInteger("totalAppInstances", 0);
 
       auto result = useCase.updateOrg(r);
       if (result.isSuccess())

@@ -34,7 +34,7 @@ class RetentionEnforcer {
 
         auto policy = policyRepo.findDefault(tenantId);
         int days = 90; // SAP default
-        if (policy !is null && policy.retentionDays > 0)
+        if (policyRepo.existsDefault(tenantId) && policy.retentionDays > 0)
             days = policy.retentionDays;
 
         // Convert days to hnsecs cutoff

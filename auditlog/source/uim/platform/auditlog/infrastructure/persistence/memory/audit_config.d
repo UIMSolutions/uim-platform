@@ -16,14 +16,14 @@ class InMemoryAuditConfigRepository : AuditConfigRepository {
   }
 
   bool existsByTenant(TenantId tenantId) {
-    return store.byValue.any!(c => c.tenantId == tenantId);
+    return findAll().any!(c => c.tenantId == tenantId);
   }
 
   AuditConfig findByTenant(TenantId tenantId) {
     if (!existsByTenant(tenantId))
       return AuditConfig.init;
 
-    foreach (c; store.byValue())
+    foreach (c; findAll())
       if (c.tenantId == tenantId)
         return c;
 

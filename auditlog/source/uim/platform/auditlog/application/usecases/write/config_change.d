@@ -10,19 +10,17 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.config_change_log_repository;
 import uim.platform.auditlog.application.dto;
 
-@safe: class WriteConfigChangeUseCase
-{
+@safe:
+class WriteConfigChangeUseCase {
     private AuditLogRepository auditRepo;
     private ConfigChangeLogRepository cclRepo;
 
-    this(AuditLogRepository auditRepo, ConfigChangeLogRepository cclRepo)
-    {
+    this(AuditLogRepository auditRepo, ConfigChangeLogRepository cclRepo) {
         this.auditRepo = auditRepo;
         this.cclRepo = cclRepo;
     }
 
-    CommandResult writeChange(WriteConfigChangeLogRequest req)
-    {
+    CommandResult writeChange(WriteConfigChangeLogRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
         if (req.configType.length == 0)

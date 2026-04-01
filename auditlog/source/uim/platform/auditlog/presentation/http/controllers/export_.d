@@ -98,7 +98,7 @@ import uim.platform.auditlog.presentation.http.json_utils;
                 writeError(res, 404, "Export job not found");
                 return;
             }
-            res.writeJsonBody(serializeJob(*job), 200);
+            res.writeJsonBody(serializeJob(job), 200);
         }
         catch (Exception e)
         {

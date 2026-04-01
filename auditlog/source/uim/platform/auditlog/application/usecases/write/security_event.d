@@ -10,21 +10,20 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.security_event_repository;
 import uim.platform.auditlog.application.dto;
 
-@safe: class WriteSecurityEventUseCase
-{
+@safe:
+class WriteSecurityEventUseCase {
     private AuditLogRepository auditRepo;
     private SecurityEventRepository secRepo;
 
-    this(AuditLogRepository auditRepo, SecurityEventRepository secRepo)
-    {
+    this(AuditLogRepository auditRepo, SecurityEventRepository secRepo) {
         this.auditRepo = auditRepo;
         this.secRepo = secRepo;
     }
 
-    CommandResult writeEvent(WriteSecurityEventRequest req)
-    {
+    CommandResult writeEvent(WriteSecurityEventRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
+            
         if (req.eventType.length == 0)
             return CommandResult("", "Event type is required");
 
@@ -69,25 +68,32 @@ import uim.platform.auditlog.application.dto;
         return CommandResult(auditId, "");
     }
 
-    private AuditAction mapEventTypeToAction(string eventType)
-    {
-        switch (eventType)
-        {
-            case "login": return AuditAction.login;
-            case "logout": return AuditAction.logout;
-            case "loginFailed": return AuditAction.loginFailed;
-            case "passwordChange": return AuditAction.passwordChange;
-            case "mfaEnroll": return AuditAction.mfaEnroll;
-            case "mfaVerify": return AuditAction.mfaVerify;
-            case "tokenIssue": return AuditAction.tokenIssue;
-            case "tokenRevoke": return AuditAction.tokenRevoke;
-            default: return AuditAction.login;
+    private AuditAction mapEventTypeToAction(string eventType) {
+        switch (eventType) {
+        case "login":
+            return AuditAction.login;
+        case "logout":
+            return AuditAction.logout;
+        case "loginFailed":
+            return AuditAction.loginFailed;
+        case "passwordChange":
+            return AuditAction.passwordChange;
+        case "mfaEnroll":
+            return AuditAction.mfaEnroll;
+        case "mfaVerify":
+            return AuditAction.mfaVerify;
+        case "tokenIssue":
+            return AuditAction.tokenIssue;
+        case "tokenRevoke":
+            return AuditAction.tokenRevoke;
+        default:
+            return AuditAction.login;
         }
     }
 
-    private string buildSecurityMessage(WriteSecurityEventRequest req)
-    {
+    private string buildSecurityMessage(WriteSecurityEventRequest req) {
         import std.conv : to;
+
         return req.eventType ~ " by user " ~ req.userName
             ~ " from " ~ req.ipAddress
             ~ " outcome=" ~ req.outcome.to!string;

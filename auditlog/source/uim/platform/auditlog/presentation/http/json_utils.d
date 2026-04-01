@@ -3,6 +3,8 @@ module uim.platform.auditlog.presentation.http.json_utils;
 import vibe.data.json;
 import vibe.http.server;
 
+import uim.platform.auditlog;
+
 @safe:
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
@@ -47,15 +49,15 @@ int jsonInt(Json j, string key, int default_ = 0) {
 
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
-    if (j.type != Json.Type.object)
-        return [];
+    if (!j.isObject)
+        return null;
     auto v = key in j;
     if (v is null || (*v).type != Json.Type.array)
-        return [];
+        return null;
 
     string[] result;
     foreach (item; *v) {
-        if (item.type == Json.Type.string)
+        if (item.isString)
             result ~= item.get!string;
     }
     return result;
