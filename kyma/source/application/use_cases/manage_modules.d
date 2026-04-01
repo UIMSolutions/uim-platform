@@ -1,4 +1,4 @@
-module application.use_cases.manage_modules;
+module application.usecases.manage_modules;
 
 import application.dto;
 import domain.entities.kyma_module;

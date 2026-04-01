@@ -1,4 +1,4 @@
-module application.use_cases.manage_namespaces;
+module application.usecases.manage_namespaces;
 
 import application.dto;
 import domain.entities.namespace;

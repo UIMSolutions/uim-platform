@@ -1,4 +1,4 @@
-module application.use_cases.manage_environments;
+module application.usecases.manage_environments;
 
 import application.dto;
 import domain.entities.kyma_environment;

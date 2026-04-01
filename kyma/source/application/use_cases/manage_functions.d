@@ -1,4 +1,4 @@
-module application.use_cases.manage_functions;
+module application.usecases.manage_functions;
 
 import application.dto;
 import domain.entities.serverless_function;

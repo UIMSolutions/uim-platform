@@ -8,10 +8,10 @@ import infrastructure.persistence.memory.certificate_repo;
 import infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
-import application.use_cases.manage_destinations;
-import application.use_cases.manage_certificates;
-import application.use_cases.manage_fragments;
-import application.use_cases.find_destination;
+import application.usecases.manage_destinations;
+import application.usecases.manage_certificates;
+import application.usecases.manage_fragments;
+import application.usecases.find_destination;
 
 // Controllers
 import presentation.http.destination_controller;

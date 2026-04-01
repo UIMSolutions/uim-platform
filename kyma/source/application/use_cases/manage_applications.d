@@ -1,4 +1,4 @@
-module application.use_cases.manage_applications;
+module application.usecases.manage_applications;
 
 import application.dto;
 import domain.entities.application;

@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.find_destination;
+import application.usecases.find_destination;
 import application.dto;
 import presentation.http.json_utils;
 

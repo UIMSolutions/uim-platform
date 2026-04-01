@@ -1,4 +1,4 @@
-module application.use_cases.manage_fragments;
+module application.usecases.manage_fragments;
 
 import application.dto;
 import domain.entities.destination_fragment;

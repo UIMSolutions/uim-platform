@@ -1,4 +1,4 @@
-module application.use_cases.manage_service_instances;
+module application.usecases.manage_service_instances;
 
 import application.dto;
 import domain.entities.service_instance;

@@ -1,4 +1,4 @@
-module application.use_cases.manage_service_bindings;
+module application.usecases.manage_service_bindings;
 
 import application.dto;
 import domain.entities.service_binding;

@@ -1,4 +1,4 @@
-module application.use_cases.manage_destinations;
+module application.usecases.manage_destinations;
 
 import application.dto;
 import domain.entities.destination;

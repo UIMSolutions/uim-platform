@@ -1,4 +1,4 @@
-module application.use_cases.manage_certificates;
+module application.usecases.manage_certificates;
 
 import application.dto;
 import domain.entities.certificate;

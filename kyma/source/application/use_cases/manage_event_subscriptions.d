@@ -1,4 +1,4 @@
-module application.use_cases.manage_event_subscriptions;
+module application.usecases.manage_event_subscriptions;
 
 import application.dto;
 import domain.entities.event_subscription;

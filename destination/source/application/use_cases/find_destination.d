@@ -1,4 +1,4 @@
-module application.use_cases.find_destination;
+module application.usecases.find_destination;
 
 import application.dto;
 import domain.entities.destination;

@@ -18,15 +18,15 @@ import domain.services.module_dependency_resolver;
 import domain.services.function_validator;
 
 // Use Cases
-import application.use_cases.manage_environments;
-import application.use_cases.manage_namespaces;
-import application.use_cases.manage_functions;
-import application.use_cases.manage_api_rules;
-import application.use_cases.manage_service_instances;
-import application.use_cases.manage_service_bindings;
-import application.use_cases.manage_event_subscriptions;
-import application.use_cases.manage_modules;
-import application.use_cases.manage_applications;
+import application.usecases.manage_environments;
+import application.usecases.manage_namespaces;
+import application.usecases.manage_functions;
+import application.usecases.manage_api_rules;
+import application.usecases.manage_service_instances;
+import application.usecases.manage_service_bindings;
+import application.usecases.manage_event_subscriptions;
+import application.usecases.manage_modules;
+import application.usecases.manage_applications;
 
 // Controllers
 import presentation.http.environment_controller;

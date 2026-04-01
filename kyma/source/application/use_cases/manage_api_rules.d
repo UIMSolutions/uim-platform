@@ -1,4 +1,4 @@
-module application.use_cases.manage_api_rules;
+module application.usecases.manage_api_rules;
 
 import application.dto;
 import domain.entities.api_rule;

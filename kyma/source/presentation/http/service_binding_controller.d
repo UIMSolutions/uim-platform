@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_service_bindings;
+import application.usecases.manage_service_bindings;
 import application.dto;
 import domain.entities.service_binding;
 import domain.types;
