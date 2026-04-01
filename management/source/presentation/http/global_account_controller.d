@@ -10,7 +10,7 @@ import domain.entities.global_account;
 import domain.types;
 import presentation.http.json_utils;
 
-class GlobalAccountController {
+class GlobalAccountController : SAPController {
     private ManageGlobalAccountsUseCase uc;
 
     this(ManageGlobalAccountsUseCase uc) {

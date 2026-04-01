@@ -10,7 +10,7 @@ import domain.entities.service_plan;
 import domain.types;
 import presentation.http.json_utils;
 
-class ServicePlanController {
+class ServicePlanController : SAPController {
     private ManageServicePlansUseCase uc;
 
     this(ManageServicePlansUseCase uc) {

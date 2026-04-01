@@ -11,7 +11,7 @@ import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.application;
 import presentation.http.json_utils;
 
-class AppController {
+class AppController : SAPController {
   private ManageAppsUseCase useCase;
 
   this(ManageAppsUseCase useCase) {

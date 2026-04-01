@@ -12,7 +12,7 @@ module uim.platform.auditlog.presentation.http.controllers.data_access;
 import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
-class DataAccessController {
+class DataAccessController : SAPController {
     private WriteDataAccessLogUseCase useCase;
 
     this(WriteDataAccessLogUseCase useCase) {

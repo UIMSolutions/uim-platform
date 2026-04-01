@@ -12,7 +12,7 @@ import domain.entities.health_check_result;
 import domain.types;
 import presentation.http.json_utils;
 
-class CheckController {
+class CheckController : SAPController {
     private ManageHealthChecksUseCase uc;
 
     this(ManageHealthChecksUseCase uc) {

@@ -11,7 +11,7 @@ import domain.entities.notification_channel;
 import domain.types;
 import presentation.http.json_utils;
 
-class ChannelController {
+class ChannelController : SAPController {
     private ManageNotificationChannelsUseCase uc;
 
     this(ManageNotificationChannelsUseCase uc) {

@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SAPController {
+class SAPController : SAPController {
   this() {
     initialize();
   }

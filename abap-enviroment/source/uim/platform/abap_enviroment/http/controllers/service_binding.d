@@ -16,7 +16,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class ServiceBindingController {
+class ServiceBindingController : SAPController {
     private ManageServiceBindingsUseCase uc;
 
     this(ManageServiceBindingsUseCase uc) {

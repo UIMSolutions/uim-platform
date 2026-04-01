@@ -11,7 +11,7 @@ import domain.entities.destination;
 import domain.types;
 import presentation.http.json_utils;
 
-class DestinationController {
+class DestinationController : SAPController {
     private ManageDestinationsUseCase uc;
 
     this(ManageDestinationsUseCase uc) {

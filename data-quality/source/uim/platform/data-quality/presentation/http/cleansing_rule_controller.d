@@ -11,7 +11,7 @@ import domain.types;
 import domain.entities.cleansing_rule;
 import presentation.http.json_utils;
 
-class CleansingRuleController {
+class CleansingRuleController : SAPController {
     private ManageCleansingRulesUseCase uc;
 
     this(ManageCleansingRulesUseCase uc) {

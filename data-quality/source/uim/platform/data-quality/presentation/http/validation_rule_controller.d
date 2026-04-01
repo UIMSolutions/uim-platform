@@ -11,7 +11,7 @@ import domain.types;
 import domain.entities.validation_rule;
 import presentation.http.json_utils;
 
-class ValidationRuleController {
+class ValidationRuleController : SAPController {
     private ManageValidationRulesUseCase uc;
 
     this(ManageValidationRulesUseCase uc) {
