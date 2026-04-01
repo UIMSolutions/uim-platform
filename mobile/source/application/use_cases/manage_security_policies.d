@@ -1,4 +1,4 @@
-module application.use_cases.manage_security_policies;
+module application.usecases.manage_security_policies;
 
 import application.dto;
 import domain.entities.security_policy;

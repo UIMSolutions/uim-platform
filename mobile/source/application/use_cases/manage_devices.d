@@ -1,4 +1,4 @@
-module application.use_cases.manage_devices;
+module application.usecases.manage_devices;
 
 import application.dto;
 import domain.entities.device_registration;

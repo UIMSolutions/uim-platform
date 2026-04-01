@@ -1,4 +1,4 @@
-module application.use_cases.manage_mobile_apps;
+module application.usecases.manage_mobile_apps;
 
 import application.dto;
 import domain.entities.mobile_app;

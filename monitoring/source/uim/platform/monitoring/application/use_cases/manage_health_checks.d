@@ -1,4 +1,4 @@
-module application.use_cases.manage_health_checks;
+module application.usecases.manage_health_checks;
 
 import application.dto;
 import domain.entities.health_check;

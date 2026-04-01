@@ -1,4 +1,4 @@
-module application.use_cases.track_usage;
+module application.usecases.track_usage;
 
 import application.dto;
 import domain.entities.usage_event;

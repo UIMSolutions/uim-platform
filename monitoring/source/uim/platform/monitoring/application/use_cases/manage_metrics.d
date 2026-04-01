@@ -1,4 +1,4 @@
-module application.use_cases.manage_metrics;
+module application.usecases.manage_metrics;
 
 import application.dto;
 import domain.entities.metric;

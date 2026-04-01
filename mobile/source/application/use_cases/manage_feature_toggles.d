@@ -1,4 +1,4 @@
-module application.use_cases.manage_feature_toggles;
+module application.usecases.manage_feature_toggles;
 
 import application.dto;
 import domain.entities.feature_toggle;

@@ -1,4 +1,4 @@
-module application.use_cases.evaluate_metrics;
+module application.usecases.evaluate_metrics;
 
 import application.dto;
 import domain.entities.alert_rule;
@@ -8,7 +8,7 @@ import domain.ports.metric_repository;
 import domain.services.threshold_evaluator;
 import domain.types;
 
-import application.use_cases.manage_alerts;
+import application.usecases.manage_alerts;
 
 /// Application service: evaluates metrics against alert rules and triggers alerts.
 class EvaluateMetricsUseCase

@@ -1,4 +1,4 @@
-module application.use_cases.get_dashboard;
+module application.usecases.get_dashboard;
 
 import application.dto;
 import domain.entities.alert;

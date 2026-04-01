@@ -1,4 +1,4 @@
-module application.use_cases.manage_push_notifications;
+module application.usecases.manage_push_notifications;
 
 import application.dto;
 import domain.entities.push_notification;

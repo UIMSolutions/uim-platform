@@ -1,4 +1,4 @@
-module application.use_cases.manage_offline_sync;
+module application.usecases.manage_offline_sync;
 
 import application.dto;
 import domain.entities.offline_config;

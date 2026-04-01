@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_notification_channels;
+import application.usecases.manage_notification_channels;
 import application.dto;
 import domain.entities.notification_channel;
 import domain.types;

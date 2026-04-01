@@ -5,7 +5,7 @@ module uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
 // import vibe.data.json;
 // import std.conv : to;
 
-// import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
+// import uim.platform.object_store.application.usecases.manage_lifecycle_rules;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.lifecycle_rule;
 // import uim.platform.object_store.presentation.http.json_utils;

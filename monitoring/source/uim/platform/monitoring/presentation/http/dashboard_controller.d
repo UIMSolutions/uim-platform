@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.use_cases.get_dashboard;
+import application.usecases.get_dashboard;
 import application.dto;
 import presentation.http.json_utils;
 

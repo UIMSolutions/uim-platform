@@ -1,4 +1,4 @@
-module uim.platform.object_store.application.use_cases.manage_access_policies;
+module uim.platform.object_store.application.usecases.manage_access_policies;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.access_policy;

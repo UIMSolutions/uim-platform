@@ -13,14 +13,14 @@ import infrastructure.persistence.memory.alert_repo;
 import infrastructure.persistence.memory.notification_channel_repo;
 
 // Use Cases
-import application.use_cases.manage_monitored_resources;
-import application.use_cases.manage_metrics;
-import application.use_cases.manage_health_checks;
-import application.use_cases.manage_alert_rules;
-import application.use_cases.manage_alerts;
-import application.use_cases.manage_notification_channels;
-import application.use_cases.evaluate_metrics;
-import application.use_cases.get_dashboard;
+import application.usecases.manage_monitored_resources;
+import application.usecases.manage_metrics;
+import application.usecases.manage_health_checks;
+import application.usecases.manage_alert_rules;
+import application.usecases.manage_alerts;
+import application.usecases.manage_notification_channels;
+import application.usecases.evaluate_metrics;
+import application.usecases.get_dashboard;
 
 // Controllers
 import presentation.http.resource_controller;

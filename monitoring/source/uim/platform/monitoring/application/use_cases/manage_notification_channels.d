@@ -1,4 +1,4 @@
-module application.use_cases.manage_notification_channels;
+module application.usecases.manage_notification_channels;
 
 import application.dto;
 import domain.entities.notification_channel;

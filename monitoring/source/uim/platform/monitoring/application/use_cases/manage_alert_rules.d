@@ -1,4 +1,4 @@
-module application.use_cases.manage_alert_rules;
+module application.usecases.manage_alert_rules;
 
 import application.dto;
 import domain.entities.alert_rule;

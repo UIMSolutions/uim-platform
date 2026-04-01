@@ -1,4 +1,4 @@
-module application.use_cases.manage_monitored_resources;
+module application.usecases.manage_monitored_resources;
 
 import application.dto;
 import domain.entities.monitored_resource;

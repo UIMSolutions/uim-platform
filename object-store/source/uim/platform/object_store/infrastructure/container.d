@@ -12,12 +12,12 @@ import uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
 import uim.platform.object_store.infrastructure.persistence.memory.service_binding;
 
 // Use Cases
-import uim.platform.object_store.application.use_cases.manage_buckets;
-import uim.platform.object_store.application.use_cases.manage_objects;
-import uim.platform.object_store.application.use_cases.manage_access_policies;
-import uim.platform.object_store.application.use_cases.manage_lifecycle_rules;
-import uim.platform.object_store.application.use_cases.manage_cors_rules;
-import uim.platform.object_store.application.use_cases.manage_service_bindings;
+import uim.platform.object_store.application.usecases.manage_buckets;
+import uim.platform.object_store.application.usecases.manage_objects;
+import uim.platform.object_store.application.usecases.manage_access_policies;
+import uim.platform.object_store.application.usecases.manage_lifecycle_rules;
+import uim.platform.object_store.application.usecases.manage_cors_rules;
+import uim.platform.object_store.application.usecases.manage_service_bindings;
 
 // Controllers
 import uim.platform.object_store.presentation.http.controllers.bucket;

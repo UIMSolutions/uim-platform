@@ -1,4 +1,4 @@
-module application.use_cases.manage_app_versions;
+module application.usecases.manage_app_versions;
 
 import application.dto;
 import domain.entities.app_version;

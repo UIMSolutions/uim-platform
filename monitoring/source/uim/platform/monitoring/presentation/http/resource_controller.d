@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_monitored_resources;
+import application.usecases.manage_monitored_resources;
 import application.dto;
 import domain.entities.monitored_resource;
 import domain.types;

@@ -1,4 +1,4 @@
-module uim.platform.object_store.application.use_cases.manage_objects;
+module uim.platform.object_store.application.usecases.manage_objects;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.bucket;

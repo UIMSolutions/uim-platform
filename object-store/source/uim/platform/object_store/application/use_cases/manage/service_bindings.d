@@ -1,4 +1,4 @@
-module uim.platform.object_store.application.use_cases.manage_service_bindings;
+module uim.platform.object_store.application.usecases.manage_service_bindings;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.service_binding;
