@@ -74,7 +74,7 @@ class AuditConfigController {
         arr ~= serializeConfig(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)configs.length);
+      resp["totalCount"] = configs.length;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -89,7 +89,7 @@ class AuditConfigController {
         writeError(res, 404, "Audit config not found");
         return;
       }
-      res.writeJsonBody(serializeConfig(*cfg), 200);
+      res.writeJsonBody(serializeConfig(cfg), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

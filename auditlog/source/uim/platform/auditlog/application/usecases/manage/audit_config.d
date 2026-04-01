@@ -10,10 +10,10 @@ import uim.platform.auditlog.application.dto;
 
 @safe:
 class ManageAuditConfigUseCase {
-    private AuditConfigRepository repo;
+    private AuditConfigRepository configRepo;
 
-    this(AuditConfigRepository repo) {
-        this.repo = repo;
+    this(AuditConfigRepository configRepo) {
+        this.configRepo = configRepo;
     }
 
     CommandResult createConfig(CreateAuditConfigRequest req) {
@@ -21,7 +21,7 @@ class ManageAuditConfigUseCase {
             return CommandResult("", "Tenant ID is required");
 
         // Only one config per tenant
-        if (repo.existsByTenant(req.tenantId))
+        if (configRepo.existsByTenant(req.tenantId))
             return CommandResult("", "Audit configuration already exists for this tenant");
 
         auto now = Clock.currStdTime();
@@ -42,23 +42,23 @@ class ManageAuditConfigUseCase {
         cfg.createdAt = now;
         cfg.updatedAt = now;
 
-        repo.save(cfg);
+        configRepo.save(cfg);
         return CommandResult(cfg.id, "");
     }
 
-    AuditConfig* getConfig(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+    AuditConfig getConfig(TenantId tenantId) {
+        return configRepo.findByTenant(tenantId);
     }
 
     AuditConfig[] listConfigs() {
-        return repo.findAll();
+        return configRepo.findAll();
     }
 
     CommandResult updateConfig(UpdateAuditConfigRequest req) {
-        auto cfg = repo.findById(req.id);
-        if (cfg is null)
+        if (!configRepo.existsById(req.id))
             return CommandResult("", "Audit config not found");
 
+        auto cfg = configRepo.findById(req.id);
         if (req.name.length > 0)
             cfg.name = req.name;
         cfg.status = req.status;
@@ -74,11 +74,11 @@ class ManageAuditConfigUseCase {
             cfg.rateLimitPerSecond = req.rateLimitPerSecond;
         cfg.updatedAt = Clock.currStdTime();
 
-        repo.update(*cfg);
+        configRepo.update(cfg);
         return CommandResult(cfg.id, "");
     }
 
     void deleteConfig(AuditConfigId id, TenantId tenantId) {
-        repo.remove(id, tenantId);
+        configRepo.remove(id, tenantId);
     }
 }

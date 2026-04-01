@@ -10,10 +10,10 @@ import uim.platform.auditlog.application.dto;
 
 @safe:
 class ManageRetentionUseCase {
-    private RetentionPolicyRepository repo;
+    private RetentionPolicyRepository policyRepo;
 
-    this(RetentionPolicyRepository repo) {
-        this.repo = repo;
+    this(RetentionPolicyRepository policyRepo) {
+        this.policyRepo = policyRepo;
     }
 
     CommandResult createPolicy(CreateRetentionPolicyRequest req) {
@@ -37,23 +37,23 @@ class ManageRetentionUseCase {
         policy.createdAt = now;
         policy.updatedAt = now;
 
-        repo.save(policy);
+        policyRepo.save(policy);
         return CommandResult(policy.id, "");
     }
 
-    RetentionPolicy* getPolicy(RetentionPolicyId id, TenantId tenantId) {
-        return repo.findById(id, tenantId);
+    RetentionPolicy getPolicy(RetentionPolicyId id, TenantId tenantId) {
+        return policyRepo.findById(id, tenantId);
     }
 
     RetentionPolicy[] listPolicies(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
+        return policyRepo.findByTenant(tenantId);
     }
 
     CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
-        auto policy = repo.findById(req.id, req.tenantId);
-        if (policy is null)
+        if (!policyRepo.existsById(req.id, req.tenantId))
             return CommandResult("", "Retention policy not found");
 
+        auto policy = policyRepo.findById(req.id, req.tenantId);
         if (req.name.length > 0)
             policy.name = req.name;
         if (req.description.length > 0)
@@ -65,11 +65,11 @@ class ManageRetentionUseCase {
         policy.status = req.status;
         policy.updatedAt = Clock.currStdTime();
 
-        repo.update(*policy);
+        policyRepo.update(policy);
         return CommandResult(policy.id, "");
     }
 
     void deletePolicy(RetentionPolicyId id, TenantId tenantId) {
-        repo.remove(id, tenantId);
+        policyRepo.remove(id, tenantId);
     }
 }

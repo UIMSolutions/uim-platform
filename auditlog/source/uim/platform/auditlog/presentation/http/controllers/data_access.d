@@ -9,24 +9,20 @@ import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-@safe: class DataAccessController
-{
+@safe:
+class DataAccessController {
     private WriteDataAccessLogUseCase useCase;
 
-    this(WriteDataAccessLogUseCase useCase)
-    {
+    this(WriteDataAccessLogUseCase useCase) {
         this.useCase = useCase;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/data-access", &handleWrite);
     }
 
-    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = WriteDataAccessLogRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -39,19 +35,14 @@ import uim.platform.auditlog.presentation.http.json_utils;
             r.channel = jsonStr(j, "channel");
 
             auto result = useCase.writeLog(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }

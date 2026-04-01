@@ -22,6 +22,7 @@ class ManageExportsUseCase {
     CommandResult createExport(CreateExportJobRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
+
         if (req.requestedBy.length == 0)
             return CommandResult("", "Requester is required");
 
@@ -53,7 +54,7 @@ class ManageExportsUseCase {
         return jobRepo.existsById(id, tenantId);
     }
 
-    ExportJob* getExport(ExportJobId id, TenantId tenantId) {
+    ExportJob getExport(ExportJobId id, TenantId tenantId) {
         return jobRepo.findById(id, tenantId);
     }
 

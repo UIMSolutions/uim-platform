@@ -9,37 +9,38 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.domain.ports.audit_config_repository;
 import uim.platform.auditlog.application.dto;
 
-@safe: class WriteAuditLogUseCase
-{
-    private AuditLogRepository repo;
+@safe:
+class WriteAuditLogUseCase {
+    private AuditLogRepository logRepo;
     private AuditConfigRepository configRepo;
 
-    this(AuditLogRepository repo, AuditConfigRepository configRepo)
-    {
-        this.repo = repo;
+    this(AuditLogRepository logRepo, AuditConfigRepository configRepo) {
+        this.logRepo = logRepo;
         this.configRepo = configRepo;
     }
 
-    CommandResult writeLog(WriteAuditLogRequest req)
-    {
+    CommandResult writeLog(WriteAuditLogRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
+            
         if (req.message.length == 0)
             return CommandResult("", "Message is required");
 
         // Check if logging is enabled for this tenant/category
-        auto cfg = configRepo.findByTenant(req.tenantId);
-        if (cfg !is null && cfg.status == ConfigStatus.disabled)
-            return CommandResult("", "Audit logging is disabled for this tenant");
+        if (configRepo.existsByTenant(req.tenantId)) {
+            auto cfg = configRepo.findByTenant(req.tenantId);
+            if (cfg.status == ConfigStatus.disabled)
+                return CommandResult("", "Audit logging is disabled for this tenant");
 
-        if (cfg !is null)
-        {
             if (req.category == AuditCategory.dataAccess && !cfg.logDataAccess)
                 return CommandResult("", "Data access logging is disabled");
+
             if (req.category == AuditCategory.dataModification && !cfg.logDataModification)
                 return CommandResult("", "Data modification logging is disabled");
+
             if (req.category == AuditCategory.securityEvents && !cfg.logSecurityEvents)
                 return CommandResult("", "Security event logging is disabled");
+
             if (req.category == AuditCategory.configuration && !cfg.logConfigurationChanges)
                 return CommandResult("", "Configuration change logging is disabled");
         }
@@ -65,7 +66,7 @@ import uim.platform.auditlog.application.dto;
         entry.originApp = req.originApp;
         entry.timestamp = Clock.currStdTime();
 
-        repo.save(entry);
+        logRepo.save(entry);
         return CommandResult(entry.id, "");
     }
 }

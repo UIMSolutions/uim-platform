@@ -7,37 +7,45 @@ import uim.platform.auditlog.domain.ports.retention_policy_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-@safe: class InMemoryRetentionPolicyRepository : RetentionPolicyRepository
-{
+@safe:
+class InMemoryRetentionPolicyRepository : RetentionPolicyRepository {
     private RetentionPolicy[RetentionPolicyId] store;
 
-    RetentionPolicy[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(p => p.tenantId == tenantId).array;
+    bool existsById(RetentionPolicyId id, TenantId tenantId) {
+        return id in store && store[id].tenantId == tenantId;
     }
 
-    RetentionPolicy* findById(RetentionPolicyId id, TenantId tenantId)
-    {
-        if (auto p = id in store)
-            if (p.tenantId == tenantId)
+    RetentionPolicy findById(RetentionPolicyId id, TenantId tenantId) {
+        if (existsById(id, tenantId))
+            return store[id];
+        return RetentionPolicy.init;
+    }
+
+    bool existsDefault(TenantId tenantId) {
+        return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
+    }
+
+    RetentionPolicy findDefault(TenantId tenantId) {
+        foreach (ref p; findByTenant(tenantId))
+            if (p.isDefault && p.status == RetentionStatus.active)
                 return p;
-        return null;
+        return RetentionPolicy.init;
     }
 
-    RetentionPolicy* findDefault(TenantId tenantId)
-    {
-        foreach (ref p; store.byValue())
-            if (p.tenantId == tenantId && p.isDefault && p.status == RetentionStatus.active)
-                return &p;
-        return null;
+    RetentionPolicy[] findByTenant(TenantId tenantId) {
+        return store.byValue.filter!(p => p.tenantId == tenantId).array;
     }
 
-    void save(RetentionPolicy policy) { store[policy.id] = policy; }
-    void update(RetentionPolicy policy) { store[policy.id] = policy; }
-    void remove(RetentionPolicyId id, TenantId tenantId)
-    {
-        if (auto p = id in store)
-            if (p.tenantId == tenantId)
-                store.remove(id);
+    void save(RetentionPolicy policy) {
+        store[policy.id] = policy;
+    }
+
+    void update(RetentionPolicy policy) {
+        store[policy.id] = policy;
+    }
+
+    void remove(RetentionPolicyId id, TenantId tenantId) {
+        if (existsById(id, tenantId))
+            store.remove(id);
     }
 }

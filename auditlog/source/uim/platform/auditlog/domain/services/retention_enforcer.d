@@ -8,8 +8,8 @@ import uim.platform.auditlog.domain.ports.data_access_log_repository;
 import uim.platform.auditlog.domain.ports.config_change_log_repository;
 
 /// Domain service — enforces retention policies by purging expired entries.
-@safe: class RetentionEnforcer
-{
+@safe:
+class RetentionEnforcer {
     private AuditLogRepository auditRepo;
     private RetentionPolicyRepository policyRepo;
     private SecurityEventRepository secRepo;
@@ -20,8 +20,7 @@ import uim.platform.auditlog.domain.ports.config_change_log_repository;
         RetentionPolicyRepository policyRepo,
         SecurityEventRepository secRepo,
         DataAccessLogRepository dalRepo,
-        ConfigChangeLogRepository cclRepo)
-    {
+        ConfigChangeLogRepository cclRepo) {
         this.auditRepo = auditRepo;
         this.policyRepo = policyRepo;
         this.secRepo = secRepo;
@@ -30,8 +29,7 @@ import uim.platform.auditlog.domain.ports.config_change_log_repository;
     }
 
     /// Purge logs older than the tenant's retention policy allows.
-    long enforceForTenant(TenantId tenantId)
-    {
+    long enforceForTenant(TenantId tenantId) {
         import std.datetime.systime : Clock;
 
         auto policy = policyRepo.findDefault(tenantId);
@@ -41,7 +39,7 @@ import uim.platform.auditlog.domain.ports.config_change_log_repository;
 
         // Convert days to hnsecs cutoff
         auto now = Clock.currStdTime();
-        long cutoff = now - (cast(long) days * 24 * 60 * 60 * 10_000_000L);
+        long cutoff = now - (cast(long)days * 24 * 60 * 60 * 10_000_000L);
 
         auditRepo.removeOlderThan(tenantId, cutoff);
         secRepo.removeOlderThan(tenantId, cutoff);

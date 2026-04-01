@@ -16,7 +16,7 @@ class InMemoryAuditConfigRepository : AuditConfigRepository {
   }
 
   bool existsByTenant(TenantId tenantId) {
-    return store.byValue().any!(c => c.tenantId == tenantId);
+    return store.byValue.any!(c => c.tenantId == tenantId);
   }
 
   AuditConfig findByTenant(TenantId tenantId) {

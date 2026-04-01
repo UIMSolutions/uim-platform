@@ -11,16 +11,16 @@ import std.array : array;
 class InMemoryAuditLogRepository : AuditLogRepository {
   private AuditLogEntry[AuditLogId] store;
 
-  AuditLogEntry[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
-  }
-
   bool existsById(AuditLogId id, TenantId tenantId) {
     return (id in store && store[id].tenantId == tenantId);
   }
 
   AuditLogEntry findById(AuditLogId id, TenantId tenantId) {
     return existsById(id, tenantId) ? store[id] : AuditLogEntry.init;
+  }
+
+  AuditLogEntry[] findByTenant(TenantId tenantId) {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category) {
@@ -89,11 +89,7 @@ class InMemoryAuditLogRepository : AuditLogRepository {
   }
 
   long countByTenant(TenantId tenantId) {
-    long count = 0;
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId)
-        ++count;
-    return count;
+    return findByTenant(tenantId).length;
   }
 
   void save(AuditLogEntry entry) {
@@ -101,11 +97,10 @@ class InMemoryAuditLogRepository : AuditLogRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    AuditLogId[] toRemove;
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.timestamp < beforeTimestamp)
-        toRemove ~= e.id;
-    foreach (id; toRemove)
-      store.remove(id);
+    store
+      .findByTenant(tenantId)
+      .filter!(e => e.timestamp < beforeTimestamp)
+      .map!(e => e.id)
+      .each(id => store.remove(id));
   }
 }
