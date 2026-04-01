@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
+module uim.platform.abap_enviroment.application.usecases.manage_application_jobs;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.application_job;

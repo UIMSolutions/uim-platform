@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.abap_enviroment.application.use_cases.manage_transport_requests;
+import uim.platform.abap_enviroment.application.usecases.manage_transport_requests;
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;

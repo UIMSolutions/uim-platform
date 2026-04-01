@@ -5,7 +5,7 @@ module uim.platform.abap_enviroment.http.controllers.application_job;
 // import vibe.data.json;
 // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.use_cases.manage_application_jobs;
+// import uim.platform.abap_enviroment.application.usecases.manage_application_jobs;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.application_job;
 // import uim.platform.abap_enviroment.domain.types;

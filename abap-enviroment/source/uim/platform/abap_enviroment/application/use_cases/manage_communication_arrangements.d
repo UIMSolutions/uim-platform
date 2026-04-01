@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_communication_arrangements;
+module uim.platform.abap_enviroment.application.usecases.manage_communication_arrangements;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;

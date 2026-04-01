@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_transport_requests;
+module uim.platform.abap_enviroment.application.usecases.manage_transport_requests;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;

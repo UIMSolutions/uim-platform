@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
+module uim.platform.abap_enviroment.application.usecases.manage_system_instances;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.system_instance;

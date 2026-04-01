@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_software_components;
+module uim.platform.abap_enviroment.application.usecases.manage_software_components;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.software_component;

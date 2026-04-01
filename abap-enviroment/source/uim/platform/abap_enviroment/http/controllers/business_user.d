@@ -5,7 +5,7 @@ module uim.platform.abap_enviroment.http.controllers.business_user;
 // import vibe.data.json;
 // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.use_cases.manage_business_users;
+// import uim.platform.abap_enviroment.application.usecases.manage_business_users;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.business_user;
 // import uim.platform.abap_enviroment.domain.types;

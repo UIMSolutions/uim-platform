@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_business_users;
+module uim.platform.abap_enviroment.application.usecases.manage_business_users;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.business_user;

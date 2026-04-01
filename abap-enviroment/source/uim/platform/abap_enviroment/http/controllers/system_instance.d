@@ -5,7 +5,7 @@ module uim.platform.abap_enviroment.http.controllers.system_instance;
 // import vibe.data.json;
 // import std.conv : to;^
 // 
-// import uim.platform.abap_enviroment.application.use_cases.manage_system_instances;
+// import uim.platform.abap_enviroment.application.usecases.manage_system_instances;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.system_instance;
 // import uim.platform.abap_enviroment.domain.types;

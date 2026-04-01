@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.application.use_cases.manage_service_bindings;
+module uim.platform.abap_enviroment.application.usecases.manage_service_bindings;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.service_binding;
