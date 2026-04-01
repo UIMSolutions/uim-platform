@@ -84,13 +84,13 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.validationRuleRepo = new InMemoryValidationRuleRepository();
-    c.validationResultRepo = new InMemoryValidationResultRepository();
-    c.addressRepo = new InMemoryAddressRepository();
-    c.matchGroupRepo = new InMemoryMatchGroupRepository();
-    c.dataProfileRepo = new InMemoryDataProfileRepository();
-    c.cleansingRuleRepo = new InMemoryCleansingRuleRepository();
-    c.cleansingJobRepo = new InMemoryCleansingJobRepository();
+    c.validationRuleRepo = new MemoryValidationRuleRepository();
+    c.validationResultRepo = new MemoryValidationResultRepository();
+    c.addressRepo = new MemoryAddressRepository();
+    c.matchGroupRepo = new MemoryMatchGroupRepository();
+    c.dataProfileRepo = new MemoryDataProfileRepository();
+    c.cleansingRuleRepo = new MemoryCleansingRuleRepository();
+    c.cleansingJobRepo = new MemoryCleansingJobRepository();
 
     // Domain services
     c.validationEngine = new ValidationEngine();

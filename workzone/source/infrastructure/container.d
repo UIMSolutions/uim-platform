@@ -86,16 +86,16 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.workspaceRepo = new InMemoryWorkspaceRepository();
-    c.workpageRepo = new InMemoryWorkpageRepository();
-    c.cardRepo = new InMemoryCardRepository();
-    c.contentRepo = new InMemoryContentRepository();
-    c.feedRepo = new InMemoryFeedRepository();
-    c.notificationRepo = new InMemoryNotificationRepository();
-    c.taskRepo = new InMemoryTaskRepository();
-    c.channelRepo = new InMemoryChannelRepository();
-    c.appRepo = new InMemoryAppRepository();
-    c.widgetRepo = new InMemoryWidgetRepository();
+    c.workspaceRepo = new MemoryWorkspaceRepository();
+    c.workpageRepo = new MemoryWorkpageRepository();
+    c.cardRepo = new MemoryCardRepository();
+    c.contentRepo = new MemoryContentRepository();
+    c.feedRepo = new MemoryFeedRepository();
+    c.notificationRepo = new MemoryNotificationRepository();
+    c.taskRepo = new MemoryTaskRepository();
+    c.channelRepo = new MemoryChannelRepository();
+    c.appRepo = new MemoryAppRepository();
+    c.widgetRepo = new MemoryWidgetRepository();
 
     // Application use cases
     c.manageWorkspaces = new ManageWorkspacesUseCase(c.workspaceRepo);

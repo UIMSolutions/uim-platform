@@ -74,14 +74,14 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.dataSubjectRepo = new InMemoryDataSubjectRepository();
-    c.personalDataModelRepo = new InMemoryPersonalDataModelRepository();
-    c.deletionRequestRepo = new InMemoryDeletionRequestRepository();
-    c.blockingRequestRepo = new InMemoryBlockingRequestRepository();
-    c.legalGroundRepo = new InMemoryLegalGroundRepository();
-    c.retentionRuleRepo = new InMemoryRetentionRuleRepository();
-    c.consentRecordRepo = new InMemoryConsentRecordRepository();
-    c.dataRetrievalRepo = new InMemoryDataRetrievalRequestRepository();
+    c.dataSubjectRepo = new MemoryDataSubjectRepository();
+    c.personalDataModelRepo = new MemoryPersonalDataModelRepository();
+    c.deletionRequestRepo = new MemoryDeletionRequestRepository();
+    c.blockingRequestRepo = new MemoryBlockingRequestRepository();
+    c.legalGroundRepo = new MemoryLegalGroundRepository();
+    c.retentionRuleRepo = new MemoryRetentionRuleRepository();
+    c.consentRecordRepo = new MemoryConsentRecordRepository();
+    c.dataRetrievalRepo = new MemoryDataRetrievalRequestRepository();
 
     // Application use cases
     c.manageDataSubjects = new ManageDataSubjectsUseCase(c.dataSubjectRepo);

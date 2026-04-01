@@ -73,13 +73,13 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.auditLogRepo = new InMemoryAuditLogRepository();
-    c.retentionRepo = new InMemoryRetentionPolicyRepository();
-    c.auditConfigRepo = new InMemoryAuditConfigRepository();
-    c.exportRepo = new InMemoryExportJobRepository();
-    c.securityEventRepo = new InMemorySecurityEventRepository();
-    c.dataAccessRepo = new InMemoryDataAccessLogRepository();
-    c.configChangeRepo = new InMemoryConfigChangeLogRepository();
+    c.auditLogRepo = new MemoryAuditLogRepository();
+    c.retentionRepo = new MemoryRetentionPolicyRepository();
+    c.auditConfigRepo = new MemoryAuditConfigRepository();
+    c.exportRepo = new MemoryExportJobRepository();
+    c.securityEventRepo = new MemorySecurityEventRepository();
+    c.dataAccessRepo = new MemoryDataAccessLogRepository();
+    c.configChangeRepo = new MemoryConfigChangeLogRepository();
 
     // Application use cases
     c.writeAuditLog = new WriteAuditLogUseCase(c.auditLogRepo, c.auditConfigRepo);

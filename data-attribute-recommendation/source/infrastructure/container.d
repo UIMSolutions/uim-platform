@@ -72,13 +72,13 @@ Container buildContainer(AppConfig config)
   Container c;
 
   // Infrastructure adapters
-  c.datasetRepo = new InMemoryDatasetRepository();
-  c.recordRepo = new InMemoryDataRecordRepository();
-  c.configRepo = new InMemoryModelConfigRepository();
-  c.jobRepo = new InMemoryTrainingJobRepository();
-  c.deploymentRepo = new InMemoryDeploymentRepository();
-  c.inferenceRequestRepo = new InMemoryInferenceRequestRepository();
-  c.inferenceResultRepo = new InMemoryInferenceResultRepository();
+  c.datasetRepo = new MemoryDatasetRepository();
+  c.recordRepo = new MemoryDataRecordRepository();
+  c.configRepo = new MemoryModelConfigRepository();
+  c.jobRepo = new MemoryTrainingJobRepository();
+  c.deploymentRepo = new MemoryDeploymentRepository();
+  c.inferenceRequestRepo = new MemoryInferenceRequestRepository();
+  c.inferenceResultRepo = new MemoryInferenceResultRepository();
 
   // Domain services
   c.modelTrainer = new ModelTrainer(

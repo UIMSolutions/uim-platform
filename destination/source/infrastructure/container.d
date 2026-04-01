@@ -48,9 +48,9 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.destRepo = new InMemoryDestinationRepository();
-    c.certRepo = new InMemoryCertificateRepository();
-    c.fragRepo = new InMemoryFragmentRepository();
+    c.destRepo = new MemoryDestinationRepository();
+    c.certRepo = new MemoryCertificateRepository();
+    c.fragRepo = new MemoryFragmentRepository();
 
     // Application use cases
     c.manageDestinations = new ManageDestinationsUseCase(c.destRepo);

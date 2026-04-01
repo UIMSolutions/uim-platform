@@ -72,13 +72,13 @@ Container buildContainer(AppConfig config)
   Container c;
 
   // Infrastructure adapters
-  c.sourceRepo = new InMemorySourceSystemRepository();
-  c.targetRepo = new InMemoryTargetSystemRepository();
-  c.proxyRepo = new InMemoryProxySystemRepository();
-  c.transformRepo = new InMemoryTransformationRepository();
-  c.jobRepo = new InMemoryProvisioningJobRepository();
-  c.logRepo = new InMemoryProvisioningLogRepository();
-  c.entityRepo = new InMemoryProvisionedEntityRepository();
+  c.sourceRepo = new MemorySourceSystemRepository();
+  c.targetRepo = new MemoryTargetSystemRepository();
+  c.proxyRepo = new MemoryProxySystemRepository();
+  c.transformRepo = new MemoryTransformationRepository();
+  c.jobRepo = new MemoryProvisioningJobRepository();
+  c.logRepo = new MemoryProvisioningLogRepository();
+  c.entityRepo = new MemoryProvisionedEntityRepository();
 
   // Domain services
   c.provisioningEngine = new ProvisioningEngine(

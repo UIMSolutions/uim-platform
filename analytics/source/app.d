@@ -32,13 +32,13 @@ void main() {
     // ──────────────────────────────────────────────
 
     // 1. Outgoing adapters (driven side — persistence)
-    auto dashboardRepo  = new InMemoryDashboardRepository();
-    auto storyRepo      = new InMemoryStoryRepository();
-    auto datasetRepo    = new InMemoryDatasetRepository();
-    auto widgetRepo     = new InMemoryWidgetRepository();
-    auto dataSourceRepo = new InMemoryDataSourceRepository();
-    auto planningRepo   = new InMemoryPlanningRepository();
-    auto predictionRepo = new InMemoryPredictionRepository();
+    auto dashboardRepo  = new MemoryDashboardRepository();
+    auto storyRepo      = new MemoryStoryRepository();
+    auto datasetRepo    = new MemoryDatasetRepository();
+    auto widgetRepo     = new MemoryWidgetRepository();
+    auto dataSourceRepo = new MemoryDataSourceRepository();
+    auto planningRepo   = new MemoryPlanningRepository();
+    auto predictionRepo = new MemoryPredictionRepository();
 
     // 2. Outgoing adapters (driven side — external services)
     auto dataConnector  = new StubDataConnector();

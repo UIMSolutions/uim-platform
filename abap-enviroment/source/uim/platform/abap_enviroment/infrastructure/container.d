@@ -72,14 +72,14 @@ Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.systemInstanceRepo = new InMemorySystemInstanceRepository();
-    c.softwareComponentRepo = new InMemorySoftwareComponentRepository();
-    c.communicationArrangementRepo = new InMemoryCommunicationArrangementRepository();
-    c.serviceBindingRepo = new InMemoryServiceBindingRepository();
-    c.businessUserRepo = new InMemoryBusinessUserRepository();
-    c.businessRoleRepo = new InMemoryBusinessRoleRepository();
-    c.transportRequestRepo = new InMemoryTransportRequestRepository();
-    c.applicationJobRepo = new InMemoryApplicationJobRepository();
+    c.systemInstanceRepo = new MemorySystemInstanceRepository();
+    c.softwareComponentRepo = new MemorySoftwareComponentRepository();
+    c.communicationArrangementRepo = new MemoryCommunicationArrangementRepository();
+    c.serviceBindingRepo = new MemoryServiceBindingRepository();
+    c.businessUserRepo = new MemoryBusinessUserRepository();
+    c.businessRoleRepo = new MemoryBusinessRoleRepository();
+    c.transportRequestRepo = new MemoryTransportRequestRepository();
+    c.applicationJobRepo = new MemoryApplicationJobRepository();
 
     // Application use cases
     c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);

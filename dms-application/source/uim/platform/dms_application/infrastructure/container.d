@@ -77,13 +77,13 @@ Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
-  c.repoRepo = new InMemoryRepositoryRepository();
-  c.folderRepo = new InMemoryFolderRepository();
-  c.docRepo = new InMemoryDocumentRepository();
-  c.versionRepo = new InMemoryDocumentVersionRepository();
-  c.shareRepo = new InMemoryShareRepository();
-  c.permRepo = new InMemoryPermissionRepository();
-  c.favRepo = new InMemoryFavoriteRepository();
+  c.repoRepo = new MemoryRepositoryRepository();
+  c.folderRepo = new MemoryFolderRepository();
+  c.docRepo = new MemoryDocumentRepository();
+  c.versionRepo = new MemoryDocumentVersionRepository();
+  c.shareRepo = new MemoryShareRepository();
+  c.permRepo = new MemoryPermissionRepository();
+  c.favRepo = new MemoryFavoriteRepository();
 
   // Domain services
   c.versioningService = new VersioningService(c.docRepo, c.versionRepo);

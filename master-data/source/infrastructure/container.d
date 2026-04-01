@@ -82,14 +82,14 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.mdoRepo = new InMemoryMasterDataObjectRepository();
-    c.dataModelRepo = new InMemoryDataModelRepository();
-    c.distRepo = new InMemoryDistributionModelRepository();
-    c.keyMapRepo = new InMemoryKeyMappingRepository();
-    c.changeLogRepo = new InMemoryChangeLogRepository();
-    c.clientRepo = new InMemoryClientRepository();
-    c.replJobRepo = new InMemoryReplicationJobRepository();
-    c.filterRuleRepo = new InMemoryFilterRuleRepository();
+    c.mdoRepo = new MemoryMasterDataObjectRepository();
+    c.dataModelRepo = new MemoryDataModelRepository();
+    c.distRepo = new MemoryDistributionModelRepository();
+    c.keyMapRepo = new MemoryKeyMappingRepository();
+    c.changeLogRepo = new MemoryChangeLogRepository();
+    c.clientRepo = new MemoryClientRepository();
+    c.replJobRepo = new MemoryReplicationJobRepository();
+    c.filterRuleRepo = new MemoryFilterRuleRepository();
 
     // Domain services
     c.keyMapResolver = new KeyMappingResolver();

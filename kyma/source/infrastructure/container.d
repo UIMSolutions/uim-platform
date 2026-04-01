@@ -88,15 +88,15 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.envRepo = new InMemoryEnvironmentRepository();
-    c.nsRepo = new InMemoryNamespaceRepository();
-    c.fnRepo = new InMemoryFunctionRepository();
-    c.apiRuleRepo = new InMemoryApiRuleRepository();
-    c.siRepo = new InMemoryServiceInstanceRepository();
-    c.sbRepo = new InMemoryServiceBindingRepository();
-    c.eventSubRepo = new InMemoryEventSubscriptionRepository();
-    c.moduleRepo = new InMemoryModuleRepository();
-    c.appRepo = new InMemoryApplicationRepository();
+    c.envRepo = new MemoryEnvironmentRepository();
+    c.nsRepo = new MemoryNamespaceRepository();
+    c.fnRepo = new MemoryFunctionRepository();
+    c.apiRuleRepo = new MemoryApiRuleRepository();
+    c.siRepo = new MemoryServiceInstanceRepository();
+    c.sbRepo = new MemoryServiceBindingRepository();
+    c.eventSubRepo = new MemoryEventSubscriptionRepository();
+    c.moduleRepo = new MemoryModuleRepository();
+    c.appRepo = new MemoryApplicationRepository();
 
     // Domain services
     c.depResolver = new ModuleDependencyResolver();

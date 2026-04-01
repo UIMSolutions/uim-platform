@@ -92,15 +92,15 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.globalAccountRepo = new InMemoryGlobalAccountRepository();
-    c.directoryRepo = new InMemoryDirectoryRepository();
-    c.subaccountRepo = new InMemorySubaccountRepository();
-    c.entitlementRepo = new InMemoryEntitlementRepository();
-    c.environmentRepo = new InMemoryEnvironmentInstanceRepository();
-    c.subscriptionRepo = new InMemorySubscriptionRepository();
-    c.servicePlanRepo = new InMemoryServicePlanRepository();
-    c.eventRepo = new InMemoryPlatformEventRepository();
-    c.labelRepo = new InMemoryLabelRepository();
+    c.globalAccountRepo = new MemoryGlobalAccountRepository();
+    c.directoryRepo = new MemoryDirectoryRepository();
+    c.subaccountRepo = new MemorySubaccountRepository();
+    c.entitlementRepo = new MemoryEntitlementRepository();
+    c.environmentRepo = new MemoryEnvironmentInstanceRepository();
+    c.subscriptionRepo = new MemorySubscriptionRepository();
+    c.servicePlanRepo = new MemoryServicePlanRepository();
+    c.eventRepo = new MemoryPlatformEventRepository();
+    c.labelRepo = new MemoryLabelRepository();
 
     // Domain services
     c.entitlementEvaluator = new EntitlementEvaluator();

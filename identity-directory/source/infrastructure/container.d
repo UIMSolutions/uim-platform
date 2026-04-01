@@ -68,12 +68,12 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.userRepo = new InMemoryUserRepository();
-    c.groupRepo = new InMemoryGroupRepository();
-    c.schemaRepo = new InMemorySchemaRepository();
-    c.passwordPolicyRepo = new InMemoryPasswordPolicyRepository();
-    c.apiClientRepo = new InMemoryApiClientRepository();
-    c.auditRepo = new InMemoryAuditRepository();
+    c.userRepo = new MemoryUserRepository();
+    c.groupRepo = new MemoryGroupRepository();
+    c.schemaRepo = new MemorySchemaRepository();
+    c.passwordPolicyRepo = new MemoryPasswordPolicyRepository();
+    c.apiClientRepo = new MemoryApiClientRepository();
+    c.auditRepo = new MemoryAuditRepository();
 
     c.passwordSvc = new Sha256PasswordService();
 

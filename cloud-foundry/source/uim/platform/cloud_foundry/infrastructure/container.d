@@ -78,14 +78,14 @@ Container buildContainer(AppConfig config)
   Container c;
 
   // Infrastructure adapters (driven ports)
-  c.orgRepo = new InMemoryOrgRepository();
-  c.spaceRepo = new InMemorySpaceRepository();
-  c.appRepo = new InMemoryAppRepository();
-  c.serviceInstanceRepo = new InMemoryServiceInstanceRepository();
-  c.serviceBindingRepo = new InMemoryServiceBindingRepository();
-  c.routeRepo = new InMemoryRouteRepository();
-  c.domainRepo = new InMemoryDomainRepository();
-  c.buildpackRepo = new InMemoryBuildpackRepository();
+  c.orgRepo = new MemoryOrgRepository();
+  c.spaceRepo = new MemorySpaceRepository();
+  c.appRepo = new MemoryAppRepository();
+  c.serviceInstanceRepo = new MemoryServiceInstanceRepository();
+  c.serviceBindingRepo = new MemoryServiceBindingRepository();
+  c.routeRepo = new MemoryRouteRepository();
+  c.domainRepo = new MemoryDomainRepository();
+  c.buildpackRepo = new MemoryBuildpackRepository();
 
   // Domain services
   c.appLifecycle = new AppLifecycleManager(c.appRepo, c.orgRepo, c.spaceRepo);

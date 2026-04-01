@@ -62,13 +62,13 @@ Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
-    c.bucketRepo = new InMemoryBucketRepository();
-    c.objectRepo = new InMemoryStorageObjectRepository();
-    c.versionRepo = new InMemoryObjectVersionRepository();
-    c.policyRepo = new InMemoryAccessPolicyRepository();
-    c.lifecycleRepo = new InMemoryLifecycleRuleRepository();
-    c.corsRepo = new InMemoryCorsRuleRepository();
-    c.bindingRepo = new InMemoryServiceBindingRepository();
+    c.bucketRepo = new MemoryBucketRepository();
+    c.objectRepo = new MemoryStorageObjectRepository();
+    c.versionRepo = new MemoryObjectVersionRepository();
+    c.policyRepo = new MemoryAccessPolicyRepository();
+    c.lifecycleRepo = new MemoryLifecycleRuleRepository();
+    c.corsRepo = new MemoryCorsRuleRepository();
+    c.bindingRepo = new MemoryServiceBindingRepository();
 
     // Application use cases
     c.manageBuckets = new ManageBucketsUseCase(c.bucketRepo);

@@ -80,15 +80,15 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.userRepo = new InMemoryUserRepository();
-    c.groupRepo = new InMemoryGroupRepository();
-    c.tenantRepo = new InMemoryTenantRepository();
-    c.appRepo = new InMemoryApplicationRepository();
-    c.sessionRepo = new InMemorySessionRepository();
-    c.tokenRepo = new InMemoryTokenRepository();
-    c.policyRepo = new InMemoryPolicyRepository();
-    c.idpConfigRepo = new InMemoryIdpConfigRepository();
-    c.riskRuleRepo = new InMemoryRiskRuleRepository();
+    c.userRepo = new MemoryUserRepository();
+    c.groupRepo = new MemoryGroupRepository();
+    c.tenantRepo = new MemoryTenantRepository();
+    c.appRepo = new MemoryApplicationRepository();
+    c.sessionRepo = new MemorySessionRepository();
+    c.tokenRepo = new MemoryTokenRepository();
+    c.policyRepo = new MemoryPolicyRepository();
+    c.idpConfigRepo = new MemoryIdpConfigRepository();
+    c.riskRuleRepo = new MemoryRiskRuleRepository();
 
     c.passwordSvc = new Sha256PasswordService();
     c.tokenSvc = new JwtTokenService(config.jwtSecret);

@@ -68,13 +68,13 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.packageRepo = new InMemoryContentPackageRepository();
-    c.providerRepo = new InMemoryContentProviderRepository();
-    c.transportRequestRepo = new InMemoryTransportRequestRepository();
-    c.exportJobRepo = new InMemoryExportJobRepository();
-    c.importJobRepo = new InMemoryImportJobRepository();
-    c.queueRepo = new InMemoryTransportQueueRepository();
-    c.activityRepo = new InMemoryContentActivityRepository();
+    c.packageRepo = new MemoryContentPackageRepository();
+    c.providerRepo = new MemoryContentProviderRepository();
+    c.transportRequestRepo = new MemoryTransportRequestRepository();
+    c.exportJobRepo = new MemoryExportJobRepository();
+    c.importJobRepo = new MemoryImportJobRepository();
+    c.queueRepo = new MemoryTransportQueueRepository();
+    c.activityRepo = new MemoryContentActivityRepository();
 
     // Application use cases
     c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c.activityRepo);

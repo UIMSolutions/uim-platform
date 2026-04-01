@@ -62,12 +62,12 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.destinationRepo = new InMemoryDestinationRepository();
-    c.connectorRepo = new InMemoryConnectorRepository();
-    c.channelRepo = new InMemoryChannelRepository();
-    c.accessRuleRepo = new InMemoryAccessRuleRepository();
-    c.certificateRepo = new InMemoryCertificateRepository();
-    c.logRepo = new InMemoryConnectivityLogRepository();
+    c.destinationRepo = new MemoryDestinationRepository();
+    c.connectorRepo = new MemoryConnectorRepository();
+    c.channelRepo = new MemoryChannelRepository();
+    c.accessRuleRepo = new MemoryAccessRuleRepository();
+    c.certificateRepo = new MemoryCertificateRepository();
+    c.logRepo = new MemoryConnectivityLogRepository();
 
     // Application use cases
     c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.logRepo);

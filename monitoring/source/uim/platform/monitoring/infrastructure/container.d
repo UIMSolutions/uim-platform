@@ -74,14 +74,14 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.resourceRepo = new InMemoryMonitoredResourceRepository();
-    c.metricDefRepo = new InMemoryMetricDefinitionRepository();
-    c.metricRepo = new InMemoryMetricRepository();
-    c.checkRepo = new InMemoryHealthCheckRepository();
-    c.checkResultRepo = new InMemoryHealthCheckResultRepository();
-    c.ruleRepo = new InMemoryAlertRuleRepository();
-    c.alertRepo = new InMemoryAlertRepository();
-    c.channelRepo = new InMemoryNotificationChannelRepository();
+    c.resourceRepo = new MemoryMonitoredResourceRepository();
+    c.metricDefRepo = new MemoryMetricDefinitionRepository();
+    c.metricRepo = new MemoryMetricRepository();
+    c.checkRepo = new MemoryHealthCheckRepository();
+    c.checkResultRepo = new MemoryHealthCheckResultRepository();
+    c.ruleRepo = new MemoryAlertRuleRepository();
+    c.alertRepo = new MemoryAlertRepository();
+    c.channelRepo = new MemoryNotificationChannelRepository();
 
     // Application use cases
     c.manageResources = new ManageMonitoredResourcesUseCase(c.resourceRepo);

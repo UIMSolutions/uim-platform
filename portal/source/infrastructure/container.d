@@ -86,16 +86,16 @@ Container buildContainer(AppConfig config)
     Container c;
 
     // Infrastructure adapters
-    c.siteRepo = new InMemorySiteRepository();
-    c.pageRepo = new InMemoryPageRepository();
-    c.sectionRepo = new InMemorySectionRepository();
-    c.tileRepo = new InMemoryTileRepository();
-    c.catalogRepo = new InMemoryCatalogRepository();
-    c.providerRepo = new InMemoryProviderRepository();
-    c.roleRepo = new InMemoryRoleRepository();
-    c.themeRepo = new InMemoryThemeRepository();
-    c.menuItemRepo = new InMemoryMenuItemRepository();
-    c.translationRepo = new InMemoryTranslationRepository();
+    c.siteRepo = new MemorySiteRepository();
+    c.pageRepo = new MemoryPageRepository();
+    c.sectionRepo = new MemorySectionRepository();
+    c.tileRepo = new MemoryTileRepository();
+    c.catalogRepo = new MemoryCatalogRepository();
+    c.providerRepo = new MemoryProviderRepository();
+    c.roleRepo = new MemoryRoleRepository();
+    c.themeRepo = new MemoryThemeRepository();
+    c.menuItemRepo = new MemoryMenuItemRepository();
+    c.translationRepo = new MemoryTranslationRepository();
 
     // Application use cases
     c.manageSites = new ManageSitesUseCase(c.siteRepo);

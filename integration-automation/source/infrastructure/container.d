@@ -70,12 +70,12 @@ Container buildContainer(AppConfig config)
   Container c;
 
   // Infrastructure adapters (driven ports)
-  c.scenarioRepo = new InMemoryScenarioRepository();
-  c.workflowRepo = new InMemoryWorkflowRepository();
-  c.stepRepo = new InMemoryStepRepository();
-  c.systemRepo = new InMemorySystemRepository();
-  c.destinationRepo = new InMemoryDestinationRepository();
-  c.executionLogRepo = new InMemoryExecutionLogRepository();
+  c.scenarioRepo = new MemoryScenarioRepository();
+  c.workflowRepo = new MemoryWorkflowRepository();
+  c.stepRepo = new MemoryStepRepository();
+  c.systemRepo = new MemorySystemRepository();
+  c.destinationRepo = new MemoryDestinationRepository();
+  c.executionLogRepo = new MemoryExecutionLogRepository();
 
   // Domain services
   c.workflowEngine = new WorkflowEngine(c.workflowRepo, c.stepRepo);
