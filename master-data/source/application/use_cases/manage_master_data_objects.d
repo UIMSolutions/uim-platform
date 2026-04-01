@@ -1,4 +1,4 @@
-module application.use_cases.manage_master_data_objects;
+module application.usecases.manage_master_data_objects;
 
 import application.dto;
 import domain.entities.master_data_object;

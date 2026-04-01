@@ -1,4 +1,4 @@
-module application.use_cases.manage_replication_jobs;
+module application.usecases.manage_replication_jobs;
 
 import application.dto;
 import domain.entities.replication_job;

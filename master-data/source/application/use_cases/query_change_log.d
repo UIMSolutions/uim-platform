@@ -1,4 +1,4 @@
-module application.use_cases.query_change_log;
+module application.usecases.query_change_log;
 
 import application.dto;
 import domain.entities.change_log_entry;

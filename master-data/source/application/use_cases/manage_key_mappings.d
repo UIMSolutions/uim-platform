@@ -1,4 +1,4 @@
-module application.use_cases.manage_key_mappings;
+module application.usecases.manage_key_mappings;
 
 import application.dto;
 import domain.entities.key_mapping;

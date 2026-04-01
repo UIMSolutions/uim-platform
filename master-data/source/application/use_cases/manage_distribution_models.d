@@ -1,4 +1,4 @@
-module application.use_cases.manage_distribution_models;
+module application.usecases.manage_distribution_models;
 
 import application.dto;
 import domain.entities.distribution_model;

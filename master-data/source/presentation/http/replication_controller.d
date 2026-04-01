@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.use_cases.manage_replication_jobs;
+import application.usecases.manage_replication_jobs;
 import application.dto;
 import domain.entities.replication_job;
 import domain.types;

@@ -1,4 +1,4 @@
-module application.use_cases.manage_data_models;
+module application.usecases.manage_data_models;
 
 import application.dto;
 import domain.entities.data_model;

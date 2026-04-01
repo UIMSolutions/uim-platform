@@ -17,14 +17,14 @@ import domain.services.key_mapping_resolver;
 import domain.services.distribution_evaluator;
 
 // Use Cases
-import application.use_cases.manage_master_data_objects;
-import application.use_cases.manage_data_models;
-import application.use_cases.manage_distribution_models;
-import application.use_cases.manage_key_mappings;
-import application.use_cases.manage_clients;
-import application.use_cases.manage_replication_jobs;
-import application.use_cases.manage_filter_rules;
-import application.use_cases.query_change_log;
+import application.usecases.manage_master_data_objects;
+import application.usecases.manage_data_models;
+import application.usecases.manage_distribution_models;
+import application.usecases.manage_key_mappings;
+import application.usecases.manage_clients;
+import application.usecases.manage_replication_jobs;
+import application.usecases.manage_filter_rules;
+import application.usecases.query_change_log;
 
 // Controllers
 import presentation.http.master_data_controller;

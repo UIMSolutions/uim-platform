@@ -1,4 +1,4 @@
-module application.use_cases.manage_filter_rules;
+module application.usecases.manage_filter_rules;
 
 import application.dto;
 import domain.entities.filter_rule;

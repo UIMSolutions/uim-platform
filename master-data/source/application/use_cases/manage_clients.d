@@ -1,4 +1,4 @@
-module application.use_cases.manage_clients;
+module application.usecases.manage_clients;
 
 import application.dto;
 import domain.entities.client;
