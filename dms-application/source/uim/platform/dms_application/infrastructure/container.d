@@ -1,39 +1,42 @@
 module infrastructure.container;
 
-import infrastructure.config;
+// import infrastructure.config;
+// 
+// // Repositories
+// import infrastructure.persistence.memory.repository_repo;
+// import infrastructure.persistence.memory.folder_repo;
+// import infrastructure.persistence.memory.document_repo;
+// import infrastructure.persistence.memory.document_version_repo;
+// import infrastructure.persistence.memory.share_repo;
+// import infrastructure.persistence.memory.permission_repo;
+// import infrastructure.persistence.memory.favorite_repo;
+// 
+// // Domain services
+// import uim.platform.dms_application.domain.services.versioning_service;
+// import uim.platform.dms_application.domain.services.access_control_service;
+// 
+// // Use cases
+// import uim.platform.dms_application.application.usecases.manage_repositories;
+// import uim.platform.dms_application.application.usecases.manage_folders;
+// import uim.platform.dms_application.application.usecases.manage_documents;
+// import uim.platform.dms_application.application.usecases.manage_versions;
+// import uim.platform.dms_application.application.usecases.manage_shares;
+// import uim.platform.dms_application.application.usecases.manage_permissions;
+// import uim.platform.dms_application.application.usecases.browse_content;
+// 
+// // Controllers
+// import uim.platform.dms_application.presentation.http.repository;
+// import uim.platform.dms_application.presentation.http.folder;
+// import uim.platform.dms_application.presentation.http.document;
+// import uim.platform.dms_application.presentation.http.version_;
+// import uim.platform.dms_application.presentation.http.share;
+// import uim.platform.dms_application.presentation.http.permission;
+// import uim.platform.dms_application.presentation.http.browse;
+// import uim.platform.dms_application.presentation.http.health;
 
-// Repositories
-import infrastructure.persistence.memory.repository_repo;
-import infrastructure.persistence.memory.folder_repo;
-import infrastructure.persistence.memory.document_repo;
-import infrastructure.persistence.memory.document_version_repo;
-import infrastructure.persistence.memory.share_repo;
-import infrastructure.persistence.memory.permission_repo;
-import infrastructure.persistence.memory.favorite_repo;
-
-// Domain services
-import uim.platform.dms_application.domain.services.versioning_service;
-import uim.platform.dms_application.domain.services.access_control_service;
-
-// Use cases
-import uim.platform.dms_application.application.usecases.manage_repositories;
-import uim.platform.dms_application.application.usecases.manage_folders;
-import uim.platform.dms_application.application.usecases.manage_documents;
-import uim.platform.dms_application.application.usecases.manage_versions;
-import uim.platform.dms_application.application.usecases.manage_shares;
-import uim.platform.dms_application.application.usecases.manage_permissions;
-import uim.platform.dms_application.application.usecases.browse_content;
-
-// Controllers
-import uim.platform.dms_application.presentation.http.repository;
-import uim.platform.dms_application.presentation.http.folder;
-import uim.platform.dms_application.presentation.http.document;
-import uim.platform.dms_application.presentation.http.version_;
-import uim.platform.dms_application.presentation.http.share;
-import uim.platform.dms_application.presentation.http.permission;
-import uim.platform.dms_application.presentation.http.browse;
-import uim.platform.dms_application.presentation.http.health;
-
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)

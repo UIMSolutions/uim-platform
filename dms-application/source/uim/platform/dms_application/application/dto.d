@@ -1,8 +1,11 @@
 module uim.platform.dms_application.application.dto;
 
-import uim.platform.dms_application.domain.types;
+// import uim.platform.dms_application.domain.types;
 
 // --- Repository DTOs ---
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 
 struct CreateRepositoryRequest {
   TenantId tenantId;

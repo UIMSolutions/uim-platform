@@ -1,24 +1,24 @@
 module uim.platform.dms_application.application.usecases.manage_repositories;
 
-import std.datetime.systime : Clock;
-import std.uuid : randomUUID;
+// import std.datetime.systime : Clock;
+// import std.uuid : randomUUID;
 
-import uim.platform.dms_application.application.dto;
-import uim.platform.dms_application.domain.entities.repository;
-import uim.platform.dms_application.domain.ports.repository_repository;
-import uim.platform.dms_application.domain.types;
+// import uim.platform.dms_application.application.dto;
+// import uim.platform.dms_application.domain.entities.repository;
+// import uim.platform.dms_application.domain.ports.repository_repository;
+// import uim.platform.dms_application.domain.types;
+import uim.platform.dms_application;
 
-class ManageRepositoriesUseCase
-{
+mixin(ShowModule!());
+@safe:
+class ManageRepositoriesUseCase {
   private IRepositoryRepository repo;
 
-  this(IRepositoryRepository repo)
-  {
+  this(IRepositoryRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRepository(CreateRepositoryRequest r)
-  {
+  CommandResult createRepository(CreateRepositoryRequest r) {
     if (r.name.length == 0)
       return CommandResult("", "Repository name is required");
     if (r.tenantId.length == 0)
@@ -44,18 +44,15 @@ class ManageRepositoriesUseCase
     return CommandResult(entity.id, "");
   }
 
-  Repository[] listRepositories(TenantId tenantId)
-  {
+  Repository[] listRepositories(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Repository getRepository(RepositoryId id, TenantId tenantId)
-  {
+  Repository getRepository(RepositoryId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  CommandResult updateRepository(UpdateRepositoryRequest r)
-  {
+  CommandResult updateRepository(UpdateRepositoryRequest r) {
     auto entity = repo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -74,8 +71,7 @@ class ManageRepositoriesUseCase
     return CommandResult(entity.id, "");
   }
 
-  CommandResult archiveRepository(RepositoryId id, TenantId tenantId)
-  {
+  CommandResult archiveRepository(RepositoryId id, TenantId tenantId) {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -86,8 +82,7 @@ class ManageRepositoriesUseCase
     return CommandResult(entity.id, "");
   }
 
-  CommandResult activateRepository(RepositoryId id, TenantId tenantId)
-  {
+  CommandResult activateRepository(RepositoryId id, TenantId tenantId) {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -98,8 +93,7 @@ class ManageRepositoriesUseCase
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteRepository(RepositoryId id, TenantId tenantId)
-  {
+  CommandResult deleteRepository(RepositoryId id, TenantId tenantId) {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");

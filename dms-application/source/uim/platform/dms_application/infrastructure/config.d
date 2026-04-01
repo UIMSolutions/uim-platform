@@ -1,5 +1,8 @@
-module infrastructure.config;
+module uim.platform.dms_application.infrastructure.config;
 
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 /// Service configuration.
 struct AppConfig {
   string host = "0.0.0.0";
