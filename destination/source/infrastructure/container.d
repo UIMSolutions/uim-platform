@@ -3,9 +3,9 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_destination_repo;
-import infrastructure.persistence.in_memory_certificate_repo;
-import infrastructure.persistence.in_memory_fragment_repo;
+import infrastructure.persistence.memory.destination_repo;
+import infrastructure.persistence.memory.certificate_repo;
+import infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
 import application.use_cases.manage_destinations;

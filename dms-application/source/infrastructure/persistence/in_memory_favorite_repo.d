@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_favorite_repo;
+module infrastructure.persistence.memory.favorite_repo;
 
 import domain.entities.favorite;
 import domain.ports.favorite_repository;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_share_repo;
+module infrastructure.persistence.memory.share_repo;
 
 import domain.entities.share;
 import domain.ports.share_repository;

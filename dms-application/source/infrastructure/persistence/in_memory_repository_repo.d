@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_repository_repo;
+module infrastructure.persistence.memory.repository_repo;
 
 import domain.entities.repository;
 import domain.ports.repository_repository;

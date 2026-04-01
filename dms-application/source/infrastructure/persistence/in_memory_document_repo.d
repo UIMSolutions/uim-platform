@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_document_repo;
+module infrastructure.persistence.memory.document_repo;
 
 import domain.entities.document;
 import domain.ports.document_repository;

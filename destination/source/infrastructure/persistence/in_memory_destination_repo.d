@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_destination_repo;
+module infrastructure.persistence.memory.destination_repo;
 
 import domain.types;
 import domain.entities.destination;

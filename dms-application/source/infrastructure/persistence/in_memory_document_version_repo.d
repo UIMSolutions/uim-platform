@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_document_version_repo;
+module infrastructure.persistence.memory.document_version_repo;
 
 import domain.entities.document_version;
 import domain.ports.document_version_repository;

@@ -3,13 +3,13 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_repository_repo;
-import infrastructure.persistence.in_memory_folder_repo;
-import infrastructure.persistence.in_memory_document_repo;
-import infrastructure.persistence.in_memory_document_version_repo;
-import infrastructure.persistence.in_memory_share_repo;
-import infrastructure.persistence.in_memory_permission_repo;
-import infrastructure.persistence.in_memory_favorite_repo;
+import infrastructure.persistence.memory.repository_repo;
+import infrastructure.persistence.memory.folder_repo;
+import infrastructure.persistence.memory.document_repo;
+import infrastructure.persistence.memory.document_version_repo;
+import infrastructure.persistence.memory.share_repo;
+import infrastructure.persistence.memory.permission_repo;
+import infrastructure.persistence.memory.favorite_repo;
 
 // Domain services
 import domain.services.versioning_service;

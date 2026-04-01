@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_permission_repo;
+module infrastructure.persistence.memory.permission_repo;
 
 import domain.entities.permission;
 import domain.ports.permission_repository;

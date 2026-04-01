@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_folder_repo;
+module infrastructure.persistence.memory.folder_repo;
 
 import domain.entities.folder;
 import domain.ports.folder_repository;
