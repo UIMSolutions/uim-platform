@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.domain.ports.token;
+module uim.platform.identity_authentication.domain.ports.repositories.token;
 
 import uim.platform.identity_authentication.domain.entities.token;
 import uim.platform.identity_authentication.domain.types;

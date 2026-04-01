@@ -1,11 +1,13 @@
-module uim.platform.identity_authentication.domain.ports.tenant;
+module uim.platform.identity_authentication.domain.ports.repositories.tenant;
 
-import uim.platform.identity_authentication.domain.entities.tenant;
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.entities.tenant;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Port: outgoing — tenant persistence.
-interface TenantRepository
-{
+interface TenantRepository {
     Tenant findById(TenantId id);
     Tenant findBySubdomain(string subdomain);
     Tenant[] findAll(uint offset = 0, uint limit = 100);

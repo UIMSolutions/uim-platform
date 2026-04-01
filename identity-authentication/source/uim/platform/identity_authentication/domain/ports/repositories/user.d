@@ -1,11 +1,10 @@
-module uim.platform.identity_authentication.domain.ports.user;
+module uim.platform.identity_authentication.domain.ports.repositories.user;
 
 import uim.platform.identity_authentication.domain.entities.user;
 import uim.platform.identity_authentication.domain.types;
 
 /// Port: outgoing — user persistence.
-interface UserRepository
-{
+interface UserRepository {
     User findById(UserId id);
     User findByEmail(TenantId tenantId, string email);
     User findByUserName(TenantId tenantId, string userName);

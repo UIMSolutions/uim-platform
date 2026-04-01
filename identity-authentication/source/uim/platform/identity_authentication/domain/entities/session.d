@@ -1,7 +1,10 @@
 module uim.platform.identity_authentication.domain.entities.session;
 
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Authenticated session.
 struct Session {
     SessionId id;

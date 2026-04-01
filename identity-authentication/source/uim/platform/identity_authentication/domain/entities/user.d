@@ -1,10 +1,12 @@
 module uim.platform.identity_authentication.domain.entities.user;
 
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Core user entity in the identity directory.
-struct User
-{
+struct User {
     UserId id;
     TenantId tenantId;
     string userName;
@@ -22,18 +24,15 @@ struct User
     long updatedAt;
     string globalUserId; // Unique identifier across landscape (like SAP Global User ID)
 
-    string displayName() const
-    {
+    string displayName() const {
         return firstName ~ " " ~ lastName;
     }
 
-    bool isActive() const
-    {
+    bool isActive() const {
         return status == UserStatus.active;
     }
 
-    bool hasMfa() const
-    {
+    bool hasMfa() const {
         return mfaType != MfaType.none;
     }
 }

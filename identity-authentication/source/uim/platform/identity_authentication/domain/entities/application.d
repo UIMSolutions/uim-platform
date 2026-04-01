@@ -1,10 +1,12 @@
 module uim.platform.identity_authentication.domain.entities.application;
 
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Application (Service Provider) registered for SSO.
-struct Application
-{
+struct Application {
     ApplicationId id;
     TenantId tenantId;
     string name;
