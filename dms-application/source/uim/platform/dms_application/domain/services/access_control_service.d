@@ -5,19 +5,16 @@ import uim.platform.dms_application.domain.ports.permission_repository;
 import uim.platform.dms_application.domain.types;
 
 /// Domain service for access control checks.
-class AccessControlService
-{
+class AccessControlService {
   private IPermissionRepository permRepo;
 
-  this(IPermissionRepository permRepo)
-  {
+  this(IPermissionRepository permRepo) {
     this.permRepo = permRepo;
   }
 
   /// Check if a user has at least the required permission level on a resource.
   bool hasPermission(string resourceId, ResourceType resourceType,
-    UserId userId, PermissionLevel required, TenantId tenantId)
-  {
+    UserId userId, PermissionLevel required, TenantId tenantId) {
     auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, userId, tenantId);
     if (perm is null)
       return false;
@@ -26,8 +23,7 @@ class AccessControlService
 
   /// Get effective permission level for a user on a resource.
   PermissionLevel getEffectivePermission(string resourceId, ResourceType resourceType,
-    UserId userId, TenantId tenantId)
-  {
+    UserId userId, TenantId tenantId) {
     auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, userId, tenantId);
     if (perm is null)
       return PermissionLevel.read; // default minimum
@@ -35,19 +31,20 @@ class AccessControlService
   }
 
   /// Get all permissions for a resource.
-  Permission[] getResourcePermissions(string resourceId, ResourceType resourceType, TenantId tenantId)
-  {
+  Permission[] getResourcePermissions(string resourceId, ResourceType resourceType, TenantId tenantId) {
     return permRepo.findByResource(resourceId, resourceType, tenantId);
   }
 
-  private static int permissionRank(PermissionLevel level)
-  {
-    final switch (level)
-    {
-      case PermissionLevel.read: return 1;
-      case PermissionLevel.write: return 2;
-      case PermissionLevel.admin: return 3;
-      case PermissionLevel.owner: return 4;
+  private static int permissionRank(PermissionLevel level) {
+    final switch (level) {
+    case PermissionLevel.read:
+      return 1;
+    case PermissionLevel.write:
+      return 2;
+    case PermissionLevel.admin:
+      return 3;
+    case PermissionLevel.owner:
+      return 4;
     }
   }
 }

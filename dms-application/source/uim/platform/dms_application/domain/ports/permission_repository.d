@@ -3,8 +3,7 @@ module uim.platform.dms_application.domain.ports.permission_repository;
 import uim.platform.dms_application.domain.entities.permission;
 import uim.platform.dms_application.domain.types;
 
-interface IPermissionRepository
-{
+interface IPermissionRepository {
   Permission[] findByTenant(TenantId tenantId);
   Permission findById(PermissionId id, TenantId tenantId);
   Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId);

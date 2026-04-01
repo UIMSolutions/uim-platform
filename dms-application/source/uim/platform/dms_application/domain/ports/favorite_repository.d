@@ -3,8 +3,7 @@ module uim.platform.dms_application.domain.ports.favorite_repository;
 import uim.platform.dms_application.domain.entities.favorite;
 import uim.platform.dms_application.domain.types;
 
-interface IFavoriteRepository
-{
+interface IFavoriteRepository {
   Favorite[] findByTenant(TenantId tenantId);
   Favorite findById(FavoriteId id, TenantId tenantId);
   Favorite[] findByUser(UserId userId, TenantId tenantId);

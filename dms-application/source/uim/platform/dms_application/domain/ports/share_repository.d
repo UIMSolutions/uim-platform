@@ -3,8 +3,7 @@ module uim.platform.dms_application.domain.ports.share_repository;
 import uim.platform.dms_application.domain.entities.share;
 import uim.platform.dms_application.domain.types;
 
-interface IShareRepository
-{
+interface IShareRepository {
   Share[] findByTenant(TenantId tenantId);
   Share findById(ShareId id, TenantId tenantId);
   Share[] findByDocument(DocumentId documentId, TenantId tenantId);

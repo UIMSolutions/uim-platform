@@ -3,8 +3,7 @@ module uim.platform.dms_application.domain.ports.document_repository;
 import uim.platform.dms_application.domain.entities.document;
 import uim.platform.dms_application.domain.types;
 
-interface IDocumentRepository
-{
+interface IDocumentRepository {
   Document[] findByTenant(TenantId tenantId);
   Document findById(DocumentId id, TenantId tenantId);
   Document[] findByRepository(RepositoryId repositoryId, TenantId tenantId);

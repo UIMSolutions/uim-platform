@@ -4,12 +4,10 @@ import uim.platform.dms_application.domain.entities.folder;
 import uim.platform.dms_application.domain.ports.folder_repository;
 import uim.platform.dms_application.domain.types;
 
-class InMemoryFolderRepository : IFolderRepository
-{
+class InMemoryFolderRepository : IFolderRepository {
   private Folder[string] store;
 
-  Folder[] findByTenant(TenantId tenantId)
-  {
+  Folder[] findByTenant(TenantId tenantId) {
     Folder[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -17,16 +15,14 @@ class InMemoryFolderRepository : IFolderRepository
     return result;
   }
 
-  Folder findById(FolderId id, TenantId tenantId)
-  {
+  Folder findById(FolderId id, TenantId tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Folder[] findByRepository(RepositoryId repositoryId, TenantId tenantId)
-  {
+  Folder[] findByRepository(RepositoryId repositoryId, TenantId tenantId) {
     Folder[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -34,8 +30,7 @@ class InMemoryFolderRepository : IFolderRepository
     return result;
   }
 
-  Folder[] findByParent(FolderId parentFolderId, TenantId tenantId)
-  {
+  Folder[] findByParent(FolderId parentFolderId, TenantId tenantId) {
     Folder[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.parentFolderId == parentFolderId)
@@ -43,20 +38,26 @@ class InMemoryFolderRepository : IFolderRepository
     return result;
   }
 
-  Folder findByPath(string path, RepositoryId repositoryId, TenantId tenantId)
-  {
+  Folder findByPath(string path, RepositoryId repositoryId, TenantId tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId && e.path == path)
         return e;
     return null;
   }
 
-  void save(Folder folder) { store[folder.id] = folder; }
-  void update(Folder folder) { store[folder.id] = folder; }
-  void remove(FolderId id, TenantId tenantId) { store.remove(id); }
+  void save(Folder folder) {
+    store[folder.id] = folder;
+  }
 
-  void removeByRepository(RepositoryId repositoryId, TenantId tenantId)
-  {
+  void update(Folder folder) {
+    store[folder.id] = folder;
+  }
+
+  void remove(FolderId id, TenantId tenantId) {
+    store.remove(id);
+  }
+
+  void removeByRepository(RepositoryId repositoryId, TenantId tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
