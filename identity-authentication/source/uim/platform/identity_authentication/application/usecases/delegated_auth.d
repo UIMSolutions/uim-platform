@@ -1,13 +1,16 @@
 module uim.platform.identity_authentication.application.usecases.delegated_auth;
 
-import uim.platform.identity_authentication.domain.entities.idp_config;
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.idp_config;
-import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.entities.idp_config;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.idp_config;
+// import uim.platform.identity_authentication.domain.ports.user;
+// 
+// import std.string : split;
+import uim.platform.identity_authentication;
 
-import std.string : split;
-
+mixin(ShowModule!());
+@safe:
 /// Application use case: delegate authentication to an external IdP.
 class DelegatedAuthUseCase
 {

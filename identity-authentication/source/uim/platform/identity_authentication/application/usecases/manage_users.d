@@ -1,29 +1,30 @@
 module uim.platform.identity_authentication.application.usecases.manage_users;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.user;
-import uim.platform.identity_authentication.domain.ports.password_service;
-import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.ports.password_service;
+// import uim.platform.identity_authentication.application.dto;
+// 
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Application use case: SCIM-like user management (CRUD).
-class ManageUsersUseCase
-{
+class ManageUsersUseCase {
     private UserRepository userRepo;
     private PasswordService passwordSvc;
 
-    this(UserRepository userRepo, PasswordService passwordSvc)
-    {
+    this(UserRepository userRepo, PasswordService passwordSvc) {
         this.userRepo = userRepo;
         this.passwordSvc = passwordSvc;
     }
 
     /// Create a new user.
-    UserResponse createUser(CreateUserRequest req)
-    {
+    UserResponse createUser(CreateUserRequest req) {
         // Check uniqueness
         auto existing = userRepo.findByEmail(req.tenantId, req.email);
         if (existing != User.init)
@@ -47,26 +48,24 @@ class ManageUsersUseCase
             now,
             now,
             randomUUID().toString() // globalUserId
+        
         );
         userRepo.save(user);
         return UserResponse(user.id, "");
     }
 
     /// Get user by ID.
-    User getUser(UserId id)
-    {
+    User getUser(UserId id) {
         return userRepo.findById(id);
     }
 
     /// List users for a tenant.
-    User[] listUsers(TenantId tenantId, uint offset = 0, uint limit = 100)
-    {
+    User[] listUsers(TenantId tenantId, uint offset = 0, uint limit = 100) {
         return userRepo.findByTenant(tenantId, offset, limit);
     }
 
     /// Update user profile.
-    string updateUser(UpdateUserRequest req)
-    {
+    string updateUser(UpdateUserRequest req) {
         auto user = userRepo.findById(req.userId);
         if (user == User.init)
             return "User not found";
@@ -84,8 +83,7 @@ class ManageUsersUseCase
     }
 
     /// Deactivate (soft-delete) a user.
-    string deactivateUser(UserId id)
-    {
+    string deactivateUser(UserId id) {
         auto user = userRepo.findById(id);
         if (user == User.init)
             return "User not found";
@@ -97,8 +95,7 @@ class ManageUsersUseCase
     }
 
     /// Change password.
-    string changePassword(UserId id, string oldPassword, string newPassword)
-    {
+    string changePassword(UserId id, string oldPassword, string newPassword) {
         auto user = userRepo.findById(id);
         if (user == User.init)
             return "User not found";

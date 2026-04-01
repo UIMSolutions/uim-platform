@@ -1,21 +1,24 @@
 module uim.platform.identity_authentication.application.usecases.authenticate_user;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.entities.session;
-import uim.platform.identity_authentication.domain.entities.risk_rule;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.user;
-import uim.platform.identity_authentication.domain.ports.password_service;
-import uim.platform.identity_authentication.domain.ports.session;
-import uim.platform.identity_authentication.domain.ports.risk_rule;
-import uim.platform.identity_authentication.domain.ports.mfa_service;
-import uim.platform.identity_authentication.domain.services.risk_evaluator;
-import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.entities.session;
+// import uim.platform.identity_authentication.domain.entities.risk_rule;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.ports.password_service;
+// import uim.platform.identity_authentication.domain.ports.session;
+// import uim.platform.identity_authentication.domain.ports.risk_rule;
+// import uim.platform.identity_authentication.domain.ports.mfa_service;
+// import uim.platform.identity_authentication.domain.services.risk_evaluator;
+// import uim.platform.identity_authentication.application.dto;
+// 
+// import std.uuid;
+// import core.time;
+// import std.datetime.systime : Clock;
+import uim.platform.identity_authentication;
 
-import std.uuid;
-import core.time;
-import std.datetime.systime : Clock;
-
+mixin(ShowModule!());
+@safe:
 /// Application use case: authenticate a user with form-based credentials.
 class AuthenticateUserUseCase {
     private UserRepository userRepo;

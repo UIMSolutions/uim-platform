@@ -1,25 +1,25 @@
 module uim.platform.identity_authentication.application.usecases.manage_tenants;
 
-import uim.platform.identity_authentication.domain.entities.tenant;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.tenant;
-import uim.platform.identity_authentication.application.dto;
+// import uim.platform.identity_authentication.domain.entities.tenant;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.tenant;
+// import uim.platform.identity_authentication.application.dto;
+// 
+// import std.uuid;
+// import std.datetime.systime : Clock;
+import uim.platform.identity_authentication;
 
-import std.uuid;
-import std.datetime.systime : Clock;
-
+mixin(ShowModule!());
+@safe:
 /// Application use case: tenant management.
-class ManageTenantsUseCase
-{
+class ManageTenantsUseCase {
     private TenantRepository tenantRepo;
 
-    this(TenantRepository tenantRepo)
-    {
+    this(TenantRepository tenantRepo) {
         this.tenantRepo = tenantRepo;
     }
 
-    TenantResponse createTenant(CreateTenantRequest req)
-    {
+    TenantResponse createTenant(CreateTenantRequest req) {
         auto existing = tenantRepo.findBySubdomain(req.subdomain);
         if (existing != Tenant.init)
             return TenantResponse("", "Subdomain already in use");
@@ -40,18 +40,15 @@ class ManageTenantsUseCase
         return TenantResponse(tenant.id, "");
     }
 
-    Tenant getTenant(TenantId id)
-    {
+    Tenant getTenant(TenantId id) {
         return tenantRepo.findById(id);
     }
 
-    Tenant[] listTenants(uint offset = 0, uint limit = 100)
-    {
+    Tenant[] listTenants(uint offset = 0, uint limit = 100) {
         return tenantRepo.findAll(offset, limit);
     }
 
-    string updateTenant(UpdateTenantRequest req)
-    {
+    string updateTenant(UpdateTenantRequest req) {
         auto tenant = tenantRepo.findById(req.tenantId);
         if (tenant == Tenant.init)
             return "Tenant not found";

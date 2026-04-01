@@ -1,22 +1,24 @@
 module uim.platform.identity_authentication.application.usecases.issue_token;
 
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.entities.application;
-import uim.platform.identity_authentication.domain.entities.token;
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.ports.user;
-import uim.platform.identity_authentication.domain.ports.application;
-import uim.platform.identity_authentication.domain.ports.token;
-import uim.platform.identity_authentication.domain.ports.session;
-import uim.platform.identity_authentication.domain.ports.token_service;
-
-import std.uuid;
-import core.time;
-import std.datetime.systime : Clock;
-
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.entities.application;
+// import uim.platform.identity_authentication.domain.entities.token;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.ports.application;
+// import uim.platform.identity_authentication.domain.ports.token;
+// import uim.platform.identity_authentication.domain.ports.session;
+// import uim.platform.identity_authentication.domain.ports.token_service;
+// 
+// import std.uuid;
+// import core.time;
+// import std.datetime.systime : Clock;
+// 
+import uim.platform.identity_authentication;
+mixin(ShowModule!());
+@safe:
 /// Application use case: issue OAuth2/OIDC tokens after successful authentication.
-class IssueTokenUseCase
-{
+class IssueTokenUseCase {
     private UserRepository userRepo;
     private ApplicationRepository appRepo;
     private TokenRepository tokenRepo;
