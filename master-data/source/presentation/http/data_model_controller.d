@@ -51,8 +51,8 @@ class DataModelController
                 fd.name = jsonStr(fj, "name");
                 fd.displayName = jsonStr(fj, "displayName");
                 fd.type_ = jsonStr(fj, "type");
-                fd.isRequired = jsonBool(fj, "isRequired");
-                fd.isKey = jsonBool(fj, "isKey");
+                fd.isRequired = fj.getBoolean( "isRequired");
+                fd.isKey = fj.getBoolean( "isKey");
                 fd.defaultValue = jsonStr(fj, "defaultValue");
                 fd.maxLength = jsonInt(fj, "maxLength");
                 fd.referenceModel = jsonStr(fj, "referenceModel");
@@ -135,8 +135,8 @@ class DataModelController
                 fd.name = jsonStr(fj, "name");
                 fd.displayName = jsonStr(fj, "displayName");
                 fd.type_ = jsonStr(fj, "type");
-                fd.isRequired = jsonBool(fj, "isRequired");
-                fd.isKey = jsonBool(fj, "isKey");
+                fd.isRequired = fj.getBoolean( "isRequired");
+                fd.isKey = fj.getBoolean( "isKey");
                 fd.defaultValue = jsonStr(fj, "defaultValue");
                 fd.maxLength = jsonInt(fj, "maxLength");
                 fd.referenceModel = jsonStr(fj, "referenceModel");

@@ -1,54 +1,58 @@
 module uim.platform.identity_authentication.infrastructure.container;
 
-import uim.platform.identity_authentication.infrastructure.config;
+// import uim.platform.identity_authentication.infrastructure.config;
+// 
+// // Repositories
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.user;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.group;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.tenant;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.app;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.session;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.token;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.policy;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.idp_config;
+// import uim.platform.identity_authentication.infrastructure.persistence.memory.risk_rule;
+// 
+// // Services
+// import uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;
+// import uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
+// import uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
+// 
+// // Use Cases
+// import uim.platform.identity_authentication.application.usecases.authenticate_user;
+// import uim.platform.identity_authentication.application.usecases.issue_token;
+// import uim.platform.identity_authentication.application.usecases.manage_users;
+// import uim.platform.identity_authentication.application.usecases.manage_groups;
+// import uim.platform.identity_authentication.application.usecases.manage_applications;
+// import uim.platform.identity_authentication.application.usecases.manage_tenants;
+// import uim.platform.identity_authentication.application.usecases.manage_policies;
+// import uim.platform.identity_authentication.application.usecases.delegated_auth;
+// 
+// // Controllers
+// import uim.platform.identity_authentication.presentation.http.controllers.auth;
+// import uim.platform.identity_authentication.presentation.http.controllers.user;
+// import uim.platform.identity_authentication.presentation.http.controllers.group;
+// import uim.platform.identity_authentication.presentation.http.controllers.application;
+// import uim.platform.identity_authentication.presentation.http.controllers.tenant;
+// import uim.platform.identity_authentication.presentation.http.controllers.policy;
 
-// Repositories
-import uim.platform.identity_authentication.infrastructure.persistence.memory.user;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.group;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.tenant;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.app;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.session;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.token;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.policy;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.idp_config;
-import uim.platform.identity_authentication.infrastructure.persistence.memory.risk_rule;
+import uim.platform.identity_authentication;
 
-// Services
-import uim.platform.identity_authentication.infrastructure.security.bcrypt_password_service;
-import uim.platform.identity_authentication.infrastructure.security.jwt_token_service;
-import uim.platform.identity_authentication.infrastructure.security.totp_mfa_service;
-
-// Use Cases
-import uim.platform.identity_authentication.application.usecases.authenticate_user;
-import uim.platform.identity_authentication.application.usecases.issue_token;
-import uim.platform.identity_authentication.application.usecases.manage_users;
-import uim.platform.identity_authentication.application.usecases.manage_groups;
-import uim.platform.identity_authentication.application.usecases.manage_applications;
-import uim.platform.identity_authentication.application.usecases.manage_tenants;
-import uim.platform.identity_authentication.application.usecases.manage_policies;
-import uim.platform.identity_authentication.application.usecases.delegated_auth;
-
-// Controllers
-import uim.platform.identity_authentication.presentation.http.controllers.auth;
-import uim.platform.identity_authentication.presentation.http.controllers.user;
-import uim.platform.identity_authentication.presentation.http.controllers.group;
-import uim.platform.identity_authentication.presentation.http.controllers.application;
-import uim.platform.identity_authentication.presentation.http.controllers.tenant;
-import uim.platform.identity_authentication.presentation.http.controllers.policy;
+mixin(ShowModule!());
+@safe:
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
-    InMemoryUserRepository userRepo;
-    InMemoryGroupRepository groupRepo;
-    InMemoryTenantRepository tenantRepo;
-    InMemoryApplicationRepository appRepo;
-    InMemorySessionRepository sessionRepo;
-    InMemoryTokenRepository tokenRepo;
-    InMemoryPolicyRepository policyRepo;
-    InMemoryIdpConfigRepository idpConfigRepo;
-    InMemoryRiskRuleRepository riskRuleRepo;
+    MemoryUserRepository userRepo;
+    MemoryGroupRepository groupRepo;
+    MemoryTenantRepository tenantRepo;
+    MemoryApplicationRepository appRepo;
+    MemorySessionRepository sessionRepo;
+    MemoryTokenRepository tokenRepo;
+    MemoryPolicyRepository policyRepo;
+    MemoryIdpConfigRepository idpConfigRepo;
+    MemoryRiskRuleRepository riskRuleRepo;
 
     // Security services (driven adapters)
     Sha256PasswordService passwordSvc;
@@ -75,8 +79,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters

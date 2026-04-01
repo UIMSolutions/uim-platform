@@ -10,6 +10,8 @@ module app;
 import uim.platform.dms_application;
 
 @safe:
+version (unittest) {
+} else {
 void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
@@ -36,4 +38,5 @@ void main() {
     listener.stopListening();
 
   runApplication();
+}
 }
