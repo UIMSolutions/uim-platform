@@ -12,28 +12,24 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.presentation.http.json_utils;
 
-@safe: class AuditLogController
-{
+@safe:
+class AuditLogController {
     private WriteAuditLogUseCase writeUC;
     private RetrieveAuditLogsUseCase retrieveUC;
 
-    this(WriteAuditLogUseCase writeUC, RetrieveAuditLogsUseCase retrieveUC)
-    {
+    this(WriteAuditLogUseCase writeUC, RetrieveAuditLogsUseCase retrieveUC) {
         this.writeUC = writeUC;
         this.retrieveUC = retrieveUC;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/auditlog", &handleWrite);
         router.get("/api/v1/auditlog", &handleQuery);
         router.get("/api/v1/auditlog/*", &handleGetById);
     }
 
-    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = WriteAuditLogRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,36 +51,29 @@ import uim.platform.auditlog.presentation.http.json_utils;
             r.originApp = jsonStr(j, "originApp");
 
             auto result = writeUC.writeLog(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto queryReq = AuditLogQueryRequest();
             queryReq.tenantId = tenantId;
 
             // Parse category filter (comma-separated)
             auto catParam = req.headers.get("X-Category-Filter", "");
-            if (catParam.length > 0)
-            {
+            if (catParam.length > 0) {
                 import std.string : split;
+
                 foreach (c; catParam.split(","))
                     queryReq.categories ~= parseCategory(c);
             }
@@ -101,37 +90,29 @@ import uim.platform.auditlog.presentation.http.json_utils;
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) entries.length);
+            resp["totalCount"] = Json(cast(long)entries.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto entry = retrieveUC.getById(id, tenantId);
-            if (entry is null)
-            {
+            if (entry is null) {
                 writeError(res, 404, "Audit log entry not found");
                 return;
             }
             res.writeJsonBody(serializeEntry(*entry), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeEntry(ref const AuditLogEntry e)
-    {
+    private static Json serializeEntry(ref const AuditLogEntry e) {
         auto j = Json.emptyObject;
         j["id"] = Json(e.id);
         j["tenantId"] = Json(e.tenantId);
@@ -153,11 +134,9 @@ import uim.platform.auditlog.presentation.http.json_utils;
         j["timestamp"] = Json(e.timestamp);
         j["formatVersion"] = Json(e.formatVersion);
 
-        if (e.attributes.length > 0)
-        {
+        if (e.attributes.length > 0) {
             auto attrs = Json.emptyArray;
-            foreach (ref a; e.attributes)
-            {
+            foreach (ref a; e.attributes) {
                 auto aj = Json.emptyObject;
                 aj["name"] = Json(a.name);
                 aj["oldValue"] = Json(a.oldValue);
@@ -169,95 +148,123 @@ import uim.platform.auditlog.presentation.http.json_utils;
         return j;
     }
 
-    private static AuditAttribute[] parseAttributes(Json j)
-    {
+    private static AuditAttribute[] parseAttributes(Json j) {
         AuditAttribute[] result;
-        auto v = "attributes" in j;
-        if (v is null || (*v).type != Json.Type.array)
-            return result;
-        foreach (item; *v)
-        {
-            if (item.type == Json.Type.object)
-            {
+
+        if (j.hasKey("attributes")) {
+            if (j.isNull) return null;
+            if (j.type != Json.Type.array)
+                return result;
+        }
+
+        foreach (item; j["attributes"].toArray) {
+            if (item.isObject) {
                 result ~= AuditAttribute(
-                    jsonStr(item, "name"),
-                    jsonStr(item, "oldValue"),
-                    jsonStr(item, "newValue")
+                    item.getString("name"),
+                    item.getString("oldValue"),
+                    item.getString("newValue")
                 );
             }
         }
         return result;
     }
 
-    private static AuditCategory parseCategory(string s)
-    {
-        switch (s)
-        {
-            case "audit.security-events", "securityEvents": return AuditCategory.securityEvents;
-            case "audit.configuration", "configuration":    return AuditCategory.configuration;
-            case "audit.data-access", "dataAccess":         return AuditCategory.dataAccess;
-            case "audit.data-modification", "dataModification": return AuditCategory.dataModification;
-            default: return AuditCategory.securityEvents;
+    private static AuditCategory parseCategory(string s) {
+        switch (s) {
+        case "audit.security-events", "securityEvents":
+            return AuditCategory.securityEvents;
+        case "audit.configuration", "configuration":
+            return AuditCategory.configuration;
+        case "audit.data-access", "dataAccess":
+            return AuditCategory.dataAccess;
+        case "audit.data-modification", "dataModification":
+            return AuditCategory.dataModification;
+        default:
+            return AuditCategory.securityEvents;
         }
     }
 
-    private static string categoryToString(AuditCategory c)
-    {
-        final switch (c)
-        {
-            case AuditCategory.securityEvents:    return "audit.security-events";
-            case AuditCategory.configuration:     return "audit.configuration";
-            case AuditCategory.dataAccess:        return "audit.data-access";
-            case AuditCategory.dataModification:  return "audit.data-modification";
+    private static string categoryToString(AuditCategory c) {
+        final switch (c) {
+        case AuditCategory.securityEvents:
+            return "audit.security-events";
+        case AuditCategory.configuration:
+            return "audit.configuration";
+        case AuditCategory.dataAccess:
+            return "audit.data-access";
+        case AuditCategory.dataModification:
+            return "audit.data-modification";
         }
     }
 
-    private static AuditSeverity parseSeverity(string s)
-    {
-        switch (s)
-        {
-            case "warning":  return AuditSeverity.warning;
-            case "error":    return AuditSeverity.error;
-            case "critical": return AuditSeverity.critical;
-            default:         return AuditSeverity.info;
+    private static AuditSeverity parseSeverity(string s) {
+        switch (s) {
+        case "warning":
+            return AuditSeverity.warning;
+        case "error":
+            return AuditSeverity.error;
+        case "critical":
+            return AuditSeverity.critical;
+        default:
+            return AuditSeverity.info;
         }
     }
 
-    private static AuditAction parseAction(string s)
-    {
-        switch (s)
-        {
-            case "create":         return AuditAction.create;
-            case "read":           return AuditAction.read_;
-            case "update":         return AuditAction.update;
-            case "delete":         return AuditAction.delete_;
-            case "login":          return AuditAction.login;
-            case "logout":         return AuditAction.logout;
-            case "loginFailed":    return AuditAction.loginFailed;
-            case "passwordChange": return AuditAction.passwordChange;
-            case "roleAssign":     return AuditAction.roleAssign;
-            case "roleRevoke":     return AuditAction.roleRevoke;
-            case "policyChange":   return AuditAction.policyChange;
-            case "configChange":   return AuditAction.configChange;
-            case "export":         return AuditAction.export_;
-            case "dataAccess":     return AuditAction.dataAccess;
-            case "consentChange":  return AuditAction.consentChange;
-            case "tokenIssue":     return AuditAction.tokenIssue;
-            case "tokenRevoke":    return AuditAction.tokenRevoke;
-            case "mfaEnroll":      return AuditAction.mfaEnroll;
-            case "mfaVerify":      return AuditAction.mfaVerify;
-            default:               return AuditAction.create;
+    private static AuditAction parseAction(string s) {
+        switch (s) {
+        case "create":
+            return AuditAction.create;
+        case "read":
+            return AuditAction.read_;
+        case "update":
+            return AuditAction.update;
+        case "delete":
+            return AuditAction.delete_;
+        case "login":
+            return AuditAction.login;
+        case "logout":
+            return AuditAction.logout;
+        case "loginFailed":
+            return AuditAction.loginFailed;
+        case "passwordChange":
+            return AuditAction.passwordChange;
+        case "roleAssign":
+            return AuditAction.roleAssign;
+        case "roleRevoke":
+            return AuditAction.roleRevoke;
+        case "policyChange":
+            return AuditAction.policyChange;
+        case "configChange":
+            return AuditAction.configChange;
+        case "export":
+            return AuditAction.export_;
+        case "dataAccess":
+            return AuditAction.dataAccess;
+        case "consentChange":
+            return AuditAction.consentChange;
+        case "tokenIssue":
+            return AuditAction.tokenIssue;
+        case "tokenRevoke":
+            return AuditAction.tokenRevoke;
+        case "mfaEnroll":
+            return AuditAction.mfaEnroll;
+        case "mfaVerify":
+            return AuditAction.mfaVerify;
+        default:
+            return AuditAction.create;
         }
     }
 
-    private static AuditOutcome parseOutcome(string s)
-    {
-        switch (s)
-        {
-            case "failure": return AuditOutcome.failure;
-            case "denied":  return AuditOutcome.denied;
-            case "error":   return AuditOutcome.error;
-            default:        return AuditOutcome.success;
+    private static AuditOutcome parseOutcome(string s) {
+        switch (s) {
+        case "failure":
+            return AuditOutcome.failure;
+        case "denied":
+            return AuditOutcome.denied;
+        case "error":
+            return AuditOutcome.error;
+        default:
+            return AuditOutcome.success;
         }
     }
 }

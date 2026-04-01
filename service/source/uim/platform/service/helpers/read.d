@@ -34,6 +34,25 @@ string[] readStringArray(Json data, string key) {
   }
   return values;
 }
+/// 
+unittest {
+  import std.stdio : writeln;
+
+  void testReadStringArray() {
+    Json data = Json.parse(`{"names": ["Alice", "Bob", "Charlie"]}`);
+    string[] names = readStringArray(data, "names");
+    assert(names.length == 3);
+    assert(names[0] == "Alice");
+    assert(names[1] == "Bob");
+    assert(names[2] == "Charlie");
+  }
+
+  void testReadTime() {
+    Json data = Json.parse(`{"timestamp": "2024-01-01T12:00:00Z"}`);
+    SysTime time = readTime(data, "timestamp");
+    assert(time.toISOExtString == "2024-01-01T12:00:00Z");
+  }
+}
 
 Json readObject(Json data, string key, Json fallback = Json.emptyObject) {
   if (!(key in data) || data[key].isNull) {
