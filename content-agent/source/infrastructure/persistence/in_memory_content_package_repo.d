@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_content_package_repo;
+module infrastructure.persistence.memory.content_package_repo;
 
 import domain.types;
 import domain.entities.content_package;

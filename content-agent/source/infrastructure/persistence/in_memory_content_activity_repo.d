@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_content_activity_repo;
+module infrastructure.persistence.memory.content_activity_repo;
 
 import domain.types;
 import domain.entities.content_activity;

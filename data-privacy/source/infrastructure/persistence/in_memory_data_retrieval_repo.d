@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_data_retrieval_repo;
+module infrastructure.persistence.memory.data_retrieval_repo;
 
 import domain.types;
 import domain.entities.data_retrieval_request;

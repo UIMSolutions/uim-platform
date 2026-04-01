@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_blocking_request_repo;
+module infrastructure.persistence.memory.blocking_request_repo;
 
 import domain.types;
 import domain.entities.blocking_request;

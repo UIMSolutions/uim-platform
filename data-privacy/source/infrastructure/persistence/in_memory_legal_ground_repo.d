@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_legal_ground_repo;
+module infrastructure.persistence.memory.legal_ground_repo;
 
 import domain.types;
 import domain.entities.legal_ground;

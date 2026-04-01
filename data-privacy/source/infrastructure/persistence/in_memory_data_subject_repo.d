@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_data_subject_repo;
+module infrastructure.persistence.memory.data_subject_repo;
 
 import domain.types;
 import domain.entities.data_subject;

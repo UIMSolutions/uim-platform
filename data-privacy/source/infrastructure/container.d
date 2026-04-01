@@ -3,14 +3,14 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_data_subject_repo;
-import infrastructure.persistence.in_memory_personal_data_model_repo;
-import infrastructure.persistence.in_memory_deletion_request_repo;
-import infrastructure.persistence.in_memory_blocking_request_repo;
-import infrastructure.persistence.in_memory_legal_ground_repo;
-import infrastructure.persistence.in_memory_retention_rule_repo;
-import infrastructure.persistence.in_memory_consent_record_repo;
-import infrastructure.persistence.in_memory_data_retrieval_repo;
+import infrastructure.persistence.memory.data_subject_repo;
+import infrastructure.persistence.memory.personal_data_model_repo;
+import infrastructure.persistence.memory.deletion_request_repo;
+import infrastructure.persistence.memory.blocking_request_repo;
+import infrastructure.persistence.memory.legal_ground_repo;
+import infrastructure.persistence.memory.retention_rule_repo;
+import infrastructure.persistence.memory.consent_record_repo;
+import infrastructure.persistence.memory.data_retrieval_repo;
 
 // Use Cases
 import application.usecases.manage_data_subjects;

@@ -3,13 +3,13 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_content_package_repo;
-import infrastructure.persistence.in_memory_content_provider_repo;
-import infrastructure.persistence.in_memory_transport_request_repo;
-import infrastructure.persistence.in_memory_export_job_repo;
-import infrastructure.persistence.in_memory_import_job_repo;
-import infrastructure.persistence.in_memory_transport_queue_repo;
-import infrastructure.persistence.in_memory_content_activity_repo;
+import infrastructure.persistence.memory.content_package_repo;
+import infrastructure.persistence.memory.content_provider_repo;
+import infrastructure.persistence.memory.transport_request_repo;
+import infrastructure.persistence.memory.export_job_repo;
+import infrastructure.persistence.memory.import_job_repo;
+import infrastructure.persistence.memory.transport_queue_repo;
+import infrastructure.persistence.memory.content_activity_repo;
 
 // Use Cases
 import application.use_cases.manage_content_packages;

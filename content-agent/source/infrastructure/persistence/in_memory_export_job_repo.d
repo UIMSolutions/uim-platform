@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_export_job_repo;
+module infrastructure.persistence.memory.export_job_repo;
 
 import domain.types;
 import domain.entities.export_job;

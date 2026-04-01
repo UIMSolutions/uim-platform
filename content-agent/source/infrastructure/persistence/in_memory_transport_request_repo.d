@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_transport_request_repo;
+module infrastructure.persistence.memory.transport_request_repo;
 
 import domain.types;
 import domain.entities.transport_request;

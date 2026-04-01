@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_retention_rule_repo;
+module infrastructure.persistence.memory.retention_rule_repo;
 
 import domain.types;
 import domain.entities.retention_rule;

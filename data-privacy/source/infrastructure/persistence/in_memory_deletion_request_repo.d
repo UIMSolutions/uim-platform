@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_deletion_request_repo;
+module infrastructure.persistence.memory.deletion_request_repo;
 
 import domain.types;
 import domain.entities.deletion_request;

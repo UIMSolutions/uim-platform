@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_personal_data_model_repo;
+module infrastructure.persistence.memory.personal_data_model_repo;
 
 import domain.types;
 import domain.entities.personal_data_model;

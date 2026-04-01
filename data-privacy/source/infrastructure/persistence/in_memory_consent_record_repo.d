@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_consent_record_repo;
+module infrastructure.persistence.memory.consent_record_repo;
 
 import domain.types;
 import domain.entities.consent_record;
