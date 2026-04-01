@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_validation_result_repo;
+module infrastructure.persistence.memory.validation_result_repo;
 
 import domain.types;
 import domain.entities.validation_result;

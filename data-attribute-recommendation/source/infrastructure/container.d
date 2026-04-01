@@ -3,13 +3,13 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_dataset_repo;
-import infrastructure.persistence.in_memory_data_record_repo;
-import infrastructure.persistence.in_memory_model_config_repo;
-import infrastructure.persistence.in_memory_training_job_repo;
-import infrastructure.persistence.in_memory_deployment_repo;
-import infrastructure.persistence.in_memory_inference_request_repo;
-import infrastructure.persistence.in_memory_inference_result_repo;
+import infrastructure.persistence.memory.dataset_repo;
+import infrastructure.persistence.memory.data_record_repo;
+import infrastructure.persistence.memory.model_config_repo;
+import infrastructure.persistence.memory.training_job_repo;
+import infrastructure.persistence.memory.deployment_repo;
+import infrastructure.persistence.memory.inference_request_repo;
+import infrastructure.persistence.memory.inference_result_repo;
 
 // Domain services
 import domain.services.model_trainer;

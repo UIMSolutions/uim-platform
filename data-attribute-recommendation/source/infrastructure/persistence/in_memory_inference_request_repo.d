@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_inference_request_repo;
+module infrastructure.persistence.memory.inference_request_repo;
 
 import domain.types;
 import domain.entities.inference_request;

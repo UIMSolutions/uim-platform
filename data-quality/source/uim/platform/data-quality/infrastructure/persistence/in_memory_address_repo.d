@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_address_repo;
+module infrastructure.persistence.memory.address_repo;
 
 import domain.types;
 import domain.entities.address_record;

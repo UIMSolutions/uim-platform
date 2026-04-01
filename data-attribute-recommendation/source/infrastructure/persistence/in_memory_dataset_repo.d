@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_dataset_repo;
+module infrastructure.persistence.memory.dataset_repo;
 
 import domain.types;
 import domain.entities.dataset;

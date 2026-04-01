@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_cleansing_rule_repo;
+module infrastructure.persistence.memory.cleansing_rule_repo;
 
 import domain.types;
 import domain.entities.cleansing_rule;

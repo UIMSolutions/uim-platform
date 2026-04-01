@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_model_config_repo;
+module infrastructure.persistence.memory.model_config_repo;
 
 import domain.types;
 import domain.entities.model_configuration;

@@ -3,13 +3,13 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_validation_rule_repo;
-import infrastructure.persistence.in_memory_validation_result_repo;
-import infrastructure.persistence.in_memory_address_repo;
-import infrastructure.persistence.in_memory_match_group_repo;
-import infrastructure.persistence.in_memory_data_profile_repo;
-import infrastructure.persistence.in_memory_cleansing_rule_repo;
-import infrastructure.persistence.in_memory_cleansing_job_repo;
+import infrastructure.persistence.memory.validation_rule_repo;
+import infrastructure.persistence.memory.validation_result_repo;
+import infrastructure.persistence.memory.address_repo;
+import infrastructure.persistence.memory.match_group_repo;
+import infrastructure.persistence.memory.data_profile_repo;
+import infrastructure.persistence.memory.cleansing_rule_repo;
+import infrastructure.persistence.memory.cleansing_job_repo;
 
 // Domain services
 import domain.services.validation_engine;
