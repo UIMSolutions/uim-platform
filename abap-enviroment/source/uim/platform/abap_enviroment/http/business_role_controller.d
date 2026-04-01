@@ -1,4 +1,4 @@
-module presentation.http.business_role;
+module uim.platform.abap_enviroment.presentation.http.business_role;
 
 import vibe.http.server;
 import vibe.http.router;

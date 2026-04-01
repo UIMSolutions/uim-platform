@@ -1,4 +1,4 @@
-module presentation.http.system_instance;
+module uim.platform.abap_enviroment.presentation.http.system_instance;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,17 +11,14 @@ import domain.entities.system_instance;
 import domain.types;
 import presentation.http.json_utils;
 
-class SystemInstanceController
-{
+class SystemInstanceController {
     private ManageSystemInstancesUseCase uc;
 
-    this(ManageSystemInstancesUseCase uc)
-    {
+    this(ManageSystemInstancesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/systems", &handleCreate);
         router.get("/api/v1/systems", &handleList);
         router.get("/api/v1/systems/*", &handleGetById);
@@ -29,10 +26,8 @@ class SystemInstanceController
         router.delete_("/api/v1/systems/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateSystemInstanceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -49,27 +44,20 @@ class SystemInstanceController
             r.stackVersion = j.getString("stackVersion");
 
             auto result = uc.createInstance(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto instances = uc.listInstances(tenantId);
             auto arr = Json.emptyArray;
@@ -77,38 +65,29 @@ class SystemInstanceController
                 arr ~= serializeInstance(inst);
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) instances.length);
+            resp["totalCount"] = Json(cast(long)instances.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto inst = uc.getInstance(id);
-            if (inst is null)
-            {
+            if (inst is null) {
                 writeError(res, 404, "System instance not found");
                 return;
             }
             res.writeJsonBody(serializeInstance(*inst), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateSystemInstanceRequest r;
@@ -119,48 +98,35 @@ class SystemInstanceController
             r.softwareVersion = j.getString("softwareVersion");
 
             auto result = uc.updateInstance(id, r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("updated");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteInstance(id);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("deleting");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeInstance(ref const SystemInstance inst)
-    {
+    private static Json serializeInstance(ref const SystemInstance inst) {
         auto j = Json.emptyObject;
         j["id"] = Json(inst.id);
         j["tenantId"] = Json(inst.tenantId);
@@ -172,8 +138,8 @@ class SystemInstanceController
         j["region"] = Json(inst.region);
         j["sapSystemId"] = Json(inst.sapSystemId);
         j["adminEmail"] = Json(inst.adminEmail);
-        j["abapRuntimeSize"] = Json(cast(long) inst.abapRuntimeSize);
-        j["hanaMemorySize"] = Json(cast(long) inst.hanaMemorySize);
+        j["abapRuntimeSize"] = Json(cast(long)inst.abapRuntimeSize);
+        j["hanaMemorySize"] = Json(cast(long)inst.hanaMemorySize);
         j["serviceUrl"] = Json(inst.serviceUrl);
         j["softwareVersion"] = Json(inst.softwareVersion);
         j["stackVersion"] = Json(inst.stackVersion);

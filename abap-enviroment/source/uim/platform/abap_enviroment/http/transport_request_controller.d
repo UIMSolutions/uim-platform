@@ -1,4 +1,4 @@
-module presentation.http.transport_request;
+module uim.platform.abap_enviroment.presentation.http.transport_request;
 
 import vibe.http.server;
 import vibe.http.router;
