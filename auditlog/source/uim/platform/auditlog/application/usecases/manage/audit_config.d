@@ -21,8 +21,7 @@ class ManageAuditConfigUseCase {
             return CommandResult("", "Tenant ID is required");
 
         // Only one config per tenant
-        auto existing = repo.findByTenant(req.tenantId);
-        if (existing !is null)
+        if (repo.existsByTenant(req.tenantId))
             return CommandResult("", "Audit configuration already exists for this tenant");
 
         auto now = Clock.currStdTime();

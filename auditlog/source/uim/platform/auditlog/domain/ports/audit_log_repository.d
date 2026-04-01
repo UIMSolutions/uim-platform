@@ -4,10 +4,13 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 
 /// Port for persisting and querying audit log entries.
-@safe: interface  AuditLogRepository
-{
+@safe:
+interface AuditLogRepository {
     AuditLogEntry[] findByTenant(TenantId tenantId);
-    AuditLogEntry* findById(AuditLogId id, TenantId tenantId);
+
+    bool existsById(AuditLogId id, TenantId tenantId);
+    AuditLogEntry findById(AuditLogId id, TenantId tenantId);
+
     AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
     AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
     AuditLogEntry[] findByUser(TenantId tenantId, UserId userId);
@@ -15,6 +18,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry;
     AuditLogEntry[] findByCorrelation(string correlationId);
     AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
         long timeFrom, long timeTo, int limit, int offset);
+
     long countByTenant(TenantId tenantId);
     void save(AuditLogEntry entry);
     void removeOlderThan(TenantId tenantId, long beforeTimestamp);

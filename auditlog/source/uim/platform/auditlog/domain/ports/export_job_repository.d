@@ -4,10 +4,13 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.export_job;
 
 /// Port for persisting export job records.
-@safe: interface  ExportJobRepository
-{
+@safe:
+interface ExportJobRepository {
     ExportJob[] findByTenant(TenantId tenantId);
-    ExportJob* findById(ExportJobId id, TenantId tenantId);
+
+    bool existsById(ExportJobId id, TenantId tenantId);
+    ExportJob findById(ExportJobId id, TenantId tenantId);
+    
     void save(ExportJob job);
     void update(ExportJob job);
     void remove(ExportJobId id, TenantId tenantId);

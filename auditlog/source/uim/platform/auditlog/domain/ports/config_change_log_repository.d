@@ -4,13 +4,16 @@ import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.config_change_log;
 
 /// Port for persisting configuration change log records.
-@safe: interface  ConfigChangeLogRepository
-{
+@safe:
+interface ConfigChangeLogRepository {
+    bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
+    ConfigChangeLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
+
     ConfigChangeLog[] findByTenant(TenantId tenantId);
-    ConfigChangeLog* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
     ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy);
     ConfigChangeLog[] findByConfigType(TenantId tenantId, string configType);
     ConfigChangeLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+    
     void save(ConfigChangeLog log);
     void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

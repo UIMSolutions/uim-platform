@@ -9,19 +9,17 @@ import uim.platform.auditlog.domain.ports.export_job_repository;
 import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.application.dto;
 
-@safe: class ManageExportsUseCase
-{
+@safe:
+class ManageExportsUseCase {
     private ExportJobRepository jobRepo;
     private AuditLogRepository auditRepo;
 
-    this(ExportJobRepository jobRepo, AuditLogRepository auditRepo)
-    {
+    this(ExportJobRepository jobRepo, AuditLogRepository auditRepo) {
         this.jobRepo = jobRepo;
         this.auditRepo = auditRepo;
     }
 
-    CommandResult createExport(CreateExportJobRequest req)
-    {
+    CommandResult createExport(CreateExportJobRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
         if (req.requestedBy.length == 0)
@@ -42,7 +40,7 @@ import uim.platform.auditlog.application.dto;
         // Simulate immediate export completion
         auto logs = auditRepo.search(req.tenantId, req.categories,
             req.timeFrom, req.timeTo, int.max, 0);
-        job.totalRecords = cast(long) logs.length;
+        job.totalRecords = cast(long)logs.length;
         job.status = ExportStatus.completed;
         job.completedAt = Clock.currStdTime();
         job.downloadUrl = "/api/v1/exports/" ~ job.id ~ "/download";
@@ -51,18 +49,19 @@ import uim.platform.auditlog.application.dto;
         return CommandResult(job.id, "");
     }
 
-    ExportJob* getExport(ExportJobId id, TenantId tenantId)
-    {
+    bool existsExport(ExportJobId id, TenantId tenantId) {
+        return jobRepo.existsById(id, tenantId);
+    }
+
+    ExportJob* getExport(ExportJobId id, TenantId tenantId) {
         return jobRepo.findById(id, tenantId);
     }
 
-    ExportJob[] listExports(TenantId tenantId)
-    {
+    ExportJob[] listExports(TenantId tenantId) {
         return jobRepo.findByTenant(tenantId);
     }
 
-    void deleteExport(ExportJobId id, TenantId tenantId)
-    {
+    void deleteExport(ExportJobId id, TenantId tenantId) {
         jobRepo.remove(id, tenantId);
     }
 }

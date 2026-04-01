@@ -9,37 +9,45 @@ import std.array : array;
 
 @safe:
 class InMemoryAuditConfigRepository : AuditConfigRepository {
-    private AuditConfig[AuditConfigId] store;
+  private AuditConfig[AuditConfigId] store;
 
-    AuditConfig[] findAll() {
-        return store.byValue().array;
-    }
+  AuditConfig[] findAll() {
+    return store.byValue().array;
+  }
 
-    
-    AuditConfig findByTenant(TenantId tenantId) {
-        foreach (c; store.byValue())
-            if (c.tenantId == tenantId)
-                return c;
-        return AuditConfig.init;
-    }
+  bool existsByTenant(TenantId tenantId) {
+    return store.byValue().any!(c => c.tenantId == tenantId);
+  }
 
-    AuditConfig findById(AuditConfigId id) {
-        if (id in store)
-            return store[id];
-        return AuditConfig.init;
-    }
+  AuditConfig findByTenant(TenantId tenantId) {
+    if (!existsByTenant(tenantId))
+      return AuditConfig.init;
 
-    void save(AuditConfig config) {
-        store[config.id] = config;
-    }
+    foreach (c; store.byValue())
+      if (c.tenantId == tenantId)
+        return c;
 
-    void update(AuditConfig config) {
-        store[config.id] = config;
-    }
+    return AuditConfig.init;
+  }
 
-    void remove(AuditConfigId id, TenantId tenantId) {
-        if (id in store)
-            if (store[id].tenantId == tenantId)
-                store.remove(id);
-    }
+  bool existsById(AuditConfigId id) {
+    return (id in store);
+  }
+
+  AuditConfig findById(AuditConfigId id) {
+    return existsById(id) ? store[id] : AuditConfig.init;
+  }
+
+  void save(AuditConfig config) {
+    store[config.id] = config;
+  }
+
+  void update(AuditConfig config) {
+    store[config.id] = config;
+  }
+
+  void remove(AuditConfigId id, TenantId tenantId) {
+    if (existsById(id) && store[id].tenantId == tenantId)
+      store.remove(id);
+  }
 }

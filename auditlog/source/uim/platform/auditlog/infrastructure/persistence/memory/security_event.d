@@ -7,43 +7,44 @@ import uim.platform.auditlog.domain.ports.security_event_repository;
 import std.algorithm : filter;
 import std.array : array;
 
-@safe: class InMemorySecurityEventRepository : SecurityEventRepository
-{
+@safe:
+class InMemorySecurityEventRepository : SecurityEventRepository {
     private SecurityEvent[] store;
 
-    SecurityEvent[] findByTenant(TenantId tenantId)
-    {
-        return store.filter!(e => e.tenantId == tenantId).array;
+    bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+        return store.any!(e => e.auditLogId == auditLogId && e.tenantId == tenantId);
     }
 
-    SecurityEvent* findByAuditLogId(AuditLogId auditLogId, TenantId tenantId)
-    {
+    SecurityEvent findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
         foreach (ref e; store)
             if (e.auditLogId == auditLogId && e.tenantId == tenantId)
                 return &e;
         return null;
     }
 
-    SecurityEvent[] findByUser(TenantId tenantId, UserId userId)
-    {
+    SecurityEvent[] findByTenant(TenantId tenantId) {
+        return store.filter!(e => e.tenantId == tenantId).array;
+    }
+
+    SecurityEvent[] findByUser(TenantId tenantId, UserId userId) {
         return store.filter!(e => e.tenantId == tenantId && e.userId == userId).array;
     }
 
-    SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome)
-    {
+    SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome) {
         return store.filter!(e => e.tenantId == tenantId && e.outcome == outcome).array;
     }
 
-    SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
-    {
+    SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
         return store.filter!(e => e.tenantId == tenantId
-            && e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
+                && e.timestamp >= timeFrom && e.timestamp <= timeTo).array;
     }
 
-    void save(SecurityEvent event) { store ~= event; }
+    void save(SecurityEvent event) {
+        store ~= event;
+    }
 
-    void removeOlderThan(TenantId tenantId, long beforeTimestamp)
-    {
-        store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
+    void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
+        store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp))
+            .array;
     }
 }
