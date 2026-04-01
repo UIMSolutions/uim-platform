@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_proxy_system_repo;
+module infrastructure.persistence.memory.proxy_system_repo;
 
 import domain.types;
 import domain.entities.proxy_system;

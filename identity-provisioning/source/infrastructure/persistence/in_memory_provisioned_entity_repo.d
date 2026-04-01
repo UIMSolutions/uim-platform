@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_provisioned_entity_repo;
+module infrastructure.persistence.memory.provisioned_entity_repo;
 
 import domain.types;
 import domain.entities.provisioned_entity;

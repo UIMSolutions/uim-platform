@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_execution_log_repo;
+module infrastructure.persistence.memory.execution_log_repo;
 
 import domain.types;
 import domain.entities.execution_log;

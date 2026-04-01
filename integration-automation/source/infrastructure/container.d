@@ -3,12 +3,12 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_scenario_repo;
-import infrastructure.persistence.in_memory_workflow_repo;
-import infrastructure.persistence.in_memory_step_repo;
-import infrastructure.persistence.in_memory_system_repo;
-import infrastructure.persistence.in_memory_destination_repo;
-import infrastructure.persistence.in_memory_execution_log_repo;
+import infrastructure.persistence.memory.scenario_repo;
+import infrastructure.persistence.memory.workflow_repo;
+import infrastructure.persistence.memory.step_repo;
+import infrastructure.persistence.memory.system_repo;
+import infrastructure.persistence.memory.destination_repo;
+import infrastructure.persistence.memory.execution_log_repo;
 
 // Domain Services
 import domain.services.workflow_engine;

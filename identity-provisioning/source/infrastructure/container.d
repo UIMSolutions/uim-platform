@@ -3,13 +3,13 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_source_system_repo;
-import infrastructure.persistence.in_memory_target_system_repo;
-import infrastructure.persistence.in_memory_proxy_system_repo;
-import infrastructure.persistence.in_memory_transformation_repo;
-import infrastructure.persistence.in_memory_provisioning_job_repo;
-import infrastructure.persistence.in_memory_provisioning_log_repo;
-import infrastructure.persistence.in_memory_provisioned_entity_repo;
+import infrastructure.persistence.memory.source_system_repo;
+import infrastructure.persistence.memory.target_system_repo;
+import infrastructure.persistence.memory.proxy_system_repo;
+import infrastructure.persistence.memory.transformation_repo;
+import infrastructure.persistence.memory.provisioning_job_repo;
+import infrastructure.persistence.memory.provisioning_log_repo;
+import infrastructure.persistence.memory.provisioned_entity_repo;
 
 // Domain services
 import domain.services.provisioning_engine;

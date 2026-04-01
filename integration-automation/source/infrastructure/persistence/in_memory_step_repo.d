@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_step_repo;
+module infrastructure.persistence.memory.step_repo;
 
 import domain.types;
 import domain.entities.workflow_step;

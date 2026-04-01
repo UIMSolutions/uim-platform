@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_system_repo;
+module infrastructure.persistence.memory.system_repo;
 
 import domain.types;
 import domain.entities.system_connection;

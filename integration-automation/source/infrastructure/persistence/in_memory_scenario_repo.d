@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_scenario_repo;
+module infrastructure.persistence.memory.scenario_repo;
 
 import domain.types;
 import domain.entities.integration_scenario;

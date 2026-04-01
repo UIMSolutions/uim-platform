@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_transformation_repo;
+module infrastructure.persistence.memory.transformation_repo;
 
 import domain.types;
 import domain.entities.transformation;
