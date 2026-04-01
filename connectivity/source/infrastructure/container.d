@@ -3,12 +3,12 @@ module infrastructure.container;
 import infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.in_memory_destination_repo;
-import infrastructure.persistence.in_memory_connector_repo;
-import infrastructure.persistence.in_memory_channel_repo;
-import infrastructure.persistence.in_memory_access_rule_repo;
-import infrastructure.persistence.in_memory_certificate_repo;
-import infrastructure.persistence.in_memory_connectivity_log_repo;
+import infrastructure.persistence.memory.destination_repo;
+import infrastructure.persistence.memory.connector_repo;
+import infrastructure.persistence.memory.channel_repo;
+import infrastructure.persistence.memory.access_rule_repo;
+import infrastructure.persistence.memory.certificate_repo;
+import infrastructure.persistence.memory.connectivity_log_repo;
 
 // Use Cases
 import application.usecases.manage_destinations;

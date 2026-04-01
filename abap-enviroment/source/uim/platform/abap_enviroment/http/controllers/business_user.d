@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.presentation.http.business_user;
+module uim.platform.abap_enviroment.http.controllers.business_user;
 
 // import vibe.http.server;
 // import vibe.http.router;

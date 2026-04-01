@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_connector_repo;
+module infrastructure.persistence.memory.connector_repo;
 
 import domain.types;
 import domain.entities.cloud_connector;

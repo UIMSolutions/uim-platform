@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_access_rule_repo;
+module infrastructure.persistence.memory.access_rule_repo;
 
 import domain.types;
 import domain.entities.access_rule;

@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.presentation.http.health;
+module uim.platform.abap_enviroment.http.controllers.health;
 
 // import vibe.http.server;
 // import vibe.http.router;

@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.presentation.http.application_job;
+module uim.platform.abap_enviroment.http.controllers.application_job;
 
 // import vibe.http.server;
 // import vibe.http.router;

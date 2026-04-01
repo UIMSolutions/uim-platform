@@ -1,4 +1,4 @@
-module infrastructure.persistence.in_memory_connectivity_log_repo;
+module infrastructure.persistence.memory.connectivity_log_repo;
 
 import domain.types;
 import domain.entities.connectivity_log;

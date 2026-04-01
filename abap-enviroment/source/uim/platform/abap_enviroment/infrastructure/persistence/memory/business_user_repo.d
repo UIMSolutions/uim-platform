@@ -1,50 +1,56 @@
 module uim.platform.abap_enviroment.infrastructure.persistence.memory.business_user_repo;
 
-import uim.platform.abap_enviroment.domain.types;
-import uim.platform.abap_enviroment.domain.entities.business_user;
-import uim.platform.abap_enviroment.domain.ports.business_user_repository;
+// import uim.platform.abap_enviroment.domain.types;
+// import uim.platform.abap_enviroment.domain.entities.business_user;
+// import uim.platform.abap_enviroment.domain.ports.business_user_repository;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.abap_enviroment;
+mixin(ShowModule!());
+@safe:
 
-class InMemoryBusinessUserRepository : BusinessUserRepository
-{
+class InMemoryBusinessUserRepository : BusinessUserRepository {
     private BusinessUser[BusinessUserId] store;
 
-    BusinessUser* findById(BusinessUserId id)
-    {
+    BusinessUser* findById(BusinessUserId id) {
         if (auto p = id in store)
             return p;
         return null;
     }
 
-    BusinessUser[] findBySystem(SystemInstanceId systemId)
-    {
+    BusinessUser[] findBySystem(SystemInstanceId systemId) {
         return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
     }
 
-    BusinessUser[] findByTenant(TenantId tenantId)
-    {
+    BusinessUser[] findByTenant(TenantId tenantId) {
         return store.byValue().filter!(e => e.tenantId == tenantId).array;
     }
 
-    BusinessUser* findByUsername(SystemInstanceId systemId, string username)
-    {
+    BusinessUser* findByUsername(SystemInstanceId systemId, string username) {
         foreach (ref e; store.byValue())
             if (e.systemInstanceId == systemId && e.username == username)
                 return &store[e.id];
         return null;
     }
 
-    BusinessUser* findByEmail(SystemInstanceId systemId, string email)
-    {
+    BusinessUser* findByEmail(SystemInstanceId systemId, string email) {
         foreach (ref e; store.byValue())
             if (e.systemInstanceId == systemId && e.email == email)
                 return &store[e.id];
         return null;
     }
 
-    void save(BusinessUser user) { store[user.id] = user; }
-    void update(BusinessUser user) { store[user.id] = user; }
-    void remove(BusinessUserId id) { store.remove(id); }
+    void save(BusinessUser user) {
+        store[user.id] = user;
+    }
+
+    void update(BusinessUser user) {
+        store[user.id] = user;
+    }
+
+    void remove(BusinessUserId id) {
+        store.remove(id);
+    }
 }

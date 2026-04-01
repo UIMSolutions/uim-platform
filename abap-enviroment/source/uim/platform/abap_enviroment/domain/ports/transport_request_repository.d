@@ -4,8 +4,7 @@ import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository
-{
+interface TransportRequestRepository {
     TransportRequest* findById(TransportRequestId id);
     TransportRequest[] findBySystem(SystemInstanceId systemId);
     TransportRequest[] findByTenant(TenantId tenantId);

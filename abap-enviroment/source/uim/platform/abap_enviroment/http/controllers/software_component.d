@@ -1,4 +1,4 @@
-module uim.platform.abap_enviroment.presentation.http.software_component;
+module uim.platform.abap_enviroment.http.controllers.software_component;
 
 // import vibe.http.server;
 // import vibe.http.router;
