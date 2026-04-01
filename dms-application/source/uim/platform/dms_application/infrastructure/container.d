@@ -35,8 +35,7 @@ import presentation.http.browse;
 import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   InMemoryRepositoryRepository repoRepo;
   InMemoryFolderRepository folderRepo;
@@ -71,8 +70,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
