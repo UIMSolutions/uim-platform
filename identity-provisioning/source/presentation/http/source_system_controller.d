@@ -38,10 +38,10 @@ class SourceSystemController
       auto j = req.json;
       auto r = CreateSourceSystemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.systemType = parseSystemType(jsonStr(j, "systemType"));
-      r.connectionConfig = jsonStr(j, "connectionConfig");
+      r.connectionConfig = j.getString("connectionConfig");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createSourceSystem(r);
@@ -111,9 +111,9 @@ class SourceSystemController
       auto r = UpdateSourceSystemRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.connectionConfig = jsonStr(j, "connectionConfig");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.connectionConfig = j.getString("connectionConfig");
 
       auto result = uc.updateSourceSystem(r);
       if (result.isSuccess)

@@ -127,7 +127,7 @@ class SectionController
         {
             auto sectionId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto pageId = jsonStr(j, "pageId");
+            auto pageId = j.getString("pageId");
             auto error = useCase.deleteSection(sectionId, pageId);
             if (error.length > 0)
                 writeApiError(res, 404, error);

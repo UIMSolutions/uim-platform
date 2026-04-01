@@ -34,16 +34,16 @@ class EventSubscriptionController
         {
             auto j = req.json;
             CreateEventSubscriptionRequest r;
-            r.namespaceId = jsonStr(j, "namespaceId");
-            r.environmentId = jsonStr(j, "environmentId");
+            r.namespaceId = j.getString("namespaceId");
+            r.environmentId = j.getString("environmentId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.source = jsonStr(j, "source");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.source = j.getString("source");
             r.eventTypes = jsonStrArray(j, "eventTypes");
-            r.typeEncoding = jsonStr(j, "typeEncoding");
-            r.sinkUrl = jsonStr(j, "sinkUrl");
-            r.sinkServiceName = jsonStr(j, "sinkServiceName");
+            r.typeEncoding = j.getString("typeEncoding");
+            r.sinkUrl = j.getString("sinkUrl");
+            r.sinkServiceName = j.getString("sinkServiceName");
             r.sinkServicePort = j.getInteger("sinkServicePort");
             r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
             r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);
@@ -113,10 +113,10 @@ class EventSubscriptionController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateEventSubscriptionRequest r;
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.eventTypes = jsonStrArray(j, "eventTypes");
-            r.sinkUrl = jsonStr(j, "sinkUrl");
-            r.sinkServiceName = jsonStr(j, "sinkServiceName");
+            r.sinkUrl = j.getString("sinkUrl");
+            r.sinkServiceName = j.getString("sinkServiceName");
             r.sinkServicePort = j.getInteger("sinkServicePort");
             r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
             r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);

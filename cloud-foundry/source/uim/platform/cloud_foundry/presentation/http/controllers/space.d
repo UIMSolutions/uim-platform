@@ -36,10 +36,10 @@ class SpaceController
       auto j = req.json;
       auto r = CreateSpaceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.orgId = jsonStr(j, "orgId");
-      r.name = jsonStr(j, "name");
+      r.orgId = j.getString("orgId");
+      r.name = j.getString("name");
       r.allowSsh = jsonBool(j, "allowSsh", true);
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createSpace(r);
       if (result.isSuccess())
@@ -108,7 +108,7 @@ class SpaceController
       auto r = UpdateSpaceRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
+      r.name = j.getString("name");
       r.allowSsh = jsonBool(j, "allowSsh", true);
 
       auto result = useCase.updateSpace(r);

@@ -36,8 +36,8 @@ class InferenceController
       auto j = req.json;
       auto r = SubmitInferenceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.deploymentId = jsonStr(j, "deploymentId");
-      r.inputData = jsonStr(j, "inputData");
+      r.deploymentId = j.getString("deploymentId");
+      r.inputData = j.getString("inputData");
 
       auto result = uc.submitInference(r);
       if (result.isSuccess)

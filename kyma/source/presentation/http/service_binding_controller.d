@@ -32,15 +32,15 @@ class ServiceBindingController
         {
             auto j = req.json;
             CreateServiceBindingRequest r;
-            r.serviceInstanceId = jsonStr(j, "serviceInstanceId");
-            r.namespaceId = jsonStr(j, "namespaceId");
-            r.environmentId = jsonStr(j, "environmentId");
+            r.serviceInstanceId = j.getString("serviceInstanceId");
+            r.namespaceId = j.getString("namespaceId");
+            r.environmentId = j.getString("environmentId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.secretName = jsonStr(j, "secretName");
-            r.secretNamespace = jsonStr(j, "secretNamespace");
-            r.parametersJson = jsonStr(j, "parameters");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.secretName = j.getString("secretName");
+            r.secretNamespace = j.getString("secretNamespace");
+            r.parametersJson = j.getString("parameters");
             r.labels = jsonStrMap(j, "labels");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -103,9 +103,9 @@ class ServiceBindingController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateServiceBindingRequest r;
-            r.description = jsonStr(j, "description");
-            r.secretName = jsonStr(j, "secretName");
-            r.parametersJson = jsonStr(j, "parameters");
+            r.description = j.getString("description");
+            r.secretName = j.getString("secretName");
+            r.parametersJson = j.getString("parameters");
             r.labels = jsonStrMap(j, "labels");
 
             auto result = uc.updateBinding(id, r);

@@ -34,12 +34,12 @@ class ConsentController
             auto j = req.json;
             CreateConsentRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
+            r.dataSubjectId = j.getString("dataSubjectId");
             r.purpose = parsePurpose(jsonStr(j, "purpose"));
-            r.channel = jsonStr(j, "channel");
-            r.consentText = jsonStr(j, "consentText");
-            r.version_ = jsonStr(j, "version");
-            r.ipAddress = jsonStr(j, "ipAddress");
+            r.channel = j.getString("channel");
+            r.consentText = j.getString("consentText");
+            r.version_ = j.getString("version");
+            r.ipAddress = j.getString("ipAddress");
             r.expiresAt = jsonLong(j, "expiresAt");
 
             auto result = uc.grantConsent(r);
@@ -135,7 +135,7 @@ class ConsentController
         {
             auto j = req.json;
             RevokeConsentRequest r;
-            r.id = jsonStr(j, "id");
+            r.id = j.getString("id");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
 
             auto result = uc.revokeConsent(r);

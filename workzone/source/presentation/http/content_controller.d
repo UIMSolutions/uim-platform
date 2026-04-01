@@ -34,17 +34,17 @@ class ContentController
         {
             auto j = req.json;
             auto r = CreateContentRequest();
-            r.workspaceId = jsonStr(j, "workspaceId");
+            r.workspaceId = j.getString("workspaceId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.body_ = jsonStr(j, "body");
-            r.summary = jsonStr(j, "summary");
-            r.authorId = jsonStr(j, "authorId");
-            r.authorName = jsonStr(j, "authorName");
+            r.title = j.getString("title");
+            r.body_ = j.getString("body");
+            r.summary = j.getString("summary");
+            r.authorId = j.getString("authorId");
+            r.authorName = j.getString("authorName");
             r.tags = jsonStrArray(j, "tags");
-            r.language = jsonStr(j, "language");
+            r.language = j.getString("language");
 
-            auto ctStr = jsonStr(j, "contentType");
+            auto ctStr = j.getString("contentType");
             if (ctStr == "wikiPage") r.contentType = ContentType.wikiPage;
             else if (ctStr == "knowledgeBase") r.contentType = ContentType.knowledgeBase;
             else if (ctStr == "forumPost") r.contentType = ContentType.forumPost;
@@ -125,13 +125,13 @@ class ContentController
             auto r = UpdateContentRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.body_ = jsonStr(j, "body");
-            r.summary = jsonStr(j, "summary");
+            r.title = j.getString("title");
+            r.body_ = j.getString("body");
+            r.summary = j.getString("summary");
             r.tags = jsonStrArray(j, "tags");
             r.pinned = jsonBool(j, "pinned");
 
-            auto statusStr = jsonStr(j, "status");
+            auto statusStr = j.getString("status");
             if (statusStr == "published") r.status = ContentStatus.published;
             else if (statusStr == "archived") r.status = ContentStatus.archived;
             else r.status = ContentStatus.draft;

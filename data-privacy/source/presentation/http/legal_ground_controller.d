@@ -33,11 +33,11 @@ class LegalGroundController
             auto j = req.json;
             CreateLegalGroundRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
+            r.dataSubjectId = j.getString("dataSubjectId");
             r.basis = parseLegalBasis(jsonStr(j, "basis"));
             r.purpose = parsePurpose(jsonStr(j, "purpose"));
-            r.description = jsonStr(j, "description");
-            r.legalReference = jsonStr(j, "legalReference");
+            r.description = j.getString("description");
+            r.legalReference = j.getString("legalReference");
             r.validFrom = jsonLong(j, "validFrom");
             r.validUntil = jsonLong(j, "validUntil");
 
@@ -113,8 +113,8 @@ class LegalGroundController
             UpdateLegalGroundRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.description = jsonStr(j, "description");
-            r.legalReference = jsonStr(j, "legalReference");
+            r.description = j.getString("description");
+            r.legalReference = j.getString("legalReference");
             r.isActive = jsonBool(j, "isActive", true);
             r.validUntil = jsonLong(j, "validUntil");
 

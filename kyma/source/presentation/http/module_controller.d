@@ -33,14 +33,14 @@ class ModuleController
         {
             auto j = req.json;
             EnableModuleRequest r;
-            r.environmentId = jsonStr(j, "environmentId");
+            r.environmentId = j.getString("environmentId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.moduleType = jsonStr(j, "moduleType");
-            r.version_ = jsonStr(j, "version");
-            r.channel = jsonStr(j, "channel");
-            r.customResourcePolicy = jsonStr(j, "customResourcePolicy");
-            r.configurationJson = jsonStr(j, "configuration");
+            r.name = j.getString("name");
+            r.moduleType = j.getString("moduleType");
+            r.version_ = j.getString("version");
+            r.channel = j.getString("channel");
+            r.customResourcePolicy = j.getString("customResourcePolicy");
+            r.configurationJson = j.getString("configuration");
             r.enabledBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.enableModule(r);
@@ -95,10 +95,10 @@ class ModuleController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateModuleRequest r;
-            r.version_ = jsonStr(j, "version");
-            r.channel = jsonStr(j, "channel");
-            r.customResourcePolicy = jsonStr(j, "customResourcePolicy");
-            r.configurationJson = jsonStr(j, "configuration");
+            r.version_ = j.getString("version");
+            r.channel = j.getString("channel");
+            r.customResourcePolicy = j.getString("customResourcePolicy");
+            r.configurationJson = j.getString("configuration");
 
             auto result = uc.updateModule(id, r);
             if (result.success) res.writeJsonBody(Json.emptyObject, 200);

@@ -60,15 +60,15 @@ class VersionController
     {
       auto j = req.json;
       auto r = CheckInRequest();
-      r.documentId = jsonStr(j, "documentId");
+      r.documentId = j.getString("documentId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.userId = req.headers.get("X-User-Id", "system");
       r.isMajor = jsonBool(j, "isMajor", true);
-      r.comment = jsonStr(j, "comment");
-      r.fileName = jsonStr(j, "fileName");
-      r.mimeType = jsonStr(j, "mimeType");
+      r.comment = j.getString("comment");
+      r.fileName = j.getString("fileName");
+      r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.checksum = jsonStr(j, "checksum");
+      r.checksum = j.getString("checksum");
 
       auto result = uc.checkIn(r);
       if (result.isSuccess)

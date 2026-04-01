@@ -135,7 +135,7 @@ class StepController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.completedBy = req.headers.get("X-User-Id", "");
-      r.result = jsonStr(j, "result");
+      r.result = j.getString("result");
 
       auto result = useCase.completeStep(r);
       if (result.isSuccess())
@@ -166,7 +166,7 @@ class StepController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.reportedBy = req.headers.get("X-User-Id", "");
-      r.errorMessage = jsonStr(j, "errorMessage");
+      r.errorMessage = j.getString("errorMessage");
 
       auto result = useCase.failStep(r);
       if (result.isSuccess())
@@ -197,7 +197,7 @@ class StepController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.skippedBy = req.headers.get("X-User-Id", "");
-      r.reason = jsonStr(j, "reason");
+      r.reason = j.getString("reason");
 
       auto result = useCase.skipStep(r);
       if (result.isSuccess())
@@ -227,8 +227,8 @@ class StepController
       auto r = AssignStepRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.assignedTo = jsonStr(j, "assignedTo");
-      r.assignedRole = jsonStr(j, "assignedRole");
+      r.assignedTo = j.getString("assignedTo");
+      r.assignedRole = j.getString("assignedRole");
 
       auto result = useCase.assignStep(r);
       if (result.isSuccess())

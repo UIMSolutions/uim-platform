@@ -34,15 +34,15 @@ class PersonalDataModelController
             auto j = req.json;
             CreatePersonalDataModelRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.fieldName = jsonStr(j, "fieldName");
-            r.fieldDescription = jsonStr(j, "fieldDescription");
+            r.fieldName = j.getString("fieldName");
+            r.fieldDescription = j.getString("fieldDescription");
             r.category = parseCategory(jsonStr(j, "category"));
             r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.sourceEntity = jsonStr(j, "sourceEntity");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.sourceEntity = j.getString("sourceEntity");
             r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
             r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
-            r.legalReference = jsonStr(j, "legalReference");
+            r.legalReference = j.getString("legalReference");
 
             auto result = uc.createModel(r);
             if (result.isSuccess())
@@ -130,14 +130,14 @@ class PersonalDataModelController
             UpdatePersonalDataModelRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.fieldName = jsonStr(j, "fieldName");
-            r.fieldDescription = jsonStr(j, "fieldDescription");
+            r.fieldName = j.getString("fieldName");
+            r.fieldDescription = j.getString("fieldDescription");
             r.category = parseCategory(jsonStr(j, "category"));
             r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.sourceEntity = jsonStr(j, "sourceEntity");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.sourceEntity = j.getString("sourceEntity");
             r.isSpecialCategory = jsonBool(j, "isSpecialCategory");
-            r.legalReference = jsonStr(j, "legalReference");
+            r.legalReference = j.getString("legalReference");
 
             auto result = uc.updateModel(r);
             if (result.isSuccess())

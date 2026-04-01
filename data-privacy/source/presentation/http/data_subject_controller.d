@@ -33,11 +33,11 @@ class DataSubjectController
             auto j = req.json;
             CreateDataSubjectRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.displayName = jsonStr(j, "displayName");
-            r.email = jsonStr(j, "email");
-            r.externalId = jsonStr(j, "externalId");
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.country = jsonStr(j, "country");
+            r.displayName = j.getString("displayName");
+            r.email = j.getString("email");
+            r.externalId = j.getString("externalId");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.country = j.getString("country");
             r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
 
             auto result = uc.createSubject(r);
@@ -106,10 +106,10 @@ class DataSubjectController
             UpdateDataSubjectRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.displayName = jsonStr(j, "displayName");
-            r.email = jsonStr(j, "email");
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.country = jsonStr(j, "country");
+            r.displayName = j.getString("displayName");
+            r.email = j.getString("email");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.country = j.getString("country");
             r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
             r.isActive = jsonBool(j, "isActive", true);
 

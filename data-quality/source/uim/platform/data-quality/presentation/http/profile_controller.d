@@ -34,8 +34,8 @@ class ProfileController
             auto j = req.json;
             auto r = ProfileDatasetRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
-            r.datasetName = jsonStr(j, "datasetName");
+            r.datasetId = j.getString("datasetId");
+            r.datasetName = j.getString("datasetName");
 
             auto recordsJson = "records" in j;
             if (recordsJson !is null && (*recordsJson).type == Json.Type.array)

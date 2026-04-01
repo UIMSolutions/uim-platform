@@ -35,12 +35,12 @@ class ReplicationController
             auto j = req.json;
             CreateReplicationJobRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.distributionModelId = jsonStr(j, "distributionModelId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.trigger = jsonStr(j, "trigger");
+            r.distributionModelId = j.getString("distributionModelId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.trigger = j.getString("trigger");
             r.categories = jsonStrArray(j, "categories");
-            r.sourceClientId = jsonStr(j, "sourceClientId");
+            r.sourceClientId = j.getString("sourceClientId");
             r.targetClientIds = jsonStrArray(j, "targetClientIds");
             r.isInitialLoad = jsonBool(j, "isInitialLoad");
             r.createdBy = req.headers.get("X-User-Id", "");

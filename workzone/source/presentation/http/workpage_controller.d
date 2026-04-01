@@ -33,10 +33,10 @@ class WorkpageController
         {
             auto j = req.json;
             auto r = CreateWorkpageRequest();
-            r.workspaceId = jsonStr(j, "workspaceId");
+            r.workspaceId = j.getString("workspaceId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
             r.sortOrder = j.getInteger("sortOrder");
             r.isDefault = jsonBool(j, "isDefault");
 
@@ -107,8 +107,8 @@ class WorkpageController
             auto r = UpdateWorkpageRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
             r.sortOrder = j.getInteger("sortOrder");
             r.visible = jsonBool(j, "visible", true);
 

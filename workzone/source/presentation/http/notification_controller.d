@@ -35,16 +35,16 @@ class NotificationController
             auto j = req.json;
             auto r = CreateNotificationRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.recipientId = jsonStr(j, "recipientId");
-            r.title = jsonStr(j, "title");
-            r.body_ = jsonStr(j, "body");
-            r.sourceApp = jsonStr(j, "sourceApp");
-            r.sourceObjectType = jsonStr(j, "sourceObjectType");
-            r.sourceObjectId = jsonStr(j, "sourceObjectId");
-            r.actionUrl = jsonStr(j, "actionUrl");
+            r.recipientId = j.getString("recipientId");
+            r.title = j.getString("title");
+            r.body_ = j.getString("body");
+            r.sourceApp = j.getString("sourceApp");
+            r.sourceObjectType = j.getString("sourceObjectType");
+            r.sourceObjectId = j.getString("sourceObjectId");
+            r.actionUrl = j.getString("actionUrl");
             r.expiresAt = jsonLong(j, "expiresAt");
 
-            auto pStr = jsonStr(j, "priority");
+            auto pStr = j.getString("priority");
             if (pStr == "low") r.priority = NotificationPriority.low;
             else if (pStr == "high") r.priority = NotificationPriority.high;
             else if (pStr == "critical") r.priority = NotificationPriority.critical;

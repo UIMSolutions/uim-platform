@@ -33,10 +33,10 @@ class DeletionController
             auto j = req.json;
             CreateDeletionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
-            r.requestedBy = jsonStr(j, "requestedBy");
+            r.dataSubjectId = j.getString("dataSubjectId");
+            r.requestedBy = j.getString("requestedBy");
             r.targetSystems = jsonStrArray(j, "targetSystems");
-            r.reason = jsonStr(j, "reason");
+            r.reason = j.getString("reason");
 
             auto result = uc.createRequest(r);
             if (result.isSuccess())
@@ -108,7 +108,7 @@ class DeletionController
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.status = parseDeletionStatus(jsonStr(j, "status"));
-            r.blockerReason = jsonStr(j, "blockerReason");
+            r.blockerReason = j.getString("blockerReason");
 
             auto result = uc.updateStatus(r);
             if (result.isSuccess())

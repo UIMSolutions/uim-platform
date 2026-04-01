@@ -34,14 +34,14 @@ class AccessRuleController
         {
             auto j = req.json;
             auto r = CreateAccessRuleRequest();
-            r.connectorId = jsonStr(j, "connectorId");
+            r.connectorId = j.getString("connectorId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.description = jsonStr(j, "description");
-            r.protocol = jsonStr(j, "protocol");
-            r.virtualHost = jsonStr(j, "virtualHost");
+            r.description = j.getString("description");
+            r.protocol = j.getString("protocol");
+            r.virtualHost = j.getString("virtualHost");
             r.virtualPort = jsonUshort(j, "virtualPort");
-            r.urlPathPrefix = jsonStr(j, "urlPathPrefix");
-            r.policy = jsonStr(j, "policy");
+            r.urlPathPrefix = j.getString("urlPathPrefix");
+            r.policy = j.getString("policy");
             r.principalPropagation = jsonBool(j, "principalPropagation");
 
             auto result = uc.createRule(r);
@@ -110,9 +110,9 @@ class AccessRuleController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateAccessRuleRequest();
-            r.description = jsonStr(j, "description");
-            r.urlPathPrefix = jsonStr(j, "urlPathPrefix");
-            r.policy = jsonStr(j, "policy");
+            r.description = j.getString("description");
+            r.urlPathPrefix = j.getString("urlPathPrefix");
+            r.policy = j.getString("policy");
             r.principalPropagation = jsonBool(j, "principalPropagation");
 
             auto result = uc.updateRule(id, r);

@@ -36,12 +36,12 @@ class TransportController
             auto j = req.json;
             auto r = CreateTransportRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.sourceSubaccount = jsonStr(j, "sourceSubaccount");
-            r.targetSubaccount = jsonStr(j, "targetSubaccount");
-            r.description = jsonStr(j, "description");
-            r.mode = jsonStr(j, "mode");
+            r.sourceSubaccount = j.getString("sourceSubaccount");
+            r.targetSubaccount = j.getString("targetSubaccount");
+            r.description = j.getString("description");
+            r.mode = j.getString("mode");
             r.packageIds = jsonStrArray(j, "packageIds");
-            r.queueId = jsonStr(j, "queueId");
+            r.queueId = j.getString("queueId");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createTransportRequest(r);
@@ -109,7 +109,7 @@ class TransportController
         {
             auto j = req.json;
             auto r = ReleaseTransportRequest();
-            r.requestId = jsonStr(j, "requestId");
+            r.requestId = j.getString("requestId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.releasedBy = req.headers.get("X-User-Id", "");
 
@@ -137,7 +137,7 @@ class TransportController
         try
         {
             auto j = req.json;
-            auto requestId = jsonStr(j, "requestId");
+            auto requestId = j.getString("requestId");
 
             auto result = uc.cancelTransport(requestId);
             if (result.success)

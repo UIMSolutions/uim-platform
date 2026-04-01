@@ -33,16 +33,16 @@ class WidgetController
         {
             auto j = req.json;
             auto r = CreateWidgetRequest();
-            r.pageId = jsonStr(j, "pageId");
+            r.pageId = j.getString("pageId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.cardId = jsonStr(j, "cardId");
-            r.appId = jsonStr(j, "appId");
+            r.title = j.getString("title");
+            r.cardId = j.getString("cardId");
+            r.appId = j.getString("appId");
             r.row = j.getInteger("row");
             r.col = j.getInteger("col");
             r.sortOrder = j.getInteger("sortOrder");
 
-            auto sStr = jsonStr(j, "size");
+            auto sStr = j.getString("size");
             if (sStr == "small") r.size = WidgetSize.small;
             else if (sStr == "large") r.size = WidgetSize.large;
             else if (sStr == "fullWidth") r.size = WidgetSize.fullWidth;
@@ -117,14 +117,14 @@ class WidgetController
             auto r = UpdateWidgetRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
+            r.title = j.getString("title");
             r.row = j.getInteger("row");
             r.col = j.getInteger("col");
             r.sortOrder = j.getInteger("sortOrder");
             r.visible = jsonBool(j, "visible", true);
             r.config = parseWidgetConfig(j);
 
-            auto sStr = jsonStr(j, "size");
+            auto sStr = j.getString("size");
             if (sStr == "small") r.size = WidgetSize.small;
             else if (sStr == "large") r.size = WidgetSize.large;
             else if (sStr == "fullWidth") r.size = WidgetSize.fullWidth;

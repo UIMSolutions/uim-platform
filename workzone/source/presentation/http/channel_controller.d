@@ -33,12 +33,12 @@ class ChannelController
         {
             auto j = req.json;
             auto r = CreateChannelRequest();
-            r.workspaceId = jsonStr(j, "workspaceId");
+            r.workspaceId = j.getString("workspaceId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
 
-            auto ctStr = jsonStr(j, "channelType");
+            auto ctStr = j.getString("channelType");
             if (ctStr == "notification") r.channelType = ChannelType.notification;
             else if (ctStr == "custom") r.channelType = ChannelType.custom;
             else if (ctStr == "external") r.channelType = ChannelType.external;
@@ -113,8 +113,8 @@ class ChannelController
             auto r = UpdateChannelRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
             r.active = jsonBool(j, "active", true);
             r.config = parseChannelConfig(j);
 

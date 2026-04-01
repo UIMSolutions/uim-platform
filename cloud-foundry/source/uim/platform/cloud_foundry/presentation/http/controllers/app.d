@@ -39,20 +39,20 @@ class AppController {
       auto j = req.json;
       auto r = CreateAppRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.spaceId = jsonStr(j, "spaceId");
-      r.name = jsonStr(j, "name");
+      r.spaceId = j.getString("spaceId");
+      r.name = j.getString("name");
       r.instances = j.getInteger("instances", 0);
       r.memoryMb = j.getInteger("memoryMb");
       r.diskMb = j.getInteger("diskMb");
-      r.buildpackId = jsonStr(j, "buildpackId");
-      r.stack = jsonStr(j, "stack");
-      r.command = jsonStr(j, "command");
+      r.buildpackId = j.getString("buildpackId");
+      r.stack = j.getString("stack");
+      r.command = j.getString("command");
       r.healthCheckType = parseHealthCheckType(jsonStr(j, "healthCheckType"));
-      r.healthCheckEndpoint = jsonStr(j, "healthCheckEndpoint");
+      r.healthCheckEndpoint = j.getString("healthCheckEndpoint");
       r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
-      r.environmentVariables = jsonStr(j, "environmentVariables");
-      r.dockerImage = jsonStr(j, "dockerImage");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.environmentVariables = j.getString("environmentVariables");
+      r.dockerImage = j.getString("dockerImage");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createApp(r);
       if (result.isSuccess()) {
@@ -106,18 +106,18 @@ class AppController {
       auto r = UpdateAppRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
+      r.name = j.getString("name");
       r.instances = j.getInteger("instances", 0);
       r.memoryMb = j.getInteger("memoryMb", 0);
       r.diskMb = j.getInteger("diskMb", 0);
-      r.buildpackId = jsonStr(j, "buildpackId");
-      r.stack = jsonStr(j, "stack");
-      r.command = jsonStr(j, "command");
+      r.buildpackId = j.getString("buildpackId");
+      r.stack = j.getString("stack");
+      r.command = j.getString("command");
       r.healthCheckType = parseHealthCheckType(jsonStr(j, "healthCheckType"));
-      r.healthCheckEndpoint = jsonStr(j, "healthCheckEndpoint");
+      r.healthCheckEndpoint = j.getString("healthCheckEndpoint");
       r.healthCheckTimeoutSec = j.getInteger("healthCheckTimeoutSec", 0);
-      r.environmentVariables = jsonStr(j, "environmentVariables");
-      r.dockerImage = jsonStr(j, "dockerImage");
+      r.environmentVariables = j.getString("environmentVariables");
+      r.dockerImage = j.getString("dockerImage");
 
       auto result = useCase.updateApp(r);
       if (result.isSuccess()) {
@@ -222,7 +222,7 @@ class AppController {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto j = req.json;
-      auto envJson = jsonStr(j, "environmentVariables");
+      auto envJson = j.getString("environmentVariables");
 
       auto result = useCase.setEnvironment(id, tenantId, envJson);
       if (result.isSuccess()) {

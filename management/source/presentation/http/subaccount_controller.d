@@ -34,13 +34,13 @@ class SubaccountController
         {
             auto j = req.json;
             CreateSubaccountRequest r;
-            r.globalAccountId = jsonStr(j, "globalAccountId");
-            r.parentDirectoryId = jsonStr(j, "parentDirectoryId");
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.subdomain = jsonStr(j, "subdomain");
-            r.region = jsonStr(j, "region");
-            r.usage = jsonStr(j, "usage");
+            r.globalAccountId = j.getString("globalAccountId");
+            r.parentDirectoryId = j.getString("parentDirectoryId");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.subdomain = j.getString("subdomain");
+            r.region = j.getString("region");
+            r.usage = j.getString("usage");
             r.betaEnabled = jsonBool(j, "betaEnabled");
             r.usedForProduction = jsonBool(j, "usedForProduction");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -114,9 +114,9 @@ class SubaccountController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateSubaccountRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.usage = jsonStr(j, "usage");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.usage = j.getString("usage");
             r.betaEnabled = jsonBool(j, "betaEnabled");
             r.usedForProduction = jsonBool(j, "usedForProduction");
             r.labels = jsonStrMap(j, "labels");
@@ -139,7 +139,7 @@ class SubaccountController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             MoveSubaccountRequest r;
-            r.targetDirectoryId = jsonStr(j, "targetDirectoryId");
+            r.targetDirectoryId = j.getString("targetDirectoryId");
 
             auto result = uc.moveSubaccount(id, r);
             if (result.success)

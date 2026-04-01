@@ -36,11 +36,11 @@ class ServiceBindingController
             auto j = req.json;
             CreateServiceBindingRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.serviceDefinitionId = jsonStr(j, "serviceDefinitionId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.bindingType = jsonStr(j, "bindingType");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.serviceDefinitionId = j.getString("serviceDefinitionId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.bindingType = j.getString("bindingType");
 
             auto result = uc.createBinding(r);
             if (result.isSuccess())
@@ -106,8 +106,8 @@ class ServiceBindingController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateServiceBindingRequest r;
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
 
             auto result = uc.updateBinding(id, r);
             if (result.isSuccess())

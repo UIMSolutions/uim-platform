@@ -32,7 +32,7 @@ class AuditConfigController {
       auto j = req.json;
       auto request = CreateAuditConfigRequest();
       request.tenantId = req.headers.get("X-Tenant-Id", "");
-      request.name = jsonStr(j, "name");
+      request.name = j.getString("name");
       request.logDataAccess = jsonBool(j, "logDataAccess", true);
       request.logDataModification = jsonBool(j, "logDataModification", true);
       request.logSecurityEvents = jsonBool(j, "logSecurityEvents", true);
@@ -41,7 +41,7 @@ class AuditConfigController {
       request.maskedFields = jsonStrArray(j, "maskedFields");
       request.excludedServices = jsonStrArray(j, "excludedServices");
 
-      auto sevStr = jsonStr(j, "minimumSeverity");
+      auto sevStr = j.getString("minimumSeverity");
       if (sevStr == "warning")
         request.minimumSeverity = AuditSeverity.warning;
       else if (sevStr == "error")
@@ -101,7 +101,7 @@ class AuditConfigController {
       auto r = UpdateAuditConfigRequest();
       r.id = extractIdFromPath(req.requestURI);
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
+      r.name = j.getString("name");
       r.logDataAccess = jsonBool(j, "logDataAccess", true);
       r.logDataModification = jsonBool(j, "logDataModification", true);
       r.logSecurityEvents = jsonBool(j, "logSecurityEvents", true);
@@ -111,13 +111,13 @@ class AuditConfigController {
       r.excludedServices = jsonStrArray(j, "excludedServices");
       r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
-      auto statusStr = jsonStr(j, "status");
+      auto statusStr = j.getString("status");
       if (statusStr == "disabled")
         r.status = ConfigStatus.disabled;
       else
         r.status = ConfigStatus.enabled;
 
-      auto sevStr = jsonStr(j, "minimumSeverity");
+      auto sevStr = j.getString("minimumSeverity");
       if (sevStr == "warning")
         r.minimumSeverity = AuditSeverity.warning;
       else if (sevStr == "error")

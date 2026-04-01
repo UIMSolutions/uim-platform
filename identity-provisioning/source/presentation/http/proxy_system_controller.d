@@ -38,12 +38,12 @@ class ProxySystemController
       auto j = req.json;
       auto r = CreateProxySystemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.systemType = parseSystemType(jsonStr(j, "systemType"));
-      r.connectionConfig = jsonStr(j, "connectionConfig");
-      r.sourceSystemId = jsonStr(j, "sourceSystemId");
-      r.targetSystemId = jsonStr(j, "targetSystemId");
+      r.connectionConfig = j.getString("connectionConfig");
+      r.sourceSystemId = j.getString("sourceSystemId");
+      r.targetSystemId = j.getString("targetSystemId");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createProxySystem(r);
@@ -113,9 +113,9 @@ class ProxySystemController
       auto r = UpdateProxySystemRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.connectionConfig = jsonStr(j, "connectionConfig");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.connectionConfig = j.getString("connectionConfig");
 
       auto result = uc.updateProxySystem(r);
       if (result.isSuccess)

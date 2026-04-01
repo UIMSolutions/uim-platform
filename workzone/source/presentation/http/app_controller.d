@@ -34,12 +34,12 @@ class AppController
             auto j = req.json;
             auto r = CreateAppRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.launchUrl = jsonStr(j, "launchUrl");
-            r.icon = jsonStr(j, "icon");
-            r.vendor = jsonStr(j, "vendor");
-            r.version_ = jsonStr(j, "version");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.launchUrl = j.getString("launchUrl");
+            r.icon = j.getString("icon");
+            r.vendor = j.getString("vendor");
+            r.version_ = j.getString("version");
             r.supportedPlatforms = jsonStrArray(j, "supportedPlatforms");
             r.tags = jsonStrArray(j, "tags");
             r.appConfig = parseAppConfig(j);
@@ -110,13 +110,13 @@ class AppController
             auto r = UpdateAppRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.launchUrl = jsonStr(j, "launchUrl");
-            r.icon = jsonStr(j, "icon");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.launchUrl = j.getString("launchUrl");
+            r.icon = j.getString("icon");
             r.appConfig = parseAppConfig(j);
 
-            auto sStr = jsonStr(j, "status");
+            auto sStr = j.getString("status");
             if (sStr == "inactive") r.status = AppStatus.inactive;
             else if (sStr == "deprecated") r.status = AppStatus.deprecated_;
             else r.status = AppStatus.active;

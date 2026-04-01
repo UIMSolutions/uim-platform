@@ -34,12 +34,12 @@ class ApplicationController
         {
             auto j = req.json;
             RegisterApplicationRequest r;
-            r.environmentId = jsonStr(j, "environmentId");
+            r.environmentId = j.getString("environmentId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.registrationType = jsonStr(j, "registrationType");
-            r.connectorUrl = jsonStr(j, "connectorUrl");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.registrationType = j.getString("registrationType");
+            r.connectorUrl = j.getString("connectorUrl");
             r.boundNamespaces = jsonStrArray(j, "boundNamespaces");
             r.labels = jsonStrMap(j, "labels");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -105,8 +105,8 @@ class ApplicationController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateApplicationRequest r;
-            r.description = jsonStr(j, "description");
-            r.connectorUrl = jsonStr(j, "connectorUrl");
+            r.description = j.getString("description");
+            r.connectorUrl = j.getString("connectorUrl");
             r.boundNamespaces = jsonStrArray(j, "boundNamespaces");
             r.labels = jsonStrMap(j, "labels");
             r.apis = parseApis(j);

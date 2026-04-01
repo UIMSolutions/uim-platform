@@ -38,11 +38,11 @@ class TransportRequestController
             auto j = req.json;
             CreateTransportRequestRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.sourceSystemId = jsonStr(j, "sourceSystemId");
-            r.targetSystemId = jsonStr(j, "targetSystemId");
-            r.description = jsonStr(j, "description");
-            r.owner = jsonStr(j, "owner");
-            r.transportType = jsonStr(j, "transportType");
+            r.sourceSystemId = j.getString("sourceSystemId");
+            r.targetSystemId = j.getString("targetSystemId");
+            r.description = j.getString("description");
+            r.owner = j.getString("owner");
+            r.transportType = j.getString("transportType");
 
             auto result = uc.createRequest(r);
             if (result.isSuccess())
@@ -108,8 +108,8 @@ class TransportRequestController
             auto requestId = extractIdFromPath(req.requestURI);
             auto j = req.json;
             AddTransportTaskRequest r;
-            r.owner = jsonStr(j, "owner");
-            r.description = jsonStr(j, "description");
+            r.owner = j.getString("owner");
+            r.description = j.getString("description");
             r.objectList = jsonStrArray(j, "objectList");
 
             auto result = uc.addTask(requestId, r);
@@ -158,7 +158,7 @@ class TransportRequestController
         try
         {
             auto j = req.json;
-            auto requestId = jsonStr(j, "requestId");
+            auto requestId = j.getString("requestId");
             auto taskId = extractIdFromPath(req.requestURI);
 
             auto result = uc.releaseTask(requestId, taskId);

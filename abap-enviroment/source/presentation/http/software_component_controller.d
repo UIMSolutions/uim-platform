@@ -37,14 +37,14 @@ class SoftwareComponentController
             auto j = req.json;
             CreateSoftwareComponentRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.componentType = jsonStr(j, "componentType");
-            r.repositoryUrl = jsonStr(j, "repositoryUrl");
-            r.branch = jsonStr(j, "branch");
-            r.branchStrategy = jsonStr(j, "branchStrategy");
-            r.namespace = jsonStr(j, "namespace");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.componentType = j.getString("componentType");
+            r.repositoryUrl = j.getString("repositoryUrl");
+            r.branch = j.getString("branch");
+            r.branchStrategy = j.getString("branchStrategy");
+            r.namespace = j.getString("namespace");
 
             auto result = uc.createComponent(r);
             if (result.isSuccess())
@@ -112,8 +112,8 @@ class SoftwareComponentController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             CloneSoftwareComponentRequest r;
-            r.branch = jsonStr(j, "branch");
-            r.commitId = jsonStr(j, "commitId");
+            r.branch = j.getString("branch");
+            r.commitId = j.getString("commitId");
 
             auto result = uc.cloneComponent(id, r);
             if (result.isSuccess())
@@ -140,7 +140,7 @@ class SoftwareComponentController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             PullSoftwareComponentRequest r;
-            r.commitId = jsonStr(j, "commitId");
+            r.commitId = j.getString("commitId");
 
             auto result = uc.pullComponent(id, r);
             if (result.isSuccess())

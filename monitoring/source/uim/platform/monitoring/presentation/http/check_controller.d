@@ -34,20 +34,20 @@ class CheckController {
             auto j = req.json;
             CreateHealthCheckRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.resourceId = jsonStr(j, "resourceId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.checkType = jsonStr(j, "checkType");
+            r.resourceId = j.getString("resourceId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.checkType = j.getString("checkType");
             r.intervalSeconds = j.getInteger("intervalSeconds");
-            r.url = jsonStr(j, "url");
-            r.expectedStatus = jsonStr(j, "expectedStatus");
-            r.mbeanName = jsonStr(j, "mbeanName");
-            r.mbeanAttribute = jsonStr(j, "mbeanAttribute");
-            r.customUrl = jsonStr(j, "customUrl");
-            r.expectedResponseContains = jsonStr(j, "expectedResponseContains");
+            r.url = j.getString("url");
+            r.expectedStatus = j.getString("expectedStatus");
+            r.mbeanName = j.getString("mbeanName");
+            r.mbeanAttribute = j.getString("mbeanAttribute");
+            r.customUrl = j.getString("customUrl");
+            r.expectedResponseContains = j.getString("expectedResponseContains");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
-            r.thresholdOperator = jsonStr(j, "thresholdOperator");
+            r.thresholdOperator = j.getString("thresholdOperator");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createCheck(r);
@@ -100,14 +100,14 @@ class CheckController {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateHealthCheckRequest r;
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.isEnabled = jsonBool(j, "isEnabled", true);
             r.intervalSeconds = j.getInteger("intervalSeconds");
-            r.url = jsonStr(j, "url");
-            r.expectedStatus = jsonStr(j, "expectedStatus");
+            r.url = j.getString("url");
+            r.expectedStatus = j.getString("expectedStatus");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
-            r.thresholdOperator = jsonStr(j, "thresholdOperator");
+            r.thresholdOperator = j.getString("thresholdOperator");
 
             auto result = uc.updateCheck(id, r);
             if (result.success) {
@@ -143,11 +143,11 @@ class CheckController {
             auto j = req.json;
             RecordCheckResultRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.checkId = jsonStr(j, "checkId");
-            r.resourceId = jsonStr(j, "resourceId");
-            r.status = jsonStr(j, "status");
+            r.checkId = j.getString("checkId");
+            r.resourceId = j.getString("resourceId");
+            r.status = j.getString("status");
             r.value_ = jsonDouble(j, "value");
-            r.message = jsonStr(j, "message");
+            r.message = j.getString("message");
             r.responseTimeMs = j.getInteger("responseTimeMs");
             r.httpStatusCode = j.getInteger("httpStatusCode");
 

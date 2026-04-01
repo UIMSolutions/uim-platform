@@ -36,17 +36,17 @@ class AlertRuleController
             auto j = req.json;
             CreateAlertRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.resourceId = jsonStr(j, "resourceId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.metricName = jsonStr(j, "metricName");
-            r.metricDefinitionId = jsonStr(j, "metricDefinitionId");
-            r.operator_ = jsonStr(j, "operator");
+            r.resourceId = j.getString("resourceId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.metricName = j.getString("metricName");
+            r.metricDefinitionId = j.getString("metricDefinitionId");
+            r.operator_ = j.getString("operator");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
             r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
             r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
-            r.severity = jsonStr(j, "severity");
+            r.severity = j.getString("severity");
             r.channelIds = jsonStrArray(j, "channelIds");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -116,12 +116,12 @@ class AlertRuleController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateAlertRuleRequest r;
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
             r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
             r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
-            r.severity = jsonStr(j, "severity");
+            r.severity = j.getString("severity");
             r.isEnabled = jsonBool(j, "isEnabled", true);
             r.channelIds = jsonStrArray(j, "channelIds");
 

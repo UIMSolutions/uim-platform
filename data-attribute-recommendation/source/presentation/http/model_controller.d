@@ -38,13 +38,13 @@ class ModelController
       auto j = req.json;
       auto r = CreateModelConfigRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.datasetId = jsonStr(j, "datasetId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.datasetId = j.getString("datasetId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.modelType = parseModelType(jsonStr(j, "modelType"));
-      r.targetColumns = jsonStr(j, "targetColumns");
-      r.featureColumns = jsonStr(j, "featureColumns");
-      r.hyperparameters = jsonStr(j, "hyperparameters");
+      r.targetColumns = j.getString("targetColumns");
+      r.featureColumns = j.getString("featureColumns");
+      r.hyperparameters = j.getString("hyperparameters");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createModelConfig(r);
@@ -114,12 +114,12 @@ class ModelController
       auto r = UpdateModelConfigRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.modelType = parseModelType(jsonStr(j, "modelType"));
-      r.targetColumns = jsonStr(j, "targetColumns");
-      r.featureColumns = jsonStr(j, "featureColumns");
-      r.hyperparameters = jsonStr(j, "hyperparameters");
+      r.targetColumns = j.getString("targetColumns");
+      r.featureColumns = j.getString("featureColumns");
+      r.hyperparameters = j.getString("hyperparameters");
 
       auto result = uc.updateModelConfig(r);
       if (result.isSuccess)

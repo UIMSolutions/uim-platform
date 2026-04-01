@@ -38,12 +38,12 @@ class ObjectController
             auto j = req.json;
             auto r = CreateObjectRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.bucketId = jsonStr(j, "bucketId");
-            r.key = jsonStr(j, "key");
-            r.contentType = jsonStr(j, "contentType");
+            r.bucketId = j.getString("bucketId");
+            r.key = j.getString("key");
+            r.contentType = j.getString("contentType");
             r.size = jsonLong(j, "size");
-            r.metadata = jsonStr(j, "metadata");
-            r.storageClass = jsonStr(j, "storageClass");
+            r.metadata = j.getString("metadata");
+            r.storageClass = j.getString("storageClass");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createObject(r);
@@ -124,9 +124,9 @@ class ObjectController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateObjectMetadataRequest();
-            r.contentType = jsonStr(j, "contentType");
-            r.metadata = jsonStr(j, "metadata");
-            r.storageClass = jsonStr(j, "storageClass");
+            r.contentType = j.getString("contentType");
+            r.metadata = j.getString("metadata");
+            r.storageClass = j.getString("storageClass");
 
             auto result = uc.updateObjectMetadata(id, r);
             if (result.success)
@@ -176,10 +176,10 @@ class ObjectController
             auto j = req.json;
             auto r = CopyObjectRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.sourceBucketId = jsonStr(j, "sourceBucketId");
-            r.sourceKey = jsonStr(j, "sourceKey");
-            r.destBucketId = jsonStr(j, "destBucketId");
-            r.destKey = jsonStr(j, "destKey");
+            r.sourceBucketId = j.getString("sourceBucketId");
+            r.sourceKey = j.getString("sourceKey");
+            r.destBucketId = j.getString("destBucketId");
+            r.destKey = j.getString("destKey");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.copyObject(r);

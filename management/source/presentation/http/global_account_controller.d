@@ -31,14 +31,14 @@ class GlobalAccountController {
         try {
             auto j = req.json;
             CreateGlobalAccountRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.contractNumber = jsonStr(j, "contractNumber");
-            r.licenseType = jsonStr(j, "licenseType");
-            r.region = jsonStr(j, "region");
-            r.costCenter = jsonStr(j, "costCenter");
-            r.companyName = jsonStr(j, "companyName");
-            r.contactEmail = jsonStr(j, "contactEmail");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.contractNumber = j.getString("contractNumber");
+            r.licenseType = j.getString("licenseType");
+            r.region = j.getString("region");
+            r.costCenter = j.getString("costCenter");
+            r.companyName = j.getString("companyName");
+            r.contactEmail = j.getString("contactEmail");
             r.maxSubaccounts = j.getInteger("maxSubaccounts", 100);
             r.maxDirectories = j.getInteger("maxDirectories", 20);
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -94,10 +94,10 @@ class GlobalAccountController {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateGlobalAccountRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.costCenter = jsonStr(j, "costCenter");
-            r.contactEmail = jsonStr(j, "contactEmail");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.costCenter = j.getString("costCenter");
+            r.contactEmail = j.getString("contactEmail");
             r.customProperties = jsonStrMap(j, "customProperties");
 
             auto result = uc.update(id, r);

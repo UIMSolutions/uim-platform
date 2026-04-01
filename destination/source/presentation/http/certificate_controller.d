@@ -39,15 +39,15 @@ class CertificateController
             UploadCertificateRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.certificateType = jsonStr(j, "type");
-            r.format_ = jsonStr(j, "format");
-            r.content = jsonStr(j, "content");
-            r.password = jsonStr(j, "password");
-            r.subject = jsonStr(j, "subject");
-            r.issuer = jsonStr(j, "issuer");
-            r.serialNumber = jsonStr(j, "serialNumber");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.certificateType = j.getString("type");
+            r.format_ = j.getString("format");
+            r.content = j.getString("content");
+            r.password = j.getString("password");
+            r.subject = j.getString("subject");
+            r.issuer = j.getString("issuer");
+            r.serialNumber = j.getString("serialNumber");
             r.validFrom = jsonLong(j, "validFrom");
             r.validTo = jsonLong(j, "validTo");
             r.uploadedBy = req.headers.get("X-User-Id", "");
@@ -151,9 +151,9 @@ class CertificateController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateCertificateRequest r;
-            r.description = jsonStr(j, "description");
-            r.content = jsonStr(j, "content");
-            r.password = jsonStr(j, "password");
+            r.description = j.getString("description");
+            r.content = j.getString("content");
+            r.password = j.getString("password");
             r.validFrom = jsonLong(j, "validFrom");
             r.validTo = jsonLong(j, "validTo");
 

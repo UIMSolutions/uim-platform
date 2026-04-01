@@ -29,20 +29,20 @@ class ServicePlanController {
         try {
             auto j = req.json;
             CreateServicePlanRequest r;
-            r.serviceName = jsonStr(j, "serviceName");
-            r.serviceDisplayName = jsonStr(j, "serviceDisplayName");
-            r.planName = jsonStr(j, "planName");
-            r.planDisplayName = jsonStr(j, "planDisplayName");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
-            r.pricingModel = jsonStr(j, "pricingModel");
+            r.serviceName = j.getString("serviceName");
+            r.serviceDisplayName = j.getString("serviceDisplayName");
+            r.planName = j.getString("planName");
+            r.planDisplayName = j.getString("planDisplayName");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
+            r.pricingModel = j.getString("pricingModel");
             r.isFree = jsonBool(j, "isFree");
             r.isBeta = jsonBool(j, "isBeta");
             r.availableRegions = jsonStrArray(j, "availableRegions");
             r.maxQuota = j.getInteger("maxQuota");
-            r.unit = jsonStr(j, "unit");
+            r.unit = j.getString("unit");
             r.supportedPlatforms = jsonStrArray(j, "supportedPlatforms");
-            r.providerDisplayName = jsonStr(j, "providerDisplayName");
+            r.providerDisplayName = j.getString("providerDisplayName");
             r.metadata = jsonStrMap(j, "metadata");
 
             auto result = uc.create(r);
@@ -102,8 +102,8 @@ class ServicePlanController {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateServicePlanRequest r;
-            r.planDisplayName = jsonStr(j, "planDisplayName");
-            r.description = jsonStr(j, "description");
+            r.planDisplayName = j.getString("planDisplayName");
+            r.description = j.getString("description");
             r.availableRegions = jsonStrArray(j, "availableRegions");
             r.maxQuota = j.getInteger("maxQuota");
             r.isBeta = jsonBool(j, "isBeta");

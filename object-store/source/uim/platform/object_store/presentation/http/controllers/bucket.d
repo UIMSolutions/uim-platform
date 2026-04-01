@@ -35,12 +35,12 @@ class BucketController
             auto j = req.json;
             auto r = CreateBucketRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.region = jsonStr(j, "region");
-            r.storageClass = jsonStr(j, "storageClass");
+            r.name = j.getString("name");
+            r.region = j.getString("region");
+            r.storageClass = j.getString("storageClass");
             r.versioningEnabled = jsonBool(j, "versioningEnabled");
-            r.encryptionType = jsonStr(j, "encryptionType");
-            r.encryptionKeyId = jsonStr(j, "encryptionKeyId");
+            r.encryptionType = j.getString("encryptionType");
+            r.encryptionKeyId = j.getString("encryptionKeyId");
             r.quotaBytes = jsonLong(j, "quotaBytes");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -110,10 +110,10 @@ class BucketController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateBucketRequest();
-            r.storageClass = jsonStr(j, "storageClass");
+            r.storageClass = j.getString("storageClass");
             r.versioningEnabled = jsonBool(j, "versioningEnabled");
-            r.encryptionType = jsonStr(j, "encryptionType");
-            r.encryptionKeyId = jsonStr(j, "encryptionKeyId");
+            r.encryptionType = j.getString("encryptionType");
+            r.encryptionKeyId = j.getString("encryptionKeyId");
             r.quotaBytes = jsonLong(j, "quotaBytes");
 
             auto result = uc.updateBucket(id, r);

@@ -31,10 +31,10 @@ class SubscriptionController
         {
             auto j = req.json;
             CreateSubscriptionRequest r;
-            r.subaccountId = jsonStr(j, "subaccountId");
-            r.globalAccountId = jsonStr(j, "globalAccountId");
-            r.appName = jsonStr(j, "appName");
-            r.planName = jsonStr(j, "planName");
+            r.subaccountId = j.getString("subaccountId");
+            r.globalAccountId = j.getString("globalAccountId");
+            r.appName = j.getString("appName");
+            r.planName = j.getString("planName");
             r.subscribedBy = req.headers.get("X-User-Id", "");
             r.parameters = jsonStrMap(j, "parameters");
             r.labels = jsonStrMap(j, "labels");
@@ -99,7 +99,7 @@ class SubscriptionController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateSubscriptionRequest r;
-            r.planName = jsonStr(j, "planName");
+            r.planName = j.getString("planName");
             r.parameters = jsonStrMap(j, "parameters");
 
             auto result = uc.updatePlan(id, r);

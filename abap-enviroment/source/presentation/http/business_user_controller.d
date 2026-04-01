@@ -36,11 +36,11 @@ class BusinessUserController
             auto j = req.json;
             CreateBusinessUserRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.username = jsonStr(j, "username");
-            r.firstName = jsonStr(j, "firstName");
-            r.lastName = jsonStr(j, "lastName");
-            r.email = jsonStr(j, "email");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.username = j.getString("username");
+            r.firstName = j.getString("firstName");
+            r.lastName = j.getString("lastName");
+            r.email = j.getString("email");
             r.roleIds = jsonStrArray(j, "roleIds");
 
             auto result = uc.createUser(r);
@@ -107,10 +107,10 @@ class BusinessUserController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateBusinessUserRequest r;
-            r.firstName = jsonStr(j, "firstName");
-            r.lastName = jsonStr(j, "lastName");
-            r.email = jsonStr(j, "email");
-            r.status = jsonStr(j, "status");
+            r.firstName = j.getString("firstName");
+            r.lastName = j.getString("lastName");
+            r.email = j.getString("email");
+            r.status = j.getString("status");
             r.roleIds = jsonStrArray(j, "roleIds");
 
             auto result = uc.updateUser(id, r);

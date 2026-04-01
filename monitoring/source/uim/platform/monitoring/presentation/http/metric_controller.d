@@ -35,11 +35,11 @@ class MetricController
             auto j = req.json;
             PushMetricRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.resourceId = jsonStr(j, "resourceId");
-            r.name = jsonStr(j, "name");
+            r.resourceId = j.getString("resourceId");
+            r.name = j.getString("name");
             r.value_ = jsonDouble(j, "value");
-            r.unit = jsonStr(j, "unit");
-            r.category = jsonStr(j, "category");
+            r.unit = j.getString("unit");
+            r.category = j.getString("category");
 
             auto result = uc.pushMetric(r);
             if (result.success)

@@ -34,8 +34,8 @@ class CleansingJobController
             auto j = req.json;
             auto r = CreateCleansingJobRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
-            r.requestedBy = jsonStr(j, "requestedBy");
+            r.datasetId = j.getString("datasetId");
+            r.requestedBy = j.getString("requestedBy");
             r.ruleIds = jsonStrArray(j, "ruleIds");
 
             auto result = uc.create(r);

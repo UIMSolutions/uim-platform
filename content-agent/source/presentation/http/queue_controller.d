@@ -36,11 +36,11 @@ class QueueController
             auto j = req.json;
             auto r = CreateQueueRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.queueType = jsonStr(j, "queueType");
-            r.endpoint = jsonStr(j, "endpoint");
-            r.authToken = jsonStr(j, "authToken");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.queueType = j.getString("queueType");
+            r.endpoint = j.getString("endpoint");
+            r.authToken = j.getString("authToken");
             r.isDefault = jsonBool(j, "isDefault");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -110,9 +110,9 @@ class QueueController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateQueueRequest();
-            r.description = jsonStr(j, "description");
-            r.endpoint = jsonStr(j, "endpoint");
-            r.authToken = jsonStr(j, "authToken");
+            r.description = j.getString("description");
+            r.endpoint = j.getString("endpoint");
+            r.authToken = j.getString("authToken");
             r.isDefault = jsonBool(j, "isDefault");
 
             auto result = uc.updateQueue(id, r);

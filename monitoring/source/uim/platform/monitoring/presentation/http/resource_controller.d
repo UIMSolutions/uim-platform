@@ -37,12 +37,12 @@ class ResourceController
             RegisterResourceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.resourceType = jsonStr(j, "resourceType");
-            r.url = jsonStr(j, "url");
-            r.runtime = jsonStr(j, "runtime");
-            r.region = jsonStr(j, "region");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.resourceType = j.getString("resourceType");
+            r.url = j.getString("url");
+            r.runtime = j.getString("runtime");
+            r.region = j.getString("region");
             r.instanceCount = j.getInteger("instanceCount");
             r.tags = jsonStrArray(j, "tags");
             r.registeredBy = req.headers.get("X-User-Id", "");
@@ -113,10 +113,10 @@ class ResourceController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateResourceRequest r;
-            r.description = jsonStr(j, "description");
-            r.url = jsonStr(j, "url");
-            r.runtime = jsonStr(j, "runtime");
-            r.state = jsonStr(j, "state");
+            r.description = j.getString("description");
+            r.url = j.getString("url");
+            r.runtime = j.getString("runtime");
+            r.state = j.getString("state");
             r.instanceCount = j.getInteger("instanceCount");
             r.tags = jsonStrArray(j, "tags");
 

@@ -137,7 +137,7 @@ class MenuItemController
         {
             auto menuItemId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto siteId = jsonStr(j, "siteId");
+            auto siteId = j.getString("siteId");
             auto error = useCase.deleteMenuItem(menuItemId, siteId);
             if (error.length > 0)
                 writeApiError(res, 404, error);

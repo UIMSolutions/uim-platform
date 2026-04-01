@@ -35,9 +35,9 @@ class ServiceBindingController
             auto j = req.json;
             auto r = CreateServiceBindingRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.bucketId = jsonStr(j, "bucketId");
-            r.name = jsonStr(j, "name");
-            r.permission = jsonStr(j, "permission");
+            r.bucketId = j.getString("bucketId");
+            r.name = j.getString("name");
+            r.permission = j.getString("permission");
             r.expiresAt = jsonLong(j, "expiresAt");
             r.createdBy = req.headers.get("X-User-Id", "");
 

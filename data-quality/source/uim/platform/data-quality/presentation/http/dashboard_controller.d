@@ -32,8 +32,8 @@ class DashboardController
             auto j = req.json;
             auto r = ComputeDashboardRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
-            r.datasetName = jsonStr(j, "datasetName");
+            r.datasetId = j.getString("datasetId");
+            r.datasetName = j.getString("datasetName");
 
             auto dashboard = uc.compute(r);
             res.writeJsonBody(serializeDashboard(dashboard), 200);

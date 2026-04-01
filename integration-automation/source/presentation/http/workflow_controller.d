@@ -39,12 +39,12 @@ class WorkflowController
       auto j = req.json;
       auto r = CreateWorkflowRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.sourceSystemId = jsonStr(j, "sourceSystemId");
-      r.targetSystemId = jsonStr(j, "targetSystemId");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.scenarioId = j.getString("scenarioId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.sourceSystemId = j.getString("sourceSystemId");
+      r.targetSystemId = j.getString("targetSystemId");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createWorkflow(r);
       if (result.isSuccess())

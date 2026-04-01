@@ -45,13 +45,13 @@ class RouteController
       auto j = req.json;
       auto r = CreateRouteRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.spaceId = jsonStr(j, "spaceId");
-      r.domainId = jsonStr(j, "domainId");
-      r.host = jsonStr(j, "host");
-      r.path = jsonStr(j, "path");
+      r.spaceId = j.getString("spaceId");
+      r.domainId = j.getString("domainId");
+      r.host = j.getString("host");
+      r.path = j.getString("path");
       r.port = j.getInteger("port");
       r.protocol = parseRouteProtocol(jsonStr(j, "protocol"));
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createRoute(r);
       if (result.isSuccess())
@@ -142,7 +142,7 @@ class RouteController
       auto r = MapRouteRequest();
       r.routeId = routeId;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
+      r.appId = j.getString("appId");
 
       auto result = useCase.mapRoute(r);
       if (result.isSuccess())
@@ -169,7 +169,7 @@ class RouteController
       auto r = MapRouteRequest();
       r.routeId = routeId;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
+      r.appId = j.getString("appId");
 
       auto result = useCase.unmapRoute(r);
       if (result.isSuccess())
@@ -196,11 +196,11 @@ class RouteController
       auto j = req.json;
       auto r = CreateDomainRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.ownerOrgId = jsonStr(j, "ownerOrgId");
-      r.name = jsonStr(j, "name");
+      r.ownerOrgId = j.getString("ownerOrgId");
+      r.name = j.getString("name");
       r.scope_ = parseDomainScope(jsonStr(j, "scope"));
       r.isInternal = jsonBool(j, "isInternal");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createDomain(r);
       if (result.isSuccess())

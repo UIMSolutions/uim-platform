@@ -33,22 +33,22 @@ class AuditLogController {
             auto j = req.json;
             auto r = WriteAuditLogRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.userId = jsonStr(j, "userId");
-            r.userName = jsonStr(j, "userName");
-            r.serviceId = jsonStr(j, "serviceId");
-            r.serviceName = jsonStr(j, "serviceName");
+            r.userId = j.getString("userId");
+            r.userName = j.getString("userName");
+            r.serviceId = j.getString("serviceId");
+            r.serviceName = j.getString("serviceName");
             r.category = parseCategory(jsonStr(j, "category"));
             r.severity = parseSeverity(jsonStr(j, "severity"));
             r.action = parseAction(jsonStr(j, "action"));
             r.outcome = parseOutcome(jsonStr(j, "outcome"));
-            r.objectType = jsonStr(j, "objectType");
-            r.objectId = jsonStr(j, "objectId");
-            r.message = jsonStr(j, "message");
+            r.objectType = j.getString("objectType");
+            r.objectId = j.getString("objectId");
+            r.message = j.getString("message");
             r.attributes = parseAttributes(j);
-            r.ipAddress = jsonStr(j, "ipAddress");
-            r.userAgent = jsonStr(j, "userAgent");
-            r.correlationId = jsonStr(j, "correlationId");
-            r.originApp = jsonStr(j, "originApp");
+            r.ipAddress = j.getString("ipAddress");
+            r.userAgent = j.getString("userAgent");
+            r.correlationId = j.getString("correlationId");
+            r.originApp = j.getString("originApp");
 
             auto result = writeUC.writeLog(r);
             if (result.isSuccess()) {

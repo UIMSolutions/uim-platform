@@ -34,9 +34,9 @@ class ImportController
             auto j = req.json;
             auto r = StartImportRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.packageId = jsonStr(j, "packageId");
-            r.transportRequestId = jsonStr(j, "transportRequestId");
-            r.sourceFilePath = jsonStr(j, "sourceFilePath");
+            r.packageId = j.getString("packageId");
+            r.transportRequestId = j.getString("transportRequestId");
+            r.sourceFilePath = j.getString("sourceFilePath");
             r.startedBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.startImport(r);

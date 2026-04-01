@@ -37,9 +37,9 @@ class DataRecordController
       auto j = req.json;
       auto r = CreateDataRecordRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.datasetId = jsonStr(j, "datasetId");
-      r.attributes = jsonStr(j, "attributes");
-      r.labels = jsonStr(j, "labels");
+      r.datasetId = j.getString("datasetId");
+      r.attributes = j.getString("attributes");
+      r.labels = j.getString("labels");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createRecord(r);

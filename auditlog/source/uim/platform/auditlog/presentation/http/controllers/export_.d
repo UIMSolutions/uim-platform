@@ -35,11 +35,11 @@ import uim.platform.auditlog.presentation.http.json_utils;
             auto j = req.json;
             auto r = CreateExportJobRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.requestedBy = jsonStr(j, "requestedBy");
+            r.requestedBy = j.getString("requestedBy");
             r.timeFrom = jsonLong(j, "timeFrom");
             r.timeTo = jsonLong(j, "timeTo");
 
-            auto fmtStr = jsonStr(j, "format");
+            auto fmtStr = j.getString("format");
             if (fmtStr == "csv") r.format_ = ExportFormat.csv;
             else r.format_ = ExportFormat.json;
 

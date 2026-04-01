@@ -38,10 +38,10 @@ class RepositoryController
       auto j = req.json;
       auto r = CreateRepositoryRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
-      r.allowedFileTypes = jsonStr(j, "allowedFileTypes");
+      r.allowedFileTypes = j.getString("allowedFileTypes");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createRepository(r);
@@ -111,10 +111,10 @@ class RepositoryController
       auto r = UpdateRepositoryRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.maxFileSize = jsonLong(j, "maxFileSize");
-      r.allowedFileTypes = jsonStr(j, "allowedFileTypes");
+      r.allowedFileTypes = j.getString("allowedFileTypes");
 
       auto result = uc.updateRepository(r);
       if (result.isSuccess)

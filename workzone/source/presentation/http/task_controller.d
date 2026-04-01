@@ -35,20 +35,20 @@ class TaskController
             auto j = req.json;
             auto r = CreateTaskRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.assigneeId = jsonStr(j, "assigneeId");
-            r.assigneeName = jsonStr(j, "assigneeName");
-            r.creatorId = jsonStr(j, "creatorId");
-            r.creatorName = jsonStr(j, "creatorName");
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
-            r.sourceApp = jsonStr(j, "sourceApp");
-            r.sourceTaskId = jsonStr(j, "sourceTaskId");
-            r.actionUrl = jsonStr(j, "actionUrl");
-            r.category = jsonStr(j, "category");
+            r.assigneeId = j.getString("assigneeId");
+            r.assigneeName = j.getString("assigneeName");
+            r.creatorId = j.getString("creatorId");
+            r.creatorName = j.getString("creatorName");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
+            r.sourceApp = j.getString("sourceApp");
+            r.sourceTaskId = j.getString("sourceTaskId");
+            r.actionUrl = j.getString("actionUrl");
+            r.category = j.getString("category");
             r.tags = jsonStrArray(j, "tags");
             r.dueDate = jsonLong(j, "dueDate");
 
-            auto pStr = jsonStr(j, "priority");
+            auto pStr = j.getString("priority");
             if (pStr == "low") r.priority = TaskPriority.low;
             else if (pStr == "high") r.priority = TaskPriority.high;
             else if (pStr == "veryHigh") r.priority = TaskPriority.veryHigh;
@@ -121,17 +121,17 @@ class TaskController
             auto r = UpdateTaskRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
             r.dueDate = jsonLong(j, "dueDate");
 
-            auto sStr = jsonStr(j, "status");
+            auto sStr = j.getString("status");
             if (sStr == "inProgress") r.status = TaskStatus.inProgress;
             else if (sStr == "completed") r.status = TaskStatus.completed;
             else if (sStr == "cancelled") r.status = TaskStatus.cancelled;
             else r.status = TaskStatus.open;
 
-            auto pStr = jsonStr(j, "priority");
+            auto pStr = j.getString("priority");
             if (pStr == "low") r.priority = TaskPriority.low;
             else if (pStr == "high") r.priority = TaskPriority.high;
             else if (pStr == "veryHigh") r.priority = TaskPriority.veryHigh;

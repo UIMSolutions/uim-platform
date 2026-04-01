@@ -36,17 +36,17 @@ class SystemInstanceController
             auto j = req.json;
             CreateSystemInstanceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.subaccountId = jsonStr(j, "subaccountId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.plan = jsonStr(j, "plan");
-            r.region = jsonStr(j, "region");
-            r.sapSystemId = jsonStr(j, "sapSystemId");
-            r.adminEmail = jsonStr(j, "adminEmail");
+            r.subaccountId = j.getString("subaccountId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.plan = j.getString("plan");
+            r.region = j.getString("region");
+            r.sapSystemId = j.getString("sapSystemId");
+            r.adminEmail = j.getString("adminEmail");
             r.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
             r.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
-            r.softwareVersion = jsonStr(j, "softwareVersion");
-            r.stackVersion = jsonStr(j, "stackVersion");
+            r.softwareVersion = j.getString("softwareVersion");
+            r.stackVersion = j.getString("stackVersion");
 
             auto result = uc.createInstance(r);
             if (result.isSuccess())
@@ -112,11 +112,11 @@ class SystemInstanceController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateSystemInstanceRequest r;
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
             r.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
             r.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
-            r.softwareVersion = jsonStr(j, "softwareVersion");
+            r.softwareVersion = j.getString("softwareVersion");
 
             auto result = uc.updateInstance(id, r);
             if (result.isSuccess())

@@ -34,9 +34,9 @@ class ExportController
             auto j = req.json;
             auto r = StartExportRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.packageId = jsonStr(j, "packageId");
-            r.transportRequestId = jsonStr(j, "transportRequestId");
-            r.queueId = jsonStr(j, "queueId");
+            r.packageId = j.getString("packageId");
+            r.transportRequestId = j.getString("transportRequestId");
+            r.queueId = j.getString("queueId");
             r.startedBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.startExport(r);

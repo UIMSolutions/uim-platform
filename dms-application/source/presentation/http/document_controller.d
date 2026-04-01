@@ -39,15 +39,15 @@ class DocumentController
       auto j = req.json;
       auto r = CreateDocumentRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.repositoryId = jsonStr(j, "repositoryId");
-      r.folderId = jsonStr(j, "folderId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.repositoryId = j.getString("repositoryId");
+      r.folderId = j.getString("folderId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.contentCategory = parseContentCategory(jsonStr(j, "contentCategory"));
-      r.mimeType = jsonStr(j, "mimeType");
+      r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.tags = jsonStr(j, "tags");
-      r.properties = jsonStr(j, "properties");
+      r.tags = j.getString("tags");
+      r.properties = j.getString("properties");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createDocument(r);
@@ -154,10 +154,10 @@ class DocumentController
       auto r = UpdateDocumentRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.tags = jsonStr(j, "tags");
-      r.properties = jsonStr(j, "properties");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.tags = j.getString("tags");
+      r.properties = j.getString("properties");
 
       auto result = uc.updateDocument(r);
       if (result.isSuccess)
@@ -187,7 +187,7 @@ class DocumentController
       auto r = MoveDocumentRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.newFolderId = jsonStr(j, "newFolderId");
+      r.newFolderId = j.getString("newFolderId");
 
       auto result = uc.moveDocument(r);
       if (result.isSuccess)

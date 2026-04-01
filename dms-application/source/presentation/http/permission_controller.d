@@ -37,9 +37,9 @@ class PermissionController
       auto j = req.json;
       auto r = CreatePermissionRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.resourceId = jsonStr(j, "resourceId");
+      r.resourceId = j.getString("resourceId");
       r.resourceType = parseResourceType(jsonStr(j, "resourceType"));
-      r.userId = jsonStr(j, "userId");
+      r.userId = j.getString("userId");
       r.level = parsePermissionLevel(jsonStr(j, "level"));
       r.createdBy = req.headers.get("X-User-Id", "system");
 
@@ -114,9 +114,9 @@ class PermissionController
     {
       auto j = req.json;
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto resourceId = jsonStr(j, "resourceId");
+      auto resourceId = j.getString("resourceId");
       auto resourceType = parseResourceType(jsonStr(j, "resourceType"));
-      auto userId = jsonStr(j, "userId");
+      auto userId = j.getString("userId");
       auto required = parsePermissionLevel(jsonStr(j, "requiredLevel"));
 
       auto allowed = uc.checkAccess(resourceId, resourceType, userId, required, tenantId);

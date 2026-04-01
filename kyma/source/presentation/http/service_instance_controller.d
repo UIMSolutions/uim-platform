@@ -32,16 +32,16 @@ class ServiceInstanceController
         {
             auto j = req.json;
             CreateServiceInstanceRequest r;
-            r.namespaceId = jsonStr(j, "namespaceId");
-            r.environmentId = jsonStr(j, "environmentId");
+            r.namespaceId = j.getString("namespaceId");
+            r.environmentId = j.getString("environmentId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.serviceOfferingName = jsonStr(j, "serviceOfferingName");
-            r.servicePlanName = jsonStr(j, "servicePlanName");
-            r.servicePlanId = jsonStr(j, "servicePlanId");
-            r.externalName = jsonStr(j, "externalName");
-            r.parametersJson = jsonStr(j, "parameters");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.serviceOfferingName = j.getString("serviceOfferingName");
+            r.servicePlanName = j.getString("servicePlanName");
+            r.servicePlanId = j.getString("servicePlanId");
+            r.externalName = j.getString("externalName");
+            r.parametersJson = j.getString("parameters");
             r.labels = jsonStrMap(j, "labels");
             r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -104,10 +104,10 @@ class ServiceInstanceController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateServiceInstanceRequest r;
-            r.description = jsonStr(j, "description");
-            r.servicePlanName = jsonStr(j, "servicePlanName");
-            r.servicePlanId = jsonStr(j, "servicePlanId");
-            r.parametersJson = jsonStr(j, "parameters");
+            r.description = j.getString("description");
+            r.servicePlanName = j.getString("servicePlanName");
+            r.servicePlanId = j.getString("servicePlanId");
+            r.parametersJson = j.getString("parameters");
             r.labels = jsonStrMap(j, "labels");
 
             auto result = uc.updateServiceInstance(id, r);

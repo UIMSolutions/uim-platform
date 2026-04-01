@@ -135,7 +135,7 @@ class PageController
         {
             auto pageId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto siteId = jsonStr(j, "siteId");
+            auto siteId = j.getString("siteId");
             auto error = useCase.deletePage(pageId, siteId);
             if (error.length > 0)
                 writeApiError(res, 404, error);

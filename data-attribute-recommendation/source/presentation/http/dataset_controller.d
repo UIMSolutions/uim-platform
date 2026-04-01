@@ -38,10 +38,10 @@ class DatasetController
       auto j = req.json;
       auto r = CreateDatasetRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.dataType = parseDataType(jsonStr(j, "dataType"));
-      r.columnDefinitions = jsonStr(j, "columnDefinitions");
+      r.columnDefinitions = j.getString("columnDefinitions");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createDataset(r);
@@ -111,9 +111,9 @@ class DatasetController
       auto r = UpdateDatasetRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.columnDefinitions = jsonStr(j, "columnDefinitions");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.columnDefinitions = j.getString("columnDefinitions");
 
       auto result = uc.updateDataset(r);
       if (result.isSuccess)

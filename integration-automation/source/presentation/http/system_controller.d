@@ -38,18 +38,18 @@ class SystemController
       auto j = req.json;
       auto r = CreateSystemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.systemType = parseSystemType(jsonStr(j, "systemType"));
-      r.host = jsonStr(j, "host");
+      r.host = j.getString("host");
       r.port = jsonUshort(j, "port");
-      r.client = jsonStr(j, "client");
-      r.protocol = jsonStr(j, "protocol");
-      r.environment = jsonStr(j, "environment");
-      r.region = jsonStr(j, "region");
-      r.systemId = jsonStr(j, "systemId");
-      r.tenant = jsonStr(j, "tenant");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.client = j.getString("client");
+      r.protocol = j.getString("protocol");
+      r.environment = j.getString("environment");
+      r.region = j.getString("region");
+      r.systemId = j.getString("systemId");
+      r.tenant = j.getString("tenant");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createSystem(r);
       if (result.isSuccess())
@@ -120,18 +120,18 @@ class SystemController
       auto r = UpdateSystemRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.systemType = parseSystemType(jsonStr(j, "systemType"));
-      r.host = jsonStr(j, "host");
+      r.host = j.getString("host");
       r.port = jsonUshort(j, "port");
-      r.client = jsonStr(j, "client");
-      r.protocol = jsonStr(j, "protocol");
+      r.client = j.getString("client");
+      r.protocol = j.getString("protocol");
       r.status = parseConnectionStatus(jsonStr(j, "status"));
-      r.environment = jsonStr(j, "environment");
-      r.region = jsonStr(j, "region");
-      r.systemId = jsonStr(j, "systemId");
-      r.tenant = jsonStr(j, "tenant");
+      r.environment = j.getString("environment");
+      r.region = j.getString("region");
+      r.systemId = j.getString("systemId");
+      r.tenant = j.getString("tenant");
 
       auto result = useCase.updateSystem(r);
       if (result.isSuccess())

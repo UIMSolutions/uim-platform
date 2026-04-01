@@ -37,13 +37,13 @@ class ApplicationJobController
             auto j = req.json;
             CreateApplicationJobRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.jobTemplateName = jsonStr(j, "jobTemplateName");
-            r.frequency = jsonStr(j, "frequency");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.jobTemplateName = j.getString("jobTemplateName");
+            r.frequency = j.getString("frequency");
             r.scheduledAt = jsonLong(j, "scheduledAt");
-            r.cronExpression = jsonStr(j, "cronExpression");
+            r.cronExpression = j.getString("cronExpression");
 
             auto result = uc.createJob(r);
             if (result.isSuccess())
@@ -109,10 +109,10 @@ class ApplicationJobController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateApplicationJobRequest r;
-            r.description = jsonStr(j, "description");
-            r.frequency = jsonStr(j, "frequency");
+            r.description = j.getString("description");
+            r.frequency = j.getString("frequency");
             r.scheduledAt = jsonLong(j, "scheduledAt");
-            r.cronExpression = jsonStr(j, "cronExpression");
+            r.cronExpression = j.getString("cronExpression");
             r.active = jsonBool(j, "active", true);
 
             auto result = uc.updateJob(id, r);

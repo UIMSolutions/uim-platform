@@ -96,7 +96,7 @@ class BrowseController
       auto r = CreateFavoriteRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.userId = req.headers.get("X-User-Id", "system");
-      r.resourceId = jsonStr(j, "resourceId");
+      r.resourceId = j.getString("resourceId");
       r.resourceType = parseResourceType(jsonStr(j, "resourceType"));
 
       auto result = uc.addFavorite(r);

@@ -31,17 +31,17 @@ class ChannelController {
             auto j = req.json;
             CreateNotificationChannelRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.channelType = jsonStr(j, "channelType");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.channelType = j.getString("channelType");
             r.emailRecipients = jsonStrArray(j, "emailRecipients");
-            r.emailSubjectPrefix = jsonStr(j, "emailSubjectPrefix");
-            r.webhookUrl = jsonStr(j, "webhookUrl");
-            r.webhookSecret = jsonStr(j, "webhookSecret");
-            r.webhookMethod = jsonStr(j, "webhookMethod");
-            r.onPremiseHost = jsonStr(j, "onPremiseHost");
+            r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
+            r.webhookUrl = j.getString("webhookUrl");
+            r.webhookSecret = j.getString("webhookSecret");
+            r.webhookMethod = j.getString("webhookMethod");
+            r.onPremiseHost = j.getString("onPremiseHost");
             r.onPremisePort = j.getInteger("onPremisePort");
-            r.onPremiseProtocol = jsonStr(j, "onPremiseProtocol");
+            r.onPremiseProtocol = j.getString("onPremiseProtocol");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createChannel(r);
@@ -94,15 +94,15 @@ class ChannelController {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateNotificationChannelRequest r;
-            r.description = jsonStr(j, "description");
-            r.state = jsonStr(j, "state");
+            r.description = j.getString("description");
+            r.state = j.getString("state");
             r.emailRecipients = jsonStrArray(j, "emailRecipients");
-            r.emailSubjectPrefix = jsonStr(j, "emailSubjectPrefix");
-            r.webhookUrl = jsonStr(j, "webhookUrl");
-            r.webhookSecret = jsonStr(j, "webhookSecret");
-            r.onPremiseHost = jsonStr(j, "onPremiseHost");
+            r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
+            r.webhookUrl = j.getString("webhookUrl");
+            r.webhookSecret = j.getString("webhookSecret");
+            r.onPremiseHost = j.getString("onPremiseHost");
             r.onPremisePort = j.getInteger("onPremisePort");
-            r.onPremiseProtocol = jsonStr(j, "onPremiseProtocol");
+            r.onPremiseProtocol = j.getString("onPremiseProtocol");
 
             auto result = uc.updateChannel(id, r);
             if (result.success) {

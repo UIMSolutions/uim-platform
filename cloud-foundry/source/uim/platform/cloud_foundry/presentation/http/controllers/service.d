@@ -44,13 +44,13 @@ class ServiceController
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.spaceId = jsonStr(j, "spaceId");
-      r.name = jsonStr(j, "name");
-      r.serviceName = jsonStr(j, "serviceName");
-      r.servicePlanName = jsonStr(j, "servicePlanName");
-      r.parameters = jsonStr(j, "parameters");
-      r.tags = jsonStr(j, "tags");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.spaceId = j.getString("spaceId");
+      r.name = j.getString("name");
+      r.serviceName = j.getString("serviceName");
+      r.servicePlanName = j.getString("servicePlanName");
+      r.parameters = j.getString("parameters");
+      r.tags = j.getString("tags");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createInstance(r);
       if (result.isSuccess())
@@ -119,9 +119,9 @@ class ServiceController
       auto r = UpdateServiceInstanceRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.parameters = jsonStr(j, "parameters");
-      r.tags = jsonStr(j, "tags");
+      r.name = j.getString("name");
+      r.parameters = j.getString("parameters");
+      r.tags = j.getString("tags");
 
       auto result = useCase.updateInstance(r);
       if (result.isSuccess())
@@ -170,11 +170,11 @@ class ServiceController
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.serviceInstanceId = jsonStr(j, "serviceInstanceId");
-      r.name = jsonStr(j, "name");
-      r.bindingOptions = jsonStr(j, "bindingOptions");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.appId = j.getString("appId");
+      r.serviceInstanceId = j.getString("serviceInstanceId");
+      r.name = j.getString("name");
+      r.bindingOptions = j.getString("bindingOptions");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createBinding(r);
       if (result.isSuccess())

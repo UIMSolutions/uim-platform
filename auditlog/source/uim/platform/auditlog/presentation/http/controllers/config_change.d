@@ -31,10 +31,10 @@ import uim.platform.auditlog.presentation.http.json_utils;
             auto j = req.json;
             auto r = WriteConfigChangeLogRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.changedBy = jsonStr(j, "changedBy");
-            r.configType = jsonStr(j, "configType");
-            r.configObjectId = jsonStr(j, "configObjectId");
-            r.reason = jsonStr(j, "reason");
+            r.changedBy = j.getString("changedBy");
+            r.configType = j.getString("configType");
+            r.configObjectId = j.getString("configObjectId");
+            r.reason = j.getString("reason");
             r.changes = parseChanges(j);
 
             auto result = useCase.writeChange(r);

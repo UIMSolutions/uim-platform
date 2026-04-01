@@ -31,9 +31,9 @@ class LabelController
         {
             auto j = req.json;
             CreateLabelRequest r;
-            r.resourceType = jsonStr(j, "resourceType");
-            r.resourceId = jsonStr(j, "resourceId");
-            r.key = jsonStr(j, "key");
+            r.resourceType = j.getString("resourceType");
+            r.resourceId = j.getString("resourceId");
+            r.key = j.getString("key");
             r.values = jsonStrArray(j, "values");
             r.createdBy = req.headers.get("X-User-Id", "");
 

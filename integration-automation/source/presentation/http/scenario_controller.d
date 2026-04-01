@@ -36,15 +36,15 @@ class ScenarioController
       auto j = req.json;
       auto r = CreateScenarioRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.category = parseScenarioCategory(jsonStr(j, "category"));
-      r.version_ = jsonStr(j, "version");
+      r.version_ = j.getString("version");
       r.sourceSystemType = parseSystemType(jsonStr(j, "sourceSystemType"));
       r.targetSystemType = parseSystemType(jsonStr(j, "targetSystemType"));
       r.prerequisites = jsonStrArray(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createScenario(r);
       if (result.isSuccess())
@@ -115,10 +115,10 @@ class ScenarioController
       auto r = UpdateScenarioRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.category = parseScenarioCategory(jsonStr(j, "category"));
-      r.version_ = jsonStr(j, "version");
+      r.version_ = j.getString("version");
       r.status = parseScenarioStatus(jsonStr(j, "status"));
       r.sourceSystemType = parseSystemType(jsonStr(j, "sourceSystemType"));
       r.targetSystemType = parseSystemType(jsonStr(j, "targetSystemType"));

@@ -34,9 +34,9 @@ class KeyMappingController
             auto j = req.json;
             CreateKeyMappingRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.masterDataObjectId = jsonStr(j, "masterDataObjectId");
-            r.category = jsonStr(j, "category");
-            r.objectType = jsonStr(j, "objectType");
+            r.masterDataObjectId = j.getString("masterDataObjectId");
+            r.category = j.getString("category");
+            r.objectType = j.getString("objectType");
             r.entries = parseEntries(j);
 
             auto result = uc.create(r);

@@ -149,7 +149,7 @@ string extractIdFromPath(string uri)
 /// Parse an enum from a JSON string field.
 T jsonEnum(T)(Json j, string key, T default_ = T.init)
 {
-    auto str = jsonStr(j, key);
+    auto str = j.getString(key);
     if (str.length == 0)
         return default_;
     import std.conv : to;

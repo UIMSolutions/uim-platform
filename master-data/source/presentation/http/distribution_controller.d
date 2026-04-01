@@ -35,16 +35,16 @@ class DistributionController
             auto j = req.json;
             CreateDistributionModelRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.direction = jsonStr(j, "direction");
-            r.sourceClientId = jsonStr(j, "sourceClientId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.direction = j.getString("direction");
+            r.sourceClientId = j.getString("sourceClientId");
             r.targetClientIds = jsonStrArray(j, "targetClientIds");
             r.categories = jsonStrArray(j, "categories");
             r.dataModelIds = jsonStrArray(j, "dataModelIds");
             r.filterRuleIds = jsonStrArray(j, "filterRuleIds");
             r.autoReplicate = jsonBool(j, "autoReplicate");
-            r.cronSchedule = jsonStr(j, "cronSchedule");
+            r.cronSchedule = j.getString("cronSchedule");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
@@ -108,15 +108,15 @@ class DistributionController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateDistributionModelRequest r;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
             r.targetClientIds = jsonStrArray(j, "targetClientIds");
             r.categories = jsonStrArray(j, "categories");
             r.dataModelIds = jsonStrArray(j, "dataModelIds");
             r.filterRuleIds = jsonStrArray(j, "filterRuleIds");
             r.autoReplicate = jsonBool(j, "autoReplicate");
-            r.cronSchedule = jsonStr(j, "cronSchedule");
+            r.cronSchedule = j.getString("cronSchedule");
 
             auto result = uc.updateModel(id, r);
             if (result.success)

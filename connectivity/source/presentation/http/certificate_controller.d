@@ -35,14 +35,14 @@ class CertificateController
             auto j = req.json;
             auto r = CreateCertificateRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.certType = jsonStr(j, "type");
-            r.usage = jsonStr(j, "usage");
-            r.subjectDN = jsonStr(j, "subjectDN");
-            r.issuerDN = jsonStr(j, "issuerDN");
-            r.serialNumber = jsonStr(j, "serialNumber");
-            r.fingerprint = jsonStr(j, "fingerprint");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.certType = j.getString("type");
+            r.usage = j.getString("usage");
+            r.subjectDN = j.getString("subjectDN");
+            r.issuerDN = j.getString("issuerDN");
+            r.serialNumber = j.getString("serialNumber");
+            r.fingerprint = j.getString("fingerprint");
             r.validFrom = jsonLong(j, "validFrom");
             r.validTo = jsonLong(j, "validTo");
 
@@ -112,7 +112,7 @@ class CertificateController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateCertificateRequest();
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.active = jsonBool(j, "active", true);
 
             auto result = uc.updateCertificate(id, r);

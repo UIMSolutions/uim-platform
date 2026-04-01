@@ -85,7 +85,7 @@ class AlertController
         {
             auto j = req.json;
             AcknowledgeAlertRequest r;
-            r.alertId = jsonStr(j, "alertId");
+            r.alertId = j.getString("alertId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.acknowledgedBy = req.headers.get("X-User-Id", "");
 
@@ -114,7 +114,7 @@ class AlertController
         {
             auto j = req.json;
             ResolveAlertRequest r;
-            r.alertId = jsonStr(j, "alertId");
+            r.alertId = j.getString("alertId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.resolvedBy = req.headers.get("X-User-Id", "");
 

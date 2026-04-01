@@ -38,10 +38,10 @@ class ProvisioningJobController
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.sourceSystemId = jsonStr(j, "sourceSystemId");
-      r.targetSystemId = jsonStr(j, "targetSystemId");
+      r.sourceSystemId = j.getString("sourceSystemId");
+      r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(jsonStr(j, "jobType"));
-      r.schedule = jsonStr(j, "schedule");
+      r.schedule = j.getString("schedule");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createJob(r);
@@ -133,10 +133,10 @@ class ProvisioningJobController
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.sourceSystemId = jsonStr(j, "sourceSystemId");
-      r.targetSystemId = jsonStr(j, "targetSystemId");
+      r.sourceSystemId = j.getString("sourceSystemId");
+      r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(jsonStr(j, "jobType"));
-      r.schedule = jsonStr(j, "schedule");
+      r.schedule = j.getString("schedule");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createAndRunJob(r);

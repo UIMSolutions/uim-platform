@@ -34,14 +34,14 @@ class ConnectorController
         {
             auto j = req.json;
             auto r = RegisterConnectorRequest();
-            r.subaccountId = jsonStr(j, "subaccountId");
+            r.subaccountId = j.getString("subaccountId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.locationId = jsonStr(j, "locationId");
-            r.description = jsonStr(j, "description");
-            r.connectorVersion = jsonStr(j, "connectorVersion");
-            r.host = jsonStr(j, "host");
+            r.locationId = j.getString("locationId");
+            r.description = j.getString("description");
+            r.connectorVersion = j.getString("connectorVersion");
+            r.host = j.getString("host");
             r.port = jsonUshort(j, "port");
-            r.tunnelEndpoint = jsonStr(j, "tunnelEndpoint");
+            r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
             auto result = uc.registerConnector(r);
             if (result.success)
@@ -118,7 +118,7 @@ class ConnectorController
 
             auto j = req.json;
             auto r = HeartbeatRequest();
-            r.connectorVersion = jsonStr(j, "connectorVersion");
+            r.connectorVersion = j.getString("connectorVersion");
 
             auto result = uc.heartbeat(connectorId, r);
             if (result.success)

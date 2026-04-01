@@ -35,19 +35,19 @@ class ClientController
             auto j = req.json;
             CreateClientRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.clientType = jsonStr(j, "clientType");
-            r.systemUrl = jsonStr(j, "systemUrl");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.communicationArrangement = jsonStr(j, "communicationArrangement");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.clientType = j.getString("clientType");
+            r.systemUrl = j.getString("systemUrl");
+            r.destinationName = j.getString("destinationName");
+            r.communicationArrangement = j.getString("communicationArrangement");
             r.supportedCategories = jsonStrArray(j, "supportedCategories");
             r.supportsInitialLoad = jsonBool(j, "supportsInitialLoad");
             r.supportsDeltaReplication = jsonBool(j, "supportsDeltaReplication");
             r.supportsKeyMapping = jsonBool(j, "supportsKeyMapping");
-            r.authType = jsonStr(j, "authType");
-            r.clientIdRef = jsonStr(j, "clientIdRef");
-            r.certificateRef = jsonStr(j, "certificateRef");
+            r.authType = j.getString("authType");
+            r.clientIdRef = j.getString("clientIdRef");
+            r.certificateRef = j.getString("certificateRef");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
@@ -114,16 +114,16 @@ class ClientController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateClientRequest r;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
-            r.systemUrl = jsonStr(j, "systemUrl");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.communicationArrangement = jsonStr(j, "communicationArrangement");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
+            r.systemUrl = j.getString("systemUrl");
+            r.destinationName = j.getString("destinationName");
+            r.communicationArrangement = j.getString("communicationArrangement");
             r.supportedCategories = jsonStrArray(j, "supportedCategories");
-            r.authType = jsonStr(j, "authType");
-            r.clientIdRef = jsonStr(j, "clientIdRef");
-            r.certificateRef = jsonStr(j, "certificateRef");
+            r.authType = j.getString("authType");
+            r.clientIdRef = j.getString("clientIdRef");
+            r.certificateRef = j.getString("certificateRef");
 
             auto result = uc.updateClient(id, r);
             if (result.success)

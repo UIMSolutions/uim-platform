@@ -35,13 +35,13 @@ class ChannelController
         {
             auto j = req.json;
             auto r = CreateChannelRequest();
-            r.connectorId = jsonStr(j, "connectorId");
+            r.connectorId = j.getString("connectorId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.channelType = jsonStr(j, "type");
-            r.virtualHost = jsonStr(j, "virtualHost");
+            r.name = j.getString("name");
+            r.channelType = j.getString("type");
+            r.virtualHost = j.getString("virtualHost");
             r.virtualPort = jsonUshort(j, "virtualPort");
-            r.backendHost = jsonStr(j, "backendHost");
+            r.backendHost = j.getString("backendHost");
             r.backendPort = jsonUshort(j, "backendPort");
 
             auto result = uc.createChannel(r);

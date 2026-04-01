@@ -36,10 +36,10 @@ class BusinessRoleController
             auto j = req.json;
             CreateBusinessRoleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.roleType = jsonStr(j, "roleType");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.roleType = j.getString("roleType");
             r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
 
             auto result = uc.createRole(r);
@@ -106,8 +106,8 @@ class BusinessRoleController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateBusinessRoleRequest r;
-            r.description = jsonStr(j, "description");
-            r.roleType = jsonStr(j, "roleType");
+            r.description = j.getString("description");
+            r.roleType = j.getString("roleType");
             r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
 
             auto result = uc.updateRole(id, r);

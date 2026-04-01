@@ -38,10 +38,10 @@ class FolderController
       auto j = req.json;
       auto r = CreateFolderRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.repositoryId = jsonStr(j, "repositoryId");
-      r.parentFolderId = jsonStr(j, "parentFolderId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.repositoryId = j.getString("repositoryId");
+      r.parentFolderId = j.getString("parentFolderId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createFolder(r);
@@ -111,8 +111,8 @@ class FolderController
       auto r = UpdateFolderRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
 
       auto result = uc.updateFolder(r);
       if (result.isSuccess)
@@ -142,7 +142,7 @@ class FolderController
       auto r = MoveFolderRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.newParentFolderId = jsonStr(j, "newParentFolderId");
+      r.newParentFolderId = j.getString("newParentFolderId");
 
       auto result = uc.moveFolder(r);
       if (result.isSuccess)

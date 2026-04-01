@@ -36,7 +36,7 @@ class DuplicateController
             auto j = req.json;
             auto r = DetectDuplicatesRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
+            r.datasetId = j.getString("datasetId");
             r.matchFields = jsonStrArrayArray(j, "matchFields");
             r.strategy = parseStrategy(jsonStr(j, "strategy"));
             r.threshold = jsonDouble(j, "threshold", 70.0);
@@ -79,8 +79,8 @@ class DuplicateController
             auto j = req.json;
             auto r = ResolveDuplicateRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.groupId = jsonStr(j, "groupId");
-            r.survivorRecordId = jsonStr(j, "survivorRecordId");
+            r.groupId = j.getString("groupId");
+            r.survivorRecordId = j.getString("survivorRecordId");
 
             auto result = uc.resolve(r);
             if (result.isSuccess())

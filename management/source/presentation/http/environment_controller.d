@@ -31,13 +31,13 @@ class EnvironmentController
         {
             auto j = req.json;
             CreateEnvironmentInstanceRequest r;
-            r.subaccountId = jsonStr(j, "subaccountId");
-            r.globalAccountId = jsonStr(j, "globalAccountId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.environmentType = jsonStr(j, "environmentType");
-            r.planName = jsonStr(j, "planName");
-            r.landscapeLabel = jsonStr(j, "landscapeLabel");
+            r.subaccountId = j.getString("subaccountId");
+            r.globalAccountId = j.getString("globalAccountId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.environmentType = j.getString("environmentType");
+            r.planName = j.getString("planName");
+            r.landscapeLabel = j.getString("landscapeLabel");
             r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
             r.routeQuota = j.getInteger("routeQuota");
             r.serviceQuota = j.getInteger("serviceQuota");
@@ -109,7 +109,7 @@ class EnvironmentController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateEnvironmentInstanceRequest r;
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
             r.routeQuota = j.getInteger("routeQuota");
             r.serviceQuota = j.getInteger("serviceQuota");

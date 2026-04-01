@@ -30,12 +30,12 @@ class AccessPolicyController {
             auto j = req.json;
             auto r = CreateAccessPolicyRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.bucketId = jsonStr(j, "bucketId");
-            r.name = jsonStr(j, "name");
-            r.effect = jsonStr(j, "effect");
-            r.principal = jsonStr(j, "principal");
-            r.actions = jsonStr(j, "actions");
-            r.resources = jsonStr(j, "resources");
+            r.bucketId = j.getString("bucketId");
+            r.name = j.getString("name");
+            r.effect = j.getString("effect");
+            r.principal = j.getString("principal");
+            r.actions = j.getString("actions");
+            r.resources = j.getString("resources");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createPolicy(r);
@@ -88,11 +88,11 @@ class AccessPolicyController {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateAccessPolicyRequest();
-            r.name = jsonStr(j, "name");
-            r.effect = jsonStr(j, "effect");
-            r.principal = jsonStr(j, "principal");
-            r.actions = jsonStr(j, "actions");
-            r.resources = jsonStr(j, "resources");
+            r.name = j.getString("name");
+            r.effect = j.getString("effect");
+            r.principal = j.getString("principal");
+            r.actions = j.getString("actions");
+            r.resources = j.getString("resources");
 
             auto result = uc.updatePolicy(id, r);
             if (result.success) {

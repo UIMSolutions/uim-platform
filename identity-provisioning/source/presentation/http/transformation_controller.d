@@ -37,11 +37,11 @@ class TransformationController
       auto j = req.json;
       auto r = CreateTransformationRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.systemId = jsonStr(j, "systemId");
+      r.systemId = j.getString("systemId");
       r.systemRole = parseSystemRole(jsonStr(j, "systemRole"));
-      r.name = jsonStr(j, "name");
-      r.mappingRules = jsonStr(j, "mappingRules");
-      r.conditions = jsonStr(j, "conditions");
+      r.name = j.getString("name");
+      r.mappingRules = j.getString("mappingRules");
+      r.conditions = j.getString("conditions");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createTransformation(r);
@@ -111,9 +111,9 @@ class TransformationController
       auto r = UpdateTransformationRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.mappingRules = jsonStr(j, "mappingRules");
-      r.conditions = jsonStr(j, "conditions");
+      r.name = j.getString("name");
+      r.mappingRules = j.getString("mappingRules");
+      r.conditions = j.getString("conditions");
 
       auto result = uc.updateTransformation(r);
       if (result.isSuccess)
@@ -140,8 +140,8 @@ class TransformationController
     {
       auto j = req.json;
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto systemId = jsonStr(j, "systemId");
-      auto inputAttributes = jsonStr(j, "inputAttributes");
+      auto systemId = j.getString("systemId");
+      auto inputAttributes = j.getString("inputAttributes");
 
       if (systemId.length == 0 || inputAttributes.length == 0)
       {

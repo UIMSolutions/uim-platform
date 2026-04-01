@@ -34,13 +34,13 @@ class AddressController
             auto j = req.json;
             auto r = CleanseAddressRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.sourceRecordId = jsonStr(j, "sourceRecordId");
-            r.line1 = jsonStr(j, "line1");
-            r.line2 = jsonStr(j, "line2");
-            r.city = jsonStr(j, "city");
-            r.region = jsonStr(j, "region");
-            r.postalCode = jsonStr(j, "postalCode");
-            r.country = jsonStr(j, "country");
+            r.sourceRecordId = j.getString("sourceRecordId");
+            r.line1 = j.getString("line1");
+            r.line2 = j.getString("line2");
+            r.city = j.getString("city");
+            r.region = j.getString("region");
+            r.postalCode = j.getString("postalCode");
+            r.country = j.getString("country");
 
             auto result = uc.cleanse(r);
             res.writeJsonBody(serializeAddress(result), 200);

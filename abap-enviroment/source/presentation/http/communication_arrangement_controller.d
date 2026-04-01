@@ -36,18 +36,18 @@ class CommunicationArrangementController
             auto j = req.json;
             CreateCommunicationArrangementRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.systemInstanceId = jsonStr(j, "systemInstanceId");
-            r.scenarioId = jsonStr(j, "scenarioId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.direction = jsonStr(j, "direction");
-            r.authMethod = jsonStr(j, "authMethod");
-            r.communicationUser = jsonStr(j, "communicationUser");
-            r.communicationPassword = jsonStr(j, "communicationPassword");
-            r.clientId = jsonStr(j, "clientId");
-            r.clientSecret = jsonStr(j, "clientSecret");
-            r.tokenEndpoint = jsonStr(j, "tokenEndpoint");
-            r.certificateId = jsonStr(j, "certificateId");
+            r.systemInstanceId = j.getString("systemInstanceId");
+            r.scenarioId = j.getString("scenarioId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.direction = j.getString("direction");
+            r.authMethod = j.getString("authMethod");
+            r.communicationUser = j.getString("communicationUser");
+            r.communicationPassword = j.getString("communicationPassword");
+            r.clientId = j.getString("clientId");
+            r.clientSecret = j.getString("clientSecret");
+            r.tokenEndpoint = j.getString("tokenEndpoint");
+            r.certificateId = j.getString("certificateId");
 
             auto result = uc.createArrangement(r);
             if (result.isSuccess())
@@ -113,14 +113,14 @@ class CommunicationArrangementController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateCommunicationArrangementRequest r;
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
-            r.authMethod = jsonStr(j, "authMethod");
-            r.communicationUser = jsonStr(j, "communicationUser");
-            r.communicationPassword = jsonStr(j, "communicationPassword");
-            r.clientId = jsonStr(j, "clientId");
-            r.clientSecret = jsonStr(j, "clientSecret");
-            r.tokenEndpoint = jsonStr(j, "tokenEndpoint");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
+            r.authMethod = j.getString("authMethod");
+            r.communicationUser = j.getString("communicationUser");
+            r.communicationPassword = j.getString("communicationPassword");
+            r.clientId = j.getString("clientId");
+            r.clientSecret = j.getString("clientSecret");
+            r.tokenEndpoint = j.getString("tokenEndpoint");
 
             auto result = uc.updateArrangement(id, r);
             if (result.isSuccess())

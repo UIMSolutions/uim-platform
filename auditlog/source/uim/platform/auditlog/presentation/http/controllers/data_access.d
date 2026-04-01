@@ -26,13 +26,13 @@ class DataAccessController {
             auto j = req.json;
             auto r = WriteDataAccessLogRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.accessedBy = jsonStr(j, "accessedBy");
-            r.dataSubject = jsonStr(j, "dataSubject");
-            r.dataObjectType = jsonStr(j, "dataObjectType");
-            r.dataObjectId = jsonStr(j, "dataObjectId");
+            r.accessedBy = j.getString("accessedBy");
+            r.dataSubject = j.getString("dataSubject");
+            r.dataObjectType = j.getString("dataObjectType");
+            r.dataObjectId = j.getString("dataObjectId");
             r.accessedFields = jsonStrArray(j, "accessedFields");
-            r.purpose = jsonStr(j, "purpose");
-            r.channel = jsonStr(j, "channel");
+            r.purpose = j.getString("purpose");
+            r.channel = j.getString("channel");
 
             auto result = useCase.writeLog(r);
             if (result.isSuccess()) {

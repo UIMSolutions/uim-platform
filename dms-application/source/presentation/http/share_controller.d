@@ -36,9 +36,9 @@ class ShareController
       auto j = req.json;
       auto r = CreateShareRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.documentId = jsonStr(j, "documentId");
+      r.documentId = j.getString("documentId");
       r.shareType = parseShareType(jsonStr(j, "shareType"));
-      r.sharedWith = jsonStr(j, "sharedWith");
+      r.sharedWith = j.getString("sharedWith");
       r.permissionLevel = parsePermissionLevel(jsonStr(j, "permissionLevel"));
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = req.headers.get("X-User-Id", "system");

@@ -34,8 +34,8 @@ class ValidateController
             auto j = req.json;
             auto r = ValidateRecordRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
-            r.recordId = jsonStr(j, "recordId");
+            r.datasetId = j.getString("datasetId");
+            r.recordId = j.getString("recordId");
             r.fieldValues = jsonStrMap(j, "fieldValues");
 
             auto result = uc.validateRecord(r);
@@ -54,7 +54,7 @@ class ValidateController
             auto j = req.json;
             auto r = ValidateBatchRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.datasetId = jsonStr(j, "datasetId");
+            r.datasetId = j.getString("datasetId");
 
             auto recordsJson = "records" in j;
             if (recordsJson !is null && (*recordsJson).type == Json.Type.array)

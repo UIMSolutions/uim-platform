@@ -36,12 +36,12 @@ class MetricDefinitionController
             auto j = req.json;
             CreateMetricDefinitionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
-            r.unit = jsonStr(j, "unit");
-            r.aggregation = jsonStr(j, "aggregation");
+            r.name = j.getString("name");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
+            r.unit = j.getString("unit");
+            r.aggregation = j.getString("aggregation");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createDefinition(r);
@@ -110,9 +110,9 @@ class MetricDefinitionController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateMetricDefinitionRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.aggregation = jsonStr(j, "aggregation");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.aggregation = j.getString("aggregation");
             r.isEnabled = jsonBool(j, "isEnabled", true);
 
             auto result = uc.updateDefinition(id, r);

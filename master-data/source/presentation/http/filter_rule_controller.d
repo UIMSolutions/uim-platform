@@ -33,12 +33,12 @@ class FilterRuleController
             auto j = req.json;
             CreateFilterRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
-            r.dataModelId = jsonStr(j, "dataModelId");
-            r.objectType = jsonStr(j, "objectType");
-            r.logicOperator = jsonStr(j, "logicOperator");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
+            r.dataModelId = j.getString("dataModelId");
+            r.objectType = j.getString("objectType");
+            r.logicOperator = j.getString("logicOperator");
             r.createdBy = req.headers.get("X-User-Id", "");
             r.conditions = parseConditions(j);
 
@@ -106,9 +106,9 @@ class FilterRuleController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateFilterRuleRequest r;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.logicOperator = jsonStr(j, "logicOperator");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.logicOperator = j.getString("logicOperator");
             r.isActive = jsonBool(j, "isActive", true);
             r.conditions = parseConditions(j);
 

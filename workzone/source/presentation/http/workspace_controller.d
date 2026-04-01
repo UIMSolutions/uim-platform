@@ -35,12 +35,12 @@ class WorkspaceController
             auto j = req.json;
             auto r = CreateWorkspaceRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.alias_ = jsonStr(j, "alias");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.alias_ = j.getString("alias");
+            r.createdBy = j.getString("createdBy");
 
-            auto typeStr = jsonStr(j, "type");
+            auto typeStr = j.getString("type");
             if (typeStr == "project") r.type = WorkspaceType.project;
             else if (typeStr == "department") r.type = WorkspaceType.department;
             else if (typeStr == "public") r.type = WorkspaceType.public_;
@@ -118,9 +118,9 @@ class WorkspaceController
             auto r = UpdateWorkspaceRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.imageUrl = jsonStr(j, "imageUrl");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.imageUrl = j.getString("imageUrl");
             r.settings = parseWorkspaceSettings(j);
 
             auto result = useCase.updateWorkspace(r);
@@ -162,12 +162,12 @@ class WorkspaceController
         {
             auto j = req.json;
             auto r = AddMemberRequest();
-            r.workspaceId = jsonStr(j, "workspaceId");
+            r.workspaceId = j.getString("workspaceId");
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.userId = jsonStr(j, "userId");
-            r.displayName = jsonStr(j, "displayName");
+            r.userId = j.getString("userId");
+            r.displayName = j.getString("displayName");
 
-            auto roleStr = jsonStr(j, "role");
+            auto roleStr = j.getString("role");
             if (roleStr == "admin") r.role = MemberRole.admin;
             else if (roleStr == "owner") r.role = MemberRole.owner;
             else if (roleStr == "viewer") r.role = MemberRole.viewer;

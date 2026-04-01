@@ -31,10 +31,10 @@ class DirectoryController
         {
             auto j = req.json;
             CreateDirectoryRequest r;
-            r.globalAccountId = jsonStr(j, "globalAccountId");
-            r.parentDirectoryId = jsonStr(j, "parentDirectoryId");
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
+            r.globalAccountId = j.getString("globalAccountId");
+            r.parentDirectoryId = j.getString("parentDirectoryId");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
             r.features = jsonStrArray(j, "features");
             r.manageEntitlements = jsonBool(j, "manageEntitlements");
             r.manageAuthorizations = jsonBool(j, "manageAuthorizations");
@@ -106,8 +106,8 @@ class DirectoryController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateDirectoryRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
             r.labels = jsonStrMap(j, "labels");
             r.customProperties = jsonStrMap(j, "customProperties");
 

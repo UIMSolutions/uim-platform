@@ -37,10 +37,10 @@ class ProviderController
             auto j = req.json;
             auto r = RegisterProviderRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.endpoint = jsonStr(j, "endpoint");
-            r.authToken = jsonStr(j, "authToken");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.endpoint = j.getString("endpoint");
+            r.authToken = j.getString("authToken");
             r.registeredBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.registerProvider(r);
@@ -109,9 +109,9 @@ class ProviderController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateProviderRequest();
-            r.description = jsonStr(j, "description");
-            r.endpoint = jsonStr(j, "endpoint");
-            r.authToken = jsonStr(j, "authToken");
+            r.description = j.getString("description");
+            r.endpoint = j.getString("endpoint");
+            r.authToken = j.getString("authToken");
 
             auto result = uc.updateProvider(id, r);
             if (result.success)
@@ -159,7 +159,7 @@ class ProviderController
         try
         {
             auto j = req.json;
-            auto providerId = jsonStr(j, "providerId");
+            auto providerId = j.getString("providerId");
 
             auto result = uc.syncProvider(providerId);
             if (result.success)

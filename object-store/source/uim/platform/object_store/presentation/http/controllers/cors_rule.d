@@ -30,11 +30,11 @@ class CorsRuleController {
             auto j = req.json;
             auto r = CreateCorsRuleRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.bucketId = jsonStr(j, "bucketId");
-            r.allowedOrigins = jsonStr(j, "allowedOrigins");
-            r.allowedMethods = jsonStr(j, "allowedMethods");
-            r.allowedHeaders = jsonStr(j, "allowedHeaders");
-            r.exposedHeaders = jsonStr(j, "exposedHeaders");
+            r.bucketId = j.getString("bucketId");
+            r.allowedOrigins = j.getString("allowedOrigins");
+            r.allowedMethods = j.getString("allowedMethods");
+            r.allowedHeaders = j.getString("allowedHeaders");
+            r.exposedHeaders = j.getString("exposedHeaders");
             r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
             auto result = uc.createRule(r);
@@ -87,10 +87,10 @@ class CorsRuleController {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateCorsRuleRequest();
-            r.allowedOrigins = jsonStr(j, "allowedOrigins");
-            r.allowedMethods = jsonStr(j, "allowedMethods");
-            r.allowedHeaders = jsonStr(j, "allowedHeaders");
-            r.exposedHeaders = jsonStr(j, "exposedHeaders");
+            r.allowedOrigins = j.getString("allowedOrigins");
+            r.allowedMethods = j.getString("allowedMethods");
+            r.allowedHeaders = j.getString("allowedHeaders");
+            r.exposedHeaders = j.getString("exposedHeaders");
             r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
             auto result = uc.updateRule(id, r);

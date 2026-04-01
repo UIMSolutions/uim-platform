@@ -32,12 +32,12 @@ class EntitlementController
         {
             auto j = req.json;
             AssignEntitlementRequest r;
-            r.globalAccountId = jsonStr(j, "globalAccountId");
-            r.directoryId = jsonStr(j, "directoryId");
-            r.subaccountId = jsonStr(j, "subaccountId");
-            r.servicePlanId = jsonStr(j, "servicePlanId");
-            r.serviceName = jsonStr(j, "serviceName");
-            r.planName = jsonStr(j, "planName");
+            r.globalAccountId = j.getString("globalAccountId");
+            r.directoryId = j.getString("directoryId");
+            r.subaccountId = j.getString("subaccountId");
+            r.servicePlanId = j.getString("servicePlanId");
+            r.serviceName = j.getString("serviceName");
+            r.planName = j.getString("planName");
             r.quotaAssigned = j.getInteger("quotaAssigned");
             r.unlimited = jsonBool(j, "unlimited");
             r.autoAssign = jsonBool(j, "autoAssign");

@@ -33,11 +33,11 @@ class DataModelController
             auto j = req.json;
             CreateDataModelRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.namespace = jsonStr(j, "namespace");
-            r.version_ = jsonStr(j, "version");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
+            r.name = j.getString("name");
+            r.namespace = j.getString("namespace");
+            r.version_ = j.getString("version");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
             r.keyFields = jsonStrArray(j, "keyFields");
             r.requiredFields = jsonStrArray(j, "requiredFields");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -122,8 +122,8 @@ class DataModelController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateDataModelRequest r;
-            r.description = jsonStr(j, "description");
-            r.version_ = jsonStr(j, "version");
+            r.description = j.getString("description");
+            r.version_ = j.getString("version");
             r.keyFields = jsonStrArray(j, "keyFields");
             r.requiredFields = jsonStrArray(j, "requiredFields");
 

@@ -34,16 +34,16 @@ class MasterDataController
             auto j = req.json;
             CreateMasterDataObjectRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.dataModelId = jsonStr(j, "dataModelId");
-            r.category = jsonStr(j, "category");
-            r.objectType = jsonStr(j, "objectType");
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.localId = jsonStr(j, "localId");
-            r.globalId = jsonStr(j, "globalId");
+            r.dataModelId = j.getString("dataModelId");
+            r.category = j.getString("category");
+            r.objectType = j.getString("objectType");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.localId = j.getString("localId");
+            r.globalId = j.getString("globalId");
             r.attributes = jsonStrMap(j, "attributes");
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.sourceClient = jsonStr(j, "sourceClient");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.sourceClient = j.getString("sourceClient");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
@@ -130,9 +130,9 @@ class MasterDataController
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateMasterDataObjectRequest r;
-            r.displayName = jsonStr(j, "displayName");
-            r.description = jsonStr(j, "description");
-            r.status = jsonStr(j, "status");
+            r.displayName = j.getString("displayName");
+            r.description = j.getString("description");
+            r.status = j.getString("status");
             r.attributes = jsonStrMap(j, "attributes");
             r.modifiedBy = req.headers.get("X-User-Id", "");
 

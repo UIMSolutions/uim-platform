@@ -32,8 +32,8 @@ class RetentionController {
             auto j = req.json;
             auto r = CreateRetentionPolicyRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
             r.retentionDays = j.getInteger("retentionDays");
             r.isDefault = jsonBool(j, "isDefault");
             r.categories = parseCategoryArray(j);
@@ -88,12 +88,12 @@ class RetentionController {
             auto r = UpdateRetentionPolicyRequest();
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
             r.retentionDays = j.getInteger("retentionDays");
             r.categories = parseCategoryArray(j);
 
-            auto statusStr = jsonStr(j, "status");
+            auto statusStr = j.getString("status");
             if (statusStr == "inactive")
                 r.status = RetentionStatus.inactive;
             else if (statusStr == "expired")
