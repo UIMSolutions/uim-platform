@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.entities.share;
+module uim.platform.dms_application.domain.entities.share;
 
 import uim.platform.dms_application.domain.types;
 

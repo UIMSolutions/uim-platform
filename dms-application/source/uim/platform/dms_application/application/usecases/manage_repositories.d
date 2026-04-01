@@ -1,4 +1,4 @@
-module application.usecases.manage_repositories;
+module uim.platform.dms_application.application.usecases.manage_repositories;
 
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;

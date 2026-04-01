@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.services.access_control_service;
+module uim.platform.dms_application.domain.services.access_control_service;
 
 import uim.platform.dms_application.domain.entities.permission;
 import uim.platform.dms_application.domain.ports.permission_repository;

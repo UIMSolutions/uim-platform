@@ -1,4 +1,4 @@
-module application.usecases.browse_content;
+module uim.platform.dms_application.application.usecases.browse_content;
 
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;

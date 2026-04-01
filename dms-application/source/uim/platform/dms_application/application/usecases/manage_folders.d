@@ -1,4 +1,4 @@
-module application.usecases.manage_folders;
+module uim.platform.dms_application.application.usecases.manage_folders;
 
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;

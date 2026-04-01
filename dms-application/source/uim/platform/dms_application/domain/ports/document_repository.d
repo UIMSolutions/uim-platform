@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.ports.document_repository;
+module uim.platform.dms_application.domain.ports.document_repository;
 
 import uim.platform.dms_application.domain.entities.document;
 import uim.platform.dms_application.domain.types;

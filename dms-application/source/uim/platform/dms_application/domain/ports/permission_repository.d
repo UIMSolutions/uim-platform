@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.ports.permission_repository;
+module uim.platform.dms_application.domain.ports.permission_repository;
 
 import uim.platform.dms_application.domain.entities.permission;
 import uim.platform.dms_application.domain.types;

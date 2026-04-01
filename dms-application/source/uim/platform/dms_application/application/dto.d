@@ -1,11 +1,10 @@
-module application.dto;
+module uim.platform.dms_application.application.dto;
 
 import uim.platform.dms_application.domain.types;
 
 // --- Repository DTOs ---
 
-struct CreateRepositoryRequest
-{
+struct CreateRepositoryRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -14,8 +13,7 @@ struct CreateRepositoryRequest
   UserId createdBy;
 }
 
-struct UpdateRepositoryRequest
-{
+struct UpdateRepositoryRequest {
   RepositoryId id;
   TenantId tenantId;
   string name;
@@ -26,8 +24,7 @@ struct UpdateRepositoryRequest
 
 // --- Folder DTOs ---
 
-struct CreateFolderRequest
-{
+struct CreateFolderRequest {
   TenantId tenantId;
   RepositoryId repositoryId;
   FolderId parentFolderId;
@@ -36,16 +33,14 @@ struct CreateFolderRequest
   UserId createdBy;
 }
 
-struct UpdateFolderRequest
-{
+struct UpdateFolderRequest {
   FolderId id;
   TenantId tenantId;
   string name;
   string description;
 }
 
-struct MoveFolderRequest
-{
+struct MoveFolderRequest {
   FolderId id;
   TenantId tenantId;
   FolderId newParentFolderId;
@@ -53,8 +48,7 @@ struct MoveFolderRequest
 
 // --- Document DTOs ---
 
-struct CreateDocumentRequest
-{
+struct CreateDocumentRequest {
   TenantId tenantId;
   RepositoryId repositoryId;
   FolderId folderId;
@@ -68,8 +62,7 @@ struct CreateDocumentRequest
   UserId createdBy;
 }
 
-struct UpdateDocumentRequest
-{
+struct UpdateDocumentRequest {
   DocumentId id;
   TenantId tenantId;
   string name;
@@ -78,8 +71,7 @@ struct UpdateDocumentRequest
   string properties;
 }
 
-struct MoveDocumentRequest
-{
+struct MoveDocumentRequest {
   DocumentId id;
   TenantId tenantId;
   FolderId newFolderId;
@@ -87,8 +79,7 @@ struct MoveDocumentRequest
 
 // --- Version DTOs ---
 
-struct CheckInRequest
-{
+struct CheckInRequest {
   DocumentId documentId;
   TenantId tenantId;
   UserId userId;
@@ -102,8 +93,7 @@ struct CheckInRequest
 
 // --- Share DTOs ---
 
-struct CreateShareRequest
-{
+struct CreateShareRequest {
   TenantId tenantId;
   DocumentId documentId;
   ShareType shareType;
@@ -115,8 +105,7 @@ struct CreateShareRequest
 
 // --- Permission DTOs ---
 
-struct CreatePermissionRequest
-{
+struct CreatePermissionRequest {
   TenantId tenantId;
   string resourceId;
   ResourceType resourceType;
@@ -125,8 +114,7 @@ struct CreatePermissionRequest
   UserId createdBy;
 }
 
-struct UpdatePermissionRequest
-{
+struct UpdatePermissionRequest {
   PermissionId id;
   TenantId tenantId;
   PermissionLevel level;
@@ -134,8 +122,7 @@ struct UpdatePermissionRequest
 
 // --- Favorite DTOs ---
 
-struct CreateFavoriteRequest
-{
+struct CreateFavoriteRequest {
   TenantId tenantId;
   UserId userId;
   string resourceId;
@@ -144,13 +131,11 @@ struct CreateFavoriteRequest
 
 // --- Generic result ---
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }

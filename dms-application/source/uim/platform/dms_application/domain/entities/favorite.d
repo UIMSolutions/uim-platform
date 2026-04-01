@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.entities.favorite;
+module uim.platform.dms_application.domain.entities.favorite;
 
 import uim.platform.dms_application.domain.types;
 

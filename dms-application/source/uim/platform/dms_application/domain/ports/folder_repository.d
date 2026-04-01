@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.ports.folder_repository;
+module uim.platform.dms_application.domain.ports.folder_repository;
 
 import uim.platform.dms_application.domain.entities.folder;
 import uim.platform.dms_application.domain.types;

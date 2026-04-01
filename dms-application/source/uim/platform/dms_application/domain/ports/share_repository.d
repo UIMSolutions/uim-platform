@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.ports.share_repository;
+module uim.platform.dms_application.domain.ports.share_repository;
 
 import uim.platform.dms_application.domain.entities.share;
 import uim.platform.dms_application.domain.types;

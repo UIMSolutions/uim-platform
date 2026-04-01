@@ -1,4 +1,4 @@
-module application.usecases.manage_shares;
+module uim.platform.dms_application.application.usecases.manage_shares;
 
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;

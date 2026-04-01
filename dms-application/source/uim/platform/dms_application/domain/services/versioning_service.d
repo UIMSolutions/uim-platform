@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.services.versioning_service;
+module uim.platform.dms_application.domain.services.versioning_service;
 
 import std.conv : to;
 import std.datetime.systime : Clock;

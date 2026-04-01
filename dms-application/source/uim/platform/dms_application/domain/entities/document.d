@@ -1,4 +1,4 @@
-module  uim.platform.dms_application.domain.entities.document;
+module uim.platform.dms_application.domain.entities.document;
 
 import uim.platform.dms_application.domain.types;
 
