@@ -62,7 +62,7 @@ string jsonStr(Json j, string key)
     if (j.type == Json.Type.object)
     {
         auto val = key in j;
-        if (val !is null && (*val).type == Json.Type.string)
+        if (val !is null && (*val).isString)
             return (*val).get!string;
     }
     return "";
@@ -112,7 +112,7 @@ string[] jsonStrArray(Json j, string key)
         {
             foreach (item; *val)
             {
-                if (item.type == Json.Type.string)
+                if (item.isString)
                     result ~= item.get!string;
             }
         }

@@ -1,10 +1,13 @@
 module uim.platform.dms_application.presentation.http.json_utils;
 
-import vibe.data.json;
-import vibe.http.server;
+// import vibe.data.json;
+// import vibe.http.server;
+// 
+// import uim.platform.dms_application.domain.types;
 
-import uim.platform.dms_application.domain.types;
-
+import uim.platform.dms_application;
+mixin(ShowModule!());
+@safe:
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
   if (j.type != Json.Type.object)
@@ -12,7 +15,7 @@ string jsonStr(Json j, string key) {
   auto v = key in j;
   if (v is null)
     return "";
-  if ((*v).type == Json.Type.string)
+  if ((*v).isString)
     return (*v).get!string;
   return "";
 }

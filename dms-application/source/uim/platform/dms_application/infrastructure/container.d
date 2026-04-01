@@ -40,13 +40,13 @@ mixin(ShowModule!());
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  InMemoryRepositoryRepository repoRepo;
-  InMemoryFolderRepository folderRepo;
-  InMemoryDocumentRepository docRepo;
-  InMemoryDocumentVersionRepository versionRepo;
-  InMemoryShareRepository shareRepo;
-  InMemoryPermissionRepository permRepo;
-  InMemoryFavoriteRepository favRepo;
+  MemoryRepositoryRepository repoRepo;
+  MemoryFolderRepository folderRepo;
+  MemoryDocumentRepository docRepo;
+  MemoryDocumentVersionRepository versionRepo;
+  MemoryShareRepository shareRepo;
+  MemoryPermissionRepository permRepo;
+  MemoryFavoriteRepository favRepo;
 
   // Domain services
   VersioningService versioningService;

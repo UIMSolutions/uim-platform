@@ -61,7 +61,7 @@ class SoftwareComponentController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto systemId = jsonStr(req.json, "systemInstanceId");
+            auto systemId = req.json.getString("systemInstanceId");
             if (systemId.length == 0)
                 systemId = req.headers.get("X-System-Id", "");
             auto components = uc.listComponents(systemId);

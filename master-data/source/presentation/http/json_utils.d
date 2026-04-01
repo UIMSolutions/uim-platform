@@ -11,7 +11,7 @@ string jsonStr(Json j, string key)
     auto v = key in j;
     if (v is null)
         return "";
-    if ((*v).type == Json.Type.string)
+    if ((*v).isString)
         return (*v).get!string;
     return "";
 }
@@ -60,7 +60,7 @@ string[] jsonStrArray(Json j, string key)
     string[] result;
     foreach (item; *v)
     {
-        if (item.type == Json.Type.string)
+        if (item.isString)
             result ~= item.get!string;
     }
     return result;
@@ -78,7 +78,7 @@ string[string] jsonStrMap(Json j, string key)
     string[string] result;
     foreach (string k, val; *v)
     {
-        if (val.type == Json.Type.string)
+        if (val.isString)
             result[k] = val.get!string;
     }
     return result;
