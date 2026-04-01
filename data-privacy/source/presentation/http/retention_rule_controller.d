@@ -36,7 +36,7 @@ class RetentionRuleController
             r.name = jsonStr(j, "name");
             r.description = jsonStr(j, "description");
             r.purpose = parsePurpose(jsonStr(j, "purpose"));
-            r.retentionDays = jsonInt(j, "retentionDays");
+            r.retentionDays = j.getInteger("retentionDays");
             r.legalReference = jsonStr(j, "legalReference");
             r.isDefault = jsonBool(j, "isDefault");
 
@@ -108,7 +108,7 @@ class RetentionRuleController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.name = jsonStr(j, "name");
             r.description = jsonStr(j, "description");
-            r.retentionDays = jsonInt(j, "retentionDays");
+            r.retentionDays = j.getInteger("retentionDays");
             r.legalReference = jsonStr(j, "legalReference");
             r.status = parseRuleStatus(jsonStr(j, "status"));
 

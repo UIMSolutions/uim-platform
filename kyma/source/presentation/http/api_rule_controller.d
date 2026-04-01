@@ -38,7 +38,7 @@ class ApiRuleController
             r.name = jsonStr(j, "name");
             r.description = jsonStr(j, "description");
             r.serviceName = jsonStr(j, "serviceName");
-            r.servicePort = jsonInt(j, "servicePort");
+            r.servicePort = j.getInteger("servicePort");
             r.gateway = jsonStr(j, "gateway");
             r.host = jsonStr(j, "host");
             r.tlsEnabled = jsonBool(j, "tlsEnabled", true);
@@ -114,7 +114,7 @@ class ApiRuleController
             UpdateApiRuleRequest r;
             r.description = jsonStr(j, "description");
             r.serviceName = jsonStr(j, "serviceName");
-            r.servicePort = jsonInt(j, "servicePort");
+            r.servicePort = j.getInteger("servicePort");
             r.host = jsonStr(j, "host");
             r.tlsEnabled = jsonBool(j, "tlsEnabled", true);
             r.tlsSecretName = jsonStr(j, "tlsSecretName");

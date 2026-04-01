@@ -35,7 +35,7 @@ class CorsRuleController {
             r.allowedMethods = jsonStr(j, "allowedMethods");
             r.allowedHeaders = jsonStr(j, "allowedHeaders");
             r.exposedHeaders = jsonStr(j, "exposedHeaders");
-            r.maxAgeSeconds = jsonInt(j, "maxAgeSeconds");
+            r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
             auto result = uc.createRule(r);
             if (result.success) {
@@ -91,7 +91,7 @@ class CorsRuleController {
             r.allowedMethods = jsonStr(j, "allowedMethods");
             r.allowedHeaders = jsonStr(j, "allowedHeaders");
             r.exposedHeaders = jsonStr(j, "exposedHeaders");
-            r.maxAgeSeconds = jsonInt(j, "maxAgeSeconds");
+            r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
             auto result = uc.updateRule(id, r);
             if (result.success) {

@@ -39,7 +39,7 @@ class DeploymentController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.trainingJobId = jsonStr(j, "trainingJobId");
       r.name = jsonStr(j, "name");
-      r.replicas = jsonInt(j, "replicas", 1);
+      r.replicas = j.getInteger("replicas", 1);
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createDeployment(r);

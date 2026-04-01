@@ -44,8 +44,8 @@ class AlertRuleController
             r.operator_ = jsonStr(j, "operator");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
-            r.evaluationPeriodSeconds = jsonInt(j, "evaluationPeriodSeconds");
-            r.consecutiveBreaches = jsonInt(j, "consecutiveBreaches");
+            r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
+            r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
             r.severity = jsonStr(j, "severity");
             r.channelIds = jsonStrArray(j, "channelIds");
             r.createdBy = req.headers.get("X-User-Id", "");
@@ -119,8 +119,8 @@ class AlertRuleController
             r.description = jsonStr(j, "description");
             r.warningThreshold = jsonDouble(j, "warningThreshold");
             r.criticalThreshold = jsonDouble(j, "criticalThreshold");
-            r.evaluationPeriodSeconds = jsonInt(j, "evaluationPeriodSeconds");
-            r.consecutiveBreaches = jsonInt(j, "consecutiveBreaches");
+            r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
+            r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
             r.severity = jsonStr(j, "severity");
             r.isEnabled = jsonBool(j, "isEnabled", true);
             r.channelIds = jsonStrArray(j, "channelIds");

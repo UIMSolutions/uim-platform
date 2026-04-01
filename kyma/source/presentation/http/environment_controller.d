@@ -38,10 +38,10 @@ class EnvironmentController
             r.description = jsonStr(j, "description");
             r.plan = jsonStr(j, "plan");
             r.region = jsonStr(j, "region");
-            r.machineCount = jsonInt(j, "machineCount");
+            r.machineCount = j.getInteger("machineCount");
             r.machineType = jsonStr(j, "machineType");
-            r.autoScalerMin = jsonInt(j, "autoScalerMin");
-            r.autoScalerMax = jsonInt(j, "autoScalerMax");
+            r.autoScalerMin = j.getInteger("autoScalerMin");
+            r.autoScalerMax = j.getInteger("autoScalerMax");
             r.oidcIssuerUrl = jsonStr(j, "oidcIssuerUrl");
             r.oidcClientId = jsonStr(j, "oidcClientId");
             r.oidcGroupsClaim = jsonStrArray(j, "oidcGroupsClaim");
@@ -111,10 +111,10 @@ class EnvironmentController
             auto j = req.json;
             UpdateEnvironmentRequest r;
             r.description = jsonStr(j, "description");
-            r.machineCount = jsonInt(j, "machineCount");
+            r.machineCount = j.getInteger("machineCount");
             r.machineType = jsonStr(j, "machineType");
-            r.autoScalerMin = jsonInt(j, "autoScalerMin");
-            r.autoScalerMax = jsonInt(j, "autoScalerMax");
+            r.autoScalerMin = j.getInteger("autoScalerMin");
+            r.autoScalerMax = j.getInteger("autoScalerMax");
             r.oidcIssuerUrl = jsonStr(j, "oidcIssuerUrl");
             r.oidcClientId = jsonStr(j, "oidcClientId");
             r.administrators = jsonStrArray(j, "administrators");

@@ -38,9 +38,9 @@ class WidgetController
             r.title = jsonStr(j, "title");
             r.cardId = jsonStr(j, "cardId");
             r.appId = jsonStr(j, "appId");
-            r.row = jsonInt(j, "row");
-            r.col = jsonInt(j, "col");
-            r.sortOrder = jsonInt(j, "sortOrder");
+            r.row = j.getInteger("row");
+            r.col = j.getInteger("col");
+            r.sortOrder = j.getInteger("sortOrder");
 
             auto sStr = jsonStr(j, "size");
             if (sStr == "small") r.size = WidgetSize.small;
@@ -118,9 +118,9 @@ class WidgetController
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.title = jsonStr(j, "title");
-            r.row = jsonInt(j, "row");
-            r.col = jsonInt(j, "col");
-            r.sortOrder = jsonInt(j, "sortOrder");
+            r.row = j.getInteger("row");
+            r.col = j.getInteger("col");
+            r.sortOrder = j.getInteger("sortOrder");
             r.visible = jsonBool(j, "visible", true);
             r.config = parseWidgetConfig(j);
 

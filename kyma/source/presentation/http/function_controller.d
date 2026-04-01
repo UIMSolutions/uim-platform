@@ -42,15 +42,15 @@ class FunctionController
             r.handler = jsonStr(j, "handler");
             r.dependencies = jsonStr(j, "dependencies");
             r.scalingType = jsonStr(j, "scalingType");
-            r.minReplicas = jsonInt(j, "minReplicas");
-            r.maxReplicas = jsonInt(j, "maxReplicas");
+            r.minReplicas = j.getInteger("minReplicas");
+            r.maxReplicas = j.getInteger("maxReplicas");
             r.cpuRequest = jsonStr(j, "cpuRequest");
             r.cpuLimit = jsonStr(j, "cpuLimit");
             r.memoryRequest = jsonStr(j, "memoryRequest");
             r.memoryLimit = jsonStr(j, "memoryLimit");
             r.envVars = jsonStrMap(j, "envVars");
             r.labels = jsonStrMap(j, "labels");
-            r.timeoutSeconds = jsonInt(j, "timeoutSeconds");
+            r.timeoutSeconds = j.getInteger("timeoutSeconds");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
@@ -117,15 +117,15 @@ class FunctionController
             r.handler = jsonStr(j, "handler");
             r.dependencies = jsonStr(j, "dependencies");
             r.scalingType = jsonStr(j, "scalingType");
-            r.minReplicas = jsonInt(j, "minReplicas");
-            r.maxReplicas = jsonInt(j, "maxReplicas");
+            r.minReplicas = j.getInteger("minReplicas");
+            r.maxReplicas = j.getInteger("maxReplicas");
             r.cpuRequest = jsonStr(j, "cpuRequest");
             r.cpuLimit = jsonStr(j, "cpuLimit");
             r.memoryRequest = jsonStr(j, "memoryRequest");
             r.memoryLimit = jsonStr(j, "memoryLimit");
             r.envVars = jsonStrMap(j, "envVars");
             r.labels = jsonStrMap(j, "labels");
-            r.timeoutSeconds = jsonInt(j, "timeoutSeconds");
+            r.timeoutSeconds = j.getInteger("timeoutSeconds");
 
             auto result = uc.updateFunction(id, r);
             if (result.success) res.writeJsonBody(Json.emptyObject, 200);

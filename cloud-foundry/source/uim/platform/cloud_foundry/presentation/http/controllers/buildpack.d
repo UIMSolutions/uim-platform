@@ -38,7 +38,7 @@ class BuildpackController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = jsonStr(j, "name");
       r.type_ = parseBuildpackType(jsonStr(j, "type"));
-      r.position = jsonInt(j, "position");
+      r.position = j.getInteger("position");
       r.stack = jsonStr(j, "stack");
       r.filename = jsonStr(j, "filename");
       r.createdBy = jsonStr(j, "createdBy");
@@ -111,7 +111,7 @@ class BuildpackController
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = jsonStr(j, "name");
-      r.position = jsonInt(j, "position");
+      r.position = j.getInteger("position");
       r.stack = jsonStr(j, "stack");
       r.filename = jsonStr(j, "filename");
       r.enabled = jsonBool(j, "enabled", true);

@@ -11,17 +11,14 @@ import domain.types;
 import domain.entities.validation_rule;
 import presentation.http.json_utils;
 
-class ValidationRuleController
-{
+class ValidationRuleController {
     private ManageValidationRulesUseCase uc;
 
-    this(ManageValidationRulesUseCase uc)
-    {
+    this(ManageValidationRulesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/validation-rules", &handleCreate);
         router.get("/api/v1/validation-rules", &handleList);
         router.get("/api/v1/validation-rules/*", &handleGetById);
@@ -29,10 +26,8 @@ class ValidationRuleController
         router.delete_("/api/v1/validation-rules/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateValidationRuleRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -50,30 +45,23 @@ class ValidationRuleController
             r.referenceDataset = jsonStr(j, "referenceDataset");
             r.crossFieldName = jsonStr(j, "crossFieldName");
             r.category = jsonStr(j, "category");
-            r.priority = jsonInt(j, "priority");
+            r.priority = j.getInteger("priority");
 
             auto result = uc.create(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto rules = uc.listByTenant(tenantId);
             auto arr = Json.emptyArray;
@@ -82,38 +70,29 @@ class ValidationRuleController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) rules.length);
+            resp["totalCount"] = Json(cast(long)rules.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto rule = uc.getById(id);
-            if (rule is null)
-            {
+            if (rule is null) {
                 writeError(res, 404, "Validation rule not found");
                 return;
             }
             res.writeJsonBody(serializeRule(*rule), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = UpdateValidationRuleRequest();
             r.id = extractIdFromPath(req.requestURI);
@@ -133,30 +112,23 @@ class ValidationRuleController
             r.referenceDataset = jsonStr(j, "referenceDataset");
             r.crossFieldName = jsonStr(j, "crossFieldName");
             r.category = jsonStr(j, "category");
-            r.priority = jsonInt(j, "priority");
+            r.priority = j.getInteger("priority");
 
             auto result = uc.update(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto result = uc.remove(id, tenantId);
@@ -164,15 +136,12 @@ class ValidationRuleController
                 res.writeJsonBody(Json.emptyObject, 204);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeRule(ref const ValidationRule r)
-    {
+    private static Json serializeRule(ref const ValidationRule r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["tenantId"] = Json(r.tenantId);
@@ -191,8 +160,7 @@ class ValidationRuleController
         j["createdAt"] = Json(r.createdAt);
         j["updatedAt"] = Json(r.updatedAt);
 
-        if (r.allowedValues.length > 0)
-        {
+        if (r.allowedValues.length > 0) {
             auto arr = Json.emptyArray;
             foreach (v; r.allowedValues)
                 arr ~= Json(v);
@@ -202,40 +170,50 @@ class ValidationRuleController
         return j;
     }
 
-    private static RuleType parseRuleType(string s)
-    {
-        switch (s)
-        {
-            case "required":      return RuleType.required;
-            case "format":        return RuleType.format_;
-            case "range":         return RuleType.range;
-            case "enumeration":   return RuleType.enumeration;
-            case "length":        return RuleType.length;
-            case "crossField":    return RuleType.crossField;
-            case "custom":        return RuleType.custom;
-            case "referenceData": return RuleType.referenceData;
-            default:              return RuleType.required;
+    private static RuleType parseRuleType(string s) {
+        switch (s) {
+        case "required":
+            return RuleType.required;
+        case "format":
+            return RuleType.format_;
+        case "range":
+            return RuleType.range;
+        case "enumeration":
+            return RuleType.enumeration;
+        case "length":
+            return RuleType.length;
+        case "crossField":
+            return RuleType.crossField;
+        case "custom":
+            return RuleType.custom;
+        case "referenceData":
+            return RuleType.referenceData;
+        default:
+            return RuleType.required;
         }
     }
 
-    private static RuleSeverity parseSeverity(string s)
-    {
-        switch (s)
-        {
-            case "warning":  return RuleSeverity.warning;
-            case "error":    return RuleSeverity.error;
-            case "critical": return RuleSeverity.critical;
-            default:         return RuleSeverity.info;
+    private static RuleSeverity parseSeverity(string s) {
+        switch (s) {
+        case "warning":
+            return RuleSeverity.warning;
+        case "error":
+            return RuleSeverity.error;
+        case "critical":
+            return RuleSeverity.critical;
+        default:
+            return RuleSeverity.info;
         }
     }
 
-    private static RuleStatus parseRuleStatus(string s)
-    {
-        switch (s)
-        {
-            case "active":   return RuleStatus.active;
-            case "inactive": return RuleStatus.inactive;
-            default:         return RuleStatus.draft;
+    private static RuleStatus parseRuleStatus(string s) {
+        switch (s) {
+        case "active":
+            return RuleStatus.active;
+        case "inactive":
+            return RuleStatus.inactive;
+        default:
+            return RuleStatus.draft;
         }
     }
 }

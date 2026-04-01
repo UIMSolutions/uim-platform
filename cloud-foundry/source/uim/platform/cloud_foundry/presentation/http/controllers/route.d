@@ -49,7 +49,7 @@ class RouteController
       r.domainId = jsonStr(j, "domainId");
       r.host = jsonStr(j, "host");
       r.path = jsonStr(j, "path");
-      r.port = jsonInt(j, "port");
+      r.port = j.getInteger("port");
       r.protocol = parseRouteProtocol(jsonStr(j, "protocol"));
       r.createdBy = jsonStr(j, "createdBy");
 

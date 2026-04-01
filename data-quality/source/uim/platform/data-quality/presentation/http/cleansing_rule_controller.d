@@ -11,17 +11,14 @@ import domain.types;
 import domain.entities.cleansing_rule;
 import presentation.http.json_utils;
 
-class CleansingRuleController
-{
+class CleansingRuleController {
     private ManageCleansingRulesUseCase uc;
 
-    this(ManageCleansingRulesUseCase uc)
-    {
+    this(ManageCleansingRulesUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/cleansing-rules", &handleCreate);
         router.get("/api/v1/cleansing-rules", &handleList);
         router.get("/api/v1/cleansing-rules/*", &handleGetById);
@@ -29,10 +26,8 @@ class CleansingRuleController
         router.delete_("/api/v1/cleansing-rules/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateCleansingRuleRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -51,30 +46,23 @@ class CleansingRuleController
             r.caseMode = jsonStr(j, "caseMode");
             r.removeDiacritics = jsonBool(j, "removeDiacritics");
             r.category = jsonStr(j, "category");
-            r.priority = jsonInt(j, "priority");
+            r.priority = j.getInteger("priority");
 
             auto result = uc.create(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto rules = uc.listByTenant(tenantId);
             auto arr = Json.emptyArray;
@@ -83,38 +71,29 @@ class CleansingRuleController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) rules.length);
+            resp["totalCount"] = Json(cast(long)rules.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto rule = uc.getById(id);
-            if (rule is null)
-            {
+            if (rule is null) {
                 writeError(res, 404, "Cleansing rule not found");
                 return;
             }
             res.writeJsonBody(serializeRule(*rule), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = UpdateCleansingRuleRequest();
             r.id = extractIdFromPath(req.requestURI);
@@ -135,30 +114,23 @@ class CleansingRuleController
             r.caseMode = jsonStr(j, "caseMode");
             r.removeDiacritics = jsonBool(j, "removeDiacritics");
             r.category = jsonStr(j, "category");
-            r.priority = jsonInt(j, "priority");
+            r.priority = j.getInteger("priority");
 
             auto result = uc.update(r);
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto result = uc.remove(id, tenantId);
@@ -166,15 +138,12 @@ class CleansingRuleController
                 res.writeJsonBody(Json.emptyObject, 204);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeRule(ref const CleansingRule r)
-    {
+    private static Json serializeRule(ref const CleansingRule r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["tenantId"] = Json(r.tenantId);
@@ -198,28 +167,35 @@ class CleansingRuleController
         return j;
     }
 
-    private static CleansingAction parseCleansingAction(string s)
-    {
-        switch (s)
-        {
-            case "trimmed":       return CleansingAction.trimmed;
-            case "normalized":    return CleansingAction.normalized;
-            case "corrected":     return CleansingAction.corrected;
-            case "standardized":  return CleansingAction.standardized;
-            case "enriched":      return CleansingAction.enriched;
-            case "removed":       return CleansingAction.removed;
-            case "defaulted":     return CleansingAction.defaulted;
-            default:              return CleansingAction.none;
+    private static CleansingAction parseCleansingAction(string s) {
+        switch (s) {
+        case "trimmed":
+            return CleansingAction.trimmed;
+        case "normalized":
+            return CleansingAction.normalized;
+        case "corrected":
+            return CleansingAction.corrected;
+        case "standardized":
+            return CleansingAction.standardized;
+        case "enriched":
+            return CleansingAction.enriched;
+        case "removed":
+            return CleansingAction.removed;
+        case "defaulted":
+            return CleansingAction.defaulted;
+        default:
+            return CleansingAction.none;
         }
     }
 
-    private static RuleStatus parseRuleStatus(string s)
-    {
-        switch (s)
-        {
-            case "active":   return RuleStatus.active;
-            case "inactive": return RuleStatus.inactive;
-            default:         return RuleStatus.draft;
+    private static RuleStatus parseRuleStatus(string s) {
+        switch (s) {
+        case "active":
+            return RuleStatus.active;
+        case "inactive":
+            return RuleStatus.inactive;
+        default:
+            return RuleStatus.draft;
         }
     }
 }

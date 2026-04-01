@@ -37,7 +37,7 @@ class WorkpageController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.title = jsonStr(j, "title");
             r.description = jsonStr(j, "description");
-            r.sortOrder = jsonInt(j, "sortOrder");
+            r.sortOrder = j.getInteger("sortOrder");
             r.isDefault = jsonBool(j, "isDefault");
 
             auto result = useCase.createWorkpage(r);
@@ -109,7 +109,7 @@ class WorkpageController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.title = jsonStr(j, "title");
             r.description = jsonStr(j, "description");
-            r.sortOrder = jsonInt(j, "sortOrder");
+            r.sortOrder = j.getInteger("sortOrder");
             r.visible = jsonBool(j, "visible", true);
 
             auto result = useCase.updateWorkpage(r);

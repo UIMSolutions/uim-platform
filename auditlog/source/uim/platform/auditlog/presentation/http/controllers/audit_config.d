@@ -51,7 +51,7 @@ class AuditConfigController {
       else
         request.minimumSeverity = AuditSeverity.info;
 
-      request.rateLimitPerSecond = jsonInt(j, "rateLimitPerSecond", 8);
+      request.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
       auto result = useCase.createConfig(request);
       if (result.isSuccess()) {
@@ -109,7 +109,7 @@ class AuditConfigController {
       r.enableDataMasking = jsonBool(j, "enableDataMasking");
       r.maskedFields = jsonStrArray(j, "maskedFields");
       r.excludedServices = jsonStrArray(j, "excludedServices");
-      r.rateLimitPerSecond = jsonInt(j, "rateLimitPerSecond", 8);
+      r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
       auto statusStr = jsonStr(j, "status");
       if (statusStr == "disabled")

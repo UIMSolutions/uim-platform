@@ -38,7 +38,7 @@ class EntitlementController
             r.servicePlanId = jsonStr(j, "servicePlanId");
             r.serviceName = jsonStr(j, "serviceName");
             r.planName = jsonStr(j, "planName");
-            r.quotaAssigned = jsonInt(j, "quotaAssigned");
+            r.quotaAssigned = j.getInteger("quotaAssigned");
             r.unlimited = jsonBool(j, "unlimited");
             r.autoAssign = jsonBool(j, "autoAssign");
             r.assignedBy = req.headers.get("X-User-Id", "");
@@ -110,7 +110,7 @@ class EntitlementController
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateEntitlementQuotaRequest r;
-            r.quotaAssigned = jsonInt(j, "quotaAssigned");
+            r.quotaAssigned = j.getInteger("quotaAssigned");
             r.unlimited = jsonBool(j, "unlimited");
 
             auto result = uc.updateQuota(id, r);

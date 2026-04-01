@@ -40,7 +40,7 @@ class NamespaceController
             r.memoryLimit = jsonStr(j, "memoryLimit");
             r.cpuRequest = jsonStr(j, "cpuRequest");
             r.memoryRequest = jsonStr(j, "memoryRequest");
-            r.podLimit = jsonInt(j, "podLimit");
+            r.podLimit = j.getInteger("podLimit");
             r.quotaEnforcement = jsonStr(j, "quotaEnforcement");
             r.istioInjection = jsonBool(j, "istioInjection", true);
             r.labels = jsonStrMap(j, "labels");
@@ -104,7 +104,7 @@ class NamespaceController
             r.memoryLimit = jsonStr(j, "memoryLimit");
             r.cpuRequest = jsonStr(j, "cpuRequest");
             r.memoryRequest = jsonStr(j, "memoryRequest");
-            r.podLimit = jsonInt(j, "podLimit");
+            r.podLimit = j.getInteger("podLimit");
             r.quotaEnforcement = jsonStr(j, "quotaEnforcement");
             r.istioInjection = jsonBool(j, "istioInjection", true);
             r.labels = jsonStrMap(j, "labels");

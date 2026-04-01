@@ -11,17 +11,14 @@ import domain.entities.destination;
 import domain.types;
 import presentation.http.json_utils;
 
-class DestinationController
-{
+class DestinationController {
     private ManageDestinationsUseCase uc;
 
-    this(ManageDestinationsUseCase uc)
-    {
+    this(ManageDestinationsUseCase uc) {
         this.uc = uc;
     }
 
-    void registerRoutes(URLRouter router)
-    {
+    void registerRoutes(URLRouter router) {
         router.post("/api/v1/destinations", &handleCreate);
         router.get("/api/v1/destinations", &handleList);
         router.get("/api/v1/destinations/*", &handleGetById);
@@ -29,10 +26,8 @@ class DestinationController
         router.delete_("/api/v1/destinations/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateDestinationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -67,34 +62,27 @@ class DestinationController
 
             r.locationId = jsonStr(j, "locationId");
             r.sccVirtualHost = jsonStr(j, "sccVirtualHost");
-            r.sccVirtualPort = jsonInt(j, "sccVirtualPort");
+            r.sccVirtualPort = j.getInteger("sccVirtualPort");
 
             r.properties = jsonStrMap(j, "properties");
             r.fragmentIds = jsonStrArray(j, "fragmentIds");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto subaccountId = req.headers.get("X-Subaccount-Id", "");
             auto instanceId = req.params.get("serviceInstanceId");
@@ -111,38 +99,29 @@ class DestinationController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) destinations.length);
+            resp["totalCount"] = Json(cast(long)destinations.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto d = uc.getDestination(id);
-            if (d.id.length == 0)
-            {
+            if (d.id.length == 0) {
                 writeError(res, 404, "Destination not found");
                 return;
             }
             res.writeJsonBody(serializeDestination(d), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateDestinationRequest r;
@@ -163,54 +142,41 @@ class DestinationController
             r.truststoreId = jsonStr(j, "truststoreId");
             r.locationId = jsonStr(j, "locationId");
             r.sccVirtualHost = jsonStr(j, "sccVirtualHost");
-            r.sccVirtualPort = jsonInt(j, "sccVirtualPort");
+            r.sccVirtualPort = j.getInteger("sccVirtualPort");
             r.status = jsonStr(j, "status");
             r.properties = jsonStrMap(j, "properties");
             r.fragmentIds = jsonStrArray(j, "fragmentIds");
 
             auto result = uc.updateDestination(id, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.removeDestination(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeDestination(const ref Destination d)
-    {
+    private static Json serializeDestination(const ref Destination d) {
         auto j = Json.emptyObject;
         j["id"] = Json(d.id);
         j["tenantId"] = Json(d.tenantId);

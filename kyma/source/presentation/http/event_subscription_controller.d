@@ -44,8 +44,8 @@ class EventSubscriptionController
             r.typeEncoding = jsonStr(j, "typeEncoding");
             r.sinkUrl = jsonStr(j, "sinkUrl");
             r.sinkServiceName = jsonStr(j, "sinkServiceName");
-            r.sinkServicePort = jsonInt(j, "sinkServicePort");
-            r.maxInFlightMessages = jsonInt(j, "maxInFlightMessages");
+            r.sinkServicePort = j.getInteger("sinkServicePort");
+            r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
             r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);
             r.filterAttributes = jsonStrMap(j, "filterAttributes");
             r.labels = jsonStrMap(j, "labels");
@@ -117,8 +117,8 @@ class EventSubscriptionController
             r.eventTypes = jsonStrArray(j, "eventTypes");
             r.sinkUrl = jsonStr(j, "sinkUrl");
             r.sinkServiceName = jsonStr(j, "sinkServiceName");
-            r.sinkServicePort = jsonInt(j, "sinkServicePort");
-            r.maxInFlightMessages = jsonInt(j, "maxInFlightMessages");
+            r.sinkServicePort = j.getInteger("sinkServicePort");
+            r.maxInFlightMessages = j.getInteger("maxInFlightMessages");
             r.exactTypeMatching = jsonBool(j, "exactTypeMatching", true);
             r.filterAttributes = jsonStrMap(j, "filterAttributes");
             r.labels = jsonStrMap(j, "labels");

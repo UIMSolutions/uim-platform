@@ -43,7 +43,7 @@ class ResourceController
             r.url = jsonStr(j, "url");
             r.runtime = jsonStr(j, "runtime");
             r.region = jsonStr(j, "region");
-            r.instanceCount = jsonInt(j, "instanceCount");
+            r.instanceCount = j.getInteger("instanceCount");
             r.tags = jsonStrArray(j, "tags");
             r.registeredBy = req.headers.get("X-User-Id", "");
 
@@ -117,7 +117,7 @@ class ResourceController
             r.url = jsonStr(j, "url");
             r.runtime = jsonStr(j, "runtime");
             r.state = jsonStr(j, "state");
-            r.instanceCount = jsonInt(j, "instanceCount");
+            r.instanceCount = j.getInteger("instanceCount");
             r.tags = jsonStrArray(j, "tags");
 
             auto result = uc.updateResource(id, r);

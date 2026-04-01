@@ -39,10 +39,10 @@ class LifecycleRuleController
             r.name = jsonStr(j, "name");
             r.prefix = jsonStr(j, "prefix");
             r.status = jsonStr(j, "status");
-            r.expirationDays = jsonInt(j, "expirationDays");
-            r.transitionDays = jsonInt(j, "transitionDays");
+            r.expirationDays = j.getInteger("expirationDays");
+            r.transitionDays = j.getInteger("transitionDays");
             r.transitionStorageClass = jsonStr(j, "transitionStorageClass");
-            r.abortIncompleteUploadDays = jsonInt(j, "abortIncompleteUploadDays");
+            r.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.createRule(r);
@@ -114,10 +114,10 @@ class LifecycleRuleController
             r.name = jsonStr(j, "name");
             r.prefix = jsonStr(j, "prefix");
             r.status = jsonStr(j, "status");
-            r.expirationDays = jsonInt(j, "expirationDays");
-            r.transitionDays = jsonInt(j, "transitionDays");
+            r.expirationDays = j.getInteger("expirationDays");
+            r.transitionDays = j.getInteger("transitionDays");
             r.transitionStorageClass = jsonStr(j, "transitionStorageClass");
-            r.abortIncompleteUploadDays = jsonInt(j, "abortIncompleteUploadDays");
+            r.abortIncompleteUploadDays = j.getInteger("abortIncompleteUploadDays");
 
             auto result = uc.updateRule(id, r);
             if (result.success)

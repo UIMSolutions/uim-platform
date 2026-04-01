@@ -34,7 +34,7 @@ class RetentionController {
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.name = jsonStr(j, "name");
             r.description = jsonStr(j, "description");
-            r.retentionDays = jsonInt(j, "retentionDays");
+            r.retentionDays = j.getInteger("retentionDays");
             r.isDefault = jsonBool(j, "isDefault");
             r.categories = parseCategoryArray(j);
 
@@ -90,7 +90,7 @@ class RetentionController {
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.name = jsonStr(j, "name");
             r.description = jsonStr(j, "description");
-            r.retentionDays = jsonInt(j, "retentionDays");
+            r.retentionDays = j.getInteger("retentionDays");
             r.categories = parseCategoryArray(j);
 
             auto statusStr = jsonStr(j, "status");

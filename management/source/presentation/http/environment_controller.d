@@ -38,9 +38,9 @@ class EnvironmentController
             r.environmentType = jsonStr(j, "environmentType");
             r.planName = jsonStr(j, "planName");
             r.landscapeLabel = jsonStr(j, "landscapeLabel");
-            r.memoryQuotaMb = jsonInt(j, "memoryQuotaMb");
-            r.routeQuota = jsonInt(j, "routeQuota");
-            r.serviceQuota = jsonInt(j, "serviceQuota");
+            r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
+            r.routeQuota = j.getInteger("routeQuota");
+            r.serviceQuota = j.getInteger("serviceQuota");
             r.createdBy = req.headers.get("X-User-Id", "");
             r.parameters = jsonStrMap(j, "parameters");
             r.labels = jsonStrMap(j, "labels");
@@ -110,9 +110,9 @@ class EnvironmentController
             auto j = req.json;
             UpdateEnvironmentInstanceRequest r;
             r.description = jsonStr(j, "description");
-            r.memoryQuotaMb = jsonInt(j, "memoryQuotaMb");
-            r.routeQuota = jsonInt(j, "routeQuota");
-            r.serviceQuota = jsonInt(j, "serviceQuota");
+            r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
+            r.routeQuota = j.getInteger("routeQuota");
+            r.serviceQuota = j.getInteger("serviceQuota");
             r.parameters = jsonStrMap(j, "parameters");
             r.labels = jsonStrMap(j, "labels");
 
