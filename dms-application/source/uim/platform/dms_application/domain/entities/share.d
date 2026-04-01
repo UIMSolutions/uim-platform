@@ -1,6 +1,6 @@
 module  uim.platform.dms_application.domain.entities.share;
 
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.types;
 
 class Share
 {

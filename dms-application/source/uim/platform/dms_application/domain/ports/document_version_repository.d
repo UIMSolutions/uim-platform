@@ -1,7 +1,7 @@
 module  uim.platform.dms_application.domain.ports.document_version_repository;
 
-import  uim.platform.dms_application.domain.entities.document_version;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.entities.document_version;
+import uim.platform.dms_application.domain.types;
 
 interface IDocumentVersionRepository
 {

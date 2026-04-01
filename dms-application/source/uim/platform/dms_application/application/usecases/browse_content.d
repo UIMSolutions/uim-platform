@@ -3,15 +3,15 @@ module application.usecases.browse_content;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import  uim.platform.dms_application.application.dto;
-import  uim.platform.dms_application.domain.entities.document;
-import  uim.platform.dms_application.domain.entities.folder;
-import  uim.platform.dms_application.domain.entities.favorite;
-import  uim.platform.dms_application.domain.ports.document_repository;
-import  uim.platform.dms_application.domain.ports.folder_repository;
-import  uim.platform.dms_application.domain.ports.favorite_repository;
-import  uim.platform.dms_application.domain.ports.repository_repository;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.application.dto;
+import uim.platform.dms_application.domain.entities.document;
+import uim.platform.dms_application.domain.entities.folder;
+import uim.platform.dms_application.domain.entities.favorite;
+import uim.platform.dms_application.domain.ports.document_repository;
+import uim.platform.dms_application.domain.ports.folder_repository;
+import uim.platform.dms_application.domain.ports.favorite_repository;
+import uim.platform.dms_application.domain.ports.repository_repository;
+import uim.platform.dms_application.domain.types;
 
 /// Browsing summary for a repository.
 struct RepositorySummary

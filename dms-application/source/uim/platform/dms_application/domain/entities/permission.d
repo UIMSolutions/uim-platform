@@ -1,6 +1,6 @@
 module  uim.platform.dms_application.domain.entities.permission;
 
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.types;
 
 class Permission
 {

@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.repository_repo;
 
-import  uim.platform.dms_application.domain.entities.repository;
-import  uim.platform.dms_application.domain.ports.repository_repository;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.entities.repository;
+import uim.platform.dms_application.domain.ports.repository_repository;
+import uim.platform.dms_application.domain.types;
 
 class InMemoryRepositoryRepository : IRepositoryRepository
 {

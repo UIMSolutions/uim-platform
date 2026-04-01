@@ -1,6 +1,6 @@
 module application.dto;
 
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.domain.types;
 
 // --- Repository DTOs ---
 

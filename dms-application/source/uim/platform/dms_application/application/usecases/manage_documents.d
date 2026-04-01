@@ -3,13 +3,13 @@ module application.usecases.manage_documents;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import  uim.platform.dms_application.application.dto;
-import  uim.platform.dms_application.domain.entities.document;
-import  uim.platform.dms_application.domain.entities.document_version;
-import  uim.platform.dms_application.domain.ports.document_repository;
-import  uim.platform.dms_application.domain.ports.document_version_repository;
-import  uim.platform.dms_application.domain.ports.folder_repository;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.application.dto;
+import uim.platform.dms_application.domain.entities.document;
+import uim.platform.dms_application.domain.entities.document_version;
+import uim.platform.dms_application.domain.ports.document_repository;
+import uim.platform.dms_application.domain.ports.document_version_repository;
+import uim.platform.dms_application.domain.ports.folder_repository;
+import uim.platform.dms_application.domain.types;
 
 class ManageDocumentsUseCase
 {

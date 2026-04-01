@@ -12,17 +12,17 @@ import infrastructure.persistence.memory.permission_repo;
 import infrastructure.persistence.memory.favorite_repo;
 
 // Domain services
-import  uim.platform.dms_application.domain.services.versioning_service;
-import  uim.platform.dms_application.domain.services.access_control_service;
+import uim.platform.dms_application.domain.services.versioning_service;
+import uim.platform.dms_application.domain.services.access_control_service;
 
 // Use cases
-import  uim.platform.dms_application.application.usecases.manage_repositories;
-import  uim.platform.dms_application.application.usecases.manage_folders;
-import  uim.platform.dms_application.application.usecases.manage_documents;
-import  uim.platform.dms_application.application.usecases.manage_versions;
-import  uim.platform.dms_application.application.usecases.manage_shares;
-import  uim.platform.dms_application.application.usecases.manage_permissions;
-import  uim.platform.dms_application.application.usecases.browse_content;
+import uim.platform.dms_application.application.usecases.manage_repositories;
+import uim.platform.dms_application.application.usecases.manage_folders;
+import uim.platform.dms_application.application.usecases.manage_documents;
+import uim.platform.dms_application.application.usecases.manage_versions;
+import uim.platform.dms_application.application.usecases.manage_shares;
+import uim.platform.dms_application.application.usecases.manage_permissions;
+import uim.platform.dms_application.application.usecases.browse_content;
 
 // Controllers
 import uim.platform.dms_application.presentation.http.repository;

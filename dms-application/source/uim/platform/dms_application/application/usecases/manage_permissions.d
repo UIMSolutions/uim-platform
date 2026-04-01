@@ -3,11 +3,11 @@ module application.usecases.manage_permissions;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import  uim.platform.dms_application.application.dto;
-import  uim.platform.dms_application.domain.entities.permission;
-import  uim.platform.dms_application.domain.ports.permission_repository;
-import  uim.platform.dms_application.domain.services.access_control_service;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.application.dto;
+import uim.platform.dms_application.domain.entities.permission;
+import uim.platform.dms_application.domain.ports.permission_repository;
+import uim.platform.dms_application.domain.services.access_control_service;
+import uim.platform.dms_application.domain.types;
 
 class ManagePermissionsUseCase
 {

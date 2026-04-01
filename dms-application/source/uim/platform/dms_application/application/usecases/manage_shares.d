@@ -3,11 +3,11 @@ module application.usecases.manage_shares;
 import std.datetime.systime : Clock;
 import std.uuid : randomUUID;
 
-import  uim.platform.dms_application.application.dto;
-import  uim.platform.dms_application.domain.entities.share;
-import  uim.platform.dms_application.domain.ports.share_repository;
-import  uim.platform.dms_application.domain.ports.document_repository;
-import  uim.platform.dms_application.domain.types;
+import uim.platform.dms_application.application.dto;
+import uim.platform.dms_application.domain.entities.share;
+import uim.platform.dms_application.domain.ports.share_repository;
+import uim.platform.dms_application.domain.ports.document_repository;
+import uim.platform.dms_application.domain.types;
 
 class ManageSharesUseCase
 {
