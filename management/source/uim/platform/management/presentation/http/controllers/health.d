@@ -1,4 +1,4 @@
-module presentation.http.health_controller;
+module uim.platform.management.presentation.http.controllers.health;
 
 import vibe.http.server;
 import vibe.http.router;

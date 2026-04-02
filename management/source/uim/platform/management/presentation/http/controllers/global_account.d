@@ -1,4 +1,4 @@
-module presentation.http.global_account_controller;
+module uim.platform.management.presentation.http.controllers.global_account;
 
 import vibe.http.server;
 import vibe.http.router;

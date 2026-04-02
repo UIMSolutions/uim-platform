@@ -1,4 +1,4 @@
-module uim.platform.management.presentation.http.controllers.directory_controller;
+module uim.platform.management.presentation.http.controllers.directory;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -10,14 +10,14 @@ import uim.platform.management.domain.entities.directory;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
-class DirectoryController
-{
+class DirectoryController {
     private ManageDirectoriesUseCase uc;
 
-    this(ManageDirectoriesUseCase uc) { this.uc = uc; }
+    this(ManageDirectoriesUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/directories", &handleCreate);
         router.get("/api/v1/directories", &handleList);
         router.get("/api/v1/directories/*", &handleGet);
@@ -25,10 +25,8 @@ class DirectoryController
         router.delete_("/api/v1/directories/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateDirectoryRequest r;
             r.globalAccountId = j.getString("globalAccountId");
@@ -43,23 +41,18 @@ class DirectoryController
             r.customProperties = jsonStrMap(j, "customProperties");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto gaId = req.params.get("globalAccountId");
             auto parentId = req.params.get("parentDirectoryId");
 
@@ -75,34 +68,27 @@ class DirectoryController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto d = uc.getById(id);
-            if (d.id.length == 0)
-            {
+            if (d.id.length == 0) {
                 writeError(res, 404, "Directory not found");
                 return;
             }
             res.writeJsonBody(serializeDirectory(d), 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateDirectoryRequest r;
@@ -116,29 +102,24 @@ class DirectoryController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.remove(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 204);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }
 
-private Json serializeDirectory(ref Directory d)
-{
+private Json serializeDirectory(ref Directory d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["globalAccountId"] = Json(d.globalAccountId);
@@ -158,4 +139,8 @@ private Json serializeDirectory(ref Directory d)
     return j;
 }
 
-private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) {
+    import std.conv : to;
+
+    return val.to!string;
+}

@@ -1,4 +1,4 @@
-module presentation.http.environment_controller;
+module uim.platform.management.presentation.http.controllers.environment;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.event_controller;
+module uim.platform.management.presentation.http.controllers.event;
 
 import vibe.http.server;
 import vibe.http.router;

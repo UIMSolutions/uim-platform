@@ -1,4 +1,4 @@
-module presentation.http.subscription_controller;
+module uim.platform.management.presentation.http.controllers.subscription;
 
 import vibe.http.server;
 import vibe.http.router;

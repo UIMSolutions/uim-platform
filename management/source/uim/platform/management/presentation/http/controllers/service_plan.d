@@ -1,4 +1,4 @@
-module presentation.http.service_plan_controller;
+module uim.platform.management.presentation.http.controllers.service_plan;
 
 import vibe.http.server;
 import vibe.http.router;
