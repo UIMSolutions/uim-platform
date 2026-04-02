@@ -1,2 +1,2 @@
-module domain.entities;
+module uim.platform.content_agent.domain.entities;
 

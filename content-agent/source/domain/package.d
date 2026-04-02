@@ -1,2 +1,2 @@
-module domain;
+module uim.platform.content_agent.domain;
 

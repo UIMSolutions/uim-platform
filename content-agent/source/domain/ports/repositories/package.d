@@ -1,2 +1,2 @@
-module domain.ports.repositories;
+module uim.platform.content_agent.domain.ports.repositories;
 
