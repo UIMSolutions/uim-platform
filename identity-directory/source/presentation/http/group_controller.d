@@ -37,9 +37,9 @@ class GroupController
             auto members = parseMembers(j);
             auto createReq = CreateGroupRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "externalId"),
-                jsonStr(j, "displayName"),
-                jsonStr(j, "description"),
+                j.getString("externalId"),
+                j.getString("displayName"),
+                j.getString("description"),
                 members,
             );
 
@@ -110,8 +110,8 @@ class GroupController
             auto j = req.json;
             auto updateReq = UpdateGroupRequest(
                 groupId,
-                jsonStr(j, "displayName"),
-                jsonStr(j, "description"),
+                j.getString("displayName"),
+                j.getString("description"),
             );
             auto error = useCase.updateGroup(updateReq);
             if (error.length > 0)
@@ -154,10 +154,10 @@ class GroupController
         {
             auto j = req.json;
             auto addReq = AddMemberRequest(
-                jsonStr(j, "groupId"),
-                jsonStr(j, "memberId"),
-                jsonStr(j, "memberType"),
-                jsonStr(j, "display"),
+                j.getString("groupId"),
+                j.getString("memberId"),
+                j.getString("memberType"),
+                j.getString("display"),
             );
             auto error = useCase.addMember(addReq);
             if (error.length > 0)
@@ -183,8 +183,8 @@ class GroupController
         {
             auto j = req.json;
             auto removeReq = RemoveMemberRequest(
-                jsonStr(j, "groupId"),
-                jsonStr(j, "memberId"),
+                j.getString("groupId"),
+                j.getString("memberId"),
             );
             auto error = useCase.removeMember(removeReq);
             if (error.length > 0)
@@ -217,9 +217,9 @@ private GroupMember[] parseMembers(Json j)
     foreach (item; *val)
     {
         result ~= GroupMember(
-            jsonStr(item, "value"),
-            jsonStr(item, "type"),
-            jsonStr(item, "display"),
+            item.getString("value"),
+            item.getString("type"),
+            item.getString("display"),
         );
     }
     return result;

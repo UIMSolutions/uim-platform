@@ -40,7 +40,7 @@ class ProvisioningJobController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
-      r.jobType = parseJobType(jsonStr(j, "jobType"));
+      r.jobType = parseJobType(j.getString("jobType"));
       r.schedule = j.getString("schedule");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
@@ -135,7 +135,7 @@ class ProvisioningJobController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
-      r.jobType = parseJobType(jsonStr(j, "jobType"));
+      r.jobType = parseJobType(j.getString("jobType"));
       r.schedule = j.getString("schedule");
       r.createdBy = req.headers.get("X-User-Id", "system");
 

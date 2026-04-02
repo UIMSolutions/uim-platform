@@ -33,9 +33,9 @@ class GroupController : SAPController {
         try {
             auto j = req.json;
             auto createReq = CreateGroupRequest(
-                jsonStr(j, "tenantId"),
-                jsonStr(j, "name"),
-                jsonStr(j, "description")
+                j.getString("tenantId"),
+                j.getString("name"),
+                j.getString("description")
             );
 
             auto result = useCase.createGroup(createReq);
@@ -98,8 +98,8 @@ class GroupController : SAPController {
         try {
             auto j = req.json;
             auto error = useCase.addMember(
-                jsonStr(j, "groupId"),
-                jsonStr(j, "userId")
+                j.getString("groupId"),
+                j.getString("userId")
             );
 
             if (error.length > 0) {

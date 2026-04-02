@@ -34,8 +34,8 @@ class SchemaController
             auto j = req.json;
             auto createReq = CreateSchemaRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 parseSchemaAttributes(j),
             );
 
@@ -102,8 +102,8 @@ class SchemaController
             auto j = req.json;
             auto updateReq = UpdateSchemaRequest(
                 schemaId,
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 parseSchemaAttributes(j),
             );
             auto error = useCase.updateSchema(updateReq);
@@ -151,9 +151,9 @@ private SchemaAttribute[] parseSchemaAttributes(Json j)
     foreach (item; *val)
     {
         result ~= SchemaAttribute(
-            jsonStr(item, "id"),
-            jsonStr(item, "name"),
-            jsonStr(item, "description"),
+            item.getString("id"),
+            item.getString("name"),
+            item.getString("description"),
         );
     }
     return result;

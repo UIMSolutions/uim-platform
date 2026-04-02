@@ -45,9 +45,9 @@ class PolicyController : SAPController {
             }
 
             auto createReq = CreatePolicyRequest(
-                jsonStr(j, "tenantId"),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("tenantId"),
+                j.getString("name"),
+                j.getString("description"),
                 rules,
                 jsonStrArray(j, "applicationIds")
             );

@@ -34,8 +34,8 @@ class TenantController : SAPController {
         try {
             auto j = req.json;
             auto createReq = CreateTenantRequest(
-                jsonStr(j, "name"),
-                jsonStr(j, "subdomain"),
+                j.getString("name"),
+                j.getString("subdomain"),
                 SsoProtocol.oidc,
                 [AuthMethod.form],
                 false
@@ -107,7 +107,7 @@ class TenantController : SAPController {
             auto j = req.json;
             auto updateReq = UpdateTenantRequest(
                 tenantId,
-                jsonStr(j, "name"),
+                j.getString("name"),
                 []
             );
 

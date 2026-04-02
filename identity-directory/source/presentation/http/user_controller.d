@@ -36,15 +36,15 @@ class UserController
             auto j = req.json;
             auto createReq = CreateUserRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "externalId"),
-                jsonStr(j, "userName"),
+                j.getString("externalId"),
+                j.getString("userName"),
                 parseUserName(j),
-                jsonStr(j, "displayName"),
-                jsonStr(j, "userType"),
-                jsonStr(j, "preferredLanguage"),
-                jsonStr(j, "locale"),
-                jsonStr(j, "timezone"),
-                jsonStr(j, "password"),
+                j.getString("displayName"),
+                j.getString("userType"),
+                j.getString("preferredLanguage"),
+                j.getString("locale"),
+                j.getString("timezone"),
+                j.getString("password"),
                 parseEmails(j),
                 parsePhoneNumbers(j),
                 parseAddresses(j),
@@ -129,11 +129,11 @@ class UserController
             auto updateReq = UpdateUserRequest(
                 userId,
                 parseUserName(j),
-                jsonStr(j, "displayName"),
-                jsonStr(j, "userType"),
-                jsonStr(j, "preferredLanguage"),
-                jsonStr(j, "locale"),
-                jsonStr(j, "timezone"),
+                j.getString("displayName"),
+                j.getString("userType"),
+                j.getString("preferredLanguage"),
+                j.getString("locale"),
+                j.getString("timezone"),
                 jsonBool(j, "active", true),
                 parseEmails(j),
                 parsePhoneNumbers(j),
@@ -186,9 +186,9 @@ class UserController
         {
             auto j = req.json;
             auto error = useCase.changePassword(
-                jsonStr(j, "userId"),
-                jsonStr(j, "currentPassword"),
-                jsonStr(j, "newPassword")
+                j.getString("userId"),
+                j.getString("currentPassword"),
+                j.getString("newPassword")
             );
             if (error.length > 0)
             {
@@ -323,8 +323,8 @@ private Email[] parseEmails(Json j)
     foreach (item; *val)
     {
         result ~= Email(
-            jsonStr(item, "value"),
-            jsonStr(item, "type"),
+            item.getString("value"),
+            item.getString("type"),
             jsonBool(item, "primary"),
         );
     }
@@ -342,8 +342,8 @@ private PhoneNumber[] parsePhoneNumbers(Json j)
     foreach (item; *val)
     {
         result ~= PhoneNumber(
-            jsonStr(item, "value"),
-            jsonStr(item, "type"),
+            item.getString("value"),
+            item.getString("type"),
             jsonBool(item, "primary"),
         );
     }
@@ -361,13 +361,13 @@ private Address[] parseAddresses(Json j)
     foreach (item; *val)
     {
         result ~= Address(
-            jsonStr(item, "formatted"),
-            jsonStr(item, "streetAddress"),
-            jsonStr(item, "locality"),
-            jsonStr(item, "region"),
-            jsonStr(item, "postalCode"),
-            jsonStr(item, "country"),
-            jsonStr(item, "type"),
+            item.getString("formatted"),
+            item.getString("streetAddress"),
+            item.getString("locality"),
+            item.getString("region"),
+            item.getString("postalCode"),
+            item.getString("country"),
+            item.getString("type"),
             jsonBool(item, "primary"),
         );
     }

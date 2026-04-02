@@ -34,13 +34,13 @@ class UserController : SAPController {
         try {
             auto j = req.json;
             auto createReq = CreateUserRequest(
-                jsonStr(j, "tenantId"),
-                jsonStr(j, "userName"),
-                jsonStr(j, "email"),
-                jsonStr(j, "firstName"),
-                jsonStr(j, "lastName"),
-                jsonStr(j, "password"),
-                jsonStr(j, "phoneNumber")
+                j.getString("tenantId"),
+                j.getString("userName"),
+                j.getString("email"),
+                j.getString("firstName"),
+                j.getString("lastName"),
+                j.getString("password"),
+                j.getString("phoneNumber")
             );
 
             auto result = useCase.createUser(createReq);
@@ -113,9 +113,9 @@ class UserController : SAPController {
 
             auto updateReq = UpdateUserRequest(
                 userId,
-                jsonStr(j, "firstName"),
-                jsonStr(j, "lastName"),
-                jsonStr(j, "phoneNumber")
+                j.getString("firstName"),
+                j.getString("lastName"),
+                j.getString("phoneNumber")
             );
 
             auto error = useCase.updateUser(updateReq);
@@ -139,9 +139,9 @@ class UserController : SAPController {
         try {
             auto j = req.json;
             auto error = useCase.changePassword(
-                jsonStr(j, "userId"),
-                jsonStr(j, "oldPassword"),
-                jsonStr(j, "newPassword")
+                j.getString("userId"),
+                j.getString("oldPassword"),
+                j.getString("newPassword")
             );
 
             if (error.length > 0) {

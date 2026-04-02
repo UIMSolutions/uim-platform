@@ -38,7 +38,7 @@ class TransformationController
       auto r = CreateTransformationRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.systemId = j.getString("systemId");
-      r.systemRole = parseSystemRole(jsonStr(j, "systemRole"));
+      r.systemRole = parseSystemRole(j.getString("systemRole"));
       r.name = j.getString("name");
       r.mappingRules = j.getString("mappingRules");
       r.conditions = j.getString("conditions");

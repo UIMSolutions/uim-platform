@@ -33,8 +33,8 @@ class ApiClientController
             auto j = req.json;
             auto createReq = CreateApiClientRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonStrArray(j, "scopes"),
                 cast(long) jsonLong(j, "expiresAt"),
             );

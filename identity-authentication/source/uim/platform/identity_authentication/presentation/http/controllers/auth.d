@@ -33,11 +33,11 @@ class AuthController : SAPController {
         try {
             auto j = req.json;
             auto authReq = AuthRequest(
-                jsonStr(j, "tenantId"),
-                jsonStr(j, "applicationId"),
-                jsonStr(j, "email"),
-                jsonStr(j, "password"),
-                jsonStr(j, "mfaCode"),
+                j.getString("tenantId"),
+                j.getString("applicationId"),
+                j.getString("email"),
+                j.getString("password"),
+                j.getString("mfaCode"),
                 req.peer,
                 req.headers.get("User-Agent", "")
             );
@@ -71,9 +71,9 @@ class AuthController : SAPController {
         try {
             auto j = req.json;
             auto tokenReq = TokenRequest(
-                jsonStr(j, "sessionId"),
-                jsonStr(j, "clientId"),
-                jsonStr(j, "clientSecret"),
+                j.getString("sessionId"),
+                j.getString("clientId"),
+                j.getString("clientSecret"),
                 jsonStrArray(j, "scopes")
             );
 

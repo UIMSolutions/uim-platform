@@ -33,8 +33,8 @@ class PasswordPolicyController
             auto j = req.json;
             auto createReq = CreatePasswordPolicyRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonUint(j, "minLength", 8),
                 jsonUint(j, "maxLength", 128),
                 jsonBool(j, "requireUppercase", true),
