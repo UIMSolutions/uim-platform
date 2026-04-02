@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.connectivity_log_repo;
+module uim.platform.connectivity.infrastructure.persistence.memory.connectivity_log_repo;
 
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.connectivity_log;

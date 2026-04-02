@@ -1,14 +1,14 @@
-module presentation.http.monitoring;
+module uim.platform.connectivity.presentation.http.monitoring;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.monitor_connectivity;
+import uim.platform.connectivity.application.usecases.monitor_connectivity;
 import uim.platform.connectivity.domain.entities.connectivity_log;
 import uim.platform.connectivity.domain.types;
-import presentation.http.json_utils;
+import uim.platform.connectivity.presentation.http.json_utils;
 
 class MonitoringController
 {

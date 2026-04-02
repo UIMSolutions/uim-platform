@@ -1,14 +1,14 @@
-module presentation.http.destination;
+module uim.platform.connectivity.presentation.http.destination;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_destinations;
-import application.dto;
+import uim.platform.connectivity.application.usecases.manage_destinations;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
-import presentation.http.json_utils;
+import uim.platform.connectivity.presentation.http.json_utils;
 
 class DestinationController
 {

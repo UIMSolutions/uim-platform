@@ -1,2 +1,2 @@
-module presentation.http.controllers;
+module uim.platform.connectivity.presentation.http.controllers;
 

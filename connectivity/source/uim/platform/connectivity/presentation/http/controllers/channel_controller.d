@@ -1,14 +1,14 @@
-module presentation.http.channel;
+module uim.platform.connectivity.presentation.http.channel;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_channels;
-import application.dto;
+import uim.platform.connectivity.application.usecases.manage_channels;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.service_channel;
-import presentation.http.json_utils;
+import uim.platform.connectivity.presentation.http.json_utils;
 
 class ChannelController
 {

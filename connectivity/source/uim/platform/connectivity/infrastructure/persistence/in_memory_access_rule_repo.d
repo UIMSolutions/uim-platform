@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.access_rule_repo;
+module uim.platform.connectivity.infrastructure.persistence.memory.access_rule_repo;
 
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.access_rule;

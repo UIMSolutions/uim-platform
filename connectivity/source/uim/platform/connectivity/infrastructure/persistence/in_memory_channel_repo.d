@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.channel_repo;
+module uim.platform.connectivity.infrastructure.persistence.memory.channel_repo;
 
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.service_channel;

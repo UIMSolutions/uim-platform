@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.certificate_repo;
+module uim.platform.connectivity.infrastructure.persistence.memory.certificate_repo;
 
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.certificate;

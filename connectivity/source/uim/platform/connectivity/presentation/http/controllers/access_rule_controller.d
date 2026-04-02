@@ -1,26 +1,23 @@
-module presentation.http.controllers.access_rule_controller;
+module uim.platform.connectivity.presentation.http.controllers.access_rule_controller;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_access_rules;
-import application.dto;
+import uim.platform.connectivity.application.usecases.manage_access_rules;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.access_rule;
-import presentation.http.json_utils;
+import uim.platform.connectivity.presentation.http.json_utils;
 
-class AccessRuleController
-{
+class AccessRuleController {
     private ManageAccessRulesUseCase uc;
 
-    this(ManageAccessRulesUseCase uc)
-    {
+    this(ManageAccessRulesUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/access-rules", &handleCreate);
         router.get("/api/v1/access-rules", &handleList);
         router.get("/api/v1/access-rules/*", &handleGetById);
@@ -28,10 +25,8 @@ class AccessRuleController
         router.delete_("/api/v1/access-rules/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateAccessRuleRequest();
             r.connectorId = j.getString("connectorId");
@@ -45,27 +40,20 @@ class AccessRuleController
             r.principalPropagation = j.getBoolean("principalPropagation");
 
             auto result = uc.createRule(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto rules = uc.listByTenant(tenantId);
 
@@ -75,38 +63,29 @@ class AccessRuleController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) rules.length);
+            resp["totalCount"] = Json(cast(long)rules.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto rule = uc.getRule(id);
-            if (rule.id.length == 0)
-            {
+            if (rule.id.length == 0) {
                 writeError(res, 404, "Access rule not found");
                 return;
             }
             res.writeJsonBody(serializeRule(rule), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateAccessRuleRequest();
@@ -116,48 +95,35 @@ class AccessRuleController
             r.principalPropagation = j.getBoolean("principalPropagation");
 
             auto result = uc.updateRule(id, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, result.error == "Access rule not found" ? 404 : 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteRule(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeRule(ref const AccessRule r)
-    {
+    private static Json serializeRule(ref const AccessRule r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["connectorId"] = Json(r.connectorId);
@@ -165,7 +131,7 @@ class AccessRuleController
         j["description"] = Json(r.description);
         j["protocol"] = Json(r.protocol.to!string);
         j["virtualHost"] = Json(r.virtualHost);
-        j["virtualPort"] = Json(cast(long) r.virtualPort);
+        j["virtualPort"] = Json(cast(long)r.virtualPort);
         j["urlPathPrefix"] = Json(r.urlPathPrefix);
         j["policy"] = Json(r.policy.to!string);
         j["principalPropagation"] = Json(r.principalPropagation);

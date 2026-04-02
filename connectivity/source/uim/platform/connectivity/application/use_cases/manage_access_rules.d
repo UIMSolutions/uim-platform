@@ -1,6 +1,6 @@
 module uim.platform.connectivity.application.usecases.manage_access_rules;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity.domain.ports.access_rule_repository;
 import uim.platform.connectivity.domain.ports.connector_repository;

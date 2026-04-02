@@ -1,14 +1,14 @@
-module presentation.http.certificate;
+module uim.platform.connectivity.presentation.http.certificate;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_certificates;
-import application.dto;
+import uim.platform.connectivity.application.usecases.manage_certificates;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.certificate;
-import presentation.http.json_utils;
+import uim.platform.connectivity.presentation.http.json_utils;
 
 class CertificateController
 {

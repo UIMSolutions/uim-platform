@@ -1,6 +1,6 @@
 module uim.platform.connectivity.application.usecases.manage_channels;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity.domain.entities.connectivity_log;
 import uim.platform.connectivity.domain.ports.channel_repository;

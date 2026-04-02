@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.destination_repo;
+module uim.platform.connectivity.infrastructure.persistence.memory.destination_repo;
 
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.destination;

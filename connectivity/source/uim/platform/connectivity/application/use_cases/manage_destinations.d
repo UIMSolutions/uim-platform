@@ -1,6 +1,6 @@
 module uim.platform.connectivity.application.usecases.manage_destinations;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
 import uim.platform.connectivity.domain.ports.destination_repository;
 import uim.platform.connectivity.domain.ports.connectivity_log_repository;

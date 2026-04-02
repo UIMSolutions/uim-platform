@@ -1,2 +1,2 @@
-module presentation;
+module uim.platform.connectivity.presentation;
 

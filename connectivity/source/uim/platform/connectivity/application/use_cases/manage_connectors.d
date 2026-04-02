@@ -1,6 +1,6 @@
 module uim.platform.connectivity.application.usecases.manage_connectors;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.cloud_connector;
 import uim.platform.connectivity.domain.entities.connectivity_log;
 import uim.platform.connectivity.domain.ports.connector_repository;

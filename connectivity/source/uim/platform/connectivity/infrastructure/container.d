@@ -1,31 +1,31 @@
-module infrastructure.container;
+module uim.platform.connectivity.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.connectivity.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.destination_repo;
-import infrastructure.persistence.memory.connector_repo;
-import infrastructure.persistence.memory.channel_repo;
-import infrastructure.persistence.memory.access_rule_repo;
-import infrastructure.persistence.memory.certificate_repo;
-import infrastructure.persistence.memory.connectivity_log_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.destination_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.connector_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.channel_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.access_rule_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.certificate_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_log_repo;
 
 // Use Cases
-import application.usecases.manage_destinations;
-import application.usecases.manage_connectors;
-import application.usecases.manage_channels;
-import application.usecases.manage_access_rules;
-import application.usecases.manage_certificates;
-import application.usecases.monitor_connectivity;
+import uim.platform.connectivity.application.usecases.manage_destinations;
+import uim.platform.connectivity.application.usecases.manage_connectors;
+import uim.platform.connectivity.application.usecases.manage_channels;
+import uim.platform.connectivity.application.usecases.manage_access_rules;
+import uim.platform.connectivity.application.usecases.manage_certificates;
+import uim.platform.connectivity.application.usecases.monitor_connectivity;
 
 // Controllers
-import presentation.http.destination;
-import presentation.http.connector;
-import presentation.http.channel;
-import presentation.http.access_rule;
-import presentation.http.certificate;
-import presentation.http.monitoring;
-import presentation.http.health;
+import uim.platform.connectivity.presentation.http.destination;
+import uim.platform.connectivity.presentation.http.connector;
+import uim.platform.connectivity.presentation.http.channel;
+import uim.platform.connectivity.presentation.http.access_rule;
+import uim.platform.connectivity.presentation.http.certificate;
+import uim.platform.connectivity.presentation.http.monitoring;
+import uim.platform.connectivity.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

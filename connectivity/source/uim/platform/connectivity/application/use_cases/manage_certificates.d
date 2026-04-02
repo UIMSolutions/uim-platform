@@ -1,6 +1,6 @@
 module uim.platform.connectivity.application.usecases.manage_certificates;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity.domain.ports.certificate_repository;
 import uim.platform.connectivity.domain.types;
