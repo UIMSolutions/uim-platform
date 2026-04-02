@@ -13,7 +13,7 @@ class MemoryUserRepository : UserRepository {
     private User[UserId] store;
 
     bool existsById(UserId id) {
-        return (id in store);
+        return (id in store) ? true : false;
     }
 
     User findById(UserId id) {

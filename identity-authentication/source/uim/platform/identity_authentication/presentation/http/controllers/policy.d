@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authorization policy management.
-class PolicyController {
+class PolicyController : SAPController {
     private ManagePoliciesUseCase useCase;
 
     this(ManagePoliciesUseCase useCase) {
@@ -21,6 +21,8 @@ class PolicyController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/policies", &handleCreate);
         router.get("/api/v1/policies", &handleList);
         router.get("/api/v1/policies/*", &handleGet);

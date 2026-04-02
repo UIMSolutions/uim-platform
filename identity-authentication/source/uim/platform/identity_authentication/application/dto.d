@@ -1,10 +1,13 @@
 module uim.platform.identity_authentication.application.dto;
 
-import uim.platform.identity_authentication.domain.types;
-import uim.platform.identity_authentication.domain.entities.policy : PolicyRule;
+// import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.entities.policy : PolicyRule;
 
 /// --- Authentication DTOs ---
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 struct AuthRequest
 {
     TenantId tenantId;

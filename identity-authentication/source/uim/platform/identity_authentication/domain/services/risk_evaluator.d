@@ -1,12 +1,14 @@
 module uim.platform.identity_authentication.domain.services.risk_evaluator;
 
-import uim.platform.identity_authentication.domain.entities.risk_rule;
-import uim.platform.identity_authentication.domain.entities.user;
-import uim.platform.identity_authentication.domain.types;
+// import uim.platform.identity_authentication.domain.entities.risk_rule;
+// import uim.platform.identity_authentication.domain.entities.user;
+// import uim.platform.identity_authentication.domain.types;
+import uim.platform.identity_authentication;
 
+mixin(ShowModule!());
+@safe:
 /// Domain service: evaluates risk level for an authentication attempt.
-struct RiskEvaluationContext
-{
+struct RiskEvaluationContext {
     string ipAddress;
     string userAgent;
     AuthMethod authMethod;
@@ -15,17 +17,14 @@ struct RiskEvaluationContext
 }
 
 /// Pure domain logic for risk evaluation.
-RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
-{
+RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
     RiskLevel highest = RiskLevel.low;
 
-    foreach (rule; rules)
-    {
+    foreach (rule; rules) {
         if (!rule.active)
             continue;
 
-        if (matchesAllConditions(rule.conditions, user, ctx))
-        {
+        if (matchesAllConditions(rule.conditions, user, ctx)) {
             if (rule.resultLevel > highest)
                 highest = rule.resultLevel;
         }
@@ -35,17 +34,14 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
 }
 
 /// Check which MFA is required given the evaluated risk.
-MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
-{
+MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
     MfaType required = MfaType.none;
 
-    foreach (rule; rules)
-    {
+    foreach (rule; rules) {
         if (!rule.active)
             continue;
 
-        if (matchesAllConditions(rule.conditions, user, ctx))
-        {
+        if (matchesAllConditions(rule.conditions, user, ctx)) {
             if (rule.requiredMfa != MfaType.none)
                 required = rule.requiredMfa;
         }
@@ -54,25 +50,21 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
     return required;
 }
 
-private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx)
-{
+private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx) {
     import std.algorithm : canFind;
 
-    foreach (cond; conditions)
-    {
+    foreach (cond; conditions) {
         if (!matchesCondition(cond, user, ctx))
             return false;
     }
     return true;
 }
 
-private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx)
-{
+private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx) {
     import std.conv : to;
     import std.algorithm : canFind;
 
-    switch (cond.conditionType)
-    {
+    switch (cond.conditionType) {
     case "ip_range":
         return cond.operator_ == "eq" ? ctx.ipAddress == cond.value : ctx.ipAddress != cond.value;
     case "group":

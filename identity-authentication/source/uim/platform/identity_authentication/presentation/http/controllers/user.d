@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
-class UserController {
+class UserController : SAPController {
     private ManageUsersUseCase useCase;
 
     this(ManageUsersUseCase useCase) {
@@ -21,6 +21,8 @@ class UserController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/users", &handleCreate);
         router.get("/api/v1/users", &handleList);
         router.get("/api/v1/users/*", &handleGet);
@@ -66,8 +68,8 @@ class UserController {
 
             auto users = useCase.listUsers(tenantId);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long)users.length);
-            response["resources"] = toJsonArray(users);
+            response["totalResults"] = users.length.toJson;
+            response["resources"] = users.toJson;
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
             auto errRes = Json.emptyObject;

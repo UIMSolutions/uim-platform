@@ -14,4 +14,15 @@ struct IdaGroup {
     string[] memberUserIds;
     long createdAt;
     long updatedAt;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("description", description)
+            .set("memberUserIds", memberUserIds)
+            .set("createdAt", createdAt)
+            .set("updatedAt", updatedAt);
+    }
 }

@@ -15,7 +15,7 @@ class MemorySessionRepository : SessionRepository {
     private IdaSession[SessionId] store;
 
     bool existsById(SessionId id) {
-        return (id in store);
+        return (id in store) ? true : false;
     }
 
     IdaSession findById(SessionId id) {

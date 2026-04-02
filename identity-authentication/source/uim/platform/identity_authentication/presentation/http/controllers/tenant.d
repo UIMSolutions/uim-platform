@@ -14,7 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for tenant management.
-class TenantController {
+class TenantController : SAPController {
     private ManageTenantsUseCase useCase;
 
     this(ManageTenantsUseCase useCase) {
@@ -22,6 +22,8 @@ class TenantController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/tenants", &handleCreate);
         router.get("/api/v1/tenants", &handleList);
         router.get("/api/v1/tenants/*", &handleGet);

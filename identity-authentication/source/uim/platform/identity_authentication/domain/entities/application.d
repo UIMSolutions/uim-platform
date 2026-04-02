@@ -22,4 +22,24 @@ struct Application {
     bool active = true;
     long createdAt;
     long updatedAt;
+
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("description", description)
+            .set("protocol", to!string(protocol))
+            .set("clientId", clientId)
+            .set("redirectUris", redirectUris)
+            .set("allowedScopes", allowedScopes)
+            .set("samlEntityId", samlEntityId)
+            .set("samlAcsUrl", samlAcsUrl)
+            .set("samlMetadataUrl", samlMetadataUrl)
+            .set("active", active)
+            .set("createdAt", createdAt)
+            .set("updatedAt", updatedAt);
+    }
 }
+

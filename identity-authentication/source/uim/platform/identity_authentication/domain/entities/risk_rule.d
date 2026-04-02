@@ -14,6 +14,17 @@ struct RiskRule {
     RiskLevel resultLevel;
     MfaType requiredMfa = MfaType.none; // MFA to enforce when rule triggers
     bool active = true;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("conditions", conditions.map!(c => c.toJson).array)
+            .set("resultLevel", to!string(resultLevel))
+            .set("requiredMfa", to!string(requiredMfa))
+            .set("active", active);
+    }
 }
 
 /// Condition that triggers a risk evaluation.

@@ -13,7 +13,7 @@ class MemoryRiskRuleRepository : RiskRuleRepository {
     private RiskRule[string] store;
 
     bool existsById(string id) {
-        return (id in store);
+        return (id in store) ? true : false;
     }
 
     RiskRule findById(string id) {

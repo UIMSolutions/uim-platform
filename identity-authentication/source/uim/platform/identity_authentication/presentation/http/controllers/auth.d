@@ -12,28 +12,25 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authentication endpoints.
-class AuthController
-{
+class AuthController : SAPController {
     private AuthenticateUserUseCase authUseCase;
     private IssueTokenUseCase tokenUseCase;
 
-    this(AuthenticateUserUseCase authUseCase, IssueTokenUseCase tokenUseCase)
-    {
+    this(AuthenticateUserUseCase authUseCase, IssueTokenUseCase tokenUseCase) {
         this.authUseCase = authUseCase;
         this.tokenUseCase = tokenUseCase;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/auth/login", &handleLogin);
         router.post("/api/v1/auth/token", &handleToken);
         router.get("/api/v1/auth/health", &handleHealth);
     }
 
-    private void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto authReq = AuthRequest(
                 jsonStr(j, "tenantId"),
@@ -50,33 +47,28 @@ class AuthController
             response["success"] = Json(result.success);
             response["message"] = Json(result.message);
 
-            if (result.mfaRequired)
-            {
+            if (result.mfaRequired) {
                 import std.conv : to;
+
                 response["mfaRequired"] = Json(true);
                 response["mfaType"] = Json(result.mfaType.to!string);
             }
 
-            if (result.success)
-            {
+            if (result.success) {
                 response["sessionId"] = Json(result.sessionId);
                 response["userId"] = Json(result.userId);
             }
 
             res.writeJsonBody(response, result.success ? 200 : 401);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
         }
     }
 
-    private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto tokenReq = TokenRequest(
                 jsonStr(j, "sessionId"),
@@ -88,31 +80,25 @@ class AuthController
             auto result = tokenUseCase.execute(tokenReq);
             auto response = Json.emptyObject;
 
-            if (result.isSuccess())
-            {
+            if (result.isSuccess()) {
                 response["access_token"] = Json(result.accessToken);
                 response["refresh_token"] = Json(result.refreshToken);
                 response["id_token"] = Json(result.idToken);
                 response["token_type"] = Json("Bearer");
                 response["expires_in"] = Json(3600L);
                 res.writeJsonBody(response, 200);
-            }
-            else
-            {
+            } else {
                 response["error"] = Json(result.error);
                 res.writeJsonBody(response, 400);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             auto errRes = Json.emptyObject;
             errRes["error"] = Json("Internal server error");
             res.writeJsonBody(errRes, 500);
         }
     }
 
-    private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
+    private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         auto response = Json.emptyObject;
         response["status"] = Json("healthy");
         response["service"] = Json("identity-authentication");

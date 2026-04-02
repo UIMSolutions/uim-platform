@@ -13,7 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
-class ApplicationController {
+class ApplicationController : SAPController {
     private ManageApplicationsUseCase useCase;
 
     this(ManageApplicationsUseCase useCase) {
@@ -21,6 +21,8 @@ class ApplicationController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/applications", &handleCreate);
         router.get("/api/v1/applications", &handleList);
         router.get("/api/v1/applications/*", &handleGet);
@@ -31,14 +33,14 @@ class ApplicationController {
         try {
             auto j = req.json;
             auto createReq = CreateAppRequest(
-                jsonStr(j, "tenantId"),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("tenantId"),
+                j.getString("name"),
+                j.getString("description"),
                 SsoProtocol.oidc,
                 jsonStrArray(j, "redirectUris"),
                 jsonStrArray(j, "allowedScopes"),
-                jsonStr(j, "samlEntityId"),
-                jsonStr(j, "samlAcsUrl")
+                j.getString("samlEntityId"),
+                j.getString("samlAcsUrl")
             );
 
             auto result = useCase.createApplication(createReq);
@@ -65,8 +67,8 @@ class ApplicationController {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto apps = useCase.listApplications(tenantId);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long)apps.length);
-            response["resources"] = toJsonArray(apps);
+            response["totalResults"] = apps.length.toJson;
+            response["resources"] = apps.toJson;
             res.writeJsonBody(response, 200);
         } catch (Exception e) {
             auto errRes = Json.emptyObject;
@@ -112,7 +114,7 @@ class ApplicationController {
             auto j = req.json;
             auto updateReq = UpdateAppRequest(
                 appId,
-                jsonStr(j, "name"),
+                j.getString("name"),
                 jsonStrArray(j, "redirectUris"),
                 jsonStrArray(j, "allowedScopes")
             );

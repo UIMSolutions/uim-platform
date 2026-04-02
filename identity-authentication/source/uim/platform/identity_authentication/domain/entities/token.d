@@ -17,4 +17,18 @@ struct Token {
     long issuedAt;
     long expiresAt;
     bool revoked;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("userId", userId)
+            .set("tenantId", tenantId)
+            .set("applicationId", applicationId)
+            .set("tokenType", to!string(tokenType))
+            .set("tokenValue", tokenValue)
+            .set("scopes", scopes)
+            .set("issuedAt", issuedAt)
+            .set("expiresAt", expiresAt)
+            .set("revoked", revoked);
+    }
 }

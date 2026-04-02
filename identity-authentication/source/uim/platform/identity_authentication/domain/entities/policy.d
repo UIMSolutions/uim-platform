@@ -16,6 +16,19 @@ struct AuthorizationPolicy {
     bool active = true;
     long createdAt;
     long updatedAt;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("description", description)
+            .set("rules", rules.map!(r => r.toJson).array)
+            .set("applicationIds", applicationIds)
+            .set("active", active)
+            .set("createdAt", createdAt)
+            .set("updatedAt", updatedAt);
+    }
 }
 
 /// A single rule within a policy.
@@ -23,4 +36,11 @@ struct PolicyRule {
     string attribute; // e.g., "group", "ip_range", "user_type", "auth_method"
     string operator_; // e.g., "eq", "in", "not_in", "matches"
     string value;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("attribute", attribute)
+            .set("operator", operator_)
+            .set("value", value);
+    }
 }

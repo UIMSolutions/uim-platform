@@ -15,7 +15,7 @@ class MemoryPolicyRepository : PolicyRepository {
     private AuthorizationPolicy[PolicyId] store;
 
     bool existsById(PolicyId id) {
-        return (id in store);
+        return (id in store) ? true : false;
     }
 
     AuthorizationPolicy findById(PolicyId id) {

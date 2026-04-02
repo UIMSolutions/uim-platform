@@ -13,7 +13,7 @@ class MemoryTenantRepository : TenantRepository {
     private Tenant[TenantId] store;
 
     bool existsById(TenantId id) {
-        return (id in store);
+        return (id in store) ? true : false;
     }
 
     Tenant findById(TenantId id) {
