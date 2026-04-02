@@ -4,15 +4,14 @@ import uim.platform.management.domain.types;
 
 /// A global account is the top-level entity in the SAP BTP account model.
 /// It represents a contract with SAP and contains directories and subaccounts.
-struct GlobalAccount
-{
+struct GlobalAccount {
     GlobalAccountId id;
     string displayName;
     string description;
     string contractNumber;
     LicenseType licenseType = LicenseType.enterprise;
     GlobalAccountStatus status = GlobalAccountStatus.active;
-    string region;                  // e.g. "eu10", "us10"
+    string region; // e.g. "eu10", "us10"
     string costCenter;
     string companyName;
     string contactEmail;
@@ -20,7 +19,7 @@ struct GlobalAccount
     int currentSubaccounts = 0;
     int maxDirectories = 20;
     int currentDirectories = 0;
-    string[] enabledServices;       // list of entitled service names
+    string[] enabledServices; // list of entitled service names
     long renewalDate;
     long createdAt;
     long modifiedAt;

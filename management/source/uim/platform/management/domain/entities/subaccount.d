@@ -5,21 +5,20 @@ import uim.platform.management.domain.types;
 /// A subaccount is the primary organizational unit where cloud services
 /// and applications are deployed. It is always part of a global account
 /// and optionally part of a directory.
-struct Subaccount
-{
+struct Subaccount {
     SubaccountId id;
     GlobalAccountId globalAccountId;
-    DirectoryId parentDirectoryId;  // empty if directly under global account
+    DirectoryId parentDirectoryId; // empty if directly under global account
     string displayName;
     string description;
-    string subdomain;               // unique subdomain slug
-    string region;                  // e.g. "eu10", "us10", "ap21"
+    string subdomain; // unique subdomain slug
+    string region; // e.g. "eu10", "us10", "ap21"
     SubaccountStatus status = SubaccountStatus.active;
     SubaccountUsage usage = SubaccountUsage.unset;
     bool betaEnabled = false;
     bool usedForProduction = false;
     string technicalName;
-    TenantId tenantId;              // associated identity tenant
+    TenantId tenantId; // associated identity tenant
     long createdAt;
     long modifiedAt;
     string createdBy;

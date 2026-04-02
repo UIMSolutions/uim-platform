@@ -8,20 +8,17 @@ import domain.ports.address_repository;
 import domain.services.address_cleanser;
 import application.dto;
 
-class CleanseAddressesUseCase
-{
+class CleanseAddressesUseCase {
     private AddressRepository repo;
     private AddressCleanser cleanser;
 
-    this(AddressRepository repo, AddressCleanser cleanser)
-    {
+    this(AddressRepository repo, AddressCleanser cleanser) {
         this.repo = repo;
         this.cleanser = cleanser;
     }
 
     /// Cleanse a single address.
-    AddressRecord cleanse(CleanseAddressRequest req)
-    {
+    AddressRecord cleanse(CleanseAddressRequest req) {
         auto record = AddressRecord();
         record.id = randomUUID().toString();
         record.tenantId = req.tenantId;
@@ -39,31 +36,26 @@ class CleanseAddressesUseCase
     }
 
     /// Cleanse a batch of addresses.
-    AddressRecord[] cleanseBatch(CleanseBatchAddressRequest req)
-    {
+    AddressRecord[] cleanseBatch(CleanseBatchAddressRequest req) {
         AddressRecord[] results;
-        foreach (ref addr; req.addresses)
-        {
+        foreach (ref addr; req.addresses) {
             results ~= cleanse(addr);
         }
         return results;
     }
 
     /// Retrieve cleansed addresses by tenant.
-    AddressRecord[] getByTenant(TenantId tenantId)
-    {
+    AddressRecord[] getByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
     /// Retrieve by source record.
-    AddressRecord[] getBySourceRecord(RecordId sourceRecordId, TenantId tenantId)
-    {
+    AddressRecord[] getBySourceRecord(RecordId sourceRecordId, TenantId tenantId) {
         return repo.findBySourceRecord(sourceRecordId, tenantId);
     }
 
     /// Retrieve by quality level.
-    AddressRecord[] getByQuality(TenantId tenantId, AddressQuality quality)
-    {
+    AddressRecord[] getByQuality(TenantId tenantId, AddressQuality quality) {
         return repo.findByQuality(tenantId, quality);
     }
 }

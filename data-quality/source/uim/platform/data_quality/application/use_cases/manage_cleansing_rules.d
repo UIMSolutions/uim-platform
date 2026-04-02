@@ -8,17 +8,14 @@ import domain.entities.cleansing_rule;
 import domain.ports.cleansing_rule_repository;
 import application.dto;
 
-class ManageCleansingRulesUseCase
-{
+class ManageCleansingRulesUseCase {
     private CleansingRuleRepository repo;
 
-    this(CleansingRuleRepository repo)
-    {
+    this(CleansingRuleRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult create(CreateCleansingRuleRequest req)
-    {
+    CommandResult create(CreateCleansingRuleRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
         if (req.name.length == 0)
@@ -53,8 +50,7 @@ class ManageCleansingRulesUseCase
         return CommandResult(rule.id, "");
     }
 
-    CommandResult update(UpdateCleansingRuleRequest req)
-    {
+    CommandResult update(UpdateCleansingRuleRequest req) {
         if (req.id.length == 0)
             return CommandResult("", "Rule ID is required");
 
@@ -88,8 +84,7 @@ class ManageCleansingRulesUseCase
         return CommandResult(rule.id, "");
     }
 
-    CommandResult remove(RuleId id, TenantId tenantId)
-    {
+    CommandResult remove(RuleId id, TenantId tenantId) {
         auto existing = repo.findById(id);
         if (existing is null)
             return CommandResult("", "Cleansing rule not found");
@@ -100,18 +95,15 @@ class ManageCleansingRulesUseCase
         return CommandResult(id, "");
     }
 
-    CleansingRule* getById(RuleId id)
-    {
+    CleansingRule* getById(RuleId id) {
         return repo.findById(id);
     }
 
-    CleansingRule[] listByTenant(TenantId tenantId)
-    {
+    CleansingRule[] listByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    CleansingRule[] listActive(TenantId tenantId)
-    {
+    CleansingRule[] listActive(TenantId tenantId) {
         return repo.findActive(tenantId);
     }
 }

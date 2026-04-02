@@ -9,18 +9,15 @@ import domain.entities.data_profile;
 import domain.ports.data_profile_repository;
 import application.dto;
 
-class ProfileDataUseCase
-{
+class ProfileDataUseCase {
     private DataProfileRepository repo;
 
-    this(DataProfileRepository repo)
-    {
+    this(DataProfileRepository repo) {
         this.repo = repo;
     }
 
     /// Profile a dataset and compute column statistics.
-    DataProfile profile(ProfileDatasetRequest req)
-    {
+    DataProfile profile(ProfileDatasetRequest req) {
         auto startTime = Clock.currStdTime();
 
         // Discover all field names
@@ -30,8 +27,7 @@ class ProfileDataUseCase
                 fieldIndex[key] = key;
 
         ColumnProfile[] columns;
-        foreach (fieldName; fieldIndex.byKey())
-        {
+        foreach (fieldName; fieldIndex.byKey()) {
             columns ~= profileColumn(fieldName, req.records);
         }
 
@@ -40,20 +36,17 @@ class ProfileDataUseCase
         profile.tenantId = req.tenantId;
         profile.datasetId = req.datasetId;
         profile.datasetName = req.datasetName;
-        profile.totalRecords = cast(long) req.records.length;
+        profile.totalRecords = cast(long)req.records.length;
         profile.profiledRecords = profile.totalRecords;
         profile.columns = columns;
 
         // Overall quality from column completeness and uniqueness
-        if (columns.length > 0)
-        {
+        if (columns.length > 0) {
             double totalComp = 0.0;
             foreach (ref c; columns)
                 totalComp += c.completeness;
             profile.overallQualityScore = totalComp / columns.length;
-        }
-        else
-        {
+        } else {
             profile.overallQualityScore = 100.0;
         }
 
@@ -66,28 +59,24 @@ class ProfileDataUseCase
     }
 
     /// Get latest profile for a dataset.
-    DataProfile* getLatest(TenantId tenantId, DatasetId datasetId)
-    {
+    DataProfile* getLatest(TenantId tenantId, DatasetId datasetId) {
         return repo.findLatestByDataset(tenantId, datasetId);
     }
 
     /// Get profile by ID.
-    DataProfile* getById(ProfileId id, TenantId tenantId)
-    {
+    DataProfile* getById(ProfileId id, TenantId tenantId) {
         return repo.findById(id, tenantId);
     }
 
     /// Get all profiles for a tenant.
-    DataProfile[] listByTenant(TenantId tenantId)
-    {
+    DataProfile[] listByTenant(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records)
-    {
+    private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records) {
         ColumnProfile cp;
         cp.fieldName = fieldName;
-        cp.totalValues = cast(long) records.length;
+        cp.totalValues = cast(long)records.length;
 
         long nullCount = 0;
         long emptyCount = 0;
@@ -97,17 +86,14 @@ class ProfileDataUseCase
         long maxLen = 0;
         long totalLen = 0;
 
-        foreach (ref rec; records)
-        {
+        foreach (ref rec; records) {
             auto v = fieldName in rec.fieldValues;
-            if (v is null)
-            {
+            if (v is null) {
                 ++nullCount;
                 continue;
             }
             string val = *v;
-            if (val.length == 0)
-            {
+            if (val.length == 0) {
                 ++emptyCount;
                 continue;
             }
@@ -115,31 +101,30 @@ class ProfileDataUseCase
             values ~= val;
             freqMap[val] = freqMap.get(val, 0) + 1;
 
-            auto len = cast(long) val.length;
-            if (len < minLen) minLen = len;
-            if (len > maxLen) maxLen = len;
+            auto len = cast(long)val.length;
+            if (len < minLen)
+                minLen = len;
+            if (len > maxLen)
+                maxLen = len;
             totalLen += len;
         }
 
         cp.nullCount = nullCount;
         cp.emptyCount = emptyCount;
-        cp.uniqueCount = cast(long) freqMap.length;
-        cp.duplicateCount = cast(long) values.length - cp.uniqueCount;
+        cp.uniqueCount = cast(long)freqMap.length;
+        cp.duplicateCount = cast(long)values.length - cp.uniqueCount;
 
         auto nonNull = cp.totalValues - nullCount;
         cp.completeness = cp.totalValues > 0
-            ? (cast(double) nonNull / cp.totalValues) * 100.0
-            : 100.0;
+            ? (cast(double)nonNull / cp.totalValues) * 100.0 : 100.0;
         cp.uniqueness = values.length > 0
-            ? (cast(double) cp.uniqueCount / values.length) * 100.0
-            : 100.0;
+            ? (cast(double)cp.uniqueCount / values.length) * 100.0 : 100.0;
         cp.validity = 100.0; // would need rules to compute
 
-        if (values.length > 0)
-        {
+        if (values.length > 0) {
             cp.minLength = minLen;
             cp.maxLength = maxLen;
-            cp.avgLength = cast(double) totalLen / values.length;
+            cp.avgLength = cast(double)totalLen / values.length;
         }
 
         // Detect data type from values
@@ -151,71 +136,81 @@ class ProfileDataUseCase
         return cp;
     }
 
-    private static ProfiledDataType detectType(string[] values)
-    {
+    private static ProfiledDataType detectType(string[] values) {
         if (values.length == 0)
             return ProfiledDataType.unknown;
 
         int intCount, floatCount, boolCount, emailCount;
-        foreach (v; values)
-        {
-            if (isInteger(v)) ++intCount;
-            else if (isFloat(v)) ++floatCount;
-            else if (v == "true" || v == "false") ++boolCount;
-            else if (isEmail(v)) ++emailCount;
+        foreach (v; values) {
+            if (isInteger(v))
+                ++intCount;
+            else if (isFloat(v))
+                ++floatCount;
+            else if (v == "true" || v == "false")
+                ++boolCount;
+            else if (isEmail(v))
+                ++emailCount;
         }
 
-        auto total = cast(int) values.length;
-        if (intCount > total * 8 / 10) return ProfiledDataType.integer;
-        if (floatCount > total * 8 / 10) return ProfiledDataType.float_;
-        if (boolCount > total * 8 / 10) return ProfiledDataType.boolean_;
-        if (emailCount > total * 8 / 10) return ProfiledDataType.email;
+        auto total = cast(int)values.length;
+        if (intCount > total * 8 / 10)
+            return ProfiledDataType.integer;
+        if (floatCount > total * 8 / 10)
+            return ProfiledDataType.float_;
+        if (boolCount > total * 8 / 10)
+            return ProfiledDataType.boolean_;
+        if (emailCount > total * 8 / 10)
+            return ProfiledDataType.email;
         return ProfiledDataType.string_;
     }
 
-    private static bool isInteger(string s)
-    {
-        if (s.length == 0) return false;
+    private static bool isInteger(string s) {
+        if (s.length == 0)
+            return false;
         size_t start = (s[0] == '-' || s[0] == '+') ? 1 : 0;
-        if (start >= s.length) return false;
+        if (start >= s.length)
+            return false;
         foreach (c; s[start .. $])
-            if (c < '0' || c > '9') return false;
+            if (c < '0' || c > '9')
+                return false;
         return true;
     }
 
-    private static bool isFloat(string s)
-    {
-        if (s.length == 0) return false;
+    private static bool isFloat(string s) {
+        if (s.length == 0)
+            return false;
         bool hasDot = false;
         size_t start = (s[0] == '-' || s[0] == '+') ? 1 : 0;
-        if (start >= s.length) return false;
-        foreach (c; s[start .. $])
-        {
-            if (c == '.')
-            {
-                if (hasDot) return false;
+        if (start >= s.length)
+            return false;
+        foreach (c; s[start .. $]) {
+            if (c == '.') {
+                if (hasDot)
+                    return false;
                 hasDot = true;
-            }
-            else if (c < '0' || c > '9')
+            } else if (c < '0' || c > '9')
                 return false;
         }
         return hasDot;
     }
 
-    private static bool isEmail(string s)
-    {
+    private static bool isEmail(string s) {
         import std.string : indexOf;
+
         auto at = s.indexOf('@');
-        return at > 0 && at < cast(long) s.length - 1
+        return at > 0 && at < cast(long)s.length - 1
             && s.indexOf('.', at) > at;
     }
 
-    private static string[] topN(int[string] freqMap, int n)
-    {
+    private static string[] topN(int[string] freqMap, int n) {
         import std.algorithm : sort;
         import std.array : array;
 
-        struct Pair { string key; int count; }
+        struct Pair {
+            string key;
+            int count;
+        }
+
         Pair[] pairs;
         foreach (k, v; freqMap)
             pairs ~= Pair(k, v);
@@ -228,12 +223,15 @@ class ProfileDataUseCase
         return result;
     }
 
-    private static QualityRating scoreToRating(double score)
-    {
-        if (score >= 95.0) return QualityRating.excellent;
-        if (score >= 80.0) return QualityRating.good;
-        if (score >= 60.0) return QualityRating.fair;
-        if (score >= 40.0) return QualityRating.poor;
+    private static QualityRating scoreToRating(double score) {
+        if (score >= 95.0)
+            return QualityRating.excellent;
+        if (score >= 80.0)
+            return QualityRating.good;
+        if (score >= 60.0)
+            return QualityRating.fair;
+        if (score >= 40.0)
+            return QualityRating.poor;
         return QualityRating.critical;
     }
 }

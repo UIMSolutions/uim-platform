@@ -8,24 +8,21 @@ import domain.ports.validation_result_repository;
 import domain.services.validation_engine;
 import application.dto;
 
-class ValidateDataUseCase
-{
+class ValidateDataUseCase {
     private ValidationRuleRepository ruleRepo;
     private ValidationResultRepository resultRepo;
     private ValidationEngine engine;
 
     this(ValidationRuleRepository ruleRepo,
         ValidationResultRepository resultRepo,
-        ValidationEngine engine)
-    {
+        ValidationEngine engine) {
         this.ruleRepo = ruleRepo;
         this.resultRepo = resultRepo;
         this.engine = engine;
     }
 
     /// Validate a single record against active rules.
-    ValidationResult validateRecord(ValidateRecordRequest req)
-    {
+    ValidationResult validateRecord(ValidateRecordRequest req) {
         auto rules = ruleRepo.findActive(req.tenantId);
         auto result = engine.validate(
             req.recordId, req.tenantId, req.datasetId,
@@ -35,13 +32,11 @@ class ValidateDataUseCase
     }
 
     /// Validate a batch of records.
-    ValidationResult[] validateBatch(ValidateBatchRequest req)
-    {
+    ValidationResult[] validateBatch(ValidateBatchRequest req) {
         auto rules = ruleRepo.findActive(req.tenantId);
         ValidationResult[] results;
 
-        foreach (ref rec; req.records)
-        {
+        foreach (ref rec; req.records) {
             auto result = engine.validate(
                 rec.recordId, req.tenantId, req.datasetId,
                 rec.fieldValues, rules);
@@ -53,14 +48,12 @@ class ValidateDataUseCase
     }
 
     /// Retrieve validation results for a dataset.
-    ValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId)
-    {
+    ValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId) {
         return resultRepo.findByDataset(tenantId, datasetId);
     }
 
     /// Retrieve validation result for a single record.
-    ValidationResult* getResultByRecord(RecordId recordId, TenantId tenantId)
-    {
+    ValidationResult* getResultByRecord(RecordId recordId, TenantId tenantId) {
         return resultRepo.findByRecord(recordId, tenantId);
     }
 }
