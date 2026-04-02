@@ -6,23 +6,21 @@ import uim.platform.management.domain.ports.directory_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage directory hierarchy within global accounts.
-class ManageDirectoriesUseCase
-{
+class ManageDirectoriesUseCase {
     private DirectoryRepository repo;
 
-    this(DirectoryRepository repo)
-    {
+    this(DirectoryRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult create(CreateDirectoryRequest req)
-    {
+    CommandResult create(CreateDirectoryRequest req) {
         if (req.globalAccountId.length == 0)
             return CommandResult(false, "", "Global account ID is required");
         if (req.displayName.length == 0)
             return CommandResult(false, "", "Display name is required");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         Directory d;
@@ -44,28 +42,38 @@ class ManageDirectoriesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult update(DirectoryId id, UpdateDirectoryRequest req)
-    {
+    CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
         auto d = repo.findById(id);
         if (d.id.length == 0)
             return CommandResult(false, "", "Directory not found");
 
-        if (req.displayName.length > 0) d.displayName = req.displayName;
-        if (req.description.length > 0) d.description = req.description;
-        if (req.labels.length > 0) d.labels = req.labels;
-        if (req.customProperties.length > 0) d.customProperties = req.customProperties;
+        if (req.displayName.length > 0)
+            d.displayName = req.displayName;
+        if (req.description.length > 0)
+            d.description = req.description;
+        if (req.labels.length > 0)
+            d.labels = req.labels;
+        if (req.customProperties.length > 0)
+            d.customProperties = req.customProperties;
         d.modifiedAt = clockSeconds();
 
         repo.update(d);
         return CommandResult(true, id, "");
     }
 
-    Directory getById(DirectoryId id) { return repo.findById(id); }
-    Directory[] listByGlobalAccount(GlobalAccountId gaId) { return repo.findByGlobalAccount(gaId); }
-    Directory[] listByParent(DirectoryId parentId) { return repo.findByParent(parentId); }
+    Directory getById(DirectoryId id) {
+        return repo.findById(id);
+    }
 
-    CommandResult remove(DirectoryId id)
-    {
+    Directory[] listByGlobalAccount(GlobalAccountId gaId) {
+        return repo.findByGlobalAccount(gaId);
+    }
+
+    Directory[] listByParent(DirectoryId parentId) {
+        return repo.findByParent(parentId);
+    }
+
+    CommandResult remove(DirectoryId id) {
         auto d = repo.findById(id);
         if (d.id.length == 0)
             return CommandResult(false, "", "Directory not found");
@@ -75,24 +83,27 @@ class ManageDirectoriesUseCase
         return CommandResult(true, id, "");
     }
 
-    private DirectoryFeature[] parseFeatures(string[] features)
-    {
+    private DirectoryFeature[] parseFeatures(string[] features) {
         DirectoryFeature[] result;
-        foreach (f; features)
-        {
-            switch (f)
-            {
-                case "entitlements": result ~= DirectoryFeature.entitlements; break;
-                case "authorizations": result ~= DirectoryFeature.authorizations; break;
-                default: result ~= DirectoryFeature.default_; break;
+        foreach (f; features) {
+            switch (f) {
+            case "entitlements":
+                result ~= DirectoryFeature.entitlements;
+                break;
+            case "authorizations":
+                result ~= DirectoryFeature.authorizations;
+                break;
+            default:
+                result ~= DirectoryFeature.default_;
+                break;
             }
         }
         return result;
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

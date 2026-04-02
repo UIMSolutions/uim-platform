@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.label_repository;
+module uim.platform.management.domain.ports.repositories.label;
 
 import uim.platform.management.domain.entities.label;
 import uim.platform.management.domain.types;

@@ -8,19 +8,16 @@ import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage SaaS application subscriptions.
-class ManageSubscriptionsUseCase
-{
+class ManageSubscriptionsUseCase {
     private SubscriptionRepository repo;
     private PlatformEventRepository eventRepo;
 
-    this(SubscriptionRepository repo, PlatformEventRepository eventRepo)
-    {
+    this(SubscriptionRepository repo, PlatformEventRepository eventRepo) {
         this.repo = repo;
         this.eventRepo = eventRepo;
     }
 
-    CommandResult subscribe(CreateSubscriptionRequest req)
-    {
+    CommandResult subscribe(CreateSubscriptionRequest req) {
         if (req.subaccountId.length == 0)
             return CommandResult(false, "", "Subaccount ID is required");
         if (req.appName.length == 0)
@@ -28,13 +25,14 @@ class ManageSubscriptionsUseCase
 
         // Check for existing subscription to same app
         auto existing = repo.findByApp(req.subaccountId, req.appName);
-        foreach (ref e; existing)
-        {
-            if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus.subscribing)
+        foreach (ref e; existing) {
+            if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus
+                .subscribing)
                 return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
         }
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         Subscription sub;
@@ -66,8 +64,7 @@ class ManageSubscriptionsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult unsubscribe(SubscriptionId id)
-    {
+    CommandResult unsubscribe(SubscriptionId id) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subscription not found");
@@ -89,27 +86,33 @@ class ManageSubscriptionsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req)
-    {
+    CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subscription not found");
 
-        if (req.planName.length > 0) sub.planName = req.planName;
-        if (req.parameters.length > 0) sub.parameters = req.parameters;
+        if (req.planName.length > 0)
+            sub.planName = req.planName;
+        if (req.parameters.length > 0)
+            sub.parameters = req.parameters;
         sub.modifiedAt = clockSeconds();
 
         repo.update(sub);
         return CommandResult(true, id, "");
     }
 
-    Subscription getById(SubscriptionId id) { return repo.findById(id); }
-    Subscription[] listBySubaccount(SubaccountId subId) { return repo.findBySubaccount(subId); }
+    Subscription getById(SubscriptionId id) {
+        return repo.findById(id);
+    }
+
+    Subscription[] listBySubaccount(SubaccountId subId) {
+        return repo.findBySubaccount(subId);
+    }
 
     private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-        string eventType, string desc, string initiatedBy)
-    {
+        string eventType, string desc, string initiatedBy) {
         import std.uuid : randomUUID;
+
         PlatformEvent ev;
         ev.id = randomUUID().toString();
         ev.globalAccountId = gaId;
@@ -124,9 +127,9 @@ class ManageSubscriptionsUseCase
         eventRepo.save(ev);
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

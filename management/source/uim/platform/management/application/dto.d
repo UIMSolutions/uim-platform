@@ -4,8 +4,7 @@ import uim.platform.management.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
     bool success;
     string id;
     string error;
@@ -13,12 +12,11 @@ struct CommandResult
 
 /// --- Global Account DTOs ---
 
-struct CreateGlobalAccountRequest
-{
+struct CreateGlobalAccountRequest {
     string displayName;
     string description;
     string contractNumber;
-    string licenseType;         // "enterprise", "trial", "partner"
+    string licenseType; // "enterprise", "trial", "partner"
     string region;
     string costCenter;
     string companyName;
@@ -29,8 +27,7 @@ struct CreateGlobalAccountRequest
     string[string] customProperties;
 }
 
-struct UpdateGlobalAccountRequest
-{
+struct UpdateGlobalAccountRequest {
     string displayName;
     string description;
     string costCenter;
@@ -40,13 +37,12 @@ struct UpdateGlobalAccountRequest
 
 /// --- Directory DTOs ---
 
-struct CreateDirectoryRequest
-{
+struct CreateDirectoryRequest {
     GlobalAccountId globalAccountId;
     DirectoryId parentDirectoryId;
     string displayName;
     string description;
-    string[] features;          // "entitlements", "authorizations"
+    string[] features; // "entitlements", "authorizations"
     bool manageEntitlements;
     bool manageAuthorizations;
     string createdBy;
@@ -54,8 +50,7 @@ struct CreateDirectoryRequest
     string[string] customProperties;
 }
 
-struct UpdateDirectoryRequest
-{
+struct UpdateDirectoryRequest {
     string displayName;
     string description;
     string[string] labels;
@@ -64,15 +59,14 @@ struct UpdateDirectoryRequest
 
 /// --- Subaccount DTOs ---
 
-struct CreateSubaccountRequest
-{
+struct CreateSubaccountRequest {
     GlobalAccountId globalAccountId;
     DirectoryId parentDirectoryId;
     string displayName;
     string description;
     string subdomain;
     string region;
-    string usage;               // "production", "development", "test"
+    string usage; // "production", "development", "test"
     bool betaEnabled = false;
     bool usedForProduction = false;
     string createdBy;
@@ -80,8 +74,7 @@ struct CreateSubaccountRequest
     string[string] customProperties;
 }
 
-struct UpdateSubaccountRequest
-{
+struct UpdateSubaccountRequest {
     string displayName;
     string description;
     string usage;
@@ -91,15 +84,13 @@ struct UpdateSubaccountRequest
     string[string] customProperties;
 }
 
-struct MoveSubaccountRequest
-{
-    DirectoryId targetDirectoryId;  // empty = move to global account root
+struct MoveSubaccountRequest {
+    DirectoryId targetDirectoryId; // empty = move to global account root
 }
 
 /// --- Entitlement DTOs ---
 
-struct AssignEntitlementRequest
-{
+struct AssignEntitlementRequest {
     GlobalAccountId globalAccountId;
     DirectoryId directoryId;
     SubaccountId subaccountId;
@@ -112,21 +103,19 @@ struct AssignEntitlementRequest
     string assignedBy;
 }
 
-struct UpdateEntitlementQuotaRequest
-{
+struct UpdateEntitlementQuotaRequest {
     int quotaAssigned;
     bool unlimited;
 }
 
 /// --- Environment Instance DTOs ---
 
-struct CreateEnvironmentInstanceRequest
-{
+struct CreateEnvironmentInstanceRequest {
     SubaccountId subaccountId;
     GlobalAccountId globalAccountId;
     string name;
     string description;
-    string environmentType;     // "cloudFoundry", "kyma", "abap"
+    string environmentType; // "cloudFoundry", "kyma", "abap"
     string planName;
     string landscapeLabel;
     int memoryQuotaMb;
@@ -137,8 +126,7 @@ struct CreateEnvironmentInstanceRequest
     string[string] labels;
 }
 
-struct UpdateEnvironmentInstanceRequest
-{
+struct UpdateEnvironmentInstanceRequest {
     string description;
     int memoryQuotaMb;
     int routeQuota;
@@ -149,8 +137,7 @@ struct UpdateEnvironmentInstanceRequest
 
 /// --- Subscription DTOs ---
 
-struct CreateSubscriptionRequest
-{
+struct CreateSubscriptionRequest {
     SubaccountId subaccountId;
     GlobalAccountId globalAccountId;
     string appName;
@@ -160,23 +147,21 @@ struct CreateSubscriptionRequest
     string[string] labels;
 }
 
-struct UpdateSubscriptionRequest
-{
+struct UpdateSubscriptionRequest {
     string planName;
     string[string] parameters;
 }
 
 /// --- Service Plan DTOs ---
 
-struct CreateServicePlanRequest
-{
+struct CreateServicePlanRequest {
     string serviceName;
     string serviceDisplayName;
     string planName;
     string planDisplayName;
     string description;
-    string category;            // "service", "application", "environment"
-    string pricingModel;        // "free", "subscription", "consumption"
+    string category; // "service", "application", "environment"
+    string pricingModel; // "free", "subscription", "consumption"
     bool isFree;
     bool isBeta;
     string[] availableRegions;
@@ -187,8 +172,7 @@ struct CreateServicePlanRequest
     string[string] metadata;
 }
 
-struct UpdateServicePlanRequest
-{
+struct UpdateServicePlanRequest {
     string planDisplayName;
     string description;
     string[] availableRegions;
@@ -200,24 +184,21 @@ struct UpdateServicePlanRequest
 
 /// --- Label DTOs ---
 
-struct CreateLabelRequest
-{
-    string resourceType;        // "globalAccount", "directory", "subaccount"
+struct CreateLabelRequest {
+    string resourceType; // "globalAccount", "directory", "subaccount"
     string resourceId;
     string key;
     string[] values;
     string createdBy;
 }
 
-struct UpdateLabelRequest
-{
+struct UpdateLabelRequest {
     string[] values;
 }
 
 /// --- Platform Event DTOs ---
 
-struct QueryEventsRequest
-{
+struct QueryEventsRequest {
     GlobalAccountId globalAccountId;
     SubaccountId subaccountId;
     string category;
@@ -227,8 +208,7 @@ struct QueryEventsRequest
 
 /// --- Dashboard/overview DTOs ---
 
-struct AccountOverview
-{
+struct AccountOverview {
     long totalSubaccounts;
     long activeSubaccounts;
     long totalDirectories;

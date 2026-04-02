@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.subscription_repository;
+module uim.platform.management.domain.ports.repositories.subscription;
 
 import uim.platform.management.domain.entities.subscription;
 import uim.platform.management.domain.types;

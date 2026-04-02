@@ -9,22 +9,19 @@ import uim.platform.management.domain.services.environment_provisioner;
 import uim.platform.management.domain.types;
 
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
-class ManageEnvironmentInstancesUseCase
-{
+class ManageEnvironmentInstancesUseCase {
     private EnvironmentInstanceRepository repo;
     private SubaccountRepository subaccountRepo;
     private EnvironmentProvisioner provisioner;
 
     this(EnvironmentInstanceRepository repo, SubaccountRepository subaccountRepo,
-        EnvironmentProvisioner provisioner)
-    {
+        EnvironmentProvisioner provisioner) {
         this.repo = repo;
         this.subaccountRepo = subaccountRepo;
         this.provisioner = provisioner;
     }
 
-    CommandResult create(CreateEnvironmentInstanceRequest req)
-    {
+    CommandResult create(CreateEnvironmentInstanceRequest req) {
         if (req.subaccountId.length == 0)
             return CommandResult(false, "", "Subaccount ID is required");
         if (req.name.length == 0)
@@ -42,6 +39,7 @@ class ManageEnvironmentInstancesUseCase
             return CommandResult(false, "", validation.reason);
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         EnvironmentInstance inst;
@@ -74,26 +72,30 @@ class ManageEnvironmentInstancesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req)
-    {
+    CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
         auto inst = repo.findById(id);
         if (inst.id.length == 0)
             return CommandResult(false, "", "Environment instance not found");
 
-        if (req.description.length > 0) inst.description = req.description;
-        if (req.memoryQuotaMb > 0) inst.memoryQuotaMb = req.memoryQuotaMb;
-        if (req.routeQuota > 0) inst.routeQuota = req.routeQuota;
-        if (req.serviceQuota > 0) inst.serviceQuota = req.serviceQuota;
-        if (req.parameters.length > 0) inst.parameters = req.parameters;
-        if (req.labels.length > 0) inst.labels = req.labels;
+        if (req.description.length > 0)
+            inst.description = req.description;
+        if (req.memoryQuotaMb > 0)
+            inst.memoryQuotaMb = req.memoryQuotaMb;
+        if (req.routeQuota > 0)
+            inst.routeQuota = req.routeQuota;
+        if (req.serviceQuota > 0)
+            inst.serviceQuota = req.serviceQuota;
+        if (req.parameters.length > 0)
+            inst.parameters = req.parameters;
+        if (req.labels.length > 0)
+            inst.labels = req.labels;
         inst.modifiedAt = clockSeconds();
 
         repo.update(inst);
         return CommandResult(true, id, "");
     }
 
-    CommandResult deprovision(EnvironmentInstanceId id)
-    {
+    CommandResult deprovision(EnvironmentInstanceId id) {
         auto inst = repo.findById(id);
         if (inst.id.length == 0)
             return CommandResult(false, "", "Environment instance not found");
@@ -109,28 +111,36 @@ class ManageEnvironmentInstancesUseCase
         return CommandResult(true, id, "");
     }
 
-    EnvironmentInstance getById(EnvironmentInstanceId id) { return repo.findById(id); }
-    EnvironmentInstance[] listBySubaccount(SubaccountId subId) { return repo.findBySubaccount(subId); }
-    EnvironmentInstance[] listByType(SubaccountId subId, string envType)
-    {
+    EnvironmentInstance getById(EnvironmentInstanceId id) {
+        return repo.findById(id);
+    }
+
+    EnvironmentInstance[] listBySubaccount(SubaccountId subId) {
+        return repo.findBySubaccount(subId);
+    }
+
+    EnvironmentInstance[] listByType(SubaccountId subId, string envType) {
         return repo.findByType(subId, parseEnvironmentType(envType));
     }
 
-    private EnvironmentType parseEnvironmentType(string s)
-    {
-        switch (s)
-        {
-            case "cloudFoundry": return EnvironmentType.cloudFoundry;
-            case "kyma": return EnvironmentType.kyma;
-            case "abap": return EnvironmentType.abap;
-            case "neo": return EnvironmentType.neo;
-            default: return EnvironmentType.cloudFoundry;
+    private EnvironmentType parseEnvironmentType(string s) {
+        switch (s) {
+        case "cloudFoundry":
+            return EnvironmentType.cloudFoundry;
+        case "kyma":
+            return EnvironmentType.kyma;
+        case "abap":
+            return EnvironmentType.abap;
+        case "neo":
+            return EnvironmentType.neo;
+        default:
+            return EnvironmentType.cloudFoundry;
         }
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

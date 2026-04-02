@@ -8,19 +8,16 @@ import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage subaccount lifecycle within global accounts.
-class ManageSubaccountsUseCase
-{
+class ManageSubaccountsUseCase {
     private SubaccountRepository repo;
     private PlatformEventRepository eventRepo;
 
-    this(SubaccountRepository repo, PlatformEventRepository eventRepo)
-    {
+    this(SubaccountRepository repo, PlatformEventRepository eventRepo) {
         this.repo = repo;
         this.eventRepo = eventRepo;
     }
 
-    CommandResult create(CreateSubaccountRequest req)
-    {
+    CommandResult create(CreateSubaccountRequest req) {
         if (req.globalAccountId.length == 0)
             return CommandResult(false, "", "Global account ID is required");
         if (req.displayName.length == 0)
@@ -36,6 +33,7 @@ class ManageSubaccountsUseCase
             return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         Subaccount sub;
@@ -68,27 +66,30 @@ class ManageSubaccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult update(SubaccountId id, UpdateSubaccountRequest req)
-    {
+    CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subaccount not found");
 
-        if (req.displayName.length > 0) sub.displayName = req.displayName;
-        if (req.description.length > 0) sub.description = req.description;
-        if (req.usage.length > 0) sub.usage = parseUsage(req.usage);
+        if (req.displayName.length > 0)
+            sub.displayName = req.displayName;
+        if (req.description.length > 0)
+            sub.description = req.description;
+        if (req.usage.length > 0)
+            sub.usage = parseUsage(req.usage);
         sub.betaEnabled = req.betaEnabled;
         sub.usedForProduction = req.usedForProduction;
-        if (req.labels.length > 0) sub.labels = req.labels;
-        if (req.customProperties.length > 0) sub.customProperties = req.customProperties;
+        if (req.labels.length > 0)
+            sub.labels = req.labels;
+        if (req.customProperties.length > 0)
+            sub.customProperties = req.customProperties;
         sub.modifiedAt = clockSeconds();
 
         repo.update(sub);
         return CommandResult(true, id, "");
     }
 
-    CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req)
-    {
+    CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subaccount not found");
@@ -106,8 +107,7 @@ class ManageSubaccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult suspend(SubaccountId id)
-    {
+    CommandResult suspend(SubaccountId id) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subaccount not found");
@@ -120,8 +120,7 @@ class ManageSubaccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult reactivate(SubaccountId id)
-    {
+    CommandResult reactivate(SubaccountId id) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subaccount not found");
@@ -134,13 +133,23 @@ class ManageSubaccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    Subaccount getById(SubaccountId id) { return repo.findById(id); }
-    Subaccount[] listByGlobalAccount(GlobalAccountId gaId) { return repo.findByGlobalAccount(gaId); }
-    Subaccount[] listByDirectory(DirectoryId dirId) { return repo.findByDirectory(dirId); }
-    Subaccount[] listByRegion(GlobalAccountId gaId, string region) { return repo.findByRegion(gaId, region); }
+    Subaccount getById(SubaccountId id) {
+        return repo.findById(id);
+    }
 
-    CommandResult remove(SubaccountId id)
-    {
+    Subaccount[] listByGlobalAccount(GlobalAccountId gaId) {
+        return repo.findByGlobalAccount(gaId);
+    }
+
+    Subaccount[] listByDirectory(DirectoryId dirId) {
+        return repo.findByDirectory(dirId);
+    }
+
+    Subaccount[] listByRegion(GlobalAccountId gaId, string region) {
+        return repo.findByRegion(gaId, region);
+    }
+
+    CommandResult remove(SubaccountId id) {
         auto sub = repo.findById(id);
         if (sub.id.length == 0)
             return CommandResult(false, "", "Subaccount not found");
@@ -151,9 +160,9 @@ class ManageSubaccountsUseCase
     }
 
     private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-        string eventType, string desc, string initiatedBy)
-    {
+        string eventType, string desc, string initiatedBy) {
         import std.uuid : randomUUID;
+
         PlatformEvent ev;
         ev.id = randomUUID().toString();
         ev.globalAccountId = gaId;
@@ -168,22 +177,26 @@ class ManageSubaccountsUseCase
         eventRepo.save(ev);
     }
 
-    private SubaccountUsage parseUsage(string s)
-    {
-        switch (s)
-        {
-            case "production": return SubaccountUsage.production;
-            case "development": return SubaccountUsage.development;
-            case "test": return SubaccountUsage.test;
-            case "staging": return SubaccountUsage.staging;
-            case "demo": return SubaccountUsage.demo;
-            default: return SubaccountUsage.unset;
+    private SubaccountUsage parseUsage(string s) {
+        switch (s) {
+        case "production":
+            return SubaccountUsage.production;
+        case "development":
+            return SubaccountUsage.development;
+        case "test":
+            return SubaccountUsage.test;
+        case "staging":
+            return SubaccountUsage.staging;
+        case "demo":
+            return SubaccountUsage.demo;
+        default:
+            return SubaccountUsage.unset;
         }
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

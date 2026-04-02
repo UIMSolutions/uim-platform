@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.subaccount_repository;
+module uim.platform.management.domain.ports.repositories.subaccount;
 
 import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.types;

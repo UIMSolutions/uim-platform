@@ -8,25 +8,23 @@ import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage global account lifecycle.
-class ManageGlobalAccountsUseCase
-{
+class ManageGlobalAccountsUseCase {
     private GlobalAccountRepository repo;
     private PlatformEventRepository eventRepo;
 
-    this(GlobalAccountRepository repo, PlatformEventRepository eventRepo)
-    {
+    this(GlobalAccountRepository repo, PlatformEventRepository eventRepo) {
         this.repo = repo;
         this.eventRepo = eventRepo;
     }
 
-    CommandResult create(CreateGlobalAccountRequest req)
-    {
+    CommandResult create(CreateGlobalAccountRequest req) {
         if (req.displayName.length == 0)
             return CommandResult(false, "", "Display name is required");
         if (req.region.length == 0)
             return CommandResult(false, "", "Region is required");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         GlobalAccount ga;
@@ -53,25 +51,28 @@ class ManageGlobalAccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req)
-    {
+    CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
         auto ga = repo.findById(id);
         if (ga.id.length == 0)
             return CommandResult(false, "", "Global account not found");
 
-        if (req.displayName.length > 0) ga.displayName = req.displayName;
-        if (req.description.length > 0) ga.description = req.description;
-        if (req.costCenter.length > 0) ga.costCenter = req.costCenter;
-        if (req.contactEmail.length > 0) ga.contactEmail = req.contactEmail;
-        if (req.customProperties.length > 0) ga.customProperties = req.customProperties;
+        if (req.displayName.length > 0)
+            ga.displayName = req.displayName;
+        if (req.description.length > 0)
+            ga.description = req.description;
+        if (req.costCenter.length > 0)
+            ga.costCenter = req.costCenter;
+        if (req.contactEmail.length > 0)
+            ga.contactEmail = req.contactEmail;
+        if (req.customProperties.length > 0)
+            ga.customProperties = req.customProperties;
         ga.modifiedAt = clockSeconds();
 
         repo.update(ga);
         return CommandResult(true, id, "");
     }
 
-    CommandResult suspend(GlobalAccountId id)
-    {
+    CommandResult suspend(GlobalAccountId id) {
         auto ga = repo.findById(id);
         if (ga.id.length == 0)
             return CommandResult(false, "", "Global account not found");
@@ -87,8 +88,7 @@ class ManageGlobalAccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult reactivate(GlobalAccountId id)
-    {
+    CommandResult reactivate(GlobalAccountId id) {
         auto ga = repo.findById(id);
         if (ga.id.length == 0)
             return CommandResult(false, "", "Global account not found");
@@ -101,12 +101,19 @@ class ManageGlobalAccountsUseCase
         return CommandResult(true, id, "");
     }
 
-    GlobalAccount getById(GlobalAccountId id) { return repo.findById(id); }
-    GlobalAccount[] listAll() { return repo.findAll(); }
-    GlobalAccount[] listByStatus(string status) { return repo.findByStatus(parseGlobalAccountStatus(status)); }
+    GlobalAccount getById(GlobalAccountId id) {
+        return repo.findById(id);
+    }
 
-    CommandResult remove(GlobalAccountId id)
-    {
+    GlobalAccount[] listAll() {
+        return repo.findAll();
+    }
+
+    GlobalAccount[] listByStatus(string status) {
+        return repo.findByStatus(parseGlobalAccountStatus(status));
+    }
+
+    CommandResult remove(GlobalAccountId id) {
         auto ga = repo.findById(id);
         if (ga.id.length == 0)
             return CommandResult(false, "", "Global account not found");
@@ -115,9 +122,9 @@ class ManageGlobalAccountsUseCase
     }
 
     private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-        string eventType, string desc, string initiatedBy)
-    {
+        string eventType, string desc, string initiatedBy) {
         import std.uuid : randomUUID;
+
         PlatformEvent ev;
         ev.id = randomUUID().toString();
         ev.globalAccountId = gaId;
@@ -132,51 +139,60 @@ class ManageGlobalAccountsUseCase
         eventRepo.save(ev);
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 
-    private GlobalAccountStatus parseGlobalAccountStatus(string s)
-    {
-        switch (s)
-        {
-            case "active": return GlobalAccountStatus.active;
-            case "suspended": return GlobalAccountStatus.suspended;
-            case "terminated": return GlobalAccountStatus.terminated;
-            case "migrating": return GlobalAccountStatus.migrating;
-            default: return GlobalAccountStatus.active;
+    private GlobalAccountStatus parseGlobalAccountStatus(string s) {
+        switch (s) {
+        case "active":
+            return GlobalAccountStatus.active;
+        case "suspended":
+            return GlobalAccountStatus.suspended;
+        case "terminated":
+            return GlobalAccountStatus.terminated;
+        case "migrating":
+            return GlobalAccountStatus.migrating;
+        default:
+            return GlobalAccountStatus.active;
         }
     }
 
-    private LicenseType parseLicenseType(string s)
-    {
-        switch (s)
-        {
-            case "enterprise": return LicenseType.enterprise;
-            case "trial": return LicenseType.trial;
-            case "partner": return LicenseType.partner;
-            case "internal": return LicenseType.internal;
-            default: return LicenseType.enterprise;
+    private LicenseType parseLicenseType(string s) {
+        switch (s) {
+        case "enterprise":
+            return LicenseType.enterprise;
+        case "trial":
+            return LicenseType.trial;
+        case "partner":
+            return LicenseType.partner;
+        case "internal":
+            return LicenseType.internal;
+        default:
+            return LicenseType.enterprise;
         }
     }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
     import core.time : MonoTime;
+
     return MonoTime.currTime.ticks / 10_000_000;
 }
 
-private LicenseType parseLicenseType(string s)
-{
-    switch (s)
-    {
-        case "enterprise": return LicenseType.enterprise;
-        case "trial": return LicenseType.trial;
-        case "partner": return LicenseType.partner;
-        case "internal": return LicenseType.internal;
-        default: return LicenseType.enterprise;
+private LicenseType parseLicenseType(string s) {
+    switch (s) {
+    case "enterprise":
+        return LicenseType.enterprise;
+    case "trial":
+        return LicenseType.trial;
+    case "partner":
+        return LicenseType.partner;
+    case "internal":
+        return LicenseType.internal;
+    default:
+        return LicenseType.enterprise;
     }
 }

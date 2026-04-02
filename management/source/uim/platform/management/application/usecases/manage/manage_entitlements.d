@@ -7,19 +7,16 @@ import uim.platform.management.domain.services.entitlement_evaluator;
 import uim.platform.management.domain.types;
 
 /// Use case: manage service plan entitlements and quota assignments.
-class ManageEntitlementsUseCase
-{
+class ManageEntitlementsUseCase {
     private EntitlementRepository repo;
     private EntitlementEvaluator evaluator;
 
-    this(EntitlementRepository repo, EntitlementEvaluator evaluator)
-    {
+    this(EntitlementRepository repo, EntitlementEvaluator evaluator) {
         this.repo = repo;
         this.evaluator = evaluator;
     }
 
-    CommandResult assign(AssignEntitlementRequest req)
-    {
+    CommandResult assign(AssignEntitlementRequest req) {
         if (req.globalAccountId.length == 0)
             return CommandResult(false, "", "Global account ID is required");
         if (req.servicePlanId.length == 0)
@@ -34,6 +31,7 @@ class ManageEntitlementsUseCase
             currentlyAssigned += e.quotaAssigned;
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         Entitlement ent;
@@ -57,8 +55,7 @@ class ManageEntitlementsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req)
-    {
+    CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
         auto ent = repo.findById(id);
         if (ent.id.length == 0)
             return CommandResult(false, "", "Entitlement not found");
@@ -71,8 +68,7 @@ class ManageEntitlementsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult revoke(EntitlementId id)
-    {
+    CommandResult revoke(EntitlementId id) {
         auto ent = repo.findById(id);
         if (ent.id.length == 0)
             return CommandResult(false, "", "Entitlement not found");
@@ -83,13 +79,23 @@ class ManageEntitlementsUseCase
         return CommandResult(true, id, "");
     }
 
-    Entitlement getById(EntitlementId id) { return repo.findById(id); }
-    Entitlement[] listByGlobalAccount(GlobalAccountId gaId) { return repo.findByGlobalAccount(gaId); }
-    Entitlement[] listBySubaccount(SubaccountId subId) { return repo.findBySubaccount(subId); }
-    Entitlement[] listByDirectory(DirectoryId dirId) { return repo.findByDirectory(dirId); }
+    Entitlement getById(EntitlementId id) {
+        return repo.findById(id);
+    }
 
-    CommandResult remove(EntitlementId id)
-    {
+    Entitlement[] listByGlobalAccount(GlobalAccountId gaId) {
+        return repo.findByGlobalAccount(gaId);
+    }
+
+    Entitlement[] listBySubaccount(SubaccountId subId) {
+        return repo.findBySubaccount(subId);
+    }
+
+    Entitlement[] listByDirectory(DirectoryId dirId) {
+        return repo.findByDirectory(dirId);
+    }
+
+    CommandResult remove(EntitlementId id) {
         auto ent = repo.findById(id);
         if (ent.id.length == 0)
             return CommandResult(false, "", "Entitlement not found");
@@ -97,9 +103,9 @@ class ManageEntitlementsUseCase
         return CommandResult(true, id, "");
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

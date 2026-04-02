@@ -6,17 +6,14 @@ import uim.platform.management.domain.ports.label_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage labels (tags) on BTP resources.
-class ManageLabelsUseCase
-{
+class ManageLabelsUseCase {
     private LabelRepository repo;
 
-    this(LabelRepository repo)
-    {
+    this(LabelRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult create(CreateLabelRequest req)
-    {
+    CommandResult create(CreateLabelRequest req) {
         if (req.resourceId.length == 0)
             return CommandResult(false, "", "Resource ID is required");
         if (req.key.length == 0)
@@ -25,6 +22,7 @@ class ManageLabelsUseCase
             return CommandResult(false, "", "At least one label value is required");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         Label lbl;
@@ -41,8 +39,7 @@ class ManageLabelsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult update(LabelId id, UpdateLabelRequest req)
-    {
+    CommandResult update(LabelId id, UpdateLabelRequest req) {
         auto lbl = repo.findById(id);
         if (lbl.id.length == 0)
             return CommandResult(false, "", "Label not found");
@@ -53,18 +50,19 @@ class ManageLabelsUseCase
         return CommandResult(true, id, "");
     }
 
-    Label getById(LabelId id) { return repo.findById(id); }
-    Label[] listByResource(string resourceType, string resourceId)
-    {
+    Label getById(LabelId id) {
+        return repo.findById(id);
+    }
+
+    Label[] listByResource(string resourceType, string resourceId) {
         return repo.findByResource(parseResourceType(resourceType), resourceId);
     }
-    Label[] listByKey(string resourceType, string key)
-    {
+
+    Label[] listByKey(string resourceType, string key) {
         return repo.findByKey(parseResourceType(resourceType), key);
     }
 
-    CommandResult remove(LabelId id)
-    {
+    CommandResult remove(LabelId id) {
         auto lbl = repo.findById(id);
         if (lbl.id.length == 0)
             return CommandResult(false, "", "Label not found");
@@ -72,28 +70,31 @@ class ManageLabelsUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult removeByResource(string resourceType, string resourceId)
-    {
+    CommandResult removeByResource(string resourceType, string resourceId) {
         repo.removeByResource(parseResourceType(resourceType), resourceId);
         return CommandResult(true, "", "");
     }
 
-    private LabeledResourceType parseResourceType(string s)
-    {
-        switch (s)
-        {
-            case "globalAccount": return LabeledResourceType.globalAccount;
-            case "directory": return LabeledResourceType.directory;
-            case "subaccount": return LabeledResourceType.subaccount;
-            case "environmentInstance": return LabeledResourceType.environmentInstance;
-            case "subscription": return LabeledResourceType.subscription;
-            default: return LabeledResourceType.subaccount;
+    private LabeledResourceType parseResourceType(string s) {
+        switch (s) {
+        case "globalAccount":
+            return LabeledResourceType.globalAccount;
+        case "directory":
+            return LabeledResourceType.directory;
+        case "subaccount":
+            return LabeledResourceType.subaccount;
+        case "environmentInstance":
+            return LabeledResourceType.environmentInstance;
+        case "subscription":
+            return LabeledResourceType.subscription;
+        default:
+            return LabeledResourceType.subaccount;
         }
     }
 
-    private long clockSeconds()
-    {
+    private long clockSeconds() {
         import core.time : MonoTime;
+
         return MonoTime.currTime.ticks / 10_000_000;
     }
 }

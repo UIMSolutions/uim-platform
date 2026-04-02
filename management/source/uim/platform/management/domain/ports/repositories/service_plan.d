@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.service_plan_repository;
+module uim.platform.management.domain.ports.repositories.service_plan;
 
 import uim.platform.management.domain.entities.service_plan;
 import uim.platform.management.domain.types;

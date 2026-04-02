@@ -11,8 +11,7 @@ import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: generate a dashboard overview for a global account.
-class GetAccountOverviewUseCase
-{
+class GetAccountOverviewUseCase {
     private SubaccountRepository subaccountRepo;
     private DirectoryRepository directoryRepo;
     private EntitlementRepository entitlementRepo;
@@ -22,8 +21,7 @@ class GetAccountOverviewUseCase
 
     this(SubaccountRepository subaccountRepo, DirectoryRepository directoryRepo,
         EntitlementRepository entitlementRepo, EnvironmentInstanceRepository environmentRepo,
-        SubscriptionRepository subscriptionRepo, PlatformEventRepository eventRepo)
-    {
+        SubscriptionRepository subscriptionRepo, PlatformEventRepository eventRepo) {
         this.subaccountRepo = subaccountRepo;
         this.directoryRepo = directoryRepo;
         this.entitlementRepo = entitlementRepo;
@@ -32,42 +30,39 @@ class GetAccountOverviewUseCase
         this.eventRepo = eventRepo;
     }
 
-    AccountOverview getOverview(GlobalAccountId gaId)
-    {
+    AccountOverview getOverview(GlobalAccountId gaId) {
         AccountOverview ov;
 
         auto subaccounts = subaccountRepo.findByGlobalAccount(gaId);
-        ov.totalSubaccounts = cast(long) subaccounts.length;
+        ov.totalSubaccounts = cast(long)subaccounts.length;
 
         int activeCount = 0;
-        foreach (ref s; subaccounts)
-        {
+        foreach (ref s; subaccounts) {
             if (s.status == SubaccountStatus.active)
                 activeCount++;
         }
-        ov.activeSubaccounts = cast(long) activeCount;
+        ov.activeSubaccounts = cast(long)activeCount;
 
         auto dirs = directoryRepo.findByGlobalAccount(gaId);
-        ov.totalDirectories = cast(long) dirs.length;
+        ov.totalDirectories = cast(long)dirs.length;
 
         auto ents = entitlementRepo.findByGlobalAccount(gaId);
-        ov.totalEntitlements = cast(long) ents.length;
+        ov.totalEntitlements = cast(long)ents.length;
 
         // Count environments across all subaccounts
         int envCount = 0;
         int subCount = 0;
-        foreach (ref s; subaccounts)
-        {
+        foreach (ref s; subaccounts) {
             auto envs = environmentRepo.findBySubaccount(s.id);
-            envCount += cast(int) envs.length;
+            envCount += cast(int)envs.length;
             auto subs = subscriptionRepo.findBySubaccount(s.id);
-            subCount += cast(int) subs.length;
+            subCount += cast(int)subs.length;
         }
-        ov.totalEnvironments = cast(long) envCount;
-        ov.totalSubscriptions = cast(long) subCount;
+        ov.totalEnvironments = cast(long)envCount;
+        ov.totalSubscriptions = cast(long)subCount;
 
         auto events = eventRepo.findByGlobalAccount(gaId);
-        ov.recentEventsCount = cast(long) events.length;
+        ov.recentEventsCount = cast(long)events.length;
 
         return ov;
     }
