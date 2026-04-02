@@ -1,6 +1,8 @@
 module uim.platform.connectivity;
 
 public {
+    import uim.platform.service;
+    
     import uim.platform.connectivity.application;
     import uim.platform.connectivity.domain;    
     import uim.platform.connectivity.infrastructure;
