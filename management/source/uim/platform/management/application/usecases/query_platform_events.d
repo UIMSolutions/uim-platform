@@ -1,6 +1,6 @@
-module application.usecases.query_platform_events;
+module uim.platform.connectivity.application.usecases.query_platform_events;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;

@@ -1,6 +1,6 @@
-module application.usecases.manage_subaccounts;
+module uim.platform.connectivity.application.usecases.manage_subaccounts;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.ports.subaccount_repository;

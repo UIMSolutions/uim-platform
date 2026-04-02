@@ -1,6 +1,6 @@
-module application.usecases.manage_subscriptions;
+module uim.platform.connectivity.application.usecases.manage_subscriptions;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.subscription;
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.ports.subscription_repository;

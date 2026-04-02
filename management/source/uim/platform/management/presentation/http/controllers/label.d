@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.usecases.manage_labels;
-import application.dto;
+import uim.platform.connectivity.application.usecases.manage_labels;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.label;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;

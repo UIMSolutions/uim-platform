@@ -1,6 +1,6 @@
-module application.usecases.manage_directories;
+module uim.platform.connectivity.application.usecases.manage_directories;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.directory;
 import uim.platform.management.domain.ports.directory_repository;
 import uim.platform.management.domain.types;

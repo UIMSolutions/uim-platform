@@ -1,6 +1,6 @@
-module application.usecases.manage_environment_instances;
+module uim.platform.connectivity.application.usecases.manage_environment_instances;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.environment_instance;
 import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.ports.environment_instance_repository;

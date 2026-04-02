@@ -1,6 +1,6 @@
-module application.usecases.manage_service_plans;
+module uim.platform.connectivity.application.usecases.manage_service_plans;
 
-import application.dto;
+import uim.platform.connectivity.application.dto;
 import uim.platform.management.domain.entities.service_plan;
 import uim.platform.management.domain.ports.service_plan_repository;
 import uim.platform.management.domain.types;
