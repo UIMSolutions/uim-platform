@@ -1,4 +1,4 @@
-module presentation.http.dashboard_controller;
+module presentation.http.dashboard;
 
 import vibe.http.server;
 import vibe.http.router;

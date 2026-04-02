@@ -1,4 +1,4 @@
-module presentation.http.alert_rule_controller;
+module presentation.http.alert_rule;
 
 import vibe.http.server;
 import vibe.http.router;

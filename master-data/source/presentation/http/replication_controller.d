@@ -1,4 +1,4 @@
-module presentation.http.replication_controller;
+module presentation.http.replication;
 
 import vibe.http.server;
 import vibe.http.router;

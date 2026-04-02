@@ -1,4 +1,4 @@
-module presentation.http.metric_definition_controller;
+module presentation.http.metric_definition;
 
 import vibe.http.server;
 import vibe.http.router;

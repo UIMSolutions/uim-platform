@@ -27,15 +27,15 @@ import application.usecases.manage_filter_rules;
 import application.usecases.query_change_log;
 
 // Controllers
-import presentation.http.master_data_controller;
-import presentation.http.data_model_controller;
-import presentation.http.distribution_controller;
-import presentation.http.key_mapping_controller;
-import presentation.http.client_controller;
-import presentation.http.replication_controller;
-import presentation.http.filter_rule_controller;
-import presentation.http.change_log_controller;
-import presentation.http.health_controller;
+import presentation.http.master_data;
+import presentation.http.data_model;
+import presentation.http.distribution;
+import presentation.http.key_mapping;
+import presentation.http.client;
+import presentation.http.replication;
+import presentation.http.filter_rule;
+import presentation.http.change_log;
+import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

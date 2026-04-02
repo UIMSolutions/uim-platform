@@ -1,4 +1,4 @@
-module presentation.http.key_mapping_controller;
+module presentation.http.key_mapping;
 
 import vibe.http.server;
 import vibe.http.router;

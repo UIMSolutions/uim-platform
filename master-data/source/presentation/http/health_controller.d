@@ -1,4 +1,4 @@
-module presentation.http.health_controller;
+module presentation.http.health;
 
 import vibe.http.server;
 import vibe.http.router;

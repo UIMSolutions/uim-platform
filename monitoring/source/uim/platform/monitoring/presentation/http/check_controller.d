@@ -1,4 +1,4 @@
-module presentation.http.check_controller;
+module presentation.http.check;
 
 import vibe.http.server;
 import vibe.http.router;
