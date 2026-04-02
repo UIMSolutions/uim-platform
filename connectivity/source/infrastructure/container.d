@@ -84,7 +84,7 @@ Container buildContainer(AppConfig config)
     c.accessRuleController = new AccessRuleController(c.manageAccessRules);
     c.certificateController = new CertificateController(c.manageCertificates);
     c.monitoringController = new MonitoringController(c.monitorConnectivity);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("connectivity");
 
     return c;
 }

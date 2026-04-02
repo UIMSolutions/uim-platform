@@ -85,7 +85,7 @@ Container buildContainer(AppConfig config) {
     c.lifecycleRuleController = new LifecycleRuleController(c.manageLifecycleRules);
     c.corsRuleController = new CorsRuleController(c.manageCorsRules);
     c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("object-store");
 
     return c;
 }

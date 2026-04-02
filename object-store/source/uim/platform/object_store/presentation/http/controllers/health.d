@@ -6,6 +6,8 @@ import vibe.data.json;
 
 class HealthController : SAPController {
     override void registerRoutes(URLRouter router) {
+       super.registerRoutes(router);
+
         router.get("/api/v1/health", &handleHealth);
     }
 

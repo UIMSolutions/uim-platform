@@ -9,8 +9,7 @@ import uim.platform.abap_enviroment.infrastructure.container;
 
 import std.stdio : writefln;
 
-void main()
-{
+void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 

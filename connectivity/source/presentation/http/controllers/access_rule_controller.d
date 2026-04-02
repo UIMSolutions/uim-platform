@@ -1,4 +1,4 @@
-module presentation.http.access_rule;
+module presentation.http.controllers.access_rule_controller;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -108,7 +108,7 @@ Container buildContainer(AppConfig config)
   c.routeController = new RouteController(c.manageRoutes);
   c.buildpackController = new BuildpackController(c.manageBuildpacks);
   c.monitoringController = new MonitoringController(c.monitorApps);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("cloud-foundry");
 
   return c;
 }

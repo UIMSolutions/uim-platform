@@ -93,7 +93,7 @@ Container buildContainer(AppConfig config)
     c.importController = new ImportController(c.importContent);
     c.queueController = new QueueController(c.manageQueues);
     c.activityController = new ActivityController(c.monitorActivities);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("content-agent");
 
     return c;
 }
