@@ -1,4 +1,4 @@
-module domain.entities.cloud_connector;
+module uim.platform.connectivity.domain.entities.cloud_connector;
 
 import domain.types;
 

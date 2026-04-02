@@ -1,4 +1,4 @@
-module application.usecases.manage_access_rules;
+module uim.platform.connectivity.application.usecases.manage_access_rules;
 
 import application.dto;
 import domain.entities.access_rule;

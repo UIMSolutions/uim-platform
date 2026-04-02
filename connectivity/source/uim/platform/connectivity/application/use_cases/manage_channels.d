@@ -1,4 +1,4 @@
-module application.usecases.manage_channels;
+module uim.platform.connectivity.application.usecases.manage_channels;
 
 import application.dto;
 import domain.entities.service_channel;

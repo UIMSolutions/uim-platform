@@ -1,4 +1,4 @@
-module domain.ports.connector_repository;
+module uim.platform.connectivity.domain.ports.connector_repository;
 
 import domain.entities.cloud_connector;
 import domain.types;

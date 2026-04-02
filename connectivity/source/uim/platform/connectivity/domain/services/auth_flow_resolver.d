@@ -1,4 +1,4 @@
-module domain.services.auth_flow_resolver;
+module uim.platform.connectivity.domain.services.auth_flow_resolver;
 
 import domain.entities.destination;
 import domain.entities.certificate;

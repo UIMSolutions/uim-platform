@@ -1,4 +1,4 @@
-module domain.entities.certificate;
+module uim.platform.connectivity.domain.entities.certificate;
 
 import domain.types;
 

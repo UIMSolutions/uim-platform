@@ -1,4 +1,4 @@
-module domain.ports.channel_repository;
+module uim.platform.connectivity.domain.ports.channel_repository;
 
 import domain.entities.service_channel;
 import domain.types;

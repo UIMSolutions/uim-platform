@@ -1,4 +1,4 @@
-module application.usecases.manage_connectors;
+module uim.platform.connectivity.application.usecases.manage_connectors;
 
 import application.dto;
 import domain.entities.cloud_connector;

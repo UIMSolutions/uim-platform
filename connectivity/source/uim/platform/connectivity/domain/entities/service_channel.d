@@ -1,4 +1,4 @@
-module domain.entities.service_channel;
+module uim.platform.connectivity.domain.entities.service_channel;
 
 import domain.types;
 

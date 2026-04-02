@@ -1,4 +1,4 @@
-module domain.ports.access_rule_repository;
+module uim.platform.connectivity.domain.ports.access_rule_repository;
 
 import domain.entities.access_rule;
 import domain.types;

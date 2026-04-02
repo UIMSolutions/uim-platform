@@ -1,4 +1,4 @@
-module domain.entities.connectivity_log;
+module uim.platform.connectivity.domain.entities.connectivity_log;
 
 import domain.types;
 

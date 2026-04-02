@@ -1,4 +1,4 @@
-module domain.entities.access_rule;
+module uim.platform.connectivity.domain.entities.access_rule;
 
 import domain.types;
 

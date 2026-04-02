@@ -1,4 +1,4 @@
-module domain.services.access_control_evaluator;
+module uim.platform.connectivity.domain.services.access_control_evaluator;
 
 import domain.entities.access_rule;
 import domain.types;

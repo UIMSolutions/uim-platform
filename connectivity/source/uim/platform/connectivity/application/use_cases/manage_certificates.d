@@ -1,4 +1,4 @@
-module application.usecases.manage_certificates;
+module uim.platform.connectivity.application.usecases.manage_certificates;
 
 import application.dto;
 import domain.entities.certificate;

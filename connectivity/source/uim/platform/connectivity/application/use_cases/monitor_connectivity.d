@@ -1,4 +1,4 @@
-module application.usecases.monitor_connectivity;
+module uim.platform.connectivity.application.usecases.monitor_connectivity;
 
 import domain.entities.connectivity_log;
 import domain.ports.connectivity_log_repository;

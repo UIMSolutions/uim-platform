@@ -1,4 +1,4 @@
-module application.usecases.manage_destinations;
+module uim.platform.connectivity.application.usecases.manage_destinations;
 
 import application.dto;
 import domain.entities.destination;

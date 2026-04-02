@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.connectivity.application.dto;
 
 import domain.types;
 import domain.entities.destination : DestinationProperty;
