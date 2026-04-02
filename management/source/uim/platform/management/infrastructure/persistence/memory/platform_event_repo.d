@@ -1,8 +1,8 @@
 module uim.platform.management.infrastructure.persistence.memory.platform_event_repo;
 
-import domain.types;
-import domain.entities.platform_event;
-import domain.ports.platform_event_repository;
+import uim.platform.management.domain.types;
+import uim.platform.management.domain.entities.platform_event;
+import uim.platform.management.domain.ports.platform_event_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,7 +1,7 @@
 module domain.ports.global_account_repository;
 
-import domain.entities.global_account;
-import domain.types;
+import uim.platform.management.domain.entities.global_account;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — global account persistence.
 interface GlobalAccountRepository

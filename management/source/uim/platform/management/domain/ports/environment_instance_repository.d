@@ -1,7 +1,7 @@
 module domain.ports.environment_instance_repository;
 
-import domain.entities.environment_instance;
-import domain.types;
+import uim.platform.management.domain.entities.environment_instance;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — environment instance persistence.
 interface EnvironmentInstanceRepository

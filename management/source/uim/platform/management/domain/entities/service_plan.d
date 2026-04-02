@@ -1,6 +1,6 @@
 module domain.entities.service_plan;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A service plan represents an available service offering in the
 /// BTP service marketplace with its pricing and capabilities.

@@ -1,14 +1,14 @@
 module application.usecases.get_account_overview;
 
 import application.dto;
-import domain.ports.global_account_repository;
-import domain.ports.subaccount_repository;
-import domain.ports.directory_repository;
-import domain.ports.entitlement_repository;
-import domain.ports.environment_instance_repository;
-import domain.ports.subscription_repository;
-import domain.ports.platform_event_repository;
-import domain.types;
+import uim.platform.management.domain.ports.global_account_repository;
+import uim.platform.management.domain.ports.subaccount_repository;
+import uim.platform.management.domain.ports.directory_repository;
+import uim.platform.management.domain.ports.entitlement_repository;
+import uim.platform.management.domain.ports.environment_instance_repository;
+import uim.platform.management.domain.ports.subscription_repository;
+import uim.platform.management.domain.ports.platform_event_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: generate a dashboard overview for a global account.
 class GetAccountOverviewUseCase

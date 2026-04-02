@@ -1,6 +1,6 @@
 module domain.entities.entitlement;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// An entitlement represents the assignment of a service plan's quota
 /// to a global account, directory, or subaccount.

@@ -14,8 +14,8 @@ import uim.platform.management.infrastructure.persistence.memory.platform_event_
 import uim.platform.management.infrastructure.persistence.memory.label_repo;
 
 // Domain Services
-import domain.services.entitlement_evaluator;
-import domain.services.environment_provisioner;
+import uim.platform.management.domain.services.entitlement_evaluator;
+import uim.platform.management.domain.services.environment_provisioner;
 
 // Use Cases
 import application.usecases.manage_global_accounts;

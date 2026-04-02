@@ -1,7 +1,7 @@
 module domain.ports.subaccount_repository;
 
-import domain.entities.subaccount;
-import domain.types;
+import uim.platform.management.domain.entities.subaccount;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — subaccount persistence.
 interface SubaccountRepository

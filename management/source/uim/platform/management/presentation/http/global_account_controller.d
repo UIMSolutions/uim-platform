@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_global_accounts;
 import application.dto;
-import domain.entities.global_account;
-import domain.types;
+import uim.platform.management.domain.entities.global_account;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class GlobalAccountController : SAPController {

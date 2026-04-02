@@ -1,6 +1,6 @@
 module domain.entities.label;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A label is a key-value tag attached to a BTP resource for
 /// organizing and categorizing global accounts, directories, subaccounts, etc.

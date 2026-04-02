@@ -1,6 +1,6 @@
 module domain.entities.subscription;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).

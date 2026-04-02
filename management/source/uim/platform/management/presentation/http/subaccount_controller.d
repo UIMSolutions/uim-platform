@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_subaccounts;
 import application.dto;
-import domain.entities.subaccount;
-import domain.types;
+import uim.platform.management.domain.entities.subaccount;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class SubaccountController

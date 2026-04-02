@@ -1,6 +1,6 @@
 module domain.entities.platform_event;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A platform event represents an auditable action or state change
 /// on a BTP resource (subaccount created, entitlement changed, etc.).

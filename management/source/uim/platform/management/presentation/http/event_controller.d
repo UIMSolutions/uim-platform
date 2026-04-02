@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 
 import application.usecases.query_platform_events;
-import domain.entities.platform_event;
-import domain.types;
+import uim.platform.management.domain.entities.platform_event;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class EventController

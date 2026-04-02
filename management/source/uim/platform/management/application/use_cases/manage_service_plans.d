@@ -1,9 +1,9 @@
 module application.usecases.manage_service_plans;
 
 import application.dto;
-import domain.entities.service_plan;
-import domain.ports.service_plan_repository;
-import domain.types;
+import uim.platform.management.domain.entities.service_plan;
+import uim.platform.management.domain.ports.service_plan_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: manage the service plan catalog.
 class ManageServicePlansUseCase

@@ -1,8 +1,8 @@
 module uim.platform.management.infrastructure.persistence.memory.label_repo;
 
-import domain.types;
-import domain.entities.label;
-import domain.ports.label_repository;
+import uim.platform.management.domain.types;
+import uim.platform.management.domain.entities.label;
+import uim.platform.management.domain.ports.label_repository;
 
 import std.algorithm : filter, canFind;
 import std.array : array;

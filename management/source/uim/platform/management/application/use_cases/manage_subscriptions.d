@@ -1,11 +1,11 @@
 module application.usecases.manage_subscriptions;
 
 import application.dto;
-import domain.entities.subscription;
-import domain.entities.platform_event;
-import domain.ports.subscription_repository;
-import domain.ports.platform_event_repository;
-import domain.types;
+import uim.platform.management.domain.entities.subscription;
+import uim.platform.management.domain.entities.platform_event;
+import uim.platform.management.domain.ports.subscription_repository;
+import uim.platform.management.domain.ports.platform_event_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: manage SaaS application subscriptions.
 class ManageSubscriptionsUseCase

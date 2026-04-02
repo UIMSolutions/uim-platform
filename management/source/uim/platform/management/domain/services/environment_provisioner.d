@@ -1,8 +1,8 @@
 module domain.services.environment_provisioner;
 
-import domain.entities.environment_instance;
-import domain.entities.subaccount;
-import domain.types;
+import uim.platform.management.domain.entities.environment_instance;
+import uim.platform.management.domain.entities.subaccount;
+import uim.platform.management.domain.types;
 
 /// Domain service: validates environment provisioning constraints.
 class EnvironmentProvisioner

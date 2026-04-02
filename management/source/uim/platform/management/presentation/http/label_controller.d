@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_labels;
 import application.dto;
-import domain.entities.label;
-import domain.types;
+import uim.platform.management.domain.entities.label;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class LabelController

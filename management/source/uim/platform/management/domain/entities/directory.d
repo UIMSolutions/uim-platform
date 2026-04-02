@@ -1,6 +1,6 @@
 module domain.entities.directory;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A directory is a grouping entity within a global account for
 /// organizing subaccounts and managing entitlements/authorizations.

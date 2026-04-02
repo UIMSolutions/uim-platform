@@ -1,6 +1,6 @@
 module domain.entities.subaccount;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// A subaccount is the primary organizational unit where cloud services
 /// and applications are deployed. It is always part of a global account

@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_environment_instances;
 import application.dto;
-import domain.entities.environment_instance;
-import domain.types;
+import uim.platform.management.domain.entities.environment_instance;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class EnvironmentController

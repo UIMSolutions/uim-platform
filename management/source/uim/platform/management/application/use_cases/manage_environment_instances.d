@@ -1,12 +1,12 @@
 module application.usecases.manage_environment_instances;
 
 import application.dto;
-import domain.entities.environment_instance;
-import domain.entities.subaccount;
-import domain.ports.environment_instance_repository;
-import domain.ports.subaccount_repository;
-import domain.services.environment_provisioner;
-import domain.types;
+import uim.platform.management.domain.entities.environment_instance;
+import uim.platform.management.domain.entities.subaccount;
+import uim.platform.management.domain.ports.environment_instance_repository;
+import uim.platform.management.domain.ports.subaccount_repository;
+import uim.platform.management.domain.services.environment_provisioner;
+import uim.platform.management.domain.types;
 
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
 class ManageEnvironmentInstancesUseCase

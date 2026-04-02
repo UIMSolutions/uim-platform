@@ -1,6 +1,6 @@
 module application.dto;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// --- Command result ---
 

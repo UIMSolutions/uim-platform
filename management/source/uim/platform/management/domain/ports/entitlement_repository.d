@@ -1,7 +1,7 @@
 module domain.ports.entitlement_repository;
 
-import domain.entities.entitlement;
-import domain.types;
+import uim.platform.management.domain.entities.entitlement;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — entitlement persistence.
 interface EntitlementRepository

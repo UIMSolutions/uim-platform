@@ -1,6 +1,6 @@
 module domain.entities.environment_instance;
 
-import domain.types;
+import uim.platform.management.domain.types;
 
 /// An environment instance represents a provisioned runtime environment
 /// (Cloud Foundry org, Kyma cluster, ABAP system, etc.) within a subaccount.

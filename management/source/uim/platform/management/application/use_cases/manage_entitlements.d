@@ -1,10 +1,10 @@
 module application.usecases.manage_entitlements;
 
 import application.dto;
-import domain.entities.entitlement;
-import domain.ports.entitlement_repository;
-import domain.services.entitlement_evaluator;
-import domain.types;
+import uim.platform.management.domain.entities.entitlement;
+import uim.platform.management.domain.ports.entitlement_repository;
+import uim.platform.management.domain.services.entitlement_evaluator;
+import uim.platform.management.domain.types;
 
 /// Use case: manage service plan entitlements and quota assignments.
 class ManageEntitlementsUseCase

@@ -1,7 +1,7 @@
 module domain.ports.platform_event_repository;
 
-import domain.entities.platform_event;
-import domain.types;
+import uim.platform.management.domain.entities.platform_event;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — platform event persistence.
 interface PlatformEventRepository

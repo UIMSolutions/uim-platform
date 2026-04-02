@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_entitlements;
 import application.dto;
-import domain.entities.entitlement;
-import domain.types;
+import uim.platform.management.domain.entities.entitlement;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class EntitlementController

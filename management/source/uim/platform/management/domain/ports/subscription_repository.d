@@ -1,7 +1,7 @@
 module domain.ports.subscription_repository;
 
-import domain.entities.subscription;
-import domain.types;
+import uim.platform.management.domain.entities.subscription;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — subscription persistence.
 interface SubscriptionRepository

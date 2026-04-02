@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_subscriptions;
 import application.dto;
-import domain.entities.subscription;
-import domain.types;
+import uim.platform.management.domain.entities.subscription;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class SubscriptionController

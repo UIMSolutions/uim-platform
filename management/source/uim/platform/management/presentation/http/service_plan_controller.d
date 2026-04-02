@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_service_plans;
 import application.dto;
-import domain.entities.service_plan;
-import domain.types;
+import uim.platform.management.domain.entities.service_plan;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class ServicePlanController : SAPController {

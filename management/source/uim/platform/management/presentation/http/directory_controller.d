@@ -6,8 +6,8 @@ import vibe.data.json;
 
 import application.usecases.manage_directories;
 import application.dto;
-import domain.entities.directory;
-import domain.types;
+import uim.platform.management.domain.entities.directory;
+import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
 class DirectoryController

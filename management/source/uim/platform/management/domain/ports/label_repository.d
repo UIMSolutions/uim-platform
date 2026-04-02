@@ -1,7 +1,7 @@
 module domain.ports.label_repository;
 
-import domain.entities.label;
-import domain.types;
+import uim.platform.management.domain.entities.label;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — label/tag persistence.
 interface LabelRepository

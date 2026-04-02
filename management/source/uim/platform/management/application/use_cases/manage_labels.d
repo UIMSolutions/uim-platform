@@ -1,9 +1,9 @@
 module application.usecases.manage_labels;
 
 import application.dto;
-import domain.entities.label;
-import domain.ports.label_repository;
-import domain.types;
+import uim.platform.management.domain.entities.label;
+import uim.platform.management.domain.ports.label_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: manage labels (tags) on BTP resources.
 class ManageLabelsUseCase

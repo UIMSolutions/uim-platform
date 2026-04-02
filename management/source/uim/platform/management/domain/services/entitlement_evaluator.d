@@ -1,7 +1,7 @@
 module domain.services.entitlement_evaluator;
 
-import domain.entities.entitlement;
-import domain.types;
+import uim.platform.management.domain.entities.entitlement;
+import uim.platform.management.domain.types;
 
 /// Domain service: evaluates entitlement quota constraints,
 /// checks availability of service plan quotas.

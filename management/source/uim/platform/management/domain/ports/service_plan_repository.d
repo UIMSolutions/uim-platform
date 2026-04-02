@@ -1,7 +1,7 @@
 module domain.ports.service_plan_repository;
 
-import domain.entities.service_plan;
-import domain.types;
+import uim.platform.management.domain.entities.service_plan;
+import uim.platform.management.domain.types;
 
 /// Port: outgoing — service plan catalog persistence.
 interface ServicePlanRepository

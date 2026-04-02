@@ -1,9 +1,9 @@
 module application.usecases.manage_directories;
 
 import application.dto;
-import domain.entities.directory;
-import domain.ports.directory_repository;
-import domain.types;
+import uim.platform.management.domain.entities.directory;
+import uim.platform.management.domain.ports.directory_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: manage directory hierarchy within global accounts.
 class ManageDirectoriesUseCase

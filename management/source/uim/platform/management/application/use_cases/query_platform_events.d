@@ -1,9 +1,9 @@
 module application.usecases.query_platform_events;
 
 import application.dto;
-import domain.entities.platform_event;
-import domain.ports.platform_event_repository;
-import domain.types;
+import uim.platform.management.domain.entities.platform_event;
+import uim.platform.management.domain.ports.platform_event_repository;
+import uim.platform.management.domain.types;
 
 /// Use case: query platform events for audit and monitoring.
 class QueryPlatformEventsUseCase

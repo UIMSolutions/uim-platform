@@ -1,8 +1,8 @@
 module uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
 
-import domain.types;
-import domain.entities.service_plan;
-import domain.ports.service_plan_repository;
+import uim.platform.management.domain.types;
+import uim.platform.management.domain.entities.service_plan;
+import uim.platform.management.domain.ports.service_plan_repository;
 
 import std.algorithm : filter, canFind;
 import std.array : array;
