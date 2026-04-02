@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.global_account_repo;
+module uim.platform.management.infrastructure.persistence.memory.global_account_repo;
 
 import domain.types;
 import domain.entities.global_account;

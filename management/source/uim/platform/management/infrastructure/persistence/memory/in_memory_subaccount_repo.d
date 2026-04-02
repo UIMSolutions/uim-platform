@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.subaccount_repo;
+module uim.platform.management.infrastructure.persistence.memory.subaccount_repo;
 
 import domain.types;
 import domain.entities.subaccount;

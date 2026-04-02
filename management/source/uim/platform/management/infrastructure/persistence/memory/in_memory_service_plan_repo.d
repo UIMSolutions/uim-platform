@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.service_plan_repo;
+module uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
 
 import domain.types;
 import domain.entities.service_plan;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.entitlement_repo;
+module uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
 
 import domain.types;
 import domain.entities.entitlement;

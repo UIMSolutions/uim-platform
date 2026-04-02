@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.environment_instance_repo;
+module uim.platform.management.infrastructure.persistence.memory.environment_instance_repo;
 
 import domain.types;
 import domain.entities.environment_instance;

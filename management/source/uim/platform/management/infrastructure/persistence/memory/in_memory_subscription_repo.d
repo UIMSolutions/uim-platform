@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.subscription_repo;
+module uim.platform.management.infrastructure.persistence.memory.subscription_repo;
 
 import domain.types;
 import domain.entities.subscription;

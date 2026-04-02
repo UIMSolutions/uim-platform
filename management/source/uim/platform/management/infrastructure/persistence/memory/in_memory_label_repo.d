@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.label_repo;
+module uim.platform.management.infrastructure.persistence.memory.label_repo;
 
 import domain.types;
 import domain.entities.label;
