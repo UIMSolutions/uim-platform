@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.ports.connector_repository;
 
-import domain.entities.cloud_connector;
-import domain.types;
+import uim.platform.connectivity.domain.entities.cloud_connector;
+import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - cloud connector persistence.
 interface ConnectorRepository

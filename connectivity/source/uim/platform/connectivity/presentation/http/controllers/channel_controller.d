@@ -7,7 +7,7 @@ import std.conv : to;
 
 import application.usecases.manage_channels;
 import application.dto;
-import domain.entities.service_channel;
+import uim.platform.connectivity.domain.entities.service_channel;
 import presentation.http.json_utils;
 
 class ChannelController

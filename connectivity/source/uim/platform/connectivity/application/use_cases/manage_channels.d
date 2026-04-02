@@ -1,12 +1,12 @@
 module uim.platform.connectivity.application.usecases.manage_channels;
 
 import application.dto;
-import domain.entities.service_channel;
-import domain.entities.connectivity_log;
-import domain.ports.channel_repository;
-import domain.ports.connector_repository;
-import domain.ports.connectivity_log_repository;
-import domain.types;
+import uim.platform.connectivity.domain.entities.service_channel;
+import uim.platform.connectivity.domain.entities.connectivity_log;
+import uim.platform.connectivity.domain.ports.channel_repository;
+import uim.platform.connectivity.domain.ports.connector_repository;
+import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+import uim.platform.connectivity.domain.types;
 
 /// Application service for service channel lifecycle.
 class ManageChannelsUseCase

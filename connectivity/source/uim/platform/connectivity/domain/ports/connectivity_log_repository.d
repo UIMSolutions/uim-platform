@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.ports.connectivity_log_repository;
 
-import domain.entities.connectivity_log;
-import domain.types;
+import uim.platform.connectivity.domain.entities.connectivity_log;
+import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - connectivity event log persistence.
 interface ConnectivityLogRepository

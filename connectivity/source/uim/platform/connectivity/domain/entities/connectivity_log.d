@@ -1,6 +1,6 @@
 module uim.platform.connectivity.domain.entities.connectivity_log;
 
-import domain.types;
+import uim.platform.connectivity.domain.types;
 
 /// Immutable connectivity event log entry.
 struct ConnectivityLog

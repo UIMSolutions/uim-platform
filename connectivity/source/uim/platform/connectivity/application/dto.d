@@ -1,12 +1,11 @@
 module uim.platform.connectivity.application.dto;
 
-import domain.types;
-import domain.entities.destination : DestinationProperty;
+import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity.domain.entities.destination : DestinationProperty;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
     bool success;
     string id;
     string error;
@@ -14,15 +13,14 @@ struct CommandResult
 
 /// --- Destination DTOs ---
 
-struct CreateDestinationRequest
-{
+struct CreateDestinationRequest {
     TenantId tenantId;
     string name;
     string description;
     string url;
-    string destinationType;     // "http", "rfc", "mail", "ldap"
-    string authType;            // "noAuthentication", "basicAuthentication", ...
-    string proxyType;           // "internet", "onPremise", "privateLink"
+    string destinationType; // "http", "rfc", "mail", "ldap"
+    string authType; // "noAuthentication", "basicAuthentication", ...
+    string proxyType; // "internet", "onPremise", "privateLink"
     string user;
     string password;
     string clientId;
@@ -36,8 +34,7 @@ struct CreateDestinationRequest
     DestinationProperty[] additionalHeaders;
 }
 
-struct UpdateDestinationRequest
-{
+struct UpdateDestinationRequest {
     string description;
     string url;
     string authType;
@@ -57,8 +54,7 @@ struct UpdateDestinationRequest
 
 /// --- Cloud Connector DTOs ---
 
-struct RegisterConnectorRequest
-{
+struct RegisterConnectorRequest {
     SubaccountId subaccountId;
     TenantId tenantId;
     string locationId;
@@ -69,19 +65,17 @@ struct RegisterConnectorRequest
     string tunnelEndpoint;
 }
 
-struct HeartbeatRequest
-{
+struct HeartbeatRequest {
     string connectorVersion;
 }
 
 /// --- Service Channel DTOs ---
 
-struct CreateChannelRequest
-{
+struct CreateChannelRequest {
     ConnectorId connectorId;
     TenantId tenantId;
     string name;
-    string channelType;     // "http", "rfc", "tcp"
+    string channelType; // "http", "rfc", "tcp"
     string virtualHost;
     ushort virtualPort;
     string backendHost;
@@ -90,21 +84,19 @@ struct CreateChannelRequest
 
 /// --- Access Rule DTOs ---
 
-struct CreateAccessRuleRequest
-{
+struct CreateAccessRuleRequest {
     ConnectorId connectorId;
     TenantId tenantId;
     string description;
-    string protocol;        // "http", "https", "rfc", "tcp", "ldap"
+    string protocol; // "http", "https", "rfc", "tcp", "ldap"
     string virtualHost;
     ushort virtualPort;
     string urlPathPrefix;
-    string policy;          // "allow", "deny"
+    string policy; // "allow", "deny"
     bool principalPropagation;
 }
 
-struct UpdateAccessRuleRequest
-{
+struct UpdateAccessRuleRequest {
     string description;
     string urlPathPrefix;
     string policy;
@@ -113,13 +105,12 @@ struct UpdateAccessRuleRequest
 
 /// --- Certificate DTOs ---
 
-struct CreateCertificateRequest
-{
+struct CreateCertificateRequest {
     TenantId tenantId;
     string name;
     string description;
-    string certType;        // "x509", "pkcs12", "pem", "jks"
-    string usage;           // "authentication", "signing", "encryption"
+    string certType; // "x509", "pkcs12", "pem", "jks"
+    string usage; // "authentication", "signing", "encryption"
     string subjectDN;
     string issuerDN;
     string serialNumber;
@@ -128,8 +119,7 @@ struct CreateCertificateRequest
     long validTo;
 }
 
-struct UpdateCertificateRequest
-{
+struct UpdateCertificateRequest {
     string description;
     bool active;
 }

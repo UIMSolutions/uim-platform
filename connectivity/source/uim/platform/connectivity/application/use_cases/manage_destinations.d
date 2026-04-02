@@ -1,11 +1,11 @@
 module uim.platform.connectivity.application.usecases.manage_destinations;
 
 import application.dto;
-import domain.entities.destination;
-import domain.ports.destination_repository;
-import domain.ports.connectivity_log_repository;
-import domain.services.auth_flow_resolver;
-import domain.types;
+import uim.platform.connectivity.domain.entities.destination;
+import uim.platform.connectivity.domain.ports.destination_repository;
+import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+import uim.platform.connectivity.domain.services.auth_flow_resolver;
+import uim.platform.connectivity.domain.types;
 
 import std.conv : to;
 

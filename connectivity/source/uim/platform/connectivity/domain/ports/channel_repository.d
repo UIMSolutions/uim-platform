@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.ports.channel_repository;
 
-import domain.entities.service_channel;
-import domain.types;
+import uim.platform.connectivity.domain.entities.service_channel;
+import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - service channel persistence.
 interface ChannelRepository

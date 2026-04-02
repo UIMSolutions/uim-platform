@@ -1,6 +1,6 @@
 module uim.platform.connectivity.domain.entities.access_rule;
 
-import domain.types;
+import uim.platform.connectivity.domain.types;
 
 /// Access control rule for exposed on-premise backend resources.
 struct AccessRule

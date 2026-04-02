@@ -1,10 +1,10 @@
 module uim.platform.connectivity.application.usecases.manage_access_rules;
 
 import application.dto;
-import domain.entities.access_rule;
-import domain.ports.access_rule_repository;
-import domain.ports.connector_repository;
-import domain.types;
+import uim.platform.connectivity.domain.entities.access_rule;
+import uim.platform.connectivity.domain.ports.access_rule_repository;
+import uim.platform.connectivity.domain.ports.connector_repository;
+import uim.platform.connectivity.domain.types;
 
 /// Application service for access rule CRUD.
 class ManageAccessRulesUseCase

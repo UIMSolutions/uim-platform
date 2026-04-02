@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.ports.destination_repository;
 
-import domain.entities.destination;
-import domain.types;
+import uim.platform.connectivity.domain.entities.destination;
+import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - destination persistence.
 interface DestinationRepository

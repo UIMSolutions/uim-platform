@@ -1,8 +1,8 @@
 module uim.platform.connectivity.application.usecases.monitor_connectivity;
 
-import domain.entities.connectivity_log;
-import domain.ports.connectivity_log_repository;
-import domain.types;
+import uim.platform.connectivity.domain.entities.connectivity_log;
+import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+import uim.platform.connectivity.domain.types;
 
 /// Summary of connectivity status for a tenant.
 struct ConnectivitySummary

@@ -1,6 +1,6 @@
 module uim.platform.connectivity.domain.entities.certificate;
 
-import domain.types;
+import uim.platform.connectivity.domain.types;
 
 /// Certificate store entry for mTLS, SAML signing, etc.
 struct Certificate

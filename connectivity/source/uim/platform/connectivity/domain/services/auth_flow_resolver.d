@@ -1,8 +1,8 @@
 module uim.platform.connectivity.domain.services.auth_flow_resolver;
 
-import domain.entities.destination;
-import domain.entities.certificate;
-import domain.types;
+import uim.platform.connectivity.domain.entities.destination;
+import uim.platform.connectivity.domain.entities.certificate;
+import uim.platform.connectivity.domain.types;
 
 /// Result of resolving an authentication flow for a destination.
 struct AuthFlowResult

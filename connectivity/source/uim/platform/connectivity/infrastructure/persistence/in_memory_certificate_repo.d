@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.certificate_repo;
 
-import domain.types;
-import domain.entities.certificate;
-import domain.ports.certificate_repository;
+import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity.domain.entities.certificate;
+import uim.platform.connectivity.domain.ports.certificate_repository;
 
 import std.algorithm : filter;
 import std.array : array;

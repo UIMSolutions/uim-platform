@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.access_rule_repo;
 
-import domain.types;
-import domain.entities.access_rule;
-import domain.ports.access_rule_repository;
+import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity.domain.entities.access_rule;
+import uim.platform.connectivity.domain.ports.access_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

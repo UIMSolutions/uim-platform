@@ -7,7 +7,7 @@ import std.conv : to;
 
 import application.usecases.manage_connectors;
 import application.dto;
-import domain.entities.cloud_connector;
+import uim.platform.connectivity.domain.entities.cloud_connector;
 import presentation.http.json_utils;
 
 class ConnectorController

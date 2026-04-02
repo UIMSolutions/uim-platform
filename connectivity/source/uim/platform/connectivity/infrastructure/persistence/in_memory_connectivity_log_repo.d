@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.connectivity_log_repo;
 
-import domain.types;
-import domain.entities.connectivity_log;
-import domain.ports.connectivity_log_repository;
+import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity.domain.entities.connectivity_log;
+import uim.platform.connectivity.domain.ports.connectivity_log_repository;
 
 import std.algorithm : filter;
 import std.array : array;

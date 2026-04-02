@@ -7,7 +7,7 @@ import std.conv : to;
 
 import application.usecases.manage_access_rules;
 import application.dto;
-import domain.entities.access_rule;
+import uim.platform.connectivity.domain.entities.access_rule;
 import presentation.http.json_utils;
 
 class AccessRuleController

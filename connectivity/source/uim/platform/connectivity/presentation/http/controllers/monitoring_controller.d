@@ -6,8 +6,8 @@ import vibe.data.json;
 import std.conv : to;
 
 import application.usecases.monitor_connectivity;
-import domain.entities.connectivity_log;
-import domain.types;
+import uim.platform.connectivity.domain.entities.connectivity_log;
+import uim.platform.connectivity.domain.types;
 import presentation.http.json_utils;
 
 class MonitoringController

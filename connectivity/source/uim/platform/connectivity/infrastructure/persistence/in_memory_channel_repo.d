@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.channel_repo;
 
-import domain.types;
-import domain.entities.service_channel;
-import domain.ports.channel_repository;
+import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity.domain.entities.service_channel;
+import uim.platform.connectivity.domain.ports.channel_repository;
 
 import std.algorithm : filter;
 import std.array : array;

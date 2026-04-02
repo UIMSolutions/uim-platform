@@ -7,7 +7,7 @@ import std.conv : to;
 
 import application.usecases.manage_destinations;
 import application.dto;
-import domain.entities.destination;
+import uim.platform.connectivity.domain.entities.destination;
 import presentation.http.json_utils;
 
 class DestinationController

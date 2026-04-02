@@ -7,7 +7,7 @@ import std.conv : to;
 
 import application.usecases.manage_certificates;
 import application.dto;
-import domain.entities.certificate;
+import uim.platform.connectivity.domain.entities.certificate;
 import presentation.http.json_utils;
 
 class CertificateController

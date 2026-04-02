@@ -1,9 +1,9 @@
 module uim.platform.connectivity.application.usecases.manage_certificates;
 
 import application.dto;
-import domain.entities.certificate;
-import domain.ports.certificate_repository;
-import domain.types;
+import uim.platform.connectivity.domain.entities.certificate;
+import uim.platform.connectivity.domain.ports.certificate_repository;
+import uim.platform.connectivity.domain.types;
 
 /// Application service for certificate store management.
 class ManageCertificatesUseCase

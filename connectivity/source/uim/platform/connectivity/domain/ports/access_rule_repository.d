@@ -1,7 +1,7 @@
 module uim.platform.connectivity.domain.ports.access_rule_repository;
 
-import domain.entities.access_rule;
-import domain.types;
+import uim.platform.connectivity.domain.entities.access_rule;
+import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - access rule persistence.
 interface AccessRuleRepository
