@@ -1,4 +1,4 @@
-module application.usecases.manage_content_providers;
+module uim.platform.content_agent.application.usecases.manage_content_providers;
 
 import uim.platform.content_agent.application.dto;
 import domain.entities.content_provider;

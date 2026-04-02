@@ -1,4 +1,4 @@
-module domain.ports.transport_request_repository;
+module uim.platform.content_agent.domain.ports.transport_request_repository;
 
 import domain.entities.transport_request;
 import domain.types;

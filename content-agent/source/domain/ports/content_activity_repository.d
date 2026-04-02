@@ -1,4 +1,4 @@
-module domain.ports.content_activity_repository;
+module uim.platform.content_agent.domain.ports.content_activity_repository;
 
 import domain.entities.content_activity;
 import domain.types;

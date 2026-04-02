@@ -1,4 +1,4 @@
-module domain.services.transport_validator;
+module uim.platform.content_agent.domain.services.transport_validator;
 
 import domain.entities.transport_request;
 import domain.entities.content_package;

@@ -1,4 +1,4 @@
-module domain.ports.export_job_repository;
+module uim.platform.content_agent.domain.ports.export_job_repository;
 
 import domain.entities.export_job;
 import domain.types;

@@ -1,4 +1,4 @@
-module application.usecases.manage_content_packages;
+module uim.platform.content_agent.application.usecases.manage_content_packages;
 
 import uim.platform.content_agent.application.dto;
 import domain.entities.content_package;

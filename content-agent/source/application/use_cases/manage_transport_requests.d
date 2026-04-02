@@ -1,4 +1,4 @@
-module application.usecases.manage_transport_requests;
+module uim.platform.content_agent.application.usecases.manage_transport_requests;
 
 import uim.platform.content_agent.application.dto;
 import domain.entities.transport_request;

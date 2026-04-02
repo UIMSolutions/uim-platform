@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.content_agent.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias ContentPackageId = string;

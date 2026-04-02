@@ -1,4 +1,4 @@
-module presentation.http.transport;
+module uim.platform.content_agent.presentation.http.transport;
 
 import vibe.http.server;
 import vibe.http.router;

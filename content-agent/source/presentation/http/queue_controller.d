@@ -1,4 +1,4 @@
-module presentation.http.queue;
+module uim.platform.content_agent.presentation.http.queue;
 
 import vibe.http.server;
 import vibe.http.router;

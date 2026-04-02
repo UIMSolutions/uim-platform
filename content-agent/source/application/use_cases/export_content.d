@@ -1,4 +1,4 @@
-module application.usecases.export_content;
+module uim.platform.content_agent.application.usecases.export_content;
 
 import uim.platform.content_agent.application.dto;
 import domain.entities.export_job;

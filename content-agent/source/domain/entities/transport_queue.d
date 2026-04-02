@@ -1,4 +1,4 @@
-module domain.entities.transport_queue;
+module uim.platform.content_agent.domain.entities.transport_queue;
 
 import domain.types;
 

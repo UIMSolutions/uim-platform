@@ -1,4 +1,4 @@
-module domain.entities.content_provider;
+module uim.platform.content_agent.domain.entities.content_provider;
 
 import domain.types;
 

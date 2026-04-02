@@ -1,4 +1,4 @@
-module domain.ports.transport_queue_repository;
+module uim.platform.content_agent.domain.ports.transport_queue_repository;
 
 import domain.entities.transport_queue;
 import domain.types;

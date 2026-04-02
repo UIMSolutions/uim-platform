@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.content_agent.application.dto;
 
 import domain.types;
 import domain.entities.content_package : ContentItem;

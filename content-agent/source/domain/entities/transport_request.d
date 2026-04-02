@@ -1,4 +1,4 @@
-module domain.entities.transport_request;
+module uim.platform.content_agent.domain.entities.transport_request;
 
 import domain.types;
 

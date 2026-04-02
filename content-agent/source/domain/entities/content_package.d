@@ -1,4 +1,4 @@
-module domain.entities.content_package;
+module uim.platform.content_agent.domain.entities.content_package;
 
 import domain.types;
 

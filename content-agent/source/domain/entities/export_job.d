@@ -1,4 +1,4 @@
-module domain.entities.export_job;
+module uim.platform.content_agent.domain.entities.export_job;
 
 import domain.types;
 

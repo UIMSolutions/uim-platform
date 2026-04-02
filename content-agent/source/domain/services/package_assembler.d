@@ -1,4 +1,4 @@
-module domain.services.package_assembler;
+module uim.platform.content_agent.domain.services.package_assembler;
 
 import domain.entities.content_package;
 import domain.entities.content_provider;

@@ -1,4 +1,4 @@
-module domain.entities.content_activity;
+module uim.platform.content_agent.domain.entities.content_activity;
 
 import domain.types;
 

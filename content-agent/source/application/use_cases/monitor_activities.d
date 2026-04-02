@@ -1,4 +1,4 @@
-module application.usecases.monitor_activities;
+module uim.platform.content_agent.application.usecases.monitor_activities;
 
 import uim.platform.content_agent.application.dto;
 import domain.entities.content_activity;

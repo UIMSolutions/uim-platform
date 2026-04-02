@@ -1,4 +1,4 @@
-module presentation.http.package;
+module uim.platform.content_agent.presentation.http.package;
 
 import vibe.http.server;
 import vibe.http.router;
