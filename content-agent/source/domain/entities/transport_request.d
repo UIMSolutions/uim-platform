@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.transport_request;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// A request to transport one or more content packages between landscapes.
 struct TransportRequest

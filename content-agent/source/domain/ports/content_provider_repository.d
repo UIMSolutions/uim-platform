@@ -1,7 +1,7 @@
 module uim.platform.content_agent.domain.ports.content_provider_repository;
 
-import domain.entities.content_provider;
-import domain.types;
+import uim.platform.content_agent.domain.entities.content_provider;
+import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content provider persistence.
 interface ContentProviderRepository

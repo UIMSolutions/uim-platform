@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.transport_request_repo;
 
-import domain.types;
-import domain.entities.transport_request;
-import domain.ports.transport_request_repository;
+import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent.domain.entities.transport_request;
+import uim.platform.content_agent.domain.ports.transport_request_repository;
 
 import std.algorithm : filter;
 import std.array : array;

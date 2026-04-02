@@ -1,7 +1,7 @@
 module uim.platform.content_agent.application.dto;
 
-import domain.types;
-import domain.entities.content_package : ContentItem;
+import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent.domain.entities.content_package : ContentItem;
 
 /// --- Command result ---
 

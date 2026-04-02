@@ -1,7 +1,7 @@
 module uim.platform.content_agent.domain.ports.transport_queue_repository;
 
-import domain.entities.transport_queue;
-import domain.types;
+import uim.platform.content_agent.domain.entities.transport_queue;
+import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - transport queue persistence.
 interface TransportQueueRepository

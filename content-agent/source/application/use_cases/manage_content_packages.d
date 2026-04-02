@@ -1,14 +1,14 @@
 module uim.platform.content_agent.application.usecases.manage_content_packages;
 
 import uim.platform.content_agent.application.dto;
-import domain.entities.content_package;
-import domain.entities.content_provider;
-import domain.entities.content_activity;
-import domain.ports.content_package_repository;
-import domain.ports.content_provider_repository;
-import domain.ports.content_activity_repository;
-import domain.services.package_assembler;
-import domain.types;
+import uim.platform.content_agent.domain.entities.content_package;
+import uim.platform.content_agent.domain.entities.content_provider;
+import uim.platform.content_agent.domain.entities.content_activity;
+import uim.platform.content_agent.domain.ports.content_package_repository;
+import uim.platform.content_agent.domain.ports.content_provider_repository;
+import uim.platform.content_agent.domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.services.package_assembler;
+import uim.platform.content_agent.domain.types;
 
 import std.conv : to;
 

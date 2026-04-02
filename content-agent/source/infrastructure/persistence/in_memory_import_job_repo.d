@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.import_job_repo;
 
-import domain.types;
-import domain.entities.import_job;
-import domain.ports.import_job_repository;
+import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent.domain.entities.import_job;
+import uim.platform.content_agent.domain.ports.import_job_repository;
 
 import std.algorithm : filter;
 import std.array : array;

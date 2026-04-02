@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.content_agent.application.usecases.import_content;
 import uim.platform.content_agent.application.dto;
-import domain.entities.import_job;
-import domain.types;
+import uim.platform.content_agent.domain.entities.import_job;
+import uim.platform.content_agent.domain.types;
 import presentation.http.json_utils;
 
 class ImportController

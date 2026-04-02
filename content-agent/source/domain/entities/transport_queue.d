@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.transport_queue;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// A configured transport queue (CTS+, Cloud TMS, or local).
 struct TransportQueue

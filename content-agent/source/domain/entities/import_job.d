@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.import_job;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// An import operation that deploys a content package into the target landscape.
 struct ImportJob

@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.export_job;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// An export operation that packages and ships content to a transport queue or file.
 struct ExportJob

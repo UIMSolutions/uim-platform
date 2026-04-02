@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.content_package;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// A single content item within a package.
 struct ContentItem

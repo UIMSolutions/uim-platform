@@ -1,7 +1,7 @@
 module uim.platform.content_agent.domain.ports.transport_request_repository;
 
-import domain.entities.transport_request;
-import domain.types;
+import uim.platform.content_agent.domain.entities.transport_request;
+import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - transport request persistence.
 interface TransportRequestRepository

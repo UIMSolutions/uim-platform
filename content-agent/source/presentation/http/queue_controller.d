@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.content_agent.application.usecases.manage_transport_queues;
 import uim.platform.content_agent.application.dto;
-import domain.entities.transport_queue;
-import domain.types;
+import uim.platform.content_agent.domain.entities.transport_queue;
+import uim.platform.content_agent.domain.types;
 import presentation.http.json_utils;
 
 class QueueController

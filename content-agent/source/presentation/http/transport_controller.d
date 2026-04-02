@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.content_agent.application.usecases.manage_transport_requests;
 import uim.platform.content_agent.application.dto;
-import domain.entities.transport_request;
-import domain.types;
+import uim.platform.content_agent.domain.entities.transport_request;
+import uim.platform.content_agent.domain.types;
 import presentation.http.json_utils;
 
 class TransportController

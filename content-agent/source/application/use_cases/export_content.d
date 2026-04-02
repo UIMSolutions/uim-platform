@@ -1,13 +1,13 @@
 module uim.platform.content_agent.application.usecases.export_content;
 
 import uim.platform.content_agent.application.dto;
-import domain.entities.export_job;
-import domain.entities.content_package;
-import domain.entities.content_activity;
-import domain.ports.export_job_repository;
-import domain.ports.content_package_repository;
-import domain.ports.content_activity_repository;
-import domain.types;
+import uim.platform.content_agent.domain.entities.export_job;
+import uim.platform.content_agent.domain.entities.content_package;
+import uim.platform.content_agent.domain.entities.content_activity;
+import uim.platform.content_agent.domain.ports.export_job_repository;
+import uim.platform.content_agent.domain.ports.content_package_repository;
+import uim.platform.content_agent.domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.types;
 
 import std.conv : to;
 

@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.content_activity;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// Audit record for a content operation.
 struct ContentActivity

@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.content_provider_repo;
 
-import domain.types;
-import domain.entities.content_provider;
-import domain.ports.content_provider_repository;
+import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent.domain.entities.content_provider;
+import uim.platform.content_agent.domain.ports.content_provider_repository;
 
 import std.algorithm : filter;
 import std.array : array;

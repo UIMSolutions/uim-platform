@@ -1,8 +1,8 @@
 module infrastructure.persistence.memory.content_activity_repo;
 
-import domain.types;
-import domain.entities.content_activity;
-import domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent.domain.entities.content_activity;
+import uim.platform.content_agent.domain.ports.content_activity_repository;
 
 import std.algorithm : filter, sort;
 import std.array : array;

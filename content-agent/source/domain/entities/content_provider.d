@@ -1,6 +1,6 @@
 module uim.platform.content_agent.domain.entities.content_provider;
 
-import domain.types;
+import uim.platform.content_agent.domain.types;
 
 /// Describes a content type offered by a provider.
 struct ProvidedContentType

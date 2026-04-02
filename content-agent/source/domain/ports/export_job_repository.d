@@ -1,7 +1,7 @@
 module uim.platform.content_agent.domain.ports.export_job_repository;
 
-import domain.entities.export_job;
-import domain.types;
+import uim.platform.content_agent.domain.entities.export_job;
+import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - export job persistence.
 interface ExportJobRepository

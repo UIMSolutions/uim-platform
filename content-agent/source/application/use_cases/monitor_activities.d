@@ -1,9 +1,9 @@
 module uim.platform.content_agent.application.usecases.monitor_activities;
 
 import uim.platform.content_agent.application.dto;
-import domain.entities.content_activity;
-import domain.ports.content_activity_repository;
-import domain.types;
+import uim.platform.content_agent.domain.entities.content_activity;
+import uim.platform.content_agent.domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.types;
 
 import std.conv : to;
 

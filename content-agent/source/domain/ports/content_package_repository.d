@@ -1,7 +1,7 @@
 module uim.platform.content_agent.domain.ports.content_package_repository;
 
-import domain.entities.content_package;
-import domain.types;
+import uim.platform.content_agent.domain.entities.content_package;
+import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content package persistence.
 interface ContentPackageRepository
