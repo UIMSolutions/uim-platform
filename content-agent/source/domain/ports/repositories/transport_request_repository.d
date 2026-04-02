@@ -4,8 +4,7 @@ import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - transport request persistence.
-interface TransportRequestRepository
-{
+interface TransportRequestRepository {
     TransportRequest findById(TransportRequestId id);
     TransportRequest[] findByTenant(TenantId tenantId);
     TransportRequest[] findByStatus(TenantId tenantId, TransportStatus status);

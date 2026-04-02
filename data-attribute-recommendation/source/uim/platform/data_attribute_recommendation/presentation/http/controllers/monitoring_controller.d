@@ -1,4 +1,4 @@
-module presentation.http.monitoring;
+module uim.platform.data_attribute_recommendation.presentation.http.controllers.monitoring_controller;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,34 +1,34 @@
-module presentation.http.dataset;
+module uim.platform.data_attribute_recommendation.presentation.http.controllers.model_controller;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_datasets;
+import application.usecases.manage_models;
 import application.dto;
-import domain.entities.dataset;
+import domain.entities.model_configuration;
 import domain.types;
 import presentation.http.json_utils;
 
-class DatasetController
+class ModelController
 {
-  private ManageDatasetsUseCase uc;
+  private ManageModelsUseCase uc;
 
-  this(ManageDatasetsUseCase uc)
+  this(ManageModelsUseCase uc)
   {
     this.uc = uc;
   }
 
   override void registerRoutes(URLRouter router)
   {
-    router.post("/api/v1/datasets", &handleCreate);
-    router.get("/api/v1/datasets", &handleList);
-    router.get("/api/v1/datasets/*", &handleGetById);
-    router.put("/api/v1/datasets/*", &handleUpdate);
-    router.delete_("/api/v1/datasets/*", &handleDelete);
-    router.post("/api/v1/datasets/validate/*", &handleValidate);
-    router.post("/api/v1/datasets/process/*", &handleProcess);
+    router.post("/api/v1/models", &handleCreate);
+    router.get("/api/v1/models", &handleList);
+    router.get("/api/v1/models/*", &handleGetById);
+    router.put("/api/v1/models/*", &handleUpdate);
+    router.delete_("/api/v1/models/*", &handleDelete);
+    router.post("/api/v1/models/activate/*", &handleActivate);
+    router.post("/api/v1/models/train/*", &handleTrain);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -36,15 +36,18 @@ class DatasetController
     try
     {
       auto j = req.json;
-      auto r = CreateDatasetRequest();
+      auto r = CreateModelConfigRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.datasetId = j.getString("datasetId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataType = parseDataType(j.getString("dataType"));
-      r.columnDefinitions = j.getString("columnDefinitions");
+      r.modelType = parseModelType(j.getString("modelType"));
+      r.targetColumns = j.getString("targetColumns");
+      r.featureColumns = j.getString("featureColumns");
+      r.hyperparameters = j.getString("hyperparameters");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
-      auto result = uc.createDataset(r);
+      auto result = uc.createModelConfig(r);
       if (result.isSuccess)
       {
         auto resp = Json.emptyObject;
@@ -65,11 +68,11 @@ class DatasetController
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto items = uc.listDatasets(tenantId);
+      auto items = uc.listModelConfigs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
-        arr ~= serializeDataset(d);
+      foreach (ref c; items)
+        arr ~= serializeConfig(c);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -88,13 +91,13 @@ class DatasetController
     {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto ds = uc.getDataset(id, tenantId);
-      if (ds is null)
+      auto config = uc.getModelConfig(id, tenantId);
+      if (config is null)
       {
-        writeError(res, 404, "Dataset not found");
+        writeError(res, 404, "Model configuration not found");
         return;
       }
-      res.writeJsonBody(serializeDataset(*ds), 200);
+      res.writeJsonBody(serializeConfig(*config), 200);
     }
     catch (Exception e)
     {
@@ -108,14 +111,17 @@ class DatasetController
     {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
-      auto r = UpdateDatasetRequest();
+      auto r = UpdateModelConfigRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.columnDefinitions = j.getString("columnDefinitions");
+      r.modelType = parseModelType(j.getString("modelType"));
+      r.targetColumns = j.getString("targetColumns");
+      r.featureColumns = j.getString("featureColumns");
+      r.hyperparameters = j.getString("hyperparameters");
 
-      auto result = uc.updateDataset(r);
+      auto result = uc.updateModelConfig(r);
       if (result.isSuccess)
       {
         auto resp = Json.emptyObject;
@@ -124,7 +130,7 @@ class DatasetController
       }
       else
       {
-        auto status = result.error == "Dataset not found" ? 404 : 400;
+        auto status = result.error == "Model configuration not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
     }
@@ -134,13 +140,13 @@ class DatasetController
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
   {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto result = uc.validateDataset(id, tenantId);
+      auto result = uc.activateConfig(id, tenantId);
       if (result.isSuccess)
       {
         auto resp = Json.emptyObject;
@@ -150,7 +156,7 @@ class DatasetController
       }
       else
       {
-        auto status = result.error == "Dataset not found" ? 404 : 400;
+        auto status = result.error == "Model configuration not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
     }
@@ -160,25 +166,26 @@ class DatasetController
     }
   }
 
-  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res)
   {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto result = uc.processDataset(id, tenantId);
+      auto r = StartTrainingRequest();
+      r.modelConfigId = id;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.createdBy = req.headers.get("X-User-Id", "system");
+
+      auto result = uc.startTraining(r);
       if (result.isSuccess)
       {
         auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("completed");
-        res.writeJsonBody(resp, 200);
+        resp["jobId"] = Json(result.id);
+        resp["status"] = Json("running");
+        res.writeJsonBody(resp, 202);
       }
       else
-      {
-        auto status = result.error == "Dataset not found" ? 404 : 400;
-        writeError(res, status, result.error);
-      }
+        writeError(res, 400, result.error);
     }
     catch (Exception e)
     {
@@ -192,7 +199,7 @@ class DatasetController
     {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto result = uc.deleteDataset(id, tenantId);
+      auto result = uc.deleteModelConfig(id, tenantId);
       if (result.isSuccess)
       {
         auto resp = Json.emptyObject;
@@ -200,7 +207,10 @@ class DatasetController
         res.writeJsonBody(resp, 200);
       }
       else
-        writeError(res, 404, result.error);
+      {
+        auto status = result.error == "Model configuration not found" ? 404 : 400;
+        writeError(res, status, result.error);
+      }
     }
     catch (Exception e)
     {
@@ -208,21 +218,22 @@ class DatasetController
     }
   }
 
-  private static Json serializeDataset(ref const Dataset d)
+  private static Json serializeConfig(ref const ModelConfiguration c)
   {
     auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["status"] = Json(d.status.to!string);
-    j["dataType"] = Json(d.dataType.to!string);
-    j["columnDefinitions"] = Json(d.columnDefinitions);
-    j["rowCount"] = Json(cast(long) d.rowCount);
-    j["validationMessage"] = Json(d.validationMessage);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
+    j["id"] = Json(c.id);
+    j["tenantId"] = Json(c.tenantId);
+    j["datasetId"] = Json(c.datasetId);
+    j["name"] = Json(c.name);
+    j["description"] = Json(c.description);
+    j["modelType"] = Json(c.modelType.to!string);
+    j["targetColumns"] = Json(c.targetColumns);
+    j["featureColumns"] = Json(c.featureColumns);
+    j["hyperparameters"] = Json(c.hyperparameters);
+    j["status"] = Json(c.status.to!string);
+    j["createdBy"] = Json(c.createdBy);
+    j["createdAt"] = Json(c.createdAt);
+    j["updatedAt"] = Json(c.updatedAt);
     return j;
   }
 }

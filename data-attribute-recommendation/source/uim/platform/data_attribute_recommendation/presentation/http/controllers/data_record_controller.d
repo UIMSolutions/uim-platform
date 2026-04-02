@@ -1,4 +1,4 @@
-module presentation.http.data_record;
+module uim.platform.data_attribute_recommendation.presentation.http.controllers.data_record_controller;
 
 import vibe.http.server;
 import vibe.http.router;

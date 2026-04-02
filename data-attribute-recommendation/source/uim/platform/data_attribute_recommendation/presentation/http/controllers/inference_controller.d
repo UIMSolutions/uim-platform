@@ -1,4 +1,4 @@
-module presentation.http.inference;
+module uim.platform.data_attribute_recommendation.presentation.http.controllers.inference_controller;
 
 import vibe.http.server;
 import vibe.http.router;
