@@ -30,17 +30,17 @@ module uim.platform.management.infrastructure.container;
 // import application.usecases.get_account_overview;
 
 // // Controllers
-// import presentation.http.global_account_controller;
-// import presentation.http.directory_controller;
-// import presentation.http.subaccount_controller;
-// import presentation.http.entitlement_controller;
-// import presentation.http.environment_controller;
-// import presentation.http.subscription_controller;
-// import presentation.http.service_plan_controller;
-// import presentation.http.label_controller;
-// import presentation.http.event_controller;
-// import presentation.http.overview_controller;
-// import presentation.http.health_controller;
+// import presentation.http.global_account;
+// import presentation.http.directory;
+// import presentation.http.subaccount;
+// import presentation.http.entitlement;
+// import presentation.http.environment;
+// import presentation.http.subscription;
+// import presentation.http.service_plan;
+// import presentation.http.label;
+// import presentation.http.event;
+// import presentation.http.overview;
+// import presentation.http.health;
 
 import uim.platform.management;
 

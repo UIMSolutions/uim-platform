@@ -1,4 +1,4 @@
-module presentation.http.find_controller;
+module presentation.http.find;
 
 import vibe.http.server;
 import vibe.http.router;

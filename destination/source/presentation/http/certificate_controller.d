@@ -1,4 +1,4 @@
-module presentation.http.certificate_controller;
+module presentation.http.certificate;
 
 import vibe.http.server;
 import vibe.http.router;

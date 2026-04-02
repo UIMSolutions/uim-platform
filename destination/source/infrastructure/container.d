@@ -14,11 +14,11 @@ import application.usecases.manage_fragments;
 import application.usecases.find_destination;
 
 // Controllers
-import presentation.http.destination_controller;
-import presentation.http.certificate_controller;
-import presentation.http.fragment_controller;
-import presentation.http.find_controller;
-import presentation.http.health_controller;
+import presentation.http.destination;
+import presentation.http.certificate;
+import presentation.http.fragment;
+import presentation.http.find;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

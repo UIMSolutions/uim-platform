@@ -1,4 +1,4 @@
-module presentation.http.fragment_controller;
+module presentation.http.fragment;
 
 import vibe.http.server;
 import vibe.http.router;
