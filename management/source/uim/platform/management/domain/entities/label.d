@@ -1,4 +1,4 @@
-module domain.entities.label;
+module uim.platform.management.domain.entities.label;
 
 import uim.platform.management.domain.types;
 

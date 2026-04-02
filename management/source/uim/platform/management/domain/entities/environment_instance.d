@@ -1,4 +1,4 @@
-module domain.entities.environment_instance;
+module uim.platform.management.domain.entities.environment_instance;
 
 import uim.platform.management.domain.types;
 

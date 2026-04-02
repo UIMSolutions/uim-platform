@@ -1,11 +1,10 @@
-module domain.ports.label_repository;
+module uim.platform.management.domain.ports.label_repository;
 
 import uim.platform.management.domain.entities.label;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — label/tag persistence.
-interface LabelRepository
-{
+interface LabelRepository {
     Label findById(LabelId id);
     Label[] findByResource(LabeledResourceType resourceType, string resourceId);
     Label[] findByKey(LabeledResourceType resourceType, string key);

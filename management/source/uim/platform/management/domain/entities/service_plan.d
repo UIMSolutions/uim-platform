@@ -1,4 +1,4 @@
-module domain.entities.service_plan;
+module uim.platform.management.domain.entities.service_plan;
 
 import uim.platform.management.domain.types;
 

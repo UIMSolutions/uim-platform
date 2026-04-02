@@ -1,11 +1,10 @@
-module domain.ports.platform_event_repository;
+module uim.platform.management.domain.ports.platform_event_repository;
 
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — platform event persistence.
-interface PlatformEventRepository
-{
+interface PlatformEventRepository {
     PlatformEvent findById(PlatformEventId id);
     PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId);
     PlatformEvent[] findBySubaccount(SubaccountId subaccountId);

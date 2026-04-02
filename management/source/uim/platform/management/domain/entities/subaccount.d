@@ -1,4 +1,4 @@
-module domain.entities.subaccount;
+module uim.platform.management.domain.entities.subaccount;
 
 import uim.platform.management.domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.platform_event;
+module uim.platform.management.domain.entities.platform_event;
 
 import uim.platform.management.domain.types;
 

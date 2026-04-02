@@ -1,4 +1,4 @@
-module presentation.http.directory_controller;
+module uim.platform.management.presentation.http.controllers.directory_controller;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.management.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias GlobalAccountId = string;

@@ -1,4 +1,4 @@
-module domain.entities.subscription;
+module uim.platform.management.domain.entities.subscription;
 
 import uim.platform.management.domain.types;
 

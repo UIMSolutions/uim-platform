@@ -1,4 +1,4 @@
-module domain.entities.entitlement;
+module uim.platform.management.domain.entities.entitlement;
 
 import uim.platform.management.domain.types;
 

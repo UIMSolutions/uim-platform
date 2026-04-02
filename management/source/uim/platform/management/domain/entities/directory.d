@@ -1,4 +1,4 @@
-module domain.entities.directory;
+module uim.platform.management.domain.entities.directory;
 
 import uim.platform.management.domain.types;
 

@@ -1,31 +1,29 @@
-module domain.services.entitlement_evaluator;
+module uim.platform.management.domain.services.entitlement_evaluator;
 
 import uim.platform.management.domain.entities.entitlement;
 import uim.platform.management.domain.types;
 
 /// Domain service: evaluates entitlement quota constraints,
 /// checks availability of service plan quotas.
-class EntitlementEvaluator
-{
+class EntitlementEvaluator {
     /// Check if a quota assignment is valid.
-    QuotaValidation validateQuotaAssignment(int requestedQuota, int currentlyAssigned, int maxAvailable, bool unlimited)
-    {
+    QuotaValidation validateQuotaAssignment(int requestedQuota, int currentlyAssigned, int maxAvailable, bool unlimited) {
         QuotaValidation v;
         v.valid = true;
 
-        if (requestedQuota <= 0)
-        {
+        if (requestedQuota <= 0) {
             v.valid = false;
             v.reason = "Requested quota must be greater than zero";
             return v;
         }
 
-        if (!unlimited && (currentlyAssigned + requestedQuota) > maxAvailable)
-        {
+        if (!unlimited && (currentlyAssigned + requestedQuota) > maxAvailable) {
             v.valid = false;
             import std.conv : to;
+
             v.reason = "Insufficient quota: requested " ~ requestedQuota.to!string
-                ~ ", available " ~ (maxAvailable - currentlyAssigned).to!string
+                ~ ", available " ~ (
+                    maxAvailable - currentlyAssigned).to!string
                 ~ " of " ~ maxAvailable.to!string;
             return v;
         }
@@ -34,15 +32,13 @@ class EntitlementEvaluator
     }
 
     /// Calculate remaining quota after an assignment.
-    int calculateRemaining(int assigned, int used)
-    {
+    int calculateRemaining(int assigned, int used) {
         auto rem = assigned - used;
         return rem > 0 ? rem : 0;
     }
 
     /// Check if an entitlement has exceeded its quota.
-    bool isOverQuota(Entitlement ent)
-    {
+    bool isOverQuota(Entitlement ent) {
         if (ent.unlimited)
             return false;
         return ent.quotaUsed > ent.quotaAssigned;
@@ -50,8 +46,7 @@ class EntitlementEvaluator
 }
 
 /// Result of quota validation.
-struct QuotaValidation
-{
+struct QuotaValidation {
     bool valid;
     string reason;
 }

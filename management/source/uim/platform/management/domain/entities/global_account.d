@@ -1,4 +1,4 @@
-module domain.entities.global_account;
+module uim.platform.management.domain.entities.global_account;
 
 import uim.platform.management.domain.types;
 
