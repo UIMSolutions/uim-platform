@@ -20,7 +20,9 @@ class CheckController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
-        router.post("/api/v1/checks", &handleCreate);
+        super.registerRoutes(router);
+
+       router.post("/api/v1/checks", &handleCreate);
         router.get("/api/v1/checks", &handleList);
         router.get("/api/v1/checks/results/*", &handleGetResults);
         router.get("/api/v1/checks/*", &handleGetById);

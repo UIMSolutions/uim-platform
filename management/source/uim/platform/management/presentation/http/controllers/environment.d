@@ -10,14 +10,14 @@ import uim.platform.management.domain.entities.environment_instance;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
-class EnvironmentController
-{
+class EnvironmentController : SAPController {
     private ManageEnvironmentInstancesUseCase uc;
 
-    this(ManageEnvironmentInstancesUseCase uc) { this.uc = uc; }
+    this(ManageEnvironmentInstancesUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/environments", &handleCreate);
         router.get("/api/v1/environments", &handleList);
         router.get("/api/v1/environments/*", &handleGet);
@@ -25,10 +25,8 @@ class EnvironmentController
         router.post("/api/v1/environments/deprovision/*", &handleDeprovision);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateEnvironmentInstanceRequest r;
             r.subaccountId = j.getString("subaccountId");
@@ -46,23 +44,18 @@ class EnvironmentController
             r.labels = jsonStrMap(j, "labels");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto subId = req.params.get("subaccountId");
             auto envType = req.params.get("environmentType");
 
@@ -78,34 +71,27 @@ class EnvironmentController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto inst = uc.getById(id);
-            if (inst.id.length == 0)
-            {
+            if (inst.id.length == 0) {
                 writeError(res, 404, "Environment instance not found");
                 return;
             }
             res.writeJsonBody(serializeEnvironment(inst), 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateEnvironmentInstanceRequest r;
@@ -121,29 +107,24 @@ class EnvironmentController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.deprovision(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }
 
-private Json serializeEnvironment(ref EnvironmentInstance inst)
-{
+private Json serializeEnvironment(ref EnvironmentInstance inst) {
     auto j = Json.emptyObject;
     j["id"] = Json(inst.id);
     j["subaccountId"] = Json(inst.subaccountId);
@@ -156,9 +137,9 @@ private Json serializeEnvironment(ref EnvironmentInstance inst)
     j["landscapeLabel"] = Json(inst.landscapeLabel);
     j["technicalKey"] = Json(inst.technicalKey);
     j["dashboardUrl"] = Json(inst.dashboardUrl);
-    j["memoryQuotaMb"] = Json(cast(long) inst.memoryQuotaMb);
-    j["routeQuota"] = Json(cast(long) inst.routeQuota);
-    j["serviceQuota"] = Json(cast(long) inst.serviceQuota);
+    j["memoryQuotaMb"] = Json(cast(long)inst.memoryQuotaMb);
+    j["routeQuota"] = Json(cast(long)inst.routeQuota);
+    j["serviceQuota"] = Json(cast(long)inst.serviceQuota);
     j["createdBy"] = Json(inst.createdBy);
     j["createdAt"] = Json(inst.createdAt);
     j["modifiedAt"] = Json(inst.modifiedAt);
@@ -167,4 +148,8 @@ private Json serializeEnvironment(ref EnvironmentInstance inst)
     return j;
 }
 
-private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) {
+    import std.conv : to;
+
+    return val.to!string;
+}

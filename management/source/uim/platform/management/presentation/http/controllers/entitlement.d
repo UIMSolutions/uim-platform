@@ -10,14 +10,14 @@ import uim.platform.management.domain.entities.entitlement;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
-class EntitlementController
-{
+class EntitlementController {
     private ManageEntitlementsUseCase uc;
 
-    this(ManageEntitlementsUseCase uc) { this.uc = uc; }
+    this(ManageEntitlementsUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/entitlements", &handleAssign);
         router.get("/api/v1/entitlements", &handleList);
         router.get("/api/v1/entitlements/*", &handleGet);
@@ -26,10 +26,8 @@ class EntitlementController
         router.delete_("/api/v1/entitlements/*", &handleDelete);
     }
 
-    private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             AssignEntitlementRequest r;
             r.globalAccountId = j.getString("globalAccountId");
@@ -44,23 +42,18 @@ class EntitlementController
             r.assignedBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.assign(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto gaId = req.params.get("globalAccountId");
             auto subId = req.params.get("subaccountId");
             auto dirId = req.params.get("directoryId");
@@ -79,34 +72,27 @@ class EntitlementController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto ent = uc.getById(id);
-            if (ent.id.length == 0)
-            {
+            if (ent.id.length == 0) {
                 writeError(res, 404, "Entitlement not found");
                 return;
             }
             res.writeJsonBody(serializeEntitlement(ent), 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateEntitlementQuotaRequest r;
@@ -118,44 +104,36 @@ class EntitlementController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.revoke(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.remove(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 204);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }
 
-private Json serializeEntitlement(ref Entitlement e)
-{
+private Json serializeEntitlement(ref Entitlement e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["globalAccountId"] = Json(e.globalAccountId);
@@ -167,9 +145,9 @@ private Json serializeEntitlement(ref Entitlement e)
     j["planDisplayName"] = Json(e.planDisplayName);
     j["category"] = Json(enumStr(e.category));
     j["status"] = Json(enumStr(e.status));
-    j["quotaAssigned"] = Json(cast(long) e.quotaAssigned);
-    j["quotaUsed"] = Json(cast(long) e.quotaUsed);
-    j["quotaRemaining"] = Json(cast(long) e.quotaRemaining);
+    j["quotaAssigned"] = Json(cast(long)e.quotaAssigned);
+    j["quotaUsed"] = Json(cast(long)e.quotaUsed);
+    j["quotaRemaining"] = Json(cast(long)e.quotaRemaining);
     j["unlimited"] = Json(e.unlimited);
     j["autoAssign"] = Json(e.autoAssign);
     j["assignedAt"] = Json(e.assignedAt);
@@ -178,4 +156,8 @@ private Json serializeEntitlement(ref Entitlement e)
     return j;
 }
 
-private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) {
+    import std.conv : to;
+
+    return val.to!string;
+}

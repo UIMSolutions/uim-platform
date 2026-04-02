@@ -23,6 +23,8 @@ class DocumentController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
+       super.registerRoutes(router);
+
     router.post("/api/v1/documents", &handleCreate);
     router.get("/api/v1/documents", &handleList);
     router.get("/api/v1/documents/search", &handleSearch);

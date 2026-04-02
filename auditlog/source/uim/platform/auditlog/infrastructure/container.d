@@ -99,7 +99,7 @@ Container buildContainer(AppConfig config)
     c.securityEventController = new SecurityEventController(c.writeSecurityEvent);
     c.dataAccessController = new DataAccessController(c.writeDataAccessLog);
     c.configChangeController = new ConfigChangeController(c.writeConfigChange);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("auditlog");
 
     return c;
 }

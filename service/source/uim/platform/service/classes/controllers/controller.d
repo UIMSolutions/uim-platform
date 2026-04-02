@@ -1,4 +1,4 @@
-module uim.platform.service.classes.controller;
+module uim.platform.service.classes.controllers.controller;
 
 import uim.platform.service;
 

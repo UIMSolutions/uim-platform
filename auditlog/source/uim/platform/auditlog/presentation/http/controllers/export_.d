@@ -22,6 +22,8 @@ class ExportController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/exports", &handleCreate);
         router.get("/api/v1/exports", &handleList);
         router.get("/api/v1/exports/*", &handleGet);

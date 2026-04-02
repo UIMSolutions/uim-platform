@@ -11,7 +11,7 @@ import domain.entities.content_package;
 import domain.types;
 import presentation.http.json_utils;
 
-class PackageController {
+class PackageController : SAPController {
     private ManageContentPackagesUseCase uc;
 
     this(ManageContentPackagesUseCase uc) {
@@ -19,6 +19,8 @@ class PackageController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/packages", &handleCreate);
         router.get("/api/v1/packages", &handleList);
         router.get("/api/v1/packages/*", &handleGetById);

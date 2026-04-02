@@ -19,6 +19,8 @@ class ChannelController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
+       super.registerRoutes(router);
+
         router.post("/api/v1/channels", &handleCreate);
         router.get("/api/v1/channels", &handleList);
         router.get("/api/v1/channels/*", &handleGetById);

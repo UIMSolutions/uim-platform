@@ -10,7 +10,7 @@ import uim.platform.management.domain.entities.directory;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;
 
-class DirectoryController {
+class DirectoryController : SAPController {
     private ManageDirectoriesUseCase uc;
 
     this(ManageDirectoriesUseCase uc) {

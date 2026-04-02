@@ -103,7 +103,7 @@ Container buildContainer(AppConfig config) {
     c.businessRoleController = new BusinessRoleController(c.manageBusinessRoles);
     c.transportRequestController = new TransportRequestController(c.manageTransportRequests);
     c.applicationJobController = new ApplicationJobController(c.manageApplicationJobs);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("abap-environment");
 
     return c;
 }
