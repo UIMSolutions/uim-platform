@@ -1,4 +1,4 @@
-module presentation.http.namespace_controller;
+module presentation.http.namespace;
 
 import vibe.http.server;
 import vibe.http.router;

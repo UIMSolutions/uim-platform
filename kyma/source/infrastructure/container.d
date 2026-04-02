@@ -29,16 +29,16 @@ import application.usecases.manage_modules;
 import application.usecases.manage_applications;
 
 // Controllers
-import presentation.http.environment_controller;
-import presentation.http.namespace_controller;
-import presentation.http.function_controller;
-import presentation.http.api_rule_controller;
-import presentation.http.service_instance_controller;
-import presentation.http.service_binding_controller;
-import presentation.http.event_subscription_controller;
-import presentation.http.module_controller;
-import presentation.http.application_controller;
-import presentation.http.health_controller;
+import presentation.http.environment;
+import presentation.http.namespace;
+import presentation.http.function;
+import presentation.http.api_rule;
+import presentation.http.service_instance;
+import presentation.http.service_binding;
+import presentation.http.event_subscription;
+import presentation.http.module;
+import presentation.http.application;
+import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

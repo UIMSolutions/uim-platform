@@ -1,4 +1,4 @@
-module presentation.http.api_rule_controller;
+module presentation.http.api_rule;
 
 import vibe.http.server;
 import vibe.http.router;

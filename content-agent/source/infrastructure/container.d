@@ -21,14 +21,14 @@ import application.usecases.manage_transport_queues;
 import application.usecases.monitor_activities;
 
 // Controllers
-import presentation.http.package_controller;
-import presentation.http.provider_controller;
-import presentation.http.transport_controller;
-import presentation.http.export_controller;
-import presentation.http.import_controller;
-import presentation.http.queue_controller;
-import presentation.http.activity_controller;
-import presentation.http.health_controller;
+import presentation.http.package;
+import presentation.http.provider;
+import presentation.http.transport;
+import presentation.http.export;
+import presentation.http.import;
+import presentation.http.queue;
+import presentation.http.activity;
+import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

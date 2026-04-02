@@ -1,4 +1,4 @@
-module presentation.http.event_subscription_controller;
+module presentation.http.event_subscription;
 
 import vibe.http.server;
 import vibe.http.router;

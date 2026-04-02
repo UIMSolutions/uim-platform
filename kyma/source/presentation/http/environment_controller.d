@@ -1,4 +1,4 @@
-module presentation.http.environment_controller;
+module presentation.http.environment;
 
 import vibe.http.server;
 import vibe.http.router;

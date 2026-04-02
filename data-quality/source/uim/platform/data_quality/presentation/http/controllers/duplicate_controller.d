@@ -1,4 +1,4 @@
-module uim.platform.data-quality.presentation.http.controllers.duplicate_controller;
+module uim.platform.data-quality.presentation.http.controllers.duplicate;
 
 import vibe.http.server;
 import vibe.http.router;

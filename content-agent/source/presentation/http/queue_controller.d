@@ -1,4 +1,4 @@
-module presentation.http.queue_controller;
+module presentation.http.queue;
 
 import vibe.http.server;
 import vibe.http.router;

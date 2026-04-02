@@ -1,4 +1,4 @@
-module uim.platform.data-quality.presentation.http.controllers.validate_controller;
+module uim.platform.data-quality.presentation.http.controllers.validate;
 
 import vibe.http.server;
 import vibe.http.router;
