@@ -1,60 +1,64 @@
 module uim.platform.management.infrastructure.container;
 
-import uim.platform.management.infrastructure.config;
+// import uim.platform.management.infrastructure.config;
 
-// Repositories
-import uim.platform.management.infrastructure.persistence.memory.global_account_repo;
-import uim.platform.management.infrastructure.persistence.memory.directory_repo;
-import uim.platform.management.infrastructure.persistence.memory.subaccount_repo;
-import uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
-import uim.platform.management.infrastructure.persistence.memory.environment_instance_repo;
-import uim.platform.management.infrastructure.persistence.memory.subscription_repo;
-import uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
-import uim.platform.management.infrastructure.persistence.memory.platform_event_repo;
-import uim.platform.management.infrastructure.persistence.memory.label_repo;
+// // Repositories
+// import uim.platform.management.infrastructure.persistence.memory.global_account_repo;
+// import uim.platform.management.infrastructure.persistence.memory.directory_repo;
+// import uim.platform.management.infrastructure.persistence.memory.subaccount_repo;
+// import uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
+// import uim.platform.management.infrastructure.persistence.memory.environment_instance_repo;
+// import uim.platform.management.infrastructure.persistence.memory.subscription_repo;
+// import uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
+// import uim.platform.management.infrastructure.persistence.memory.platform_event_repo;
+// import uim.platform.management.infrastructure.persistence.memory.label_repo;
 
-// Domain Services
-import uim.platform.management.domain.services.entitlement_evaluator;
-import uim.platform.management.domain.services.environment_provisioner;
+// // Domain Services
+// import uim.platform.management.domain.services.entitlement_evaluator;
+// import uim.platform.management.domain.services.environment_provisioner;
 
-// Use Cases
-import application.usecases.manage_global_accounts;
-import application.usecases.manage_directories;
-import application.usecases.manage_subaccounts;
-import application.usecases.manage_entitlements;
-import application.usecases.manage_environment_instances;
-import application.usecases.manage_subscriptions;
-import application.usecases.manage_service_plans;
-import application.usecases.manage_labels;
-import application.usecases.query_platform_events;
-import application.usecases.get_account_overview;
+// // Use Cases
+// import application.usecases.manage_global_accounts;
+// import application.usecases.manage_directories;
+// import application.usecases.manage_subaccounts;
+// import application.usecases.manage_entitlements;
+// import application.usecases.manage_environment_instances;
+// import application.usecases.manage_subscriptions;
+// import application.usecases.manage_service_plans;
+// import application.usecases.manage_labels;
+// import application.usecases.query_platform_events;
+// import application.usecases.get_account_overview;
 
-// Controllers
-import presentation.http.global_account_controller;
-import presentation.http.directory_controller;
-import presentation.http.subaccount_controller;
-import presentation.http.entitlement_controller;
-import presentation.http.environment_controller;
-import presentation.http.subscription_controller;
-import presentation.http.service_plan_controller;
-import presentation.http.label_controller;
-import presentation.http.event_controller;
-import presentation.http.overview_controller;
-import presentation.http.health_controller;
+// // Controllers
+// import presentation.http.global_account_controller;
+// import presentation.http.directory_controller;
+// import presentation.http.subaccount_controller;
+// import presentation.http.entitlement_controller;
+// import presentation.http.environment_controller;
+// import presentation.http.subscription_controller;
+// import presentation.http.service_plan_controller;
+// import presentation.http.label_controller;
+// import presentation.http.event_controller;
+// import presentation.http.overview_controller;
+// import presentation.http.health_controller;
+
+import uim.platform.management;
+
+mixin(ShowModule!());
+@safe:
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
-    InMemoryGlobalAccountRepository globalAccountRepo;
-    InMemoryDirectoryRepository directoryRepo;
-    InMemorySubaccountRepository subaccountRepo;
-    InMemoryEntitlementRepository entitlementRepo;
-    InMemoryEnvironmentInstanceRepository environmentRepo;
-    InMemorySubscriptionRepository subscriptionRepo;
-    InMemoryServicePlanRepository servicePlanRepo;
-    InMemoryPlatformEventRepository eventRepo;
-    InMemoryLabelRepository labelRepo;
+    MemoryGlobalAccountRepository globalAccountRepo;
+    MemoryDirectoryRepository directoryRepo;
+    MemorySubaccountRepository subaccountRepo;
+    MemoryEntitlementRepository entitlementRepo;
+    MemoryEnvironmentInstanceRepository environmentRepo;
+    MemorySubscriptionRepository subscriptionRepo;
+    MemoryServicePlanRepository servicePlanRepo;
+    MemoryPlatformEventRepository eventRepo;
+    MemoryLabelRepository labelRepo;
 
     // Domain services
     EntitlementEvaluator entitlementEvaluator;
@@ -87,8 +91,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters

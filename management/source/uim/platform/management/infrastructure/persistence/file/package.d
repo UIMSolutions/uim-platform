@@ -1,4 +1,4 @@
-module uim.platform.management.infrastructure.persistence.memory;
+module uim.platform.management.infrastructure.persistence.file;
 
 public {
 }

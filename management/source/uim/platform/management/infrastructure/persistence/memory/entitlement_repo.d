@@ -1,46 +1,53 @@
 module uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
 
-import uim.platform.management.domain.types;
-import uim.platform.management.domain.entities.entitlement;
-import uim.platform.management.domain.ports.entitlement_repository;
+// import uim.platform.management.domain.types;
+// import uim.platform.management.domain.entities.entitlement;
+// import uim.platform.management.domain.ports.entitlement_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
-class MemoryEntitlementRepository : EntitlementRepository
-{
+import uim.platform.management;
+
+mixin(ShowModule!());
+@safe:
+
+class MemoryEntitlementRepository : EntitlementRepository {
     private Entitlement[EntitlementId] store;
 
-    Entitlement findById(EntitlementId id)
-    {
+    Entitlement findById(EntitlementId id) {
         if (auto p = id in store)
             return *p;
         return Entitlement.init;
     }
 
-    Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId)
-    {
+    Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
         return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
     }
 
-    Entitlement[] findBySubaccount(SubaccountId subaccountId)
-    {
+    Entitlement[] findBySubaccount(SubaccountId subaccountId) {
         return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
     }
 
-    Entitlement[] findByDirectory(DirectoryId directoryId)
-    {
+    Entitlement[] findByDirectory(DirectoryId directoryId) {
         return store.byValue().filter!(e => e.directoryId == directoryId).array;
     }
 
-    Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId)
-    {
+    Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
         return store.byValue()
             .filter!(e => e.globalAccountId == globalAccountId && e.servicePlanId == planId)
             .array;
     }
 
-    void save(Entitlement ent) { store[ent.id] = ent; }
-    void update(Entitlement ent) { store[ent.id] = ent; }
-    void remove(EntitlementId id) { store.remove(id); }
+    void save(Entitlement ent) {
+        store[ent.id] = ent;
+    }
+
+    void update(Entitlement ent) {
+        store[ent.id] = ent;
+    }
+
+    void remove(EntitlementId id) {
+        store.remove(id);
+    }
 }

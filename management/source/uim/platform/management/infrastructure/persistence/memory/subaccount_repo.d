@@ -1,58 +1,63 @@
 module uim.platform.management.infrastructure.persistence.memory.subaccount_repo;
 
-import uim.platform.management.domain.types;
-import uim.platform.management.domain.entities.subaccount;
-import uim.platform.management.domain.ports.subaccount_repository;
+// import uim.platform.management.domain.types;
+// import uim.platform.management.domain.entities.subaccount;
+// import uim.platform.management.domain.ports.subaccount_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
-class MemorySubaccountRepository : SubaccountRepository
-{
+import uim.platform.management;
+
+mixin(ShowModule!());
+@safe:
+
+class MemorySubaccountRepository : SubaccountRepository {
     private Subaccount[SubaccountId] store;
 
-    Subaccount findById(SubaccountId id)
-    {
+    Subaccount findById(SubaccountId id) {
         if (auto p = id in store)
             return *p;
         return Subaccount.init;
     }
 
-    Subaccount findBySubdomain(string subdomain)
-    {
-        foreach (ref s; store.byValue())
-        {
+    Subaccount findBySubdomain(string subdomain) {
+        foreach (ref s; store.byValue()) {
             if (s.subdomain == subdomain)
                 return s;
         }
         return Subaccount.init;
     }
 
-    Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId)
-    {
+    Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId) {
         return store.byValue().filter!(e => e.globalAccountId == globalAccountId).array;
     }
 
-    Subaccount[] findByDirectory(DirectoryId directoryId)
-    {
+    Subaccount[] findByDirectory(DirectoryId directoryId) {
         return store.byValue().filter!(e => e.parentDirectoryId == directoryId).array;
     }
 
-    Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region)
-    {
+    Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region) {
         return store.byValue()
             .filter!(e => e.globalAccountId == globalAccountId && e.region == region)
             .array;
     }
 
-    Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status)
-    {
+    Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status) {
         return store.byValue()
             .filter!(e => e.globalAccountId == globalAccountId && e.status == status)
             .array;
     }
 
-    void save(Subaccount sub) { store[sub.id] = sub; }
-    void update(Subaccount sub) { store[sub.id] = sub; }
-    void remove(SubaccountId id) { store.remove(id); }
+    void save(Subaccount sub) {
+        store[sub.id] = sub;
+    }
+
+    void update(Subaccount sub) {
+        store[sub.id] = sub;
+    }
+
+    void remove(SubaccountId id) {
+        store.remove(id);
+    }
 }
