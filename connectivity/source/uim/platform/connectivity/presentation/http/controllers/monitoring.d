@@ -1,4 +1,4 @@
-module uim.platform.connectivity.presentation.http.monitoring;
+module uim.platform.connectivity.presentation.http.controllers.monitoring;
 
 // import vibe.http.server;
 // import vibe.http.router;

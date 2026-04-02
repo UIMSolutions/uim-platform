@@ -1,4 +1,4 @@
-module uim.platform.connectivity.presentation.http.connector;
+module uim.platform.connectivity.presentation.http.controllers.connector;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -19,7 +19,7 @@ class ConnectorController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/connectors", &handleRegister);
         router.get("/api/v1/connectors", &handleList);
         router.get("/api/v1/connectors/*", &handleGetById);

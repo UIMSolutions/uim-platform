@@ -1,15 +1,19 @@
-module uim.platform.connectivity.presentation.http.certificate;
+module uim.platform.connectivity.presentation.http.controllers.certificate;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
-import uim.platform.connectivity.application.usecases.manage_certificates;
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.certificate;
-import uim.platform.connectivity.presentation.http.json_utils;
+// import uim.platform.connectivity.application.usecases.manage_certificates;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.certificate;
+// import uim.platform.connectivity.presentation.http.json_utils;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 class CertificateController {
     private ManageCertificatesUseCase uc;
 
@@ -19,7 +23,7 @@ class CertificateController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/certificates", &handleCreate);
         router.get("/api/v1/certificates", &handleList);
         router.get("/api/v1/certificates/*", &handleGetById);

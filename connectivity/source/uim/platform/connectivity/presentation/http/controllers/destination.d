@@ -1,4 +1,4 @@
-module uim.platform.connectivity.presentation.http.destination;
+module uim.platform.connectivity.presentation.http.controllers.connector;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -19,7 +19,7 @@ class DestinationController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/destinations", &handleCreate);
         router.get("/api/v1/destinations", &handleList);
         router.get("/api/v1/destinations/*", &handleGetById);

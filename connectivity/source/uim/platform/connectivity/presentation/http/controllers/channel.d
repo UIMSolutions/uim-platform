@@ -1,4 +1,4 @@
-module uim.platform.connectivity.presentation.http.channel;
+module uim.platform.connectivity.presentation.http.controllers.channel;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -19,7 +19,7 @@ class ChannelController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/channels", &handleCreate);
         router.get("/api/v1/channels", &handleList);
         router.get("/api/v1/channels/*", &handleGetById);
