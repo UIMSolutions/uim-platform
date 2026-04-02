@@ -4,8 +4,7 @@ import uim.platform.connectivity.domain.entities.connectivity_log;
 import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - connectivity event log persistence.
-interface ConnectivityLogRepository
-{
+interface ConnectivityLogRepository {
     ConnectivityLog[] findByTenant(TenantId tenantId);
     ConnectivityLog[] findBySeverity(TenantId tenantId, LogSeverity severity);
     ConnectivityLog[] findBySource(string sourceId);

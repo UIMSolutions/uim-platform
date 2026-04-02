@@ -11,19 +11,16 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for access rule CRUD.
-class ManageAccessRulesUseCase
-{
+class ManageAccessRulesUseCase {
     private AccessRuleRepository ruleRepo;
     private ConnectorRepository connectorRepo;
 
-    this(AccessRuleRepository ruleRepo, ConnectorRepository connectorRepo)
-    {
+    this(AccessRuleRepository ruleRepo, ConnectorRepository connectorRepo) {
         this.ruleRepo = ruleRepo;
         this.connectorRepo = connectorRepo;
     }
 
-    CommandResult createRule(CreateAccessRuleRequest req)
-    {
+    CommandResult createRule(CreateAccessRuleRequest req) {
         // Validate connector exists
         auto cc = connectorRepo.findById(req.connectorId);
         if (cc.id.length == 0)
@@ -33,6 +30,7 @@ class ManageAccessRulesUseCase
             return CommandResult(false, "", "Virtual host is required");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         AccessRule rule;
@@ -51,38 +49,36 @@ class ManageAccessRulesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req)
-    {
+    CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
         auto rule = ruleRepo.findById(id);
         if (rule.id.length == 0)
             return CommandResult(false, "", "Access rule not found");
 
-        if (req.description.length > 0) rule.description = req.description;
-        if (req.urlPathPrefix.length > 0) rule.urlPathPrefix = req.urlPathPrefix;
-        if (req.policy.length > 0) rule.policy = parseAccessPolicy(req.policy);
+        if (req.description.length > 0)
+            rule.description = req.description;
+        if (req.urlPathPrefix.length > 0)
+            rule.urlPathPrefix = req.urlPathPrefix;
+        if (req.policy.length > 0)
+            rule.policy = parseAccessPolicy(req.policy);
         rule.principalPropagation = req.principalPropagation;
 
         ruleRepo.update(rule);
         return CommandResult(true, id, "");
     }
 
-    AccessRule getRule(RuleId id)
-    {
+    AccessRule getRule(RuleId id) {
         return ruleRepo.findById(id);
     }
 
-    AccessRule[] listByConnector(ConnectorId connectorId)
-    {
+    AccessRule[] listByConnector(ConnectorId connectorId) {
         return ruleRepo.findByConnector(connectorId);
     }
 
-    AccessRule[] listByTenant(TenantId tenantId)
-    {
+    AccessRule[] listByTenant(TenantId tenantId) {
         return ruleRepo.findByTenant(tenantId);
     }
 
-    CommandResult deleteRule(RuleId id)
-    {
+    CommandResult deleteRule(RuleId id) {
         auto rule = ruleRepo.findById(id);
         if (rule.id.length == 0)
             return CommandResult(false, "", "Access rule not found");
@@ -92,25 +88,30 @@ class ManageAccessRulesUseCase
     }
 }
 
-private AccessProtocol parseAccessProtocol(string s)
-{
-    switch (s)
-    {
-    case "http": return AccessProtocol.http;
-    case "https": return AccessProtocol.https;
-    case "rfc": return AccessProtocol.rfc;
-    case "tcp": return AccessProtocol.tcp;
-    case "ldap": return AccessProtocol.ldap;
-    default: return AccessProtocol.https;
+private AccessProtocol parseAccessProtocol(string s) {
+    switch (s) {
+    case "http":
+        return AccessProtocol.http;
+    case "https":
+        return AccessProtocol.https;
+    case "rfc":
+        return AccessProtocol.rfc;
+    case "tcp":
+        return AccessProtocol.tcp;
+    case "ldap":
+        return AccessProtocol.ldap;
+    default:
+        return AccessProtocol.https;
     }
 }
 
-private AccessPolicy parseAccessPolicy(string s)
-{
-    switch (s)
-    {
-    case "allow": return AccessPolicy.allow;
-    case "deny": return AccessPolicy.deny;
-    default: return AccessPolicy.allow;
+private AccessPolicy parseAccessPolicy(string s) {
+    switch (s) {
+    case "allow":
+        return AccessPolicy.allow;
+    case "deny":
+        return AccessPolicy.deny;
+    default:
+        return AccessPolicy.allow;
     }
 }

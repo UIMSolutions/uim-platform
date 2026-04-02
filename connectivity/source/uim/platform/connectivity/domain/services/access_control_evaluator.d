@@ -4,30 +4,26 @@ import uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity.domain.types;
 
 /// Result of evaluating access control rules.
-struct AccessEvaluation
-{
+struct AccessEvaluation {
     bool allowed;
-    string matchedRuleId;   // empty if no rule matched
+    string matchedRuleId; // empty if no rule matched
     string reason;
 }
 
 /// Domain service: evaluates access control rules for on-premise backend requests.
-struct AccessControlEvaluator
-{
+struct AccessControlEvaluator {
     /// Evaluate whether a request to a virtual host/path is allowed.
     static AccessEvaluation evaluate(
         AccessRule[] rules,
         string virtualHost,
         ushort virtualPort,
         string urlPath,
-    )
-    {
+    ) {
         // Find the most specific matching rule (longest urlPathPrefix match).
         AccessRule* bestMatch = null;
         size_t bestLen = 0;
 
-        foreach (ref rule; rules)
-        {
+        foreach (ref rule; rules) {
             if (rule.virtualHost != virtualHost)
                 continue;
             if (rule.virtualPort != virtualPort)
@@ -35,8 +31,7 @@ struct AccessControlEvaluator
             if (!pathStartsWith(urlPath, rule.urlPathPrefix))
                 continue;
 
-            if (rule.urlPathPrefix.length >= bestLen)
-            {
+            if (rule.urlPathPrefix.length >= bestLen) {
                 bestLen = rule.urlPathPrefix.length;
                 bestMatch = &rule;
             }
@@ -52,8 +47,7 @@ struct AccessControlEvaluator
     }
 
     /// Check if a path starts with the given prefix.
-    private static bool pathStartsWith(string path, string prefix)
-    {
+    private static bool pathStartsWith(string path, string prefix) {
         if (prefix.length == 0)
             return true;
         if (path.length < prefix.length)

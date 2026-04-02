@@ -25,16 +25,19 @@ import uim.platform.content_agent.presentation.http.package;
 import uim.platform.content_agent.presentation.http.provider;
 import uim.platform.content_agent.presentation.http.transport;
 import uim.platform.content_agent.presentation.http.export;
-import uim.platform.content_agent.presentation.http.import;
+import uim.platform.content_agent.presentation.http.import ;
 import uim.platform.content_agent.presentation.http.queue;
 import uim.platform.content_agent.presentation.http.activity;
 import uim.platform.content_agent.presentation.http.health;
 
+
+
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
+    
     // Repositories (driven adapters)
     InMemoryContentPackageRepository packageRepo;
+
     InMemoryContentProviderRepository providerRepo;
     InMemoryTransportRequestRepository transportRequestRepo;
     InMemoryExportJobRepository exportJobRepo;
@@ -63,8 +66,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
@@ -77,9 +79,11 @@ Container buildContainer(AppConfig config)
     c.activityRepo = new MemoryContentActivityRepository();
 
     // Application use cases
-    c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c.activityRepo);
+    c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c
+            .activityRepo);
     c.manageProviders = new ManageContentProvidersUseCase(c.providerRepo, c.activityRepo);
-    c.manageTransports = new ManageTransportRequestsUseCase(c.transportRequestRepo, c.packageRepo, c.queueRepo, c.activityRepo);
+    c.manageTransports = new ManageTransportRequestsUseCase(c.transportRequestRepo, c.packageRepo, c.queueRepo, c
+            .activityRepo);
     c.exportContent = new ExportContentUseCase(c.exportJobRepo, c.packageRepo, c.activityRepo);
     c.importContent = new ImportContentUseCase(c.importJobRepo, c.packageRepo, c.activityRepo);
     c.manageQueues = new ManageTransportQueuesUseCase(c.queueRepo, c.activityRepo);

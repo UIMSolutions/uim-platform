@@ -1,4 +1,4 @@
-module uim.platform.content_agent.domain.ports.import_job_repository;
+module domain.ports.repositories.import_job_repository;
 
 import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;

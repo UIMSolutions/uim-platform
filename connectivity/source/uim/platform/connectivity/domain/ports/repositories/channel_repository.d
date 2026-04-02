@@ -4,8 +4,7 @@ import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - service channel persistence.
-interface ChannelRepository
-{
+interface ChannelRepository {
     ServiceChannel findById(ChannelId id);
     ServiceChannel[] findByConnector(ConnectorId connectorId);
     ServiceChannel[] findByTenant(TenantId tenantId);
