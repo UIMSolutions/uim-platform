@@ -1,14 +1,18 @@
 module uim.platform.connectivity.application.usecases.manage_destinations;
 
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.destination;
-import uim.platform.connectivity.domain.ports.destination_repository;
-import uim.platform.connectivity.domain.ports.connectivity_log_repository;
-import uim.platform.connectivity.domain.services.auth_flow_resolver;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.destination;
+// import uim.platform.connectivity.domain.ports.destination_repository;
+// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.services.auth_flow_resolver;
+// import uim.platform.connectivity.domain.types;
+// 
+// import std.conv : to;
+import uim.platform.connectivity;
 
-import std.conv : to;
+mixin(ShowModule!());
 
+@safe:
 /// Application service for destination CRUD and lookup.
 class ManageDestinationsUseCase
 {

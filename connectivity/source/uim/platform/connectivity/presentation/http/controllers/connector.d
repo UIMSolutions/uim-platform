@@ -10,17 +10,16 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.cloud_connector;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class ConnectorController
-{
+class ConnectorController {
     private ManageConnectorsUseCase uc;
 
-    this(ManageConnectorsUseCase uc)
-    {
+    this(ManageConnectorsUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/connectors", &handleRegister);
         router.get("/api/v1/connectors", &handleList);
         router.get("/api/v1/connectors/*", &handleGetById);
@@ -28,10 +27,8 @@ class ConnectorController
         router.delete_("/api/v1/connectors/*", &handleUnregister);
     }
 
-    private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = RegisterConnectorRequest();
             r.subaccountId = j.getString("subaccountId");
@@ -44,27 +41,20 @@ class ConnectorController
             r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
             auto result = uc.registerConnector(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto conns = uc.listByTenant(tenantId);
 
@@ -74,43 +64,33 @@ class ConnectorController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) conns.length);
+            resp["totalCount"] = Json(cast(long)conns.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto cc = uc.getConnector(id);
-            if (cc.id.length == 0)
-            {
+            if (cc.id.length == 0) {
                 writeError(res, 404, "Connector not found");
                 return;
             }
             res.writeJsonBody(serializeConnector(cc), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             // Extract connector id from /api/v1/connectors/{id}/heartbeat
             auto uri = req.requestURI;
             auto parts = splitPath(uri);
-            if (parts.length < 5)
-            {
+            if (parts.length < 5) {
                 writeError(res, 400, "Invalid path");
                 return;
             }
@@ -121,48 +101,35 @@ class ConnectorController
             r.connectorVersion = j.getString("connectorVersion");
 
             auto result = uc.heartbeat(connectorId, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("acknowledged");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.unregister(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeConnector(ref const CloudConnector c)
-    {
+    private static Json serializeConnector(ref const CloudConnector c) {
         auto j = Json.emptyObject;
         j["id"] = Json(c.id);
         j["subaccountId"] = Json(c.subaccountId);
@@ -171,7 +138,7 @@ class ConnectorController
         j["description"] = Json(c.description);
         j["connectorVersion"] = Json(c.connectorVersion);
         j["host"] = Json(c.host);
-        j["port"] = Json(cast(long) c.port);
+        j["port"] = Json(cast(long)c.port);
         j["status"] = Json(c.status.to!string);
         j["tunnelEndpoint"] = Json(c.tunnelEndpoint);
         j["lastHeartbeat"] = Json(c.lastHeartbeat);
@@ -181,9 +148,9 @@ class ConnectorController
         return j;
     }
 
-    private static string[] splitPath(string uri)
-    {
+    private static string[] splitPath(string uri) {
         import std.string : indexOf, split;
+
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;
         string[] parts;

@@ -1,12 +1,16 @@
 module uim.platform.connectivity.application.usecases.monitor_connectivity;
 
-import uim.platform.connectivity.domain.entities.connectivity_log;
-import uim.platform.connectivity.domain.ports.connectivity_log_repository;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.connectivity_log;
+// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.types;
 
+import uim.platform.connectivity;
+
+mixin(ShowModule!());
+
+@safe:
 /// Summary of connectivity status for a tenant.
-struct ConnectivitySummary
-{
+struct ConnectivitySummary {
     ulong totalEvents;
     ulong infoCount;
     ulong warningCount;
@@ -15,40 +19,32 @@ struct ConnectivitySummary
 }
 
 /// Application service for connectivity monitoring and log queries.
-class MonitorConnectivityUseCase
-{
+class MonitorConnectivityUseCase {
     private ConnectivityLogRepository logRepo;
 
-    this(ConnectivityLogRepository logRepo)
-    {
+    this(ConnectivityLogRepository logRepo) {
         this.logRepo = logRepo;
     }
 
-    ConnectivityLog[] listLogs(TenantId tenantId)
-    {
+    ConnectivityLog[] listLogs(TenantId tenantId) {
         return logRepo.findByTenant(tenantId);
     }
 
-    ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity)
-    {
+    ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) {
         return logRepo.findBySeverity(tenantId, severity);
     }
 
-    ConnectivityLog[] listBySource(string sourceId)
-    {
+    ConnectivityLog[] listBySource(string sourceId) {
         return logRepo.findBySource(sourceId);
     }
 
-    ConnectivitySummary getSummary(TenantId tenantId)
-    {
+    ConnectivitySummary getSummary(TenantId tenantId) {
         auto logs = logRepo.findByTenant(tenantId);
         ConnectivitySummary summary;
         summary.totalEvents = logs.length;
 
-        foreach (log; logs)
-        {
-            final switch (log.severity)
-            {
+        foreach (log; logs) {
+            final switch (log.severity) {
             case LogSeverity.info:
                 summary.infoCount++;
                 break;

@@ -1,11 +1,17 @@
 module uim.platform.connectivity.infrastructure.persistence.memory.channel_repo;
 
-import uim.platform.connectivity.domain.types;
-import uim.platform.connectivity.domain.entities.service_channel;
-import uim.platform.connectivity.domain.ports.channel_repository;
+// import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.service_channel;
+// import uim.platform.connectivity.domain.ports.channel_repository;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.connectivity;
+
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryChannelRepository : ChannelRepository
 {

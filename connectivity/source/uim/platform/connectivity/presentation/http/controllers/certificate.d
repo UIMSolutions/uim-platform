@@ -10,17 +10,16 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class CertificateController
-{
+class CertificateController {
     private ManageCertificatesUseCase uc;
 
-    this(ManageCertificatesUseCase uc)
-    {
+    this(ManageCertificatesUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/certificates", &handleCreate);
         router.get("/api/v1/certificates", &handleList);
         router.get("/api/v1/certificates/*", &handleGetById);
@@ -28,10 +27,8 @@ class CertificateController
         router.delete_("/api/v1/certificates/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateCertificateRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -47,27 +44,20 @@ class CertificateController
             r.validTo = jsonLong(j, "validTo");
 
             auto result = uc.createCertificate(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto certs = uc.listCertificates(tenantId);
 
@@ -77,38 +67,29 @@ class CertificateController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) certs.length);
+            resp["totalCount"] = Json(cast(long)certs.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto cert = uc.getCertificate(id);
-            if (cert.id.length == 0)
-            {
+            if (cert.id.length == 0) {
                 writeError(res, 404, "Certificate not found");
                 return;
             }
             res.writeJsonBody(serializeCert(cert), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateCertificateRequest();
@@ -116,48 +97,35 @@ class CertificateController
             r.active = j.getBoolean("active", true);
 
             auto result = uc.updateCertificate(id, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteCertificate(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeCert(ref const Certificate c)
-    {
+    private static Json serializeCert(ref const Certificate c) {
         auto j = Json.emptyObject;
         j["id"] = Json(c.id);
         j["tenantId"] = Json(c.tenantId);

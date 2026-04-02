@@ -1,4 +1,4 @@
-module uim.platform.connectivity.presentation.http.controllers.access_rule_controller;
+module uim.platform.connectivity.presentation.http.controllers.access_rule;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -10,7 +10,7 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class AccessRuleController {
+class AccessRuleController : SAPController {
     private ManageAccessRulesUseCase uc;
 
     this(ManageAccessRulesUseCase uc) {
@@ -18,6 +18,8 @@ class AccessRuleController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/access-rules", &handleCreate);
         router.get("/api/v1/access-rules", &handleList);
         router.get("/api/v1/access-rules/*", &handleGetById);

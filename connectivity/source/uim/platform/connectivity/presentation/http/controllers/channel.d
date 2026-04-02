@@ -10,17 +10,16 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class ChannelController
-{
+class ChannelController {
     private ManageChannelsUseCase uc;
 
-    this(ManageChannelsUseCase uc)
-    {
+    this(ManageChannelsUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/channels", &handleCreate);
         router.get("/api/v1/channels", &handleList);
         router.get("/api/v1/channels/*", &handleGetById);
@@ -29,10 +28,8 @@ class ChannelController
         router.delete_("/api/v1/channels/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateChannelRequest();
             r.connectorId = j.getString("connectorId");
@@ -45,27 +42,20 @@ class ChannelController
             r.backendPort = jsonUshort(j, "backendPort");
 
             auto result = uc.createChannel(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto channels = uc.listByTenant(tenantId);
 
@@ -75,119 +65,88 @@ class ChannelController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) channels.length);
+            resp["totalCount"] = Json(cast(long)channels.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto ch = uc.getChannel(id);
-            if (ch.id.length == 0)
-            {
+            if (ch.id.length == 0) {
                 writeError(res, 404, "Channel not found");
                 return;
             }
             res.writeJsonBody(serializeChannel(ch), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto parts = splitPath(req.requestURI);
-            if (parts.length < 5)
-            {
+            if (parts.length < 5) {
                 writeError(res, 400, "Invalid path");
                 return;
             }
             auto channelId = parts[$ - 2];
 
             auto result = uc.openChannel(channelId);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("opened");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto parts = splitPath(req.requestURI);
-            if (parts.length < 5)
-            {
+            if (parts.length < 5) {
                 writeError(res, 400, "Invalid path");
                 return;
             }
             auto channelId = parts[$ - 2];
 
             auto result = uc.closeChannel(channelId);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["status"] = Json("closed");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteChannel(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeChannel(ref const ServiceChannel ch)
-    {
+    private static Json serializeChannel(ref const ServiceChannel ch) {
         auto j = Json.emptyObject;
         j["id"] = Json(ch.id);
         j["connectorId"] = Json(ch.connectorId);
@@ -196,9 +155,9 @@ class ChannelController
         j["type"] = Json(ch.channelType.to!string);
         j["status"] = Json(ch.status.to!string);
         j["virtualHost"] = Json(ch.virtualHost);
-        j["virtualPort"] = Json(cast(long) ch.virtualPort);
+        j["virtualPort"] = Json(cast(long)ch.virtualPort);
         j["backendHost"] = Json(ch.backendHost);
-        j["backendPort"] = Json(cast(long) ch.backendPort);
+        j["backendPort"] = Json(cast(long)ch.backendPort);
         j["openedAt"] = Json(ch.openedAt);
         j["closedAt"] = Json(ch.closedAt);
         j["createdAt"] = Json(ch.createdAt);
@@ -206,9 +165,9 @@ class ChannelController
         return j;
     }
 
-    private static string[] splitPath(string uri)
-    {
+    private static string[] splitPath(string uri) {
         import std.string : indexOf, split;
+
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;
         string[] parts;

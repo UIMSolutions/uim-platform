@@ -1,12 +1,16 @@
 module uim.platform.connectivity.application.usecases.manage_connectors;
 
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.cloud_connector;
-import uim.platform.connectivity.domain.entities.connectivity_log;
-import uim.platform.connectivity.domain.ports.connector_repository;
-import uim.platform.connectivity.domain.ports.connectivity_log_repository;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.cloud_connector;
+// import uim.platform.connectivity.domain.entities.connectivity_log;
+// import uim.platform.connectivity.domain.ports.connector_repository;
+// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for Cloud Connector registration and lifecycle.
 class ManageConnectorsUseCase
 {

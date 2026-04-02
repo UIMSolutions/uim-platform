@@ -10,17 +10,16 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class DestinationController
-{
+class DestinationController {
     private ManageDestinationsUseCase uc;
 
-    this(ManageDestinationsUseCase uc)
-    {
+    this(ManageDestinationsUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/destinations", &handleCreate);
         router.get("/api/v1/destinations", &handleList);
         router.get("/api/v1/destinations/*", &handleGetById);
@@ -28,10 +27,8 @@ class DestinationController
         router.delete_("/api/v1/destinations/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreateDestinationRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -54,27 +51,20 @@ class DestinationController
             r.additionalHeaders = parseHeaders(j);
 
             auto result = uc.createDestination(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto dests = uc.listDestinations(tenantId);
 
@@ -84,38 +74,29 @@ class DestinationController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) dests.length);
+            resp["totalCount"] = Json(cast(long)dests.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto dest = uc.getDestination(id);
-            if (dest.id.length == 0)
-            {
+            if (dest.id.length == 0) {
                 writeError(res, 404, "Destination not found");
                 return;
             }
             res.writeJsonBody(serializeDest(dest), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdateDestinationRequest();
@@ -136,48 +117,35 @@ class DestinationController
             r.additionalHeaders = parseHeaders(j);
 
             auto result = uc.updateDestination(id, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteDestination(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeDest(ref const Destination d)
-    {
+    private static Json serializeDest(ref const Destination d) {
         auto j = Json.emptyObject;
         j["id"] = Json(d.id);
         j["tenantId"] = Json(d.tenantId);
@@ -189,11 +157,9 @@ class DestinationController
         j["proxyType"] = Json(d.proxyType.to!string);
         j["cloudConnectorLocationId"] = Json(d.cloudConnectorLocationId);
 
-        if (d.properties.length > 0)
-        {
+        if (d.properties.length > 0) {
             auto props = Json.emptyArray;
-            foreach (ref p; d.properties)
-            {
+            foreach (ref p; d.properties) {
                 auto pj = Json.emptyObject;
                 pj["key"] = Json(p.key);
                 pj["value"] = Json(p.value);
@@ -202,11 +168,9 @@ class DestinationController
             j["properties"] = props;
         }
 
-        if (d.additionalHeaders.length > 0)
-        {
+        if (d.additionalHeaders.length > 0) {
             auto hdrs = Json.emptyArray;
-            foreach (ref h; d.additionalHeaders)
-            {
+            foreach (ref h; d.additionalHeaders) {
                 auto hj = Json.emptyObject;
                 hj["key"] = Json(h.key);
                 hj["value"] = Json(h.value);
@@ -221,28 +185,24 @@ class DestinationController
         return j;
     }
 
-    private static DestinationProperty[] parseProperties(Json j)
-    {
+    private static DestinationProperty[] parseProperties(Json j) {
         DestinationProperty[] result;
         auto v = "properties" in j;
         if (v is null || (*v).type != Json.Type.array)
             return result;
-        foreach (item; *v)
-        {
+        foreach (item; *v) {
             if (item.type == Json.Type.object)
                 result ~= DestinationProperty(item.getString("key"), item.getString("value"));
         }
         return result;
     }
 
-    private static DestinationProperty[] parseHeaders(Json j)
-    {
+    private static DestinationProperty[] parseHeaders(Json j) {
         DestinationProperty[] result;
         auto v = "additionalHeaders" in j;
         if (v is null || (*v).type != Json.Type.array)
             return result;
-        foreach (item; *v)
-        {
+        foreach (item; *v) {
             if (item.type == Json.Type.object)
                 result ~= DestinationProperty(item.getString("key"), item.getString("value"));
         }
