@@ -1,15 +1,15 @@
-module infrastructure.container;
+module uim.platform.content_agent.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.content_agent.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.content_package_repo;
-import infrastructure.persistence.memory.content_provider_repo;
-import infrastructure.persistence.memory.transport_request_repo;
-import infrastructure.persistence.memory.export_job_repo;
-import infrastructure.persistence.memory.import_job_repo;
-import infrastructure.persistence.memory.transport_queue_repo;
-import infrastructure.persistence.memory.content_activity_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_package_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_provider_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.transport_request_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.export_job_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.import_job_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.transport_queue_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_activity_repo;
 
 // Use Cases
 import uim.platform.content_agent.application.usecases.manage_content_packages;
@@ -21,14 +21,14 @@ import uim.platform.content_agent.application.usecases.manage_transport_queues;
 import uim.platform.content_agent.application.usecases.monitor_activities;
 
 // Controllers
-import presentation.http.package;
-import presentation.http.provider;
-import presentation.http.transport;
-import presentation.http.export;
-import presentation.http.import;
-import presentation.http.queue;
-import presentation.http.activity;
-import presentation.http.health;
+import uim.platform.content_agent.presentation.http.package;
+import uim.platform.content_agent.presentation.http.provider;
+import uim.platform.content_agent.presentation.http.transport;
+import uim.platform.content_agent.presentation.http.export;
+import uim.platform.content_agent.presentation.http.import;
+import uim.platform.content_agent.presentation.http.queue;
+import uim.platform.content_agent.presentation.http.activity;
+import uim.platform.content_agent.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

@@ -1,4 +1,4 @@
-module infrastructure.config;
+module uim.platform.content_agent.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig

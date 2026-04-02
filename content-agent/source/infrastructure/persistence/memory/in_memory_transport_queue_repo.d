@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.transport_queue_repo;
+module infrastructure.persistence.memory.in_memory_transport_queue_repo;
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.transport_queue;

@@ -1,0 +1,2 @@
+module domain.entities;
+

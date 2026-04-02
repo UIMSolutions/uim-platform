@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.export_job_repo;
+module infrastructure.persistence.memory.in_memory_export_job_repo;
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.export_job;

@@ -8,7 +8,7 @@ import std.conv : to;
 import uim.platform.content_agent.application.usecases.monitor_activities;
 import uim.platform.content_agent.domain.entities.content_activity;
 import uim.platform.content_agent.domain.types;
-import presentation.http.json_utils;
+import uim.platform.content_agent.presentation.http.json_utils;
 
 class ActivityController
 {
