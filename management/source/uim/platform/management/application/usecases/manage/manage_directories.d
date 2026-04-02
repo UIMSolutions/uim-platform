@@ -1,9 +1,15 @@
-module uim.platform.connectivity.application.usecases.manage_directories;
+module uim.platform.management.application.usecases.manage_directories;
 
-import uim.platform.connectivity.application.dto;
-import uim.platform.management.domain.entities.directory;
-import uim.platform.management.domain.ports.directory_repository;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.directory;
+// import uim.platform.management.domain.ports.directory_repository;
+// import uim.platform.management.domain.types;
+
+import uim.platform.management;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Use case: manage directory hierarchy within global accounts.
 class ManageDirectoriesUseCase {

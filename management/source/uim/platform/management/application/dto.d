@@ -1,7 +1,12 @@
-module uim.platform.connectivity.application.dto;
+module uim.platform.management.application.dto;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
 
+import uim.platform.management;
+
+mixin(ShowModule!());
+
+@safe:
 /// --- Command result ---
 
 struct CommandResult {

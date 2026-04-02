@@ -1,6 +1,6 @@
-module uim.platform.connectivity.application.usecases.manage_labels;
+module uim.platform.management.application.usecases.manage_labels;
 
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.label;
 import uim.platform.management.domain.ports.label_repository;
 import uim.platform.management.domain.types;

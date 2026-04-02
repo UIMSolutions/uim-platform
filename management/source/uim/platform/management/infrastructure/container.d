@@ -18,16 +18,16 @@ module uim.platform.management.infrastructure.container;
 // import uim.platform.management.domain.services.environment_provisioner;
 
 // // Use Cases
-// import uim.platform.connectivity.application.usecases.manage_global_accounts;
-// import uim.platform.connectivity.application.usecases.manage_directories;
-// import uim.platform.connectivity.application.usecases.manage_subaccounts;
-// import uim.platform.connectivity.application.usecases.manage_entitlements;
-// import uim.platform.connectivity.application.usecases.manage_environment_instances;
-// import uim.platform.connectivity.application.usecases.manage_subscriptions;
-// import uim.platform.connectivity.application.usecases.manage_service_plans;
-// import uim.platform.connectivity.application.usecases.manage_labels;
-// import uim.platform.connectivity.application.usecases.query_platform_events;
-// import uim.platform.connectivity.application.usecases.get_account_overview;
+// import uim.platform.management.application.usecases.manage_global_accounts;
+// import uim.platform.management.application.usecases.manage_directories;
+// import uim.platform.management.application.usecases.manage_subaccounts;
+// import uim.platform.management.application.usecases.manage_entitlements;
+// import uim.platform.management.application.usecases.manage_environment_instances;
+// import uim.platform.management.application.usecases.manage_subscriptions;
+// import uim.platform.management.application.usecases.manage_service_plans;
+// import uim.platform.management.application.usecases.manage_labels;
+// import uim.platform.management.application.usecases.query_platform_events;
+// import uim.platform.management.application.usecases.get_account_overview;
 
 // // Controllers
 // import presentation.http.global_account;

@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.entitlement;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// An entitlement represents the assignment of a service plan's quota
 /// to a global account, directory, or subaccount.
 struct Entitlement {

@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import uim.platform.connectivity.application.usecases.manage_directories;
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.usecases.manage_directories;
+import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.directory;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;

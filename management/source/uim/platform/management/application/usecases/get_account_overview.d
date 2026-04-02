@@ -1,6 +1,6 @@
-module uim.platform.connectivity.application.usecases.get_account_overview;
+module uim.platform.management.application.usecases.get_account_overview;
 
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.dto;
 import uim.platform.management.domain.ports.global_account_repository;
 import uim.platform.management.domain.ports.subaccount_repository;
 import uim.platform.management.domain.ports.directory_repository;

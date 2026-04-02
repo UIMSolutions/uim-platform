@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import uim.platform.connectivity.application.usecases.query_platform_events;
+import uim.platform.management.application.usecases.query_platform_events;
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.types;
 import presentation.http.json_utils;

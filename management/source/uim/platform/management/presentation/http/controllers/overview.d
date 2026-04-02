@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import uim.platform.connectivity.application.usecases.get_account_overview;
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.usecases.get_account_overview;
+import uim.platform.management.application.dto;
 import presentation.http.json_utils;
 
 class OverviewController

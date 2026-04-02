@@ -1,6 +1,6 @@
-module uim.platform.connectivity.application.usecases.manage_global_accounts;
+module uim.platform.management.application.usecases.manage_global_accounts;
 
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.global_account;
 import uim.platform.management.domain.entities.platform_event;
 import uim.platform.management.domain.ports.global_account_repository;

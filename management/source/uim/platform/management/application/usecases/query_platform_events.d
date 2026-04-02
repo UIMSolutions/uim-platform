@@ -1,10 +1,15 @@
-module uim.platform.connectivity.application.usecases.query_platform_events;
+module uim.platform.management.application.usecases.query_platform_events;
 
-import uim.platform.connectivity.application.dto;
-import uim.platform.management.domain.entities.platform_event;
-import uim.platform.management.domain.ports.platform_event_repository;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.platform_event;
+// import uim.platform.management.domain.ports.platform_event_repository;
+// import uim.platform.management.domain.types;
 
+import uim.platform.management;
+
+mixin(ShowModule!());
+
+@safe:
 /// Use case: query platform events for audit and monitoring.
 class QueryPlatformEventsUseCase {
     private PlatformEventRepository repo;

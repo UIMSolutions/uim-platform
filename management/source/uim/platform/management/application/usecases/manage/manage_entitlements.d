@@ -1,6 +1,6 @@
-module uim.platform.connectivity.application.usecases.manage_entitlements;
+module uim.platform.management.application.usecases.manage_entitlements;
 
-import uim.platform.connectivity.application.dto;
+import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.entitlement;
 import uim.platform.management.domain.ports.entitlement_repository;
 import uim.platform.management.domain.services.entitlement_evaluator;
