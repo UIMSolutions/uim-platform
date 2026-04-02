@@ -11,8 +11,7 @@ alias TenantId = string;
 alias SubaccountId = string;
 
 /// Destination protocol type.
-enum DestinationType
-{
+enum DestinationType {
     http,
     rfc,
     mail,
@@ -20,8 +19,7 @@ enum DestinationType
 }
 
 /// Authentication method for destinations.
-enum AuthenticationType
-{
+enum AuthenticationType {
     noAuthentication,
     basicAuthentication,
     oauth2ClientCredentials,
@@ -36,16 +34,14 @@ enum AuthenticationType
 }
 
 /// Proxy type for destination routing.
-enum ProxyType
-{
+enum ProxyType {
     internet,
     onPremise,
     privateLink,
 }
 
 /// Cloud Connector connection status.
-enum ConnectorStatus
-{
+enum ConnectorStatus {
     connected,
     disconnected,
     error,
@@ -53,31 +49,27 @@ enum ConnectorStatus
 }
 
 /// Service channel protocol type.
-enum ChannelType
-{
+enum ChannelType {
     http,
     rfc,
     tcp,
 }
 
 /// Service channel status.
-enum ChannelStatus
-{
+enum ChannelStatus {
     open,
     closed,
     error,
 }
 
 /// Access rule policy.
-enum AccessPolicy
-{
+enum AccessPolicy {
     allow,
     deny,
 }
 
 /// Protocol for access rules.
-enum AccessProtocol
-{
+enum AccessProtocol {
     http,
     https,
     rfc,
@@ -86,8 +78,7 @@ enum AccessProtocol
 }
 
 /// Certificate format type.
-enum CertificateType
-{
+enum CertificateType {
     x509,
     pkcs12,
     pem,
@@ -95,16 +86,14 @@ enum CertificateType
 }
 
 /// Certificate usage purpose.
-enum CertificateUsage
-{
+enum CertificateUsage {
     authentication,
     signing,
     encryption,
 }
 
 /// Connectivity log event severity.
-enum LogSeverity
-{
+enum LogSeverity {
     info,
     warning,
     error,
@@ -112,8 +101,7 @@ enum LogSeverity
 }
 
 /// Connectivity log event type.
-enum ConnectivityEventType
-{
+enum ConnectivityEventType {
     connectionEstablished,
     connectionLost,
     connectionRefused,
