@@ -9,6 +9,8 @@ import infrastructure.container;
 
 import std.stdio : writefln;
 
+import uim.platform.connectivity;
+
 void main()
 {
     auto config = loadConfig();
