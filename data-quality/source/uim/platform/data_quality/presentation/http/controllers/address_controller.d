@@ -1,4 +1,4 @@
-module presentation.http.address;
+module uim.platform.data-quality.presentation.http.controllers.address_controller;
 
 import vibe.http.server;
 import vibe.http.router;

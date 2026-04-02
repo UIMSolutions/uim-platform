@@ -1,4 +1,4 @@
-module presentation.http.profile;
+module uim.platform.data-quality.presentation.http.controllers.profile_controller;
 
 import vibe.http.server;
 import vibe.http.router;
