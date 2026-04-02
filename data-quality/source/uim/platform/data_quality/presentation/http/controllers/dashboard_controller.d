@@ -11,24 +11,19 @@ import domain.types;
 import domain.entities.quality_dashboard;
 import presentation.http.json_utils;
 
-class DashboardController
-{
+class DashboardController {
     private ComputeDashboardUseCase uc;
 
-    this(ComputeDashboardUseCase uc)
-    {
+    this(ComputeDashboardUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/dashboard", &handleCompute);
     }
 
-    private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = ComputeDashboardRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -37,15 +32,12 @@ class DashboardController
 
             auto dashboard = uc.compute(r);
             res.writeJsonBody(serializeDashboard(dashboard), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeDashboard(ref const QualityDashboard d)
-    {
+    private static Json serializeDashboard(ref const QualityDashboard d) {
         auto j = Json.emptyObject;
         j["tenantId"] = Json(d.tenantId);
         j["datasetId"] = Json(d.datasetId);
@@ -75,8 +67,7 @@ class DashboardController
 
         // Violations by severity
         auto sevArr = Json.emptyArray;
-        foreach (ref s; d.violationsBySeverity)
-        {
+        foreach (ref s; d.violationsBySeverity) {
             auto sj = Json.emptyObject;
             sj["severity"] = Json(s.severity.to!string);
             sj["count"] = Json(s.count);

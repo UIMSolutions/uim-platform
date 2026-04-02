@@ -1,4 +1,6 @@
-module uim.platform.management.presentation.http.controllers;
+module uim.platform.management.domain.ports.repositories;
 
 public {
+    import uim.platform.management.domain.ports.repositories.directory;
+    import uim.platform.management.domain.ports.repositories.environment;
 }

@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.environment_instance_repository;
+module uim.platform.management.domain.ports.repositories.environment_instance;
 
 import uim.platform.management.domain.entities.environment_instance;
 import uim.platform.management.domain.types;

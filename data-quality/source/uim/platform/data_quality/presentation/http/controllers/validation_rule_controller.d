@@ -1,4 +1,4 @@
-module uim.platform.data-quality.presentation.http.controllers.validation_rule;
+module uim.platform.data - quality.presentation.http.controllers.validation_rule;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -20,7 +20,7 @@ class ValidationRuleController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
-        
+
         router.post("/api/v1/validation-rules", &handleCreate);
         router.get("/api/v1/validation-rules", &handleList);
         router.get("/api/v1/validation-rules/*", &handleGetById);

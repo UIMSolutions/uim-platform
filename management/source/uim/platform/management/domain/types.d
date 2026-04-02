@@ -13,8 +13,7 @@ alias LabelId = string;
 alias TenantId = string;
 
 /// Status of a global account.
-enum GlobalAccountStatus
-{
+enum GlobalAccountStatus {
     active,
     suspended,
     terminated,
@@ -22,8 +21,7 @@ enum GlobalAccountStatus
 }
 
 /// License type for a global account.
-enum LicenseType
-{
+enum LicenseType {
     enterprise,
     trial,
     partner,
@@ -31,24 +29,21 @@ enum LicenseType
 }
 
 /// Status of a directory entity.
-enum DirectoryStatus
-{
+enum DirectoryStatus {
     active,
     inactive,
     deleting,
 }
 
 /// Features enabled on a directory.
-enum DirectoryFeature
-{
+enum DirectoryFeature {
     default_,
     entitlements,
     authorizations,
 }
 
 /// Status of a subaccount.
-enum SubaccountStatus
-{
+enum SubaccountStatus {
     active,
     suspended,
     creating,
@@ -59,8 +54,7 @@ enum SubaccountStatus
 }
 
 /// Usage type of a subaccount.
-enum SubaccountUsage
-{
+enum SubaccountUsage {
     unset,
     production,
     development,
@@ -70,8 +64,7 @@ enum SubaccountUsage
 }
 
 /// Status of an entitlement assignment.
-enum EntitlementStatus
-{
+enum EntitlementStatus {
     active,
     pending,
     revoked,
@@ -79,8 +72,7 @@ enum EntitlementStatus
 }
 
 /// Category of a service plan.
-enum ServicePlanCategory
-{
+enum ServicePlanCategory {
     service,
     application,
     environment,
@@ -88,17 +80,15 @@ enum ServicePlanCategory
 }
 
 /// Pricing model for a service plan.
-enum PricingModel
-{
+enum PricingModel {
     free,
     subscription,
     consumption,
-    byol,       // bring your own license
+    byol, // bring your own license
 }
 
 /// Status of an environment instance.
-enum EnvironmentStatus
-{
+enum EnvironmentStatus {
     creating,
     active,
     updating,
@@ -108,8 +98,7 @@ enum EnvironmentStatus
 }
 
 /// Type of environment.
-enum EnvironmentType
-{
+enum EnvironmentType {
     cloudFoundry,
     kyma,
     abap,
@@ -117,8 +106,7 @@ enum EnvironmentType
 }
 
 /// Status of a SaaS subscription.
-enum SubscriptionStatus
-{
+enum SubscriptionStatus {
     subscribed,
     subscribing,
     unsubscribing,
@@ -128,8 +116,7 @@ enum SubscriptionStatus
 }
 
 /// Category of a platform event.
-enum PlatformEventCategory
-{
+enum PlatformEventCategory {
     subaccountLifecycle,
     entitlementChange,
     environmentLifecycle,
@@ -141,8 +128,7 @@ enum PlatformEventCategory
 }
 
 /// Severity of a platform event.
-enum PlatformEventSeverity
-{
+enum PlatformEventSeverity {
     info,
     warning,
     error,
@@ -150,8 +136,7 @@ enum PlatformEventSeverity
 }
 
 /// Type of labeled resource.
-enum LabeledResourceType
-{
+enum LabeledResourceType {
     globalAccount,
     directory,
     subaccount,

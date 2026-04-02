@@ -19,7 +19,7 @@ class CleansingRuleController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
-       super.registerRoutes(router);
+        super.registerRoutes(router);
 
         router.post("/api/v1/cleansing-rules", &handleCreate);
         router.get("/api/v1/cleansing-rules", &handleList);

@@ -1,2 +1,2 @@
-module uim.platform.data_quality;
+module uim.platform.data_quality.infrastructure.persistence.memory;
 

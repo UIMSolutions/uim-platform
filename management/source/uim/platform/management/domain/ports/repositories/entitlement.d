@@ -1,4 +1,4 @@
-module uim.platform.management.domain.ports.entitlement_repository;
+module uim.platform.management.domain.ports.repositories.entitlement;
 
 import uim.platform.management.domain.entities.entitlement;
 import uim.platform.management.domain.types;
