@@ -230,7 +230,7 @@ class DestinationController
         foreach (item; *v)
         {
             if (item.type == Json.Type.object)
-                result ~= DestinationProperty(jsonStr(item, "key"), jsonStr(item, "value"));
+                result ~= DestinationProperty(item.getString("key"), item.getString("value"));
         }
         return result;
     }
@@ -244,7 +244,7 @@ class DestinationController
         foreach (item; *v)
         {
             if (item.type == Json.Type.object)
-                result ~= DestinationProperty(jsonStr(item, "key"), jsonStr(item, "value"));
+                result ~= DestinationProperty(item.getString("key"), item.getString("value"));
         }
         return result;
     }

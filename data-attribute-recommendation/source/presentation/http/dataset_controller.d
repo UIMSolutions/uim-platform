@@ -40,7 +40,7 @@ class DatasetController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataType = parseDataType(jsonStr(j, "dataType"));
+      r.dataType = parseDataType(j.getString("dataType"));
       r.columnDefinitions = j.getString("columnDefinitions");
       r.createdBy = req.headers.get("X-User-Id", "system");
 

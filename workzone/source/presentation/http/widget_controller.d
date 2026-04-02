@@ -172,10 +172,10 @@ private WidgetConfig parseWidgetConfig(Json j)
     if (v !is null && (*v).type == Json.Type.object)
     {
         auto c = *v;
-        cfg.customTitle = jsonStr(c, "customTitle");
+        cfg.customTitle = c.getString("customTitle");
         cfg.maxItems = jsonInt(c, "maxItems");
         cfg.refreshIntervalSec = jsonInt(c, "refreshIntervalSec");
-        cfg.filterExpression = jsonStr(c, "filterExpression");
+        cfg.filterExpression = c.getString("filterExpression");
     }
     return cfg;
 }

@@ -33,13 +33,13 @@ class MenuItemController
         {
             auto j = req.json;
             auto createReq = CreateMenuItemRequest(
-                jsonStr(j, "siteId"),
+                j.getString("siteId"),
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "title"),
-                jsonStr(j, "icon"),
-                jsonStr(j, "parentId"),
-                jsonStr(j, "targetPageId"),
-                jsonStr(j, "targetUrl"),
+                j.getString("title"),
+                j.getString("icon"),
+                j.getString("parentId"),
+                j.getString("targetPageId"),
+                j.getString("targetUrl"),
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
@@ -108,11 +108,11 @@ class MenuItemController
             auto j = req.json;
             auto updateReq = UpdateMenuItemRequest(
                 menuItemId,
-                jsonStr(j, "title"),
-                jsonStr(j, "icon"),
-                jsonStr(j, "parentId"),
-                jsonStr(j, "targetPageId"),
-                jsonStr(j, "targetUrl"),
+                j.getString("title"),
+                j.getString("icon"),
+                j.getString("parentId"),
+                j.getString("targetPageId"),
+                j.getString("targetUrl"),
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),

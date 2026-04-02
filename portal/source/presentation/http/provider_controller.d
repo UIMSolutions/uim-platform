@@ -34,11 +34,11 @@ class ProviderController
             auto j = req.json;
             auto createReq = CreateProviderRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonEnum!ProviderType(j, "providerType", ProviderType.local),
-                jsonStr(j, "contentEndpointUrl"),
-                jsonStr(j, "authToken"),
+                j.getString("contentEndpointUrl"),
+                j.getString("authToken"),
             );
 
             auto result = useCase.createProvider(createReq);
@@ -103,10 +103,10 @@ class ProviderController
             auto j = req.json;
             auto updateReq = UpdateProviderRequest(
                 providerId,
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
-                jsonStr(j, "contentEndpointUrl"),
-                jsonStr(j, "authToken"),
+                j.getString("name"),
+                j.getString("description"),
+                j.getString("contentEndpointUrl"),
+                j.getString("authToken"),
                 jsonBool(j, "active", true),
             );
 

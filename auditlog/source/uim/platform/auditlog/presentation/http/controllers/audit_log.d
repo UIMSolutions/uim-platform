@@ -41,10 +41,10 @@ class AuditLogController : SAPController {
             r.userName = j.getString("userName");
             r.serviceId = j.getString("serviceId");
             r.serviceName = j.getString("serviceName");
-            r.category = parseCategory(jsonStr(j, "category"));
-            r.severity = parseSeverity(jsonStr(j, "severity"));
-            r.action = parseAction(jsonStr(j, "action"));
-            r.outcome = parseOutcome(jsonStr(j, "outcome"));
+            r.category = parseCategory(j.getString("category"));
+            r.severity = parseSeverity(j.getString("severity"));
+            r.action = parseAction(j.getString("action"));
+            r.outcome = parseOutcome(j.getString("outcome"));
             r.objectType = j.getString("objectType");
             r.objectId = j.getString("objectId");
             r.message = j.getString("message");

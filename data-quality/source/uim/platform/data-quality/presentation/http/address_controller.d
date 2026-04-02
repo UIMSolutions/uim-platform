@@ -68,13 +68,13 @@ class AddressController
                     {
                         CleanseAddressRequest a;
                         a.tenantId = batchReq.tenantId;
-                        a.sourceRecordId = jsonStr(item, "sourceRecordId");
-                        a.line1 = jsonStr(item, "line1");
-                        a.line2 = jsonStr(item, "line2");
-                        a.city = jsonStr(item, "city");
-                        a.region = jsonStr(item, "region");
-                        a.postalCode = jsonStr(item, "postalCode");
-                        a.country = jsonStr(item, "country");
+                        a.sourceRecordId = item.getString("sourceRecordId");
+                        a.line1 = item.getString("line1");
+                        a.line2 = item.getString("line2");
+                        a.city = item.getString("city");
+                        a.region = item.getString("region");
+                        a.postalCode = item.getString("postalCode");
+                        a.country = item.getString("country");
                         batchReq.addresses ~= a;
                     }
                 }

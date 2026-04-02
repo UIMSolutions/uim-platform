@@ -37,7 +37,7 @@ class BuildpackController
       auto r = CreateBuildpackRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
-      r.type_ = parseBuildpackType(jsonStr(j, "type"));
+      r.type_ = parseBuildpackType(j.getString("type"));
       r.position = j.getInteger("position");
       r.stack = j.getString("stack");
       r.filename = j.getString("filename");

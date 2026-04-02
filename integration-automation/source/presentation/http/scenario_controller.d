@@ -38,10 +38,10 @@ class ScenarioController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.category = parseScenarioCategory(jsonStr(j, "category"));
+      r.category = parseScenarioCategory(j.getString("category"));
       r.version_ = j.getString("version");
-      r.sourceSystemType = parseSystemType(jsonStr(j, "sourceSystemType"));
-      r.targetSystemType = parseSystemType(jsonStr(j, "targetSystemType"));
+      r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
+      r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
       r.prerequisites = jsonStrArray(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
       r.createdBy = j.getString("createdBy");
@@ -117,11 +117,11 @@ class ScenarioController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.category = parseScenarioCategory(jsonStr(j, "category"));
+      r.category = parseScenarioCategory(j.getString("category"));
       r.version_ = j.getString("version");
-      r.status = parseScenarioStatus(jsonStr(j, "status"));
-      r.sourceSystemType = parseSystemType(jsonStr(j, "sourceSystemType"));
-      r.targetSystemType = parseSystemType(jsonStr(j, "targetSystemType"));
+      r.status = parseScenarioStatus(j.getString("status"));
+      r.sourceSystemType = parseSystemType(j.getString("sourceSystemType"));
+      r.targetSystemType = parseSystemType(j.getString("targetSystemType"));
       r.prerequisites = jsonStrArray(j, "prerequisites");
       r.stepTemplates = parseStepTemplates(j);
 
@@ -218,15 +218,15 @@ class ScenarioController
       if (item.type == Json.Type.object)
       {
         ScenarioStepTemplate t;
-        t.name = jsonStr(item, "name");
-        t.description = jsonStr(item, "description");
-        t.type_ = parseStepType(jsonStr(item, "type"));
-        t.priority = parseStepPriority(jsonStr(item, "priority"));
+        t.name = item.getString("name");
+        t.description = item.getString("description");
+        t.type_ = parseStepType(item.getString("type"));
+        t.priority = parseStepPriority(item.getString("priority"));
         t.sequenceNumber = jsonInt(item, "sequenceNumber");
-        t.assignedRole = jsonStr(item, "assignedRole");
-        t.instructions = jsonStr(item, "instructions");
-        t.automationEndpoint = jsonStr(item, "automationEndpoint");
-        t.automationPayload = jsonStr(item, "automationPayload");
+        t.assignedRole = item.getString("assignedRole");
+        t.instructions = item.getString("instructions");
+        t.automationEndpoint = item.getString("automationEndpoint");
+        t.automationPayload = item.getString("automationPayload");
         t.requiresSourceSystem = jsonBool(item, "requiresSourceSystem");
         t.requiresTargetSystem = jsonBool(item, "requiresTargetSystem");
         t.estimatedDurationMinutes = jsonInt(item, "estimatedDurationMinutes");

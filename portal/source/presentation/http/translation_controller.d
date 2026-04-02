@@ -34,11 +34,11 @@ class TranslationController
             auto j = req.json;
             auto createReq = CreateTranslationRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "resourceType"),
-                jsonStr(j, "resourceId"),
-                jsonStr(j, "fieldName"),
-                jsonStr(j, "language"),
-                jsonStr(j, "value"),
+                j.getString("resourceType"),
+                j.getString("resourceId"),
+                j.getString("fieldName"),
+                j.getString("language"),
+                j.getString("value"),
             );
 
             auto result = useCase.createTranslation(createReq);
@@ -112,7 +112,7 @@ class TranslationController
             auto j = req.json;
             auto updateReq = UpdateTranslationRequest(
                 translationId,
-                jsonStr(j, "value"),
+                j.getString("value"),
             );
 
             auto error = useCase.updateTranslation(updateReq);

@@ -33,9 +33,9 @@ class SectionController
         {
             auto j = req.json;
             auto createReq = CreateSectionRequest(
-                jsonStr(j, "pageId"),
+                j.getString("pageId"),
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "title"),
+                j.getString("title"),
                 jsonInt(j, "sortOrder"),
                 jsonBool(j, "visible", true),
                 jsonInt(j, "columns", 3),
@@ -103,7 +103,7 @@ class SectionController
             auto j = req.json;
             auto updateReq = UpdateSectionRequest(
                 sectionId,
-                jsonStr(j, "title"),
+                j.getString("title"),
                 jsonInt(j, "sortOrder"),
                 jsonBool(j, "visible", true),
                 jsonInt(j, "columns", 3),

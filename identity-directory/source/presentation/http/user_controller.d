@@ -303,12 +303,12 @@ private UserName parseUserName(Json j)
 
     auto n = *nameVal;
     return UserName(
-        jsonStr(n, "formatted"),
-        jsonStr(n, "familyName"),
-        jsonStr(n, "givenName"),
-        jsonStr(n, "middleName"),
-        jsonStr(n, "honorificPrefix"),
-        jsonStr(n, "honorificSuffix"),
+        n.getString("formatted"),
+        n.getString("familyName"),
+        n.getString("givenName"),
+        n.getString("middleName"),
+        n.getString("honorificPrefix"),
+        n.getString("honorificSuffix"),
     );
 }
 

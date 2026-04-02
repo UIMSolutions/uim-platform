@@ -35,8 +35,8 @@ class RoleController
             auto j = req.json;
             auto createReq = CreateRoleRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonEnum!RoleScope(j, "scope", RoleScope.site),
             );
 
@@ -102,8 +102,8 @@ class RoleController
             auto j = req.json;
             auto updateReq = UpdateRoleRequest(
                 roleId,
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
             );
 
             auto error = useCase.updateRole(updateReq);
@@ -124,7 +124,7 @@ class RoleController
         {
             auto j = req.json;
             auto assignReq = AssignRoleRequest(
-                jsonStr(j, "roleId"),
+                j.getString("roleId"),
                 jsonStrArray(j, "userIds"),
                 jsonStrArray(j, "groupIds"),
             );

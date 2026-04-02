@@ -34,9 +34,9 @@ class CatalogController
             auto j = req.json;
             auto createReq = CreateCatalogRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "title"),
-                jsonStr(j, "description"),
-                jsonStr(j, "providerId"),
+                j.getString("title"),
+                j.getString("description"),
+                j.getString("providerId"),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonBool(j, "active", true),
             );
@@ -103,8 +103,8 @@ class CatalogController
             auto j = req.json;
             auto updateReq = UpdateCatalogRequest(
                 catalogId,
-                jsonStr(j, "title"),
-                jsonStr(j, "description"),
+                j.getString("title"),
+                j.getString("description"),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonBool(j, "active", true),
             );

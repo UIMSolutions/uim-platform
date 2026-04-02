@@ -19,6 +19,8 @@ class ValidationRuleController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/validation-rules", &handleCreate);
         router.get("/api/v1/validation-rules", &handleList);
         router.get("/api/v1/validation-rules/*", &handleGetById);
@@ -35,8 +37,8 @@ class ValidationRuleController : SAPController {
             r.description = j.getString("description");
             r.datasetPattern = j.getString("datasetPattern");
             r.fieldName = j.getString("fieldName");
-            r.ruleType = parseRuleType(jsonStr(j, "ruleType"));
-            r.severity = parseSeverity(jsonStr(j, "severity"));
+            r.ruleType = parseRuleType(j.getString("ruleType"));
+            r.severity = parseSeverity(j.getString("severity"));
             r.pattern = j.getString("pattern");
             r.minValue = j.getString("minValue");
             r.maxValue = j.getString("maxValue");
@@ -101,9 +103,9 @@ class ValidationRuleController : SAPController {
             r.description = j.getString("description");
             r.datasetPattern = j.getString("datasetPattern");
             r.fieldName = j.getString("fieldName");
-            r.ruleType = parseRuleType(jsonStr(j, "ruleType"));
-            r.severity = parseSeverity(jsonStr(j, "severity"));
-            r.status = parseRuleStatus(jsonStr(j, "status"));
+            r.ruleType = parseRuleType(j.getString("ruleType"));
+            r.severity = parseSeverity(j.getString("severity"));
+            r.status = parseRuleStatus(j.getString("status"));
             r.pattern = j.getString("pattern");
             r.minValue = j.getString("minValue");
             r.maxValue = j.getString("maxValue");

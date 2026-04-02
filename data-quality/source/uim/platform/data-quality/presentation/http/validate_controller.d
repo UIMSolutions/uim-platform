@@ -64,7 +64,7 @@ class ValidateController
                     if (item.type == Json.Type.object)
                     {
                         RecordFieldValues rfv;
-                        rfv.recordId = jsonStr(item, "recordId");
+                        rfv.recordId = item.getString("recordId");
                         rfv.fieldValues = jsonStrMap(item, "fieldValues");
                         r.records ~= rfv;
                     }

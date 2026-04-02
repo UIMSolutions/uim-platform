@@ -33,11 +33,11 @@ class PageController
         {
             auto j = req.json;
             auto createReq = CreatePageRequest(
-                jsonStr(j, "siteId"),
+                j.getString("siteId"),
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "title"),
-                jsonStr(j, "description"),
-                jsonStr(j, "alias"),
+                j.getString("title"),
+                j.getString("description"),
+                j.getString("alias"),
                 jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
@@ -108,9 +108,9 @@ class PageController
             auto j = req.json;
             auto updateReq = UpdatePageRequest(
                 pageId,
-                jsonStr(j, "title"),
-                jsonStr(j, "description"),
-                jsonStr(j, "alias"),
+                j.getString("title"),
+                j.getString("description"),
+                j.getString("alias"),
                 jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),

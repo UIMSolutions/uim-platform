@@ -35,13 +35,13 @@ class ThemeController
             auto j = req.json;
             auto createReq = CreateThemeRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonEnum!ThemeMode(j, "mode", ThemeMode.light),
-                jsonStr(j, "baseTheme"),
+                j.getString("baseTheme"),
                 parseColors(j),
                 parseFonts(j),
-                jsonStr(j, "customCss"),
+                j.getString("customCss"),
                 jsonBool(j, "isDefault", false),
             );
 
@@ -126,12 +126,12 @@ class ThemeController
             auto j = req.json;
             auto updateReq = UpdateThemeRequest(
                 themeId,
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
+                j.getString("name"),
+                j.getString("description"),
                 jsonEnum!ThemeMode(j, "mode", ThemeMode.light),
                 parseColors(j),
                 parseFonts(j),
-                jsonStr(j, "customCss"),
+                j.getString("customCss"),
                 jsonBool(j, "isDefault", false),
             );
 
@@ -171,16 +171,16 @@ class ThemeController
             return ThemeColors.init;
         auto c = *colorsJson;
         return ThemeColors(
-            jsonStr(c, "primary"),
-            jsonStr(c, "secondary"),
-            jsonStr(c, "accent"),
-            jsonStr(c, "background"),
-            jsonStr(c, "surface"),
-            jsonStr(c, "error"),
-            jsonStr(c, "warning"),
-            jsonStr(c, "info"),
-            jsonStr(c, "success"),
-            jsonStr(c, "textPrimary"),
+            c.getString("primary"),
+            c.getString("secondary"),
+            c.getString("accent"),
+            c.getString("background"),
+            c.getString("surface"),
+            c.getString("error"),
+            c.getString("warning"),
+            c.getString("info"),
+            c.getString("success"),
+            c.getString("textPrimary"),
         );
     }
 

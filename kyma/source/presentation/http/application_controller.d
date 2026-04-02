@@ -164,11 +164,11 @@ class ApplicationController
         foreach (item; *v)
         {
             AppApiEntryDto entry;
-            entry.name = jsonStr(item, "name");
-            entry.description = jsonStr(item, "description");
-            entry.targetUrl = jsonStr(item, "targetUrl");
-            entry.specUrl = jsonStr(item, "specUrl");
-            entry.authType = jsonStr(item, "authType");
+            entry.name = item.getString("name");
+            entry.description = item.getString("description");
+            entry.targetUrl = item.getString("targetUrl");
+            entry.specUrl = item.getString("specUrl");
+            entry.authType = item.getString("authType");
             entries ~= entry;
         }
         return entries;
@@ -183,9 +183,9 @@ class ApplicationController
         foreach (item; *v)
         {
             AppEventEntryDto entry;
-            entry.name = jsonStr(item, "name");
-            entry.description = jsonStr(item, "description");
-            entry.version_ = jsonStr(item, "version");
+            entry.name = item.getString("name");
+            entry.description = item.getString("description");
+            entry.version_ = item.getString("version");
             entries ~= entry;
         }
         return entries;

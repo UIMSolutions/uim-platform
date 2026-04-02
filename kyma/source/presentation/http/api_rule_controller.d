@@ -153,9 +153,9 @@ class ApiRuleController
         foreach (item; *v)
         {
             ApiRuleEntryDto entry;
-            entry.path = jsonStr(item, "path");
+            entry.path = item.getString("path");
             entry.methods = jsonStrArray(item, "methods");
-            entry.accessStrategy = jsonStr(item, "accessStrategy");
+            entry.accessStrategy = item.getString("accessStrategy");
             entry.requiredScopes = jsonStrArray(item, "requiredScopes");
             entry.audiences = jsonStrArray(item, "audiences");
             entry.trustedIssuers = jsonStrArray(item, "trustedIssuers");

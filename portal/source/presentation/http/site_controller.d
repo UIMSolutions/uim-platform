@@ -37,10 +37,10 @@ class SiteController
             auto j = req.json;
             auto createReq = CreateSiteRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
-                jsonStr(j, "alias"),
-                jsonStr(j, "themeId"),
+                j.getString("name"),
+                j.getString("description"),
+                j.getString("alias"),
+                j.getString("themeId"),
                 parseSiteSettings(j),
             );
 
@@ -106,10 +106,10 @@ class SiteController
             auto j = req.json;
             auto updateReq = UpdateSiteRequest(
                 siteId,
-                jsonStr(j, "name"),
-                jsonStr(j, "description"),
-                jsonStr(j, "alias"),
-                jsonStr(j, "themeId"),
+                j.getString("name"),
+                j.getString("description"),
+                j.getString("alias"),
+                j.getString("themeId"),
                 parseSiteSettings(j),
             );
 

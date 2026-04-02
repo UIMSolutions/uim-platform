@@ -38,7 +38,7 @@ class CardController
             r.subtitle = j.getString("subtitle");
             r.description = j.getString("description");
             r.icon = j.getString("icon");
-            r.cardType = parseCardType(jsonStr(j, "cardType"));
+            r.cardType = parseCardType(j.getString("cardType"));
             r.dataSource = parseDataSource(j);
             r.manifest = parseManifest(j);
 

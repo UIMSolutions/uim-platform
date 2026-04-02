@@ -56,9 +56,9 @@ class ConfigChangeController : SAPController {
     foreach (item; *v) {
       if (item.type == Json.Type.object) {
         result ~= AuditAttribute(
-          jsonStr(item, "name"),
-          jsonStr(item, "oldValue"),
-          jsonStr(item, "newValue")
+          item.getString("name"),
+          item.getString("oldValue"),
+          item.getString("newValue")
         );
       }
     }

@@ -35,16 +35,16 @@ class TileController
             auto j = req.json;
             auto createReq = CreateTileRequest(
                 req.headers.get("X-Tenant-Id", ""),
-                jsonStr(j, "catalogId"),
-                jsonStr(j, "title"),
-                jsonStr(j, "subtitle"),
-                jsonStr(j, "description"),
-                jsonStr(j, "icon"),
-                jsonStr(j, "info"),
+                j.getString("catalogId"),
+                j.getString("title"),
+                j.getString("subtitle"),
+                j.getString("description"),
+                j.getString("icon"),
+                j.getString("info"),
                 jsonEnum!TileType(j, "tileType", TileType.static_),
                 jsonEnum!AppType(j, "appType", AppType.url),
-                jsonStr(j, "url"),
-                jsonStr(j, "appId"),
+                j.getString("url"),
+                j.getString("appId"),
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "keywords"),
                 jsonStrArray(j, "allowedRoleIds"),
@@ -131,15 +131,15 @@ class TileController
             auto j = req.json;
             auto updateReq = UpdateTileRequest(
                 tileId,
-                jsonStr(j, "title"),
-                jsonStr(j, "subtitle"),
-                jsonStr(j, "description"),
-                jsonStr(j, "icon"),
-                jsonStr(j, "info"),
+                j.getString("title"),
+                j.getString("subtitle"),
+                j.getString("description"),
+                j.getString("icon"),
+                j.getString("info"),
                 jsonEnum!TileType(j, "tileType", TileType.static_),
                 jsonEnum!AppType(j, "appType", AppType.url),
-                jsonStr(j, "url"),
-                jsonStr(j, "appId"),
+                j.getString("url"),
+                j.getString("appId"),
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "keywords"),
                 jsonStrArray(j, "allowedRoleIds"),
@@ -183,12 +183,12 @@ class TileController
             return TileConfiguration.init;
         auto c = *cfgJson;
         return TileConfiguration(
-            jsonStr(c, "serviceUrl"),
-            jsonStr(c, "serviceRefreshInterval"),
-            jsonStr(c, "numberUnit"),
-            jsonStr(c, "targetNumber"),
-            jsonStr(c, "indicatorColor"),
-            jsonStr(c, "sizeBehavior"),
+            c.getString("serviceUrl"),
+            c.getString("serviceRefreshInterval"),
+            c.getString("numberUnit"),
+            c.getString("targetNumber"),
+            c.getString("indicatorColor"),
+            c.getString("sizeBehavior"),
         );
     }
 }

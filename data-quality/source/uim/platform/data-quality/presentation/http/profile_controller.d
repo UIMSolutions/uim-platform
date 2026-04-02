@@ -45,7 +45,7 @@ class ProfileController
                     if (item.type == Json.Type.object)
                     {
                         ProfileRecordInput pri;
-                        pri.recordId = jsonStr(item, "recordId");
+                        pri.recordId = item.getString("recordId");
                         pri.fieldValues = jsonStrMap(item, "fieldValues");
                         r.records ~= pri;
                     }

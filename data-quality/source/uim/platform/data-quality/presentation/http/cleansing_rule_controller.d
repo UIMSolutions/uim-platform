@@ -35,7 +35,7 @@ class CleansingRuleController : SAPController {
             r.description = j.getString("description");
             r.datasetPattern = j.getString("datasetPattern");
             r.fieldName = j.getString("fieldName");
-            r.action = parseCleansingAction(jsonStr(j, "action"));
+            r.action = parseCleansingAction(j.getString("action"));
             r.findPattern = j.getString("findPattern");
             r.replaceWith = j.getString("replaceWith");
             r.defaultValue = j.getString("defaultValue");
@@ -102,8 +102,8 @@ class CleansingRuleController : SAPController {
             r.description = j.getString("description");
             r.datasetPattern = j.getString("datasetPattern");
             r.fieldName = j.getString("fieldName");
-            r.action = parseCleansingAction(jsonStr(j, "action"));
-            r.status = parseRuleStatus(jsonStr(j, "status"));
+            r.action = parseCleansingAction(j.getString("action"));
+            r.status = parseRuleStatus(j.getString("status"));
             r.findPattern = j.getString("findPattern");
             r.replaceWith = j.getString("replaceWith");
             r.defaultValue = j.getString("defaultValue");

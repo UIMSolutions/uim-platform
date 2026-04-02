@@ -50,7 +50,7 @@ class RouteController
       r.host = j.getString("host");
       r.path = j.getString("path");
       r.port = j.getInteger("port");
-      r.protocol = parseRouteProtocol(jsonStr(j, "protocol"));
+      r.protocol = parseRouteProtocol(j.getString("protocol"));
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createRoute(r);
@@ -198,7 +198,7 @@ class RouteController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.ownerOrgId = j.getString("ownerOrgId");
       r.name = j.getString("name");
-      r.scope_ = parseDomainScope(jsonStr(j, "scope"));
+      r.scope_ = parseDomainScope(j.getString("scope"));
       r.isInternal = j.getBoolean("isInternal");
       r.createdBy = j.getString("createdBy");
 

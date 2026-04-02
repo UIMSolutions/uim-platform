@@ -38,7 +38,7 @@ class DuplicateController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.datasetId = j.getString("datasetId");
             r.matchFields = jsonStrArrayArray(j, "matchFields");
-            r.strategy = parseStrategy(jsonStr(j, "strategy"));
+            r.strategy = parseStrategy(j.getString("strategy"));
             r.threshold = jsonDouble(j, "threshold", 70.0);
 
             auto recordsJson = "records" in j;
@@ -49,7 +49,7 @@ class DuplicateController
                     if (item.type == Json.Type.object)
                     {
                         DuplicateRecordInput dri;
-                        dri.recordId = jsonStr(item, "recordId");
+                        dri.recordId = item.getString("recordId");
                         dri.fieldValues = jsonStrMap(item, "fieldValues");
                         r.records ~= dri;
                     }

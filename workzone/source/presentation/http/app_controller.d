@@ -163,12 +163,12 @@ private AppConfig parseAppConfig(Json j)
     if (v !is null && (*v).type == Json.Type.object)
     {
         auto c = *v;
-        cfg.authType = jsonStr(c, "authType");
-        cfg.authEndpoint = jsonStr(c, "authEndpoint");
+        cfg.authType = c.getString("authType");
+        cfg.authEndpoint = c.getString("authEndpoint");
         cfg.enableSso = jsonBool(c, "enableSso");
-        cfg.sapSystemAlias = jsonStr(c, "sapSystemAlias");
-        cfg.oDataServiceUrl = jsonStr(c, "oDataServiceUrl");
-        cfg.componentId = jsonStr(c, "componentId");
+        cfg.sapSystemAlias = c.getString("sapSystemAlias");
+        cfg.oDataServiceUrl = c.getString("oDataServiceUrl");
+        cfg.componentId = c.getString("componentId");
     }
     return cfg;
 }

@@ -11,17 +11,14 @@ import domain.entities.content_package;
 import domain.types;
 import presentation.http.json_utils;
 
-class PackageController
-{
+class PackageController {
     private ManageContentPackagesUseCase uc;
 
-    this(ManageContentPackagesUseCase uc)
-    {
+    this(ManageContentPackagesUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/packages", &handleCreate);
         router.get("/api/v1/packages", &handleList);
         router.get("/api/v1/packages/*", &handleGetById);
@@ -30,10 +27,8 @@ class PackageController
         router.post("/api/v1/packages/assemble", &handleAssemble);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CreatePackageRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -47,27 +42,20 @@ class PackageController
             r.items = parseContentItems(j);
 
             auto result = uc.createPackage(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto packages = uc.listPackages(tenantId);
 
@@ -77,38 +65,29 @@ class PackageController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) packages.length);
+            resp["totalCount"] = Json(cast(long)packages.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto pkg = uc.getPackage(id);
-            if (pkg.id.length == 0)
-            {
+            if (pkg.id.length == 0) {
                 writeError(res, 404, "Package not found");
                 return;
             }
             res.writeJsonBody(serializePackage(pkg), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             auto r = UpdatePackageRequest();
@@ -118,50 +97,36 @@ class PackageController
             r.items = parseContentItems(j);
 
             auto result = uc.updatePackage(id, r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, result.error == "Package not found" ? 404 : 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deletePackage(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = AssemblePackageRequest();
             r.packageId = j.getString("packageId");
@@ -169,78 +134,87 @@ class PackageController
             r.assembledBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.assemblePackage(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 resp["status"] = Json("assembled");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static ContentItem[] parseContentItems(Json j)
-    {
+    private static ContentItem[] parseContentItems(Json j) {
         ContentItem[] items;
         auto v = "items" in j;
         if (v is null || (*v).type != Json.Type.array)
             return items;
 
-        foreach (itemJson; *v)
-        {
+        foreach (itemJson; *v) {
             if (itemJson.type != Json.Type.object)
                 continue;
             ContentItem item;
-            item.id = jsonStr(itemJson, "id");
-            item.name = jsonStr(itemJson, "name");
-            item.providerId = jsonStr(itemJson, "providerId");
-            item.version_ = jsonStr(itemJson, "version");
-            item.description = jsonStr(itemJson, "description");
+            item.id = itemJson.getString("id");
+            item.name = itemJson.getString("name");
+            item.providerId = itemJson.getString("providerId");
+            item.version_ = itemJson.getString("version");
+            item.description = itemJson.getString("description");
             item.dependencies = jsonStrArray(itemJson, "dependencies");
 
-            auto catStr = jsonStr(itemJson, "category");
+            auto catStr = itemJson.getString("category");
             item.category = parseContentCategory(catStr);
             items ~= item;
         }
         return items;
     }
 
-    private static ContentCategory parseContentCategory(string s)
-    {
-        switch (s)
-        {
-            case "integrationFlow": return ContentCategory.integrationFlow;
-            case "destination": return ContentCategory.destination;
-            case "apiProxy": return ContentCategory.apiProxy;
-            case "valueMapping": return ContentCategory.valueMapping;
-            case "securityArtifact": return ContentCategory.securityArtifact;
-            case "messageMapping": return ContentCategory.messageMapping;
-            case "scriptCollection": return ContentCategory.scriptCollection;
-            case "dataType": return ContentCategory.dataType;
-            case "messageType": return ContentCategory.messageType;
-            case "numberRange": return ContentCategory.numberRange;
-            case "customForm": return ContentCategory.customForm;
-            case "workflow": return ContentCategory.workflow;
-            case "businessRule": return ContentCategory.businessRule;
-            case "keyValueMap": return ContentCategory.keyValueMap;
-            case "oauthCredential": return ContentCategory.oauthCredential;
-            case "certificateToUserMapping": return ContentCategory.certificateToUserMapping;
-            case "accessPolicy": return ContentCategory.accessPolicy;
-            case "functionLibrary": return ContentCategory.functionLibrary;
-            default: return ContentCategory.custom;
+    private static ContentCategory parseContentCategory(string s) {
+        switch (s) {
+        case "integrationFlow":
+            return ContentCategory.integrationFlow;
+        case "destination":
+            return ContentCategory.destination;
+        case "apiProxy":
+            return ContentCategory.apiProxy;
+        case "valueMapping":
+            return ContentCategory.valueMapping;
+        case "securityArtifact":
+            return ContentCategory.securityArtifact;
+        case "messageMapping":
+            return ContentCategory.messageMapping;
+        case "scriptCollection":
+            return ContentCategory.scriptCollection;
+        case "dataType":
+            return ContentCategory.dataType;
+        case "messageType":
+            return ContentCategory.messageType;
+        case "numberRange":
+            return ContentCategory.numberRange;
+        case "customForm":
+            return ContentCategory.customForm;
+        case "workflow":
+            return ContentCategory.workflow;
+        case "businessRule":
+            return ContentCategory.businessRule;
+        case "keyValueMap":
+            return ContentCategory.keyValueMap;
+        case "oauthCredential":
+            return ContentCategory.oauthCredential;
+        case "certificateToUserMapping":
+            return ContentCategory.certificateToUserMapping;
+        case "accessPolicy":
+            return ContentCategory.accessPolicy;
+        case "functionLibrary":
+            return ContentCategory.functionLibrary;
+        default:
+            return ContentCategory.custom;
         }
     }
 
-    private static Json serializePackage(ref const ContentPackage p)
-    {
+    private static Json serializePackage(ref const ContentPackage p) {
         auto j = Json.emptyObject;
         j["id"] = Json(p.id);
         j["tenantId"] = Json(p.tenantId);
@@ -256,11 +230,9 @@ class PackageController
         j["assembledAt"] = Json(p.assembledAt);
         j["packageSizeBytes"] = Json(p.packageSizeBytes);
 
-        if (p.items.length > 0)
-        {
+        if (p.items.length > 0) {
             auto arr = Json.emptyArray;
-            foreach (ref item; p.items)
-            {
+            foreach (ref item; p.items) {
                 auto ij = Json.emptyObject;
                 ij["id"] = Json(item.id);
                 ij["name"] = Json(item.name);

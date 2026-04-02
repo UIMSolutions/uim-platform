@@ -160,10 +160,10 @@ private ChannelConfig parseChannelConfig(Json j)
     if (v !is null && (*v).type == Json.Type.object)
     {
         auto c = *v;
-        cfg.sourceUrl = jsonStr(c, "sourceUrl");
+        cfg.sourceUrl = c.getString("sourceUrl");
         cfg.pollIntervalSec = jsonInt(c, "pollIntervalSec");
-        cfg.authType = jsonStr(c, "authType");
-        cfg.authToken = jsonStr(c, "authToken");
+        cfg.authType = c.getString("authType");
+        cfg.authToken = c.getString("authToken");
         cfg.maxItems = jsonInt(c, "maxItems");
     }
     return cfg;

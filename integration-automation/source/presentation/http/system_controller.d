@@ -40,7 +40,7 @@ class SystemController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.systemType = parseSystemType(jsonStr(j, "systemType"));
+      r.systemType = parseSystemType(j.getString("systemType"));
       r.host = j.getString("host");
       r.port = jsonUshort(j, "port");
       r.client = j.getString("client");
@@ -122,12 +122,12 @@ class SystemController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.systemType = parseSystemType(jsonStr(j, "systemType"));
+      r.systemType = parseSystemType(j.getString("systemType"));
       r.host = j.getString("host");
       r.port = jsonUshort(j, "port");
       r.client = j.getString("client");
       r.protocol = j.getString("protocol");
-      r.status = parseConnectionStatus(jsonStr(j, "status"));
+      r.status = parseConnectionStatus(j.getString("status"));
       r.environment = j.getString("environment");
       r.region = j.getString("region");
       r.systemId = j.getString("systemId");

@@ -41,7 +41,7 @@ class ModelController
       r.datasetId = j.getString("datasetId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.modelType = parseModelType(jsonStr(j, "modelType"));
+      r.modelType = parseModelType(j.getString("modelType"));
       r.targetColumns = j.getString("targetColumns");
       r.featureColumns = j.getString("featureColumns");
       r.hyperparameters = j.getString("hyperparameters");
@@ -116,7 +116,7 @@ class ModelController
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.modelType = parseModelType(jsonStr(j, "modelType"));
+      r.modelType = parseModelType(j.getString("modelType"));
       r.targetColumns = j.getString("targetColumns");
       r.featureColumns = j.getString("featureColumns");
       r.hyperparameters = j.getString("hyperparameters");
