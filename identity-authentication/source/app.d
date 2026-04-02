@@ -6,9 +6,11 @@ import uim.platform.identity_authentication;
 import uim.platform.identity_authentication.infrastructure.config;
 import uim.platform.identity_authentication.infrastructure.container;
 import vibe.d;
+@safe:
 
-void main()
-{
+version (unittest) {
+} else {
+void main() {
     // Load configuration
     auto config = loadConfig();
 

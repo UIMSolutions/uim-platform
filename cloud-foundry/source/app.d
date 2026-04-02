@@ -8,9 +8,11 @@ import uim.platform.cloud_foundry.infrastructure.config;
 import uim.platform.cloud_foundry.infrastructure.container;
 
 import std.stdio : writefln;
+@safe:
 
-void main()
-{
+version (unittest) {
+} else {
+void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
 

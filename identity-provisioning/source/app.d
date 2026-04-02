@@ -6,9 +6,11 @@ import vibe.core.core : runApplication;
 
 import infrastructure.config;
 import infrastructure.container;
+@safe:
 
-void main()
-{
+version (unittest) {
+} else {
+void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
 

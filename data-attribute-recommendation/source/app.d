@@ -8,9 +8,11 @@ import infrastructure.config;
 import infrastructure.container;
 
 import std.stdio : writefln;
+@safe:
 
-void main()
-{
+version (unittest) {
+} else {
+void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
 
