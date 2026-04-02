@@ -9,8 +9,11 @@ import infrastructure.container;
 
 import std.stdio : writefln;
 
-void main()
-{
+import uim.platform.management;
+
+@safe:
+
+void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
