@@ -107,7 +107,7 @@ class DeletionController
             UpdateDeletionStatusRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.status = parseDeletionStatus(jsonStr(j, "status"));
+            r.status = parseDeletionStatus(j.getString("status"));
             r.blockerReason = j.getString("blockerReason");
 
             auto result = uc.updateStatus(r);

@@ -105,7 +105,7 @@ class DataRetrievalController
             UpdateRetrievalStatusRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.status = parseRetrievalStatus(jsonStr(j, "status"));
+            r.status = parseRetrievalStatus(j.getString("status"));
             r.downloadUrl = j.getString("downloadUrl");
             r.totalFields = jsonLong(j, "totalFields");
 

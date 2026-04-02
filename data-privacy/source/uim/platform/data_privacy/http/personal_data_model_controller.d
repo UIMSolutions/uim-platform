@@ -36,11 +36,11 @@ class PersonalDataModelController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.fieldName = j.getString("fieldName");
             r.fieldDescription = j.getString("fieldDescription");
-            r.category = parseCategory(jsonStr(j, "category"));
-            r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
+            r.category = parseCategory(j.getString("category"));
+            r.sensitivity = parseSensitivity(j.getString("sensitivity"));
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceEntity = j.getString("sourceEntity");
-            r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
+            r.subjectType = parseSubjectType(j.getString("subjectType"));
             r.isSpecialCategory = j.getBoolean("isSpecialCategory");
             r.legalReference = j.getString("legalReference");
 
@@ -132,8 +132,8 @@ class PersonalDataModelController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.fieldName = j.getString("fieldName");
             r.fieldDescription = j.getString("fieldDescription");
-            r.category = parseCategory(jsonStr(j, "category"));
-            r.sensitivity = parseSensitivity(jsonStr(j, "sensitivity"));
+            r.category = parseCategory(j.getString("category"));
+            r.sensitivity = parseSensitivity(j.getString("sensitivity"));
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceEntity = j.getString("sourceEntity");
             r.isSpecialCategory = j.getBoolean("isSpecialCategory");

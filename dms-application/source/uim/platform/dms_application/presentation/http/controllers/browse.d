@@ -90,7 +90,7 @@ class BrowseController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.userId = req.headers.get("X-User-Id", "system");
       r.resourceId = j.getString("resourceId");
-      r.resourceType = parseResourceType(jsonStr(j, "resourceType"));
+      r.resourceType = parseResourceType(j.getString("resourceType"));
 
       auto result = uc.addFavorite(r);
       if (result.isSuccess) {

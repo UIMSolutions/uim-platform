@@ -35,7 +35,7 @@ class ConsentController
             CreateConsentRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.dataSubjectId = j.getString("dataSubjectId");
-            r.purpose = parsePurpose(jsonStr(j, "purpose"));
+            r.purpose = parsePurpose(j.getString("purpose"));
             r.channel = j.getString("channel");
             r.consentText = j.getString("consentText");
             r.version_ = j.getString("version");

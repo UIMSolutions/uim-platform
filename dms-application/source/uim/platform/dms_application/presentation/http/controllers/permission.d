@@ -39,9 +39,9 @@ class PermissionController : SAPController {
       auto r = CreatePermissionRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceId = j.getString("resourceId");
-      r.resourceType = parseResourceType(jsonStr(j, "resourceType"));
+      r.resourceType = parseResourceType(j.getString("resourceType"));
       r.userId = j.getString("userId");
-      r.level = parsePermissionLevel(jsonStr(j, "level"));
+      r.level = parsePermissionLevel(j.getString("level"));
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.grantPermission(r);
@@ -102,9 +102,9 @@ class PermissionController : SAPController {
       auto j = req.json;
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto resourceId = j.getString("resourceId");
-      auto resourceType = parseResourceType(jsonStr(j, "resourceType"));
+      auto resourceType = parseResourceType(j.getString("resourceType"));
       auto userId = j.getString("userId");
-      auto required = parsePermissionLevel(jsonStr(j, "requiredLevel"));
+      auto required = parsePermissionLevel(j.getString("requiredLevel"));
 
       auto allowed = uc.checkAccess(resourceId, resourceType, userId, required, tenantId);
 
@@ -126,7 +126,7 @@ class PermissionController : SAPController {
       auto r = UpdatePermissionRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.level = parsePermissionLevel(jsonStr(j, "level"));
+      r.level = parsePermissionLevel(j.getString("level"));
 
       auto result = uc.updatePermission(r);
       if (result.isSuccess) {

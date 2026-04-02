@@ -34,8 +34,8 @@ class LegalGroundController
             CreateLegalGroundRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.dataSubjectId = j.getString("dataSubjectId");
-            r.basis = parseLegalBasis(jsonStr(j, "basis"));
-            r.purpose = parsePurpose(jsonStr(j, "purpose"));
+            r.basis = parseLegalBasis(j.getString("basis"));
+            r.purpose = parsePurpose(j.getString("purpose"));
             r.description = j.getString("description");
             r.legalReference = j.getString("legalReference");
             r.validFrom = jsonLong(j, "validFrom");

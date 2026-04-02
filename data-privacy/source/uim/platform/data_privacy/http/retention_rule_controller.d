@@ -35,7 +35,7 @@ class RetentionRuleController
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.purpose = parsePurpose(jsonStr(j, "purpose"));
+            r.purpose = parsePurpose(j.getString("purpose"));
             r.retentionDays = j.getInteger("retentionDays");
             r.legalReference = j.getString("legalReference");
             r.isDefault = j.getBoolean("isDefault");
@@ -110,7 +110,7 @@ class RetentionRuleController
             r.description = j.getString("description");
             r.retentionDays = j.getInteger("retentionDays");
             r.legalReference = j.getString("legalReference");
-            r.status = parseRuleStatus(jsonStr(j, "status"));
+            r.status = parseRuleStatus(j.getString("status"));
 
             auto result = uc.updateRule(r);
             if (result.isSuccess())

@@ -42,7 +42,7 @@ class DocumentController : SAPController {
       r.folderId = j.getString("folderId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.contentCategory = parseContentCategory(jsonStr(j, "contentCategory"));
+      r.contentCategory = parseContentCategory(j.getString("contentCategory"));
       r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
       r.tags = j.getString("tags");

@@ -104,7 +104,7 @@ class BlockingController
             UpdateBlockingStatusRequest r;
             r.id = extractIdFromPath(req.requestURI);
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.status = parseBlockingStatus(jsonStr(j, "status"));
+            r.status = parseBlockingStatus(j.getString("status"));
 
             auto result = uc.updateStatus(r);
             if (result.isSuccess())

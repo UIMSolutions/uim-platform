@@ -38,7 +38,7 @@ class DataSubjectController
             r.externalId = j.getString("externalId");
             r.sourceSystem = j.getString("sourceSystem");
             r.country = j.getString("country");
-            r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
+            r.subjectType = parseSubjectType(j.getString("subjectType"));
 
             auto result = uc.createSubject(r);
             if (result.isSuccess())
@@ -110,7 +110,7 @@ class DataSubjectController
             r.email = j.getString("email");
             r.sourceSystem = j.getString("sourceSystem");
             r.country = j.getString("country");
-            r.subjectType = parseSubjectType(jsonStr(j, "subjectType"));
+            r.subjectType = parseSubjectType(j.getString("subjectType"));
             r.isActive = j.getBoolean("isActive", true);
 
             auto result = uc.updateSubject(r);
