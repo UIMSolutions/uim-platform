@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.environment_instance;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// An environment instance represents a provisioned runtime environment
 /// (Cloud Foundry org, Kyma cluster, ABAP system, etc.) within a subaccount.
 struct EnvironmentInstance {

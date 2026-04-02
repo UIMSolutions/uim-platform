@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.subscription;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).
 struct Subscription {

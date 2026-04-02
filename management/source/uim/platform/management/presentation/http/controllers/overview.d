@@ -7,25 +7,25 @@ import vibe.data.json;
 import uim.platform.management.application.usecases.get_account_overview;
 import uim.platform.management.application.dto;
 import presentation.http.json_utils;
+import uim.platform.management;
 
-class OverviewController
-{
+mixin(ShowModule!());
+@safe:
+class OverviewController {
     private GetAccountOverviewUseCase uc;
 
-    this(GetAccountOverviewUseCase uc) { this.uc = uc; }
+    this(GetAccountOverviewUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.get("/api/v1/overview", &handleOverview);
     }
 
-    private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto gaId = req.params.get("globalAccountId");
-            if (gaId.length == 0)
-            {
+            if (gaId.length == 0) {
                 writeError(res, 400, "globalAccountId query parameter is required");
                 return;
             }
@@ -41,8 +41,7 @@ class OverviewController
             j["totalSubscriptions"] = Json(ov.totalSubscriptions);
             j["recentEventsCount"] = Json(ov.recentEventsCount);
             res.writeJsonBody(j, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }

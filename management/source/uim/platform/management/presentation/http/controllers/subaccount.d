@@ -1,23 +1,28 @@
 module uim.platform.management.presentation.http.controllers.subaccount;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
 
-import uim.platform.management.application.usecases.manage_subaccounts;
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.subaccount;
-import uim.platform.management.domain.types;
-import presentation.http.json_utils;
+// import uim.platform.management.application.usecases.manage_subaccounts;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.subaccount;
+// import uim.platform.management.domain.types;
+// import presentation.http.json_utils;
+import uim.platform.management;
 
-class SubaccountController
-{
+mixin(ShowModule!());
+@safe:
+class SubaccountController {
     private ManageSubaccountsUseCase uc;
 
-    this(ManageSubaccountsUseCase uc) { this.uc = uc; }
+    this(ManageSubaccountsUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/subaccounts", &handleCreate);
         router.get("/api/v1/subaccounts", &handleList);
         router.get("/api/v1/subaccounts/*", &handleGet);
@@ -28,10 +33,8 @@ class SubaccountController
         router.delete_("/api/v1/subaccounts/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateSubaccountRequest r;
             r.globalAccountId = j.getString("globalAccountId");
@@ -48,23 +51,18 @@ class SubaccountController
             r.customProperties = jsonStrMap(j, "customProperties");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto gaId = req.params.get("globalAccountId");
             auto dirId = req.params.get("directoryId");
             auto region = req.params.get("region");
@@ -83,34 +81,27 @@ class SubaccountController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto s = uc.getById(id);
-            if (s.id.length == 0)
-            {
+            if (s.id.length == 0) {
                 writeError(res, 404, "Subaccount not found");
                 return;
             }
             res.writeJsonBody(serializeSubaccount(s), 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateSubaccountRequest r;
@@ -127,15 +118,12 @@ class SubaccountController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             MoveSubaccountRequest r;
@@ -146,59 +134,48 @@ class SubaccountController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.suspend(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.reactivate(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.remove(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 204);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }
 
-private Json serializeSubaccount(ref Subaccount s)
-{
+private Json serializeSubaccount(ref Subaccount s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["globalAccountId"] = Json(s.globalAccountId);
@@ -220,4 +197,8 @@ private Json serializeSubaccount(ref Subaccount s)
     return j;
 }
 
-private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) {
+    import std.conv : to;
+
+    return val.to!string;
+}

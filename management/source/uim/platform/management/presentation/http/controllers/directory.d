@@ -1,15 +1,18 @@
 module uim.platform.management.presentation.http.controllers.directory;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// 
+// import uim.platform.management.application.usecases.manage_directories;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.directory;
+// import uim.platform.management.domain.types;
+// import presentation.http.json_utils;
+import uim.platform.management;
 
-import uim.platform.management.application.usecases.manage_directories;
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.directory;
-import uim.platform.management.domain.types;
-import presentation.http.json_utils;
-
+mixin(ShowModule!());
+@safe:
 class DirectoryController : SAPController {
     private ManageDirectoriesUseCase uc;
 
@@ -18,6 +21,8 @@ class DirectoryController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/directories", &handleCreate);
         router.get("/api/v1/directories", &handleList);
         router.get("/api/v1/directories/*", &handleGet);

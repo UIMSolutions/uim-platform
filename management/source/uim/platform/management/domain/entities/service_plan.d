@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.service_plan;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// A service plan represents an available service offering in the
 /// BTP service marketplace with its pricing and capabilities.
 struct ServicePlan {

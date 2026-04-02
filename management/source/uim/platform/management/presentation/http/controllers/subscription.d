@@ -1,23 +1,27 @@
 module uim.platform.management.presentation.http.controllers.subscription;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// 
+// import uim.platform.management.application.usecases.manage_subscriptions;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.subscription;
+// import uim.platform.management.domain.types;
+// import presentation.http.json_utils;
 
-import uim.platform.management.application.usecases.manage_subscriptions;
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.subscription;
-import uim.platform.management.domain.types;
-import presentation.http.json_utils;
+import uim.platform.management;
 
-class SubscriptionController
-{
+mixin(ShowModule!());
+@safe:
+class SubscriptionController {
     private ManageSubscriptionsUseCase uc;
 
-    this(ManageSubscriptionsUseCase uc) { this.uc = uc; }
+    this(ManageSubscriptionsUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/subscriptions", &handleSubscribe);
         router.get("/api/v1/subscriptions", &handleList);
         router.get("/api/v1/subscriptions/*", &handleGet);
@@ -25,10 +29,8 @@ class SubscriptionController
         router.post("/api/v1/subscriptions/unsubscribe/*", &handleUnsubscribe);
     }
 
-    private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateSubscriptionRequest r;
             r.subaccountId = j.getString("subaccountId");
@@ -40,23 +42,18 @@ class SubscriptionController
             r.labels = jsonStrMap(j, "labels");
 
             auto result = uc.subscribe(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto subId = req.params.get("subaccountId");
             Subscription[] items;
             if (subId.length > 0)
@@ -68,34 +65,27 @@ class SubscriptionController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto s = uc.getById(id);
-            if (s.id.length == 0)
-            {
+            if (s.id.length == 0) {
                 writeError(res, 404, "Subscription not found");
                 return;
             }
             res.writeJsonBody(serializeSubscription(s), 200);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto j = req.json;
             UpdateSubscriptionRequest r;
@@ -107,29 +97,24 @@ class SubscriptionController
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 404, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 
-    private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractId(req.requestURI);
             auto result = uc.unsubscribe(id);
             if (result.success)
                 res.writeJsonBody(Json.emptyObject, 200);
             else
                 writeError(res, 400, result.error);
-        }
-        catch (Exception e)
+        } catch (Exception e)
             writeError(res, 500, "Internal server error");
     }
 }
 
-private Json serializeSubscription(ref Subscription s)
-{
+private Json serializeSubscription(ref Subscription s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["subaccountId"] = Json(s.subaccountId);
@@ -149,4 +134,8 @@ private Json serializeSubscription(ref Subscription s)
     return j;
 }
 
-private string enumStr(E)(E val) { import std.conv : to; return val.to!string; }
+private string enumStr(E)(E val) {
+    import std.conv : to;
+
+    return val.to!string;
+}

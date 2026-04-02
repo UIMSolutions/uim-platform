@@ -1,15 +1,18 @@
 module uim.platform.management.presentation.http.controllers.entitlement;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// 
+// import uim.platform.management.application.usecases.manage_entitlements;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.entitlement;
+// import uim.platform.management.domain.types;
+// import presentation.http.json_utils;
+import uim.platform.management;
 
-import uim.platform.management.application.usecases.manage_entitlements;
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.entitlement;
-import uim.platform.management.domain.types;
-import presentation.http.json_utils;
-
+mixin(ShowModule!());
+@safe:
 class EntitlementController {
     private ManageEntitlementsUseCase uc;
 

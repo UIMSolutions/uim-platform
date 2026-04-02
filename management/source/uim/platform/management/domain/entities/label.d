@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.label;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// A label is a key-value tag attached to a BTP resource for
 /// organizing and categorizing global accounts, directories, subaccounts, etc.
 struct Label {

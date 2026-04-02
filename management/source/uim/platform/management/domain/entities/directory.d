@@ -1,7 +1,11 @@
 module uim.platform.management.domain.entities.directory;
 
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// A directory is a grouping entity within a global account for
 /// organizing subaccounts and managing entitlements/authorizations.
 struct Directory {
