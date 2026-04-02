@@ -1,15 +1,18 @@
 module app;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.core.core : runApplication;
-
-import uim.platform.management.infrastructure.config;
-import uim.platform.management.infrastructure.container;
-
-import std.stdio : writefln;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.core.core : runApplication;
+// 
+// import uim.platform.management.infrastructure.config;
+// import uim.platform.management.infrastructure.container;
+// 
+// import std.stdio : writefln;
 
 import uim.platform.management;
+
+mixin(ShowModule!());
+@safe:
 
 @safe:
 

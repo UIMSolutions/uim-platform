@@ -1,6 +1,6 @@
 module application.usecases.monitor_activities;
 
-import application.dto;
+import uim.platform.content_agent.application.dto;
 import domain.entities.content_activity;
 import domain.ports.content_activity_repository;
 import domain.types;

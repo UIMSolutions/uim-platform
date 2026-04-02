@@ -1,6 +1,6 @@
 module application.usecases.manage_transport_queues;
 
-import application.dto;
+import uim.platform.content_agent.application.dto;
 import domain.entities.transport_queue;
 import domain.entities.content_activity;
 import domain.ports.transport_queue_repository;

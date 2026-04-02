@@ -1,6 +1,6 @@
 module application.usecases.export_content;
 
-import application.dto;
+import uim.platform.content_agent.application.dto;
 import domain.entities.export_job;
 import domain.entities.content_package;
 import domain.entities.content_activity;

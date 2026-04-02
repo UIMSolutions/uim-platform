@@ -1,6 +1,6 @@
 module application.usecases.manage_content_providers;
 
-import application.dto;
+import uim.platform.content_agent.application.dto;
 import domain.entities.content_provider;
 import domain.entities.content_activity;
 import domain.ports.content_provider_repository;

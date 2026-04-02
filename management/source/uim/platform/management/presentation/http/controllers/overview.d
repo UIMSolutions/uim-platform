@@ -1,17 +1,17 @@
 module uim.platform.management.presentation.http.controllers.overview;
 
-import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-
-import uim.platform.management.application.usecases.get_account_overview;
-import uim.platform.management.application.dto;
-import presentation.http.json_utils;
+// import vibe.http.server;
+// import vibe.http.router;
+// import vibe.data.json;
+// 
+// import uim.platform.management.application.usecases.get_account_overview;
+// import uim.platform.management.application.dto;
+// import presentation.http.json_utils;
 import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class OverviewController {
+class OverviewController : SAPController {
     private GetAccountOverviewUseCase uc;
 
     this(GetAccountOverviewUseCase uc) {
@@ -19,6 +19,8 @@ class OverviewController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.get("/api/v1/overview", &handleOverview);
     }
 

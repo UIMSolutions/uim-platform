@@ -14,7 +14,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubscriptionController {
+class SubscriptionController : SAPController {
     private ManageSubscriptionsUseCase uc;
 
     this(ManageSubscriptionsUseCase uc) {
@@ -22,6 +22,8 @@ class SubscriptionController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+
         router.post("/api/v1/subscriptions", &handleSubscribe);
         router.get("/api/v1/subscriptions", &handleList);
         router.get("/api/v1/subscriptions/*", &handleGet);

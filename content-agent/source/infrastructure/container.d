@@ -12,13 +12,13 @@ import infrastructure.persistence.memory.transport_queue_repo;
 import infrastructure.persistence.memory.content_activity_repo;
 
 // Use Cases
-import application.usecases.manage_content_packages;
-import application.usecases.manage_content_providers;
-import application.usecases.manage_transport_requests;
-import application.usecases.export_content;
-import application.usecases.import_content;
-import application.usecases.manage_transport_queues;
-import application.usecases.monitor_activities;
+import uim.platform.content_agent.application.usecases.manage_content_packages;
+import uim.platform.content_agent.application.usecases.manage_content_providers;
+import uim.platform.content_agent.application.usecases.manage_transport_requests;
+import uim.platform.content_agent.application.usecases.export_content;
+import uim.platform.content_agent.application.usecases.import_content;
+import uim.platform.content_agent.application.usecases.manage_transport_queues;
+import uim.platform.content_agent.application.usecases.monitor_activities;
 
 // Controllers
 import presentation.http.package;

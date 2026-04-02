@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.import_content;
-import application.dto;
+import uim.platform.content_agent.application.usecases.import_content;
+import uim.platform.content_agent.application.dto;
 import domain.entities.import_job;
 import domain.types;
 import presentation.http.json_utils;

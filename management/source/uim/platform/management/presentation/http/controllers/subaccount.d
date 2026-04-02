@@ -13,7 +13,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubaccountController {
+class SubaccountController : SAPController {
     private ManageSubaccountsUseCase uc;
 
     this(ManageSubaccountsUseCase uc) {

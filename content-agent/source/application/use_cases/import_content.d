@@ -1,6 +1,6 @@
 module application.usecases.import_content;
 
-import application.dto;
+import uim.platform.content_agent.application.dto;
 import domain.entities.import_job;
 import domain.entities.content_package;
 import domain.entities.content_activity;

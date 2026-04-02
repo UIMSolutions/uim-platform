@@ -21,6 +21,8 @@ class ServicePlanController : SAPController {
     }
 
     override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        
         router.post("/api/v1/service-plans", &handleCreate);
         router.get("/api/v1/service-plans", &handleList);
         router.get("/api/v1/service-plans/*", &handleGet);
