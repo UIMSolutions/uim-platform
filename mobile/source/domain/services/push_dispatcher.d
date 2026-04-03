@@ -1,9 +1,9 @@
-module uim.platform.xyz.domain.services.push_dispatcher;
+module uim.platform.mobile.domain.services.push_dispatcher;
 
-import uim.platform.xyz.domain.entities.push_notification;
-import uim.platform.xyz.domain.entities.push_template;
-import uim.platform.xyz.domain.entities.device_registration;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.push_notification;
+import uim.platform.mobile.domain.entities.push_template;
+import uim.platform.mobile.domain.entities.device_registration;
+import uim.platform.mobile.domain.types;
 
 /// Domain service: validates and prepares push notifications for dispatch.
 class PushDispatcher

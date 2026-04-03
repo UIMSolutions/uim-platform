@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_feature_toggles;
+module uim.platform.mobile.application.usecases.manage_feature_toggles;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.feature_toggle;
-import uim.platform.xyz.domain.ports.feature_toggle_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.application.dto;
+import uim.platform.mobile.domain.entities.feature_toggle;
+import uim.platform.mobile.domain.ports.feature_toggle_repository;
+import uim.platform.mobile.domain.types;
 
 /// Use case: manage feature toggles / feature flags for mobile apps.
 class ManageFeatureTogglesUseCase

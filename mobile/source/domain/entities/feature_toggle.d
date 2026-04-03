@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.feature_toggle;
+module uim.platform.mobile.domain.entities.feature_toggle;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.types;
 
 /// A remote feature toggle / feature flag for mobile apps.
 struct FeatureToggle

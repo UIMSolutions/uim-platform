@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.usage_event_repository;
+module uim.platform.mobile.domain.ports.usage_event_repository;
 
-import uim.platform.xyz.domain.entities.usage_event;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.usage_event;
+import uim.platform.mobile.domain.types;
 
 /// Port: outgoing — usage event persistence.
 interface UsageEventRepository

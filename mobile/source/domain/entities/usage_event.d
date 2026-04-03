@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.usage_event;
+module uim.platform.mobile.domain.entities.usage_event;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.types;
 
 /// An analytics event from a mobile app.
 struct UsageEvent

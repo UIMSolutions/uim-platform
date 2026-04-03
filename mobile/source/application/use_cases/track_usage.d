@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.track_usage;
+module uim.platform.mobile.application.usecases.track_usage;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.usage_event;
-import uim.platform.xyz.domain.entities.client_log;
-import uim.platform.xyz.domain.ports.usage_event_repository;
-import uim.platform.xyz.domain.ports.client_log_repository;
-import uim.platform.xyz.domain.ports.device_registration_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.application.dto;
+import uim.platform.mobile.domain.entities.usage_event;
+import uim.platform.mobile.domain.entities.client_log;
+import uim.platform.mobile.domain.ports.usage_event_repository;
+import uim.platform.mobile.domain.ports.client_log_repository;
+import uim.platform.mobile.domain.ports.device_registration_repository;
+import uim.platform.mobile.domain.types;
 
 /// Use case: track mobile usage events, analytics, and client logs.
 class TrackUsageUseCase

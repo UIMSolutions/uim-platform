@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.security_policy_repository;
+module uim.platform.mobile.domain.ports.security_policy_repository;
 
-import uim.platform.xyz.domain.entities.security_policy;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.security_policy;
+import uim.platform.mobile.domain.types;
 
 /// Port: outgoing — security policy persistence.
 interface SecurityPolicyRepository

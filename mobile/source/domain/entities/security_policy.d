@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.security_policy;
+module uim.platform.mobile.domain.entities.security_policy;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.types;
 
 /// Security policy governing mobile app behavior.
 struct SecurityPolicy

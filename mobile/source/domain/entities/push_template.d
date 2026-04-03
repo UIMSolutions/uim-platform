@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.push_template;
+module uim.platform.mobile.domain.entities.push_template;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.types;
 
 /// A reusable push notification template.
 struct PushTemplate

@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.feature_toggle_repository;
+module uim.platform.mobile.domain.ports.feature_toggle_repository;
 
-import uim.platform.xyz.domain.entities.feature_toggle;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.feature_toggle;
+import uim.platform.mobile.domain.types;
 
 /// Port: outgoing — feature toggle persistence.
 interface FeatureToggleRepository

@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.mobile_app_repo;
+module uim.platform.mobile.infrastructure.persistence.memory.mobile_app_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.mobile_app;
-import uim.platform.xyz.domain.ports.mobile_app_repository;
+import uim.platform.mobile.domain.types;
+import uim.platform.mobile.domain.entities.mobile_app;
+import uim.platform.mobile.domain.ports.mobile_app_repository;
 
 import std.algorithm : filter;
 import std.array : array;

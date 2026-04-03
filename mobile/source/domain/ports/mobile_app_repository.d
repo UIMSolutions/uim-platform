@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.mobile_app_repository;
+module uim.platform.mobile.domain.ports.mobile_app_repository;
 
-import uim.platform.xyz.domain.entities.mobile_app;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.mobile_app;
+import uim.platform.mobile.domain.types;
 
 /// Port: outgoing — mobile app persistence.
 interface MobileAppRepository

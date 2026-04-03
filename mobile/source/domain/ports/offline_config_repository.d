@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.offline_config_repository;
+module uim.platform.mobile.domain.ports.offline_config_repository;
 
-import uim.platform.xyz.domain.entities.offline_config;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.entities.offline_config;
+import uim.platform.mobile.domain.types;
 
 /// Port: outgoing — offline configuration persistence.
 interface OfflineConfigRepository

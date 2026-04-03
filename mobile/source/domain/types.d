@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.mobile.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias MobileAppId = string;

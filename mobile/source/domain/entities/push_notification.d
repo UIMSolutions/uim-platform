@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.push_notification;
+module uim.platform.mobile.domain.entities.push_notification;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.domain.types;
 
 /// A push notification message sent to one or more devices.
 struct PushNotification

@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_mobile_apps;
+module uim.platform.mobile.application.usecases.manage_mobile_apps;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.mobile_app;
-import uim.platform.xyz.domain.ports.mobile_app_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.mobile.application.dto;
+import uim.platform.mobile.domain.entities.mobile_app;
+import uim.platform.mobile.domain.ports.mobile_app_repository;
+import uim.platform.mobile.domain.types;
 
 /// Use case: manage mobile app definitions.
 class ManageMobileAppsUseCase
