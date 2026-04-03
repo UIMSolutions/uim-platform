@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.dataset_repo;
+module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.dataset_repo;
 
 import domain.types;
 import domain.entities.dataset;

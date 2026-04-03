@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.model_config_repo;
+module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.model_config_repo;
 
 import domain.types;
 import domain.entities.model_configuration;

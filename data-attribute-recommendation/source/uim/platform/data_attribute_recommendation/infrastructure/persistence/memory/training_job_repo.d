@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.training_job_repo;
+module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.training_job_repo;
 
 import domain.types;
 import domain.entities.training_job;

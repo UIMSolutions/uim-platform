@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.deployment_repo;
+module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
 
 import domain.types;
 import domain.entities.model_deployment;

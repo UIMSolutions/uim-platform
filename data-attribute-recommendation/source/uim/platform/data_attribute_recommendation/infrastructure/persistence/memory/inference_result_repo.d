@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.inference_result_repo;
+module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.inference_result_repo;
 
 import domain.types;
 import domain.entities.inference_result;
