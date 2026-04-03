@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.provider_repository;
+module uim.platform.portal.domain.ports.provider_repository;
 
-import uim.platform.xyz.domain.entities.content_provider;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.entities.content_provider;
+import uim.platform.portal.domain.types;
 
 /// Port: outgoing — content provider persistence.
 interface ProviderRepository

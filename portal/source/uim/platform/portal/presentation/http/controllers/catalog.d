@@ -8,10 +8,10 @@ module uim.platform.portal.presentation.http.controllers.catalog;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_catalogs;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.catalog;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.application.usecases.manage_catalogs;
+import uim.platform.portal.application.dto;
+import uim.platform.portal.domain.entities.catalog;
+import uim.platform.portal.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class CatalogController {

@@ -1,11 +1,11 @@
-module uim.platform.xyz.application.usecases.manage_sections;
+module uim.platform.portal.application.usecases.manage_sections;
 
-import uim.platform.xyz.domain.entities.section;
-import uim.platform.xyz.domain.entities.page;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.section_repository;
-import uim.platform.xyz.domain.ports.page_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.portal.domain.entities.section;
+import uim.platform.portal.domain.entities.page;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.section_repository;
+import uim.platform.portal.domain.ports.page_repository;
+import uim.platform.portal.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

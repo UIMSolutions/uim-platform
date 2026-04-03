@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.translation;
+module uim.platform.portal.domain.entities.translation;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// Translation entry for portal content (i18n).
 struct Translation

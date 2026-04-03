@@ -1,11 +1,11 @@
-module uim.platform.xyz.application.usecases.manage_pages;
+module uim.platform.portal.application.usecases.manage_pages;
 
-import uim.platform.xyz.domain.entities.page;
-import uim.platform.xyz.domain.entities.site;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.page_repository;
-import uim.platform.xyz.domain.ports.site_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.portal.domain.entities.page;
+import uim.platform.portal.domain.entities.site;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.page_repository;
+import uim.platform.portal.domain.ports.site_repository;
+import uim.platform.portal.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

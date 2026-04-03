@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.menu_item;
+module uim.platform.portal.domain.entities.menu_item;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// Navigation menu item within a site.
 struct MenuItem

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.site;
+module uim.platform.portal.domain.entities.site;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// Portal site — the top-level container for pages, navigation, and content.
 struct Site

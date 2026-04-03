@@ -3,10 +3,10 @@ module uim.platform.portal.presentation.http.controllers.site;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_sites;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.site;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.application.usecases.manage_sites;
+import uim.platform.portal.application.dto;
+import uim.platform.portal.domain.entities.site;
+import uim.platform.portal.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SiteController

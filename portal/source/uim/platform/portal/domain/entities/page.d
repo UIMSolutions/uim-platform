@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.page;
+module uim.platform.portal.domain.entities.page;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// A page within a site; contains sections.
 struct Page

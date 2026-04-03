@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.portal.application.dto;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.site : SiteSettings;
-import uim.platform.xyz.domain.entities.tile : TileConfiguration;
-import uim.platform.xyz.domain.entities.theme : ThemeColors, ThemeFonts;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.entities.site : SiteSettings;
+import uim.platform.portal.domain.entities.tile : TileConfiguration;
+import uim.platform.portal.domain.entities.theme : ThemeColors, ThemeFonts;
 
 /// --- Site DTOs ---
 

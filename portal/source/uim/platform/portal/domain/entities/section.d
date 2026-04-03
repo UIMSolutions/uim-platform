@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.section;
+module uim.platform.portal.domain.entities.section;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// A section within a page — groups tiles together.
 struct Section

@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.theme_repository;
+module uim.platform.portal.domain.ports.theme_repository;
 
-import uim.platform.xyz.domain.entities.theme;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.entities.theme;
+import uim.platform.portal.domain.types;
 
 /// Port: outgoing — theme persistence.
 interface ThemeRepository

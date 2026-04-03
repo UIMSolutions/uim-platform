@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.menu_item_repository;
+module uim.platform.portal.domain.ports.menu_item_repository;
 
-import uim.platform.xyz.domain.entities.menu_item;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.entities.menu_item;
+import uim.platform.portal.domain.types;
 
 /// Port: outgoing — menu item persistence.
 interface MenuItemRepository

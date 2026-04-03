@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_themes;
+module uim.platform.portal.application.usecases.manage_themes;
 
-import uim.platform.xyz.domain.entities.theme;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.theme_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.portal.domain.entities.theme;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.theme_repository;
+import uim.platform.portal.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

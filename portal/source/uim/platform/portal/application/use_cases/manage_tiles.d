@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_tiles;
+module uim.platform.portal.application.usecases.manage_tiles;
 
-import uim.platform.xyz.domain.entities.tile;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.tile_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.portal.domain.entities.tile;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.tile_repository;
+import uim.platform.portal.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

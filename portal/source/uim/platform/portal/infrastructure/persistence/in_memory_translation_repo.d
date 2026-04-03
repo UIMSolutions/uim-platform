@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.translation_repo;
+module uim.platform.portal.infrastructure.persistence.memory.translation_repo;
 
-import uim.platform.xyz.domain.entities.translation;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.translation_repository;
+import uim.platform.portal.domain.entities.translation;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.translation_repository;
 
 class MemoryTranslationRepository : TranslationRepository
 {

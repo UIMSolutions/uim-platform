@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.site_repo;
+module uim.platform.portal.infrastructure.persistence.memory.site_repo;
 
-import uim.platform.xyz.domain.entities.site;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.site_repository;
+import uim.platform.portal.domain.entities.site;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.site_repository;
 
 class MemorySiteRepository : SiteRepository
 {

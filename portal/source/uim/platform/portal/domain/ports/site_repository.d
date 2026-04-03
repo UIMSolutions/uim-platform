@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.site_repository;
+module uim.platform.portal.domain.ports.site_repository;
 
-import uim.platform.xyz.domain.entities.site;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.entities.site;
+import uim.platform.portal.domain.types;
 
 /// Port: outgoing — site persistence.
 interface SiteRepository

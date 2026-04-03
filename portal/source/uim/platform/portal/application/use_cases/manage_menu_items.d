@@ -1,11 +1,11 @@
-module uim.platform.xyz.application.usecases.manage_menu_items;
+module uim.platform.portal.application.usecases.manage_menu_items;
 
-import uim.platform.xyz.domain.entities.menu_item;
-import uim.platform.xyz.domain.entities.site;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.menu_item_repository;
-import uim.platform.xyz.domain.ports.site_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.portal.domain.entities.menu_item;
+import uim.platform.portal.domain.entities.site;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.menu_item_repository;
+import uim.platform.portal.domain.ports.site_repository;
+import uim.platform.portal.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.page_repo;
+module uim.platform.portal.infrastructure.persistence.memory.page_repo;
 
-import uim.platform.xyz.domain.entities.page;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.page_repository;
+import uim.platform.portal.domain.entities.page;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.page_repository;
 
 class MemoryPageRepository : PageRepository
 {

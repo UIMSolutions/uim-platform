@@ -3,10 +3,10 @@ module uim.platform.portal.presentation.http.controllers.section;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_sections;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.section;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.application.usecases.manage_sections;
+import uim.platform.portal.application.dto;
+import uim.platform.portal.domain.entities.section;
+import uim.platform.portal.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SectionController

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.theme;
+module uim.platform.portal.domain.entities.theme;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.types;
 
 /// Theme definition for portal sites.
 struct Theme

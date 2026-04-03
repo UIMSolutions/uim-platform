@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.tile_repository;
+module uim.platform.portal.domain.ports.tile_repository;
 
-import uim.platform.xyz.domain.entities.tile;
-import uim.platform.xyz.domain.types;
+import uim.platform.portal.domain.entities.tile;
+import uim.platform.portal.domain.types;
 
 /// Port: outgoing — tile / app launcher persistence.
 interface TileRepository

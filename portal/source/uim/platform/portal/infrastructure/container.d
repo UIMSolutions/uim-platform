@@ -3,33 +3,33 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.portal.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.portal.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.site_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.page_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.section_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.tile_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.catalog_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.provider_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.role_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.theme_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.menu_item_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.translation_repo;
+import uim.platform.portal.infrastructure.persistence.memory.site_repo;
+import uim.platform.portal.infrastructure.persistence.memory.page_repo;
+import uim.platform.portal.infrastructure.persistence.memory.section_repo;
+import uim.platform.portal.infrastructure.persistence.memory.tile_repo;
+import uim.platform.portal.infrastructure.persistence.memory.catalog_repo;
+import uim.platform.portal.infrastructure.persistence.memory.provider_repo;
+import uim.platform.portal.infrastructure.persistence.memory.role_repo;
+import uim.platform.portal.infrastructure.persistence.memory.theme_repo;
+import uim.platform.portal.infrastructure.persistence.memory.menu_item_repo;
+import uim.platform.portal.infrastructure.persistence.memory.translation_repo;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_sites;
-import uim.platform.xyz.application.usecases.manage_pages;
-import uim.platform.xyz.application.usecases.manage_sections;
-import uim.platform.xyz.application.usecases.manage_tiles;
-import uim.platform.xyz.application.usecases.manage_catalogs;
-import uim.platform.xyz.application.usecases.manage_providers;
-import uim.platform.xyz.application.usecases.manage_roles;
-import uim.platform.xyz.application.usecases.manage_themes;
-import uim.platform.xyz.application.usecases.manage_menu_items;
-import uim.platform.xyz.application.usecases.manage_translations;
+import uim.platform.portal.application.usecases.manage_sites;
+import uim.platform.portal.application.usecases.manage_pages;
+import uim.platform.portal.application.usecases.manage_sections;
+import uim.platform.portal.application.usecases.manage_tiles;
+import uim.platform.portal.application.usecases.manage_catalogs;
+import uim.platform.portal.application.usecases.manage_providers;
+import uim.platform.portal.application.usecases.manage_roles;
+import uim.platform.portal.application.usecases.manage_themes;
+import uim.platform.portal.application.usecases.manage_menu_items;
+import uim.platform.portal.application.usecases.manage_translations;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.site;

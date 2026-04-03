@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.theme_repo;
+module uim.platform.portal.infrastructure.persistence.memory.theme_repo;
 
-import uim.platform.xyz.domain.entities.theme;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.theme_repository;
+import uim.platform.portal.domain.entities.theme;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.theme_repository;
 
 class MemoryThemeRepository : ThemeRepository
 {

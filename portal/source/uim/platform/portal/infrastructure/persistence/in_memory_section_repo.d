@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.section_repo;
+module uim.platform.portal.infrastructure.persistence.memory.section_repo;
 
-import uim.platform.xyz.domain.entities.section;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.section_repository;
+import uim.platform.portal.domain.entities.section;
+import uim.platform.portal.domain.types;
+import uim.platform.portal.domain.ports.section_repository;
 
 class MemorySectionRepository : SectionRepository
 {
