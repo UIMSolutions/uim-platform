@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.personal_data_model;
 import domain.ports.personal_data_model_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManagePersonalDataModelsUseCase
 {

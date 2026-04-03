@@ -1,6 +1,6 @@
 module application.usecases.evaluate_metrics;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.alert_rule;
 import domain.entities.metric;
 import domain.ports.alert_rule_repository;
@@ -8,7 +8,7 @@ import domain.ports.metric_repository;
 import domain.services.threshold_evaluator;
 import domain.types;
 
-import application.usecases.manage_alerts;
+import uim.platform.xyz.application.usecases.manage_alerts;
 
 /// Application service: evaluates metrics against alert rules and triggers alerts.
 class EvaluateMetricsUseCase

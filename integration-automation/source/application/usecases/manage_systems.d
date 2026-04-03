@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.system_connection;
 // import domain.ports.system_repository;
 import domain.ports;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageSystemsUseCase {
   private SystemRepository repo;

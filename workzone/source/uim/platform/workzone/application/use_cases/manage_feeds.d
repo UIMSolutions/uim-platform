@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.feed_entry;
 import domain.ports.feed_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageFeedsUseCase
 {

@@ -1,6 +1,6 @@
 module application.usecases.manage_data_models;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.data_model;
 import domain.ports.data_model_repository;
 import domain.types;

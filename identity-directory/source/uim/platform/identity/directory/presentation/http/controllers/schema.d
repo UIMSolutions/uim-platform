@@ -3,8 +3,8 @@ module uim.platform.identity_authentication.presentation.http.schema;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.usecases.manage_schemas;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_schemas;
+import uim.platform.xyz.application.dto;
 import domain.entities.schema;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 

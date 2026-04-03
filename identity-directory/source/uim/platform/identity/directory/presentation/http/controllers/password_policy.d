@@ -8,8 +8,8 @@ module uim.platform.identity_authentication.presentation.http.password_policy;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.usecases.manage_password_policies;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_password_policies;
+import uim.platform.xyz.application.dto;
 import domain.entities.password_policy;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 

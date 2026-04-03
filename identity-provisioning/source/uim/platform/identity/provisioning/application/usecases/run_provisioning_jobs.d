@@ -10,7 +10,7 @@ import domain.ports.source_system_repository;
 import domain.ports.target_system_repository;
 import domain.ports.provisioning_log_repository;
 import domain.services.provisioning_engine;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class RunProvisioningJobsUseCase
 {

@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.cleansing_rule;
 import domain.ports.cleansing_rule_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageCleansingRulesUseCase {
     private CleansingRuleRepository repo;

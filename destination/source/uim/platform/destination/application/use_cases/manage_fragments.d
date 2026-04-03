@@ -1,6 +1,6 @@
 module application.usecases.manage_fragments;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.destination_fragment;
 import domain.ports.fragment_repository;
 import domain.types;

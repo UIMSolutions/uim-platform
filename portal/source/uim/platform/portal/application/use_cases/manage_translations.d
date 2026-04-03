@@ -3,7 +3,7 @@ module application.usecases.manage_translations;
 import domain.entities.translation;
 import domain.types;
 import domain.ports.translation_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

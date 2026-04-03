@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.blocking_request;
 import domain.ports.blocking_request_repository;
 import domain.ports.data_subject_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageBlockingRequestsUseCase
 {

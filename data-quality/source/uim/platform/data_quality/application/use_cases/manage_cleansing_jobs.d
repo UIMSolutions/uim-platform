@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.cleansing_job;
 import domain.ports.cleansing_job_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageCleansingJobsUseCase {
     private CleansingJobRepository repo;

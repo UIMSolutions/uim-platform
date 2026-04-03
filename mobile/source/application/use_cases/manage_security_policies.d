@@ -1,6 +1,6 @@
 module application.usecases.manage_security_policies;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.security_policy;
 import domain.ports.security_policy_repository;
 import domain.types;

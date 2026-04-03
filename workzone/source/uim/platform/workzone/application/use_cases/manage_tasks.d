@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.task;
 import domain.ports.task_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageTasksUseCase
 {

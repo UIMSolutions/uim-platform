@@ -1,6 +1,6 @@
 module application.usecases.track_usage;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.usage_event;
 import domain.entities.client_log;
 import domain.ports.usage_event_repository;

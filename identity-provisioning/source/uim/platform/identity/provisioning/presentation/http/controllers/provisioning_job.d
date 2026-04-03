@@ -10,8 +10,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.run_provisioning_jobs;
-import application.dto;
+import uim.platform.xyz.application.usecases.run_provisioning_jobs;
+import uim.platform.xyz.application.dto;
 import domain.entities.provisioning_job;
 import domain.types;
 import uim.platform.xyz.presentation.http.json_utils;

@@ -1,6 +1,6 @@
 module application.usecases.manage_app_versions;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.app_version;
 import domain.ports.app_version_repository;
 import domain.services.version_checker;

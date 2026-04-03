@@ -8,7 +8,7 @@ import domain.ports.password_service;
 import domain.ports.password_policy_repository;
 import domain.ports.audit_repository;
 import domain.services.password_validator;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

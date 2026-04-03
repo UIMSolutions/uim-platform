@@ -1,6 +1,6 @@
 module application.usecases.manage_key_mappings;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.key_mapping;
 import domain.ports.key_mapping_repository;
 import domain.services.key_mapping_resolver;

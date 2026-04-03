@@ -1,6 +1,6 @@
 module application.usecases.manage_functions;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.serverless_function;
 import domain.ports.function_repository;
 import domain.services.function_validator;

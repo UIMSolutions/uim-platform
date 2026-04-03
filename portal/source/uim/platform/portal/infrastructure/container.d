@@ -20,16 +20,16 @@ import uim.platform.xyz.infrastructure.persistence.memory.menu_item_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.translation_repo;
 
 // Use Cases
-import application.usecases.manage_sites;
-import application.usecases.manage_pages;
-import application.usecases.manage_sections;
-import application.usecases.manage_tiles;
-import application.usecases.manage_catalogs;
-import application.usecases.manage_providers;
-import application.usecases.manage_roles;
-import application.usecases.manage_themes;
-import application.usecases.manage_menu_items;
-import application.usecases.manage_translations;
+import uim.platform.xyz.application.usecases.manage_sites;
+import uim.platform.xyz.application.usecases.manage_pages;
+import uim.platform.xyz.application.usecases.manage_sections;
+import uim.platform.xyz.application.usecases.manage_tiles;
+import uim.platform.xyz.application.usecases.manage_catalogs;
+import uim.platform.xyz.application.usecases.manage_providers;
+import uim.platform.xyz.application.usecases.manage_roles;
+import uim.platform.xyz.application.usecases.manage_themes;
+import uim.platform.xyz.application.usecases.manage_menu_items;
+import uim.platform.xyz.application.usecases.manage_translations;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.site;

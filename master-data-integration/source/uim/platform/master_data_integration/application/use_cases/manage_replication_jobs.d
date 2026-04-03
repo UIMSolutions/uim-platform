@@ -1,6 +1,6 @@
 module application.usecases.manage_replication_jobs;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.replication_job;
 import domain.ports.replication_job_repository;
 import domain.types;

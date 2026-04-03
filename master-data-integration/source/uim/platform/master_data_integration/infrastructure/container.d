@@ -22,14 +22,14 @@ import domain.services.key_mapping_resolver;
 import domain.services.distribution_evaluator;
 
 // Use Cases
-import application.usecases.manage_master_data_objects;
-import application.usecases.manage_data_models;
-import application.usecases.manage_distribution_models;
-import application.usecases.manage_key_mappings;
-import application.usecases.manage_clients;
-import application.usecases.manage_replication_jobs;
-import application.usecases.manage_filter_rules;
-import application.usecases.query_change_log;
+import uim.platform.xyz.application.usecases.manage_master_data_objects;
+import uim.platform.xyz.application.usecases.manage_data_models;
+import uim.platform.xyz.application.usecases.manage_distribution_models;
+import uim.platform.xyz.application.usecases.manage_key_mappings;
+import uim.platform.xyz.application.usecases.manage_clients;
+import uim.platform.xyz.application.usecases.manage_replication_jobs;
+import uim.platform.xyz.application.usecases.manage_filter_rules;
+import uim.platform.xyz.application.usecases.query_change_log;
 
 // Controllers
 import uim.platform.xyz.presentation.http.master_data;

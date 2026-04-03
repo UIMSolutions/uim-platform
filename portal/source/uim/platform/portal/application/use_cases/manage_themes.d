@@ -3,7 +3,7 @@ module application.usecases.manage_themes;
 import domain.entities.theme;
 import domain.types;
 import domain.ports.theme_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

@@ -1,6 +1,6 @@
 module application.usecases.manage_certificates;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.certificate;
 import domain.ports.certificate_repository;
 import domain.services.certificate_validator;

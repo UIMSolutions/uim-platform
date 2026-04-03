@@ -3,7 +3,7 @@ module application.usecases.manage_tiles;
 import domain.entities.tile;
 import domain.types;
 import domain.ports.tile_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

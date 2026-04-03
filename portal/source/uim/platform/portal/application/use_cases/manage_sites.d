@@ -4,7 +4,7 @@ import domain.entities.site;
 import domain.types;
 import domain.ports.site_repository;
 import domain.services.site_publisher;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

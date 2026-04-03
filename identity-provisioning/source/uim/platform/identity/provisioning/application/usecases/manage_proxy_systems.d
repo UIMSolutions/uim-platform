@@ -8,7 +8,7 @@ import domain.entities.proxy_system;
 import domain.ports.proxy_system_repository;
 import domain.ports.source_system_repository;
 import domain.ports.target_system_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageProxySystemsUseCase
 {

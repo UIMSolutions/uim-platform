@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.find_destination;
-import application.dto;
+import uim.platform.xyz.application.usecases.find_destination;
+import uim.platform.xyz.application.dto;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class FindController

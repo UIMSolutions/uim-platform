@@ -10,8 +10,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_service_instances;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_service_instances;
+import uim.platform.xyz.application.dto;
 import domain.entities.service_instance;
 import domain.types;
 import uim.platform.xyz.presentation.http.json_utils;

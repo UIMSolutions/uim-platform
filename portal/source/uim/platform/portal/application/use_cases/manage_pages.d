@@ -5,7 +5,7 @@ import domain.entities.site;
 import domain.types;
 import domain.ports.page_repository;
 import domain.ports.site_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

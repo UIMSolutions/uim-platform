@@ -7,7 +7,7 @@ import domain.entities.data_profile;
 import domain.ports.validation_result_repository;
 import domain.ports.data_profile_repository;
 import domain.services.quality_scorer;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ComputeDashboardUseCase {
     private ValidationResultRepository resultRepo;

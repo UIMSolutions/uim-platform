@@ -4,7 +4,7 @@ import domain.types;
 import domain.entities.match_group;
 import domain.ports.match_group_repository;
 import domain.services.duplicate_detector;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.datetime.systime : Clock;
 

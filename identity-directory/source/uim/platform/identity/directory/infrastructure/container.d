@@ -14,12 +14,12 @@ import uim.platform.xyz.infrastructure.persistence.memory.audit_repo;
 import uim.platform.xyz.infrastructure.security.sha256_password_service;
 
 // Use Cases
-import application.usecases.manage_users;
-import application.usecases.manage_groups;
-import application.usecases.manage_schemas;
-import application.usecases.manage_password_policies;
-import application.usecases.manage_api_clients;
-import application.usecases.query_audit_log;
+import uim.platform.xyz.application.usecases.manage_users;
+import uim.platform.xyz.application.usecases.manage_groups;
+import uim.platform.xyz.application.usecases.manage_schemas;
+import uim.platform.xyz.application.usecases.manage_password_policies;
+import uim.platform.xyz.application.usecases.manage_api_clients;
+import uim.platform.xyz.application.usecases.query_audit_log;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.user;

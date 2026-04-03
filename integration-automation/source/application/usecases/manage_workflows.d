@@ -13,7 +13,7 @@ import domain.entities.integration_scenario;
 import domain.ports;
 
 import domain.services.workflow_engine;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageWorkflowsUseCase {
   private WorkflowRepository workflowRepo;

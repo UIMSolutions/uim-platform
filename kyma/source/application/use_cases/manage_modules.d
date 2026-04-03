@@ -1,6 +1,6 @@
 module application.usecases.manage_modules;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.kyma_module;
 import domain.ports.module_repository;
 import domain.services.module_dependency_resolver;

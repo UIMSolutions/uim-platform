@@ -6,7 +6,7 @@ import domain.entities.validation_result;
 import domain.ports.validation_rule_repository;
 import domain.ports.validation_result_repository;
 import domain.services.validation_engine;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ValidateDataUseCase {
     private ValidationRuleRepository ruleRepo;

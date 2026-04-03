@@ -23,15 +23,15 @@ import domain.services.module_dependency_resolver;
 import domain.services.function_validator;
 
 // Use Cases
-import application.usecases.manage_environments;
-import application.usecases.manage_namespaces;
-import application.usecases.manage_functions;
-import application.usecases.manage_api_rules;
-import application.usecases.manage_service_instances;
-import application.usecases.manage_service_bindings;
-import application.usecases.manage_event_subscriptions;
-import application.usecases.manage_modules;
-import application.usecases.manage_applications;
+import uim.platform.xyz.application.usecases.manage_environments;
+import uim.platform.xyz.application.usecases.manage_namespaces;
+import uim.platform.xyz.application.usecases.manage_functions;
+import uim.platform.xyz.application.usecases.manage_api_rules;
+import uim.platform.xyz.application.usecases.manage_service_instances;
+import uim.platform.xyz.application.usecases.manage_service_bindings;
+import uim.platform.xyz.application.usecases.manage_event_subscriptions;
+import uim.platform.xyz.application.usecases.manage_modules;
+import uim.platform.xyz.application.usecases.manage_applications;
 
 // Controllers
 import uim.platform.xyz.presentation.http.environment;

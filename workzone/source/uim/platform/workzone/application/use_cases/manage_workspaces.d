@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.workspace;
 import domain.ports.workspace_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageWorkspacesUseCase
 {

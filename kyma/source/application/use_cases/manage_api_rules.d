@@ -1,6 +1,6 @@
 module application.usecases.manage_api_rules;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.api_rule;
 import domain.ports.api_rule_repository;
 import domain.types;

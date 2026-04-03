@@ -1,6 +1,6 @@
 module application.usecases.find_destination;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.destination;
 import domain.entities.destination_fragment;
 import domain.entities.auth_token;

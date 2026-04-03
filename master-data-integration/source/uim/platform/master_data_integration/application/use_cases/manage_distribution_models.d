@@ -1,6 +1,6 @@
 module application.usecases.manage_distribution_models;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.distribution_model;
 import domain.ports.distribution_model_repository;
 import domain.types;

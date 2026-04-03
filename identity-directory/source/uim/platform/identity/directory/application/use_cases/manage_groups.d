@@ -7,7 +7,7 @@ import domain.types;
 import domain.ports.group_repository;
 import domain.ports.user_repository;
 import domain.ports.audit_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

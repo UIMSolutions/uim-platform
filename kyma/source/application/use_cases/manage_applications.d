@@ -1,6 +1,6 @@
 module application.usecases.manage_applications;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.application;
 import domain.ports.application_repository;
 import domain.types;

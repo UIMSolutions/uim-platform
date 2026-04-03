@@ -1,6 +1,6 @@
 module application.usecases.manage_offline_sync;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.offline_config;
 import domain.entities.sync_session;
 import domain.ports.offline_config_repository;

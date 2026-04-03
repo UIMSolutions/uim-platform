@@ -7,7 +7,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.data_profile;
 import domain.ports.data_profile_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ProfileDataUseCase {
     private DataProfileRepository repo;

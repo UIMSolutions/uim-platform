@@ -9,7 +9,7 @@ import domain.entities.workflow_step;
 import domain.ports;
 import domain.services.step_executor;
 import domain.services.workflow_engine;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageStepsUseCase {
   private StepRepository repo;

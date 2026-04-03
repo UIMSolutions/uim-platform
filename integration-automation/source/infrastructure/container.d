@@ -15,12 +15,12 @@ import domain.services.workflow_engine;
 import domain.services.step_executor;
 
 // Use Cases
-import application.usecases.manage_scenarios;
-import application.usecases.manage_workflows;
-import application.usecases.manage_steps;
-import application.usecases.manage_systems;
-import application.usecases.manage_destinations;
-import application.usecases.monitor_executions;
+import uim.platform.xyz.application.usecases.manage_scenarios;
+import uim.platform.xyz.application.usecases.manage_workflows;
+import uim.platform.xyz.application.usecases.manage_steps;
+import uim.platform.xyz.application.usecases.manage_systems;
+import uim.platform.xyz.application.usecases.manage_destinations;
+import uim.platform.xyz.application.usecases.monitor_executions;
 
 // Controllers
 import uim.platform.xyz.presentation.http.scenario;

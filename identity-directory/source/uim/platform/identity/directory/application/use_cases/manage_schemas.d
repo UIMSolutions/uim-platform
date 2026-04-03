@@ -5,7 +5,7 @@ import domain.entities.audit_event;
 import domain.types;
 import domain.ports.schema_repository;
 import domain.ports.audit_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

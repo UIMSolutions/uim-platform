@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.legal_ground;
 import domain.ports.legal_ground_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageLegalGroundsUseCase
 {

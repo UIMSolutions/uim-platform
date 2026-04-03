@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.compute_dashboard;
-import application.dto;
+import uim.platform.xyz.application.usecases.compute_dashboard;
+import uim.platform.xyz.application.dto;
 import domain.types;
 import domain.entities.quality_dashboard;
 import uim.platform.xyz.presentation.http.json_utils;

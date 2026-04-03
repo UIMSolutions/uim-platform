@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.data_subject;
 import domain.ports.data_subject_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageDataSubjectsUseCase
 {

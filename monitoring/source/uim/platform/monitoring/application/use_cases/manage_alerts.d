@@ -1,6 +1,6 @@
 module application.usecases.manage_alerts;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.alert;
 import domain.ports.alert_repository;
 import domain.types;

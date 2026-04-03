@@ -1,6 +1,6 @@
 module application.usecases.manage_push_notifications;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.push_notification;
 import domain.ports.push_notification_repository;
 import domain.ports.push_template_repository;

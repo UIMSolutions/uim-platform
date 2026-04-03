@@ -1,6 +1,6 @@
 module application.usecases.manage_event_subscriptions;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.event_subscription;
 import domain.ports.event_subscription_repository;
 import domain.types;

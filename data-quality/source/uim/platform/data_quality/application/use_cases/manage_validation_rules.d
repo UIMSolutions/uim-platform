@@ -6,7 +6,7 @@ import std.datetime.systime : Clock;
 import domain.types;
 import domain.entities.validation_rule;
 import domain.ports.validation_rule_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageValidationRulesUseCase {
     private ValidationRuleRepository repo;

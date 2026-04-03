@@ -3,7 +3,7 @@ module application.usecases.manage_catalogs;
 import domain.entities.catalog;
 import domain.types;
 import domain.ports.catalog_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

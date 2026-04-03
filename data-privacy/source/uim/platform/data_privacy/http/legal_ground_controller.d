@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_legal_grounds;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_legal_grounds;
+import uim.platform.xyz.application.dto;
 import domain.types;
 import domain.entities.legal_ground;
 import uim.platform.xyz.presentation.http.json_utils;

@@ -1,6 +1,6 @@
 module application.usecases.manage_environments;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.kyma_environment;
 import domain.ports.environment_repository;
 import domain.types;

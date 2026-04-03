@@ -1,6 +1,6 @@
 module application.usecases.manage_namespaces;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.namespace;
 import domain.ports.namespace_repository;
 import domain.types;

@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.content_item;
 import domain.ports.content_repository;
 import domain.services.content_search;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageContentUseCase
 {

@@ -8,7 +8,7 @@ import domain.entities.data_retrieval_request;
 import domain.ports.data_retrieval_request_repository;
 import domain.ports.data_subject_repository;
 import domain.ports.personal_data_model_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageDataRetrievalsUseCase
 {

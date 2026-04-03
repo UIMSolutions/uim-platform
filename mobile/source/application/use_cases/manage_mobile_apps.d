@@ -1,6 +1,6 @@
 module application.usecases.manage_mobile_apps;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.mobile_app;
 import domain.ports.mobile_app_repository;
 import domain.types;

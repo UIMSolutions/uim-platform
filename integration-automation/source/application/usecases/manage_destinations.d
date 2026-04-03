@@ -8,7 +8,7 @@ import domain.entities.destination;
 // import domain.ports.destination_repository;
 // import domain.ports.system_repository;
 import domain.ports;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageDestinationsUseCase {
   private DestinationRepository repo;

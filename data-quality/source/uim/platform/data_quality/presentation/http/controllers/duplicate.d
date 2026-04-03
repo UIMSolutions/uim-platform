@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.detect_duplicates;
-import application.dto;
+import uim.platform.xyz.application.usecases.detect_duplicates;
+import uim.platform.xyz.application.dto;
 import domain.types;
 import domain.entities.match_group;
 import domain.services.duplicate_detector : RecordEntry;

@@ -1,6 +1,6 @@
 module application.usecases.get_dashboard;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.alert;
 import domain.entities.health_check_result;
 import domain.entities.monitored_resource;

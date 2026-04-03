@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_systems;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_systems;
+import uim.platform.xyz.application.dto;
 import domain.types;
 import domain.entities.system_connection;
 import uim.platform.xyz.presentation.http.json_utils;

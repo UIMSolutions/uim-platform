@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import application.usecases.get_dashboard;
-import application.dto;
+import uim.platform.xyz.application.usecases.get_dashboard;
+import uim.platform.xyz.application.dto;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class DashboardController

@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.integration_scenario;
 // import domain.ports.scenario_repository;
 import domain.ports;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageScenariosUseCase {
   private ScenarioRepository repo;

@@ -1,6 +1,6 @@
 module application.usecases.query_change_log;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.change_log_entry;
 import domain.ports.change_log_repository;
 import domain.types;

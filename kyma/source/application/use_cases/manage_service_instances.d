@@ -1,6 +1,6 @@
 module application.usecases.manage_service_instances;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.service_instance;
 import domain.ports.service_instance_repository;
 import domain.types;

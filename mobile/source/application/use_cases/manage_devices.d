@@ -1,6 +1,6 @@
 module application.usecases.manage_devices;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.device_registration;
 import domain.ports.device_registration_repository;
 import domain.types;

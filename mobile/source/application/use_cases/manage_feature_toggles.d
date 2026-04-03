@@ -1,6 +1,6 @@
 module application.usecases.manage_feature_toggles;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.feature_toggle;
 import domain.ports.feature_toggle_repository;
 import domain.types;

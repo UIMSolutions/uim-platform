@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_alert_rules;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_alert_rules;
+import uim.platform.xyz.application.dto;
 import domain.entities.alert_rule;
 import domain.types;
 import uim.platform.xyz.presentation.http.json_utils;

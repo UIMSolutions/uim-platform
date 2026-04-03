@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.transformation;
 import domain.ports.transformation_repository;
 import domain.services.transformation_engine;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageTransformationsUseCase
 {

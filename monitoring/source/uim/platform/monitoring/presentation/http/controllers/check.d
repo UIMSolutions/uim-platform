@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_health_checks;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_health_checks;
+import uim.platform.xyz.application.dto;
 import domain.entities.health_check;
 import domain.entities.health_check_result;
 import domain.types;

@@ -13,10 +13,10 @@ import uim.platform.xyz.infrastructure.persistence.memory.certificate_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
-import application.usecases.manage_destinations;
-import application.usecases.manage_certificates;
-import application.usecases.manage_fragments;
-import application.usecases.find_destination;
+import uim.platform.xyz.application.usecases.manage_destinations;
+import uim.platform.xyz.application.usecases.manage_certificates;
+import uim.platform.xyz.application.usecases.manage_fragments;
+import uim.platform.xyz.application.usecases.find_destination;
 
 // Controllers
 import uim.platform.xyz.presentation.http.destination;

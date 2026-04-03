@@ -1,6 +1,6 @@
 module application.usecases.manage_destinations;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.destination;
 import domain.ports.destination_repository;
 import domain.services.destination_resolver;

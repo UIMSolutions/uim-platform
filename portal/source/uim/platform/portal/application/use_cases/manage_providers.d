@@ -3,7 +3,7 @@ module application.usecases.manage_providers;
 import domain.entities.content_provider;
 import domain.types;
 import domain.ports.provider_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

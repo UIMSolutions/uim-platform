@@ -10,8 +10,8 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_destinations;
-import application.dto;
+import uim.platform.xyz.application.usecases.manage_destinations;
+import uim.platform.xyz.application.dto;
 import domain.types;
 import domain.entities.destination;
 import uim.platform.xyz.presentation.http.json_utils;

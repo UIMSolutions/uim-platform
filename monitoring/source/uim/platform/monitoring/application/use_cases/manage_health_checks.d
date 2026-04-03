@@ -1,6 +1,6 @@
 module application.usecases.manage_health_checks;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.health_check;
 import domain.entities.health_check_result;
 import domain.ports.health_check_repository;

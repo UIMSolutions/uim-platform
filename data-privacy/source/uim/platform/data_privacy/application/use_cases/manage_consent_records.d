@@ -7,7 +7,7 @@ import domain.types;
 import domain.entities.consent_record;
 import domain.ports.consent_record_repository;
 import domain.ports.data_subject_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class ManageConsentRecordsUseCase
 {

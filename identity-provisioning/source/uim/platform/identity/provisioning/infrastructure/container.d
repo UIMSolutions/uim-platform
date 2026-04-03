@@ -16,12 +16,12 @@ import domain.services.provisioning_engine;
 import domain.services.transformation_engine;
 
 // Use cases
-import application.usecases.manage_source_systems;
-import application.usecases.manage_target_systems;
-import application.usecases.manage_proxy_systems;
-import application.usecases.manage_transformations;
-import application.usecases.run_provisioning_jobs;
-import application.usecases.monitor_provisioning;
+import uim.platform.xyz.application.usecases.manage_source_systems;
+import uim.platform.xyz.application.usecases.manage_target_systems;
+import uim.platform.xyz.application.usecases.manage_proxy_systems;
+import uim.platform.xyz.application.usecases.manage_transformations;
+import uim.platform.xyz.application.usecases.run_provisioning_jobs;
+import uim.platform.xyz.application.usecases.monitor_provisioning;
 
 // Controllers
 import uim.platform.xyz.presentation.http.source_system;

@@ -3,7 +3,7 @@ module application.usecases.manage_roles;
 import domain.entities.role;
 import domain.types;
 import domain.ports.role_repository;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

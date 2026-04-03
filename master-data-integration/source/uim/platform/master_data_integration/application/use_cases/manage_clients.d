@@ -1,6 +1,6 @@
 module application.usecases.manage_clients;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.client;
 import domain.ports.client_repository;
 import domain.types;

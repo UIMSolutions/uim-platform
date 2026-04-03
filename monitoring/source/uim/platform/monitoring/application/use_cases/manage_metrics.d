@@ -1,6 +1,6 @@
 module application.usecases.manage_metrics;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.metric;
 import domain.entities.metric_definition;
 import domain.ports.metric_repository;

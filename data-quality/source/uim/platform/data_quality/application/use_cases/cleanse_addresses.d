@@ -6,7 +6,7 @@ import domain.types;
 import domain.entities.address_record;
 import domain.ports.address_repository;
 import domain.services.address_cleanser;
-import application.dto;
+import uim.platform.xyz.application.dto;
 
 class CleanseAddressesUseCase {
     private AddressRepository repo;

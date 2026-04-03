@@ -1,6 +1,6 @@
 module application.usecases.manage_filter_rules;
 
-import application.dto;
+import uim.platform.xyz.application.dto;
 import domain.entities.filter_rule;
 import domain.ports.filter_rule_repository;
 import domain.types;
