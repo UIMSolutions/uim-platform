@@ -11,8 +11,8 @@ struct ServiceConfig {
     string apiVersion = "v1";
 
     static ServiceConfig load() {
-        import std.process : environment;
-        import std.conv : to;
+        // import std.process : environment;
+        // import std.conv : to;
 
         ServiceConfig cfg;
         if (auto h = environment.get("ANALYTICS_HOST"))

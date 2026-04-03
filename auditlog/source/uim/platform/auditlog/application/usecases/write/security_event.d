@@ -1,7 +1,7 @@
 module uim.platform.auditlog.application.usecases.write.security_event;
 
-// import std.uuid;
-// import std.datetime.systime : Clock;
+// // import std.uuid;
+// // import std.datetime.systime : Clock;
 // 
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
@@ -94,7 +94,7 @@ class WriteSecurityEventUseCase {
     }
 
     private string buildSecurityMessage(WriteSecurityEventRequest req) {
-        import std.conv : to;
+        // import std.conv : to;
 
         return req.eventType ~ " by user " ~ req.userName
             ~ " from " ~ req.ipAddress

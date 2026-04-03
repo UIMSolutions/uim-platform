@@ -27,7 +27,7 @@ class ManageConnectorsUseCase {
         if (existing.id.length > 0)
             return CommandResult(false, "", "Connector with locationId '" ~ req.locationId ~ "' already registered");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 
@@ -106,7 +106,7 @@ class ManageConnectorsUseCase {
 
     private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
         string sourceId, string sourceType, string message) {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         ConnectivityLog entry;
         entry.id = randomUUID().toString();

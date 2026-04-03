@@ -1,7 +1,7 @@
 module uim.platform.auditlog.application.usecases.write.audit_log;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;

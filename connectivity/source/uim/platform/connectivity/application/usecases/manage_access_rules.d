@@ -29,7 +29,7 @@ class ManageAccessRulesUseCase {
         if (req.virtualHost.length == 0)
             return CommandResult(false, "", "Virtual host is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 

@@ -74,7 +74,7 @@ class PredictionHandler {
 }
 
 private string extractIdFromPath(string uri, string resource) {
-    import std.string : split;
+    // import std.string : split;
 
     auto parts = uri.split("/");
     foreach (i, part; parts)

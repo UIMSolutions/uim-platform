@@ -12,7 +12,7 @@ import uim.platform.content_agent.domain.ports.content_activity_repository;
 import uim.platform.content_agent.domain.services.transport_validator;
 import uim.platform.content_agent.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for transport request lifecycle management.
 class ManageTransportRequestsUseCase
@@ -55,7 +55,7 @@ class ManageTransportRequestsUseCase
         else
             queue = queueRepo.findDefault(req.tenantId);
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         TransportRequest tr;
@@ -144,7 +144,7 @@ class ManageTransportRequestsUseCase
     private void recordActivity(TenantId tenantId, ActivityType actType,
         string entityId, string entityName, string desc, string by)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         ContentActivity activity;
         activity.id = randomUUID().toString();
         activity.tenantId = tenantId;
@@ -160,7 +160,7 @@ class ManageTransportRequestsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

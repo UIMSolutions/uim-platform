@@ -9,7 +9,7 @@ import uim.platform.content_agent.domain.ports.content_package_repository;
 import uim.platform.content_agent.domain.ports.content_activity_repository;
 import uim.platform.content_agent.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for exporting content packages.
 class ExportContentUseCase
@@ -36,7 +36,7 @@ class ExportContentUseCase
         if (pkg.status != PackageStatus.assembled)
             return CommandResult(false, "", "Package must be assembled before export");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ExportJob job;
@@ -90,7 +90,7 @@ class ExportContentUseCase
     private void recordActivity(TenantId tenantId, ActivityType actType,
         string entityId, string entityName, string desc, string by)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         ContentActivity activity;
         activity.id = randomUUID().toString();
         activity.tenantId = tenantId;
@@ -106,7 +106,7 @@ class ExportContentUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 }

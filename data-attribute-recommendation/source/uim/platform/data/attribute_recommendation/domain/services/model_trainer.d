@@ -1,7 +1,7 @@
 module uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;

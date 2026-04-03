@@ -31,7 +31,7 @@ struct AnalyticsEngine {
             case AggregationType.Variance:
                 return variance(values);
             case AggregationType.StdDev:
-                import std.math : sqrt;
+                // import std.math : sqrt;
                 return sqrt(variance(values));
             case AggregationType.First:
                 return values[0];
@@ -63,7 +63,7 @@ struct AnalyticsEngine {
     }
 
     static double median(double[] v) {
-        import std.algorithm : sort;
+        // import std.algorithm : sort;
         auto sorted = v.dup;
         sorted.sort();
         auto n = sorted.length;

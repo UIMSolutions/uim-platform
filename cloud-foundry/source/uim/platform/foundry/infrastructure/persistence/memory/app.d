@@ -4,8 +4,8 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry.domain.ports.app;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryAppRepository : AppRepository {
   private Application[AppId] store;

@@ -38,7 +38,7 @@ class ManageChannelsUseCase {
         if (req.backendHost.length == 0)
             return CommandResult(false, "", "Backend host is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 
@@ -116,7 +116,7 @@ class ManageChannelsUseCase {
 
     private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
         string sourceId, string sourceType, string message) {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         ConnectivityLog entry;
         entry.id = randomUUID().toString();

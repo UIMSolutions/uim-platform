@@ -1,7 +1,7 @@
 module uim.platform.data.attribute_recommendation.application.usecases.manage_models;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;

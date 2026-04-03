@@ -4,8 +4,8 @@ module uim.platform.connectivity.infrastructure.persistence.memory.connector_rep
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.ports.connector_repository;
 // 
-// import std.algorithm : filter;
-// import std.array : array;
+// // import std.algorithm : filter;
+// // import std.array : array;
 import uim.platform.connectivity;
 
 mixin(ShowModule!());

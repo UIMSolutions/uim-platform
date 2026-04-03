@@ -11,7 +11,7 @@ module uim.platform.auditlog.infrastructure.config;
 /// Load configuration from environment variables.
 AppConfig loadConfig()
 {
-    import std.process : environment;
+    // import std.process : environment;
 
     AppConfig config;
 
@@ -22,7 +22,7 @@ AppConfig loadConfig()
     auto portStr = environment.get("AL_PORT", "");
     if (portStr.length > 0)
     {
-        import std.conv : to;
+        // import std.conv : to;
         try
             config.port = portStr.to!ushort;
         catch (Exception)

@@ -34,7 +34,7 @@ class RetentionEnforcer {
 
     /// Purge logs older than the tenant's retention policy allows.
     long enforceForTenant(TenantId tenantId) {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
 
         auto policy = policyRepo.findDefault(tenantId);
         int days = 90; // SAP default

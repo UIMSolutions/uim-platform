@@ -7,7 +7,7 @@ module uim.platform.connectivity.application.usecases.manage_destinations;
 // import uim.platform.connectivity.domain.services.auth_flow_resolver;
 // import uim.platform.connectivity.domain.types;
 // 
-// import std.conv : to;
+// // import std.conv : to;
 import uim.platform.connectivity;
 
 mixin(ShowModule!());
@@ -34,7 +34,7 @@ class ManageDestinationsUseCase {
         if (req.url.length == 0)
             return CommandResult(false, "", "Destination URL is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 

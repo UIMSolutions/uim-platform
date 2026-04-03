@@ -1,6 +1,6 @@
 module uim.platform.analytics.domain.services.engines.forecasting;
 
-import std.math : exp, pow;
+// import std.math : exp, pow;
 
 /// Domain service: simple time-series forecasting (exponential smoothing).
 struct ForecastingEngine {

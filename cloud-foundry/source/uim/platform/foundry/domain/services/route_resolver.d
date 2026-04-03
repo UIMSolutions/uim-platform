@@ -6,7 +6,7 @@ import uim.platform.foundry.domain.entities.cf_domain;
 import uim.platform.foundry.domain.ports.route;
 import uim.platform.foundry.domain.ports.domain;
 
-import std.algorithm : canFind, remove;
+// import std.algorithm : canFind, remove;
 
 /// Domain service that handles route resolution —
 /// validates host/domain uniqueness and manages app-to-route mappings.

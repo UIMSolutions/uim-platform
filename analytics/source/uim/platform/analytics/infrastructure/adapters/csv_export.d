@@ -12,7 +12,7 @@ class CsvExportAdapter : ExportPort {
     }
 
     string exportCsv(string datasetId, string[] columns) {
-        import std.array : join;
+        // import std.array : join;
         string header = columns.join(",");
         return header ~ "\n" ~ "# CSV data for dataset " ~ datasetId ~ "\n";
     }

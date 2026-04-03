@@ -10,7 +10,7 @@ import uim.platform.content_agent.domain.ports.content_activity_repository;
 import uim.platform.content_agent.domain.services.package_assembler;
 import uim.platform.content_agent.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for content package CRUD and assembly.
 class ManageContentPackagesUseCase
@@ -37,7 +37,7 @@ class ManageContentPackagesUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Package name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ContentPackage pkg;
@@ -150,7 +150,7 @@ class ManageContentPackagesUseCase
     private void recordActivity(TenantId tenantId, ActivityType actType,
         string entityId, string entityName, string desc, string by)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         ContentActivity activity;
         activity.id = randomUUID().toString();
         activity.tenantId = tenantId;
@@ -166,7 +166,7 @@ class ManageContentPackagesUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

@@ -9,7 +9,7 @@ import uim.platform.content_agent.domain.ports.content_package_repository;
 import uim.platform.content_agent.domain.ports.content_activity_repository;
 import uim.platform.content_agent.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for importing content packages.
 class ImportContentUseCase
@@ -33,7 +33,7 @@ class ImportContentUseCase
         if (pkg.id.length == 0)
             return CommandResult(false, "", "Package not found");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ImportJob job;
@@ -94,7 +94,7 @@ class ImportContentUseCase
     private void recordActivity(TenantId tenantId, ActivityType actType,
         string entityId, string entityName, string desc, string by)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         ContentActivity activity;
         activity.id = randomUUID().toString();
         activity.tenantId = tenantId;
@@ -110,7 +110,7 @@ class ImportContentUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 }

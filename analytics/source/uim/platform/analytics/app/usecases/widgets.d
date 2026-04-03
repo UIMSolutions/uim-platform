@@ -5,7 +5,7 @@ import uim.platform.analytics.domain.repositories.widget;
 import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics.domain.values.chart_type;
 import uim.platform.analytics.app.dto.widget;
-import std.conv : to;
+// import std.conv : to;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

@@ -4,7 +4,7 @@ import uim.platform.analytics.domain.entities.prediction;
 import uim.platform.analytics.domain.repositories.prediction;
 import uim.platform.analytics.domain.values.common;
 import uim.platform.analytics.app.dto.prediction;
-import std.conv : to;
+// import std.conv : to;
 import uim.platform.analytics;
 
 mixin(ShowModule!());

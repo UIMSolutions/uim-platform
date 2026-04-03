@@ -3,7 +3,7 @@ module uim.platform.auditlog.presentation.http.controllers.audit_log;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import std.conv : to;
+// // import std.conv : to;
 // 
 // import uim.platform.auditlog.application.usecases.write.audit_log;
 // import uim.platform.auditlog.application.usecases.retrieve_audit_logs;
@@ -76,7 +76,7 @@ class AuditLogController : SAPController {
             // Parse category filter (comma-separated)
             auto catParam = req.headers.get("X-Category-Filter", "");
             if (catParam.length > 0) {
-                import std.string : split;
+                // import std.string : split;
 
                 foreach (c; catParam.split(","))
                     queryReq.categories ~= parseCategory(c);

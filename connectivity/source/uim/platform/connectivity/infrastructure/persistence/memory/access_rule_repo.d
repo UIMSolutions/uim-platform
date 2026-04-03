@@ -4,8 +4,8 @@ module uim.platform.connectivity.infrastructure.persistence.memory.access_rule_r
 // import uim.platform.connectivity.domain.entities.access_rule;
 // import uim.platform.connectivity.domain.ports.access_rule_repository;
 // 
-// import std.algorithm : filter;
-// import std.array : array;
+// // import std.algorithm : filter;
+// // import std.array : array;
 
 import uim.platform.connectivity;
 
