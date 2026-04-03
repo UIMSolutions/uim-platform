@@ -71,7 +71,7 @@ string[] jsonStrArray(Json j, string key) {
 
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
-    import std.string : indexOf;
+    // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;

@@ -5,8 +5,8 @@ import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for communication arrangement CRUD.
 class ManageCommunicationArrangementsUseCase
@@ -47,7 +47,7 @@ class ManageCommunicationArrangementsUseCase
         arr.inboundServices = req.inboundServices;
         arr.outboundServices = req.outboundServices;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         arr.createdAt = Clock.currStdTime();
         arr.updatedAt = arr.createdAt;
 
@@ -72,7 +72,7 @@ class ManageCommunicationArrangementsUseCase
         if (req.inboundServices.length > 0) arr.inboundServices = req.inboundServices;
         if (req.outboundServices.length > 0) arr.outboundServices = req.outboundServices;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         arr.updatedAt = Clock.currStdTime();
 
         repo.update(*arr);

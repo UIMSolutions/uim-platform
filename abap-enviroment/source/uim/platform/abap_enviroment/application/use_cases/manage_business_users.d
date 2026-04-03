@@ -6,8 +6,8 @@ import uim.platform.abap_enviroment.domain.ports.business_user_repository;
 import uim.platform.abap_enviroment.domain.ports.business_role_repository;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for business user management.
 class ManageBusinessUsersUseCase
@@ -56,12 +56,12 @@ class ManageBusinessUsersUseCase
             auto role = roleRepo.findById(roleId);
             if (role !is null)
             {
-                import std.datetime.systime : Clock;
+                // import std.datetime.systime : Clock;
                 user.roleAssignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
             }
         }
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         user.createdAt = Clock.currStdTime();
         user.updatedAt = user.createdAt;
 
@@ -89,14 +89,14 @@ class ManageBusinessUsersUseCase
                 auto role = roleRepo.findById(roleId);
                 if (role !is null)
                 {
-                    import std.datetime.systime : Clock;
+                    // import std.datetime.systime : Clock;
                     assignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
                 }
             }
             user.roleAssignments = assignments;
         }
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         user.updatedAt = Clock.currStdTime();
 
         repo.update(*user);

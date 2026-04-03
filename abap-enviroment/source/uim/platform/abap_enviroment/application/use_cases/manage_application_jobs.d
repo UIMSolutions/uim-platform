@@ -5,8 +5,8 @@ import uim.platform.abap_enviroment.domain.entities.application_job;
 import uim.platform.abap_enviroment.domain.ports.application_job_repository;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for application job scheduling and management.
 class ManageApplicationJobsUseCase
@@ -42,7 +42,7 @@ class ManageApplicationJobsUseCase
         job.status = JobStatus.scheduled;
         job.jobParameters = req.jobParameters;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         job.createdAt = Clock.currStdTime();
         job.updatedAt = job.createdAt;
 
@@ -63,7 +63,7 @@ class ManageApplicationJobsUseCase
         job.active = req.active;
         if (req.jobParameters.length > 0) job.jobParameters = req.jobParameters;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         job.updatedAt = Clock.currStdTime();
 
         repo.update(*job);
@@ -82,7 +82,7 @@ class ManageApplicationJobsUseCase
         job.status = JobStatus.canceled;
         job.active = false;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         job.updatedAt = Clock.currStdTime();
 
         repo.update(*job);

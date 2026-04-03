@@ -4,8 +4,8 @@ import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryCommunicationArrangementRepository : CommunicationArrangementRepository
 {

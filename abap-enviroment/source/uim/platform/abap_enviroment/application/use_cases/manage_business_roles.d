@@ -5,8 +5,8 @@ import uim.platform.abap_enviroment.domain.entities.business_role;
 import uim.platform.abap_enviroment.domain.ports.business_role_repository;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for business role management.
 class ManageBusinessRolesUseCase
@@ -40,7 +40,7 @@ class ManageBusinessRolesUseCase
         role.restrictionTypes = req.restrictionTypes;
         role.assignedCatalogs = req.assignedCatalogs;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         role.createdAt = Clock.currStdTime();
         role.updatedAt = role.createdAt;
 
@@ -59,7 +59,7 @@ class ManageBusinessRolesUseCase
         if (req.restrictionTypes.length > 0) role.restrictionTypes = req.restrictionTypes;
         if (req.assignedCatalogs.length > 0) role.assignedCatalogs = req.assignedCatalogs;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         role.updatedAt = Clock.currStdTime();
 
         repo.update(*role);

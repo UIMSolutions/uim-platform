@@ -6,8 +6,8 @@ import uim.platform.abap_enviroment.domain.ports.transport_request_repository;
 import uim.platform.abap_enviroment.domain.services.transport_release_validator;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for transport request management (CTS-like).
 class ManageTransportRequestsUseCase
@@ -39,7 +39,7 @@ class ManageTransportRequestsUseCase
         tr.transportType = parseTransportType(req.transportType);
         tr.status = TransportStatus.modifiable;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         tr.createdAt = Clock.currStdTime();
 
         repo.save(tr);
@@ -63,7 +63,7 @@ class ManageTransportRequestsUseCase
         task.description = req.description;
         task.objectList = req.objectList;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         task.createdAt = Clock.currStdTime();
 
         tr.tasks ~= task;
@@ -94,7 +94,7 @@ class ManageTransportRequestsUseCase
                 }
                 task.status = TransportStatus.released;
 
-                import std.datetime.systime : Clock;
+                // import std.datetime.systime : Clock;
                 task.releasedAt = Clock.currStdTime();
 
                 repo.update(*tr);
@@ -124,7 +124,7 @@ class ManageTransportRequestsUseCase
 
         tr.status = TransportStatus.released;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         tr.releasedAt = Clock.currStdTime();
 
         repo.update(*tr);

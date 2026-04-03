@@ -4,8 +4,8 @@ module uim.platform.abap_enviroment.infrastructure.persistence.memory.software_c
 // import uim.platform.abap_enviroment.domain.entities.software_component;
 // import uim.platform.abap_enviroment.domain.ports.software_component_repository;
 // 
-// import std.algorithm : filter;
-// import std.array : array;
+// // import std.algorithm : filter;
+// // import std.array : array;
 
 import uim.platform.abap_enviroment;
 mixin(ShowModule!());

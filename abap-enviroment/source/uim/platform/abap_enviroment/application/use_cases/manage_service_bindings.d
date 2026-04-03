@@ -5,8 +5,8 @@ import uim.platform.abap_enviroment.domain.entities.service_binding;
 import uim.platform.abap_enviroment.domain.ports.service_binding_repository;
 import uim.platform.abap_enviroment.domain.types;
 
-import std.conv : to;
-import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.uuid : randomUUID;
 
 /// Application service for service binding CRUD.
 class ManageServiceBindingsUseCase
@@ -41,7 +41,7 @@ class ManageServiceBindingsUseCase
         binding.serviceUrl = "/sap/opu/odata4/sap/" ~ req.name ~ "/";
         binding.metadataUrl = binding.serviceUrl ~ "$metadata";
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         binding.createdAt = Clock.currStdTime();
         binding.updatedAt = binding.createdAt;
 
@@ -59,7 +59,7 @@ class ManageServiceBindingsUseCase
         if (req.status.length > 0) binding.status = parseBindingStatus(req.status);
         if (req.endpoints.length > 0) binding.endpoints = req.endpoints;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         binding.updatedAt = Clock.currStdTime();
 
         repo.update(*binding);
