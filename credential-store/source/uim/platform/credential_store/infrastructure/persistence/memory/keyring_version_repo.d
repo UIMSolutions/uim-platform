@@ -1,0 +1,65 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.credential_store.infrastructure.persistence.memory.keyring_version_repo;
+
+import uim.platform.credential_store.domain.entities.keyring_version;
+import uim.platform.credential_store.domain.ports.keyring_version_repository;
+import uim.platform.credential_store.domain.types;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class MemoryKeyringVersionRepository : KeyringVersionRepository {
+  private KeyringVersion[] store;
+
+  KeyringVersion findById(KeyringVersionId id) {
+    foreach (ref v; store)
+      if (v.id == id)
+        return v;
+    return KeyringVersion.init;
+  }
+
+  KeyringVersion findActiveVersion(CredentialId keyringId) {
+    foreach (ref v; store)
+      if (v.keyringId == keyringId && v.isActive)
+        return v;
+    return KeyringVersion.init;
+  }
+
+  KeyringVersion findByVersion(CredentialId keyringId, long versionNumber) {
+    foreach (ref v; store)
+      if (v.keyringId == keyringId && v.versionNumber == versionNumber)
+        return v;
+    return KeyringVersion.init;
+  }
+
+  KeyringVersion[] findByKeyring(CredentialId keyringId) {
+    return store.filter!(v => v.keyringId == keyringId).array;
+  }
+
+  void save(KeyringVersion ver) {
+    store ~= ver;
+  }
+
+  void deactivateAll(CredentialId keyringId) {
+    foreach (ref v; store) {
+      if (v.keyringId == keyringId)
+        v.isActive = false;
+    }
+  }
+
+  void remove(KeyringVersionId id) {
+    store = store.filter!(v => v.id != id).array;
+  }
+
+  void removeByKeyring(CredentialId keyringId) {
+    store = store.filter!(v => v.keyringId != keyringId).array;
+  }
+
+  long countByKeyring(CredentialId keyringId) {
+    return cast(long) store.filter!(v => v.keyringId == keyringId).array.length;
+  }
+}
