@@ -1,4 +1,4 @@
-module presentation.http.monitoring;
+module presentation.http.controllers.monitoring_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,17 +11,14 @@ import domain.entities.provisioned_entity;
 import domain.types;
 import presentation.http.json_utils;
 
-class MonitoringController
-{
+class MonitoringController {
   private MonitorProvisioningUseCase uc;
 
-  this(MonitorProvisioningUseCase uc)
-  {
+  this(MonitorProvisioningUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/monitoring/jobs", &handleListJobSummaries);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJobSummary);
     router.get("/api/v1/monitoring/logs/*", &handleGetJobLogs);
@@ -29,10 +26,8 @@ class MonitoringController
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listJobSummaries(tenantId);
 
@@ -42,39 +37,30 @@ class MonitoringController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getJobSummary(id, tenantId);
-      if (summary.jobId.length == 0)
-      {
+      if (summary.jobId.length == 0) {
         writeError(res, 404, "Job not found");
         return;
       }
       res.writeJsonBody(serializeJobSummary(summary), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto jobId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = uc.getJobLogs(jobId, tenantId);
@@ -85,19 +71,15 @@ class MonitoringController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(cast(long)logs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listProvisionedEntities(tenantId);
 
@@ -107,42 +89,35 @@ class MonitoringController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject;
-      j["totalSourceSystems"] = Json(cast(long) summary.totalSourceSystems);
-      j["activeSourceSystems"] = Json(cast(long) summary.activeSourceSystems);
-      j["totalTargetSystems"] = Json(cast(long) summary.totalTargetSystems);
-      j["activeTargetSystems"] = Json(cast(long) summary.activeTargetSystems);
-      j["totalJobs"] = Json(cast(long) summary.totalJobs);
-      j["completedJobs"] = Json(cast(long) summary.completedJobs);
-      j["failedJobs"] = Json(cast(long) summary.failedJobs);
-      j["runningJobs"] = Json(cast(long) summary.runningJobs);
+      j["totalSourceSystems"] = Json(cast(long)summary.totalSourceSystems);
+      j["activeSourceSystems"] = Json(cast(long)summary.activeSourceSystems);
+      j["totalTargetSystems"] = Json(cast(long)summary.totalTargetSystems);
+      j["activeTargetSystems"] = Json(cast(long)summary.activeTargetSystems);
+      j["totalJobs"] = Json(cast(long)summary.totalJobs);
+      j["completedJobs"] = Json(cast(long)summary.completedJobs);
+      j["failedJobs"] = Json(cast(long)summary.failedJobs);
+      j["runningJobs"] = Json(cast(long)summary.runningJobs);
       j["totalProvisionedEntities"] = Json(summary.totalProvisionedEntities);
       res.writeJsonBody(j, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeJobSummary(ref const JobSummary s)
-  {
+  private static Json serializeJobSummary(ref const JobSummary s) {
     auto j = Json.emptyObject;
     j["jobId"] = Json(s.jobId);
     j["sourceName"] = Json(s.sourceName);
@@ -157,8 +132,7 @@ class MonitoringController
     return j;
   }
 
-  private static Json serializeLog(ref const ProvisioningLog l)
-  {
+  private static Json serializeLog(ref const ProvisioningLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["jobId"] = Json(l.jobId);
@@ -173,8 +147,7 @@ class MonitoringController
     return j;
   }
 
-  private static Json serializeEntity(ref const ProvisionedEntity e)
-  {
+  private static Json serializeEntity(ref const ProvisionedEntity e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["externalId"] = Json(e.externalId);

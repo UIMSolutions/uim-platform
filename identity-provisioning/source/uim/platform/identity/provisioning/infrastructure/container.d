@@ -33,8 +33,7 @@ import presentation.http.monitoring;
 import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   InMemorySourceSystemRepository sourceRepo;
   InMemoryTargetSystemRepository targetRepo;
@@ -67,8 +66,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
@@ -89,7 +87,8 @@ Container buildContainer(AppConfig config)
   c.manageSourceSystems = new ManageSourceSystemsUseCase(c.sourceRepo);
   c.manageTargetSystems = new ManageTargetSystemsUseCase(c.targetRepo);
   c.manageProxySystems = new ManageProxySystemsUseCase(c.proxyRepo, c.sourceRepo, c.targetRepo);
-  c.manageTransformations = new ManageTransformationsUseCase(c.transformRepo, c.transformationEngine);
+  c.manageTransformations = new ManageTransformationsUseCase(c.transformRepo, c
+      .transformationEngine);
   c.runProvisioningJobs = new RunProvisioningJobsUseCase(
     c.jobRepo, c.sourceRepo, c.targetRepo, c.logRepo, c.provisioningEngine);
   c.monitorProvisioning = new MonitorProvisioningUseCase(
@@ -102,7 +101,7 @@ Container buildContainer(AppConfig config)
   c.transformationController = new TransformationController(c.manageTransformations);
   c.provisioningJobController = new ProvisioningJobController(c.runProvisioningJobs);
   c.monitoringController = new MonitoringController(c.monitorProvisioning);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("identity-provisioning");
 
   return c;
 }
