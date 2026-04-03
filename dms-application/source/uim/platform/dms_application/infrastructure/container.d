@@ -106,7 +106,7 @@ Container buildContainer(AppConfig config) {
   c.shareController = new ShareController(c.manageShares);
   c.permissionController = new PermissionController(c.managePermissions);
   c.browseController = new BrowseController(c.browseContent);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("dms-application");
 
   return c;
 }

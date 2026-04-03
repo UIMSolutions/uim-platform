@@ -31,8 +31,7 @@ import uim.platform.identity_authentication.presentation.http.audit;
 import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
     InMemoryUserRepository userRepo;
     InMemoryGroupRepository groupRepo;
@@ -63,8 +62,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
@@ -102,7 +100,7 @@ Container buildContainer(AppConfig config)
     c.passwordPolicyController = new PasswordPolicyController(c.managePasswordPolicies);
     c.apiClientController = new ApiClientController(c.manageApiClients);
     c.auditController = new AuditController(c.queryAuditLog);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("identity-directory");
 
     return c;
 }

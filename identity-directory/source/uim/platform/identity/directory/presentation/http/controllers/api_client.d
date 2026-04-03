@@ -1,4 +1,4 @@
-module uim.platform.identity_authentication.presentation.http.api_client;
+module presentation.http.controllers.api_client;
 
 import vibe.http.server;
 import vibe.http.router;
