@@ -4,3 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.workzone;
+
+public {
+    import uim.platform.service;
+
+    import uim.platform.workzone.application;
+    import uim.platform.monitoring.domain;
+    import uim.platform.monitoring.helpers;
+    import uim.platform.monitoring.infrastructure;
+    import uim.platform.monitoring.presentation;
+}
