@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.app_repository;
+module uim.platform.workzone.domain.ports.app_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.app_registration;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.app_registration;
 
 interface AppRepository
 {

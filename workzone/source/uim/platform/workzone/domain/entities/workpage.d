@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.workpage;
+module uim.platform.workzone.domain.entities.workpage;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.workzone.domain.types;
 
 /// A page within a workspace — containers for widgets and content.
 struct Workpage

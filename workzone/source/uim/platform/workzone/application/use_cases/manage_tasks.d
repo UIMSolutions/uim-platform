@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.manage_tasks;
+module uim.platform.workzone.application.usecases.manage_tasks;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.task;
-import uim.platform.xyz.domain.ports.task_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.task;
+import uim.platform.workzone.domain.ports.task_repository;
+import uim.platform.workzone.application.dto;
 
 class ManageTasksUseCase
 {

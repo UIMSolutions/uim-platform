@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.manage_apps;
+module uim.platform.workzone.application.usecases.manage_apps;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.app_registration;
-import uim.platform.xyz.domain.ports.app_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.app_registration;
+import uim.platform.workzone.domain.ports.app_repository;
+import uim.platform.workzone.application.dto;
 
 class ManageAppsUseCase
 {

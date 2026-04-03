@@ -1,11 +1,11 @@
-module uim.platform.xyz.domain.services.content_search;
+module uim.platform.workzone.domain.services.content_search;
 
 import std.algorithm : canFind, filter;
 import std.array : array;
 import std.uni : toLower;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.content_item;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.content_item;
 
 /// Domain service — simple in-memory content search.
 struct ContentSearchService

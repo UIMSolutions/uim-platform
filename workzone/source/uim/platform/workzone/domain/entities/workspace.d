@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.workspace;
+module uim.platform.workzone.domain.entities.workspace;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.workzone.domain.types;
 
 /// A collaborative workspace — teams, projects, or departments.
 struct Workspace

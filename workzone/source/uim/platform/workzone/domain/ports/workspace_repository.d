@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.workspace_repository;
+module uim.platform.workzone.domain.ports.workspace_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workspace;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.workspace;
 
 interface WorkspaceRepository
 {

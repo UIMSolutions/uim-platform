@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.manage_widgets;
+module uim.platform.workzone.application.usecases.manage_widgets;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.widget;
-import uim.platform.xyz.domain.ports.widget_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.widget;
+import uim.platform.workzone.domain.ports.widget_repository;
+import uim.platform.workzone.application.dto;
 
 class ManageWidgetsUseCase
 {

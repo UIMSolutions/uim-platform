@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.task_repo;
+module uim.platform.workzone.infrastructure.persistence.memory.task_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.task;
-import uim.platform.xyz.domain.ports.task_repository;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.task;
+import uim.platform.workzone.domain.ports.task_repository;
 
 import std.algorithm : filter;
 import std.array : array;

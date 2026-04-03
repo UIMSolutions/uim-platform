@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.feed_repo;
+module uim.platform.workzone.infrastructure.persistence.memory.feed_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.feed_entry;
-import uim.platform.xyz.domain.ports.feed_repository;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.feed_entry;
+import uim.platform.workzone.domain.ports.feed_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -3,10 +3,10 @@ module uim.platform.identity_authentication.presentation.http.card;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_cards;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.card;
+import uim.platform.workzone.application.usecases.manage_cards;
+import uim.platform.workzone.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.card;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class CardController

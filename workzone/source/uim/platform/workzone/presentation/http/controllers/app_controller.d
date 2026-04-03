@@ -8,10 +8,10 @@ module uim.platform.workzone.presentation.http.controllers.app_controller;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_apps;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.app_registration;
+import uim.platform.workzone.application.usecases.manage_apps;
+import uim.platform.workzone.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class AppController
@@ -162,7 +162,7 @@ class AppController
 
 private AppConfig parseAppConfig(Json j)
 {
-    import uim.platform.xyz.domain.entities.app_registration : AppConfig;
+    import uim.platform.workzone.domain.entities.app_registration : AppConfig;
     AppConfig cfg;
     auto v = "appConfig" in j;
     if (v !is null && (*v).type == Json.Type.object)

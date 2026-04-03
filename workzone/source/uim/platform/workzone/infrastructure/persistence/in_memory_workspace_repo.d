@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.workspace_repo;
+module uim.platform.workzone.infrastructure.persistence.memory.workspace_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workspace;
-import uim.platform.xyz.domain.ports.workspace_repository;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.workspace;
+import uim.platform.workzone.domain.ports.workspace_repository;
 
 import std.algorithm : filter;
 import std.array : array;

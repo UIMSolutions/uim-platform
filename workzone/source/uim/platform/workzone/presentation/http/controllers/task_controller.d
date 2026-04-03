@@ -3,10 +3,10 @@ module uim.platform.identity_authentication.presentation.http.task;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_tasks;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.task;
+import uim.platform.workzone.application.usecases.manage_tasks;
+import uim.platform.workzone.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.task;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class TaskController

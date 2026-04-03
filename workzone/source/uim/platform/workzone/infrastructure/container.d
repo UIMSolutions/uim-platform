@@ -3,33 +3,33 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.workzone.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.workzone.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.workspace_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.workpage_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.card_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.content_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.feed_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.notification_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.task_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.channel_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.app_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.widget_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.workspace_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.workpage_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.card_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.content_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.feed_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.notification_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.task_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.channel_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.app_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.widget_repo;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_workspaces;
-import uim.platform.xyz.application.usecases.manage_workpages;
-import uim.platform.xyz.application.usecases.manage_cards;
-import uim.platform.xyz.application.usecases.manage_content;
-import uim.platform.xyz.application.usecases.manage_feeds;
-import uim.platform.xyz.application.usecases.manage_notifications;
-import uim.platform.xyz.application.usecases.manage_tasks;
-import uim.platform.xyz.application.usecases.manage_channels;
-import uim.platform.xyz.application.usecases.manage_apps;
-import uim.platform.xyz.application.usecases.manage_widgets;
+import uim.platform.workzone.application.usecases.manage_workspaces;
+import uim.platform.workzone.application.usecases.manage_workpages;
+import uim.platform.workzone.application.usecases.manage_cards;
+import uim.platform.workzone.application.usecases.manage_content;
+import uim.platform.workzone.application.usecases.manage_feeds;
+import uim.platform.workzone.application.usecases.manage_notifications;
+import uim.platform.workzone.application.usecases.manage_tasks;
+import uim.platform.workzone.application.usecases.manage_channels;
+import uim.platform.workzone.application.usecases.manage_apps;
+import uim.platform.workzone.application.usecases.manage_widgets;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.workspace;

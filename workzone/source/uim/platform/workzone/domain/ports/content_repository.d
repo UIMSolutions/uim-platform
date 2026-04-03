@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.content_repository;
+module uim.platform.workzone.domain.ports.content_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.content_item;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.content_item;
 
 interface ContentRepository
 {

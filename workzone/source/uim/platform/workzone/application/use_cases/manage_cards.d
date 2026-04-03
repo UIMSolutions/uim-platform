@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.manage_cards;
+module uim.platform.workzone.application.usecases.manage_cards;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.card;
-import uim.platform.xyz.domain.ports.card_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.card;
+import uim.platform.workzone.domain.ports.card_repository;
+import uim.platform.workzone.application.dto;
 
 class ManageCardsUseCase
 {

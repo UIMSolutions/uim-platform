@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.notification_repository;
+module uim.platform.workzone.domain.ports.notification_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.notification;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.notification;
 
 interface NotificationRepository
 {

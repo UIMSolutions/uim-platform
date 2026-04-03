@@ -3,10 +3,10 @@ module uim.platform.identity_authentication.presentation.http.channel;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_channels;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.channel;
+import uim.platform.workzone.application.usecases.manage_channels;
+import uim.platform.workzone.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.channel;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class ChannelController
@@ -154,7 +154,7 @@ class ChannelController
 
 private ChannelConfig parseChannelConfig(Json j)
 {
-    import uim.platform.xyz.domain.entities.channel : ChannelConfig;
+    import uim.platform.workzone.domain.entities.channel : ChannelConfig;
     ChannelConfig cfg;
     auto v = "config" in j;
     if (v !is null && (*v).type == Json.Type.object)

@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.workzone.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias WorkspaceId = string;

@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.workpage_repository;
+module uim.platform.workzone.domain.ports.workpage_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workpage;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.workpage;
 
 interface WorkpageRepository
 {

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.card;
+module uim.platform.workzone.domain.entities.card;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.workzone.domain.types;
 
 /// Integration card — a modular content unit displaying data from business systems.
 struct Card

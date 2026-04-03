@@ -1,13 +1,13 @@
-module uim.platform.xyz.application.usecases.manage_content;
+module uim.platform.workzone.application.usecases.manage_content;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.content_item;
-import uim.platform.xyz.domain.ports.content_repository;
-import uim.platform.xyz.domain.services.content_search;
-import uim.platform.xyz.application.dto;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.content_item;
+import uim.platform.workzone.domain.ports.content_repository;
+import uim.platform.workzone.domain.services.content_search;
+import uim.platform.workzone.application.dto;
 
 class ManageContentUseCase
 {

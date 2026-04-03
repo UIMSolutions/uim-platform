@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.card_repository;
+module uim.platform.workzone.domain.ports.card_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.card;
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.card;
 
 interface CardRepository
 {
