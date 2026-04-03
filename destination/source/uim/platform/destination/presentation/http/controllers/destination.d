@@ -1,4 +1,4 @@
-module presentation.http.destination;
+module presentation.http.controllers.destination;
 
 import vibe.http.server;
 import vibe.http.router;

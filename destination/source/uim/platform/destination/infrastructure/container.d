@@ -21,8 +21,7 @@ import presentation.http.find;
 import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
     InMemoryDestinationRepository destRepo;
     InMemoryCertificateRepository certRepo;
@@ -43,8 +42,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
@@ -63,7 +61,7 @@ Container buildContainer(AppConfig config)
     c.certificateController = new CertificateController(c.manageCertificates);
     c.fragmentController = new FragmentController(c.manageFragments);
     c.findController = new FindController(c.findDestination);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("destination-service");
 
     return c;
 }

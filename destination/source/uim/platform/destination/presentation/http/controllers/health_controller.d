@@ -1,4 +1,4 @@
-module presentation.http.health;
+module presentation.http.controllers.health_controller;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -15,7 +15,7 @@ class HealthController
     {
         auto j = Json.emptyObject;
         j["status"] = Json("UP");
-        j["service"] = Json("destination-service");
+        j["service"] = Json();
         res.writeJsonBody(j, 200);
     }
 }

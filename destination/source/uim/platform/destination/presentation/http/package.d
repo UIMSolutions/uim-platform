@@ -1,4 +1,4 @@
-module uim.platform.management;
+module presentation;
 
 public {
     import uim.platform.service;
