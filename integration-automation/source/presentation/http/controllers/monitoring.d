@@ -1,4 +1,4 @@
-module presentation.http.monitoring;
+module uim.platform.xyz.presentation.http.monitoring;
 
 import vibe.http.server;
 import vibe.http.router;

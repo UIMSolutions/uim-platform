@@ -1,4 +1,4 @@
-module presentation.http.system;
+module uim.platform.xyz.presentation.http.system;
 
 import vibe.http.server;
 import vibe.http.router;

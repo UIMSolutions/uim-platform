@@ -1,4 +1,4 @@
-module presentation.http.filter_rule;
+module uim.platform.xyz.presentation.http.filter_rule;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.metric;
+module uim.platform.xyz.presentation.http.metric;
 
 import vibe.http.server;
 import vibe.http.router;

@@ -1,4 +1,4 @@
-module presentation.http.scenario;
+module uim.platform.xyz.presentation.http.scenario;
 
 import vibe.http.server;
 import vibe.http.router;

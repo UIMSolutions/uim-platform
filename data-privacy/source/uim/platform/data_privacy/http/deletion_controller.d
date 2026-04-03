@@ -1,4 +1,4 @@
-module presentation.http.deletion;
+module uim.platform.xyz.presentation.http.deletion;
 
 import vibe.http.server;
 import vibe.http.router;

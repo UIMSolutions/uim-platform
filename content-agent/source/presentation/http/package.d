@@ -1,2 +1,2 @@
-module presentation.http;
+module uim.platform.xyz.presentation.http;
 

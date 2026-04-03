@@ -1,4 +1,4 @@
-module presentation.http.fragment;
+module uim.platform.xyz.presentation.http.fragment;
 
 import vibe.http.server;
 import vibe.http.router;

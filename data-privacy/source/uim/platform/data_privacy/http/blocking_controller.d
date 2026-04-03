@@ -1,4 +1,4 @@
-module presentation.http.blocking;
+module uim.platform.xyz.presentation.http.blocking;
 
 import vibe.http.server;
 import vibe.http.router;

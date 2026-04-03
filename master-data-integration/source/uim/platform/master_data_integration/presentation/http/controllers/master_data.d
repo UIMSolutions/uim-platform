@@ -1,4 +1,4 @@
-module presentation.http.master_data;
+module uim.platform.xyz.presentation.http.master_data;
 
 import vibe.http.server;
 import vibe.http.router;

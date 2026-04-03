@@ -1,4 +1,4 @@
-module presentation.http.workflow;
+module uim.platform.xyz.presentation.http.workflow;
 
 import vibe.http.server;
 import vibe.http.router;

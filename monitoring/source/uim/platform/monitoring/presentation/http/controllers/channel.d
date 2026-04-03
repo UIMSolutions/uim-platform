@@ -1,4 +1,4 @@
-module presentation.http.channel;
+module uim.platform.xyz.presentation.http.channel;
 
 import vibe.http.server;
 import vibe.http.router;

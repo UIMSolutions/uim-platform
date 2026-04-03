@@ -1,4 +1,4 @@
-module presentation.http.retention_rule;
+module uim.platform.xyz.presentation.http.retention_rule;
 
 import vibe.http.server;
 import vibe.http.router;

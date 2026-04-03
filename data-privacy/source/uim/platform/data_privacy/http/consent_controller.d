@@ -1,4 +1,4 @@
-module presentation.http.consent;
+module uim.platform.xyz.presentation.http.consent;
 
 import vibe.http.server;
 import vibe.http.router;
