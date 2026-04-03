@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-logging-config
+  labels:
+    app: cloud-logging
+    part-of: uim-platform
+data:
+  LOGGING_HOST: "0.0.0.0"
+  LOGGING_PORT: "8094"
