@@ -35,17 +35,17 @@ module uim.platform.management.infrastructure.container;
 // import uim.platform.management.application.usecases.get_account_overview;
 
 // // Controllers
-// import uim.platform.xyz.presentation.http.global_account;
-// import uim.platform.xyz.presentation.http.directory;
-// import uim.platform.xyz.presentation.http.subaccount;
-// import uim.platform.xyz.presentation.http.entitlement;
-// import uim.platform.xyz.presentation.http.environment;
-// import uim.platform.xyz.presentation.http.subscription;
-// import uim.platform.xyz.presentation.http.service_plan;
-// import uim.platform.xyz.presentation.http.label;
-// import uim.platform.xyz.presentation.http.event;
-// import uim.platform.xyz.presentation.http.overview;
-// import uim.platform.xyz.presentation.http.health;
+// import uim.platform.management.presentation.http.global_account;
+// import uim.platform.management.presentation.http.directory;
+// import uim.platform.management.presentation.http.subaccount;
+// import uim.platform.management.presentation.http.entitlement;
+// import uim.platform.management.presentation.http.environment;
+// import uim.platform.management.presentation.http.subscription;
+// import uim.platform.management.presentation.http.service_plan;
+// import uim.platform.management.presentation.http.label;
+// import uim.platform.management.presentation.http.event;
+// import uim.platform.management.presentation.http.overview;
+// import uim.platform.management.presentation.http.health;
 
 import uim.platform.management;
 
