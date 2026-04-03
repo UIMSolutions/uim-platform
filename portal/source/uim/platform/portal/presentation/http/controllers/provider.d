@@ -1,31 +1,30 @@
-module uim.platform.identity_authentication.presentation.http.role;
+module uim.platform.portal.presentation.http.controllers.provider;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.usecases.manage_roles;
+import application.usecases.manage_providers;
 import application.dto;
-import domain.entities.role;
+import domain.entities.content_provider;
 import domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class RoleController
+class ProviderController
 {
-    private ManageRolesUseCase useCase;
+    private ManageProvidersUseCase useCase;
 
-    this(ManageRolesUseCase useCase)
+    this(ManageProvidersUseCase useCase)
     {
         this.useCase = useCase;
     }
 
     override void registerRoutes(URLRouter router)
     {
-        router.post("/api/v1/roles", &handleCreate);
-        router.get("/api/v1/roles", &handleList);
-        router.get("/api/v1/roles/*", &handleGet);
-        router.put("/api/v1/roles/*", &handleUpdate);
-        router.delete_("/api/v1/roles/*", &handleDelete);
-        router.post("/api/v1/roles/assign", &handleAssign);
+        router.post("/api/v1/providers", &handleCreate);
+        router.get("/api/v1/providers", &handleList);
+        router.get("/api/v1/providers/*", &handleGet);
+        router.put("/api/v1/providers/*", &handleUpdate);
+        router.delete_("/api/v1/providers/*", &handleDelete);
     }
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -33,18 +32,20 @@ class RoleController
         try
         {
             auto j = req.json;
-            auto createReq = CreateRoleRequest(
+            auto createReq = CreateProviderRequest(
                 req.headers.get("X-Tenant-Id", ""),
                 j.getString("name"),
                 j.getString("description"),
-                jsonEnum!RoleScope(j, "scope", RoleScope.site),
+                jsonEnum!ProviderType(j, "providerType", ProviderType.local),
+                j.getString("contentEndpointUrl"),
+                j.getString("authToken"),
             );
 
-            auto result = useCase.createRole(createReq);
+            auto result = useCase.createProvider(createReq);
             if (result.isSuccess())
             {
                 auto response = Json.emptyObject;
-                response["id"] = Json(result.roleId);
+                response["id"] = Json(result.providerId);
                 res.writeJsonBody(response, 201);
             }
             else
@@ -63,10 +64,10 @@ class RoleController
         try
         {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto roles = useCase.listRoles(tenantId);
+            auto providers = useCase.listProviders(tenantId);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long) roles.length);
-            response["resources"] = toJsonArray(roles);
+            response["totalResults"] = Json(cast(long) providers.length);
+            response["resources"] = toJsonArray(providers);
             res.writeJsonBody(response, 200);
         }
         catch (Exception e)
@@ -79,14 +80,14 @@ class RoleController
     {
         try
         {
-            auto roleId = extractIdFromPath(req.requestURI);
-            auto role = useCase.getRole(roleId);
-            if (role == Role.init)
+            auto providerId = extractIdFromPath(req.requestURI);
+            auto provider = useCase.getProvider(providerId);
+            if (provider == ContentProvider.init)
             {
-                writeApiError(res, 404, "Role not found");
+                writeApiError(res, 404, "Content provider not found");
                 return;
             }
-            res.writeJsonBody(toJsonValue(role), 200);
+            res.writeJsonBody(toJsonValue(provider), 200);
         }
         catch (Exception e)
         {
@@ -98,38 +99,18 @@ class RoleController
     {
         try
         {
-            auto roleId = extractIdFromPath(req.requestURI);
+            auto providerId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto updateReq = UpdateRoleRequest(
-                roleId,
+            auto updateReq = UpdateProviderRequest(
+                providerId,
                 j.getString("name"),
                 j.getString("description"),
+                j.getString("contentEndpointUrl"),
+                j.getString("authToken"),
+                jsonBool(j, "active", true),
             );
 
-            auto error = useCase.updateRole(updateReq);
-            if (error.length > 0)
-                writeApiError(res, 404, error);
-            else
-                res.writeJsonBody(Json.emptyObject, 200);
-        }
-        catch (Exception e)
-        {
-            writeApiError(res, 500, "Internal server error");
-        }
-    }
-
-    private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
-            auto j = req.json;
-            auto assignReq = AssignRoleRequest(
-                j.getString("roleId"),
-                jsonStrArray(j, "userIds"),
-                jsonStrArray(j, "groupIds"),
-            );
-
-            auto error = useCase.assignRole(assignReq);
+            auto error = useCase.updateProvider(updateReq);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else
@@ -145,8 +126,8 @@ class RoleController
     {
         try
         {
-            auto roleId = extractIdFromPath(req.requestURI);
-            auto error = useCase.deleteRole(roleId);
+            auto providerId = extractIdFromPath(req.requestURI);
+            auto error = useCase.deleteProvider(providerId);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else

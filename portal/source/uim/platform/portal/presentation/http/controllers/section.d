@@ -1,30 +1,30 @@
-module uim.platform.identity_authentication.presentation.http.menu_item;
+module uim.platform.portal.presentation.http.controllers.section;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.usecases.manage_menu_items;
+import application.usecases.manage_sections;
 import application.dto;
-import domain.entities.menu_item;
+import domain.entities.section;
 import domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class MenuItemController
+class SectionController
 {
-    private ManageMenuItemsUseCase useCase;
+    private ManageSectionsUseCase useCase;
 
-    this(ManageMenuItemsUseCase useCase)
+    this(ManageSectionsUseCase useCase)
     {
         this.useCase = useCase;
     }
 
     override void registerRoutes(URLRouter router)
     {
-        router.post("/api/v1/menu-items", &handleCreate);
-        router.get("/api/v1/menu-items", &handleList);
-        router.get("/api/v1/menu-items/*", &handleGet);
-        router.put("/api/v1/menu-items/*", &handleUpdate);
-        router.delete_("/api/v1/menu-items/*", &handleDelete);
+        router.post("/api/v1/sections", &handleCreate);
+        router.get("/api/v1/sections", &handleList);
+        router.get("/api/v1/sections/*", &handleGet);
+        router.put("/api/v1/sections/*", &handleUpdate);
+        router.delete_("/api/v1/sections/*", &handleDelete);
     }
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -32,25 +32,20 @@ class MenuItemController
         try
         {
             auto j = req.json;
-            auto createReq = CreateMenuItemRequest(
-                j.getString("siteId"),
+            auto createReq = CreateSectionRequest(
+                j.getString("pageId"),
                 req.headers.get("X-Tenant-Id", ""),
                 j.getString("title"),
-                j.getString("icon"),
-                j.getString("parentId"),
-                j.getString("targetPageId"),
-                j.getString("targetUrl"),
-                jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
-                jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
                 jsonBool(j, "visible", true),
+                jsonInt(j, "columns", 3),
             );
 
-            auto result = useCase.createMenuItem(createReq);
+            auto result = useCase.createSection(createReq);
             if (result.isSuccess())
             {
                 auto response = Json.emptyObject;
-                response["id"] = Json(result.menuItemId);
+                response["id"] = Json(result.sectionId);
                 res.writeJsonBody(response, 201);
             }
             else
@@ -68,11 +63,11 @@ class MenuItemController
     {
         try
         {
-            auto siteId = req.headers.get("X-Site-Id", "");
-            auto items = useCase.listMenuItems(siteId);
+            auto pageId = req.headers.get("X-Page-Id", "");
+            auto sections = useCase.listSections(pageId);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long) items.length);
-            response["resources"] = toJsonArray(items);
+            response["totalResults"] = Json(cast(long) sections.length);
+            response["resources"] = toJsonArray(sections);
             res.writeJsonBody(response, 200);
         }
         catch (Exception e)
@@ -85,14 +80,14 @@ class MenuItemController
     {
         try
         {
-            auto menuItemId = extractIdFromPath(req.requestURI);
-            auto item = useCase.getMenuItem(menuItemId);
-            if (item == MenuItem.init)
+            auto sectionId = extractIdFromPath(req.requestURI);
+            auto section = useCase.getSection(sectionId);
+            if (section == Section.init)
             {
-                writeApiError(res, 404, "Menu item not found");
+                writeApiError(res, 404, "Section not found");
                 return;
             }
-            res.writeJsonBody(toJsonValue(item), 200);
+            res.writeJsonBody(toJsonValue(section), 200);
         }
         catch (Exception e)
         {
@@ -104,22 +99,17 @@ class MenuItemController
     {
         try
         {
-            auto menuItemId = extractIdFromPath(req.requestURI);
+            auto sectionId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto updateReq = UpdateMenuItemRequest(
-                menuItemId,
+            auto updateReq = UpdateSectionRequest(
+                sectionId,
                 j.getString("title"),
-                j.getString("icon"),
-                j.getString("parentId"),
-                j.getString("targetPageId"),
-                j.getString("targetUrl"),
-                jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
-                jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
                 jsonBool(j, "visible", true),
+                jsonInt(j, "columns", 3),
             );
 
-            auto error = useCase.updateMenuItem(updateReq);
+            auto error = useCase.updateSection(updateReq);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else
@@ -135,10 +125,10 @@ class MenuItemController
     {
         try
         {
-            auto menuItemId = extractIdFromPath(req.requestURI);
+            auto sectionId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto siteId = j.getString("siteId");
-            auto error = useCase.deleteMenuItem(menuItemId, siteId);
+            auto pageId = j.getString("pageId");
+            auto error = useCase.deleteSection(sectionId, pageId);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else

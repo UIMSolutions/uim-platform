@@ -1,30 +1,30 @@
-module uim.platform.portal.presentation.http.controllers.catalog_controller;
+module uim.platform.portal.presentation.http.controllers.page;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import application.usecases.manage_catalogs;
+import application.usecases.manage_pages;
 import application.dto;
-import domain.entities.catalog;
+import domain.entities.page;
 import domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class CatalogController
+class PageController
 {
-    private ManageCatalogsUseCase useCase;
+    private ManagePagesUseCase useCase;
 
-    this(ManageCatalogsUseCase useCase)
+    this(ManagePagesUseCase useCase)
     {
         this.useCase = useCase;
     }
 
     override void registerRoutes(URLRouter router)
     {
-        router.post("/api/v1/catalogs", &handleCreate);
-        router.get("/api/v1/catalogs", &handleList);
-        router.get("/api/v1/catalogs/*", &handleGet);
-        router.put("/api/v1/catalogs/*", &handleUpdate);
-        router.delete_("/api/v1/catalogs/*", &handleDelete);
+        router.post("/api/v1/pages", &handleCreate);
+        router.get("/api/v1/pages", &handleList);
+        router.get("/api/v1/pages/*", &handleGet);
+        router.put("/api/v1/pages/*", &handleUpdate);
+        router.delete_("/api/v1/pages/*", &handleDelete);
     }
 
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -32,20 +32,23 @@ class CatalogController
         try
         {
             auto j = req.json;
-            auto createReq = CreateCatalogRequest(
+            auto createReq = CreatePageRequest(
+                j.getString("siteId"),
                 req.headers.get("X-Tenant-Id", ""),
                 j.getString("title"),
                 j.getString("description"),
-                j.getString("providerId"),
+                j.getString("alias"),
+                jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
-                jsonBool(j, "active", true),
+                jsonInt(j, "sortOrder"),
+                jsonBool(j, "visible", true),
             );
 
-            auto result = useCase.createCatalog(createReq);
+            auto result = useCase.createPage(createReq);
             if (result.isSuccess())
             {
                 auto response = Json.emptyObject;
-                response["id"] = Json(result.catalogId);
+                response["id"] = Json(result.pageId);
                 res.writeJsonBody(response, 201);
             }
             else
@@ -63,11 +66,13 @@ class CatalogController
     {
         try
         {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto catalogs = useCase.listCatalogs(tenantId);
+            auto siteId = jsonStr(Json(req.headers.get("X-Site-Id", "")), "");
+            // Use query param for site filter
+            auto siteIdParam = req.headers.get("X-Site-Id", "");
+            auto pages = useCase.listPages(siteIdParam);
             auto response = Json.emptyObject;
-            response["totalResults"] = Json(cast(long) catalogs.length);
-            response["resources"] = toJsonArray(catalogs);
+            response["totalResults"] = Json(cast(long) pages.length);
+            response["resources"] = toJsonArray(pages);
             res.writeJsonBody(response, 200);
         }
         catch (Exception e)
@@ -80,14 +85,14 @@ class CatalogController
     {
         try
         {
-            auto catalogId = extractIdFromPath(req.requestURI);
-            auto catalog = useCase.getCatalog(catalogId);
-            if (catalog == Catalog.init)
+            auto pageId = extractIdFromPath(req.requestURI);
+            auto page = useCase.getPage(pageId);
+            if (page == Page.init)
             {
-                writeApiError(res, 404, "Catalog not found");
+                writeApiError(res, 404, "Page not found");
                 return;
             }
-            res.writeJsonBody(toJsonValue(catalog), 200);
+            res.writeJsonBody(toJsonValue(page), 200);
         }
         catch (Exception e)
         {
@@ -99,17 +104,20 @@ class CatalogController
     {
         try
         {
-            auto catalogId = extractIdFromPath(req.requestURI);
+            auto pageId = extractIdFromPath(req.requestURI);
             auto j = req.json;
-            auto updateReq = UpdateCatalogRequest(
-                catalogId,
+            auto updateReq = UpdatePageRequest(
+                pageId,
                 j.getString("title"),
                 j.getString("description"),
+                j.getString("alias"),
+                jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
-                jsonBool(j, "active", true),
+                jsonInt(j, "sortOrder"),
+                jsonBool(j, "visible", true),
             );
 
-            auto error = useCase.updateCatalog(updateReq);
+            auto error = useCase.updatePage(updateReq);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else
@@ -125,8 +133,10 @@ class CatalogController
     {
         try
         {
-            auto catalogId = extractIdFromPath(req.requestURI);
-            auto error = useCase.deleteCatalog(catalogId);
+            auto pageId = extractIdFromPath(req.requestURI);
+            auto j = req.json;
+            auto siteId = j.getString("siteId");
+            auto error = useCase.deletePage(pageId, siteId);
             if (error.length > 0)
                 writeApiError(res, 404, error);
             else
