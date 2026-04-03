@@ -19,51 +19,51 @@ alias CommunicationScenarioId = string;
 /// ABAP system provisioning plan.
 enum SystemPlan
 {
-    standard,
-    free_,
-    development,
-    test,
-    production,
+  standard,
+  free_,
+  development,
+  test,
+  production,
 }
 
 /// Lifecycle status of an ABAP system instance.
 enum SystemStatus
 {
-    provisioning,
-    active,
-    updating,
-    suspended,
-    deleting,
-    deleted,
-    error,
+  provisioning,
+  active,
+  updating,
+  suspended,
+  deleting,
+  deleted,
+  error,
 }
 
 /// Software component type.
 enum ComponentType
 {
-    developmentPackage,
-    businessConfiguration,
-    extensibility,
-    customCode,
+  developmentPackage,
+  businessConfiguration,
+  extensibility,
+  customCode,
 }
 
 /// Status of a software component clone / pull.
 enum ComponentStatus
 {
-    notCloned,
-    cloning,
-    cloned,
-    pulling,
-    error,
+  notCloned,
+  cloning,
+  cloned,
+  pulling,
+  error,
 }
 
 /// Branch strategy for a software component.
 enum BranchStrategy
 {
-    main,
-    release,
-    feature,
-    correction,
+  main,
+  release,
+  feature,
+  correction,
 }
 
 // ─── Communication ───
@@ -71,36 +71,36 @@ enum BranchStrategy
 /// Communication direction.
 enum CommunicationDirection
 {
-    inbound,
-    outbound,
+  inbound,
+  outbound,
 }
 
 /// Communication protocol.
 enum CommunicationProtocol
 {
-    httpRest,
-    httpSoap,
-    rfc,
-    odataV2,
-    odataV4,
+  httpRest,
+  httpSoap,
+  rfc,
+  odataV2,
+  odataV4,
 }
 
 /// Authentication method used in communication arrangements.
 enum CommunicationAuthMethod
 {
-    basicAuthentication,
-    oauth2ClientCredentials,
-    oauth2SAMLBearerAssertion,
-    clientCertificate,
-    noAuthentication,
+  basicAuthentication,
+  oauth2ClientCredentials,
+  oauth2SAMLBearerAssertion,
+  clientCertificate,
+  noAuthentication,
 }
 
 /// Status of a communication arrangement.
 enum ArrangementStatus
 {
-    active,
-    inactive,
-    error,
+  active,
+  inactive,
+  error,
 }
 
 // ─── Service Binding ───
@@ -108,20 +108,20 @@ enum ArrangementStatus
 /// Binding type for service exposure.
 enum BindingType
 {
-    odataV2,
-    odataV4,
-    soapHttp,
-    restHttp,
-    sql,
-    inboundRfc,
+  odataV2,
+  odataV4,
+  soapHttp,
+  restHttp,
+  sql,
+  inboundRfc,
 }
 
 /// Status of a service binding.
 enum BindingStatus
 {
-    active,
-    inactive,
-    deprecated_,
+  active,
+  inactive,
+  deprecated_,
 }
 
 // ─── Users and Roles ───
@@ -129,18 +129,18 @@ enum BindingStatus
 /// Business user status.
 enum UserStatus
 {
-    active,
-    inactive,
-    locked,
-    passwordLocked,
+  active,
+  inactive,
+  locked,
+  passwordLocked,
 }
 
 /// Business role type.
 enum RoleType
 {
-    unrestricted,
-    restricted,
-    custom,
+  unrestricted,
+  restricted,
+  custom,
 }
 
 // ─── Transport Management ───
@@ -148,18 +148,18 @@ enum RoleType
 /// Transport request type (CTS-like).
 enum TransportType
 {
-    workbench,
-    customizing,
-    transportOfCopies,
+  workbench,
+  customizing,
+  transportOfCopies,
 }
 
 /// Transport request status.
 enum TransportStatus
 {
-    modifiable,
-    released,
-    imported,
-    error,
+  modifiable,
+  released,
+  imported,
+  error,
 }
 
 // ─── Application Jobs ───
@@ -167,19 +167,19 @@ enum TransportStatus
 /// Job scheduling frequency.
 enum JobFrequency
 {
-    once,
-    hourly,
-    daily,
-    weekly,
-    monthly,
+  once,
+  hourly,
+  daily,
+  weekly,
+  monthly,
 }
 
 /// Application job execution status.
 enum JobStatus
 {
-    scheduled,
-    running,
-    completed,
-    failed,
-    canceled,
+  scheduled,
+  running,
+  completed,
+  failed,
+  canceled,
 }

@@ -4,25 +4,27 @@ module uim.platform.auditlog.domain.ports.audit_log_repository;
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 /// Port for persisting and querying audit log entries.
 @safe:
-interface AuditLogRepository {
-    AuditLogEntry[] findByTenant(TenantId tenantId);
+interface AuditLogRepository
+{
+  AuditLogEntry[] findByTenant(TenantId tenantId);
 
-    bool existsById(AuditLogId id, TenantId tenantId);
-    AuditLogEntry findById(AuditLogId id, TenantId tenantId);
+  bool existsById(AuditLogId id, TenantId tenantId);
+  AuditLogEntry findById(AuditLogId id, TenantId tenantId);
 
-    AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
-    AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
-    AuditLogEntry[] findByUser(TenantId tenantId, UserId userId);
-    AuditLogEntry[] findByService(TenantId tenantId, ServiceId serviceId);
-    AuditLogEntry[] findByCorrelation(string correlationId);
-    AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
-        long timeFrom, long timeTo, int limit, int offset);
+  AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
+  AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
+  AuditLogEntry[] findByUser(TenantId tenantId, UserId userId);
+  AuditLogEntry[] findByService(TenantId tenantId, ServiceId serviceId);
+  AuditLogEntry[] findByCorrelation(string correlationId);
+  AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
+      long timeFrom, long timeTo, int limit, int offset);
 
-    long countByTenant(TenantId tenantId);
-    void save(AuditLogEntry entry);
-    void removeOlderThan(TenantId tenantId, long beforeTimestamp);
+  long countByTenant(TenantId tenantId);
+  void save(AuditLogEntry entry);
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

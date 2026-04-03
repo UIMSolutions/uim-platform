@@ -12,39 +12,47 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryBusinessRoleRepository : BusinessRoleRepository {
-    private BusinessRole[BusinessRoleId] store;
+class MemoryBusinessRoleRepository : BusinessRoleRepository
+{
+  private BusinessRole[BusinessRoleId] store;
 
-    BusinessRole findById(BusinessRoleId id) {
-        if (id in store)
-            return store[id];
-        return BusinessRole.init;
-    }
+  BusinessRole findById(BusinessRoleId id)
+  {
+    if (id in store)
+      return store[id];
+    return BusinessRole.init;
+  }
 
-    BusinessRole[] findBySystem(SystemInstanceId systemId) {
-        return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
-    }
+  BusinessRole[] findBySystem(SystemInstanceId systemId)
+  {
+    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+  }
 
-    BusinessRole[] findByTenant(TenantId tenantId) {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  BusinessRole[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    BusinessRole findByName(SystemInstanceId systemId, string name) {
-        foreach (e; store.byValue())
-            if (e.systemInstanceId == systemId && e.name == name)
-                return e;
-        return BusinessRole.init;
-    }
+  BusinessRole findByName(SystemInstanceId systemId, string name)
+  {
+    foreach (e; store.byValue())
+      if (e.systemInstanceId == systemId && e.name == name)
+        return e;
+    return BusinessRole.init;
+  }
 
-    void save(BusinessRole role) {
-        store[role.id] = role;
-    }
+  void save(BusinessRole role)
+  {
+    store[role.id] = role;
+  }
 
-    void update(BusinessRole role) {
-        store[role.id] = role;
-    }
+  void update(BusinessRole role)
+  {
+    store[role.id] = role;
+  }
 
-    void remove(BusinessRoleId id) {
-        store.remove(id);
-    }
+  void remove(BusinessRoleId id)
+  {
+    store.remove(id);
+  }
 }

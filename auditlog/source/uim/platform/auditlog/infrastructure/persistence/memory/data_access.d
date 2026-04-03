@@ -8,46 +8,55 @@ module uim.platform.auditlog.infrastructure.persistence.memory.data_access;
 // // import std.array : array;
 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 
 @safe:
-class MemoryDataAccessLogRepository : DataAccessLogRepository {
+class MemoryDataAccessLogRepository : DataAccessLogRepository
+{
   private DataAccessLog[] store;
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId)
+  {
     return store.findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
-  DataAccessLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  DataAccessLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId)
+  {
     foreach (ref e; store)
       if (e.auditLogId == auditLogId && e.tenantId == tenantId)
         return e;
     return DataAccessLog.init;
   }
 
-  DataAccessLog[] findByTenant(TenantId tenantId) {
+  DataAccessLog[] findByTenant(TenantId tenantId)
+  {
     return store.filter!(e => e.tenantId == tenantId).array;
   }
 
-  DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy) {
+  DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy)
+  {
     return findByTenant(tenantId).filter!(e => e.accessedBy == accessedBy).array;
   }
 
-  DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject) {
+  DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject)
+  {
     return findByTenant(tenantId).filter!(e => e.dataSubject == dataSubject).array;
   }
 
-  DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
+  DataAccessLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
+  {
     return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
 
-  void save(DataAccessLog log) {
+  void save(DataAccessLog log)
+  {
     store ~= log;
   }
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp))
-      .array;
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp)
+  {
+    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 }

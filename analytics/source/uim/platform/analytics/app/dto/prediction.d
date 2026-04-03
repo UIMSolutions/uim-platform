@@ -6,7 +6,8 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreatePredictionRequest {
+struct CreatePredictionRequest
+{
   string name;
   string description;
   string datasetId;
@@ -16,11 +17,13 @@ struct CreatePredictionRequest {
   string userId;
 }
 
-Json toJson(CreatePredictionRequest request) {
+Json toJson(CreatePredictionRequest request)
+{
   return serializeToJson(request);
 }
 
-struct PredictionResponse {
+struct PredictionResponse
+{
   string id;
   string name;
   string description;
@@ -31,35 +34,22 @@ struct PredictionResponse {
   double rmse;
   string modelSummary;
 
-  static PredictionResponse fromEntity(Prediction p) {
+  static PredictionResponse fromEntity(Prediction p)
+  {
     if (p is null)
       return PredictionResponse.init;
 
-    return PredictionResponse(
-      p.id.value,
-      p.name,
-      p.description,
-      p.datasetId.value,
-      p.predictionType.to!string,
-      p.predStatus.to!string,
-      p.lastResult.accuracy,
-      p.lastResult.rmse,
-      p.lastResult.modelSummary,
-    );
+    return PredictionResponse(p.id.value, p.name, p.description,
+        p.datasetId.value, p.predictionType.to!string,
+        p.predStatus.to!string, p.lastResult.accuracy, p.lastResult.rmse,
+        p.lastResult.modelSummary,);
   }
 
-  Json toJson() {
-    return Json.emptyObject
-      .set("id", id)
-      .set("name", name)
-      .set("description", description)
-      .set("datasetId", datasetId)
-      .set("predictionType", predictionType)
-      .set("status", status)
-      .set("accuracy", accuracy)
-      .set("rmse", rmse)
-      .set("modelSummary", modelSummary);
+  Json toJson()
+  {
+    return Json.emptyObject.set("id", id).set("name", name).set("description",
+        description).set("datasetId", datasetId).set("predictionType",
+        predictionType).set("status", status).set("accuracy", accuracy)
+      .set("rmse", rmse).set("modelSummary", modelSummary);
   }
 }
-
-

@@ -5,34 +5,34 @@ import uim.platform.abap_enviroment.domain.types;
 /// Exposed service endpoint from a binding.
 struct ExposedEndpoint
 {
-    string path;
-    string serviceName;
-    string serviceVersion;
-    bool requiresAuth = true;
+  string path;
+  string serviceName;
+  string serviceVersion;
+  bool requiresAuth = true;
 }
 
 /// Service binding that exposes CDS/RAP services via OData/REST/SOAP.
 struct ServiceBinding
 {
-    ServiceBindingId id;
-    TenantId tenantId;
-    SystemInstanceId systemInstanceId;
-    ServiceDefinitionId serviceDefinitionId;
-    string name;
-    string description;
+  ServiceBindingId id;
+  TenantId tenantId;
+  SystemInstanceId systemInstanceId;
+  ServiceDefinitionId serviceDefinitionId;
+  string name;
+  string description;
 
-    BindingType bindingType = BindingType.odataV4;
-    BindingStatus status = BindingStatus.active;
+  BindingType bindingType = BindingType.odataV4;
+  BindingStatus status = BindingStatus.active;
 
-    /// Exposed endpoints
-    ExposedEndpoint[] endpoints;
+  /// Exposed endpoints
+  ExposedEndpoint[] endpoints;
 
-    /// Runtime URL
-    string serviceUrl;
-    string metadataUrl;
+  /// Runtime URL
+  string serviceUrl;
+  string metadataUrl;
 
-    /// Metadata
-    string createdBy;
-    long createdAt;
-    long updatedAt;
+  /// Metadata
+  string createdBy;
+  long createdAt;
+  long updatedAt;
 }

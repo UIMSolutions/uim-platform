@@ -9,78 +9,86 @@ module uim.platform.auditlog.application.usecases.manage.audit_config;
 // import uim.platform.auditlog.application.dto;
 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 @safe:
-class ManageAuditConfigUseCase {
-    private AuditConfigRepository configRepo;
+class ManageAuditConfigUseCase
+{
+  private AuditConfigRepository configRepo;
 
-    this(AuditConfigRepository configRepo) {
-        this.configRepo = configRepo;
-    }
+  this(AuditConfigRepository configRepo)
+  {
+    this.configRepo = configRepo;
+  }
 
-    CommandResult createConfig(CreateAuditConfigRequest req) {
-        if (req.tenantId.length == 0)
-            return CommandResult("", "Tenant ID is required");
+  CommandResult createConfig(CreateAuditConfigRequest req)
+  {
+    if (req.tenantId.length == 0)
+      return CommandResult("", "Tenant ID is required");
 
-        // Only one config per tenant
-        if (configRepo.existsByTenant(req.tenantId))
-            return CommandResult("", "Audit configuration already exists for this tenant");
+    // Only one config per tenant
+    if (configRepo.existsByTenant(req.tenantId))
+      return CommandResult("", "Audit configuration already exists for this tenant");
 
-        auto now = Clock.currStdTime();
-        auto cfg = AuditConfig();
-        cfg.id = randomUUID().toString();
-        cfg.tenantId = req.tenantId;
-        cfg.name = req.name.length > 0 ? req.name : "Default";
-        cfg.status = ConfigStatus.enabled;
-        cfg.logDataAccess = req.logDataAccess;
-        cfg.logDataModification = req.logDataModification;
-        cfg.logSecurityEvents = req.logSecurityEvents;
-        cfg.logConfigurationChanges = req.logConfigurationChanges;
-        cfg.enableDataMasking = req.enableDataMasking;
-        cfg.maskedFields = req.maskedFields;
-        cfg.excludedServices = req.excludedServices;
-        cfg.minimumSeverity = req.minimumSeverity;
-        cfg.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
-        cfg.createdAt = now;
-        cfg.updatedAt = now;
+    auto now = Clock.currStdTime();
+    auto cfg = AuditConfig();
+    cfg.id = randomUUID().toString();
+    cfg.tenantId = req.tenantId;
+    cfg.name = req.name.length > 0 ? req.name : "Default";
+    cfg.status = ConfigStatus.enabled;
+    cfg.logDataAccess = req.logDataAccess;
+    cfg.logDataModification = req.logDataModification;
+    cfg.logSecurityEvents = req.logSecurityEvents;
+    cfg.logConfigurationChanges = req.logConfigurationChanges;
+    cfg.enableDataMasking = req.enableDataMasking;
+    cfg.maskedFields = req.maskedFields;
+    cfg.excludedServices = req.excludedServices;
+    cfg.minimumSeverity = req.minimumSeverity;
+    cfg.rateLimitPerSecond = req.rateLimitPerSecond > 0 ? req.rateLimitPerSecond : 8;
+    cfg.createdAt = now;
+    cfg.updatedAt = now;
 
-        configRepo.save(cfg);
-        return CommandResult(cfg.id, "");
-    }
+    configRepo.save(cfg);
+    return CommandResult(cfg.id, "");
+  }
 
-    AuditConfig getConfig(TenantId tenantId) {
-        return configRepo.findByTenant(tenantId);
-    }
+  AuditConfig getConfig(TenantId tenantId)
+  {
+    return configRepo.findByTenant(tenantId);
+  }
 
-    AuditConfig[] listConfigs() {
-        return configRepo.findAll();
-    }
+  AuditConfig[] listConfigs()
+  {
+    return configRepo.findAll();
+  }
 
-    CommandResult updateConfig(UpdateAuditConfigRequest req) {
-        if (!configRepo.existsById(req.id))
-            return CommandResult("", "Audit config not found");
+  CommandResult updateConfig(UpdateAuditConfigRequest req)
+  {
+    if (!configRepo.existsById(req.id))
+      return CommandResult("", "Audit config not found");
 
-        auto cfg = configRepo.findById(req.id);
-        if (req.name.length > 0)
-            cfg.name = req.name;
-        cfg.status = req.status;
-        cfg.logDataAccess = req.logDataAccess;
-        cfg.logDataModification = req.logDataModification;
-        cfg.logSecurityEvents = req.logSecurityEvents;
-        cfg.logConfigurationChanges = req.logConfigurationChanges;
-        cfg.enableDataMasking = req.enableDataMasking;
-        cfg.maskedFields = req.maskedFields;
-        cfg.excludedServices = req.excludedServices;
-        cfg.minimumSeverity = req.minimumSeverity;
-        if (req.rateLimitPerSecond > 0)
-            cfg.rateLimitPerSecond = req.rateLimitPerSecond;
-        cfg.updatedAt = Clock.currStdTime();
+    auto cfg = configRepo.findById(req.id);
+    if (req.name.length > 0)
+      cfg.name = req.name;
+    cfg.status = req.status;
+    cfg.logDataAccess = req.logDataAccess;
+    cfg.logDataModification = req.logDataModification;
+    cfg.logSecurityEvents = req.logSecurityEvents;
+    cfg.logConfigurationChanges = req.logConfigurationChanges;
+    cfg.enableDataMasking = req.enableDataMasking;
+    cfg.maskedFields = req.maskedFields;
+    cfg.excludedServices = req.excludedServices;
+    cfg.minimumSeverity = req.minimumSeverity;
+    if (req.rateLimitPerSecond > 0)
+      cfg.rateLimitPerSecond = req.rateLimitPerSecond;
+    cfg.updatedAt = Clock.currStdTime();
 
-        configRepo.update(cfg);
-        return CommandResult(cfg.id, "");
-    }
+    configRepo.update(cfg);
+    return CommandResult(cfg.id, "");
+  }
 
-    void deleteConfig(AuditConfigId id, TenantId tenantId) {
-        configRepo.remove(id, tenantId);
-    }
+  void deleteConfig(AuditConfigId id, TenantId tenantId)
+  {
+    configRepo.remove(id, tenantId);
+  }
 }

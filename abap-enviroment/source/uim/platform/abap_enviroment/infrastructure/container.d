@@ -34,76 +34,78 @@ module uim.platform.abap_enviroment.infrastructure.container;
 // import uim.platform.abap_enviroment.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container {
-    // Repositories (driven adapters)
-    MemorySystemInstanceRepository systemInstanceRepo;
-    MemorySoftwareComponentRepository softwareComponentRepo;
-    MemoryCommunicationArrangementRepository communicationArrangementRepo;
-    MemoryServiceBindingRepository serviceBindingRepo;
-    MemoryBusinessUserRepository businessUserRepo;
-    MemoryBusinessRoleRepository businessRoleRepo;
-    MemoryTransportRequestRepository transportRequestRepo;
-    MemoryApplicationJobRepository applicationJobRepo;
+struct Container
+{
+  // Repositories (driven adapters)
+  MemorySystemInstanceRepository systemInstanceRepo;
+  MemorySoftwareComponentRepository softwareComponentRepo;
+  MemoryCommunicationArrangementRepository communicationArrangementRepo;
+  MemoryServiceBindingRepository serviceBindingRepo;
+  MemoryBusinessUserRepository businessUserRepo;
+  MemoryBusinessRoleRepository businessRoleRepo;
+  MemoryTransportRequestRepository transportRequestRepo;
+  MemoryApplicationJobRepository applicationJobRepo;
 
-    // Use cases (application layer)
-    ManageSystemInstancesUseCase manageSystemInstances;
-    ManageSoftwareComponentsUseCase manageSoftwareComponents;
-    ManageCommunicationArrangementsUseCase manageCommunicationArrangements;
-    ManageServiceBindingsUseCase manageServiceBindings;
-    ManageBusinessUsersUseCase manageBusinessUsers;
-    ManageBusinessRolesUseCase manageBusinessRoles;
-    ManageTransportRequestsUseCase manageTransportRequests;
-    ManageApplicationJobsUseCase manageApplicationJobs;
+  // Use cases (application layer)
+  ManageSystemInstancesUseCase manageSystemInstances;
+  ManageSoftwareComponentsUseCase manageSoftwareComponents;
+  ManageCommunicationArrangementsUseCase manageCommunicationArrangements;
+  ManageServiceBindingsUseCase manageServiceBindings;
+  ManageBusinessUsersUseCase manageBusinessUsers;
+  ManageBusinessRolesUseCase manageBusinessRoles;
+  ManageTransportRequestsUseCase manageTransportRequests;
+  ManageApplicationJobsUseCase manageApplicationJobs;
 
-    // Controllers (driving adapters)
-    SystemInstanceController systemInstanceController;
-    SoftwareComponentController softwareComponentController;
-    CommunicationArrangementController communicationArrangementController;
-    ServiceBindingController serviceBindingController;
-    BusinessUserController businessUserController;
-    BusinessRoleController businessRoleController;
-    TransportRequestController transportRequestController;
-    ApplicationJobController applicationJobController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  SystemInstanceController systemInstanceController;
+  SoftwareComponentController softwareComponentController;
+  CommunicationArrangementController communicationArrangementController;
+  ServiceBindingController serviceBindingController;
+  BusinessUserController businessUserController;
+  BusinessRoleController businessRoleController;
+  TransportRequestController transportRequestController;
+  ApplicationJobController applicationJobController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.systemInstanceRepo = new MemorySystemInstanceRepository();
-    c.softwareComponentRepo = new MemorySoftwareComponentRepository();
-    c.communicationArrangementRepo = new MemoryCommunicationArrangementRepository();
-    c.serviceBindingRepo = new MemoryServiceBindingRepository();
-    c.businessUserRepo = new MemoryBusinessUserRepository();
-    c.businessRoleRepo = new MemoryBusinessRoleRepository();
-    c.transportRequestRepo = new MemoryTransportRequestRepository();
-    c.applicationJobRepo = new MemoryApplicationJobRepository();
+  // Infrastructure adapters
+  c.systemInstanceRepo = new MemorySystemInstanceRepository();
+  c.softwareComponentRepo = new MemorySoftwareComponentRepository();
+  c.communicationArrangementRepo = new MemoryCommunicationArrangementRepository();
+  c.serviceBindingRepo = new MemoryServiceBindingRepository();
+  c.businessUserRepo = new MemoryBusinessUserRepository();
+  c.businessRoleRepo = new MemoryBusinessRoleRepository();
+  c.transportRequestRepo = new MemoryTransportRequestRepository();
+  c.applicationJobRepo = new MemoryApplicationJobRepository();
 
-    // Application use cases
-    c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);
-    c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(
-        c.softwareComponentRepo, c.systemInstanceRepo);
-    c.manageCommunicationArrangements = new ManageCommunicationArrangementsUseCase(
-        c.communicationArrangementRepo);
-    c.manageServiceBindings = new ManageServiceBindingsUseCase(c.serviceBindingRepo);
-    c.manageBusinessUsers = new ManageBusinessUsersUseCase(c.businessUserRepo, c.businessRoleRepo);
-    c.manageBusinessRoles = new ManageBusinessRolesUseCase(c.businessRoleRepo);
-    c.manageTransportRequests = new ManageTransportRequestsUseCase(c.transportRequestRepo);
-    c.manageApplicationJobs = new ManageApplicationJobsUseCase(c.applicationJobRepo);
+  // Application use cases
+  c.manageSystemInstances = new ManageSystemInstancesUseCase(c.systemInstanceRepo);
+  c.manageSoftwareComponents = new ManageSoftwareComponentsUseCase(
+      c.softwareComponentRepo, c.systemInstanceRepo);
+  c.manageCommunicationArrangements = new ManageCommunicationArrangementsUseCase(
+      c.communicationArrangementRepo);
+  c.manageServiceBindings = new ManageServiceBindingsUseCase(c.serviceBindingRepo);
+  c.manageBusinessUsers = new ManageBusinessUsersUseCase(c.businessUserRepo, c.businessRoleRepo);
+  c.manageBusinessRoles = new ManageBusinessRolesUseCase(c.businessRoleRepo);
+  c.manageTransportRequests = new ManageTransportRequestsUseCase(c.transportRequestRepo);
+  c.manageApplicationJobs = new ManageApplicationJobsUseCase(c.applicationJobRepo);
 
-    // Presentation controllers
-    c.systemInstanceController = new SystemInstanceController(c.manageSystemInstances);
-    c.softwareComponentController = new SoftwareComponentController(c.manageSoftwareComponents);
-    c.communicationArrangementController = new CommunicationArrangementController(
-        c.manageCommunicationArrangements);
-    c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
-    c.businessUserController = new BusinessUserController(c.manageBusinessUsers);
-    c.businessRoleController = new BusinessRoleController(c.manageBusinessRoles);
-    c.transportRequestController = new TransportRequestController(c.manageTransportRequests);
-    c.applicationJobController = new ApplicationJobController(c.manageApplicationJobs);
-    c.healthController = new HealthController("abap-environment");
+  // Presentation controllers
+  c.systemInstanceController = new SystemInstanceController(c.manageSystemInstances);
+  c.softwareComponentController = new SoftwareComponentController(c.manageSoftwareComponents);
+  c.communicationArrangementController = new CommunicationArrangementController(
+      c.manageCommunicationArrangements);
+  c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
+  c.businessUserController = new BusinessUserController(c.manageBusinessUsers);
+  c.businessRoleController = new BusinessRoleController(c.manageBusinessRoles);
+  c.transportRequestController = new TransportRequestController(c.manageTransportRequests);
+  c.applicationJobController = new ApplicationJobController(c.manageApplicationJobs);
+  c.healthController = new HealthController("abap-environment");
 
-    return c;
+  return c;
 }

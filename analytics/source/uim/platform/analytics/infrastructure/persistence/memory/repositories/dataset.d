@@ -8,24 +8,29 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDatasetRepository : DatasetRepository {
+class MemoryDatasetRepository : DatasetRepository
+{
   private Dataset[string] store;
 
-  Dataset findById(EntityId id) {
+  Dataset findById(EntityId id)
+  {
     if (auto p = id.value in store)
       return *p;
     return null;
   }
 
-  Dataset[] findAll() {
+  Dataset[] findAll()
+  {
     return store.values;
   }
 
-  void save(Dataset dataset) {
+  void save(Dataset dataset)
+  {
     store[dataset.id.value] = dataset;
   }
 
-  void remove(EntityId id) {
+  void remove(EntityId id)
+  {
     store.remove(id.value);
   }
 }

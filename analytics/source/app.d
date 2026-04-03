@@ -22,9 +22,13 @@ import uim.platform.analytics;
 
 @safe:
 
-version (unittest) {
-} else {
-void main() {
+version (unittest)
+{
+}
+else
+{
+  void main()
+  {
     auto cfg = ServiceConfig.load();
 
     // ──────────────────────────────────────────────
@@ -32,43 +36,42 @@ void main() {
     // ──────────────────────────────────────────────
 
     // 1. Outgoing adapters (driven side — persistence)
-    auto dashboardRepo  = new MemoryDashboardRepository();
-    auto storyRepo      = new MemoryStoryRepository();
-    auto datasetRepo    = new MemoryDatasetRepository();
-    auto widgetRepo     = new MemoryWidgetRepository();
+    auto dashboardRepo = new MemoryDashboardRepository();
+    auto storyRepo = new MemoryStoryRepository();
+    auto datasetRepo = new MemoryDatasetRepository();
+    auto widgetRepo = new MemoryWidgetRepository();
     auto dataSourceRepo = new MemoryDataSourceRepository();
-    auto planningRepo   = new MemoryPlanningRepository();
+    auto planningRepo = new MemoryPlanningRepository();
     auto predictionRepo = new MemoryPredictionRepository();
 
     // 2. Outgoing adapters (driven side — external services)
-    auto dataConnector  = new StubDataConnector();
-    auto notification   = new ConsoleNotificationAdapter();
-    auto exporter       = new CsvExportAdapter();
+    auto dataConnector = new StubDataConnector();
+    auto notification = new ConsoleNotificationAdapter();
+    auto exporter = new CsvExportAdapter();
 
     // 3. Application layer — use cases (core hexagon)
-    auto dashboardUC   = new DashboardUseCases(dashboardRepo);
-    auto storyUC       = new StoryUseCases(storyRepo);
-    auto datasetUC     = new DatasetUseCases(datasetRepo);
-    auto widgetUC      = new WidgetUseCases(widgetRepo);
-    auto planningUC    = new PlanningUseCases(planningRepo);
-    auto predictionUC  = new PredictionUseCases(predictionRepo);
-    auto dataSourceUC  = new DataSourceUseCases(dataSourceRepo, dataConnector);
+    auto dashboardUC = new DashboardUseCases(dashboardRepo);
+    auto storyUC = new StoryUseCases(storyRepo);
+    auto datasetUC = new DatasetUseCases(datasetRepo);
+    auto widgetUC = new WidgetUseCases(widgetRepo);
+    auto planningUC = new PlanningUseCases(planningRepo);
+    auto predictionUC = new PredictionUseCases(predictionRepo);
+    auto dataSourceUC = new DataSourceUseCases(dataSourceRepo, dataConnector);
 
     // 4. Incoming adapters (driving side — REST handlers)
-    auto dashboardH   = new DashboardHandler(dashboardUC);
-    auto storyH       = new StoryHandler(storyUC);
-    auto datasetH     = new DatasetHandler(datasetUC);
-    auto widgetH      = new WidgetHandler(widgetUC);
-    auto planningH    = new PlanningHandler(planningUC);
-    auto predictionH  = new PredictionHandler(predictionUC);
-    auto dataSourceH  = new DataSourceHandler(dataSourceUC);
-    auto healthH      = new HealthHandler();
+    auto dashboardH = new DashboardHandler(dashboardUC);
+    auto storyH = new StoryHandler(storyUC);
+    auto datasetH = new DatasetHandler(datasetUC);
+    auto widgetH = new WidgetHandler(widgetUC);
+    auto planningH = new PlanningHandler(planningUC);
+    auto predictionH = new PredictionHandler(predictionUC);
+    auto dataSourceH = new DataSourceHandler(dataSourceUC);
+    auto healthH = new HealthHandler();
 
     // 5. HTTP Router — register all routes
     auto router = new URLRouter();
-    registerRoutes(router,
-        dashboardH, storyH, datasetH, widgetH,
-        planningH, predictionH, dataSourceH, healthH);
+    registerRoutes(router, dashboardH, storyH, datasetH, widgetH, planningH,
+        predictionH, dataSourceH, healthH);
 
     // 6. HTTP Server
     auto settings = new HTTPServerSettings;
@@ -94,5 +97,5 @@ void main() {
     logInfo("═══════════════════════════════════════════════════");
 
     runApplication();
-}
+  }
 }

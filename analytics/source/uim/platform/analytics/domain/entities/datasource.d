@@ -7,66 +7,80 @@ mixin(ShowModule!());
 @safe:
 
 /// Represents an external data connection (database, file, API, live connection).
-class DataSource {
-    EntityId id;
-    string name;
-    DataSourceType sourceType;
-    ConnectionInfo connection;
-    ImportSchedule schedule;
-    DataSourceStatus connStatus;
-    AuditInfo audit;
+class DataSource
+{
+  EntityId id;
+  string name;
+  DataSourceType sourceType;
+  ConnectionInfo connection;
+  ImportSchedule schedule;
+  DataSourceStatus connStatus;
+  AuditInfo audit;
 
-    this() { }
+  this()
+  {
+  }
 
-    static DataSource create(string name, DataSourceType sourceType, ConnectionInfo conn, string userId) {
-        auto ds = new DataSource();
-        ds.id = EntityId.generate();
-        ds.name = name;
-        ds.sourceType = sourceType;
-        ds.connection = conn;
-        ds.schedule = ImportSchedule.init;
-        ds.connStatus = DataSourceStatus.Disconnected;
-        ds.audit = AuditInfo.create(userId);
-        return ds;
-    }
+  static DataSource create(string name, DataSourceType sourceType,
+      ConnectionInfo conn, string userId)
+  {
+    auto ds = new DataSource();
+    ds.id = EntityId.generate();
+    ds.name = name;
+    ds.sourceType = sourceType;
+    ds.connection = conn;
+    ds.schedule = ImportSchedule.init;
+    ds.connStatus = DataSourceStatus.Disconnected;
+    ds.audit = AuditInfo.create(userId);
+    return ds;
+  }
 
-    void markConnected() { connStatus = DataSourceStatus.Connected; }
-    void markError(string msg) {
-        connStatus = DataSourceStatus.Error;
-        connection.lastError = msg;
-    }
+  void markConnected()
+  {
+    connStatus = DataSourceStatus.Connected;
+  }
+
+  void markError(string msg)
+  {
+    connStatus = DataSourceStatus.Error;
+    connection.lastError = msg;
+  }
 }
 
-enum DataSourceType {
-    Database,
-    CSV,
-    Excel,
-    OData,
-    RestAPI,
-    HANA,
-    S3,
-    GoogleSheets,
-    LiveConnection,
+enum DataSourceType
+{
+  Database,
+  CSV,
+  Excel,
+  OData,
+  RestAPI,
+  HANA,
+  S3,
+  GoogleSheets,
+  LiveConnection,
 }
 
-enum DataSourceStatus {
-    Connected,
-    Disconnected,
-    Error,
-    Importing,
+enum DataSourceStatus
+{
+  Connected,
+  Disconnected,
+  Error,
+  Importing,
 }
 
-struct ConnectionInfo {
-    string host;
-    int port;
-    string databaseName;
-    string username;
-    /// Not persisted — only used during connection setup
-    string lastError;
+struct ConnectionInfo
+{
+  string host;
+  int port;
+  string databaseName;
+  string username;
+  /// Not persisted — only used during connection setup
+  string lastError;
 }
 
-struct ImportSchedule {
-    bool enabled = false;
-    string cronExpression = "";
-    string timezone = "UTC";
+struct ImportSchedule
+{
+  bool enabled = false;
+  string cronExpression = "";
+  string timezone = "UTC";
 }

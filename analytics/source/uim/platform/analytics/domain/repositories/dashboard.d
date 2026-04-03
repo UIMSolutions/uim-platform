@@ -8,11 +8,12 @@ mixin(ShowModule!());
 @safe:
 
 /// Port: outgoing repository interface for Dashboard persistence.
-interface DashboardRepository {
-    Dashboard findById(EntityId id);
-    Dashboard[] findByOwner(EntityId ownerId);
-    Dashboard[] findByStatus(ArtifactStatus status);
-    Dashboard[] findAll();
-    void save(Dashboard dashboard);
-    void remove(EntityId id);
+interface DashboardRepository
+{
+  Dashboard findById(EntityId id);
+  Dashboard[] findByOwner(EntityId ownerId);
+  Dashboard[] findByStatus(ArtifactStatus status);
+  Dashboard[] findAll();
+  void save(Dashboard dashboard);
+  void remove(EntityId id);
 }

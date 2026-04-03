@@ -7,9 +7,10 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface DataSourceRepository {
-    DataSource findById(EntityId id);
-    DataSource[] findAll();
-    void save(DataSource ds);
-    void remove(EntityId id);
+interface DataSourceRepository
+{
+  DataSource findById(EntityId id);
+  DataSource[] findAll();
+  void save(DataSource ds);
+  void remove(EntityId id);
 }

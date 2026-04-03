@@ -4,60 +4,69 @@ import uim.platform.analytics;
 
 @safe:
 /// Strongly-typed identifier wrapping a UUID string.
-struct EntityId {
+struct EntityId
+{
   string value;
 
-  static EntityId generate() {
+  static EntityId generate()
+  {
     return EntityId(randomUUID().toString());
   }
 
-  bool opEquals(const EntityId other) const {
+  bool opEquals(const EntityId other) const
+  {
     return value == other.value;
   }
 
-  size_t toHash() const nothrow @safe {
+  size_t toHash() const nothrow @safe
+  {
     size_t hash;
     foreach (c; value)
       hash = hash * 31 + c;
     return hash;
   }
 
-  bool empty() const {
+  bool empty() const
+  {
     return value.length == 0;
   }
 }
 
-Json toJson(EntityId id) {
+Json toJson(EntityId id)
+{
   return serializeToJson(id);
 }
 
 /// Audit metadata attached to every domain entity.
-struct AuditInfo {
+struct AuditInfo
+{
   SysTime createdAt;
   string createdBy;
   SysTime updatedAt;
   string updatedBy;
 
-  static AuditInfo create(string userId) {
+  static AuditInfo create(string userId)
+  {
     auto now = Clock.currTime();
     return AuditInfo(now, userId, now, userId);
   }
 
-  AuditInfo touch(string userId) const {
+  AuditInfo touch(string userId) const
+  {
     return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
   }
 
-  Json toJson() {
-    return Json.emptyObject
-      .set("createdAt", createdAt.toISOExtString())
-      .set("createdBy", createdBy)
-      .set("updatedAt", updatedAt.toISOExtString())
+  Json toJson()
+  {
+    return Json.emptyObject.set("createdAt", createdAt.toISOExtString())
+      .set("createdBy", createdBy).set("updatedAt", updatedAt.toISOExtString())
       .set("updatedBy", updatedBy);
   }
 }
 
 /// Sharing / visibility scope.
-enum Visibility {
+enum Visibility
+{
   Private,
   Team,
   Organization,
@@ -65,7 +74,8 @@ enum Visibility {
 }
 
 /// Status of an analytical artifact.
-enum ArtifactStatus {
+enum ArtifactStatus
+{
   Draft,
   Published,
   Archived,

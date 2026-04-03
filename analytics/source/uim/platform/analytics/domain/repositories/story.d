@@ -7,10 +7,11 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface StoryRepository {
-    Story findById(EntityId id);
-    Story[] findByOwner(EntityId ownerId);
-    Story[] findAll();
-    void save(Story story);
-    void remove(EntityId id);
+interface StoryRepository
+{
+  Story findById(EntityId id);
+  Story[] findByOwner(EntityId ownerId);
+  Story[] findAll();
+  void save(Story story);
+  void remove(EntityId id);
 }

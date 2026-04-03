@@ -6,7 +6,8 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreateDataSourceRequest {
+struct CreateDataSourceRequest
+{
   string name;
   string sourceType;
   string host;
@@ -16,7 +17,8 @@ struct CreateDataSourceRequest {
   string userId;
 }
 
-struct DataSourceResponse {
+struct DataSourceResponse
+{
   string id;
   string name;
   string sourceType;
@@ -25,18 +27,13 @@ struct DataSourceResponse {
   string databaseName;
   string status;
 
-  static DataSourceResponse fromEntity(DataSource ds) {
+  static DataSourceResponse fromEntity(DataSource ds)
+  {
     if (ds is null)
       return DataSourceResponse.init;
 
-    return DataSourceResponse(
-      ds.id.value,
-      ds.name,
-      ds.sourceType.to!string,
-      ds.connection.host,
-      ds.connection.port,
-      ds.connection.databaseName,
-      ds.connStatus.to!string,
-    );
+    return DataSourceResponse(ds.id.value, ds.name, ds.sourceType.to!string,
+        ds.connection.host, ds.connection.port, ds.connection.databaseName,
+        ds.connStatus.to!string,);
   }
 }

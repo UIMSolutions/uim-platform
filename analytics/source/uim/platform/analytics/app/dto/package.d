@@ -1,6 +1,7 @@
 module uim.platform.analytics.app.dto;
 
-public {
+public
+{
   import uim.platform.analytics.app.dto.dashboard;
   import uim.platform.analytics.app.dto.story;
   import uim.platform.analytics.app.dto.dataset;

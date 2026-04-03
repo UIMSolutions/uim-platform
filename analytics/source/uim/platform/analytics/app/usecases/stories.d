@@ -8,47 +8,57 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class StoryUseCases {
-    private StoryRepository repo;
+class StoryUseCases
+{
+  private StoryRepository repo;
 
-    this(StoryRepository repo) {
-        this.repo = repo;
-    }
+  this(StoryRepository repo)
+  {
+    this.repo = repo;
+  }
 
-    StoryResponse create(CreateStoryRequest req) {
-        auto story = Story.create(req.title, req.description, req.ownerId);
-        repo.save(story);
-        return StoryResponse.fromEntity(story);
-    }
+  StoryResponse create(CreateStoryRequest req)
+  {
+    auto story = Story.create(req.title, req.description, req.ownerId);
+    repo.save(story);
+    return StoryResponse.fromEntity(story);
+  }
 
-    StoryResponse getById(string id) {
-        return StoryResponse.fromEntity(repo.findById(EntityId(id)));
-    }
+  StoryResponse getById(string id)
+  {
+    return StoryResponse.fromEntity(repo.findById(EntityId(id)));
+  }
 
-    StoryResponse[] list() {
-        StoryResponse[] result;
-        foreach (s; repo.findAll())
-            result ~= StoryResponse.fromEntity(s);
-        return result;
-    }
+  StoryResponse[] list()
+  {
+    StoryResponse[] result;
+    foreach (s; repo.findAll())
+      result ~= StoryResponse.fromEntity(s);
+    return result;
+  }
 
-    StoryResponse addSection(string storyId, string heading, string narrative) {
-        auto s = repo.findById(EntityId(storyId));
-        if (s is null) return StoryResponse.init;
-        s.addSection(heading, narrative);
-        repo.save(s);
-        return StoryResponse.fromEntity(s);
-    }
+  StoryResponse addSection(string storyId, string heading, string narrative)
+  {
+    auto s = repo.findById(EntityId(storyId));
+    if (s is null)
+      return StoryResponse.init;
+    s.addSection(heading, narrative);
+    repo.save(s);
+    return StoryResponse.fromEntity(s);
+  }
 
-    StoryResponse publish(string storyId) {
-        auto s = repo.findById(EntityId(storyId));
-        if (s is null) return StoryResponse.init;
-        s.publish();
-        repo.save(s);
-        return StoryResponse.fromEntity(s);
-    }
+  StoryResponse publish(string storyId)
+  {
+    auto s = repo.findById(EntityId(storyId));
+    if (s is null)
+      return StoryResponse.init;
+    s.publish();
+    repo.save(s);
+    return StoryResponse.fromEntity(s);
+  }
 
-    void remove(string id) {
-        repo.remove(EntityId(id));
-    }
+  void remove(string id)
+  {
+    repo.remove(EntityId(id));
+  }
 }

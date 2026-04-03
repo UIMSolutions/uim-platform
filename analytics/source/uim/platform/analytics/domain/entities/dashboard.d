@@ -7,7 +7,8 @@ mixin(ShowModule!());
 @safe:
 /// A Dashboard is a collection of pages, each containing analytical widgets.
 /// Corresponds to an "Analytic Application" in SAP Analytics Cloud.
-class Dashboard {
+class Dashboard
+{
   EntityId id;
   string name;
   string description;
@@ -18,10 +19,12 @@ class Dashboard {
   AuditInfo audit;
   string[] tags;
 
-  this() {
+  this()
+  {
   }
 
-  static Dashboard create(string name, string description, string ownerId) {
+  static Dashboard create(string name, string description, string ownerId)
+  {
     auto d = new Dashboard();
     d.id = EntityId.generate();
     d.name = name;
@@ -35,45 +38,39 @@ class Dashboard {
     return d;
   }
 
-  void addPage(string title) {
+  void addPage(string title)
+  {
     pages ~= Page(EntityId.generate(), title, []);
   }
 
-  void publish() {
+  void publish()
+  {
     status = ArtifactStatus.Published;
   }
 
-  void archive() {
+  void archive()
+  {
     status = ArtifactStatus.Archived;
   }
 
-  Json toJson() {
-    auto jPages = pages.map!(p => Json.emptyObject
-        .set("id", p.id.value)
-        .set("title", p.title)
-        .set("widgetIds", p.widgetIds.map!(wid => wid.value).array)
-    ).array;
+  Json toJson()
+  {
+    auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
+        .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array)).array;
 
-    return Json.emptyObject
-      .set("id", id.value)
-      .set("name", name)
-      .set("description", description)
-      .set("ownerId", ownerId.value)
-      .set("visibility", to!string(visibility))
-      .set("status", to!string(status))
-      .set("pages", jPages)
-      .set("audit", Json.emptyObject
-          .set("createdBy", audit.createdBy)
-          .set("createdAt", audit.createdAt.toISOExtString())
-          .set("updatedBy", audit.updatedBy)
-          .set("updatedAt", audit.updatedAt.toISOExtString())
-      )
-      .set("tags", tags);
+    return Json.emptyObject.set("id", id.value).set("name", name)
+      .set("description", description).set("ownerId", ownerId.value)
+      .set("visibility", to!string(visibility)).set("status", to!string(status))
+      .set("pages", jPages).set("audit", Json.emptyObject.set("createdBy",
+        audit.createdBy).set("createdAt", audit.createdAt.toISOExtString())
+        .set("updatedBy", audit.updatedBy).set("updatedAt", audit.updatedAt.toISOExtString())).set("tags",
+        tags);
   }
 }
 
 /// A page / tab within a dashboard.
-struct Page {
+struct Page
+{
   EntityId id;
   string title;
   EntityId[] widgetIds;

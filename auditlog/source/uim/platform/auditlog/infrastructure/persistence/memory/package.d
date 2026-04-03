@@ -1,6 +1,7 @@
 module uim.platform.auditlog.infrastructure.persistence.memory;
 
-public {
+public
+{
   import uim.platform.auditlog.infrastructure.persistence.memory.audit_config;
   import uim.platform.auditlog.infrastructure.persistence.memory.audit_log;
   import uim.platform.auditlog.infrastructure.persistence.memory.config_change;

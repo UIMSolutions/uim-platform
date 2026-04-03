@@ -14,55 +14,65 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class SecurityEventController : SAPController {
-    private WriteSecurityEventUseCase useCase;
+class SecurityEventController : SAPController
+{
+  private WriteSecurityEventUseCase useCase;
 
-    this(WriteSecurityEventUseCase useCase) {
-        this.useCase = useCase;
+  this(WriteSecurityEventUseCase useCase)
+  {
+    this.useCase = useCase;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    super.registerRoutes(router);
+
+    router.post("/api/v1/security-events", &handleWrite);
+  }
+
+  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = WriteSecurityEventRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.userId = j.getString("userId");
+      r.userName = j.getString("userName");
+      r.eventType = j.getString("eventType");
+      r.ipAddress = j.getString("ipAddress");
+      r.userAgent = j.getString("userAgent");
+      r.clientId = j.getString("clientId");
+      r.identityProvider = j.getString("identityProvider");
+      r.authMethod = j.getString("authMethod");
+      r.failureReason = j.getString("failureReason");
+      r.riskLevel = j.getString("riskLevel");
+
+      auto outcomeStr = j.getString("outcome");
+      if (outcomeStr == "failure")
+        r.outcome = AuditOutcome.failure;
+      else if (outcomeStr == "denied")
+        r.outcome = AuditOutcome.denied;
+      else if (outcomeStr == "error")
+        r.outcome = AuditOutcome.error;
+      else
+        r.outcome = AuditOutcome.success;
+
+      auto result = useCase.writeEvent(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+      {
+        writeError(res, 400, result.error);
+      }
     }
-
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-
-        router.post("/api/v1/security-events", &handleWrite);
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
-
-    private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            auto r = WriteSecurityEventRequest();
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.userId = j.getString("userId");
-            r.userName = j.getString("userName");
-            r.eventType = j.getString("eventType");
-            r.ipAddress = j.getString("ipAddress");
-            r.userAgent = j.getString("userAgent");
-            r.clientId = j.getString("clientId");
-            r.identityProvider = j.getString("identityProvider");
-            r.authMethod = j.getString("authMethod");
-            r.failureReason = j.getString("failureReason");
-            r.riskLevel = j.getString("riskLevel");
-
-            auto outcomeStr = j.getString("outcome");
-            if (outcomeStr == "failure")
-                r.outcome = AuditOutcome.failure;
-            else if (outcomeStr == "denied")
-                r.outcome = AuditOutcome.denied;
-            else if (outcomeStr == "error")
-                r.outcome = AuditOutcome.error;
-            else
-                r.outcome = AuditOutcome.success;
-
-            auto result = useCase.writeEvent(r);
-            if (result.isSuccess()) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+  }
 }

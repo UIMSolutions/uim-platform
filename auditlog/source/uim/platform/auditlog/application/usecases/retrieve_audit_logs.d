@@ -6,35 +6,43 @@ import uim.platform.auditlog.domain.ports.audit_log_repository;
 import uim.platform.auditlog.application.dto;
 
 @safe:
-class RetrieveAuditLogsUseCase {
-    private AuditLogRepository repo;
+class RetrieveAuditLogsUseCase
+{
+  private AuditLogRepository repo;
 
-    this(AuditLogRepository repo) {
-        this.repo = repo;
-    }
+  this(AuditLogRepository repo)
+  {
+    this.repo = repo;
+  }
 
-    AuditLogEntry[] query(AuditLogQueryRequest req) {
-        return repo.search(req.tenantId, req.categories,
-            req.timeFrom, req.timeTo, req.limit, req.offset);
-    }
+  AuditLogEntry[] query(AuditLogQueryRequest req)
+  {
+    return repo.search(req.tenantId, req.categories, req.timeFrom, req.timeTo,
+        req.limit, req.offset);
+  }
 
-    AuditLogEntry getById(AuditLogId id, TenantId tenantId) {
-        return repo.findById(id, tenantId);
-    }
+  AuditLogEntry getById(AuditLogId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
 
-    AuditLogEntry[] getByCategory(TenantId tenantId, AuditCategory category) {
-        return repo.findByCategory(tenantId, category);
-    }
+  AuditLogEntry[] getByCategory(TenantId tenantId, AuditCategory category)
+  {
+    return repo.findByCategory(tenantId, category);
+  }
 
-    AuditLogEntry[] getByUser(TenantId tenantId, UserId userId) {
-        return repo.findByUser(tenantId, userId);
-    }
+  AuditLogEntry[] getByUser(TenantId tenantId, UserId userId)
+  {
+    return repo.findByUser(tenantId, userId);
+  }
 
-    AuditLogEntry[] getByCorrelation(string correlationId) {
-        return repo.findByCorrelation(correlationId);
-    }
+  AuditLogEntry[] getByCorrelation(string correlationId)
+  {
+    return repo.findByCorrelation(correlationId);
+  }
 
-    long count(TenantId tenantId) {
-        return repo.countByTenant(tenantId);
-    }
+  long count(TenantId tenantId)
+  {
+    return repo.countByTenant(tenantId);
+  }
 }

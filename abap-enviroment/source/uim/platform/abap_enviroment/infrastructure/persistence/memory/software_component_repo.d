@@ -8,41 +8,50 @@ module uim.platform.abap_enviroment.infrastructure.persistence.memory.software_c
 // // import std.array : array;
 
 import uim.platform.abap_enviroment;
+
 mixin(ShowModule!());
 @safe:
-class MemorySoftwareComponentRepository : SoftwareComponentRepository {
-    private SoftwareComponent[SoftwareComponentId] store;
+class MemorySoftwareComponentRepository : SoftwareComponentRepository
+{
+  private SoftwareComponent[SoftwareComponentId] store;
 
-    SoftwareComponent* findById(SoftwareComponentId id) {
-        if (id in store)
-            return &store[id];
-        return null;
-    }
+  SoftwareComponent* findById(SoftwareComponentId id)
+  {
+    if (id in store)
+      return &store[id];
+    return null;
+  }
 
-    SoftwareComponent[] findBySystem(SystemInstanceId systemId) {
-        return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
-    }
+  SoftwareComponent[] findBySystem(SystemInstanceId systemId)
+  {
+    return store.byValue().filter!(e => e.systemInstanceId == systemId).array;
+  }
 
-    SoftwareComponent[] findByTenant(TenantId tenantId) {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  SoftwareComponent[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    SoftwareComponent* findByName(SystemInstanceId systemId, string name) {
-        foreach (ref e; store.byValue())
-            if (e.systemInstanceId == systemId && e.name == name)
-                return &store[e.id];
-        return null;
-    }
+  SoftwareComponent* findByName(SystemInstanceId systemId, string name)
+  {
+    foreach (ref e; store.byValue())
+      if (e.systemInstanceId == systemId && e.name == name)
+        return &store[e.id];
+    return null;
+  }
 
-    void save(SoftwareComponent component) {
-        store[component.id] = component;
-    }
+  void save(SoftwareComponent component)
+  {
+    store[component.id] = component;
+  }
 
-    void update(SoftwareComponent component) {
-        store[component.id] = component;
-    }
+  void update(SoftwareComponent component)
+  {
+    store[component.id] = component;
+  }
 
-    void remove(SoftwareComponentId id) {
-        store.remove(id);
-    }
+  void remove(SoftwareComponentId id)
+  {
+    store.remove(id);
+  }
 }

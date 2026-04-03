@@ -8,13 +8,15 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreateDashboardRequest {
+struct CreateDashboardRequest
+{
   string name;
   string description;
   string ownerId;
 }
 
-struct DashboardResponse {
+struct DashboardResponse
+{
   string id;
   string name;
   string description;
@@ -24,7 +26,8 @@ struct DashboardResponse {
   PageResponse[] pages;
   string[] tags;
 
-  static DashboardResponse fromEntity(Dashboard d) {
+  static DashboardResponse fromEntity(Dashboard d)
+  {
     if (d is null)
       return DashboardResponse.init;
 
@@ -32,20 +35,13 @@ struct DashboardResponse {
     foreach (p; d.pages)
       pgs ~= PageResponse(p.id.value, p.title);
 
-    return DashboardResponse(
-      d.id.value,
-      d.name,
-      d.description,
-      d.ownerId.value,
-      d.visibility.to!string,
-      d.status.to!string,
-      pgs,
-      d.tags,
-    );
+    return DashboardResponse(d.id.value, d.name, d.description,
+        d.ownerId.value, d.visibility.to!string, d.status.to!string, pgs, d.tags,);
   }
 }
 
-struct PageResponse {
+struct PageResponse
+{
   string id;
   string title;
 }

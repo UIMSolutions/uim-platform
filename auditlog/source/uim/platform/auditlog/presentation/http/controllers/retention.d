@@ -12,179 +12,217 @@ module uim.platform.auditlog.presentation.http.controllers.retention;
 // import uim.platform.auditlog.presentation.http.json_utils;
 
 import uim.platform.auditlog;
+
 mixin(ShowModule!());
 @safe:
-class RetentionController : SAPController {
-    private ManageRetentionUseCase useCase;
+class RetentionController : SAPController
+{
+  private ManageRetentionUseCase useCase;
 
-    this(ManageRetentionUseCase useCase) {
-        this.useCase = useCase;
+  this(ManageRetentionUseCase useCase)
+  {
+    this.useCase = useCase;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    super.registerRoutes(router);
+
+    router.post("/api/v1/retention", &handleCreate);
+    router.get("/api/v1/retention", &handleList);
+    router.get("/api/v1/retention/*", &handleGet);
+    router.put("/api/v1/retention/*", &handleUpdate);
+    router.delete_("/api/v1/retention/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = CreateRetentionPolicyRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.retentionDays = j.getInteger("retentionDays");
+      r.isDefault = j.getBoolean("isDefault");
+      r.categories = parseCategoryArray(j);
+
+      auto result = useCase.createPolicy(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+      {
+        writeError(res, 400, result.error);
+      }
     }
-
-    override void registerRoutes(URLRouter router) {
-        super.registerRoutes(router);
-
-        router.post("/api/v1/retention", &handleCreate);
-        router.get("/api/v1/retention", &handleList);
-        router.get("/api/v1/retention/*", &handleGet);
-        router.put("/api/v1/retention/*", &handleUpdate);
-        router.delete_("/api/v1/retention/*", &handleDelete);
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            auto r = CreateRetentionPolicyRequest();
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.retentionDays = j.getInteger("retentionDays");
-            r.isDefault = j.getBoolean("isDefault");
-            r.categories = parseCategoryArray(j);
-
-            auto result = useCase.createPolicy(r);
-            if (result.isSuccess()) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto policies = useCase.listPolicies(tenantId);
+      auto arr = Json.emptyArray;
+      foreach (ref p; policies)
+        arr ~= serializePolicy(p);
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) policies.length);
+      res.writeJsonBody(resp, 200);
     }
-
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto policies = useCase.listPolicies(tenantId);
-            auto arr = Json.emptyArray;
-            foreach (ref p; policies)
-                arr ~= serializePolicy(p);
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long)policies.length);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            if (!useCase.hasPolicy(id, tenantId)) {
-                writeError(res, 404, "Retention policy not found");
-                return;
-            }
-            auto policy = useCase.getPolicy(id, tenantId);
-            res.writeJsonBody(serializePolicy(policy), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      if (!useCase.hasPolicy(id, tenantId))
+      {
+        writeError(res, 404, "Retention policy not found");
+        return;
+      }
+      auto policy = useCase.getPolicy(id, tenantId);
+      res.writeJsonBody(serializePolicy(policy), 200);
     }
-
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            auto r = UpdateRetentionPolicyRequest();
-            r.id = extractIdFromPath(req.requestURI);
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.retentionDays = j.getInteger("retentionDays");
-            r.categories = parseCategoryArray(j);
-
-            auto statusStr = j.getString("status");
-            if (statusStr == "inactive")
-                r.status = RetentionStatus.inactive;
-            else if (statusStr == "expired")
-                r.status = RetentionStatus.expired;
-            else
-                r.status = RetentionStatus.active;
-
-            auto result = useCase.updatePolicy(r);
-            if (result.isSuccess()) {
-                auto resp = Json.emptyObject;
-                resp["status"] = Json("updated");
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            useCase.deletePolicy(id, tenantId);
-            auto resp = Json.emptyObject;
-            resp["status"] = Json("deleted");
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      auto r = UpdateRetentionPolicyRequest();
+      r.id = extractIdFromPath(req.requestURI);
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.retentionDays = j.getInteger("retentionDays");
+      r.categories = parseCategoryArray(j);
+
+      auto statusStr = j.getString("status");
+      if (statusStr == "inactive")
+        r.status = RetentionStatus.inactive;
+      else if (statusStr == "expired")
+        r.status = RetentionStatus.expired;
+      else
+        r.status = RetentionStatus.active;
+
+      auto result = useCase.updatePolicy(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["status"] = Json("updated");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        writeError(res, 404, result.error);
+      }
     }
-
-    private static Json serializePolicy(ref const RetentionPolicy p) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(p.id);
-        j["tenantId"] = Json(p.tenantId);
-        j["name"] = Json(p.name);
-        j["description"] = Json(p.description);
-        j["retentionDays"] = Json(cast(long)p.retentionDays);
-        j["status"] = Json(p.status.to!string);
-        j["isDefault"] = Json(p.isDefault);
-        j["createdAt"] = Json(p.createdAt);
-        j["updatedAt"] = Json(p.updatedAt);
-
-        if (p.categories.length > 0) {
-            auto cats = Json.emptyArray;
-            foreach (ref c; p.categories)
-                cats ~= Json(categoryToString(c));
-            j["categories"] = cats;
-        }
-        return j;
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private static AuditCategory[] parseCategoryArray(Json j) {
-        AuditCategory[] result;
-        auto cats = jsonStrArray(j, "categories");
-        foreach (c; cats)
-            result ~= parseCategory(c);
-        return result;
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      useCase.deletePolicy(id, tenantId);
+      auto resp = Json.emptyObject;
+      resp["status"] = Json("deleted");
+      res.writeJsonBody(resp, 200);
     }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 
-    private static AuditCategory parseCategory(string s) {
-        switch (s) {
-        case "audit.security-events", "securityEvents":
-            return AuditCategory.securityEvents;
-        case "audit.configuration", "configuration":
-            return AuditCategory.configuration;
-        case "audit.data-access", "dataAccess":
-            return AuditCategory.dataAccess;
-        case "audit.data-modification", "dataModification":
-            return AuditCategory.dataModification;
-        default:
-            return AuditCategory.securityEvents;
-        }
-    }
+  private static Json serializePolicy(ref const RetentionPolicy p)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(p.id);
+    j["tenantId"] = Json(p.tenantId);
+    j["name"] = Json(p.name);
+    j["description"] = Json(p.description);
+    j["retentionDays"] = Json(cast(long) p.retentionDays);
+    j["status"] = Json(p.status.to!string);
+    j["isDefault"] = Json(p.isDefault);
+    j["createdAt"] = Json(p.createdAt);
+    j["updatedAt"] = Json(p.updatedAt);
 
-    private static string categoryToString(AuditCategory c) {
-        final switch (c) {
-        case AuditCategory.securityEvents:
-            return "audit.security-events";
-        case AuditCategory.configuration:
-            return "audit.configuration";
-        case AuditCategory.dataAccess:
-            return "audit.data-access";
-        case AuditCategory.dataModification:
-            return "audit.data-modification";
-        }
+    if (p.categories.length > 0)
+    {
+      auto cats = Json.emptyArray;
+      foreach (ref c; p.categories)
+        cats ~= Json(categoryToString(c));
+      j["categories"] = cats;
     }
+    return j;
+  }
+
+  private static AuditCategory[] parseCategoryArray(Json j)
+  {
+    AuditCategory[] result;
+    auto cats = jsonStrArray(j, "categories");
+    foreach (c; cats)
+      result ~= parseCategory(c);
+    return result;
+  }
+
+  private static AuditCategory parseCategory(string s)
+  {
+    switch (s)
+    {
+    case "audit.security-events", "securityEvents":
+      return AuditCategory.securityEvents;
+    case "audit.configuration", "configuration":
+      return AuditCategory.configuration;
+    case "audit.data-access", "dataAccess":
+      return AuditCategory.dataAccess;
+    case "audit.data-modification", "dataModification":
+      return AuditCategory.dataModification;
+    default:
+      return AuditCategory.securityEvents;
+    }
+  }
+
+  private static string categoryToString(AuditCategory c)
+  {
+    final switch (c)
+    {
+    case AuditCategory.securityEvents:
+      return "audit.security-events";
+    case AuditCategory.configuration:
+      return "audit.configuration";
+    case AuditCategory.dataAccess:
+      return "audit.data-access";
+    case AuditCategory.dataModification:
+      return "audit.data-modification";
+    }
+  }
 }
