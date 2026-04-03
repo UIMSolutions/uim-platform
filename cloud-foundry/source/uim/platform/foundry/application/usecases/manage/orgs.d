@@ -5,6 +5,7 @@ module uim.platform.foundry.application.usecases.manage.orgs;
 
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.organization;
+
 // import uim.platform.foundry.domain.ports.org;
 // import uim.platform.foundry.domain.ports.space;
 import uim.platform.foundry.domain.ports;
@@ -74,12 +75,17 @@ class ManageOrgsUseCase
       return CommandResult("", "Organization not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
+    if (req.name.length > 0)
+      updated.name = req.name;
     updated.status = req.status;
-    if (req.memoryQuotaMb > 0) updated.memoryQuotaMb = req.memoryQuotaMb;
-    if (req.instanceMemoryLimitMb > 0) updated.instanceMemoryLimitMb = req.instanceMemoryLimitMb;
-    if (req.totalRoutes > 0) updated.totalRoutes = req.totalRoutes;
-    if (req.totalServices > 0) updated.totalServices = req.totalServices;
+    if (req.memoryQuotaMb > 0)
+      updated.memoryQuotaMb = req.memoryQuotaMb;
+    if (req.instanceMemoryLimitMb > 0)
+      updated.instanceMemoryLimitMb = req.instanceMemoryLimitMb;
+    if (req.totalRoutes > 0)
+      updated.totalRoutes = req.totalRoutes;
+    if (req.totalServices > 0)
+      updated.totalServices = req.totalServices;
     updated.totalAppInstances = req.totalAppInstances;
     updated.updatedAt = Clock.currStdTime();
 

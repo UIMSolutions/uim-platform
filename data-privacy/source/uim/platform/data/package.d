@@ -1,5 +1,6 @@
 module uim.platform.management;
 
-public {
-    import uim.platform.service;
+public
+{
+  import uim.platform.service;
 }

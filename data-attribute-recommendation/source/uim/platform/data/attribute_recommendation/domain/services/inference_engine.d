@@ -19,10 +19,8 @@ class InferenceEngine
   private InferenceRequestRepository requestRepo;
   private InferenceResultRepository resultRepo;
 
-  this(
-    DeploymentRepository deploymentRepo,
-    InferenceRequestRepository requestRepo,
-    InferenceResultRepository resultRepo)
+  this(DeploymentRepository deploymentRepo,
+      InferenceRequestRepository requestRepo, InferenceResultRepository resultRepo)
   {
     this.deploymentRepo = deploymentRepo;
     this.requestRepo = requestRepo;

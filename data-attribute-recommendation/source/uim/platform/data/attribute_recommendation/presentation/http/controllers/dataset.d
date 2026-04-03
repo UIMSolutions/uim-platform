@@ -14,16 +14,19 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class DatasetController : SAPController {
+class DatasetController : SAPController
+{
   private ManageDatasetsUseCase uc;
 
-  this(ManageDatasetsUseCase uc) {
+  this(ManageDatasetsUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/datasets", &handleCreate);
     router.get("/api/v1/datasets", &handleList);
     router.get("/api/v1/datasets/*", &handleGetById);
@@ -33,8 +36,10 @@ class DatasetController : SAPController {
     router.post("/api/v1/datasets/process/*", &handleProcess);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateDatasetRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,19 +50,25 @@ class DatasetController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createDataset(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else
+      }
+      else
         writeError(res, 400, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listDatasets(tenantId);
 
@@ -67,30 +78,39 @@ class DatasetController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto ds = uc.getDataset(id, tenantId);
-      if (ds is null) {
+      if (ds is null)
+      {
         writeError(res, 404, "Dataset not found");
         return;
       }
       res.writeJsonBody(serializeDataset(*ds), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateDatasetRequest();
@@ -101,74 +121,100 @@ class DatasetController : SAPController {
       r.columnDefinitions = j.getString("columnDefinitions");
 
       auto result = uc.updateDataset(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.validateDataset(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("ready");
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.processDataset(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteDataset(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeDataset(ref const Dataset d) {
+  private static Json serializeDataset(ref const Dataset d)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);
@@ -177,7 +223,7 @@ class DatasetController : SAPController {
     j["status"] = Json(d.status.to!string);
     j["dataType"] = Json(d.dataType.to!string);
     j["columnDefinitions"] = Json(d.columnDefinitions);
-    j["rowCount"] = Json(cast(long)d.rowCount);
+    j["rowCount"] = Json(cast(long) d.rowCount);
     j["validationMessage"] = Json(d.validationMessage);
     j["createdBy"] = Json(d.createdBy);
     j["createdAt"] = Json(d.createdAt);

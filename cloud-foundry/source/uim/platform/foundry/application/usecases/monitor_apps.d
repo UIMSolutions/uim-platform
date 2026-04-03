@@ -4,6 +4,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.route;
+
 // import uim.platform.foundry.domain.ports.app;
 // import uim.platform.foundry.domain.ports.service_instance;
 // import uim.platform.foundry.domain.ports.route;
@@ -84,19 +85,19 @@ class MonitorAppsUseCase
     {
       final switch (app.state)
       {
-        case AppState.started:
-          s.runningApps++;
-          s.totalMemoryUsedMb += app.instances * app.memoryMb;
-          s.totalDiskUsedMb += app.instances * app.diskMb;
-          break;
-        case AppState.stopped:
-          s.stoppedApps++;
-          break;
-        case AppState.crashed:
-          s.crashedApps++;
-          break;
-        case AppState.staging:
-          break;
+      case AppState.started:
+        s.runningApps++;
+        s.totalMemoryUsedMb += app.instances * app.memoryMb;
+        s.totalDiskUsedMb += app.instances * app.diskMb;
+        break;
+      case AppState.stopped:
+        s.stoppedApps++;
+        break;
+      case AppState.crashed:
+        s.crashedApps++;
+        break;
+      case AppState.staging:
+        break;
       }
     }
     return s;

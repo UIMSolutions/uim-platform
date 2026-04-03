@@ -22,11 +22,8 @@ class ModelTrainer
   private TrainingJobRepository jobRepo;
   private DataRecordRepository recordRepo;
 
-  this(
-    DatasetRepository datasetRepo,
-    ModelConfigRepository configRepo,
-    TrainingJobRepository jobRepo,
-    DataRecordRepository recordRepo)
+  this(DatasetRepository datasetRepo, ModelConfigRepository configRepo,
+      TrainingJobRepository jobRepo, DataRecordRepository recordRepo)
   {
     this.datasetRepo = datasetRepo;
     this.configRepo = configRepo;

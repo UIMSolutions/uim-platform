@@ -12,8 +12,8 @@ struct ServiceBinding
   TenantId tenantId;
   string name;
   BindingStatus status = BindingStatus.creating;
-  string credentials;                 // JSON string of binding credentials
-  string bindingOptions;              // JSON string of binding parameters
+  string credentials; // JSON string of binding credentials
+  string bindingOptions; // JSON string of binding parameters
   string createdBy;
   long createdAt;
 }

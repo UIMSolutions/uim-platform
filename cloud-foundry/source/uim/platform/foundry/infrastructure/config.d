@@ -20,7 +20,8 @@ AppConfig loadConfig()
     config.host = host;
 
   auto portStr = environment.get("CF_PORT", "");
-  if (portStr.length > 0) {
+  if (portStr.length > 0)
+  {
     // import std.conv : to;
     try
       config.port = portStr.to!ushort;

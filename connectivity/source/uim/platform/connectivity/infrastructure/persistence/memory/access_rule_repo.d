@@ -12,32 +12,39 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAccessRuleRepository : AccessRuleRepository {
-    private AccessRule[RuleId] store;
+class MemoryAccessRuleRepository : AccessRuleRepository
+{
+  private AccessRule[RuleId] store;
 
-    AccessRule findById(RuleId id) {
-        if (auto p = id in store)
-            return *p;
-        return AccessRule.init;
-    }
+  AccessRule findById(RuleId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return AccessRule.init;
+  }
 
-    AccessRule[] findByConnector(ConnectorId connectorId) {
-        return store.byValue().filter!(e => e.connectorId == connectorId).array;
-    }
+  AccessRule[] findByConnector(ConnectorId connectorId)
+  {
+    return store.byValue().filter!(e => e.connectorId == connectorId).array;
+  }
 
-    AccessRule[] findByTenant(TenantId tenantId) {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  AccessRule[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    void save(AccessRule entity) {
-        store[entity.id] = entity;
-    }
+  void save(AccessRule entity)
+  {
+    store[entity.id] = entity;
+  }
 
-    void update(AccessRule entity) {
-        store[entity.id] = entity;
-    }
+  void update(AccessRule entity)
+  {
+    store[entity.id] = entity;
+  }
 
-    void remove(RuleId id) {
-        store.remove(id);
-    }
+  void remove(RuleId id)
+  {
+    store.remove(id);
+  }
 }

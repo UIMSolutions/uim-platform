@@ -10,7 +10,7 @@ struct TrainingJob
   TenantId tenantId;
   ModelConfigId modelConfigId;
   JobStatus status = JobStatus.queued;
-  string metrics;       // JSON: {accuracy, precision, recall, f1Score}
+  string metrics; // JSON: {accuracy, precision, recall, f1Score}
   int epochsCompleted;
   int totalEpochs;
   string errorMessage;

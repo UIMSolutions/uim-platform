@@ -4,7 +4,8 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.route;
 
 /// Port for persisting and querying routes.
-interface IRouteRepository {
+interface IRouteRepository
+{
   Route[] findBySpace(SpaceId spaceId, TenantId tenantId);
   Route* findById(RouteId id, TenantId tenantId);
   Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId);

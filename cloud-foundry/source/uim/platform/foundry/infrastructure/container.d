@@ -36,7 +36,8 @@ import uim.platform.foundry.presentation.http.monitoring;
 import uim.platform.foundry.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container {
+struct Container
+{
   // Repositories (driven adapters)
   MemoryOrgRepository orgRepo;
   MemorySpaceRepository spaceRepo;
@@ -72,7 +73,8 @@ struct Container {
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
+Container buildContainer(AppConfig config)
+{
   Container c;
 
   // Infrastructure adapters (driven ports)

@@ -7,7 +7,8 @@ module uim.platform.data.attribute_recommendation.presentation.http.json_utils;
 import uim.platform.data.attribute_recommendation.domain.types;
 
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
+string jsonStr(Json j, string key)
+{
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -19,7 +20,8 @@ string jsonStr(Json j, string key) {
 }
 
 /// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0) {
+long jsonLong(Json j, string key, long default_ = 0)
+{
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -31,12 +33,14 @@ long jsonLong(Json j, string key, long default_ = 0) {
 }
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int)jsonLong(j, key, default_);
+int jsonInt(Json j, string key, int default_ = 0)
+{
+  return cast(int) jsonLong(j, key, default_);
 }
 
 /// Extract the last path segment from a URI (for wildcard routes).
-string extractIdFromPath(string uri) {
+string extractIdFromPath(string uri)
+{
   // import std.string : indexOf;
 
   auto qpos = uri.indexOf('?');
@@ -51,15 +55,17 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
-private long lastIndexOf(string s, char c) {
-  for (long i = cast(long)s.length - 1; i >= 0; --i)
-    if (s[cast(size_t)i] == c)
+private long lastIndexOf(string s, char c)
+{
+  for (long i = cast(long) s.length - 1; i >= 0; --i)
+    if (s[cast(size_t) i] == c)
       return i;
   return -1;
 }
 
 /// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
+void writeError(scope HTTPServerResponse res, int status, string message)
+{
   auto j = Json.emptyObject;
   j["error"] = Json(message);
   j["status"] = Json(status);
@@ -68,8 +74,10 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
 
 // --- Enum parsers ---
 
-DataType parseDataType(string s) {
-  switch (s) {
+DataType parseDataType(string s)
+{
+  switch (s)
+  {
   case "product":
     return DataType.product;
   case "material":
@@ -85,8 +93,10 @@ DataType parseDataType(string s) {
   }
 }
 
-ModelType parseModelType(string s) {
-  switch (s) {
+ModelType parseModelType(string s)
+{
+  switch (s)
+  {
   case "classification":
     return ModelType.classification;
   case "regression":

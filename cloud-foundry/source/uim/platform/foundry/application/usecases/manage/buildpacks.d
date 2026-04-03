@@ -10,14 +10,17 @@ import uim.platform.foundry.domain.entities.buildpack;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageBuildpacksUseCase {
+class ManageBuildpacksUseCase
+{
   private BuildpackRepository repo;
 
-  this(BuildpackRepository repo) {
+  this(BuildpackRepository repo)
+  {
     this.repo = repo;
   }
 
-  CommandResult createBuildpack(CreateBuildpackRequest req) {
+  CommandResult createBuildpack(CreateBuildpackRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -46,19 +49,23 @@ class ManageBuildpacksUseCase {
     return CommandResult(bp.id, "");
   }
 
-  Buildpack* getBuildpack(BuildpackId id, TenantId tenantId) {
+  Buildpack* getBuildpack(BuildpackId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  Buildpack[] listBuildpacks(TenantId tenantId) {
+  Buildpack[] listBuildpacks(TenantId tenantId)
+  {
     return repo.findByTenant(tenantId);
   }
 
-  Buildpack[] listEnabled(TenantId tenantId) {
+  Buildpack[] listEnabled(TenantId tenantId)
+  {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult updateBuildpack(UpdateBuildpackRequest req) {
+  CommandResult updateBuildpack(UpdateBuildpackRequest req)
+  {
     if (req.id.length == 0)
       return CommandResult("", "Buildpack ID is required");
     if (req.tenantId.length == 0)
@@ -85,7 +92,8 @@ class ManageBuildpacksUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteBuildpack(BuildpackId id, TenantId tenantId) {
+  CommandResult deleteBuildpack(BuildpackId id, TenantId tenantId)
+  {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Buildpack not found");

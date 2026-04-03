@@ -4,7 +4,8 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.space;
 
 /// Port for persisting and querying spaces.
-interface SpaceRepository {
+interface SpaceRepository
+{
   Space[] findByOrg(OrgId orgId, TenantId tenantId);
   Space* findById(SpaceId id, TenantId tenantId);
   Space* findByName(OrgId orgId, TenantId tenantId, string name);

@@ -12,8 +12,8 @@ struct ModelConfiguration
   string name;
   string description;
   ModelType modelType = ModelType.classification;
-  string targetColumns;   // JSON array of column names
-  string featureColumns;  // JSON array of column names
+  string targetColumns; // JSON array of column names
+  string featureColumns; // JSON array of column names
   string hyperparameters; // JSON: {learningRate, epochs, batchSize, ...}
   ModelConfigStatus status = ModelConfigStatus.draft;
   UserId createdBy;

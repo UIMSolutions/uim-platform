@@ -13,9 +13,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository
 
   ServiceBinding[] findByApp(AppId appId, TenantId tenantId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.appId == appId)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
   }
 
   ServiceBinding* findById(ServiceBindingId id, TenantId tenantId)
@@ -28,9 +26,8 @@ class MemoryServiceBindingRepository : ServiceBindingRepository
 
   ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId, TenantId tenantId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.serviceInstanceId == instanceId)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId
+        && e.serviceInstanceId == instanceId).array;
   }
 
   ServiceBinding[] findByTenant(TenantId tenantId)
@@ -48,8 +45,15 @@ class MemoryServiceBindingRepository : ServiceBindingRepository
       store.remove(id);
   }
 
-  void save(ServiceBinding binding) { store[binding.id] = binding; }
-  void update(ServiceBinding binding) { store[binding.id] = binding; }
+  void save(ServiceBinding binding)
+  {
+    store[binding.id] = binding;
+  }
+
+  void update(ServiceBinding binding)
+  {
+    store[binding.id] = binding;
+  }
 
   void remove(ServiceBindingId id, TenantId tenantId)
   {

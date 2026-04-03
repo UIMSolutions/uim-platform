@@ -33,71 +33,74 @@ import uim.platform.content_agent.presentation.http.health;
 
 
 /// Dependency injection container - wires all layers together.
-struct Container {
-    
-    // Repositories (driven adapters)
-    MemoryContentPackageRepository packageRepo;
+struct Container
+{
 
-    MemoryContentProviderRepository providerRepo;
-    MemoryTransportRequestRepository transportRequestRepo;
-    MemoryExportJobRepository exportJobRepo;
-    MemoryImportJobRepository importJobRepo;
-    MemoryTransportQueueRepository queueRepo;
-    MemoryContentActivityRepository activityRepo;
+  
 
-    // Use cases (application layer)
-    ManageContentPackagesUseCase managePackages;
-    ManageContentProvidersUseCase manageProviders;
-    ManageTransportRequestsUseCase manageTransports;
-    ExportContentUseCase exportContent;
-    ImportContentUseCase importContent;
-    ManageTransportQueuesUseCase manageQueues;
-    MonitorActivitiesUseCase monitorActivities;
+  // Repositories (driven adapters)
+  MemoryContentPackageRepository packageRepo;
 
-    // Controllers (driving adapters)
-    PackageController packageController;
-    ProviderController providerController;
-    TransportController transportController;
-    ExportController exportController;
-    ImportController importController;
-    QueueController queueController;
-    ActivityController activityController;
-    HealthController healthController;
+  MemoryContentProviderRepository providerRepo;
+  MemoryTransportRequestRepository transportRequestRepo;
+  MemoryExportJobRepository exportJobRepo;
+  MemoryImportJobRepository importJobRepo;
+  MemoryTransportQueueRepository queueRepo;
+  MemoryContentActivityRepository activityRepo;
+
+  // Use cases (application layer)
+  ManageContentPackagesUseCase managePackages;
+  ManageContentProvidersUseCase manageProviders;
+  ManageTransportRequestsUseCase manageTransports;
+  ExportContentUseCase exportContent;
+  ImportContentUseCase importContent;
+  ManageTransportQueuesUseCase manageQueues;
+  MonitorActivitiesUseCase monitorActivities;
+
+  // Controllers (driving adapters)
+  PackageController packageController;
+  ProviderController providerController;
+  TransportController transportController;
+  ExportController exportController;
+  ImportController importController;
+  QueueController queueController;
+  ActivityController activityController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.packageRepo = new MemoryContentPackageRepository();
-    c.providerRepo = new MemoryContentProviderRepository();
-    c.transportRequestRepo = new MemoryTransportRequestRepository();
-    c.exportJobRepo = new MemoryExportJobRepository();
-    c.importJobRepo = new MemoryImportJobRepository();
-    c.queueRepo = new MemoryTransportQueueRepository();
-    c.activityRepo = new MemoryContentActivityRepository();
+  // Infrastructure adapters
+  c.packageRepo = new MemoryContentPackageRepository();
+  c.providerRepo = new MemoryContentProviderRepository();
+  c.transportRequestRepo = new MemoryTransportRequestRepository();
+  c.exportJobRepo = new MemoryExportJobRepository();
+  c.importJobRepo = new MemoryImportJobRepository();
+  c.queueRepo = new MemoryTransportQueueRepository();
+  c.activityRepo = new MemoryContentActivityRepository();
 
-    // Application use cases
-    c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c
-            .activityRepo);
-    c.manageProviders = new ManageContentProvidersUseCase(c.providerRepo, c.activityRepo);
-    c.manageTransports = new ManageTransportRequestsUseCase(c.transportRequestRepo, c.packageRepo, c.queueRepo, c
-            .activityRepo);
-    c.exportContent = new ExportContentUseCase(c.exportJobRepo, c.packageRepo, c.activityRepo);
-    c.importContent = new ImportContentUseCase(c.importJobRepo, c.packageRepo, c.activityRepo);
-    c.manageQueues = new ManageTransportQueuesUseCase(c.queueRepo, c.activityRepo);
-    c.monitorActivities = new MonitorActivitiesUseCase(c.activityRepo);
+  // Application use cases
+  c.managePackages = new ManageContentPackagesUseCase(c.packageRepo, c.providerRepo, c.activityRepo);
+  c.manageProviders = new ManageContentProvidersUseCase(c.providerRepo, c.activityRepo);
+  c.manageTransports = new ManageTransportRequestsUseCase(c.transportRequestRepo,
+      c.packageRepo, c.queueRepo, c.activityRepo);
+  c.exportContent = new ExportContentUseCase(c.exportJobRepo, c.packageRepo, c.activityRepo);
+  c.importContent = new ImportContentUseCase(c.importJobRepo, c.packageRepo, c.activityRepo);
+  c.manageQueues = new ManageTransportQueuesUseCase(c.queueRepo, c.activityRepo);
+  c.monitorActivities = new MonitorActivitiesUseCase(c.activityRepo);
 
-    // Presentation controllers
-    c.packageController = new PackageController(c.managePackages);
-    c.providerController = new ProviderController(c.manageProviders);
-    c.transportController = new TransportController(c.manageTransports);
-    c.exportController = new ExportController(c.exportContent);
-    c.importController = new ImportController(c.importContent);
-    c.queueController = new QueueController(c.manageQueues);
-    c.activityController = new ActivityController(c.monitorActivities);
-    c.healthController = new HealthController("content-agent");
+  // Presentation controllers
+  c.packageController = new PackageController(c.managePackages);
+  c.providerController = new ProviderController(c.manageProviders);
+  c.transportController = new TransportController(c.manageTransports);
+  c.exportController = new ExportController(c.exportContent);
+  c.importController = new ImportController(c.importContent);
+  c.queueController = new QueueController(c.manageQueues);
+  c.activityController = new ActivityController(c.monitorActivities);
+  c.healthController = new HealthController("content-agent");
 
-    return c;
+  return c;
 }

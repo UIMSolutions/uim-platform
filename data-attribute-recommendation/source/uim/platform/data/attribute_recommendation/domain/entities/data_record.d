@@ -10,7 +10,7 @@ struct DataRecord
   DatasetId datasetId;
   TenantId tenantId;
   string attributes; // JSON: key-value pairs of record attributes
-  string labels;     // JSON: ground-truth label values for target columns
+  string labels; // JSON: ground-truth label values for target columns
   RecordStatus status = RecordStatus.pending;
   UserId createdBy;
   long createdAt;

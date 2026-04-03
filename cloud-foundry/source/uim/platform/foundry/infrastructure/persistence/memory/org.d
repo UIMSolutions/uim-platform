@@ -32,8 +32,15 @@ class MemoryOrgRepository : OrgRepository
     return null;
   }
 
-  void save(Organization org) { store[org.id] = org; }
-  void update(Organization org) { store[org.id] = org; }
+  void save(Organization org)
+  {
+    store[org.id] = org;
+  }
+
+  void update(Organization org)
+  {
+    store[org.id] = org;
+  }
 
   void remove(OrgId id, TenantId tenantId)
   {

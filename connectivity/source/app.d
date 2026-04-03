@@ -10,11 +10,16 @@ import uim.platform.connectivity.infrastructure.container;
 // import std.stdio : writefln;
 
 import uim.platform.connectivity;
+
 @safe:
 
-version (unittest) {
-} else {
-void main() {
+version (unittest)
+{
+}
+else
+{
+  void main()
+  {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -51,4 +56,4 @@ void main() {
     writefln("==========================================================");
 
     runApplication();
-}
+  }

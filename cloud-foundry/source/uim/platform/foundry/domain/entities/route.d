@@ -10,11 +10,11 @@ struct Route
   SpaceId spaceId;
   DomainId domainId;
   TenantId tenantId;
-  string host;                        // subdomain portion (e.g. "myapp")
-  string path;                        // URL path prefix (e.g. "/api")
-  int port;                           // port number for TCP routes
+  string host; // subdomain portion (e.g. "myapp")
+  string path; // URL path prefix (e.g. "/api")
+  int port; // port number for TCP routes
   RouteProtocol protocol = RouteProtocol.http;
-  string[] mappedAppIds;              // applications mapped to this route
+  string[] mappedAppIds; // applications mapped to this route
   string createdBy;
   long createdAt;
   long updatedAt;

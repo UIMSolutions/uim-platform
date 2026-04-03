@@ -87,11 +87,16 @@ class ManageModelsUseCase
       return CommandResult("", "Only draft configurations can be updated");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.description.length > 0) updated.description = req.description;
-    if (req.targetColumns.length > 0) updated.targetColumns = req.targetColumns;
-    if (req.featureColumns.length > 0) updated.featureColumns = req.featureColumns;
-    if (req.hyperparameters.length > 0) updated.hyperparameters = req.hyperparameters;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.targetColumns.length > 0)
+      updated.targetColumns = req.targetColumns;
+    if (req.featureColumns.length > 0)
+      updated.featureColumns = req.featureColumns;
+    if (req.hyperparameters.length > 0)
+      updated.hyperparameters = req.hyperparameters;
     updated.modelType = req.modelType;
     updated.updatedAt = Clock.currStdTime();
 
@@ -128,7 +133,8 @@ class ManageModelsUseCase
 
     auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);
     if (job is null)
-      return CommandResult("", "Cannot start training - verify dataset is completed and config is ready");
+      return CommandResult("",
+          "Cannot start training - verify dataset is completed and config is ready");
 
     return CommandResult(job.id, "");
   }

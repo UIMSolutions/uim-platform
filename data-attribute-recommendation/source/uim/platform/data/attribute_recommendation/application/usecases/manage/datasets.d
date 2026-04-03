@@ -73,9 +73,12 @@ class ManageDatasetsUseCase
       return CommandResult("", "Only draft datasets can be updated");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.description.length > 0) updated.description = req.description;
-    if (req.columnDefinitions.length > 0) updated.columnDefinitions = req.columnDefinitions;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.columnDefinitions.length > 0)
+      updated.columnDefinitions = req.columnDefinitions;
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);

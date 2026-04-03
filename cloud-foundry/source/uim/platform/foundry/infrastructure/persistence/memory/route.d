@@ -13,9 +13,7 @@ class MemoryRouteRepository : RouteRepository
 
   Route[] findBySpace(SpaceId spaceId, TenantId tenantId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.spaceId == spaceId)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
   Route* findById(RouteId id, TenantId tenantId)
@@ -36,16 +34,13 @@ class MemoryRouteRepository : RouteRepository
 
   Route[] findByDomain(DomainId domainId, TenantId tenantId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.domainId == domainId)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
   }
 
   Route[] findByApp(AppId appId, TenantId tenantId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.mappedAppIds.canFind(appId))
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId
+        && e.mappedAppIds.canFind(appId)).array;
   }
 
   Route[] findByTenant(TenantId tenantId)
@@ -53,8 +48,15 @@ class MemoryRouteRepository : RouteRepository
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void save(Route route) { store[route.id] = route; }
-  void update(Route route) { store[route.id] = route; }
+  void save(Route route)
+  {
+    store[route.id] = route;
+  }
+
+  void update(Route route)
+  {
+    store[route.id] = route;
+  }
 
   void remove(RouteId id, TenantId tenantId)
   {

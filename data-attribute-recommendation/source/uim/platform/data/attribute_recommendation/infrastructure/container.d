@@ -4,12 +4,17 @@ import uim.platform.data.attribute_recommendation.infrastructure.config;
 
 // Repositories
 import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.data_record_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.model_config_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.training_job_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.data_record_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.model_config_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.training_job_repo;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_request_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_result_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.inference_request_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.inference_result_repo;
 
 // Domain services
 import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
@@ -81,20 +86,19 @@ Container buildContainer(AppConfig config)
   c.inferenceResultRepo = new MemoryInferenceResultRepository();
 
   // Domain services
-  c.modelTrainer = new ModelTrainer(
-    c.datasetRepo, c.configRepo, c.jobRepo, c.recordRepo);
-  c.inferenceEngine = new InferenceEngine(
-    c.deploymentRepo, c.inferenceRequestRepo, c.inferenceResultRepo);
+  c.modelTrainer = new ModelTrainer(c.datasetRepo, c.configRepo, c.jobRepo, c.recordRepo);
+  c.inferenceEngine = new InferenceEngine(c.deploymentRepo,
+      c.inferenceRequestRepo, c.inferenceResultRepo);
 
   // Application use cases
   c.manageDatasets = new ManageDatasetsUseCase(c.datasetRepo, c.recordRepo);
   c.manageDataRecords = new ManageDataRecordsUseCase(c.recordRepo, c.datasetRepo);
   c.manageModels = new ManageModelsUseCase(c.configRepo, c.datasetRepo, c.modelTrainer);
   c.manageDeployments = new ManageDeploymentsUseCase(c.deploymentRepo, c.jobRepo, c.configRepo);
-  c.processInference = new ProcessInferenceUseCase(
-    c.inferenceRequestRepo, c.inferenceResultRepo, c.inferenceEngine);
-  c.monitorTraining = new MonitorTrainingUseCase(
-    c.jobRepo, c.deploymentRepo, c.configRepo, c.inferenceRequestRepo);
+  c.processInference = new ProcessInferenceUseCase(c.inferenceRequestRepo,
+      c.inferenceResultRepo, c.inferenceEngine);
+  c.monitorTraining = new MonitorTrainingUseCase(c.jobRepo, c.deploymentRepo,
+      c.configRepo, c.inferenceRequestRepo);
 
   // Presentation controllers
   c.datasetController = new DatasetController(c.manageDatasets);

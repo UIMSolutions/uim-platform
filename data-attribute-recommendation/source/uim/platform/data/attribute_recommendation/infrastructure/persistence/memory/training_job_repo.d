@@ -1,4 +1,5 @@
-module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.training_job_repo;
+module uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.training_job_repo;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.training_job;

@@ -4,7 +4,8 @@ import uim.platform.foundry.domain.types;
 
 /// A Cloud Foundry application — represents a deployed unit with scaling,
 /// health checks, and environment configuration.
-struct Application {
+struct Application
+{
   AppId id;
   SpaceId spaceId;
   TenantId tenantId;

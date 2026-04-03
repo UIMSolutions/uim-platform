@@ -9,7 +9,7 @@ struct InferenceRequest
   InferenceRequestId id;
   TenantId tenantId;
   DeploymentId deploymentId;
-  string inputData;   // JSON: input attribute key-value pairs
+  string inputData; // JSON: input attribute key-value pairs
   InferenceStatus status = InferenceStatus.pending;
   long createdAt;
 }

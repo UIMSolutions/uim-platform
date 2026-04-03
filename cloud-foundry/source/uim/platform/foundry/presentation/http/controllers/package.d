@@ -1,6 +1,7 @@
 module uim.platform.foundry.presentation.http.controllers;
 
-public {
+public
+{
   import uim.platform.foundry.presentation.http.controllers.app;
   import uim.platform.foundry.presentation.http.controllers.buildpack;
   import uim.platform.foundry.presentation.http.controllers.health;

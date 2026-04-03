@@ -9,36 +9,45 @@ import uim.platform.content_agent.domain.ports.content_package_repository;
 
 class MemoryContentPackageRepository : ContentPackageRepository
 {
-    private ContentPackage[ContentPackageId] store;
+  private ContentPackage[ContentPackageId] store;
 
-    ContentPackage findById(ContentPackageId id)
-    {
-        if (auto p = id in store)
-            return *p;
-        return ContentPackage.init;
-    }
+  ContentPackage findById(ContentPackageId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return ContentPackage.init;
+  }
 
-    ContentPackage[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  ContentPackage[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status)
-    {
-        return store.byValue()
-            .filter!(e => e.tenantId == tenantId && e.status == status)
-            .array;
-    }
+  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+  }
 
-    ContentPackage findByName(TenantId tenantId, string name)
-    {
-        foreach (ref e; store.byValue())
-            if (e.tenantId == tenantId && e.name == name)
-                return e;
-        return ContentPackage.init;
-    }
+  ContentPackage findByName(TenantId tenantId, string name)
+  {
+    foreach (ref e; store.byValue())
+      if (e.tenantId == tenantId && e.name == name)
+        return e;
+    return ContentPackage.init;
+  }
 
-    void save(ContentPackage pkg) { store[pkg.id] = pkg; }
-    void update(ContentPackage pkg) { store[pkg.id] = pkg; }
-    void remove(ContentPackageId id) { store.remove(id); }
+  void save(ContentPackage pkg)
+  {
+    store[pkg.id] = pkg;
+  }
+
+  void update(ContentPackage pkg)
+  {
+    store[pkg.id] = pkg;
+  }
+
+  void remove(ContentPackageId id)
+  {
+    store.remove(id);
+  }
 }

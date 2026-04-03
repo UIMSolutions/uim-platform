@@ -10,16 +10,19 @@ import uim.platform.data.attribute_recommendation.domain.ports.data_record_repos
 import uim.platform.data.attribute_recommendation.domain.ports.dataset_repository;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ManageDataRecordsUseCase {
+class ManageDataRecordsUseCase
+{
   private DataRecordRepository repo;
   private DatasetRepository datasetRepo;
 
-  this(DataRecordRepository repo, DatasetRepository datasetRepo) {
+  this(DataRecordRepository repo, DatasetRepository datasetRepo)
+  {
     this.repo = repo;
     this.datasetRepo = datasetRepo;
   }
 
-  CommandResult createRecord(CreateDataRecordRequest req) {
+  CommandResult createRecord(CreateDataRecordRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.datasetId.length == 0)
@@ -48,15 +51,18 @@ class ManageDataRecordsUseCase {
     return CommandResult(record.id, "");
   }
 
-  DataRecord* getRecord(DataRecordId id, TenantId tenantId) {
+  DataRecord* getRecord(DataRecordId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  DataRecord[] listByDataset(DatasetId datasetId, TenantId tenantId) {
+  DataRecord[] listByDataset(DatasetId datasetId, TenantId tenantId)
+  {
     return repo.findByDataset(datasetId, tenantId);
   }
 
-  CommandResult validateRecord(DataRecordId id, TenantId tenantId) {
+  CommandResult validateRecord(DataRecordId id, TenantId tenantId)
+  {
     auto record = repo.findById(id, tenantId);
     if (record is null)
       return CommandResult("", "Record not found");
@@ -66,7 +72,8 @@ class ManageDataRecordsUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult rejectRecord(DataRecordId id, TenantId tenantId) {
+  CommandResult rejectRecord(DataRecordId id, TenantId tenantId)
+  {
     auto record = repo.findById(id, tenantId);
     if (record is null)
       return CommandResult("", "Record not found");
@@ -76,7 +83,8 @@ class ManageDataRecordsUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteRecord(DataRecordId id, TenantId tenantId) {
+  CommandResult deleteRecord(DataRecordId id, TenantId tenantId)
+  {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Record not found");

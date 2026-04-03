@@ -10,12 +10,12 @@ struct ServiceInstance
   SpaceId spaceId;
   TenantId tenantId;
   string name;
-  string serviceName;                 // e.g. "xsuaa", "hana", "destination"
-  string servicePlanName;             // e.g. "lite", "standard", "application"
+  string serviceName; // e.g. "xsuaa", "hana", "destination"
+  string servicePlanName; // e.g. "lite", "standard", "application"
   ServiceInstanceStatus status = ServiceInstanceStatus.creating;
-  string parameters;                  // JSON string of creation parameters
+  string parameters; // JSON string of creation parameters
   string dashboardUrl;
-  string tags;                        // comma-separated tags
+  string tags; // comma-separated tags
   string createdBy;
   long createdAt;
   long updatedAt;

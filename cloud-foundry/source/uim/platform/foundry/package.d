@@ -1,4 +1,5 @@
 module uim.platform.foundry;
 
-public {
+public
+{
 }

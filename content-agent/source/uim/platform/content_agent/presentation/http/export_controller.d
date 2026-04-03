@@ -13,107 +13,107 @@ import uim.platform.content_agent.presentation.http.json_utils;
 
 class ExportController
 {
-    private ExportContentUseCase uc;
+  private ExportContentUseCase uc;
 
-    this(ExportContentUseCase uc)
+  this(ExportContentUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/exports", &handleStartExport);
+    router.get("/api/v1/exports", &handleList);
+    router.get("/api/v1/exports/*", &handleGetById);
+  }
+
+  private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        this.uc = uc;
-    }
+      auto j = req.json;
+      auto r = StartExportRequest();
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.packageId = j.getString("packageId");
+      r.transportRequestId = j.getString("transportRequestId");
+      r.queueId = j.getString("queueId");
+      r.startedBy = req.headers.get("X-User-Id", "");
 
-    override void registerRoutes(URLRouter router)
+      auto result = uc.startExport(r);
+      if (result.success)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["status"] = Json("completed");
+        res.writeJsonBody(resp, 201);
+      }
+      else
+      {
+        writeError(res, 400, result.error);
+      }
+    }
+    catch (Exception e)
     {
-        router.post("/api/v1/exports", &handleStartExport);
-        router.get("/api/v1/exports", &handleList);
-        router.get("/api/v1/exports/*", &handleGetById);
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto j = req.json;
-            auto r = StartExportRequest();
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.packageId = j.getString("packageId");
-            r.transportRequestId = j.getString("transportRequestId");
-            r.queueId = j.getString("queueId");
-            r.startedBy = req.headers.get("X-User-Id", "");
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto jobs = uc.listExportJobs(tenantId);
 
-            auto result = uc.startExport(r);
-            if (result.success)
-            {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["status"] = Json("completed");
-                res.writeJsonBody(resp, 201);
-            }
-            else
-            {
-                writeError(res, 400, result.error);
-            }
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      auto arr = Json.emptyArray;
+      foreach (ref j; jobs)
+        arr ~= serializeExportJob(j);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) jobs.length);
+      res.writeJsonBody(resp, 200);
     }
-
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    catch (Exception e)
     {
-        try
-        {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto jobs = uc.listExportJobs(tenantId);
-
-            auto arr = Json.emptyArray;
-            foreach (ref j; jobs)
-                arr ~= serializeExportJob(j);
-
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) jobs.length);
-            res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto id = extractIdFromPath(req.requestURI);
-            auto job = uc.getExportJob(id);
-            if (job.id.length == 0)
-            {
-                writeError(res, 404, "Export job not found");
-                return;
-            }
-            res.writeJsonBody(serializeExportJob(job), 200);
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      auto id = extractIdFromPath(req.requestURI);
+      auto job = uc.getExportJob(id);
+      if (job.id.length == 0)
+      {
+        writeError(res, 404, "Export job not found");
+        return;
+      }
+      res.writeJsonBody(serializeExportJob(job), 200);
     }
-
-    private static Json serializeExportJob(ref const ExportJob e)
+    catch (Exception e)
     {
-        auto j = Json.emptyObject;
-        j["id"] = Json(e.id);
-        j["tenantId"] = Json(e.tenantId);
-        j["packageId"] = Json(e.packageId);
-        j["transportRequestId"] = Json(e.transportRequestId);
-        j["queueId"] = Json(e.queueId);
-        j["status"] = Json(e.status.to!string);
-        j["exportedFilePath"] = Json(e.exportedFilePath);
-        j["exportedSizeBytes"] = Json(e.exportedSizeBytes);
-        j["createdBy"] = Json(e.createdBy);
-        j["startedAt"] = Json(e.startedAt);
-        j["completedAt"] = Json(e.completedAt);
-        j["errorMessage"] = Json(e.errorMessage);
-        return j;
+      writeError(res, 500, "Internal server error");
     }
+  }
+
+  private static Json serializeExportJob(ref const ExportJob e)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(e.id);
+    j["tenantId"] = Json(e.tenantId);
+    j["packageId"] = Json(e.packageId);
+    j["transportRequestId"] = Json(e.transportRequestId);
+    j["queueId"] = Json(e.queueId);
+    j["status"] = Json(e.status.to!string);
+    j["exportedFilePath"] = Json(e.exportedFilePath);
+    j["exportedSizeBytes"] = Json(e.exportedSizeBytes);
+    j["createdBy"] = Json(e.createdBy);
+    j["startedAt"] = Json(e.startedAt);
+    j["completedAt"] = Json(e.completedAt);
+    j["errorMessage"] = Json(e.errorMessage);
+    return j;
+  }
 }

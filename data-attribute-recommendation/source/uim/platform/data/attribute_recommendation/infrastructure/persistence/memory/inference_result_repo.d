@@ -1,4 +1,5 @@
-module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_result_repo;
+module uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.inference_result_repo;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;

@@ -36,73 +36,76 @@ import uim.platform.data.privacy.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container
 {
-    // Repositories (driven adapters)
-    MemoryDataSubjectRepository dataSubjectRepo;
-    MemoryPersonalDataModelRepository personalDataModelRepo;
-    MemoryDeletionRequestRepository deletionRequestRepo;
-    MemoryBlockingRequestRepository blockingRequestRepo;
-    MemoryLegalGroundRepository legalGroundRepo;
-    MemoryRetentionRuleRepository retentionRuleRepo;
-    MemoryConsentRecordRepository consentRecordRepo;
-    MemoryDataRetrievalRequestRepository dataRetrievalRepo;
+  // Repositories (driven adapters)
+  MemoryDataSubjectRepository dataSubjectRepo;
+  MemoryPersonalDataModelRepository personalDataModelRepo;
+  MemoryDeletionRequestRepository deletionRequestRepo;
+  MemoryBlockingRequestRepository blockingRequestRepo;
+  MemoryLegalGroundRepository legalGroundRepo;
+  MemoryRetentionRuleRepository retentionRuleRepo;
+  MemoryConsentRecordRepository consentRecordRepo;
+  MemoryDataRetrievalRequestRepository dataRetrievalRepo;
 
-    // Use cases (application layer)
-    ManageDataSubjectsUseCase manageDataSubjects;
-    ManagePersonalDataModelsUseCase managePersonalDataModels;
-    ManageDeletionRequestsUseCase manageDeletionRequests;
-    ManageBlockingRequestsUseCase manageBlockingRequests;
-    ManageLegalGroundsUseCase manageLegalGrounds;
-    ManageRetentionRulesUseCase manageRetentionRules;
-    ManageConsentRecordsUseCase manageConsentRecords;
-    ManageDataRetrievalsUseCase manageDataRetrievals;
+  // Use cases (application layer)
+  ManageDataSubjectsUseCase manageDataSubjects;
+  ManagePersonalDataModelsUseCase managePersonalDataModels;
+  ManageDeletionRequestsUseCase manageDeletionRequests;
+  ManageBlockingRequestsUseCase manageBlockingRequests;
+  ManageLegalGroundsUseCase manageLegalGrounds;
+  ManageRetentionRulesUseCase manageRetentionRules;
+  ManageConsentRecordsUseCase manageConsentRecords;
+  ManageDataRetrievalsUseCase manageDataRetrievals;
 
-    // Controllers (driving adapters)
-    DataSubjectController dataSubjectController;
-    PersonalDataModelController personalDataModelController;
-    DeletionController deletionController;
-    BlockingController blockingController;
-    LegalGroundController legalGroundController;
-    RetentionRuleController retentionRuleController;
-    ConsentController consentController;
-    DataRetrievalController dataRetrievalController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  DataSubjectController dataSubjectController;
+  PersonalDataModelController personalDataModelController;
+  DeletionController deletionController;
+  BlockingController blockingController;
+  LegalGroundController legalGroundController;
+  RetentionRuleController retentionRuleController;
+  ConsentController consentController;
+  DataRetrievalController dataRetrievalController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
 Container buildContainer(AppConfig config)
 {
-    Container c;
+  Container c;
 
-    // Infrastructure adapters
-    c.dataSubjectRepo = new MemoryDataSubjectRepository();
-    c.personalDataModelRepo = new MemoryPersonalDataModelRepository();
-    c.deletionRequestRepo = new MemoryDeletionRequestRepository();
-    c.blockingRequestRepo = new MemoryBlockingRequestRepository();
-    c.legalGroundRepo = new MemoryLegalGroundRepository();
-    c.retentionRuleRepo = new MemoryRetentionRuleRepository();
-    c.consentRecordRepo = new MemoryConsentRecordRepository();
-    c.dataRetrievalRepo = new MemoryDataRetrievalRequestRepository();
+  // Infrastructure adapters
+  c.dataSubjectRepo = new MemoryDataSubjectRepository();
+  c.personalDataModelRepo = new MemoryPersonalDataModelRepository();
+  c.deletionRequestRepo = new MemoryDeletionRequestRepository();
+  c.blockingRequestRepo = new MemoryBlockingRequestRepository();
+  c.legalGroundRepo = new MemoryLegalGroundRepository();
+  c.retentionRuleRepo = new MemoryRetentionRuleRepository();
+  c.consentRecordRepo = new MemoryConsentRecordRepository();
+  c.dataRetrievalRepo = new MemoryDataRetrievalRequestRepository();
 
-    // Application use cases
-    c.manageDataSubjects = new ManageDataSubjectsUseCase(c.dataSubjectRepo);
-    c.managePersonalDataModels = new ManagePersonalDataModelsUseCase(c.personalDataModelRepo);
-    c.manageDeletionRequests = new ManageDeletionRequestsUseCase(c.deletionRequestRepo, c.dataSubjectRepo);
-    c.manageBlockingRequests = new ManageBlockingRequestsUseCase(c.blockingRequestRepo, c.dataSubjectRepo);
-    c.manageLegalGrounds = new ManageLegalGroundsUseCase(c.legalGroundRepo);
-    c.manageRetentionRules = new ManageRetentionRulesUseCase(c.retentionRuleRepo);
-    c.manageConsentRecords = new ManageConsentRecordsUseCase(c.consentRecordRepo, c.dataSubjectRepo);
-    c.manageDataRetrievals = new ManageDataRetrievalsUseCase(c.dataRetrievalRepo, c.dataSubjectRepo, c.personalDataModelRepo);
+  // Application use cases
+  c.manageDataSubjects = new ManageDataSubjectsUseCase(c.dataSubjectRepo);
+  c.managePersonalDataModels = new ManagePersonalDataModelsUseCase(c.personalDataModelRepo);
+  c.manageDeletionRequests = new ManageDeletionRequestsUseCase(c.deletionRequestRepo,
+      c.dataSubjectRepo);
+  c.manageBlockingRequests = new ManageBlockingRequestsUseCase(c.blockingRequestRepo,
+      c.dataSubjectRepo);
+  c.manageLegalGrounds = new ManageLegalGroundsUseCase(c.legalGroundRepo);
+  c.manageRetentionRules = new ManageRetentionRulesUseCase(c.retentionRuleRepo);
+  c.manageConsentRecords = new ManageConsentRecordsUseCase(c.consentRecordRepo, c.dataSubjectRepo);
+  c.manageDataRetrievals = new ManageDataRetrievalsUseCase(c.dataRetrievalRepo,
+      c.dataSubjectRepo, c.personalDataModelRepo);
 
-    // Presentation controllers
-    c.dataSubjectController = new DataSubjectController(c.manageDataSubjects);
-    c.personalDataModelController = new PersonalDataModelController(c.managePersonalDataModels);
-    c.deletionController = new DeletionController(c.manageDeletionRequests);
-    c.blockingController = new BlockingController(c.manageBlockingRequests);
-    c.legalGroundController = new LegalGroundController(c.manageLegalGrounds);
-    c.retentionRuleController = new RetentionRuleController(c.manageRetentionRules);
-    c.consentController = new ConsentController(c.manageConsentRecords);
-    c.dataRetrievalController = new DataRetrievalController(c.manageDataRetrievals);
-    c.healthController = new HealthController("data-privacy");
+  // Presentation controllers
+  c.dataSubjectController = new DataSubjectController(c.manageDataSubjects);
+  c.personalDataModelController = new PersonalDataModelController(c.managePersonalDataModels);
+  c.deletionController = new DeletionController(c.manageDeletionRequests);
+  c.blockingController = new BlockingController(c.manageBlockingRequests);
+  c.legalGroundController = new LegalGroundController(c.manageLegalGrounds);
+  c.retentionRuleController = new RetentionRuleController(c.manageRetentionRules);
+  c.consentController = new ConsentController(c.manageConsentRecords);
+  c.dataRetrievalController = new DataRetrievalController(c.manageDataRetrievals);
+  c.healthController = new HealthController("data-privacy");
 
-    return c;
+  return c;
 }

@@ -12,18 +12,21 @@ import uim.platform.data.attribute_recommendation.domain.ports.training_job_repo
 import uim.platform.data.attribute_recommendation.domain.ports.model_config_repository;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ManageDeploymentsUseCase {
+class ManageDeploymentsUseCase
+{
   private DeploymentRepository repo;
   private TrainingJobRepository jobRepo;
   private ModelConfigRepository configRepo;
 
-  this(DeploymentRepository repo, TrainingJobRepository jobRepo, ModelConfigRepository configRepo) {
+  this(DeploymentRepository repo, TrainingJobRepository jobRepo, ModelConfigRepository configRepo)
+  {
     this.repo = repo;
     this.jobRepo = jobRepo;
     this.configRepo = configRepo;
   }
 
-  CommandResult createDeployment(CreateDeploymentRequest req) {
+  CommandResult createDeployment(CreateDeploymentRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.trainingJobId.length == 0)
@@ -64,16 +67,19 @@ class ManageDeploymentsUseCase {
     return CommandResult(dep.id, "");
   }
 
-  ModelDeployment* getDeployment(DeploymentId id, TenantId tenantId) {
+  ModelDeployment* getDeployment(DeploymentId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  ModelDeployment[] listDeployments(TenantId tenantId) {
+  ModelDeployment[] listDeployments(TenantId tenantId)
+  {
     return repo.findByTenant(tenantId);
   }
 
   /// Activate a deploying or inactive deployment.
-  CommandResult activateDeployment(DeploymentId id, TenantId tenantId) {
+  CommandResult activateDeployment(DeploymentId id, TenantId tenantId)
+  {
     auto dep = repo.findById(id, tenantId);
     if (dep is null)
       return CommandResult("", "Deployment not found");
@@ -88,7 +94,8 @@ class ManageDeploymentsUseCase {
   }
 
   /// Deactivate an active deployment.
-  CommandResult deactivateDeployment(DeploymentId id, TenantId tenantId) {
+  CommandResult deactivateDeployment(DeploymentId id, TenantId tenantId)
+  {
     auto dep = repo.findById(id, tenantId);
     if (dep is null)
       return CommandResult("", "Deployment not found");
@@ -102,7 +109,8 @@ class ManageDeploymentsUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteDeployment(DeploymentId id, TenantId tenantId) {
+  CommandResult deleteDeployment(DeploymentId id, TenantId tenantId)
+  {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Deployment not found");

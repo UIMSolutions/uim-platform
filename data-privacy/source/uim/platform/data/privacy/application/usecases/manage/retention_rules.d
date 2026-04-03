@@ -10,76 +10,81 @@ import uim.platform.data.privacy.application.dto;
 
 class ManageRetentionRulesUseCase
 {
-    private RetentionRuleRepository repo;
+  private RetentionRuleRepository repo;
 
-    this(RetentionRuleRepository repo)
-    {
-        this.repo = repo;
-    }
+  this(RetentionRuleRepository repo)
+  {
+    this.repo = repo;
+  }
 
-    CommandResult createRule(CreateRetentionRuleRequest req)
-    {
-        if (req.tenantId.length == 0)
-            return CommandResult("", "Tenant ID is required");
-        if (req.name.length == 0)
-            return CommandResult("", "Rule name is required");
-        if (req.retentionDays <= 0)
-            return CommandResult("", "Retention days must be positive");
+  CommandResult createRule(CreateRetentionRuleRequest req)
+  {
+    if (req.tenantId.length == 0)
+      return CommandResult("", "Tenant ID is required");
+    if (req.name.length == 0)
+      return CommandResult("", "Rule name is required");
+    if (req.retentionDays <= 0)
+      return CommandResult("", "Retention days must be positive");
 
-        auto now = Clock.currStdTime();
-        auto rule = RetentionRule();
-        rule.id = randomUUID().toString();
-        rule.tenantId = req.tenantId;
-        rule.name = req.name;
-        rule.description = req.description;
-        rule.purpose = req.purpose;
-        rule.categories = req.categories;
-        rule.retentionDays = req.retentionDays;
-        rule.legalReference = req.legalReference;
-        rule.status = RetentionRuleStatus.active;
-        rule.isDefault = req.isDefault;
-        rule.createdAt = now;
-        rule.updatedAt = now;
+    auto now = Clock.currStdTime();
+    auto rule = RetentionRule();
+    rule.id = randomUUID().toString();
+    rule.tenantId = req.tenantId;
+    rule.name = req.name;
+    rule.description = req.description;
+    rule.purpose = req.purpose;
+    rule.categories = req.categories;
+    rule.retentionDays = req.retentionDays;
+    rule.legalReference = req.legalReference;
+    rule.status = RetentionRuleStatus.active;
+    rule.isDefault = req.isDefault;
+    rule.createdAt = now;
+    rule.updatedAt = now;
 
-        repo.save(rule);
-        return CommandResult(rule.id, "");
-    }
+    repo.save(rule);
+    return CommandResult(rule.id, "");
+  }
 
-    RetentionRule* getRule(RetentionRuleId id, TenantId tenantId)
-    {
-        return repo.findById(id, tenantId);
-    }
+  RetentionRule* getRule(RetentionRuleId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
 
-    RetentionRule[] listRules(TenantId tenantId)
-    {
-        return repo.findByTenant(tenantId);
-    }
+  RetentionRule[] listRules(TenantId tenantId)
+  {
+    return repo.findByTenant(tenantId);
+  }
 
-    RetentionRule[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-    {
-        return repo.findByPurpose(tenantId, purpose);
-    }
+  RetentionRule[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose)
+  {
+    return repo.findByPurpose(tenantId, purpose);
+  }
 
-    CommandResult updateRule(UpdateRetentionRuleRequest req)
-    {
-        auto rule = repo.findById(req.id, req.tenantId);
-        if (rule is null)
-            return CommandResult("", "Retention rule not found");
+  CommandResult updateRule(UpdateRetentionRuleRequest req)
+  {
+    auto rule = repo.findById(req.id, req.tenantId);
+    if (rule is null)
+      return CommandResult("", "Retention rule not found");
 
-        if (req.name.length > 0) rule.name = req.name;
-        if (req.description.length > 0) rule.description = req.description;
-        if (req.retentionDays > 0) rule.retentionDays = req.retentionDays;
-        if (req.categories.length > 0) rule.categories = req.categories;
-        if (req.legalReference.length > 0) rule.legalReference = req.legalReference;
-        rule.status = req.status;
-        rule.updatedAt = Clock.currStdTime();
+    if (req.name.length > 0)
+      rule.name = req.name;
+    if (req.description.length > 0)
+      rule.description = req.description;
+    if (req.retentionDays > 0)
+      rule.retentionDays = req.retentionDays;
+    if (req.categories.length > 0)
+      rule.categories = req.categories;
+    if (req.legalReference.length > 0)
+      rule.legalReference = req.legalReference;
+    rule.status = req.status;
+    rule.updatedAt = Clock.currStdTime();
 
-        repo.update(*rule);
-        return CommandResult(rule.id, "");
-    }
+    repo.update(*rule);
+    return CommandResult(rule.id, "");
+  }
 
-    void deleteRule(RetentionRuleId id, TenantId tenantId)
-    {
-        repo.remove(id, tenantId);
-    }
+  void deleteRule(RetentionRuleId id, TenantId tenantId)
+  {
+    repo.remove(id, tenantId);
+  }
 }

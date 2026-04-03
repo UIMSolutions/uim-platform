@@ -3,6 +3,7 @@ module uim.platform.foundry.domain.services.app_lifecycle_manager;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry.domain.entities.organization;
+
 // import uim.platform.foundry.domain.ports.repositories.app;
 // import uim.platform.foundry.domain.ports.repositories.org;
 // import uim.platform.foundry.domain.ports.repositories.space;
@@ -107,9 +108,12 @@ class AppLifecycleManager
       }
     }
 
-    if (instances > 0) app.instances = instances;
-    if (memoryMb > 0) app.memoryMb = memoryMb;
-    if (diskMb > 0) app.diskMb = diskMb;
+    if (instances > 0)
+      app.instances = instances;
+    if (memoryMb > 0)
+      app.memoryMb = memoryMb;
+    if (diskMb > 0)
+      app.diskMb = diskMb;
 
     // If app is running, adjust running instances
     if (app.state == AppState.started)

@@ -11,107 +11,119 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for access rule CRUD.
-class ManageAccessRulesUseCase {
-    private AccessRuleRepository ruleRepo;
-    private ConnectorRepository connectorRepo;
+class ManageAccessRulesUseCase
+{
+  private AccessRuleRepository ruleRepo;
+  private ConnectorRepository connectorRepo;
 
-    this(AccessRuleRepository ruleRepo, ConnectorRepository connectorRepo) {
-        this.ruleRepo = ruleRepo;
-        this.connectorRepo = connectorRepo;
-    }
+  this(AccessRuleRepository ruleRepo, ConnectorRepository connectorRepo)
+  {
+    this.ruleRepo = ruleRepo;
+    this.connectorRepo = connectorRepo;
+  }
 
-    CommandResult createRule(CreateAccessRuleRequest req) {
-        // Validate connector exists
-        auto cc = connectorRepo.findById(req.connectorId);
-        if (cc.id.length == 0)
-            return CommandResult(false, "", "Connector not found");
+  CommandResult createRule(CreateAccessRuleRequest req)
+  {
+    // Validate connector exists
+    auto cc = connectorRepo.findById(req.connectorId);
+    if (cc.id.length == 0)
+      return CommandResult(false, "", "Connector not found");
 
-        if (req.virtualHost.length == 0)
-            return CommandResult(false, "", "Virtual host is required");
+    if (req.virtualHost.length == 0)
+      return CommandResult(false, "", "Virtual host is required");
 
-        // import std.uuid : randomUUID;
+    // import std.uuid : randomUUID;
 
-        auto id = randomUUID().toString();
+    auto id = randomUUID().toString();
 
-        AccessRule rule;
-        rule.id = id;
-        rule.connectorId = req.connectorId;
-        rule.tenantId = req.tenantId;
-        rule.description = req.description;
-        rule.protocol = parseAccessProtocol(req.protocol);
-        rule.virtualHost = req.virtualHost;
-        rule.virtualPort = req.virtualPort;
-        rule.urlPathPrefix = req.urlPathPrefix;
-        rule.policy = parseAccessPolicy(req.policy);
-        rule.principalPropagation = req.principalPropagation;
+    AccessRule rule;
+    rule.id = id;
+    rule.connectorId = req.connectorId;
+    rule.tenantId = req.tenantId;
+    rule.description = req.description;
+    rule.protocol = parseAccessProtocol(req.protocol);
+    rule.virtualHost = req.virtualHost;
+    rule.virtualPort = req.virtualPort;
+    rule.urlPathPrefix = req.urlPathPrefix;
+    rule.policy = parseAccessPolicy(req.policy);
+    rule.principalPropagation = req.principalPropagation;
 
-        ruleRepo.save(rule);
-        return CommandResult(true, id, "");
-    }
+    ruleRepo.save(rule);
+    return CommandResult(true, id, "");
+  }
 
-    CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
-        auto rule = ruleRepo.findById(id);
-        if (rule.id.length == 0)
-            return CommandResult(false, "", "Access rule not found");
+  CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req)
+  {
+    auto rule = ruleRepo.findById(id);
+    if (rule.id.length == 0)
+      return CommandResult(false, "", "Access rule not found");
 
-        if (req.description.length > 0)
-            rule.description = req.description;
-        if (req.urlPathPrefix.length > 0)
-            rule.urlPathPrefix = req.urlPathPrefix;
-        if (req.policy.length > 0)
-            rule.policy = parseAccessPolicy(req.policy);
-        rule.principalPropagation = req.principalPropagation;
+    if (req.description.length > 0)
+      rule.description = req.description;
+    if (req.urlPathPrefix.length > 0)
+      rule.urlPathPrefix = req.urlPathPrefix;
+    if (req.policy.length > 0)
+      rule.policy = parseAccessPolicy(req.policy);
+    rule.principalPropagation = req.principalPropagation;
 
-        ruleRepo.update(rule);
-        return CommandResult(true, id, "");
-    }
+    ruleRepo.update(rule);
+    return CommandResult(true, id, "");
+  }
 
-    AccessRule getRule(RuleId id) {
-        return ruleRepo.findById(id);
-    }
+  AccessRule getRule(RuleId id)
+  {
+    return ruleRepo.findById(id);
+  }
 
-    AccessRule[] listByConnector(ConnectorId connectorId) {
-        return ruleRepo.findByConnector(connectorId);
-    }
+  AccessRule[] listByConnector(ConnectorId connectorId)
+  {
+    return ruleRepo.findByConnector(connectorId);
+  }
 
-    AccessRule[] listByTenant(TenantId tenantId) {
-        return ruleRepo.findByTenant(tenantId);
-    }
+  AccessRule[] listByTenant(TenantId tenantId)
+  {
+    return ruleRepo.findByTenant(tenantId);
+  }
 
-    CommandResult deleteRule(RuleId id) {
-        auto rule = ruleRepo.findById(id);
-        if (rule.id.length == 0)
-            return CommandResult(false, "", "Access rule not found");
+  CommandResult deleteRule(RuleId id)
+  {
+    auto rule = ruleRepo.findById(id);
+    if (rule.id.length == 0)
+      return CommandResult(false, "", "Access rule not found");
 
-        ruleRepo.remove(id);
-        return CommandResult(true, id, "");
-    }
+    ruleRepo.remove(id);
+    return CommandResult(true, id, "");
+  }
 }
 
-private AccessProtocol parseAccessProtocol(string s) {
-    switch (s) {
-    case "http":
-        return AccessProtocol.http;
-    case "https":
-        return AccessProtocol.https;
-    case "rfc":
-        return AccessProtocol.rfc;
-    case "tcp":
-        return AccessProtocol.tcp;
-    case "ldap":
-        return AccessProtocol.ldap;
-    default:
-        return AccessProtocol.https;
-    }
+private AccessProtocol parseAccessProtocol(string s)
+{
+  switch (s)
+  {
+  case "http":
+    return AccessProtocol.http;
+  case "https":
+    return AccessProtocol.https;
+  case "rfc":
+    return AccessProtocol.rfc;
+  case "tcp":
+    return AccessProtocol.tcp;
+  case "ldap":
+    return AccessProtocol.ldap;
+  default:
+    return AccessProtocol.https;
+  }
 }
 
-private AccessPolicy parseAccessPolicy(string s) {
-    switch (s) {
-    case "allow":
-        return AccessPolicy.allow;
-    case "deny":
-        return AccessPolicy.deny;
-    default:
-        return AccessPolicy.allow;
-    }
+private AccessPolicy parseAccessPolicy(string s)
+{
+  switch (s)
+  {
+  case "allow":
+    return AccessPolicy.allow;
+  case "deny":
+    return AccessPolicy.deny;
+  default:
+    return AccessPolicy.allow;
+  }
 }

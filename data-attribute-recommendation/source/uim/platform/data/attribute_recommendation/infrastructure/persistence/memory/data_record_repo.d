@@ -1,4 +1,5 @@
-module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.data_record_repo;
+module uim.platform.data.attribute_recommendation.infrastructure.persistence
+  .memory.data_record_repo;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;

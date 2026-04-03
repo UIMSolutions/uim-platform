@@ -28,61 +28,63 @@ import uim.platform.connectivity.presentation.http.monitoring;
 import uim.platform.connectivity.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container {
-    // Repositories (driven adapters)
-    MemoryDestinationRepository destinationRepo;
-    MemoryConnectorRepository connectorRepo;
-    MemoryChannelRepository channelRepo;
-    MemoryAccessRuleRepository accessRuleRepo;
-    MemoryCertificateRepository certificateRepo;
-    MemoryConnectivityLogRepository logRepo;
+struct Container
+{
+  // Repositories (driven adapters)
+  MemoryDestinationRepository destinationRepo;
+  MemoryConnectorRepository connectorRepo;
+  MemoryChannelRepository channelRepo;
+  MemoryAccessRuleRepository accessRuleRepo;
+  MemoryCertificateRepository certificateRepo;
+  MemoryConnectivityLogRepository logRepo;
 
-    // Use cases (application layer)
-    ManageDestinationsUseCase manageDestinations;
-    ManageConnectorsUseCase manageConnectors;
-    ManageChannelsUseCase manageChannels;
-    ManageAccessRulesUseCase manageAccessRules;
-    ManageCertificatesUseCase manageCertificates;
-    MonitorConnectivityUseCase monitorConnectivity;
+  // Use cases (application layer)
+  ManageDestinationsUseCase manageDestinations;
+  ManageConnectorsUseCase manageConnectors;
+  ManageChannelsUseCase manageChannels;
+  ManageAccessRulesUseCase manageAccessRules;
+  ManageCertificatesUseCase manageCertificates;
+  MonitorConnectivityUseCase monitorConnectivity;
 
-    // Controllers (driving adapters)
-    DestinationController destinationController;
-    ConnectorController connectorController;
-    ChannelController channelController;
-    AccessRuleController accessRuleController;
-    CertificateController certificateController;
-    MonitoringController monitoringController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  DestinationController destinationController;
+  ConnectorController connectorController;
+  ChannelController channelController;
+  AccessRuleController accessRuleController;
+  CertificateController certificateController;
+  MonitoringController monitoringController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.destinationRepo = new MemoryDestinationRepository();
-    c.connectorRepo = new MemoryConnectorRepository();
-    c.channelRepo = new MemoryChannelRepository();
-    c.accessRuleRepo = new MemoryAccessRuleRepository();
-    c.certificateRepo = new MemoryCertificateRepository();
-    c.logRepo = new MemoryConnectivityLogRepository();
+  // Infrastructure adapters
+  c.destinationRepo = new MemoryDestinationRepository();
+  c.connectorRepo = new MemoryConnectorRepository();
+  c.channelRepo = new MemoryChannelRepository();
+  c.accessRuleRepo = new MemoryAccessRuleRepository();
+  c.certificateRepo = new MemoryCertificateRepository();
+  c.logRepo = new MemoryConnectivityLogRepository();
 
-    // Application use cases
-    c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.logRepo);
-    c.manageConnectors = new ManageConnectorsUseCase(c.connectorRepo, c.logRepo);
-    c.manageChannels = new ManageChannelsUseCase(c.channelRepo, c.connectorRepo, c.logRepo);
-    c.manageAccessRules = new ManageAccessRulesUseCase(c.accessRuleRepo, c.connectorRepo);
-    c.manageCertificates = new ManageCertificatesUseCase(c.certificateRepo);
-    c.monitorConnectivity = new MonitorConnectivityUseCase(c.logRepo);
+  // Application use cases
+  c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.logRepo);
+  c.manageConnectors = new ManageConnectorsUseCase(c.connectorRepo, c.logRepo);
+  c.manageChannels = new ManageChannelsUseCase(c.channelRepo, c.connectorRepo, c.logRepo);
+  c.manageAccessRules = new ManageAccessRulesUseCase(c.accessRuleRepo, c.connectorRepo);
+  c.manageCertificates = new ManageCertificatesUseCase(c.certificateRepo);
+  c.monitorConnectivity = new MonitorConnectivityUseCase(c.logRepo);
 
-    // Presentation controllers
-    c.destinationController = new DestinationController(c.manageDestinations);
-    c.connectorController = new ConnectorController(c.manageConnectors);
-    c.channelController = new ChannelController(c.manageChannels);
-    c.accessRuleController = new AccessRuleController(c.manageAccessRules);
-    c.certificateController = new CertificateController(c.manageCertificates);
-    c.monitoringController = new MonitoringController(c.monitorConnectivity);
-    c.healthController = new HealthController("connectivity");
+  // Presentation controllers
+  c.destinationController = new DestinationController(c.manageDestinations);
+  c.connectorController = new ConnectorController(c.manageConnectors);
+  c.channelController = new ChannelController(c.manageChannels);
+  c.accessRuleController = new AccessRuleController(c.manageAccessRules);
+  c.certificateController = new CertificateController(c.manageCertificates);
+  c.monitoringController = new MonitoringController(c.monitorConnectivity);
+  c.healthController = new HealthController("connectivity");
 
-    return c;
+  return c;
 }

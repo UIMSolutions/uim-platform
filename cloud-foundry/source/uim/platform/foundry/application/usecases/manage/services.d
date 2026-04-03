@@ -6,6 +6,7 @@ module uim.platform.foundry.application.usecases.manage.services;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
+
 // import uim.platform.foundry.domain.ports.service_instance;
 // import uim.platform.foundry.domain.ports.service_binding;
 import uim.platform.foundry.domain.ports;
@@ -87,9 +88,12 @@ class ManageServicesUseCase
       return CommandResult("", "Service instance not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.parameters.length > 0) updated.parameters = req.parameters;
-    if (req.tags.length > 0) updated.tags = req.tags;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.parameters.length > 0)
+      updated.parameters = req.parameters;
+    if (req.tags.length > 0)
+      updated.tags = req.tags;
     updated.updatedAt = Clock.currStdTime();
 
     instanceRepo.update(updated);

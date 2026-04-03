@@ -9,7 +9,7 @@ struct InferenceResult
   InferenceResultId id;
   TenantId tenantId;
   InferenceRequestId requestId;
-  string predictions;      // JSON: {attributeName: predictedValue, ...}
+  string predictions; // JSON: {attributeName: predictedValue, ...}
   string confidenceScores; // JSON: {attributeName: score, ...}
   long processingTimeMs;
   long createdAt;

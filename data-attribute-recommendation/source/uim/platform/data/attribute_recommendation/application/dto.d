@@ -30,7 +30,7 @@ struct CreateDataRecordRequest
   DatasetId datasetId;
   TenantId tenantId;
   string attributes; // JSON
-  string labels;     // JSON
+  string labels; // JSON
   UserId createdBy;
 }
 
@@ -51,8 +51,8 @@ struct CreateModelConfigRequest
   string name;
   string description;
   ModelType modelType;
-  string targetColumns;   // JSON array
-  string featureColumns;  // JSON array
+  string targetColumns; // JSON array
+  string featureColumns; // JSON array
   string hyperparameters; // JSON
   UserId createdBy;
 }

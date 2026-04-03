@@ -10,7 +10,8 @@ import uim.platform.data.attribute_recommendation.domain.ports.model_config_repo
 import uim.platform.data.attribute_recommendation.domain.ports.inference_request_repository;
 
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
-struct TrainingJobSummary {
+struct TrainingJobSummary
+{
   TrainingJobId jobId;
   ModelConfigId modelConfigId;
   string modelName;
@@ -22,7 +23,8 @@ struct TrainingJobSummary {
   long completedAt;
 }
 
-struct DeploymentSummary {
+struct DeploymentSummary
+{
   DeploymentId deploymentId;
   string deploymentName;
   DeploymentStatus status;
@@ -32,7 +34,8 @@ struct DeploymentSummary {
   long inferenceCount;
 }
 
-struct PipelineSummary {
+struct PipelineSummary
+{
   int totalModels;
   int trainedModels;
   int activeDeployments;
@@ -42,24 +45,24 @@ struct PipelineSummary {
   long totalInferenceRequests;
 }
 
-class MonitorTrainingUseCase {
+class MonitorTrainingUseCase
+{
   private TrainingJobRepository jobRepo;
   private DeploymentRepository deploymentRepo;
   private ModelConfigRepository configRepo;
   private InferenceRequestRepository inferenceRepo;
 
-  this(
-    TrainingJobRepository jobRepo,
-    DeploymentRepository deploymentRepo,
-    ModelConfigRepository configRepo,
-    InferenceRequestRepository inferenceRepo) {
+  this(TrainingJobRepository jobRepo, DeploymentRepository deploymentRepo,
+      ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo)
+  {
     this.jobRepo = jobRepo;
     this.deploymentRepo = deploymentRepo;
     this.configRepo = configRepo;
     this.inferenceRepo = inferenceRepo;
   }
 
-  TrainingJobSummary[] listTrainingJobs(TenantId tenantId) {
+  TrainingJobSummary[] listTrainingJobs(TenantId tenantId)
+  {
     auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
     foreach (ref job; jobs)
@@ -67,14 +70,16 @@ class MonitorTrainingUseCase {
     return result;
   }
 
-  TrainingJobSummary getTrainingJob(TrainingJobId id, TenantId tenantId) {
+  TrainingJobSummary getTrainingJob(TrainingJobId id, TenantId tenantId)
+  {
     auto job = jobRepo.findById(id, tenantId);
     if (job is null)
       return TrainingJobSummary.init;
     return buildJobSummary(*job, tenantId);
   }
 
-  DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
+  DeploymentSummary[] listDeploymentSummaries(TenantId tenantId)
+  {
     auto deps = deploymentRepo.findByTenant(tenantId);
     DeploymentSummary[] result;
     foreach (ref dep; deps)
@@ -82,11 +87,12 @@ class MonitorTrainingUseCase {
     return result;
   }
 
-  PipelineSummary getPipelineSummary(TenantId tenantId) {
+  PipelineSummary getPipelineSummary(TenantId tenantId)
+  {
     PipelineSummary s;
 
     auto configs = configRepo.findByTenant(tenantId);
-    s.totalModels = cast(int)configs.length;
+    s.totalModels = cast(int) configs.length;
     foreach (ref c; configs)
       if (c.status == ModelConfigStatus.trained)
         s.trainedModels++;
@@ -97,8 +103,9 @@ class MonitorTrainingUseCase {
         s.activeDeployments++;
 
     auto jobs = jobRepo.findByTenant(tenantId);
-    s.totalTrainingJobs = cast(int)jobs.length;
-    foreach (ref j; jobs) {
+    s.totalTrainingJobs = cast(int) jobs.length;
+    foreach (ref j; jobs)
+    {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
       else if (j.status == JobStatus.failed)
@@ -106,12 +113,13 @@ class MonitorTrainingUseCase {
     }
 
     auto inferences = inferenceRepo.findByTenant(tenantId);
-    s.totalInferenceRequests = cast(long)inferences.length;
+    s.totalInferenceRequests = cast(long) inferences.length;
 
     return s;
   }
 
-  private TrainingJobSummary buildJobSummary(ref TrainingJob job, TenantId tenantId) {
+  private TrainingJobSummary buildJobSummary(ref TrainingJob job, TenantId tenantId)
+  {
     TrainingJobSummary s;
     s.jobId = job.id;
     s.modelConfigId = job.modelConfigId;
@@ -129,7 +137,8 @@ class MonitorTrainingUseCase {
     return s;
   }
 
-  private DeploymentSummary buildDeploymentSummary(ref ModelDeployment dep, TenantId tenantId) {
+  private DeploymentSummary buildDeploymentSummary(ref ModelDeployment dep, TenantId tenantId)
+  {
     DeploymentSummary s;
     s.deploymentId = dep.id;
     s.deploymentName = dep.name;
@@ -142,7 +151,7 @@ class MonitorTrainingUseCase {
       s.modelName = config.name;
 
     auto reqs = inferenceRepo.findByDeployment(dep.id, tenantId);
-    s.inferenceCount = cast(long)reqs.length;
+    s.inferenceCount = cast(long) reqs.length;
 
     return s;
   }

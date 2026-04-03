@@ -11,16 +11,19 @@ import uim.platform.foundry.domain.entities.space;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageSpacesUseCase {
+class ManageSpacesUseCase
+{
   private SpaceRepository repo;
   private OrgRepository orgRepo;
 
-  this(SpaceRepository repo, OrgRepository orgRepo) {
+  this(SpaceRepository repo, OrgRepository orgRepo)
+  {
     this.repo = repo;
     this.orgRepo = orgRepo;
   }
 
-  CommandResult createSpace(CreateSpaceRequest req) {
+  CommandResult createSpace(CreateSpaceRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.orgId.length == 0)
@@ -56,19 +59,23 @@ class ManageSpacesUseCase {
     return CommandResult(space.id, "");
   }
 
-  Space* getSpace(SpaceId id, TenantId tenantId) {
+  Space* getSpace(SpaceId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  Space[] listSpaces(TenantId tenantId) {
+  Space[] listSpaces(TenantId tenantId)
+  {
     return repo.findByTenant(tenantId);
   }
 
-  Space[] listByOrg(OrgId orgId, TenantId tenantId) {
+  Space[] listByOrg(OrgId orgId, TenantId tenantId)
+  {
     return repo.findByOrg(orgId, tenantId);
   }
 
-  CommandResult updateSpace(UpdateSpaceRequest req) {
+  CommandResult updateSpace(UpdateSpaceRequest req)
+  {
     if (req.id.length == 0)
       return CommandResult("", "Space ID is required");
     if (req.tenantId.length == 0)
@@ -89,7 +96,8 @@ class ManageSpacesUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSpace(SpaceId id, TenantId tenantId) {
+  CommandResult deleteSpace(SpaceId id, TenantId tenantId)
+  {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Space not found");

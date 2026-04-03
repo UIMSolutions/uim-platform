@@ -17,10 +17,8 @@ class ProcessInferenceUseCase
   private InferenceResultRepository resultRepo;
   private InferenceEngine engine;
 
-  this(
-    InferenceRequestRepository requestRepo,
-    InferenceResultRepository resultRepo,
-    InferenceEngine engine)
+  this(InferenceRequestRepository requestRepo,
+      InferenceResultRepository resultRepo, InferenceEngine engine)
   {
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;

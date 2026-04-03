@@ -13,160 +13,169 @@ import uim.platform.data.privacy.presentation.http.json_utils;
 
 class DataSubjectController
 {
-    private ManageDataSubjectsUseCase uc;
+  private ManageDataSubjectsUseCase uc;
 
-    this(ManageDataSubjectsUseCase uc) { this.uc = uc; }
+  this(ManageDataSubjectsUseCase uc)
+  {
+    this.uc = uc;
+  }
 
-    override void registerRoutes(URLRouter router)
+  override void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/data-subjects", &handleCreate);
+    router.get("/api/v1/data-subjects", &handleList);
+    router.get("/api/v1/data-subjects/*", &handleGetById);
+    router.put("/api/v1/data-subjects/*", &handleUpdate);
+    router.delete_("/api/v1/data-subjects/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        router.post("/api/v1/data-subjects", &handleCreate);
-        router.get("/api/v1/data-subjects", &handleList);
-        router.get("/api/v1/data-subjects/*", &handleGetById);
-        router.put("/api/v1/data-subjects/*", &handleUpdate);
-        router.delete_("/api/v1/data-subjects/*", &handleDelete);
-    }
+      auto j = req.json;
+      CreateDataSubjectRequest r;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.displayName = j.getString("displayName");
+      r.email = j.getString("email");
+      r.externalId = j.getString("externalId");
+      r.sourceSystem = j.getString("sourceSystem");
+      r.country = j.getString("country");
+      r.subjectType = parseSubjectType(j.getString("subjectType"));
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+      auto result = uc.createSubject(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto j = req.json;
-            CreateDataSubjectRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.displayName = j.getString("displayName");
-            r.email = j.getString("email");
-            r.externalId = j.getString("externalId");
-            r.sourceSystem = j.getString("sourceSystem");
-            r.country = j.getString("country");
-            r.subjectType = parseSubjectType(j.getString("subjectType"));
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto typeParam = req.headers.get("X-Subject-Type", "");
 
-            auto result = uc.createSubject(r);
-            if (result.isSuccess())
-            {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            }
-            else
-                writeError(res, 400, result.error);
-        }
-        catch (Exception e)
-            writeError(res, 500, "Internal server error");
+      DataSubject[] items;
+      if (typeParam.length > 0)
+        items = uc.listByType(tenantId, parseSubjectType(typeParam));
+      else
+        items = uc.listSubjects(tenantId);
+
+      auto arr = Json.emptyArray;
+      foreach (ref e; items)
+        arr ~= serialize(e);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
     }
+    catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto typeParam = req.headers.get("X-Subject-Type", "");
-
-            DataSubject[] items;
-            if (typeParam.length > 0)
-                items = uc.listByType(tenantId, parseSubjectType(typeParam));
-            else
-                items = uc.listSubjects(tenantId);
-
-            auto arr = Json.emptyArray;
-            foreach (ref e; items)
-                arr ~= serialize(e);
-
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
-            res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-            writeError(res, 500, "Internal server error");
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto entry = uc.getSubject(id, tenantId);
+      if (entry is null)
+      {
+        writeError(res, 404, "Data subject not found");
+        return;
+      }
+      res.writeJsonBody(serialize(*entry), 200);
     }
+    catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto entry = uc.getSubject(id, tenantId);
-            if (entry is null)
-            {
-                writeError(res, 404, "Data subject not found");
-                return;
-            }
-            res.writeJsonBody(serialize(*entry), 200);
-        }
-        catch (Exception e)
-            writeError(res, 500, "Internal server error");
-    }
+      auto j = req.json;
+      UpdateDataSubjectRequest r;
+      r.id = extractIdFromPath(req.requestURI);
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.displayName = j.getString("displayName");
+      r.email = j.getString("email");
+      r.sourceSystem = j.getString("sourceSystem");
+      r.country = j.getString("country");
+      r.subjectType = parseSubjectType(j.getString("subjectType"));
+      r.isActive = j.getBoolean("isActive", true);
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+      auto result = uc.updateSubject(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+        writeError(res, 400, result.error);
+    }
+    catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto j = req.json;
-            UpdateDataSubjectRequest r;
-            r.id = extractIdFromPath(req.requestURI);
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.displayName = j.getString("displayName");
-            r.email = j.getString("email");
-            r.sourceSystem = j.getString("sourceSystem");
-            r.country = j.getString("country");
-            r.subjectType = parseSubjectType(j.getString("subjectType"));
-            r.isActive = j.getBoolean("isActive", true);
-
-            auto result = uc.updateSubject(r);
-            if (result.isSuccess())
-            {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 200);
-            }
-            else
-                writeError(res, 400, result.error);
-        }
-        catch (Exception e)
-            writeError(res, 500, "Internal server error");
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      uc.deleteSubject(id, tenantId);
+      res.writeJsonBody(Json.emptyObject, 204);
     }
+    catch (Exception e)
+      writeError(res, 500, "Internal server error");
+  }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private static Json serialize(ref const DataSubject e)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(e.id);
+    j["tenantId"] = Json(e.tenantId);
+    j["subjectType"] = Json(e.subjectType.to!string);
+    j["externalId"] = Json(e.externalId);
+    j["displayName"] = Json(e.displayName);
+    j["email"] = Json(e.email);
+    j["sourceSystem"] = Json(e.sourceSystem);
+    j["country"] = Json(e.country);
+    j["isActive"] = Json(e.isActive);
+    j["createdAt"] = Json(e.createdAt);
+    j["updatedAt"] = Json(e.updatedAt);
+    return j;
+  }
+
+  private static DataSubjectType parseSubjectType(string s)
+  {
+    switch (s)
     {
-        try
-        {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            uc.deleteSubject(id, tenantId);
-            res.writeJsonBody(Json.emptyObject, 204);
-        }
-        catch (Exception e)
-            writeError(res, 500, "Internal server error");
+    case "employee":
+      return DataSubjectType.employee;
+    case "customer":
+      return DataSubjectType.customer;
+    case "vendor":
+      return DataSubjectType.vendor;
+    case "partner":
+      return DataSubjectType.partner;
+    case "applicant":
+      return DataSubjectType.applicant;
+    default:
+      return DataSubjectType.naturalPerson;
     }
-
-    private static Json serialize(ref const DataSubject e)
-    {
-        auto j = Json.emptyObject;
-        j["id"] = Json(e.id);
-        j["tenantId"] = Json(e.tenantId);
-        j["subjectType"] = Json(e.subjectType.to!string);
-        j["externalId"] = Json(e.externalId);
-        j["displayName"] = Json(e.displayName);
-        j["email"] = Json(e.email);
-        j["sourceSystem"] = Json(e.sourceSystem);
-        j["country"] = Json(e.country);
-        j["isActive"] = Json(e.isActive);
-        j["createdAt"] = Json(e.createdAt);
-        j["updatedAt"] = Json(e.updatedAt);
-        return j;
-    }
-
-    private static DataSubjectType parseSubjectType(string s)
-    {
-        switch (s)
-        {
-            case "employee": return DataSubjectType.employee;
-            case "customer": return DataSubjectType.customer;
-            case "vendor": return DataSubjectType.vendor;
-            case "partner": return DataSubjectType.partner;
-            case "applicant": return DataSubjectType.applicant;
-            default: return DataSubjectType.naturalPerson;
-        }
-    }
+  }
 }

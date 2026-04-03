@@ -7,9 +7,9 @@ import uim.platform.foundry.domain.types;
 struct CfDomain
 {
   DomainId id;
-  OrgId ownerOrgId;                   // empty for shared domains
+  OrgId ownerOrgId; // empty for shared domains
   TenantId tenantId;
-  string name;                        // e.g. "apps.example.com"
+  string name; // e.g. "apps.example.com"
   DomainScope scope_ = DomainScope.shared_;
   bool isInternal;
   string createdBy;

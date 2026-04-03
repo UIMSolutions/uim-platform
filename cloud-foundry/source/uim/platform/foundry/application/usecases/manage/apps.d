@@ -5,6 +5,7 @@ module uim.platform.foundry.application.usecases.manage.apps;
 
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
+
 // import uim.platform.foundry.domain.ports.app;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.domain.services.app_lifecycle_manager;
@@ -88,18 +89,29 @@ class ManageAppsUseCase
       return CommandResult("", "Application not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.instances > 0) updated.instances = req.instances;
-    if (req.memoryMb > 0) updated.memoryMb = req.memoryMb;
-    if (req.diskMb > 0) updated.diskMb = req.diskMb;
-    if (req.buildpackId.length > 0) updated.buildpackId = req.buildpackId;
-    if (req.stack.length > 0) updated.stack = req.stack;
-    if (req.command.length > 0) updated.command = req.command;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.instances > 0)
+      updated.instances = req.instances;
+    if (req.memoryMb > 0)
+      updated.memoryMb = req.memoryMb;
+    if (req.diskMb > 0)
+      updated.diskMb = req.diskMb;
+    if (req.buildpackId.length > 0)
+      updated.buildpackId = req.buildpackId;
+    if (req.stack.length > 0)
+      updated.stack = req.stack;
+    if (req.command.length > 0)
+      updated.command = req.command;
     updated.healthCheckType = req.healthCheckType;
-    if (req.healthCheckEndpoint.length > 0) updated.healthCheckEndpoint = req.healthCheckEndpoint;
-    if (req.healthCheckTimeoutSec > 0) updated.healthCheckTimeoutSec = req.healthCheckTimeoutSec;
-    if (req.environmentVariables.length > 0) updated.environmentVariables = req.environmentVariables;
-    if (req.dockerImage.length > 0) updated.dockerImage = req.dockerImage;
+    if (req.healthCheckEndpoint.length > 0)
+      updated.healthCheckEndpoint = req.healthCheckEndpoint;
+    if (req.healthCheckTimeoutSec > 0)
+      updated.healthCheckTimeoutSec = req.healthCheckTimeoutSec;
+    if (req.environmentVariables.length > 0)
+      updated.environmentVariables = req.environmentVariables;
+    if (req.dockerImage.length > 0)
+      updated.dockerImage = req.dockerImage;
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);

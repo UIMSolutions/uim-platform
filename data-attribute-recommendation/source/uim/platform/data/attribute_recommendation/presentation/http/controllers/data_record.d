@@ -12,19 +12,23 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers.
 // import uim.platform.data.attribute_recommendation.presentation.http.json_utils;
 
 import uim.platform.data.attribute_recommendation;
+
 mixin(ShowModule!());
 @safe:
 
-class DataRecordController : SAPController{
+class DataRecordController : SAPController
+{
   private ManageDataRecordsUseCase uc;
 
-  this(ManageDataRecordsUseCase uc) {
+  this(ManageDataRecordsUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/data-records", &handleCreate);
     router.get("/api/v1/data-records/*", &handleGetById);
     router.get("/api/v1/datasets/records/*", &handleListByDataset);
@@ -33,8 +37,10 @@ class DataRecordController : SAPController{
     router.delete_("/api/v1/data-records/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateDataRecordRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,34 +50,45 @@ class DataRecordController : SAPController{
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createRecord(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else
+      }
+      else
         writeError(res, 400, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto record = uc.getRecord(id, tenantId);
-      if (record is null) {
+      if (record is null)
+      {
         writeError(res, 404, "Record not found");
         return;
       }
       res.writeJsonBody(serializeRecord(*record), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto datasetId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listByDataset(datasetId, tenantId);
@@ -82,64 +99,85 @@ class DataRecordController : SAPController{
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.validateRecord(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("validated");
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.rejectRecord(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("rejected");
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteRecord(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeRecord(ref const DataRecord r) {
+  private static Json serializeRecord(ref const DataRecord r)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["datasetId"] = Json(r.datasetId);

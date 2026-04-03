@@ -13,38 +13,44 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryChannelRepository : ChannelRepository {
-    private ServiceChannel[ChannelId] store;
+class MemoryChannelRepository : ChannelRepository
+{
+  private ServiceChannel[ChannelId] store;
 
-    ServiceChannel findById(ChannelId id) {
-        if (auto p = id in store)
-            return *p;
-        return ServiceChannel.init;
-    }
+  ServiceChannel findById(ChannelId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return ServiceChannel.init;
+  }
 
-    ServiceChannel[] findByConnector(ConnectorId connectorId) {
-        return store.byValue().filter!(e => e.connectorId == connectorId).array;
-    }
+  ServiceChannel[] findByConnector(ConnectorId connectorId)
+  {
+    return store.byValue().filter!(e => e.connectorId == connectorId).array;
+  }
 
-    ServiceChannel[] findByTenant(TenantId tenantId) {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  ServiceChannel[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
-        return store.byValue()
-            .filter!(e => e.tenantId == tenantId && e.status == status)
-            .array;
-    }
+  ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
+  }
 
-    void save(ServiceChannel entity) {
-        store[entity.id] = entity;
-    }
+  void save(ServiceChannel entity)
+  {
+    store[entity.id] = entity;
+  }
 
-    void update(ServiceChannel entity) {
-        store[entity.id] = entity;
-    }
+  void update(ServiceChannel entity)
+  {
+    store[entity.id] = entity;
+  }
 
-    void remove(ChannelId id) {
-        store.remove(id);
-    }
+  void remove(ChannelId id)
+  {
+    store.remove(id);
+  }
 }

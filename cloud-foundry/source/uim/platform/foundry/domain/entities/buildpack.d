@@ -4,7 +4,8 @@ import uim.platform.foundry.domain.types;
 
 /// A buildpack — provides the runtime detection, compilation, and start
 /// scripts for staging applications (e.g. Java, Node.js, Go, Python).
-struct Buildpack {
+struct Buildpack
+{
   BuildpackId id;
   TenantId tenantId;
   string name; // e.g. "java_buildpack", "nodejs_buildpack"
