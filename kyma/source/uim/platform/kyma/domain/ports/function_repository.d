@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.function_repository;
+module uim.platform.kyma.domain.ports.function_repository;
 
-import uim.platform.xyz.domain.entities.serverless_function;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.serverless_function;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — serverless function persistence.
 interface FunctionRepository

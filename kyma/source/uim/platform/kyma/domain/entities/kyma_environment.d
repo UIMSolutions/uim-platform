@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.kyma_environment;
+module uim.platform.kyma.domain.entities.kyma_environment;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.types;
 
 /// A Kyma environment — a managed Kubernetes cluster with Kyma modules.
 struct KymaEnvironment

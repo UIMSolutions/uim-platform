@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.service_instance_repository;
+module uim.platform.kyma.domain.ports.service_instance_repository;
 
-import uim.platform.xyz.domain.entities.service_instance;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.service_instance;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — service instance persistence.
 interface ServiceInstanceRepository

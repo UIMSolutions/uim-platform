@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_event_subscriptions;
+module uim.platform.kyma.application.usecases.manage_event_subscriptions;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.event_subscription;
-import uim.platform.xyz.domain.ports.event_subscription_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.event_subscription;
+import uim.platform.kyma.domain.ports.event_subscription_repository;
+import uim.platform.kyma.domain.types;
 
 /// Application service for event subscription management.
 class ManageEventSubscriptionsUseCase

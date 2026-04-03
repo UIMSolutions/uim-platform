@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.application_repository;
+module uim.platform.kyma.domain.ports.application_repository;
 
-import uim.platform.xyz.domain.entities.application;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.application;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — external application connectivity persistence.
 interface ApplicationRepository

@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.api_rule;
+module uim.platform.kyma.presentation.http.controllers.api_rule;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_api_rules;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.api_rule;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.kyma.application.usecases.manage_api_rules;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.api_rule;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.presentation.http.json_utils;
 
 class ApiRuleController {
     private ManageApiRulesUseCase uc;

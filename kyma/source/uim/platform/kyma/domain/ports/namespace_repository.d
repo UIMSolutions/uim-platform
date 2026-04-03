@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.namespace_repository;
+module uim.platform.kyma.domain.ports.namespace_repository;
 
-import uim.platform.xyz.domain.entities.namespace;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.namespace;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — namespace persistence.
 interface NamespaceRepository

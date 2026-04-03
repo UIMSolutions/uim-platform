@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.namespace;
+module uim.platform.kyma.domain.entities.namespace;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.types;
 
 /// A Kubernetes namespace within a Kyma environment.
 struct Namespace

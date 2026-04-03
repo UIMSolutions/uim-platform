@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.event_subscription_repository;
+module uim.platform.kyma.domain.ports.event_subscription_repository;
 
-import uim.platform.xyz.domain.entities.event_subscription;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.event_subscription;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — event subscription persistence.
 interface EventSubscriptionRepository

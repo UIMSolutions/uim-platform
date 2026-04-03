@@ -1,22 +1,19 @@
-module uim.platform.xyz.application.usecases.manage_api_rules;
+module uim.platform.kyma.application.usecases.manage_api_rules;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.api_rule;
-import uim.platform.xyz.domain.ports.api_rule_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.api_rule;
+import uim.platform.kyma.domain.ports.api_rule_repository;
+import uim.platform.kyma.domain.types;
 
 /// Application service for API rule management.
-class ManageApiRulesUseCase
-{
+class ManageApiRulesUseCase {
     private ApiRuleRepository repo;
 
-    this(ApiRuleRepository repo)
-    {
+    this(ApiRuleRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult create(CreateApiRuleRequest req)
-    {
+    CommandResult create(CreateApiRuleRequest req) {
         if (req.name.length == 0)
             return CommandResult(false, "", "API rule name is required");
         if (req.serviceName.length == 0)
@@ -29,6 +26,7 @@ class ManageApiRulesUseCase
             return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID().toString();
 
         ApiRule rule;
@@ -41,7 +39,8 @@ class ManageApiRulesUseCase
         rule.status = ApiRuleStatus.notReady;
         rule.serviceName = req.serviceName;
         rule.servicePort = req.servicePort > 0 ? req.servicePort : 80;
-        rule.gateway = req.gateway.length > 0 ? req.gateway : "kyma-gateway.kyma-system.svc.cluster.local";
+        rule.gateway = req.gateway.length > 0 ? req.gateway
+            : "kyma-gateway.kyma-system.svc.cluster.local";
         rule.host = req.host;
         rule.tlsEnabled = req.tlsEnabled;
         rule.tlsSecretName = req.tlsSecretName;
@@ -56,8 +55,7 @@ class ManageApiRulesUseCase
 
         // Convert rule entry DTOs
         ApiRuleEntry[] entries;
-        foreach (ref r; req.rules)
-        {
+        foreach (ref r; req.rules) {
             ApiRuleEntry entry;
             entry.path = r.path;
             entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
@@ -77,29 +75,35 @@ class ManageApiRulesUseCase
         return CommandResult(true, id, "");
     }
 
-    CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req)
-    {
+    CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
         auto rule = repo.findById(id);
         if (rule.id.length == 0)
             return CommandResult(false, "", "API rule not found");
 
-        if (req.description.length > 0) rule.description = req.description;
-        if (req.serviceName.length > 0) rule.serviceName = req.serviceName;
-        if (req.servicePort > 0) rule.servicePort = req.servicePort;
-        if (req.host.length > 0) rule.host = req.host;
+        if (req.description.length > 0)
+            rule.description = req.description;
+        if (req.serviceName.length > 0)
+            rule.serviceName = req.serviceName;
+        if (req.servicePort > 0)
+            rule.servicePort = req.servicePort;
+        if (req.host.length > 0)
+            rule.host = req.host;
         rule.tlsEnabled = req.tlsEnabled;
-        if (req.tlsSecretName.length > 0) rule.tlsSecretName = req.tlsSecretName;
+        if (req.tlsSecretName.length > 0)
+            rule.tlsSecretName = req.tlsSecretName;
         rule.corsEnabled = req.corsEnabled;
-        if (req.corsAllowOrigins.length > 0) rule.corsAllowOrigins = req.corsAllowOrigins;
-        if (req.corsAllowMethods.length > 0) rule.corsAllowMethods = req.corsAllowMethods;
-        if (req.corsAllowHeaders.length > 0) rule.corsAllowHeaders = req.corsAllowHeaders;
-        if (req.labels !is null) rule.labels = req.labels;
+        if (req.corsAllowOrigins.length > 0)
+            rule.corsAllowOrigins = req.corsAllowOrigins;
+        if (req.corsAllowMethods.length > 0)
+            rule.corsAllowMethods = req.corsAllowMethods;
+        if (req.corsAllowHeaders.length > 0)
+            rule.corsAllowHeaders = req.corsAllowHeaders;
+        if (req.labels !is null)
+            rule.labels = req.labels;
 
-        if (req.rules.length > 0)
-        {
+        if (req.rules.length > 0) {
             ApiRuleEntry[] entries;
-            foreach (ref r; req.rules)
-            {
+            foreach (ref r; req.rules) {
                 ApiRuleEntry entry;
                 entry.path = r.path;
                 entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
@@ -120,12 +124,19 @@ class ManageApiRulesUseCase
         return CommandResult(true, id, "");
     }
 
-    ApiRule getApiRule(ApiRuleId id) { return repo.findById(id); }
-    ApiRule[] listByNamespace(NamespaceId nsId) { return repo.findByNamespace(nsId); }
-    ApiRule[] listByEnvironment(KymaEnvironmentId envId) { return repo.findByEnvironment(envId); }
+    ApiRule getApiRule(ApiRuleId id) {
+        return repo.findById(id);
+    }
 
-    CommandResult deleteApiRule(ApiRuleId id)
-    {
+    ApiRule[] listByNamespace(NamespaceId nsId) {
+        return repo.findByNamespace(nsId);
+    }
+
+    ApiRule[] listByEnvironment(KymaEnvironmentId envId) {
+        return repo.findByEnvironment(envId);
+    }
+
+    CommandResult deleteApiRule(ApiRuleId id) {
         auto rule = repo.findById(id);
         if (rule.id.length == 0)
             return CommandResult(false, "", "API rule not found");
@@ -133,36 +144,45 @@ class ManageApiRulesUseCase
         return CommandResult(true, id, "");
     }
 
-    private AccessStrategy parseAccessStrategy(string s)
-    {
-        switch (s)
-        {
-            case "noAuth": return AccessStrategy.noAuth;
-            case "oauth2_introspection": return AccessStrategy.oauth2Introspection;
-            case "jwt": return AccessStrategy.jwt;
-            case "allow": return AccessStrategy.allowAll;
-            default: return AccessStrategy.noAuth;
+    private AccessStrategy parseAccessStrategy(string s) {
+        switch (s) {
+        case "noAuth":
+            return AccessStrategy.noAuth;
+        case "oauth2_introspection":
+            return AccessStrategy.oauth2Introspection;
+        case "jwt":
+            return AccessStrategy.jwt;
+        case "allow":
+            return AccessStrategy.allowAll;
+        default:
+            return AccessStrategy.noAuth;
         }
     }
 
-    private ApiHttpMethod parseHttpMethod(string s)
-    {
-        switch (s)
-        {
-            case "GET": return ApiHttpMethod.get_;
-            case "POST": return ApiHttpMethod.post_;
-            case "PUT": return ApiHttpMethod.put_;
-            case "PATCH": return ApiHttpMethod.patch_;
-            case "DELETE": return ApiHttpMethod.delete_;
-            case "HEAD": return ApiHttpMethod.head_;
-            case "OPTIONS": return ApiHttpMethod.options_;
-            default: return ApiHttpMethod.get_;
+    private ApiHttpMethod parseHttpMethod(string s) {
+        switch (s) {
+        case "GET":
+            return ApiHttpMethod.get_;
+        case "POST":
+            return ApiHttpMethod.post_;
+        case "PUT":
+            return ApiHttpMethod.put_;
+        case "PATCH":
+            return ApiHttpMethod.patch_;
+        case "DELETE":
+            return ApiHttpMethod.delete_;
+        case "HEAD":
+            return ApiHttpMethod.head_;
+        case "OPTIONS":
+            return ApiHttpMethod.options_;
+        default:
+            return ApiHttpMethod.get_;
         }
     }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
     import core.time : MonoTime;
+
     return MonoTime.currTime.ticks / 10_000_000;
 }

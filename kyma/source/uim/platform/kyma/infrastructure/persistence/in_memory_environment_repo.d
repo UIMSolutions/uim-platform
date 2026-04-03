@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.environment_repo;
+module uim.platform.kyma.infrastructure.persistence.memory.environment_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.kyma_environment;
-import uim.platform.xyz.domain.ports.environment_repository;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.domain.entities.kyma_environment;
+import uim.platform.kyma.domain.ports.environment_repository;
 
 import std.algorithm : filter;
 import std.array : array;

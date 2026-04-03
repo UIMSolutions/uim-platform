@@ -3,47 +3,47 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.kyma.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.kyma.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.environment_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.namespace_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.function_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.api_rule_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.service_instance_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.service_binding_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.event_subscription_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.module_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.application_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.environment_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.namespace_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.function_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.api_rule_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.service_instance_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.service_binding_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.event_subscription_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.module_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.application_repo;
 
 // Domain services
-import uim.platform.xyz.domain.services.module_dependency_resolver;
-import uim.platform.xyz.domain.services.function_validator;
+import uim.platform.kyma.domain.services.module_dependency_resolver;
+import uim.platform.kyma.domain.services.function_validator;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_environments;
-import uim.platform.xyz.application.usecases.manage_namespaces;
-import uim.platform.xyz.application.usecases.manage_functions;
-import uim.platform.xyz.application.usecases.manage_api_rules;
-import uim.platform.xyz.application.usecases.manage_service_instances;
-import uim.platform.xyz.application.usecases.manage_service_bindings;
-import uim.platform.xyz.application.usecases.manage_event_subscriptions;
-import uim.platform.xyz.application.usecases.manage_modules;
-import uim.platform.xyz.application.usecases.manage_applications;
+import uim.platform.kyma.application.usecases.manage_environments;
+import uim.platform.kyma.application.usecases.manage_namespaces;
+import uim.platform.kyma.application.usecases.manage_functions;
+import uim.platform.kyma.application.usecases.manage_api_rules;
+import uim.platform.kyma.application.usecases.manage_service_instances;
+import uim.platform.kyma.application.usecases.manage_service_bindings;
+import uim.platform.kyma.application.usecases.manage_event_subscriptions;
+import uim.platform.kyma.application.usecases.manage_modules;
+import uim.platform.kyma.application.usecases.manage_applications;
 
 // Controllers
-import uim.platform.xyz.presentation.http.environment;
-import uim.platform.xyz.presentation.http.namespace;
-import uim.platform.xyz.presentation.http.function;
-import uim.platform.xyz.presentation.http.api_rule;
-import uim.platform.xyz.presentation.http.service_instance;
-import uim.platform.xyz.presentation.http.service_binding;
-import uim.platform.xyz.presentation.http.event_subscription;
-import uim.platform.xyz.presentation.http.module ;
-import uim.platform.xyz.presentation.http.application;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.kyma.presentation.http.environment;
+import uim.platform.kyma.presentation.http.namespace;
+import uim.platform.kyma.presentation.http.function;
+import uim.platform.kyma.presentation.http.api_rule;
+import uim.platform.kyma.presentation.http.service_instance;
+import uim.platform.kyma.presentation.http.service_binding;
+import uim.platform.kyma.presentation.http.event_subscription;
+import uim.platform.kyma.presentation.http.module ;
+import uim.platform.kyma.presentation.http.application;
+import uim.platform.kyma.presentation.http.health;
 
 
 

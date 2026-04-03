@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.application_repo;
+module uim.platform.kyma.infrastructure.persistence.memory.application_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.application;
-import uim.platform.xyz.domain.ports.application_repository;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.domain.entities.application;
+import uim.platform.kyma.domain.ports.application_repository;
 
 import std.algorithm : filter;
 import std.array : array;

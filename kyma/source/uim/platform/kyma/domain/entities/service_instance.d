@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.service_instance;
+module uim.platform.kyma.domain.entities.service_instance;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.types;
 
 /// A service instance provisioned from the BTP service catalog.
 struct ServiceInstance

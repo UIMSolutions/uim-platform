@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.event_subscription_repo;
+module uim.platform.kyma.infrastructure.persistence.memory.event_subscription_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.event_subscription;
-import uim.platform.xyz.domain.ports.event_subscription_repository;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.domain.entities.event_subscription;
+import uim.platform.kyma.domain.ports.event_subscription_repository;
 
 import std.algorithm : filter;
 import std.array : array;

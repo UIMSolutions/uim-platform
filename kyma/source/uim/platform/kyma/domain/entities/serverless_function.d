@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.serverless_function;
+module uim.platform.kyma.domain.entities.serverless_function;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.types;
 
 /// A serverless function deployed in a Kyma namespace.
 struct ServerlessFunction

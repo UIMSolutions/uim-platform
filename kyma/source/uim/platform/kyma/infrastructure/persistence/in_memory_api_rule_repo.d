@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.api_rule_repo;
+module uim.platform.kyma.infrastructure.persistence.memory.api_rule_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.api_rule;
-import uim.platform.xyz.domain.ports.api_rule_repository;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.domain.entities.api_rule;
+import uim.platform.kyma.domain.ports.api_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

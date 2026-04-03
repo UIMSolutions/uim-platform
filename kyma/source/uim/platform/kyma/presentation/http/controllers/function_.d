@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.function_;
+module uim.platform.kyma.presentation.http.controllers.function_;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_functions;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.serverless_function;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.kyma.application.usecases.manage_functions;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.serverless_function;
+import uim.platform.kyma.domain.types;
+import uim.platform.kyma.presentation.http.json_utils;
 
 class FunctionController {
     private ManageFunctionsUseCase uc;

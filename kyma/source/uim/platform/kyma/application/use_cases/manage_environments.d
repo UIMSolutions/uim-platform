@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_environments;
+module uim.platform.kyma.application.usecases.manage_environments;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.kyma_environment;
-import uim.platform.xyz.domain.ports.environment_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.kyma_environment;
+import uim.platform.kyma.domain.ports.environment_repository;
+import uim.platform.kyma.domain.types;
 
 /// Application service for Kyma environment lifecycle management.
 class ManageEnvironmentsUseCase

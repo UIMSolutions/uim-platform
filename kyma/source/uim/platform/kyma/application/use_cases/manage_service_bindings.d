@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_service_bindings;
+module uim.platform.kyma.application.usecases.manage_service_bindings;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.service_binding;
-import uim.platform.xyz.domain.ports.service_binding_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.service_binding;
+import uim.platform.kyma.domain.ports.service_binding_repository;
+import uim.platform.kyma.domain.types;
 
 /// Application service for service binding management.
 class ManageServiceBindingsUseCase

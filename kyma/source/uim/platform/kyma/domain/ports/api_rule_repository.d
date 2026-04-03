@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.api_rule_repository;
+module uim.platform.kyma.domain.ports.api_rule_repository;
 
-import uim.platform.xyz.domain.entities.api_rule;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.domain.entities.api_rule;
+import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — API rule persistence.
 interface ApiRuleRepository

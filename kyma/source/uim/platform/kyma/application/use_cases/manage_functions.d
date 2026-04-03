@@ -1,10 +1,10 @@
-module uim.platform.xyz.application.usecases.manage_functions;
+module uim.platform.kyma.application.usecases.manage_functions;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.serverless_function;
-import uim.platform.xyz.domain.ports.function_repository;
-import uim.platform.xyz.domain.services.function_validator;
-import uim.platform.xyz.domain.types;
+import uim.platform.kyma.application.dto;
+import uim.platform.kyma.domain.entities.serverless_function;
+import uim.platform.kyma.domain.ports.function_repository;
+import uim.platform.kyma.domain.services.function_validator;
+import uim.platform.kyma.domain.types;
 
 /// Application service for serverless function lifecycle management.
 class ManageFunctionsUseCase
