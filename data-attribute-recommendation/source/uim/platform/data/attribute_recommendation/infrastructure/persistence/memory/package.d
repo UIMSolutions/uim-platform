@@ -4,3 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory;
+
+public {
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.data_record_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_request_repo;
+
+}
