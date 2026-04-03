@@ -45,85 +45,87 @@ import uim.platform.identity_authentication.presentation.http.translation;
 import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container {
-    // Repositories (driven adapters)
-    MemorySiteRepository siteRepo;
-    MemoryPageRepository pageRepo;
-    MemorySectionRepository sectionRepo;
-    MemoryTileRepository tileRepo;
-    MemoryCatalogRepository catalogRepo;
-    MemoryProviderRepository providerRepo;
-    MemoryRoleRepository roleRepo;
-    MemoryThemeRepository themeRepo;
-    MemoryMenuItemRepository menuItemRepo;
-    MemoryTranslationRepository translationRepo;
+struct Container
+{
+  // Repositories (driven adapters)
+  MemorySiteRepository siteRepo;
+  MemoryPageRepository pageRepo;
+  MemorySectionRepository sectionRepo;
+  MemoryTileRepository tileRepo;
+  MemoryCatalogRepository catalogRepo;
+  MemoryProviderRepository providerRepo;
+  MemoryRoleRepository roleRepo;
+  MemoryThemeRepository themeRepo;
+  MemoryMenuItemRepository menuItemRepo;
+  MemoryTranslationRepository translationRepo;
 
-    // Use cases (application layer)
-    ManageSitesUseCase manageSites;
-    ManagePagesUseCase managePages;
-    ManageSectionsUseCase manageSections;
-    ManageTilesUseCase manageTiles;
-    ManageCatalogsUseCase manageCatalogs;
-    ManageProvidersUseCase manageProviders;
-    ManageRolesUseCase manageRoles;
-    ManageThemesUseCase manageThemes;
-    ManageMenuItemsUseCase manageMenuItems;
-    ManageTranslationsUseCase manageTranslations;
+  // Use cases (application layer)
+  ManageSitesUseCase manageSites;
+  ManagePagesUseCase managePages;
+  ManageSectionsUseCase manageSections;
+  ManageTilesUseCase manageTiles;
+  ManageCatalogsUseCase manageCatalogs;
+  ManageProvidersUseCase manageProviders;
+  ManageRolesUseCase manageRoles;
+  ManageThemesUseCase manageThemes;
+  ManageMenuItemsUseCase manageMenuItems;
+  ManageTranslationsUseCase manageTranslations;
 
-    // Controllers (driving adapters)
-    SiteController siteController;
-    PageController pageController;
-    SectionController sectionController;
-    TileController tileController;
-    CatalogController catalogController;
-    ProviderController providerController;
-    RoleController roleController;
-    ThemeController themeController;
-    MenuItemController menuItemController;
-    TranslationController translationController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  SiteController siteController;
+  PageController pageController;
+  SectionController sectionController;
+  TileController tileController;
+  CatalogController catalogController;
+  ProviderController providerController;
+  RoleController roleController;
+  ThemeController themeController;
+  MenuItemController menuItemController;
+  TranslationController translationController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.siteRepo = new MemorySiteRepository();
-    c.pageRepo = new MemoryPageRepository();
-    c.sectionRepo = new MemorySectionRepository();
-    c.tileRepo = new MemoryTileRepository();
-    c.catalogRepo = new MemoryCatalogRepository();
-    c.providerRepo = new MemoryProviderRepository();
-    c.roleRepo = new MemoryRoleRepository();
-    c.themeRepo = new MemoryThemeRepository();
-    c.menuItemRepo = new MemoryMenuItemRepository();
-    c.translationRepo = new MemoryTranslationRepository();
+  // Infrastructure adapters
+  c.siteRepo = new MemorySiteRepository();
+  c.pageRepo = new MemoryPageRepository();
+  c.sectionRepo = new MemorySectionRepository();
+  c.tileRepo = new MemoryTileRepository();
+  c.catalogRepo = new MemoryCatalogRepository();
+  c.providerRepo = new MemoryProviderRepository();
+  c.roleRepo = new MemoryRoleRepository();
+  c.themeRepo = new MemoryThemeRepository();
+  c.menuItemRepo = new MemoryMenuItemRepository();
+  c.translationRepo = new MemoryTranslationRepository();
 
-    // Application use cases
-    c.manageSites = new ManageSitesUseCase(c.siteRepo);
-    c.managePages = new ManagePagesUseCase(c.pageRepo, c.siteRepo);
-    c.manageSections = new ManageSectionsUseCase(c.sectionRepo, c.pageRepo);
-    c.manageTiles = new ManageTilesUseCase(c.tileRepo);
-    c.manageCatalogs = new ManageCatalogsUseCase(c.catalogRepo);
-    c.manageProviders = new ManageProvidersUseCase(c.providerRepo);
-    c.manageRoles = new ManageRolesUseCase(c.roleRepo);
-    c.manageThemes = new ManageThemesUseCase(c.themeRepo);
-    c.manageMenuItems = new ManageMenuItemsUseCase(c.menuItemRepo, c.siteRepo);
-    c.manageTranslations = new ManageTranslationsUseCase(c.translationRepo);
+  // Application use cases
+  c.manageSites = new ManageSitesUseCase(c.siteRepo);
+  c.managePages = new ManagePagesUseCase(c.pageRepo, c.siteRepo);
+  c.manageSections = new ManageSectionsUseCase(c.sectionRepo, c.pageRepo);
+  c.manageTiles = new ManageTilesUseCase(c.tileRepo);
+  c.manageCatalogs = new ManageCatalogsUseCase(c.catalogRepo);
+  c.manageProviders = new ManageProvidersUseCase(c.providerRepo);
+  c.manageRoles = new ManageRolesUseCase(c.roleRepo);
+  c.manageThemes = new ManageThemesUseCase(c.themeRepo);
+  c.manageMenuItems = new ManageMenuItemsUseCase(c.menuItemRepo, c.siteRepo);
+  c.manageTranslations = new ManageTranslationsUseCase(c.translationRepo);
 
-    // Presentation controllers
-    c.siteController = new SiteController(c.manageSites);
-    c.pageController = new PageController(c.managePages);
-    c.sectionController = new SectionController(c.manageSections);
-    c.tileController = new TileController(c.manageTiles);
-    c.catalogController = new CatalogController(c.manageCatalogs);
-    c.providerController = new ProviderController(c.manageProviders);
-    c.roleController = new RoleController(c.manageRoles);
-    c.themeController = new ThemeController(c.manageThemes);
-    c.menuItemController = new MenuItemController(c.manageMenuItems);
-    c.translationController = new TranslationController(c.manageTranslations);
-    c.healthController = new HealthController("portal");
+  // Presentation controllers
+  c.siteController = new SiteController(c.manageSites);
+  c.pageController = new PageController(c.managePages);
+  c.sectionController = new SectionController(c.manageSections);
+  c.tileController = new TileController(c.manageTiles);
+  c.catalogController = new CatalogController(c.manageCatalogs);
+  c.providerController = new ProviderController(c.manageProviders);
+  c.roleController = new RoleController(c.manageRoles);
+  c.themeController = new ThemeController(c.manageThemes);
+  c.menuItemController = new MenuItemController(c.manageMenuItems);
+  c.translationController = new TranslationController(c.manageTranslations);
+  c.healthController = new HealthController("portal");
 
-    return c;
+  return c;
 }

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service.classes.entities.tenant;
 
 import uim.platform.service;
@@ -6,37 +11,44 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMTenantEntity : UIMEntity {
+class UIMTenantEntity : UIMEntity
+{
   mixin(UIMEntityTemplate!UIMTenantEntity);
 
-  this(UUID tenantId) {
+  this(UUID tenantId)
+  {
     super();
     this.tenantId(tenantId);
   }
 
-  this(UUID tenantId, Json[string] initData) {
+  this(UUID tenantId, Json[string] initData)
+  {
     super(initData);
     this.tenantId(tenantId);
   }
 
-  override bool initialize(Json[string] initData = null) {
-    if (!super.initialize(initData)) {
+  override bool initialize(Json[string] initData = null)
+  {
+    if (!super.initialize(initData))
+    {
       return false;
     }
 
-    if (initData.hasKey("tenant_id")) {
+    if (initData.hasKey("tenant_id"))
+    {
       _tenantId = UUID(initData["tenant_id"].getString);
     }
 
     return true;
   }
 
-  override Json toJson() {
-    return super.toJson()
-      .set("tenantId", _tenantId.toString());
+  override Json toJson()
+  {
+    return super.toJson().set("tenantId", _tenantId.toString());
   }
   ///
-  unittest {
+  unittest
+  {
     UUID id = randomUUID();
     UIMTenantEntity obj = new UIMTenantEntity(id);
     Json json = obj.toJson();
@@ -45,15 +57,18 @@ class UIMTenantEntity : UIMEntity {
 
   // #region tenantId
   protected UUID _tenantId;
-  UUID tenantId() const {
+  UUID tenantId() const
+  {
     return _tenantId;
   }
 
-  void tenantId(UUID id) {
+  void tenantId(UUID id)
+  {
     _tenantId = id;
   }
   ///
-  unittest {
+  unittest
+  {
     UUID id = randomUUID();
     UIMTenantEntity obj = new UIMTenantEntity(id);
     assert(obj.tenantId == id);

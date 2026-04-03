@@ -45,85 +45,87 @@ import uim.platform.identity_authentication.presentation.http.widget;
 import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container {
-    // Repositories (driven adapters)
-    MemoryWorkspaceRepository workspaceRepo;
-    MemoryWorkpageRepository workpageRepo;
-    MemoryCardRepository cardRepo;
-    MemoryContentRepository contentRepo;
-    MemoryFeedRepository feedRepo;
-    MemoryNotificationRepository notificationRepo;
-    MemoryTaskRepository taskRepo;
-    MemoryChannelRepository channelRepo;
-    MemoryAppRepository appRepo;
-    MemoryWidgetRepository widgetRepo;
+struct Container
+{
+  // Repositories (driven adapters)
+  MemoryWorkspaceRepository workspaceRepo;
+  MemoryWorkpageRepository workpageRepo;
+  MemoryCardRepository cardRepo;
+  MemoryContentRepository contentRepo;
+  MemoryFeedRepository feedRepo;
+  MemoryNotificationRepository notificationRepo;
+  MemoryTaskRepository taskRepo;
+  MemoryChannelRepository channelRepo;
+  MemoryAppRepository appRepo;
+  MemoryWidgetRepository widgetRepo;
 
-    // Use cases (application layer)
-    ManageWorkspacesUseCase manageWorkspaces;
-    ManageWorkpagesUseCase manageWorkpages;
-    ManageCardsUseCase manageCards;
-    ManageContentUseCase manageContent;
-    ManageFeedsUseCase manageFeeds;
-    ManageNotificationsUseCase manageNotifications;
-    ManageTasksUseCase manageTasks;
-    ManageChannelsUseCase manageChannels;
-    ManageAppsUseCase manageApps;
-    ManageWidgetsUseCase manageWidgets;
+  // Use cases (application layer)
+  ManageWorkspacesUseCase manageWorkspaces;
+  ManageWorkpagesUseCase manageWorkpages;
+  ManageCardsUseCase manageCards;
+  ManageContentUseCase manageContent;
+  ManageFeedsUseCase manageFeeds;
+  ManageNotificationsUseCase manageNotifications;
+  ManageTasksUseCase manageTasks;
+  ManageChannelsUseCase manageChannels;
+  ManageAppsUseCase manageApps;
+  ManageWidgetsUseCase manageWidgets;
 
-    // Controllers (driving adapters)
-    WorkspaceController workspaceController;
-    WorkpageController workpageController;
-    CardController cardController;
-    ContentController contentController;
-    FeedController feedController;
-    NotificationController notificationController;
-    TaskController taskController;
-    ChannelController channelController;
-    AppController appController;
-    WidgetController widgetController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  WorkspaceController workspaceController;
+  WorkpageController workpageController;
+  CardController cardController;
+  ContentController contentController;
+  FeedController feedController;
+  NotificationController notificationController;
+  TaskController taskController;
+  ChannelController channelController;
+  AppController appController;
+  WidgetController widgetController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.workspaceRepo = new MemoryWorkspaceRepository();
-    c.workpageRepo = new MemoryWorkpageRepository();
-    c.cardRepo = new MemoryCardRepository();
-    c.contentRepo = new MemoryContentRepository();
-    c.feedRepo = new MemoryFeedRepository();
-    c.notificationRepo = new MemoryNotificationRepository();
-    c.taskRepo = new MemoryTaskRepository();
-    c.channelRepo = new MemoryChannelRepository();
-    c.appRepo = new MemoryAppRepository();
-    c.widgetRepo = new MemoryWidgetRepository();
+  // Infrastructure adapters
+  c.workspaceRepo = new MemoryWorkspaceRepository();
+  c.workpageRepo = new MemoryWorkpageRepository();
+  c.cardRepo = new MemoryCardRepository();
+  c.contentRepo = new MemoryContentRepository();
+  c.feedRepo = new MemoryFeedRepository();
+  c.notificationRepo = new MemoryNotificationRepository();
+  c.taskRepo = new MemoryTaskRepository();
+  c.channelRepo = new MemoryChannelRepository();
+  c.appRepo = new MemoryAppRepository();
+  c.widgetRepo = new MemoryWidgetRepository();
 
-    // Application use cases
-    c.manageWorkspaces = new ManageWorkspacesUseCase(c.workspaceRepo);
-    c.manageWorkpages = new ManageWorkpagesUseCase(c.workpageRepo);
-    c.manageCards = new ManageCardsUseCase(c.cardRepo);
-    c.manageContent = new ManageContentUseCase(c.contentRepo);
-    c.manageFeeds = new ManageFeedsUseCase(c.feedRepo);
-    c.manageNotifications = new ManageNotificationsUseCase(c.notificationRepo);
-    c.manageTasks = new ManageTasksUseCase(c.taskRepo);
-    c.manageChannels = new ManageChannelsUseCase(c.channelRepo);
-    c.manageApps = new ManageAppsUseCase(c.appRepo);
-    c.manageWidgets = new ManageWidgetsUseCase(c.widgetRepo);
+  // Application use cases
+  c.manageWorkspaces = new ManageWorkspacesUseCase(c.workspaceRepo);
+  c.manageWorkpages = new ManageWorkpagesUseCase(c.workpageRepo);
+  c.manageCards = new ManageCardsUseCase(c.cardRepo);
+  c.manageContent = new ManageContentUseCase(c.contentRepo);
+  c.manageFeeds = new ManageFeedsUseCase(c.feedRepo);
+  c.manageNotifications = new ManageNotificationsUseCase(c.notificationRepo);
+  c.manageTasks = new ManageTasksUseCase(c.taskRepo);
+  c.manageChannels = new ManageChannelsUseCase(c.channelRepo);
+  c.manageApps = new ManageAppsUseCase(c.appRepo);
+  c.manageWidgets = new ManageWidgetsUseCase(c.widgetRepo);
 
-    // Presentation controllers
-    c.workspaceController = new WorkspaceController(c.manageWorkspaces);
-    c.workpageController = new WorkpageController(c.manageWorkpages);
-    c.cardController = new CardController(c.manageCards);
-    c.contentController = new ContentController(c.manageContent);
-    c.feedController = new FeedController(c.manageFeeds);
-    c.notificationController = new NotificationController(c.manageNotifications);
-    c.taskController = new TaskController(c.manageTasks);
-    c.channelController = new ChannelController(c.manageChannels);
-    c.appController = new AppController(c.manageApps);
-    c.widgetController = new WidgetController(c.manageWidgets);
-    c.healthController = new HealthController("workzone");
+  // Presentation controllers
+  c.workspaceController = new WorkspaceController(c.manageWorkspaces);
+  c.workpageController = new WorkpageController(c.manageWorkpages);
+  c.cardController = new CardController(c.manageCards);
+  c.contentController = new ContentController(c.manageContent);
+  c.feedController = new FeedController(c.manageFeeds);
+  c.notificationController = new NotificationController(c.manageNotifications);
+  c.taskController = new TaskController(c.manageTasks);
+  c.channelController = new ChannelController(c.manageChannels);
+  c.appController = new AppController(c.manageApps);
+  c.widgetController = new WidgetController(c.manageWidgets);
+  c.healthController = new HealthController("workzone");
 
-    return c;
+  return c;
 }

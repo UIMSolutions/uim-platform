@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.workzone.application.usecases.manage_apps;
 
 // import std.uuid;
@@ -8,72 +13,80 @@ import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.ports.app_repository;
 import uim.platform.workzone.application.dto;
 
-class ManageAppsUseCase {
-    private AppRepository repo;
+class ManageAppsUseCase
+{
+  private AppRepository repo;
 
-    this(AppRepository repo) {
-        this.repo = repo;
-    }
+  this(AppRepository repo)
+  {
+    this.repo = repo;
+  }
 
-    CommandResult createApp(CreateAppRequest req) {
-        if (req.name.length == 0)
-            return CommandResult("", "App name is required");
+  CommandResult createApp(CreateAppRequest req)
+  {
+    if (req.name.length == 0)
+      return CommandResult("", "App name is required");
 
-        auto now = Clock.currStdTime();
-        auto app = AppRegistration();
-        app.id = randomUUID().toString();
-        app.tenantId = req.tenantId;
-        app.name = req.name;
-        app.description = req.description;
-        app.launchUrl = req.launchUrl;
-        app.icon = req.icon;
-        app.vendor = req.vendor;
-        app.version_ = req.version_;
-        app.status = AppStatus.active;
-        app.supportedPlatforms = req.supportedPlatforms;
-        app.tags = req.tags;
-        app.appConfig = req.appConfig;
-        app.createdAt = now;
-        app.updatedAt = now;
+    auto now = Clock.currStdTime();
+    auto app = AppRegistration();
+    app.id = randomUUID().toString();
+    app.tenantId = req.tenantId;
+    app.name = req.name;
+    app.description = req.description;
+    app.launchUrl = req.launchUrl;
+    app.icon = req.icon;
+    app.vendor = req.vendor;
+    app.version_ = req.version_;
+    app.status = AppStatus.active;
+    app.supportedPlatforms = req.supportedPlatforms;
+    app.tags = req.tags;
+    app.appConfig = req.appConfig;
+    app.createdAt = now;
+    app.updatedAt = now;
 
-        repo.save(app);
-        return CommandResult(app.id, "");
-    }
+    repo.save(app);
+    return CommandResult(app.id, "");
+  }
 
-    AppRegistration* getApp(AppId id, TenantId tenantId) {
-        return repo.findById(id, tenantId);
-    }
+  AppRegistration* getApp(AppId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
 
-    AppRegistration[] listApps(TenantId tenantId) {
-        return repo.findByTenant(tenantId);
-    }
+  AppRegistration[] listApps(TenantId tenantId)
+  {
+    return repo.findByTenant(tenantId);
+  }
 
-    AppRegistration[] listByStatus(AppStatus status, TenantId tenantId) {
-        return repo.findByStatus(status, tenantId);
-    }
+  AppRegistration[] listByStatus(AppStatus status, TenantId tenantId)
+  {
+    return repo.findByStatus(status, tenantId);
+  }
 
-    CommandResult updateApp(UpdateAppRequest req) {
-        auto app = repo.findById(req.id, req.tenantId);
-        if (app is null)
-            return CommandResult("", "App not found");
+  CommandResult updateApp(UpdateAppRequest req)
+  {
+    auto app = repo.findById(req.id, req.tenantId);
+    if (app is null)
+      return CommandResult("", "App not found");
 
-        if (req.name.length > 0)
-            app.name = req.name;
-        if (req.description.length > 0)
-            app.description = req.description;
-        if (req.launchUrl.length > 0)
-            app.launchUrl = req.launchUrl;
-        if (req.icon.length > 0)
-            app.icon = req.icon;
-        app.status = req.status;
-        app.appConfig = req.appConfig;
-        app.updatedAt = Clock.currStdTime();
+    if (req.name.length > 0)
+      app.name = req.name;
+    if (req.description.length > 0)
+      app.description = req.description;
+    if (req.launchUrl.length > 0)
+      app.launchUrl = req.launchUrl;
+    if (req.icon.length > 0)
+      app.icon = req.icon;
+    app.status = req.status;
+    app.appConfig = req.appConfig;
+    app.updatedAt = Clock.currStdTime();
 
-        repo.update(*app);
-        return CommandResult(app.id, "");
-    }
+    repo.update(*app);
+    return CommandResult(app.id, "");
+  }
 
-    void deleteApp(AppId id, TenantId tenantId) {
-        repo.remove(id, tenantId);
-    }
+  void deleteApp(AppId id, TenantId tenantId)
+  {
+    repo.remove(id, tenantId);
+  }
 }

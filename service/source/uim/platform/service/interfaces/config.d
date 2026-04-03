@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service.interfaces.config;
 
 import uim.platform.service;
@@ -5,7 +10,8 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-interface IUIMConfig {
+interface IUIMConfig
+{
   string serviceName();
   void serviceName(string name);
 
@@ -13,7 +19,7 @@ interface IUIMConfig {
   void serviceVersion(string vers);
 
   string host();
-  void host(string host);  
+  void host(string host);
 
   ushort port();
   void port(ushort port);

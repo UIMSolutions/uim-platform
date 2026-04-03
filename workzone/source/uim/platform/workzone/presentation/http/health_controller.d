@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.identity_authentication.presentation.http.health;
 
 // import vibe.http.server;
@@ -6,16 +11,16 @@ module uim.platform.identity_authentication.presentation.http.health;
 
 class HealthController
 {
-    override void registerRoutes(URLRouter router)
-    {
-        router.get("/api/v1/health", &handleHealth);
-    }
+  override void registerRoutes(URLRouter router)
+  {
+    router.get("/api/v1/health", &handleHealth);
+  }
 
-    private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        auto j = Json.emptyObject;
-        j["status"] = Json("UP");
-        j["service"] = Json("workzone");
-        res.writeJsonBody(j, 200);
-    }
+  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    auto j = Json.emptyObject;
+    j["status"] = Json("UP");
+    j["service"] = Json("workzone");
+    res.writeJsonBody(j, 200);
+  }
 }

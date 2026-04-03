@@ -5,14 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.service.classes;
 
-public { // Packages
+public
+{ // Packages
   import uim.platform.service.classes.controllers;
   import uim.platform.service.classes.entities;
   import uim.platform.service.classes.stores;
   import uim.platform.service.classes.tenants;
 }
 
-public { // Modules
+public
+{ // Modules
   import uim.platform.service.classes.config;
   import uim.platform.service.classes.repository;
   import uim.platform.service.classes.server;

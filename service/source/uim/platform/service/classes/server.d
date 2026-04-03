@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service.classes.server;
 
 import uim.platform.service;
@@ -5,7 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
- /**
+/**
   * SAPServer - Base class for all SAP service HTTP servers
   * Provides common functionality like:
   * - Base path handling
@@ -19,27 +24,33 @@ mixin(ShowModule!());
   *   (other routes are implemented in subclasses)
 
   */
-class UIMServer {
-  this() {
+class UIMServer
+{
+  this()
+  {
     initialize();
   }
 
-  this(Json initData) {
-    if (initData.isObject) {
+  this(Json initData)
+  {
+    if (initData.isObject)
+    {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData) {
+  this(Json[string] initData)
+  {
     initialize(initData);
   }
 
-  this(IUIMService service) {
+  this(IUIMService service)
+  {
     _service = service;
   }
 
-
-  bool initialize(Json[string] initData = null) {
+  bool initialize(Json[string] initData = null)
+  {
     // Initialization logic for the store
     return true;
   }
@@ -47,80 +58,95 @@ class UIMServer {
   protected IUIMService _service;
   // -- host --
   protected string _host;
-  string host() const {
+  string host() const
+  {
     return _host;
   }
 
-  void host(string value) {
+  void host(string value)
+  {
     _host = value;
   }
 
   // -- port --
   protected ushort _port;
 
-  ushort port() const {
+  ushort port() const
+  {
     return _port;
   }
 
-  void port(ushort value) {
+  void port(ushort value)
+  {
     _port = value;
   }
 
   // -- basePath --
   protected string _basePath;
 
-  string basePath() const {
+  string basePath() const
+  {
     return _basePath;
   }
 
-  void basePath(string value) {
+  void basePath(string value)
+  {
     _basePath = value;
   }
 
   // -- subPath --
   protected string _subPath;
 
-  string subPath() const {
+  string subPath() const
+  {
     return _subPath;
   }
 
-  void subPath(string value) {
+  void subPath(string value)
+  {
     _subPath = value;
   }
 
   // -- requireAuthToken --
   protected bool _requireAuthToken;
 
-  bool requireAuthToken() const {
+  bool requireAuthToken() const
+  {
     return _requireAuthToken;
   }
 
-  void requireAuthToken(bool value) {
+  void requireAuthToken(bool value)
+  {
     _requireAuthToken = value;
   }
 
   // -- authToken --
   protected string _authToken;
 
-  string authToken() const {
+  string authToken() const
+  {
     return _authToken;
   }
 
-  void authToken(string value) {
+  void authToken(string value)
+  {
     _authToken = value;
   }
 
   // -- customHeaders --
   protected string[string] _customHeaders;
-  string[string] customHeaders() {
+  string[string] customHeaders()
+  {
     return _customHeaders;
   }
 
-  void customHeaders(string[string] value) {
+  void customHeaders(string[string] value)
+  {
     _customHeaders = value;
   }
 
-  void run() {
+  void run()
+  {
     auto settings = new HTTPServerSettings;
     settings.port = _service.config.port;
     settings.bindAddresses = [_service.config.host];
@@ -128,13 +154,15 @@ class UIMServer {
     runApplication();
   }
 
-  void handleRequest(HTTPServerRequest req, HTTPServerResponse res) {
+  void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
+  {
     foreach (key, value; _service.config.customHeaders)
       res.headers[key] = value;
 
     _basePath = _service.config.basePath;
     auto path = req.requestPath.toString();
-    if (!path.startsWith(_basePath)) {
+    if (!path.startsWith(_basePath))
+    {
       respondError(res, "Not found", 404);
       return;
     }
@@ -147,18 +175,21 @@ class UIMServer {
     // Platform endpoints (no auth required)
     // ---------------------------------------------------------------
     // ── Health / readiness ────────────────────────────────────────────
-    if (_subPath == "/health" && req.method == HTTPMethod.GET) {
+    if (_subPath == "/health" && req.method == HTTPMethod.GET)
+    {
       res.writeJsonBody(_service.health(), 200);
       return;
     }
 
-    if (_subPath == "/ready" && req.method == HTTPMethod.GET) {
+    if (_subPath == "/ready" && req.method == HTTPMethod.GET)
+    {
       res.writeJsonBody(_service.ready(), 200);
       return;
     }
   }
 
-  Json toJson() {
+  Json toJson()
+  {
     return Json.emptyObject;
   }
 }

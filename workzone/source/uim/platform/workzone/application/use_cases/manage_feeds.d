@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.workzone.application.usecases.manage_feeds;
 
 // import std.uuid;
@@ -10,44 +15,44 @@ import uim.platform.workzone.application.dto;
 
 class ManageFeedsUseCase
 {
-    private FeedRepository repo;
+  private FeedRepository repo;
 
-    this(FeedRepository repo)
-    {
-        this.repo = repo;
-    }
+  this(FeedRepository repo)
+  {
+    this.repo = repo;
+  }
 
-    CommandResult createEntry(CreateFeedEntryRequest req)
-    {
-        auto entry = FeedEntry();
-        entry.id = randomUUID().toString();
-        entry.workspaceId = req.workspaceId;
-        entry.tenantId = req.tenantId;
-        entry.actorId = req.actorId;
-        entry.actorName = req.actorName;
-        entry.action = req.action;
-        entry.objectType = req.objectType;
-        entry.objectId = req.objectId;
-        entry.objectTitle = req.objectTitle;
-        entry.message = req.message;
-        entry.createdAt = Clock.currStdTime();
+  CommandResult createEntry(CreateFeedEntryRequest req)
+  {
+    auto entry = FeedEntry();
+    entry.id = randomUUID().toString();
+    entry.workspaceId = req.workspaceId;
+    entry.tenantId = req.tenantId;
+    entry.actorId = req.actorId;
+    entry.actorName = req.actorName;
+    entry.action = req.action;
+    entry.objectType = req.objectType;
+    entry.objectId = req.objectId;
+    entry.objectTitle = req.objectTitle;
+    entry.message = req.message;
+    entry.createdAt = Clock.currStdTime();
 
-        repo.save(entry);
-        return CommandResult(entry.id, "");
-    }
+    repo.save(entry);
+    return CommandResult(entry.id, "");
+  }
 
-    FeedEntry* getEntry(FeedEntryId id, TenantId tenantId)
-    {
-        return repo.findById(id, tenantId);
-    }
+  FeedEntry* getEntry(FeedEntryId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
 
-    FeedEntry[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-    {
-        return repo.findByWorkspace(workspaceId, tenantId);
-    }
+  FeedEntry[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
+  {
+    return repo.findByWorkspace(workspaceId, tenantId);
+  }
 
-    void deleteEntry(FeedEntryId id, TenantId tenantId)
-    {
-        repo.remove(id, tenantId);
-    }
+  void deleteEntry(FeedEntryId id, TenantId tenantId)
+  {
+    repo.remove(id, tenantId);
+  }
 }

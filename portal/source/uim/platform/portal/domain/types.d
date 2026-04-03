@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.portal.domain.types;
 
 /// Unique identifier type aliases for type safety.
@@ -17,82 +22,82 @@ alias TranslationId = string;
 /// Site status.
 enum SiteStatus
 {
-    draft,
-    published,
-    unpublished,
-    archived,
+  draft,
+  published,
+  unpublished,
+  archived,
 }
 
 /// Page layout type.
 enum PageLayout
 {
-    freeform,
-    anchored,
-    twoColumn,
-    threeColumn,
-    dashboard,
+  freeform,
+  anchored,
+  twoColumn,
+  threeColumn,
+  dashboard,
 }
 
 /// Tile type (app launcher type).
 enum TileType
 {
-    static_,     // simple link tile
-    dynamic,     // tile with dynamic data count
-    custom,      // custom widget tile
-    news,        // news/feed tile
-    kpi,         // KPI indicator tile
+  static_, // simple link tile
+  dynamic, // tile with dynamic data count
+  custom, // custom widget tile
+  news, // news/feed tile
+  kpi, // KPI indicator tile
 }
 
 /// App type for tiles.
 enum AppType
 {
-    sapui5,
-    webDynpro,
-    sapGuiHtml,
-    url,
-    webComponent,
-    native_,
+  sapui5,
+  webDynpro,
+  sapGuiHtml,
+  url,
+  webComponent,
+  native_,
 }
 
 /// Content provider type.
 enum ProviderType
 {
-    local,
-    remote,
-    federated,
+  local,
+  remote,
+  federated,
 }
 
 /// Theme mode.
 enum ThemeMode
 {
-    light,
-    dark,
-    highContrast,
-    highContrastDark,
+  light,
+  dark,
+  highContrast,
+  highContrastDark,
 }
 
 /// Navigation target type.
 enum NavigationTarget
 {
-    inPlace,
-    newWindow,
-    embedded,
+  inPlace,
+  newWindow,
+  embedded,
 }
 
 /// Transport status.
 enum TransportStatus
 {
-    pending,
-    inProgress,
-    completed,
-    failed,
+  pending,
+  inProgress,
+  completed,
+  failed,
 }
 
 /// Role assignment scope.
 enum RoleScope
 {
-    site,
-    catalog,
-    group,
-    page,
+  site,
+  catalog,
+  group,
+  page,
 }

@@ -1,34 +1,48 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.service.classes.entities.entity;
 
 import uim.platform.service;
+
 // import std.datetime.systime;
 mixin(ShowModule!());
 
 @safe:
 
-class UIMEntity {
-  this() {
+class UIMEntity
+{
+  this()
+  {
     initialize();
   }
 
-  this(Json initData) {
-    if (initData.isObject) {
+  this(Json initData)
+  {
+    if (initData.isObject)
+    {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData) {
+  this(Json[string] initData)
+  {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null) {
+  bool initialize(Json[string] initData = null)
+  {
     createdAt = Clock.currTime();
-    if (initData.hasKey("created_at")) {
+    if (initData.hasKey("created_at"))
+    {
       createdAt = SysTime.fromISOExtString(initData["created_at"].getString);
-    }   
-    
+    }
+
     updatedAt = createdAt;
-    if (initData.hasKey("updated_at")) {
+    if (initData.hasKey("updated_at"))
+    {
       updatedAt = SysTime.fromISOExtString(initData["updated_at"].getString);
     }
 
@@ -37,14 +51,18 @@ class UIMEntity {
 
   // #region createdAt
   protected SysTime _createdAt;
-  SysTime createdAt() {
+  SysTime createdAt()
+  {
     return _createdAt;
   }
-  void createdAt(SysTime time) {
+
+  void createdAt(SysTime time)
+  {
     _createdAt = time;
   }
   /// 
-  unittest {
+  unittest
+  {
     auto obj = new UIMEntity();
 
     auto now = Clock.currTime;
@@ -55,14 +73,18 @@ class UIMEntity {
 
   // #region updatedAt
   protected SysTime _updatedAt;
-  SysTime updatedAt() {
+  SysTime updatedAt()
+  {
     return _updatedAt;
   }
-  void updatedAt(SysTime time) {
+
+  void updatedAt(SysTime time)
+  {
     _updatedAt = time;
   }
   /// 
-  unittest {
+  unittest
+  {
     auto obj = new UIMEntity();
     auto now = Clock.currTime;
     obj.updatedAt(now);
@@ -70,7 +92,8 @@ class UIMEntity {
   }
   // #endregion updatedAt
 
-  Json toJson() {
+  Json toJson()
+  {
     Json info = Json.emptyObject;
     // Add tenant-specific fields to the JSON object
     info["created_at"] = createdAt.toISOExtString();

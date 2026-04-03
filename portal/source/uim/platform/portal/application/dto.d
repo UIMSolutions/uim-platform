@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.portal.application.dto;
 
 import uim.platform.portal.domain.types;
@@ -9,339 +14,369 @@ import uim.platform.portal.domain.entities.theme : ThemeColors, ThemeFonts;
 
 struct CreateSiteRequest
 {
-    TenantId tenantId;
-    string name;
-    string description;
-    string alias_;
-    ThemeId themeId;
-    SiteSettings settings;
+  TenantId tenantId;
+  string name;
+  string description;
+  string alias_;
+  ThemeId themeId;
+  SiteSettings settings;
 }
 
 struct UpdateSiteRequest
 {
-    SiteId siteId;
-    string name;
-    string description;
-    string alias_;
-    ThemeId themeId;
-    SiteSettings settings;
+  SiteId siteId;
+  string name;
+  string description;
+  string alias_;
+  ThemeId themeId;
+  SiteSettings settings;
 }
 
 struct SiteResponse
 {
-    string siteId;
-    string error;
+  string siteId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Page DTOs ---
 
 struct CreatePageRequest
 {
-    SiteId siteId;
-    TenantId tenantId;
-    string title;
-    string description;
-    string alias_;
-    PageLayout layout;
-    string[] allowedRoleIds;
-    int sortOrder;
-    bool visible;
+  SiteId siteId;
+  TenantId tenantId;
+  string title;
+  string description;
+  string alias_;
+  PageLayout layout;
+  string[] allowedRoleIds;
+  int sortOrder;
+  bool visible;
 }
 
 struct UpdatePageRequest
 {
-    PageId pageId;
-    string title;
-    string description;
-    string alias_;
-    PageLayout layout;
-    string[] allowedRoleIds;
-    int sortOrder;
-    bool visible;
+  PageId pageId;
+  string title;
+  string description;
+  string alias_;
+  PageLayout layout;
+  string[] allowedRoleIds;
+  int sortOrder;
+  bool visible;
 }
 
 struct PageResponse
 {
-    string pageId;
-    string error;
+  string pageId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Section DTOs ---
 
 struct CreateSectionRequest
 {
-    PageId pageId;
-    TenantId tenantId;
-    string title;
-    int sortOrder;
-    bool visible;
-    int columns;
+  PageId pageId;
+  TenantId tenantId;
+  string title;
+  int sortOrder;
+  bool visible;
+  int columns;
 }
 
 struct UpdateSectionRequest
 {
-    SectionId sectionId;
-    string title;
-    int sortOrder;
-    bool visible;
-    int columns;
+  SectionId sectionId;
+  string title;
+  int sortOrder;
+  bool visible;
+  int columns;
 }
 
 struct SectionResponse
 {
-    string sectionId;
-    string error;
+  string sectionId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Tile DTOs ---
 
 struct CreateTileRequest
 {
-    TenantId tenantId;
-    CatalogId catalogId;
-    string title;
-    string subtitle;
-    string description;
-    string icon;
-    string info;
-    TileType tileType;
-    AppType appType;
-    string url;
-    string appId;
-    NavigationTarget navigationTarget;
-    string[] keywords;
-    string[] allowedRoleIds;
-    TileConfiguration configuration;
+  TenantId tenantId;
+  CatalogId catalogId;
+  string title;
+  string subtitle;
+  string description;
+  string icon;
+  string info;
+  TileType tileType;
+  AppType appType;
+  string url;
+  string appId;
+  NavigationTarget navigationTarget;
+  string[] keywords;
+  string[] allowedRoleIds;
+  TileConfiguration configuration;
 }
 
 struct UpdateTileRequest
 {
-    TileId tileId;
-    string title;
-    string subtitle;
-    string description;
-    string icon;
-    string info;
-    TileType tileType;
-    AppType appType;
-    string url;
-    string appId;
-    NavigationTarget navigationTarget;
-    string[] keywords;
-    string[] allowedRoleIds;
-    TileConfiguration configuration;
+  TileId tileId;
+  string title;
+  string subtitle;
+  string description;
+  string icon;
+  string info;
+  TileType tileType;
+  AppType appType;
+  string url;
+  string appId;
+  NavigationTarget navigationTarget;
+  string[] keywords;
+  string[] allowedRoleIds;
+  TileConfiguration configuration;
 }
 
 struct TileResponse
 {
-    string tileId;
-    string error;
+  string tileId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Catalog DTOs ---
 
 struct CreateCatalogRequest
 {
-    TenantId tenantId;
-    string title;
-    string description;
-    ProviderId providerId;
-    string[] allowedRoleIds;
-    bool active;
+  TenantId tenantId;
+  string title;
+  string description;
+  ProviderId providerId;
+  string[] allowedRoleIds;
+  bool active;
 }
 
 struct UpdateCatalogRequest
 {
-    CatalogId catalogId;
-    string title;
-    string description;
-    string[] allowedRoleIds;
-    bool active;
+  CatalogId catalogId;
+  string title;
+  string description;
+  string[] allowedRoleIds;
+  bool active;
 }
 
 struct CatalogResponse
 {
-    string catalogId;
-    string error;
+  string catalogId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Content Provider DTOs ---
 
 struct CreateProviderRequest
 {
-    TenantId tenantId;
-    string name;
-    string description;
-    ProviderType providerType;
-    string contentEndpointUrl;
-    string authToken;
+  TenantId tenantId;
+  string name;
+  string description;
+  ProviderType providerType;
+  string contentEndpointUrl;
+  string authToken;
 }
 
 struct UpdateProviderRequest
 {
-    ProviderId providerId;
-    string name;
-    string description;
-    string contentEndpointUrl;
-    string authToken;
-    bool active;
+  ProviderId providerId;
+  string name;
+  string description;
+  string contentEndpointUrl;
+  string authToken;
+  bool active;
 }
 
 struct ProviderResponse
 {
-    string providerId;
-    string error;
+  string providerId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Role DTOs ---
 
 struct CreateRoleRequest
 {
-    TenantId tenantId;
-    string name;
-    string description;
-    RoleScope scope_;
+  TenantId tenantId;
+  string name;
+  string description;
+  RoleScope scope_;
 }
 
 struct UpdateRoleRequest
 {
-    RoleId roleId;
-    string name;
-    string description;
+  RoleId roleId;
+  string name;
+  string description;
 }
 
 struct AssignRoleRequest
 {
-    RoleId roleId;
-    string[] userIds;
-    string[] groupIds;
+  RoleId roleId;
+  string[] userIds;
+  string[] groupIds;
 }
 
 struct RoleResponse
 {
-    string roleId;
-    string error;
+  string roleId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Theme DTOs ---
 
 struct CreateThemeRequest
 {
-    TenantId tenantId;
-    string name;
-    string description;
-    ThemeMode mode;
-    string baseTheme;
-    ThemeColors colors;
-    ThemeFonts fonts;
-    string customCss;
-    bool isDefault;
+  TenantId tenantId;
+  string name;
+  string description;
+  ThemeMode mode;
+  string baseTheme;
+  ThemeColors colors;
+  ThemeFonts fonts;
+  string customCss;
+  bool isDefault;
 }
 
 struct UpdateThemeRequest
 {
-    ThemeId themeId;
-    string name;
-    string description;
-    ThemeMode mode;
-    ThemeColors colors;
-    ThemeFonts fonts;
-    string customCss;
-    bool isDefault;
+  ThemeId themeId;
+  string name;
+  string description;
+  ThemeMode mode;
+  ThemeColors colors;
+  ThemeFonts fonts;
+  string customCss;
+  bool isDefault;
 }
 
 struct ThemeResponse
 {
-    string themeId;
-    string error;
+  string themeId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Menu Item DTOs ---
 
 struct CreateMenuItemRequest
 {
-    SiteId siteId;
-    TenantId tenantId;
-    string title;
-    string icon;
-    MenuItemId parentId;
-    PageId targetPageId;
-    string targetUrl;
-    NavigationTarget navigationTarget;
-    string[] allowedRoleIds;
-    int sortOrder;
-    bool visible;
+  SiteId siteId;
+  TenantId tenantId;
+  string title;
+  string icon;
+  MenuItemId parentId;
+  PageId targetPageId;
+  string targetUrl;
+  NavigationTarget navigationTarget;
+  string[] allowedRoleIds;
+  int sortOrder;
+  bool visible;
 }
 
 struct UpdateMenuItemRequest
 {
-    MenuItemId menuItemId;
-    string title;
-    string icon;
-    MenuItemId parentId;
-    PageId targetPageId;
-    string targetUrl;
-    NavigationTarget navigationTarget;
-    string[] allowedRoleIds;
-    int sortOrder;
-    bool visible;
+  MenuItemId menuItemId;
+  string title;
+  string icon;
+  MenuItemId parentId;
+  PageId targetPageId;
+  string targetUrl;
+  NavigationTarget navigationTarget;
+  string[] allowedRoleIds;
+  int sortOrder;
+  bool visible;
 }
 
 struct MenuItemResponse
 {
-    string menuItemId;
-    string error;
+  string menuItemId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Translation DTOs ---
 
 struct CreateTranslationRequest
 {
-    TenantId tenantId;
-    string resourceType;
-    string resourceId;
-    string fieldName;
-    string language;
-    string value;
+  TenantId tenantId;
+  string resourceType;
+  string resourceId;
+  string fieldName;
+  string language;
+  string value;
 }
 
 struct UpdateTranslationRequest
 {
-    TranslationId translationId;
-    string value;
+  TranslationId translationId;
+  string value;
 }
 
 struct TranslationResponse
 {
-    string translationId;
-    string error;
+  string translationId;
+  string error;
 
-    bool isSuccess() const { return error.length == 0; }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }
 
 /// --- Paged list ---
 
 struct PagedListResponse
 {
-    ulong totalResults;
-    uint startIndex;
-    uint itemsPerPage;
+  ulong totalResults;
+  uint startIndex;
+  uint itemsPerPage;
 }

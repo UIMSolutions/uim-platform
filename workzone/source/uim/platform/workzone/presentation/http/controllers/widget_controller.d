@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.identity_authentication.presentation.http.widget;
 
 // import vibe.http.server;
@@ -11,199 +16,208 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class WidgetController
 {
-    private ManageWidgetsUseCase useCase;
+  private ManageWidgetsUseCase useCase;
 
-    this(ManageWidgetsUseCase useCase)
+  this(ManageWidgetsUseCase useCase)
+  {
+    this.useCase = useCase;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/widgets", &handleCreate);
+    router.get("/api/v1/widgets", &handleList);
+    router.get("/api/v1/widgets/*", &handleGet);
+    router.put("/api/v1/widgets/*", &handleUpdate);
+    router.delete_("/api/v1/widgets/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        this.useCase = useCase;
-    }
+      auto j = req.json;
+      auto r = CreateWidgetRequest();
+      r.pageId = j.getString("pageId");
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.title = j.getString("title");
+      r.cardId = j.getString("cardId");
+      r.appId = j.getString("appId");
+      r.row = j.getInteger("row");
+      r.col = j.getInteger("col");
+      r.sortOrder = j.getInteger("sortOrder");
 
-    override void registerRoutes(URLRouter router)
+      auto sStr = j.getString("size");
+      if (sStr == "small")
+        r.size = WidgetSize.small;
+      else if (sStr == "large")
+        r.size = WidgetSize.large;
+      else if (sStr == "fullWidth")
+        r.size = WidgetSize.fullWidth;
+      else
+        r.size = WidgetSize.medium;
+
+      r.config = parseWidgetConfig(j);
+
+      auto result = useCase.createWidget(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+      {
+        writeError(res, 400, result.error);
+      }
+    }
+    catch (Exception e)
     {
-        router.post("/api/v1/widgets", &handleCreate);
-        router.get("/api/v1/widgets", &handleList);
-        router.get("/api/v1/widgets/*", &handleGet);
-        router.put("/api/v1/widgets/*", &handleUpdate);
-        router.delete_("/api/v1/widgets/*", &handleDelete);
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto j = req.json;
-            auto r = CreateWidgetRequest();
-            r.pageId = j.getString("pageId");
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = j.getString("title");
-            r.cardId = j.getString("cardId");
-            r.appId = j.getString("appId");
-            r.row = j.getInteger("row");
-            r.col = j.getInteger("col");
-            r.sortOrder = j.getInteger("sortOrder");
-
-            auto sStr = j.getString("size");
-            if (sStr == "small") r.size = WidgetSize.small;
-            else if (sStr == "large") r.size = WidgetSize.large;
-            else if (sStr == "fullWidth") r.size = WidgetSize.fullWidth;
-            else r.size = WidgetSize.medium;
-
-            r.config = parseWidgetConfig(j);
-
-            auto result = useCase.createWidget(r);
-            if (result.isSuccess())
-            {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            }
-            else
-            {
-                writeError(res, 400, result.error);
-            }
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto pageId = req.params.get("pageId", "");
+      auto widgets = useCase.listByPage(pageId, tenantId);
+      auto arr = Json.emptyArray;
+      foreach (ref w; widgets)
+        arr ~= serializeWidget(w);
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) widgets.length);
+      res.writeJsonBody(resp, 200);
     }
-
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    catch (Exception e)
     {
-        try
-        {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto pageId = req.params.get("pageId", "");
-            auto widgets = useCase.listByPage(pageId, tenantId);
-            auto arr = Json.emptyArray;
-            foreach (ref w; widgets)
-                arr ~= serializeWidget(w);
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) widgets.length);
-            res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto w = useCase.getWidget(id, tenantId);
-            if (w is null)
-            {
-                writeError(res, 404, "Widget not found");
-                return;
-            }
-            res.writeJsonBody(serializeWidget(*w), 200);
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto w = useCase.getWidget(id, tenantId);
+      if (w is null)
+      {
+        writeError(res, 404, "Widget not found");
+        return;
+      }
+      res.writeJsonBody(serializeWidget(*w), 200);
     }
-
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+    catch (Exception e)
     {
-        try
-        {
-            auto j = req.json;
-            auto r = UpdateWidgetRequest();
-            r.id = extractIdFromPath(req.requestURI);
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.title = j.getString("title");
-            r.row = j.getInteger("row");
-            r.col = j.getInteger("col");
-            r.sortOrder = j.getInteger("sortOrder");
-            r.visible = j.getBoolean("visible", true);
-            r.config = parseWidgetConfig(j);
-
-            auto sStr = j.getString("size");
-            if (sStr == "small") r.size = WidgetSize.small;
-            else if (sStr == "large") r.size = WidgetSize.large;
-            else if (sStr == "fullWidth") r.size = WidgetSize.fullWidth;
-            else r.size = WidgetSize.medium;
-
-            auto result = useCase.updateWidget(r);
-            if (result.isSuccess())
-            {
-                auto resp = Json.emptyObject;
-                resp["status"] = Json("updated");
-                res.writeJsonBody(resp, 200);
-            }
-            else
-            {
-                writeError(res, 404, result.error);
-            }
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
     {
-        try
-        {
-            auto id = extractIdFromPath(req.requestURI);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            useCase.deleteWidget(id, tenantId);
-            res.writeBody("", 204);
-        }
-        catch (Exception e)
-        {
-            writeError(res, 500, "Internal server error");
-        }
+      auto j = req.json;
+      auto r = UpdateWidgetRequest();
+      r.id = extractIdFromPath(req.requestURI);
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.title = j.getString("title");
+      r.row = j.getInteger("row");
+      r.col = j.getInteger("col");
+      r.sortOrder = j.getInteger("sortOrder");
+      r.visible = j.getBoolean("visible", true);
+      r.config = parseWidgetConfig(j);
+
+      auto sStr = j.getString("size");
+      if (sStr == "small")
+        r.size = WidgetSize.small;
+      else if (sStr == "large")
+        r.size = WidgetSize.large;
+      else if (sStr == "fullWidth")
+        r.size = WidgetSize.fullWidth;
+      else
+        r.size = WidgetSize.medium;
+
+      auto result = useCase.updateWidget(r);
+      if (result.isSuccess())
+      {
+        auto resp = Json.emptyObject;
+        resp["status"] = Json("updated");
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        writeError(res, 404, result.error);
+      }
     }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      useCase.deleteWidget(id, tenantId);
+      res.writeBody("", 204);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
 }
 
 private WidgetConfig parseWidgetConfig(Json j)
 {
-    import uim.platform.workzone.domain.entities.widget : WidgetConfig;
-    WidgetConfig cfg;
-    auto v = "config" in j;
-    if (v !is null && (*v).type == Json.Type.object)
-    {
-        auto c = *v;
-        cfg.customTitle = c.getString("customTitle");
-        cfg.maxItems = jsonInt(c, "maxItems");
-        cfg.refreshIntervalSec = jsonInt(c, "refreshIntervalSec");
-        cfg.filterExpression = c.getString("filterExpression");
-    }
-    return cfg;
+  import uim.platform.workzone.domain.entities.widget : WidgetConfig;
+
+  WidgetConfig cfg;
+  auto v = "config" in j;
+  if (v !is null && (*v).type == Json.Type.object)
+  {
+    auto c = *v;
+    cfg.customTitle = c.getString("customTitle");
+    cfg.maxItems = jsonInt(c, "maxItems");
+    cfg.refreshIntervalSec = jsonInt(c, "refreshIntervalSec");
+    cfg.filterExpression = c.getString("filterExpression");
+  }
+  return cfg;
 }
 
 private Json serializeWidget(ref Widget w)
 {
-    // import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(w.id);
-    j["pageId"] = Json(w.pageId);
-    j["tenantId"] = Json(w.tenantId);
-    j["title"] = Json(w.title);
-    j["cardId"] = Json(w.cardId);
-    j["appId"] = Json(w.appId);
-    j["size"] = Json(w.size.to!string);
-    j["row"] = Json(w.row);
-    j["col"] = Json(w.col);
-    j["sortOrder"] = Json(w.sortOrder);
-    j["visible"] = Json(w.visible);
-    j["createdAt"] = Json(w.createdAt);
-    j["updatedAt"] = Json(w.updatedAt);
+  // import std.conv : to;
+  auto j = Json.emptyObject;
+  j["id"] = Json(w.id);
+  j["pageId"] = Json(w.pageId);
+  j["tenantId"] = Json(w.tenantId);
+  j["title"] = Json(w.title);
+  j["cardId"] = Json(w.cardId);
+  j["appId"] = Json(w.appId);
+  j["size"] = Json(w.size.to!string);
+  j["row"] = Json(w.row);
+  j["col"] = Json(w.col);
+  j["sortOrder"] = Json(w.sortOrder);
+  j["visible"] = Json(w.visible);
+  j["createdAt"] = Json(w.createdAt);
+  j["updatedAt"] = Json(w.updatedAt);
 
-    auto cfg = Json.emptyObject;
-    cfg["customTitle"] = Json(w.config.customTitle);
-    cfg["maxItems"] = Json(w.config.maxItems);
-    cfg["refreshIntervalSec"] = Json(w.config.refreshIntervalSec);
-    cfg["filterExpression"] = Json(w.config.filterExpression);
-    j["config"] = cfg;
+  auto cfg = Json.emptyObject;
+  cfg["customTitle"] = Json(w.config.customTitle);
+  cfg["maxItems"] = Json(w.config.maxItems);
+  cfg["refreshIntervalSec"] = Json(w.config.refreshIntervalSec);
+  cfg["filterExpression"] = Json(w.config.filterExpression);
+  j["config"] = cfg;
 
-    return j;
+  return j;
 }
