@@ -5,102 +5,102 @@ import uim.platform.identity.directory.domain.types;
 /// SCIM 2.0 user name component.
 struct UserName
 {
-    string formatted;
-    string familyName;
-    string givenName;
-    string middleName;
-    string honorificPrefix;
-    string honorificSuffix;
+  string formatted;
+  string familyName;
+  string givenName;
+  string middleName;
+  string honorificPrefix;
+  string honorificSuffix;
 }
 
 /// SCIM 2.0 email entry.
 struct Email
 {
-    string value;
-    string type; // "work", "home", "other"
-    bool primary;
+  string value;
+  string type; // "work", "home", "other"
+  bool primary;
 }
 
 /// SCIM 2.0 phone number entry.
 struct PhoneNumber
 {
-    string value;
-    string type; // "work", "mobile", "fax", "other"
-    bool primary;
+  string value;
+  string type; // "work", "mobile", "fax", "other"
+  bool primary;
 }
 
 /// SCIM 2.0 address entry.
 struct Address
 {
-    string formatted;
-    string streetAddress;
-    string locality;
-    string region;
-    string postalCode;
-    string country;
-    string type; // "work", "home"
-    bool primary;
+  string formatted;
+  string streetAddress;
+  string locality;
+  string region;
+  string postalCode;
+  string country;
+  string type; // "work", "home"
+  bool primary;
 }
 
 /// Extended attributes stored as key-value pairs (custom schema extensions).
 struct ExtendedAttribute
 {
-    string schemaId;
-    string attributeName;
-    string value;
+  string schemaId;
+  string attributeName;
+  string value;
 }
 
 /// Core user entity — SCIM 2.0 compliant.
 struct User
 {
-    UserId id;
-    TenantId tenantId;
-    string externalId;
-    string userName;
-    UserName name;
-    string displayName;
-    string nickName;
-    string profileUrl;
-    string userType; // "employee", "partner", "customer", "public"
-    string title;
-    string preferredLanguage;
-    string locale;
-    string timezone;
-    bool active = true;
-    UserStatus status = UserStatus.active;
-    string passwordHash;
-    Email[] emails;
-    PhoneNumber[] phoneNumbers;
-    Address[] addresses;
-    string[] groupIds;
-    ExtendedAttribute[] extendedAttributes;
-    string[] schemas; // SCIM schema URNs
-    long createdAt;
-    long updatedAt;
+  UserId id;
+  TenantId tenantId;
+  string externalId;
+  string userName;
+  UserName name;
+  string displayName;
+  string nickName;
+  string profileUrl;
+  string userType; // "employee", "partner", "customer", "public"
+  string title;
+  string preferredLanguage;
+  string locale;
+  string timezone;
+  bool active = true;
+  UserStatus status = UserStatus.active;
+  string passwordHash;
+  Email[] emails;
+  PhoneNumber[] phoneNumbers;
+  Address[] addresses;
+  string[] groupIds;
+  ExtendedAttribute[] extendedAttributes;
+  string[] schemas; // SCIM schema URNs
+  long createdAt;
+  long updatedAt;
 
-    /// SCIM displayName or formatted name.
-    string getDisplayName() const
-    {
-        if (displayName.length > 0)
-            return displayName;
-        if (name.formatted.length > 0)
-            return name.formatted;
-        return name.givenName ~ " " ~ name.familyName;
-    }
+  /// SCIM displayName or formatted name.
+  string getDisplayName() const
+  {
+    if (displayName.length > 0)
+      return displayName;
+    if (name.formatted.length > 0)
+      return name.formatted;
+    return name.givenName ~ " " ~ name.familyName;
+  }
 
-    bool isActive() const
-    {
-        return status == UserStatus.active && active;
-    }
+  bool isActive() const
+  {
+    return status == UserStatus.active && active;
+  }
 
-    /// Primary email address.
-    string primaryEmail() const
+  /// Primary email address.
+  string primaryEmail() const
+  {
+    foreach (e; emails)
     {
-        foreach (e; emails)
-        {
-            if (e.primary)
-                return e.value;
-        }
-        return emails.length > 0 ? emails[0].value : "";
+      if (e.primary)
+        return e.value;
     }
+    return emails.length > 0 ? emails[0].value : "";
+  }
 }

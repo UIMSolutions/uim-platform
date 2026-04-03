@@ -8,11 +8,11 @@ struct ProvisionedEntity
 {
   ProvisionedEntityId id;
   TenantId tenantId;
-  string externalId;         // id in the external system
+  string externalId; // id in the external system
   EntityType entityType = EntityType.user;
   SourceSystemId sourceSystemId;
   TargetSystemId targetSystemId;
-  string attributes;         // JSON: provisioned attribute snapshot
+  string attributes; // JSON: provisioned attribute snapshot
   EntityStatus status = EntityStatus.pending;
   long lastSyncAt;
   long createdAt;

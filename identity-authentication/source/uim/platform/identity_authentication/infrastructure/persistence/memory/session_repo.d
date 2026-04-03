@@ -11,56 +11,69 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
-class MemorySessionRepository : SessionRepository {
-    private IdaSession[SessionId] store;
+class MemorySessionRepository : SessionRepository
+{
+  private IdaSession[SessionId] store;
 
-    bool existsById(SessionId id) {
-        return (id in store) ? true : false;
-    }
+  bool existsById(SessionId id)
+  {
+    return (id in store) ? true : false;
+  }
 
-    IdaSession findById(SessionId id) {
-        if (existsById(id))
-            return store[id];
-        return IdaSession.init;
-    }
+  IdaSession findById(SessionId id)
+  {
+    if (existsById(id))
+      return store[id];
+    return IdaSession.init;
+  }
 
-    IdaSession[] findByUser(UserId userId) {
-        return store.byValue().filter!(s => s.userId == userId).array;
-    }
+  IdaSession[] findByUser(UserId userId)
+  {
+    return store.byValue().filter!(s => s.userId == userId).array;
+  }
 
-    void save(IdaSession session) {
-        store[session.id] = session;
-    }
+  void save(IdaSession session)
+  {
+    store[session.id] = session;
+  }
 
-    void revoke(SessionId id) {
-        if (existsById(id)) {
-            auto p = store[id];
-            p.revoked = true;
-            store[id] = p;
-        }
+  void revoke(SessionId id)
+  {
+    if (existsById(id))
+    {
+      auto p = store[id];
+      p.revoked = true;
+      store[id] = p;
     }
+  }
 
-    void revokeAllForUser(UserId userId) {
-        foreach (s; store.byValue()) {
-            if (s.userId == userId) {
-                auto updated = s;
-                updated.revoked = true;
-                store[s.id] = updated;
-            }
-        }
+  void revokeAllForUser(UserId userId)
+  {
+    foreach (s; store.byValue())
+    {
+      if (s.userId == userId)
+      {
+        auto updated = s;
+        updated.revoked = true;
+        store[s.id] = updated;
+      }
     }
+  }
 
-    void removeExpired() {
-        auto now = Clock.currStdTime();
-        SessionId[] toRemove;
-        foreach (id, s; store) {
-            if (s.expiresAt < now)
-                toRemove ~= id;
-        }
-        removeIds(toRemove);
+  void removeExpired()
+  {
+    auto now = Clock.currStdTime();
+    SessionId[] toRemove;
+    foreach (id, s; store)
+    {
+      if (s.expiresAt < now)
+        toRemove ~= id;
     }
+    removeIds(toRemove);
+  }
 
-    void removeIds(SessionId[] ids) {
-        ids.each!(id => store.remove(id));
-    }
+  void removeIds(SessionId[] ids)
+  {
+    ids.each!(id => store.remove(id));
+  }
 }

@@ -6,17 +6,18 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Authenticated session.
-struct IdaSession {
-    SessionId id;
-    UserId userId;
-    TenantId tenantId;
-    ApplicationId applicationId;
-    AuthMethod authMethod;
-    MfaType mfaUsed = MfaType.none;
-    string ipAddress;
-    string userAgent;
-    RiskLevel riskLevel = RiskLevel.low;
-    long createdAt;
-    long expiresAt;
-    bool revoked;
+struct IdaSession
+{
+  SessionId id;
+  UserId userId;
+  TenantId tenantId;
+  ApplicationId applicationId;
+  AuthMethod authMethod;
+  MfaType mfaUsed = MfaType.none;
+  string ipAddress;
+  string userAgent;
+  RiskLevel riskLevel = RiskLevel.low;
+  long createdAt;
+  long expiresAt;
+  bool revoked;
 }

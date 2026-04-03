@@ -33,7 +33,8 @@ import uim.platform.identity.provisioning.presentation.http.monitoring;
 import uim.platform.identity.provisioning.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container {
+struct Container
+{
   // Repositories (driven adapters)
   MemorySourceSystemRepository sourceRepo;
   MemoryTargetSystemRepository targetRepo;
@@ -66,7 +67,8 @@ struct Container {
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
+Container buildContainer(AppConfig config)
+{
   Container c;
 
   // Infrastructure adapters
@@ -79,20 +81,20 @@ Container buildContainer(AppConfig config) {
   c.entityRepo = new MemoryProvisionedEntityRepository();
 
   // Domain services
-  c.provisioningEngine = new ProvisioningEngine(
-    c.sourceRepo, c.targetRepo, c.jobRepo, c.logRepo, c.entityRepo);
+  c.provisioningEngine = new ProvisioningEngine(c.sourceRepo, c.targetRepo,
+      c.jobRepo, c.logRepo, c.entityRepo);
   c.transformationEngine = new TransformationEngine(c.transformRepo);
 
   // Application use cases
   c.manageSourceSystems = new ManageSourceSystemsUseCase(c.sourceRepo);
   c.manageTargetSystems = new ManageTargetSystemsUseCase(c.targetRepo);
   c.manageProxySystems = new ManageProxySystemsUseCase(c.proxyRepo, c.sourceRepo, c.targetRepo);
-  c.manageTransformations = new ManageTransformationsUseCase(c.transformRepo, c
-      .transformationEngine);
-  c.runProvisioningJobs = new RunProvisioningJobsUseCase(
-    c.jobRepo, c.sourceRepo, c.targetRepo, c.logRepo, c.provisioningEngine);
-  c.monitorProvisioning = new MonitorProvisioningUseCase(
-    c.jobRepo, c.logRepo, c.entityRepo, c.sourceRepo, c.targetRepo);
+  c.manageTransformations = new ManageTransformationsUseCase(c.transformRepo,
+      c.transformationEngine);
+  c.runProvisioningJobs = new RunProvisioningJobsUseCase(c.jobRepo, c.sourceRepo,
+      c.targetRepo, c.logRepo, c.provisioningEngine);
+  c.monitorProvisioning = new MonitorProvisioningUseCase(c.jobRepo, c.logRepo,
+      c.entityRepo, c.sourceRepo, c.targetRepo);
 
   // Presentation controllers
   c.sourceSystemController = new SourceSystemController(c.manageSourceSystems);

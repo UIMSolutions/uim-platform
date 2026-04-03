@@ -10,9 +10,13 @@ import uim.platform.identity.directory.infrastructure.container;
 // import std.stdio : writefln;
 @safe:
 
-version (unittest) {
-} else {
-void main() {
+version (unittest)
+{
+}
+else
+{
+  void main()
+  {
     // Load configuration
     auto config = loadConfig();
 
@@ -55,4 +59,4 @@ void main() {
     writefln("╚══════════════════════════════════════════════════════╝");
 
     runApplication();
-}
+  }

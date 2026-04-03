@@ -16,7 +16,8 @@ class ManageProxySystemsUseCase
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
 
-  this(ProxySystemRepository repo, SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo)
+  this(ProxySystemRepository repo, SourceSystemRepository sourceRepo,
+      TargetSystemRepository targetRepo)
   {
     this.repo = repo;
     this.sourceRepo = sourceRepo;
@@ -87,9 +88,12 @@ class ManageProxySystemsUseCase
       return CommandResult("", "Proxy system not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.description.length > 0) updated.description = req.description;
-    if (req.connectionConfig.length > 0) updated.connectionConfig = req.connectionConfig;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.connectionConfig.length > 0)
+      updated.connectionConfig = req.connectionConfig;
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);

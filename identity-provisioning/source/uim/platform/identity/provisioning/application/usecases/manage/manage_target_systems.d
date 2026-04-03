@@ -67,9 +67,12 @@ class ManageTargetSystemsUseCase
       return CommandResult("", "Target system not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
-    if (req.description.length > 0) updated.description = req.description;
-    if (req.connectionConfig.length > 0) updated.connectionConfig = req.connectionConfig;
+    if (req.name.length > 0)
+      updated.name = req.name;
+    if (req.description.length > 0)
+      updated.description = req.description;
+    if (req.connectionConfig.length > 0)
+      updated.connectionConfig = req.connectionConfig;
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);

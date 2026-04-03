@@ -78,14 +78,16 @@ class ManageTransformationsUseCase
       return CommandResult("", "Transformation not found");
 
     auto updated = *existing;
-    if (req.name.length > 0) updated.name = req.name;
+    if (req.name.length > 0)
+      updated.name = req.name;
     if (req.mappingRules.length > 0)
     {
       if (!engine.validateRules(req.mappingRules))
         return CommandResult("", "Invalid mapping rules format");
       updated.mappingRules = req.mappingRules;
     }
-    if (req.conditions.length > 0) updated.conditions = req.conditions;
+    if (req.conditions.length > 0)
+      updated.conditions = req.conditions;
     updated.updatedAt = Clock.currStdTime();
 
     repo.update(updated);

@@ -9,67 +9,63 @@ module uim.platform.identity_authentication.application.usecases.manage_applicat
 // // import std.datetime.systime : Clock;
 
 import uim.platform.identity_authentication;
+
 mixin(ShowModule!());
 @safe:
 /// Application use case: service provider / application registration.
-class ManageApplicationsUseCase {
-    private ApplicationRepository appRepo;
+class ManageApplicationsUseCase
+{
+  private ApplicationRepository appRepo;
 
-    this(ApplicationRepository appRepo) {
-        this.appRepo = appRepo;
-    }
+  this(ApplicationRepository appRepo)
+  {
+    this.appRepo = appRepo;
+  }
 
-    AppResponse createApplication(CreateAppRequest req) {
-        auto now = Clock.currStdTime();
-        auto app = Application(
-            randomUUID().toString(),
-            req.tenantId,
-            req.name,
-            req.description,
-            req.protocol,
-            randomUUID().toString(), // clientId
-            randomUUID()
-            .toString(), // clientSecret
-            req.redirectUris,
-            req.allowedScopes,
-            req.samlEntityId,
-            req.samlAcsUrl,
-            "",
-            true,
-            now,
-            now
-        );
-        appRepo.save(app);
-        return AppResponse(app.id, app.clientId, app.clientSecret, "");
-    }
+  AppResponse createApplication(CreateAppRequest req)
+  {
+    auto now = Clock.currStdTime();
+    auto app = Application(randomUUID().toString(), req.tenantId, req.name,
+        req.description, req.protocol, randomUUID().toString(), // clientId
+        randomUUID()
+          .toString(), // clientSecret
+        req.redirectUris, req.allowedScopes, req.samlEntityId,
+        req.samlAcsUrl, "", true, now, now);
+    appRepo.save(app);
+    return AppResponse(app.id, app.clientId, app.clientSecret, "");
+  }
 
-    Application getApplication(ApplicationId id) {
-        return appRepo.findById(id);
-    }
+  Application getApplication(ApplicationId id)
+  {
+    return appRepo.findById(id);
+  }
 
-    Application[] listApplications(TenantId tenantId, uint offset = 0, uint limit = 100) {
-        return appRepo.findByTenant(tenantId, offset, limit);
-    }
+  Application[] listApplications(TenantId tenantId, uint offset = 0, uint limit = 100)
+  {
+    return appRepo.findByTenant(tenantId, offset, limit);
+  }
 
-    string updateApplication(UpdateAppRequest req) {
-        auto app = appRepo.findById(req.applicationId);
-        if (app == Application.init)
-            return "Application not found";
+  string updateApplication(UpdateAppRequest req)
+  {
+    auto app = appRepo.findById(req.applicationId);
+    if (app == Application.init)
+      return "Application not found";
 
-        if (req.name.length > 0)
-            app.name = req.name;
-        if (req.redirectUris.length > 0)
-            app.redirectUris = req.redirectUris;
-        if (req.allowedScopes.length > 0)
-            app.allowedScopes = req.allowedScopes;
+    if (req.name.length > 0)
+      app.name = req.name;
+    if (req.redirectUris.length > 0)
+      app.redirectUris = req.redirectUris;
+    if (req.allowedScopes.length > 0)
+      app.allowedScopes = req.allowedScopes;
 
-        app.updatedAt = Clock.currStdTime();
-        appRepo.update(app);
-        return "";
-    }
+    app.updatedAt = Clock.currStdTime();
+    appRepo.update(app);
+    return "";
+  }
 
-    string deleteApplication(ApplicationId id) {
-        appRepo.remove(id);
-        return "";
-    }
+  string deleteApplication(ApplicationId id)
+  {
+    appRepo.remove(id);
+    return "";
+  }
 }

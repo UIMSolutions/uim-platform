@@ -9,25 +9,25 @@ import uim.platform.identity.directory.domain.ports.password_service;
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
 class Sha256PasswordService : PasswordService
 {
-    string hashPassword(string plaintext)
-    {
-        auto salt = randomUUID().toString()[0 .. 8];
-        auto hash = sha256Of(cast(ubyte[]) (plaintext ~ salt).representation);
-        return salt ~ "$" ~ toHexString(hash).idup;
-    }
+  string hashPassword(string plaintext)
+  {
+    auto salt = randomUUID().toString()[0 .. 8];
+    auto hash = sha256Of(cast(ubyte[])(plaintext ~ salt).representation);
+    return salt ~ "$" ~ toHexString(hash).idup;
+  }
 
-    bool verifyPassword(string plaintext, string stored)
-    {
-        // import std.string : indexOf;
+  bool verifyPassword(string plaintext, string stored)
+  {
+    // import std.string : indexOf;
 
-        auto sepIdx = stored.indexOf('$');
-        if (sepIdx < 0)
-            return false;
+    auto sepIdx = stored.indexOf('$');
+    if (sepIdx < 0)
+      return false;
 
-        auto salt = stored[0 .. sepIdx];
-        auto expectedHash = stored[sepIdx + 1 .. $];
+    auto salt = stored[0 .. sepIdx];
+    auto expectedHash = stored[sepIdx + 1 .. $];
 
-        auto hash = sha256Of(cast(ubyte[]) (plaintext ~ salt).representation);
-        return toHexString(hash).idup == expectedHash;
-    }
+    auto hash = sha256Of(cast(ubyte[])(plaintext ~ salt).representation);
+    return toHexString(hash).idup == expectedHash;
+  }
 }

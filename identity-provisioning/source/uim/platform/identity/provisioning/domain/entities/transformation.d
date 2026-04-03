@@ -8,11 +8,11 @@ struct Transformation
 {
   TransformationId id;
   TenantId tenantId;
-  string systemId;       // source, target, or proxy system id
+  string systemId; // source, target, or proxy system id
   SystemRole systemRole; // role of the referenced system
   string name;
   string mappingRules; // JSON: [{sourceAttr, targetAttr, expression, default}]
-  string conditions;   // JSON: [{attribute, operator, value}]
+  string conditions; // JSON: [{attribute, operator, value}]
   UserId createdBy;
   long createdAt;
   long updatedAt;

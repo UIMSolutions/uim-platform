@@ -12,7 +12,7 @@ struct ProvisioningJob
   TargetSystemId targetSystemId;
   JobType jobType = JobType.full;
   JobStatus status = JobStatus.scheduled;
-  string schedule;       // cron expression (empty = on-demand)
+  string schedule; // cron expression (empty = on-demand)
   long totalEntities;
   long processedEntities;
   long failedEntities;

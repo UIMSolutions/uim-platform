@@ -13,85 +13,61 @@ import uim.platform.identity.directory.application.dto;
 /// Application use case: API client / technical user management.
 class ManageApiClientsUseCase
 {
-    private ApiClientRepository clientRepo;
-    private AuditRepository auditRepo;
+  private ApiClientRepository clientRepo;
+  private AuditRepository auditRepo;
 
-    this(ApiClientRepository clientRepo, AuditRepository auditRepo)
-    {
-        this.clientRepo = clientRepo;
-        this.auditRepo = auditRepo;
-    }
+  this(ApiClientRepository clientRepo, AuditRepository auditRepo)
+  {
+    this.clientRepo = clientRepo;
+    this.auditRepo = auditRepo;
+  }
 
-    /// Create a new API client.
-    ApiClientResponse createClient(CreateApiClientRequest req)
-    {
-        auto now = Clock.currStdTime();
-        auto id = randomUUID().toString();
-        auto clientId = randomUUID().toString();
-        auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
+  /// Create a new API client.
+  ApiClientResponse createClient(CreateApiClientRequest req)
+  {
+    auto now = Clock.currStdTime();
+    auto id = randomUUID().toString();
+    auto clientId = randomUUID().toString();
+    auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
 
-        auto client = ApiClient(
-            id,
-            req.tenantId,
-            req.name,
-            req.description,
-            clientId,
-            clientSecret,
-            req.scopes,
-            true,
-            now,
-            req.expiresAt,
-            0, // lastUsedAt
+    auto client = ApiClient(id, req.tenantId, req.name, req.description,
+        clientId, clientSecret, req.scopes, true, now, req.expiresAt, 0, // lastUsedAt
         );
-        clientRepo.save(client);
+    clientRepo.save(client);
 
-        auditRepo.save(AuditEvent(
-            randomUUID().toString(),
-            req.tenantId,
-            AuditEventType.apiClientCreated,
-            "system", "System",
-            id, "ApiClient",
-            "API client created: " ~ req.name,
-            "", "", null,
-            now,
-        ));
+    auditRepo.save(AuditEvent(randomUUID().toString(), req.tenantId, AuditEventType.apiClientCreated,
+        "system", "System", id, "ApiClient",
+        "API client created: " ~ req.name, "", "", null, now,));
 
-        return ApiClientResponse(clientId, clientSecret, "");
-    }
+    return ApiClientResponse(clientId, clientSecret, "");
+  }
 
-    /// Get client by ID.
-    ApiClient getClient(ApiClientId id)
-    {
-        return clientRepo.findById(id);
-    }
+  /// Get client by ID.
+  ApiClient getClient(ApiClientId id)
+  {
+    return clientRepo.findById(id);
+  }
 
-    /// List clients for a tenant.
-    ApiClient[] listClients(TenantId tenantId, uint offset = 0, uint limit = 100)
-    {
-        return clientRepo.findByTenant(tenantId, offset, limit);
-    }
+  /// List clients for a tenant.
+  ApiClient[] listClients(TenantId tenantId, uint offset = 0, uint limit = 100)
+  {
+    return clientRepo.findByTenant(tenantId, offset, limit);
+  }
 
-    /// Revoke an API client.
-    string revokeClient(ApiClientId id)
-    {
-        auto client = clientRepo.findById(id);
-        if (client == ApiClient.init)
-            return "API client not found";
+  /// Revoke an API client.
+  string revokeClient(ApiClientId id)
+  {
+    auto client = clientRepo.findById(id);
+    if (client == ApiClient.init)
+      return "API client not found";
 
-        client.active = false;
-        clientRepo.update(client);
+    client.active = false;
+    clientRepo.update(client);
 
-        auditRepo.save(AuditEvent(
-            randomUUID().toString(),
-            client.tenantId,
-            AuditEventType.apiClientRevoked,
-            "system", "System",
-            id, "ApiClient",
-            "API client revoked: " ~ client.name,
-            "", "", null,
-            Clock.currStdTime(),
-        ));
+    auditRepo.save(AuditEvent(randomUUID().toString(), client.tenantId, AuditEventType.apiClientRevoked,
+        "system", "System", id, "ApiClient", "API client revoked: " ~ client.name,
+        "", "", null, Clock.currStdTime(),));
 
-        return "";
-    }
+    return "";
+  }
 }

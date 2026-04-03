@@ -6,23 +6,20 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// IdaGroup entity for organizing users.
-struct IdaGroup {
-    GroupId id;
-    TenantId tenantId;
-    string name;
-    string description;
-    string[] memberUserIds;
-    long createdAt;
-    long updatedAt;
+struct IdaGroup
+{
+  GroupId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string[] memberUserIds;
+  long createdAt;
+  long updatedAt;
 
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("name", name)
-            .set("description", description)
-            .set("memberUserIds", memberUserIds)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
-    }
+  Json toJson()
+  {
+    return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
+        name).set("description", description).set("memberUserIds",
+        memberUserIds).set("createdAt", createdAt).set("updatedAt", updatedAt);
+  }
 }

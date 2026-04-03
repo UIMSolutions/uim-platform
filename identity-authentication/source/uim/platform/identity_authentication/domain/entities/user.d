@@ -6,52 +6,48 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Core user entity in the identity directory.
-struct User {
-    UserId id;
-    TenantId tenantId;
-    string userName;
-    string email;
-    string firstName;
-    string lastName;
-    string passwordHash;
-    UserStatus status = UserStatus.active;
-    MfaType mfaType = MfaType.none;
-    string mfaSecret;
-    string[] groupIds;
-    string phoneNumber;
-    string externalIdpId;
-    long createdAt;
-    long updatedAt;
-    string globalUserId; // Unique identifier across landscape (like SAP Global User ID)
+struct User
+{
+  UserId id;
+  TenantId tenantId;
+  string userName;
+  string email;
+  string firstName;
+  string lastName;
+  string passwordHash;
+  UserStatus status = UserStatus.active;
+  MfaType mfaType = MfaType.none;
+  string mfaSecret;
+  string[] groupIds;
+  string phoneNumber;
+  string externalIdpId;
+  long createdAt;
+  long updatedAt;
+  string globalUserId; // Unique identifier across landscape (like SAP Global User ID)
 
-    string displayName() const {
-        return firstName ~ " " ~ lastName;
-    }
+  string displayName() const
+  {
+    return firstName ~ " " ~ lastName;
+  }
 
-    bool isActive() const {
-        return status == UserStatus.active;
-    }
+  bool isActive() const
+  {
+    return status == UserStatus.active;
+  }
 
-    bool hasMfa() const {
-        return mfaType != MfaType.none;
-    }
+  bool hasMfa() const
+  {
+    return mfaType != MfaType.none;
+  }
 
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("userName", userName)
-            .set("email", email)
-            .set("firstName", firstName)
-            .set("lastName", lastName)
-            // Note: Exclude passwordHash and mfaSecret from JSON for security reasons
-            .set("status", to!string(status))
-            .set("mfaType", to!string(mfaType))
-            .set("groupIds", groupIds)
-            .set("phoneNumber", phoneNumber)
-            .set("externalIdpId", externalIdpId)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt)
-            .set("globalUserId", globalUserId);
-    }
+  Json toJson()
+  {
+    return Json.emptyObject.set("id", id).set("tenantId", tenantId)
+      .set("userName", userName).set("email", email).set("firstName",
+        firstName).set("lastName", lastName) // Note: Exclude passwordHash and mfaSecret from JSON for security reasons
+      .set("status", to!string(status))
+      .set("mfaType", to!string(mfaType)).set("groupIds", groupIds).set("phoneNumber", phoneNumber)
+      .set("externalIdpId", externalIdpId).set("createdAt", createdAt)
+      .set("updatedAt", updatedAt).set("globalUserId", globalUserId);
+  }
 }

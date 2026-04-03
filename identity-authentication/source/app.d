@@ -5,12 +5,17 @@ module app;
 import uim.platform.identity_authentication;
 import uim.platform.identity_authentication.infrastructure.config;
 import uim.platform.identity_authentication.infrastructure.container;
+
 // import vibe.d;
 @safe:
 
-version (unittest) {
-} else {
-void main() {
+version (unittest)
+{
+}
+else
+{
+  void main()
+  {
     // Load configuration
     auto config = loadConfig();
 
@@ -50,4 +55,4 @@ void main() {
     writefln("╚══════════════════════════════════════════════════╝");
 
     runApplication();
-}
+  }

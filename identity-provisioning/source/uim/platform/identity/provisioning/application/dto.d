@@ -76,7 +76,7 @@ struct CreateTransformationRequest
   SystemRole systemRole;
   string name;
   string mappingRules; // JSON
-  string conditions;   // JSON
+  string conditions; // JSON
   UserId createdBy;
 }
 

@@ -12,73 +12,73 @@ alias TokenId = string;
 /// Authentication method supported by the platform.
 enum AuthMethod
 {
-    form,
-    spnego,
-    social,
-    certificate,
-    saml,
-    oidc,
-    apiKey,
+  form,
+  spnego,
+  social,
+  certificate,
+  saml,
+  oidc,
+  apiKey,
 }
 
 /// Multi-factor authentication type.
 enum MfaType
 {
-    none,
-    totp,
-    sms,
-    email,
+  none,
+  totp,
+  sms,
+  email,
 }
 
 /// SSO protocol.
 enum SsoProtocol
 {
-    saml2,
-    oidc,
+  saml2,
+  oidc,
 }
 
 /// User status in the identity directory.
 enum UserStatus
 {
-    active,
-    inactive,
-    locked,
-    pendingVerification,
+  active,
+  inactive,
+  locked,
+  pendingVerification,
 }
 
 /// Risk level determined by risk-based authentication.
 enum RiskLevel
 {
-    low,
-    medium,
-    high,
-    critical,
+  low,
+  medium,
+  high,
+  critical,
 }
 
 /// Token type.
 enum TokenType
 {
-    access,
-    refresh,
-    idToken,
-    samlAssertion,
+  access,
+  refresh,
+  idToken,
+  samlAssertion,
 }
 
 /// Provisioning job status.
 enum JobStatus
 {
-    pending,
-    running,
-    completed,
-    failed,
+  pending,
+  running,
+  completed,
+  failed,
 }
 
 /// Identity provider type for delegation.
 enum IdpType
 {
-    local,
-    saml,
-    oidc,
-    ldap,
-    corporate,
+  local,
+  saml,
+  oidc,
+  ldap,
+  corporate,
 }

@@ -9,37 +9,45 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : GroupRepository {
-    private IdaGroup[GroupId] store;
+class MemoryGroupRepository : GroupRepository
+{
+  private IdaGroup[GroupId] store;
 
-    IdaGroup findById(GroupId id) {
-        if (auto p = id in store)
-            return *p;
-        return IdaGroup.init;
-    }
+  IdaGroup findById(GroupId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return IdaGroup.init;
+  }
 
-    IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
-        IdaGroup[] result;
-        uint idx;
-        foreach (g; store.byValue()) {
-            if (g.tenantId == tenantId) {
-                if (idx >= offset && result.length < limit)
-                    result ~= g;
-                idx++;
-            }
-        }
-        return result;
+  IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
+  {
+    IdaGroup[] result;
+    uint idx;
+    foreach (g; store.byValue())
+    {
+      if (g.tenantId == tenantId)
+      {
+        if (idx >= offset && result.length < limit)
+          result ~= g;
+        idx++;
+      }
     }
+    return result;
+  }
 
-    void save(IdaGroup group) {
-        store[group.id] = group;
-    }
+  void save(IdaGroup group)
+  {
+    store[group.id] = group;
+  }
 
-    void update(IdaGroup group) {
-        store[group.id] = group;
-    }
+  void update(IdaGroup group)
+  {
+    store[group.id] = group;
+  }
 
-    void remove(GroupId id) {
-        store.remove(id);
-    }
+  void remove(GroupId id)
+  {
+    store.remove(id);
+  }
 }

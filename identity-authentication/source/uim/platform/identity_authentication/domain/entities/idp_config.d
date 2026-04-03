@@ -7,38 +7,31 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// External Identity Provider configuration for delegated authentication.
-struct IdpConfig {
-    string id;
-    TenantId tenantId;
-    string name;
-    IdpType idpType;
-    string metadataUrl;
-    string authorizationEndpoint;
-    string tokenEndpoint;
-    string userInfoEndpoint;
-    string clientId;
-    string clientSecret;
-    string[] domainHints; // email domains that route to this IdP
-    bool isDefault;
-    bool active = true;
-    long createdAt;
-    long updatedAt;
+struct IdpConfig
+{
+  string id;
+  TenantId tenantId;
+  string name;
+  IdpType idpType;
+  string metadataUrl;
+  string authorizationEndpoint;
+  string tokenEndpoint;
+  string userInfoEndpoint;
+  string clientId;
+  string clientSecret;
+  string[] domainHints; // email domains that route to this IdP
+  bool isDefault;
+  bool active = true;
+  long createdAt;
+  long updatedAt;
 
-    Json toJson() {
-        return Json.emptyObject
-            .set("id", id)
-            .set("tenantId", tenantId)
-            .set("name", name)
-            .set("idpType", to!string(idpType))
-            .set("metadataUrl", metadataUrl)
-            .set("authorizationEndpoint", authorizationEndpoint)
-            .set("tokenEndpoint", tokenEndpoint)
-            .set("userInfoEndpoint", userInfoEndpoint)
-            .set("clientId", clientId)
-            .set("domainHints", domainHints)
-            .set("isDefault", isDefault)
-            .set("active", active)
-            .set("createdAt", createdAt)
-            .set("updatedAt", updatedAt);
-    }
+  Json toJson()
+  {
+    return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
+        name).set("idpType", to!string(idpType)).set("metadataUrl", metadataUrl)
+      .set("authorizationEndpoint", authorizationEndpoint).set("tokenEndpoint",
+        tokenEndpoint).set("userInfoEndpoint", userInfoEndpoint)
+      .set("clientId", clientId).set("domainHints", domainHints).set("isDefault",
+        isDefault).set("active", active).set("createdAt", createdAt).set("updatedAt", updatedAt);
+  }
 }

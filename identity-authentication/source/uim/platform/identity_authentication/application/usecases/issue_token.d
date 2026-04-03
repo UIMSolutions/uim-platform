@@ -15,90 +15,88 @@ module uim.platform.identity_authentication.application.usecases.issue_token;
 // // import std.datetime.systime : Clock;
 // 
 import uim.platform.identity_authentication;
+
 mixin(ShowModule!());
 @safe:
 /// Application use case: issue OAuth2/OIDC tokens after successful authentication.
-class IssueTokenUseCase {
-    private UserRepository userRepo;
-    private ApplicationRepository appRepo;
-    private TokenRepository tokenRepo;
-    private SessionRepository sessionRepo;
-    private TokenService tokenSvc;
+class IssueTokenUseCase
+{
+  private UserRepository userRepo;
+  private ApplicationRepository appRepo;
+  private TokenRepository tokenRepo;
+  private SessionRepository sessionRepo;
+  private TokenService tokenSvc;
 
-    this(UserRepository userRepo, ApplicationRepository appRepo,
-        TokenRepository tokenRepo, SessionRepository sessionRepo,
-        TokenService tokenSvc)
-    {
-        this.userRepo = userRepo;
-        this.appRepo = appRepo;
-        this.tokenRepo = tokenRepo;
-        this.sessionRepo = sessionRepo;
-        this.tokenSvc = tokenSvc;
-    }
+  this(UserRepository userRepo, ApplicationRepository appRepo,
+      TokenRepository tokenRepo, SessionRepository sessionRepo, TokenService tokenSvc)
+  {
+    this.userRepo = userRepo;
+    this.appRepo = appRepo;
+    this.tokenRepo = tokenRepo;
+    this.sessionRepo = sessionRepo;
+    this.tokenSvc = tokenSvc;
+  }
 
-    TokenResponse execute(TokenRequest req)
-    {
-        // Validate session
-        auto session = sessionRepo.findById(req.sessionId);
-        import uim.platform.identity_authentication.domain.entities.session : IdaSession;
-        if (session == IdaSession.init || session.revoked)
-            return TokenResponse("", "", "", "Invalid session");
+  TokenResponse execute(TokenRequest req)
+  {
+    // Validate session
+    auto session = sessionRepo.findById(req.sessionId);
+    import uim.platform.identity_authentication.domain.entities.session : IdaSession;
 
-        auto user = userRepo.findById(session.userId);
-        if (user == User.init)
-            return TokenResponse("", "", "", "User not found");
+    if (session == IdaSession.init || session.revoked)
+      return TokenResponse("", "", "", "Invalid session");
 
-        auto app = appRepo.findByClientId(req.clientId);
-        if (app == Application.init)
-            return TokenResponse("", "", "", "Unknown application");
+    auto user = userRepo.findById(session.userId);
+    if (user == User.init)
+      return TokenResponse("", "", "", "User not found");
 
-        if (app.clientSecret != req.clientSecret)
-            return TokenResponse("", "", "", "Invalid client credentials");
+    auto app = appRepo.findByClientId(req.clientId);
+    if (app == Application.init)
+      return TokenResponse("", "", "", "Unknown application");
 
-        auto now = Clock.currStdTime();
+    if (app.clientSecret != req.clientSecret)
+      return TokenResponse("", "", "", "Invalid client credentials");
 
-        // Generate access token
-        auto accessTokenValue = tokenSvc.generateToken(user, app, TokenType.access, req.scopes);
-        auto accessToken = Token(
-            randomUUID().toString(), user.id, session.tenantId, app.id,
-            TokenType.access, accessTokenValue, req.scopes,
-            now, now + dur!"hours"(1).total!"hnsecs", false
-        );
-        tokenRepo.save(accessToken);
+    auto now = Clock.currStdTime();
 
-        // Generate refresh token
-        auto refreshTokenValue = tokenSvc.generateToken(user, app, TokenType.refresh, req.scopes);
-        auto refreshToken = Token(
-            randomUUID().toString(), user.id, session.tenantId, app.id,
-            TokenType.refresh, refreshTokenValue, req.scopes,
-            now, now + dur!"hours"(24).total!"hnsecs", false
-        );
-        tokenRepo.save(refreshToken);
+    // Generate access token
+    auto accessTokenValue = tokenSvc.generateToken(user, app, TokenType.access, req.scopes);
+    auto accessToken = Token(randomUUID().toString(), user.id, session.tenantId,
+        app.id, TokenType.access, accessTokenValue, req.scopes, now,
+        now + dur!"hours"(1).total!"hnsecs", false);
+    tokenRepo.save(accessToken);
 
-        // Generate ID token (OIDC)
-        auto idTokenValue = tokenSvc.generateToken(user, app, TokenType.idToken, req.scopes);
+    // Generate refresh token
+    auto refreshTokenValue = tokenSvc.generateToken(user, app, TokenType.refresh, req.scopes);
+    auto refreshToken = Token(randomUUID().toString(), user.id, session.tenantId,
+        app.id, TokenType.refresh, refreshTokenValue, req.scopes, now,
+        now + dur!"hours"(24).total!"hnsecs", false);
+    tokenRepo.save(refreshToken);
 
-        return TokenResponse(accessTokenValue, refreshTokenValue, idTokenValue, "");
-    }
+    // Generate ID token (OIDC)
+    auto idTokenValue = tokenSvc.generateToken(user, app, TokenType.idToken, req.scopes);
+
+    return TokenResponse(accessTokenValue, refreshTokenValue, idTokenValue, "");
+  }
 }
 
 struct TokenRequest
 {
-    string sessionId;
-    string clientId;
-    string clientSecret;
-    string[] scopes;
+  string sessionId;
+  string clientId;
+  string clientSecret;
+  string[] scopes;
 }
 
 struct TokenResponse
 {
-    string accessToken;
-    string refreshToken;
-    string idToken;
-    string error;
+  string accessToken;
+  string refreshToken;
+  string idToken;
+  string error;
 
-    bool isSuccess() const
-    {
-        return error.length == 0;
-    }
+  bool isSuccess() const
+  {
+    return error.length == 0;
+  }
 }

@@ -47,12 +47,9 @@ class MonitorProvisioningUseCase
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
 
-  this(
-    ProvisioningJobRepository jobRepo,
-    ProvisioningLogRepository logRepo,
-    ProvisionedEntityRepository entityRepo,
-    SourceSystemRepository sourceRepo,
-    TargetSystemRepository targetRepo)
+  this(ProvisioningJobRepository jobRepo, ProvisioningLogRepository logRepo,
+      ProvisionedEntityRepository entityRepo, SourceSystemRepository sourceRepo,
+      TargetSystemRepository targetRepo)
   {
     this.jobRepo = jobRepo;
     this.logRepo = logRepo;
@@ -113,9 +110,12 @@ class MonitorProvisioningUseCase
     s.totalJobs = cast(int) jobs.length;
     foreach (ref j; jobs)
     {
-      if (j.status == JobStatus.completed) s.completedJobs++;
-      else if (j.status == JobStatus.failed) s.failedJobs++;
-      else if (j.status == JobStatus.running) s.runningJobs++;
+      if (j.status == JobStatus.completed)
+        s.completedJobs++;
+      else if (j.status == JobStatus.failed)
+        s.failedJobs++;
+      else if (j.status == JobStatus.running)
+        s.runningJobs++;
     }
 
     auto entities = entityRepo.findByTenant(tenantId);
@@ -137,10 +137,12 @@ class MonitorProvisioningUseCase
     s.completedAt = job.completedAt;
 
     auto src = sourceRepo.findById(job.sourceSystemId, tenantId);
-    if (src !is null) s.sourceName = src.name;
+    if (src !is null)
+      s.sourceName = src.name;
 
     auto tgt = targetRepo.findById(job.targetSystemId, tenantId);
-    if (tgt !is null) s.targetName = tgt.name;
+    if (tgt !is null)
+      s.targetName = tgt.name;
 
     return s;
   }

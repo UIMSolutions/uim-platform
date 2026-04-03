@@ -8,13 +8,14 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token generation and validation.
-interface TokenService {
-    /// Generate an access/id/refresh token.
-    string generateToken(User user, Application app, TokenType tokenType, string[] scopes);
+interface TokenService
+{
+  /// Generate an access/id/refresh token.
+  string generateToken(User user, Application app, TokenType tokenType, string[] scopes);
 
-    /// Validate a token and return the user id, or null if invalid.
-    string validateToken(string tokenValue);
+  /// Validate a token and return the user id, or null if invalid.
+  string validateToken(string tokenValue);
 
-    /// Generate a SAML assertion.
-    string generateSamlAssertion(User user, Application app);
+  /// Generate a SAML assertion.
+  string generateSamlAssertion(User user, Application app);
 }

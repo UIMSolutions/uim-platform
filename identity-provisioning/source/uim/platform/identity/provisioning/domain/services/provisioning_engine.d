@@ -26,12 +26,8 @@ class ProvisioningEngine
   private ProvisioningLogRepository logRepo;
   private ProvisionedEntityRepository entityRepo;
 
-  this(
-    SourceSystemRepository sourceRepo,
-    TargetSystemRepository targetRepo,
-    ProvisioningJobRepository jobRepo,
-    ProvisioningLogRepository logRepo,
-    ProvisionedEntityRepository entityRepo)
+  this(SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo, ProvisioningJobRepository jobRepo,
+      ProvisioningLogRepository logRepo, ProvisionedEntityRepository entityRepo)
   {
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
@@ -119,10 +115,8 @@ class ProvisioningEngine
     return true;
   }
 
-  private void simulateEntities(
-    ProvisioningJob* job, TenantId tenantId,
-    string srcName, string tgtName,
-    EntityType eType, int count)
+  private void simulateEntities(ProvisioningJob* job, TenantId tenantId,
+      string srcName, string tgtName, EntityType eType, int count)
   {
     auto now = Clock.currStdTime();
     foreach (i; 0 .. count)
@@ -131,15 +125,14 @@ class ProvisioningEngine
       auto entity = ProvisionedEntity();
       entity.id = randomUUID().toString();
       entity.tenantId = tenantId;
-      entity.externalId = eType == EntityType.user
-        ? "user-" ~ randomUUID().toString()[0 .. 8]
-        : "group-" ~ randomUUID().toString()[0 .. 8];
+      entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
+        .toString()[0 .. 8] : "group-" ~ randomUUID().toString()[0 .. 8];
       entity.entityType = eType;
       entity.sourceSystemId = job.sourceSystemId;
       entity.targetSystemId = job.targetSystemId;
       entity.attributes = eType == EntityType.user
         ? `{"userName":"simulated","email":"sim@example.com","active":true}`
-        : `{"displayName":"simulated-group","members":[]}`  ;
+        : `{"displayName":"simulated-group","members":[]}`;
       entity.status = EntityStatus.active;
       entity.lastSyncAt = now;
       entity.createdAt = now;

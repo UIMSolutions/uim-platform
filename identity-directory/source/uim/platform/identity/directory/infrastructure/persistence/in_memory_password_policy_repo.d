@@ -7,48 +7,48 @@ import uim.platform.identity.directory.domain.ports.password_policy_repository;
 /// In-memory adapter for password policy persistence.
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository
 {
-    private PasswordPolicy[string] store;
+  private PasswordPolicy[string] store;
 
-    PasswordPolicy findById(string id)
-    {
-        if (auto p = id in store)
-            return *p;
-        return PasswordPolicy.init;
-    }
+  PasswordPolicy findById(string id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return PasswordPolicy.init;
+  }
 
-    PasswordPolicy findActiveForTenant(TenantId tenantId)
+  PasswordPolicy findActiveForTenant(TenantId tenantId)
+  {
+    foreach (p; store.byValue())
     {
-        foreach (p; store.byValue())
-        {
-            if (p.tenantId == tenantId && p.active)
-                return p;
-        }
-        return PasswordPolicy.init;
+      if (p.tenantId == tenantId && p.active)
+        return p;
     }
+    return PasswordPolicy.init;
+  }
 
-    PasswordPolicy[] findByTenant(TenantId tenantId)
+  PasswordPolicy[] findByTenant(TenantId tenantId)
+  {
+    PasswordPolicy[] result;
+    foreach (p; store.byValue())
     {
-        PasswordPolicy[] result;
-        foreach (p; store.byValue())
-        {
-            if (p.tenantId == tenantId)
-                result ~= p;
-        }
-        return result;
+      if (p.tenantId == tenantId)
+        result ~= p;
     }
+    return result;
+  }
 
-    void save(PasswordPolicy policy)
-    {
-        store[policy.id] = policy;
-    }
+  void save(PasswordPolicy policy)
+  {
+    store[policy.id] = policy;
+  }
 
-    void update(PasswordPolicy policy)
-    {
-        store[policy.id] = policy;
-    }
+  void update(PasswordPolicy policy)
+  {
+    store[policy.id] = policy;
+  }
 
-    void remove(string id)
-    {
-        store.remove(id);
-    }
+  void remove(string id)
+  {
+    store.remove(id);
+  }
 }

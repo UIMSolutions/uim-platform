@@ -20,12 +20,9 @@ class RunProvisioningJobsUseCase
   private ProvisioningLogRepository logRepo;
   private ProvisioningEngine engine;
 
-  this(
-    ProvisioningJobRepository repo,
-    SourceSystemRepository sourceRepo,
-    TargetSystemRepository targetRepo,
-    ProvisioningLogRepository logRepo,
-    ProvisioningEngine engine)
+  this(ProvisioningJobRepository repo, SourceSystemRepository sourceRepo,
+      TargetSystemRepository targetRepo, ProvisioningLogRepository logRepo,
+      ProvisioningEngine engine)
   {
     this.repo = repo;
     this.sourceRepo = sourceRepo;
@@ -71,7 +68,8 @@ class RunProvisioningJobsUseCase
   CommandResult runJob(ProvisioningJobId id, TenantId tenantId)
   {
     if (!engine.canRun(id, tenantId))
-      return CommandResult("", "Job cannot be started - verify systems are active and job is scheduled");
+      return CommandResult("",
+          "Job cannot be started - verify systems are active and job is scheduled");
 
     auto result = engine.runJob(id, tenantId);
     if (result is null)

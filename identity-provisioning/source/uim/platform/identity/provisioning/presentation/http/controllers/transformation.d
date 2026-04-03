@@ -16,14 +16,17 @@ import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class TransformationController {
+class TransformationController
+{
   private ManageTransformationsUseCase uc;
 
-  this(ManageTransformationsUseCase uc) {
+  this(ManageTransformationsUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     router.post("/api/v1/transformations", &handleCreate);
     router.get("/api/v1/transformations", &handleList);
     router.get("/api/v1/transformations/*", &handleGetById);
@@ -32,8 +35,10 @@ class TransformationController {
     router.post("/api/v1/transformations/test", &handleTest);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateTransformationRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,19 +50,25 @@ class TransformationController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createTransformation(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else
+      }
+      else
         writeError(res, 400, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listTransformations(tenantId);
 
@@ -67,30 +78,39 @@ class TransformationController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto t = uc.getTransformation(id, tenantId);
-      if (t is null) {
+      if (t is null)
+      {
         writeError(res, 404, "Transformation not found");
         return;
       }
       res.writeJsonBody(serializeTransformation(*t), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateTransformationRequest();
@@ -101,27 +121,35 @@ class TransformationController {
       r.conditions = j.getString("conditions");
 
       auto result = uc.updateTransformation(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Transformation not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto systemId = j.getString("systemId");
       auto inputAttributes = j.getString("inputAttributes");
 
-      if (systemId.length == 0 || inputAttributes.length == 0) {
+      if (systemId.length == 0 || inputAttributes.length == 0)
+      {
         writeError(res, 400, "systemId and inputAttributes are required");
         return;
       }
@@ -130,28 +158,37 @@ class TransformationController {
       auto resp = Json.emptyObject;
       resp["output"] = Json(output);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteTransformation(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeTransformation(ref const Transformation t) {
+  private static Json serializeTransformation(ref const Transformation t)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(t.id);
     j["tenantId"] = Json(t.tenantId);
