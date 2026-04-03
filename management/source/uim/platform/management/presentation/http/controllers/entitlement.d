@@ -160,7 +160,7 @@ private Json serializeEntitlement(ref Entitlement e) {
 }
 
 private string enumStr(E)(E val) {
-    import std.conv : to;
+    // import std.conv : to;
 
     return val.to!string;
 }

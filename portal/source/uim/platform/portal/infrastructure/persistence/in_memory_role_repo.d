@@ -4,7 +4,7 @@ import uim.platform.portal.domain.entities.role;
 import uim.platform.portal.domain.types;
 import uim.platform.portal.domain.ports.role_repository;
 
-import std.algorithm : canFind;
+// import std.algorithm : canFind;
 
 class MemoryRoleRepository : RoleRepository
 {

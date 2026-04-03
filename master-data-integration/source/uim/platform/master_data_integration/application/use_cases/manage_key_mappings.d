@@ -25,7 +25,7 @@ class ManageKeyMappingsUseCase
         if (req.entries.length == 0)
             return CommandResult(false, "", "At least one key mapping entry is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         KeyMapping mapping;

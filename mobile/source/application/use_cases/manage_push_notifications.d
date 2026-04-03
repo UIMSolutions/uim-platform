@@ -36,7 +36,7 @@ class ManagePushNotificationsUseCase
         if (req.appId.length == 0)
             return CommandResult(false, "", "App ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         PushNotification n;
@@ -112,7 +112,7 @@ class ManagePushNotificationsUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Template name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         PushTemplate t;
@@ -159,7 +159,7 @@ class ManagePushNotificationsUseCase
         if (req.templateId.length == 0)
             return CommandResult(false, "", "Template ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         PushCampaign c;

@@ -28,7 +28,7 @@ class ManageFeatureTogglesUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Feature key already exists for this app");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         FeatureToggle t;
@@ -114,7 +114,7 @@ class ManageFeatureTogglesUseCase
         if (t.platforms.length > 0)
         {
             auto clientPlatform = parsePlatform(req.platform);
-            import std.algorithm : canFind;
+            // import std.algorithm : canFind;
             if (!t.platforms.canFind(clientPlatform))
                 return t.defaultValue;
         }
@@ -122,7 +122,7 @@ class ManageFeatureTogglesUseCase
         // Check explicit user override
         if (t.enabledUserIds.length > 0)
         {
-            import std.algorithm : canFind;
+            // import std.algorithm : canFind;
             if (t.enabledUserIds.canFind(req.userId))
                 return t.enabledValue;
         }

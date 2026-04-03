@@ -82,8 +82,8 @@ class DistributionEvaluator
 
     private bool evaluateOperator(FilterOperator op, string value, string expected, string[] list)
     {
-        import std.algorithm : canFind;
-        import std.string : indexOf;
+        // import std.algorithm : canFind;
+        // import std.string : indexOf;
 
         final switch (op)
         {

@@ -4,7 +4,7 @@ import uim.platform.portal.domain.entities.tile;
 import uim.platform.portal.domain.types;
 import uim.platform.portal.domain.ports.tile_repository;
 
-import std.string : toLower, indexOf;
+// import std.string : toLower, indexOf;
 
 class MemoryTileRepository : TileRepository
 {

@@ -4,8 +4,8 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.ports.app_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryAppRepository : AppRepository
 {

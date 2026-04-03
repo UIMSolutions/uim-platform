@@ -87,7 +87,7 @@ private Json serializeEvent(ref PlatformEvent ev) {
 }
 
 private string enumStr(E)(E val) {
-    import std.conv : to;
+    // import std.conv : to;
 
     return val.to!string;
 }

@@ -29,7 +29,7 @@ class ManageOfflineSyncUseCase
         if (req.serviceUrl.length == 0)
             return CommandResult(false, "", "Service URL is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         OfflineConfig cfg;
@@ -80,7 +80,7 @@ class ManageOfflineSyncUseCase
         if (req.deviceId.length == 0)
             return CommandResult(false, "", "Device ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         SyncSession s;

@@ -4,8 +4,8 @@ import uim.platform.kyma.domain.types;
 import uim.platform.kyma.domain.entities.application;
 import uim.platform.kyma.domain.ports.application_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryApplicationRepository : ApplicationRepository
 {

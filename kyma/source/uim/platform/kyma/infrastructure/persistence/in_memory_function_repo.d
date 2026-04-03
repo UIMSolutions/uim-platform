@@ -4,8 +4,8 @@ import uim.platform.kyma.domain.types;
 import uim.platform.kyma.domain.entities.serverless_function;
 import uim.platform.kyma.domain.ports.function_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryFunctionRepository : FunctionRepository
 {

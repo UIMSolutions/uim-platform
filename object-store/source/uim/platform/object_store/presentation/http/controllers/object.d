@@ -3,7 +3,7 @@ module uim.platform.object_store.presentation.http.controllers.object;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import std.conv : to;
+// // import std.conv : to;
 // 
 // import uim.platform.object_store.application.usecases.manage_objects;
 // import uim.platform.object_store.application.dto;
@@ -224,7 +224,7 @@ class ObjectController : SAPController {
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects
   private static string extractBucketIdFromPath(string uri) {
-    import std.string : indexOf;
+    // import std.string : indexOf;
 
     // Remove query string
     auto qpos = uri.indexOf('?');
@@ -244,7 +244,7 @@ class ObjectController : SAPController {
 
   /// Extract object ID from /api/v1/objects/{id}/versions
   private static string extractObjectIdFromVersionsPath(string uri) {
-    import std.string : indexOf;
+    // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;

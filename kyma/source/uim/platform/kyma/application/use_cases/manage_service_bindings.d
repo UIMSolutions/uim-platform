@@ -26,7 +26,7 @@ class ManageServiceBindingsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Binding '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ServiceBinding binding;

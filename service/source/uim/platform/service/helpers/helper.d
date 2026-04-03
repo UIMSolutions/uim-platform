@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.service.helpers.helper;
 
-import std.process : environment;
-import std.uuid : randomUUID;
-import std.conv : to;
-import std.datetime : Clock;
+// import std.process : environment;
+// import std.uuid : randomUUID;
+// import std.conv : to;
+// import std.datetime : Clock;
 import uim.platform.service;
 
 mixin(ShowModule!());
@@ -111,7 +111,7 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
 
 /// Simple text-relevance score (case-insensitive substring match).
 double textRelevance(string text, string query) {
-  import std.uni : toLower;
+  // import std.uni : toLower;
 
   if (query.length == 0)
     return 0.0;
@@ -119,7 +119,7 @@ double textRelevance(string text, string query) {
   auto lq = query.toLower;
   if (lt == lq)
     return 1.0;
-  import std.algorithm : canFind;
+  // import std.algorithm : canFind;
 
   if (lt.canFind(lq))
     return 0.6;

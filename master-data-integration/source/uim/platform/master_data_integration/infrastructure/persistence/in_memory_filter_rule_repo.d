@@ -4,8 +4,8 @@ import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.ports.filter_rule_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryFilterRuleRepository : FilterRuleRepository
 {

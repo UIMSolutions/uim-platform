@@ -40,7 +40,7 @@ class PushDispatcher
         string result = template_;
         foreach (key, value; variables)
         {
-            import std.string : replace;
+            // import std.string : replace;
             result = result.replace("{{" ~ key ~ "}}", value);
         }
         return result;
@@ -53,8 +53,8 @@ class PushDispatcher
         if (targetPlatforms.length == 0)
             return devices;
 
-        import std.algorithm : filter, canFind;
-        import std.array : array;
+        // import std.algorithm : filter, canFind;
+        // import std.array : array;
         return devices.filter!(d => targetPlatforms.canFind(d.platform)).array;
     }
 }

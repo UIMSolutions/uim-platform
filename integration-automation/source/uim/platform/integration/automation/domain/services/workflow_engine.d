@@ -57,7 +57,7 @@ class WorkflowEngine
     // All steps done?
     if (completed >= wf.totalSteps)
     {
-      import std.datetime.systime : Clock;
+      // import std.datetime.systime : Clock;
       wf.status = WorkflowStatus.completed;
       wf.completedAt = Clock.currStdTime();
       workflowRepo.update(*wf);
@@ -65,8 +65,8 @@ class WorkflowEngine
     }
 
     // Find next pending step whose dependencies are met
-    import std.algorithm : sort;
-    import std.array : array;
+    // import std.algorithm : sort;
+    // import std.array : array;
     auto sorted = steps.dup;
     sorted.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
 

@@ -26,7 +26,7 @@ class ManageAppVersionsUseCase
         if (req.appId.length == 0)
             return CommandResult(false, "", "App ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         AppVersion v;

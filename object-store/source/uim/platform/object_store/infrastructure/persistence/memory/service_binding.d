@@ -4,8 +4,8 @@ import uim.platform.object_store.domain.types;
 import uim.platform.object_store.domain.entities.service_binding;
 import uim.platform.object_store.domain.ports.repositories.service_binding;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryServiceBindingRepository : ServiceBindingRepository {
     private ServiceBinding[ServiceBindingId] store;

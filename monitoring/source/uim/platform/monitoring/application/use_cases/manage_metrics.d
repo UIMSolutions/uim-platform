@@ -7,7 +7,7 @@ import uim.platform.monitoring.domain.ports.metric_repository;
 import uim.platform.monitoring.domain.ports.metric_definition_repository;
 import uim.platform.monitoring.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for metric retrieval, push, and custom metric definitions.
 class ManageMetricsUseCase
@@ -32,7 +32,7 @@ class ManageMetricsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         MetricDefinition def;
@@ -98,7 +98,7 @@ class ManageMetricsUseCase
         if (req.resourceId.length == 0)
             return CommandResult(false, "", "Resource ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Metric m;
@@ -121,7 +121,7 @@ class ManageMetricsUseCase
         Metric[] metrics;
         foreach (ref r; req.metrics)
         {
-            import std.uuid : randomUUID;
+            // import std.uuid : randomUUID;
             Metric m;
             m.id = randomUUID().toString();
             m.tenantId = req.tenantId;
@@ -184,7 +184,7 @@ class ManageMetricsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

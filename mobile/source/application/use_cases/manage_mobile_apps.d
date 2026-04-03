@@ -28,7 +28,7 @@ class ManageMobileAppsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Bundle ID already registered");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         MobileApp app;

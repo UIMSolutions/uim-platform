@@ -5,8 +5,8 @@ import uim.platform.portal.domain.types;
 import uim.platform.portal.domain.ports.translation_repository;
 import uim.platform.portal.application.dto;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 class ManageTranslationsUseCase
 {

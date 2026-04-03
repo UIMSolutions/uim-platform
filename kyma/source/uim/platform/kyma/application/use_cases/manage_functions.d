@@ -29,7 +29,7 @@ class ManageFunctionsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Function '" ~ req.name ~ "' already exists in this namespace");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ServerlessFunction fn;

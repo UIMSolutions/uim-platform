@@ -5,7 +5,7 @@ import uim.platform.monitoring.domain.entities.alert_rule;
 import uim.platform.monitoring.domain.ports.alert_rule_repository;
 import uim.platform.monitoring.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for alert rule CRUD (thresholds and checks configuration).
 class ManageAlertRulesUseCase
@@ -25,7 +25,7 @@ class ManageAlertRulesUseCase
         if (req.metricName.length == 0)
             return CommandResult(false, "", "Metric name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         AlertRule rule;
@@ -104,7 +104,7 @@ class ManageAlertRulesUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

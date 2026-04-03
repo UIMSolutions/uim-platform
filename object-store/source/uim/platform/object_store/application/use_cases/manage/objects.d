@@ -10,7 +10,7 @@ import uim.platform.object_store.domain.ports.repositories.object_version;
 import uim.platform.object_store.domain.services.quota_validator;
 import uim.platform.object_store.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for storage object CRUD operations.
 class ManageObjectsUseCase
@@ -44,7 +44,7 @@ class ManageObjectsUseCase
         if (!quotaResult.valid)
             return CommandResult(false, "", quotaResult.error);
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
         auto ts = currentTimestamp();
 
@@ -144,7 +144,7 @@ class ManageObjectsUseCase
         // If versioning enabled, add a delete marker instead of removing
         if (bucket !is null && bucket.versioningEnabled)
         {
-            import std.uuid : randomUUID;
+            // import std.uuid : randomUUID;
             auto versionId = randomUUID().toString();
             auto ts = currentTimestamp();
 
@@ -204,7 +204,7 @@ class ManageObjectsUseCase
         if (!quotaResult.valid)
             return CommandResult(false, "", quotaResult.error);
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
         auto ts = currentTimestamp();
 
@@ -246,14 +246,14 @@ private StorageClass parseStorageClass(string s)
 
 private string generateEtag(string id)
 {
-    import std.digest.md : md5Of, toHexString;
-    import std.string : representation;
+    // import std.digest.md : md5Of, toHexString;
+    // import std.string : representation;
     auto hash = md5Of(id.representation);
     return toHexString(hash).idup;
 }
 
 private long currentTimestamp()
 {
-    import std.datetime.systime : Clock;
+    // import std.datetime.systime : Clock;
     return Clock.currStdTime();
 }

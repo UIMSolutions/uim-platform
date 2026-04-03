@@ -17,7 +17,7 @@ class ManageClientsUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Client name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Client client;

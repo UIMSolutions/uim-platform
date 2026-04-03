@@ -91,7 +91,7 @@ struct ThresholdEvaluator
 
     private static string formatDouble(double v)
     {
-        import std.format : format;
+        // import std.format : format;
         return format("%.2f", v);
     }
 }

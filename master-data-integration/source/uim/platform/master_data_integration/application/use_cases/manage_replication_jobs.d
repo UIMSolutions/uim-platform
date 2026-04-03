@@ -19,7 +19,7 @@ class ManageReplicationJobsUseCase
         if (req.sourceClientId.length == 0)
             return CommandResult(false, "", "Source client ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ReplicationJob job;

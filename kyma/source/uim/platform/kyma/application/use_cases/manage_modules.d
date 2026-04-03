@@ -29,7 +29,7 @@ class ManageModulesUseCase
         if (existing.id.length > 0 && existing.status == ModuleStatus.enabled)
             return CommandResult(false, "", "Module '" ~ req.name ~ "' is already enabled");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = existing.id.length > 0 ? existing.id : randomUUID().toString();
 
         KymaModule mod;
@@ -55,7 +55,7 @@ class ManageModulesUseCase
         if (!depResolver.canEnable(mod, allModules))
         {
             auto missing = depResolver.getUnsatisfiedDependencies(mod, allModules);
-            import std.array : join;
+            // import std.array : join;
             return CommandResult(false, "", "Missing required modules: " ~ missing.join(", "));
         }
 
@@ -79,7 +79,7 @@ class ManageModulesUseCase
         auto dependents = depResolver.findDependents(mod.name, allModules);
         if (dependents.length > 0)
         {
-            import std.array : join;
+            // import std.array : join;
             return CommandResult(false, "", "Cannot disable: modules depend on it: " ~ dependents.join(", "));
         }
 

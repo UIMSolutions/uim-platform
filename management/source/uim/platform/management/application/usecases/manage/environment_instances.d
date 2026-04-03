@@ -38,7 +38,7 @@ class ManageEnvironmentInstancesUseCase {
         if (!validation.valid)
             return CommandResult(false, "", validation.reason);
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 

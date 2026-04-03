@@ -5,7 +5,7 @@ import uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.ports.alert_repository;
 import uim.platform.monitoring.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for alert lifecycle management (list, acknowledge, resolve).
 class ManageAlertsUseCase
@@ -91,7 +91,7 @@ class ManageAlertsUseCase
         string ruleName, string metricName, double currentValue, double thresholdValue,
         ThresholdOperator op, AlertSeverity severity, string message)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Alert a;
@@ -115,7 +115,7 @@ class ManageAlertsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

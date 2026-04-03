@@ -6,7 +6,7 @@ import uim.platform.object_store.domain.ports.repositories.service_binding;
 import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for service binding management (credentials for programmatic access).
 class ManageServiceBindingsUseCase {
@@ -28,7 +28,7 @@ class ManageServiceBindingsUseCase {
         if (bucket is null || bucket.id.length == 0)
             return CommandResult(false, "", "Bucket not found");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
         auto accessKeyId = randomUUID().toString();
@@ -92,15 +92,15 @@ private BindingPermission parsePermission(string s) {
 }
 
 private string hashSecret(string secret) {
-    import std.digest.md : md5Of, toHexString;
-    import std.string : representation;
+    // import std.digest.md : md5Of, toHexString;
+    // import std.string : representation;
 
     auto hash = md5Of(secret.representation);
     return toHexString(hash).idup;
 }
 
 private long currentTimestamp() {
-    import std.datetime.systime : Clock;
+    // import std.datetime.systime : Clock;
 
     return Clock.currStdTime();
 }

@@ -90,7 +90,7 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
 
 /// Extract the last path segment as ID from a URI.
 string extractId(string uri) {
-    import std.string : lastIndexOf;
+    // import std.string : lastIndexOf;
 
     auto qIdx = uri.lastIndexOf('?');
     auto path = qIdx >= 0 ? uri[0 .. qIdx] : uri;

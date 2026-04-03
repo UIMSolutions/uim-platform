@@ -21,7 +21,7 @@ class ManageLabelsUseCase {
         if (req.values.length == 0)
             return CommandResult(false, "", "At least one label value is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 

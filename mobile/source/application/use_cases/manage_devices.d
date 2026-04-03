@@ -43,7 +43,7 @@ class ManageDevicesUseCase
             }
         }
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         DeviceRegistration reg;

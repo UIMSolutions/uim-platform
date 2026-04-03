@@ -20,7 +20,7 @@ class ManageSecurityPoliciesUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Policy name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         SecurityPolicy p;

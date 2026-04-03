@@ -5,7 +5,7 @@ import uim.platform.monitoring.domain.entities.notification_channel;
 import uim.platform.monitoring.domain.ports.notification_channel_repository;
 import uim.platform.monitoring.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for notification channel CRUD (email, webhook, on-premise).
 class ManageNotificationChannelsUseCase
@@ -22,7 +22,7 @@ class ManageNotificationChannelsUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Channel name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         NotificationChannel ch;
@@ -107,7 +107,7 @@ class ManageNotificationChannelsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

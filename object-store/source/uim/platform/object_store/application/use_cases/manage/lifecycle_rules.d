@@ -26,7 +26,7 @@ class ManageLifecycleRulesUseCase {
         if (bucket is null || bucket.id.length == 0)
             return CommandResult(false, "", "Bucket not found");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
         auto ts = currentTimestamp();
@@ -116,7 +116,7 @@ private StorageClass parseStorageClass(string s) {
 }
 
 private long currentTimestamp() {
-    import std.datetime.systime : Clock;
+    // import std.datetime.systime : Clock;
 
     return Clock.currStdTime();
 }

@@ -31,7 +31,7 @@ class ManageSubscriptionsUseCase {
                 return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
         }
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 
@@ -111,7 +111,7 @@ class ManageSubscriptionsUseCase {
 
     private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
         string eventType, string desc, string initiatedBy) {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         PlatformEvent ev;
         ev.id = randomUUID().toString();

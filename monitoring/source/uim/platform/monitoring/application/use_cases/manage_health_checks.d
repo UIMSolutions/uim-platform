@@ -8,7 +8,7 @@ import uim.platform.monitoring.domain.ports.health_check_result_repository;
 import uim.platform.monitoring.domain.services.health_checker;
 import uim.platform.monitoring.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for health check CRUD and result recording.
 class ManageHealthChecksUseCase
@@ -27,7 +27,7 @@ class ManageHealthChecksUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Check name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         HealthCheck c;
@@ -90,7 +90,7 @@ class ManageHealthChecksUseCase
 
     CommandResult recordResult(RecordCheckResultRequest req)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         HealthCheckResult r;
@@ -151,7 +151,7 @@ class ManageHealthChecksUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

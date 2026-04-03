@@ -19,7 +19,7 @@ class ManageDataModelsUseCase
         if (req.namespace.length == 0)
             return CommandResult(false, "", "Namespace is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         DataModel model;

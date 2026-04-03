@@ -26,7 +26,7 @@ class ManageApplicationsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Application app;

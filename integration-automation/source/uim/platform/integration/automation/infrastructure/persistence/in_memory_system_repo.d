@@ -5,8 +5,8 @@ import uim.platform.integration.automation.domain.entities.system_connection;
 // import uim.platform.integration.automation.domain.ports.system_repository;
 import uim.platform.integration.automation.domain.ports;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemorySystemRepository : SystemRepository
 {

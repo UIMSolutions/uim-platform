@@ -17,7 +17,7 @@ class ManageFilterRulesUseCase
         if (req.name.length == 0)
             return CommandResult(false, "", "Filter rule name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         FilterRule rule;

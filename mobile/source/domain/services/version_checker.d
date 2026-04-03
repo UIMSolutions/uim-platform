@@ -52,8 +52,8 @@ class VersionChecker
 
     private int[] splitVersion(string v)
     {
-        import std.array : split;
-        import std.conv : to;
+        // import std.array : split;
+        // import std.conv : to;
         int[] parts;
         foreach (s; v.split("."))
         {

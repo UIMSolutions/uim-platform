@@ -30,7 +30,7 @@ class TrackUsageUseCase
         if (req.appId.length == 0)
             return CommandResult(false, "", "App ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         UsageEvent e;
@@ -71,7 +71,7 @@ class TrackUsageUseCase
         if (req.appId.length == 0)
             return CommandResult(false, "", "App ID is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         ClientLog l;
@@ -109,7 +109,7 @@ class TrackUsageUseCase
         auto devices = deviceRepo.findByApp(appId);
         s.totalDevices = cast(long) devices.length;
 
-        import std.algorithm : filter, count;
+        // import std.algorithm : filter, count;
         s.activeDevices = cast(long) devices.filter!(d => d.status == DeviceStatus.active).count;
 
         auto events = eventRepo.findByApp(appId);

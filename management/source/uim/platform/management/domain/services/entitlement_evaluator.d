@@ -23,7 +23,7 @@ class EntitlementEvaluator {
 
         if (!unlimited && (currentlyAssigned + requestedQuota) > maxAvailable) {
             v.valid = false;
-            import std.conv : to;
+            // import std.conv : to;
 
             v.reason = "Insufficient quota: requested " ~ requestedQuota.to!string
                 ~ ", available " ~ (

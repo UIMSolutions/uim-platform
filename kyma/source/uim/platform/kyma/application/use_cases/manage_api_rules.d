@@ -25,7 +25,7 @@ class ManageApiRulesUseCase {
         if (existing.id.length > 0)
             return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 

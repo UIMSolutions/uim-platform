@@ -28,7 +28,7 @@ class ManageEventSubscriptionsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         EventSubscription sub;

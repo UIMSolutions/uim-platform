@@ -6,7 +6,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.services.encryption_policy;
 import uim.platform.object_store.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for bucket CRUD operations.
 class ManageBucketsUseCase {
@@ -26,7 +26,7 @@ class ManageBucketsUseCase {
         if (existing !is null && existing.id.length > 0)
             return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
 
         auto id = randomUUID().toString();
 
@@ -125,7 +125,7 @@ private EncryptionType parseEncryptionType(string s) {
 
 private long currentTimestamp() {
     import core.time : Duration;
-    import std.datetime.systime : Clock;
+    // import std.datetime.systime : Clock;
 
     return Clock.currStdTime();
 }

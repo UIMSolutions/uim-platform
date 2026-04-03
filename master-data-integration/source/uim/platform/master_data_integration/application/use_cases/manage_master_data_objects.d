@@ -26,7 +26,7 @@ class ManageMasterDataObjectsUseCase
         if (req.displayName.length == 0)
             return CommandResult(false, "", "Display name is required");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         MasterDataObject obj;
@@ -94,7 +94,7 @@ class ManageMasterDataObjectsUseCase
         auto oldVersion = obj.versionNumber;
         obj.versionNumber++;
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         obj.currentVersion = randomUUID().toString();
         obj.modifiedAt = clockSeconds();
         obj.modifiedBy = req.modifiedBy;
@@ -128,7 +128,7 @@ class ManageMasterDataObjectsUseCase
         string[] changedFields, string[string] oldValues, string[string] newValues,
         string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         ChangeLogEntry entry;
         entry.id = randomUUID().toString();
         entry.tenantId = tenantId;

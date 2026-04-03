@@ -1,7 +1,7 @@
 module uim.platform.service.classes.entities.entity;
 
 import uim.platform.service;
-import std.datetime.systime;
+// import std.datetime.systime;
 mixin(ShowModule!());
 
 @safe:

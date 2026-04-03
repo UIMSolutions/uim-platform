@@ -4,8 +4,8 @@ import uim.platform.kyma.domain.types;
 import uim.platform.kyma.domain.entities.event_subscription;
 import uim.platform.kyma.domain.ports.event_subscription_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryEventSubscriptionRepository : EventSubscriptionRepository
 {

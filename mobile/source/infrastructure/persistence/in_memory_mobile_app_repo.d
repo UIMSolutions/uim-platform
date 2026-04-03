@@ -4,8 +4,8 @@ import uim.platform.mobile.domain.types;
 import uim.platform.mobile.domain.entities.mobile_app;
 import uim.platform.mobile.domain.ports.mobile_app_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryMobileAppRepository : MobileAppRepository
 {

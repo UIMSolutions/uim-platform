@@ -26,7 +26,7 @@ class ManageNamespacesUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Namespace ns;
