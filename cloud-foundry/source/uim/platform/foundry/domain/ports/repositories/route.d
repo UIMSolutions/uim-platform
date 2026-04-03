@@ -1,7 +1,7 @@
-module uim.platform.cloud_foundry.domain.ports.route;
+module uim.platform.foundry.domain.ports.route;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.route;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.route;
 
 /// Port for persisting and querying routes.
 interface IRouteRepository {

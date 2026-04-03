@@ -1,7 +1,7 @@
-module uim.platform.cloud_foundry.domain.ports.space;
+module uim.platform.foundry.domain.ports.space;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.space;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.space;
 
 /// Port for persisting and querying spaces.
 interface SpaceRepository {

@@ -1,1 +1,1 @@
-module uim.platform.cloud_foundry.domain.services;
+module uim.platform.foundry.domain.services;

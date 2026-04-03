@@ -1,8 +1,8 @@
-module uim.platform.cloud_foundry.infrastructure.persistence.memory.buildpack;
+module uim.platform.foundry.infrastructure.persistence.memory.buildpack;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.buildpack;
-import uim.platform.cloud_foundry.domain.ports.buildpack;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.buildpack;
+import uim.platform.foundry.domain.ports.buildpack;
 
 import std.algorithm : filter;
 import std.array : array;

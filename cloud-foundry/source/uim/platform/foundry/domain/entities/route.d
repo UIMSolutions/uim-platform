@@ -1,6 +1,6 @@
-module uim.platform.cloud_foundry.domain.entities.route;
+module uim.platform.foundry.domain.entities.route;
 
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.domain.types;
 
 /// A route — maps incoming HTTP/TCP traffic to one or more applications
 /// via a domain, optional host prefix, and optional URL path.

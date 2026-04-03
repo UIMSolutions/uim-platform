@@ -1,6 +1,6 @@
-module uim.platform.cloud_foundry.domain.entities.space;
+module uim.platform.foundry.domain.entities.space;
 
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.domain.types;
 
 /// A space — an isolated area within an organization where applications,
 /// services, and routes are deployed and managed.

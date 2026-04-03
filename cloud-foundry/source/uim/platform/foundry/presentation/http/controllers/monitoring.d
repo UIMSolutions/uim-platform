@@ -1,12 +1,12 @@
-module uim.platform.cloud_foundry.presentation.http.controllers.monitoring;
+module uim.platform.foundry.presentation.http.controllers.monitoring;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.cloud_foundry.application.usecases.monitor_apps;
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.application.usecases.monitor_apps;
+import uim.platform.foundry.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class MonitoringController

@@ -1,2 +1,2 @@
-module uim.platform.cloud_foundry.infrastructure.persistence;
+module uim.platform.foundry.infrastructure.persistence;
 

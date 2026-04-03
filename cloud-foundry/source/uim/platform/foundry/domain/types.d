@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.domain.types;
+module uim.platform.foundry.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias OrgId = string;

@@ -1,8 +1,8 @@
-module uim.platform.cloud_foundry.infrastructure.persistence.memory.service_binding;
+module uim.platform.foundry.infrastructure.persistence.memory.service_binding;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.service_binding;
-import uim.platform.cloud_foundry.domain.ports.service_binding;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.service_binding;
+import uim.platform.foundry.domain.ports.service_binding;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,15 +1,15 @@
-module uim.platform.cloud_foundry.presentation.http.controllers.service;
+module uim.platform.foundry.presentation.http.controllers.service;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.cloud_foundry.application.usecases.manage_services;
-import uim.platform.cloud_foundry.application.dto;
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.service_instance;
-import uim.platform.cloud_foundry.domain.entities.service_binding;
+import uim.platform.foundry.application.usecases.manage_services;
+import uim.platform.foundry.application.dto;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.service_instance;
+import uim.platform.foundry.domain.entities.service_binding;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class ServiceController

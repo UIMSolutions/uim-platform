@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.infrastructure.config;
+module uim.platform.foundry.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig

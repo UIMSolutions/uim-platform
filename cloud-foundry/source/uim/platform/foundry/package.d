@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry;
+module uim.platform.foundry;
 
 public {
 }

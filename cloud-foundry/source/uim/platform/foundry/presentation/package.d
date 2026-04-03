@@ -1,4 +1,4 @@
-module uim.platform.cloud_foundry.presentation;
+module uim.platform.foundry.presentation;
 
 public {
   import uim.platform.xyz.presentation.http;

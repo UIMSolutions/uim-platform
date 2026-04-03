@@ -1,14 +1,14 @@
-module uim.platform.cloud_foundry.presentation.http.controllers.space;
+module uim.platform.foundry.presentation.http.controllers.space;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.cloud_foundry.application.usecases.manage_spaces;
-import uim.platform.cloud_foundry.application.dto;
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.space;
+import uim.platform.foundry.application.usecases.manage_spaces;
+import uim.platform.foundry.application.dto;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.space;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class SpaceController

@@ -1,10 +1,10 @@
-module uim.platform.cloud_foundry.application.usecases;
+module uim.platform.foundry.application.usecases;
 
 public {
-    import uim.platform.cloud_foundry.application.usecases.manage_apps;
-    import uim.platform.cloud_foundry.application.usecases.manage_buildpacks;
-    import uim.platform.cloud_foundry.application.usecases.manage_orgs;
-    import uim.platform.cloud_foundry.application.usecases.manage_routes;
-    import uim.platform.cloud_foundry.application.usecases.manage_services;
-    import uim.platform.cloud_foundry.application.usecases.manage_spaces;
+    import uim.platform.foundry.application.usecases.manage_apps;
+    import uim.platform.foundry.application.usecases.manage_buildpacks;
+    import uim.platform.foundry.application.usecases.manage_orgs;
+    import uim.platform.foundry.application.usecases.manage_routes;
+    import uim.platform.foundry.application.usecases.manage_services;
+    import uim.platform.foundry.application.usecases.manage_spaces;
 }

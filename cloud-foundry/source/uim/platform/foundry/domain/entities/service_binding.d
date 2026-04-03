@@ -1,6 +1,6 @@
-module uim.platform.cloud_foundry.domain.entities.service_binding;
+module uim.platform.foundry.domain.entities.service_binding;
 
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.domain.types;
 
 /// A service binding — connects an application to a service instance,
 /// injecting credentials into the application's VCAP_SERVICES environment.

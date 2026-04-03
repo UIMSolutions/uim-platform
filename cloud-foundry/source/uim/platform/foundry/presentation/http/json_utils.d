@@ -1,9 +1,9 @@
-module uim.platform.cloud_foundry.presentation.http.json_utils;
+module uim.platform.foundry.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;
 
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.domain.types;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)

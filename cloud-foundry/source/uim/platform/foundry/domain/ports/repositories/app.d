@@ -1,7 +1,7 @@
-module uim.platform.cloud_foundry.domain.ports.app;
+module uim.platform.foundry.domain.ports.app;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.application;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.application;
 
 /// Port for persisting and querying applications.
 interface IAppRepository {

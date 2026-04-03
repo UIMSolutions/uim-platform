@@ -1,6 +1,6 @@
-module uim.platform.cloud_foundry.domain.entities.buildpack;
+module uim.platform.foundry.domain.entities.buildpack;
 
-import uim.platform.cloud_foundry.domain.types;
+import uim.platform.foundry.domain.types;
 
 /// A buildpack — provides the runtime detection, compilation, and start
 /// scripts for staging applications (e.g. Java, Node.js, Go, Python).

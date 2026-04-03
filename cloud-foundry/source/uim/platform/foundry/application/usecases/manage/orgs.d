@@ -1,14 +1,14 @@
-module uim.platform.cloud_foundry.application.usecases.manage.orgs;
+module uim.platform.foundry.application.usecases.manage.orgs;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.organization;
-// import uim.platform.cloud_foundry.domain.ports.org;
-// import uim.platform.cloud_foundry.domain.ports.space;
-import uim.platform.cloud_foundry.domain.ports;
-import uim.platform.cloud_foundry.application.dto;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.organization;
+// import uim.platform.foundry.domain.ports.org;
+// import uim.platform.foundry.domain.ports.space;
+import uim.platform.foundry.domain.ports;
+import uim.platform.foundry.application.dto;
 
 class ManageOrgsUseCase
 {

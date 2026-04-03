@@ -1,14 +1,14 @@
-module uim.platform.cloud_foundry.application.usecases.manage.buildpacks;
+module uim.platform.foundry.application.usecases.manage.buildpacks;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.buildpack;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.buildpack;
 
-// import uim.platform.cloud_foundry.domain.ports.buildpack;
-import uim.platform.cloud_foundry.domain.ports;
-import uim.platform.cloud_foundry.application.dto;
+// import uim.platform.foundry.domain.ports.buildpack;
+import uim.platform.foundry.domain.ports;
+import uim.platform.foundry.application.dto;
 
 class ManageBuildpacksUseCase {
   private BuildpackRepository repo;

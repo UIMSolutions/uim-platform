@@ -1,29 +1,29 @@
-module uim.platform.cloud_foundry.infrastructure.container;
+module uim.platform.foundry.infrastructure.container;
 
-import uim.platform.cloud_foundry.infrastructure.config;
+import uim.platform.foundry.infrastructure.config;
 
 // Repositories
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.org;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.space;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.app;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.service_instance;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.service_binding;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.route;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.domain;
-import uim.platform.cloud_foundry.infrastructure.persistence.memory.buildpack;
+import uim.platform.foundry.infrastructure.persistence.memory.org;
+import uim.platform.foundry.infrastructure.persistence.memory.space;
+import uim.platform.foundry.infrastructure.persistence.memory.app;
+import uim.platform.foundry.infrastructure.persistence.memory.service_instance;
+import uim.platform.foundry.infrastructure.persistence.memory.service_binding;
+import uim.platform.foundry.infrastructure.persistence.memory.route;
+import uim.platform.foundry.infrastructure.persistence.memory.domain;
+import uim.platform.foundry.infrastructure.persistence.memory.buildpack;
 
 // Domain Services
-import uim.platform.cloud_foundry.domain.services.app_lifecycle_manager;
-import uim.platform.cloud_foundry.domain.services.route_resolver;
+import uim.platform.foundry.domain.services.app_lifecycle_manager;
+import uim.platform.foundry.domain.services.route_resolver;
 
 // Use Cases
-import uim.platform.cloud_foundry.application.usecases.manage_orgs;
-import uim.platform.cloud_foundry.application.usecases.manage_spaces;
-import uim.platform.cloud_foundry.application.usecases.manage_apps;
-import uim.platform.cloud_foundry.application.usecases.manage_services;
-import uim.platform.cloud_foundry.application.usecases.manage_routes;
-import uim.platform.cloud_foundry.application.usecases.manage_buildpacks;
-import uim.platform.cloud_foundry.application.usecases.monitor_apps;
+import uim.platform.foundry.application.usecases.manage_orgs;
+import uim.platform.foundry.application.usecases.manage_spaces;
+import uim.platform.foundry.application.usecases.manage_apps;
+import uim.platform.foundry.application.usecases.manage_services;
+import uim.platform.foundry.application.usecases.manage_routes;
+import uim.platform.foundry.application.usecases.manage_buildpacks;
+import uim.platform.foundry.application.usecases.monitor_apps;
 
 // Controllers
 import uim.platform.xyz.presentation.http.org;

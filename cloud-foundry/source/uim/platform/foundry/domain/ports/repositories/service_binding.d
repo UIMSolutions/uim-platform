@@ -1,7 +1,7 @@
-module uim.platform.cloud_foundry.domain.ports.service_binding;
+module uim.platform.foundry.domain.ports.service_binding;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.service_binding;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.service_binding;
 
 /// Port for persisting and querying service bindings.
 interface IServiceBindingRepository {

@@ -1,15 +1,15 @@
-module uim.platform.cloud_foundry.application.usecases.manage.services;
+module uim.platform.foundry.application.usecases.manage.services;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.cloud_foundry.domain.types;
-import uim.platform.cloud_foundry.domain.entities.service_instance;
-import uim.platform.cloud_foundry.domain.entities.service_binding;
-// import uim.platform.cloud_foundry.domain.ports.service_instance;
-// import uim.platform.cloud_foundry.domain.ports.service_binding;
-import uim.platform.cloud_foundry.domain.ports;
-import uim.platform.cloud_foundry.application.dto;
+import uim.platform.foundry.domain.types;
+import uim.platform.foundry.domain.entities.service_instance;
+import uim.platform.foundry.domain.entities.service_binding;
+// import uim.platform.foundry.domain.ports.service_instance;
+// import uim.platform.foundry.domain.ports.service_binding;
+import uim.platform.foundry.domain.ports;
+import uim.platform.foundry.application.dto;
 
 class ManageServicesUseCase
 {

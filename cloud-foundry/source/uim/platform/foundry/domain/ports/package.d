@@ -1,5 +1,5 @@
-module uim.platform.cloud_foundry.domain.ports;
+module uim.platform.foundry.domain.ports;
 
 public {
-  import uim.platform.cloud_foundry.domain.ports.repositories;
+  import uim.platform.foundry.domain.ports.repositories;
 }
