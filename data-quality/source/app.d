@@ -10,9 +10,13 @@ import uim.platform.data.quality.infrastructure.container;
 // import std.stdio : writefln;
 @safe:
 
-version (unittest) {
-} else {
-void main() {
+version (unittest)
+{
+}
+else
+{
+  void main()
+  {
     auto config = loadConfig();
     auto container = buildContainer(config);
 
@@ -56,4 +60,4 @@ void main() {
     writefln("==========================================================");
 
     runApplication();
-}
+  }

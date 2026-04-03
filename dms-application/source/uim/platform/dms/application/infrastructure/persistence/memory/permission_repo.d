@@ -8,10 +8,12 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPermissionRepository : IPermissionRepository {
+class MemoryPermissionRepository : IPermissionRepository
+{
   private Permission[string] store;
 
-  Permission[] findByTenant(TenantId tenantId) {
+  Permission[] findByTenant(TenantId tenantId)
+  {
     Permission[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -19,14 +21,16 @@ class MemoryPermissionRepository : IPermissionRepository {
     return result;
   }
 
-  Permission findById(PermissionId id, TenantId tenantId) {
+  Permission findById(PermissionId id, TenantId tenantId)
+  {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
+  Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId)
+  {
     Permission[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId && e.resourceType == resourceType)
@@ -34,7 +38,8 @@ class MemoryPermissionRepository : IPermissionRepository {
     return result;
   }
 
-  Permission[] findByUser(UserId userId, TenantId tenantId) {
+  Permission[] findByUser(UserId userId, TenantId tenantId)
+  {
     Permission[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId)
@@ -42,27 +47,33 @@ class MemoryPermissionRepository : IPermissionRepository {
     return result;
   }
 
-  Permission findByResourceAndUser(string resourceId, ResourceType resourceType, UserId userId, TenantId tenantId) {
+  Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
+      UserId userId, TenantId tenantId)
+  {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId
-        && e.resourceType == resourceType && e.userId == userId)
+          && e.resourceType == resourceType && e.userId == userId)
         return e;
     return null;
   }
 
-  void save(Permission perm) {
+  void save(Permission perm)
+  {
     store[perm.id] = perm;
   }
 
-  void update(Permission perm) {
+  void update(Permission perm)
+  {
     store[perm.id] = perm;
   }
 
-  void remove(PermissionId id, TenantId tenantId) {
+  void remove(PermissionId id, TenantId tenantId)
+  {
     store.remove(id);
   }
 
-  void removeByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
+  void removeByResource(string resourceId, ResourceType resourceType, TenantId tenantId)
+  {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId && e.resourceType == resourceType)

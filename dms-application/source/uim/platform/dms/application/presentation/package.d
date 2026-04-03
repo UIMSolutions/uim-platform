@@ -1,5 +1,6 @@
 module uim.platform.dms.application.presentation;
 
-public {
+public
+{
   import uim.platform.dms.application.presentation.http;
 }

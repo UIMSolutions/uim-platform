@@ -12,27 +12,33 @@ module uim.platform.dms.application.application.usecases.manage_documents;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
-class ManageDocumentsUseCase {
+class ManageDocumentsUseCase
+{
   private IDocumentRepository docRepo;
   private IDocumentVersionRepository versionRepo;
   private IFolderRepository folderRepo;
 
-  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo, IFolderRepository folderRepo) {
+  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo,
+      IFolderRepository folderRepo)
+  {
     this.docRepo = docRepo;
     this.versionRepo = versionRepo;
     this.folderRepo = folderRepo;
   }
 
-  CommandResult createDocument(CreateDocumentRequest r) {
+  CommandResult createDocument(CreateDocumentRequest r)
+  {
     if (r.name.length == 0)
       return CommandResult("", "Document name is required");
     if (r.repositoryId.length == 0)
       return CommandResult("", "Repository ID is required");
 
     // Validate folder exists if provided
-    if (r.folderId.length > 0) {
+    if (r.folderId.length > 0)
+    {
       auto folder = folderRepo.findById(r.folderId, r.tenantId);
       if (folder is null)
         return CommandResult("", "Folder not found");
@@ -81,27 +87,33 @@ class ManageDocumentsUseCase {
     return CommandResult(doc.id, "");
   }
 
-  Document[] listDocuments(TenantId tenantId) {
+  Document[] listDocuments(TenantId tenantId)
+  {
     return docRepo.findByTenant(tenantId);
   }
 
-  Document[] listByFolder(FolderId folderId, TenantId tenantId) {
+  Document[] listByFolder(FolderId folderId, TenantId tenantId)
+  {
     return docRepo.findByFolder(folderId, tenantId);
   }
 
-  Document[] listByRepository(string repositoryId, TenantId tenantId) {
+  Document[] listByRepository(string repositoryId, TenantId tenantId)
+  {
     return docRepo.findByRepository(repositoryId, tenantId);
   }
 
-  Document getDocument(DocumentId id, TenantId tenantId) {
+  Document getDocument(DocumentId id, TenantId tenantId)
+  {
     return docRepo.findById(id, tenantId);
   }
 
-  Document[] searchByName(string name, TenantId tenantId) {
+  Document[] searchByName(string name, TenantId tenantId)
+  {
     return docRepo.findByName(name, tenantId);
   }
 
-  CommandResult updateDocument(UpdateDocumentRequest r) {
+  CommandResult updateDocument(UpdateDocumentRequest r)
+  {
     auto doc = docRepo.findById(r.id, r.tenantId);
     if (doc is null)
       return CommandResult("", "Document not found");
@@ -120,12 +132,14 @@ class ManageDocumentsUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult moveDocument(MoveDocumentRequest r) {
+  CommandResult moveDocument(MoveDocumentRequest r)
+  {
     auto doc = docRepo.findById(r.id, r.tenantId);
     if (doc is null)
       return CommandResult("", "Document not found");
 
-    if (r.newFolderId.length > 0) {
+    if (r.newFolderId.length > 0)
+    {
       auto folder = folderRepo.findById(r.newFolderId, r.tenantId);
       if (folder is null)
         return CommandResult("", "Target folder not found");
@@ -137,7 +151,8 @@ class ManageDocumentsUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult archiveDocument(DocumentId id, TenantId tenantId) {
+  CommandResult archiveDocument(DocumentId id, TenantId tenantId)
+  {
     auto doc = docRepo.findById(id, tenantId);
     if (doc is null)
       return CommandResult("", "Document not found");
@@ -148,7 +163,8 @@ class ManageDocumentsUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult deleteDocument(DocumentId id, TenantId tenantId) {
+  CommandResult deleteDocument(DocumentId id, TenantId tenantId)
+  {
     auto doc = docRepo.findById(id, tenantId);
     if (doc is null)
       return CommandResult("", "Document not found");

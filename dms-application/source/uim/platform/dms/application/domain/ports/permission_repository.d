@@ -3,14 +3,17 @@ module uim.platform.dms.application.domain.ports.permission_repository;
 // import uim.platform.dms.application.domain.entities.permission;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
-interface IPermissionRepository {
+interface IPermissionRepository
+{
   Permission[] findByTenant(TenantId tenantId);
   Permission findById(PermissionId id, TenantId tenantId);
   Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId);
   Permission[] findByUser(UserId userId, TenantId tenantId);
-  Permission findByResourceAndUser(string resourceId, ResourceType resourceType, UserId userId, TenantId tenantId);
+  Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
+      UserId userId, TenantId tenantId);
   void save(Permission perm);
   void update(Permission perm);
   void remove(PermissionId id, TenantId tenantId);

@@ -11,20 +11,24 @@ module uim.platform.dms.application.domain.services.versioning_service;
 //import uim.platform.dms.application.domain.types;
 //
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 /// Domain service for document version management (checkout/checkin model).
-class VersioningService {
+class VersioningService
+{
   private IDocumentRepository docRepo;
   private IDocumentVersionRepository versionRepo;
 
-  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo) {
+  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo)
+  {
     this.docRepo = docRepo;
     this.versionRepo = versionRepo;
   }
 
   /// Check out a document (lock it for editing).
-  bool checkOut(DocumentId docId, TenantId tenantId, UserId userId) {
+  bool checkOut(DocumentId docId, TenantId tenantId, UserId userId)
+  {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return false;
@@ -38,8 +42,9 @@ class VersioningService {
   }
 
   /// Check in a document, creating a new version.
-  DocumentVersion checkIn(DocumentId docId, TenantId tenantId, UserId userId,
-    bool isMajor, string comment, string fileName, string mimeType, long fileSize, string checksum) {
+  DocumentVersion checkIn(DocumentId docId, TenantId tenantId, UserId userId, bool isMajor,
+      string comment, string fileName, string mimeType, long fileSize, string checksum)
+  {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return null;
@@ -48,11 +53,13 @@ class VersioningService {
 
     // Determine version number
     auto existingVersions = versionRepo.findByDocument(docId, tenantId);
-    int nextVersion = cast(int)existingVersions.length + 1;
+    int nextVersion = cast(int) existingVersions.length + 1;
 
     // Mark existing current version as superseded
-    foreach (ref v; existingVersions) {
-      if (v.status == VersionStatus.current) {
+    foreach (ref v; existingVersions)
+    {
+      if (v.status == VersionStatus.current)
+      {
         v.status = VersionStatus.superseded;
         versionRepo.update(v);
       }
@@ -87,7 +94,8 @@ class VersioningService {
   }
 
   /// Cancel a checkout (unlock without creating a version).
-  bool cancelCheckOut(DocumentId docId, TenantId tenantId) {
+  bool cancelCheckOut(DocumentId docId, TenantId tenantId)
+  {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return false;
@@ -101,12 +109,14 @@ class VersioningService {
   }
 
   /// Get all versions of a document.
-  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId) {
+  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId)
+  {
     return versionRepo.findByDocument(docId, tenantId);
   }
 
   /// Get the current (latest) version.
-  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId) {
+  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId)
+  {
     return versionRepo.findLatest(docId, tenantId);
   }
 }

@@ -5,13 +5,16 @@ module uim.platform.dms.application.infrastructure.persistence.memory.document_r
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 
-class MemoryDocumentRepository : IDocumentRepository {
+class MemoryDocumentRepository : IDocumentRepository
+{
   private Document[string] store;
 
-  Document[] findByTenant(TenantId tenantId) {
+  Document[] findByTenant(TenantId tenantId)
+  {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -19,14 +22,16 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document findById(DocumentId id, TenantId tenantId) {
+  Document findById(DocumentId id, TenantId tenantId)
+  {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Document[] findByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  Document[] findByRepository(RepositoryId repositoryId, TenantId tenantId)
+  {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -34,7 +39,8 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document[] findByFolder(FolderId folderId, TenantId tenantId) {
+  Document[] findByFolder(FolderId folderId, TenantId tenantId)
+  {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
@@ -42,7 +48,8 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document[] findByStatus(DocumentStatus status, TenantId tenantId) {
+  Document[] findByStatus(DocumentStatus status, TenantId tenantId)
+  {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)
@@ -50,7 +57,8 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document[] findByName(string name, TenantId tenantId) {
+  Document[] findByName(string name, TenantId tenantId)
+  {
     // import std.algorithm : canFind;
     // import std.uni : toLower;
 
@@ -62,7 +70,8 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  long countByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  long countByRepository(RepositoryId repositoryId, TenantId tenantId)
+  {
     long count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -70,7 +79,8 @@ class MemoryDocumentRepository : IDocumentRepository {
     return count;
   }
 
-  long countByFolder(FolderId folderId, TenantId tenantId) {
+  long countByFolder(FolderId folderId, TenantId tenantId)
+  {
     long count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
@@ -78,19 +88,23 @@ class MemoryDocumentRepository : IDocumentRepository {
     return count;
   }
 
-  void save(Document doc) {
+  void save(Document doc)
+  {
     store[doc.id] = doc;
   }
 
-  void update(Document doc) {
+  void update(Document doc)
+  {
     store[doc.id] = doc;
   }
 
-  void remove(DocumentId id, TenantId tenantId) {
+  void remove(DocumentId id, TenantId tenantId)
+  {
     store.remove(id);
   }
 
-  void removeByFolder(FolderId folderId, TenantId tenantId) {
+  void removeByFolder(FolderId folderId, TenantId tenantId)
+  {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)

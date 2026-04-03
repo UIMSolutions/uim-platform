@@ -9,45 +9,51 @@ import uim.platform.data.quality.domain.ports.cleansing_rule_repository;
 
 class MemoryCleansingRuleRepository : CleansingRuleRepository
 {
-    private CleansingRule[RuleId] store;
+  private CleansingRule[RuleId] store;
 
-    CleansingRule[] findAll()
-    {
-        return store.byValue().array;
-    }
+  CleansingRule[] findAll()
+  {
+    return store.byValue().array;
+  }
 
-    CleansingRule[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(r => r.tenantId == tenantId).array;
-    }
+  CleansingRule[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+  }
 
-    CleansingRule* findById(RuleId id)
-    {
-        if (auto p = id in store)
-            return p;
-        return null;
-    }
+  CleansingRule* findById(RuleId id)
+  {
+    if (auto p = id in store)
+      return p;
+    return null;
+  }
 
-    CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern)
-    {
-        return store.byValue()
-            .filter!(r => r.tenantId == tenantId && r.datasetPattern == datasetPattern)
-            .array;
-    }
+  CleansingRule[] findByDataset(TenantId tenantId, string datasetPattern)
+  {
+    return store.byValue().filter!(r => r.tenantId == tenantId
+        && r.datasetPattern == datasetPattern).array;
+  }
 
-    CleansingRule[] findActive(TenantId tenantId)
-    {
-        return store.byValue()
-            .filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
-            .array;
-    }
+  CleansingRule[] findActive(TenantId tenantId)
+  {
+    return store.byValue().filter!(r => r.tenantId == tenantId && r.status == RuleStatus.active)
+      .array;
+  }
 
-    void save(CleansingRule rule) { store[rule.id] = rule; }
-    void update(CleansingRule rule) { store[rule.id] = rule; }
-    void remove(RuleId id, TenantId tenantId)
-    {
-        if (auto p = id in store)
-            if (p.tenantId == tenantId)
-                store.remove(id);
-    }
+  void save(CleansingRule rule)
+  {
+    store[rule.id] = rule;
+  }
+
+  void update(CleansingRule rule)
+  {
+    store[rule.id] = rule;
+  }
+
+  void remove(RuleId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
 }

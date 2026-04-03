@@ -1,6 +1,7 @@
 module uim.platform.dms.application.application.usecases;
 
-public {
+public
+{
   import uim.platform.dms.application.application.usecases.browse_content;
   import uim.platform.dms.application.application.usecases.manage_documents;
   import uim.platform.dms.application.application.usecases.manage_folders;

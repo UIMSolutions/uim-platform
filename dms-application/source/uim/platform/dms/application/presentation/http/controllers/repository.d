@@ -12,17 +12,21 @@ module uim.platform.dms.application.presentation.http.controllers.repository;
 // import uim.platform.dms.application.presentation.http.json_utils;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 
-class RepositoryController : SAPController {
+class RepositoryController : SAPController
+{
   private ManageRepositoriesUseCase uc;
 
-  this(ManageRepositoriesUseCase uc) {
+  this(ManageRepositoriesUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     super.registerRoutes(router);
 
     router.post("/api/v1/repositories", &handleCreate);
@@ -34,8 +38,10 @@ class RepositoryController : SAPController {
     router.post("/api/v1/repositories/archive/*", &handleArchive);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateRepositoryRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,19 +52,25 @@ class RepositoryController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createRepository(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else
+      }
+      else
         writeError(res, 400, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listRepositories(tenantId);
 
@@ -68,30 +80,39 @@ class RepositoryController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto repo = uc.getRepository(id, tenantId);
-      if (repo is null) {
+      if (repo is null)
+      {
         writeError(res, 404, "Repository not found");
         return;
       }
       res.writeJsonBody(serializeRepo(repo), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateRepositoryRequest();
@@ -103,70 +124,94 @@ class RepositoryController : SAPController {
       r.allowedFileTypes = j.getString("allowedFileTypes");
 
       auto result = uc.updateRepository(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Repository not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.activateRepository(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("active");
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.archiveRepository(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("archived");
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteRepository(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeRepo(const Repository r) {
+  private static Json serializeRepo(const Repository r)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

@@ -9,49 +9,50 @@ import uim.platform.data.quality.domain.ports.data_profile_repository;
 
 class MemoryDataProfileRepository : DataProfileRepository
 {
-    private DataProfile[ProfileId] store;
+  private DataProfile[ProfileId] store;
 
-    DataProfile[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(p => p.tenantId == tenantId).array;
-    }
+  DataProfile[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(p => p.tenantId == tenantId).array;
+  }
 
-    DataProfile* findById(ProfileId id, TenantId tenantId)
-    {
-        if (auto p = id in store)
-            if (p.tenantId == tenantId)
-                return p;
-        return null;
-    }
+  DataProfile* findById(ProfileId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
 
-    DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId)
+  DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId)
+  {
+    DataProfile* latest;
+    long latestTime = 0;
+    foreach (ref p; store.byValue())
     {
-        DataProfile* latest;
-        long latestTime = 0;
-        foreach (ref p; store.byValue())
-        {
-            if (p.tenantId == tenantId && p.datasetId == datasetId
-                && p.profiledAt > latestTime)
-            {
-                latest = &p;
-                latestTime = p.profiledAt;
-            }
-        }
-        return latest;
+      if (p.tenantId == tenantId && p.datasetId == datasetId && p.profiledAt > latestTime)
+      {
+        latest = &p;
+        latestTime = p.profiledAt;
+      }
     }
+    return latest;
+  }
 
-    DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId)
-    {
-        return store.byValue()
-            .filter!(p => p.tenantId == tenantId && p.datasetId == datasetId)
-            .array;
-    }
+  DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId)
+  {
+    return store.byValue().filter!(p => p.tenantId == tenantId && p.datasetId == datasetId).array;
+  }
 
-    void save(DataProfile profile) { store[profile.id] = profile; }
-    void remove(ProfileId id, TenantId tenantId)
-    {
-        if (auto p = id in store)
-            if (p.tenantId == tenantId)
-                store.remove(id);
-    }
+  void save(DataProfile profile)
+  {
+    store[profile.id] = profile;
+  }
+
+  void remove(ProfileId id, TenantId tenantId)
+  {
+    if (auto p = id in store)
+      if (p.tenantId == tenantId)
+        store.remove(id);
+  }
 }

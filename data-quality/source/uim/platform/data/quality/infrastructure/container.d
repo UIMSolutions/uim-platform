@@ -39,85 +39,87 @@ import uim.platform.data.quality.presentation.http.dashboard;
 import uim.platform.data.quality.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container {
-    // Repositories (driven adapters)
-    MemoryValidationRuleRepository validationRuleRepo;
-    MemoryValidationResultRepository validationResultRepo;
-    MemoryAddressRepository addressRepo;
-    MemoryMatchGroupRepository matchGroupRepo;
-    MemoryDataProfileRepository dataProfileRepo;
-    MemoryCleansingRuleRepository cleansingRuleRepo;
-    MemoryCleansingJobRepository cleansingJobRepo;
+struct Container
+{
+  // Repositories (driven adapters)
+  MemoryValidationRuleRepository validationRuleRepo;
+  MemoryValidationResultRepository validationResultRepo;
+  MemoryAddressRepository addressRepo;
+  MemoryMatchGroupRepository matchGroupRepo;
+  MemoryDataProfileRepository dataProfileRepo;
+  MemoryCleansingRuleRepository cleansingRuleRepo;
+  MemoryCleansingJobRepository cleansingJobRepo;
 
-    // Domain services
-    ValidationEngine validationEngine;
-    AddressCleanser addressCleanser;
-    DuplicateDetector duplicateDetector;
-    QualityScorer qualityScorer;
+  // Domain services
+  ValidationEngine validationEngine;
+  AddressCleanser addressCleanser;
+  DuplicateDetector duplicateDetector;
+  QualityScorer qualityScorer;
 
-    // Use cases (application layer)
-    ManageValidationRulesUseCase manageValidationRules;
-    ValidateDataUseCase validateData;
-    CleanseAddressesUseCase cleanseAddresses;
-    DetectDuplicatesUseCase detectDuplicates;
-    ProfileDataUseCase profileData;
-    ManageCleansingRulesUseCase manageCleansingRules;
-    ManageCleansingJobsUseCase manageCleansingJobs;
-    ComputeDashboardUseCase computeDashboard;
+  // Use cases (application layer)
+  ManageValidationRulesUseCase manageValidationRules;
+  ValidateDataUseCase validateData;
+  CleanseAddressesUseCase cleanseAddresses;
+  DetectDuplicatesUseCase detectDuplicates;
+  ProfileDataUseCase profileData;
+  ManageCleansingRulesUseCase manageCleansingRules;
+  ManageCleansingJobsUseCase manageCleansingJobs;
+  ComputeDashboardUseCase computeDashboard;
 
-    // Controllers (driving adapters)
-    ValidationRuleController validationRuleController;
-    ValidateController validateController;
-    AddressController addressController;
-    DuplicateController duplicateController;
-    ProfileController profileController;
-    CleansingRuleController cleansingRuleController;
-    CleansingJobController cleansingJobController;
-    DashboardController dashboardController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  ValidationRuleController validationRuleController;
+  ValidateController validateController;
+  AddressController addressController;
+  DuplicateController duplicateController;
+  ProfileController profileController;
+  CleansingRuleController cleansingRuleController;
+  CleansingJobController cleansingJobController;
+  DashboardController dashboardController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.validationRuleRepo = new MemoryValidationRuleRepository();
-    c.validationResultRepo = new MemoryValidationResultRepository();
-    c.addressRepo = new MemoryAddressRepository();
-    c.matchGroupRepo = new MemoryMatchGroupRepository();
-    c.dataProfileRepo = new MemoryDataProfileRepository();
-    c.cleansingRuleRepo = new MemoryCleansingRuleRepository();
-    c.cleansingJobRepo = new MemoryCleansingJobRepository();
+  // Infrastructure adapters
+  c.validationRuleRepo = new MemoryValidationRuleRepository();
+  c.validationResultRepo = new MemoryValidationResultRepository();
+  c.addressRepo = new MemoryAddressRepository();
+  c.matchGroupRepo = new MemoryMatchGroupRepository();
+  c.dataProfileRepo = new MemoryDataProfileRepository();
+  c.cleansingRuleRepo = new MemoryCleansingRuleRepository();
+  c.cleansingJobRepo = new MemoryCleansingJobRepository();
 
-    // Domain services
-    c.validationEngine = new ValidationEngine();
-    c.addressCleanser = new AddressCleanser();
-    c.duplicateDetector = new DuplicateDetector();
-    c.qualityScorer = new QualityScorer();
+  // Domain services
+  c.validationEngine = new ValidationEngine();
+  c.addressCleanser = new AddressCleanser();
+  c.duplicateDetector = new DuplicateDetector();
+  c.qualityScorer = new QualityScorer();
 
-    // Application use cases
-    c.manageValidationRules = new ManageValidationRulesUseCase(c.validationRuleRepo);
-    c.validateData = new ValidateDataUseCase(
-        c.validationRuleRepo, c.validationResultRepo, c.validationEngine);
-    c.cleanseAddresses = new CleanseAddressesUseCase(c.addressRepo, c.addressCleanser);
-    c.detectDuplicates = new DetectDuplicatesUseCase(c.matchGroupRepo, c.duplicateDetector);
-    c.profileData = new ProfileDataUseCase(c.dataProfileRepo);
-    c.manageCleansingRules = new ManageCleansingRulesUseCase(c.cleansingRuleRepo);
-    c.manageCleansingJobs = new ManageCleansingJobsUseCase(c.cleansingJobRepo);
-    c.computeDashboard = new ComputeDashboardUseCase(
-        c.validationResultRepo, c.dataProfileRepo, c.qualityScorer);
+  // Application use cases
+  c.manageValidationRules = new ManageValidationRulesUseCase(c.validationRuleRepo);
+  c.validateData = new ValidateDataUseCase(c.validationRuleRepo,
+      c.validationResultRepo, c.validationEngine);
+  c.cleanseAddresses = new CleanseAddressesUseCase(c.addressRepo, c.addressCleanser);
+  c.detectDuplicates = new DetectDuplicatesUseCase(c.matchGroupRepo, c.duplicateDetector);
+  c.profileData = new ProfileDataUseCase(c.dataProfileRepo);
+  c.manageCleansingRules = new ManageCleansingRulesUseCase(c.cleansingRuleRepo);
+  c.manageCleansingJobs = new ManageCleansingJobsUseCase(c.cleansingJobRepo);
+  c.computeDashboard = new ComputeDashboardUseCase(c.validationResultRepo,
+      c.dataProfileRepo, c.qualityScorer);
 
-    // Presentation controllers
-    c.validationRuleController = new ValidationRuleController(c.manageValidationRules);
-    c.validateController = new ValidateController(c.validateData);
-    c.addressController = new AddressController(c.cleanseAddresses);
-    c.duplicateController = new DuplicateController(c.detectDuplicates);
-    c.profileController = new ProfileController(c.profileData);
-    c.cleansingRuleController = new CleansingRuleController(c.manageCleansingRules);
-    c.cleansingJobController = new CleansingJobController(c.manageCleansingJobs);
-    c.dashboardController = new DashboardController(c.computeDashboard);
-    c.healthController = new HealthController("data-quality");
+  // Presentation controllers
+  c.validationRuleController = new ValidationRuleController(c.manageValidationRules);
+  c.validateController = new ValidateController(c.validateData);
+  c.addressController = new AddressController(c.cleanseAddresses);
+  c.duplicateController = new DuplicateController(c.detectDuplicates);
+  c.profileController = new ProfileController(c.profileData);
+  c.cleansingRuleController = new CleansingRuleController(c.manageCleansingRules);
+  c.cleansingJobController = new CleansingJobController(c.manageCleansingJobs);
+  c.dashboardController = new DashboardController(c.computeDashboard);
+  c.healthController = new HealthController("data-quality");
 
-    return c;
+  return c;
 }

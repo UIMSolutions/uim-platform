@@ -10,24 +10,18 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class PredictionUseCases
-{
+class PredictionUseCases {
   private PredictionRepository repo;
 
-  this(PredictionRepository repo)
-  {
+  this(PredictionRepository repo) {
     this.repo = repo;
   }
 
-  PredictionResponse create(CreatePredictionRequest req)
-  {
+  PredictionResponse create(CreatePredictionRequest req) {
     PredictionType pt;
-    try
-    {
+    try {
       pt = req.predictionType.to!PredictionType;
-    }
-    catch (Exception)
-    {
+    } catch (Exception) {
       pt = PredictionType.Regression;
     }
     auto cfg = PredictionConfig(req.targetColumn, req.featureColumns);
@@ -36,21 +30,18 @@ class PredictionUseCases
     return PredictionResponse.fromEntity(p);
   }
 
-  PredictionResponse getById(string id)
-  {
+  PredictionResponse getById(string id) {
     return PredictionResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  PredictionResponse[] list()
-  {
+  PredictionResponse[] list() {
     PredictionResponse[] result;
     foreach (p; repo.findAll())
       result ~= PredictionResponse.fromEntity(p);
     return result;
   }
 
-  PredictionResponse train(string id)
-  {
+  PredictionResponse train(string id) {
     auto p = repo.findById(EntityId(id));
     if (p is null)
       return PredictionResponse.init;
@@ -61,8 +52,7 @@ class PredictionUseCases
     return PredictionResponse.fromEntity(p);
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

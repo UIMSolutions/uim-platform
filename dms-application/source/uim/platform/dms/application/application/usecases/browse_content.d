@@ -14,10 +14,12 @@ module uim.platform.dms.application.application.usecases.browse_content;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 /// Browsing summary for a repository.
-struct RepositorySummary {
+struct RepositorySummary
+{
   string repositoryId;
   string name;
   long totalDocuments;
@@ -26,14 +28,16 @@ struct RepositorySummary {
 }
 
 /// Use case for browsing content, searching, and managing favorites.
-class BrowseContentUseCase {
+class BrowseContentUseCase
+{
   private IDocumentRepository docRepo;
   private IFolderRepository folderRepo;
   private IFavoriteRepository favRepo;
   private IRepositoryRepository repoRepo;
 
   this(IDocumentRepository docRepo, IFolderRepository folderRepo,
-    IFavoriteRepository favRepo, IRepositoryRepository repoRepo) {
+      IFavoriteRepository favRepo, IRepositoryRepository repoRepo)
+  {
     this.docRepo = docRepo;
     this.folderRepo = folderRepo;
     this.favRepo = favRepo;
@@ -41,12 +45,14 @@ class BrowseContentUseCase {
   }
 
   /// Search documents by name.
-  Document[] searchDocuments(string query, TenantId tenantId) {
+  Document[] searchDocuments(string query, TenantId tenantId)
+  {
     return docRepo.findByName(query, tenantId);
   }
 
   /// Browse folder contents (subfolders + documents).
-  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId) {
+  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId)
+  {
     FolderContents result;
     result.subfolders = folderRepo.findByParent(folderId, tenantId);
     result.documents = docRepo.findByFolder(folderId, tenantId);
@@ -54,7 +60,8 @@ class BrowseContentUseCase {
   }
 
   /// Get repository summary.
-  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId) {
+  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId)
+  {
     RepositorySummary summary;
     auto repo = repoRepo.findById(repositoryId, tenantId);
     if (repo is null)
@@ -63,13 +70,14 @@ class BrowseContentUseCase {
     summary.repositoryId = repositoryId;
     summary.name = repo.name;
     summary.totalDocuments = docRepo.countByRepository(repositoryId, tenantId);
-    summary.totalFolders = cast(long)folderRepo.findByRepository(repositoryId, tenantId).length;
+    summary.totalFolders = cast(long) folderRepo.findByRepository(repositoryId, tenantId).length;
     summary.status = repo.status;
     return summary;
   }
 
   /// Add a favorite.
-  CommandResult addFavorite(CreateFavoriteRequest r) {
+  CommandResult addFavorite(CreateFavoriteRequest r)
+  {
     // Check for duplicate
     auto existing = favRepo.findByUserAndResource(r.userId, r.resourceId, r.tenantId);
     if (existing !is null)
@@ -88,12 +96,14 @@ class BrowseContentUseCase {
   }
 
   /// Get user favorites.
-  Favorite[] getFavorites(UserId userId, TenantId tenantId) {
+  Favorite[] getFavorites(UserId userId, TenantId tenantId)
+  {
     return favRepo.findByUser(userId, tenantId);
   }
 
   /// Remove a favorite.
-  CommandResult removeFavorite(FavoriteId id, TenantId tenantId) {
+  CommandResult removeFavorite(FavoriteId id, TenantId tenantId)
+  {
     auto fav = favRepo.findById(id, tenantId);
     if (fav is null)
       return CommandResult("", "Favorite not found");
@@ -103,7 +113,8 @@ class BrowseContentUseCase {
   }
 }
 
-struct FolderContents {
+struct FolderContents
+{
   Folder[] subfolders;
   Document[] documents;
 }

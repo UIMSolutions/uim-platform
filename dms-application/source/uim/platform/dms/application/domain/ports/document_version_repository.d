@@ -3,9 +3,11 @@ module uim.platform.dms.application.domain.ports.document_version_repository;
 // import uim.platform.dms.application.domain.entities.document_version;
 // import uim.platform.dms.application.domain.types;
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
-interface IDocumentVersionRepository {
+interface IDocumentVersionRepository
+{
   DocumentVersion[] findByTenant(TenantId tenantId);
   DocumentVersion findById(DocumentVersionId id, TenantId tenantId);
   DocumentVersion[] findByDocument(DocumentId documentId, TenantId tenantId);

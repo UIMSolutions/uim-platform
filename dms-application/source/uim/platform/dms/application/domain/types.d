@@ -13,13 +13,15 @@ alias UserId = string;
 
 // --- Enumerations ---
 
-enum RepositoryStatus {
+enum RepositoryStatus
+{
   active,
   inactive,
   archived,
 }
 
-enum DocumentStatus {
+enum DocumentStatus
+{
   draft,
   active,
   locked,
@@ -27,38 +29,44 @@ enum DocumentStatus {
   deleted,
 }
 
-enum VersionStatus {
+enum VersionStatus
+{
   current,
   superseded,
   archived,
 }
 
-enum PermissionLevel {
+enum PermissionLevel
+{
   read,
   write,
   admin,
   owner,
 }
 
-enum ShareType {
+enum ShareType
+{
   internal,
   external,
   public_,
 }
 
-enum ShareStatus {
+enum ShareStatus
+{
   active,
   expired,
   revoked,
 }
 
-enum ResourceType {
+enum ResourceType
+{
   document,
   folder,
   repository,
 }
 
-enum ContentCategory {
+enum ContentCategory
+{
   file,
   link,
   reference,

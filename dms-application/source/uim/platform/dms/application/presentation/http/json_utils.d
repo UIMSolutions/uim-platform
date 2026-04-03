@@ -6,10 +6,12 @@ module uim.platform.dms.application.presentation.http.json_utils;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
+string jsonStr(Json j, string key)
+{
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -21,7 +23,8 @@ string jsonStr(Json j, string key) {
 }
 
 /// Extract a long field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0) {
+long jsonLong(Json j, string key, long default_ = 0)
+{
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -33,7 +36,8 @@ long jsonLong(Json j, string key, long default_ = 0) {
 }
 
 /// Extract a bool field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool jsonBool(Json j, string key, bool default_ = false)
+{
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -45,7 +49,8 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 }
 
 /// Extract the last path segment from a URI (for wildcard routes).
-string extractIdFromPath(string uri) {
+string extractIdFromPath(string uri)
+{
   // import std.string : indexOf;
 
   auto qpos = uri.indexOf('?');
@@ -60,15 +65,17 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
-private long lastIndexOf(string s, char c) {
-  for (long i = cast(long)s.length - 1; i >= 0; --i)
-    if (s[cast(size_t)i] == c)
+private long lastIndexOf(string s, char c)
+{
+  for (long i = cast(long) s.length - 1; i >= 0; --i)
+    if (s[cast(size_t) i] == c)
       return i;
   return -1;
 }
 
 /// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
+void writeError(scope HTTPServerResponse res, int status, string message)
+{
   auto j = Json.emptyObject;
   j["error"] = Json(message);
   j["status"] = Json(status);
@@ -77,8 +84,10 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
 
 // --- Enum parsers ---
 
-ContentCategory parseContentCategory(string s) {
-  switch (s) {
+ContentCategory parseContentCategory(string s)
+{
+  switch (s)
+  {
   case "file":
     return ContentCategory.file;
   case "link":
@@ -90,8 +99,10 @@ ContentCategory parseContentCategory(string s) {
   }
 }
 
-ShareType parseShareType(string s) {
-  switch (s) {
+ShareType parseShareType(string s)
+{
+  switch (s)
+  {
   case "internal":
     return ShareType.internal;
   case "external":
@@ -103,8 +114,10 @@ ShareType parseShareType(string s) {
   }
 }
 
-PermissionLevel parsePermissionLevel(string s) {
-  switch (s) {
+PermissionLevel parsePermissionLevel(string s)
+{
+  switch (s)
+  {
   case "read":
     return PermissionLevel.read;
   case "write":
@@ -118,8 +131,10 @@ PermissionLevel parsePermissionLevel(string s) {
   }
 }
 
-ResourceType parseResourceType(string s) {
-  switch (s) {
+ResourceType parseResourceType(string s)
+{
+  switch (s)
+  {
   case "document":
     return ResourceType.document;
   case "folder":

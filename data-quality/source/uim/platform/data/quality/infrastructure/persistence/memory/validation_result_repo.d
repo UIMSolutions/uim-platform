@@ -9,37 +9,38 @@ import uim.platform.data.quality.domain.ports.validation_result_repository;
 
 class MemoryValidationResultRepository : ValidationResultRepository
 {
-    private ValidationResult[RecordId] store;
+  private ValidationResult[RecordId] store;
 
-    ValidationResult[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(r => r.tenantId == tenantId).array;
-    }
+  ValidationResult[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(r => r.tenantId == tenantId).array;
+  }
 
-    ValidationResult* findByRecord(RecordId recordId, TenantId tenantId)
-    {
-        if (auto p = recordId in store)
-            if (p.tenantId == tenantId)
-                return p;
-        return null;
-    }
+  ValidationResult* findByRecord(RecordId recordId, TenantId tenantId)
+  {
+    if (auto p = recordId in store)
+      if (p.tenantId == tenantId)
+        return p;
+    return null;
+  }
 
-    ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId)
-    {
-        return store.byValue()
-            .filter!(r => r.tenantId == tenantId && r.datasetId == datasetId)
-            .array;
-    }
+  ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId)
+  {
+    return store.byValue().filter!(r => r.tenantId == tenantId && r.datasetId == datasetId).array;
+  }
 
-    void save(ValidationResult result) { store[result.recordId] = result; }
+  void save(ValidationResult result)
+  {
+    store[result.recordId] = result;
+  }
 
-    void removeByDataset(TenantId tenantId, DatasetId datasetId)
-    {
-        RecordId[] toRemove;
-        foreach (ref r; store.byValue())
-            if (r.tenantId == tenantId && r.datasetId == datasetId)
-                toRemove ~= r.recordId;
-        foreach (id; toRemove)
-            store.remove(id);
-    }
+  void removeByDataset(TenantId tenantId, DatasetId datasetId)
+  {
+    RecordId[] toRemove;
+    foreach (ref r; store.byValue())
+      if (r.tenantId == tenantId && r.datasetId == datasetId)
+        toRemove ~= r.recordId;
+    foreach (id; toRemove)
+      store.remove(id);
+  }
 }

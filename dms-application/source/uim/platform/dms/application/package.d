@@ -1,6 +1,7 @@
 module uim.platform.dms.application;
 
-public {
+public
+{
   import uim.platform.service;
 
   import uim.platform.dms.application.application;

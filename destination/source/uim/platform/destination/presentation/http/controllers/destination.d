@@ -16,191 +16,225 @@ import uim.platform.destination.domain.entities.destination;
 import uim.platform.destination.domain.types;
 import uim.platform.destination.presentation.http.json_utils;
 
-class DestinationController : SAPController {
-    private ManageDestinationsUseCase uc;
+class DestinationController : SAPController
+{
+  private ManageDestinationsUseCase uc;
 
-    this(ManageDestinationsUseCase uc) {
-        this.uc = uc;
+  this(ManageDestinationsUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/destinations", &handleCreate);
+    router.get("/api/v1/destinations", &handleList);
+    router.get("/api/v1/destinations/*", &handleGetById);
+    router.put("/api/v1/destinations/*", &handleUpdate);
+    router.delete_("/api/v1/destinations/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      CreateDestinationRequest r;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.subaccountId = req.headers.get("X-Subaccount-Id", "");
+      r.serviceInstanceId = j.getString("serviceInstanceId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.destinationType = j.getString("type");
+      r.url = j.getString("url");
+      r.authenticationType = j.getString("authentication");
+      r.proxyType = j.getString("proxyType");
+      r.level = j.getString("level");
+      r.urlPath = j.getString("urlPath");
+      r.httpMethod = j.getString("httpMethod");
+
+      r.user = j.getString("user");
+      r.password = j.getString("password");
+      r.clientId = j.getString("clientId");
+      r.clientSecret = j.getString("clientSecret");
+      r.tokenServiceUrl = j.getString("tokenServiceURL");
+      r.tokenServiceUser = j.getString("tokenServiceUser");
+      r.tokenServicePassword = j.getString("tokenServicePassword");
+      r.audience = j.getString("audience");
+      r.systemUser = j.getString("systemUser");
+      r.samlAudience = j.getString("samlAudience");
+      r.nameIdFormat = j.getString("nameIdFormat");
+      r.authnContextClassRef = j.getString("authnContextClassRef");
+
+      r.keystoreId = j.getString("keystoreId");
+      r.keystorePassword = j.getString("keystorePassword");
+      r.truststoreId = j.getString("truststoreId");
+
+      r.locationId = j.getString("locationId");
+      r.sccVirtualHost = j.getString("sccVirtualHost");
+      r.sccVirtualPort = j.getInteger("sccVirtualPort");
+
+      r.properties = jsonStrMap(j, "properties");
+      r.fragmentIds = jsonStrArray(j, "fragmentIds");
+      r.createdBy = req.headers.get("X-User-Id", "");
+
+      auto result = uc.create(r);
+      if (result.success)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+      {
+        writeError(res, 400, result.error);
+      }
     }
-
-    override void registerRoutes(URLRouter router) {
-        router.post("/api/v1/destinations", &handleCreate);
-        router.get("/api/v1/destinations", &handleList);
-        router.get("/api/v1/destinations/*", &handleGetById);
-        router.put("/api/v1/destinations/*", &handleUpdate);
-        router.delete_("/api/v1/destinations/*", &handleDelete);
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            CreateDestinationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.subaccountId = req.headers.get("X-Subaccount-Id", "");
-            r.serviceInstanceId = j.getString("serviceInstanceId");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.destinationType = j.getString("type");
-            r.url = j.getString("url");
-            r.authenticationType = j.getString("authentication");
-            r.proxyType = j.getString("proxyType");
-            r.level = j.getString("level");
-            r.urlPath = j.getString("urlPath");
-            r.httpMethod = j.getString("httpMethod");
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+      auto instanceId = req.params.get("serviceInstanceId");
 
-            r.user = j.getString("user");
-            r.password = j.getString("password");
-            r.clientId = j.getString("clientId");
-            r.clientSecret = j.getString("clientSecret");
-            r.tokenServiceUrl = j.getString("tokenServiceURL");
-            r.tokenServiceUser = j.getString("tokenServiceUser");
-            r.tokenServicePassword = j.getString("tokenServicePassword");
-            r.audience = j.getString("audience");
-            r.systemUser = j.getString("systemUser");
-            r.samlAudience = j.getString("samlAudience");
-            r.nameIdFormat = j.getString("nameIdFormat");
-            r.authnContextClassRef = j.getString("authnContextClassRef");
+      Destination[] destinations;
+      if (instanceId.length > 0)
+        destinations = uc.listByServiceInstance(tenantId, instanceId);
+      else
+        destinations = uc.listBySubaccount(tenantId, subaccountId);
 
-            r.keystoreId = j.getString("keystoreId");
-            r.keystorePassword = j.getString("keystorePassword");
-            r.truststoreId = j.getString("truststoreId");
+      auto arr = Json.emptyArray;
+      foreach (ref d; destinations)
+        arr ~= serializeDestination(d);
 
-            r.locationId = j.getString("locationId");
-            r.sccVirtualHost = j.getString("sccVirtualHost");
-            r.sccVirtualPort = j.getInteger("sccVirtualPort");
-
-            r.properties = jsonStrMap(j, "properties");
-            r.fragmentIds = jsonStrArray(j, "fragmentIds");
-            r.createdBy = req.headers.get("X-User-Id", "");
-
-            auto result = uc.create(r);
-            if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            } else {
-                writeError(res, 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) destinations.length);
+      res.writeJsonBody(resp, 200);
     }
-
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
-            auto subaccountId = req.headers.get("X-Subaccount-Id", "");
-            auto instanceId = req.params.get("serviceInstanceId");
-
-            Destination[] destinations;
-            if (instanceId.length > 0)
-                destinations = uc.listByServiceInstance(tenantId, instanceId);
-            else
-                destinations = uc.listBySubaccount(tenantId, subaccountId);
-
-            auto arr = Json.emptyArray;
-            foreach (ref d; destinations)
-                arr ~= serializeDestination(d);
-
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long)destinations.length);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto d = uc.getDestination(id);
-            if (d.id.length == 0) {
-                writeError(res, 404, "Destination not found");
-                return;
-            }
-            res.writeJsonBody(serializeDestination(d), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto d = uc.getDestination(id);
+      if (d.id.length == 0)
+      {
+        writeError(res, 404, "Destination not found");
+        return;
+      }
+      res.writeJsonBody(serializeDestination(d), 200);
     }
-
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto j = req.json;
-            UpdateDestinationRequest r;
-            r.description = j.getString("description");
-            r.url = j.getString("url");
-            r.authenticationType = j.getString("authentication");
-            r.proxyType = j.getString("proxyType");
-            r.user = j.getString("user");
-            r.password = j.getString("password");
-            r.clientId = j.getString("clientId");
-            r.clientSecret = j.getString("clientSecret");
-            r.tokenServiceUrl = j.getString("tokenServiceURL");
-            r.tokenServiceUser = j.getString("tokenServiceUser");
-            r.tokenServicePassword = j.getString("tokenServicePassword");
-            r.audience = j.getString("audience");
-            r.keystoreId = j.getString("keystoreId");
-            r.keystorePassword = j.getString("keystorePassword");
-            r.truststoreId = j.getString("truststoreId");
-            r.locationId = j.getString("locationId");
-            r.sccVirtualHost = j.getString("sccVirtualHost");
-            r.sccVirtualPort = j.getInteger("sccVirtualPort");
-            r.status = j.getString("status");
-            r.properties = jsonStrMap(j, "properties");
-            r.fragmentIds = jsonStrArray(j, "fragmentIds");
-
-            auto result = uc.updateDestination(id, r);
-            if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto result = uc.removeDestination(id);
-            if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["deleted"] = Json(true);
-                res.writeJsonBody(resp, 200);
-            } else {
-                writeError(res, 404, result.error);
-            }
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto j = req.json;
+      UpdateDestinationRequest r;
+      r.description = j.getString("description");
+      r.url = j.getString("url");
+      r.authenticationType = j.getString("authentication");
+      r.proxyType = j.getString("proxyType");
+      r.user = j.getString("user");
+      r.password = j.getString("password");
+      r.clientId = j.getString("clientId");
+      r.clientSecret = j.getString("clientSecret");
+      r.tokenServiceUrl = j.getString("tokenServiceURL");
+      r.tokenServiceUser = j.getString("tokenServiceUser");
+      r.tokenServicePassword = j.getString("tokenServicePassword");
+      r.audience = j.getString("audience");
+      r.keystoreId = j.getString("keystoreId");
+      r.keystorePassword = j.getString("keystorePassword");
+      r.truststoreId = j.getString("truststoreId");
+      r.locationId = j.getString("locationId");
+      r.sccVirtualHost = j.getString("sccVirtualHost");
+      r.sccVirtualPort = j.getInteger("sccVirtualPort");
+      r.status = j.getString("status");
+      r.properties = jsonStrMap(j, "properties");
+      r.fragmentIds = jsonStrArray(j, "fragmentIds");
 
-    private static Json serializeDestination(const ref Destination d) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(d.id);
-        j["tenantId"] = Json(d.tenantId);
-        j["subaccountId"] = Json(d.subaccountId);
-        j["serviceInstanceId"] = Json(d.serviceInstanceId);
-        j["name"] = Json(d.name);
-        j["description"] = Json(d.description);
-        j["type"] = Json(d.destinationType.to!string);
-        j["url"] = Json(d.url);
-        j["authentication"] = Json(d.authenticationType.to!string);
-        j["proxyType"] = Json(d.proxyType.to!string);
-        j["level"] = Json(d.level.to!string);
-        j["status"] = Json(d.status.to!string);
-        j["locationId"] = Json(d.locationId);
-        j["properties"] = toJsonObject(d.properties);
-        j["fragmentIds"] = toJsonArray(d.fragmentIds);
-        j["createdBy"] = Json(d.createdBy);
-        j["createdAt"] = Json(d.createdAt);
-        j["modifiedAt"] = Json(d.modifiedAt);
-        return j;
+      auto result = uc.updateDestination(id, r);
+      if (result.success)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
+      }
     }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto result = uc.removeDestination(id);
+      if (result.success)
+      {
+        auto resp = Json.emptyObject;
+        resp["deleted"] = Json(true);
+        res.writeJsonBody(resp, 200);
+      }
+      else
+      {
+        writeError(res, 404, result.error);
+      }
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private static Json serializeDestination(const ref Destination d)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(d.id);
+    j["tenantId"] = Json(d.tenantId);
+    j["subaccountId"] = Json(d.subaccountId);
+    j["serviceInstanceId"] = Json(d.serviceInstanceId);
+    j["name"] = Json(d.name);
+    j["description"] = Json(d.description);
+    j["type"] = Json(d.destinationType.to!string);
+    j["url"] = Json(d.url);
+    j["authentication"] = Json(d.authenticationType.to!string);
+    j["proxyType"] = Json(d.proxyType.to!string);
+    j["level"] = Json(d.level.to!string);
+    j["status"] = Json(d.status.to!string);
+    j["locationId"] = Json(d.locationId);
+    j["properties"] = toJsonObject(d.properties);
+    j["fragmentIds"] = toJsonArray(d.fragmentIds);
+    j["createdBy"] = Json(d.createdBy);
+    j["createdAt"] = Json(d.createdAt);
+    j["modifiedAt"] = Json(d.modifiedAt);
+    return j;
+  }
 }

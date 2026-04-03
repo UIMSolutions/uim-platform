@@ -13,16 +13,19 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageFoldersUseCase {
+class ManageFoldersUseCase
+{
   private IFolderRepository folderRepo;
   private IRepositoryRepository repoRepo;
 
-  this(IFolderRepository folderRepo, IRepositoryRepository repoRepo) {
+  this(IFolderRepository folderRepo, IRepositoryRepository repoRepo)
+  {
     this.folderRepo = folderRepo;
     this.repoRepo = repoRepo;
   }
 
-  CommandResult createFolder(CreateFolderRequest r) {
+  CommandResult createFolder(CreateFolderRequest r)
+  {
     if (r.name.length == 0)
       return CommandResult("", "Folder name is required");
     if (r.repositoryId.length == 0)
@@ -35,7 +38,8 @@ class ManageFoldersUseCase {
 
     // Build path
     string path = "/" ~ r.name;
-    if (r.parentFolderId.length > 0) {
+    if (r.parentFolderId.length > 0)
+    {
       auto parent = folderRepo.findById(r.parentFolderId, r.tenantId);
       if (parent is null)
         return CommandResult("", "Parent folder not found");
@@ -58,28 +62,34 @@ class ManageFoldersUseCase {
     return CommandResult(entity.id, "");
   }
 
-  Folder[] listFolders(TenantId tenantId) {
+  Folder[] listFolders(TenantId tenantId)
+  {
     return folderRepo.findByTenant(tenantId);
   }
 
-  Folder[] listByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  Folder[] listByRepository(RepositoryId repositoryId, TenantId tenantId)
+  {
     return folderRepo.findByRepository(repositoryId, tenantId);
   }
 
-  Folder[] listChildren(FolderId parentId, TenantId tenantId) {
+  Folder[] listChildren(FolderId parentId, TenantId tenantId)
+  {
     return folderRepo.findByParent(parentId, tenantId);
   }
 
-  Folder getFolder(FolderId id, TenantId tenantId) {
+  Folder getFolder(FolderId id, TenantId tenantId)
+  {
     return folderRepo.findById(id, tenantId);
   }
 
-  CommandResult updateFolder(UpdateFolderRequest r) {
+  CommandResult updateFolder(UpdateFolderRequest r)
+  {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
 
-    if (r.name.length > 0) {
+    if (r.name.length > 0)
+    {
       entity.name = r.name;
       // Update path
       auto lastSlash = lastIndexOf(entity.path, '/');
@@ -96,18 +106,22 @@ class ManageFoldersUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult moveFolder(MoveFolderRequest r) {
+  CommandResult moveFolder(MoveFolderRequest r)
+  {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
 
-    if (r.newParentFolderId.length > 0) {
+    if (r.newParentFolderId.length > 0)
+    {
       auto newParent = folderRepo.findById(r.newParentFolderId, r.tenantId);
       if (newParent is null)
         return CommandResult("", "New parent folder not found");
       entity.parentFolderId = r.newParentFolderId;
       entity.path = newParent.path ~ "/" ~ entity.name;
-    } else {
+    }
+    else
+    {
       entity.parentFolderId = "";
       entity.path = "/" ~ entity.name;
     }
@@ -117,7 +131,8 @@ class ManageFoldersUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteFolder(FolderId id, TenantId tenantId) {
+  CommandResult deleteFolder(FolderId id, TenantId tenantId)
+  {
     auto entity = folderRepo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
@@ -126,9 +141,10 @@ class ManageFoldersUseCase {
     return CommandResult(id, "");
   }
 
-  private static long lastIndexOf(string s, char c) {
-    for (long i = cast(long)s.length - 1; i >= 0; --i)
-      if (s[cast(size_t)i] == c)
+  private static long lastIndexOf(string s, char c)
+  {
+    for (long i = cast(long) s.length - 1; i >= 0; --i)
+      if (s[cast(size_t) i] == c)
         return i;
     return -1;
   }

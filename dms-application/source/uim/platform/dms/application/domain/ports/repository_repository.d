@@ -4,9 +4,11 @@ module uim.platform.dms.application.domain.ports.repository_repository;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
-interface IRepositoryRepository {
+interface IRepositoryRepository
+{
   Repository[] findByTenant(TenantId tenantId);
   Repository findById(RepositoryId id, TenantId tenantId);
   Repository findByName(string name, TenantId tenantId);

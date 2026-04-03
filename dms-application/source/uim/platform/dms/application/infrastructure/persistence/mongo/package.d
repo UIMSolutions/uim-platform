@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence.mongo;
 
-public {
+public
+{
 
 }

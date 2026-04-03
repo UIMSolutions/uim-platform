@@ -15,15 +15,18 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class DocumentController : SAPController {
+class DocumentController : SAPController
+{
   private ManageDocumentsUseCase uc;
 
-  this(ManageDocumentsUseCase uc) {
+  this(ManageDocumentsUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
-       super.registerRoutes(router);
+  override void registerRoutes(URLRouter router)
+  {
+    super.registerRoutes(router);
 
     router.post("/api/v1/documents", &handleCreate);
     router.get("/api/v1/documents", &handleList);
@@ -35,8 +38,10 @@ class DocumentController : SAPController {
     router.post("/api/v1/documents/archive/*", &handleArchive);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateDocumentRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -52,19 +57,25 @@ class DocumentController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createDocument(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else
+      }
+      else
         writeError(res, 400, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listDocuments(tenantId);
 
@@ -74,27 +85,33 @@ class DocumentController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto query = req.headers.get("X-Search-Query", "");
-      if (query.length == 0) {
+      if (query.length == 0)
+      {
         // Try query param
         auto uri = req.requestURI;
         // import std.string : indexOf;
 
         auto qIdx = uri.indexOf("q=");
-        if (qIdx >= 0) {
+        if (qIdx >= 0)
+        {
           auto rest = uri[cast(size_t)(qIdx + 2) .. $];
           auto ampIdx = rest.indexOf('&');
-          query = ampIdx >= 0 ? rest[0 .. cast(size_t)ampIdx] : rest;
+          query = ampIdx >= 0 ? rest[0 .. cast(size_t) ampIdx] : rest;
         }
       }
 
@@ -106,30 +123,39 @@ class DocumentController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto doc = uc.getDocument(id, tenantId);
-      if (doc is null) {
+      if (doc is null)
+      {
         writeError(res, 404, "Document not found");
         return;
       }
       res.writeJsonBody(serializeDoc(doc), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateDocumentRequest();
@@ -141,21 +167,28 @@ class DocumentController : SAPController {
       r.properties = j.getString("properties");
 
       auto result = uc.updateDocument(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Document not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = MoveDocumentRequest();
@@ -164,53 +197,71 @@ class DocumentController : SAPController {
       r.newFolderId = j.getString("newFolderId");
 
       auto result = uc.moveDocument(r);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         auto status = result.error == "Document not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.archiveDocument(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("archived");
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteDocument(id, tenantId);
-      if (result.isSuccess) {
+      if (result.isSuccess)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else
+      }
+      else
         writeError(res, 404, result.error);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeDoc(const Document d) {
+  private static Json serializeDoc(const Document d)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

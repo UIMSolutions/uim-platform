@@ -5,50 +5,50 @@ import uim.platform.data.quality.domain.types;
 /// Aggregated data quality metrics for a tenant / dataset.
 struct QualityDashboard
 {
-    TenantId tenantId;
-    DatasetId datasetId;
-    string datasetName;
+  TenantId tenantId;
+  DatasetId datasetId;
+  string datasetName;
 
-    // Record-level metrics
-    long totalRecords;
-    long validRecords;
-    long invalidRecords;
-    long duplicateRecords;
-    long cleansedRecords;
+  // Record-level metrics
+  long totalRecords;
+  long validRecords;
+  long invalidRecords;
+  long duplicateRecords;
+  long cleansedRecords;
 
-    // Score breakdown
-    double overallScore;         // 0.0 - 100.0
-    double completenessScore;    // % non-null fields
-    double validityScore;        // % passing validation
-    double uniquenessScore;      // % unique records
-    double consistencyScore;     // % consistent across rules
-    double accuracyScore;        // % verified (address etc.)
+  // Score breakdown
+  double overallScore; // 0.0 - 100.0
+  double completenessScore; // % non-null fields
+  double validityScore; // % passing validation
+  double uniquenessScore; // % unique records
+  double consistencyScore; // % consistent across rules
+  double accuracyScore; // % verified (address etc.)
 
-    QualityRating rating;
+  QualityRating rating;
 
-    // Rule execution summary
-    int totalRules;
-    int activeRules;
-    int violationCount;
-    RuleSeverityCount[] violationsBySeverity;
+  // Rule execution summary
+  int totalRules;
+  int activeRules;
+  int violationCount;
+  RuleSeverityCount[] violationsBySeverity;
 
-    // Trend
-    QualityTrendPoint[] trend;   // historical scores
+  // Trend
+  QualityTrendPoint[] trend; // historical scores
 
-    long computedAt;
+  long computedAt;
 }
 
 /// Count of violations per severity level.
 struct RuleSeverityCount
 {
-    RuleSeverity severity;
-    int count;
+  RuleSeverity severity;
+  int count;
 }
 
 /// A historical quality score data point.
 struct QualityTrendPoint
 {
-    long timestamp;
-    double score;
-    long recordCount;
+  long timestamp;
+  double score;
+  long recordCount;
 }

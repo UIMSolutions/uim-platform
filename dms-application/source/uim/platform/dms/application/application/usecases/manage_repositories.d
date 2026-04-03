@@ -11,14 +11,17 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageRepositoriesUseCase {
+class ManageRepositoriesUseCase
+{
   private IRepositoryRepository repo;
 
-  this(IRepositoryRepository repo) {
+  this(IRepositoryRepository repo)
+  {
     this.repo = repo;
   }
 
-  CommandResult createRepository(CreateRepositoryRequest r) {
+  CommandResult createRepository(CreateRepositoryRequest r)
+  {
     if (r.name.length == 0)
       return CommandResult("", "Repository name is required");
     if (r.tenantId.length == 0)
@@ -44,15 +47,18 @@ class ManageRepositoriesUseCase {
     return CommandResult(entity.id, "");
   }
 
-  Repository[] listRepositories(TenantId tenantId) {
+  Repository[] listRepositories(TenantId tenantId)
+  {
     return repo.findByTenant(tenantId);
   }
 
-  Repository getRepository(RepositoryId id, TenantId tenantId) {
+  Repository getRepository(RepositoryId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  CommandResult updateRepository(UpdateRepositoryRequest r) {
+  CommandResult updateRepository(UpdateRepositoryRequest r)
+  {
     auto entity = repo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -71,7 +77,8 @@ class ManageRepositoriesUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult archiveRepository(RepositoryId id, TenantId tenantId) {
+  CommandResult archiveRepository(RepositoryId id, TenantId tenantId)
+  {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -82,7 +89,8 @@ class ManageRepositoriesUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult activateRepository(RepositoryId id, TenantId tenantId) {
+  CommandResult activateRepository(RepositoryId id, TenantId tenantId)
+  {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");
@@ -93,7 +101,8 @@ class ManageRepositoriesUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteRepository(RepositoryId id, TenantId tenantId) {
+  CommandResult deleteRepository(RepositoryId id, TenantId tenantId)
+  {
     auto entity = repo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Repository not found");

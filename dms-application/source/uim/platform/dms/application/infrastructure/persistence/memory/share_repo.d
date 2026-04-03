@@ -5,12 +5,15 @@ module uim.platform.dms.application.infrastructure.persistence.memory.share_repo
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
+
 mixin(ShowModule!());
 @safe:
-class MemoryShareRepository : IShareRepository {
+class MemoryShareRepository : IShareRepository
+{
   private Share[string] store;
 
-  Share[] findByTenant(TenantId tenantId) {
+  Share[] findByTenant(TenantId tenantId)
+  {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -18,14 +21,16 @@ class MemoryShareRepository : IShareRepository {
     return result;
   }
 
-  Share findById(ShareId id, TenantId tenantId) {
+  Share findById(ShareId id, TenantId tenantId)
+  {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Share[] findByDocument(DocumentId documentId, TenantId tenantId) {
+  Share[] findByDocument(DocumentId documentId, TenantId tenantId)
+  {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
@@ -33,7 +38,8 @@ class MemoryShareRepository : IShareRepository {
     return result;
   }
 
-  Share[] findBySharedWith(string sharedWith, TenantId tenantId) {
+  Share[] findBySharedWith(string sharedWith, TenantId tenantId)
+  {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.sharedWith == sharedWith)
@@ -41,7 +47,8 @@ class MemoryShareRepository : IShareRepository {
     return result;
   }
 
-  Share[] findByStatus(ShareStatus status, TenantId tenantId) {
+  Share[] findByStatus(ShareStatus status, TenantId tenantId)
+  {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)
@@ -49,19 +56,23 @@ class MemoryShareRepository : IShareRepository {
     return result;
   }
 
-  void save(Share share) {
+  void save(Share share)
+  {
     store[share.id] = share;
   }
 
-  void update(Share share) {
+  void update(Share share)
+  {
     store[share.id] = share;
   }
 
-  void remove(ShareId id, TenantId tenantId) {
+  void remove(ShareId id, TenantId tenantId)
+  {
     store.remove(id);
   }
 
-  void removeByDocument(DocumentId documentId, TenantId tenantId) {
+  void removeByDocument(DocumentId documentId, TenantId tenantId)
+  {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)

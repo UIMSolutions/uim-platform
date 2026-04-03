@@ -5,38 +5,38 @@ import uim.platform.data.quality.domain.types;
 /// An address record for cleansing and geocoding.
 struct AddressRecord
 {
-    AddressId id;
-    TenantId tenantId;
-    RecordId sourceRecordId;    // link to originating record
+  AddressId id;
+  TenantId tenantId;
+  RecordId sourceRecordId; // link to originating record
 
-    // Input fields
-    string inputLine1;
-    string inputLine2;
-    string inputCity;
-    string inputRegion;
-    string inputPostalCode;
-    string inputCountry;
+  // Input fields
+  string inputLine1;
+  string inputLine2;
+  string inputCity;
+  string inputRegion;
+  string inputPostalCode;
+  string inputCountry;
 
-    // Cleansed output
-    string line1;
-    string line2;
-    string city;
-    string region;
-    string postalCode;
-    string country;
-    string countryIso2;
+  // Cleansed output
+  string line1;
+  string line2;
+  string city;
+  string region;
+  string postalCode;
+  string country;
+  string countryIso2;
 
-    AddressType addressType = AddressType.unknown;
-    AddressQuality quality = AddressQuality.unverifiable;
+  AddressType addressType = AddressType.unknown;
+  AddressQuality quality = AddressQuality.unverifiable;
 
-    // Geocoding
-    double latitude = 0.0;
-    double longitude = 0.0;
-    GeocodePrecision geocodePrecision = GeocodePrecision.none;
+  // Geocoding
+  double latitude = 0.0;
+  double longitude = 0.0;
+  GeocodePrecision geocodePrecision = GeocodePrecision.none;
 
-    // Metadata
-    CleansingAction[] appliedActions;
-    string[] changeLog;         // human-readable changes
-    long cleansedAt;
-    long geocodedAt;
+  // Metadata
+  CleansingAction[] appliedActions;
+  string[] changeLog; // human-readable changes
+  long cleansedAt;
+  long geocodedAt;
 }
