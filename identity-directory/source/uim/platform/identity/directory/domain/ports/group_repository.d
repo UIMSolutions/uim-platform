@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.group_repository;
+module uim.platform.identity.directory.domain.ports.group_repository;
 
-import uim.platform.xyz.domain.entities.group;
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.entities.group;
+import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — group persistence.
 interface GroupRepository

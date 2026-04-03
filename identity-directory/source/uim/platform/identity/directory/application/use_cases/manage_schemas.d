@@ -1,11 +1,11 @@
 module application.usecases.manage_schemas;
 
-import uim.platform.xyz.domain.entities.schema;
-import uim.platform.xyz.domain.entities.audit_event;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.schema_repository;
-import uim.platform.xyz.domain.ports.audit_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.identity.directory.domain.entities.schema;
+import uim.platform.identity.directory.domain.entities.audit_event;
+import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory.domain.ports.schema_repository;
+import uim.platform.identity.directory.domain.ports.audit_repository;
+import uim.platform.identity.directory.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

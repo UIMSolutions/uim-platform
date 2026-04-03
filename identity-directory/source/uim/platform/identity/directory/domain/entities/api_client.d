@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.api_client;
+module uim.platform.identity.directory.domain.entities.api_client;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.types;
 
 /// API client / technical user for service-to-service access.
 struct ApiClient

@@ -1,25 +1,25 @@
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.identity.directory.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.identity.directory.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.user_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.group_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.schema_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.password_policy_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.api_client_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.audit_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.user_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.group_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.schema_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.password_policy_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.api_client_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.audit_repo;
 
 // Services
-import uim.platform.xyz.infrastructure.security.sha256_password_service;
+import uim.platform.identity.directory.infrastructure.security.sha256_password_service;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_users;
-import uim.platform.xyz.application.usecases.manage_groups;
-import uim.platform.xyz.application.usecases.manage_schemas;
-import uim.platform.xyz.application.usecases.manage_password_policies;
-import uim.platform.xyz.application.usecases.manage_api_clients;
-import uim.platform.xyz.application.usecases.query_audit_log;
+import uim.platform.identity.directory.application.usecases.manage_users;
+import uim.platform.identity.directory.application.usecases.manage_groups;
+import uim.platform.identity.directory.application.usecases.manage_schemas;
+import uim.platform.identity.directory.application.usecases.manage_password_policies;
+import uim.platform.identity.directory.application.usecases.manage_api_clients;
+import uim.platform.identity.directory.application.usecases.query_audit_log;
 
 // Controllers
 import uim.platform.identity_authentication.presentation.http.user;

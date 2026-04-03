@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.audit_event;
+module uim.platform.identity.directory.domain.entities.audit_event;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.types;
 
 /// Immutable audit log entry.
 struct AuditEvent

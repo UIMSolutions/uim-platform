@@ -3,14 +3,14 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.api_client;
+module uim.platform.identity.directory.presentation.http.controllers.api_client;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_api_clients;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.api_client;
+import uim.platform.identity.directory.application.usecases.manage_api_clients;
+import uim.platform.identity.directory.application.dto;
+import uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.user;
+module uim.platform.identity.directory.domain.entities.user;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.types;
 
 /// SCIM 2.0 user name component.
 struct UserName

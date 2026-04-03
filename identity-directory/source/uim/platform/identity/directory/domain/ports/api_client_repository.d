@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.api_client_repository;
+module uim.platform.identity.directory.domain.ports.api_client_repository;
 
-import uim.platform.xyz.domain.entities.api_client;
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.entities.api_client;
+import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — API client persistence.
 interface ApiClientRepository

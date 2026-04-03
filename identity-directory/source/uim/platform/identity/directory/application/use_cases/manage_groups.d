@@ -1,13 +1,13 @@
 module application.usecases.manage_groups;
 
-import uim.platform.xyz.domain.entities.group;
-import uim.platform.xyz.domain.entities.user;
-import uim.platform.xyz.domain.entities.audit_event;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.ports.group_repository;
-import uim.platform.xyz.domain.ports.user_repository;
-import uim.platform.xyz.domain.ports.audit_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.identity.directory.domain.entities.group;
+import uim.platform.identity.directory.domain.entities.user;
+import uim.platform.identity.directory.domain.entities.audit_event;
+import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory.domain.ports.group_repository;
+import uim.platform.identity.directory.domain.ports.user_repository;
+import uim.platform.identity.directory.domain.ports.audit_repository;
+import uim.platform.identity.directory.application.dto;
 
 import std.uuid;
 import std.datetime.systime : Clock;

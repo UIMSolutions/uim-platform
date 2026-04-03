@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.schema;
+module uim.platform.identity.directory.domain.entities.schema;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.types;
 
 /// Attribute definition within a custom schema.
 struct SchemaAttribute

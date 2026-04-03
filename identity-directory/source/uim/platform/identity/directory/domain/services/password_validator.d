@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.services.password_validator;
+module uim.platform.identity.directory.domain.services.password_validator;
 
-import uim.platform.xyz.domain.entities.password_policy;
+import uim.platform.identity.directory.domain.entities.password_policy;
 
 /// Domain service: validates passwords against policy rules.
 struct PasswordValidationResult

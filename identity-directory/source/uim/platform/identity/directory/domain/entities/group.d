@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.group;
+module uim.platform.identity.directory.domain.entities.group;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.directory.domain.types;
 
 /// Member reference within a group.
 struct GroupMember

@@ -3,9 +3,9 @@ module uim.platform.identity_authentication.presentation.http.group;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_groups;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.group;
+import uim.platform.identity.directory.application.usecases.manage_groups;
+import uim.platform.identity.directory.application.dto;
+import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 group management.
@@ -207,7 +207,7 @@ class GroupController
 
 private GroupMember[] parseMembers(Json j)
 {
-    import uim.platform.xyz.domain.entities.group : GroupMember;
+    import uim.platform.identity.directory.domain.entities.group : GroupMember;
     GroupMember[] result;
     if (!j.isObject)
         return result;

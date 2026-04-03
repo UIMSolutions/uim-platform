@@ -1,9 +1,9 @@
 module application.dto;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.user : UserName, Email, PhoneNumber, Address, ExtendedAttribute;
-import uim.platform.xyz.domain.entities.group : GroupMember;
-import uim.platform.xyz.domain.entities.schema : SchemaAttribute;
+import uim.platform.identity.directory.domain.types;
+import uim.platform.identity.directory.domain.entities.user : UserName, Email, PhoneNumber, Address, ExtendedAttribute;
+import uim.platform.identity.directory.domain.entities.group : GroupMember;
+import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
 
 /// --- User DTOs ---
 

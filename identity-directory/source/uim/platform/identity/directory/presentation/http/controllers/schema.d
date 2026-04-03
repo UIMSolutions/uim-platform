@@ -3,9 +3,9 @@ module uim.platform.identity_authentication.presentation.http.schema;
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
-import uim.platform.xyz.application.usecases.manage_schemas;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.schema;
+import uim.platform.identity.directory.application.usecases.manage_schemas;
+import uim.platform.identity.directory.application.dto;
+import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for custom schema management.
