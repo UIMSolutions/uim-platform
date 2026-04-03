@@ -1,4 +1,4 @@
-module uim.platform.xyz.infrastructure.persistence.memory.in_memory_transport_request_repo;
+module uim.platform.content_agent.infrastructure.persistence.memory.in_memory_transport_request_repo;
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.transport_request;

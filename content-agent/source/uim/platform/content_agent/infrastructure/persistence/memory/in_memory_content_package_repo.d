@@ -1,4 +1,4 @@
-module uim.platform.xyz.infrastructure.persistence.memory.in_memory_content_package_repo;
+module uim.platform.content_agent.infrastructure.persistence.memory.in_memory_content_package_repo;
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.content_package;
