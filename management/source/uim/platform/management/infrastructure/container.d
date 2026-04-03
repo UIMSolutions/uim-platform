@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.management.infrastructure.container;
 
 // import uim.platform.management.infrastructure.config;
@@ -135,7 +140,7 @@ Container buildContainer(AppConfig config) {
     c.labelController = new LabelController(c.manageLabels);
     c.eventController = new EventController(c.queryEvents);
     c.overviewController = new OverviewController(c.getOverview);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("management");
 
     return c;
 }

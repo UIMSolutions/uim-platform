@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module infrastructure.container;
 
 import infrastructure.config;
@@ -36,15 +41,18 @@ import presentation.http.api_rule;
 import presentation.http.service_instance;
 import presentation.http.service_binding;
 import presentation.http.event_subscription;
-import presentation.http.module;
+import presentation.http.module ;
 import presentation.http.application;
 import presentation.http.health;
 
+
+
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
+    
     // Repositories (driven adapters)
     InMemoryEnvironmentRepository envRepo;
+
     InMemoryNamespaceRepository nsRepo;
     InMemoryFunctionRepository fnRepo;
     InMemoryApiRuleRepository apiRuleRepo;
@@ -83,8 +91,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters

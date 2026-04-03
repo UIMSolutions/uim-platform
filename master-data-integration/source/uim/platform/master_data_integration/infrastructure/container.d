@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module infrastructure.container;
 
 import infrastructure.config;
@@ -38,8 +43,7 @@ import presentation.http.change_log;
 import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
     InMemoryMasterDataObjectRepository mdoRepo;
     InMemoryDataModelRepository dataModelRepo;
@@ -77,8 +81,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
@@ -114,7 +117,7 @@ Container buildContainer(AppConfig config)
     c.replicationController = new ReplicationController(c.manageReplicationJobs);
     c.filterRuleController = new FilterRuleController(c.manageFilterRules);
     c.changeLogController = new ChangeLogController(c.queryChangeLog);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("master-data-integration");
 
     return c;
 }

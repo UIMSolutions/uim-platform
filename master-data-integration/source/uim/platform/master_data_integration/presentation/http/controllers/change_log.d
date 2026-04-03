@@ -1,4 +1,4 @@
-module presentation.http.change_log;
+module presentation.http.controllers.change_log;
 
 import vibe.http.server;
 import vibe.http.router;
