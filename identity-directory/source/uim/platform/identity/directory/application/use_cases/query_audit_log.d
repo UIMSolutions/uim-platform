@@ -1,4 +1,4 @@
-module application.usecases.query_audit_log;
+module uim.platform.xyz.application.usecases.query_audit_log;
 
 import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory.domain.types;

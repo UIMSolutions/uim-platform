@@ -1,4 +1,4 @@
-module application.usecases.process_inference;
+module uim.platform.xyz.application.usecases.process_inference;
 
 import std.uuid;
 import std.datetime.systime : Clock;

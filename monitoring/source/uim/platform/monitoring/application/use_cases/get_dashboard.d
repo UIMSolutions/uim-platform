@@ -1,4 +1,4 @@
-module application.usecases.get_dashboard;
+module uim.platform.xyz.application.usecases.get_dashboard;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.alert;

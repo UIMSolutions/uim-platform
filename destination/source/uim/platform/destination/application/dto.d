@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.xyz.application.dto;
 
 import uim.platform.destination.domain.types;
 

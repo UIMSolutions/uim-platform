@@ -1,4 +1,4 @@
-module application.usecases.manage_monitored_resources;
+module uim.platform.xyz.application.usecases.manage_monitored_resources;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.monitored_resource;

@@ -1,4 +1,4 @@
-module application.usecases.manage_distribution_models;
+module uim.platform.xyz.application.usecases.manage_distribution_models;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.distribution_model;

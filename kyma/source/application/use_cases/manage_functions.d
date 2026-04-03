@@ -1,4 +1,4 @@
-module application.usecases.manage_functions;
+module uim.platform.xyz.application.usecases.manage_functions;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.serverless_function;

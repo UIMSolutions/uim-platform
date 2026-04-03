@@ -1,4 +1,4 @@
-module application.usecases.manage_sites;
+module uim.platform.xyz.application.usecases.manage_sites;
 
 import uim.platform.xyz.domain.entities.site;
 import uim.platform.xyz.domain.types;

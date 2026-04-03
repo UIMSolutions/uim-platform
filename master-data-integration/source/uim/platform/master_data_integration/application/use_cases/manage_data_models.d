@@ -1,4 +1,4 @@
-module application.usecases.manage_data_models;
+module uim.platform.xyz.application.usecases.manage_data_models;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.data_model;

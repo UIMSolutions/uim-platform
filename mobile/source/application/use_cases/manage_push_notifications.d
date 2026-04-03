@@ -1,4 +1,4 @@
-module application.usecases.manage_push_notifications;
+module uim.platform.xyz.application.usecases.manage_push_notifications;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.push_notification;

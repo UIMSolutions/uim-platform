@@ -1,4 +1,4 @@
-module application.usecases.manage_catalogs;
+module uim.platform.xyz.application.usecases.manage_catalogs;
 
 import uim.platform.xyz.domain.entities.catalog;
 import uim.platform.xyz.domain.types;

@@ -1,4 +1,4 @@
-module application.usecases.manage_filter_rules;
+module uim.platform.xyz.application.usecases.manage_filter_rules;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.filter_rule;

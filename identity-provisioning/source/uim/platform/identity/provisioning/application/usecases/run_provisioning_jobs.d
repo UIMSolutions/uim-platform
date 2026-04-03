@@ -1,4 +1,4 @@
-module application.usecases.run_provisioning_jobs;
+module uim.platform.xyz.application.usecases.run_provisioning_jobs;
 
 import std.uuid;
 import std.datetime.systime : Clock;

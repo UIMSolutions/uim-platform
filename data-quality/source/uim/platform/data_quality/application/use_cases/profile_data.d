@@ -1,4 +1,4 @@
-module application.usecases.profile_data;
+module uim.platform.xyz.application.usecases.profile_data;
 
 import std.uuid;
 import std.conv : to;

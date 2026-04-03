@@ -1,4 +1,4 @@
-module application.usecases.manage_certificates;
+module uim.platform.xyz.application.usecases.manage_certificates;
 
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.certificate;

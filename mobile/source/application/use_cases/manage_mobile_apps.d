@@ -1,4 +1,4 @@
-module application.usecases.manage_mobile_apps;
+module uim.platform.xyz.application.usecases.manage_mobile_apps;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.mobile_app;

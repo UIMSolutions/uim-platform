@@ -1,4 +1,4 @@
-module application.usecases.manage_offline_sync;
+module uim.platform.xyz.application.usecases.manage_offline_sync;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.offline_config;

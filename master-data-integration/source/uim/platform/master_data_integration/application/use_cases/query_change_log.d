@@ -1,4 +1,4 @@
-module application.usecases.query_change_log;
+module uim.platform.xyz.application.usecases.query_change_log;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.change_log_entry;

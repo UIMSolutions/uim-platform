@@ -1,4 +1,4 @@
-module application.usecases.manage_users;
+module uim.platform.xyz.application.usecases.manage_users;
 
 import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.entities.audit_event;

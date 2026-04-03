@@ -1,4 +1,4 @@
-module application.dto;
+module uim.platform.xyz.application.dto;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.validation_result : RuleViolation;

@@ -1,4 +1,4 @@
-module application.usecases.manage_cleansing_rules;
+module uim.platform.xyz.application.usecases.manage_cleansing_rules;
 
 import std.uuid;
 import std.datetime.systime : Clock;

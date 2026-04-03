@@ -1,4 +1,4 @@
-module application.usecases.validate_data;
+module uim.platform.xyz.application.usecases.validate_data;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.validation_rule;

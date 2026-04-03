@@ -1,4 +1,4 @@
-module application.usecases.manage_themes;
+module uim.platform.xyz.application.usecases.manage_themes;
 
 import uim.platform.xyz.domain.entities.theme;
 import uim.platform.xyz.domain.types;

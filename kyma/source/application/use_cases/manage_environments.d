@@ -1,4 +1,4 @@
-module application.usecases.manage_environments;
+module uim.platform.xyz.application.usecases.manage_environments;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.kyma_environment;

@@ -1,4 +1,4 @@
-module application.usecases.manage_tiles;
+module uim.platform.xyz.application.usecases.manage_tiles;
 
 import uim.platform.xyz.domain.entities.tile;
 import uim.platform.xyz.domain.types;

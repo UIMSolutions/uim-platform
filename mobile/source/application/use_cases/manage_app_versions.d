@@ -1,4 +1,4 @@
-module application.usecases.manage_app_versions;
+module uim.platform.xyz.application.usecases.manage_app_versions;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.app_version;

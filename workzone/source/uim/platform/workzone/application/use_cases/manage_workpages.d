@@ -1,4 +1,4 @@
-module application.usecases.manage_workpages;
+module uim.platform.xyz.application.usecases.manage_workpages;
 
 import std.uuid;
 import std.datetime.systime : Clock;

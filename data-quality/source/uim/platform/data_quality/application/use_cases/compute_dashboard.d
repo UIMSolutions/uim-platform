@@ -1,4 +1,4 @@
-module application.usecases.compute_dashboard;
+module uim.platform.xyz.application.usecases.compute_dashboard;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.quality_dashboard;

@@ -1,4 +1,4 @@
-module application.usecases.manage_password_policies;
+module uim.platform.xyz.application.usecases.manage_password_policies;
 
 import uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity.directory.domain.entities.audit_event;

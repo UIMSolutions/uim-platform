@@ -1,4 +1,4 @@
-module application.usecases.manage_roles;
+module uim.platform.xyz.application.usecases.manage_roles;
 
 import uim.platform.xyz.domain.entities.role;
 import uim.platform.xyz.domain.types;

@@ -1,4 +1,4 @@
-module application.usecases.manage_schemas;
+module uim.platform.xyz.application.usecases.manage_schemas;
 
 import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity.directory.domain.entities.audit_event;

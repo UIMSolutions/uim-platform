@@ -1,4 +1,4 @@
-module application.usecases.monitor_provisioning;
+module uim.platform.xyz.application.usecases.monitor_provisioning;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.provisioning_job;

@@ -1,4 +1,4 @@
-module application.usecases.manage_providers;
+module uim.platform.xyz.application.usecases.manage_providers;
 
 import uim.platform.xyz.domain.entities.content_provider;
 import uim.platform.xyz.domain.types;

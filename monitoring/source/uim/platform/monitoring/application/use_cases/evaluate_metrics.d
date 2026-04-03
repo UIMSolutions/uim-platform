@@ -1,4 +1,4 @@
-module application.usecases.evaluate_metrics;
+module uim.platform.xyz.application.usecases.evaluate_metrics;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.alert_rule;

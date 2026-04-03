@@ -1,4 +1,4 @@
-module application.usecases.manage_menu_items;
+module uim.platform.xyz.application.usecases.manage_menu_items;
 
 import uim.platform.xyz.domain.entities.menu_item;
 import uim.platform.xyz.domain.entities.site;

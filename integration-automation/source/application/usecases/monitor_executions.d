@@ -1,4 +1,4 @@
-module application.usecases.monitor_executions;
+module uim.platform.xyz.application.usecases.monitor_executions;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.execution_log;

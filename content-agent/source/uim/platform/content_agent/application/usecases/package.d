@@ -1,2 +1,2 @@
-module application.use_cases;
+module uim.platform.xyz.application.use_cases;
 

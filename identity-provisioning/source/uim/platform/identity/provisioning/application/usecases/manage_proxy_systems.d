@@ -1,4 +1,4 @@
-module application.usecases.manage_proxy_systems;
+module uim.platform.xyz.application.usecases.manage_proxy_systems;
 
 import std.uuid;
 import std.datetime.systime : Clock;

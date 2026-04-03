@@ -1,4 +1,4 @@
-module application.usecases.manage_health_checks;
+module uim.platform.xyz.application.usecases.manage_health_checks;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.health_check;

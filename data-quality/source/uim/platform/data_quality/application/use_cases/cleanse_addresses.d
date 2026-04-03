@@ -1,4 +1,4 @@
-module application.usecases.cleanse_addresses;
+module uim.platform.xyz.application.usecases.cleanse_addresses;
 
 import std.uuid;
 

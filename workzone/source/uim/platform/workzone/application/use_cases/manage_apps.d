@@ -1,4 +1,4 @@
-module application.usecases.manage_apps;
+module uim.platform.xyz.application.usecases.manage_apps;
 
 import std.uuid;
 import std.datetime.systime : Clock;

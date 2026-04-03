@@ -1,4 +1,4 @@
-module application.usecases.monitor_training;
+module uim.platform.xyz.application.usecases.monitor_training;
 
 import uim.platform.data_attribute_recommendation.domain.types;
 import uim.platform.data_attribute_recommendation.domain.entities.training_job;

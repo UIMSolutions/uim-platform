@@ -1,4 +1,4 @@
-module application.usecases.detect_duplicates;
+module uim.platform.xyz.application.usecases.detect_duplicates;
 
 import uim.platform.xyz.domain.types;
 import uim.platform.xyz.domain.entities.match_group;

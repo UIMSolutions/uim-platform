@@ -1,4 +1,4 @@
-module application.usecases.manage_fragments;
+module uim.platform.xyz.application.usecases.manage_fragments;
 
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.destination_fragment;

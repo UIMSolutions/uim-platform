@@ -1,4 +1,4 @@
-module application.usecases.manage_cards;
+module uim.platform.xyz.application.usecases.manage_cards;
 
 import std.uuid;
 import std.datetime.systime : Clock;

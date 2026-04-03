@@ -1,4 +1,4 @@
-module application.usecases.manage_validation_rules;
+module uim.platform.xyz.application.usecases.manage_validation_rules;
 
 import std.uuid;
 import std.datetime.systime : Clock;

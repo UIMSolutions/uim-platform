@@ -1,4 +1,4 @@
-module application.usecases.manage_channels;
+module uim.platform.xyz.application.usecases.manage_channels;
 
 import std.uuid;
 import std.datetime.systime : Clock;

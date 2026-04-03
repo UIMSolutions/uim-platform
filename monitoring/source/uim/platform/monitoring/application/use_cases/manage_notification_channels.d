@@ -1,4 +1,4 @@
-module application.usecases.manage_notification_channels;
+module uim.platform.xyz.application.usecases.manage_notification_channels;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.notification_channel;

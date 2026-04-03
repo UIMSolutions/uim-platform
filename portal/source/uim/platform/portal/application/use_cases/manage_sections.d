@@ -1,4 +1,4 @@
-module application.usecases.manage_sections;
+module uim.platform.xyz.application.usecases.manage_sections;
 
 import uim.platform.xyz.domain.entities.section;
 import uim.platform.xyz.domain.entities.page;

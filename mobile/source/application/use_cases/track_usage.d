@@ -1,4 +1,4 @@
-module application.usecases.track_usage;
+module uim.platform.xyz.application.usecases.track_usage;
 
 import uim.platform.xyz.application.dto;
 import uim.platform.xyz.domain.entities.usage_event;

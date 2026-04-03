@@ -1,2 +1,2 @@
-module application;
+module uim.platform.xyz.application;
 

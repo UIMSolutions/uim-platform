@@ -1,4 +1,4 @@
-module uim.platform.xyz.infrastructure.config;
+module uim.platform.data_attribute_recommendation.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig

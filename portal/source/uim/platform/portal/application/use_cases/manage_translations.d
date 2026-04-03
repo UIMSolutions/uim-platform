@@ -1,4 +1,4 @@
-module application.usecases.manage_translations;
+module uim.platform.xyz.application.usecases.manage_translations;
 
 import uim.platform.xyz.domain.entities.translation;
 import uim.platform.xyz.domain.types;
