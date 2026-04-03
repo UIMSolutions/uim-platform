@@ -1,3 +1,5 @@
 module uim.platform.kyma.domain;
 
-kage.datetime
+public {
+  import uim.platform.kyma.domain.model;
+}

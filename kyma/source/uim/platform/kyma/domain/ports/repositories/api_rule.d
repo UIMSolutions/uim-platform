@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.api_rule;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — API rule persistence.
-interface ApiRuleRepository
-{
+interface ApiRuleRepository {
   ApiRule findById(ApiRuleId id);
   ApiRule findByName(NamespaceId nsId, string name);
   ApiRule[] findByNamespace(NamespaceId nsId);

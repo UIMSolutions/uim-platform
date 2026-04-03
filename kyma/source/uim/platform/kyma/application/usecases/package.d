@@ -1,3 +1,5 @@
 module uim.platform.kyma.application.usecases;
 
-kage.datetime
+public {
+  import uim.platform.kyma.application.usecases.kyma;
+}
