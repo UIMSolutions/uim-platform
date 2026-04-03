@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.management.domain.types;
 
 /// Unique identifier type aliases for type safety.
@@ -13,133 +18,148 @@ alias LabelId = string;
 alias TenantId = string;
 
 /// Status of a global account.
-enum GlobalAccountStatus {
-    active,
-    suspended,
-    terminated,
-    migrating,
+enum GlobalAccountStatus
+{
+  active,
+  suspended,
+  terminated,
+  migrating,
 }
 
 /// License type for a global account.
-enum LicenseType {
-    enterprise,
-    trial,
-    partner,
-    internal,
+enum LicenseType
+{
+  enterprise,
+  trial,
+  partner,
+  internal,
 }
 
 /// Status of a directory entity.
-enum DirectoryStatus {
-    active,
-    inactive,
-    deleting,
+enum DirectoryStatus
+{
+  active,
+  inactive,
+  deleting,
 }
 
 /// Features enabled on a directory.
-enum DirectoryFeature {
-    default_,
-    entitlements,
-    authorizations,
+enum DirectoryFeature
+{
+  default_,
+  entitlements,
+  authorizations,
 }
 
 /// Status of a subaccount.
-enum SubaccountStatus {
-    active,
-    suspended,
-    creating,
-    updating,
-    deleting,
-    moveInProgress,
-    moveFailed,
+enum SubaccountStatus
+{
+  active,
+  suspended,
+  creating,
+  updating,
+  deleting,
+  moveInProgress,
+  moveFailed,
 }
 
 /// Usage type of a subaccount.
-enum SubaccountUsage {
-    unset,
-    production,
-    development,
-    test,
-    staging,
-    demo,
+enum SubaccountUsage
+{
+  unset,
+  production,
+  development,
+  test,
+  staging,
+  demo,
 }
 
 /// Status of an entitlement assignment.
-enum EntitlementStatus {
-    active,
-    pending,
-    revoked,
-    expired,
+enum EntitlementStatus
+{
+  active,
+  pending,
+  revoked,
+  expired,
 }
 
 /// Category of a service plan.
-enum ServicePlanCategory {
-    service,
-    application,
-    environment,
-    elasticService,
+enum ServicePlanCategory
+{
+  service,
+  application,
+  environment,
+  elasticService,
 }
 
 /// Pricing model for a service plan.
-enum PricingModel {
-    free,
-    subscription,
-    consumption,
-    byol, // bring your own license
+enum PricingModel
+{
+  free,
+  subscription,
+  consumption,
+  byol, // bring your own license
 }
 
 /// Status of an environment instance.
-enum EnvironmentStatus {
-    creating,
-    active,
-    updating,
-    deleting,
-    error,
-    suspended,
+enum EnvironmentStatus
+{
+  creating,
+  active,
+  updating,
+  deleting,
+  error,
+  suspended,
 }
 
 /// Type of environment.
-enum EnvironmentType {
-    cloudFoundry,
-    kyma,
-    abap,
-    neo,
+enum EnvironmentType
+{
+  cloudFoundry,
+  kyma,
+  abap,
+  neo,
 }
 
 /// Status of a SaaS subscription.
-enum SubscriptionStatus {
-    subscribed,
-    subscribing,
-    unsubscribing,
-    unsubscribed,
-    error,
-    suspended,
+enum SubscriptionStatus
+{
+  subscribed,
+  subscribing,
+  unsubscribing,
+  unsubscribed,
+  error,
+  suspended,
 }
 
 /// Category of a platform event.
-enum PlatformEventCategory {
-    subaccountLifecycle,
-    entitlementChange,
-    environmentLifecycle,
-    subscriptionLifecycle,
-    directoryChange,
-    globalAccountChange,
-    quotaChange,
-    securityEvent,
+enum PlatformEventCategory
+{
+  subaccountLifecycle,
+  entitlementChange,
+  environmentLifecycle,
+  subscriptionLifecycle,
+  directoryChange,
+  globalAccountChange,
+  quotaChange,
+  securityEvent,
 }
 
 /// Severity of a platform event.
-enum PlatformEventSeverity {
-    info,
-    warning,
-    error,
-    critical,
+enum PlatformEventSeverity
+{
+  info,
+  warning,
+  error,
+  critical,
 }
 
 /// Type of labeled resource.
-enum LabeledResourceType {
-    globalAccount,
-    directory,
-    subaccount,
-    environmentInstance,
-    subscription,
+enum LabeledResourceType
+{
+  globalAccount,
+  directory,
+  subaccount,
+  environmentInstance,
+  subscription,
 }

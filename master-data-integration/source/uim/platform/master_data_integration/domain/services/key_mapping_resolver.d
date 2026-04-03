@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.master_data_integration.domain.services.key_mapping_resolver;
 
 import uim.platform.master_data_integration.domain.entities.key_mapping;
@@ -6,56 +11,57 @@ import uim.platform.master_data_integration.domain.types;
 /// Domain service: resolves cross-system key mappings.
 class KeyMappingResolver
 {
-    /// Find the local key for a specific client within a key mapping.
-    string resolveLocalKey(KeyMapping mapping, ClientId clientId)
+  /// Find the local key for a specific client within a key mapping.
+  string resolveLocalKey(KeyMapping mapping, ClientId clientId)
+  {
+    foreach (ref entry; mapping.entries)
     {
-        foreach (ref entry; mapping.entries)
-        {
-            if (entry.clientId == clientId)
-                return entry.localKey;
-        }
-        return "";
+      if (entry.clientId == clientId)
+        return entry.localKey;
     }
+    return "";
+  }
 
-    /// Find the primary key entry within a mapping.
-    KeyMappingEntry findPrimaryEntry(KeyMapping mapping)
+  /// Find the primary key entry within a mapping.
+  KeyMappingEntry findPrimaryEntry(KeyMapping mapping)
+  {
+    foreach (ref entry; mapping.entries)
     {
-        foreach (ref entry; mapping.entries)
-        {
-            if (entry.isPrimary)
-                return entry;
-        }
-        return KeyMappingEntry.init;
+      if (entry.isPrimary)
+        return entry;
     }
+    return KeyMappingEntry.init;
+  }
 
-    /// Check if a mapping contains a given client.
-    bool hasClientMapping(KeyMapping mapping, ClientId clientId)
+  /// Check if a mapping contains a given client.
+  bool hasClientMapping(KeyMapping mapping, ClientId clientId)
+  {
+    foreach (ref entry; mapping.entries)
     {
-        foreach (ref entry; mapping.entries)
-        {
-            if (entry.clientId == clientId)
-                return true;
-        }
+      if (entry.clientId == clientId)
+        return true;
+    }
+    return false;
+  }
+
+  /// Validate that a key mapping has at least one primary entry.
+  bool isValid(KeyMapping mapping)
+  {
+    if (mapping.entries.length == 0)
+      return false;
+
+    bool hasPrimary = false;
+    foreach (ref entry; mapping.entries)
+    {
+      if (entry.isPrimary)
+      {
+        if (hasPrimary)
+          return false; // Only one primary allowed
+        hasPrimary = true;
+      }
+      if (entry.localKey.length == 0)
         return false;
     }
-
-    /// Validate that a key mapping has at least one primary entry.
-    bool isValid(KeyMapping mapping)
-    {
-        if (mapping.entries.length == 0)
-            return false;
-
-        bool hasPrimary = false;
-        foreach (ref entry; mapping.entries)
-        {
-            if (entry.isPrimary)
-            {
-                if (hasPrimary) return false;   // Only one primary allowed
-                hasPrimary = true;
-            }
-            if (entry.localKey.length == 0)
-                return false;
-        }
-        return hasPrimary;
-    }
+    return hasPrimary;
+  }
 }

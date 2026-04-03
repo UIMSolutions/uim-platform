@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
 
 // import uim.platform.management.domain.types;
@@ -12,42 +17,49 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryServicePlanRepository : ServicePlanRepository {
-    private ServicePlan[ServicePlanId] store;
+class MemoryServicePlanRepository : ServicePlanRepository
+{
+  private ServicePlan[ServicePlanId] store;
 
-    ServicePlan findById(ServicePlanId id) {
-        if (auto p = id in store)
-            return *p;
-        return ServicePlan.init;
-    }
+  ServicePlan findById(ServicePlanId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return ServicePlan.init;
+  }
 
-    ServicePlan[] findByService(string serviceName) {
-        return store.byValue().filter!(e => e.serviceName == serviceName).array;
-    }
+  ServicePlan[] findByService(string serviceName)
+  {
+    return store.byValue().filter!(e => e.serviceName == serviceName).array;
+  }
 
-    ServicePlan[] findByCategory(ServicePlanCategory category) {
-        return store.byValue().filter!(e => e.category == category).array;
-    }
+  ServicePlan[] findByCategory(ServicePlanCategory category)
+  {
+    return store.byValue().filter!(e => e.category == category).array;
+  }
 
-    ServicePlan[] findByRegion(string region) {
-        return store.byValue()
-            .filter!(e => e.availableRegions.canFind(region))
-            .array;
-    }
+  ServicePlan[] findByRegion(string region)
+  {
+    return store.byValue().filter!(e => e.availableRegions.canFind(region)).array;
+  }
 
-    ServicePlan[] findAll() {
-        return store.byValue().array;
-    }
+  ServicePlan[] findAll()
+  {
+    return store.byValue().array;
+  }
 
-    void save(ServicePlan plan) {
-        store[plan.id] = plan;
-    }
+  void save(ServicePlan plan)
+  {
+    store[plan.id] = plan;
+  }
 
-    void update(ServicePlan plan) {
-        store[plan.id] = plan;
-    }
+  void update(ServicePlan plan)
+  {
+    store[plan.id] = plan;
+  }
 
-    void remove(ServicePlanId id) {
-        store.remove(id);
-    }
+  void remove(ServicePlanId id)
+  {
+    store.remove(id);
+  }
 }

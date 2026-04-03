@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage_subscriptions;
 
 import uim.platform.management.application.dto;
@@ -8,128 +13,135 @@ import uim.platform.management.domain.ports.platform_event_repository;
 import uim.platform.management.domain.types;
 
 /// Use case: manage SaaS application subscriptions.
-class ManageSubscriptionsUseCase {
-    private SubscriptionRepository repo;
-    private PlatformEventRepository eventRepo;
+class ManageSubscriptionsUseCase
+{
+  private SubscriptionRepository repo;
+  private PlatformEventRepository eventRepo;
 
-    this(SubscriptionRepository repo, PlatformEventRepository eventRepo) {
-        this.repo = repo;
-        this.eventRepo = eventRepo;
+  this(SubscriptionRepository repo, PlatformEventRepository eventRepo)
+  {
+    this.repo = repo;
+    this.eventRepo = eventRepo;
+  }
+
+  CommandResult subscribe(CreateSubscriptionRequest req)
+  {
+    if (req.subaccountId.length == 0)
+      return CommandResult(false, "", "Subaccount ID is required");
+    if (req.appName.length == 0)
+      return CommandResult(false, "", "Application name is required");
+
+    // Check for existing subscription to same app
+    auto existing = repo.findByApp(req.subaccountId, req.appName);
+    foreach (ref e; existing)
+    {
+      if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus.subscribing)
+        return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
     }
 
-    CommandResult subscribe(CreateSubscriptionRequest req) {
-        if (req.subaccountId.length == 0)
-            return CommandResult(false, "", "Subaccount ID is required");
-        if (req.appName.length == 0)
-            return CommandResult(false, "", "Application name is required");
+    // import std.uuid : randomUUID;
 
-        // Check for existing subscription to same app
-        auto existing = repo.findByApp(req.subaccountId, req.appName);
-        foreach (ref e; existing) {
-            if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus
-                .subscribing)
-                return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
-        }
+    auto id = randomUUID().toString();
 
-        // import std.uuid : randomUUID;
+    Subscription sub;
+    sub.id = id;
+    sub.subaccountId = req.subaccountId;
+    sub.globalAccountId = req.globalAccountId;
+    sub.appName = req.appName;
+    sub.planName = req.planName;
+    sub.status = SubscriptionStatus.subscribing;
+    sub.subscribedAt = clockSeconds();
+    sub.modifiedAt = sub.subscribedAt;
+    sub.subscribedBy = req.subscribedBy;
+    sub.parameters = req.parameters;
+    sub.labels = req.labels;
 
-        auto id = randomUUID().toString();
+    repo.save(sub);
 
-        Subscription sub;
-        sub.id = id;
-        sub.subaccountId = req.subaccountId;
-        sub.globalAccountId = req.globalAccountId;
-        sub.appName = req.appName;
-        sub.planName = req.planName;
-        sub.status = SubscriptionStatus.subscribing;
-        sub.subscribedAt = clockSeconds();
-        sub.modifiedAt = sub.subscribedAt;
-        sub.subscribedBy = req.subscribedBy;
-        sub.parameters = req.parameters;
-        sub.labels = req.labels;
+    // Complete subscription (simulated)
+    sub.status = SubscriptionStatus.subscribed;
+    sub.isSubscriptionDone = true;
+    sub.appUrl = "/apps/" ~ req.appName ~ "/" ~ id;
+    sub.tenantId = "tenant-" ~ id[0 .. 8];
+    repo.update(sub);
 
-        repo.save(sub);
+    emitEvent(req.globalAccountId, req.subaccountId, PlatformEventCategory.subscriptionLifecycle,
+        "subscription.created", "Subscribed to " ~ req.appName, req.subscribedBy);
 
-        // Complete subscription (simulated)
-        sub.status = SubscriptionStatus.subscribed;
-        sub.isSubscriptionDone = true;
-        sub.appUrl = "/apps/" ~ req.appName ~ "/" ~ id;
-        sub.tenantId = "tenant-" ~ id[0 .. 8];
-        repo.update(sub);
+    return CommandResult(true, id, "");
+  }
 
-        emitEvent(req.globalAccountId, req.subaccountId,
-            PlatformEventCategory.subscriptionLifecycle,
-            "subscription.created", "Subscribed to " ~ req.appName, req.subscribedBy);
+  CommandResult unsubscribe(SubscriptionId id)
+  {
+    auto sub = repo.findById(id);
+    if (sub.id.length == 0)
+      return CommandResult(false, "", "Subscription not found");
+    if (sub.status != SubscriptionStatus.subscribed)
+      return CommandResult(false, "", "Subscription must be in subscribed status");
 
-        return CommandResult(true, id, "");
-    }
+    sub.status = SubscriptionStatus.unsubscribing;
+    sub.modifiedAt = clockSeconds();
+    repo.update(sub);
 
-    CommandResult unsubscribe(SubscriptionId id) {
-        auto sub = repo.findById(id);
-        if (sub.id.length == 0)
-            return CommandResult(false, "", "Subscription not found");
-        if (sub.status != SubscriptionStatus.subscribed)
-            return CommandResult(false, "", "Subscription must be in subscribed status");
+    // Complete unsubscription
+    sub.status = SubscriptionStatus.unsubscribed;
+    repo.update(sub);
 
-        sub.status = SubscriptionStatus.unsubscribing;
-        sub.modifiedAt = clockSeconds();
-        repo.update(sub);
+    emitEvent(sub.globalAccountId, sub.subaccountId, PlatformEventCategory.subscriptionLifecycle,
+        "subscription.deleted", "Unsubscribed from " ~ sub.appName, "system");
 
-        // Complete unsubscription
-        sub.status = SubscriptionStatus.unsubscribed;
-        repo.update(sub);
+    return CommandResult(true, id, "");
+  }
 
-        emitEvent(sub.globalAccountId, sub.subaccountId,
-            PlatformEventCategory.subscriptionLifecycle,
-            "subscription.deleted", "Unsubscribed from " ~ sub.appName, "system");
+  CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req)
+  {
+    auto sub = repo.findById(id);
+    if (sub.id.length == 0)
+      return CommandResult(false, "", "Subscription not found");
 
-        return CommandResult(true, id, "");
-    }
+    if (req.planName.length > 0)
+      sub.planName = req.planName;
+    if (req.parameters.length > 0)
+      sub.parameters = req.parameters;
+    sub.modifiedAt = clockSeconds();
 
-    CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
-        auto sub = repo.findById(id);
-        if (sub.id.length == 0)
-            return CommandResult(false, "", "Subscription not found");
+    repo.update(sub);
+    return CommandResult(true, id, "");
+  }
 
-        if (req.planName.length > 0)
-            sub.planName = req.planName;
-        if (req.parameters.length > 0)
-            sub.parameters = req.parameters;
-        sub.modifiedAt = clockSeconds();
+  Subscription getById(SubscriptionId id)
+  {
+    return repo.findById(id);
+  }
 
-        repo.update(sub);
-        return CommandResult(true, id, "");
-    }
+  Subscription[] listBySubaccount(SubaccountId subId)
+  {
+    return repo.findBySubaccount(subId);
+  }
 
-    Subscription getById(SubscriptionId id) {
-        return repo.findById(id);
-    }
+  private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
+      string eventType, string desc, string initiatedBy)
+  {
+    // import std.uuid : randomUUID;
 
-    Subscription[] listBySubaccount(SubaccountId subId) {
-        return repo.findBySubaccount(subId);
-    }
+    PlatformEvent ev;
+    ev.id = randomUUID().toString();
+    ev.globalAccountId = gaId;
+    ev.subaccountId = subId;
+    ev.category = cat;
+    ev.severity = PlatformEventSeverity.info;
+    ev.eventType = eventType;
+    ev.description = desc;
+    ev.initiatedBy = initiatedBy;
+    ev.sourceService = "cloud-management";
+    ev.timestamp = clockSeconds();
+    eventRepo.save(ev);
+  }
 
-    private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-        string eventType, string desc, string initiatedBy) {
-        // import std.uuid : randomUUID;
+  private long clockSeconds()
+  {
+    import core.time : MonoTime;
 
-        PlatformEvent ev;
-        ev.id = randomUUID().toString();
-        ev.globalAccountId = gaId;
-        ev.subaccountId = subId;
-        ev.category = cat;
-        ev.severity = PlatformEventSeverity.info;
-        ev.eventType = eventType;
-        ev.description = desc;
-        ev.initiatedBy = initiatedBy;
-        ev.sourceService = "cloud-management";
-        ev.timestamp = clockSeconds();
-        eventRepo.save(ev);
-    }
-
-    private long clockSeconds() {
-        import core.time : MonoTime;
-
-        return MonoTime.currTime.ticks / 10_000_000;
-    }
+    return MonoTime.currTime.ticks / 10_000_000;
+  }
 }
