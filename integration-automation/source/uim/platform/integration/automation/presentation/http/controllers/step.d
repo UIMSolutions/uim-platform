@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.step;
+module uim.platform.integration.automation.presentation.http.step;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_steps;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workflow_step;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.integration.automation.application.usecases.manage_steps;
+import uim.platform.integration.automation.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.workflow_step;
+import uim.platform.integration.automation.presentation.http.json_utils;
 
 class StepController
 {

@@ -1,15 +1,15 @@
-module uim.platform.xyz.application.usecases.manage_steps;
+module uim.platform.integration.automation.application.usecases.manage_steps;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workflow_step;
-// import uim.platform.xyz.domain.ports.step_repository;
-import uim.platform.xyz.domain.ports;
-import uim.platform.xyz.domain.services.step_executor;
-import uim.platform.xyz.domain.services.workflow_engine;
-import uim.platform.xyz.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.workflow_step;
+// import uim.platform.integration.automation.domain.ports.step_repository;
+import uim.platform.integration.automation.domain.ports;
+import uim.platform.integration.automation.domain.services.step_executor;
+import uim.platform.integration.automation.domain.services.workflow_engine;
+import uim.platform.integration.automation.application.dto;
 
 class ManageStepsUseCase {
   private StepRepository repo;

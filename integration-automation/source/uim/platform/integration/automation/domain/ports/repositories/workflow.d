@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.repositories.workflow;
+module uim.platform.integration.automation.domain.ports.repositories.workflow;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workflow;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.workflow;
 
 /// Port for persisting and querying workflow instances.
 interface WorkflowRepository

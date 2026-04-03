@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.repositories.destination;
+module uim.platform.integration.automation.domain.ports.repositories.destination;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.destination;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.destination;
 
 /// Port for persisting and querying destinations.
 interface DestinationRepository

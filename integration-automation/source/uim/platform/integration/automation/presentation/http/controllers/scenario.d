@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.scenario;
+module uim.platform.integration.automation.presentation.http.scenario;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_scenarios;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.integration_scenario;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.integration.automation.application.usecases.manage_scenarios;
+import uim.platform.integration.automation.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.integration_scenario;
+import uim.platform.integration.automation.presentation.http.json_utils;
 
 class ScenarioController
 {

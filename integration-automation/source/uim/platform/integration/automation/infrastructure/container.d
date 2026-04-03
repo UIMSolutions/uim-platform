@@ -1,35 +1,35 @@
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.integration.automation.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.integration.automation.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.scenario_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.workflow_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.step_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.system_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.scenario_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.workflow_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.step_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.system_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.destination_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.execution_log_repo;
 
 // Domain Services
-import uim.platform.xyz.domain.services.workflow_engine;
-import uim.platform.xyz.domain.services.step_executor;
+import uim.platform.integration.automation.domain.services.workflow_engine;
+import uim.platform.integration.automation.domain.services.step_executor;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_scenarios;
-import uim.platform.xyz.application.usecases.manage_workflows;
-import uim.platform.xyz.application.usecases.manage_steps;
-import uim.platform.xyz.application.usecases.manage_systems;
-import uim.platform.xyz.application.usecases.manage_destinations;
-import uim.platform.xyz.application.usecases.monitor_executions;
+import uim.platform.integration.automation.application.usecases.manage_scenarios;
+import uim.platform.integration.automation.application.usecases.manage_workflows;
+import uim.platform.integration.automation.application.usecases.manage_steps;
+import uim.platform.integration.automation.application.usecases.manage_systems;
+import uim.platform.integration.automation.application.usecases.manage_destinations;
+import uim.platform.integration.automation.application.usecases.monitor_executions;
 
 // Controllers
-import uim.platform.xyz.presentation.http.scenario;
-import uim.platform.xyz.presentation.http.workflow;
-import uim.platform.xyz.presentation.http.step;
-import uim.platform.xyz.presentation.http.system;
-import uim.platform.xyz.presentation.http.destination;
-import uim.platform.xyz.presentation.http.monitoring;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.integration.automation.presentation.http.scenario;
+import uim.platform.integration.automation.presentation.http.workflow;
+import uim.platform.integration.automation.presentation.http.step;
+import uim.platform.integration.automation.presentation.http.system;
+import uim.platform.integration.automation.presentation.http.destination;
+import uim.platform.integration.automation.presentation.http.monitoring;
+import uim.platform.integration.automation.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container {

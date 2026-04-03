@@ -1,13 +1,13 @@
-module uim.platform.xyz.application.usecases.manage_systems;
+module uim.platform.integration.automation.application.usecases.manage_systems;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.system_connection;
-// import uim.platform.xyz.domain.ports.system_repository;
-import uim.platform.xyz.domain.ports;
-import uim.platform.xyz.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.system_connection;
+// import uim.platform.integration.automation.domain.ports.system_repository;
+import uim.platform.integration.automation.domain.ports;
+import uim.platform.integration.automation.application.dto;
 
 class ManageSystemsUseCase {
   private SystemRepository repo;

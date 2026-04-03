@@ -1,9 +1,9 @@
-module uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
+module uim.platform.integration.automation.infrastructure.persistence.memory.execution_log_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.execution_log;
-// import uim.platform.xyz.domain.ports.execution_log_repository;
-import uim.platform.xyz.domain.ports;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.execution_log;
+// import uim.platform.integration.automation.domain.ports.execution_log_repository;
+import uim.platform.integration.automation.domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

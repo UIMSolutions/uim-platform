@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.repositories.step;
+module uim.platform.integration.automation.domain.ports.repositories.step;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workflow_step;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.workflow_step;
 
 /// Port for persisting and querying workflow steps.
 interface StepRepository {

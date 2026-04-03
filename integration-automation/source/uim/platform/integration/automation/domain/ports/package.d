@@ -1,5 +1,5 @@
-module uim.platform.xyz.domain.ports;
+module uim.platform.integration.automation.domain.ports;
 
 public {
-    import uim.platform.xyz.domain.ports.repositories;
+    import uim.platform.integration.automation.domain.ports.repositories;
 }

@@ -3,19 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.destination;
+module uim.platform.integration.automation.presentation.http.controllers.destination;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_destinations;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.destination;
-import uim.platform.xyz.presentation.http.json_utils;
-import uim.platform.xyz.presentation.http.scenario_controller : parseSystemType;
+import uim.platform.integration.automation.application.usecases.manage_destinations;
+import uim.platform.integration.automation.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.destination;
+import uim.platform.integration.automation.presentation.http.json_utils;
+import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
 class DestinationController {
   private ManageDestinationsUseCase useCase;

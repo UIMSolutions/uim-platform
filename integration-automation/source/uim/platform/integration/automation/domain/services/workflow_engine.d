@@ -1,11 +1,11 @@
-module uim.platform.xyz.domain.services.workflow_engine;
+module uim.platform.integration.automation.domain.services.workflow_engine;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.workflow;
-import uim.platform.xyz.domain.entities.workflow_step;
-// import uim.platform.xyz.domain.ports.workflow_repository;
-// import uim.platform.xyz.domain.ports.step_repository;
-import uim.platform.xyz.domain.ports;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.workflow;
+import uim.platform.integration.automation.domain.entities.workflow_step;
+// import uim.platform.integration.automation.domain.ports.workflow_repository;
+// import uim.platform.integration.automation.domain.ports.step_repository;
+import uim.platform.integration.automation.domain.ports;
 
 /// Domain service that orchestrates workflow progression —
 /// advances to the next step, checks dependencies, and updates status.

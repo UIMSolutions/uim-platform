@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.core.core : runApplication;
 
-import uim.platform.xyz.infrastructure.config;
-import uim.platform.xyz.infrastructure.container;
+import uim.platform.integration.automation.infrastructure.config;
+import uim.platform.integration.automation.infrastructure.container;
 
 import std.stdio : writefln;
 @safe:

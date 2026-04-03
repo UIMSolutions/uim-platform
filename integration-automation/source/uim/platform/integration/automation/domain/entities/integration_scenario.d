@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.integration_scenario;
+module uim.platform.integration.automation.domain.entities.integration_scenario;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.integration.automation.domain.types;
 
 /// An integration scenario template — defines a reusable set of steps
 /// for integrating SAP cloud solutions with on-premise or other cloud systems.

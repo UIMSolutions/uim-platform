@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.workflow_step;
+module uim.platform.integration.automation.domain.entities.workflow_step;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.integration.automation.domain.types;
 
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).

@@ -1,14 +1,14 @@
-module uim.platform.xyz.application.usecases.manage_destinations;
+module uim.platform.integration.automation.application.usecases.manage_destinations;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.destination;
-// import uim.platform.xyz.domain.ports.destination_repository;
-// import uim.platform.xyz.domain.ports.system_repository;
-import uim.platform.xyz.domain.ports;
-import uim.platform.xyz.application.dto;
+import uim.platform.integration.automation.domain.types;
+import uim.platform.integration.automation.domain.entities.destination;
+// import uim.platform.integration.automation.domain.ports.destination_repository;
+// import uim.platform.integration.automation.domain.ports.system_repository;
+import uim.platform.integration.automation.domain.ports;
+import uim.platform.integration.automation.application.dto;
 
 class ManageDestinationsUseCase {
   private DestinationRepository repo;
