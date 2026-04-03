@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.web.handlers.planning;
 
 // import vibe.http.server;
-import vibe.data.json;
+// import vibe.data.json;
 import uim.platform.analytics.app.usecases.planning;
 import uim.platform.analytics.app.dto.planning;
 import uim.platform.analytics.infrastructure.web.json_utils;
@@ -64,7 +64,7 @@ class PlanningHandler {
 }
 
 private string extractIdFromPath(string uri, string resource) {
-    import std.string : split;
+    // import std.string : split;
     auto parts = uri.split("/");
     foreach (i, part; parts)
         if (part == resource && i + 1 < parts.length) {

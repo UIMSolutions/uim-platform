@@ -1,9 +1,9 @@
 module uim.platform.connectivity.presentation.http.controllers.channel;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
 import uim.platform.connectivity.application.usecases.manage_channels;
 import uim.platform.connectivity.application.dto;
@@ -166,7 +166,7 @@ class ChannelController {
     }
 
     private static string[] splitPath(string uri) {
-        import std.string : indexOf, split;
+        // import std.string : indexOf, split;
 
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;

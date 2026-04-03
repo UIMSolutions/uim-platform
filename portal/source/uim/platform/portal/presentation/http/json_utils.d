@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.presentation.http.json_utils;
 
-import vibe.data.json;
+// import vibe.data.json;
 // import vibe.http.server;
-import std.traits;
+// import std.traits;
 
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val)
@@ -27,7 +27,7 @@ Json toJsonValue(T)(T val)
         }
         else static if (is(FT == enum))
         {
-            import std.conv : to;
+            // import std.conv : to;
             j[name] = Json(val.tupleof[i].to!string);
         }
         else static if (is(FT == string[string]))
@@ -130,7 +130,7 @@ string[] jsonStrArray(Json j, string key)
 /// Extract the last segment of a request URI path as the resource ID.
 string extractIdFromPath(string uri)
 {
-    import std.string : lastIndexOf;
+    // import std.string : lastIndexOf;
 
     // Strip query string
     auto qIdx = uri.lastIndexOf('?');
@@ -152,7 +152,7 @@ T jsonEnum(T)(Json j, string key, T default_ = T.init)
     auto str = j.getString(key);
     if (str.length == 0)
         return default_;
-    import std.conv : to;
+    // import std.conv : to;
     try
         return str.to!T;
     catch (Exception)

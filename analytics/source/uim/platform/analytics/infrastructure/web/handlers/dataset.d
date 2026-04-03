@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.web.handlers.dataset;
 
 // import vibe.http.server;
-import vibe.data.json;
+// import vibe.data.json;
 import uim.platform.analytics.app.usecases.datasets;
 import uim.platform.analytics.app.dto.dataset;
 import uim.platform.analytics.infrastructure.web.json_utils;
@@ -49,7 +49,7 @@ class DatasetHandler {
 }
 
 private string extractIdFromPath(string uri, string resource) {
-    import std.string : split;
+    // import std.string : split;
     auto parts = uri.split("/");
     foreach (i, part; parts)
         if (part == resource && i + 1 < parts.length && parts[i + 1].length > 0)

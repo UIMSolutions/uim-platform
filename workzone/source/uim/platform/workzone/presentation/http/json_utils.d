@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.presentation.http.json_utils;
 
-import vibe.data.json;
+// import vibe.data.json;
 // import vibe.http.server;
 
 /// Extract a string field from a Json object.
@@ -70,7 +70,7 @@ string[] jsonStrArray(Json j, string key)
 string extractIdFromPath(string uri)
 {
     // Strip query string
-    import std.string : indexOf;
+    // import std.string : indexOf;
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 

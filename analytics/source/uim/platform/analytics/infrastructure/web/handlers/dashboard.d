@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.web.handlers.dashboard;
 
 // import vibe.http.server;
-import vibe.data.json;
+// import vibe.data.json;
 import uim.platform.analytics.app.usecases.dashboards;
 import uim.platform.analytics.app.dto.dashboard;
 import uim.platform.analytics.infrastructure.web.json_utils;
@@ -77,8 +77,8 @@ class DashboardHandler {
 }
 
 private string extractId(scope HTTPServerRequest req) {
-    import std.conv : to;
-    import std.string : split;
+    // import std.conv : to;
+    // import std.string : split;
     auto path = req.requestURI;
     auto parts = path.split("/");
     // /api/v1/dashboards/{id}...

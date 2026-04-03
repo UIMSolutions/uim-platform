@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.web.handlers.health;
 
 // import vibe.http.server;
-import vibe.data.json;
+// import vibe.data.json;
 @safe:
 
 class HealthHandler {

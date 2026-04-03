@@ -1,7 +1,7 @@
 module uim.platform.analytics.infrastructure.adapters.console_notification;
 
 import uim.platform.analytics.app.ports.notification_port;
-import vibe.core.log;
+// import vibe.core.log;
 
 /// Adapter: logs notifications to console (development stand-in for email/push).
 class ConsoleNotificationAdapter : NotificationPort {

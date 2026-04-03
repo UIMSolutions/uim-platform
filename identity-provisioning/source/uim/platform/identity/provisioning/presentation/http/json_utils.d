@@ -1,8 +1,8 @@
 module uim.platform.identity.provisioning.presentation.http.json_utils;
 
-import vibe.data.json;
+// import vibe.data.json;
 // import vibe.http.server;
-import std.conv : to;
+// import std.conv : to;
 
 import uim.platform.identity.provisioning.domain.types;
 
@@ -41,7 +41,7 @@ int jsonInt(Json j, string key, int default_ = 0)
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri)
 {
-  import std.string : indexOf;
+  // import std.string : indexOf;
   auto qpos = uri.indexOf('?');
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 

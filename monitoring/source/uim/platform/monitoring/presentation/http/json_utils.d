@@ -1,6 +1,6 @@
 module uim.platform.monitoring.presentation.http.json_utils;
 
-import vibe.data.json;
+// import vibe.data.json;
 // import vibe.http.server;
 
 /// Extract a string field from a Json object.
@@ -101,7 +101,7 @@ void writeError(scope HTTPServerResponse res, int statusCode, string message)
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri)
 {
-    import std.string : indexOf;
+    // import std.string : indexOf;
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 

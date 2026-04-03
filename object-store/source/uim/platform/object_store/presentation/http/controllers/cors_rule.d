@@ -1,9 +1,9 @@
 module uim.platform.object_store.presentation.http.controllers.cors_rule;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
 import uim.platform.object_store.application.usecases.manage_cors_rules;
 import uim.platform.object_store.application.dto;
@@ -138,7 +138,7 @@ class CorsRuleController : SAPController {
     }
 
     private static string extractBucketIdFromCorsPath(string uri) {
-        import std.string : indexOf;
+        // import std.string : indexOf;
 
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;

@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.presentation.http.card;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.router;
+// import vibe.data.json;
 import uim.platform.workzone.application.usecases.manage_cards;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
@@ -204,7 +204,7 @@ private CardManifest parseManifest(Json j)
 
 private Json serializeCard(ref Card c)
 {
-    import std.conv : to;
+    // import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

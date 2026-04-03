@@ -1,9 +1,9 @@
 module uim.platform.object_store.presentation.http.controllers.service_binding;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
 import uim.platform.object_store.application.usecases.manage_service_bindings;
 import uim.platform.object_store.application.dto;
@@ -109,7 +109,7 @@ class ServiceBindingController
         {
             // /api/v1/service-bindings/{id}/revoke
             auto path = req.requestURI;
-            import std.string : indexOf;
+            // import std.string : indexOf;
             auto bindingsPos = path.indexOf("service-bindings/");
             if (bindingsPos < 0)
             {
@@ -181,7 +181,7 @@ class ServiceBindingController
 
     private static string extractBucketIdFromBindingsPath(string uri)
     {
-        import std.string : indexOf;
+        // import std.string : indexOf;
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 

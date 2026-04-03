@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.presentation.http.json_utils;
 
-import vibe.data.json;
-import std.traits;
+// import vibe.data.json;
+// import std.traits;
 
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val)
@@ -26,7 +26,7 @@ Json toJsonValue(T)(T val)
         }
         else static if (is(FT == enum))
         {
-            import std.conv : to;
+            // import std.conv : to;
             j[name] = Json(val.tupleof[i].to!string);
         }
         else static if (is(FT == string[string]))
@@ -123,7 +123,7 @@ string[] jsonStrArray(Json j, string key)
 /// Extract ID from the last segment of a URL path.
 string extractIdFromPath(string path)
 {
-    import std.string : lastIndexOf;
+    // import std.string : lastIndexOf;
     auto idx = path.lastIndexOf('/');
     if (idx >= 0 && idx + 1 < path.length)
         return path[idx + 1 .. $];

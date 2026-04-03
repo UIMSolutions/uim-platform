@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.presentation.http.schema;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.router;
+// import vibe.data.json;
 import uim.platform.identity.directory.application.usecases.manage_schemas;
 import uim.platform.identity.directory.application.dto;
 import uim.platform.identity.directory.domain.entities.schema;
@@ -166,7 +166,7 @@ private void writeScimError(scope HTTPServerResponse res, int status, string det
     errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");
     errRes["detail"] = Json(detail);
 
-    import std.conv : to;
+    // import std.conv : to;
     errRes["status"] = Json(status.to!string);
     res.writeJsonBody(errRes, status);
 }

@@ -6,8 +6,8 @@
 module uim.platform.workzone.presentation.http.controllers.app_controller;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.router;
+// import vibe.data.json;
 import uim.platform.workzone.application.usecases.manage_apps;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
@@ -180,7 +180,7 @@ private AppConfig parseAppConfig(Json j)
 
 private Json serializeApp(ref AppRegistration a)
 {
-    import std.conv : to;
+    // import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);

@@ -1,11 +1,11 @@
 module app;
 
-import std.stdio;
-import std.conv;
+// import std.stdio;
+// import std.conv;
 import uim.platform.identity_authentication;
 import uim.platform.identity_authentication.infrastructure.config;
 import uim.platform.identity_authentication.infrastructure.container;
-import vibe.d;
+// import vibe.d;
 @safe:
 
 version (unittest) {

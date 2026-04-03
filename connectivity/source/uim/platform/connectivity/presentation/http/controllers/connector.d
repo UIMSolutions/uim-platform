@@ -1,9 +1,9 @@
 module uim.platform.connectivity.presentation.http.controllers.connector;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
 import uim.platform.connectivity.application.usecases.manage_connectors;
 import uim.platform.connectivity.application.dto;
@@ -149,7 +149,7 @@ class ConnectorController {
     }
 
     private static string[] splitPath(string uri) {
-        import std.string : indexOf, split;
+        // import std.string : indexOf, split;
 
         auto qpos = uri.indexOf('?');
         string path = qpos >= 0 ? uri[0 .. qpos] : uri;

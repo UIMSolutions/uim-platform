@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.presentation.http.workspace;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.router;
+// import vibe.data.json;
 import uim.platform.workzone.application.usecases.manage_workspaces;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
@@ -212,7 +212,7 @@ private WorkspaceSettings parseWorkspaceSettings(Json j)
 
 private Json serializeWorkspace(ref Workspace w)
 {
-    import std.conv : to;
+    // import std.conv : to;
 
     auto j = Json.emptyObject;
     j["id"] = Json(w.id);

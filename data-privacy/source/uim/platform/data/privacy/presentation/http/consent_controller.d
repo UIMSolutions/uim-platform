@@ -1,9 +1,9 @@
 module uim.platform.data.privacy.presentation.http.consent;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
-import std.conv : to;
+// import vibe.http.router;
+// import vibe.data.json;
+// import std.conv : to;
 
 import uim.platform.data.privacy.application.usecases.manage_consent_records;
 import uim.platform.data.privacy.application.dto;

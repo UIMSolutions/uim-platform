@@ -1,8 +1,8 @@
 module uim.platform.identity_authentication.presentation.http.channel;
 
 // import vibe.http.server;
-import vibe.http.router;
-import vibe.data.json;
+// import vibe.http.router;
+// import vibe.data.json;
 import uim.platform.workzone.application.usecases.manage_channels;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
@@ -171,7 +171,7 @@ private ChannelConfig parseChannelConfig(Json j)
 
 private Json serializeChannel(ref Channel c)
 {
-    import std.conv : to;
+    // import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["workspaceId"] = Json(c.workspaceId);

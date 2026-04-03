@@ -1,6 +1,6 @@
 module uim.platform.master_data_integration.presentation.http.json_utils;
 
-import vibe.data.json;
+// import vibe.data.json;
 // import vibe.http.server;
 
 /// Extract a string field from a Json object.
@@ -96,7 +96,7 @@ void writeError(scope HTTPServerResponse res, int code, string msg)
 /// Extract an ID from the end of a URI path.
 string extractIdFromPath(string uri)
 {
-    import std.string : lastIndexOf;
+    // import std.string : lastIndexOf;
     auto idx = uri.lastIndexOf('/');
     if (idx < 0 || idx + 1 >= uri.length)
         return "";
