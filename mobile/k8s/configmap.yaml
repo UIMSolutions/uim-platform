@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mobile-services-config
+  labels:
+    app: mobile-services
+    part-of: uim-platform
+data:
+  MOBILE_HOST: "0.0.0.0"
+  MOBILE_PORT: "8096"

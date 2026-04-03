@@ -1,0 +1,22 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.mobile.domain.ports.usage_report_repository;
+
+import uim.platform.mobile.domain.entities.usage_report;
+import uim.platform.mobile.domain.types;
+
+interface UsageReportRepository {
+  UsageReport findById(UsageReportId id);
+  UsageReport[] findByApp(MobileAppId appId);
+  UsageReport[] findByDevice(DeviceRegistrationId deviceId);
+  UsageReport[] findByUser(string userId);
+  UsageReport[] findByMetricType(MobileAppId appId, MetricType metricType);
+  UsageReport[] findByTenant(TenantId tenantId);
+  void save(UsageReport report);
+  void remove(UsageReportId id);
+  long countByApp(MobileAppId appId);
+  long countByTenant(TenantId tenantId);
+}

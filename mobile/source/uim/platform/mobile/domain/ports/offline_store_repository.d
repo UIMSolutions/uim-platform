@@ -1,0 +1,20 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.mobile.domain.ports.offline_store_repository;
+
+import uim.platform.mobile.domain.entities.offline_store;
+import uim.platform.mobile.domain.types;
+
+interface OfflineStoreRepository {
+  OfflineStore findById(OfflineStoreId id);
+  OfflineStore findByName(MobileAppId appId, string name);
+  OfflineStore[] findByApp(MobileAppId appId);
+  OfflineStore[] findByTenant(TenantId tenantId);
+  void save(OfflineStore store);
+  void update(OfflineStore store);
+  void remove(OfflineStoreId id);
+  long countByApp(MobileAppId appId);
+}

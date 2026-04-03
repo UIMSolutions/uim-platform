@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mobile-services
+  labels:
+    app: mobile-services
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: mobile-services
+  ports:
+    - name: http
+      port: 8096
+      targetPort: 8096
+      protocol: TCP
