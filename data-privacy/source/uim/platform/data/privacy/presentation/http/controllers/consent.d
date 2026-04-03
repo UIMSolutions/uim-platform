@@ -16,17 +16,14 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class ConsentController
-{
+class ConsentController {
   private ManageConsentRecordsUseCase uc;
 
-  this(ManageConsentRecordsUseCase uc)
-  {
+  this(ManageConsentRecordsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/consents", &handleGrant);
     router.get("/api/v1/consents", &handleList);
     router.get("/api/v1/consents/active", &handleListActive);
@@ -35,10 +32,8 @@ class ConsentController
     router.delete_("/api/v1/consents/*", &handleDelete);
   }
 
-  private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       CreateConsentRecordRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -51,23 +46,18 @@ class ConsentController
       r.expiresAt = jsonLong(j, "expiresAt");
 
       auto result = uc.grantConsent(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
@@ -86,17 +76,14 @@ class ConsentController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
@@ -112,69 +99,55 @@ class ConsentController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getConsent(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Consent record not found");
         return;
       }
       res.writeJsonBody(serialize(*entry), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       RevokeConsentRequest r;
       r.id = j.getString("id");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
 
       auto result = uc.revokeConsent(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteConsent(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const ConsentRecord e)
-  {
+  private static Json serialize(ref const ConsentRecord e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -198,10 +171,8 @@ class ConsentController
     return j;
   }
 
-  private static ProcessingPurpose parsePurpose(string s)
-  {
-    switch (s)
-    {
+  private static ProcessingPurpose parsePurpose(string s) {
+    switch (s) {
     case "serviceDelivery":
       return ProcessingPurpose.serviceDelivery;
     case "marketing":
