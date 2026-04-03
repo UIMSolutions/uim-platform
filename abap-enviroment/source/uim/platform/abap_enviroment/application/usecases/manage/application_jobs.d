@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.application.usecases.manage_application_jobs;
+module uim.platform.abap_enviroment.application.usecases.manage.application_jobs;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.application_job;
