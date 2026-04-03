@@ -1,6 +1,6 @@
-module domain.entities.dataset;
+module uim.platform.data_attribute_recommendation.domain.entities.dataset;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// A training dataset containing column definitions and data records
 /// used to train attribute recommendation models.

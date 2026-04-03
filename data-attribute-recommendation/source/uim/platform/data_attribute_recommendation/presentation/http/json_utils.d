@@ -4,7 +4,7 @@ import vibe.data.json;
 import vibe.http.server;
 import std.conv : to;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)

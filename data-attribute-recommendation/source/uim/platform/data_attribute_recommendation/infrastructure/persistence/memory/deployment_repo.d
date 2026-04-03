@@ -1,8 +1,8 @@
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
 
-import domain.types;
-import domain.entities.model_deployment;
-import domain.ports.deployment_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
+import uim.platform.data_attribute_recommendation.domain.ports.deployment_repository;
 
 class MemoryDeploymentRepository : DeploymentRepository
 {

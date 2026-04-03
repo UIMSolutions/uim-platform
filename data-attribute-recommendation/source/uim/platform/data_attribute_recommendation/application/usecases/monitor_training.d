@@ -1,13 +1,13 @@
 module application.usecases.monitor_training;
 
-import domain.types;
-import domain.entities.training_job;
-import domain.entities.model_deployment;
-import domain.entities.model_configuration;
-import domain.ports.training_job_repository;
-import domain.ports.deployment_repository;
-import domain.ports.model_config_repository;
-import domain.ports.inference_request_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
+import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
+import uim.platform.data_attribute_recommendation.domain.ports.training_job_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.deployment_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.model_config_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_request_repository;
 
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
 struct TrainingJobSummary

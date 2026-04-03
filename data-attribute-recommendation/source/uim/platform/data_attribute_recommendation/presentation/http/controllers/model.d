@@ -5,11 +5,11 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_models;
-import application.dto;
-import domain.entities.model_configuration;
-import domain.types;
-import presentation.http.json_utils;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_models;
+import uim.platform.data_attribute_recommendation.application.dto;
+import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.presentation.http.json_utils;
 
 class ModelController
 {

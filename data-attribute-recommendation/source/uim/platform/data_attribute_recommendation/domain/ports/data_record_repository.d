@@ -1,7 +1,7 @@
-module domain.ports.data_record_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.data_record_repository;
 
-import domain.types;
-import domain.entities.data_record;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.data_record;
 
 interface DataRecordRepository
 {

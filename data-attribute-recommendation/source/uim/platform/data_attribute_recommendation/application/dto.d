@@ -1,6 +1,6 @@
 module application.dto;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 // --- Dataset ---
 

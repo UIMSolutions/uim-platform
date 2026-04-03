@@ -1,6 +1,6 @@
-module domain.entities.data_record;
+module uim.platform.data_attribute_recommendation.domain.entities.data_record;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// An individual record within a dataset, holding attribute key-value pairs
 /// and optional ground-truth labels for supervised training.

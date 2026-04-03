@@ -5,11 +5,11 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_data_records;
-import application.dto;
-import domain.entities.data_record;
-import domain.types;
-import presentation.http.json_utils;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_data_records;
+import uim.platform.data_attribute_recommendation.application.dto;
+import uim.platform.data_attribute_recommendation.domain.entities.data_record;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.presentation.http.json_utils;
 
 class DataRecordController
 {

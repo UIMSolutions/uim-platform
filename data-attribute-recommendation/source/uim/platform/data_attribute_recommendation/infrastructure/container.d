@@ -12,25 +12,25 @@ import infrastructure.persistence.memory.inference_request_repo;
 import infrastructure.persistence.memory.inference_result_repo;
 
 // Domain services
-import domain.services.model_trainer;
-import domain.services.inference_engine;
+import uim.platform.data_attribute_recommendation.domain.services.model_trainer;
+import uim.platform.data_attribute_recommendation.domain.services.inference_engine;
 
 // Use cases
-import application.usecases.manage_datasets;
-import application.usecases.manage_data_records;
-import application.usecases.manage_models;
-import application.usecases.manage_deployments;
-import application.usecases.process_inference;
-import application.usecases.monitor_training;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_datasets;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_data_records;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_models;
+import uim.platform.data_attribute_recommendation.application.usecases.manage_deployments;
+import uim.platform.data_attribute_recommendation.application.usecases.process_inference;
+import uim.platform.data_attribute_recommendation.application.usecases.monitor_training;
 
 // Controllers
-import presentation.http.dataset;
-import presentation.http.data_record;
-import presentation.http.model;
-import presentation.http.deployment;
-import presentation.http.inference;
-import presentation.http.monitoring;
-import presentation.http.health;
+import uim.platform.data_attribute_recommendation.presentation.http.dataset;
+import uim.platform.data_attribute_recommendation.presentation.http.data_record;
+import uim.platform.data_attribute_recommendation.presentation.http.model;
+import uim.platform.data_attribute_recommendation.presentation.http.deployment;
+import uim.platform.data_attribute_recommendation.presentation.http.inference;
+import uim.platform.data_attribute_recommendation.presentation.http.monitoring;
+import uim.platform.data_attribute_recommendation.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

@@ -1,6 +1,6 @@
-module domain.entities.inference_request;
+module uim.platform.data_attribute_recommendation.domain.entities.inference_request;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// A request to predict/recommend attributes for input data
 /// using a deployed model.

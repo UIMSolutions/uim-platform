@@ -4,13 +4,13 @@ import std.uuid;
 import std.conv : to;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.model_deployment;
-import domain.entities.training_job;
-import domain.ports.deployment_repository;
-import domain.ports.training_job_repository;
-import domain.ports.model_config_repository;
-import application.dto;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.ports.deployment_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.training_job_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.model_config_repository;
+import uim.platform.data_attribute_recommendation.application.dto;
 
 class ManageDeploymentsUseCase {
   private DeploymentRepository repo;

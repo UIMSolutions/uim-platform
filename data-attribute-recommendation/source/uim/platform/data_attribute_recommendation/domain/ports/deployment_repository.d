@@ -1,7 +1,7 @@
-module domain.ports.deployment_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.deployment_repository;
 
-import domain.types;
-import domain.entities.model_deployment;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 
 interface DeploymentRepository
 {

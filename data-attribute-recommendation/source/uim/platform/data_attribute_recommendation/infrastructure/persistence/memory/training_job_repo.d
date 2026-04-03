@@ -1,8 +1,8 @@
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.training_job_repo;
 
-import domain.types;
-import domain.entities.training_job;
-import domain.ports.training_job_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.ports.training_job_repository;
 
 class MemoryTrainingJobRepository : TrainingJobRepository
 {

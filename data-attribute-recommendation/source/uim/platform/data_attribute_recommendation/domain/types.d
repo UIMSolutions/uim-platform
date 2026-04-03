@@ -1,4 +1,4 @@
-module domain.types;
+module uim.platform.data_attribute_recommendation.domain.types;
 
 // --- Type aliases ---
 alias DatasetId = string;

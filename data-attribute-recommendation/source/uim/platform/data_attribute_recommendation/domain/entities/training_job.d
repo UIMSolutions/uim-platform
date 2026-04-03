@@ -1,6 +1,6 @@
-module domain.entities.training_job;
+module uim.platform.data_attribute_recommendation.domain.entities.training_job;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// Represents a single training run of a model configuration, tracking
 /// progress, metrics, and completion status.

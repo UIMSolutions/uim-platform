@@ -1,6 +1,6 @@
-module domain.entities.inference_result;
+module uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// The predicted attributes and confidence scores returned
 /// by the inference engine for a given request.

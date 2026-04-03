@@ -1,7 +1,7 @@
-module domain.ports.training_job_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.training_job_repository;
 
-import domain.types;
-import domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
 
 interface TrainingJobRepository
 {

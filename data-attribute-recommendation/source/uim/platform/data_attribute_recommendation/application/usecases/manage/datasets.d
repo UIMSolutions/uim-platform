@@ -3,11 +3,11 @@ module application.usecases.manage_datasets;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.dataset;
-import domain.ports.dataset_repository;
-import domain.ports.data_record_repository;
-import application.dto;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.dataset;
+import uim.platform.data_attribute_recommendation.domain.ports.dataset_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.data_record_repository;
+import uim.platform.data_attribute_recommendation.application.dto;
 
 class ManageDatasetsUseCase
 {

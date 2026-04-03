@@ -1,7 +1,7 @@
-module domain.ports.model_config_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.model_config_repository;
 
-import domain.types;
-import domain.entities.model_configuration;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
 
 interface ModelConfigRepository
 {

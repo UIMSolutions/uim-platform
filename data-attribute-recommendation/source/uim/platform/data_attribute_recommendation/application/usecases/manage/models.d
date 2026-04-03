@@ -3,13 +3,13 @@ module application.usecases.manage_models;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.model_configuration;
-import domain.entities.training_job;
-import domain.ports.model_config_repository;
-import domain.ports.dataset_repository;
-import domain.services.model_trainer;
-import application.dto;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.ports.model_config_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.dataset_repository;
+import uim.platform.data_attribute_recommendation.domain.services.model_trainer;
+import uim.platform.data_attribute_recommendation.application.dto;
 
 class ManageModelsUseCase
 {

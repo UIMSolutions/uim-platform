@@ -1,6 +1,6 @@
-module domain.entities.model_deployment;
+module uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
 
-import domain.types;
+import uim.platform.data_attribute_recommendation.domain.types;
 
 /// A deployed instance of a trained model, exposing an inference endpoint
 /// for real-time attribute recommendations.

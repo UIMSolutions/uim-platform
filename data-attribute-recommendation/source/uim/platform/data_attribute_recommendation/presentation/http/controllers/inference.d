@@ -5,12 +5,12 @@ import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.process_inference;
-import application.dto;
-import domain.entities.inference_request;
-import domain.entities.inference_result;
-import domain.types;
-import presentation.http.json_utils;
+import uim.platform.data_attribute_recommendation.application.usecases.process_inference;
+import uim.platform.data_attribute_recommendation.application.dto;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.presentation.http.json_utils;
 
 class InferenceController
 {

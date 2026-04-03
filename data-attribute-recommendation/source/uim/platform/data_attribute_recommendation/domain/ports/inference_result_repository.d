@@ -1,7 +1,7 @@
-module domain.ports.inference_result_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.inference_result_repository;
 
-import domain.types;
-import domain.entities.inference_result;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
 
 interface InferenceResultRepository
 {

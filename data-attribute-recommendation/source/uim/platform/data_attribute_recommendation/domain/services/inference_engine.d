@@ -1,15 +1,15 @@
-module domain.services.inference_engine;
+module uim.platform.data_attribute_recommendation.domain.services.inference_engine;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.model_deployment;
-import domain.entities.inference_request;
-import domain.entities.inference_result;
-import domain.ports.deployment_repository;
-import domain.ports.inference_request_repository;
-import domain.ports.inference_result_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.model_deployment;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
+import uim.platform.data_attribute_recommendation.domain.ports.deployment_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_request_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_result_repository;
 
 /// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.

@@ -3,13 +3,13 @@ module application.usecases.process_inference;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.inference_request;
-import domain.entities.inference_result;
-import domain.ports.inference_request_repository;
-import domain.ports.inference_result_repository;
-import domain.services.inference_engine;
-import application.dto;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_request;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_request_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_result_repository;
+import uim.platform.data_attribute_recommendation.domain.services.inference_engine;
+import uim.platform.data_attribute_recommendation.application.dto;
 
 class ProcessInferenceUseCase
 {

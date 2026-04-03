@@ -1,8 +1,8 @@
 module uim.platform.data_attribute_recommendation.infrastructure.persistence.memory.inference_result_repo;
 
-import domain.types;
-import domain.entities.inference_result;
-import domain.ports.inference_result_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.inference_result;
+import uim.platform.data_attribute_recommendation.domain.ports.inference_result_repository;
 
 class MemoryInferenceResultRepository : InferenceResultRepository
 {

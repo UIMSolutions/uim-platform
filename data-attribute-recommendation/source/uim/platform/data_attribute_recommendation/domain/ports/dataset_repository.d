@@ -1,7 +1,7 @@
-module domain.ports.dataset_repository;
+module uim.platform.data_attribute_recommendation.domain.ports.dataset_repository;
 
-import domain.types;
-import domain.entities.dataset;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.dataset;
 
 interface DatasetRepository
 {

@@ -1,16 +1,16 @@
-module domain.services.model_trainer;
+module uim.platform.data_attribute_recommendation.domain.services.model_trainer;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.dataset;
-import domain.entities.model_configuration;
-import domain.entities.training_job;
-import domain.ports.dataset_repository;
-import domain.ports.model_config_repository;
-import domain.ports.training_job_repository;
-import domain.ports.data_record_repository;
+import uim.platform.data_attribute_recommendation.domain.types;
+import uim.platform.data_attribute_recommendation.domain.entities.dataset;
+import uim.platform.data_attribute_recommendation.domain.entities.model_configuration;
+import uim.platform.data_attribute_recommendation.domain.entities.training_job;
+import uim.platform.data_attribute_recommendation.domain.ports.dataset_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.model_config_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.training_job_repository;
+import uim.platform.data_attribute_recommendation.domain.ports.data_record_repository;
 
 /// Domain service that orchestrates the training lifecycle:
 /// validates dataset readiness, creates training jobs, and
