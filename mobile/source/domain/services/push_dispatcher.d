@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.mobile.domain.services.push_dispatcher;
 
 import uim.platform.mobile.domain.entities.push_notification;
@@ -8,60 +13,59 @@ import uim.platform.mobile.domain.types;
 /// Domain service: validates and prepares push notifications for dispatch.
 class PushDispatcher
 {
-    /// Validate a push notification has valid targets and content.
-    DispatchValidation validateNotification(PushNotification notification)
+  /// Validate a push notification has valid targets and content.
+  DispatchValidation validateNotification(PushNotification notification)
+  {
+    DispatchValidation v;
+    v.valid = true;
+
+    if (notification.title.length == 0 && !notification.silent)
     {
-        DispatchValidation v;
-        v.valid = true;
-
-        if (notification.title.length == 0 && !notification.silent)
-        {
-            v.valid = false;
-            v.reason = "Non-silent notification must have a title";
-            return v;
-        }
-
-        bool hasTargets = notification.targetDeviceIds.length > 0
-            || notification.targetUserIds.length > 0
-            || notification.targetSegment.length > 0;
-        if (!hasTargets)
-        {
-            v.valid = false;
-            v.reason = "Notification must have at least one target (devices, users, or segment)";
-            return v;
-        }
-
-        return v;
+      v.valid = false;
+      v.reason = "Non-silent notification must have a title";
+      return v;
     }
 
-    /// Resolve template placeholders in notification text.
-    string resolveTemplate(string template_, string[string] variables)
+    bool hasTargets = notification.targetDeviceIds.length > 0
+      || notification.targetUserIds.length > 0 || notification.targetSegment.length > 0;
+    if (!hasTargets)
     {
-        string result = template_;
-        foreach (key, value; variables)
-        {
-            // import std.string : replace;
-            result = result.replace("{{" ~ key ~ "}}", value);
-        }
-        return result;
+      v.valid = false;
+      v.reason = "Notification must have at least one target (devices, users, or segment)";
+      return v;
     }
 
-    /// Filter devices matching the notification target platforms.
-    DeviceRegistration[] filterTargetDevices(
-        DeviceRegistration[] devices, MobilePlatform[] targetPlatforms)
-    {
-        if (targetPlatforms.length == 0)
-            return devices;
+    return v;
+  }
 
-        // import std.algorithm : filter, canFind;
-        // import std.array : array;
-        return devices.filter!(d => targetPlatforms.canFind(d.platform)).array;
+  /// Resolve template placeholders in notification text.
+  string resolveTemplate(string template_, string[string] variables)
+  {
+    string result = template_;
+    foreach (key, value; variables)
+    {
+      // import std.string : replace;
+      result = result.replace("{{" ~ key ~ "}}", value);
     }
+    return result;
+  }
+
+  /// Filter devices matching the notification target platforms.
+  DeviceRegistration[] filterTargetDevices(DeviceRegistration[] devices,
+      MobilePlatform[] targetPlatforms)
+  {
+    if (targetPlatforms.length == 0)
+      return devices;
+
+    // import std.algorithm : filter, canFind;
+    // import std.array : array;
+    return devices.filter!(d => targetPlatforms.canFind(d.platform)).array;
+  }
 }
 
 /// Result of dispatch validation.
 struct DispatchValidation
 {
-    bool valid;
-    string reason;
+  bool valid;
+  string reason;
 }

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.storage_object;
 
 import uim.platform.object_store.domain.types;
@@ -9,39 +14,47 @@ import uim.platform.object_store.domain.ports.repositories.storage_object;
 
 class MemoryStorageObjectRepository : StorageObjectRepository
 {
-    private StorageObject[ObjectId] store;
+  private StorageObject[ObjectId] store;
 
-    StorageObject findById(ObjectId id)
-    {
-        if (auto p = id in store)
-            return *p;
-        return null;
-    }
+  StorageObject findById(ObjectId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return null;
+  }
 
-    StorageObject findByKey(BucketId bucketId, string key)
-    {
-        foreach (ref e; store.byValue())
-            if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
-                return e;
-        return null;
-    }
+  StorageObject findByKey(BucketId bucketId, string key)
+  {
+    foreach (ref e; store.byValue())
+      if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
+        return e;
+    return null;
+  }
 
-    StorageObject[] findByBucket(BucketId bucketId)
-    {
-        return store.byValue()
-            .filter!(e => e.bucketId == bucketId && e.status == ObjectStatus.active)
-            .array;
-    }
+  StorageObject[] findByBucket(BucketId bucketId)
+  {
+    return store.byValue().filter!(e => e.bucketId == bucketId
+        && e.status == ObjectStatus.active).array;
+  }
 
-    StorageObject[] findByPrefix(BucketId bucketId, string prefix)
-    {
-        return store.byValue()
-            .filter!(e => e.bucketId == bucketId && e.status == ObjectStatus.active
-                && e.key.startsWith(prefix))
-            .array;
-    }
+  StorageObject[] findByPrefix(BucketId bucketId, string prefix)
+  {
+    return store.byValue().filter!(e => e.bucketId == bucketId
+        && e.status == ObjectStatus.active && e.key.startsWith(prefix)).array;
+  }
 
-    void save(StorageObject entity) { store[entity.id] = entity; }
-    void update(StorageObject entity) { store[entity.id] = entity; }
-    void remove(ObjectId id) { store.remove(id); }
+  void save(StorageObject entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(StorageObject entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(ObjectId id)
+  {
+    store.remove(id);
+  }
 }

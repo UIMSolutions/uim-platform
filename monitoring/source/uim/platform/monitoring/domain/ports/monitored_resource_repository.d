@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.monitoring.domain.ports.monitored_resource_repository;
 
 import uim.platform.monitoring.domain.entities.monitored_resource;
@@ -6,11 +11,11 @@ import uim.platform.monitoring.domain.types;
 /// Port: outgoing - monitored resource persistence.
 interface MonitoredResourceRepository
 {
-    MonitoredResource findById(MonitoredResourceId id);
-    MonitoredResource[] findByTenant(TenantId tenantId);
-    MonitoredResource[] findByType(TenantId tenantId, ResourceType type);
-    MonitoredResource findByName(TenantId tenantId, string name);
-    void save(MonitoredResource resource);
-    void update(MonitoredResource resource);
-    void remove(MonitoredResourceId id);
+  MonitoredResource findById(MonitoredResourceId id);
+  MonitoredResource[] findByTenant(TenantId tenantId);
+  MonitoredResource[] findByType(TenantId tenantId, ResourceType type);
+  MonitoredResource findByName(TenantId tenantId, string name);
+  void save(MonitoredResource resource);
+  void update(MonitoredResource resource);
+  void remove(MonitoredResourceId id);
 }

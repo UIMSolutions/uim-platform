@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers.object;
 
 // import vibe.http.server;
@@ -16,14 +21,17 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ObjectController : SAPController {
+class ObjectController : SAPController
+{
   private ManageObjectsUseCase uc;
 
-  this(ManageObjectsUseCase uc) {
+  this(ManageObjectsUseCase uc)
+  {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     super.registerRoutes(router);
 
     router.post("/api/v1/objects", &handleCreate);
@@ -35,8 +43,10 @@ class ObjectController : SAPController {
     router.get("/api/v1/objects/*/versions", &handleListVersions);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateObjectRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -49,20 +59,27 @@ class ObjectController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createObject(r);
-      if (result.success) {
+      if (result.success)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      }
+      else
+      {
         writeError(res, 400, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
       auto path = req.requestURI;
       auto bucketId = extractBucketIdFromPath(path);
@@ -80,33 +97,42 @@ class ObjectController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)objects.length);
+      resp["totalCount"] = Json(cast(long) objects.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       // Check if this is a versions request
       if (id == "versions" || id == "copy")
         return;
 
       auto obj = uc.getObject(id);
-      if (obj is null || obj.id.length == 0) {
+      if (obj is null || obj.id.length == 0)
+      {
         writeError(res, 404, "Object not found");
         return;
       }
       res.writeJsonBody(serializeObject(obj), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateObjectMetadataRequest();
@@ -115,36 +141,50 @@ class ObjectController : SAPController {
       r.storageClass = j.getString("storageClass");
 
       auto result = uc.updateObjectMetadata(id, r);
-      if (result.success) {
+      if (result.success)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         writeError(res, result.error == "Object not found" ? 404 : 400, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteObject(id);
-      if (result.success) {
+      if (result.success)
+      {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         writeError(res, 404, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CopyObjectRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -155,20 +195,27 @@ class ObjectController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.copyObject(r);
-      if (result.success) {
+      if (result.success)
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      }
+      else
+      {
         writeError(res, 400, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       // /api/v1/objects/{objectId}/versions
       auto path = req.requestURI;
       auto objectId = extractObjectIdFromVersionsPath(path);
@@ -181,14 +228,17 @@ class ObjectController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)versions.length);
+      resp["totalCount"] = Json(cast(long) versions.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeObject(StorageObject o) {
+  private static Json serializeObject(StorageObject o)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);
@@ -207,7 +257,8 @@ class ObjectController : SAPController {
     return j;
   }
 
-  private static Json serializeVersion(ObjectVersion v) {
+  private static Json serializeVersion(ObjectVersion v)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(v.id);
     j["objectId"] = Json(v.objectId);
@@ -223,7 +274,8 @@ class ObjectController : SAPController {
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects
-  private static string extractBucketIdFromPath(string uri) {
+  private static string extractBucketIdFromPath(string uri)
+  {
     // import std.string : indexOf;
 
     // Remove query string
@@ -243,7 +295,8 @@ class ObjectController : SAPController {
   }
 
   /// Extract object ID from /api/v1/objects/{id}/versions
-  private static string extractObjectIdFromVersionsPath(string uri) {
+  private static string extractObjectIdFromVersionsPath(string uri)
+  {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');

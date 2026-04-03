@@ -41,73 +41,74 @@ import uim.platform.monitoring.presentation.http.health;
 /// Dependency injection container - wires all layers together.
 struct Container
 {
-    // Repositories (driven adapters)
-    MemoryMonitoredResourceRepository resourceRepo;
-    MemoryMetricDefinitionRepository metricDefRepo;
-    MemoryMetricRepository metricRepo;
-    MemoryHealthCheckRepository checkRepo;
-    MemoryHealthCheckResultRepository checkResultRepo;
-    MemoryAlertRuleRepository ruleRepo;
-    MemoryAlertRepository alertRepo;
-    MemoryNotificationChannelRepository channelRepo;
+  // Repositories (driven adapters)
+  MemoryMonitoredResourceRepository resourceRepo;
+  MemoryMetricDefinitionRepository metricDefRepo;
+  MemoryMetricRepository metricRepo;
+  MemoryHealthCheckRepository checkRepo;
+  MemoryHealthCheckResultRepository checkResultRepo;
+  MemoryAlertRuleRepository ruleRepo;
+  MemoryAlertRepository alertRepo;
+  MemoryNotificationChannelRepository channelRepo;
 
-    // Use cases (application layer)
-    ManageMonitoredResourcesUseCase manageResources;
-    ManageMetricsUseCase manageMetrics;
-    ManageHealthChecksUseCase manageChecks;
-    ManageAlertRulesUseCase manageRules;
-    ManageAlertsUseCase manageAlerts;
-    ManageNotificationChannelsUseCase manageChannels;
-    EvaluateMetricsUseCase evaluateMetrics;
-    GetDashboardUseCase getDashboard;
+  // Use cases (application layer)
+  ManageMonitoredResourcesUseCase manageResources;
+  ManageMetricsUseCase manageMetrics;
+  ManageHealthChecksUseCase manageChecks;
+  ManageAlertRulesUseCase manageRules;
+  ManageAlertsUseCase manageAlerts;
+  ManageNotificationChannelsUseCase manageChannels;
+  EvaluateMetricsUseCase evaluateMetrics;
+  GetDashboardUseCase getDashboard;
 
-    // Controllers (driving adapters)
-    ResourceController resourceController;
-    MetricController metricController;
-    MetricDefinitionController metricDefinitionController;
-    CheckController checkController;
-    AlertRuleController alertRuleController;
-    AlertController alertController;
-    ChannelController channelController;
-    DashboardController dashboardController;
-    HealthController healthController;
+  // Controllers (driving adapters)
+  ResourceController resourceController;
+  MetricController metricController;
+  MetricDefinitionController metricDefinitionController;
+  CheckController checkController;
+  AlertRuleController alertRuleController;
+  AlertController alertController;
+  ChannelController channelController;
+  DashboardController dashboardController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
 Container buildContainer(AppConfig config)
 {
-    Container c;
+  Container c;
 
-    // Infrastructure adapters
-    c.resourceRepo = new MemoryMonitoredResourceRepository();
-    c.metricDefRepo = new MemoryMetricDefinitionRepository();
-    c.metricRepo = new MemoryMetricRepository();
-    c.checkRepo = new MemoryHealthCheckRepository();
-    c.checkResultRepo = new MemoryHealthCheckResultRepository();
-    c.ruleRepo = new MemoryAlertRuleRepository();
-    c.alertRepo = new MemoryAlertRepository();
-    c.channelRepo = new MemoryNotificationChannelRepository();
+  // Infrastructure adapters
+  c.resourceRepo = new MemoryMonitoredResourceRepository();
+  c.metricDefRepo = new MemoryMetricDefinitionRepository();
+  c.metricRepo = new MemoryMetricRepository();
+  c.checkRepo = new MemoryHealthCheckRepository();
+  c.checkResultRepo = new MemoryHealthCheckResultRepository();
+  c.ruleRepo = new MemoryAlertRuleRepository();
+  c.alertRepo = new MemoryAlertRepository();
+  c.channelRepo = new MemoryNotificationChannelRepository();
 
-    // Application use cases
-    c.manageResources = new ManageMonitoredResourcesUseCase(c.resourceRepo);
-    c.manageMetrics = new ManageMetricsUseCase(c.metricRepo, c.metricDefRepo);
-    c.manageChecks = new ManageHealthChecksUseCase(c.checkRepo, c.checkResultRepo);
-    c.manageRules = new ManageAlertRulesUseCase(c.ruleRepo);
-    c.manageAlerts = new ManageAlertsUseCase(c.alertRepo);
-    c.manageChannels = new ManageNotificationChannelsUseCase(c.channelRepo);
-    c.evaluateMetrics = new EvaluateMetricsUseCase(c.ruleRepo, c.metricRepo, c.manageAlerts);
-    c.getDashboard = new GetDashboardUseCase(c.resourceRepo, c.alertRepo, c.checkRepo, c.checkResultRepo, c.metricDefRepo, c.channelRepo);
+  // Application use cases
+  c.manageResources = new ManageMonitoredResourcesUseCase(c.resourceRepo);
+  c.manageMetrics = new ManageMetricsUseCase(c.metricRepo, c.metricDefRepo);
+  c.manageChecks = new ManageHealthChecksUseCase(c.checkRepo, c.checkResultRepo);
+  c.manageRules = new ManageAlertRulesUseCase(c.ruleRepo);
+  c.manageAlerts = new ManageAlertsUseCase(c.alertRepo);
+  c.manageChannels = new ManageNotificationChannelsUseCase(c.channelRepo);
+  c.evaluateMetrics = new EvaluateMetricsUseCase(c.ruleRepo, c.metricRepo, c.manageAlerts);
+  c.getDashboard = new GetDashboardUseCase(c.resourceRepo, c.alertRepo,
+      c.checkRepo, c.checkResultRepo, c.metricDefRepo, c.channelRepo);
 
-    // Presentation controllers
-    c.resourceController = new ResourceController(c.manageResources);
-    c.metricController = new MetricController(c.manageMetrics);
-    c.metricDefinitionController = new MetricDefinitionController(c.manageMetrics);
-    c.checkController = new CheckController(c.manageChecks);
-    c.alertRuleController = new AlertRuleController(c.manageRules);
-    c.alertController = new AlertController(c.manageAlerts);
-    c.channelController = new ChannelController(c.manageChannels);
-    c.dashboardController = new DashboardController(c.getDashboard);
-    c.healthController = new HealthController("monitoring");
+  // Presentation controllers
+  c.resourceController = new ResourceController(c.manageResources);
+  c.metricController = new MetricController(c.manageMetrics);
+  c.metricDefinitionController = new MetricDefinitionController(c.manageMetrics);
+  c.checkController = new CheckController(c.manageChecks);
+  c.alertRuleController = new AlertRuleController(c.manageRules);
+  c.alertController = new AlertController(c.manageAlerts);
+  c.channelController = new ChannelController(c.manageChannels);
+  c.dashboardController = new DashboardController(c.getDashboard);
+  c.healthController = new HealthController("monitoring");
 
-    return c;
+  return c;
 }

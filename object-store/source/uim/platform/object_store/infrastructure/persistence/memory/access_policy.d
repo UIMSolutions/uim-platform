@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.access_policy;
 
 import uim.platform.object_store.domain.types;
@@ -9,26 +14,37 @@ import uim.platform.object_store.domain.ports.repositories.access_policy;
 
 class MemoryAccessPolicyRepository : AccessPolicyRepository
 {
-    private AccessPolicy[AccessPolicyId] store;
+  private AccessPolicy[AccessPolicyId] store;
 
-    AccessPolicy findById(AccessPolicyId id)
-    {
-        if (auto p = id in store)
-            return *p;
-        return null;
-    }
+  AccessPolicy findById(AccessPolicyId id)
+  {
+    if (auto p = id in store)
+      return *p;
+    return null;
+  }
 
-    AccessPolicy[] findByBucket(BucketId bucketId)
-    {
-        return store.byValue().filter!(e => e.bucketId == bucketId).array;
-    }
+  AccessPolicy[] findByBucket(BucketId bucketId)
+  {
+    return store.byValue().filter!(e => e.bucketId == bucketId).array;
+  }
 
-    AccessPolicy[] findByTenant(TenantId tenantId)
-    {
-        return store.byValue().filter!(e => e.tenantId == tenantId).array;
-    }
+  AccessPolicy[] findByTenant(TenantId tenantId)
+  {
+    return store.byValue().filter!(e => e.tenantId == tenantId).array;
+  }
 
-    void save(AccessPolicy entity) { store[entity.id] = entity; }
-    void update(AccessPolicy entity) { store[entity.id] = entity; }
-    void remove(AccessPolicyId id) { store.remove(id); }
+  void save(AccessPolicy entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void update(AccessPolicy entity)
+  {
+    store[entity.id] = entity;
+  }
+
+  void remove(AccessPolicyId id)
+  {
+    store.remove(id);
+  }
 }
