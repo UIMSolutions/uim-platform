@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.integration.automation.application.usecases.manage_destinations;
+module uim.platform.integration.automation.application.usecases.manage.manage_destinations;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
@@ -16,19 +16,16 @@ import uim.platform.integration.automation.domain.entities.destination;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 
-class ManageDestinationsUseCase
-{
+class ManageDestinationsUseCase {
   private DestinationRepository repo;
   private SystemRepository systemRepo;
 
-  this(DestinationRepository repo, SystemRepository systemRepo)
-  {
+  this(DestinationRepository repo, SystemRepository systemRepo) {
     this.repo = repo;
     this.systemRepo = systemRepo;
   }
 
-  CommandResult createDestination(CreateDestinationRequest req)
-  {
+  CommandResult createDestination(CreateDestinationRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -42,8 +39,7 @@ class ManageDestinationsUseCase
       return CommandResult("", "Destination with this name already exists");
 
     // Validate linked system if provided
-    if (req.systemId.length > 0)
-    {
+    if (req.systemId.length > 0) {
       auto sys = systemRepo.findById(req.systemId, req.tenantId);
       if (sys is null)
         return CommandResult("", "Linked system not found");
@@ -76,28 +72,23 @@ class ManageDestinationsUseCase
     return CommandResult(dest.id, "");
   }
 
-  Destination* getDestination(DestinationId id, TenantId tenantId)
-  {
+  Destination* getDestination(DestinationId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Destination[] listDestinations(TenantId tenantId)
-  {
+  Destination[] listDestinations(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Destination[] listBySystem(TenantId tenantId, SystemId systemId)
-  {
+  Destination[] listBySystem(TenantId tenantId, SystemId systemId) {
     return repo.findBySystem(tenantId, systemId);
   }
 
-  Destination[] listEnabled(TenantId tenantId)
-  {
+  Destination[] listEnabled(TenantId tenantId) {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult updateDestination(UpdateDestinationRequest req)
-  {
+  CommandResult updateDestination(UpdateDestinationRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Destination ID is required");
     if (req.tenantId.length == 0)
@@ -138,8 +129,7 @@ class ManageDestinationsUseCase
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteDestination(DestinationId id, TenantId tenantId)
-  {
+  CommandResult deleteDestination(DestinationId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Destination not found");

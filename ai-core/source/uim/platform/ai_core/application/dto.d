@@ -1,0 +1,203 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.ai_core.application.dto;
+
+import uim.platform.ai_core.domain.types;
+
+// --- Generic result ---
+
+struct CommandResult {
+  bool success;
+  string id;
+  string error;
+}
+
+// --- Scenario ---
+
+struct CreateScenarioRequest {
+  string tenantId;
+  string resourceGroupId;
+  string id;
+  string name;
+  string description;
+  string[] labels;
+}
+
+// --- Executable ---
+
+struct CreateExecutableRequest {
+  string tenantId;
+  string resourceGroupId;
+  string scenarioId;
+  string id;
+  string name;
+  string description;
+  string type;
+  string versionId;
+  string deployable;
+}
+
+// --- Configuration ---
+
+struct CreateConfigurationRequest {
+  string tenantId;
+  string resourceGroupId;
+  string scenarioId;
+  string executableId;
+  string name;
+  string[][] parameterValues;
+  string[][] inputArtifacts;
+}
+
+// --- Execution ---
+
+struct CreateExecutionRequest {
+  string tenantId;
+  string resourceGroupId;
+  string configurationId;
+}
+
+struct PatchExecutionRequest {
+  string tenantId;
+  string resourceGroupId;
+  string executionId;
+  string targetStatus;
+}
+
+struct BulkPatchExecutionRequest {
+  string tenantId;
+  string resourceGroupId;
+  string[] executionIds;
+  string targetStatus;
+}
+
+// --- Deployment ---
+
+struct CreateDeploymentRequest {
+  string tenantId;
+  string resourceGroupId;
+  string configurationId;
+  int ttl;
+}
+
+struct PatchDeploymentRequest {
+  string tenantId;
+  string resourceGroupId;
+  string deploymentId;
+  string targetStatus;
+  string configurationId;
+  int ttl;
+}
+
+struct BulkPatchDeploymentRequest {
+  string tenantId;
+  string resourceGroupId;
+  string[] deploymentIds;
+  string targetStatus;
+}
+
+// --- Artifact ---
+
+struct CreateArtifactRequest {
+  string tenantId;
+  string resourceGroupId;
+  string scenarioId;
+  string name;
+  string description;
+  string kind;
+  string url;
+  string[][] labels;
+}
+
+// --- Resource Group ---
+
+struct CreateResourceGroupRequest {
+  string tenantId;
+  string resourceGroupId;
+  string[][] labels;
+}
+
+struct PatchResourceGroupRequest {
+  string tenantId;
+  string resourceGroupId;
+  string[][] labels;
+}
+
+// --- Docker Registry Secret ---
+
+struct CreateDockerRegistrySecretRequest {
+  string tenantId;
+  string resourceGroupId;
+  string name;
+  string server;
+  string username;
+  string password;
+}
+
+// --- Object Store Secret ---
+
+struct CreateObjectStoreSecretRequest {
+  string tenantId;
+  string resourceGroupId;
+  string name;
+  string type;
+  string bucket;
+  string region;
+  string endpoint;
+  string pathPrefix;
+  string accessKey;
+  string secretKey;
+}
+
+// --- Metrics ---
+
+struct PatchMetricsRequest {
+  string tenantId;
+  string resourceGroupId;
+  string executionId;
+  string[][] metrics;
+  string[][] tags;
+  string[][] customInfo;
+  string[][] labels;
+}
+
+// --- Execution Schedule ---
+
+struct CreateExecutionScheduleRequest {
+  string tenantId;
+  string resourceGroupId;
+  string configurationId;
+  string name;
+  string cron;
+  long start;
+  long end;
+}
+
+struct PatchExecutionScheduleRequest {
+  string tenantId;
+  string resourceGroupId;
+  string scheduleId;
+  string status;
+  string cron;
+  long start;
+  long end;
+}
+
+// --- Meta / Capabilities ---
+
+struct CapabilitiesResponse {
+  bool logsExecutions;
+  bool logsDeployments;
+  bool multitenant;
+  bool shareable;
+  bool staticDeployments;
+  bool userDeployments;
+  bool userExecutions;
+  bool executionSchedules;
+  bool bulkUpdates;
+  bool timeToLiveDeployments;
+  string apiVersion;
+}
