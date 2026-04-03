@@ -4,8 +4,8 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.core.core : runApplication;
 
-import uim.platform.data_attribute_recommendation.infrastructure.config;
-import uim.platform.data_attribute_recommendation.infrastructure.container;
+import uim.platform.data.attribute_recommendation.infrastructure.config;
+import uim.platform.data.attribute_recommendation.infrastructure.container;
 
 import std.stdio : writefln;
 @safe:

@@ -1,2 +1,2 @@
-module uim.platform.xyz.application.use_cases;
+module uim.platform.content_agent.application.use_cases;
 

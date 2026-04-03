@@ -1,2 +1,2 @@
-module uim.platform.xyz.application;
+module uim.platform.content_agent.application;
 
