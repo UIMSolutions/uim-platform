@@ -1,4 +1,4 @@
-module domain.entities.data_profile;
+module uim.platform.xyz.domain.entities.data_profile;
 
 import domain.types;
 

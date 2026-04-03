@@ -1,4 +1,4 @@
-module domain.entities.deletion_request;
+module uim.platform.xyz.domain.entities.deletion_request;
 
 import domain.types;
 

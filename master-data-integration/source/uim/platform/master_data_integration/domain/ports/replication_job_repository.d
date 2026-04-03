@@ -1,4 +1,4 @@
-module domain.ports.replication_job_repository;
+module uim.platform.xyz.domain.ports.replication_job_repository;
 
 import domain.entities.replication_job;
 import domain.types;

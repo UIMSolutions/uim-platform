@@ -1,4 +1,4 @@
-module domain.ports.proxy_system_repository;
+module uim.platform.xyz.domain.ports.proxy_system_repository;
 
 import domain.types;
 import domain.entities.proxy_system;

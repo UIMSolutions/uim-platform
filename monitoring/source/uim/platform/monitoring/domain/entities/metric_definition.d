@@ -1,4 +1,4 @@
-module domain.entities.metric_definition;
+module uim.platform.xyz.domain.entities.metric_definition;
 
 import domain.types;
 

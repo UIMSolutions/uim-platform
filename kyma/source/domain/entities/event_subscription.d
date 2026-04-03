@@ -1,4 +1,4 @@
-module domain.entities.event_subscription;
+module uim.platform.xyz.domain.entities.event_subscription;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.ports.function_repository;
+module uim.platform.xyz.domain.ports.function_repository;
 
 import domain.entities.serverless_function;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.services.function_validator;
+module uim.platform.xyz.domain.services.function_validator;
 
 import domain.entities.serverless_function;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.ports.match_group_repository;
+module uim.platform.xyz.domain.ports.match_group_repository;
 
 import domain.types;
 import domain.entities.match_group;

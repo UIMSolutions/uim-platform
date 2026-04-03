@@ -1,4 +1,4 @@
-module domain.services.transformation_engine;
+module uim.platform.xyz.domain.services.transformation_engine;
 
 import domain.types;
 import domain.entities.transformation;

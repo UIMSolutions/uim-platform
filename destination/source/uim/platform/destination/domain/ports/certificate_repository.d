@@ -1,4 +1,4 @@
-module domain.ports.certificate_repository;
+module uim.platform.xyz.domain.ports.certificate_repository;
 
 import domain.entities.certificate;
 import domain.types;

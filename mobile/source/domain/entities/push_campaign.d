@@ -1,4 +1,4 @@
-module domain.entities.push_campaign;
+module uim.platform.xyz.domain.entities.push_campaign;
 
 import domain.types;
 

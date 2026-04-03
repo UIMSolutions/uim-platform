@@ -1,4 +1,4 @@
-module domain.entities.alert_rule;
+module uim.platform.xyz.domain.entities.alert_rule;
 
 import domain.types;
 

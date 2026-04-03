@@ -1,4 +1,4 @@
-module domain.ports.transformation_repository;
+module uim.platform.xyz.domain.ports.transformation_repository;
 
 import domain.types;
 import domain.entities.transformation;

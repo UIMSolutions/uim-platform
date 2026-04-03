@@ -1,4 +1,4 @@
-module domain.entities.legal_ground;
+module uim.platform.xyz.domain.entities.legal_ground;
 
 import domain.types;
 

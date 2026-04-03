@@ -1,4 +1,4 @@
-module domain.ports.metric_repository;
+module uim.platform.xyz.domain.ports.metric_repository;
 
 import domain.entities.metric;
 import domain.types;

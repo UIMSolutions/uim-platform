@@ -1,4 +1,4 @@
-module domain.ports.alert_rule_repository;
+module uim.platform.xyz.domain.ports.alert_rule_repository;
 
 import domain.entities.alert_rule;
 import domain.types;

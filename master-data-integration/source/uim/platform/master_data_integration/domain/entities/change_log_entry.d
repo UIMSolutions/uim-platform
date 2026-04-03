@@ -1,4 +1,4 @@
-module domain.entities.change_log_entry;
+module uim.platform.xyz.domain.entities.change_log_entry;
 
 import domain.types;
 

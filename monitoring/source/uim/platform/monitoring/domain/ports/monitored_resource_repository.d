@@ -1,4 +1,4 @@
-module domain.ports.monitored_resource_repository;
+module uim.platform.xyz.domain.ports.monitored_resource_repository;
 
 import domain.entities.monitored_resource;
 import domain.types;

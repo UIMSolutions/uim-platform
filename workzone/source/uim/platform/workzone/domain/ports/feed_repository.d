@@ -1,4 +1,4 @@
-module domain.ports.feed_repository;
+module uim.platform.xyz.domain.ports.feed_repository;
 
 import domain.types;
 import domain.entities.feed_entry;

@@ -1,4 +1,4 @@
-module domain.entities.workspace;
+module uim.platform.xyz.domain.entities.workspace;
 
 import domain.types;
 

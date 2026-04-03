@@ -1,4 +1,4 @@
-module domain.ports.notification_repository;
+module uim.platform.xyz.domain.ports.notification_repository;
 
 import domain.types;
 import domain.entities.notification;

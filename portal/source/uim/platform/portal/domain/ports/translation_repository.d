@@ -1,4 +1,4 @@
-module domain.ports.translation_repository;
+module uim.platform.xyz.domain.ports.translation_repository;
 
 import domain.entities.translation;
 import domain.types;

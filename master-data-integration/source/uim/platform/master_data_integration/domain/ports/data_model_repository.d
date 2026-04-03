@@ -1,4 +1,4 @@
-module domain.ports.data_model_repository;
+module uim.platform.xyz.domain.ports.data_model_repository;
 
 import domain.entities.data_model;
 import domain.types;

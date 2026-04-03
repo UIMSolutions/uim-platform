@@ -1,4 +1,4 @@
-module domain.services.health_checker;
+module uim.platform.xyz.domain.services.health_checker;
 
 import domain.entities.health_check;
 import domain.types;

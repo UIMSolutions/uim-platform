@@ -1,4 +1,4 @@
-module domain.entities.personal_data_model;
+module uim.platform.xyz.domain.entities.personal_data_model;
 
 import domain.types;
 

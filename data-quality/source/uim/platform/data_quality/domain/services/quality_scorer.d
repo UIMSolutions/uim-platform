@@ -1,4 +1,4 @@
-module domain.services.quality_scorer;
+module uim.platform.xyz.domain.services.quality_scorer;
 
 import domain.types;
 import domain.entities.quality_dashboard;

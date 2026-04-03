@@ -1,4 +1,4 @@
-module domain.entities.workflow_step;
+module uim.platform.xyz.domain.entities.workflow_step;
 
 import domain.types;
 

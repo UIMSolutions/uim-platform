@@ -1,4 +1,4 @@
-module domain.ports.tile_repository;
+module uim.platform.xyz.domain.ports.tile_repository;
 
 import domain.entities.tile;
 import domain.types;

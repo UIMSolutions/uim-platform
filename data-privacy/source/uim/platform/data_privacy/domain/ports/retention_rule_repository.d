@@ -1,4 +1,4 @@
-module domain.ports.retention_rule_repository;
+module uim.platform.xyz.domain.ports.retention_rule_repository;
 
 import domain.types;
 import domain.entities.retention_rule;

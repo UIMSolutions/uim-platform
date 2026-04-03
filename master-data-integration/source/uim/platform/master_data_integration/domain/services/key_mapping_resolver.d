@@ -1,4 +1,4 @@
-module domain.services.key_mapping_resolver;
+module uim.platform.xyz.domain.services.key_mapping_resolver;
 
 import domain.entities.key_mapping;
 import domain.types;

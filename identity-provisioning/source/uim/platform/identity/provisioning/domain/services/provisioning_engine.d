@@ -1,4 +1,4 @@
-module domain.services.provisioning_engine;
+module uim.platform.xyz.domain.services.provisioning_engine;
 
 import std.uuid;
 import std.datetime.systime : Clock;

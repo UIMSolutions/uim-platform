@@ -1,4 +1,4 @@
-module domain.entities.execution_log;
+module uim.platform.xyz.domain.entities.execution_log;
 
 import domain.types;
 

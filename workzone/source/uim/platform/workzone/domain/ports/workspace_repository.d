@@ -1,4 +1,4 @@
-module domain.ports.workspace_repository;
+module uim.platform.xyz.domain.ports.workspace_repository;
 
 import domain.types;
 import domain.entities.workspace;

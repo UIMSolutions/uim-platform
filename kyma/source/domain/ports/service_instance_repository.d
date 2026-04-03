@@ -1,4 +1,4 @@
-module domain.ports.service_instance_repository;
+module uim.platform.xyz.domain.ports.service_instance_repository;
 
 import domain.entities.service_instance;
 import domain.types;

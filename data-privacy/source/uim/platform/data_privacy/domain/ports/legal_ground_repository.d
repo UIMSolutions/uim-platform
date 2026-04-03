@@ -1,4 +1,4 @@
-module domain.ports.legal_ground_repository;
+module uim.platform.xyz.domain.ports.legal_ground_repository;
 
 import domain.types;
 import domain.entities.legal_ground;

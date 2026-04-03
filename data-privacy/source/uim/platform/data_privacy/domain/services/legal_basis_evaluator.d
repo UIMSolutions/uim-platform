@@ -1,4 +1,4 @@
-module domain.services.legal_basis_evaluator;
+module uim.platform.xyz.domain.services.legal_basis_evaluator;
 
 import domain.types;
 import domain.entities.legal_ground;

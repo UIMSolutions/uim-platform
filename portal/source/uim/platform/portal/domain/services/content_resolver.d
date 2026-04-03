@@ -1,4 +1,4 @@
-module domain.services.content_resolver;
+module uim.platform.xyz.domain.services.content_resolver;
 
 import domain.entities.site;
 import domain.entities.page;

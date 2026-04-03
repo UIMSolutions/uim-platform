@@ -1,4 +1,4 @@
-module domain.entities.security_policy;
+module uim.platform.xyz.domain.entities.security_policy;
 
 import domain.types;
 

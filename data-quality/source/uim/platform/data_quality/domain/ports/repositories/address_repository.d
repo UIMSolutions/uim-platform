@@ -1,4 +1,4 @@
-module domain.ports.address_repository;
+module uim.platform.xyz.domain.ports.address_repository;
 
 import domain.types;
 import domain.entities.address_record;

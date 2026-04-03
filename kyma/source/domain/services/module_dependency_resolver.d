@@ -1,4 +1,4 @@
-module domain.services.module_dependency_resolver;
+module uim.platform.xyz.domain.services.module_dependency_resolver;
 
 import domain.entities.kyma_module;
 import domain.types;

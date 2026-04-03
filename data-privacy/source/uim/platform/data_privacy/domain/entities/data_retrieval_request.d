@@ -1,4 +1,4 @@
-module domain.entities.data_retrieval_request;
+module uim.platform.xyz.domain.entities.data_retrieval_request;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.ports.provisioning_job_repository;
+module uim.platform.xyz.domain.ports.provisioning_job_repository;
 
 import domain.types;
 import domain.entities.provisioning_job;

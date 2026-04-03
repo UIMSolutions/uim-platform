@@ -1,4 +1,4 @@
-module domain.ports.password_service;
+module uim.platform.xyz.domain.ports.password_service;
 
 /// Port: outgoing — password hashing and validation.
 interface PasswordService

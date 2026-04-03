@@ -1,4 +1,4 @@
-module domain.entities.target_system;
+module uim.platform.xyz.domain.entities.target_system;
 
 import domain.types;
 

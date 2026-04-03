@@ -1,4 +1,4 @@
-module domain.services.duplicate_detector;
+module uim.platform.xyz.domain.services.duplicate_detector;
 
 import domain.types;
 import domain.entities.match_group;

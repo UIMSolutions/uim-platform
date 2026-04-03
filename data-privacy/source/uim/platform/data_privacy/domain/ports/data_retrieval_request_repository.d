@@ -1,4 +1,4 @@
-module domain.ports.data_retrieval_request_repository;
+module uim.platform.xyz.domain.ports.data_retrieval_request_repository;
 
 import domain.types;
 import domain.entities.data_retrieval_request;

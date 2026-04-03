@@ -1,4 +1,4 @@
-module domain.services.address_cleanser;
+module uim.platform.xyz.domain.services.address_cleanser;
 
 import domain.types;
 import domain.entities.address_record;

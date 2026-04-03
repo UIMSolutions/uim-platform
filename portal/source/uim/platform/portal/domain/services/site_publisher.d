@@ -1,4 +1,4 @@
-module domain.services.site_publisher;
+module uim.platform.xyz.domain.services.site_publisher;
 
 import domain.entities.site;
 import domain.types;

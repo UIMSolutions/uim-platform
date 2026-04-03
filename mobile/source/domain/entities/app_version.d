@@ -1,4 +1,4 @@
-module domain.entities.app_version;
+module uim.platform.xyz.domain.entities.app_version;
 
 import domain.types;
 

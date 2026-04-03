@@ -1,4 +1,4 @@
-module domain.services.workspace_access;
+module uim.platform.xyz.domain.services.workspace_access;
 
 import domain.types;
 import domain.entities.workspace;

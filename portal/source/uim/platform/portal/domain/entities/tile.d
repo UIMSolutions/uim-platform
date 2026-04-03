@@ -1,4 +1,4 @@
-module domain.entities.tile;
+module uim.platform.xyz.domain.entities.tile;
 
 import domain.types;
 

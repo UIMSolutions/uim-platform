@@ -1,4 +1,4 @@
-module domain.ports.service_binding_repository;
+module uim.platform.xyz.domain.ports.service_binding_repository;
 
 import domain.entities.service_binding;
 import domain.types;

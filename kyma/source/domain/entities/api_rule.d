@@ -1,4 +1,4 @@
-module domain.entities.api_rule;
+module uim.platform.xyz.domain.entities.api_rule;
 
 import domain.types;
 

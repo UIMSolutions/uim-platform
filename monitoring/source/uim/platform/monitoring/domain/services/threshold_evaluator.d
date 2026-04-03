@@ -1,4 +1,4 @@
-module domain.services.threshold_evaluator;
+module uim.platform.xyz.domain.services.threshold_evaluator;
 
 import domain.entities.alert_rule;
 import domain.entities.metric;

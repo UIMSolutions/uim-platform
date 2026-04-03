@@ -1,4 +1,4 @@
-module domain.ports.push_template_repository;
+module uim.platform.xyz.domain.ports.push_template_repository;
 
 import domain.entities.push_template;
 import domain.types;

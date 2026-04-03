@@ -1,4 +1,4 @@
-module domain.ports.consent_record_repository;
+module uim.platform.xyz.domain.ports.consent_record_repository;
 
 import domain.types;
 import domain.entities.consent_record;

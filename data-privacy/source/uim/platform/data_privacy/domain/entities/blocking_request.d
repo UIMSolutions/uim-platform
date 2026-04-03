@@ -1,4 +1,4 @@
-module domain.entities.blocking_request;
+module uim.platform.xyz.domain.entities.blocking_request;
 
 import domain.types;
 

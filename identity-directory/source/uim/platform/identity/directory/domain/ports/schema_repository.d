@@ -1,4 +1,4 @@
-module domain.ports.schema_repository;
+module uim.platform.xyz.domain.ports.schema_repository;
 
 import domain.entities.schema;
 import domain.types;

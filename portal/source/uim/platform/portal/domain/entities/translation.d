@@ -1,4 +1,4 @@
-module domain.entities.translation;
+module uim.platform.xyz.domain.entities.translation;
 
 import domain.types;
 

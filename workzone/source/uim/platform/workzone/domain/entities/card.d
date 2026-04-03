@@ -1,4 +1,4 @@
-module domain.entities.card;
+module uim.platform.xyz.domain.entities.card;
 
 import domain.types;
 

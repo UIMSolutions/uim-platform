@@ -1,4 +1,4 @@
-module domain.entities.app_registration;
+module uim.platform.xyz.domain.entities.app_registration;
 
 import domain.types;
 

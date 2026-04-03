@@ -1,4 +1,4 @@
-module domain.ports.health_check_result_repository;
+module uim.platform.xyz.domain.ports.health_check_result_repository;
 
 import domain.entities.health_check_result;
 import domain.types;

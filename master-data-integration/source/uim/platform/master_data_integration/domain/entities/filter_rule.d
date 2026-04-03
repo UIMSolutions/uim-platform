@@ -1,4 +1,4 @@
-module domain.entities.filter_rule;
+module uim.platform.xyz.domain.entities.filter_rule;
 
 import domain.types;
 

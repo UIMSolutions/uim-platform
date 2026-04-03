@@ -1,4 +1,4 @@
-module domain.entities.section;
+module uim.platform.xyz.domain.entities.section;
 
 import domain.types;
 

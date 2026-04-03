@@ -1,4 +1,4 @@
-module domain.ports.repositories.workflow;
+module uim.platform.xyz.domain.ports.repositories.workflow;
 
 import domain.types;
 import domain.entities.workflow;

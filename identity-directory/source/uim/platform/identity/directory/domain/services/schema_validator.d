@@ -1,4 +1,4 @@
-module domain.services.schema_validator;
+module uim.platform.xyz.domain.services.schema_validator;
 
 import domain.entities.schema;
 import domain.entities.user : ExtendedAttribute;

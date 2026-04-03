@@ -1,4 +1,4 @@
-module domain.ports.repositories.system_;
+module uim.platform.xyz.domain.ports.repositories.system_;
 
 import domain.types;
 import domain.entities.system_connection;

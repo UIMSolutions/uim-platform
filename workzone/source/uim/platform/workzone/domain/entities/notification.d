@@ -1,4 +1,4 @@
-module domain.entities.notification;
+module uim.platform.xyz.domain.entities.notification;
 
 import domain.types;
 

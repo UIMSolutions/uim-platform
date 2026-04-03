@@ -1,4 +1,4 @@
-module domain.entities.cleansing_rule;
+module uim.platform.xyz.domain.entities.cleansing_rule;
 
 import domain.types;
 

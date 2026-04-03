@@ -1,4 +1,4 @@
-module domain.services.distribution_evaluator;
+module uim.platform.xyz.domain.services.distribution_evaluator;
 
 import domain.entities.distribution_model;
 import domain.entities.filter_rule;

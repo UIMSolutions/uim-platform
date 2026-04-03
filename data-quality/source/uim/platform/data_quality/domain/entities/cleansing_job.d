@@ -1,4 +1,4 @@
-module domain.entities.cleansing_job;
+module uim.platform.xyz.domain.entities.cleansing_job;
 
 import domain.types;
 

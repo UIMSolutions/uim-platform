@@ -1,4 +1,4 @@
-module domain.entities.password_policy;
+module uim.platform.xyz.domain.entities.password_policy;
 
 import domain.types;
 

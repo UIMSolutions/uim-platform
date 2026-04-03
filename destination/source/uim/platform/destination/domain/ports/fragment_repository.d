@@ -1,4 +1,4 @@
-module domain.ports.fragment_repository;
+module uim.platform.xyz.domain.ports.fragment_repository;
 
 import domain.entities.destination_fragment;
 import domain.types;

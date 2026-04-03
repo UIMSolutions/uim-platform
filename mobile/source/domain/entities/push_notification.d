@@ -1,4 +1,4 @@
-module domain.entities.push_notification;
+module uim.platform.xyz.domain.entities.push_notification;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.ports.repositories.execution_log;
+module uim.platform.xyz.domain.ports.repositories.execution_log;
 
 import domain.types;
 import domain.entities.execution_log;

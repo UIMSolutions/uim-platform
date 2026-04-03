@@ -1,4 +1,4 @@
-module domain.ports.audit_repository;
+module uim.platform.xyz.domain.ports.audit_repository;
 
 import domain.entities.audit_event;
 import domain.types;

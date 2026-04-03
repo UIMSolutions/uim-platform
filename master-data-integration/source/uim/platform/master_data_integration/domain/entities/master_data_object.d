@@ -1,4 +1,4 @@
-module domain.entities.master_data_object;
+module uim.platform.xyz.domain.entities.master_data_object;
 
 import domain.types;
 

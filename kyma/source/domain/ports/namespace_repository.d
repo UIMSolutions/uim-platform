@@ -1,4 +1,4 @@
-module domain.ports.namespace_repository;
+module uim.platform.xyz.domain.ports.namespace_repository;
 
 import domain.entities.namespace;
 import domain.types;

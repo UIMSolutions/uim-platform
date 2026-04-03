@@ -1,4 +1,4 @@
-module domain.entities.source_system;
+module uim.platform.xyz.domain.entities.source_system;
 
 import domain.types;
 

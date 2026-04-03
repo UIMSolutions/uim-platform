@@ -1,4 +1,4 @@
-module domain.entities.destination;
+module uim.platform.xyz.domain.entities.destination;
 
 import domain.types;
 

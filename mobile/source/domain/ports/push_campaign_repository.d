@@ -1,4 +1,4 @@
-module domain.ports.push_campaign_repository;
+module uim.platform.xyz.domain.ports.push_campaign_repository;
 
 import domain.entities.push_campaign;
 import domain.types;

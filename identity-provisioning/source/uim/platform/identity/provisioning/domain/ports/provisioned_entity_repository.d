@@ -1,4 +1,4 @@
-module domain.ports.provisioned_entity_repository;
+module uim.platform.xyz.domain.ports.provisioned_entity_repository;
 
 import domain.types;
 import domain.entities.provisioned_entity;

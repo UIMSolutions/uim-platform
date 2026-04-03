@@ -1,4 +1,4 @@
-module domain.entities.usage_event;
+module uim.platform.xyz.domain.entities.usage_event;
 
 import domain.types;
 

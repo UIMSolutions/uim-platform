@@ -1,4 +1,4 @@
-module domain.ports.event_subscription_repository;
+module uim.platform.xyz.domain.ports.event_subscription_repository;
 
 import domain.entities.event_subscription;
 import domain.types;

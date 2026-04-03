@@ -1,4 +1,4 @@
-module domain.entities.provisioning_job;
+module uim.platform.xyz.domain.entities.provisioning_job;
 
 import domain.types;
 

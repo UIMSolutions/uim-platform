@@ -1,4 +1,4 @@
-module domain.ports.repositories;
+module uim.platform.xyz.domain.ports.repositories;
 
 public {
     import domain.ports.repositories.destination;

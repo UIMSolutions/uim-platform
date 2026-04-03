@@ -1,4 +1,4 @@
-module domain.entities.serverless_function;
+module uim.platform.xyz.domain.entities.serverless_function;
 
 import domain.types;
 

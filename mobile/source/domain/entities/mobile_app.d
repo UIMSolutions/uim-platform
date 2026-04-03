@@ -1,4 +1,4 @@
-module domain.entities.mobile_app;
+module uim.platform.xyz.domain.entities.mobile_app;
 
 import domain.types;
 

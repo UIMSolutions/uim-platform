@@ -1,4 +1,4 @@
-module domain.ports.mobile_app_repository;
+module uim.platform.xyz.domain.ports.mobile_app_repository;
 
 import domain.entities.mobile_app;
 import domain.types;

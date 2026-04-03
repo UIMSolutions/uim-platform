@@ -1,4 +1,4 @@
-module domain.entities.feed_entry;
+module uim.platform.xyz.domain.entities.feed_entry;
 
 import domain.types;
 

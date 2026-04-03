@@ -1,4 +1,4 @@
-module domain.entities.destination_fragment;
+module uim.platform.xyz.domain.entities.destination_fragment;
 
 import domain.types;
 

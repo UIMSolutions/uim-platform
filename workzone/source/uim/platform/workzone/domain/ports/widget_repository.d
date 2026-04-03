@@ -1,4 +1,4 @@
-module domain.ports.widget_repository;
+module uim.platform.xyz.domain.ports.widget_repository;
 
 import domain.types;
 import domain.entities.widget;

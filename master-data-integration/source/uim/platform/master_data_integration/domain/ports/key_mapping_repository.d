@@ -1,4 +1,4 @@
-module domain.ports.key_mapping_repository;
+module uim.platform.xyz.domain.ports.key_mapping_repository;
 
 import domain.entities.key_mapping;
 import domain.types;

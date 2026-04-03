@@ -1,4 +1,4 @@
-module domain.ports.role_repository;
+module uim.platform.xyz.domain.ports.role_repository;
 
 import domain.entities.role;
 import domain.types;

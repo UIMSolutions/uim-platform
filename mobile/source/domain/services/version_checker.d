@@ -1,4 +1,4 @@
-module domain.services.version_checker;
+module uim.platform.xyz.domain.services.version_checker;
 
 import domain.entities.app_version;
 import domain.types;

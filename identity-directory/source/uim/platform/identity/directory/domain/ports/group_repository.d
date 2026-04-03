@@ -1,4 +1,4 @@
-module domain.ports.group_repository;
+module uim.platform.xyz.domain.ports.group_repository;
 
 import domain.entities.group;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.entities.key_mapping;
+module uim.platform.xyz.domain.entities.key_mapping;
 
 import domain.types;
 

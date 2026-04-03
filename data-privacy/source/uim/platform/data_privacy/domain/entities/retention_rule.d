@@ -1,4 +1,4 @@
-module domain.entities.retention_rule;
+module uim.platform.xyz.domain.entities.retention_rule;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.catalog;
+module uim.platform.xyz.domain.entities.catalog;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.services.password_validator;
+module uim.platform.xyz.domain.services.password_validator;
 
 import domain.entities.password_policy;
 

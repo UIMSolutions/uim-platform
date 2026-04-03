@@ -1,4 +1,4 @@
-module domain.ports.device_registration_repository;
+module uim.platform.xyz.domain.ports.device_registration_repository;
 
 import domain.entities.device_registration;
 import domain.types;

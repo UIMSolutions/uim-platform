@@ -1,4 +1,4 @@
-module domain.entities.sync_session;
+module uim.platform.xyz.domain.entities.sync_session;
 
 import domain.types;
 

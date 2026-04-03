@@ -1,4 +1,4 @@
-module domain.entities.channel;
+module uim.platform.xyz.domain.entities.channel;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.proxy_system;
+module uim.platform.xyz.domain.entities.proxy_system;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.widget;
+module uim.platform.xyz.domain.entities.widget;
 
 import domain.types;
 

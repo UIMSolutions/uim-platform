@@ -1,4 +1,4 @@
-module domain.ports.change_log_repository;
+module uim.platform.xyz.domain.ports.change_log_repository;
 
 import domain.entities.change_log_entry;
 import domain.types;

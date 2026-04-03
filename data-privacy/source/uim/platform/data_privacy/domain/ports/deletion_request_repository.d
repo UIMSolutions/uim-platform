@@ -1,4 +1,4 @@
-module domain.ports.deletion_request_repository;
+module uim.platform.xyz.domain.ports.deletion_request_repository;
 
 import domain.types;
 import domain.entities.deletion_request;

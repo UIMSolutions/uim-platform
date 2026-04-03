@@ -1,4 +1,4 @@
-module domain.entities.system_connection;
+module uim.platform.xyz.domain.entities.system_connection;
 
 import domain.types;
 

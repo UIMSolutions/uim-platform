@@ -1,4 +1,4 @@
-module domain.ports.usage_event_repository;
+module uim.platform.xyz.domain.ports.usage_event_repository;
 
 import domain.entities.usage_event;
 import domain.types;

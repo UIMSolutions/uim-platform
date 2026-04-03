@@ -1,4 +1,4 @@
-module domain.entities.consent_record;
+module uim.platform.xyz.domain.entities.consent_record;
 
 import domain.types;
 

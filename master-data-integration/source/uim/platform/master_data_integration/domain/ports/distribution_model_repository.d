@@ -1,4 +1,4 @@
-module domain.ports.distribution_model_repository;
+module uim.platform.xyz.domain.ports.distribution_model_repository;
 
 import domain.entities.distribution_model;
 import domain.types;

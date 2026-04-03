@@ -1,4 +1,4 @@
-module domain.entities.task;
+module uim.platform.xyz.domain.entities.task;
 
 import domain.types;
 

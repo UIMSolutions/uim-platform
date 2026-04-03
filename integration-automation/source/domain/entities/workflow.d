@@ -1,4 +1,4 @@
-module domain.entities.workflow;
+module uim.platform.xyz.domain.entities.workflow;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.entities.destination_lookup;
+module uim.platform.xyz.domain.entities.destination_lookup;
 
 import domain.types;
 import domain.entities.destination;

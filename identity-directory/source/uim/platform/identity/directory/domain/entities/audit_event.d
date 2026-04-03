@@ -1,4 +1,4 @@
-module domain.entities.audit_event;
+module uim.platform.xyz.domain.entities.audit_event;
 
 import domain.types;
 

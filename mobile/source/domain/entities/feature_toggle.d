@@ -1,4 +1,4 @@
-module domain.entities.feature_toggle;
+module uim.platform.xyz.domain.entities.feature_toggle;
 
 import domain.types;
 

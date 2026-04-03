@@ -1,4 +1,4 @@
-module domain.entities.validation_rule;
+module uim.platform.xyz.domain.entities.validation_rule;
 
 import domain.types;
 

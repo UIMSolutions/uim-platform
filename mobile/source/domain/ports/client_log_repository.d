@@ -1,4 +1,4 @@
-module domain.ports.client_log_repository;
+module uim.platform.xyz.domain.ports.client_log_repository;
 
 import domain.entities.client_log;
 import domain.types;

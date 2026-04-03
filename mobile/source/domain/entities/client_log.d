@@ -1,4 +1,4 @@
-module domain.entities.client_log;
+module uim.platform.xyz.domain.entities.client_log;
 
 import domain.types;
 

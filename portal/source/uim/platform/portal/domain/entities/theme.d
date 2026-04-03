@@ -1,4 +1,4 @@
-module domain.entities.theme;
+module uim.platform.xyz.domain.entities.theme;
 
 import domain.types;
 

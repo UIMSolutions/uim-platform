@@ -1,4 +1,4 @@
-module domain.entities.address_record;
+module uim.platform.xyz.domain.entities.address_record;
 
 import domain.types;
 

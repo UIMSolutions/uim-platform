@@ -1,4 +1,4 @@
-module domain.entities.page;
+module uim.platform.xyz.domain.entities.page;
 
 import domain.types;
 

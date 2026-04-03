@@ -1,4 +1,4 @@
-module domain.ports.provisioning_log_repository;
+module uim.platform.xyz.domain.ports.provisioning_log_repository;
 
 import domain.types;
 import domain.entities.provisioning_log;

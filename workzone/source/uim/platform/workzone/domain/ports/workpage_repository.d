@@ -1,4 +1,4 @@
-module domain.ports.workpage_repository;
+module uim.platform.xyz.domain.ports.workpage_repository;
 
 import domain.types;
 import domain.entities.workpage;

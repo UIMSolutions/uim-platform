@@ -1,4 +1,4 @@
-module domain.ports.card_repository;
+module uim.platform.xyz.domain.ports.card_repository;
 
 import domain.types;
 import domain.entities.card;

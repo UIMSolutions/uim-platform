@@ -1,4 +1,4 @@
-module domain.ports.repositories.scenario;
+module uim.platform.xyz.domain.ports.repositories.scenario;
 
 import domain.types;
 import domain.entities.integration_scenario;

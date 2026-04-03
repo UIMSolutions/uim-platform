@@ -1,4 +1,4 @@
-module domain.entities.monitored_resource;
+module uim.platform.xyz.domain.entities.monitored_resource;
 
 import domain.types;
 

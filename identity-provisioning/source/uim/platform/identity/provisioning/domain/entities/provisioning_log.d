@@ -1,4 +1,4 @@
-module domain.entities.provisioning_log;
+module uim.platform.xyz.domain.entities.provisioning_log;
 
 import domain.types;
 

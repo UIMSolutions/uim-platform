@@ -1,4 +1,4 @@
-module domain.services.validation_engine;
+module uim.platform.xyz.domain.services.validation_engine;
 
 import domain.types;
 import domain.entities.validation_rule;

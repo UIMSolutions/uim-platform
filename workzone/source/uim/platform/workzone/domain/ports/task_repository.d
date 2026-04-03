@@ -1,4 +1,4 @@
-module domain.ports.task_repository;
+module uim.platform.xyz.domain.ports.task_repository;
 
 import domain.types;
 import domain.entities.task;

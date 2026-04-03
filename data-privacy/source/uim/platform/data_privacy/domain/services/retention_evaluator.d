@@ -1,4 +1,4 @@
-module domain.services.retention_evaluator;
+module uim.platform.xyz.domain.services.retention_evaluator;
 
 import domain.types;
 import domain.entities.retention_rule;

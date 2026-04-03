@@ -1,4 +1,4 @@
-module domain.ports.api_rule_repository;
+module uim.platform.xyz.domain.ports.api_rule_repository;
 
 import domain.entities.api_rule;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.ports.environment_repository;
+module uim.platform.xyz.domain.ports.environment_repository;
 
 import domain.entities.kyma_environment;
 import domain.types;

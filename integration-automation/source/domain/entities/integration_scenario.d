@@ -1,4 +1,4 @@
-module domain.entities.integration_scenario;
+module uim.platform.xyz.domain.entities.integration_scenario;
 
 import domain.types;
 

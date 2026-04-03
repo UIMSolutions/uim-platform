@@ -1,4 +1,4 @@
-module domain.entities.device_registration;
+module uim.platform.xyz.domain.entities.device_registration;
 
 import domain.types;
 

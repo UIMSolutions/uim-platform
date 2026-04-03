@@ -1,4 +1,4 @@
-module domain.ports.security_policy_repository;
+module uim.platform.xyz.domain.ports.security_policy_repository;
 
 import domain.entities.security_policy;
 import domain.types;

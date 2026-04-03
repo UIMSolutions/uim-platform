@@ -1,4 +1,4 @@
-module domain.entities.service_instance;
+module uim.platform.xyz.domain.entities.service_instance;
 
 import domain.types;
 

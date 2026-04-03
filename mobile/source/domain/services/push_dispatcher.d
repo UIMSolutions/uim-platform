@@ -1,4 +1,4 @@
-module domain.services.push_dispatcher;
+module uim.platform.xyz.domain.services.push_dispatcher;
 
 import domain.entities.push_notification;
 import domain.entities.push_template;

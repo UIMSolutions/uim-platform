@@ -1,4 +1,4 @@
-module domain.ports.validation_rule_repository;
+module uim.platform.xyz.domain.ports.validation_rule_repository;
 
 import domain.types;
 import domain.entities.validation_rule;

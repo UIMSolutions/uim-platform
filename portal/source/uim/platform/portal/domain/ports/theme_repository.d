@@ -1,4 +1,4 @@
-module domain.ports.theme_repository;
+module uim.platform.xyz.domain.ports.theme_repository;
 
 import domain.entities.theme;
 import domain.types;

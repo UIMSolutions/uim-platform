@@ -1,4 +1,4 @@
-module domain.entities.offline_config;
+module uim.platform.xyz.domain.entities.offline_config;
 
 import domain.types;
 

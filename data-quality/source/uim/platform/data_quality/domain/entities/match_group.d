@@ -1,4 +1,4 @@
-module domain.entities.match_group;
+module uim.platform.xyz.domain.entities.match_group;
 
 import domain.types;
 

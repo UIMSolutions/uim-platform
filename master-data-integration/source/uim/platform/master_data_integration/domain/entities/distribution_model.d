@@ -1,4 +1,4 @@
-module domain.entities.distribution_model;
+module uim.platform.xyz.domain.entities.distribution_model;
 
 import domain.types;
 

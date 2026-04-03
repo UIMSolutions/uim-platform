@@ -1,4 +1,4 @@
-module domain.ports.menu_item_repository;
+module uim.platform.xyz.domain.ports.menu_item_repository;
 
 import domain.entities.menu_item;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.services.content_search;
+module uim.platform.xyz.domain.services.content_search;
 
 import std.algorithm : canFind, filter;
 import std.array : array;

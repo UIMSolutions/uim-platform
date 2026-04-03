@@ -1,4 +1,4 @@
-module domain.ports.site_repository;
+module uim.platform.xyz.domain.ports.site_repository;
 
 import domain.entities.site;
 import domain.types;

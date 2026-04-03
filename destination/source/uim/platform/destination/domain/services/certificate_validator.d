@@ -1,4 +1,4 @@
-module domain.services.certificate_validator;
+module uim.platform.xyz.domain.services.certificate_validator;
 
 import domain.entities.certificate;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.entities.validation_result;
+module uim.platform.xyz.domain.entities.validation_result;
 
 import domain.types;
 

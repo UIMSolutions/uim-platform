@@ -1,4 +1,4 @@
-module domain.entities.replication_job;
+module uim.platform.xyz.domain.entities.replication_job;
 
 import domain.types;
 

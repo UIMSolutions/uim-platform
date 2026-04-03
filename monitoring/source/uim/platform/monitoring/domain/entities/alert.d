@@ -1,4 +1,4 @@
-module domain.entities.alert;
+module uim.platform.xyz.domain.entities.alert;
 
 import domain.types;
 

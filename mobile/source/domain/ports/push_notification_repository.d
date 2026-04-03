@@ -1,4 +1,4 @@
-module domain.ports.push_notification_repository;
+module uim.platform.xyz.domain.ports.push_notification_repository;
 
 import domain.entities.push_notification;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.ports.filter_rule_repository;
+module uim.platform.xyz.domain.ports.filter_rule_repository;
 
 import domain.entities.filter_rule;
 import domain.types;

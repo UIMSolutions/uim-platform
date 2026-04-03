@@ -1,4 +1,4 @@
-module domain.ports.feature_toggle_repository;
+module uim.platform.xyz.domain.ports.feature_toggle_repository;
 
 import domain.entities.feature_toggle;
 import domain.types;

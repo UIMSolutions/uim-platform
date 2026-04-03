@@ -1,4 +1,4 @@
-module domain.entities.provisioned_entity;
+module uim.platform.xyz.domain.entities.provisioned_entity;
 
 import domain.types;
 

@@ -1,4 +1,4 @@
-module domain.services.destination_resolver;
+module uim.platform.xyz.domain.services.destination_resolver;
 
 import domain.entities.destination;
 import domain.entities.destination_fragment;

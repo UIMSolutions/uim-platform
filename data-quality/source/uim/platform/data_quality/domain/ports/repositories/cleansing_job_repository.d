@@ -1,4 +1,4 @@
-module domain.ports.cleansing_job_repository;
+module uim.platform.xyz.domain.ports.cleansing_job_repository;
 
 import domain.types;
 import domain.entities.cleansing_job;

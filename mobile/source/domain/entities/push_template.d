@@ -1,4 +1,4 @@
-module domain.entities.push_template;
+module uim.platform.xyz.domain.entities.push_template;
 
 import domain.types;
 

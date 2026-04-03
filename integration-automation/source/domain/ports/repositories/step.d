@@ -1,4 +1,4 @@
-module domain.ports.repositories.step;
+module uim.platform.xyz.domain.ports.repositories.step;
 
 import domain.types;
 import domain.entities.workflow_step;

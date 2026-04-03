@@ -1,4 +1,4 @@
-module domain.ports.catalog_repository;
+module uim.platform.xyz.domain.ports.catalog_repository;
 
 import domain.entities.catalog;
 import domain.types;

@@ -1,4 +1,4 @@
-module domain.ports.personal_data_model_repository;
+module uim.platform.xyz.domain.ports.personal_data_model_repository;
 
 import domain.types;
 import domain.entities.personal_data_model;

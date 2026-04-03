@@ -1,4 +1,4 @@
-module domain.entities.group;
+module uim.platform.xyz.domain.entities.group;
 
 import domain.types;
 

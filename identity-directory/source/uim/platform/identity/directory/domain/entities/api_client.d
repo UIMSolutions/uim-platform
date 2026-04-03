@@ -1,4 +1,4 @@
-module domain.entities.api_client;
+module uim.platform.xyz.domain.entities.api_client;
 
 import domain.types;
 

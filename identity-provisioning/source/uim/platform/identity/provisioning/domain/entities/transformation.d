@@ -1,4 +1,4 @@
-module domain.entities.transformation;
+module uim.platform.xyz.domain.entities.transformation;
 
 import domain.types;
 

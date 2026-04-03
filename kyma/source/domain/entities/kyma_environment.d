@@ -1,4 +1,4 @@
-module domain.entities.kyma_environment;
+module uim.platform.xyz.domain.entities.kyma_environment;
 
 import domain.types;
 

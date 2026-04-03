@@ -1,4 +1,4 @@
-module domain.entities.role;
+module uim.platform.xyz.domain.entities.role;
 
 import domain.types;
 

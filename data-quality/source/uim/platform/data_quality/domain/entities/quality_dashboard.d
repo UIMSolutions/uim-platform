@@ -1,4 +1,4 @@
-module domain.entities.quality_dashboard;
+module uim.platform.xyz.domain.entities.quality_dashboard;
 
 import domain.types;
 

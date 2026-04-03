@@ -1,4 +1,4 @@
-module domain.ports.sync_session_repository;
+module uim.platform.xyz.domain.ports.sync_session_repository;
 
 import domain.entities.sync_session;
 import domain.types;

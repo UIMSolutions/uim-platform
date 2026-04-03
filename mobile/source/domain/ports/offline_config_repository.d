@@ -1,4 +1,4 @@
-module domain.ports.offline_config_repository;
+module uim.platform.xyz.domain.ports.offline_config_repository;
 
 import domain.entities.offline_config;
 import domain.types;
