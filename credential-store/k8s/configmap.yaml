@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: credential-store-config
+  labels:
+    app: credential-store
+    part-of: uim-platform
+data:
+  CREDSTORE_HOST: "0.0.0.0"
+  CREDSTORE_PORT: "8095"
