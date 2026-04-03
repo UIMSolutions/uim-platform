@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.application.dto;
 
 import uim.platform.integration.automation.domain.types;
@@ -6,7 +11,8 @@ import uim.platform.integration.automation.domain.entities.workflow_step : Workf
 
 // ──────────────── Integration Scenario DTOs ────────────────
 
-struct CreateScenarioRequest {
+struct CreateScenarioRequest
+{
   TenantId tenantId;
   string name;
   string description;
@@ -19,7 +25,8 @@ struct CreateScenarioRequest {
   string createdBy;
 }
 
-struct UpdateScenarioRequest {
+struct UpdateScenarioRequest
+{
   ScenarioId id;
   TenantId tenantId;
   string name;
@@ -35,7 +42,8 @@ struct UpdateScenarioRequest {
 
 // ──────────────── Workflow DTOs ────────────────
 
-struct CreateWorkflowRequest {
+struct CreateWorkflowRequest
+{
   TenantId tenantId;
   ScenarioId scenarioId;
   string name;
@@ -45,7 +53,8 @@ struct CreateWorkflowRequest {
   string createdBy;
 }
 
-struct UpdateWorkflowStatusRequest {
+struct UpdateWorkflowStatusRequest
+{
   WorkflowId id;
   TenantId tenantId;
   WorkflowStatus status;
@@ -53,7 +62,8 @@ struct UpdateWorkflowStatusRequest {
 
 // ──────────────── Workflow Step DTOs ────────────────
 
-struct CreateStepRequest {
+struct CreateStepRequest
+{
   WorkflowId workflowId;
   TenantId tenantId;
   string name;
@@ -72,28 +82,32 @@ struct CreateStepRequest {
   int estimatedDurationMinutes;
 }
 
-struct CompleteStepRequest {
+struct CompleteStepRequest
+{
   StepId id;
   TenantId tenantId;
   UserId completedBy;
   string result;
 }
 
-struct FailStepRequest {
+struct FailStepRequest
+{
   StepId id;
   TenantId tenantId;
   UserId reportedBy;
   string errorMessage;
 }
 
-struct SkipStepRequest {
+struct SkipStepRequest
+{
   StepId id;
   TenantId tenantId;
   UserId skippedBy;
   string reason;
 }
 
-struct AssignStepRequest {
+struct AssignStepRequest
+{
   StepId id;
   TenantId tenantId;
   UserId assignedTo;
@@ -102,7 +116,8 @@ struct AssignStepRequest {
 
 // ──────────────── System Connection DTOs ────────────────
 
-struct CreateSystemRequest {
+struct CreateSystemRequest
+{
   TenantId tenantId;
   string name;
   string description;
@@ -118,7 +133,8 @@ struct CreateSystemRequest {
   string createdBy;
 }
 
-struct UpdateSystemRequest {
+struct UpdateSystemRequest
+{
   SystemId id;
   TenantId tenantId;
   string name;
@@ -137,7 +153,8 @@ struct UpdateSystemRequest {
 
 // ──────────────── Destination DTOs ────────────────
 
-struct CreateDestinationRequest {
+struct CreateDestinationRequest
+{
   TenantId tenantId;
   string name;
   string description;
@@ -155,7 +172,8 @@ struct CreateDestinationRequest {
   string createdBy;
 }
 
-struct UpdateDestinationRequest {
+struct UpdateDestinationRequest
+{
   DestinationId id;
   TenantId tenantId;
   string name;
@@ -176,11 +194,13 @@ struct UpdateDestinationRequest {
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult {
+struct CommandResult
+{
   string id;
   string error;
 
-  bool isSuccess() const {
+  bool isSuccess() const
+  {
     return error.length == 0;
   }
 }

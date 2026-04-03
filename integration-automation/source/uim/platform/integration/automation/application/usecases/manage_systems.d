@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.application.usecases.manage_systems;
 
 // import std.uuid;
@@ -5,18 +10,22 @@ module uim.platform.integration.automation.application.usecases.manage_systems;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.system_connection;
+
 // import uim.platform.integration.automation.domain.ports.system_repository;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 
-class ManageSystemsUseCase {
+class ManageSystemsUseCase
+{
   private SystemRepository repo;
 
-  this(SystemRepository repo) {
+  this(SystemRepository repo)
+  {
     this.repo = repo;
   }
 
-  CommandResult createSystem(CreateSystemRequest req) {
+  CommandResult createSystem(CreateSystemRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -49,19 +58,23 @@ class ManageSystemsUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SystemConnection* getSystem(SystemId id, TenantId tenantId) {
+  SystemConnection* getSystem(SystemId id, TenantId tenantId)
+  {
     return repo.findById(id, tenantId);
   }
 
-  SystemConnection[] listSystems(TenantId tenantId) {
+  SystemConnection[] listSystems(TenantId tenantId)
+  {
     return repo.findByTenant(tenantId);
   }
 
-  SystemConnection[] listByType(TenantId tenantId, SystemType systemType) {
+  SystemConnection[] listByType(TenantId tenantId, SystemType systemType)
+  {
     return repo.findByType(tenantId, systemType);
   }
 
-  CommandResult updateSystem(UpdateSystemRequest req) {
+  CommandResult updateSystem(UpdateSystemRequest req)
+  {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
     if (req.tenantId.length == 0)
@@ -100,7 +113,8 @@ class ManageSystemsUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSystem(SystemId id, TenantId tenantId) {
+  CommandResult deleteSystem(SystemId id, TenantId tenantId)
+  {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "System not found");
@@ -110,7 +124,8 @@ class ManageSystemsUseCase {
   }
 
   /// Test a system connection (simulated).
-  CommandResult testConnection(SystemId id, TenantId tenantId) {
+  CommandResult testConnection(SystemId id, TenantId tenantId)
+  {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "System not found");

@@ -48,89 +48,93 @@ import uim.platform.kyma.presentation.http.health;
 
 
 /// Dependency injection container — wires all layers together.
-struct Container {
-    
-    // Repositories (driven adapters)
-    MemoryEnvironmentRepository envRepo;
+struct Container
+{
 
-    MemoryNamespaceRepository nsRepo;
-    MemoryFunctionRepository fnRepo;
-    MemoryApiRuleRepository apiRuleRepo;
-    MemoryServiceInstanceRepository siRepo;
-    MemoryServiceBindingRepository sbRepo;
-    MemoryEventSubscriptionRepository eventSubRepo;
-    MemoryModuleRepository moduleRepo;
-    MemoryApplicationRepository appRepo;
+  
 
-    // Domain services
-    ModuleDependencyResolver depResolver;
-    FunctionValidator fnValidator;
+  // Repositories (driven adapters)
+  MemoryEnvironmentRepository envRepo;
 
-    // Use cases (application layer)
-    ManageEnvironmentsUseCase manageEnvironments;
-    ManageNamespacesUseCase manageNamespaces;
-    ManageFunctionsUseCase manageFunctions;
-    ManageApiRulesUseCase manageApiRules;
-    ManageServiceInstancesUseCase manageServiceInstances;
-    ManageServiceBindingsUseCase manageServiceBindings;
-    ManageEventSubscriptionsUseCase manageEventSubscriptions;
-    ManageModulesUseCase manageModules;
-    ManageApplicationsUseCase manageApplications;
+  MemoryNamespaceRepository nsRepo;
+  MemoryFunctionRepository fnRepo;
+  MemoryApiRuleRepository apiRuleRepo;
+  MemoryServiceInstanceRepository siRepo;
+  MemoryServiceBindingRepository sbRepo;
+  MemoryEventSubscriptionRepository eventSubRepo;
+  MemoryModuleRepository moduleRepo;
+  MemoryApplicationRepository appRepo;
 
-    // Controllers (driving adapters)
-    EnvironmentController environmentController;
-    NamespaceController namespaceController;
-    FunctionController functionController;
-    ApiRuleController apiRuleController;
-    ServiceInstanceController serviceInstanceController;
-    ServiceBindingController serviceBindingController;
-    EventSubscriptionController eventSubscriptionController;
-    ModuleController moduleController;
-    ApplicationController applicationController;
-    HealthController healthController;
+  // Domain services
+  ModuleDependencyResolver depResolver;
+  FunctionValidator fnValidator;
+
+  // Use cases (application layer)
+  ManageEnvironmentsUseCase manageEnvironments;
+  ManageNamespacesUseCase manageNamespaces;
+  ManageFunctionsUseCase manageFunctions;
+  ManageApiRulesUseCase manageApiRules;
+  ManageServiceInstancesUseCase manageServiceInstances;
+  ManageServiceBindingsUseCase manageServiceBindings;
+  ManageEventSubscriptionsUseCase manageEventSubscriptions;
+  ManageModulesUseCase manageModules;
+  ManageApplicationsUseCase manageApplications;
+
+  // Controllers (driving adapters)
+  EnvironmentController environmentController;
+  NamespaceController namespaceController;
+  FunctionController functionController;
+  ApiRuleController apiRuleController;
+  ServiceInstanceController serviceInstanceController;
+  ServiceBindingController serviceBindingController;
+  EventSubscriptionController eventSubscriptionController;
+  ModuleController moduleController;
+  ApplicationController applicationController;
+  HealthController healthController;
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
-    Container c;
+Container buildContainer(AppConfig config)
+{
+  Container c;
 
-    // Infrastructure adapters
-    c.envRepo = new MemoryEnvironmentRepository();
-    c.nsRepo = new MemoryNamespaceRepository();
-    c.fnRepo = new MemoryFunctionRepository();
-    c.apiRuleRepo = new MemoryApiRuleRepository();
-    c.siRepo = new MemoryServiceInstanceRepository();
-    c.sbRepo = new MemoryServiceBindingRepository();
-    c.eventSubRepo = new MemoryEventSubscriptionRepository();
-    c.moduleRepo = new MemoryModuleRepository();
-    c.appRepo = new MemoryApplicationRepository();
+  // Infrastructure adapters
+  c.envRepo = new MemoryEnvironmentRepository();
+  c.nsRepo = new MemoryNamespaceRepository();
+  c.fnRepo = new MemoryFunctionRepository();
+  c.apiRuleRepo = new MemoryApiRuleRepository();
+  c.siRepo = new MemoryServiceInstanceRepository();
+  c.sbRepo = new MemoryServiceBindingRepository();
+  c.eventSubRepo = new MemoryEventSubscriptionRepository();
+  c.moduleRepo = new MemoryModuleRepository();
+  c.appRepo = new MemoryApplicationRepository();
 
-    // Domain services
-    c.depResolver = new ModuleDependencyResolver();
-    c.fnValidator = new FunctionValidator();
+  // Domain services
+  c.depResolver = new ModuleDependencyResolver();
+  c.fnValidator = new FunctionValidator();
 
-    // Application use cases
-    c.manageEnvironments = new ManageEnvironmentsUseCase(c.envRepo);
-    c.manageNamespaces = new ManageNamespacesUseCase(c.nsRepo);
-    c.manageFunctions = new ManageFunctionsUseCase(c.fnRepo, c.fnValidator);
-    c.manageApiRules = new ManageApiRulesUseCase(c.apiRuleRepo);
-    c.manageServiceInstances = new ManageServiceInstancesUseCase(c.siRepo);
-    c.manageServiceBindings = new ManageServiceBindingsUseCase(c.sbRepo);
-    c.manageEventSubscriptions = new ManageEventSubscriptionsUseCase(c.eventSubRepo);
-    c.manageModules = new ManageModulesUseCase(c.moduleRepo, c.depResolver);
-    c.manageApplications = new ManageApplicationsUseCase(c.appRepo);
+  // Application use cases
+  c.manageEnvironments = new ManageEnvironmentsUseCase(c.envRepo);
+  c.manageNamespaces = new ManageNamespacesUseCase(c.nsRepo);
+  c.manageFunctions = new ManageFunctionsUseCase(c.fnRepo, c.fnValidator);
+  c.manageApiRules = new ManageApiRulesUseCase(c.apiRuleRepo);
+  c.manageServiceInstances = new ManageServiceInstancesUseCase(c.siRepo);
+  c.manageServiceBindings = new ManageServiceBindingsUseCase(c.sbRepo);
+  c.manageEventSubscriptions = new ManageEventSubscriptionsUseCase(c.eventSubRepo);
+  c.manageModules = new ManageModulesUseCase(c.moduleRepo, c.depResolver);
+  c.manageApplications = new ManageApplicationsUseCase(c.appRepo);
 
-    // Presentation controllers
-    c.environmentController = new EnvironmentController(c.manageEnvironments);
-    c.namespaceController = new NamespaceController(c.manageNamespaces);
-    c.functionController = new FunctionController(c.manageFunctions);
-    c.apiRuleController = new ApiRuleController(c.manageApiRules);
-    c.serviceInstanceController = new ServiceInstanceController(c.manageServiceInstances);
-    c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
-    c.eventSubscriptionController = new EventSubscriptionController(c.manageEventSubscriptions);
-    c.moduleController = new ModuleController(c.manageModules);
-    c.applicationController = new ApplicationController(c.manageApplications);
-    c.healthController = new HealthController("kyma-runtime");
+  // Presentation controllers
+  c.environmentController = new EnvironmentController(c.manageEnvironments);
+  c.namespaceController = new NamespaceController(c.manageNamespaces);
+  c.functionController = new FunctionController(c.manageFunctions);
+  c.apiRuleController = new ApiRuleController(c.manageApiRules);
+  c.serviceInstanceController = new ServiceInstanceController(c.manageServiceInstances);
+  c.serviceBindingController = new ServiceBindingController(c.manageServiceBindings);
+  c.eventSubscriptionController = new EventSubscriptionController(c.manageEventSubscriptions);
+  c.moduleController = new ModuleController(c.manageModules);
+  c.applicationController = new ApplicationController(c.manageApplications);
+  c.healthController = new HealthController("kyma-runtime");
 
-    return c;
+  return c;
 }

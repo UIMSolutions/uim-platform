@@ -1,10 +1,16 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.domain.entities.destination;
 
 import uim.platform.integration.automation.domain.types;
 
 /// A destination configuration — defines how to connect to a target system
 /// for automated step execution. Mirrors SAP BTP destination service concepts.
-struct Destination {
+struct Destination
+{
   DestinationId id;
   TenantId tenantId;
   string name; // unique destination name

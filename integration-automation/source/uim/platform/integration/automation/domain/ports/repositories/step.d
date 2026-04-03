@@ -1,10 +1,16 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.domain.ports.repositories.step;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 
 /// Port for persisting and querying workflow steps.
-interface StepRepository {
+interface StepRepository
+{
   WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId);
   WorkflowStep* findById(StepId id, TenantId tenantId);
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo);

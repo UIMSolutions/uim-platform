@@ -16,145 +16,171 @@ import uim.platform.kyma.domain.entities.namespace;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class NamespaceController {
-    private ManageNamespacesUseCase uc;
+class NamespaceController
+{
+  private ManageNamespacesUseCase uc;
 
-    this(ManageNamespacesUseCase uc) {
-        this.uc = uc;
+  this(ManageNamespacesUseCase uc)
+  {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router)
+  {
+    router.post("/api/v1/namespaces", &handleCreate);
+    router.get("/api/v1/namespaces", &handleList);
+    router.get("/api/v1/namespaces/*", &handleGetById);
+    router.put("/api/v1/namespaces/*", &handleUpdate);
+    router.delete_("/api/v1/namespaces/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto j = req.json;
+      CreateNamespaceRequest r;
+      r.environmentId = j.getString("environmentId");
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.cpuLimit = j.getString("cpuLimit");
+      r.memoryLimit = j.getString("memoryLimit");
+      r.cpuRequest = j.getString("cpuRequest");
+      r.memoryRequest = j.getString("memoryRequest");
+      r.podLimit = j.getInteger("podLimit");
+      r.quotaEnforcement = j.getString("quotaEnforcement");
+      r.istioInjection = j.getBoolean("istioInjection", true);
+      r.labels = jsonStrMap(j, "labels");
+      r.annotations = jsonStrMap(j, "annotations");
+      r.createdBy = req.headers.get("X-User-Id", "");
+
+      auto result = uc.create(r);
+      if (result.success)
+      {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        res.writeJsonBody(resp, 201);
+      }
+      else
+        writeError(res, 400, result.error);
     }
-
-    override void registerRoutes(URLRouter router) {
-        router.post("/api/v1/namespaces", &handleCreate);
-        router.get("/api/v1/namespaces", &handleList);
-        router.get("/api/v1/namespaces/*", &handleGetById);
-        router.put("/api/v1/namespaces/*", &handleUpdate);
-        router.delete_("/api/v1/namespaces/*", &handleDelete);
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto j = req.json;
-            CreateNamespaceRequest r;
-            r.environmentId = j.getString("environmentId");
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.name = j.getString("name");
-            r.description = j.getString("description");
-            r.cpuLimit = j.getString("cpuLimit");
-            r.memoryLimit = j.getString("memoryLimit");
-            r.cpuRequest = j.getString("cpuRequest");
-            r.memoryRequest = j.getString("memoryRequest");
-            r.podLimit = j.getInteger("podLimit");
-            r.quotaEnforcement = j.getString("quotaEnforcement");
-            r.istioInjection = j.getBoolean("istioInjection", true);
-            r.labels = jsonStrMap(j, "labels");
-            r.annotations = jsonStrMap(j, "annotations");
-            r.createdBy = req.headers.get("X-User-Id", "");
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto envIdParam = req.params.get("environmentId");
+      string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
-            auto result = uc.create(r);
-            if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                res.writeJsonBody(resp, 201);
-            } else
-                writeError(res, 400, result.error);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+      auto items = uc.listByEnvironment(envId);
+      auto arr = Json.emptyArray;
+      foreach (ref ns; items)
+        arr ~= serializeNs(ns);
+
+      auto resp = Json.emptyObject;
+      resp["items"] = arr;
+      resp["totalCount"] = Json(cast(long) items.length);
+      res.writeJsonBody(resp, 200);
     }
-
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto envIdParam = req.params.get("environmentId");
-            string envId = envIdParam.length > 0 ? envIdParam
-                : req.headers.get("X-Environment-Id", "");
-
-            auto items = uc.listByEnvironment(envId);
-            auto arr = Json.emptyArray;
-            foreach (ref ns; items)
-                arr ~= serializeNs(ns);
-
-            auto resp = Json.emptyObject;
-            resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long)items.length);
-            res.writeJsonBody(resp, 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto ns = uc.getNamespace(id);
-            if (ns.id.length == 0) {
-                writeError(res, 404, "Namespace not found");
-                return;
-            }
-            res.writeJsonBody(serializeNs(ns), 200);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto ns = uc.getNamespace(id);
+      if (ns.id.length == 0)
+      {
+        writeError(res, 404, "Namespace not found");
+        return;
+      }
+      res.writeJsonBody(serializeNs(ns), 200);
     }
-
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto j = req.json;
-            UpdateNamespaceRequest r;
-            r.description = j.getString("description");
-            r.cpuLimit = j.getString("cpuLimit");
-            r.memoryLimit = j.getString("memoryLimit");
-            r.cpuRequest = j.getString("cpuRequest");
-            r.memoryRequest = j.getString("memoryRequest");
-            r.podLimit = j.getInteger("podLimit");
-            r.quotaEnforcement = j.getString("quotaEnforcement");
-            r.istioInjection = j.getBoolean("istioInjection", true);
-            r.labels = jsonStrMap(j, "labels");
-            r.annotations = jsonStrMap(j, "annotations");
-
-            auto result = uc.updateNamespace(id, r);
-            if (result.success)
-                res.writeJsonBody(Json.emptyObject, 200);
-            else
-                writeError(res, 400, result.error);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
     }
+  }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-        try {
-            auto id = extractIdFromPath(req.requestURI);
-            auto result = uc.deleteNamespace(id);
-            if (result.success)
-                res.writeBody("", 204);
-            else
-                writeError(res, 404, result.error);
-        } catch (Exception e) {
-            writeError(res, 500, "Internal server error");
-        }
-    }
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto j = req.json;
+      UpdateNamespaceRequest r;
+      r.description = j.getString("description");
+      r.cpuLimit = j.getString("cpuLimit");
+      r.memoryLimit = j.getString("memoryLimit");
+      r.cpuRequest = j.getString("cpuRequest");
+      r.memoryRequest = j.getString("memoryRequest");
+      r.podLimit = j.getInteger("podLimit");
+      r.quotaEnforcement = j.getString("quotaEnforcement");
+      r.istioInjection = j.getBoolean("istioInjection", true);
+      r.labels = jsonStrMap(j, "labels");
+      r.annotations = jsonStrMap(j, "annotations");
 
-    private Json serializeNs(ref Namespace ns) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(ns.id);
-        j["environmentId"] = Json(ns.environmentId);
-        j["tenantId"] = Json(ns.tenantId);
-        j["name"] = Json(ns.name);
-        j["description"] = Json(ns.description);
-        j["status"] = Json(ns.status.to!string);
-        j["cpuLimit"] = Json(ns.cpuLimit);
-        j["memoryLimit"] = Json(ns.memoryLimit);
-        j["cpuRequest"] = Json(ns.cpuRequest);
-        j["memoryRequest"] = Json(ns.memoryRequest);
-        j["podLimit"] = Json(cast(long)ns.podLimit);
-        j["quotaEnforcement"] = Json(ns.quotaEnforcement.to!string);
-        j["istioInjection"] = Json(ns.istioInjection);
-        j["labels"] = serializeStrMap(ns.labels);
-        j["annotations"] = serializeStrMap(ns.annotations);
-        j["createdBy"] = Json(ns.createdBy);
-        j["createdAt"] = Json(ns.createdAt);
-        j["modifiedAt"] = Json(ns.modifiedAt);
-        return j;
+      auto result = uc.updateNamespace(id, r);
+      if (result.success)
+        res.writeJsonBody(Json.emptyObject, 200);
+      else
+        writeError(res, 400, result.error);
     }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
+      auto id = extractIdFromPath(req.requestURI);
+      auto result = uc.deleteNamespace(id);
+      if (result.success)
+        res.writeBody("", 204);
+      else
+        writeError(res, 404, result.error);
+    }
+    catch (Exception e)
+    {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private Json serializeNs(ref Namespace ns)
+  {
+    auto j = Json.emptyObject;
+    j["id"] = Json(ns.id);
+    j["environmentId"] = Json(ns.environmentId);
+    j["tenantId"] = Json(ns.tenantId);
+    j["name"] = Json(ns.name);
+    j["description"] = Json(ns.description);
+    j["status"] = Json(ns.status.to!string);
+    j["cpuLimit"] = Json(ns.cpuLimit);
+    j["memoryLimit"] = Json(ns.memoryLimit);
+    j["cpuRequest"] = Json(ns.cpuRequest);
+    j["memoryRequest"] = Json(ns.memoryRequest);
+    j["podLimit"] = Json(cast(long) ns.podLimit);
+    j["quotaEnforcement"] = Json(ns.quotaEnforcement.to!string);
+    j["istioInjection"] = Json(ns.istioInjection);
+    j["labels"] = serializeStrMap(ns.labels);
+    j["annotations"] = serializeStrMap(ns.annotations);
+    j["createdBy"] = Json(ns.createdBy);
+    j["createdAt"] = Json(ns.createdAt);
+    j["modifiedAt"] = Json(ns.modifiedAt);
+    return j;
+  }
 }

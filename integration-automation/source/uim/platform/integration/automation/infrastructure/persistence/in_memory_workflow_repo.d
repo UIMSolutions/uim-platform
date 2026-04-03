@@ -1,7 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.workflow_repo;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
+
 // import uim.platform.integration.automation.domain.ports.workflow_repository;
 import uim.platform.integration.automation.domain.ports;
 
@@ -27,23 +33,17 @@ class MemoryWorkflowRepository : WorkflowRepository
 
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.scenarioId == scenarioId)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.scenarioId == scenarioId).array;
   }
 
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.status == status)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   Workflow[] findByCreator(TenantId tenantId, UserId createdBy)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.createdBy == createdBy)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.createdBy == createdBy).array;
   }
 
   long countByTenant(TenantId tenantId)
@@ -53,11 +53,9 @@ class MemoryWorkflowRepository : WorkflowRepository
 
   long countActiveByTenant(TenantId tenantId)
   {
-    return cast(long) store.byValue()
-      .filter!(e => e.tenantId == tenantId
+    return cast(long) store.byValue().filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
-          || e.status == WorkflowStatus.planned
-          || e.status == WorkflowStatus.suspended))
+          || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;
   }
 

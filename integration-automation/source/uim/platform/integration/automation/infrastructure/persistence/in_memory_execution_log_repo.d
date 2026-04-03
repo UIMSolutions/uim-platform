@@ -1,7 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.execution_log_repo;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
+
 // import uim.platform.integration.automation.domain.ports.execution_log_repository;
 import uim.platform.integration.automation.domain.ports;
 
@@ -35,9 +41,12 @@ class MemoryExecutionLogRepository : ExecutionLogRepository
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
   {
     return store.filter!((e) {
-      if (e.tenantId != tenantId) return false;
-      if (timeFrom > 0 && e.timestamp < timeFrom) return false;
-      if (timeTo > 0 && e.timestamp > timeTo) return false;
+      if (e.tenantId != tenantId)
+        return false;
+      if (timeFrom > 0 && e.timestamp < timeFrom)
+        return false;
+      if (timeTo > 0 && e.timestamp > timeTo)
+        return false;
       return true;
     }).array;
   }

@@ -1,7 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.step_repo;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
+
 // import uim.platform.integration.automation.domain.ports.step_repository;
 import uim.platform.integration.automation.domain.ports;
 
@@ -14,9 +20,8 @@ class MemoryStepRepository : StepRepository
 
   WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId)
   {
-    auto result = store.byValue()
-      .filter!(e => e.workflowId == workflowId && e.tenantId == tenantId)
-      .array;
+    auto result = store.byValue().filter!(e => e.workflowId == workflowId
+        && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
   }
@@ -31,31 +36,25 @@ class MemoryStepRepository : StepRepository
 
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.assignedTo == assignedTo).array;
   }
 
   WorkflowStep[] findByRole(TenantId tenantId, string assignedRole)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.assignedRole == assignedRole)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId
+        && e.assignedRole == assignedRole).array;
   }
 
   WorkflowStep[] findByStatus(WorkflowId workflowId, TenantId tenantId, StepStatus status)
   {
-    return store.byValue()
-      .filter!(e => e.workflowId == workflowId
-        && e.tenantId == tenantId && e.status == status)
-      .array;
+    return store.byValue().filter!(e => e.workflowId == workflowId
+        && e.tenantId == tenantId && e.status == status).array;
   }
 
   WorkflowStep* findBySequence(WorkflowId workflowId, TenantId tenantId, int sequenceNumber)
   {
     foreach (ref s; store.byValue())
-      if (s.workflowId == workflowId && s.tenantId == tenantId
-        && s.sequenceNumber == sequenceNumber)
+      if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
     return null;
   }

@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.presentation.http.scenario;
 
 // import vibe.http.server;
@@ -241,15 +246,24 @@ ScenarioCategory parseScenarioCategory(string s)
 {
   switch (s)
   {
-    case "leadToCash": return ScenarioCategory.leadToCash;
-    case "sourceToPay": return ScenarioCategory.sourceToPay;
-    case "recruitToRetire": return ScenarioCategory.recruitToRetire;
-    case "designToOperate": return ScenarioCategory.designToOperate;
-    case "btpServices": return ScenarioCategory.btpServices;
-    case "s4HanaIntegration": return ScenarioCategory.s4HanaIntegration;
-    case "communicationManagement": return ScenarioCategory.communicationManagement;
-    case "custom": return ScenarioCategory.custom;
-    default: return ScenarioCategory.custom;
+  case "leadToCash":
+    return ScenarioCategory.leadToCash;
+  case "sourceToPay":
+    return ScenarioCategory.sourceToPay;
+  case "recruitToRetire":
+    return ScenarioCategory.recruitToRetire;
+  case "designToOperate":
+    return ScenarioCategory.designToOperate;
+  case "btpServices":
+    return ScenarioCategory.btpServices;
+  case "s4HanaIntegration":
+    return ScenarioCategory.s4HanaIntegration;
+  case "communicationManagement":
+    return ScenarioCategory.communicationManagement;
+  case "custom":
+    return ScenarioCategory.custom;
+  default:
+    return ScenarioCategory.custom;
   }
 }
 
@@ -257,11 +271,16 @@ ScenarioStatus parseScenarioStatus(string s)
 {
   switch (s)
   {
-    case "draft": return ScenarioStatus.draft;
-    case "active": return ScenarioStatus.active;
-    case "deprecated": return ScenarioStatus.deprecated_;
-    case "archived": return ScenarioStatus.archived;
-    default: return ScenarioStatus.draft;
+  case "draft":
+    return ScenarioStatus.draft;
+  case "active":
+    return ScenarioStatus.active;
+  case "deprecated":
+    return ScenarioStatus.deprecated_;
+  case "archived":
+    return ScenarioStatus.archived;
+  default:
+    return ScenarioStatus.draft;
   }
 }
 
@@ -269,18 +288,30 @@ SystemType parseSystemType(string s)
 {
   switch (s)
   {
-    case "sapS4Hana": return SystemType.sapS4Hana;
-    case "sapS4HanaCloud": return SystemType.sapS4HanaCloud;
-    case "sapBtp": return SystemType.sapBtp;
-    case "sapSuccessFactors": return SystemType.sapSuccessFactors;
-    case "sapAriba": return SystemType.sapAriba;
-    case "sapConcur": return SystemType.sapConcur;
-    case "sapFieldglass": return SystemType.sapFieldglass;
-    case "sapIntegratedBusinessPlanning": return SystemType.sapIntegratedBusinessPlanning;
-    case "sapBuildWorkZone": return SystemType.sapBuildWorkZone;
-    case "onPremise": return SystemType.onPremise;
-    case "thirdParty": return SystemType.thirdParty;
-    default: return SystemType.thirdParty;
+  case "sapS4Hana":
+    return SystemType.sapS4Hana;
+  case "sapS4HanaCloud":
+    return SystemType.sapS4HanaCloud;
+  case "sapBtp":
+    return SystemType.sapBtp;
+  case "sapSuccessFactors":
+    return SystemType.sapSuccessFactors;
+  case "sapAriba":
+    return SystemType.sapAriba;
+  case "sapConcur":
+    return SystemType.sapConcur;
+  case "sapFieldglass":
+    return SystemType.sapFieldglass;
+  case "sapIntegratedBusinessPlanning":
+    return SystemType.sapIntegratedBusinessPlanning;
+  case "sapBuildWorkZone":
+    return SystemType.sapBuildWorkZone;
+  case "onPremise":
+    return SystemType.onPremise;
+  case "thirdParty":
+    return SystemType.thirdParty;
+  default:
+    return SystemType.thirdParty;
   }
 }
 
@@ -288,11 +319,16 @@ StepType parseStepType(string s)
 {
   switch (s)
   {
-    case "manual": return StepType.manual;
-    case "automated": return StepType.automated;
-    case "approval": return StepType.approval;
-    case "notification": return StepType.notification;
-    default: return StepType.manual;
+  case "manual":
+    return StepType.manual;
+  case "automated":
+    return StepType.automated;
+  case "approval":
+    return StepType.approval;
+  case "notification":
+    return StepType.notification;
+  default:
+    return StepType.manual;
   }
 }
 
@@ -300,10 +336,15 @@ StepPriority parseStepPriority(string s)
 {
   switch (s)
   {
-    case "low": return StepPriority.low;
-    case "medium": return StepPriority.medium;
-    case "high": return StepPriority.high;
-    case "critical": return StepPriority.critical;
-    default: return StepPriority.medium;
+  case "low":
+    return StepPriority.low;
+  case "medium":
+    return StepPriority.medium;
+  case "high":
+    return StepPriority.high;
+  case "critical":
+    return StepPriority.critical;
+  default:
+    return StepPriority.medium;
   }
 }

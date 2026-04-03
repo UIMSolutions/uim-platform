@@ -1,7 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.scenario_repo;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
+
 // import uim.platform.integration.automation.domain.ports.scenario_repository;
 import uim.platform.integration.automation.domain.ports;
 
@@ -27,24 +33,18 @@ class MemoryScenarioRepository : ScenarioRepository
 
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.category == category)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
   IntegrationScenario[] findByStatus(TenantId tenantId, ScenarioStatus status)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.status == status)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   IntegrationScenario[] findBySystemType(TenantId tenantId, SystemType systemType)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId
-        && (e.sourceSystemType == systemType || e.targetSystemType == systemType))
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId
+        && (e.sourceSystemType == systemType || e.targetSystemType == systemType)).array;
   }
 
   void save(IntegrationScenario scenario)

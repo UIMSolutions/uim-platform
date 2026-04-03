@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.container;
 
 import uim.platform.integration.automation.infrastructure.config;
@@ -32,7 +37,8 @@ import uim.platform.integration.automation.presentation.http.monitoring;
 import uim.platform.integration.automation.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container {
+struct Container
+{
   // Repositories (driven adapters)
   MemoryScenarioRepository scenarioRepo;
   MemoryWorkflowRepository workflowRepo;
@@ -64,7 +70,8 @@ struct Container {
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config) {
+Container buildContainer(AppConfig config)
+{
   Container c;
 
   // Infrastructure adapters (driven ports)
@@ -81,13 +88,12 @@ Container buildContainer(AppConfig config) {
 
   // Application use cases
   c.manageScenarios = new ManageScenariosUseCase(c.scenarioRepo);
-  c.manageWorkflows = new ManageWorkflowsUseCase(
-    c.workflowRepo, c.stepRepo, c.scenarioRepo, c.workflowEngine);
+  c.manageWorkflows = new ManageWorkflowsUseCase(c.workflowRepo, c.stepRepo,
+      c.scenarioRepo, c.workflowEngine);
   c.manageSteps = new ManageStepsUseCase(c.stepRepo, c.stepExecutor, c.workflowEngine);
   c.manageSystems = new ManageSystemsUseCase(c.systemRepo);
   c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.systemRepo);
-  c.monitorExecutions = new MonitorExecutionsUseCase(
-    c.executionLogRepo, c.workflowRepo, c.stepRepo);
+  c.monitorExecutions = new MonitorExecutionsUseCase(c.executionLogRepo, c.workflowRepo, c.stepRepo);
 
   // Presentation controllers (driving adapters)
   c.scenarioController = new ScenarioController(c.manageScenarios);

@@ -1,7 +1,13 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.infrastructure.persistence.memory.system_repo;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.system_connection;
+
 // import uim.platform.integration.automation.domain.ports.system_repository;
 import uim.platform.integration.automation.domain.ports;
 
@@ -27,16 +33,12 @@ class MemorySystemRepository : SystemRepository
 
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.systemType == systemType)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.systemType == systemType).array;
   }
 
   SystemConnection[] findByStatus(TenantId tenantId, ConnectionStatus status)
   {
-    return store.byValue()
-      .filter!(e => e.tenantId == tenantId && e.status == status)
-      .array;
+    return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
   void save(SystemConnection system)

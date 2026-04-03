@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.presentation.http.system;
 
 // import vibe.http.server;
@@ -228,10 +233,15 @@ ConnectionStatus parseConnectionStatus(string s)
 {
   switch (s)
   {
-    case "active": return ConnectionStatus.active;
-    case "inactive": return ConnectionStatus.inactive;
-    case "error": return ConnectionStatus.error;
-    case "testing": return ConnectionStatus.testing;
-    default: return ConnectionStatus.inactive;
+  case "active":
+    return ConnectionStatus.active;
+  case "inactive":
+    return ConnectionStatus.inactive;
+  case "error":
+    return ConnectionStatus.error;
+  case "testing":
+    return ConnectionStatus.testing;
+  default:
+    return ConnectionStatus.inactive;
   }
 }

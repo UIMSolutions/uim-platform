@@ -1,8 +1,14 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.domain.services.step_executor;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation.domain.entities.execution_log;
+
 // import uim.platform.integration.automation.domain.ports.step_repository;
 // import uim.platform.integration.automation.domain.ports.execution_log_repository;
 import uim.platform.integration.automation.domain.ports;
@@ -37,7 +43,7 @@ class StepExecutor
     stepRepo.update(*step);
 
     recordLog(step.workflowId, stepId, tenantId, "step.started",
-      ExecutionOutcome.success, "Step started", executedBy);
+        ExecutionOutcome.success, "Step started", executedBy);
     return true;
   }
 
@@ -60,7 +66,7 @@ class StepExecutor
 
     long durationMs = (endTime - startTime) / 10_000; // hnsecs to ms
     recordLog(step.workflowId, stepId, tenantId, "step.completed",
-      ExecutionOutcome.success, result, executedBy, durationMs);
+        ExecutionOutcome.success, result, executedBy, durationMs);
     return true;
   }
 
@@ -77,7 +83,7 @@ class StepExecutor
     stepRepo.update(*step);
 
     recordLog(step.workflowId, stepId, tenantId, "step.failed",
-      ExecutionOutcome.failure, errorMessage, executedBy);
+        ExecutionOutcome.failure, errorMessage, executedBy);
     return true;
   }
 
@@ -94,13 +100,12 @@ class StepExecutor
     stepRepo.update(*step);
 
     recordLog(step.workflowId, stepId, tenantId, "step.skipped",
-      ExecutionOutcome.skipped, reason, executedBy);
+        ExecutionOutcome.skipped, reason, executedBy);
     return true;
   }
 
-  private void recordLog(WorkflowId workflowId, StepId stepId, TenantId tenantId,
-    string action, ExecutionOutcome outcome, string message,
-    string executedBy, long durationMs = 0)
+  private void recordLog(WorkflowId workflowId, StepId stepId, TenantId tenantId, string action,
+      ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0)
   {
     auto log = ExecutionLog();
     log.id = randomUUID().toString();

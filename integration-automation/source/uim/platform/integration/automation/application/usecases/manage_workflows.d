@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module uim.platform.integration.automation.application.usecases.manage_workflows;
 
 // import std.uuid;
@@ -7,6 +12,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
+
 // import uim.platform.integration.automation.domain.ports.workflow_repository;
 // import uim.platform.integration.automation.domain.ports.step_repository;
 // import uim.platform.integration.automation.domain.ports.scenario_repository;
@@ -15,14 +21,16 @@ import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.domain.services.workflow_engine;
 import uim.platform.integration.automation.application.dto;
 
-class ManageWorkflowsUseCase {
+class ManageWorkflowsUseCase
+{
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
   private ScenarioRepository scenarioRepo;
   private WorkflowEngine engine;
 
   this(WorkflowRepository workflowRepo, StepRepository stepRepo,
-    ScenarioRepository scenarioRepo, WorkflowEngine engine) {
+      ScenarioRepository scenarioRepo, WorkflowEngine engine)
+  {
     this.workflowRepo = workflowRepo;
     this.stepRepo = stepRepo;
     this.scenarioRepo = scenarioRepo;
@@ -30,7 +38,8 @@ class ManageWorkflowsUseCase {
   }
 
   /// Create a new workflow instance from a scenario template.
-  CommandResult createWorkflow(CreateWorkflowRequest req) {
+  CommandResult createWorkflow(CreateWorkflowRequest req)
+  {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.scenarioId.length == 0)
@@ -57,7 +66,7 @@ class ManageWorkflowsUseCase {
     wf.description = req.description.length > 0 ? req.description : scenario.description;
     wf.status = WorkflowStatus.planned;
     wf.currentStepIndex = 0;
-    wf.totalSteps = cast(int)scenario.stepTemplates.length;
+    wf.totalSteps = cast(int) scenario.stepTemplates.length;
     wf.completedSteps = 0;
     wf.sourceSystemId = req.sourceSystemId;
     wf.targetSystemId = req.targetSystemId;
@@ -68,7 +77,8 @@ class ManageWorkflowsUseCase {
     workflowRepo.save(wf);
 
     // Instantiate workflow steps from scenario templates
-    foreach (ref tmpl; scenario.stepTemplates) {
+    foreach (ref tmpl; scenario.stepTemplates)
+    {
       auto step = WorkflowStep();
       step.id = randomUUID().toString();
       step.workflowId = wf.id;
@@ -98,20 +108,24 @@ class ManageWorkflowsUseCase {
     return CommandResult(wf.id, "");
   }
 
-  Workflow* getWorkflow(WorkflowId id, TenantId tenantId) {
+  Workflow* getWorkflow(WorkflowId id, TenantId tenantId)
+  {
     return workflowRepo.findById(id, tenantId);
   }
 
-  Workflow[] listWorkflows(TenantId tenantId) {
+  Workflow[] listWorkflows(TenantId tenantId)
+  {
     return workflowRepo.findByTenant(tenantId);
   }
 
-  Workflow[] listByStatus(TenantId tenantId, WorkflowStatus status) {
+  Workflow[] listByStatus(TenantId tenantId, WorkflowStatus status)
+  {
     return workflowRepo.findByStatus(tenantId, status);
   }
 
   /// Start a planned workflow.
-  CommandResult startWorkflow(WorkflowId id, TenantId tenantId) {
+  CommandResult startWorkflow(WorkflowId id, TenantId tenantId)
+  {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -128,7 +142,8 @@ class ManageWorkflowsUseCase {
   }
 
   /// Suspend an in-progress workflow.
-  CommandResult suspendWorkflow(WorkflowId id, TenantId tenantId) {
+  CommandResult suspendWorkflow(WorkflowId id, TenantId tenantId)
+  {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -142,7 +157,8 @@ class ManageWorkflowsUseCase {
   }
 
   /// Resume a suspended workflow.
-  CommandResult resumeWorkflow(WorkflowId id, TenantId tenantId) {
+  CommandResult resumeWorkflow(WorkflowId id, TenantId tenantId)
+  {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -158,7 +174,8 @@ class ManageWorkflowsUseCase {
   }
 
   /// Terminate a workflow.
-  CommandResult terminateWorkflow(WorkflowId id, TenantId tenantId) {
+  CommandResult terminateWorkflow(WorkflowId id, TenantId tenantId)
+  {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -172,7 +189,8 @@ class ManageWorkflowsUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteWorkflow(WorkflowId id, TenantId tenantId) {
+  CommandResult deleteWorkflow(WorkflowId id, TenantId tenantId)
+  {
     auto existing = workflowRepo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Workflow not found");

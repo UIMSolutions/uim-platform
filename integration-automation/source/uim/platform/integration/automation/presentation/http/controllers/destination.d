@@ -17,14 +17,17 @@ import uim.platform.integration.automation.domain.entities.destination;
 import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
-class DestinationController {
+class DestinationController
+{
   private ManageDestinationsUseCase useCase;
 
-  this(ManageDestinationsUseCase useCase) {
+  this(ManageDestinationsUseCase useCase)
+  {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router) {
+  override void registerRoutes(URLRouter router)
+  {
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
     router.get("/api/v1/destinations/*", &handleGetById);
@@ -32,8 +35,10 @@ class DestinationController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto j = req.json;
       auto r = CreateDestinationRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -53,20 +58,27 @@ class DestinationController {
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createDestination(r);
-      if (result.isSuccess()) {
+      if (result.isSuccess())
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      }
+      else
+      {
         writeError(res, 400, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto destinations = useCase.listDestinations(tenantId);
 
@@ -76,30 +88,39 @@ class DestinationController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)destinations.length);
+      resp["totalCount"] = Json(cast(long) destinations.length);
       res.writeJsonBody(resp, 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto dest = useCase.getDestination(id, tenantId);
-      if (dest is null) {
+      if (dest is null)
+      {
         writeError(res, 404, "Destination not found");
         return;
       }
       res.writeJsonBody(serializeDestination(*dest), 200);
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateDestinationRequest();
@@ -121,36 +142,49 @@ class DestinationController {
       r.isEnabled = j.getBoolean("isEnabled", true);
 
       auto result = useCase.updateDestination(r);
-      if (result.isSuccess()) {
+      if (result.isSuccess())
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         writeError(res, 400, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  {
+    try
+    {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteDestination(id, tenantId);
-      if (result.isSuccess()) {
+      if (result.isSuccess())
+      {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      }
+      else
+      {
         writeError(res, 404, result.error);
       }
-    } catch (Exception e) {
+    }
+    catch (Exception e)
+    {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeDestination(ref const Destination d) {
+  private static Json serializeDestination(ref const Destination d)
+  {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);
@@ -174,8 +208,10 @@ class DestinationController {
   }
 }
 
-DestinationType parseDestinationType(string s) {
-  switch (s) {
+DestinationType parseDestinationType(string s)
+{
+  switch (s)
+  {
   case "http":
     return DestinationType.http;
   case "rfc":
@@ -191,8 +227,10 @@ DestinationType parseDestinationType(string s) {
   }
 }
 
-AuthenticationType parseAuthenticationType(string s) {
-  switch (s) {
+AuthenticationType parseAuthenticationType(string s)
+{
+  switch (s)
+  {
   case "basic":
     return AuthenticationType.basic;
   case "oauth2ClientCredentials":
@@ -212,8 +250,10 @@ AuthenticationType parseAuthenticationType(string s) {
   }
 }
 
-ProxyType parseProxyType(string s) {
-  switch (s) {
+ProxyType parseProxyType(string s)
+{
+  switch (s)
+  {
   case "internet":
     return ProxyType.internet;
   case "onPremise":
