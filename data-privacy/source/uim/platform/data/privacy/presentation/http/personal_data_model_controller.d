@@ -1,6 +1,6 @@
 module uim.platform.data.privacy.presentation.http.personal_data_model;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;

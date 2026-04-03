@@ -1,7 +1,7 @@
 module uim.platform.object_store.presentation.http.json_utils;
 
 import vibe.data.json;
-import vibe.http.server;
+// import vibe.http.server;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)

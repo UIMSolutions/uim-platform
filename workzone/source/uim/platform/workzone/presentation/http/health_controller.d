@@ -1,6 +1,6 @@
 module uim.platform.identity_authentication.presentation.http.health;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 

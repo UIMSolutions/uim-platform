@@ -1,7 +1,7 @@
 module uim.platform.auditlog.presentation.http.json_utils;
 
 import vibe.data.json;
-import vibe.http.server;
+// import vibe.http.server;
 
 import uim.platform.auditlog;
 

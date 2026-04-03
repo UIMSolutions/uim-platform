@@ -8,17 +8,14 @@ import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.ports.app_repository;
 import uim.platform.workzone.application.dto;
 
-class ManageAppsUseCase
-{
+class ManageAppsUseCase {
     private AppRepository repo;
 
-    this(AppRepository repo)
-    {
+    this(AppRepository repo) {
         this.repo = repo;
     }
 
-    CommandResult createApp(CreateAppRequest req)
-    {
+    CommandResult createApp(CreateAppRequest req) {
         if (req.name.length == 0)
             return CommandResult("", "App name is required");
 
@@ -43,31 +40,31 @@ class ManageAppsUseCase
         return CommandResult(app.id, "");
     }
 
-    AppRegistration* getApp(AppId id, TenantId tenantId)
-    {
+    AppRegistration* getApp(AppId id, TenantId tenantId) {
         return repo.findById(id, tenantId);
     }
 
-    AppRegistration[] listApps(TenantId tenantId)
-    {
+    AppRegistration[] listApps(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    AppRegistration[] listByStatus(AppStatus status, TenantId tenantId)
-    {
+    AppRegistration[] listByStatus(AppStatus status, TenantId tenantId) {
         return repo.findByStatus(status, tenantId);
     }
 
-    CommandResult updateApp(UpdateAppRequest req)
-    {
+    CommandResult updateApp(UpdateAppRequest req) {
         auto app = repo.findById(req.id, req.tenantId);
         if (app is null)
             return CommandResult("", "App not found");
 
-        if (req.name.length > 0) app.name = req.name;
-        if (req.description.length > 0) app.description = req.description;
-        if (req.launchUrl.length > 0) app.launchUrl = req.launchUrl;
-        if (req.icon.length > 0) app.icon = req.icon;
+        if (req.name.length > 0)
+            app.name = req.name;
+        if (req.description.length > 0)
+            app.description = req.description;
+        if (req.launchUrl.length > 0)
+            app.launchUrl = req.launchUrl;
+        if (req.icon.length > 0)
+            app.icon = req.icon;
         app.status = req.status;
         app.appConfig = req.appConfig;
         app.updatedAt = Clock.currStdTime();
@@ -76,8 +73,7 @@ class ManageAppsUseCase
         return CommandResult(app.id, "");
     }
 
-    void deleteApp(AppId id, TenantId tenantId)
-    {
+    void deleteApp(AppId id, TenantId tenantId) {
         repo.remove(id, tenantId);
     }
 }

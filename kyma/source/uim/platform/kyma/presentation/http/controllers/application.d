@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.presentation.http.application;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;

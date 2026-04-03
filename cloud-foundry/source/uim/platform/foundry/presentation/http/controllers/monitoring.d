@@ -1,6 +1,6 @@
 module uim.platform.foundry.presentation.http.controllers.monitoring;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;

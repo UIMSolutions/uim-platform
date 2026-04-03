@@ -1,7 +1,7 @@
 module uim.platform.data.attribute_recommendation.presentation.http.json_utils;
 
 import vibe.data.json;
-import vibe.http.server;
+// import vibe.http.server;
 import std.conv : to;
 
 import uim.platform.data.attribute_recommendation.domain.types;

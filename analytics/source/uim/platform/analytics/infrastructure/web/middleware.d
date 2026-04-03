@@ -1,6 +1,6 @@
 module uim.platform.analytics.infrastructure.web.middleware;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.core.log;
 
 /// CORS middleware - adds cross-origin headers for browser access.

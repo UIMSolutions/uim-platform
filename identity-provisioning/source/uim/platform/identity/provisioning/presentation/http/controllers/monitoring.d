@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning.presentation.http.controllers.monitoring_controller;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;

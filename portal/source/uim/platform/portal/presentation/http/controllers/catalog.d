@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.portal.presentation.http.controllers.catalog;
 
-import vibe.http.server;
+// import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import uim.platform.portal.application.usecases.manage_catalogs;
