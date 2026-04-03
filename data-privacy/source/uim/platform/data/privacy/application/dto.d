@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.data.privacy.application.dto;
 
 import uim.platform.data.privacy.domain.types;
 

@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_retention_rules;
+module uim.platform.data.privacy.application.usecases.manage_retention_rules;
 
 import std.uuid;
 import std.datetime.systime : Clock;

@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_personal_data_models;
+module uim.platform.data.privacy.application.usecases.manage_personal_data_models;
 
 import std.uuid;
 import std.datetime.systime : Clock;

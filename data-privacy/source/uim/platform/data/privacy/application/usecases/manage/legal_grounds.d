@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_legal_grounds;
+module uim.platform.data.privacy.application.usecases.manage_legal_grounds;
 
 import std.uuid;
 import std.datetime.systime : Clock;

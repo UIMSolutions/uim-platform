@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_consent_records;
+module uim.platform.data.privacy.application.usecases.manage_consent_records;
 
 import std.uuid;
 import std.datetime.systime : Clock;

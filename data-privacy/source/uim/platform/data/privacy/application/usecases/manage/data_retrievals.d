@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_data_retrievals;
+module uim.platform.data.privacy.application.usecases.manage_data_retrievals;
 
 import std.uuid;
 import std.datetime.systime : Clock;
