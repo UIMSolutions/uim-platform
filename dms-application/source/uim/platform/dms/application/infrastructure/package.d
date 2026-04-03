@@ -1,7 +1,7 @@
-module uim.platform.dms_application.infrastructure;
+module uim.platform.dms.application.infrastructure;
 
 public {
-  import uim.platform.dms_application.infrastructure.persistence;
-  import uim.platform.dms_application.infrastructure.config;
-  import uim.platform.dms_application.infrastructure.container;
+  import uim.platform.dms.application.infrastructure.persistence;
+  import uim.platform.dms.application.infrastructure.config;
+  import uim.platform.dms.application.infrastructure.container;
 }

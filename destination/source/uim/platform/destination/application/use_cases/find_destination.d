@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.find_destination;
+module uim.platform.destination.application.usecases.find_destination;
 
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.destination;

@@ -1,11 +1,10 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.destination.application.dto;
 
 import uim.platform.destination.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
     bool success;
     string id;
     string error;
@@ -13,18 +12,17 @@ struct CommandResult
 
 /// --- Destination DTOs ---
 
-struct CreateDestinationRequest
-{
+struct CreateDestinationRequest {
     TenantId tenantId;
     SubaccountId subaccountId;
     ServiceInstanceId serviceInstanceId;
     string name;
     string description;
-    string destinationType;         // "http", "rfc", "mail", "ldap"
+    string destinationType; // "http", "rfc", "mail", "ldap"
     string url;
-    string authenticationType;      // "NoAuthentication", "BasicAuthentication", "OAuth2ClientCredentials", etc.
-    string proxyType;               // "Internet", "OnPremise", "PrivateLink"
-    string level;                   // "subaccount", "serviceInstance"
+    string authenticationType; // "NoAuthentication", "BasicAuthentication", "OAuth2ClientCredentials", etc.
+    string proxyType; // "Internet", "OnPremise", "PrivateLink"
+    string level; // "subaccount", "serviceInstance"
 
     // HTTP-specific
     string urlPath;
@@ -63,8 +61,7 @@ struct CreateDestinationRequest
     string createdBy;
 }
 
-struct UpdateDestinationRequest
-{
+struct UpdateDestinationRequest {
     string description;
     string url;
     string authenticationType;
@@ -83,22 +80,21 @@ struct UpdateDestinationRequest
     string locationId;
     string sccVirtualHost;
     int sccVirtualPort;
-    string status;                  // "active", "inactive"
+    string status; // "active", "inactive"
     string[string] properties;
     string[] fragmentIds;
 }
 
 /// --- Certificate DTOs ---
 
-struct UploadCertificateRequest
-{
+struct UploadCertificateRequest {
     TenantId tenantId;
     SubaccountId subaccountId;
     string name;
     string description;
-    string certificateType;         // "keystore", "truststore"
-    string format_;                 // "p12", "jks", "pem", "pfx"
-    string content;                 // base64-encoded
+    string certificateType; // "keystore", "truststore"
+    string format_; // "p12", "jks", "pem", "pfx"
+    string content; // base64-encoded
     string password;
     string subject;
     string issuer;
@@ -108,8 +104,7 @@ struct UploadCertificateRequest
     string uploadedBy;
 }
 
-struct UpdateCertificateRequest
-{
+struct UpdateCertificateRequest {
     string description;
     string content;
     string password;
@@ -119,13 +114,12 @@ struct UpdateCertificateRequest
 
 /// --- Destination Fragment DTOs ---
 
-struct CreateFragmentRequest
-{
+struct CreateFragmentRequest {
     TenantId tenantId;
     SubaccountId subaccountId;
     string name;
     string description;
-    string level;                   // "subaccount", "serviceInstance"
+    string level; // "subaccount", "serviceInstance"
     string url;
     string authenticationType;
     string proxyType;
@@ -141,8 +135,7 @@ struct CreateFragmentRequest
     string createdBy;
 }
 
-struct UpdateFragmentRequest
-{
+struct UpdateFragmentRequest {
     string description;
     string url;
     string authenticationType;
@@ -160,18 +153,16 @@ struct UpdateFragmentRequest
 
 /// --- Find Destination DTO ---
 
-struct FindDestinationRequest
-{
+struct FindDestinationRequest {
     TenantId tenantId;
     SubaccountId subaccountId;
     string name;
-    string headerProvider;          // "subscriber", "provider"
+    string headerProvider; // "subscriber", "provider"
 }
 
 /// --- Destination Lookup Result DTO ---
 
-struct DestinationLookupResponse
-{
+struct DestinationLookupResponse {
     bool found;
     string destinationName;
     string url;
@@ -185,16 +176,14 @@ struct DestinationLookupResponse
     string error;
 }
 
-struct AuthTokenDto
-{
+struct AuthTokenDto {
     string type_;
     string value_;
     long expiresAt;
     string httpHeaderSuggestion;
 }
 
-struct CertificateDto
-{
+struct CertificateDto {
     string name;
     string type_;
     string format_;

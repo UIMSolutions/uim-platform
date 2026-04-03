@@ -1,6 +1,6 @@
-module uim.platform.dms_application.infrastructure.config;
+module uim.platform.dms.application.infrastructure.config;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Service configuration.

@@ -1,19 +1,19 @@
-module uim.platform.dms_application.application.usecases.browse_content;
+module uim.platform.dms.application.application.usecases.browse_content;
 
 // import std.datetime.systime : Clock;
 // import std.uuid : randomUUID;
 // 
-// import uim.platform.dms_application.application.dto;
-// import uim.platform.dms_application.domain.entities.document;
-// import uim.platform.dms_application.domain.entities.folder;
-// import uim.platform.dms_application.domain.entities.favorite;
-// import uim.platform.dms_application.domain.ports.document_repository;
-// import uim.platform.dms_application.domain.ports.folder_repository;
-// import uim.platform.dms_application.domain.ports.favorite_repository;
-// import uim.platform.dms_application.domain.ports.repository_repository;
-// import uim.platform.dms_application.domain.types;
+// import uim.platform.dms.application.application.dto;
+// import uim.platform.dms.application.domain.entities.document;
+// import uim.platform.dms.application.domain.entities.folder;
+// import uim.platform.dms.application.domain.entities.favorite;
+// import uim.platform.dms.application.domain.ports.document_repository;
+// import uim.platform.dms.application.domain.ports.folder_repository;
+// import uim.platform.dms.application.domain.ports.favorite_repository;
+// import uim.platform.dms.application.domain.ports.repository_repository;
+// import uim.platform.dms.application.domain.types;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Browsing summary for a repository.

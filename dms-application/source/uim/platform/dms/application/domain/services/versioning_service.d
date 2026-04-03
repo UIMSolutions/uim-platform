@@ -1,16 +1,16 @@
-module uim.platform.dms_application.domain.services.versioning_service;
+module uim.platform.dms.application.domain.services.versioning_service;
 
 //import std.conv : to;
 //import std.datetime.systime : Clock;
 //import std.uuid : randomUUID;
 //
-//import uim.platform.dms_application.domain.entities.document;
-//import uim.platform.dms_application.domain.entities.document_version;
-//import uim.platform.dms_application.domain.ports.document_repository;
-//import uim.platform.dms_application.domain.ports.document_version_repository;
-//import uim.platform.dms_application.domain.types;
+//import uim.platform.dms.application.domain.entities.document;
+//import uim.platform.dms.application.domain.entities.document_version;
+//import uim.platform.dms.application.domain.ports.document_repository;
+//import uim.platform.dms.application.domain.ports.document_version_repository;
+//import uim.platform.dms.application.domain.types;
 //
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Domain service for document version management (checkout/checkin model).

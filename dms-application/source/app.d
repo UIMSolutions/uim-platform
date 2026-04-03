@@ -4,10 +4,10 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 // 
-// import uim.platform.xyz.infrastructure.config;
-// import uim.platform.xyz.infrastructure.container;
+// import uim.platform.dms.application.infrastructure.config;
+// import uim.platform.dms.application.infrastructure.container;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 
 @safe:
 version (unittest) {

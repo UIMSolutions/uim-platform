@@ -1,40 +1,40 @@
-module uim.platform.dms_application.infrastructure.container;
+module uim.platform.dms.application.infrastructure.container;
 
-// import uim.platform.xyz.infrastructure.config;
+// import uim.platform.dms.application.infrastructure.config;
 // 
 // // Repositories
-// import uim.platform.xyz.infrastructure.persistence.memory.repository_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.folder_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.document_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.document_version_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.share_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.permission_repo;
-// import uim.platform.xyz.infrastructure.persistence.memory.favorite_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.repository_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.folder_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.document_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.document_version_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.share_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.permission_repo;
+// import uim.platform.dms.application.infrastructure.persistence.memory.favorite_repo;
 // 
 // // Domain services
-// import uim.platform.dms_application.domain.services.versioning_service;
-// import uim.platform.dms_application.domain.services.access_control_service;
+// import uim.platform.dms.application.domain.services.versioning_service;
+// import uim.platform.dms.application.domain.services.access_control_service;
 // 
 // // Use cases
-// import uim.platform.dms_application.application.usecases.manage_repositories;
-// import uim.platform.dms_application.application.usecases.manage_folders;
-// import uim.platform.dms_application.application.usecases.manage_documents;
-// import uim.platform.dms_application.application.usecases.manage_versions;
-// import uim.platform.dms_application.application.usecases.manage_shares;
-// import uim.platform.dms_application.application.usecases.manage_permissions;
-// import uim.platform.dms_application.application.usecases.browse_content;
+// import uim.platform.dms.application.application.usecases.manage_repositories;
+// import uim.platform.dms.application.application.usecases.manage_folders;
+// import uim.platform.dms.application.application.usecases.manage_documents;
+// import uim.platform.dms.application.application.usecases.manage_versions;
+// import uim.platform.dms.application.application.usecases.manage_shares;
+// import uim.platform.dms.application.application.usecases.manage_permissions;
+// import uim.platform.dms.application.application.usecases.browse_content;
 // 
 // // Controllers
-// import uim.platform.dms_application.presentation.http.repository;
-// import uim.platform.dms_application.presentation.http.folder;
-// import uim.platform.dms_application.presentation.http.document;
-// import uim.platform.dms_application.presentation.http.version_;
-// import uim.platform.dms_application.presentation.http.share;
-// import uim.platform.dms_application.presentation.http.permission;
-// import uim.platform.dms_application.presentation.http.browse;
-// import uim.platform.dms_application.presentation.http.health;
+// import uim.platform.dms.application.presentation.http.repository;
+// import uim.platform.dms.application.presentation.http.folder;
+// import uim.platform.dms.application.presentation.http.document;
+// import uim.platform.dms.application.presentation.http.version_;
+// import uim.platform.dms.application.presentation.http.share;
+// import uim.platform.dms.application.presentation.http.permission;
+// import uim.platform.dms.application.presentation.http.browse;
+// import uim.platform.dms.application.presentation.http.health;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Dependency injection container - wires all layers together.

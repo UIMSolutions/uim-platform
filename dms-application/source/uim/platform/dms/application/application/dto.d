@@ -1,9 +1,9 @@
-module uim.platform.dms_application.application.dto;
+module uim.platform.dms.application.application.dto;
 
-// import uim.platform.dms_application.domain.types;
+// import uim.platform.dms.application.domain.types;
 
 // --- Repository DTOs ---
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 

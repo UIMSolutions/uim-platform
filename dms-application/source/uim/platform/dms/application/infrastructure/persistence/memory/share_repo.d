@@ -1,10 +1,10 @@
-module uim.platform.xyz.infrastructure.persistence.memory.share_repo;
+module uim.platform.dms.application.infrastructure.persistence.memory.share_repo;
 
-// import uim.platform.dms_application.domain.entities.share;
-// import uim.platform.dms_application.domain.ports.share_repository;
-// import uim.platform.dms_application.domain.types;
+// import uim.platform.dms.application.domain.entities.share;
+// import uim.platform.dms.application.domain.ports.share_repository;
+// import uim.platform.dms.application.domain.types;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class MemoryShareRepository : IShareRepository {

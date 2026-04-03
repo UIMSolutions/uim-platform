@@ -1,6 +1,6 @@
-module uim.platform.dms_application.application;
+module uim.platform.dms.application.application;
 
 public {
-  import uim.platform.dms_application.application.usecases;
-  import uim.platform.dms_application.application.dto;
+  import uim.platform.dms.application.application.usecases;
+  import uim.platform.dms.application.application.dto;
 }

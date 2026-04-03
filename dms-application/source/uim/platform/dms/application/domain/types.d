@@ -1,4 +1,4 @@
-module uim.platform.dms_application.domain.types;
+module uim.platform.dms.application.domain.types;
 
 // --- ID type aliases ---
 alias RepositoryId = string;

@@ -1,11 +1,11 @@
-module uim.platform.dms_application.application.usecases.manage_versions;
+module uim.platform.dms.application.application.usecases.manage_versions;
 
-// import uim.platform.dms_application.application.dto;
-// import uim.platform.dms_application.domain.entities.document_version;
-// import uim.platform.dms_application.domain.services.versioning_service;
-// import uim.platform.dms_application.domain.types;
+// import uim.platform.dms.application.application.dto;
+// import uim.platform.dms.application.domain.entities.document_version;
+// import uim.platform.dms.application.domain.services.versioning_service;
+// import uim.platform.dms.application.domain.types;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 class ManageVersionsUseCase {

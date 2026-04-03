@@ -1,11 +1,11 @@
-module uim.platform.dms_application.presentation.http.json_utils;
+module uim.platform.dms.application.presentation.http.json_utils;
 
 // import vibe.data.json;
 // import vibe.http.server;
 // 
-// import uim.platform.dms_application.domain.types;
+// import uim.platform.dms.application.domain.types;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Extract a string field from a Json object.

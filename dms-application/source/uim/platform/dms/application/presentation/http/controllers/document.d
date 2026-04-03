@@ -1,17 +1,17 @@
-module uim.platform.dms_application.presentation.http.controllers.document;
+module uim.platform.dms.application.presentation.http.controllers.document;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // import std.conv : to;
 // 
-// import uim.platform.dms_application.application.usecases.manage_documents;
-// import uim.platform.dms_application.application.dto;
-// import uim.platform.dms_application.domain.entities.document;
-// import uim.platform.dms_application.domain.types;
-// import uim.platform.dms_application.presentation.http.json_utils;
+// import uim.platform.dms.application.application.usecases.manage_documents;
+// import uim.platform.dms.application.application.dto;
+// import uim.platform.dms.application.domain.entities.document;
+// import uim.platform.dms.application.domain.types;
+// import uim.platform.dms.application.presentation.http.json_utils;
 
-import uim.platform.dms_application;
+import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:

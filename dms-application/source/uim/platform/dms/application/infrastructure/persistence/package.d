@@ -1,5 +1,5 @@
-module uim.platform.dms_application.infrastructure.persistence;
+module uim.platform.dms.application.infrastructure.persistence;
 
 public {
-  import uim.platform.dms_application.infrastructure.persistence.memory;
+  import uim.platform.dms.application.infrastructure.persistence.memory;
 }

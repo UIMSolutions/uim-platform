@@ -1,8 +1,8 @@
-module uim.platform.dms_application.domain;
+module uim.platform.dms.application.domain;
 
 public {
-  import uim.platform.dms_application.domain.entities;
-  import uim.platform.dms_application.domain.ports;
-  import uim.platform.dms_application.domain.services;
-  import uim.platform.dms_application.domain.types;
+  import uim.platform.dms.application.domain.entities;
+  import uim.platform.dms.application.domain.ports;
+  import uim.platform.dms.application.domain.services;
+  import uim.platform.dms.application.domain.types;
 }

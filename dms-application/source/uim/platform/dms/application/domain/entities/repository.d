@@ -1,6 +1,6 @@
-module uim.platform.dms_application.domain.entities.repository;
+module uim.platform.dms.application.domain.entities.repository;
 
-import uim.platform.dms_application.domain.types;
+import uim.platform.dms.application.domain.types;
 
 class Repository
 {
