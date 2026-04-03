@@ -9,7 +9,7 @@ import uim.platform.cloud_foundry.application.usecases.manage_orgs;
 import uim.platform.cloud_foundry.application.dto;
 import uim.platform.cloud_foundry.domain.types;
 import uim.platform.cloud_foundry.domain.entities.organization;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class OrgController
 {

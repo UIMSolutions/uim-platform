@@ -9,7 +9,7 @@ import application.usecases.manage_retention_rules;
 import application.dto;
 import domain.types;
 import domain.entities.retention_rule;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class RetentionRuleController
 {

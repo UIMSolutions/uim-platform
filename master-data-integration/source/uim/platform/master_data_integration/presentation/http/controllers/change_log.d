@@ -9,7 +9,7 @@ import application.usecases.query_change_log;
 import application.dto;
 import domain.entities.change_log_entry;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ChangeLogController
 {

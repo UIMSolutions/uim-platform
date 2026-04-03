@@ -9,7 +9,7 @@ import application.usecases.manage_legal_grounds;
 import application.dto;
 import domain.types;
 import domain.entities.legal_ground;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class LegalGroundController
 {

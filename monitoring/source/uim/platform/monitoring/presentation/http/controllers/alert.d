@@ -14,7 +14,7 @@ import application.usecases.manage_alerts;
 import application.dto;
 import domain.entities.alert;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class AlertController {
     private ManageAlertsUseCase uc;

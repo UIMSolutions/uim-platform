@@ -9,7 +9,7 @@ import application.usecases.manage_deletion_requests;
 import application.dto;
 import domain.types;
 import domain.entities.deletion_request;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DeletionController
 {

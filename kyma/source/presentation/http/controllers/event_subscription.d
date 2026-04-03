@@ -14,7 +14,7 @@ import application.usecases.manage_event_subscriptions;
 import application.dto;
 import domain.entities.event_subscription;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class EventSubscriptionController {
     private ManageEventSubscriptionsUseCase uc;

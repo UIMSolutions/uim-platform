@@ -9,7 +9,7 @@ import application.usecases.manage_blocking_requests;
 import application.dto;
 import domain.types;
 import domain.entities.blocking_request;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class BlockingController
 {

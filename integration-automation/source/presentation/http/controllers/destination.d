@@ -14,8 +14,8 @@ import application.usecases.manage_destinations;
 import application.dto;
 import domain.types;
 import domain.entities.destination;
-import presentation.http.json_utils;
-import presentation.http.scenario_controller : parseSystemType;
+import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.scenario_controller : parseSystemType;
 
 class DestinationController {
   private ManageDestinationsUseCase useCase;

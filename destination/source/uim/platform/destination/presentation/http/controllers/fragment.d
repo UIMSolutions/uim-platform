@@ -9,7 +9,7 @@ import application.usecases.manage_fragments;
 import application.dto;
 import domain.entities.destination_fragment;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class FragmentController
 {

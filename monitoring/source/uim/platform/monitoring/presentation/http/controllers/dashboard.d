@@ -6,7 +6,7 @@ import vibe.data.json;
 
 import application.usecases.get_dashboard;
 import application.dto;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DashboardController
 {

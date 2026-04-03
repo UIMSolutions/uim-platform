@@ -14,7 +14,7 @@ import application.usecases.manage_applications;
 import application.dto;
 import domain.entities.application;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ApplicationController {
     private ManageApplicationsUseCase uc;

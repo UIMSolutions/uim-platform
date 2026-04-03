@@ -1,5 +1,5 @@
 module uim.platform.cloud_foundry.presentation;
 
 public {
-  import presentation.http;
+  import uim.platform.xyz.presentation.http;
 }

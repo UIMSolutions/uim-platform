@@ -9,7 +9,7 @@ import application.usecases.cleanse_addresses;
 import application.dto;
 import domain.types;
 import domain.entities.address_record;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class AddressController {
     private CleanseAddressesUseCase uc;

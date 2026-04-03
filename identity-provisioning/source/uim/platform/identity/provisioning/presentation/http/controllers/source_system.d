@@ -14,7 +14,7 @@ import application.usecases.manage_source_systems;
 import application.dto;
 import domain.entities.source_system;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class SourceSystemController {
   private ManageSourceSystemsUseCase uc;

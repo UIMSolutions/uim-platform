@@ -9,7 +9,7 @@ import application.usecases.manage_distribution_models;
 import application.dto;
 import domain.entities.distribution_model;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DistributionController
 {

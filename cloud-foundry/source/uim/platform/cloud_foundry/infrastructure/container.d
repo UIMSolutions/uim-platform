@@ -26,14 +26,14 @@ import uim.platform.cloud_foundry.application.usecases.manage_buildpacks;
 import uim.platform.cloud_foundry.application.usecases.monitor_apps;
 
 // Controllers
-import presentation.http.org;
-import presentation.http.space;
-import presentation.http.app;
-import presentation.http.service;
-import presentation.http.route;
-import presentation.http.buildpack;
-import presentation.http.monitoring;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.org;
+import uim.platform.xyz.presentation.http.space;
+import uim.platform.xyz.presentation.http.app;
+import uim.platform.xyz.presentation.http.service;
+import uim.platform.xyz.presentation.http.route;
+import uim.platform.xyz.presentation.http.buildpack;
+import uim.platform.xyz.presentation.http.monitoring;
+import uim.platform.xyz.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

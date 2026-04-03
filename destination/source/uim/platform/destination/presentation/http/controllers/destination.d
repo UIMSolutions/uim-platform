@@ -14,7 +14,7 @@ import application.usecases.manage_destinations;
 import application.dto;
 import domain.entities.destination;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DestinationController : SAPController {
     private ManageDestinationsUseCase uc;

@@ -14,7 +14,7 @@ import application.usecases.monitor_provisioning;
 import domain.entities.provisioning_log;
 import domain.entities.provisioned_entity;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class MonitoringController {
   private MonitorProvisioningUseCase uc;

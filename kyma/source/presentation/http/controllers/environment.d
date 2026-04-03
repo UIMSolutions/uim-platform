@@ -14,7 +14,7 @@ import application.usecases.manage_environments;
 import application.dto;
 import domain.entities.kyma_environment;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class EnvironmentController {
     private ManageEnvironmentsUseCase uc;

@@ -14,7 +14,7 @@ import application.usecases.manage_transformations;
 import application.dto;
 import domain.entities.transformation;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class TransformationController {
   private ManageTransformationsUseCase uc;

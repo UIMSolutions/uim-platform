@@ -8,7 +8,7 @@ module uim.platform.management.presentation.http.controllers.entitlement;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.entitlement;
 // import uim.platform.management.domain.types;
-// import presentation.http.json_utils;
+// import uim.platform.xyz.presentation.http.json_utils;
 import uim.platform.management;
 
 mixin(ShowModule!());

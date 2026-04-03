@@ -14,7 +14,7 @@ import application.usecases.run_provisioning_jobs;
 import application.dto;
 import domain.entities.provisioning_job;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ProvisioningJobController {
   private RunProvisioningJobsUseCase uc;

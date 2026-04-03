@@ -23,13 +23,13 @@ import application.usecases.manage_destinations;
 import application.usecases.monitor_executions;
 
 // Controllers
-import presentation.http.scenario;
-import presentation.http.workflow;
-import presentation.http.step;
-import presentation.http.system;
-import presentation.http.destination;
-import presentation.http.monitoring;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.scenario;
+import uim.platform.xyz.presentation.http.workflow;
+import uim.platform.xyz.presentation.http.step;
+import uim.platform.xyz.presentation.http.system;
+import uim.platform.xyz.presentation.http.destination;
+import uim.platform.xyz.presentation.http.monitoring;
+import uim.platform.xyz.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container {

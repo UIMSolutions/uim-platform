@@ -32,15 +32,15 @@ import application.usecases.manage_filter_rules;
 import application.usecases.query_change_log;
 
 // Controllers
-import presentation.http.master_data;
-import presentation.http.data_model;
-import presentation.http.distribution;
-import presentation.http.key_mapping;
-import presentation.http.client;
-import presentation.http.replication;
-import presentation.http.filter_rule;
-import presentation.http.change_log;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.master_data;
+import uim.platform.xyz.presentation.http.data_model;
+import uim.platform.xyz.presentation.http.distribution;
+import uim.platform.xyz.presentation.http.key_mapping;
+import uim.platform.xyz.presentation.http.client;
+import uim.platform.xyz.presentation.http.replication;
+import uim.platform.xyz.presentation.http.filter_rule;
+import uim.platform.xyz.presentation.http.change_log;
+import uim.platform.xyz.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container {

@@ -9,7 +9,7 @@ import application.usecases.compute_dashboard;
 import application.dto;
 import domain.types;
 import domain.entities.quality_dashboard;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DashboardController {
     private ComputeDashboardUseCase uc;

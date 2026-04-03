@@ -14,7 +14,7 @@ import application.usecases.manage_api_rules;
 import application.dto;
 import domain.entities.api_rule;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ApiRuleController {
     private ManageApiRulesUseCase uc;

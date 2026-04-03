@@ -10,7 +10,7 @@ import application.dto;
 import domain.entities.health_check;
 import domain.entities.health_check_result;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class CheckController : SAPController {
     private ManageHealthChecksUseCase uc;

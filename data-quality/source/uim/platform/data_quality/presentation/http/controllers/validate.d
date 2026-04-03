@@ -9,7 +9,7 @@ import application.usecases.validate_data;
 import application.dto;
 import domain.types;
 import domain.entities.validation_result;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ValidateController {
     private ValidateDataUseCase uc;

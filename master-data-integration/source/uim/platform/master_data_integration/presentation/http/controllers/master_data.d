@@ -9,7 +9,7 @@ import application.usecases.manage_master_data_objects;
 import application.dto;
 import domain.entities.master_data_object;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class MasterDataController
 {

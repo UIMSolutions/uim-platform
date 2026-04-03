@@ -9,7 +9,7 @@ import application.usecases.manage_steps;
 import application.dto;
 import domain.types;
 import domain.entities.workflow_step;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class StepController
 {

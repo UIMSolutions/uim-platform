@@ -14,7 +14,7 @@ import application.usecases.manage_modules;
 import application.dto;
 import domain.entities.kyma_module;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ModuleController {
     private ManageModulesUseCase uc;

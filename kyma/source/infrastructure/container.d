@@ -34,16 +34,16 @@ import application.usecases.manage_modules;
 import application.usecases.manage_applications;
 
 // Controllers
-import presentation.http.environment;
-import presentation.http.namespace;
-import presentation.http.function;
-import presentation.http.api_rule;
-import presentation.http.service_instance;
-import presentation.http.service_binding;
-import presentation.http.event_subscription;
-import presentation.http.module ;
-import presentation.http.application;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.environment;
+import uim.platform.xyz.presentation.http.namespace;
+import uim.platform.xyz.presentation.http.function;
+import uim.platform.xyz.presentation.http.api_rule;
+import uim.platform.xyz.presentation.http.service_instance;
+import uim.platform.xyz.presentation.http.service_binding;
+import uim.platform.xyz.presentation.http.event_subscription;
+import uim.platform.xyz.presentation.http.module ;
+import uim.platform.xyz.presentation.http.application;
+import uim.platform.xyz.presentation.http.health;
 
 
 

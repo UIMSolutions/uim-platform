@@ -14,7 +14,7 @@ import application.usecases.manage_data_models;
 import application.dto;
 import domain.entities.data_model;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DataModelController {
     private ManageDataModelsUseCase uc;

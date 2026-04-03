@@ -19,11 +19,11 @@ import application.usecases.manage_fragments;
 import application.usecases.find_destination;
 
 // Controllers
-import presentation.http.destination;
-import presentation.http.certificate;
-import presentation.http.fragment;
-import presentation.http.find;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.destination;
+import uim.platform.xyz.presentation.http.certificate;
+import uim.platform.xyz.presentation.http.fragment;
+import uim.platform.xyz.presentation.http.find;
+import uim.platform.xyz.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container {

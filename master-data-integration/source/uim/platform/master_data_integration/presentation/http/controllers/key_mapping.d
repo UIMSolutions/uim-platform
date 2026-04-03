@@ -9,7 +9,7 @@ import application.usecases.manage_key_mappings;
 import application.dto;
 import domain.entities.key_mapping;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class KeyMappingController
 {

@@ -6,7 +6,7 @@ module uim.platform.management.presentation.http.controllers.overview;
 // 
 // import uim.platform.management.application.usecases.get_account_overview;
 // import uim.platform.management.application.dto;
-// import presentation.http.json_utils;
+// import uim.platform.xyz.presentation.http.json_utils;
 import uim.platform.management;
 
 mixin(ShowModule!());

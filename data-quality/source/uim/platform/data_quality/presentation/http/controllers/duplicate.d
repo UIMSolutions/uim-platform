@@ -10,7 +10,7 @@ import application.dto;
 import domain.types;
 import domain.entities.match_group;
 import domain.services.duplicate_detector : RecordEntry;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DuplicateController
 {

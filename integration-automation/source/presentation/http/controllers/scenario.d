@@ -9,7 +9,7 @@ import application.usecases.manage_scenarios;
 import application.dto;
 import domain.types;
 import domain.entities.integration_scenario;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ScenarioController
 {

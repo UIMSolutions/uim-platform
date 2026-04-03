@@ -9,7 +9,7 @@ import application.usecases.manage_clients;
 import application.dto;
 import domain.entities.client;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ClientController
 {

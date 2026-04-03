@@ -9,7 +9,7 @@ import application.usecases.manage_data_retrievals;
 import application.dto;
 import domain.types;
 import domain.entities.data_retrieval_request;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class DataRetrievalController
 {

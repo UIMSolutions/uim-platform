@@ -9,7 +9,7 @@ import application.usecases.manage_monitored_resources;
 import application.dto;
 import domain.entities.monitored_resource;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ResourceController
 {

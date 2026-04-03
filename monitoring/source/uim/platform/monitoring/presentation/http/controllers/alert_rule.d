@@ -9,7 +9,7 @@ import application.usecases.manage_alert_rules;
 import application.dto;
 import domain.entities.alert_rule;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class AlertRuleController
 {

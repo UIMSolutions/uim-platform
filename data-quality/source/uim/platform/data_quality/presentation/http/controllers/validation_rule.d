@@ -9,7 +9,7 @@ import application.usecases.manage_validation_rules;
 import application.dto;
 import domain.types;
 import domain.entities.validation_rule;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ValidationRuleController : SAPController {
     private ManageValidationRulesUseCase uc;

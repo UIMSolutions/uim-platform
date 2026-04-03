@@ -14,7 +14,7 @@ import application.usecases.manage_proxy_systems;
 import application.dto;
 import domain.entities.proxy_system;
 import domain.types;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ProxySystemController {
   private ManageProxySystemsUseCase uc;

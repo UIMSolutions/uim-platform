@@ -28,15 +28,15 @@ import application.usecases.evaluate_metrics;
 import application.usecases.get_dashboard;
 
 // Controllers
-import presentation.http.resource;
-import presentation.http.metric;
-import presentation.http.metric_definition;
-import presentation.http.check;
-import presentation.http.alert_rule;
-import presentation.http.alert;
-import presentation.http.channel;
-import presentation.http.dashboard;
-import presentation.http.health;
+import uim.platform.xyz.presentation.http.resource;
+import uim.platform.xyz.presentation.http.metric;
+import uim.platform.xyz.presentation.http.metric_definition;
+import uim.platform.xyz.presentation.http.check;
+import uim.platform.xyz.presentation.http.alert_rule;
+import uim.platform.xyz.presentation.http.alert;
+import uim.platform.xyz.presentation.http.channel;
+import uim.platform.xyz.presentation.http.dashboard;
+import uim.platform.xyz.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

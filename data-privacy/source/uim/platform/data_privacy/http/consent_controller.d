@@ -9,7 +9,7 @@ import application.usecases.manage_consent_records;
 import application.dto;
 import domain.types;
 import domain.entities.consent_record;
-import presentation.http.json_utils;
+import uim.platform.xyz.presentation.http.json_utils;
 
 class ConsentController
 {
