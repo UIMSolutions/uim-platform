@@ -47,16 +47,16 @@ import uim.platform.identity_authentication.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryWorkspaceRepository workspaceRepo;
-    InMemoryWorkpageRepository workpageRepo;
-    InMemoryCardRepository cardRepo;
-    InMemoryContentRepository contentRepo;
-    InMemoryFeedRepository feedRepo;
-    InMemoryNotificationRepository notificationRepo;
-    InMemoryTaskRepository taskRepo;
-    InMemoryChannelRepository channelRepo;
-    InMemoryAppRepository appRepo;
-    InMemoryWidgetRepository widgetRepo;
+    MemoryWorkspaceRepository workspaceRepo;
+    MemoryWorkpageRepository workpageRepo;
+    MemoryCardRepository cardRepo;
+    MemoryContentRepository contentRepo;
+    MemoryFeedRepository feedRepo;
+    MemoryNotificationRepository notificationRepo;
+    MemoryTaskRepository taskRepo;
+    MemoryChannelRepository channelRepo;
+    MemoryAppRepository appRepo;
+    MemoryWidgetRepository widgetRepo;
 
     // Use cases (application layer)
     ManageWorkspacesUseCase manageWorkspaces;

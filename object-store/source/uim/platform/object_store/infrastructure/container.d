@@ -31,13 +31,13 @@ import uim.platform.object_store.presentation.http.controllers.health;
 /// Dependency injection container - wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryBucketRepository bucketRepo;
-    InMemoryStorageObjectRepository objectRepo;
-    InMemoryObjectVersionRepository versionRepo;
-    InMemoryAccessPolicyRepository policyRepo;
-    InMemoryLifecycleRuleRepository lifecycleRepo;
-    InMemoryCorsRuleRepository corsRepo;
-    InMemoryServiceBindingRepository bindingRepo;
+    MemoryBucketRepository bucketRepo;
+    MemoryStorageObjectRepository objectRepo;
+    MemoryObjectVersionRepository versionRepo;
+    MemoryAccessPolicyRepository policyRepo;
+    MemoryLifecycleRuleRepository lifecycleRepo;
+    MemoryCorsRuleRepository corsRepo;
+    MemoryServiceBindingRepository bindingRepo;
 
     // Use cases (application layer)
     ManageBucketsUseCase manageBuckets;

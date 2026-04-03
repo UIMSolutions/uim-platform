@@ -26,27 +26,26 @@ import uim.platform.foundry.application.usecases.manage_buildpacks;
 import uim.platform.foundry.application.usecases.monitor_apps;
 
 // Controllers
-import uim.platform.xyz.presentation.http.org;
-import uim.platform.xyz.presentation.http.space;
-import uim.platform.xyz.presentation.http.app;
-import uim.platform.xyz.presentation.http.service;
-import uim.platform.xyz.presentation.http.route;
-import uim.platform.xyz.presentation.http.buildpack;
-import uim.platform.xyz.presentation.http.monitoring;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.foundry.presentation.http.org;
+import uim.platform.foundry.presentation.http.space;
+import uim.platform.foundry.presentation.http.app;
+import uim.platform.foundry.presentation.http.service;
+import uim.platform.foundry.presentation.http.route;
+import uim.platform.foundry.presentation.http.buildpack;
+import uim.platform.foundry.presentation.http.monitoring;
+import uim.platform.foundry.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
-  InMemoryOrgRepository orgRepo;
-  InMemorySpaceRepository spaceRepo;
-  InMemoryAppRepository appRepo;
-  InMemoryServiceInstanceRepository serviceInstanceRepo;
-  InMemoryServiceBindingRepository serviceBindingRepo;
-  InMemoryRouteRepository routeRepo;
-  InMemoryDomainRepository domainRepo;
-  InMemoryBuildpackRepository buildpackRepo;
+  MemoryOrgRepository orgRepo;
+  MemorySpaceRepository spaceRepo;
+  MemoryAppRepository appRepo;
+  MemoryServiceInstanceRepository serviceInstanceRepo;
+  MemoryServiceBindingRepository serviceBindingRepo;
+  MemoryRouteRepository routeRepo;
+  MemoryDomainRepository domainRepo;
+  MemoryBuildpackRepository buildpackRepo;
 
   // Domain services
   AppLifecycleManager appLifecycle;
@@ -73,8 +72,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)

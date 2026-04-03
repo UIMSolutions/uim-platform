@@ -566,13 +566,13 @@ WriteConfigChangeUseCase ..> ConfigChangeLog
 WriteConfigChangeUseCase ..> AuditLogEntry
 
 ' Infrastructure implements Ports
-InMemoryAuditLogRepository ..|> AuditLogRepository
-InMemoryAuditConfigRepository ..|> AuditConfigRepository
-InMemoryRetentionPolicyRepository ..|> RetentionPolicyRepository
-InMemoryExportJobRepository ..|> ExportJobRepository
-InMemorySecurityEventRepository ..|> SecurityEventRepository
-InMemoryDataAccessLogRepository ..|> DataAccessLogRepository
-InMemoryConfigChangeLogRepository ..|> ConfigChangeLogRepository
+MemoryAuditLogRepository ..|> AuditLogRepository
+MemoryAuditConfigRepository ..|> AuditConfigRepository
+MemoryRetentionPolicyRepository ..|> RetentionPolicyRepository
+MemoryExportJobRepository ..|> ExportJobRepository
+MemorySecurityEventRepository ..|> SecurityEventRepository
+MemoryDataAccessLogRepository ..|> DataAccessLogRepository
+MemoryConfigChangeLogRepository ..|> ConfigChangeLogRepository
 
 @enduml
 ```

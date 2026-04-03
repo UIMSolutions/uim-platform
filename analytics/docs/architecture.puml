@@ -352,13 +352,13 @@ DataSourceUseCases --> DataConnector : tests connections
 ' RELATIONSHIPS – Adapter implements Port
 ' ============================================================
 
-InMemoryDashboardRepository   ..|> DashboardRepository
-InMemoryStoryRepository       ..|> StoryRepository
-InMemoryDatasetRepository     ..|> DatasetRepository
-InMemoryWidgetRepository      ..|> WidgetRepository
-InMemoryDataSourceRepository  ..|> DataSourceRepository
-InMemoryPlanningRepository    ..|> PlanningRepository
-InMemoryPredictionRepository  ..|> PredictionRepository
+MemoryDashboardRepository   ..|> DashboardRepository
+MemoryStoryRepository       ..|> StoryRepository
+MemoryDatasetRepository     ..|> DatasetRepository
+MemoryWidgetRepository      ..|> WidgetRepository
+MemoryDataSourceRepository  ..|> DataSourceRepository
+MemoryPlanningRepository    ..|> PlanningRepository
+MemoryPredictionRepository  ..|> PredictionRepository
 
 StubDataConnector             ..|> DataConnector
 CsvExportAdapter              ..|> ExportPort

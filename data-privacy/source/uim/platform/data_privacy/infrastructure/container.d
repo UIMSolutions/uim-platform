@@ -37,14 +37,14 @@ import uim.platform.xyz.presentation.http.health;
 struct Container
 {
     // Repositories (driven adapters)
-    InMemoryDataSubjectRepository dataSubjectRepo;
-    InMemoryPersonalDataModelRepository personalDataModelRepo;
-    InMemoryDeletionRequestRepository deletionRequestRepo;
-    InMemoryBlockingRequestRepository blockingRequestRepo;
-    InMemoryLegalGroundRepository legalGroundRepo;
-    InMemoryRetentionRuleRepository retentionRuleRepo;
-    InMemoryConsentRecordRepository consentRecordRepo;
-    InMemoryDataRetrievalRequestRepository dataRetrievalRepo;
+    MemoryDataSubjectRepository dataSubjectRepo;
+    MemoryPersonalDataModelRepository personalDataModelRepo;
+    MemoryDeletionRequestRepository deletionRequestRepo;
+    MemoryBlockingRequestRepository blockingRequestRepo;
+    MemoryLegalGroundRepository legalGroundRepo;
+    MemoryRetentionRuleRepository retentionRuleRepo;
+    MemoryConsentRecordRepository consentRecordRepo;
+    MemoryDataRetrievalRequestRepository dataRetrievalRepo;
 
     // Use cases (application layer)
     ManageDataSubjectsUseCase manageDataSubjects;

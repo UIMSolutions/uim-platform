@@ -9,7 +9,7 @@ import uim.platform.foundry.application.usecases.manage_apps;
 import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.foundry.presentation.http.json_utils;
 
 class AppController : SAPController {
   private ManageAppsUseCase useCase;

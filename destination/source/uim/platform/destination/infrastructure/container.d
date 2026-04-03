@@ -28,9 +28,9 @@ import uim.platform.xyz.presentation.http.health;
 /// Dependency injection container - wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryDestinationRepository destRepo;
-    InMemoryCertificateRepository certRepo;
-    InMemoryFragmentRepository fragRepo;
+    MemoryDestinationRepository destRepo;
+    MemoryCertificateRepository certRepo;
+    MemoryFragmentRepository fragRepo;
 
     // Use cases (application layer)
     ManageDestinationsUseCase manageDestinations;

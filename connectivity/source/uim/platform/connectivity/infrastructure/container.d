@@ -30,12 +30,12 @@ import uim.platform.connectivity.presentation.http.health;
 /// Dependency injection container - wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryDestinationRepository destinationRepo;
-    InMemoryConnectorRepository connectorRepo;
-    InMemoryChannelRepository channelRepo;
-    InMemoryAccessRuleRepository accessRuleRepo;
-    InMemoryCertificateRepository certificateRepo;
-    InMemoryConnectivityLogRepository logRepo;
+    MemoryDestinationRepository destinationRepo;
+    MemoryConnectorRepository connectorRepo;
+    MemoryChannelRepository channelRepo;
+    MemoryAccessRuleRepository accessRuleRepo;
+    MemoryCertificateRepository certificateRepo;
+    MemoryConnectivityLogRepository logRepo;
 
     // Use cases (application layer)
     ManageDestinationsUseCase manageDestinations;

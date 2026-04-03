@@ -428,12 +428,12 @@ QueryAuditLogUseCase            --> AuditRepository
 ' RELATIONSHIPS – Adapter implements Port
 ' ============================================================
 
-InMemoryUserRepository           ..|> UserRepository
-InMemoryGroupRepository          ..|> GroupRepository
-InMemorySchemaRepository         ..|> SchemaRepository
-InMemoryPasswordPolicyRepository ..|> PasswordPolicyRepository
-InMemoryApiClientRepository      ..|> ApiClientRepository
-InMemoryAuditRepository          ..|> AuditRepository
+MemoryUserRepository           ..|> UserRepository
+MemoryGroupRepository          ..|> GroupRepository
+MemorySchemaRepository         ..|> SchemaRepository
+MemoryPasswordPolicyRepository ..|> PasswordPolicyRepository
+MemoryApiClientRepository      ..|> ApiClientRepository
+MemoryAuditRepository          ..|> AuditRepository
 Sha256PasswordService            ..|> PasswordService
 
 ' ============================================================

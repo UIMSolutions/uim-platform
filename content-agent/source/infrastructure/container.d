@@ -36,14 +36,14 @@ import uim.platform.content_agent.presentation.http.health;
 struct Container {
     
     // Repositories (driven adapters)
-    InMemoryContentPackageRepository packageRepo;
+    MemoryContentPackageRepository packageRepo;
 
-    InMemoryContentProviderRepository providerRepo;
-    InMemoryTransportRequestRepository transportRequestRepo;
-    InMemoryExportJobRepository exportJobRepo;
-    InMemoryImportJobRepository importJobRepo;
-    InMemoryTransportQueueRepository queueRepo;
-    InMemoryContentActivityRepository activityRepo;
+    MemoryContentProviderRepository providerRepo;
+    MemoryTransportRequestRepository transportRequestRepo;
+    MemoryExportJobRepository exportJobRepo;
+    MemoryImportJobRepository importJobRepo;
+    MemoryTransportQueueRepository queueRepo;
+    MemoryContentActivityRepository activityRepo;
 
     // Use cases (application layer)
     ManageContentPackagesUseCase managePackages;

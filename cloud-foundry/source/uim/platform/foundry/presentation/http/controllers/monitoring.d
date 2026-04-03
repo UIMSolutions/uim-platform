@@ -7,7 +7,7 @@ import std.conv : to;
 
 import uim.platform.foundry.application.usecases.monitor_apps;
 import uim.platform.foundry.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.foundry.presentation.http.json_utils;
 
 class MonitoringController
 {

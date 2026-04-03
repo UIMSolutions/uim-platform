@@ -42,14 +42,14 @@ import uim.platform.xyz.presentation.http.health;
 struct Container
 {
     // Repositories (driven adapters)
-    InMemoryMonitoredResourceRepository resourceRepo;
-    InMemoryMetricDefinitionRepository metricDefRepo;
-    InMemoryMetricRepository metricRepo;
-    InMemoryHealthCheckRepository checkRepo;
-    InMemoryHealthCheckResultRepository checkResultRepo;
-    InMemoryAlertRuleRepository ruleRepo;
-    InMemoryAlertRepository alertRepo;
-    InMemoryNotificationChannelRepository channelRepo;
+    MemoryMonitoredResourceRepository resourceRepo;
+    MemoryMetricDefinitionRepository metricDefRepo;
+    MemoryMetricRepository metricRepo;
+    MemoryHealthCheckRepository checkRepo;
+    MemoryHealthCheckResultRepository checkResultRepo;
+    MemoryAlertRuleRepository ruleRepo;
+    MemoryAlertRepository alertRepo;
+    MemoryNotificationChannelRepository channelRepo;
 
     // Use cases (application layer)
     ManageMonitoredResourcesUseCase manageResources;

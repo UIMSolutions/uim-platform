@@ -236,13 +236,13 @@ ComputeDashboardUseCase      --> IValidationResultRepository
 ' RELATIONSHIPS – Adapter implements Port
 ' ============================================================
 
-InMemoryValidationRuleRepo   ..|> IValidationRuleRepository
-InMemoryValidationResultRepo ..|> IValidationResultRepository
-InMemoryAddressRepo          ..|> IAddressRepository
-InMemoryMatchGroupRepo       ..|> IMatchGroupRepository
-InMemoryDataProfileRepo      ..|> IDataProfileRepository
-InMemoryCleansingRuleRepo    ..|> ICleansingRuleRepository
-InMemoryCleansingJobRepo     ..|> ICleansingJobRepository
+MemoryValidationRuleRepo   ..|> IValidationRuleRepository
+MemoryValidationResultRepo ..|> IValidationResultRepository
+MemoryAddressRepo          ..|> IAddressRepository
+MemoryMatchGroupRepo       ..|> IMatchGroupRepository
+MemoryDataProfileRepo      ..|> IDataProfileRepository
+MemoryCleansingRuleRepo    ..|> ICleansingRuleRepository
+MemoryCleansingJobRepo     ..|> ICleansingJobRepository
 
 ' ============================================================
 ' ENTITY ASSOCIATIONS

@@ -544,12 +544,12 @@ StepExecutor   --> ExecutionLogRepository : records logs
 ' RELATIONSHIPS – Adapter implements Port
 ' ============================================================
 
-InMemoryScenarioRepo     ..|> ScenarioRepository
-InMemoryWorkflowRepo     ..|> WorkflowRepository
-InMemoryStepRepo         ..|> StepRepository
-InMemorySystemRepo       ..|> SystemRepository
-InMemoryDestinationRepo  ..|> DestinationRepository
-InMemoryExecutionLogRepo ..|> ExecutionLogRepository
+MemoryScenarioRepo     ..|> ScenarioRepository
+MemoryWorkflowRepo     ..|> WorkflowRepository
+MemoryStepRepo         ..|> StepRepository
+MemorySystemRepo       ..|> SystemRepository
+MemoryDestinationRepo  ..|> DestinationRepository
+MemoryExecutionLogRepo ..|> ExecutionLogRepository
 
 ' ============================================================
 ' ENTITY ASSOCIATIONS

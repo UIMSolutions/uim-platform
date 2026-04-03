@@ -200,13 +200,13 @@ NSOV-1  AuditLog Services
                      ┌──────────────────────────────────┐
                      │   Infrastructure Layer            │
                      │  ┌────────────────────────────┐  │
-                     │  │ InMemoryAuditLogRepo        │  │
-                     │  │ InMemoryAuditConfigRepo     │  │
-                     │  │ InMemoryRetentionRepo       │  │
-                     │  │ InMemoryExportJobRepo       │  │
-                     │  │ InMemorySecurityEventRepo   │  │
-                     │  │ InMemoryDataAccessRepo      │  │
-                     │  │ InMemoryConfigChangeRepo    │  │
+                     │  │ MemoryAuditLogRepo        │  │
+                     │  │ MemoryAuditConfigRepo     │  │
+                     │  │ MemoryRetentionRepo       │  │
+                     │  │ MemoryExportJobRepo       │  │
+                     │  │ MemorySecurityEventRepo   │  │
+                     │  │ MemoryDataAccessRepo      │  │
+                     │  │ MemoryConfigChangeRepo    │  │
                      │  └────────────────────────────┘  │
                      └──────────────────────────────────┘
 ```

@@ -203,12 +203,12 @@ NSOV-1  Connectivity Services
                      │  │ Container (DI wiring)       │  │
                      │  ├────────────────────────────┤  │
                      │  │ In-Memory Repositories:     │  │
-                     │  │   InMemoryDestinationRepo   │  │
-                     │  │   InMemoryConnectorRepo     │  │
-                     │  │   InMemoryChannelRepo       │  │
-                     │  │   InMemoryAccessRuleRepo    │  │
-                     │  │   InMemoryCertificateRepo   │  │
-                     │  │   InMemoryConnectivityLogRepo│ │
+                     │  │   MemoryDestinationRepo   │  │
+                     │  │   MemoryConnectorRepo     │  │
+                     │  │   MemoryChannelRepo       │  │
+                     │  │   MemoryAccessRuleRepo    │  │
+                     │  │   MemoryCertificateRepo   │  │
+                     │  │   MemoryConnectivityLogRepo│ │
                      │  └────────────────────────────┘  │
                      └──────────────────────────────────┘
                                     │

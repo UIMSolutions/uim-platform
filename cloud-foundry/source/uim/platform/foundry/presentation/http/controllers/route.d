@@ -10,7 +10,7 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.route;
 import uim.platform.foundry.domain.entities.cf_domain;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.foundry.presentation.http.json_utils;
 
 class RouteController
 {

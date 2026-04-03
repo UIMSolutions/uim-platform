@@ -198,12 +198,12 @@ NSOV-1  Identity Directory Services
                      │  │ Container (DI wiring)       │  │
                      │  ├────────────────────────────┤  │
                      │  │ In-Memory Repositories:     │  │
-                     │  │   InMemoryUserRepo          │  │
-                     │  │   InMemoryGroupRepo         │  │
-                     │  │   InMemorySchemaRepo        │  │
-                     │  │   InMemoryPasswordPolicyRepo│  │
-                     │  │   InMemoryApiClientRepo     │  │
-                     │  │   InMemoryAuditRepo         │  │
+                     │  │   MemoryUserRepo          │  │
+                     │  │   MemoryGroupRepo         │  │
+                     │  │   MemorySchemaRepo        │  │
+                     │  │   MemoryPasswordPolicyRepo│  │
+                     │  │   MemoryApiClientRepo     │  │
+                     │  │   MemoryAuditRepo         │  │
                      │  ├────────────────────────────┤  │
                      │  │ Security Adapters:          │  │
                      │  │   Sha256PasswordService     │  │

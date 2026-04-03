@@ -47,16 +47,16 @@ import uim.platform.identity_authentication.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemorySiteRepository siteRepo;
-    InMemoryPageRepository pageRepo;
-    InMemorySectionRepository sectionRepo;
-    InMemoryTileRepository tileRepo;
-    InMemoryCatalogRepository catalogRepo;
-    InMemoryProviderRepository providerRepo;
-    InMemoryRoleRepository roleRepo;
-    InMemoryThemeRepository themeRepo;
-    InMemoryMenuItemRepository menuItemRepo;
-    InMemoryTranslationRepository translationRepo;
+    MemorySiteRepository siteRepo;
+    MemoryPageRepository pageRepo;
+    MemorySectionRepository sectionRepo;
+    MemoryTileRepository tileRepo;
+    MemoryCatalogRepository catalogRepo;
+    MemoryProviderRepository providerRepo;
+    MemoryRoleRepository roleRepo;
+    MemoryThemeRepository themeRepo;
+    MemoryMenuItemRepository menuItemRepo;
+    MemoryTranslationRepository translationRepo;
 
     // Use cases (application layer)
     ManageSitesUseCase manageSites;

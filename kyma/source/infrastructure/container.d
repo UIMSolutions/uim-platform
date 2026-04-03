@@ -51,16 +51,16 @@ import uim.platform.xyz.presentation.http.health;
 struct Container {
     
     // Repositories (driven adapters)
-    InMemoryEnvironmentRepository envRepo;
+    MemoryEnvironmentRepository envRepo;
 
-    InMemoryNamespaceRepository nsRepo;
-    InMemoryFunctionRepository fnRepo;
-    InMemoryApiRuleRepository apiRuleRepo;
-    InMemoryServiceInstanceRepository siRepo;
-    InMemoryServiceBindingRepository sbRepo;
-    InMemoryEventSubscriptionRepository eventSubRepo;
-    InMemoryModuleRepository moduleRepo;
-    InMemoryApplicationRepository appRepo;
+    MemoryNamespaceRepository nsRepo;
+    MemoryFunctionRepository fnRepo;
+    MemoryApiRuleRepository apiRuleRepo;
+    MemoryServiceInstanceRepository siRepo;
+    MemoryServiceBindingRepository sbRepo;
+    MemoryEventSubscriptionRepository eventSubRepo;
+    MemoryModuleRepository moduleRepo;
+    MemoryApplicationRepository appRepo;
 
     // Domain services
     ModuleDependencyResolver depResolver;

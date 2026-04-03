@@ -1,5 +1,5 @@
 module uim.platform.foundry.presentation;
 
 public {
-  import uim.platform.xyz.presentation.http;
+  import uim.platform.foundry.presentation.http;
 }

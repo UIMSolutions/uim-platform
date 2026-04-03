@@ -36,13 +36,13 @@ import uim.platform.data_attribute_recommendation.presentation.http.health;
 struct Container
 {
   // Repositories (driven adapters)
-  InMemoryDatasetRepository datasetRepo;
-  InMemoryDataRecordRepository recordRepo;
-  InMemoryModelConfigRepository configRepo;
-  InMemoryTrainingJobRepository jobRepo;
-  InMemoryDeploymentRepository deploymentRepo;
-  InMemoryInferenceRequestRepository inferenceRequestRepo;
-  InMemoryInferenceResultRepository inferenceResultRepo;
+  MemoryDatasetRepository datasetRepo;
+  MemoryDataRecordRepository recordRepo;
+  MemoryModelConfigRepository configRepo;
+  MemoryTrainingJobRepository jobRepo;
+  MemoryDeploymentRepository deploymentRepo;
+  MemoryInferenceRequestRepository inferenceRequestRepo;
+  MemoryInferenceResultRepository inferenceResultRepo;
 
   // Domain services
   ModelTrainer modelTrainer;

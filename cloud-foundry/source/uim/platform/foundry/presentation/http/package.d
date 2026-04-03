@@ -1,6 +1,6 @@
 module uim.platform.foundry.presentation.http.controllers;
 
 public {
-  import uim.platform.xyz.presentation.http.json_utils;
-  import uim.platform.xyz.presentation.http.controllers;
+  import uim.platform.foundry.presentation.http.json_utils;
+  import uim.platform.foundry.presentation.http.controllers;
 }

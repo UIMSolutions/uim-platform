@@ -41,13 +41,13 @@ import uim.platform.xyz.presentation.http.health;
 /// Dependency injection container - wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryValidationRuleRepository validationRuleRepo;
-    InMemoryValidationResultRepository validationResultRepo;
-    InMemoryAddressRepository addressRepo;
-    InMemoryMatchGroupRepository matchGroupRepo;
-    InMemoryDataProfileRepository dataProfileRepo;
-    InMemoryCleansingRuleRepository cleansingRuleRepo;
-    InMemoryCleansingJobRepository cleansingJobRepo;
+    MemoryValidationRuleRepository validationRuleRepo;
+    MemoryValidationResultRepository validationResultRepo;
+    MemoryAddressRepository addressRepo;
+    MemoryMatchGroupRepository matchGroupRepo;
+    MemoryDataProfileRepository dataProfileRepo;
+    MemoryCleansingRuleRepository cleansingRuleRepo;
+    MemoryCleansingJobRepository cleansingJobRepo;
 
     // Domain services
     ValidationEngine validationEngine;

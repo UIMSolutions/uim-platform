@@ -36,14 +36,14 @@ module uim.platform.abap_enviroment.infrastructure.container;
 /// Dependency injection container - wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemorySystemInstanceRepository systemInstanceRepo;
-    InMemorySoftwareComponentRepository softwareComponentRepo;
-    InMemoryCommunicationArrangementRepository communicationArrangementRepo;
-    InMemoryServiceBindingRepository serviceBindingRepo;
-    InMemoryBusinessUserRepository businessUserRepo;
-    InMemoryBusinessRoleRepository businessRoleRepo;
-    InMemoryTransportRequestRepository transportRequestRepo;
-    InMemoryApplicationJobRepository applicationJobRepo;
+    MemorySystemInstanceRepository systemInstanceRepo;
+    MemorySoftwareComponentRepository softwareComponentRepo;
+    MemoryCommunicationArrangementRepository communicationArrangementRepo;
+    MemoryServiceBindingRepository serviceBindingRepo;
+    MemoryBusinessUserRepository businessUserRepo;
+    MemoryBusinessRoleRepository businessRoleRepo;
+    MemoryTransportRequestRepository transportRequestRepo;
+    MemoryApplicationJobRepository applicationJobRepo;
 
     // Use cases (application layer)
     ManageSystemInstancesUseCase manageSystemInstances;

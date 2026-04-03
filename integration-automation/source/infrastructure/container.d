@@ -34,12 +34,12 @@ import uim.platform.xyz.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)
-  InMemoryScenarioRepository scenarioRepo;
-  InMemoryWorkflowRepository workflowRepo;
-  InMemoryStepRepository stepRepo;
-  InMemorySystemRepository systemRepo;
-  InMemoryDestinationRepository destinationRepo;
-  InMemoryExecutionLogRepository executionLogRepo;
+  MemoryScenarioRepository scenarioRepo;
+  MemoryWorkflowRepository workflowRepo;
+  MemoryStepRepository stepRepo;
+  MemorySystemRepository systemRepo;
+  MemoryDestinationRepository destinationRepo;
+  MemoryExecutionLogRepository executionLogRepo;
 
   // Domain services
   WorkflowEngine workflowEngine;

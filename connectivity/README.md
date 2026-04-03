@@ -562,20 +562,20 @@ ManageCertificatesUseCase --> CertificateRepository
 MonitorConnectivityUseCase --> ConnectivityLogRepository
 
 ' Infrastructure implements Ports
-InMemoryDestinationRepo ..|> DestinationRepository
-InMemoryConnectorRepo ..|> ConnectorRepository
-InMemoryChannelRepo ..|> ChannelRepository
-InMemoryAccessRuleRepo ..|> AccessRuleRepository
-InMemoryCertificateRepo ..|> CertificateRepository
-InMemoryConnectivityLogRepo ..|> ConnectivityLogRepository
+MemoryDestinationRepo ..|> DestinationRepository
+MemoryConnectorRepo ..|> ConnectorRepository
+MemoryChannelRepo ..|> ChannelRepository
+MemoryAccessRuleRepo ..|> AccessRuleRepository
+MemoryCertificateRepo ..|> CertificateRepository
+MemoryConnectivityLogRepo ..|> ConnectivityLogRepository
 
 ' Container wires everything
-Container --> InMemoryDestinationRepo
-Container --> InMemoryConnectorRepo
-Container --> InMemoryChannelRepo
-Container --> InMemoryAccessRuleRepo
-Container --> InMemoryCertificateRepo
-Container --> InMemoryConnectivityLogRepo
+Container --> MemoryDestinationRepo
+Container --> MemoryConnectorRepo
+Container --> MemoryChannelRepo
+Container --> MemoryAccessRuleRepo
+Container --> MemoryCertificateRepo
+Container --> MemoryConnectivityLogRepo
 
 @enduml
 ```

@@ -197,12 +197,12 @@ NSOV-1  Integration Automation Services
                      │  │ Container (DI wiring)       │  │
                      │  ├────────────────────────────┤  │
                      │  │ In-Memory Repositories:     │  │
-                     │  │   InMemoryScenarioRepo      │  │
-                     │  │   InMemoryWorkflowRepo      │  │
-                     │  │   InMemoryStepRepo          │  │
-                     │  │   InMemorySystemRepo        │  │
-                     │  │   InMemoryDestinationRepo   │  │
-                     │  │   InMemoryExecutionLogRepo  │  │
+                     │  │   MemoryScenarioRepo      │  │
+                     │  │   MemoryWorkflowRepo      │  │
+                     │  │   MemoryStepRepo          │  │
+                     │  │   MemorySystemRepo        │  │
+                     │  │   MemoryDestinationRepo   │  │
+                     │  │   MemoryExecutionLogRepo  │  │
                      │  └────────────────────────────┘  │
                      └──────────────────────────────────┘
                                     │

@@ -38,13 +38,13 @@ mixin(ShowModule!());
 @safe: struct Container
 {
     // Repositories (driven adapters)
-    InMemoryAuditLogRepository auditLogRepo;
-    InMemoryRetentionPolicyRepository retentionRepo;
-    InMemoryAuditConfigRepository auditConfigRepo;
-    InMemoryExportJobRepository exportRepo;
-    InMemorySecurityEventRepository securityEventRepo;
-    InMemoryDataAccessLogRepository dataAccessRepo;
-    InMemoryConfigChangeLogRepository configChangeRepo;
+    MemoryAuditLogRepository auditLogRepo;
+    MemoryRetentionPolicyRepository retentionRepo;
+    MemoryAuditConfigRepository auditConfigRepo;
+    MemoryExportJobRepository exportRepo;
+    MemorySecurityEventRepository securityEventRepo;
+    MemoryDataAccessLogRepository dataAccessRepo;
+    MemoryConfigChangeLogRepository configChangeRepo;
 
     // Use cases (application layer)
     WriteAuditLogUseCase writeAuditLog;

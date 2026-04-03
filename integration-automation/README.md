@@ -547,9 +547,9 @@ Response:
 │                                                                  │
 │  AppConfig (CIA_HOST/CIA_PORT)  ·  Container (DI wiring)         │
 │                                                                  │
-│  InMemoryScenarioRepo · InMemoryWorkflowRepo                    │
-│  InMemoryStepRepo     · InMemorySystemRepo                      │
-│  InMemoryDestinationRepo · InMemoryExecutionLogRepo              │
+│  MemoryScenarioRepo · MemoryWorkflowRepo                    │
+│  MemoryStepRepo     · MemorySystemRepo                      │
+│  MemoryDestinationRepo · MemoryExecutionLogRepo              │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

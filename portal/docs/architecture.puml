@@ -351,16 +351,16 @@ ManageTranslationsUseCase --> ITranslationRepository
 ' RELATIONSHIPS – Adapter implements Port
 ' ============================================================
 
-InMemorySiteRepo        ..|> ISiteRepository
-InMemoryPageRepo        ..|> IPageRepository
-InMemorySectionRepo     ..|> ISectionRepository
-InMemoryTileRepo        ..|> ITileRepository
-InMemoryCatalogRepo     ..|> ICatalogRepository
-InMemoryProviderRepo    ..|> IProviderRepository
-InMemoryRoleRepo        ..|> IRoleRepository
-InMemoryThemeRepo       ..|> IThemeRepository
-InMemoryMenuItemRepo    ..|> IMenuItemRepository
-InMemoryTranslationRepo ..|> ITranslationRepository
+MemorySiteRepo        ..|> ISiteRepository
+MemoryPageRepo        ..|> IPageRepository
+MemorySectionRepo     ..|> ISectionRepository
+MemoryTileRepo        ..|> ITileRepository
+MemoryCatalogRepo     ..|> ICatalogRepository
+MemoryProviderRepo    ..|> IProviderRepository
+MemoryRoleRepo        ..|> IRoleRepository
+MemoryThemeRepo       ..|> IThemeRepository
+MemoryMenuItemRepo    ..|> IMenuItemRepository
+MemoryTranslationRepo ..|> ITranslationRepository
 
 ' ============================================================
 ' ENTITY ASSOCIATIONS

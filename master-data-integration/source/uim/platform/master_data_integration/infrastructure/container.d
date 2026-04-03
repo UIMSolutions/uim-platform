@@ -45,14 +45,14 @@ import uim.platform.xyz.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryMasterDataObjectRepository mdoRepo;
-    InMemoryDataModelRepository dataModelRepo;
-    InMemoryDistributionModelRepository distRepo;
-    InMemoryKeyMappingRepository keyMapRepo;
-    InMemoryChangeLogRepository changeLogRepo;
-    InMemoryClientRepository clientRepo;
-    InMemoryReplicationJobRepository replJobRepo;
-    InMemoryFilterRuleRepository filterRuleRepo;
+    MemoryMasterDataObjectRepository mdoRepo;
+    MemoryDataModelRepository dataModelRepo;
+    MemoryDistributionModelRepository distRepo;
+    MemoryKeyMappingRepository keyMapRepo;
+    MemoryChangeLogRepository changeLogRepo;
+    MemoryClientRepository clientRepo;
+    MemoryReplicationJobRepository replJobRepo;
+    MemoryFilterRuleRepository filterRuleRepo;
 
     // Domain services
     KeyMappingResolver keyMapResolver;

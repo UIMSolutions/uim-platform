@@ -33,12 +33,12 @@ import uim.platform.identity_authentication.presentation.http.health;
 /// Dependency injection container — wires all layers together.
 struct Container {
     // Repositories (driven adapters)
-    InMemoryUserRepository userRepo;
-    InMemoryGroupRepository groupRepo;
-    InMemorySchemaRepository schemaRepo;
-    InMemoryPasswordPolicyRepository passwordPolicyRepo;
-    InMemoryApiClientRepository apiClientRepo;
-    InMemoryAuditRepository auditRepo;
+    MemoryUserRepository userRepo;
+    MemoryGroupRepository groupRepo;
+    MemorySchemaRepository schemaRepo;
+    MemoryPasswordPolicyRepository passwordPolicyRepo;
+    MemoryApiClientRepository apiClientRepo;
+    MemoryAuditRepository auditRepo;
 
     // Security services (driven adapters)
     Sha256PasswordService passwordSvc;
