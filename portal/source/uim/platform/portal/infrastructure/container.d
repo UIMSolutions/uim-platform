@@ -120,7 +120,7 @@ Container buildContainer(AppConfig config)
     c.themeController = new ThemeController(c.manageThemes);
     c.menuItemController = new MenuItemController(c.manageMenuItems);
     c.translationController = new TranslationController(c.manageTranslations);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("portal");
 
     return c;
 }

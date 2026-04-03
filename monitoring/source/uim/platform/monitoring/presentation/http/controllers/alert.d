@@ -11,17 +11,14 @@ import domain.entities.alert;
 import domain.types;
 import presentation.http.json_utils;
 
-class AlertController
-{
+class AlertController {
     private ManageAlertsUseCase uc;
 
-    this(ManageAlertsUseCase uc)
-    {
+    this(ManageAlertsUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.get("/api/v1/alerts", &handleList);
         router.get("/api/v1/alerts/*", &handleGetById);
         router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);
@@ -29,10 +26,8 @@ class AlertController
         router.delete_("/api/v1/alerts/*", &handleDelete);
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto state = req.params.get("state", "");
             auto severity = req.params.get("severity", "");
@@ -51,38 +46,29 @@ class AlertController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) alerts.length);
+            resp["totalCount"] = Json(cast(long)alerts.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto a = uc.getAlert(id);
-            if (a.id.length == 0)
-            {
+            if (a.id.length == 0) {
                 writeError(res, 404, "Alert not found");
                 return;
             }
             res.writeJsonBody(serializeAlert(a), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             AcknowledgeAlertRequest r;
             r.alertId = j.getString("alertId");
@@ -90,28 +76,21 @@ class AlertController
             r.acknowledgedBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.acknowledgeAlert(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 resp["state"] = Json("acknowledged");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             ResolveAlertRequest r;
             r.alertId = j.getString("alertId");
@@ -119,49 +98,36 @@ class AlertController
             r.resolvedBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.resolveAlert(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 resp["state"] = Json("resolved");
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 400, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteAlert(id);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["deleted"] = Json(true);
                 res.writeJsonBody(resp, 200);
-            }
-            else
-            {
+            } else {
                 writeError(res, 404, result.error);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeAlert(const ref Alert a)
-    {
+    private static Json serializeAlert(const ref Alert a) {
         auto j = Json.emptyObject;
         j["id"] = Json(a.id);
         j["tenantId"] = Json(a.tenantId);
