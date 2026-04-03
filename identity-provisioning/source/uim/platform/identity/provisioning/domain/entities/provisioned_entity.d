@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.provisioned_entity;
+module uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.provisioning.domain.types;
 
 /// A tracked identity entity (user or group) that has been
 /// provisioned from a source to a target system.

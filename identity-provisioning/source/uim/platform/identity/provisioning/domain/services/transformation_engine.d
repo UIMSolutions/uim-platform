@@ -1,8 +1,8 @@
-module uim.platform.xyz.domain.services.transformation_engine;
+module uim.platform.identity.provisioning.domain.services.transformation_engine;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.transformation;
-import uim.platform.xyz.domain.ports.transformation_repository;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.transformation;
+import uim.platform.identity.provisioning.domain.ports.transformation_repository;
 
 /// Domain service that applies transformation rules to identity
 /// attributes during provisioning.

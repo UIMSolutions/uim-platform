@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.identity.directory.application.dto;
 
 import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.entities.user : UserName, Email, PhoneNumber, Address, ExtendedAttribute;

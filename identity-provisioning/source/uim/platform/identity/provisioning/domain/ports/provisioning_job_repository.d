@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.provisioning_job_repository;
+module uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.provisioning_job;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 
 interface ProvisioningJobRepository
 {

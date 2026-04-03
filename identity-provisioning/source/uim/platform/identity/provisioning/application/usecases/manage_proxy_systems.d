@@ -1,14 +1,14 @@
-module uim.platform.xyz.application.usecases.manage_proxy_systems;
+module uim.platform.identity.provisioning.application.usecases.manage_proxy_systems;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.proxy_system;
-import uim.platform.xyz.domain.ports.proxy_system_repository;
-import uim.platform.xyz.domain.ports.source_system_repository;
-import uim.platform.xyz.domain.ports.target_system_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.proxy_system;
+import uim.platform.identity.provisioning.domain.ports.proxy_system_repository;
+import uim.platform.identity.provisioning.domain.ports.source_system_repository;
+import uim.platform.identity.provisioning.domain.ports.target_system_repository;
+import uim.platform.identity.provisioning.application.dto;
 
 class ManageProxySystemsUseCase
 {

@@ -1,19 +1,19 @@
-module uim.platform.xyz.domain.services.provisioning_engine;
+module uim.platform.identity.provisioning.domain.services.provisioning_engine;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.source_system;
-import uim.platform.xyz.domain.entities.target_system;
-import uim.platform.xyz.domain.entities.provisioning_job;
-import uim.platform.xyz.domain.entities.provisioning_log;
-import uim.platform.xyz.domain.entities.provisioned_entity;
-import uim.platform.xyz.domain.ports.source_system_repository;
-import uim.platform.xyz.domain.ports.target_system_repository;
-import uim.platform.xyz.domain.ports.provisioning_job_repository;
-import uim.platform.xyz.domain.ports.provisioning_log_repository;
-import uim.platform.xyz.domain.ports.provisioned_entity_repository;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.source_system;
+import uim.platform.identity.provisioning.domain.entities.target_system;
+import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+import uim.platform.identity.provisioning.domain.ports.source_system_repository;
+import uim.platform.identity.provisioning.domain.ports.target_system_repository;
+import uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
+import uim.platform.identity.provisioning.domain.ports.provisioning_log_repository;
+import uim.platform.identity.provisioning.domain.ports.provisioned_entity_repository;
 
 /// Core domain service that orchestrates the provisioning pipeline:
 /// reads entities from a source, applies transformations, and writes

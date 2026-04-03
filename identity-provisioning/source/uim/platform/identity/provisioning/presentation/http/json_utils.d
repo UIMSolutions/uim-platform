@@ -1,10 +1,10 @@
-module uim.platform.xyz.presentation.http.json_utils;
+module uim.platform.identity.provisioning.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;
 import std.conv : to;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.provisioning.domain.types;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key)

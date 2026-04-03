@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_api_clients;
+module uim.platform.identity.directory.application.usecases.manage_api_clients;
 
 import uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity.directory.domain.entities.audit_event;

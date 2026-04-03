@@ -1,14 +1,14 @@
-module uim.platform.xyz.application.usecases.monitor_provisioning;
+module uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.provisioning_job;
-import uim.platform.xyz.domain.entities.provisioning_log;
-import uim.platform.xyz.domain.entities.provisioned_entity;
-import uim.platform.xyz.domain.ports.provisioning_job_repository;
-import uim.platform.xyz.domain.ports.provisioning_log_repository;
-import uim.platform.xyz.domain.ports.provisioned_entity_repository;
-import uim.platform.xyz.domain.ports.source_system_repository;
-import uim.platform.xyz.domain.ports.target_system_repository;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.provisioning_job;
+import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
+import uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
+import uim.platform.identity.provisioning.domain.ports.provisioning_log_repository;
+import uim.platform.identity.provisioning.domain.ports.provisioned_entity_repository;
+import uim.platform.identity.provisioning.domain.ports.source_system_repository;
+import uim.platform.identity.provisioning.domain.ports.target_system_repository;
 
 /// Summary of a provisioning job for monitoring dashboards.
 struct JobSummary

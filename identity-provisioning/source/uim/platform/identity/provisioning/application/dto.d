@@ -1,6 +1,6 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.identity.provisioning.application.dto;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.provisioning.domain.types;
 
 // --- Source System ---
 

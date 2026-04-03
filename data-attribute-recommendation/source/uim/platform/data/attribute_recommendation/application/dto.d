@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.data.attribute_recommendation.application.dto;
 
 import uim.platform.data.attribute_recommendation.domain.types;
 

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.proxy_system;
+module uim.platform.identity.provisioning.domain.entities.proxy_system;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.provisioning.domain.types;
 
 /// A proxy system that acts as an intermediary between a source
 /// and target system, applying transformations and access control.

@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.target_system;
+module uim.platform.identity.provisioning.presentation.http.target_system;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_target_systems;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.target_system;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.identity.provisioning.application.usecases.manage_target_systems;
+import uim.platform.identity.provisioning.application.dto;
+import uim.platform.identity.provisioning.domain.entities.target_system;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.presentation.http.json_utils;
 
 class TargetSystemController {
   private ManageTargetSystemsUseCase uc;

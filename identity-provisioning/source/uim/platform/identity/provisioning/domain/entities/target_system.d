@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.target_system;
+module uim.platform.identity.provisioning.domain.entities.target_system;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.identity.provisioning.domain.types;
 
 /// A target system to which identities (users/groups) are written
 /// during provisioning runs.

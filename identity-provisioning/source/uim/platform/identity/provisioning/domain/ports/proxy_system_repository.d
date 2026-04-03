@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.proxy_system_repository;
+module uim.platform.identity.provisioning.domain.ports.proxy_system_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.proxy_system;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.proxy_system;
 
 interface ProxySystemRepository
 {

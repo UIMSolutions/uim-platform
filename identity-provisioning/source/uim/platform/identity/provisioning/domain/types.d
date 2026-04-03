@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.identity.provisioning.domain.types;
 
 // --- Type Aliases ---
 alias SourceSystemId = string;

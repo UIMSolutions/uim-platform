@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_groups;
+module uim.platform.identity.directory.application.usecases.manage_groups;
 
 import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory.domain.entities.user;

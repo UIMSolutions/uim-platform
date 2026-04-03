@@ -1,4 +1,4 @@
-module uim.platform.xyz.application.usecases.manage_deployments;
+module uim.platform.data.attribute_recommendation.application.usecases.manage_deployments;
 
 import std.uuid;
 import std.conv : to;

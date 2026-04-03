@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.provisioning_log_repo;
+module uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.provisioning_log;
-import uim.platform.xyz.domain.ports.provisioning_log_repository;
+import uim.platform.identity.provisioning.domain.types;
+import uim.platform.identity.provisioning.domain.entities.provisioning_log;
+import uim.platform.identity.provisioning.domain.ports.provisioning_log_repository;
 
 class MemoryProvisioningLogRepository : ProvisioningLogRepository
 {
