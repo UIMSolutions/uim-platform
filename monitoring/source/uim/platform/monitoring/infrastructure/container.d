@@ -102,7 +102,7 @@ Container buildContainer(AppConfig config)
     c.alertController = new AlertController(c.manageAlerts);
     c.channelController = new ChannelController(c.manageChannels);
     c.dashboardController = new DashboardController(c.getDashboard);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("monitoring");
 
     return c;
 }
