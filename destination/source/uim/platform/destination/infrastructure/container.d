@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module infrastructure.container;
 
 import infrastructure.config;
@@ -61,7 +66,7 @@ Container buildContainer(AppConfig config) {
     c.certificateController = new CertificateController(c.manageCertificates);
     c.fragmentController = new FragmentController(c.manageFragments);
     c.findController = new FindController(c.findDestination);
-    c.healthController = new HealthController("destination-service");
+    c.healthController = new HealthController("destination");
 
     return c;
 }

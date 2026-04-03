@@ -1,42 +1,42 @@
-module presentation.http.source_system;
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module presentation.http.target_system;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import application.usecases.manage_source_systems;
+import application.usecases.manage_target_systems;
 import application.dto;
-import domain.entities.source_system;
+import domain.entities.target_system;
 import domain.types;
 import presentation.http.json_utils;
 
-class SourceSystemController
-{
-  private ManageSourceSystemsUseCase uc;
+class TargetSystemController {
+  private ManageTargetSystemsUseCase uc;
 
-  this(ManageSourceSystemsUseCase uc)
-  {
+  this(ManageTargetSystemsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
-    router.post("/api/v1/source-systems", &handleCreate);
-    router.get("/api/v1/source-systems", &handleList);
-    router.get("/api/v1/source-systems/*", &handleGetById);
-    router.put("/api/v1/source-systems/*", &handleUpdate);
-    router.delete_("/api/v1/source-systems/*", &handleDelete);
-    router.post("/api/v1/source-systems/activate/*", &handleActivate);
-    router.post("/api/v1/source-systems/deactivate/*", &handleDeactivate);
+  override void registerRoutes(URLRouter router) {
+    router.post("/api/v1/target-systems", &handleCreate);
+    router.get("/api/v1/target-systems", &handleList);
+    router.get("/api/v1/target-systems/*", &handleGetById);
+    router.put("/api/v1/target-systems/*", &handleUpdate);
+    router.delete_("/api/v1/target-systems/*", &handleDelete);
+    router.post("/api/v1/target-systems/activate/*", &handleActivate);
+    router.post("/api/v1/target-systems/deactivate/*", &handleDeactivate);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
-      auto r = CreateSourceSystemRequest();
+      auto r = CreateTargetSystemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -44,28 +44,22 @@ class SourceSystemController
       r.connectionConfig = j.getString("connectionConfig");
       r.createdBy = req.headers.get("X-User-Id", "system");
 
-      auto result = uc.createSourceSystem(r);
-      if (result.isSuccess)
-      {
+      auto result = uc.createTargetSystem(r);
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto items = uc.listSourceSystems(tenantId);
+      auto items = uc.listTargetSystems(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (ref s; items)
@@ -73,140 +67,106 @@ class SourceSystemController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto sys = uc.getSourceSystem(id, tenantId);
-      if (sys is null)
-      {
-        writeError(res, 404, "Source system not found");
+      auto sys = uc.getTargetSystem(id, tenantId);
+      if (sys is null) {
+        writeError(res, 404, "Target system not found");
         return;
       }
       res.writeJsonBody(serializeSystem(*sys), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
-      auto r = UpdateSourceSystemRequest();
+      auto r = UpdateTargetSystemRequest();
       r.id = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
 
-      auto result = uc.updateSourceSystem(r);
-      if (result.isSuccess)
-      {
+      auto result = uc.updateTargetSystem(r);
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.error == "Source system not found" ? 404 : 400;
+      } else {
+        auto status = result.error == "Target system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.activateSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("active");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
-        auto status = result.error == "Source system not found" ? 404 : 400;
+      } else {
+        auto status = result.error == "Target system not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deactivateSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("inactive");
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto result = uc.deleteSourceSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      auto result = uc.deleteTargetSystem(id, tenantId);
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeSystem(ref const SourceSystem s)
-  {
+  private static Json serializeSystem(ref const TargetSystem s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

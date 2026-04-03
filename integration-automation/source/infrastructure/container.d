@@ -32,8 +32,7 @@ import presentation.http.monitoring;
 import presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   InMemoryScenarioRepository scenarioRepo;
   InMemoryWorkflowRepository workflowRepo;
@@ -65,8 +64,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)
@@ -98,7 +96,7 @@ Container buildContainer(AppConfig config)
   c.systemController = new SystemController(c.manageSystems);
   c.destinationController = new DestinationController(c.manageDestinations);
   c.monitoringController = new MonitoringController(c.monitorExecutions);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("integration-automation");
 
   return c;
 }
