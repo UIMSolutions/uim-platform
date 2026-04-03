@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.deletion_request_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.deletion_request;
-import uim.platform.xyz.domain.ports.deletion_request_repository;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.deletion_request;
+import uim.platform.data.privacy.domain.ports.deletion_request_repository;
 
 class MemoryDeletionRequestRepository : DeletionRequestRepository
 {

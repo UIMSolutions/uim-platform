@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.blocking;
+module uim.platform.data.privacy.presentation.http.blocking;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_blocking_requests;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.blocking_request;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.data.privacy.application.usecases.manage_blocking_requests;
+import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.blocking_request;
+import uim.platform.data.privacy.presentation.http.json_utils;
 
 class BlockingController
 {

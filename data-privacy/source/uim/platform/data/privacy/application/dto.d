@@ -1,6 +1,6 @@
-module application.dto;
+module uim.platform.xyz.application.dto;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.data.privacy.domain.types;
 
 // ──────────────── Data Subject DTOs ────────────────
 

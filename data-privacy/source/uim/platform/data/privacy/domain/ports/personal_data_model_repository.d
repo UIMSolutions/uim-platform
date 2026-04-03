@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.personal_data_model_repository;
+module uim.platform.data.privacy.domain.ports.personal_data_model_repository;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.personal_data_model;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.personal_data_model;
 
 /// Port for persisting personal data model definitions.
 interface PersonalDataModelRepository

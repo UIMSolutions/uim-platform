@@ -1,8 +1,8 @@
-module uim.platform.xyz.domain.services.retention_evaluator;
+module uim.platform.data.privacy.domain.services.retention_evaluator;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.retention_rule;
-import uim.platform.xyz.domain.ports.retention_rule_repository;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.retention_rule;
+import uim.platform.data.privacy.domain.ports.retention_rule_repository;
 
 /// Result of a retention evaluation.
 struct RetentionEvaluation

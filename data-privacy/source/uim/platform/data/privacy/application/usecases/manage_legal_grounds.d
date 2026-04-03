@@ -1,12 +1,12 @@
-module application.usecases.manage_legal_grounds;
+module uim.platform.xyz.application.usecases.manage_legal_grounds;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.legal_ground;
-import uim.platform.xyz.domain.ports.legal_ground_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.legal_ground;
+import uim.platform.data.privacy.domain.ports.legal_ground_repository;
+import uim.platform.data.privacy.application.dto;
 
 class ManageLegalGroundsUseCase
 {

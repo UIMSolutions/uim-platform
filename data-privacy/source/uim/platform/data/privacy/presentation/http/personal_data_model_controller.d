@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.personal_data_model;
+module uim.platform.data.privacy.presentation.http.personal_data_model;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_personal_data_models;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.personal_data_model;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.data.privacy.application.usecases.manage_personal_data_models;
+import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.personal_data_model;
+import uim.platform.data.privacy.presentation.http.json_utils;
 
 class PersonalDataModelController
 {

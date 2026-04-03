@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.legal_ground;
+module uim.platform.data.privacy.domain.entities.legal_ground;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.data.privacy.domain.types;
 
 /// A recorded legal basis for processing personal data (GDPR Art. 6 / Art. 9).
 struct LegalGround

@@ -1,13 +1,13 @@
-module application.usecases.manage_blocking_requests;
+module uim.platform.xyz.application.usecases.manage_blocking_requests;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.blocking_request;
-import uim.platform.xyz.domain.ports.blocking_request_repository;
-import uim.platform.xyz.domain.ports.data_subject_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.blocking_request;
+import uim.platform.data.privacy.domain.ports.blocking_request_repository;
+import uim.platform.data.privacy.domain.ports.data_subject_repository;
+import uim.platform.data.privacy.application.dto;
 
 class ManageBlockingRequestsUseCase
 {

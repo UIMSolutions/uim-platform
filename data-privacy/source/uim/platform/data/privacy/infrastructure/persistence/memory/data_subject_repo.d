@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.data_subject_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.data_subject_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.data_subject;
-import uim.platform.xyz.domain.ports.data_subject_repository;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.data_subject;
+import uim.platform.data.privacy.domain.ports.data_subject_repository;
 
 class MemoryDataSubjectRepository : DataSubjectRepository
 {

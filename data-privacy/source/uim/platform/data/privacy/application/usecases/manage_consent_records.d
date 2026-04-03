@@ -1,27 +1,24 @@
-module application.usecases.manage_consent_records;
+module uim.platform.xyz.application.usecases.manage_consent_records;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.consent_record;
-import uim.platform.xyz.domain.ports.consent_record_repository;
-import uim.platform.xyz.domain.ports.data_subject_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.consent_record;
+import uim.platform.data.privacy.domain.ports.consent_record_repository;
+import uim.platform.data.privacy.domain.ports.data_subject_repository;
+import uim.platform.data.privacy.application.dto;
 
-class ManageConsentRecordsUseCase
-{
+class ManageConsentRecordsUseCase {
     private ConsentRecordRepository repo;
     private DataSubjectRepository subjectRepo;
 
-    this(ConsentRecordRepository repo, DataSubjectRepository subjectRepo)
-    {
+    this(ConsentRecordRepository repo, DataSubjectRepository subjectRepo) {
         this.repo = repo;
         this.subjectRepo = subjectRepo;
     }
 
-    CommandResult grantConsent(CreateConsentRecordRequest req)
-    {
+    CommandResult grantConsent(CreateConsentRecordRequest req) {
         if (req.tenantId.length == 0)
             return CommandResult("", "Tenant ID is required");
         if (req.dataSubjectId.length == 0)
@@ -53,33 +50,27 @@ class ManageConsentRecordsUseCase
         return CommandResult(record.id, "");
     }
 
-    ConsentRecord* getConsent(ConsentRecordId id, TenantId tenantId)
-    {
+    ConsentRecord* getConsent(ConsentRecordId id, TenantId tenantId) {
         return repo.findById(id, tenantId);
     }
 
-    ConsentRecord[] listConsents(TenantId tenantId)
-    {
+    ConsentRecord[] listConsents(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    ConsentRecord[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId)
-    {
+    ConsentRecord[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
         return repo.findByDataSubject(tenantId, subjectId);
     }
 
-    ConsentRecord[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-    {
+    ConsentRecord[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
         return repo.findByPurpose(tenantId, purpose);
     }
 
-    ConsentRecord[] listActiveConsents(TenantId tenantId, DataSubjectId subjectId)
-    {
+    ConsentRecord[] listActiveConsents(TenantId tenantId, DataSubjectId subjectId) {
         return repo.findActiveConsents(tenantId, subjectId);
     }
 
-    CommandResult revokeConsent(RevokeConsentRequest req)
-    {
+    CommandResult revokeConsent(RevokeConsentRequest req) {
         auto record = repo.findById(req.id, req.tenantId);
         if (record is null)
             return CommandResult("", "Consent record not found");
@@ -93,8 +84,7 @@ class ManageConsentRecordsUseCase
         return CommandResult(record.id, "");
     }
 
-    void deleteConsent(ConsentRecordId id, TenantId tenantId)
-    {
+    void deleteConsent(ConsentRecordId id, TenantId tenantId) {
         repo.remove(id, tenantId);
     }
 }

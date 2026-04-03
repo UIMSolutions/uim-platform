@@ -1,12 +1,12 @@
-module application.usecases.manage_data_subjects;
+module uim.platform.xyz.application.usecases.manage_data_subjects;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.data_subject;
-import uim.platform.xyz.domain.ports.data_subject_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.data_subject;
+import uim.platform.data.privacy.domain.ports.data_subject_repository;
+import uim.platform.data.privacy.application.dto;
 
 class ManageDataSubjectsUseCase
 {

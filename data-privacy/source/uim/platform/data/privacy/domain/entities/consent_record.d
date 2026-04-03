@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.consent_record;
+module uim.platform.data.privacy.domain.entities.consent_record;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.data.privacy.domain.types;
 
 /// A consent record — tracks a data subject's consent for a specific purpose.
 struct ConsentRecord

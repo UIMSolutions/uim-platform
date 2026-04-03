@@ -1,37 +1,37 @@
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.data.privacy.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.data.privacy.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.data_subject_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.personal_data_model_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.deletion_request_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.blocking_request_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.legal_ground_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.retention_rule_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.consent_record_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.data_retrieval_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.data_subject_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.personal_data_model_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.blocking_request_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.legal_ground_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.retention_rule_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.consent_record_repo;
+import uim.platform.data.privacy.infrastructure.persistence.memory.data_retrieval_repo;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_data_subjects;
-import uim.platform.xyz.application.usecases.manage_personal_data_models;
-import uim.platform.xyz.application.usecases.manage_deletion_requests;
-import uim.platform.xyz.application.usecases.manage_blocking_requests;
-import uim.platform.xyz.application.usecases.manage_legal_grounds;
-import uim.platform.xyz.application.usecases.manage_retention_rules;
-import uim.platform.xyz.application.usecases.manage_consent_records;
-import uim.platform.xyz.application.usecases.manage_data_retrievals;
+import uim.platform.data.privacy.application.usecases.manage_data_subjects;
+import uim.platform.data.privacy.application.usecases.manage_personal_data_models;
+import uim.platform.data.privacy.application.usecases.manage_deletion_requests;
+import uim.platform.data.privacy.application.usecases.manage_blocking_requests;
+import uim.platform.data.privacy.application.usecases.manage_legal_grounds;
+import uim.platform.data.privacy.application.usecases.manage_retention_rules;
+import uim.platform.data.privacy.application.usecases.manage_consent_records;
+import uim.platform.data.privacy.application.usecases.manage_data_retrievals;
 
 // Controllers
-import uim.platform.xyz.presentation.http.data_subject;
-import uim.platform.xyz.presentation.http.personal_data_model;
-import uim.platform.xyz.presentation.http.deletion;
-import uim.platform.xyz.presentation.http.blocking;
-import uim.platform.xyz.presentation.http.legal_ground;
-import uim.platform.xyz.presentation.http.retention_rule;
-import uim.platform.xyz.presentation.http.consent;
-import uim.platform.xyz.presentation.http.data_retrieval;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.data.privacy.presentation.http.data_subject;
+import uim.platform.data.privacy.presentation.http.personal_data_model;
+import uim.platform.data.privacy.presentation.http.deletion;
+import uim.platform.data.privacy.presentation.http.blocking;
+import uim.platform.data.privacy.presentation.http.legal_ground;
+import uim.platform.data.privacy.presentation.http.retention_rule;
+import uim.platform.data.privacy.presentation.http.consent;
+import uim.platform.data.privacy.presentation.http.data_retrieval;
+import uim.platform.data.privacy.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container

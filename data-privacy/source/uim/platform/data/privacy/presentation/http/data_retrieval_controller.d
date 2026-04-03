@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.data_retrieval;
+module uim.platform.data.privacy.presentation.http.data_retrieval;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_data_retrievals;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.data_retrieval_request;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.data.privacy.application.usecases.manage_data_retrievals;
+import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.data_retrieval_request;
+import uim.platform.data.privacy.presentation.http.json_utils;
 
 class DataRetrievalController
 {

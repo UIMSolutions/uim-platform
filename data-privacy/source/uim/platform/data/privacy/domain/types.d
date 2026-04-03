@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.data.privacy.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias DataSubjectId = string;

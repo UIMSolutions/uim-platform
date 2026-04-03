@@ -1,10 +1,10 @@
-module uim.platform.xyz.domain.services.legal_basis_evaluator;
+module uim.platform.data.privacy.domain.services.legal_basis_evaluator;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.legal_ground;
-import uim.platform.xyz.domain.entities.consent_record;
-import uim.platform.xyz.domain.ports.legal_ground_repository;
-import uim.platform.xyz.domain.ports.consent_record_repository;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.legal_ground;
+import uim.platform.data.privacy.domain.entities.consent_record;
+import uim.platform.data.privacy.domain.ports.legal_ground_repository;
+import uim.platform.data.privacy.domain.ports.consent_record_repository;
 
 /// Result of a legal basis evaluation.
 struct LegalBasisEvaluation

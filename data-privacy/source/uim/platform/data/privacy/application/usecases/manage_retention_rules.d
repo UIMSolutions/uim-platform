@@ -1,12 +1,12 @@
-module application.usecases.manage_retention_rules;
+module uim.platform.xyz.application.usecases.manage_retention_rules;
 
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.retention_rule;
-import uim.platform.xyz.domain.ports.retention_rule_repository;
-import uim.platform.xyz.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.retention_rule;
+import uim.platform.data.privacy.domain.ports.retention_rule_repository;
+import uim.platform.data.privacy.application.dto;
 
 class ManageRetentionRulesUseCase
 {

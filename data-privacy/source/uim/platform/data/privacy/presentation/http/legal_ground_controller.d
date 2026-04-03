@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.legal_ground;
+module uim.platform.data.privacy.presentation.http.legal_ground;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_legal_grounds;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.legal_ground;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.data.privacy.application.usecases.manage_legal_grounds;
+import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy.domain.entities.legal_ground;
+import uim.platform.data.privacy.presentation.http.json_utils;
 
 class LegalGroundController
 {
