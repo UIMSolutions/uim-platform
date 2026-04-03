@@ -4,8 +4,8 @@ import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.user_repository;
 
-import std.algorithm : canFind;
-import std.string : toLower, indexOf;
+// import std.algorithm : canFind;
+// import std.string : toLower, indexOf;
 
 /// In-memory adapter for user persistence.
 class MemoryUserRepository : UserRepository

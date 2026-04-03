@@ -6,7 +6,7 @@ import uim.platform.destination.domain.ports.destination_repository;
 import uim.platform.destination.domain.services.destination_resolver;
 import uim.platform.destination.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for destination CRUD operations.
 class ManageDestinationsUseCase
@@ -30,7 +30,7 @@ class ManageDestinationsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Destination d;
@@ -145,7 +145,7 @@ class ManageDestinationsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

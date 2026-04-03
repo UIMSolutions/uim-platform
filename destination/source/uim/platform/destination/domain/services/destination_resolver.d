@@ -6,7 +6,7 @@ import uim.platform.destination.domain.entities.auth_token;
 import uim.platform.destination.domain.entities.destination_lookup;
 import uim.platform.destination.domain.types;
 
-import std.datetime.systime : Clock;
+// import std.datetime.systime : Clock;
 
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.
 struct DestinationResolver
@@ -66,7 +66,7 @@ struct DestinationResolver
                 break;
 
             case AuthenticationType.basicAuthentication:
-                import std.base64 : Base64;
+                // import std.base64 : Base64;
                 auto creds = cast(ubyte[])(dest.user ~ ":" ~ dest.password);
                 token.type_ = "Basic";
                 token.value_ = Base64.encode(creds);
@@ -115,13 +115,13 @@ struct DestinationResolver
 
     private static string generateMockOAuthToken(const ref Destination dest)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         return "mock-oauth2-" ~ randomUUID().toString();
     }
 
     private static string generateMockSAMLToken(const ref Destination dest)
     {
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         return "mock-saml-" ~ randomUUID().toString();
     }
 

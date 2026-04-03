@@ -2,9 +2,9 @@ module uim.platform.identity.directory.infrastructure.security.sha256_password_s
 
 import uim.platform.identity.directory.domain.ports.password_service;
 
-import std.digest.sha;
-import std.uuid;
-import std.string : representation;
+// import std.digest.sha;
+// import std.uuid;
+// import std.string : representation;
 
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
 class Sha256PasswordService : PasswordService
@@ -18,7 +18,7 @@ class Sha256PasswordService : PasswordService
 
     bool verifyPassword(string plaintext, string stored)
     {
-        import std.string : indexOf;
+        // import std.string : indexOf;
 
         auto sepIdx = stored.indexOf('$');
         if (sepIdx < 0)

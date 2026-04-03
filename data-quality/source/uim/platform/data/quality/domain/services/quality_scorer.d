@@ -5,7 +5,7 @@ import uim.platform.data.quality.domain.entities.quality_dashboard;
 import uim.platform.data.quality.domain.entities.validation_result;
 import uim.platform.data.quality.domain.entities.data_profile;
 
-import std.datetime.systime : Clock;
+// import std.datetime.systime : Clock;
 
 /// Domain service - computes quality scores and dashboard metrics.
 class QualityScorer

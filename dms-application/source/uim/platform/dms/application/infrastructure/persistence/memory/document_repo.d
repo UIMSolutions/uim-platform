@@ -51,8 +51,8 @@ class MemoryDocumentRepository : IDocumentRepository {
   }
 
   Document[] findByName(string name, TenantId tenantId) {
-    import std.algorithm : canFind;
-    import std.uni : toLower;
+    // import std.algorithm : canFind;
+    // import std.uni : toLower;
 
     Document[] result;
     auto lowerName = name.toLower();

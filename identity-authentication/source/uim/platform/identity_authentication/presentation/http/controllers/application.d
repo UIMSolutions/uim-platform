@@ -79,7 +79,7 @@ class ApplicationController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.string : lastIndexOf;
+            // import std.string : lastIndexOf;
 
             auto path = req.requestURI;
             auto idx = path.lastIndexOf('/');
@@ -105,7 +105,7 @@ class ApplicationController : SAPController {
 
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.string : lastIndexOf;
+            // import std.string : lastIndexOf;
 
             auto path = req.requestURI;
             auto idx = path.lastIndexOf('/');

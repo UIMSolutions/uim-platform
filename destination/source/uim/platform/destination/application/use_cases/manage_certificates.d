@@ -6,7 +6,7 @@ import uim.platform.destination.domain.ports.certificate_repository;
 import uim.platform.destination.domain.services.certificate_validator;
 import uim.platform.destination.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for certificate CRUD operations.
 class ManageCertificatesUseCase
@@ -30,7 +30,7 @@ class ManageCertificatesUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         Certificate c;
@@ -119,7 +119,7 @@ class ManageCertificatesUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

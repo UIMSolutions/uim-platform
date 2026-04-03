@@ -27,8 +27,8 @@ class RetentionEvaluator
     RetentionEvaluation evaluate(TenantId tenantId, ProcessingPurpose purpose,
         long dataTimestamp)
     {
-        import std.datetime.systime : Clock;
-        import std.conv : to;
+        // import std.datetime.systime : Clock;
+        // import std.conv : to;
 
         RetentionEvaluation result;
         auto now = Clock.currStdTime();

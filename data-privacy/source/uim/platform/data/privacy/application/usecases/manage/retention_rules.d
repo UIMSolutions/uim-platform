@@ -1,7 +1,7 @@
 module uim.platform.data.privacy.application.usecases.manage_retention_rules;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.retention_rule;

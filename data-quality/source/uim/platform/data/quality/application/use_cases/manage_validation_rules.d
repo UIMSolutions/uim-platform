@@ -1,7 +1,7 @@
 module uim.platform.data.quality.application.usecases.manage_validation_rules;
 
-import std.uuid;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.datetime.systime : Clock;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.validation_rule;

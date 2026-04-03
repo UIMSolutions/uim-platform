@@ -1,6 +1,6 @@
 module uim.platform.data.quality.application.usecases.cleanse_addresses;
 
-import std.uuid;
+// import std.uuid;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;

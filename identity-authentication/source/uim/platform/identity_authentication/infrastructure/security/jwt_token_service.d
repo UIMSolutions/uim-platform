@@ -5,11 +5,11 @@ module uim.platform.identity_authentication.infrastructure.security.jwt_token_se
 // import uim.platform.identity_authentication.domain.types;
 // import uim.platform.identity_authentication.domain.ports.token_service;
 // 
-// import std.uuid;
-// import std.conv : to;
-// import std.datetime.systime : Clock;
+// // import std.uuid;
+// // import std.conv : to;
+// // import std.datetime.systime : Clock;
 // import core.time;
-// import std.digest.sha : SHA256, toHexString;
+// // import std.digest.sha : SHA256, toHexString;
 import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
@@ -27,7 +27,7 @@ class JwtTokenService : TokenService
 
     string generateToken(User user, Application app, TokenType tokenType, string[] scopes)
     {
-        import std.array : join;
+        // import std.array : join;
 
         auto now = Clock.currStdTime();
         auto payload = user.id ~ "|" ~ app.id ~ "|" ~ tokenType.to!string
@@ -40,7 +40,7 @@ class JwtTokenService : TokenService
 
     string validateToken(string tokenValue)
     {
-        import std.string : lastIndexOf, split;
+        // import std.string : lastIndexOf, split;
 
         auto dotIdx = tokenValue.lastIndexOf('.');
         if (dotIdx < 0)

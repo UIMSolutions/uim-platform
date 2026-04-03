@@ -3,10 +3,10 @@ module uim.platform.data.quality.domain.services.address_cleanser;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;
 
-import std.uni : toUpper, toLower, isAlpha, isWhite;
-import std.string : strip, toUpper, toLower;
-import std.array : replace;
-import std.datetime.systime : Clock;
+// import std.uni : toUpper, toLower, isAlpha, isWhite;
+// import std.string : strip, toUpper, toLower;
+// import std.array : replace;
+// import std.datetime.systime : Clock;
 
 /// Domain service - cleanses and standardizes address data.
 class AddressCleanser
@@ -170,7 +170,7 @@ class AddressCleanser
 
     private static string standardizePostalCode(string code, string countryIso2)
     {
-        import std.string : strip;
+        // import std.string : strip;
 
         auto cleaned = code.strip();
 

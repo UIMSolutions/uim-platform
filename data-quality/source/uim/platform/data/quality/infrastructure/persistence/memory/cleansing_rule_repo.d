@@ -4,8 +4,8 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality.domain.ports.cleansing_rule_repository;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
 
 class MemoryCleansingRuleRepository : CleansingRuleRepository
 {

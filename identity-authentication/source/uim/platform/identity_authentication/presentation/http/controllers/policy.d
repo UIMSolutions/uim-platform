@@ -89,7 +89,7 @@ class PolicyController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.string : lastIndexOf;
+            // import std.string : lastIndexOf;
 
             auto path = req.requestURI;
             auto idx = path.lastIndexOf('/');

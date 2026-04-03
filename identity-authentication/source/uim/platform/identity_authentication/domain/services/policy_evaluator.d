@@ -40,8 +40,8 @@ AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies, User u
 
 private bool evaluateRule(PolicyRule rule, User user, PolicyEvaluationContext ctx)
 {
-    import std.conv : to;
-    import std.algorithm : canFind;
+    // import std.conv : to;
+    // import std.algorithm : canFind;
 
     switch (rule.attribute)
     {

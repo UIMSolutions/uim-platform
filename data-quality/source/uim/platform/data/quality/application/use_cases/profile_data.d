@@ -1,8 +1,8 @@
 module uim.platform.data.quality.application.usecases.profile_data;
 
-import std.uuid;
-import std.conv : to;
-import std.datetime.systime : Clock;
+// import std.uuid;
+// import std.conv : to;
+// import std.datetime.systime : Clock;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.data_profile;
@@ -195,7 +195,7 @@ class ProfileDataUseCase {
     }
 
     private static bool isEmail(string s) {
-        import std.string : indexOf;
+        // import std.string : indexOf;
 
         auto at = s.indexOf('@');
         return at > 0 && at < cast(long)s.length - 1
@@ -203,8 +203,8 @@ class ProfileDataUseCase {
     }
 
     private static string[] topN(int[string] freqMap, int n) {
-        import std.algorithm : sort;
-        import std.array : array;
+        // import std.algorithm : sort;
+        // import std.array : array;
 
         struct Pair {
             string key;

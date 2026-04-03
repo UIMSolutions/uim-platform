@@ -15,7 +15,7 @@ struct AppConfig {
 
 /// Load configuration (extend to read from env vars or config files).
 AppConfig loadConfig() {
-    import std.process : environment;
+    // import std.process : environment;
 
     AppConfig config;
 
@@ -25,7 +25,7 @@ AppConfig loadConfig() {
 
     auto portStr = environment.get("IAS_PORT", "");
     if (portStr.length > 0) {
-        import std.conv : to;
+        // import std.conv : to;
 
         try
             config.port = portStr.to!ushort;

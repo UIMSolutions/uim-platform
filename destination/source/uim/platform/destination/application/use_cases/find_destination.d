@@ -11,7 +11,7 @@ import uim.platform.destination.domain.ports.certificate_repository;
 import uim.platform.destination.domain.services.destination_resolver;
 import uim.platform.destination.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for the "Find Destination" API — resolves a destination
 /// by name, merges fragments, resolves auth tokens, and collects certificates.

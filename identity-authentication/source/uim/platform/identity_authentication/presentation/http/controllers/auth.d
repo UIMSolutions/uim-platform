@@ -48,7 +48,7 @@ class AuthController : SAPController {
             response["message"] = Json(result.message);
 
             if (result.mfaRequired) {
-                import std.conv : to;
+                // import std.conv : to;
 
                 response["mfaRequired"] = Json(true);
                 response["mfaType"] = Json(result.mfaType.to!string);

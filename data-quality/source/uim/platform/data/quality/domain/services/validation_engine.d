@@ -4,9 +4,9 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.validation_rule;
 import uim.platform.data.quality.domain.entities.validation_result;
 
-import std.regex;
-import std.conv : to;
-import std.uni : toLower;
+// import std.regex;
+// import std.conv : to;
+// import std.uni : toLower;
 
 /// Domain service - evaluates validation rules against record field values.
 class ValidationEngine
@@ -57,7 +57,7 @@ class ValidationEngine
         else
             result.qualityScore = 100.0;
 
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         result.validatedAt = Clock.currStdTime();
 
         return result;

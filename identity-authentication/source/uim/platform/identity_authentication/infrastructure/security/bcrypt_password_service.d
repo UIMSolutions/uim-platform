@@ -2,8 +2,8 @@ module uim.platform.identity_authentication.infrastructure.security.bcrypt_passw
 
 // import uim.platform.identity_authentication.domain.ports.services.password;
 // 
-// import std.digest.sha : SHA256, toHexString;
-// import std.uuid;
+// // import std.digest.sha : SHA256, toHexString;
+// // import std.uuid;
 import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
@@ -27,7 +27,7 @@ class Sha256PasswordService : PasswordService
 
     bool verifyPassword(string plaintext, string hash)
     {
-        import std.string : indexOf;
+        // import std.string : indexOf;
 
         auto sepIdx = hash.indexOf('$');
         if (sepIdx < 0)

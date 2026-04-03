@@ -3,7 +3,7 @@ module uim.platform.destination.domain.services.certificate_validator;
 import uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination.domain.types;
 
-import std.datetime.systime : Clock;
+// import std.datetime.systime : Clock;
 
 /// Result of certificate validation.
 struct ValidationResult
@@ -77,7 +77,7 @@ struct CertificateValidator
 
     private static string formatLong(long v)
     {
-        import std.format : format;
+        // import std.format : format;
         return format("%d", v);
     }
 }

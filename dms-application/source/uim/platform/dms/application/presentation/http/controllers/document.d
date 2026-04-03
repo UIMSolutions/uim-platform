@@ -3,7 +3,7 @@ module uim.platform.dms.application.presentation.http.controllers.document;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import std.conv : to;
+// // import std.conv : to;
 // 
 // import uim.platform.dms.application.application.usecases.manage_documents;
 // import uim.platform.dms.application.application.dto;
@@ -88,7 +88,7 @@ class DocumentController : SAPController {
       if (query.length == 0) {
         // Try query param
         auto uri = req.requestURI;
-        import std.string : indexOf;
+        // import std.string : indexOf;
 
         auto qIdx = uri.indexOf("q=");
         if (qIdx >= 0) {

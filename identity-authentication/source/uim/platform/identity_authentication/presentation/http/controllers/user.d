@@ -80,7 +80,7 @@ class UserController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            import std.conv : to;
+            // import std.conv : to;
 
             auto path = req.requestURI;
             auto userId = extractIdFromPath(path);
@@ -162,7 +162,7 @@ class UserController : SAPController {
 }
 
 private string extractIdFromPath(string path) {
-    import std.string : lastIndexOf;
+    // import std.string : lastIndexOf;
 
     auto idx = path.lastIndexOf('/');
     if (idx >= 0 && idx + 1 < path.length)

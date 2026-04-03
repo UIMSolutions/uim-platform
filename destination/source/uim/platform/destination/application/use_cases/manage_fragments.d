@@ -5,7 +5,7 @@ import uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.ports.fragment_repository;
 import uim.platform.destination.domain.types;
 
-import std.conv : to;
+// import std.conv : to;
 
 /// Application service for destination fragment CRUD operations.
 class ManageFragmentsUseCase
@@ -26,7 +26,7 @@ class ManageFragmentsUseCase
         if (existing.id.length > 0)
             return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
-        import std.uuid : randomUUID;
+        // import std.uuid : randomUUID;
         auto id = randomUUID().toString();
 
         DestinationFragment f;
@@ -102,7 +102,7 @@ class ManageFragmentsUseCase
 
     private static long clockSeconds()
     {
-        import std.datetime.systime : Clock;
+        // import std.datetime.systime : Clock;
         return Clock.currTime().toUnixTime();
     }
 

@@ -51,7 +51,7 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
 }
 
 private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx) {
-    import std.algorithm : canFind;
+    // import std.algorithm : canFind;
 
     foreach (cond; conditions) {
         if (!matchesCondition(cond, user, ctx))
@@ -61,8 +61,8 @@ private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEva
 }
 
 private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx) {
-    import std.conv : to;
-    import std.algorithm : canFind;
+    // import std.conv : to;
+    // import std.algorithm : canFind;
 
     switch (cond.conditionType) {
     case "ip_range":

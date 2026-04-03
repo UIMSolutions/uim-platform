@@ -1,7 +1,7 @@
 module uim.platform.identity_authentication.presentation.http.json_utils;
 
 // import vibe.data.json;
-// import std.traits;
+// // import std.traits;
 
 import uim.platform.identity_authentication;
 
@@ -26,7 +26,7 @@ Json toJsonValue(T)(T val) {
                     arr ~= Json(s);
                 j[name] = arr;
             } else static if (is(FT == enum)) {
-                import std.conv : to;
+                // import std.conv : to;
 
                 j[name] = Json(val.tupleof[i].to!string);
             }

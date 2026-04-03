@@ -30,8 +30,8 @@ class LegalBasisEvaluator
     LegalBasisEvaluation evaluate(TenantId tenantId, DataSubjectId subjectId,
         ProcessingPurpose purpose)
     {
-        import std.datetime.systime : Clock;
-        import std.conv : to;
+        // import std.datetime.systime : Clock;
+        // import std.conv : to;
 
         LegalBasisEvaluation result;
         auto now = Clock.currStdTime();

@@ -3,10 +3,10 @@ module uim.platform.identity_authentication.infrastructure.security.totp_mfa_ser
 // import uim.platform.identity_authentication.domain.types;
 // import uim.platform.identity_authentication.domain.ports.mfa_service;
 // 
-// import std.uuid;
-// import std.conv : to;
-// import std.digest.sha : SHA256, toHexString;
-// import std.datetime.systime : Clock;
+// // import std.uuid;
+// // import std.conv : to;
+// // import std.digest.sha : SHA256, toHexString;
+// // import std.datetime.systime : Clock;
 import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
@@ -27,7 +27,7 @@ class TotpMfaService : MfaService {
     void sendOtp(MfaType mfaType, string destination, string code) {
         // In production: integrate with SMS gateway or email service.
         // For now, log to stdout.
-        import std.stdio : writefln;
+        // import std.stdio : writefln;
 
         writefln("[MFA] Sending OTP %s to %s via %s", code, destination, mfaType.to!string);
     }
@@ -44,7 +44,7 @@ class TotpMfaService : MfaService {
         foreach (c; hex[0 .. 8]) {
             numeric = numeric * 16 + (c >= 'A' ? c - 'A' + 10 : c - '0');
         }
-        import std.format : format;
+        // import std.format : format;
 
         return format("%06d", numeric % 1_000_000);
     }
