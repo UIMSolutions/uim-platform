@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.fragment_repository;
+module uim.platform.destination.domain.ports.fragment_repository;
 
-import uim.platform.xyz.domain.entities.destination_fragment;
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.domain.entities.destination_fragment;
+import uim.platform.destination.domain.types;
 
 /// Port: outgoing — destination fragment persistence.
 interface FragmentRepository

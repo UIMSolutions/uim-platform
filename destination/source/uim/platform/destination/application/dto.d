@@ -1,6 +1,6 @@
 module application.dto;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.domain.types;
 
 /// --- Command result ---
 

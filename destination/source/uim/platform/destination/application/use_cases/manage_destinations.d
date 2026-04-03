@@ -1,10 +1,10 @@
 module application.usecases.manage_destinations;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.destination;
-import uim.platform.xyz.domain.ports.destination_repository;
-import uim.platform.xyz.domain.services.destination_resolver;
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.application.dto;
+import uim.platform.destination.domain.entities.destination;
+import uim.platform.destination.domain.ports.destination_repository;
+import uim.platform.destination.domain.services.destination_resolver;
+import uim.platform.destination.domain.types;
 
 import std.conv : to;
 

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.auth_token;
+module uim.platform.destination.domain.entities.auth_token;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.domain.types;
 
 /// A resolved authentication token for a destination.
 struct AuthToken

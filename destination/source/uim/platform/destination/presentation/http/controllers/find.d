@@ -1,13 +1,13 @@
-module uim.platform.xyz.presentation.http.find;
+module uim.platform.destination.presentation.http.find;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.find_destination;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.destination.application.usecases.find_destination;
+import uim.platform.destination.application.dto;
+import uim.platform.destination.presentation.http.json_utils;
 
 class FindController
 {

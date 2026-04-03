@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.certificate;
+module uim.platform.destination.domain.entities.certificate;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.domain.types;
 
 /// A certificate (keystore or truststore) uploaded for destination authentication.
 struct Certificate

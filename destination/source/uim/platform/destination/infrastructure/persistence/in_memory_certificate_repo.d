@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.certificate_repo;
+module uim.platform.destination.infrastructure.persistence.memory.certificate_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.certificate;
-import uim.platform.xyz.domain.ports.certificate_repository;
+import uim.platform.destination.domain.types;
+import uim.platform.destination.domain.entities.certificate;
+import uim.platform.destination.domain.ports.certificate_repository;
 
 import std.algorithm : filter;
 import std.array : array;

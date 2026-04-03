@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.certificate;
+module uim.platform.destination.presentation.http.controllers.certificate;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_certificates;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.certificate;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.destination.application.usecases.manage_certificates;
+import uim.platform.destination.application.dto;
+import uim.platform.destination.domain.entities.certificate;
+import uim.platform.destination.domain.types;
+import uim.platform.destination.presentation.http.json_utils;
 
 class CertificateController {
     private ManageCertificatesUseCase uc;

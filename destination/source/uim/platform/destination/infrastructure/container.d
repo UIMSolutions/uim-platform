@@ -3,27 +3,27 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.destination.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.destination.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.certificate_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.fragment_repo;
+import uim.platform.destination.infrastructure.persistence.memory.destination_repo;
+import uim.platform.destination.infrastructure.persistence.memory.certificate_repo;
+import uim.platform.destination.infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_destinations;
-import uim.platform.xyz.application.usecases.manage_certificates;
-import uim.platform.xyz.application.usecases.manage_fragments;
-import uim.platform.xyz.application.usecases.find_destination;
+import uim.platform.destination.application.usecases.manage_destinations;
+import uim.platform.destination.application.usecases.manage_certificates;
+import uim.platform.destination.application.usecases.manage_fragments;
+import uim.platform.destination.application.usecases.find_destination;
 
 // Controllers
-import uim.platform.xyz.presentation.http.destination;
-import uim.platform.xyz.presentation.http.certificate;
-import uim.platform.xyz.presentation.http.fragment;
-import uim.platform.xyz.presentation.http.find;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.destination.presentation.http.destination;
+import uim.platform.destination.presentation.http.certificate;
+import uim.platform.destination.presentation.http.fragment;
+import uim.platform.destination.presentation.http.find;
+import uim.platform.destination.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container {

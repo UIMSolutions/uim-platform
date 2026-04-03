@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.fragment;
+module uim.platform.destination.presentation.http.fragment;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_fragments;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.destination_fragment;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.destination.application.usecases.manage_fragments;
+import uim.platform.destination.application.dto;
+import uim.platform.destination.domain.entities.destination_fragment;
+import uim.platform.destination.domain.types;
+import uim.platform.destination.presentation.http.json_utils;
 
 class FragmentController
 {

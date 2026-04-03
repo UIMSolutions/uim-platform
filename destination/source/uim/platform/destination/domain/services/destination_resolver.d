@@ -1,10 +1,10 @@
-module uim.platform.xyz.domain.services.destination_resolver;
+module uim.platform.destination.domain.services.destination_resolver;
 
-import uim.platform.xyz.domain.entities.destination;
-import uim.platform.xyz.domain.entities.destination_fragment;
-import uim.platform.xyz.domain.entities.auth_token;
-import uim.platform.xyz.domain.entities.destination_lookup;
-import uim.platform.xyz.domain.types;
+import uim.platform.destination.domain.entities.destination;
+import uim.platform.destination.domain.entities.destination_fragment;
+import uim.platform.destination.domain.entities.auth_token;
+import uim.platform.destination.domain.entities.destination_lookup;
+import uim.platform.destination.domain.types;
 
 import std.datetime.systime : Clock;
 

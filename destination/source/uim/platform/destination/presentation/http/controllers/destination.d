@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.destination;
+module uim.platform.destination.presentation.http.controllers.destination;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_destinations;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.destination;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.destination.application.usecases.manage_destinations;
+import uim.platform.destination.application.dto;
+import uim.platform.destination.domain.entities.destination;
+import uim.platform.destination.domain.types;
+import uim.platform.destination.presentation.http.json_utils;
 
 class DestinationController : SAPController {
     private ManageDestinationsUseCase uc;

@@ -1,4 +1,4 @@
-module uim.platform.xyz.presentation.http.json_utils;
+module uim.platform.destination.presentation.http.json_utils;
 
 import vibe.data.json;
 import vibe.http.server;
