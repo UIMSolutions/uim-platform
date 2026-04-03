@@ -123,7 +123,7 @@ Container buildContainer(AppConfig config)
     c.eventSubscriptionController = new EventSubscriptionController(c.manageEventSubscriptions);
     c.moduleController = new ModuleController(c.manageModules);
     c.applicationController = new ApplicationController(c.manageApplications);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("kyma-runtime");
 
     return c;
 }

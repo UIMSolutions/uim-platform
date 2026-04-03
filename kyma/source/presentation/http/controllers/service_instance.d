@@ -1,3 +1,8 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
 module presentation.http.service_instance;
 
 import vibe.http.server;
@@ -11,14 +16,14 @@ import domain.entities.service_instance;
 import domain.types;
 import presentation.http.json_utils;
 
-class ServiceInstanceController
-{
+class ServiceInstanceController {
     private ManageServiceInstancesUseCase uc;
 
-    this(ManageServiceInstancesUseCase uc) { this.uc = uc; }
+    this(ManageServiceInstancesUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/service-instances", &handleCreate);
         router.get("/api/v1/service-instances", &handleList);
         router.get("/api/v1/service-instances/*", &handleGetById);
@@ -26,10 +31,8 @@ class ServiceInstanceController
         router.delete_("/api/v1/service-instances/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateServiceInstanceRequest r;
             r.namespaceId = j.getString("namespaceId");
@@ -46,22 +49,19 @@ class ServiceInstanceController
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto nsId = req.params.get("namespaceId");
             auto envId = req.params.get("environmentId");
 
@@ -79,28 +79,29 @@ class ServiceInstanceController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto inst = uc.getServiceInstance(id);
-            if (inst.id.length == 0) { writeError(res, 404, "Service instance not found"); return; }
+            if (inst.id.length == 0) {
+                writeError(res, 404, "Service instance not found");
+                return;
+            }
             res.writeJsonBody(serializeInst(inst), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateServiceInstanceRequest r;
@@ -111,26 +112,29 @@ class ServiceInstanceController
             r.labels = jsonStrMap(j, "labels");
 
             auto result = uc.updateServiceInstance(id, r);
-            if (result.success) res.writeJsonBody(Json.emptyObject, 200);
-            else writeError(res, 400, result.error);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteServiceInstance(id);
-            if (result.success) res.writeBody("", 204);
-            else writeError(res, 404, result.error);
+            if (result.success)
+                res.writeBody("", 204);
+            else
+                writeError(res, 404, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private Json serializeInst(ref ServiceInstance inst)
-    {
+    private Json serializeInst(ref ServiceInstance inst) {
         auto j = Json.emptyObject;
         j["id"] = Json(inst.id);
         j["namespaceId"] = Json(inst.namespaceId);
@@ -145,7 +149,7 @@ class ServiceInstanceController
         j["externalName"] = Json(inst.externalName);
         j["parameters"] = Json(inst.parametersJson);
         j["labels"] = serializeStrMap(inst.labels);
-        j["bindingCount"] = Json(cast(long) inst.bindingCount);
+        j["bindingCount"] = Json(cast(long)inst.bindingCount);
         j["createdBy"] = Json(inst.createdBy);
         j["createdAt"] = Json(inst.createdAt);
         j["modifiedAt"] = Json(inst.modifiedAt);

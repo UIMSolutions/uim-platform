@@ -1,4 +1,9 @@
-module presentation.http.function;
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module presentation.http.controllers.function_;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,14 +16,14 @@ import domain.entities.serverless_function;
 import domain.types;
 import presentation.http.json_utils;
 
-class FunctionController
-{
+class FunctionController {
     private ManageFunctionsUseCase uc;
 
-    this(ManageFunctionsUseCase uc) { this.uc = uc; }
+    this(ManageFunctionsUseCase uc) {
+        this.uc = uc;
+    }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/functions", &handleCreate);
         router.get("/api/v1/functions", &handleList);
         router.get("/api/v1/functions/*", &handleGetById);
@@ -26,10 +31,8 @@ class FunctionController
         router.delete_("/api/v1/functions/*", &handleDelete);
     }
 
-    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             CreateFunctionRequest r;
             r.namespaceId = j.getString("namespaceId");
@@ -54,22 +57,19 @@ class FunctionController
             r.createdBy = req.headers.get("X-User-Id", "");
 
             auto result = uc.create(r);
-            if (result.success)
-            {
+            if (result.success) {
                 auto resp = Json.emptyObject;
                 resp["id"] = Json(result.id);
                 res.writeJsonBody(resp, 201);
-            }
-            else
+            } else
                 writeError(res, 400, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto nsId = req.params.get("namespaceId");
             auto envId = req.params.get("environmentId");
 
@@ -87,28 +87,29 @@ class FunctionController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) items.length);
+            resp["totalCount"] = Json(cast(long)items.length);
             res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto fn = uc.getFunction(id);
-            if (fn.id.length == 0) { writeError(res, 404, "Function not found"); return; }
+            if (fn.id.length == 0) {
+                writeError(res, 404, "Function not found");
+                return;
+            }
             res.writeJsonBody(serializeFn(fn), 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto j = req.json;
             UpdateFunctionRequest r;
@@ -128,26 +129,29 @@ class FunctionController
             r.timeoutSeconds = j.getInteger("timeoutSeconds");
 
             auto result = uc.updateFunction(id, r);
-            if (result.success) res.writeJsonBody(Json.emptyObject, 200);
-            else writeError(res, 400, result.error);
+            if (result.success)
+                res.writeJsonBody(Json.emptyObject, 200);
+            else
+                writeError(res, 400, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto id = extractIdFromPath(req.requestURI);
             auto result = uc.deleteFunction(id);
-            if (result.success) res.writeBody("", 204);
-            else writeError(res, 404, result.error);
+            if (result.success)
+                res.writeBody("", 204);
+            else
+                writeError(res, 404, result.error);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
         }
-        catch (Exception e) { writeError(res, 500, "Internal server error"); }
     }
 
-    private Json serializeFn(ref ServerlessFunction fn)
-    {
+    private Json serializeFn(ref ServerlessFunction fn) {
         auto j = Json.emptyObject;
         j["id"] = Json(fn.id);
         j["namespaceId"] = Json(fn.namespaceId);
@@ -159,15 +163,15 @@ class FunctionController
         j["status"] = Json(fn.status.to!string);
         j["handler"] = Json(fn.handler);
         j["scalingType"] = Json(fn.scalingType.to!string);
-        j["minReplicas"] = Json(cast(long) fn.minReplicas);
-        j["maxReplicas"] = Json(cast(long) fn.maxReplicas);
+        j["minReplicas"] = Json(cast(long)fn.minReplicas);
+        j["maxReplicas"] = Json(cast(long)fn.maxReplicas);
         j["cpuRequest"] = Json(fn.cpuRequest);
         j["cpuLimit"] = Json(fn.cpuLimit);
         j["memoryRequest"] = Json(fn.memoryRequest);
         j["memoryLimit"] = Json(fn.memoryLimit);
         j["envVars"] = serializeStrMap(fn.envVars);
         j["labels"] = serializeStrMap(fn.labels);
-        j["timeoutSeconds"] = Json(cast(long) fn.timeoutSeconds);
+        j["timeoutSeconds"] = Json(cast(long)fn.timeoutSeconds);
         j["createdBy"] = Json(fn.createdBy);
         j["createdAt"] = Json(fn.createdAt);
         j["modifiedAt"] = Json(fn.modifiedAt);
