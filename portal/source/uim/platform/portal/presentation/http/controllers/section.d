@@ -37,7 +37,7 @@ class SectionController
                 req.headers.get("X-Tenant-Id", ""),
                 j.getString("title"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
                 jsonInt(j, "columns", 3),
             );
 
@@ -105,7 +105,7 @@ class SectionController
                 sectionId,
                 j.getString("title"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
                 jsonInt(j, "columns", 3),
             );
 

@@ -134,7 +134,7 @@ class UserController
                 j.getString("preferredLanguage"),
                 j.getString("locale"),
                 j.getString("timezone"),
-                jsonBool(j, "active", true),
+                j.getBoolean("active", true),
                 parseEmails(j),
                 parsePhoneNumbers(j),
                 parseAddresses(j),

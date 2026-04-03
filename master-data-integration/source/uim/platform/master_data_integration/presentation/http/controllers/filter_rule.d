@@ -142,12 +142,12 @@ class FilterRuleController
         foreach (ref cj; condsArr)
         {
             FilterConditionDto c;
-            c.fieldName = jsonStr(cj, "fieldName");
-            c.operator = jsonStr(cj, "operator");
-            c.value = jsonStr(cj, "value");
+            c.fieldName = cj.getString( "fieldName");
+            c.operator = cj.getString( "operator");
+            c.value = cj.getString( "value");
             c.valueList = jsonStrArray(cj, "valueList");
-            c.lowerBound = jsonStr(cj, "lowerBound");
-            c.upperBound = jsonStr(cj, "upperBound");
+            c.lowerBound = cj.getString( "lowerBound");
+            c.upperBound = cj.getString( "upperBound");
             conditions ~= c;
         }
         return conditions;

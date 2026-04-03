@@ -42,7 +42,7 @@ class ThemeController
                 parseColors(j),
                 parseFonts(j),
                 j.getString("customCss"),
-                jsonBool(j, "isDefault", false),
+                j.getBoolean("isDefault", false),
             );
 
             auto result = useCase.createTheme(createReq);
@@ -132,7 +132,7 @@ class ThemeController
                 parseColors(j),
                 parseFonts(j),
                 j.getString("customCss"),
-                jsonBool(j, "isDefault", false),
+                j.getBoolean("isDefault", false),
             );
 
             auto error = useCase.updateTheme(updateReq);

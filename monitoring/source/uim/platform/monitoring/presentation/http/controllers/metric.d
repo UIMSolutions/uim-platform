@@ -78,11 +78,11 @@ class MetricController
                         continue;
                     PushMetricRequest r;
                     r.tenantId = tenantId;
-                    r.resourceId = jsonStr(mj, "resourceId");
-                    r.name = jsonStr(mj, "name");
+                    r.resourceId = mj.getString( "resourceId");
+                    r.name = mj.getString( "name");
                     r.value_ = jsonDouble(mj, "value");
-                    r.unit = jsonStr(mj, "unit");
-                    r.category = jsonStr(mj, "category");
+                    r.unit = mj.getString( "unit");
+                    r.category = mj.getString( "category");
                     batchReq.metrics ~= r;
                 }
             }

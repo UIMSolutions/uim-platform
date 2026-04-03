@@ -227,8 +227,8 @@ class ScenarioController
         t.instructions = item.getString("instructions");
         t.automationEndpoint = item.getString("automationEndpoint");
         t.automationPayload = item.getString("automationPayload");
-        t.requiresSourceSystem = jsonBool(item, "requiresSourceSystem");
-        t.requiresTargetSystem = jsonBool(item, "requiresTargetSystem");
+        t.requiresSourceSystem item.getBoolean("requiresSourceSystem");
+        t.requiresTargetSystem item.getBoolean("requiresTargetSystem");
         t.estimatedDurationMinutes = jsonInt(item, "estimatedDurationMinutes");
         result ~= t;
       }

@@ -41,7 +41,7 @@ class PageController
                 jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
             );
 
             auto result = useCase.createPage(createReq);
@@ -114,7 +114,7 @@ class PageController
                 jsonEnum!PageLayout(j, "layout", PageLayout.freeform),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
             );
 
             auto error = useCase.updatePage(updateReq);

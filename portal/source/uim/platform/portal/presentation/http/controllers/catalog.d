@@ -38,7 +38,7 @@ class CatalogController {
                 j.getString("description"),
                 j.getString("providerId"),
                 jsonStrArray(j, "allowedRoleIds"),
-                jsonBool(j, "active", true),
+                j.getBoolean("active", true),
             );
 
             auto result = useCase.createCatalog(createReq);
@@ -90,7 +90,7 @@ class CatalogController {
                 j.getString("title"),
                 j.getString("description"),
                 jsonStrArray(j, "allowedRoleIds"),
-                jsonBool(j, "active", true),
+                j.getBoolean("active", true),
             );
 
             auto error = useCase.updateCatalog(updateReq);

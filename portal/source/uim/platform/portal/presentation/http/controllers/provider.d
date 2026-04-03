@@ -107,7 +107,7 @@ class ProviderController
                 j.getString("description"),
                 j.getString("contentEndpointUrl"),
                 j.getString("authToken"),
-                jsonBool(j, "active", true),
+                j.getBoolean("active", true),
             );
 
             auto error = useCase.updateProvider(updateReq);

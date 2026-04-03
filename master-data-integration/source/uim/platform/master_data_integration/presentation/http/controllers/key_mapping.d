@@ -168,10 +168,10 @@ class KeyMappingController
         foreach (ref ej; entriesArr)
         {
             KeyMappingEntryDto e;
-            e.clientId = jsonStr(ej, "clientId");
-            e.systemId = jsonStr(ej, "systemId");
-            e.localKey = jsonStr(ej, "localKey");
-            e.sourceType = jsonStr(ej, "sourceType");
+            e.clientId = ej.getString( "clientId");
+            e.systemId = ej.getString( "systemId");
+            e.localKey = ej.getString( "localKey");
+            e.sourceType = ej.getString( "sourceType");
             e.isPrimary = jsonBool(ej, "isPrimary");
             entries ~= e;
         }

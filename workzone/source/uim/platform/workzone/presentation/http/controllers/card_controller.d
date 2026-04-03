@@ -173,12 +173,12 @@ private CardDataSource parseDataSource(Json j)
     if (v !is null && (*v).type == Json.Type.object)
     {
         auto d = *v;
-        ds.url = jsonStr(d, "url");
-        ds.method = jsonStr(d, "method");
-        ds.path = jsonStr(d, "path");
+        ds.url = d.getString( "url");
+        ds.method = d.getString( "method");
+        ds.path = d.getString( "path");
         ds.refreshIntervalSec = jsonInt(d, "refreshIntervalSec");
-        ds.authType = jsonStr(d, "authType");
-        ds.authToken = jsonStr(d, "authToken");
+        ds.authType = d.getString( "authType");
+        ds.authToken = d.getString( "authToken");
     }
     return ds;
 }
@@ -190,13 +190,13 @@ private CardManifest parseManifest(Json j)
     if (v !is null && (*v).type == Json.Type.object)
     {
         auto d = *v;
-        m.type = jsonStr(d, "type");
-        m.version_ = jsonStr(d, "version");
-        m.minVersion = jsonStr(d, "minVersion");
-        m.headerTitle = jsonStr(d, "headerTitle");
-        m.headerSubtitle = jsonStr(d, "headerSubtitle");
-        m.headerIcon = jsonStr(d, "headerIcon");
-        m.headerStatus = jsonStr(d, "headerStatus");
+        m.type = d.getString( "type");
+        m.version_ = d.getString( "version");
+        m.minVersion = d.getString( "minVersion");
+        m.headerTitle = d.getString( "headerTitle");
+        m.headerSubtitle = d.getString( "headerSubtitle");
+        m.headerIcon = d.getString( "headerIcon");
+        m.headerStatus = d.getString( "headerStatus");
         m.maxItems = jsonInt(d, "maxItems");
     }
     return m;

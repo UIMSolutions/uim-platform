@@ -43,7 +43,7 @@ class MenuItemController
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
             );
 
             auto result = useCase.createMenuItem(createReq);
@@ -116,7 +116,7 @@ class MenuItemController
                 jsonEnum!NavigationTarget(j, "navigationTarget", NavigationTarget.inPlace),
                 jsonStrArray(j, "allowedRoleIds"),
                 jsonInt(j, "sortOrder"),
-                jsonBool(j, "visible", true),
+                j.getBoolean("visible", true),
             );
 
             auto error = useCase.updateMenuItem(updateReq);
