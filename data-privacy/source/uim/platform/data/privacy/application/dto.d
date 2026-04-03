@@ -4,8 +4,7 @@ import uim.platform.xyz.domain.types;
 
 // ──────────────── Data Subject DTOs ────────────────
 
-struct CreateDataSubjectRequest
-{
+struct CreateDataSubjectRequest {
     TenantId tenantId;
     DataSubjectType subjectType;
     string externalId;
@@ -15,8 +14,7 @@ struct CreateDataSubjectRequest
     string country;
 }
 
-struct UpdateDataSubjectRequest
-{
+struct UpdateDataSubjectRequest {
     DataSubjectId id;
     TenantId tenantId;
     DataSubjectType subjectType;
@@ -29,8 +27,7 @@ struct UpdateDataSubjectRequest
 
 // ──────────────── Personal Data Model DTOs ────────────────
 
-struct CreatePersonalDataModelRequest
-{
+struct CreatePersonalDataModelRequest {
     TenantId tenantId;
     string fieldName;
     string fieldDescription;
@@ -43,8 +40,7 @@ struct CreatePersonalDataModelRequest
     string legalReference;
 }
 
-struct UpdatePersonalDataModelRequest
-{
+struct UpdatePersonalDataModelRequest {
     PersonalDataModelId id;
     TenantId tenantId;
     string fieldName;
@@ -59,8 +55,7 @@ struct UpdatePersonalDataModelRequest
 
 // ──────────────── Deletion Request DTOs ────────────────
 
-struct CreateDeletionRequest
-{
+struct CreateDeletionRequest {
     TenantId tenantId;
     DataSubjectId dataSubjectId;
     UserId requestedBy;
@@ -69,8 +64,7 @@ struct CreateDeletionRequest
     string reason;
 }
 
-struct UpdateDeletionStatusRequest
-{
+struct UpdateDeletionStatusRequest {
     DeletionRequestId id;
     TenantId tenantId;
     DeletionStatus status;
@@ -79,8 +73,7 @@ struct UpdateDeletionStatusRequest
 
 // ──────────────── Blocking Request DTOs ────────────────
 
-struct CreateBlockingRequest
-{
+struct CreateBlockingRequest {
     TenantId tenantId;
     DataSubjectId dataSubjectId;
     UserId requestedBy;
@@ -89,8 +82,7 @@ struct CreateBlockingRequest
     string reason;
 }
 
-struct UpdateBlockingStatusRequest
-{
+struct UpdateBlockingStatusRequest {
     BlockingRequestId id;
     TenantId tenantId;
     BlockingStatus status;
@@ -98,8 +90,7 @@ struct UpdateBlockingStatusRequest
 
 // ──────────────── Legal Ground DTOs ────────────────
 
-struct CreateLegalGroundRequest
-{
+struct CreateLegalGroundRequest {
     TenantId tenantId;
     DataSubjectId dataSubjectId;
     LegalBasis basis;
@@ -111,8 +102,7 @@ struct CreateLegalGroundRequest
     long validUntil;
 }
 
-struct UpdateLegalGroundRequest
-{
+struct UpdateLegalGroundRequest {
     LegalGroundId id;
     TenantId tenantId;
     string description;
@@ -124,8 +114,7 @@ struct UpdateLegalGroundRequest
 
 // ──────────────── Retention Rule DTOs ────────────────
 
-struct CreateRetentionRuleRequest
-{
+struct CreateRetentionRuleRequest {
     TenantId tenantId;
     string name;
     string description;
@@ -136,8 +125,7 @@ struct CreateRetentionRuleRequest
     bool isDefault;
 }
 
-struct UpdateRetentionRuleRequest
-{
+struct UpdateRetentionRuleRequest {
     RetentionRuleId id;
     TenantId tenantId;
     string name;
@@ -150,8 +138,7 @@ struct UpdateRetentionRuleRequest
 
 // ──────────────── Consent Record DTOs ────────────────
 
-struct CreateConsentRecordRequest
-{
+struct CreateConsentRecordRequest {
     TenantId tenantId;
     DataSubjectId dataSubjectId;
     ProcessingPurpose purpose;
@@ -163,16 +150,14 @@ struct CreateConsentRecordRequest
     long expiresAt;
 }
 
-struct RevokeConsentRequest
-{
+struct RevokeConsentRequest {
     ConsentRecordId id;
     TenantId tenantId;
 }
 
 // ──────────────── Data Retrieval Request DTOs ────────────────
 
-struct CreateDataRetrievalRequest
-{
+struct CreateDataRetrievalRequest {
     TenantId tenantId;
     DataSubjectId dataSubjectId;
     UserId requestedBy;
@@ -181,8 +166,7 @@ struct CreateDataRetrievalRequest
     string reason;
 }
 
-struct UpdateRetrievalStatusRequest
-{
+struct UpdateRetrievalStatusRequest {
     DataRetrievalRequestId id;
     TenantId tenantId;
     RetrievalStatus status;
@@ -192,13 +176,11 @@ struct UpdateRetrievalStatusRequest
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult
-{
+struct CommandResult {
     string id;
     string error;
 
-    bool isSuccess() const
-    {
+    bool isSuccess() const {
         return error.length == 0;
     }
 }
