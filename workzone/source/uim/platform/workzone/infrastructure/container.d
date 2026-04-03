@@ -5,19 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.workspace_repo;
-import infrastructure.persistence.memory.workpage_repo;
-import infrastructure.persistence.memory.card_repo;
-import infrastructure.persistence.memory.content_repo;
-import infrastructure.persistence.memory.feed_repo;
-import infrastructure.persistence.memory.notification_repo;
-import infrastructure.persistence.memory.task_repo;
-import infrastructure.persistence.memory.channel_repo;
-import infrastructure.persistence.memory.app_repo;
-import infrastructure.persistence.memory.widget_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.workspace_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.workpage_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.card_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.content_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.feed_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.notification_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.task_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.channel_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.app_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.widget_repo;
 
 // Use Cases
 import application.usecases.manage_workspaces;

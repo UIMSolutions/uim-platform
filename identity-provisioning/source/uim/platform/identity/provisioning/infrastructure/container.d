@@ -1,15 +1,15 @@
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.source_system_repo;
-import infrastructure.persistence.memory.target_system_repo;
-import infrastructure.persistence.memory.proxy_system_repo;
-import infrastructure.persistence.memory.transformation_repo;
-import infrastructure.persistence.memory.provisioning_job_repo;
-import infrastructure.persistence.memory.provisioning_log_repo;
-import infrastructure.persistence.memory.provisioned_entity_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.source_system_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.target_system_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.proxy_system_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.transformation_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.provisioning_job_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.provisioning_log_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.provisioned_entity_repo;
 
 // Domain services
 import domain.services.provisioning_engine;

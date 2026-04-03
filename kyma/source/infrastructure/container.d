@@ -5,18 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.environment_repo;
-import infrastructure.persistence.memory.namespace_repo;
-import infrastructure.persistence.memory.function_repo;
-import infrastructure.persistence.memory.api_rule_repo;
-import infrastructure.persistence.memory.service_instance_repo;
-import infrastructure.persistence.memory.service_binding_repo;
-import infrastructure.persistence.memory.event_subscription_repo;
-import infrastructure.persistence.memory.module_repo;
-import infrastructure.persistence.memory.application_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.environment_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.namespace_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.function_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.api_rule_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.service_instance_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.service_binding_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.event_subscription_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.module_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.application_repo;
 
 // Domain services
 import domain.services.module_dependency_resolver;

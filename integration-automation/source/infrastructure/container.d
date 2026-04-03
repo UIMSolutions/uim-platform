@@ -1,14 +1,14 @@
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.scenario_repo;
-import infrastructure.persistence.memory.workflow_repo;
-import infrastructure.persistence.memory.step_repo;
-import infrastructure.persistence.memory.system_repo;
-import infrastructure.persistence.memory.destination_repo;
-import infrastructure.persistence.memory.execution_log_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.scenario_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.workflow_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.step_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.system_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
 
 // Domain Services
 import domain.services.workflow_engine;

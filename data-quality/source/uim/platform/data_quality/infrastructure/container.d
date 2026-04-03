@@ -1,15 +1,15 @@
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.validation_rule_repo;
-import infrastructure.persistence.memory.validation_result_repo;
-import infrastructure.persistence.memory.address_repo;
-import infrastructure.persistence.memory.match_group_repo;
-import infrastructure.persistence.memory.data_profile_repo;
-import infrastructure.persistence.memory.cleansing_rule_repo;
-import infrastructure.persistence.memory.cleansing_job_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.validation_rule_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.validation_result_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.address_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.match_group_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.data_profile_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.cleansing_rule_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.cleansing_job_repo;
 
 // Domain services
 import domain.services.validation_engine;

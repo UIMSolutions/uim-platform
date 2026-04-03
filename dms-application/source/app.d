@@ -4,8 +4,8 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 // 
-// import infrastructure.config;
-// import infrastructure.container;
+// import uim.platform.xyz.infrastructure.config;
+// import uim.platform.xyz.infrastructure.container;
 
 import uim.platform.dms_application;
 

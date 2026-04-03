@@ -1,17 +1,17 @@
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.user_repo;
-import infrastructure.persistence.memory.group_repo;
-import infrastructure.persistence.memory.schema_repo;
-import infrastructure.persistence.memory.password_policy_repo;
-import infrastructure.persistence.memory.api_client_repo;
-import infrastructure.persistence.memory.audit_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.user_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.group_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.schema_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.password_policy_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.api_client_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.audit_repo;
 
 // Services
-import infrastructure.security.sha256_password_service;
+import uim.platform.xyz.infrastructure.security.sha256_password_service;
 
 // Use Cases
 import application.usecases.manage_users;

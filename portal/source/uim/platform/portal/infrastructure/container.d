@@ -5,19 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.site_repo;
-import infrastructure.persistence.memory.page_repo;
-import infrastructure.persistence.memory.section_repo;
-import infrastructure.persistence.memory.tile_repo;
-import infrastructure.persistence.memory.catalog_repo;
-import infrastructure.persistence.memory.provider_repo;
-import infrastructure.persistence.memory.role_repo;
-import infrastructure.persistence.memory.theme_repo;
-import infrastructure.persistence.memory.menu_item_repo;
-import infrastructure.persistence.memory.translation_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.site_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.page_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.section_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.tile_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.catalog_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.provider_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.role_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.theme_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.menu_item_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.translation_repo;
 
 // Use Cases
 import application.usecases.manage_sites;

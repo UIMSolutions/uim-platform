@@ -5,17 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.master_data_object_repo;
-import infrastructure.persistence.memory.data_model_repo;
-import infrastructure.persistence.memory.distribution_model_repo;
-import infrastructure.persistence.memory.key_mapping_repo;
-import infrastructure.persistence.memory.change_log_repo;
-import infrastructure.persistence.memory.client_repo;
-import infrastructure.persistence.memory.replication_job_repo;
-import infrastructure.persistence.memory.filter_rule_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.master_data_object_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.data_model_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.distribution_model_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.key_mapping_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.change_log_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.client_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.replication_job_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.filter_rule_repo;
 
 // Domain services
 import domain.services.key_mapping_resolver;

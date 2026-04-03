@@ -1,15 +1,15 @@
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.dataset_repo;
-import infrastructure.persistence.memory.data_record_repo;
-import infrastructure.persistence.memory.model_config_repo;
-import infrastructure.persistence.memory.training_job_repo;
-import infrastructure.persistence.memory.deployment_repo;
-import infrastructure.persistence.memory.inference_request_repo;
-import infrastructure.persistence.memory.inference_result_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.dataset_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.data_record_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.model_config_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.training_job_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.deployment_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.inference_request_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.inference_result_repo;
 
 // Domain services
 import uim.platform.data_attribute_recommendation.domain.services.model_trainer;

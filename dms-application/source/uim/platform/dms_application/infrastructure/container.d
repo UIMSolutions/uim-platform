@@ -1,15 +1,15 @@
 module uim.platform.dms_application.infrastructure.container;
 
-// import infrastructure.config;
+// import uim.platform.xyz.infrastructure.config;
 // 
 // // Repositories
-// import infrastructure.persistence.memory.repository_repo;
-// import infrastructure.persistence.memory.folder_repo;
-// import infrastructure.persistence.memory.document_repo;
-// import infrastructure.persistence.memory.document_version_repo;
-// import infrastructure.persistence.memory.share_repo;
-// import infrastructure.persistence.memory.permission_repo;
-// import infrastructure.persistence.memory.favorite_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.repository_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.folder_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.document_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.document_version_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.share_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.permission_repo;
+// import uim.platform.xyz.infrastructure.persistence.memory.favorite_repo;
 // 
 // // Domain services
 // import uim.platform.dms_application.domain.services.versioning_service;

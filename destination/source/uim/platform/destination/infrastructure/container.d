@@ -5,12 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.xyz.infrastructure.container;
 
-import infrastructure.config;
+import uim.platform.xyz.infrastructure.config;
 
 // Repositories
-import infrastructure.persistence.memory.destination_repo;
-import infrastructure.persistence.memory.certificate_repo;
-import infrastructure.persistence.memory.fragment_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.certificate_repo;
+import uim.platform.xyz.infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
 import application.usecases.manage_destinations;
