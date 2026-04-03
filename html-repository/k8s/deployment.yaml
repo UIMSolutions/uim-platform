@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: html-repository
+  labels:
+    app: html-repository
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: html-repository
+  template:
+    metadata:
+      labels:
+        app: html-repository
+    spec:
+      containers:
+      - name: html-repository
+        image: uim-platform/html-repository:latest
+        ports:
+        - containerPort: 8097
+          protocol: TCP
+        env:
+        - name: HTML_REPO_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: html-repository-config
+              key: HTML_REPO_HOST
+        - name: HTML_REPO_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: html-repository-config
+              key: HTML_REPO_PORT
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8097
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+      restartPolicy: Always

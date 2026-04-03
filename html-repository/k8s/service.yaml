@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: html-repository
+  labels:
+    app: html-repository
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: html-repository
+  ports:
+  - name: http
+    port: 8097
+    targetPort: 8097
+    protocol: TCP
