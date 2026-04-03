@@ -10,7 +10,7 @@ spec:
   selector:
     app: mobile-services
   ports:
-    - name: http
-      port: 8096
-      targetPort: 8096
-      protocol: TCP
+  - name: http
+    port: 8096
+    targetPort: 8096
+    protocol: TCP

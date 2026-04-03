@@ -16,41 +16,41 @@ spec:
         app: mobile-services
     spec:
       containers:
-        - name: mobile-services
-          image: uim-platform/mobile-services:latest
-          ports:
-            - containerPort: 8096
-              protocol: TCP
-          env:
-            - name: MOBILE_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: mobile-services-config
-                  key: MOBILE_HOST
-            - name: MOBILE_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: mobile-services-config
-                  key: MOBILE_PORT
-          livenessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 8096
-            initialDelaySeconds: 10
-            periodSeconds: 30
-            timeoutSeconds: 3
-          readinessProbe:
-            httpGet:
-              path: /api/v1/health
-              port: 8096
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            timeoutSeconds: 3
-          resources:
-            requests:
-              memory: "64Mi"
-              cpu: "100m"
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
+      - name: mobile-services
+        image: uim-platform/mobile-services:latest
+        ports:
+        - containerPort: 8096
+          protocol: TCP
+        env:
+        - name: MOBILE_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: mobile-services-config
+              key: MOBILE_HOST
+        - name: MOBILE_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: mobile-services-config
+              key: MOBILE_PORT
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 10
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
       restartPolicy: Always
