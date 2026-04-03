@@ -12,8 +12,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 /// Core audit log record — an immutable chronological entry.
 @safe:
-struct AuditLogEntry
-{
+struct AuditLogEntry {
   AuditLogId id; // message_uuid
   TenantId tenantId;
   UserId userId;
@@ -38,8 +37,7 @@ struct AuditLogEntry
 
 /// Key/value pair describing a changed or accessed attribute.
 @safe:
-struct AuditAttribute
-{
+struct AuditAttribute {
   string name;
   string oldValue;
   string newValue;

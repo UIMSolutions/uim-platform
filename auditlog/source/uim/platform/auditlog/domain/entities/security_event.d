@@ -12,8 +12,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 /// Enriched security event — login/logout, auth failures, privilege changes.
 @safe:
-struct SecurityEvent
-{
+struct SecurityEvent {
   AuditLogId auditLogId; // references the parent audit entry
   TenantId tenantId;
   UserId userId;

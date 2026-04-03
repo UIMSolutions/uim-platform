@@ -9,8 +9,7 @@ import uim.platform.auditlog.domain.types;
 
 /// Tenant-level audit logging configuration.
 @safe:
-struct AuditConfig
-{
+struct AuditConfig {
   AuditConfigId id;
   TenantId tenantId;
   string name;

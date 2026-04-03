@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities;
 
-public
-{
+public {
   import uim.platform.auditlog.domain.entities.audit_config;
   import uim.platform.auditlog.domain.entities.audit_log_entry;
   import uim.platform.auditlog.domain.entities.config_change_log;

@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain;
 
-public
-{
+public {
   import uim.platform.auditlog.domain.entities;
   import uim.platform.auditlog.domain.ports;
   import uim.platform.auditlog.domain.services;

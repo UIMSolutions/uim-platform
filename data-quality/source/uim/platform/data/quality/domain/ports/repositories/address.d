@@ -9,8 +9,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;
 
 /// Port for persisting address records.
-interface AddressRepository
-{
+interface AddressRepository {
   AddressRecord[] findByTenant(TenantId tenantId);
   AddressRecord* findById(AddressId id, TenantId tenantId);
   AddressRecord[] findBySourceRecord(RecordId sourceRecordId, TenantId tenantId);

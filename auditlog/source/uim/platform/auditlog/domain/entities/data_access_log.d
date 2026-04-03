@@ -13,8 +13,7 @@ mixin(ShowModule!());
 
 /// Tracks read-access to sensitive / personal data.
 @safe:
-struct DataAccessLog
-{
+struct DataAccessLog {
   AuditLogId auditLogId; // references parent audit entry
   TenantId tenantId;
   UserId accessedBy;

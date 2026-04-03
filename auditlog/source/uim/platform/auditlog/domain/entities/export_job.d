@@ -13,8 +13,7 @@ mixin(ShowModule!());
 
 /// An audit log export job.
 @safe:
-struct ExportJob
-{
+struct ExportJob {
   ExportJobId id;
   TenantId tenantId;
   UserId requestedBy;

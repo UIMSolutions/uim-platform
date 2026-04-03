@@ -13,8 +13,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 /// Tracks security-critical configuration changes.
 @safe:
-struct ConfigChangeLog
-{
+struct ConfigChangeLog {
   AuditLogId auditLogId; // references parent audit entry
   TenantId tenantId;
   UserId changedBy;
