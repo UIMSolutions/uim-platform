@@ -1,4 +1,4 @@
-module uim.platform.data-quality.presentation.http.controllers.validate;
+module uim.platform.data - quality.presentation.http.controllers.validate;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,26 +11,21 @@ import domain.types;
 import domain.entities.validation_result;
 import presentation.http.json_utils;
 
-class ValidateController
-{
+class ValidateController {
     private ValidateDataUseCase uc;
 
-    this(ValidateDataUseCase uc)
-    {
+    this(ValidateDataUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/validate", &handleValidate);
         router.post("/api/v1/validate/batch", &handleValidateBatch);
         router.get("/api/v1/validate/results/*", &handleGetResult);
     }
 
-    private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = ValidateRecordRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -40,29 +35,22 @@ class ValidateController
 
             auto result = uc.validateRecord(r);
             res.writeJsonBody(serializeResult(result), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = ValidateBatchRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.datasetId = j.getString("datasetId");
 
             auto recordsJson = "records" in j;
-            if (recordsJson !is null && (*recordsJson).type == Json.Type.array)
-            {
-                foreach (item; *recordsJson)
-                {
-                    if (item.type == Json.Type.object)
-                    {
+            if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
+                foreach (item; *recordsJson) {
+                    if (item.type == Json.Type.object) {
                         RecordFieldValues rfv;
                         rfv.recordId = item.getString("recordId");
                         rfv.fieldValues = jsonStrMap(item, "fieldValues");
@@ -78,37 +66,29 @@ class ValidateController
 
             auto resp = Json.emptyObject;
             resp["results"] = arr;
-            resp["totalCount"] = Json(cast(long) results.length);
+            resp["totalCount"] = Json(cast(long)results.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto recordId = extractIdFromPath(req.requestURI);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto result = uc.getResultByRecord(recordId, tenantId);
-            if (result is null)
-            {
+            if (result is null) {
                 writeError(res, 404, "Validation result not found");
                 return;
             }
             res.writeJsonBody(serializeResult(*result), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeResult(ref const ValidationResult r)
-    {
+    private static Json serializeResult(ref const ValidationResult r) {
         auto j = Json.emptyObject;
         j["recordId"] = Json(r.recordId);
         j["tenantId"] = Json(r.tenantId);
@@ -119,11 +99,9 @@ class ValidateController
         j["qualityScore"] = Json(r.qualityScore);
         j["validatedAt"] = Json(r.validatedAt);
 
-        if (r.violations.length > 0)
-        {
+        if (r.violations.length > 0) {
             auto violations = Json.emptyArray;
-            foreach (ref v; r.violations)
-            {
+            foreach (ref v; r.violations) {
                 auto vj = Json.emptyObject;
                 vj["ruleId"] = Json(v.ruleId);
                 vj["ruleName"] = Json(v.ruleName);

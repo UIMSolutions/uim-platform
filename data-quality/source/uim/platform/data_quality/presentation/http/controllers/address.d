@@ -1,4 +1,4 @@
-module uim.platform.data-quality.presentation.http.controllers.address;
+module uim.platform.data_quality.presentation.http.controllers.address;
 
 import vibe.http.server;
 import vibe.http.router;
@@ -11,26 +11,21 @@ import domain.types;
 import domain.entities.address_record;
 import presentation.http.json_utils;
 
-class AddressController
-{
+class AddressController {
     private CleanseAddressesUseCase uc;
 
-    this(CleanseAddressesUseCase uc)
-    {
+    this(CleanseAddressesUseCase uc) {
         this.uc = uc;
     }
 
-    override void registerRoutes(URLRouter router)
-    {
+    override void registerRoutes(URLRouter router) {
         router.post("/api/v1/addresses/cleanse", &handleCleanse);
         router.post("/api/v1/addresses/cleanse/batch", &handleCleanseBatch);
         router.get("/api/v1/addresses", &handleList);
     }
 
-    private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto r = CleanseAddressRequest();
             r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,28 +39,21 @@ class AddressController
 
             auto result = uc.cleanse(r);
             res.writeJsonBody(serializeAddress(result), 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto j = req.json;
             auto batchReq = CleanseBatchAddressRequest();
             batchReq.tenantId = req.headers.get("X-Tenant-Id", "");
 
             auto addrJson = "addresses" in j;
-            if (addrJson !is null && (*addrJson).type == Json.Type.array)
-            {
-                foreach (item; *addrJson)
-                {
-                    if (item.type == Json.Type.object)
-                    {
+            if (addrJson !is null && (*addrJson).type == Json.Type.array) {
+                foreach (item; *addrJson) {
+                    if (item.type == Json.Type.object) {
                         CleanseAddressRequest a;
                         a.tenantId = batchReq.tenantId;
                         a.sourceRecordId = item.getString("sourceRecordId");
@@ -87,19 +75,15 @@ class AddressController
 
             auto resp = Json.emptyObject;
             resp["results"] = arr;
-            resp["totalCount"] = Json(cast(long) results.length);
+            resp["totalCount"] = Json(cast(long)results.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-    {
-        try
-        {
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto records = uc.getByTenant(tenantId);
             auto arr = Json.emptyArray;
@@ -108,17 +92,14 @@ class AddressController
 
             auto resp = Json.emptyObject;
             resp["items"] = arr;
-            resp["totalCount"] = Json(cast(long) records.length);
+            resp["totalCount"] = Json(cast(long)records.length);
             res.writeJsonBody(resp, 200);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
     }
 
-    private static Json serializeAddress(ref const AddressRecord r)
-    {
+    private static Json serializeAddress(ref const AddressRecord r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["tenantId"] = Json(r.tenantId);
@@ -157,8 +138,7 @@ class AddressController
 
         j["cleansedAt"] = Json(r.cleansedAt);
 
-        if (r.changeLog.length > 0)
-        {
+        if (r.changeLog.length > 0) {
             auto changes = Json.emptyArray;
             foreach (ch; r.changeLog)
                 changes ~= Json(ch);

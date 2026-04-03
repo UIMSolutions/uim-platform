@@ -102,7 +102,7 @@ Container buildContainer(AppConfig config)
     c.retentionRuleController = new RetentionRuleController(c.manageRetentionRules);
     c.consentController = new ConsentController(c.manageConsentRecords);
     c.dataRetrievalController = new DataRetrievalController(c.manageDataRetrievals);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("data-privacy");
 
     return c;
 }

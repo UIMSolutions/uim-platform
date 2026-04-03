@@ -103,7 +103,7 @@ Container buildContainer(AppConfig config)
   c.deploymentController = new DeploymentController(c.manageDeployments);
   c.inferenceController = new InferenceController(c.processInference);
   c.monitoringController = new MonitoringController(c.monitorTraining);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("data-attribute-recommendation");
 
   return c;
 }

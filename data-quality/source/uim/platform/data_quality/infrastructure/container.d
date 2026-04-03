@@ -39,8 +39,7 @@ import presentation.http.dashboard;
 import presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
     // Repositories (driven adapters)
     InMemoryValidationRuleRepository validationRuleRepo;
     InMemoryValidationResultRepository validationResultRepo;
@@ -79,8 +78,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
     Container c;
 
     // Infrastructure adapters
@@ -119,7 +117,7 @@ Container buildContainer(AppConfig config)
     c.cleansingRuleController = new CleansingRuleController(c.manageCleansingRules);
     c.cleansingJobController = new CleansingJobController(c.manageCleansingJobs);
     c.dashboardController = new DashboardController(c.computeDashboard);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("data-quality");
 
     return c;
 }
