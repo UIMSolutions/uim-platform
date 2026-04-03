@@ -10,7 +10,7 @@ spec:
   selector:
     app: cloud-logging
   ports:
-    - name: http
-      port: 8094
-      targetPort: 8094
-      protocol: TCP
+  - name: http
+    port: 8094
+    targetPort: 8094
+    protocol: TCP
