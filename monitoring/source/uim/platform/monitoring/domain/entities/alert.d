@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.alert;
+module uim.platform.monitoring.domain.entities.alert;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// An active or resolved alert triggered by a rule breach.
 struct Alert

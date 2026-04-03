@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.alert_repository;
+module uim.platform.monitoring.domain.ports.alert_repository;
 
-import uim.platform.xyz.domain.entities.alert;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.entities.alert;
+import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - alert persistence.
 interface AlertRepository

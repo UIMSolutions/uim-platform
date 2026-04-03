@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.monitoring.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias MetricId = string;

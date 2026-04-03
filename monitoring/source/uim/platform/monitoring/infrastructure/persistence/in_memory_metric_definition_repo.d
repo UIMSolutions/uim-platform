@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.metric_definition_repo;
+module uim.platform.monitoring.infrastructure.persistence.memory.metric_definition_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.metric_definition;
-import uim.platform.xyz.domain.ports.metric_definition_repository;
+import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring.domain.entities.metric_definition;
+import uim.platform.monitoring.domain.ports.metric_definition_repository;
 
 import std.algorithm : filter;
 import std.array : array;

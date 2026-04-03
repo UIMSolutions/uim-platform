@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.notification_channel_repository;
+module uim.platform.monitoring.domain.ports.notification_channel_repository;
 
-import uim.platform.xyz.domain.entities.notification_channel;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.entities.notification_channel;
+import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - notification channel persistence.
 interface NotificationChannelRepository

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.health_check_result;
+module uim.platform.monitoring.domain.entities.health_check_result;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// Result of executing a health check.
 struct HealthCheckResult

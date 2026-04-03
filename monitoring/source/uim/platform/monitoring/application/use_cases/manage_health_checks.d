@@ -1,12 +1,12 @@
-module uim.platform.xyz.application.usecases.manage_health_checks;
+module uim.platform.monitoring.application.usecases.manage_health_checks;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.health_check;
-import uim.platform.xyz.domain.entities.health_check_result;
-import uim.platform.xyz.domain.ports.health_check_repository;
-import uim.platform.xyz.domain.ports.health_check_result_repository;
-import uim.platform.xyz.domain.services.health_checker;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.application.dto;
+import uim.platform.monitoring.domain.entities.health_check;
+import uim.platform.monitoring.domain.entities.health_check_result;
+import uim.platform.monitoring.domain.ports.health_check_repository;
+import uim.platform.monitoring.domain.ports.health_check_result_repository;
+import uim.platform.monitoring.domain.services.health_checker;
+import uim.platform.monitoring.domain.types;
 
 import std.conv : to;
 

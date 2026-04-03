@@ -1,16 +1,16 @@
-module uim.platform.xyz.application.usecases.get_dashboard;
+module uim.platform.monitoring.application.usecases.get_dashboard;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.alert;
-import uim.platform.xyz.domain.entities.health_check_result;
-import uim.platform.xyz.domain.entities.monitored_resource;
-import uim.platform.xyz.domain.ports.alert_repository;
-import uim.platform.xyz.domain.ports.health_check_repository;
-import uim.platform.xyz.domain.ports.health_check_result_repository;
-import uim.platform.xyz.domain.ports.metric_definition_repository;
-import uim.platform.xyz.domain.ports.monitored_resource_repository;
-import uim.platform.xyz.domain.ports.notification_channel_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.application.dto;
+import uim.platform.monitoring.domain.entities.alert;
+import uim.platform.monitoring.domain.entities.health_check_result;
+import uim.platform.monitoring.domain.entities.monitored_resource;
+import uim.platform.monitoring.domain.ports.alert_repository;
+import uim.platform.monitoring.domain.ports.health_check_repository;
+import uim.platform.monitoring.domain.ports.health_check_result_repository;
+import uim.platform.monitoring.domain.ports.metric_definition_repository;
+import uim.platform.monitoring.domain.ports.monitored_resource_repository;
+import uim.platform.monitoring.domain.ports.notification_channel_repository;
+import uim.platform.monitoring.domain.types;
 
 /// Application service: aggregates monitoring data for dashboard overview.
 class GetDashboardUseCase

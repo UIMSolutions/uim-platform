@@ -1,6 +1,6 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.monitoring.application.dto;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// --- Command result ---
 

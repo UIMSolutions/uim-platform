@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.metric_repository;
+module uim.platform.monitoring.domain.ports.metric_repository;
 
-import uim.platform.xyz.domain.entities.metric;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.entities.metric;
+import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - metric data point persistence.
 interface MetricRepository

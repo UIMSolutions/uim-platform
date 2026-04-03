@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.notification_channel;
+module uim.platform.monitoring.domain.entities.notification_channel;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// A notification channel for delivering alert notifications.
 struct NotificationChannel

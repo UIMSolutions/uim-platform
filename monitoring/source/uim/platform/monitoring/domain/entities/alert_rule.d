@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.alert_rule;
+module uim.platform.monitoring.domain.entities.alert_rule;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// An alert rule that defines thresholds for triggering alerts.
 struct AlertRule

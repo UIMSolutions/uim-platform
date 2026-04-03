@@ -18,25 +18,25 @@ import uim.platform.monitoring.infrastructure.persistence.memory.alert_repo;
 import uim.platform.monitoring.infrastructure.persistence.memory.notification_channel_repo;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_monitored_resources;
-import uim.platform.xyz.application.usecases.manage_metrics;
-import uim.platform.xyz.application.usecases.manage_health_checks;
-import uim.platform.xyz.application.usecases.manage_alert_rules;
-import uim.platform.xyz.application.usecases.manage_alerts;
-import uim.platform.xyz.application.usecases.manage_notification_channels;
-import uim.platform.xyz.application.usecases.evaluate_metrics;
-import uim.platform.xyz.application.usecases.get_dashboard;
+import uim.platform.monitoring.application.usecases.manage_monitored_resources;
+import uim.platform.monitoring.application.usecases.manage_metrics;
+import uim.platform.monitoring.application.usecases.manage_health_checks;
+import uim.platform.monitoring.application.usecases.manage_alert_rules;
+import uim.platform.monitoring.application.usecases.manage_alerts;
+import uim.platform.monitoring.application.usecases.manage_notification_channels;
+import uim.platform.monitoring.application.usecases.evaluate_metrics;
+import uim.platform.monitoring.application.usecases.get_dashboard;
 
 // Controllers
-import uim.platform.xyz.presentation.http.resource;
-import uim.platform.xyz.presentation.http.metric;
-import uim.platform.xyz.presentation.http.metric_definition;
-import uim.platform.xyz.presentation.http.check;
-import uim.platform.xyz.presentation.http.alert_rule;
-import uim.platform.xyz.presentation.http.alert;
-import uim.platform.xyz.presentation.http.channel;
-import uim.platform.xyz.presentation.http.dashboard;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.monitoring.presentation.http.resource;
+import uim.platform.monitoring.presentation.http.metric;
+import uim.platform.monitoring.presentation.http.metric_definition;
+import uim.platform.monitoring.presentation.http.check;
+import uim.platform.monitoring.presentation.http.alert_rule;
+import uim.platform.monitoring.presentation.http.alert;
+import uim.platform.monitoring.presentation.http.channel;
+import uim.platform.monitoring.presentation.http.dashboard;
+import uim.platform.monitoring.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
 struct Container

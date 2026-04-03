@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.metric;
+module uim.platform.monitoring.domain.entities.metric;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.domain.types;
 
 /// A single metric data point.
 struct Metric

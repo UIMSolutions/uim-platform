@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.monitored_resource_repo;
+module uim.platform.monitoring.infrastructure.persistence.memory.monitored_resource_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.monitored_resource;
-import uim.platform.xyz.domain.ports.monitored_resource_repository;
+import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring.domain.entities.monitored_resource;
+import uim.platform.monitoring.domain.ports.monitored_resource_repository;
 
 import std.algorithm : filter;
 import std.array : array;

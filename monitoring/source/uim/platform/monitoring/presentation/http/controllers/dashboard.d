@@ -1,12 +1,12 @@
-module uim.platform.xyz.presentation.http.dashboard;
+module uim.platform.monitoring.presentation.http.dashboard;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 
-import uim.platform.xyz.application.usecases.get_dashboard;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.monitoring.application.usecases.get_dashboard;
+import uim.platform.monitoring.application.dto;
+import uim.platform.monitoring.presentation.http.json_utils;
 
 class DashboardController
 {

@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_alert_rules;
+module uim.platform.monitoring.application.usecases.manage_alert_rules;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.alert_rule;
-import uim.platform.xyz.domain.ports.alert_rule_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.monitoring.application.dto;
+import uim.platform.monitoring.domain.entities.alert_rule;
+import uim.platform.monitoring.domain.ports.alert_rule_repository;
+import uim.platform.monitoring.domain.types;
 
 import std.conv : to;
 

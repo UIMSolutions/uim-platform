@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.alert_rule;
+module uim.platform.monitoring.presentation.http.alert_rule;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_alert_rules;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.alert_rule;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.monitoring.application.usecases.manage_alert_rules;
+import uim.platform.monitoring.application.dto;
+import uim.platform.monitoring.domain.entities.alert_rule;
+import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring.presentation.http.json_utils;
 
 class AlertRuleController
 {

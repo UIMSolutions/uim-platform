@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.health_check_repo;
+module uim.platform.monitoring.infrastructure.persistence.memory.health_check_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.health_check;
-import uim.platform.xyz.domain.ports.health_check_repository;
+import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring.domain.entities.health_check;
+import uim.platform.monitoring.domain.ports.health_check_repository;
 
 import std.algorithm : filter;
 import std.array : array;
