@@ -1,8 +1,8 @@
 module application.usecases.query_audit_log;
 
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.audit_repository;
 
 /// Application use case: query audit logs.
 class QueryAuditLogUseCase

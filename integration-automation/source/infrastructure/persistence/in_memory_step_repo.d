@@ -1,9 +1,9 @@
 module uim.platform.xyz.infrastructure.persistence.memory.step_repo;
 
-import domain.types;
-import domain.entities.workflow_step;
-// import domain.ports.step_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workflow_step;
+// import uim.platform.xyz.domain.ports.step_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.algorithm : filter, sort;
 import std.array : array;

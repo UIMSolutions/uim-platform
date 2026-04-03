@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.device_registration;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A registered mobile device with push token and metadata.
 struct DeviceRegistration

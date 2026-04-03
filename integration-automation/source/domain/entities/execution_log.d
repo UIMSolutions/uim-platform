@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.execution_log;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An execution log entry — records the execution of a workflow step
 /// for monitoring, auditing, and troubleshooting purposes.

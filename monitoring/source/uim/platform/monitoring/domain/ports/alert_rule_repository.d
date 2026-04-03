@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.alert_rule_repository;
 
-import domain.entities.alert_rule;
-import domain.types;
+import uim.platform.xyz.domain.entities.alert_rule;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing - alert rule persistence.
 interface AlertRuleRepository

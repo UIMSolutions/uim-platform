@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.address_repo;
 
-import domain.types;
-import domain.entities.address_record;
-import domain.ports.address_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.address_record;
+import uim.platform.xyz.domain.ports.address_repository;
 
 import std.algorithm : filter;
 import std.array : array;

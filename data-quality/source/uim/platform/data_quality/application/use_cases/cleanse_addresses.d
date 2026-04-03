@@ -2,10 +2,10 @@ module application.usecases.cleanse_addresses;
 
 import std.uuid;
 
-import domain.types;
-import domain.entities.address_record;
-import domain.ports.address_repository;
-import domain.services.address_cleanser;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.address_record;
+import uim.platform.xyz.domain.ports.address_repository;
+import uim.platform.xyz.domain.services.address_cleanser;
 import uim.platform.xyz.application.dto;
 
 class CleanseAddressesUseCase {

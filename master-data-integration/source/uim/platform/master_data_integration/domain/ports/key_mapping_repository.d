@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.key_mapping_repository;
 
-import domain.entities.key_mapping;
-import domain.types;
+import uim.platform.xyz.domain.entities.key_mapping;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — key mapping persistence.
 interface KeyMappingRepository

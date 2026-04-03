@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.schema_repository;
 
-import domain.entities.schema;
-import domain.types;
+import uim.platform.xyz.domain.entities.schema;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — custom schema persistence.
 interface SchemaRepository

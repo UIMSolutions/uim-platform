@@ -1,11 +1,11 @@
 module application.dto;
 
-import domain.types;
-import domain.entities.workspace : WorkspaceMember, WorkspaceSettings;
-import domain.entities.card : CardDataSource, CardManifest;
-import domain.entities.channel : ChannelConfig;
-import domain.entities.app_registration : AppConfig;
-import domain.entities.widget : WidgetConfig;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workspace : WorkspaceMember, WorkspaceSettings;
+import uim.platform.xyz.domain.entities.card : CardDataSource, CardManifest;
+import uim.platform.xyz.domain.entities.channel : ChannelConfig;
+import uim.platform.xyz.domain.entities.app_registration : AppConfig;
+import uim.platform.xyz.domain.entities.widget : WidgetConfig;
 
 // ──────────────── Workspace DTOs ────────────────
 

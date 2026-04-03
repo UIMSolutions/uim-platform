@@ -1,9 +1,9 @@
 module application.usecases.manage_notification_channels;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.notification_channel;
-import domain.ports.notification_channel_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.notification_channel;
+import uim.platform.xyz.domain.ports.notification_channel_repository;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

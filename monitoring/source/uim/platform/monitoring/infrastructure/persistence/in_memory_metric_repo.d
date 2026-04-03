@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.metric_repo;
 
-import domain.types;
-import domain.entities.metric;
-import domain.ports.metric_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.metric;
+import uim.platform.xyz.domain.ports.metric_repository;
 
 import std.algorithm : filter;
 import std.array : array;

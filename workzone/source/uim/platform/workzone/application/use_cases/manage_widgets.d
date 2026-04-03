@@ -3,9 +3,9 @@ module application.usecases.manage_widgets;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.widget;
-import domain.ports.widget_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.widget;
+import uim.platform.xyz.domain.ports.widget_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageWidgetsUseCase

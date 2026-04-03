@@ -1,9 +1,9 @@
 module uim.platform.xyz.domain.services.distribution_evaluator;
 
-import domain.entities.distribution_model;
-import domain.entities.filter_rule;
-import domain.entities.master_data_object;
-import domain.types;
+import uim.platform.xyz.domain.entities.distribution_model;
+import uim.platform.xyz.domain.entities.filter_rule;
+import uim.platform.xyz.domain.entities.master_data_object;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: evaluates whether a master data object matches distribution
 /// model criteria and filter rules.

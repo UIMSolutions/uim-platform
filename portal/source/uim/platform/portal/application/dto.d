@@ -1,9 +1,9 @@
 module application.dto;
 
-import domain.types;
-import domain.entities.site : SiteSettings;
-import domain.entities.tile : TileConfiguration;
-import domain.entities.theme : ThemeColors, ThemeFonts;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.site : SiteSettings;
+import uim.platform.xyz.domain.entities.tile : TileConfiguration;
+import uim.platform.xyz.domain.entities.theme : ThemeColors, ThemeFonts;
 
 /// --- Site DTOs ---
 

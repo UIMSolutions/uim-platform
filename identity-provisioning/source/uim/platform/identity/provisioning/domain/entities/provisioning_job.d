@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.provisioning_job;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A provisioning job that synchronises identities from a source
 /// system to a target system.

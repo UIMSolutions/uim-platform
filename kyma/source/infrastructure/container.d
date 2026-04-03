@@ -19,8 +19,8 @@ import uim.platform.xyz.infrastructure.persistence.memory.module_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.application_repo;
 
 // Domain services
-import domain.services.module_dependency_resolver;
-import domain.services.function_validator;
+import uim.platform.xyz.domain.services.module_dependency_resolver;
+import uim.platform.xyz.domain.services.function_validator;
 
 // Use Cases
 import uim.platform.xyz.application.usecases.manage_environments;

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.page_repository;
 
-import domain.entities.page;
-import domain.types;
+import uim.platform.xyz.domain.entities.page;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — page persistence.
 interface PageRepository

@@ -12,8 +12,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_event_subscriptions;
 import uim.platform.xyz.application.dto;
-import domain.entities.event_subscription;
-import domain.types;
+import uim.platform.xyz.domain.entities.event_subscription;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class EventSubscriptionController {

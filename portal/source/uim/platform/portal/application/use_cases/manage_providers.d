@@ -1,8 +1,8 @@
 module application.usecases.manage_providers;
 
-import domain.entities.content_provider;
-import domain.types;
-import domain.ports.provider_repository;
+import uim.platform.xyz.domain.entities.content_provider;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.provider_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

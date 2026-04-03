@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.widget_repository;
 
-import domain.types;
-import domain.entities.widget;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.widget;
 
 interface WidgetRepository
 {

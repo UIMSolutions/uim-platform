@@ -1,8 +1,8 @@
 module application.usecases.manage_roles;
 
-import domain.entities.role;
-import domain.types;
-import domain.ports.role_repository;
+import uim.platform.xyz.domain.entities.role;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.role_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

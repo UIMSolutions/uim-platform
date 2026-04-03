@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_tiles;
 import uim.platform.xyz.application.dto;
-import domain.entities.tile;
-import domain.types;
+import uim.platform.xyz.domain.entities.tile;
+import uim.platform.xyz.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class TileController
@@ -177,7 +177,7 @@ class TileController
 
     private TileConfiguration parseTileConfig(Json j)
     {
-        import domain.entities.tile : TileConfiguration;
+        import uim.platform.xyz.domain.entities.tile : TileConfiguration;
         auto cfgJson = "configuration" in j;
         if (cfgJson is null || (*cfgJson).type != Json.Type.object)
             return TileConfiguration.init;

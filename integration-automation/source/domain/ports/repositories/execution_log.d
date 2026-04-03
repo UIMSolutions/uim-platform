@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.repositories.execution_log;
 
-import domain.types;
-import domain.entities.execution_log;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.execution_log;
 
 /// Port for persisting and querying execution logs.
 interface ExecutionLogRepository

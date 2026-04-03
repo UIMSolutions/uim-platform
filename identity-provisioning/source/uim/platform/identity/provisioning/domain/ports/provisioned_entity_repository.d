@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.provisioned_entity_repository;
 
-import domain.types;
-import domain.entities.provisioned_entity;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.provisioned_entity;
 
 interface ProvisionedEntityRepository
 {

@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.api_rule_repo;
 
-import domain.types;
-import domain.entities.api_rule;
-import domain.ports.api_rule_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.api_rule;
+import uim.platform.xyz.domain.ports.api_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

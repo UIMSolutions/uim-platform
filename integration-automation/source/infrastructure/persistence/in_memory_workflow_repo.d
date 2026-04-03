@@ -1,9 +1,9 @@
 module uim.platform.xyz.infrastructure.persistence.memory.workflow_repo;
 
-import domain.types;
-import domain.entities.workflow;
-// import domain.ports.workflow_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workflow;
+// import uim.platform.xyz.domain.ports.workflow_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

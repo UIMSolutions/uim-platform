@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
 
-import domain.types;
-import domain.entities.destination;
-import domain.ports.destination_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.destination;
+import uim.platform.xyz.domain.ports.destination_repository;
 
 import std.algorithm : filter;
 import std.array : array;

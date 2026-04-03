@@ -1,11 +1,11 @@
 module uim.platform.xyz.domain.services.content_resolver;
 
-import domain.entities.site;
-import domain.entities.page;
-import domain.entities.section;
-import domain.entities.tile;
-import domain.entities.menu_item;
-import domain.types;
+import uim.platform.xyz.domain.entities.site;
+import uim.platform.xyz.domain.entities.page;
+import uim.platform.xyz.domain.entities.section;
+import uim.platform.xyz.domain.entities.tile;
+import uim.platform.xyz.domain.entities.menu_item;
+import uim.platform.xyz.domain.types;
 
 /// Resolved site tree — a fully expanded view of a site for rendering.
 struct ResolvedSite

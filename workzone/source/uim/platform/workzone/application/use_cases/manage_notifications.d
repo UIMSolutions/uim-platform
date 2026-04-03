@@ -3,9 +3,9 @@ module application.usecases.manage_notifications;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.notification;
-import domain.ports.notification_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.notification;
+import uim.platform.xyz.domain.ports.notification_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageNotificationsUseCase

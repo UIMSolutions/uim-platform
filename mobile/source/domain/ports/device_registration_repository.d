@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.device_registration_repository;
 
-import domain.entities.device_registration;
-import domain.types;
+import uim.platform.xyz.domain.entities.device_registration;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — device registration persistence.
 interface DeviceRegistrationRepository

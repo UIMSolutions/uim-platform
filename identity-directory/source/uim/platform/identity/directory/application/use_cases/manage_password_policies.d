@@ -1,10 +1,10 @@
 module application.usecases.manage_password_policies;
 
-import domain.entities.password_policy;
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.password_policy_repository;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.password_policy;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.password_policy_repository;
+import uim.platform.xyz.domain.ports.audit_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

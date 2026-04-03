@@ -1,9 +1,9 @@
 module application.usecases.manage_devices;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.device_registration;
-import domain.ports.device_registration_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.device_registration;
+import uim.platform.xyz.domain.ports.device_registration_repository;
+import uim.platform.xyz.domain.types;
 
 /// Use case: manage mobile device registrations.
 class ManageDevicesUseCase

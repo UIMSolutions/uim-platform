@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.health_check;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Configuration for a health or availability check.
 struct HealthCheck

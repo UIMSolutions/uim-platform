@@ -1,9 +1,9 @@
 module uim.platform.xyz.domain.entities.destination_lookup;
 
-import domain.types;
-import domain.entities.destination;
-import domain.entities.auth_token;
-import domain.entities.certificate;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.destination;
+import uim.platform.xyz.domain.entities.auth_token;
+import uim.platform.xyz.domain.entities.certificate;
 
 /// The result of a "find destination" lookup — includes destination config, resolved auth tokens, and certificates.
 struct DestinationLookup
@@ -16,4 +16,4 @@ struct DestinationLookup
     string error;
 }
 
-import domain.entities.destination_fragment;
+import uim.platform.xyz.domain.entities.destination_fragment;

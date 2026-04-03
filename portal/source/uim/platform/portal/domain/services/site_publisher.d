@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.site_publisher;
 
-import domain.entities.site;
-import domain.types;
+import uim.platform.xyz.domain.entities.site;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: validates whether a site is ready for publishing.
 struct PublishValidationResult

@@ -3,9 +3,9 @@ module application.usecases.manage_target_systems;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.target_system;
-import domain.ports.target_system_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.target_system;
+import uim.platform.xyz.domain.ports.target_system_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageTargetSystemsUseCase

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.feed_entry;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An activity feed entry — records actions and events in a workspace.
 struct FeedEntry

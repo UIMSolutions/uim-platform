@@ -3,10 +3,10 @@ module application.usecases.manage_scenarios;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.integration_scenario;
-// import domain.ports.scenario_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.integration_scenario;
+// import uim.platform.xyz.domain.ports.scenario_repository;
+import uim.platform.xyz.domain.ports;
 import uim.platform.xyz.application.dto;
 
 class ManageScenariosUseCase {

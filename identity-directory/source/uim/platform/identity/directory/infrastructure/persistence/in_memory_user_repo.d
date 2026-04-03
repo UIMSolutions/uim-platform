@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.user_repo;
 
-import domain.entities.user;
-import domain.types;
-import domain.ports.user_repository;
+import uim.platform.xyz.domain.entities.user;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.user_repository;
 
 import std.algorithm : canFind;
 import std.string : toLower, indexOf;

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.duplicate_detector;
 
-import domain.types;
-import domain.entities.match_group;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.match_group;
 
 import std.math : abs;
 import std.uni : toLower;

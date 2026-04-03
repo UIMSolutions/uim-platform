@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.sync_session_repository;
 
-import domain.entities.sync_session;
-import domain.types;
+import uim.platform.xyz.domain.entities.sync_session;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — sync session persistence.
 interface SyncSessionRepository

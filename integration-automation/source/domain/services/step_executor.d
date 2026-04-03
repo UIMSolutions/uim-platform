@@ -1,11 +1,11 @@
 module uim.platform.xyz.domain.services.step_executor;
 
-import domain.types;
-import domain.entities.workflow_step;
-import domain.entities.execution_log;
-// import domain.ports.step_repository;
-// import domain.ports.execution_log_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workflow_step;
+import uim.platform.xyz.domain.entities.execution_log;
+// import uim.platform.xyz.domain.ports.step_repository;
+// import uim.platform.xyz.domain.ports.execution_log_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.uuid;
 import std.datetime.systime : Clock;

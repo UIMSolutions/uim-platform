@@ -3,9 +3,9 @@ module application.usecases.manage_tasks;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.task;
-import domain.ports.task_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.task;
+import uim.platform.xyz.domain.ports.task_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageTasksUseCase

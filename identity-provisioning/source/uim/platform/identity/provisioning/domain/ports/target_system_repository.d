@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.target_system_repository;
 
-import domain.types;
-import domain.entities.target_system;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.target_system;
 
 interface TargetSystemRepository
 {

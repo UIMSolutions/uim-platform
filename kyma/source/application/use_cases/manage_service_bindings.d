@@ -1,9 +1,9 @@
 module application.usecases.manage_service_bindings;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.service_binding;
-import domain.ports.service_binding_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.service_binding;
+import uim.platform.xyz.domain.ports.service_binding_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for service binding management.
 class ManageServiceBindingsUseCase

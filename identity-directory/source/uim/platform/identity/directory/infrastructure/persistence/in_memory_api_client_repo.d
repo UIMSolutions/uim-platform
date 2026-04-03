@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.api_client_repo;
 
-import domain.entities.api_client;
-import domain.types;
-import domain.ports.api_client_repository;
+import uim.platform.xyz.domain.entities.api_client;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.api_client_repository;
 
 /// In-memory adapter for API client persistence.
 class MemoryApiClientRepository : ApiClientRepository

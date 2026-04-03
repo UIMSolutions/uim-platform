@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.catalog_repo;
 
-import domain.entities.catalog;
-import domain.types;
-import domain.ports.catalog_repository;
+import uim.platform.xyz.domain.entities.catalog;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.catalog_repository;
 
 class MemoryCatalogRepository : CatalogRepository
 {

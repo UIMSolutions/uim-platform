@@ -1,10 +1,10 @@
 module application.usecases.manage_schemas;
 
-import domain.entities.schema;
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.schema_repository;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.schema;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.schema_repository;
+import uim.platform.xyz.domain.ports.audit_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.tile;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A tile / app launcher within a section.
 struct Tile

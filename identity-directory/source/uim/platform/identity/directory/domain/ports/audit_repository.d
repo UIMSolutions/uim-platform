@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.audit_repository;
 
-import domain.entities.audit_event;
-import domain.types;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — audit event persistence.
 interface AuditRepository

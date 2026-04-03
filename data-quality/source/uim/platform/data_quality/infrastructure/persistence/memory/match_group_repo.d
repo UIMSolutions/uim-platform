@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.match_group_repo;
 
-import domain.types;
-import domain.entities.match_group;
-import domain.ports.match_group_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.match_group;
+import uim.platform.xyz.domain.ports.match_group_repository;
 
 import std.algorithm : filter;
 import std.array : array;

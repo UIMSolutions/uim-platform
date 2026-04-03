@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.client_repository;
 
-import domain.entities.client;
-import domain.types;
+import uim.platform.xyz.domain.entities.client;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — connected client system persistence.
 interface ClientRepository

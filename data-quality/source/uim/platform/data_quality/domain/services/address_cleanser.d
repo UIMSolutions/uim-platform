@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.address_cleanser;
 
-import domain.types;
-import domain.entities.address_record;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.address_record;
 
 import std.uni : toUpper, toLower, isAlpha, isWhite;
 import std.string : strip, toUpper, toLower;

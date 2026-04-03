@@ -1,12 +1,12 @@
 module application.usecases.evaluate_metrics;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.alert_rule;
-import domain.entities.metric;
-import domain.ports.alert_rule_repository;
-import domain.ports.metric_repository;
-import domain.services.threshold_evaluator;
-import domain.types;
+import uim.platform.xyz.domain.entities.alert_rule;
+import uim.platform.xyz.domain.entities.metric;
+import uim.platform.xyz.domain.ports.alert_rule_repository;
+import uim.platform.xyz.domain.ports.metric_repository;
+import uim.platform.xyz.domain.services.threshold_evaluator;
+import uim.platform.xyz.domain.types;
 
 import uim.platform.xyz.application.usecases.manage_alerts;
 

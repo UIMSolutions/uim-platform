@@ -10,7 +10,7 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_api_clients;
 import uim.platform.xyz.application.dto;
-import domain.entities.api_client;
+import uim.platform.xyz.domain.entities.api_client;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.

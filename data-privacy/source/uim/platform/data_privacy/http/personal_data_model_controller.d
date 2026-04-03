@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_personal_data_models;
 import uim.platform.xyz.application.dto;
-import domain.types;
-import domain.entities.personal_data_model;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.personal_data_model;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class PersonalDataModelController

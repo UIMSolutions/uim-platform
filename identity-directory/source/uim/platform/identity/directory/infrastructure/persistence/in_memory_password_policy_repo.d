@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.password_policy_repo;
 
-import domain.entities.password_policy;
-import domain.types;
-import domain.ports.password_policy_repository;
+import uim.platform.xyz.domain.entities.password_policy;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.password_policy_repository;
 
 /// In-memory adapter for password policy persistence.
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository

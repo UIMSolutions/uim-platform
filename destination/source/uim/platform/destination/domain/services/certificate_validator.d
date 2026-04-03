@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.certificate_validator;
 
-import domain.entities.certificate;
-import domain.types;
+import uim.platform.xyz.domain.entities.certificate;
+import uim.platform.xyz.domain.types;
 
 import std.datetime.systime : Clock;
 

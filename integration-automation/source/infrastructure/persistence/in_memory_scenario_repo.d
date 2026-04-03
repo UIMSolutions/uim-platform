@@ -1,9 +1,9 @@
 module uim.platform.xyz.infrastructure.persistence.memory.scenario_repo;
 
-import domain.types;
-import domain.entities.integration_scenario;
-// import domain.ports.scenario_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.integration_scenario;
+// import uim.platform.xyz.domain.ports.scenario_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

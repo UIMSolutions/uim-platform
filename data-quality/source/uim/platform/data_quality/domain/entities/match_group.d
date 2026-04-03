@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.match_group;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A group of records identified as potential duplicates.
 struct MatchGroup

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.data_profile_repository;
 
-import domain.types;
-import domain.entities.data_profile;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_profile;
 
 /// Port for persisting data profiling results.
 interface DataProfileRepository

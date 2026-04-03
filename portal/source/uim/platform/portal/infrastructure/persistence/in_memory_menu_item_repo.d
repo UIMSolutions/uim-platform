@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.menu_item_repo;
 
-import domain.entities.menu_item;
-import domain.types;
-import domain.ports.menu_item_repository;
+import uim.platform.xyz.domain.entities.menu_item;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.menu_item_repository;
 
 class MemoryMenuItemRepository : MenuItemRepository
 {

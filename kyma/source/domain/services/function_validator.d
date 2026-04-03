@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.function_validator;
 
-import domain.entities.serverless_function;
-import domain.types;
+import uim.platform.xyz.domain.entities.serverless_function;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: validates serverless function configurations.
 class FunctionValidator

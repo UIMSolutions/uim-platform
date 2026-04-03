@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.password_policy;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Password policy configuration per tenant.
 struct PasswordPolicy

@@ -3,10 +3,10 @@ module application.usecases.manage_transformations;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.transformation;
-import domain.ports.transformation_repository;
-import domain.services.transformation_engine;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.transformation;
+import uim.platform.xyz.domain.ports.transformation_repository;
+import uim.platform.xyz.domain.services.transformation_engine;
 import uim.platform.xyz.application.dto;
 
 class ManageTransformationsUseCase

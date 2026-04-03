@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.system_connection;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A system in the customer landscape — represents an endpoint
 /// that participates in integration scenarios.

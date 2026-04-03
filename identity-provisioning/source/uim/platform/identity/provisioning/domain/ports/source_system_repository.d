@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.source_system_repository;
 
-import domain.types;
-import domain.entities.source_system;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.source_system;
 
 interface SourceSystemRepository
 {

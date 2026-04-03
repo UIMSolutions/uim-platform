@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.audit_event;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Immutable audit log entry.
 struct AuditEvent

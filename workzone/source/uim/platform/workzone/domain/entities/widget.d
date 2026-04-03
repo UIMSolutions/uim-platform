@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.widget;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A widget instance placed on a workspace page.
 struct Widget

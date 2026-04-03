@@ -1,9 +1,9 @@
 module application.usecases.query_change_log;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.change_log_entry;
-import domain.ports.change_log_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.change_log_entry;
+import uim.platform.xyz.domain.ports.change_log_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for querying the change log (delta tracking).
 class QueryChangeLogUseCase

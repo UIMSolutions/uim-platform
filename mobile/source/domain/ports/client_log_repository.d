@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.client_log_repository;
 
-import domain.entities.client_log;
-import domain.types;
+import uim.platform.xyz.domain.entities.client_log;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — client log persistence.
 interface ClientLogRepository

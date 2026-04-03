@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_widgets;
 import uim.platform.xyz.application.dto;
-import domain.types;
-import domain.entities.widget;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.widget;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class WidgetController
@@ -166,7 +166,7 @@ class WidgetController
 
 private WidgetConfig parseWidgetConfig(Json j)
 {
-    import domain.entities.widget : WidgetConfig;
+    import uim.platform.xyz.domain.entities.widget : WidgetConfig;
     WidgetConfig cfg;
     auto v = "config" in j;
     if (v !is null && (*v).type == Json.Type.object)

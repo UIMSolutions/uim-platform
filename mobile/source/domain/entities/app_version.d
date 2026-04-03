@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.app_version;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A specific version of a mobile app with OTA update support.
 struct AppVersion

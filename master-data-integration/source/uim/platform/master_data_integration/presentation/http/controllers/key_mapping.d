@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_key_mappings;
 import uim.platform.xyz.application.dto;
-import domain.entities.key_mapping;
-import domain.types;
+import uim.platform.xyz.domain.entities.key_mapping;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class KeyMappingController

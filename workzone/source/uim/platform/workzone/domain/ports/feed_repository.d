@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.feed_repository;
 
-import domain.types;
-import domain.entities.feed_entry;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.feed_entry;
 
 interface FeedRepository
 {

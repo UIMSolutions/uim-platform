@@ -1,8 +1,8 @@
 module uim.platform.xyz.domain.services.schema_validator;
 
-import domain.entities.schema;
-import domain.entities.user : ExtendedAttribute;
-import domain.types;
+import uim.platform.xyz.domain.entities.schema;
+import uim.platform.xyz.domain.entities.user : ExtendedAttribute;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: validates extended attributes against custom schema definitions.
 struct SchemaValidationResult

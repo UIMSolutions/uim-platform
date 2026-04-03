@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.data_profile;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Profile analysis result for a dataset.
 struct DataProfile

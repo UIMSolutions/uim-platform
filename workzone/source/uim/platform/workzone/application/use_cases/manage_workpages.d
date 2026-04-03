@@ -3,9 +3,9 @@ module application.usecases.manage_workpages;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.workpage;
-import domain.ports.workpage_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workpage;
+import uim.platform.xyz.domain.ports.workpage_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageWorkpagesUseCase

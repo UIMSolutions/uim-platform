@@ -1,12 +1,12 @@
 module application.usecases.manage_health_checks;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.health_check;
-import domain.entities.health_check_result;
-import domain.ports.health_check_repository;
-import domain.ports.health_check_result_repository;
-import domain.services.health_checker;
-import domain.types;
+import uim.platform.xyz.domain.entities.health_check;
+import uim.platform.xyz.domain.entities.health_check_result;
+import uim.platform.xyz.domain.ports.health_check_repository;
+import uim.platform.xyz.domain.ports.health_check_result_repository;
+import uim.platform.xyz.domain.services.health_checker;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

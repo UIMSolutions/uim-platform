@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.app_registration;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A registered business application — SAP or third-party app entry.
 struct AppRegistration

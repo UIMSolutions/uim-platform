@@ -11,9 +11,9 @@ import vibe.data.json;
 import std.conv : to;
 
 import uim.platform.xyz.application.usecases.monitor_provisioning;
-import domain.entities.provisioning_log;
-import domain.entities.provisioned_entity;
-import domain.types;
+import uim.platform.xyz.domain.entities.provisioning_log;
+import uim.platform.xyz.domain.entities.provisioned_entity;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class MonitoringController {

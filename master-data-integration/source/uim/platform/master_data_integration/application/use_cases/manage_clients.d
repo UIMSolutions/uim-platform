@@ -1,9 +1,9 @@
 module application.usecases.manage_clients;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.client;
-import domain.ports.client_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.client;
+import uim.platform.xyz.domain.ports.client_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for connected client system management.
 class ManageClientsUseCase

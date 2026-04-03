@@ -3,10 +3,10 @@ module application.usecases.manage_deletion_requests;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.deletion_request;
-import domain.ports.deletion_request_repository;
-import domain.ports.data_subject_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.deletion_request;
+import uim.platform.xyz.domain.ports.deletion_request_repository;
+import uim.platform.xyz.domain.ports.data_subject_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageDeletionRequestsUseCase

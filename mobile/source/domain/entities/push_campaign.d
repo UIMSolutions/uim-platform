@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.push_campaign;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A push notification campaign targeting segments over time.
 struct PushCampaign

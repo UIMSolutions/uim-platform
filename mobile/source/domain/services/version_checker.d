@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.version_checker;
 
-import domain.entities.app_version;
-import domain.types;
+import uim.platform.xyz.domain.entities.app_version;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: checks app version requirements and update policies.
 class VersionChecker

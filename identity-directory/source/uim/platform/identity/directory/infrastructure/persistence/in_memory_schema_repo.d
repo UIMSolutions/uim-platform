@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.schema_repo;
 
-import domain.entities.schema;
-import domain.types;
-import domain.ports.schema_repository;
+import uim.platform.xyz.domain.entities.schema;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.schema_repository;
 
 /// In-memory adapter for custom schema persistence.
 class MemorySchemaRepository : SchemaRepository

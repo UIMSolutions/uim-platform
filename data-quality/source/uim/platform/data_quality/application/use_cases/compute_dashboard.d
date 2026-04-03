@@ -1,12 +1,12 @@
 module application.usecases.compute_dashboard;
 
-import domain.types;
-import domain.entities.quality_dashboard;
-import domain.entities.validation_result;
-import domain.entities.data_profile;
-import domain.ports.validation_result_repository;
-import domain.ports.data_profile_repository;
-import domain.services.quality_scorer;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.quality_dashboard;
+import uim.platform.xyz.domain.entities.validation_result;
+import uim.platform.xyz.domain.entities.data_profile;
+import uim.platform.xyz.domain.ports.validation_result_repository;
+import uim.platform.xyz.domain.ports.data_profile_repository;
+import uim.platform.xyz.domain.services.quality_scorer;
 import uim.platform.xyz.application.dto;
 
 class ComputeDashboardUseCase {

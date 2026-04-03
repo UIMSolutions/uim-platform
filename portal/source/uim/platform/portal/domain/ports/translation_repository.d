@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.translation_repository;
 
-import domain.entities.translation;
-import domain.types;
+import uim.platform.xyz.domain.entities.translation;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — translation persistence.
 interface TranslationRepository

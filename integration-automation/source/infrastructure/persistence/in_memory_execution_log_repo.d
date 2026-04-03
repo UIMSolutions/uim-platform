@@ -1,9 +1,9 @@
 module uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
 
-import domain.types;
-import domain.entities.execution_log;
-// import domain.ports.execution_log_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.execution_log;
+// import uim.platform.xyz.domain.ports.execution_log_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

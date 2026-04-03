@@ -3,13 +3,13 @@ module application.usecases.run_provisioning_jobs;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.provisioning_job;
-import domain.ports.provisioning_job_repository;
-import domain.ports.source_system_repository;
-import domain.ports.target_system_repository;
-import domain.ports.provisioning_log_repository;
-import domain.services.provisioning_engine;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.provisioning_job;
+import uim.platform.xyz.domain.ports.provisioning_job_repository;
+import uim.platform.xyz.domain.ports.source_system_repository;
+import uim.platform.xyz.domain.ports.target_system_repository;
+import uim.platform.xyz.domain.ports.provisioning_log_repository;
+import uim.platform.xyz.domain.services.provisioning_engine;
 import uim.platform.xyz.application.dto;
 
 class RunProvisioningJobsUseCase

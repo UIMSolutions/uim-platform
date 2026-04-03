@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.master_data_object;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A master data record — the core entity managed by MDI.
 struct MasterDataObject

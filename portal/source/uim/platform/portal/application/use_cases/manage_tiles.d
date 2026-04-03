@@ -1,8 +1,8 @@
 module application.usecases.manage_tiles;
 
-import domain.entities.tile;
-import domain.types;
-import domain.ports.tile_repository;
+import uim.platform.xyz.domain.entities.tile;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.tile_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

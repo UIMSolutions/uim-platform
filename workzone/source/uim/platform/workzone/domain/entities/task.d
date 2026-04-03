@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.task;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A unified task — aggregated from multiple backend systems into a single inbox.
 struct Task

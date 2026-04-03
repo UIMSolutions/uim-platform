@@ -1,9 +1,9 @@
 module application.usecases.manage_sites;
 
-import domain.entities.site;
-import domain.types;
-import domain.ports.site_repository;
-import domain.services.site_publisher;
+import uim.platform.xyz.domain.entities.site;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.site_repository;
+import uim.platform.xyz.domain.services.site_publisher;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

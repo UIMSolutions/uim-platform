@@ -3,9 +3,9 @@ module application.usecases.manage_validation_rules;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.validation_rule;
-import domain.ports.validation_rule_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_rule;
+import uim.platform.xyz.domain.ports.validation_rule_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageValidationRulesUseCase {

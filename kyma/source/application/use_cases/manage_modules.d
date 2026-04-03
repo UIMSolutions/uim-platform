@@ -1,10 +1,10 @@
 module application.usecases.manage_modules;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.kyma_module;
-import domain.ports.module_repository;
-import domain.services.module_dependency_resolver;
-import domain.types;
+import uim.platform.xyz.domain.entities.kyma_module;
+import uim.platform.xyz.domain.ports.module_repository;
+import uim.platform.xyz.domain.services.module_dependency_resolver;
+import uim.platform.xyz.domain.types;
 
 /// Application service for Kyma module management.
 class ManageModulesUseCase

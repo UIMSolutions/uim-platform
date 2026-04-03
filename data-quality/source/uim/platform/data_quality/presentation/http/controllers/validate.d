@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.validate_data;
 import uim.platform.xyz.application.dto;
-import domain.types;
-import domain.entities.validation_result;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_result;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class ValidateController {

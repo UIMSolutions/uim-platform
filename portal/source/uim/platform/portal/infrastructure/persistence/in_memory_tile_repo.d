@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.tile_repo;
 
-import domain.entities.tile;
-import domain.types;
-import domain.ports.tile_repository;
+import uim.platform.xyz.domain.entities.tile;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.tile_repository;
 
 import std.string : toLower, indexOf;
 

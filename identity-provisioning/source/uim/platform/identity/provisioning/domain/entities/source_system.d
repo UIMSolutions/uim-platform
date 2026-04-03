@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.source_system;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A source system from which identities (users/groups) are read
 /// during provisioning runs.

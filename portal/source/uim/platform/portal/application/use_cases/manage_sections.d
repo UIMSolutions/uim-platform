@@ -1,10 +1,10 @@
 module application.usecases.manage_sections;
 
-import domain.entities.section;
-import domain.entities.page;
-import domain.types;
-import domain.ports.section_repository;
-import domain.ports.page_repository;
+import uim.platform.xyz.domain.entities.section;
+import uim.platform.xyz.domain.entities.page;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.section_repository;
+import uim.platform.xyz.domain.ports.page_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

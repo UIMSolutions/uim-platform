@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.health_check_result_repository;
 
-import domain.entities.health_check_result;
-import domain.types;
+import uim.platform.xyz.domain.entities.health_check_result;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing - health check result persistence.
 interface HealthCheckResultRepository

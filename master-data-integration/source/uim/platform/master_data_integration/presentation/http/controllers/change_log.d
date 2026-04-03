@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.query_change_log;
 import uim.platform.xyz.application.dto;
-import domain.entities.change_log_entry;
-import domain.types;
+import uim.platform.xyz.domain.entities.change_log_entry;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class ChangeLogController

@@ -1,9 +1,9 @@
 module application.usecases.detect_duplicates;
 
-import domain.types;
-import domain.entities.match_group;
-import domain.ports.match_group_repository;
-import domain.services.duplicate_detector;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.match_group;
+import uim.platform.xyz.domain.ports.match_group_repository;
+import uim.platform.xyz.domain.services.duplicate_detector;
 import uim.platform.xyz.application.dto;
 
 import std.datetime.systime : Clock;

@@ -1,11 +1,11 @@
 module application.usecases.manage_metrics;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.metric;
-import domain.entities.metric_definition;
-import domain.ports.metric_repository;
-import domain.ports.metric_definition_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.metric;
+import uim.platform.xyz.domain.entities.metric_definition;
+import uim.platform.xyz.domain.ports.metric_repository;
+import uim.platform.xyz.domain.ports.metric_definition_repository;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

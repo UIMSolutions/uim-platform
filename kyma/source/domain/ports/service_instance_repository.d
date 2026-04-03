@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.service_instance_repository;
 
-import domain.entities.service_instance;
-import domain.types;
+import uim.platform.xyz.domain.entities.service_instance;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — service instance persistence.
 interface ServiceInstanceRepository

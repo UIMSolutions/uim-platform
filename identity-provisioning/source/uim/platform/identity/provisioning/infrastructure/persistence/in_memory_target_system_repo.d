@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.target_system_repo;
 
-import domain.types;
-import domain.entities.target_system;
-import domain.ports.target_system_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.target_system;
+import uim.platform.xyz.domain.ports.target_system_repository;
 
 class MemoryTargetSystemRepository : TargetSystemRepository
 {

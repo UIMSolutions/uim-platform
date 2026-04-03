@@ -1,10 +1,10 @@
 module application.usecases.manage_functions;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.serverless_function;
-import domain.ports.function_repository;
-import domain.services.function_validator;
-import domain.types;
+import uim.platform.xyz.domain.entities.serverless_function;
+import uim.platform.xyz.domain.ports.function_repository;
+import uim.platform.xyz.domain.services.function_validator;
+import uim.platform.xyz.domain.types;
 
 /// Application service for serverless function lifecycle management.
 class ManageFunctionsUseCase

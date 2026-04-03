@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.consent_record_repository;
 
-import domain.types;
-import domain.entities.consent_record;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.consent_record;
 
 /// Port for persisting consent records.
 interface ConsentRecordRepository

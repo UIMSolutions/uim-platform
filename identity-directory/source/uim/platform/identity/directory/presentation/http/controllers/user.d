@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_users;
 import uim.platform.xyz.application.dto;
-import domain.entities.user;
+import uim.platform.xyz.domain.entities.user;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 user management.

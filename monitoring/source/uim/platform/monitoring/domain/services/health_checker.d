@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.health_checker;
 
-import domain.entities.health_check;
-import domain.types;
+import uim.platform.xyz.domain.entities.health_check;
+import uim.platform.xyz.domain.types;
 
 /// Result of validating a health check configuration.
 struct ValidationResult

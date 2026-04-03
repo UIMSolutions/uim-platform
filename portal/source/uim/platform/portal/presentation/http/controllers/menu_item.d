@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_menu_items;
 import uim.platform.xyz.application.dto;
-import domain.entities.menu_item;
-import domain.types;
+import uim.platform.xyz.domain.entities.menu_item;
+import uim.platform.xyz.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class MenuItemController

@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.retention_rule_repo;
 
-import domain.types;
-import domain.entities.retention_rule;
-import domain.ports.retention_rule_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.retention_rule;
+import uim.platform.xyz.domain.ports.retention_rule_repository;
 
 class MemoryRetentionRuleRepository : RetentionRuleRepository
 {

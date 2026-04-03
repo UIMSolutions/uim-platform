@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.catalog_repository;
 
-import domain.entities.catalog;
-import domain.types;
+import uim.platform.xyz.domain.entities.catalog;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — catalog persistence.
 interface CatalogRepository

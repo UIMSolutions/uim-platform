@@ -6,8 +6,8 @@ import vibe.data.json;
 import std.conv : to;
 
 import uim.platform.xyz.application.usecases.monitor_executions;
-import domain.types;
-import domain.entities.execution_log;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.execution_log;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class MonitoringController

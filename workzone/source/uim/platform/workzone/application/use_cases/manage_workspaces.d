@@ -3,9 +3,9 @@ module application.usecases.manage_workspaces;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.workspace;
-import domain.ports.workspace_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workspace;
+import uim.platform.xyz.domain.ports.workspace_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageWorkspacesUseCase

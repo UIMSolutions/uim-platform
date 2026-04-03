@@ -3,9 +3,9 @@ module application.usecases.manage_apps;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.app_registration;
-import domain.ports.app_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.app_registration;
+import uim.platform.xyz.domain.ports.app_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageAppsUseCase

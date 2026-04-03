@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.alert_rule_repo;
 
-import domain.types;
-import domain.entities.alert_rule;
-import domain.ports.alert_rule_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.alert_rule;
+import uim.platform.xyz.domain.ports.alert_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.fragment_repo;
 
-import domain.types;
-import domain.entities.destination_fragment;
-import domain.ports.fragment_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.destination_fragment;
+import uim.platform.xyz.domain.ports.fragment_repository;
 
 import std.algorithm : filter;
 import std.array : array;

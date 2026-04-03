@@ -1,8 +1,8 @@
 module uim.platform.xyz.domain.services.threshold_evaluator;
 
-import domain.entities.alert_rule;
-import domain.entities.metric;
-import domain.types;
+import uim.platform.xyz.domain.entities.alert_rule;
+import uim.platform.xyz.domain.entities.metric;
+import uim.platform.xyz.domain.types;
 
 /// Result of evaluating a metric against an alert rule.
 struct EvaluationResult

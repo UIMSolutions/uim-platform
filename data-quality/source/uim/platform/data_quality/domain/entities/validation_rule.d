@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.validation_rule;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A configurable data quality validation rule.
 struct ValidationRule

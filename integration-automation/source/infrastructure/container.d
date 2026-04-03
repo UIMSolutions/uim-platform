@@ -11,8 +11,8 @@ import uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
 
 // Domain Services
-import domain.services.workflow_engine;
-import domain.services.step_executor;
+import uim.platform.xyz.domain.services.workflow_engine;
+import uim.platform.xyz.domain.services.step_executor;
 
 // Use Cases
 import uim.platform.xyz.application.usecases.manage_scenarios;

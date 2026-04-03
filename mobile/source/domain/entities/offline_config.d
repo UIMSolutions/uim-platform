@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.offline_config;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Configuration for OData offline store.
 struct OfflineConfig

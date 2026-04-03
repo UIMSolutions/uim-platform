@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.push_campaign_repository;
 
-import domain.entities.push_campaign;
-import domain.types;
+import uim.platform.xyz.domain.entities.push_campaign;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — push campaign persistence.
 interface PushCampaignRepository

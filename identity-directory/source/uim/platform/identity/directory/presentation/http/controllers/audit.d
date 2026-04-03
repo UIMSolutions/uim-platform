@@ -4,7 +4,7 @@ import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.query_audit_log;
-import domain.entities.audit_event;
+import uim.platform.xyz.domain.entities.audit_event;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for audit log queries.

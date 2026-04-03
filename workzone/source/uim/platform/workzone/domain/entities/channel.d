@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.channel;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A content channel — a feed source within a workspace for activity streams.
 struct Channel

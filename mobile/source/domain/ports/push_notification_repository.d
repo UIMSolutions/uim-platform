@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.push_notification_repository;
 
-import domain.entities.push_notification;
-import domain.types;
+import uim.platform.xyz.domain.entities.push_notification;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — push notification persistence.
 interface PushNotificationRepository

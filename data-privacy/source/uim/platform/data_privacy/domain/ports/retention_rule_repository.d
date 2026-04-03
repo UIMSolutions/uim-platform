@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.retention_rule_repository;
 
-import domain.types;
-import domain.entities.retention_rule;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.retention_rule;
 
 /// Port for persisting data retention rules.
 interface RetentionRuleRepository

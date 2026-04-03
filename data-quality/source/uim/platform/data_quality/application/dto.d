@@ -1,10 +1,10 @@
 module application.dto;
 
-import domain.types;
-import domain.entities.validation_result : RuleViolation;
-import domain.entities.match_group : MatchCandidate, FieldMatch;
-import domain.entities.data_profile : ColumnProfile;
-import domain.entities.quality_dashboard : RuleSeverityCount, QualityTrendPoint;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_result : RuleViolation;
+import uim.platform.xyz.domain.entities.match_group : MatchCandidate, FieldMatch;
+import uim.platform.xyz.domain.entities.data_profile : ColumnProfile;
+import uim.platform.xyz.domain.entities.quality_dashboard : RuleSeverityCount, QualityTrendPoint;
 
 // ──────────────── Validation Rule DTOs ────────────────
 

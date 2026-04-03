@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.validation_result_repo;
 
-import domain.types;
-import domain.entities.validation_result;
-import domain.ports.validation_result_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_result;
+import uim.platform.xyz.domain.ports.validation_result_repository;
 
 import std.algorithm : filter;
 import std.array : array;

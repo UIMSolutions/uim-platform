@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.validation_rule_repo;
 
-import domain.types;
-import domain.entities.validation_rule;
-import domain.ports.validation_rule_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_rule;
+import uim.platform.xyz.domain.ports.validation_rule_repository;
 
 import std.algorithm : filter;
 import std.array : array;

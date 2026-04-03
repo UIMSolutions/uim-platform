@@ -4,9 +4,9 @@ import std.uuid;
 import std.conv : to;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.data_profile;
-import domain.ports.data_profile_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_profile;
+import uim.platform.xyz.domain.ports.data_profile_repository;
 import uim.platform.xyz.application.dto;
 
 class ProfileDataUseCase {

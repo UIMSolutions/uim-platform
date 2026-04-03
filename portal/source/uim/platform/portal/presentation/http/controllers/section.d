@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_sections;
 import uim.platform.xyz.application.dto;
-import domain.entities.section;
-import domain.types;
+import uim.platform.xyz.domain.entities.section;
+import uim.platform.xyz.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SectionController

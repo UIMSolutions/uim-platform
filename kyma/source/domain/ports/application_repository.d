@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.application_repository;
 
-import domain.entities.application;
-import domain.types;
+import uim.platform.xyz.domain.entities.application;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — external application connectivity persistence.
 interface ApplicationRepository

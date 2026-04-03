@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.source_system_repo;
 
-import domain.types;
-import domain.entities.source_system;
-import domain.ports.source_system_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.source_system;
+import uim.platform.xyz.domain.ports.source_system_repository;
 
 class MemorySourceSystemRepository : SourceSystemRepository
 {

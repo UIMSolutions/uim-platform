@@ -18,8 +18,8 @@ import uim.platform.xyz.infrastructure.persistence.memory.replication_job_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.filter_rule_repo;
 
 // Domain services
-import domain.services.key_mapping_resolver;
-import domain.services.distribution_evaluator;
+import uim.platform.xyz.domain.services.key_mapping_resolver;
+import uim.platform.xyz.domain.services.distribution_evaluator;
 
 // Use Cases
 import uim.platform.xyz.application.usecases.manage_master_data_objects;

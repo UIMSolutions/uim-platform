@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.cleansing_rule_repository;
 
-import domain.types;
-import domain.entities.cleansing_rule;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.cleansing_rule;
 
 /// Port for persisting data cleansing rules.
 interface CleansingRuleRepository

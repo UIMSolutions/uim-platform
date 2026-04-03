@@ -1,9 +1,9 @@
 module application.usecases.manage_applications;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.application;
-import domain.ports.application_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.application;
+import uim.platform.xyz.domain.ports.application_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for external application connectivity.
 class ManageApplicationsUseCase

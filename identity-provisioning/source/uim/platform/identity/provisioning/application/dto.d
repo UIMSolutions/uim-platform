@@ -1,6 +1,6 @@
 module application.dto;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 // --- Source System ---
 

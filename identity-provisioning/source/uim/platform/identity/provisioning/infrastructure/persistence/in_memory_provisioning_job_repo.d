@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.provisioning_job_repo;
 
-import domain.types;
-import domain.entities.provisioning_job;
-import domain.ports.provisioning_job_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.provisioning_job;
+import uim.platform.xyz.domain.ports.provisioning_job_repository;
 
 class MemoryProvisioningJobRepository : ProvisioningJobRepository
 {

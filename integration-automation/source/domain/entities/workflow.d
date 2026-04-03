@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.workflow;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A workflow instance — a running execution of an integration scenario
 /// for a specific tenant. Contains the current execution progress.

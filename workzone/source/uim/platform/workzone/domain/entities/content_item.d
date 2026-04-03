@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.content_item;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A content item within a workspace — blog, wiki, KB article, forum post, etc.
 struct ContentItem

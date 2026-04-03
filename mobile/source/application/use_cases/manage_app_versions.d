@@ -1,10 +1,10 @@
 module application.usecases.manage_app_versions;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.app_version;
-import domain.ports.app_version_repository;
-import domain.services.version_checker;
-import domain.types;
+import uim.platform.xyz.domain.entities.app_version;
+import uim.platform.xyz.domain.ports.app_version_repository;
+import uim.platform.xyz.domain.services.version_checker;
+import uim.platform.xyz.domain.types;
 
 /// Use case: manage app versions and OTA updates.
 class ManageAppVersionsUseCase

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.notification_channel;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A notification channel for delivering alert notifications.
 struct NotificationChannel

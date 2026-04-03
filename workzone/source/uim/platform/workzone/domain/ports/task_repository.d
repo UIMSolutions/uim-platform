@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.task_repository;
 
-import domain.types;
-import domain.entities.task;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.task;
 
 interface TaskRepository
 {

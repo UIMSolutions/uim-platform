@@ -1,9 +1,9 @@
 module uim.platform.xyz.domain.services.quality_scorer;
 
-import domain.types;
-import domain.entities.quality_dashboard;
-import domain.entities.validation_result;
-import domain.entities.data_profile;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.quality_dashboard;
+import uim.platform.xyz.domain.entities.validation_result;
+import uim.platform.xyz.domain.entities.data_profile;
 
 import std.datetime.systime : Clock;
 

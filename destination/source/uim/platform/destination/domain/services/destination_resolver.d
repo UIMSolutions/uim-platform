@@ -1,10 +1,10 @@
 module uim.platform.xyz.domain.services.destination_resolver;
 
-import domain.entities.destination;
-import domain.entities.destination_fragment;
-import domain.entities.auth_token;
-import domain.entities.destination_lookup;
-import domain.types;
+import uim.platform.xyz.domain.entities.destination;
+import uim.platform.xyz.domain.entities.destination_fragment;
+import uim.platform.xyz.domain.entities.auth_token;
+import uim.platform.xyz.domain.entities.destination_lookup;
+import uim.platform.xyz.domain.types;
 
 import std.datetime.systime : Clock;
 

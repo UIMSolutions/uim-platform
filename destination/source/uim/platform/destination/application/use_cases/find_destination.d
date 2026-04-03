@@ -1,15 +1,15 @@
 module application.usecases.find_destination;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.destination;
-import domain.entities.destination_fragment;
-import domain.entities.auth_token;
-import domain.entities.certificate;
-import domain.ports.destination_repository;
-import domain.ports.fragment_repository;
-import domain.ports.certificate_repository;
-import domain.services.destination_resolver;
-import domain.types;
+import uim.platform.xyz.domain.entities.destination;
+import uim.platform.xyz.domain.entities.destination_fragment;
+import uim.platform.xyz.domain.entities.auth_token;
+import uim.platform.xyz.domain.entities.certificate;
+import uim.platform.xyz.domain.ports.destination_repository;
+import uim.platform.xyz.domain.ports.fragment_repository;
+import uim.platform.xyz.domain.ports.certificate_repository;
+import uim.platform.xyz.domain.services.destination_resolver;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.schema;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Attribute definition within a custom schema.
 struct SchemaAttribute

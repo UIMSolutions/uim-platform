@@ -1,10 +1,10 @@
 module application.usecases.manage_api_clients;
 
-import domain.entities.api_client;
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.api_client_repository;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.api_client;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.api_client_repository;
+import uim.platform.xyz.domain.ports.audit_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

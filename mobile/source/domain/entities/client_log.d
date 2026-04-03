@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.client_log;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A log entry uploaded from a mobile client.
 struct ClientLog

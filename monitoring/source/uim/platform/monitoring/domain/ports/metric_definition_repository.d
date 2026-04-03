@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.metric_definition_repository;
 
-import domain.entities.metric_definition;
-import domain.types;
+import uim.platform.xyz.domain.entities.metric_definition;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing - metric definition persistence.
 interface MetricDefinitionRepository

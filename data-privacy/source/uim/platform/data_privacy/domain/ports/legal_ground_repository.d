@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.legal_ground_repository;
 
-import domain.types;
-import domain.entities.legal_ground;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.legal_ground;
 
 /// Port for persisting legal grounds for data processing.
 interface LegalGroundRepository

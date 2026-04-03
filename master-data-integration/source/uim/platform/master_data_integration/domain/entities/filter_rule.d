@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.filter_rule;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A filter rule for selective master data distribution.
 struct FilterRule

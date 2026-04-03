@@ -4,8 +4,8 @@ import std.algorithm : canFind, filter;
 import std.array : array;
 import std.uni : toLower;
 
-import domain.types;
-import domain.entities.content_item;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.content_item;
 
 /// Domain service — simple in-memory content search.
 struct ContentSearchService

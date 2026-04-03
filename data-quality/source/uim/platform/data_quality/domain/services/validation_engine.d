@@ -1,8 +1,8 @@
 module uim.platform.xyz.domain.services.validation_engine;
 
-import domain.types;
-import domain.entities.validation_rule;
-import domain.entities.validation_result;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_rule;
+import uim.platform.xyz.domain.entities.validation_result;
 
 import std.regex;
 import std.conv : to;

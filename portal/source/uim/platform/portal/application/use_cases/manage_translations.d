@@ -1,8 +1,8 @@
 module application.usecases.manage_translations;
 
-import domain.entities.translation;
-import domain.types;
-import domain.ports.translation_repository;
+import uim.platform.xyz.domain.entities.translation;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.translation_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

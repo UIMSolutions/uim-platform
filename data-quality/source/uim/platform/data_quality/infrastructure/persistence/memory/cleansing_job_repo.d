@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.cleansing_job_repo;
 
-import domain.types;
-import domain.entities.cleansing_job;
-import domain.ports.cleansing_job_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.cleansing_job;
+import uim.platform.xyz.domain.ports.cleansing_job_repository;
 
 import std.algorithm : filter;
 import std.array : array;

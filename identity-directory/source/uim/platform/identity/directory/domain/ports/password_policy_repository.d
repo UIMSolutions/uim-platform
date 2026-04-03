@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.password_policy_repository;
 
-import domain.entities.password_policy;
-import domain.types;
+import uim.platform.xyz.domain.entities.password_policy;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — password policy persistence.
 interface PasswordPolicyRepository

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.app_version_repository;
 
-import domain.entities.app_version;
-import domain.types;
+import uim.platform.xyz.domain.entities.app_version;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — app version persistence.
 interface AppVersionRepository

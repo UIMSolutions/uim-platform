@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_sites;
 import uim.platform.xyz.application.dto;
-import domain.entities.site;
-import domain.types;
+import uim.platform.xyz.domain.entities.site;
+import uim.platform.xyz.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class SiteController

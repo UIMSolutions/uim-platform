@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.module_repository;
 
-import domain.entities.kyma_module;
-import domain.types;
+import uim.platform.xyz.domain.entities.kyma_module;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — Kyma module persistence.
 interface ModuleRepository

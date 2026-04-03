@@ -1,10 +1,10 @@
 module application.usecases.manage_pages;
 
-import domain.entities.page;
-import domain.entities.site;
-import domain.types;
-import domain.ports.page_repository;
-import domain.ports.site_repository;
+import uim.platform.xyz.domain.entities.page;
+import uim.platform.xyz.domain.entities.site;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.page_repository;
+import uim.platform.xyz.domain.ports.site_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

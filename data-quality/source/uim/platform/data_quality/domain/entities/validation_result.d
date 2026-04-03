@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.validation_result;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Result of running validation rules against a single record.
 struct ValidationResult

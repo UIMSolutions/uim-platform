@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.notification;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A user notification — cross-system alerts and action items.
 struct Notification

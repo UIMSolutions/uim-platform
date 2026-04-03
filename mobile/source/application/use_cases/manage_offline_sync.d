@@ -1,11 +1,11 @@
 module application.usecases.manage_offline_sync;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.offline_config;
-import domain.entities.sync_session;
-import domain.ports.offline_config_repository;
-import domain.ports.sync_session_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.offline_config;
+import uim.platform.xyz.domain.entities.sync_session;
+import uim.platform.xyz.domain.ports.offline_config_repository;
+import uim.platform.xyz.domain.ports.sync_session_repository;
+import uim.platform.xyz.domain.types;
 
 /// Use case: manage offline store configurations and sync sessions.
 class ManageOfflineSyncUseCase

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.kyma_module;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A Kyma module — an optional component that can be enabled/disabled.
 struct KymaModule

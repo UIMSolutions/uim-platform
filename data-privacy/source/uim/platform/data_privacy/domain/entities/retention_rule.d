@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.retention_rule;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Defines how long personal data may be retained for a given purpose.
 struct RetentionRule

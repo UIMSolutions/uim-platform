@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_fragments;
 import uim.platform.xyz.application.dto;
-import domain.entities.destination_fragment;
-import domain.types;
+import uim.platform.xyz.domain.entities.destination_fragment;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class FragmentController

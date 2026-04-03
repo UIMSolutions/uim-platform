@@ -1,14 +1,14 @@
 module application.usecases.manage_push_notifications;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.push_notification;
-import domain.ports.push_notification_repository;
-import domain.ports.push_template_repository;
-import domain.ports.push_campaign_repository;
-import domain.entities.push_template;
-import domain.entities.push_campaign;
-import domain.services.push_dispatcher;
-import domain.types;
+import uim.platform.xyz.domain.entities.push_notification;
+import uim.platform.xyz.domain.ports.push_notification_repository;
+import uim.platform.xyz.domain.ports.push_template_repository;
+import uim.platform.xyz.domain.ports.push_campaign_repository;
+import uim.platform.xyz.domain.entities.push_template;
+import uim.platform.xyz.domain.entities.push_campaign;
+import uim.platform.xyz.domain.services.push_dispatcher;
+import uim.platform.xyz.domain.types;
 
 /// Use case: manage push notifications, templates, and campaigns.
 class ManagePushNotificationsUseCase

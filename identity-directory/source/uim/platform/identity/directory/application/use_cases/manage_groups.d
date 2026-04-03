@@ -1,12 +1,12 @@
 module application.usecases.manage_groups;
 
-import domain.entities.group;
-import domain.entities.user;
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.group_repository;
-import domain.ports.user_repository;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.group;
+import uim.platform.xyz.domain.entities.user;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.group_repository;
+import uim.platform.xyz.domain.ports.user_repository;
+import uim.platform.xyz.domain.ports.audit_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

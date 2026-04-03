@@ -1,5 +1,5 @@
 module uim.platform.xyz.domain.ports;
 
 public {
-    import domain.ports.repositories;
+    import uim.platform.xyz.domain.ports.repositories;
 }

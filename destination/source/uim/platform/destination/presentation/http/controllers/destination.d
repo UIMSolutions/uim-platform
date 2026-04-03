@@ -12,8 +12,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_destinations;
 import uim.platform.xyz.application.dto;
-import domain.entities.destination;
-import domain.types;
+import uim.platform.xyz.domain.entities.destination;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class DestinationController : SAPController {

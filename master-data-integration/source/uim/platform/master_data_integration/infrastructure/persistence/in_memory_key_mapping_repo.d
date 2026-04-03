@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.key_mapping_repo;
 
-import domain.types;
-import domain.entities.key_mapping;
-import domain.ports.key_mapping_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.key_mapping;
+import uim.platform.xyz.domain.ports.key_mapping_repository;
 
 import std.algorithm : filter;
 import std.array : array;

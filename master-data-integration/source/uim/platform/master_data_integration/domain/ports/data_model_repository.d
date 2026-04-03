@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.data_model_repository;
 
-import domain.entities.data_model;
-import domain.types;
+import uim.platform.xyz.domain.entities.data_model;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — data model/schema persistence.
 interface DataModelRepository

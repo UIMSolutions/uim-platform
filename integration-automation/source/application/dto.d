@@ -1,8 +1,8 @@
 module application.dto;
 
-import domain.types;
-import domain.entities.integration_scenario : ScenarioStepTemplate;
-import domain.entities.workflow_step : WorkflowStep;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.integration_scenario : ScenarioStepTemplate;
+import uim.platform.xyz.domain.entities.workflow_step : WorkflowStep;
 
 // ──────────────── Integration Scenario DTOs ────────────────
 

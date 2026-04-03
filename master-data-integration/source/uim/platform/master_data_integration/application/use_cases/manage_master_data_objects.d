@@ -1,11 +1,11 @@
 module application.usecases.manage_master_data_objects;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.master_data_object;
-import domain.entities.change_log_entry;
-import domain.ports.master_data_object_repository;
-import domain.ports.change_log_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.master_data_object;
+import uim.platform.xyz.domain.entities.change_log_entry;
+import uim.platform.xyz.domain.ports.master_data_object_repository;
+import uim.platform.xyz.domain.ports.change_log_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for master data object CRUD and lifecycle.
 class ManageMasterDataObjectsUseCase

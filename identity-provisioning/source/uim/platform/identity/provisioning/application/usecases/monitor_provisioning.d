@@ -1,14 +1,14 @@
 module application.usecases.monitor_provisioning;
 
-import domain.types;
-import domain.entities.provisioning_job;
-import domain.entities.provisioning_log;
-import domain.entities.provisioned_entity;
-import domain.ports.provisioning_job_repository;
-import domain.ports.provisioning_log_repository;
-import domain.ports.provisioned_entity_repository;
-import domain.ports.source_system_repository;
-import domain.ports.target_system_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.provisioning_job;
+import uim.platform.xyz.domain.entities.provisioning_log;
+import uim.platform.xyz.domain.entities.provisioned_entity;
+import uim.platform.xyz.domain.ports.provisioning_job_repository;
+import uim.platform.xyz.domain.ports.provisioning_log_repository;
+import uim.platform.xyz.domain.ports.provisioned_entity_repository;
+import uim.platform.xyz.domain.ports.source_system_repository;
+import uim.platform.xyz.domain.ports.target_system_repository;
 
 /// Summary of a provisioning job for monitoring dashboards.
 struct JobSummary

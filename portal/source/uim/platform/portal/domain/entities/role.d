@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.role;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Role for portal access — controls what content users can see.
 struct Role

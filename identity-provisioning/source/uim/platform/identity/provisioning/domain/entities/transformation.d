@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.transformation;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An attribute-mapping transformation that defines how identity
 /// attributes from a source system are mapped to a target system.

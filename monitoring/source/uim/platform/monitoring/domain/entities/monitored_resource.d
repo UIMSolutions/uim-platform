@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.monitored_resource;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A monitored application, database system, or service on SAP BTP.
 struct MonitoredResource

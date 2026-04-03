@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.api_rule_repository;
 
-import domain.entities.api_rule;
-import domain.types;
+import uim.platform.xyz.domain.entities.api_rule;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — API rule persistence.
 interface ApiRuleRepository

@@ -1,9 +1,9 @@
 module uim.platform.xyz.infrastructure.persistence.memory.system_repo;
 
-import domain.types;
-import domain.entities.system_connection;
-// import domain.ports.system_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.system_connection;
+// import uim.platform.xyz.domain.ports.system_repository;
+import uim.platform.xyz.domain.ports;
 
 import std.algorithm : filter;
 import std.array : array;

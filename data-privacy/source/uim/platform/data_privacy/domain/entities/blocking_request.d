@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.blocking_request;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A request to restrict processing of personal data (GDPR Art. 18).
 struct BlockingRequest

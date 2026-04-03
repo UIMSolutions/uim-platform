@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.change_log_entry;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A change log entry for tracking master data modifications.
 struct ChangeLogEntry

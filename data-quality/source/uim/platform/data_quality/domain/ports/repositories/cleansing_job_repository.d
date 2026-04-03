@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.cleansing_job_repository;
 
-import domain.types;
-import domain.entities.cleansing_job;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.cleansing_job;
 
 /// Port for persisting cleansing job records.
 interface CleansingJobRepository

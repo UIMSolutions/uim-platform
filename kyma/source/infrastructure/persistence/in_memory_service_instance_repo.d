@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.service_instance_repo;
 
-import domain.types;
-import domain.entities.service_instance;
-import domain.ports.service_instance_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.service_instance;
+import uim.platform.xyz.domain.ports.service_instance_repository;
 
 import std.algorithm : filter;
 import std.array : array;

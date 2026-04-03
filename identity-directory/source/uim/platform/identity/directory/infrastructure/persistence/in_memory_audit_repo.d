@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.audit_repo;
 
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.audit_repository;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.audit_repository;
 
 /// In-memory adapter for audit event persistence (append-only).
 class MemoryAuditRepository : AuditRepository

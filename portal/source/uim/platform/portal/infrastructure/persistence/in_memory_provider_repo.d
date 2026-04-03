@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.provider_repo;
 
-import domain.entities.content_provider;
-import domain.types;
-import domain.ports.provider_repository;
+import uim.platform.xyz.domain.entities.content_provider;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.provider_repository;
 
 class MemoryProviderRepository : ProviderRepository
 {

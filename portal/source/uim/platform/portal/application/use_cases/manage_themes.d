@@ -1,8 +1,8 @@
 module application.usecases.manage_themes;
 
-import domain.entities.theme;
-import domain.types;
-import domain.ports.theme_repository;
+import uim.platform.xyz.domain.entities.theme;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.theme_repository;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

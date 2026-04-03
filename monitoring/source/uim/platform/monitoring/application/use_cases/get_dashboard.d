@@ -1,16 +1,16 @@
 module application.usecases.get_dashboard;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.alert;
-import domain.entities.health_check_result;
-import domain.entities.monitored_resource;
-import domain.ports.alert_repository;
-import domain.ports.health_check_repository;
-import domain.ports.health_check_result_repository;
-import domain.ports.metric_definition_repository;
-import domain.ports.monitored_resource_repository;
-import domain.ports.notification_channel_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.alert;
+import uim.platform.xyz.domain.entities.health_check_result;
+import uim.platform.xyz.domain.entities.monitored_resource;
+import uim.platform.xyz.domain.ports.alert_repository;
+import uim.platform.xyz.domain.ports.health_check_repository;
+import uim.platform.xyz.domain.ports.health_check_result_repository;
+import uim.platform.xyz.domain.ports.metric_definition_repository;
+import uim.platform.xyz.domain.ports.monitored_resource_repository;
+import uim.platform.xyz.domain.ports.notification_channel_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service: aggregates monitoring data for dashboard overview.
 class GetDashboardUseCase

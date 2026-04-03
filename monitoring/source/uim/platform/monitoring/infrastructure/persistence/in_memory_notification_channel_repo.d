@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.notification_channel_repo;
 
-import domain.types;
-import domain.entities.notification_channel;
-import domain.ports.notification_channel_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.notification_channel;
+import uim.platform.xyz.domain.ports.notification_channel_repository;
 
 import std.algorithm : filter;
 import std.array : array;

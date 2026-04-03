@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.master_data_object_repository;
 
-import domain.entities.master_data_object;
-import domain.types;
+import uim.platform.xyz.domain.entities.master_data_object;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — master data object persistence.
 interface MasterDataObjectRepository

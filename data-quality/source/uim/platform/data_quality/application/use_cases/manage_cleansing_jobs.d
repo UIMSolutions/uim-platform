@@ -3,9 +3,9 @@ module application.usecases.manage_cleansing_jobs;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.cleansing_job;
-import domain.ports.cleansing_job_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.cleansing_job;
+import uim.platform.xyz.domain.ports.cleansing_job_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageCleansingJobsUseCase {

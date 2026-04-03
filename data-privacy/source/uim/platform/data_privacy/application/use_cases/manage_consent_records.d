@@ -3,10 +3,10 @@ module application.usecases.manage_consent_records;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.consent_record;
-import domain.ports.consent_record_repository;
-import domain.ports.data_subject_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.consent_record;
+import uim.platform.xyz.domain.ports.consent_record_repository;
+import uim.platform.xyz.domain.ports.data_subject_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageConsentRecordsUseCase

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.service_instance;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A service instance provisioned from the BTP service catalog.
 struct ServiceInstance

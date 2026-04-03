@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.content_provider;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Content provider — source of apps and content.
 struct ContentProvider

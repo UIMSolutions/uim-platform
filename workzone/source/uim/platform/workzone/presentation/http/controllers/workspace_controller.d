@@ -5,8 +5,8 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_workspaces;
 import uim.platform.xyz.application.dto;
-import domain.types;
-import domain.entities.workspace;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workspace;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 class WorkspaceController

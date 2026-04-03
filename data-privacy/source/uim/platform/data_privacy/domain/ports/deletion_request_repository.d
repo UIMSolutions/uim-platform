@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.deletion_request_repository;
 
-import domain.types;
-import domain.entities.deletion_request;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.deletion_request;
 
 /// Port for persisting data deletion requests.
 interface DeletionRequestRepository

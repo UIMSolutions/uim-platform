@@ -1,10 +1,10 @@
 module application.usecases.manage_certificates;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.certificate;
-import domain.ports.certificate_repository;
-import domain.services.certificate_validator;
-import domain.types;
+import uim.platform.xyz.domain.entities.certificate;
+import uim.platform.xyz.domain.ports.certificate_repository;
+import uim.platform.xyz.domain.services.certificate_validator;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

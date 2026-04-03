@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.provisioning_log;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An audit record for a single entity operation within a
 /// provisioning job run.

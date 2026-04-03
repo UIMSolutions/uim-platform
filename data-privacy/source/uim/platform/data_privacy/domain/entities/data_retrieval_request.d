@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.data_retrieval_request;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A data subject access request — retrieve all personal data (GDPR Art. 15).
 struct DataRetrievalRequest

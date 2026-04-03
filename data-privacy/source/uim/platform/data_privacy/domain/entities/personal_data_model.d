@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.personal_data_model;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Defines a field of personal data within a system — what data exists and where.
 struct PersonalDataModel

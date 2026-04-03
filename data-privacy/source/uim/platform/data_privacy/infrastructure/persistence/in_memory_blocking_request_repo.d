@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.blocking_request_repo;
 
-import domain.types;
-import domain.entities.blocking_request;
-import domain.ports.blocking_request_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.blocking_request;
+import uim.platform.xyz.domain.ports.blocking_request_repository;
 
 class MemoryBlockingRequestRepository : BlockingRequestRepository
 {

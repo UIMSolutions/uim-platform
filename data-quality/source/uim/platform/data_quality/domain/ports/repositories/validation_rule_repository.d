@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.validation_rule_repository;
 
-import domain.types;
-import domain.entities.validation_rule;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_rule;
 
 /// Port for persisting validation rules.
 interface ValidationRuleRepository

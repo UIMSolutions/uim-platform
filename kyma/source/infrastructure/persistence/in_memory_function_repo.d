@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.function_repo;
 
-import domain.types;
-import domain.entities.serverless_function;
-import domain.ports.function_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.serverless_function;
+import uim.platform.xyz.domain.ports.function_repository;
 
 import std.algorithm : filter;
 import std.array : array;

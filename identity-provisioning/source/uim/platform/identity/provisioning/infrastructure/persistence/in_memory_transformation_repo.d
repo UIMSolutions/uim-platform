@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.transformation_repo;
 
-import domain.types;
-import domain.entities.transformation;
-import domain.ports.transformation_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.transformation;
+import uim.platform.xyz.domain.ports.transformation_repository;
 
 class MemoryTransformationRepository : TransformationRepository
 {

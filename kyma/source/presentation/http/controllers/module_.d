@@ -12,8 +12,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_modules;
 import uim.platform.xyz.application.dto;
-import domain.entities.kyma_module;
-import domain.types;
+import uim.platform.xyz.domain.entities.kyma_module;
+import uim.platform.xyz.domain.types;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class ModuleController {

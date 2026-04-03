@@ -12,8 +12,8 @@ import uim.platform.xyz.infrastructure.persistence.memory.provisioning_log_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.provisioned_entity_repo;
 
 // Domain services
-import domain.services.provisioning_engine;
-import domain.services.transformation_engine;
+import uim.platform.xyz.domain.services.provisioning_engine;
+import uim.platform.xyz.domain.services.transformation_engine;
 
 // Use cases
 import uim.platform.xyz.application.usecases.manage_source_systems;

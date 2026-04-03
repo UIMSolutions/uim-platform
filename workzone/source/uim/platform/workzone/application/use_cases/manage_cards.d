@@ -3,9 +3,9 @@ module application.usecases.manage_cards;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.card;
-import domain.ports.card_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.card;
+import uim.platform.xyz.domain.ports.card_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageCardsUseCase

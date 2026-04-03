@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.address_record;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An address record for cleansing and geocoding.
 struct AddressRecord

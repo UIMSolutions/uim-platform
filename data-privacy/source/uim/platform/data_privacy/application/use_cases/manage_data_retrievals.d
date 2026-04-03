@@ -3,11 +3,11 @@ module application.usecases.manage_data_retrievals;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.data_retrieval_request;
-import domain.ports.data_retrieval_request_repository;
-import domain.ports.data_subject_repository;
-import domain.ports.personal_data_model_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_retrieval_request;
+import uim.platform.xyz.domain.ports.data_retrieval_request_repository;
+import uim.platform.xyz.domain.ports.data_subject_repository;
+import uim.platform.xyz.domain.ports.personal_data_model_repository;
 import uim.platform.xyz.application.dto;
 
 class ManageDataRetrievalsUseCase

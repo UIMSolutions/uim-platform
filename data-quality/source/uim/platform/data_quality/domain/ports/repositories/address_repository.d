@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.address_repository;
 
-import domain.types;
-import domain.entities.address_record;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.address_record;
 
 /// Port for persisting address records.
 interface AddressRepository

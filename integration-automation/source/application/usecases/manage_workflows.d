@@ -3,16 +3,16 @@ module application.usecases.manage_workflows;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.workflow;
-import domain.entities.workflow_step;
-import domain.entities.integration_scenario;
-// import domain.ports.workflow_repository;
-// import domain.ports.step_repository;
-// import domain.ports.scenario_repository;
-import domain.ports;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workflow;
+import uim.platform.xyz.domain.entities.workflow_step;
+import uim.platform.xyz.domain.entities.integration_scenario;
+// import uim.platform.xyz.domain.ports.workflow_repository;
+// import uim.platform.xyz.domain.ports.step_repository;
+// import uim.platform.xyz.domain.ports.scenario_repository;
+import uim.platform.xyz.domain.ports;
 
-import domain.services.workflow_engine;
+import uim.platform.xyz.domain.services.workflow_engine;
 import uim.platform.xyz.application.dto;
 
 class ManageWorkflowsUseCase {

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.cleansing_rule;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A data cleansing / transformation rule.
 struct CleansingRule

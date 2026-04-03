@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.monitored_resource_repository;
 
-import domain.entities.monitored_resource;
-import domain.types;
+import uim.platform.xyz.domain.entities.monitored_resource;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing - monitored resource persistence.
 interface MonitoredResourceRepository

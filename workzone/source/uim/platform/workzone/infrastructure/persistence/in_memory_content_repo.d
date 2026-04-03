@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.content_repo;
 
-import domain.types;
-import domain.entities.content_item;
-import domain.ports.content_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.content_item;
+import uim.platform.xyz.domain.ports.content_repository;
 
 import std.algorithm : canFind, filter;
 import std.array : array;

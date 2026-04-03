@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.personal_data_model_repo;
 
-import domain.types;
-import domain.entities.personal_data_model;
-import domain.ports.personal_data_model_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.personal_data_model;
+import uim.platform.xyz.domain.ports.personal_data_model_repository;
 
 class MemoryPersonalDataModelRepository : PersonalDataModelRepository
 {

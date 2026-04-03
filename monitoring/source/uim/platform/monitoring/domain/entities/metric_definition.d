@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.metric_definition;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Definition of a metric that can be collected for monitored resources.
 struct MetricDefinition

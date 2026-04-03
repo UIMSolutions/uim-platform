@@ -1,6 +1,6 @@
 module uim.platform.xyz.infrastructure.security.sha256_password_service;
 
-import domain.ports.password_service;
+import uim.platform.xyz.domain.ports.password_service;
 
 import std.digest.sha;
 import std.uuid;

@@ -5,7 +5,7 @@ import vibe.http.router;
 import vibe.data.json;
 import uim.platform.xyz.application.usecases.manage_schemas;
 import uim.platform.xyz.application.dto;
-import domain.entities.schema;
+import uim.platform.xyz.domain.entities.schema;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for custom schema management.

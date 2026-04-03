@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.target_system;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A target system to which identities (users/groups) are written
 /// during provisioning runs.

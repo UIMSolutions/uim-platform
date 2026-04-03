@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.user_repository;
 
-import domain.entities.user;
-import domain.types;
+import uim.platform.xyz.domain.entities.user;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
 interface UserRepository

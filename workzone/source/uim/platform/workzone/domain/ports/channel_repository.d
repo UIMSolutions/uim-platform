@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.channel_repository;
 
-import domain.types;
-import domain.entities.channel;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.channel;
 
 interface ChannelRepository
 {

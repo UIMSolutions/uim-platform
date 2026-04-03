@@ -1,9 +1,9 @@
 module application.usecases.manage_namespaces;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.namespace;
-import domain.ports.namespace_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.namespace;
+import uim.platform.xyz.domain.ports.namespace_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for Kubernetes namespace management.
 class ManageNamespacesUseCase

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.sync_session;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A record of an offline store synchronization session.
 struct SyncSession

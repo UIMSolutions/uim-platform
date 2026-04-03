@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.destination;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A destination configuration — defines how to connect to a target system
 /// for automated step execution. Mirrors SAP BTP destination service concepts.

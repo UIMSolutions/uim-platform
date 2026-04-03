@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.destination_fragment;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A reusable destination fragment — partial configuration that can be merged into destinations.
 struct DestinationFragment

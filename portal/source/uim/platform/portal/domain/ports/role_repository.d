@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.role_repository;
 
-import domain.entities.role;
-import domain.types;
+import uim.platform.xyz.domain.entities.role;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — role persistence.
 interface RoleRepository

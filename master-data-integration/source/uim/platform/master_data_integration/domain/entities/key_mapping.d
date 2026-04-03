@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.key_mapping;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A key mapping entry — maps IDs across different systems.
 struct KeyMapping

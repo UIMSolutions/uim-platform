@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.repositories.scenario;
 
-import domain.types;
-import domain.entities.integration_scenario;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.integration_scenario;
 
 /// Port for persisting and querying integration scenarios.
 interface ScenarioRepository

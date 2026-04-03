@@ -1,11 +1,11 @@
 module application.usecases.validate_data;
 
-import domain.types;
-import domain.entities.validation_rule;
-import domain.entities.validation_result;
-import domain.ports.validation_rule_repository;
-import domain.ports.validation_result_repository;
-import domain.services.validation_engine;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_rule;
+import uim.platform.xyz.domain.entities.validation_result;
+import uim.platform.xyz.domain.ports.validation_rule_repository;
+import uim.platform.xyz.domain.ports.validation_result_repository;
+import uim.platform.xyz.domain.services.validation_engine;
 import uim.platform.xyz.application.dto;
 
 class ValidateDataUseCase {

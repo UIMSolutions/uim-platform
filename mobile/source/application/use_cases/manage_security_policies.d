@@ -1,9 +1,9 @@
 module application.usecases.manage_security_policies;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.security_policy;
-import domain.ports.security_policy_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.security_policy;
+import uim.platform.xyz.domain.ports.security_policy_repository;
+import uim.platform.xyz.domain.types;
 
 /// Use case: manage mobile security policies.
 class ManageSecurityPoliciesUseCase

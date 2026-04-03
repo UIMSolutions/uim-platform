@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.blocking_request_repository;
 
-import domain.types;
-import domain.entities.blocking_request;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.blocking_request;
 
 /// Port for persisting data blocking / restriction requests.
 interface BlockingRequestRepository

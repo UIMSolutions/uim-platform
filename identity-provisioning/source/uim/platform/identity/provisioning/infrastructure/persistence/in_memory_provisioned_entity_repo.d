@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.provisioned_entity_repo;
 
-import domain.types;
-import domain.entities.provisioned_entity;
-import domain.ports.provisioned_entity_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.provisioned_entity;
+import uim.platform.xyz.domain.ports.provisioned_entity_repository;
 
 class MemoryProvisionedEntityRepository : ProvisionedEntityRepository
 {

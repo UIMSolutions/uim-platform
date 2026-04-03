@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.application;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An external application connected to the Kyma environment.
 struct Application

@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.proxy_system_repo;
 
-import domain.types;
-import domain.entities.proxy_system;
-import domain.ports.proxy_system_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.proxy_system;
+import uim.platform.xyz.domain.ports.proxy_system_repository;
 
 class MemoryProxySystemRepository : ProxySystemRepository
 {

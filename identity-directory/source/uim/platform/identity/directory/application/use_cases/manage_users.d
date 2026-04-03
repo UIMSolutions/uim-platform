@@ -1,13 +1,13 @@
 module application.usecases.manage_users;
 
-import domain.entities.user;
-import domain.entities.audit_event;
-import domain.types;
-import domain.ports.user_repository;
-import domain.ports.password_service;
-import domain.ports.password_policy_repository;
-import domain.ports.audit_repository;
-import domain.services.password_validator;
+import uim.platform.xyz.domain.entities.user;
+import uim.platform.xyz.domain.entities.audit_event;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.ports.user_repository;
+import uim.platform.xyz.domain.ports.password_service;
+import uim.platform.xyz.domain.ports.password_policy_repository;
+import uim.platform.xyz.domain.ports.audit_repository;
+import uim.platform.xyz.domain.services.password_validator;
 import uim.platform.xyz.application.dto;
 
 import std.uuid;

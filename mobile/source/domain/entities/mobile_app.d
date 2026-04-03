@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.mobile_app;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// A mobile application definition with platform-specific configurations.
 struct MobileApp

@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.legal_ground_repo;
 
-import domain.types;
-import domain.entities.legal_ground;
-import domain.ports.legal_ground_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.legal_ground;
+import uim.platform.xyz.domain.ports.legal_ground_repository;
 
 class MemoryLegalGroundRepository : LegalGroundRepository
 {

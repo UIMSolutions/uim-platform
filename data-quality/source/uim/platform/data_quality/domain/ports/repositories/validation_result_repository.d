@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.validation_result_repository;
 
-import domain.types;
-import domain.entities.validation_result;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.validation_result;
 
 /// Port for persisting validation results.
 interface ValidationResultRepository

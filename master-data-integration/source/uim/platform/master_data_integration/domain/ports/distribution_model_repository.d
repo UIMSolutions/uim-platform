@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.distribution_model_repository;
 
-import domain.entities.distribution_model;
-import domain.types;
+import uim.platform.xyz.domain.entities.distribution_model;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — distribution model persistence.
 interface DistributionModelRepository

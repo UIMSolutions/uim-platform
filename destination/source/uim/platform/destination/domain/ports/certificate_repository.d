@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.certificate_repository;
 
-import domain.entities.certificate;
-import domain.types;
+import uim.platform.xyz.domain.entities.certificate;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — certificate persistence.
 interface CertificateRepository

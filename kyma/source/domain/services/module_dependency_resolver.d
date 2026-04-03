@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.module_dependency_resolver;
 
-import domain.entities.kyma_module;
-import domain.types;
+import uim.platform.xyz.domain.entities.kyma_module;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: resolves module dependencies and validates enable/disable operations.
 class ModuleDependencyResolver

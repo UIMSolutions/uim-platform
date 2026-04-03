@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.catalog;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// Content catalog — groups tiles for content administration.
 struct Catalog

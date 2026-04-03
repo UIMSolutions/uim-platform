@@ -12,10 +12,10 @@ import uim.platform.xyz.infrastructure.persistence.memory.cleansing_rule_repo;
 import uim.platform.xyz.infrastructure.persistence.memory.cleansing_job_repo;
 
 // Domain services
-import domain.services.validation_engine;
-import domain.services.address_cleanser;
-import domain.services.duplicate_detector;
-import domain.services.quality_scorer;
+import uim.platform.xyz.domain.services.validation_engine;
+import uim.platform.xyz.domain.services.address_cleanser;
+import uim.platform.xyz.domain.services.duplicate_detector;
+import uim.platform.xyz.domain.services.quality_scorer;
 
 // Use cases
 import uim.platform.xyz.application.usecases.manage_validation_rules;

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.transformation_repository;
 
-import domain.types;
-import domain.entities.transformation;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.transformation;
 
 interface TransformationRepository
 {

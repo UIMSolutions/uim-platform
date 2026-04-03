@@ -1,9 +1,9 @@
 module application.usecases.manage_service_instances;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.service_instance;
-import domain.ports.service_instance_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.service_instance;
+import uim.platform.xyz.domain.ports.service_instance_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for BTP service instance management in Kyma.
 class ManageServiceInstancesUseCase

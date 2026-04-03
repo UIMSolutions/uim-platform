@@ -1,9 +1,9 @@
 module application.usecases.manage_alerts;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.alert;
-import domain.ports.alert_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.alert;
+import uim.platform.xyz.domain.ports.alert_repository;
+import uim.platform.xyz.domain.types;
 
 import std.conv : to;
 

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.event_subscription;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An event subscription — subscribes to events from a source.
 struct EventSubscription

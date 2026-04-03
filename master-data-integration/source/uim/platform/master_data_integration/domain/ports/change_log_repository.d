@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.change_log_repository;
 
-import domain.entities.change_log_entry;
-import domain.types;
+import uim.platform.xyz.domain.entities.change_log_entry;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — change log persistence.
 interface ChangeLogRepository

@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.workspace_access;
 
-import domain.types;
-import domain.entities.workspace;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.workspace;
 
 /// Domain service — evaluates workspace membership and access rules.
 struct WorkspaceAccessService

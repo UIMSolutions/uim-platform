@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.services.key_mapping_resolver;
 
-import domain.entities.key_mapping;
-import domain.types;
+import uim.platform.xyz.domain.entities.key_mapping;
+import uim.platform.xyz.domain.types;
 
 /// Domain service: resolves cross-system key mappings.
 class KeyMappingResolver

@@ -1,6 +1,6 @@
 module uim.platform.xyz.domain.entities.api_rule;
 
-import domain.types;
+import uim.platform.xyz.domain.types;
 
 /// An API rule — exposes a service or function via the API Gateway.
 struct ApiRule

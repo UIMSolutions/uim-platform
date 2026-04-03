@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.data_retrieval_repo;
 
-import domain.types;
-import domain.entities.data_retrieval_request;
-import domain.ports.data_retrieval_request_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_retrieval_request;
+import uim.platform.xyz.domain.ports.data_retrieval_request_repository;
 
 class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository
 {

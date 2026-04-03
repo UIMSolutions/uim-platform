@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.data_retrieval_request_repository;
 
-import domain.types;
-import domain.entities.data_retrieval_request;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_retrieval_request;
 
 /// Port for persisting data subject access / retrieval requests.
 interface DataRetrievalRequestRepository

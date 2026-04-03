@@ -1,9 +1,9 @@
 module application.usecases.manage_api_rules;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.api_rule;
-import domain.ports.api_rule_repository;
-import domain.types;
+import uim.platform.xyz.domain.entities.api_rule;
+import uim.platform.xyz.domain.ports.api_rule_repository;
+import uim.platform.xyz.domain.types;
 
 /// Application service for API rule management.
 class ManageApiRulesUseCase

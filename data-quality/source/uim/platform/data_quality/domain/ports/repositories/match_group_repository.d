@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.match_group_repository;
 
-import domain.types;
-import domain.entities.match_group;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.match_group;
 
 /// Port for persisting duplicate match groups.
 interface MatchGroupRepository

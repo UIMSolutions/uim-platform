@@ -1,8 +1,8 @@
 module uim.platform.xyz.infrastructure.persistence.memory.change_log_repo;
 
-import domain.types;
-import domain.entities.change_log_entry;
-import domain.ports.change_log_repository;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.change_log_entry;
+import uim.platform.xyz.domain.ports.change_log_repository;
 
 import std.algorithm : filter, sort;
 import std.array : array;

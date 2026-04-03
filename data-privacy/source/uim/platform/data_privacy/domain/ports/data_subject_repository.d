@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.data_subject_repository;
 
-import domain.types;
-import domain.entities.data_subject;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.data_subject;
 
 /// Port for persisting and querying data subjects.
 interface DataSubjectRepository

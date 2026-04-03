@@ -3,10 +3,10 @@ module application.usecases.manage_content;
 import std.uuid;
 import std.datetime.systime : Clock;
 
-import domain.types;
-import domain.entities.content_item;
-import domain.ports.content_repository;
-import domain.services.content_search;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.content_item;
+import uim.platform.xyz.domain.ports.content_repository;
+import uim.platform.xyz.domain.services.content_search;
 import uim.platform.xyz.application.dto;
 
 class ManageContentUseCase

@@ -7,8 +7,8 @@ import std.conv : to;
 
 import uim.platform.xyz.application.usecases.manage_legal_grounds;
 import uim.platform.xyz.application.dto;
-import domain.types;
-import domain.entities.legal_ground;
+import uim.platform.xyz.domain.types;
+import uim.platform.xyz.domain.entities.legal_ground;
 import uim.platform.xyz.presentation.http.json_utils;
 
 class LegalGroundController

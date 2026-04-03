@@ -1,10 +1,10 @@
 module application.usecases.manage_key_mappings;
 
 import uim.platform.xyz.application.dto;
-import domain.entities.key_mapping;
-import domain.ports.key_mapping_repository;
-import domain.services.key_mapping_resolver;
-import domain.types;
+import uim.platform.xyz.domain.entities.key_mapping;
+import uim.platform.xyz.domain.ports.key_mapping_repository;
+import uim.platform.xyz.domain.services.key_mapping_resolver;
+import uim.platform.xyz.domain.types;
 
 /// Application service for cross-system key mapping management.
 class ManageKeyMappingsUseCase

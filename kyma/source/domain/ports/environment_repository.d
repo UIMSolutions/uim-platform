@@ -1,7 +1,7 @@
 module uim.platform.xyz.domain.ports.environment_repository;
 
-import domain.entities.kyma_environment;
-import domain.types;
+import uim.platform.xyz.domain.entities.kyma_environment;
+import uim.platform.xyz.domain.types;
 
 /// Port: outgoing — Kyma environment persistence.
 interface EnvironmentRepository
