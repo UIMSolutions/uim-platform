@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.master_data;
+module uim.platform.master_data_integration.presentation.http.master_data;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_master_data_objects;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.master_data_object;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.master_data_integration.application.usecases.manage_master_data_objects;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.master_data_object;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class MasterDataController
 {

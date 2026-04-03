@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.client_repo;
+module uim.platform.master_data_integration.infrastructure.persistence.memory.client_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.client;
-import uim.platform.xyz.domain.ports.client_repository;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.domain.entities.client;
+import uim.platform.master_data_integration.domain.ports.client_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.client_repository;
+module uim.platform.master_data_integration.domain.ports.client_repository;
 
-import uim.platform.xyz.domain.entities.client;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.entities.client;
+import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — connected client system persistence.
 interface ClientRepository

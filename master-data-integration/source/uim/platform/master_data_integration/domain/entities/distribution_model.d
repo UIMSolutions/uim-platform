@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.distribution_model;
+module uim.platform.master_data_integration.domain.entities.distribution_model;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.types;
 
 /// A distribution model defines which data flows from/to which clients.
 struct DistributionModel

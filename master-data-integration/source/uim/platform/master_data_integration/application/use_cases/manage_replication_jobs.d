@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_replication_jobs;
+module uim.platform.master_data_integration.application.usecases.manage_replication_jobs;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.replication_job;
-import uim.platform.xyz.domain.ports.replication_job_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.replication_job;
+import uim.platform.master_data_integration.domain.ports.replication_job_repository;
+import uim.platform.master_data_integration.domain.types;
 
 /// Application service for replication job lifecycle management.
 class ManageReplicationJobsUseCase

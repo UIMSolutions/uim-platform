@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.replication_job_repository;
+module uim.platform.master_data_integration.domain.ports.replication_job_repository;
 
-import uim.platform.xyz.domain.entities.replication_job;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.entities.replication_job;
+import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — replication job persistence.
 interface ReplicationJobRepository

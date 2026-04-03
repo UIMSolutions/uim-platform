@@ -3,18 +3,18 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.presentation.http.controllers.change_log;
+module uim.platform.master_data_integration.presentation.http.controllers.change_log;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.query_change_log;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.change_log_entry;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.master_data_integration.application.usecases.query_change_log;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.change_log_entry;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class ChangeLogController
 {

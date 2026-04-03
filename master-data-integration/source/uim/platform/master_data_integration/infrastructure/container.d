@@ -3,44 +3,44 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.xyz.infrastructure.container;
+module uim.platform.master_data_integration.infrastructure.container;
 
-import uim.platform.xyz.infrastructure.config;
+import uim.platform.master_data_integration.infrastructure.config;
 
 // Repositories
-import uim.platform.xyz.infrastructure.persistence.memory.master_data_object_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.data_model_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.distribution_model_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.key_mapping_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.change_log_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.client_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.replication_job_repo;
-import uim.platform.xyz.infrastructure.persistence.memory.filter_rule_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.master_data_object_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.data_model_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.distribution_model_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.key_mapping_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.change_log_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.client_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.replication_job_repo;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.filter_rule_repo;
 
 // Domain services
-import uim.platform.xyz.domain.services.key_mapping_resolver;
-import uim.platform.xyz.domain.services.distribution_evaluator;
+import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
+import uim.platform.master_data_integration.domain.services.distribution_evaluator;
 
 // Use Cases
-import uim.platform.xyz.application.usecases.manage_master_data_objects;
-import uim.platform.xyz.application.usecases.manage_data_models;
-import uim.platform.xyz.application.usecases.manage_distribution_models;
-import uim.platform.xyz.application.usecases.manage_key_mappings;
-import uim.platform.xyz.application.usecases.manage_clients;
-import uim.platform.xyz.application.usecases.manage_replication_jobs;
-import uim.platform.xyz.application.usecases.manage_filter_rules;
-import uim.platform.xyz.application.usecases.query_change_log;
+import uim.platform.master_data_integration.application.usecases.manage_master_data_objects;
+import uim.platform.master_data_integration.application.usecases.manage_data_models;
+import uim.platform.master_data_integration.application.usecases.manage_distribution_models;
+import uim.platform.master_data_integration.application.usecases.manage_key_mappings;
+import uim.platform.master_data_integration.application.usecases.manage_clients;
+import uim.platform.master_data_integration.application.usecases.manage_replication_jobs;
+import uim.platform.master_data_integration.application.usecases.manage_filter_rules;
+import uim.platform.master_data_integration.application.usecases.query_change_log;
 
 // Controllers
-import uim.platform.xyz.presentation.http.master_data;
-import uim.platform.xyz.presentation.http.data_model;
-import uim.platform.xyz.presentation.http.distribution;
-import uim.platform.xyz.presentation.http.key_mapping;
-import uim.platform.xyz.presentation.http.client;
-import uim.platform.xyz.presentation.http.replication;
-import uim.platform.xyz.presentation.http.filter_rule;
-import uim.platform.xyz.presentation.http.change_log;
-import uim.platform.xyz.presentation.http.health;
+import uim.platform.master_data_integration.presentation.http.master_data;
+import uim.platform.master_data_integration.presentation.http.data_model;
+import uim.platform.master_data_integration.presentation.http.distribution;
+import uim.platform.master_data_integration.presentation.http.key_mapping;
+import uim.platform.master_data_integration.presentation.http.client;
+import uim.platform.master_data_integration.presentation.http.replication;
+import uim.platform.master_data_integration.presentation.http.filter_rule;
+import uim.platform.master_data_integration.presentation.http.change_log;
+import uim.platform.master_data_integration.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
 struct Container {

@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.distribution;
+module uim.platform.master_data_integration.presentation.http.distribution;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_distribution_models;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.distribution_model;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.master_data_integration.application.usecases.manage_distribution_models;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.distribution_model;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class DistributionController
 {

@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.client;
+module uim.platform.master_data_integration.domain.entities.client;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.types;
 
 /// A connected client system participating in master data integration.
 struct Client

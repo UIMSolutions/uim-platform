@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.replication_job;
+module uim.platform.master_data_integration.domain.entities.replication_job;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.types;
 
 /// A replication job — executes data synchronization between systems.
 struct ReplicationJob

@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_filter_rules;
+module uim.platform.master_data_integration.application.usecases.manage_filter_rules;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.filter_rule;
-import uim.platform.xyz.domain.ports.filter_rule_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.filter_rule;
+import uim.platform.master_data_integration.domain.ports.filter_rule_repository;
+import uim.platform.master_data_integration.domain.types;
 
 /// Application service for filter rule management.
 class ManageFilterRulesUseCase

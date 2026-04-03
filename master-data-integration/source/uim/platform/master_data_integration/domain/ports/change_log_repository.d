@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.change_log_repository;
+module uim.platform.master_data_integration.domain.ports.change_log_repository;
 
-import uim.platform.xyz.domain.entities.change_log_entry;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.entities.change_log_entry;
+import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — change log persistence.
 interface ChangeLogRepository

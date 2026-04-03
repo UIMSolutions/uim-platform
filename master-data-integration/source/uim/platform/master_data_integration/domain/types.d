@@ -1,4 +1,4 @@
-module uim.platform.xyz.domain.types;
+module uim.platform.master_data_integration.domain.types;
 
 /// Unique identifier type aliases for type safety.
 alias MasterDataObjectId = string;

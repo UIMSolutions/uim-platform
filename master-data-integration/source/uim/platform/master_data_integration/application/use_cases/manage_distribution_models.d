@@ -1,9 +1,9 @@
-module uim.platform.xyz.application.usecases.manage_distribution_models;
+module uim.platform.master_data_integration.application.usecases.manage_distribution_models;
 
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.distribution_model;
-import uim.platform.xyz.domain.ports.distribution_model_repository;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.distribution_model;
+import uim.platform.master_data_integration.domain.ports.distribution_model_repository;
+import uim.platform.master_data_integration.domain.types;
 
 /// Application service for distribution model management.
 class ManageDistributionModelsUseCase

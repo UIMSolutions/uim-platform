@@ -1,8 +1,8 @@
-module uim.platform.xyz.infrastructure.persistence.memory.data_model_repo;
+module uim.platform.master_data_integration.infrastructure.persistence.memory.data_model_repo;
 
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.domain.entities.data_model;
-import uim.platform.xyz.domain.ports.data_model_repository;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.domain.entities.data_model;
+import uim.platform.master_data_integration.domain.ports.data_model_repository;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -1,7 +1,7 @@
-module uim.platform.xyz.domain.ports.filter_rule_repository;
+module uim.platform.master_data_integration.domain.ports.filter_rule_repository;
 
-import uim.platform.xyz.domain.entities.filter_rule;
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.entities.filter_rule;
+import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — filter rule persistence.
 interface FilterRuleRepository

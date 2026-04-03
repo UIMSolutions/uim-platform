@@ -1,6 +1,6 @@
-module uim.platform.xyz.application.dto;
+module uim.platform.master_data_integration.application.dto;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.types;
 
 /// --- Command result ---
 

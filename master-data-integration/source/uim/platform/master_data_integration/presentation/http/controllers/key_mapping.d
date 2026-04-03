@@ -1,15 +1,15 @@
-module uim.platform.xyz.presentation.http.key_mapping;
+module uim.platform.master_data_integration.presentation.http.key_mapping;
 
 import vibe.http.server;
 import vibe.http.router;
 import vibe.data.json;
 import std.conv : to;
 
-import uim.platform.xyz.application.usecases.manage_key_mappings;
-import uim.platform.xyz.application.dto;
-import uim.platform.xyz.domain.entities.key_mapping;
-import uim.platform.xyz.domain.types;
-import uim.platform.xyz.presentation.http.json_utils;
+import uim.platform.master_data_integration.application.usecases.manage_key_mappings;
+import uim.platform.master_data_integration.application.dto;
+import uim.platform.master_data_integration.domain.entities.key_mapping;
+import uim.platform.master_data_integration.domain.types;
+import uim.platform.master_data_integration.presentation.http.json_utils;
 
 class KeyMappingController
 {

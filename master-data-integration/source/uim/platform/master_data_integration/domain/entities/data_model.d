@@ -1,6 +1,6 @@
-module uim.platform.xyz.domain.entities.data_model;
+module uim.platform.master_data_integration.domain.entities.data_model;
 
-import uim.platform.xyz.domain.types;
+import uim.platform.master_data_integration.domain.types;
 
 /// Defines the schema/structure of a master data entity type.
 struct DataModel
