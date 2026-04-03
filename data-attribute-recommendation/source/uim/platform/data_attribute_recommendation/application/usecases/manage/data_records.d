@@ -1,4 +1,4 @@
-module application.usecases.manage_data_records;
+module uim.platform.data_attribute_recommendation.application.usecases.manage.data_records;
 
 import std.uuid;
 import std.datetime.systime : Clock;
