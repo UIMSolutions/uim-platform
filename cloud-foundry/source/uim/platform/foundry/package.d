@@ -5,6 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.foundry;
 
-public
-{
+public {
+    import uim.platform.service;
+
+    import uim.platform.foundry.application;
+    import uim.platform.foundry.domain;
+    import uim.platform.foundry.infrastructure;
+    import uim.platform.foundry.presentation;
 }

@@ -4,3 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.identity.provisioning;
+
+public {
+  import uim.platform.service;
+
+  import uim.platform.identity.provisioning.application;
+  import uim.platform.identity.provisioning.domain;
+  import uim.platform.identity.provisioning.infrastructure;
+  import uim.platform.identity.provisioning.presentation;
+}

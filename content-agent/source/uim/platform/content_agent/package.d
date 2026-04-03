@@ -4,3 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent;
+
+public {
+    import uim.platform.service;
+
+    import uim.platform.content_agent.application;
+    import uim.platform.content_agent.domain;
+    import uim.platform.content_agent.infrastructure;
+    import uim.platform.content_agent.presentation;
+}

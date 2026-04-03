@@ -4,3 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma;
+
+public {
+  import uim.platform.service;
+
+  import uim.platform.kyma.application;
+  import uim.platform.kyma.domain;
+  import uim.platform.kyma.infrastructure;
+  import uim.platform.kyma.presentation;
+}

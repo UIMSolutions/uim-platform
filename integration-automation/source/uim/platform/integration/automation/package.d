@@ -4,3 +4,12 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.integration.automation;
+
+public {
+  import uim.platform.service;
+
+  import uim.platform.integration.automation.application;
+  import uim.platform.integration.automation.domain;
+  import uim.platform.integration.automation.infrastructure;
+  import uim.platform.integration.automation.presentation;
+}
