@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.fragment_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.fragment_repo;
 
 import domain.types;
 import domain.entities.destination_fragment;

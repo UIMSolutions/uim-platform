@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.workflow_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.workflow_repo;
 
 import domain.types;
 import domain.entities.workflow;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.data_retrieval_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.data_retrieval_repo;
 
 import domain.types;
 import domain.entities.data_retrieval_request;

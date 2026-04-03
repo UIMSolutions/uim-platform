@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.workpage_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.workpage_repo;
 
 import domain.types;
 import domain.entities.workpage;

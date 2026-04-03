@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.event_subscription_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.event_subscription_repo;
 
 import domain.types;
 import domain.entities.event_subscription;

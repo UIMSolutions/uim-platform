@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.mobile_app_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.mobile_app_repo;
 
 import domain.types;
 import domain.entities.mobile_app;

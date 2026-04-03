@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.service_instance_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.service_instance_repo;
 
 import domain.types;
 import domain.entities.service_instance;

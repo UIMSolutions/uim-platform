@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.step_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.step_repo;
 
 import domain.types;
 import domain.entities.workflow_step;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.transformation_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.transformation_repo;
 
 import domain.types;
 import domain.entities.transformation;

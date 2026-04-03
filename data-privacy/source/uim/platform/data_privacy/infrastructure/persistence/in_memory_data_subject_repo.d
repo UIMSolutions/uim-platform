@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.data_subject_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.data_subject_repo;
 
 import domain.types;
 import domain.entities.data_subject;

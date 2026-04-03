@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.metric_definition_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.metric_definition_repo;
 
 import domain.types;
 import domain.entities.metric_definition;

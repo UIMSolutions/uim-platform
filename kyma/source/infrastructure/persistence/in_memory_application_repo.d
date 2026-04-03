@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.application_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.application_repo;
 
 import domain.types;
 import domain.entities.application;

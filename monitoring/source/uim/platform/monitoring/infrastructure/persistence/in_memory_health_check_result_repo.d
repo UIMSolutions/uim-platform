@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.health_check_result_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.health_check_result_repo;
 
 import domain.types;
 import domain.entities.health_check_result;

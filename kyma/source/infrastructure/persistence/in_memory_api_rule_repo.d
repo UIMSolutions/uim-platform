@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.api_rule_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.api_rule_repo;
 
 import domain.types;
 import domain.entities.api_rule;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.scenario_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.scenario_repo;
 
 import domain.types;
 import domain.entities.integration_scenario;

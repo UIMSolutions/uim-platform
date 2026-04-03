@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.monitored_resource_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.monitored_resource_repo;
 
 import domain.types;
 import domain.entities.monitored_resource;

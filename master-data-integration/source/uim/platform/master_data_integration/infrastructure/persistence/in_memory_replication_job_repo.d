@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.replication_job_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.replication_job_repo;
 
 import domain.types;
 import domain.entities.replication_job;

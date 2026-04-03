@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.provisioned_entity_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.provisioned_entity_repo;
 
 import domain.types;
 import domain.entities.provisioned_entity;

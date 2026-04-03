@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.catalog_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.catalog_repo;
 
 import domain.entities.catalog;
 import domain.types;

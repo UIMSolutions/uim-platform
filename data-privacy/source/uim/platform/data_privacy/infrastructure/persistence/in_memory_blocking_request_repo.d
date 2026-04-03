@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.blocking_request_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.blocking_request_repo;
 
 import domain.types;
 import domain.entities.blocking_request;

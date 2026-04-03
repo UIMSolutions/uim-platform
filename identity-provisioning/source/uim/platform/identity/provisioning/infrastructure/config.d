@@ -1,4 +1,4 @@
-module infrastructure.config;
+module uim.platform.xyz.infrastructure.config;
 
 /// Service configuration.
 struct AppConfig {

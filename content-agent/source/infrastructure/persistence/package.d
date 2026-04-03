@@ -1,2 +1,2 @@
-module infrastructure.persistence;
+module uim.platform.xyz.infrastructure.persistence;
 

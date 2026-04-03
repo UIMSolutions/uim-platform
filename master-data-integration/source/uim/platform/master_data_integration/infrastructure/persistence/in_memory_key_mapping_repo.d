@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.key_mapping_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.key_mapping_repo;
 
 import domain.types;
 import domain.entities.key_mapping;

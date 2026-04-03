@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.provider_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.provider_repo;
 
 import domain.entities.content_provider;
 import domain.types;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.data_model_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.data_model_repo;
 
 import domain.types;
 import domain.entities.data_model;

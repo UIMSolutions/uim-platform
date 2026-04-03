@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.favorite_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.favorite_repo;
 
 // import uim.platform.dms_application.domain.entities.favorite;
 // import uim.platform.dms_application.domain.ports.favorite_repository;

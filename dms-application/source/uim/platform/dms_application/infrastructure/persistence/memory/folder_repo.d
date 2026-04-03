@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.folder_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.folder_repo;
 
 // import uim.platform.dms_application.domain.entities.folder;
 // import uim.platform.dms_application.domain.ports.folder_repository;

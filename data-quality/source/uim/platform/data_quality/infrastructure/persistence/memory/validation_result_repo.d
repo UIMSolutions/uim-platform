@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.validation_result_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.validation_result_repo;
 
 import domain.types;
 import domain.entities.validation_result;

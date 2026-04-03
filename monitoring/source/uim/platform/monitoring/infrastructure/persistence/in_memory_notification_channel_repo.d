@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.notification_channel_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.notification_channel_repo;
 
 import domain.types;
 import domain.entities.notification_channel;

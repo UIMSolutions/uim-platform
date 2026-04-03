@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.master_data_object_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.master_data_object_repo;
 
 import domain.types;
 import domain.entities.master_data_object;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.document_version_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.document_version_repo;
 
 // import uim.platform.dms_application.domain.entities.document_version;
 // import uim.platform.dms_application.domain.ports.document_version_repository;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.notification_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.notification_repo;
 
 import domain.types;
 import domain.entities.notification;

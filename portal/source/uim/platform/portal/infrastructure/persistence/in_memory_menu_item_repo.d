@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.menu_item_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.menu_item_repo;
 
 import domain.entities.menu_item;
 import domain.types;

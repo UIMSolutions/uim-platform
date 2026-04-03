@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.schema_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.schema_repo;
 
 import domain.entities.schema;
 import domain.types;

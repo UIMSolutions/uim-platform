@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.section_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.section_repo;
 
 import domain.entities.section;
 import domain.types;

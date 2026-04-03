@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.execution_log_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.execution_log_repo;
 
 import domain.types;
 import domain.entities.execution_log;

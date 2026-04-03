@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.content_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.content_repo;
 
 import domain.types;
 import domain.entities.content_item;

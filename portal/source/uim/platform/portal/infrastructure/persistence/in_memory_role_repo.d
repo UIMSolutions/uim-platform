@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.role_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.role_repo;
 
 import domain.entities.role;
 import domain.types;

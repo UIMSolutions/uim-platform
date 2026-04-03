@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.certificate_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.certificate_repo;
 
 import domain.types;
 import domain.entities.certificate;

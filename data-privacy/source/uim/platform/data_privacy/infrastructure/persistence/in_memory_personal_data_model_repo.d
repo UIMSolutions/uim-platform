@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.personal_data_model_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.personal_data_model_repo;
 
 import domain.types;
 import domain.entities.personal_data_model;

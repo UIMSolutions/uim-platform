@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.environment_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.environment_repo;
 
 import domain.types;
 import domain.entities.kyma_environment;

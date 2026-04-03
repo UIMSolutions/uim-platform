@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.source_system_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.source_system_repo;
 
 import domain.types;
 import domain.entities.source_system;

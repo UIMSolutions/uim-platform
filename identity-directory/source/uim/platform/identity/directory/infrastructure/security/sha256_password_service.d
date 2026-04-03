@@ -1,4 +1,4 @@
-module infrastructure.security.sha256_password_service;
+module uim.platform.xyz.infrastructure.security.sha256_password_service;
 
 import domain.ports.password_service;
 

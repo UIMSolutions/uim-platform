@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.provisioning_job_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.provisioning_job_repo;
 
 import domain.types;
 import domain.entities.provisioning_job;

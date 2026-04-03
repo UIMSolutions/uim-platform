@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.client_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.client_repo;
 
 import domain.types;
 import domain.entities.client;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.provisioning_log_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.provisioning_log_repo;
 
 import domain.types;
 import domain.entities.provisioning_log;

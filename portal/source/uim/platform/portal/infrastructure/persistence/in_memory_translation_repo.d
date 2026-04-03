@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.translation_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.translation_repo;
 
 import domain.entities.translation;
 import domain.types;

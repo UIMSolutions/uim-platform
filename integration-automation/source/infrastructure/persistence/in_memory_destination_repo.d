@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.destination_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.destination_repo;
 
 import domain.types;
 import domain.entities.destination;

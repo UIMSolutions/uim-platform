@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.group_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.group_repo;
 
 import domain.entities.group;
 import domain.types;

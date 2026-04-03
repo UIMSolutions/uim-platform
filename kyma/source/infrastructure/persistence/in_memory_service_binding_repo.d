@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.service_binding_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.service_binding_repo;
 
 import domain.types;
 import domain.entities.service_binding;

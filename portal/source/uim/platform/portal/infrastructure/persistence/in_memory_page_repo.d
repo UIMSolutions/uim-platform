@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.page_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.page_repo;
 
 import domain.entities.page;
 import domain.types;

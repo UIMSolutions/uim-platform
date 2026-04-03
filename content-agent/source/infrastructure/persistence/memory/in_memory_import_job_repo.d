@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.in_memory_import_job_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.in_memory_import_job_repo;
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.import_job;

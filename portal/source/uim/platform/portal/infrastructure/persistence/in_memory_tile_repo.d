@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.tile_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.tile_repo;
 
 import domain.entities.tile;
 import domain.types;

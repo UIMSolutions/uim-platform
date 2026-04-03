@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.data_profile_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.data_profile_repo;
 
 import domain.types;
 import domain.entities.data_profile;

@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.consent_record_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.consent_record_repo;
 
 import domain.types;
 import domain.entities.consent_record;

@@ -1,2 +1,2 @@
-module infrastructure;
+module uim.platform.xyz.infrastructure;
 

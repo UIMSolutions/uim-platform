@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.permission_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.permission_repo;
 
 // import uim.platform.dms_application.domain.entities.permission;
 // import uim.platform.dms_application.domain.ports.permission_repository;

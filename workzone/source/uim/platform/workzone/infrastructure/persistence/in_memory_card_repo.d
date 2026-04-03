@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.card_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.card_repo;
 
 import domain.types;
 import domain.entities.card;

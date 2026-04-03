@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.audit_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.audit_repo;
 
 import domain.entities.audit_event;
 import domain.types;

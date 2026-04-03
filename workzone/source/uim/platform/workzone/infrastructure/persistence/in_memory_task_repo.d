@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.task_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.task_repo;
 
 import domain.types;
 import domain.entities.task;

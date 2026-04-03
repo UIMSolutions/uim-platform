@@ -1,4 +1,4 @@
-module infrastructure.persistence.memory.alert_rule_repo;
+module uim.platform.xyz.infrastructure.persistence.memory.alert_rule_repo;
 
 import domain.types;
 import domain.entities.alert_rule;

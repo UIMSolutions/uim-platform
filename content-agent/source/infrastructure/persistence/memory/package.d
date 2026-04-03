@@ -1,2 +1,2 @@
-module infrastructure.persistence.memory;
+module uim.platform.xyz.infrastructure.persistence.memory;
 
