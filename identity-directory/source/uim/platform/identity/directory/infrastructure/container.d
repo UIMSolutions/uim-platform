@@ -19,11 +19,11 @@ import uim.platform.identity.directory.infrastructure.persistence.memory.audit_r
 import uim.platform.identity.directory.infrastructure.security.sha256_password_service;
 
 // Use Cases
-import uim.platform.identity.directory.application.usecases.manage_users;
-import uim.platform.identity.directory.application.usecases.manage_groups;
-import uim.platform.identity.directory.application.usecases.manage_schemas;
-import uim.platform.identity.directory.application.usecases.manage_password_policies;
-import uim.platform.identity.directory.application.usecases.manage_api_clients;
+import uim.platform.identity.directory.application.usecases.manage.users;
+import uim.platform.identity.directory.application.usecases.manage.groups;
+import uim.platform.identity.directory.application.usecases.manage.schemas;
+import uim.platform.identity.directory.application.usecases.manage.password_policies;
+import uim.platform.identity.directory.application.usecases.manage.api_clients;
 import uim.platform.identity.directory.application.usecases.query_audit_log;
 
 // Controllers

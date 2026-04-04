@@ -8,7 +8,7 @@ module uim.platform.identity.directory.presentation.http.controllers.api_client;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.identity.directory.application.usecases.manage_api_clients;
+import uim.platform.identity.directory.application.usecases.manage.api_clients;
 import uim.platform.identity.directory.application.dto;
 import uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity_authentication.presentation.http.json_utils;

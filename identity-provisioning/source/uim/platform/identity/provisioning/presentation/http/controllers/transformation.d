@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.presentation.http.transformation;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.identity.provisioning.application.usecases.manage_transformations;
+import uim.platform.identity.provisioning.application.usecases.manage.transformations;
 import uim.platform.identity.provisioning.application.dto;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;

@@ -21,10 +21,10 @@ import uim.platform.identity.provisioning.domain.services.provisioning_engine;
 import uim.platform.identity.provisioning.domain.services.transformation_engine;
 
 // Use cases
-import uim.platform.identity.provisioning.application.usecases.manage_source_systems;
-import uim.platform.identity.provisioning.application.usecases.manage_target_systems;
-import uim.platform.identity.provisioning.application.usecases.manage_proxy_systems;
-import uim.platform.identity.provisioning.application.usecases.manage_transformations;
+import uim.platform.identity.provisioning.application.usecases.manage.source_systems;
+import uim.platform.identity.provisioning.application.usecases.manage.target_systems;
+import uim.platform.identity.provisioning.application.usecases.manage.proxy_systems;
+import uim.platform.identity.provisioning.application.usecases.manage.transformations;
 import uim.platform.identity.provisioning.application.usecases.run_provisioning_jobs;
 import uim.platform.identity.provisioning.application.usecases.monitor_provisioning;
 
