@@ -3,14 +3,13 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.portal.domain.ports.tile_repository;
+module uim.platform.portal.domain.ports.tiles;
 
 import uim.platform.portal.domain.entities.tile;
 import uim.platform.portal.domain.types;
 
 /// Port: outgoing — tile / app launcher persistence.
-interface TileRepository
-{
+interface TileRepository {
   Tile findById(TileId id);
   Tile[] findByCatalog(CatalogId catalogId);
   Tile[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
