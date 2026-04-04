@@ -7,5 +7,5 @@ module uim.platform.logging.application;
 
 public {
   import uim.platform.logging.application.dto;
-  import uim.platform.logging.application.use_cases;
+  import uim.platform.logging.application.usecases;
 }

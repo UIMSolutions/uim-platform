@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.alert;
 
-import uim.platform.logging.application.use_cases.manage_alerts;
+import uim.platform.logging.application.usecases.manage_alerts;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.domain.entities.alert;
 import uim.platform.logging.domain.types;

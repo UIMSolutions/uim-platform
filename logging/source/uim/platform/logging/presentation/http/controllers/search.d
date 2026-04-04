@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.search;
 
-import uim.platform.logging.application.use_cases.search_logs;
+import uim.platform.logging.application.usecases.search_logs;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.domain.entities.log_entry;
 import uim.platform.logging.domain.services.log_parser;

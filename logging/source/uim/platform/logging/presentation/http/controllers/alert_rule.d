@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.alert_rule;
 
-import uim.platform.logging.application.use_cases.manage_alert_rules;
+import uim.platform.logging.application.usecases.manage_alert_rules;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.presentation.http.json_utils;
 

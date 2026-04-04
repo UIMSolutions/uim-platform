@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.pipeline;
 
-import uim.platform.logging.application.use_cases.manage_pipelines;
+import uim.platform.logging.application.usecases.manage_pipelines;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.presentation.http.json_utils;
 

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.dashboard;
 
-import uim.platform.logging.application.use_cases.manage_dashboards;
+import uim.platform.logging.application.usecases.manage_dashboards;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.domain.entities.dashboard;
 import uim.platform.logging.domain.types;

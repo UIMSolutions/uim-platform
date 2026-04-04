@@ -20,17 +20,17 @@ import uim.platform.logging.infrastructure.persistence.memory.pipeline_repo;
 import uim.platform.logging.infrastructure.persistence.memory.ingestion_token_repo;
 
 // Use Cases
-import uim.platform.logging.application.use_cases.ingest_logs;
-import uim.platform.logging.application.use_cases.ingest_traces;
-import uim.platform.logging.application.use_cases.search_logs;
-import uim.platform.logging.application.use_cases.manage_log_streams;
-import uim.platform.logging.application.use_cases.manage_dashboards;
-import uim.platform.logging.application.use_cases.manage_retention_policies;
-import uim.platform.logging.application.use_cases.manage_alert_rules;
-import uim.platform.logging.application.use_cases.manage_alerts;
-import uim.platform.logging.application.use_cases.manage_notification_channels;
-import uim.platform.logging.application.use_cases.manage_pipelines;
-import uim.platform.logging.application.use_cases.get_overview;
+import uim.platform.logging.application.usecases.ingest_logs;
+import uim.platform.logging.application.usecases.ingest_traces;
+import uim.platform.logging.application.usecases.search_logs;
+import uim.platform.logging.application.usecases.manage_log_streams;
+import uim.platform.logging.application.usecases.manage_dashboards;
+import uim.platform.logging.application.usecases.manage_retention_policies;
+import uim.platform.logging.application.usecases.manage_alert_rules;
+import uim.platform.logging.application.usecases.manage_alerts;
+import uim.platform.logging.application.usecases.manage_notification_channels;
+import uim.platform.logging.application.usecases.manage_pipelines;
+import uim.platform.logging.application.usecases.get_overview;
 
 // Controllers
 import uim.platform.logging.presentation.http.controllers.log;

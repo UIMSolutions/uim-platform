@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.application.use_cases.get_overview;
+module uim.platform.logging.application.usecases.get_overview;
 
 import uim.platform.logging.domain.ports.log_entry_repository;
 import uim.platform.logging.domain.ports.span_repository;

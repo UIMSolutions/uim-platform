@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.trace;
 
-import uim.platform.logging.application.use_cases.ingest_traces;
+import uim.platform.logging.application.usecases.ingest_traces;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.domain.entities.span;
 import uim.platform.logging.domain.types;
