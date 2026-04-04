@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.audit;
 
-import uim.platform.credential_store.application.use_cases.get_audit_logs;
+import uim.platform.credential_store.application.usecases.get_audit_logs;
 import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store.domain.entities.audit_log_entry;
 import uim.platform.credential_store.domain.types;

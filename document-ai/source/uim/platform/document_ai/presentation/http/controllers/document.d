@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.document;
 
-import uim.platform.document_ai.application.use_cases.process_documents;
+import uim.platform.document_ai.application.usecases.process_documents;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document : Document;

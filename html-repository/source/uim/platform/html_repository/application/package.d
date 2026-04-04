@@ -7,5 +7,5 @@ module uim.platform.html_repository.application;
 
 public {
   import uim.platform.html_repository.application.dto;
-  import uim.platform.html_repository.application.use_cases;
+  import uim.platform.html_repository.application.usecases;
 }

@@ -7,5 +7,5 @@ module uim.platform.document_ai.application;
 
 public {
   import uim.platform.document_ai.application.dto;
-  import uim.platform.document_ai.application.use_cases;
+  import uim.platform.document_ai.application.usecases;
 }

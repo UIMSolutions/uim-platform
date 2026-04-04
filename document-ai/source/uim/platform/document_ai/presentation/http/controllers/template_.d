@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.template_;
 
-import uim.platform.document_ai.application.use_cases.manage_templates;
+import uim.platform.document_ai.application.usecases.manage_templates;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.template_ : Template;

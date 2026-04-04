@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.deployment;
 
-import uim.platform.html_repository.application.use_cases.deploy_application;
-import uim.platform.html_repository.application.use_cases.get_deployment_history;
+import uim.platform.html_repository.application.usecases.deploy_application;
+import uim.platform.html_repository.application.usecases.get_deployment_history;
 import uim.platform.html_repository.application.dto;
 import uim.platform.html_repository.presentation.http.json_utils;
 

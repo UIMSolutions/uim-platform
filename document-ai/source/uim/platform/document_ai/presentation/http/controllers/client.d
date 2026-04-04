@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.client;
 
-import uim.platform.document_ai.application.use_cases.manage_clients;
+import uim.platform.document_ai.application.usecases.manage_clients;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.client : Client;

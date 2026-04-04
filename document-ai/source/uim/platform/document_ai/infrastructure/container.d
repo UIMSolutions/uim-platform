@@ -18,14 +18,14 @@ import uim.platform.document_ai.infrastructure.persistence.memory.training_job_r
 import uim.platform.document_ai.infrastructure.persistence.memory.client_repo;
 
 // Use Cases
-import uim.platform.document_ai.application.use_cases.process_documents;
-import uim.platform.document_ai.application.use_cases.manage_schemas;
-import uim.platform.document_ai.application.use_cases.manage_templates;
-import uim.platform.document_ai.application.use_cases.manage_document_types;
-import uim.platform.document_ai.application.use_cases.manage_enrichment_data;
-import uim.platform.document_ai.application.use_cases.manage_training_jobs;
-import uim.platform.document_ai.application.use_cases.manage_clients;
-import uim.platform.document_ai.application.use_cases.get_capabilities;
+import uim.platform.document_ai.application.usecases.process_documents;
+import uim.platform.document_ai.application.usecases.manage_schemas;
+import uim.platform.document_ai.application.usecases.manage_templates;
+import uim.platform.document_ai.application.usecases.manage_document_types;
+import uim.platform.document_ai.application.usecases.manage_enrichment_data;
+import uim.platform.document_ai.application.usecases.manage_training_jobs;
+import uim.platform.document_ai.application.usecases.manage_clients;
+import uim.platform.document_ai.application.usecases.get_capabilities;
 
 // Controllers
 import uim.platform.document_ai.presentation.http.controllers.document;

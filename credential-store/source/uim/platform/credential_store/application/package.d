@@ -7,5 +7,5 @@ module uim.platform.credential_store.application;
 
 public {
   import uim.platform.credential_store.application.dto;
-  import uim.platform.credential_store.application.use_cases;
+  import uim.platform.credential_store.application.usecases;
 }

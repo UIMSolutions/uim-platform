@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.html_repository.application.use_cases.manage_service_instances;
+module uim.platform.html_repository.application.usecases.manage_service_instances;
 
 import uim.platform.html_repository.domain.ports.service_instance_repository;
 import uim.platform.html_repository.domain.entities.service_instance;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.overview;
 
-import uim.platform.credential_store.application.use_cases.get_overview;
+import uim.platform.credential_store.application.usecases.get_overview;
 import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store.presentation.http.json_utils;
 

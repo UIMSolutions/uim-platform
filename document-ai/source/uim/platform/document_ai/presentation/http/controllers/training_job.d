@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.training_job;
 
-import uim.platform.document_ai.application.use_cases.manage_training_jobs;
+import uim.platform.document_ai.application.usecases.manage_training_jobs;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.training_job : TrainingJob;

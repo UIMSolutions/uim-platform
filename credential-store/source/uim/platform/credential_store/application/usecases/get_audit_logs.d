@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.credential_store.application.use_cases.get_audit_logs;
+module uim.platform.credential_store.application.usecases.get_audit_logs;
 
 import uim.platform.credential_store.domain.ports.audit_log_repository;
 import uim.platform.credential_store.domain.entities.audit_log_entry;

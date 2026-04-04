@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.namespace;
 
-import uim.platform.credential_store.application.use_cases.manage_namespaces;
+import uim.platform.credential_store.application.usecases.manage_namespaces;
 import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store.presentation.http.json_utils;
 
