@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-launchpad
+  labels:
+    app: ai-launchpad
+spec:
+  type: ClusterIP
+  selector:
+    app: ai-launchpad
+  ports:
+  - port: 8097
+    targetPort: 8097
+    protocol: TCP
+    name: http

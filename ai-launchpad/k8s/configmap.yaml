@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-launchpad-config
+  labels:
+    app: ai-launchpad
+data:
+  AILP_HOST: "0.0.0.0"
+  AILP_PORT: "8097"
