@@ -3,14 +3,13 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
+module uim.platform.abap_enviroment.domain.ports.repositories.communication_arrangements;
 
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - communication arrangement persistence.
-interface CommunicationArrangementRepository
-{
+interface CommunicationArrangementRepository {
   CommunicationArrangement* findById(CommunicationArrangementId id);
   CommunicationArrangement[] findBySystem(SystemInstanceId systemId);
   CommunicationArrangement[] findByTenant(TenantId tenantId);

@@ -3,11 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.infrastructure.persistence.memory.business_user_repo;
+module uim.platform.abap_enviroment.infrastructure.persistence.memory.business_users;
 
 // import uim.platform.abap_enviroment.domain.types;
 // import uim.platform.abap_enviroment.domain.entities.business_user;
-// import uim.platform.abap_enviroment.domain.ports.business_user_repository;
+// import uim.platform.abap_enviroment.domain.ports.repositories.business_users;
 // 
 // // import std.algorithm : filter;
 // // import std.array : array;

@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.http.controllers.service_binding;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.usecases.manage_service_bindings;
+// import uim.platform.abap_enviroment.application.usecases.manage.service_bindings;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.service_binding;
 // import uim.platform.abap_enviroment.domain.types;

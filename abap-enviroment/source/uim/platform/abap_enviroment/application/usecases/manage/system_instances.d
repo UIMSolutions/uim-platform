@@ -7,7 +7,7 @@ module uim.platform.abap_enviroment.application.usecases.manage.system_instances
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.system_instance;
-import uim.platform.abap_enviroment.domain.ports.system_instance_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.system_instances;
 import uim.platform.abap_enviroment.domain.services.system_lifecycle_validator;
 import uim.platform.abap_enviroment.domain.types;
 
@@ -15,17 +15,14 @@ import uim.platform.abap_enviroment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for ABAP system instance lifecycle management.
-class ManageSystemInstancesUseCase
-{
+class ManageSystemInstancesUseCase : UIMUseCase {
   private SystemInstanceRepository repo;
 
-  this(SystemInstanceRepository repo)
-  {
+  this(SystemInstanceRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createInstance(CreateSystemInstanceRequest req)
-  {
+  CommandResult createInstance(CreateSystemInstanceRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "System instance name is required");
     if (req.tenantId.length == 0)
@@ -34,8 +31,7 @@ class ManageSystemInstancesUseCase
       return CommandResult("", "Admin email is required");
 
     // Validate SID
-    if (req.sapSystemId.length > 0)
-    {
+    if (req.sapSystemId.length > 0) {
       auto sidResult = SystemLifecycleValidator.validateSid(req.sapSystemId);
       if (!sidResult.valid)
         return CommandResult("", sidResult.error);
@@ -58,8 +54,8 @@ class ManageSystemInstancesUseCase
     inst.region = req.region;
     inst.sapSystemId = req.sapSystemId;
     inst.adminEmail = req.adminEmail;
-    inst.abapRuntimeSize = req.abapRuntimeSize > 0 ? req.abapRuntimeSize : cast(ushort) 4;
-    inst.hanaMemorySize = req.hanaMemorySize > 0 ? req.hanaMemorySize : cast(ushort) 16;
+    inst.abapRuntimeSize = req.abapRuntimeSize > 0 ? req.abapRuntimeSize : cast(ushort)4;
+    inst.hanaMemorySize = req.hanaMemorySize > 0 ? req.hanaMemorySize : cast(ushort)16;
     inst.softwareVersion = req.softwareVersion;
     inst.stackVersion = req.stackVersion;
 
@@ -71,8 +67,7 @@ class ManageSystemInstancesUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req)
-  {
+  CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req) {
     auto inst = repo.findById(id);
     if (inst is null)
       return CommandResult("", "System instance not found");
@@ -87,8 +82,7 @@ class ManageSystemInstancesUseCase
       inst.softwareVersion = req.softwareVersion;
 
     // Status transition
-    if (req.status.length > 0)
-    {
+    if (req.status.length > 0) {
       auto newStatus = parseStatus(req.status);
       auto validation = SystemLifecycleValidator.validateTransition(inst.status, newStatus);
       if (!validation.valid)
@@ -103,24 +97,21 @@ class ManageSystemInstancesUseCase
     return CommandResult(id, "");
   }
 
-  SystemInstance* getInstance(SystemInstanceId id)
-  {
+  SystemInstance* getInstance(SystemInstanceId id) {
     return repo.findById(id);
   }
 
-  SystemInstance[] listInstances(TenantId tenantId)
-  {
+  SystemInstance[] listInstances(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteInstance(SystemInstanceId id)
-  {
+  CommandResult deleteInstance(SystemInstanceId id) {
     auto inst = repo.findById(id);
     if (inst is null)
       return CommandResult("", "System instance not found");
 
     if (inst.status != SystemStatus.active && inst.status != SystemStatus.error
-        && inst.status != SystemStatus.suspended)
+      && inst.status != SystemStatus.suspended)
       return CommandResult("", "System must be in active, suspended, or error status to delete");
 
     inst.status = SystemStatus.deleting;
@@ -129,10 +120,8 @@ class ManageSystemInstancesUseCase
   }
 }
 
-private SystemPlan parsePlan(string s)
-{
-  switch (s)
-  {
+private SystemPlan parsePlan(string s) {
+  switch (s) {
   case "standard":
     return SystemPlan.standard;
   case "free_":
@@ -148,10 +137,8 @@ private SystemPlan parsePlan(string s)
   }
 }
 
-private SystemStatus parseStatus(string s)
-{
-  switch (s)
-  {
+private SystemStatus parseStatus(string s) {
+  switch (s) {
   case "provisioning":
     return SystemStatus.provisioning;
   case "active":

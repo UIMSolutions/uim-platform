@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.presentation.http.transport_request;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.abap_enviroment.application.usecases.manage_transport_requests;
+import uim.platform.abap_enviroment.application.usecases.manage.transport_requests;
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;

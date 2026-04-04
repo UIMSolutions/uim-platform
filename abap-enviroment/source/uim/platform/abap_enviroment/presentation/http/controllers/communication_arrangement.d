@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.http.controllers.communication_arrangement;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.usecases.manage_communication_arrangements;
+// import uim.platform.abap_enviroment.application.usecases.manage.communication_arrangements;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 // import uim.platform.abap_enviroment.domain.types;

@@ -10,7 +10,7 @@ module uim.platform.abap_enviroment.http.controllers.software_component;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.abap_enviroment.application.usecases.manage_software_components;
+// import uim.platform.abap_enviroment.application.usecases.manage.software_components;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.software_component;
 // import uim.platform.abap_enviroment.domain.types;

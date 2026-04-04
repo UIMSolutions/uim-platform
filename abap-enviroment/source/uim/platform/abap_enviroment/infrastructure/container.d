@@ -18,14 +18,14 @@ module uim.platform.abap_enviroment.infrastructure.container;
 // import uim.platform.abap_enviroment.infrastructure.persistence.memory.application_job_repo;
 
 // // Use Cases
-// import uim.platform.abap_enviroment.application.usecases.manage_system_instances;
-// import uim.platform.abap_enviroment.application.usecases.manage_software_components;
-// import uim.platform.abap_enviroment.application.usecases.manage_communication_arrangements;
-// import uim.platform.abap_enviroment.application.usecases.manage_service_bindings;
-// import uim.platform.abap_enviroment.application.usecases.manage_business_users;
-// import uim.platform.abap_enviroment.application.usecases.manage_business_roles;
-// import uim.platform.abap_enviroment.application.usecases.manage_transport_requests;
-// import uim.platform.abap_enviroment.application.usecases.manage_application_jobs;
+// import uim.platform.abap_enviroment.application.usecases.manage.system_instances;
+// import uim.platform.abap_enviroment.application.usecases.manage.software_components;
+// import uim.platform.abap_enviroment.application.usecases.manage.communication_arrangements;
+// import uim.platform.abap_enviroment.application.usecases.manage.service_bindings;
+// import uim.platform.abap_enviroment.application.usecases.manage.business_users;
+// import uim.platform.abap_enviroment.application.usecases.manage.business_roles;
+// import uim.platform.abap_enviroment.application.usecases.manage.transport_requests;
+// import uim.platform.abap_enviroment.application.usecases.manage.application_jobs;
 
 // // Controllers
 // import uim.platform.abap_enviroment.presentation.http.system_instance;
