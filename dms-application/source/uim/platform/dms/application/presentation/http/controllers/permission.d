@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.permission;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_permissions;
+// import uim.platform.dms.application.application.usecases.manage.permissions;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.permission;
 // import uim.platform.dms.application.domain.types;

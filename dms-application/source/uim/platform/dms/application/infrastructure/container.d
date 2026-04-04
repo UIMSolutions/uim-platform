@@ -21,12 +21,12 @@ module uim.platform.dms.application.infrastructure.container;
 // import uim.platform.dms.application.domain.services.access_control_service;
 // 
 // // Use cases
-// import uim.platform.dms.application.application.usecases.manage_repositories;
-// import uim.platform.dms.application.application.usecases.manage_folders;
-// import uim.platform.dms.application.application.usecases.manage_documents;
-// import uim.platform.dms.application.application.usecases.manage_versions;
-// import uim.platform.dms.application.application.usecases.manage_shares;
-// import uim.platform.dms.application.application.usecases.manage_permissions;
+// import uim.platform.dms.application.application.usecases.manage.repositories;
+// import uim.platform.dms.application.application.usecases.manage.folders;
+// import uim.platform.dms.application.application.usecases.manage.documents;
+// import uim.platform.dms.application.application.usecases.manage.versions;
+// import uim.platform.dms.application.application.usecases.manage.shares;
+// import uim.platform.dms.application.application.usecases.manage.permissions;
 // import uim.platform.dms.application.application.usecases.browse_content;
 // 
 // // Controllers

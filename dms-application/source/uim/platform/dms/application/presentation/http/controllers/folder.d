@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.folder;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_folders;
+// import uim.platform.dms.application.application.usecases.manage.folders;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.folder;
 // import uim.platform.dms.application.domain.types;

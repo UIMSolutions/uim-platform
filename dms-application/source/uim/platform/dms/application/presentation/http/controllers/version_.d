@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.version_;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_versions;
+// import uim.platform.dms.application.application.usecases.manage.versions;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.document_version;
 // import uim.platform.dms.application.domain.types;

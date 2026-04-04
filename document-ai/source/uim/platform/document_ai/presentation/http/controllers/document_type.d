@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.document_ai.presentation.http.controllers.document_type;
 
-import uim.platform.document_ai.application.usecases.manage_document_types;
+import uim.platform.document_ai.application.usecases.manage.document_types;
 import uim.platform.document_ai.application.dto;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document_type : DocumentType;

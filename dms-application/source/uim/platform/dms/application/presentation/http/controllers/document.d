@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.document;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_documents;
+// import uim.platform.dms.application.application.usecases.manage.documents;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.document;
 // import uim.platform.dms.application.domain.types;

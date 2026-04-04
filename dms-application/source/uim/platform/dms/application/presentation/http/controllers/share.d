@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.share;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_shares;
+// import uim.platform.dms.application.application.usecases.manage.shares;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.share;
 // import uim.platform.dms.application.domain.types;

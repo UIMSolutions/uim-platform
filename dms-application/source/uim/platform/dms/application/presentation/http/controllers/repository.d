@@ -10,7 +10,7 @@ module uim.platform.dms.application.presentation.http.controllers.repository;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.dms.application.application.usecases.manage_repositories;
+// import uim.platform.dms.application.application.usecases.manage.repositories;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.repository;
 // import uim.platform.dms.application.domain.types;
