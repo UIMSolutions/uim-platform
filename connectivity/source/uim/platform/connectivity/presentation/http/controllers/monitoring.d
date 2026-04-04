@@ -21,8 +21,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MonitoringController
-{
+class MonitoringController {
   private MonitorConnectivityUseCase uc;
 
   this(MonitorConnectivityUseCase uc)

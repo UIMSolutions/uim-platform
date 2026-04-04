@@ -16,8 +16,7 @@ import uim.platform.content_agent.domain.entities.export_job;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class ExportController
-{
+class ExportController {
   private ExportContentUseCase uc;
 
   this(ExportContentUseCase uc)

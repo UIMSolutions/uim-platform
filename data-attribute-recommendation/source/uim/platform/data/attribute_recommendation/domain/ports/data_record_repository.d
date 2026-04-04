@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 
-interface DataRecordRepository
-{
+interface DataRecordRepository {
   DataRecord[] findByDataset(DatasetId datasetId, TenantId tenantId);
   DataRecord* findById(DataRecordId id, TenantId tenantId);
   DataRecord[] findByStatus(DatasetId datasetId, TenantId tenantId, RecordStatus status);

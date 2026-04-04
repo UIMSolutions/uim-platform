@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// A request to predict/recommend attributes for input data
 /// using a deployed model.
-struct InferenceRequest
-{
+struct InferenceRequest {
   InferenceRequestId id;
   TenantId tenantId;
   DeploymentId deploymentId;

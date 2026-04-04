@@ -20,8 +20,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 /// Domain service that orchestrates the training lifecycle:
 /// validates dataset readiness, creates training jobs, and
 /// simulates training with quality metrics.
-class ModelTrainer
-{
+class ModelTrainer {
   private DatasetRepository datasetRepo;
   private ModelConfigRepository configRepo;
   private TrainingJobRepository jobRepo;

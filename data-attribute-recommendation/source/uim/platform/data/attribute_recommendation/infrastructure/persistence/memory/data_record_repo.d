@@ -10,8 +10,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
 
-class MemoryDataRecordRepository : DataRecordRepository
-{
+class MemoryDataRecordRepository : DataRecordRepository {
   private DataRecord[string] store;
 
   void save(DataRecord entity)

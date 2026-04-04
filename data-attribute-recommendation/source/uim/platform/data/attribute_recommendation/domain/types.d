@@ -18,8 +18,7 @@ alias UserId = string;
 
 // --- Enums ---
 
-enum DatasetStatus
-{
+enum DatasetStatus {
   draft,
   ready,
   processing,
@@ -27,8 +26,7 @@ enum DatasetStatus
   failed
 }
 
-enum DataType
-{
+enum DataType {
   product,
   material,
   customer,
@@ -36,22 +34,19 @@ enum DataType
   custom
 }
 
-enum RecordStatus
-{
+enum RecordStatus {
   pending,
   validated,
   rejected
 }
 
-enum ModelType
-{
+enum ModelType {
   classification,
   regression,
   recommendation
 }
 
-enum ModelConfigStatus
-{
+enum ModelConfigStatus {
   draft,
   ready,
   training,
@@ -59,8 +54,7 @@ enum ModelConfigStatus
   failed
 }
 
-enum JobStatus
-{
+enum JobStatus {
   queued,
   running,
   completed,
@@ -68,16 +62,14 @@ enum JobStatus
   cancelled
 }
 
-enum DeploymentStatus
-{
+enum DeploymentStatus {
   deploying,
   active,
   inactive,
   failed
 }
 
-enum InferenceStatus
-{
+enum InferenceStatus {
   pending,
   processing,
   completed,

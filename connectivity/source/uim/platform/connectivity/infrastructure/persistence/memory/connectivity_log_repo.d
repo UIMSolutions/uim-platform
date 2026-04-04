@@ -17,8 +17,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectivityLogRepository : ConnectivityLogRepository
-{
+class MemoryConnectivityLogRepository : ConnectivityLogRepository {
   private ConnectivityLog[] logs;
 
   ConnectivityLog[] findByTenant(TenantId tenantId)

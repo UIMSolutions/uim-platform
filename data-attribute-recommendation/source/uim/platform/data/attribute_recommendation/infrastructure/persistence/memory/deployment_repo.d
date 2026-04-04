@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
 
-class MemoryDeploymentRepository : DeploymentRepository
-{
+class MemoryDeploymentRepository : DeploymentRepository {
   private ModelDeployment[string] store;
 
   void save(ModelDeployment entity)

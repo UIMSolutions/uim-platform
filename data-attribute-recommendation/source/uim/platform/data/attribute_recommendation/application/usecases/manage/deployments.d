@@ -17,8 +17,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.trai
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 import uim.platform.data.attribute_recommendation.application.dto;
 
-class ManageDeploymentsUseCase
-{
+class ManageDeploymentsUseCase : UIMUseCase {
   private DeploymentRepository repo;
   private TrainingJobRepository jobRepo;
   private ModelConfigRepository configRepo;

@@ -18,8 +18,7 @@ import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class ImportController
-{
+class ImportController {
   private ImportContentUseCase uc;
 
   this(ImportContentUseCase uc)

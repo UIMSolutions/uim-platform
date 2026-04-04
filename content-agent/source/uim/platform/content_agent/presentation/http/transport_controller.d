@@ -16,8 +16,7 @@ import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class TransportController
-{
+class TransportController {
   private ManageTransportRequestsUseCase uc;
 
   this(ManageTransportRequestsUseCase uc)

@@ -8,15 +8,13 @@ module uim.platform.connectivity.domain.entities.destination;
 import uim.platform.connectivity.domain.types;
 
 /// Custom property key-value pair attached to a destination.
-struct DestinationProperty
-{
+struct DestinationProperty {
   string key;
   string value;
 }
 
 /// Named connectivity endpoint for reaching remote services.
-struct Destination
-{
+struct Destination {
   DestinationId id;
   TenantId tenantId;
   string name;

@@ -13,8 +13,7 @@ import uim.platform.content_agent.domain.ports.repositories.transport_requests;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTransportRequestRepository : TransportRequestRepository
-{
+class MemoryTransportRequestRepository : TransportRequestRepository {
   private TransportRequest[TransportRequestId] store;
 
   TransportRequest findById(TransportRequestId id)

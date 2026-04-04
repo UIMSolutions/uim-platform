@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.export_job;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - export job persistence.
-interface ExportJobRepository
-{
+interface ExportJobRepository {
   ExportJob findById(ExportJobId id);
   ExportJob[] findByTenant(TenantId tenantId);
   ExportJob[] findByPackage(ContentPackageId packageId);

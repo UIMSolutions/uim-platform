@@ -16,8 +16,7 @@ import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class QueueController
-{
+class QueueController {
   private ManageTransportQueuesUseCase uc;
 
   this(ManageTransportQueuesUseCase uc)

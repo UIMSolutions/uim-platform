@@ -18,8 +18,7 @@ alias TenantId = string;
 alias SubaccountId = string;
 
 /// Status of a content package.
-enum PackageStatus
-{
+enum PackageStatus {
   draft,
   assembled,
   exported,
@@ -29,16 +28,14 @@ enum PackageStatus
 }
 
 /// Content format for package assembly.
-enum ContentFormat
-{
+enum ContentFormat {
   mtar,
   zip,
   json,
 }
 
 /// Status of a content provider.
-enum ProviderStatus
-{
+enum ProviderStatus {
   active,
   inactive,
   error,
@@ -46,8 +43,7 @@ enum ProviderStatus
 }
 
 /// Content category provided by a content provider.
-enum ContentCategory
-{
+enum ContentCategory {
   integrationFlow,
   destination,
   apiProxy,
@@ -70,8 +66,7 @@ enum ContentCategory
 }
 
 /// Status of a transport request.
-enum TransportStatus
-{
+enum TransportStatus {
   created,
   readyForExport,
   exporting,
@@ -85,8 +80,7 @@ enum TransportStatus
 }
 
 /// Status of an export job.
-enum ExportStatus
-{
+enum ExportStatus {
   pending,
   assembling,
   packaging,
@@ -97,8 +91,7 @@ enum ExportStatus
 }
 
 /// Status of an import job.
-enum ImportStatus
-{
+enum ImportStatus {
   pending,
   downloading,
   validating,
@@ -109,8 +102,7 @@ enum ImportStatus
 }
 
 /// Transport mode.
-enum TransportMode
-{
+enum TransportMode {
   cloudTransportManagement,
   ctsPlus,
   directExport,
@@ -118,16 +110,14 @@ enum TransportMode
 }
 
 /// Type of transport queue.
-enum QueueType
-{
+enum QueueType {
   cloudTMS,
   ctsPlus,
   local,
 }
 
 /// Type of recorded activity.
-enum ActivityType
-{
+enum ActivityType {
   packageCreated,
   packageAssembled,
   packageExported,
@@ -148,8 +138,7 @@ enum ActivityType
 }
 
 /// Severity level for activities.
-enum ActivitySeverity
-{
+enum ActivitySeverity {
   info,
   warning,
   error,

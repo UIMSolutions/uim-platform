@@ -20,8 +20,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for transport request lifecycle management.
-class ManageTransportRequestsUseCase
-{
+class ManageTransportRequestsUseCase : UIMUseCase {
   private TransportRequestRepository requestRepo;
   private ContentPackageRepository packageRepo;
   private TransportQueueRepository queueRepo;

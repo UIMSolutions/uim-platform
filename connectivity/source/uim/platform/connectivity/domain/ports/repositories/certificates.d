@@ -9,8 +9,7 @@ import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - certificate store persistence.
-interface CertificateRepository
-{
+interface CertificateRepository {
   bool existsId(CertificateId id);
   Certificate findById(CertificateId id);
 

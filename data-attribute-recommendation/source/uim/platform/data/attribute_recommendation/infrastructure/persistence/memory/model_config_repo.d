@@ -10,8 +10,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 
-class MemoryModelConfigRepository : ModelConfigRepository
-{
+class MemoryModelConfigRepository : ModelConfigRepository {
   private ModelConfiguration[string] store;
 
   void save(ModelConfiguration entity)

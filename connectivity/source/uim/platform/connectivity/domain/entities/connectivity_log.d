@@ -8,8 +8,7 @@ module uim.platform.connectivity.domain.entities.connectivity_log;
 import uim.platform.connectivity.domain.types;
 
 /// Immutable connectivity event log entry.
-struct ConnectivityLog
-{
+struct ConnectivityLog {
   ConnectivityLogId id;
   TenantId tenantId;
   ConnectivityEventType eventType;

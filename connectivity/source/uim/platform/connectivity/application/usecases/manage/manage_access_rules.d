@@ -16,8 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for access rule CRUD.
-class ManageAccessRulesUseCase
-{
+class ManageAccessRulesUseCase : UIMUseCase {
   private AccessRuleRepository ruleRepo;
   private ConnectorRepository connectorRepo;
 
@@ -101,8 +100,7 @@ class ManageAccessRulesUseCase
   }
 }
 
-private AccessProtocol parseAccessProtocol(string s)
-{
+private AccessProtocol parseAccessProtocol(string s) {
   switch (s)
   {
   case "http":
@@ -120,8 +118,7 @@ private AccessProtocol parseAccessProtocol(string s)
   }
 }
 
-private AccessPolicy parseAccessPolicy(string s)
-{
+private AccessPolicy parseAccessPolicy(string s) {
   switch (s)
   {
   case "allow":

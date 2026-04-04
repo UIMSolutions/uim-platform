@@ -18,11 +18,9 @@ import uim.platform.connectivity;
 
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto config = loadConfig();

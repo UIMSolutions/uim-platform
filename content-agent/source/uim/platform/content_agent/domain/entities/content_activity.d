@@ -8,8 +8,7 @@ module uim.platform.content_agent.domain.entities.content_activity;
 import uim.platform.content_agent.domain.types;
 
 /// Audit record for a content operation.
-struct ContentActivity
-{
+struct ContentActivity {
   ContentActivityId id;
   TenantId tenantId;
   ActivityType activityType;

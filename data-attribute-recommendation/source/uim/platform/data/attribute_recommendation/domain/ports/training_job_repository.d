@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.trai
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.training_job;
 
-interface TrainingJobRepository
-{
+interface TrainingJobRepository {
   TrainingJob[] findByTenant(TenantId tenantId);
   TrainingJob* findById(TrainingJobId id, TenantId tenantId);
   TrainingJob[] findByModelConfig(ModelConfigId configId, TenantId tenantId);

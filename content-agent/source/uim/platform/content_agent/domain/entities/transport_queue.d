@@ -8,8 +8,7 @@ module uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
 
 /// A configured transport queue (CTS+, Cloud TMS, or local).
-struct TransportQueue
-{
+struct TransportQueue {
   TransportQueueId id;
   TenantId tenantId;
   string name;

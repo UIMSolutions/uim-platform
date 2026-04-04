@@ -15,8 +15,7 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class DestinationController
-{
+class DestinationController {
   private ManageDestinationsUseCase uc;
 
   this(ManageDestinationsUseCase uc)

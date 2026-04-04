@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// The predicted attributes and confidence scores returned
 /// by the inference engine for a given request.
-struct InferenceResult
-{
+struct InferenceResult {
   InferenceResultId id;
   TenantId tenantId;
   InferenceRequestId requestId;

@@ -15,8 +15,7 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class ChannelController
-{
+class ChannelController {
   private ManageChannelsUseCase uc;
 
   this(ManageChannelsUseCase uc)

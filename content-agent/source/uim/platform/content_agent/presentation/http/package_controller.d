@@ -16,8 +16,7 @@ import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class PackageController : SAPController
-{
+class PackageController : SAPController {
   private ManageContentPackagesUseCase uc;
 
   this(ManageContentPackagesUseCase uc)

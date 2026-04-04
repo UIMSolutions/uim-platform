@@ -12,8 +12,7 @@ import uim.platform.content_agent.domain.ports.repositories.export_jobs;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryExportJobRepository : ExportJobRepository
-{
+class MemoryExportJobRepository : ExportJobRepository {
   private ExportJob[ExportJobId] store;
 
   ExportJob findById(ExportJobId id)

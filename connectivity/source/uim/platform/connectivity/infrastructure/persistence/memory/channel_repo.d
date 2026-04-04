@@ -18,8 +18,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MemoryChannelRepository : ChannelRepository
-{
+class MemoryChannelRepository : ChannelRepository {
   private ServiceChannel[ChannelId] store;
 
   ServiceChannel findById(ChannelId id)

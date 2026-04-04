@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 
-interface InferenceResultRepository
-{
+interface InferenceResultRepository {
   InferenceResult* findById(InferenceResultId id, TenantId tenantId);
   InferenceResult* findByRequest(InferenceRequestId requestId, TenantId tenantId);
   InferenceResult[] findByTenant(TenantId tenantId);

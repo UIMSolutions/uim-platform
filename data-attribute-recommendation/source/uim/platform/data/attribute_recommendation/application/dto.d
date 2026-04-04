@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 // --- Dataset ---
 
-struct CreateDatasetRequest
-{
+struct CreateDatasetRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -19,8 +18,7 @@ struct CreateDatasetRequest
   UserId createdBy;
 }
 
-struct UpdateDatasetRequest
-{
+struct UpdateDatasetRequest {
   DatasetId id;
   TenantId tenantId;
   string name;
@@ -30,8 +28,7 @@ struct UpdateDatasetRequest
 
 // --- Data Record ---
 
-struct CreateDataRecordRequest
-{
+struct CreateDataRecordRequest {
   DatasetId datasetId;
   TenantId tenantId;
   string attributes; // JSON
@@ -39,8 +36,7 @@ struct CreateDataRecordRequest
   UserId createdBy;
 }
 
-struct CreateBulkRecordsRequest
-{
+struct CreateBulkRecordsRequest {
   DatasetId datasetId;
   TenantId tenantId;
   string records; // JSON array of {attributes, labels}
@@ -49,8 +45,7 @@ struct CreateBulkRecordsRequest
 
 // --- Model Configuration ---
 
-struct CreateModelConfigRequest
-{
+struct CreateModelConfigRequest {
   TenantId tenantId;
   DatasetId datasetId;
   string name;
@@ -62,8 +57,7 @@ struct CreateModelConfigRequest
   UserId createdBy;
 }
 
-struct UpdateModelConfigRequest
-{
+struct UpdateModelConfigRequest {
   ModelConfigId id;
   TenantId tenantId;
   string name;
@@ -76,8 +70,7 @@ struct UpdateModelConfigRequest
 
 // --- Training Job ---
 
-struct StartTrainingRequest
-{
+struct StartTrainingRequest {
   ModelConfigId modelConfigId;
   TenantId tenantId;
   UserId createdBy;
@@ -85,8 +78,7 @@ struct StartTrainingRequest
 
 // --- Model Deployment ---
 
-struct CreateDeploymentRequest
-{
+struct CreateDeploymentRequest {
   TenantId tenantId;
   TrainingJobId trainingJobId;
   string name;
@@ -96,8 +88,7 @@ struct CreateDeploymentRequest
 
 // --- Inference ---
 
-struct SubmitInferenceRequest
-{
+struct SubmitInferenceRequest {
   TenantId tenantId;
   DeploymentId deploymentId;
   string inputData; // JSON
@@ -105,8 +96,7 @@ struct SubmitInferenceRequest
 
 // --- Command Result ---
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 

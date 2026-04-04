@@ -10,8 +10,7 @@ import uim.platform.content_agent.domain.entities.content_package : ContentItem;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -19,8 +18,7 @@ struct CommandResult
 
 /// --- Content Package DTOs ---
 
-struct CreatePackageRequest
-{
+struct CreatePackageRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -32,16 +30,14 @@ struct CreatePackageRequest
   string createdBy;
 }
 
-struct UpdatePackageRequest
-{
+struct UpdatePackageRequest {
   string description;
   string version_;
   ContentItem[] items;
   string[] tags;
 }
 
-struct AssemblePackageRequest
-{
+struct AssemblePackageRequest {
   ContentPackageId packageId;
   TenantId tenantId;
   string assembledBy;
@@ -49,8 +45,7 @@ struct AssemblePackageRequest
 
 /// --- Content Provider DTOs ---
 
-struct RegisterProviderRequest
-{
+struct RegisterProviderRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -59,8 +54,7 @@ struct RegisterProviderRequest
   string registeredBy;
 }
 
-struct UpdateProviderRequest
-{
+struct UpdateProviderRequest {
   string description;
   string endpoint;
   string authToken;
@@ -68,8 +62,7 @@ struct UpdateProviderRequest
 
 /// --- Transport Request DTOs ---
 
-struct CreateTransportRequest
-{
+struct CreateTransportRequest {
   TenantId tenantId;
   SubaccountId sourceSubaccount;
   SubaccountId targetSubaccount;
@@ -80,8 +73,7 @@ struct CreateTransportRequest
   string createdBy;
 }
 
-struct ReleaseTransportRequest
-{
+struct ReleaseTransportRequest {
   TransportRequestId requestId;
   TenantId tenantId;
   string releasedBy;
@@ -89,8 +81,7 @@ struct ReleaseTransportRequest
 
 /// --- Export Job DTOs ---
 
-struct StartExportRequest
-{
+struct StartExportRequest {
   TenantId tenantId;
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
@@ -100,8 +91,7 @@ struct StartExportRequest
 
 /// --- Import Job DTOs ---
 
-struct StartImportRequest
-{
+struct StartImportRequest {
   TenantId tenantId;
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
@@ -111,8 +101,7 @@ struct StartImportRequest
 
 /// --- Transport Queue DTOs ---
 
-struct CreateQueueRequest
-{
+struct CreateQueueRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -123,8 +112,7 @@ struct CreateQueueRequest
   string createdBy;
 }
 
-struct UpdateQueueRequest
-{
+struct UpdateQueueRequest {
   string description;
   string endpoint;
   string authToken;
@@ -133,8 +121,7 @@ struct UpdateQueueRequest
 
 /// --- Activity query ---
 
-struct ActivityQuery
-{
+struct ActivityQuery {
   TenantId tenantId;
   string entityId;
   string activityType;

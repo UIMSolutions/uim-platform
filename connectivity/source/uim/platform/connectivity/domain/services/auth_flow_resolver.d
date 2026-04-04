@@ -10,16 +10,14 @@ import uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity.domain.types;
 
 /// Result of resolving an authentication flow for a destination.
-struct AuthFlowResult
-{
+struct AuthFlowResult {
   bool valid;
   string[] errors;
   string resolvedAuthHeader; // e.g., "Bearer <token>" or "Basic <b64>"
 }
 
 /// Domain service: validates and resolves authentication configuration for destinations.
-struct AuthFlowResolver
-{
+struct AuthFlowResolver {
   /// Validate that the destination has the required fields for its auth type.
   static AuthFlowResult validate(const ref Destination dest)
   {

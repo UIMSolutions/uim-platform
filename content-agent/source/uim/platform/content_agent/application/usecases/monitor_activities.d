@@ -13,8 +13,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for viewing content operation activities.
-class MonitorActivitiesUseCase
-{
+class MonitorActivitiesUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(ContentActivityRepository activityRepo)
@@ -109,8 +108,7 @@ class MonitorActivitiesUseCase
   }
 }
 
-struct ActivitySummary
-{
+struct ActivitySummary {
   long totalCount;
   long infoCount;
   long warningCount;

@@ -12,8 +12,7 @@ import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 // import std.algorithm : filter, sort;
 // import std.array : array;
 
-class MemoryContentActivityRepository : ContentActivityRepository
-{
+class MemoryContentActivityRepository : ContentActivityRepository {
   private ContentActivity[] store;
 
   ContentActivity findById(ContentActivityId id)

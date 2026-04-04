@@ -8,8 +8,7 @@ module uim.platform.connectivity.domain.entities.cloud_connector;
 import uim.platform.connectivity.domain.types;
 
 /// On-premise Cloud Connector registration.
-struct CloudConnector
-{
+struct CloudConnector {
   ConnectorId id;
   SubaccountId subaccountId;
   TenantId tenantId;

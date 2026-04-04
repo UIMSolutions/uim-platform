@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.presentation;
 
-public
-{
+public {
   import uim.platform.connectivity.presentation.http;
 }

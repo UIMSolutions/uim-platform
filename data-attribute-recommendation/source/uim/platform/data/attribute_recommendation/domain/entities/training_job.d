@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// Represents a single training run of a model configuration, tracking
 /// progress, metrics, and completion status.
-struct TrainingJob
-{
+struct TrainingJob {
   TrainingJobId id;
   TenantId tenantId;
   ModelConfigId modelConfigId;

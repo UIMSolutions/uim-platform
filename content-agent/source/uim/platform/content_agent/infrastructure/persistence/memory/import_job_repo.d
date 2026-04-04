@@ -12,8 +12,7 @@ import uim.platform.content_agent.domain.ports.repositories.import_jobs;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryImportJobRepository : ImportJobRepository
-{
+class MemoryImportJobRepository : ImportJobRepository {
   private ImportJob[ImportJobId] store;
 
   ImportJob findById(ImportJobId id)

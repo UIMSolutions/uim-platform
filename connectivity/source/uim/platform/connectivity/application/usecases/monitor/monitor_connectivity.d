@@ -15,8 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Summary of connectivity status for a tenant.
-struct ConnectivitySummary
-{
+struct ConnectivitySummary {
   ulong totalEvents;
   ulong infoCount;
   ulong warningCount;
@@ -25,8 +24,7 @@ struct ConnectivitySummary
 }
 
 /// Application service for connectivity monitoring and log queries.
-class MonitorConnectivityUseCase
-{
+class MonitorConnectivityUseCase : UIMUseCase {
   private ConnectivityLogRepository logRepo;
 
   this(ConnectivityLogRepository logRepo)

@@ -16,8 +16,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectorRepository : ConnectorRepository
-{
+class MemoryConnectorRepository : ConnectorRepository {
   private CloudConnector[ConnectorId] store;
 
   CloudConnector findById(ConnectorId id)

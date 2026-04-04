@@ -19,8 +19,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class AccessRuleController : SAPController
-{
+class AccessRuleController : SAPController {
   private ManageAccessRulesUseCase uc;
 
   this(ManageAccessRulesUseCase uc)

@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
 
-class MemoryDatasetRepository : DatasetRepository
-{
+class MemoryDatasetRepository : DatasetRepository {
   private Dataset[string] store;
 
   void save(Dataset entity)

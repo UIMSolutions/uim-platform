@@ -12,8 +12,7 @@ import uim.platform.content_agent.domain.ports.repositories.transport_queues;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTransportQueueRepository : TransportQueueRepository
-{
+class MemoryTransportQueueRepository : TransportQueueRepository {
   private TransportQueue[TransportQueueId] store;
 
   TransportQueue findById(TransportQueueId id)

@@ -17,8 +17,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for exporting content packages.
-class ExportContentUseCase
-{
+class ExportContentUseCase : UIMUseCase {
   private ExportJobRepository exportRepo;
   private ContentPackageRepository packageRepo;
   private ContentActivityRepository activityRepo;

@@ -15,8 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for certificate store management.
-class ManageCertificatesUseCase
-{
+class ManageCertificatesUseCase : UIMUseCase {
   private CertificateRepository repo;
 
   this(CertificateRepository repo)
@@ -96,8 +95,7 @@ class ManageCertificatesUseCase
   }
 }
 
-private CertificateType parseCertType(string s)
-{
+private CertificateType parseCertType(string s) {
   switch (s)
   {
   case "x509":
@@ -113,8 +111,7 @@ private CertificateType parseCertType(string s)
   }
 }
 
-private CertificateUsage parseCertUsage(string s)
-{
+private CertificateUsage parseCertUsage(string s) {
   switch (s)
   {
   case "authentication":

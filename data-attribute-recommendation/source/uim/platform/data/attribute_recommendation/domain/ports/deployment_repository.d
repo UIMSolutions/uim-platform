@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.depl
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 
-interface DeploymentRepository
-{
+interface DeploymentRepository {
   ModelDeployment[] findByTenant(TenantId tenantId);
   ModelDeployment* findById(DeploymentId id, TenantId tenantId);
   ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId);

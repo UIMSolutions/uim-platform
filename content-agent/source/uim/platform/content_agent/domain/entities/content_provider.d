@@ -8,8 +8,7 @@ module uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
 /// Describes a content type offered by a provider.
-struct ProvidedContentType
-{
+struct ProvidedContentType {
   ContentTypeId typeId;
   string name;
   ContentCategory category;
@@ -18,8 +17,7 @@ struct ProvidedContentType
 }
 
 /// A registered content provider from which content can be discovered and assembled.
-struct ContentProvider
-{
+struct ContentProvider {
   ContentProviderId id;
   TenantId tenantId;
   string name;

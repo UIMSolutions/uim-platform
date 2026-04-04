@@ -9,16 +9,14 @@ import uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity.domain.types;
 
 /// Result of evaluating access control rules.
-struct AccessEvaluation
-{
+struct AccessEvaluation {
   bool allowed;
   string matchedRuleId; // empty if no rule matched
   string reason;
 }
 
 /// Domain service: evaluates access control rules for on-premise backend requests.
-struct AccessControlEvaluator
-{
+struct AccessControlEvaluator {
   /// Evaluate whether a request to a virtual host/path is allowed.
   static AccessEvaluation evaluate(AccessRule[] rules, string virtualHost,
       ushort virtualPort, string urlPath,)

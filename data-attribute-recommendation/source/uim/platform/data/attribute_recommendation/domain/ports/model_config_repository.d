@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.mode
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
 
-interface ModelConfigRepository
-{
+interface ModelConfigRepository {
   ModelConfiguration[] findByTenant(TenantId tenantId);
   ModelConfiguration* findById(ModelConfigId id, TenantId tenantId);
   ModelConfiguration* findByName(TenantId tenantId, string name);

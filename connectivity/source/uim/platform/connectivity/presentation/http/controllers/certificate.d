@@ -19,8 +19,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class CertificateController
-{
+class CertificateController {
   private ManageCertificatesUseCase uc;
 
   this(ManageCertificatesUseCase uc)

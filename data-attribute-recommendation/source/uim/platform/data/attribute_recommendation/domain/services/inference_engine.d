@@ -18,8 +18,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 
 /// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.
-class InferenceEngine
-{
+class InferenceEngine {
   private DeploymentRepository deploymentRepo;
   private InferenceRequestRepository requestRepo;
   private InferenceResultRepository resultRepo;

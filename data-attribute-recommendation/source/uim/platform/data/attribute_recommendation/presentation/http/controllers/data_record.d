@@ -21,8 +21,7 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 
-class DataRecordController : SAPController
-{
+class DataRecordController : SAPController {
   private ManageDataRecordsUseCase uc;
 
   this(ManageDataRecordsUseCase uc)

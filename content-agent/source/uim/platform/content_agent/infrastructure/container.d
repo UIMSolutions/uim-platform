@@ -38,8 +38,7 @@ import uim.platform.content_agent.presentation.http.health;
 
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
 
   
 
@@ -74,8 +73,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

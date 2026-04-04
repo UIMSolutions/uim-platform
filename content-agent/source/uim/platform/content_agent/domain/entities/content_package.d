@@ -8,8 +8,7 @@ module uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.types;
 
 /// A single content item within a package.
-struct ContentItem
-{
+struct ContentItem {
   string id;
   string name;
   ContentCategory category;
@@ -20,8 +19,7 @@ struct ContentItem
 }
 
 /// A package containing bundled content for transport across landscapes.
-struct ContentPackage
-{
+struct ContentPackage {
   ContentPackageId id;
   TenantId tenantId;
   SubaccountId subaccountId;

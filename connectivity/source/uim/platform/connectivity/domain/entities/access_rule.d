@@ -8,8 +8,7 @@ module uim.platform.connectivity.domain.entities.access_rule;
 import uim.platform.connectivity.domain.types;
 
 /// Access control rule for exposed on-premise backend resources.
-struct AccessRule
-{
+struct AccessRule {
   RuleId id;
   ConnectorId connectorId;
   TenantId tenantId;

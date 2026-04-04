@@ -8,8 +8,7 @@ module uim.platform.connectivity.domain.entities.certificate;
 import uim.platform.connectivity.domain.types;
 
 /// Certificate store entry for mTLS, SAML signing, etc.
-struct Certificate
-{
+struct Certificate {
   CertificateId id;
   TenantId tenantId;
   string name;

@@ -18,8 +18,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for service channel lifecycle.
-class ManageChannelsUseCase
-{
+class ManageChannelsUseCase : UIMUseCase {
   private ChannelRepository channelRepo;
   private ConnectorRepository connectorRepo;
   private ConnectivityLogRepository logRepo;
@@ -145,8 +144,7 @@ class ManageChannelsUseCase
   }
 }
 
-private ChannelType parseChannelType(string s)
-{
+private ChannelType parseChannelType(string s) {
   switch (s)
   {
   case "http":

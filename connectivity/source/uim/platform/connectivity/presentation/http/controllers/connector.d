@@ -15,8 +15,7 @@ import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.cloud_connector;
 import uim.platform.connectivity.presentation.http.json_utils;
 
-class ConnectorController
-{
+class ConnectorController {
   private ManageConnectorsUseCase uc;
 
   this(ManageConnectorsUseCase uc)

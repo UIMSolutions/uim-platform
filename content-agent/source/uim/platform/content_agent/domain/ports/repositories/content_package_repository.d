@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content package persistence.
-interface ContentPackageRepository
-{
+interface ContentPackageRepository {
   ContentPackage findById(ContentPackageId id);
   ContentPackage[] findByTenant(TenantId tenantId);
   ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status);

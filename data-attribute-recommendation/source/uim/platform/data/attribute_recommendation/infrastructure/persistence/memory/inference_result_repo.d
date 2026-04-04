@@ -10,8 +10,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
 
-class MemoryInferenceResultRepository : InferenceResultRepository
-{
+class MemoryInferenceResultRepository : InferenceResultRepository {
   private InferenceResult[string] store;
 
   void save(InferenceResult entity)

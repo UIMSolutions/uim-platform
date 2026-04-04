@@ -43,8 +43,7 @@ import uim.platform.data.attribute_recommendation.presentation.http.monitoring;
 import uim.platform.data.attribute_recommendation.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryDatasetRepository datasetRepo;
   MemoryDataRecordRepository recordRepo;
@@ -77,8 +76,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

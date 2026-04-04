@@ -19,8 +19,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Application service for destination CRUD and lookup.
-class ManageDestinationsUseCase
-{
+class ManageDestinationsUseCase : UIMUseCase {
   private DestinationRepository repo;
   private ConnectivityLogRepository logRepo;
 
@@ -165,8 +164,7 @@ class ManageDestinationsUseCase
   }
 }
 
-private DestinationType parseDestinationType(string s)
-{
+private DestinationType parseDestinationType(string s) {
   switch (s)
   {
   case "http":
@@ -182,8 +180,7 @@ private DestinationType parseDestinationType(string s)
   }
 }
 
-private AuthenticationType parseAuthType(string s)
-{
+private AuthenticationType parseAuthType(string s) {
   switch (s)
   {
   case "noAuthentication":
@@ -213,8 +210,7 @@ private AuthenticationType parseAuthType(string s)
   }
 }
 
-private ProxyType parseProxyType(string s)
-{
+private ProxyType parseProxyType(string s) {
   switch (s)
   {
   case "internet":

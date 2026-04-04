@@ -10,8 +10,7 @@ import uim.platform.connectivity.domain.entities.destination : DestinationProper
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -19,8 +18,7 @@ struct CommandResult
 
 /// --- Destination DTOs ---
 
-struct CreateDestinationRequest
-{
+struct CreateDestinationRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -41,8 +39,7 @@ struct CreateDestinationRequest
   DestinationProperty[] additionalHeaders;
 }
 
-struct UpdateDestinationRequest
-{
+struct UpdateDestinationRequest {
   string description;
   string url;
   string authType;
@@ -62,8 +59,7 @@ struct UpdateDestinationRequest
 
 /// --- Cloud Connector DTOs ---
 
-struct RegisterConnectorRequest
-{
+struct RegisterConnectorRequest {
   SubaccountId subaccountId;
   TenantId tenantId;
   string locationId;
@@ -74,15 +70,13 @@ struct RegisterConnectorRequest
   string tunnelEndpoint;
 }
 
-struct HeartbeatRequest
-{
+struct HeartbeatRequest {
   string connectorVersion;
 }
 
 /// --- Service Channel DTOs ---
 
-struct CreateChannelRequest
-{
+struct CreateChannelRequest {
   ConnectorId connectorId;
   TenantId tenantId;
   string name;
@@ -95,8 +89,7 @@ struct CreateChannelRequest
 
 /// --- Access Rule DTOs ---
 
-struct CreateAccessRuleRequest
-{
+struct CreateAccessRuleRequest {
   ConnectorId connectorId;
   TenantId tenantId;
   string description;
@@ -108,8 +101,7 @@ struct CreateAccessRuleRequest
   bool principalPropagation;
 }
 
-struct UpdateAccessRuleRequest
-{
+struct UpdateAccessRuleRequest {
   string description;
   string urlPathPrefix;
   string policy;
@@ -118,8 +110,7 @@ struct UpdateAccessRuleRequest
 
 /// --- Certificate DTOs ---
 
-struct CreateCertificateRequest
-{
+struct CreateCertificateRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -133,8 +124,7 @@ struct CreateCertificateRequest
   long validTo;
 }
 
-struct UpdateCertificateRequest
-{
+struct UpdateCertificateRequest {
   string description;
   bool active;
 }

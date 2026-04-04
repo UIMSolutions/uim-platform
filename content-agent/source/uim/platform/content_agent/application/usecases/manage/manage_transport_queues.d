@@ -15,8 +15,7 @@ import uim.platform.content_agent.domain.types;
 // import std.conv : to;
 
 /// Application service for transport queue configuration.
-class ManageTransportQueuesUseCase
-{
+class ManageTransportQueuesUseCase : UIMUseCase {
   private TransportQueueRepository queueRepo;
   private ContentActivityRepository activityRepo;
 

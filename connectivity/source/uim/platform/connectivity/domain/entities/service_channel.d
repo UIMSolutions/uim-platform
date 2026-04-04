@@ -8,8 +8,7 @@ module uim.platform.connectivity.domain.entities.service_channel;
 import uim.platform.connectivity.domain.types;
 
 /// Tunnel / service channel between cloud and on-premise.
-struct ServiceChannel
-{
+struct ServiceChannel {
   ChannelId id;
   ConnectorId connectorId;
   TenantId tenantId;

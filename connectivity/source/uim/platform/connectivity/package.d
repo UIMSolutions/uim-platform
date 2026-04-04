@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity;
 
-public
-{
+public {
   import uim.platform.service;
 
   import uim.platform.connectivity.application;

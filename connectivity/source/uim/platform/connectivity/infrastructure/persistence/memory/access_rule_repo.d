@@ -17,8 +17,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAccessRuleRepository : AccessRuleRepository
-{
+class MemoryAccessRuleRepository : AccessRuleRepository {
   private AccessRule[RuleId] store;
 
   AccessRule findById(RuleId id)

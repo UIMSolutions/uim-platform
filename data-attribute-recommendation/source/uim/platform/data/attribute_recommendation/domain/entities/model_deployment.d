@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// A deployed instance of a trained model, exposing an inference endpoint
 /// for real-time attribute recommendations.
-struct ModelDeployment
-{
+struct ModelDeployment {
   DeploymentId id;
   TenantId tenantId;
   TrainingJobId trainingJobId;

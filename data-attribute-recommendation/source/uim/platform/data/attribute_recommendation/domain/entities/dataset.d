@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// A training dataset containing column definitions and data records
 /// used to train attribute recommendation models.
-struct Dataset
-{
+struct Dataset {
   DatasetId id;
   TenantId tenantId;
   string name;

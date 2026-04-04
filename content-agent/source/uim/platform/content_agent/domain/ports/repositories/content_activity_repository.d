@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.content_activity;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content activity (audit log) persistence.
-interface ContentActivityRepository
-{
+interface ContentActivityRepository {
   ContentActivity findById(ContentActivityId id);
   ContentActivity[] findByTenant(TenantId tenantId);
   ContentActivity[] findByEntity(string entityId);

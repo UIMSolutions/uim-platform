@@ -10,8 +10,7 @@ import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
 /// Result of a package assembly operation.
-struct AssemblyResult
-{
+struct AssemblyResult {
   bool valid;
   string[] errors;
   string[] resolvedDependencies;
@@ -19,8 +18,7 @@ struct AssemblyResult
 }
 
 /// Domain service: validates and assembles content items into a package.
-struct PackageAssembler
-{
+struct PackageAssembler {
   /// Validate that all items in the package are consistent and have their dependencies met.
   static AssemblyResult validate(const ref ContentPackage pkg, const ContentProvider[] providers)
   {

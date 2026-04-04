@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - transport queue persistence.
-interface TransportQueueRepository
-{
+interface TransportQueueRepository {
   TransportQueue findById(TransportQueueId id);
   TransportQueue[] findByTenant(TenantId tenantId);
   TransportQueue findDefault(TenantId tenantId);

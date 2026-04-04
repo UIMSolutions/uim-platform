@@ -9,8 +9,7 @@ import uim.platform.data.attribute_recommendation.domain.types;
 
 /// Configuration for a machine-learning model that defines which dataset
 /// to train on, which columns are features/targets, and hyperparameters.
-struct ModelConfiguration
-{
+struct ModelConfiguration {
   ModelConfigId id;
   TenantId tenantId;
   DatasetId datasetId;

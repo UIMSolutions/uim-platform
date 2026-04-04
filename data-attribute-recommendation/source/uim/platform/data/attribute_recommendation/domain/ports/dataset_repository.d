@@ -8,8 +8,7 @@ module uim.platform.data.attribute_recommendation.domain.ports.repositories.data
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 
-interface DatasetRepository
-{
+interface DatasetRepository {
   Dataset[] findByTenant(TenantId tenantId);
   Dataset* findById(DatasetId id, TenantId tenantId);
   Dataset* findByName(TenantId tenantId, string name);

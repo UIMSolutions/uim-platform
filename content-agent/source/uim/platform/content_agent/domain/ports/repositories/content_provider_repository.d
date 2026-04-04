@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - content provider persistence.
-interface ContentProviderRepository
-{
+interface ContentProviderRepository {
   ContentProvider findById(ContentProviderId id);
   ContentProvider[] findByTenant(TenantId tenantId);
   ContentProvider findByName(TenantId tenantId, string name);

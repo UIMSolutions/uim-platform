@@ -12,8 +12,7 @@ import uim.platform.content_agent.domain.ports.repositories.content_packages;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryContentPackageRepository : ContentPackageRepository
-{
+class MemoryContentPackageRepository : ContentPackageRepository {
   private ContentPackage[ContentPackageId] store;
 
   ContentPackage findById(ContentPackageId id)

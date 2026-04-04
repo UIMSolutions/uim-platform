@@ -9,8 +9,7 @@ import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 
 /// Port: outgoing - import job persistence.
-interface ImportJobRepository
-{
+interface ImportJobRepository {
   ImportJob findById(ImportJobId id);
   ImportJob[] findByTenant(TenantId tenantId);
   ImportJob[] findByPackage(ContentPackageId packageId);

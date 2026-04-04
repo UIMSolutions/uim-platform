@@ -15,8 +15,7 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.mode
 import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
 
 /// Read-only summaries for training jobs, deployments, and overall pipeline health.
-struct TrainingJobSummary
-{
+struct TrainingJobSummary {
   TrainingJobId jobId;
   ModelConfigId modelConfigId;
   string modelName;
@@ -28,8 +27,7 @@ struct TrainingJobSummary
   long completedAt;
 }
 
-struct DeploymentSummary
-{
+struct DeploymentSummary {
   DeploymentId deploymentId;
   string deploymentName;
   DeploymentStatus status;
@@ -39,8 +37,7 @@ struct DeploymentSummary
   long inferenceCount;
 }
 
-struct PipelineSummary
-{
+struct PipelineSummary {
   int totalModels;
   int trainedModels;
   int activeDeployments;
@@ -50,8 +47,7 @@ struct PipelineSummary
   long totalInferenceRequests;
 }
 
-class MonitorTrainingUseCase
-{
+class MonitorTrainingUseCase : UIMUseCase {
   private TrainingJobRepository jobRepo;
   private DeploymentRepository deploymentRepo;
   private ModelConfigRepository configRepo;

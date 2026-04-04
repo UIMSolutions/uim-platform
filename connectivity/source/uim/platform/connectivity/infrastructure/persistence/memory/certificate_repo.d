@@ -17,8 +17,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryCertificateRepository : CertificateRepository
-{
+class MemoryCertificateRepository : CertificateRepository {
   private Certificate[CertificateId] store;
 
   Certificate findById(CertificateId id)

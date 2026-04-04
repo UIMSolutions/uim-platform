@@ -16,8 +16,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryDestinationRepository : DestinationRepository
-{
+class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
   Destination findById(DestinationId id)
