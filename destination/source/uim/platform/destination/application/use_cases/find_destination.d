@@ -10,9 +10,9 @@ import uim.platform.destination.domain.entities.destination;
 import uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.entities.auth_token;
 import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.ports.destination_repository;
-import uim.platform.destination.domain.ports.fragment_repository;
-import uim.platform.destination.domain.ports.certificate_repository;
+import uim.platform.destination.domain.ports.repositories.destinations;
+import uim.platform.destination.domain.ports.repositories.fragments;
+import uim.platform.destination.domain.ports.repositories.certificates;
 import uim.platform.destination.domain.services.destination_resolver;
 import uim.platform.destination.domain.types;
 

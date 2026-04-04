@@ -7,7 +7,7 @@ module uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rul
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_rule;
-import uim.platform.data.quality.domain.ports.cleansing_rule_repository;
+import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 
 // import std.algorithm : filter;
 // import std.array : array;

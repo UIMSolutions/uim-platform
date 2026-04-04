@@ -7,7 +7,7 @@ module uim.platform.destination.infrastructure.persistence.memory.certificate_re
 
 import uim.platform.destination.domain.types;
 import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.ports.certificate_repository;
+import uim.platform.destination.domain.ports.repositories.certificates;
 
 // import std.algorithm : filter;
 // import std.array : array;

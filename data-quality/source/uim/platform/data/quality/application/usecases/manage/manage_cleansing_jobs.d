@@ -10,7 +10,7 @@ module uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;
-import uim.platform.data.quality.domain.ports.cleansing_job_repository;
+import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 import uim.platform.data.quality.application.dto;
 
 class ManageCleansingJobsUseCase

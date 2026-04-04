@@ -10,8 +10,8 @@ module uim.platform.dms.application.application.usecases.manage.shares;
 // 
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.share;
-// import uim.platform.dms.application.domain.ports.share_repository;
-// import uim.platform.dms.application.domain.ports.document_repository;
+// import uim.platform.dms.application.domain.ports.repositories.shares;
+// import uim.platform.dms.application.domain.ports.repositories.documents;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

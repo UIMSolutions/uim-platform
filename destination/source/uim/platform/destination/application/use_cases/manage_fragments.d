@@ -7,7 +7,7 @@ module uim.platform.destination.application.usecases.manage.fragments;
 
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.destination_fragment;
-import uim.platform.destination.domain.ports.fragment_repository;
+import uim.platform.destination.domain.ports.repositories.fragments;
 import uim.platform.destination.domain.types;
 
 // import std.conv : to;

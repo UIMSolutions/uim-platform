@@ -6,7 +6,7 @@
 module uim.platform.dms.application.infrastructure.persistence.memory.favorite_repo;
 
 // import uim.platform.dms.application.domain.entities.favorite;
-// import uim.platform.dms.application.domain.ports.favorite_repository;
+// import uim.platform.dms.application.domain.ports.repositories.favorites;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

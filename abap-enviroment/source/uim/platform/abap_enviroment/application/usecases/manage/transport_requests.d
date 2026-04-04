@@ -15,17 +15,14 @@ import uim.platform.abap_enviroment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for transport request management (CTS-like).
-class ManageTransportRequestsUseCase
-{
+class ManageTransportRequestsUseCase {
   private TransportRequestRepository repo;
 
-  this(TransportRequestRepository repo)
-  {
+  this(TransportRequestRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRequest(CreateTransportRequestRequest req)
-  {
+  CommandResult createRequest(CreateTransportRequestRequest req) {
     if (req.description.length == 0)
       return CommandResult("", "Transport request description is required");
     if (req.owner.length == 0)
@@ -51,8 +48,7 @@ class ManageTransportRequestsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req)
-  {
+  CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
     auto tr = repo.findById(requestId);
     if (tr is null)
       return CommandResult("", "Transport request not found");
@@ -76,22 +72,17 @@ class ManageTransportRequestsUseCase
     return CommandResult(taskId, "");
   }
 
-  CommandResult releaseTask(TransportRequestId requestId, string taskId)
-  {
+  CommandResult releaseTask(TransportRequestId requestId, string taskId) {
     auto tr = repo.findById(requestId);
     if (tr is null)
       return CommandResult("", "Transport request not found");
 
-    foreach (ref task; tr.tasks)
-    {
-      if (task.taskId == taskId)
-      {
+    foreach (ref task; tr.tasks) {
+      if (task.taskId == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
-        if (!validation.valid)
-        {
+        if (!validation.valid) {
           string msg;
-          foreach (i, e; validation.errors)
-          {
+          foreach (i, e; validation.errors) {
             if (i > 0)
               msg ~= "; ";
             msg ~= e;
@@ -110,18 +101,15 @@ class ManageTransportRequestsUseCase
     return CommandResult("", "Task not found");
   }
 
-  CommandResult releaseRequest(TransportRequestId id)
-  {
+  CommandResult releaseRequest(TransportRequestId id) {
     auto tr = repo.findById(id);
     if (tr is null)
       return CommandResult("", "Transport request not found");
 
     auto validation = TransportReleaseValidator.validateRelease(*tr);
-    if (!validation.valid)
-    {
+    if (!validation.valid) {
       string msg;
-      foreach (i, e; validation.errors)
-      {
+      foreach (i, e; validation.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -138,23 +126,19 @@ class ManageTransportRequestsUseCase
     return CommandResult(id, "");
   }
 
-  TransportRequest* getRequest(TransportRequestId id)
-  {
+  TransportRequest* getRequest(TransportRequestId id) {
     return repo.findById(id);
   }
 
-  TransportRequest[] listRequests(SystemInstanceId systemId)
-  {
+  TransportRequest[] listRequests(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  TransportRequest[] listByStatus(SystemInstanceId systemId, string statusStr)
-  {
+  TransportRequest[] listByStatus(SystemInstanceId systemId, string statusStr) {
     return repo.findByStatus(systemId, parseTransportStatus(statusStr));
   }
 
-  CommandResult deleteRequest(TransportRequestId id)
-  {
+  CommandResult deleteRequest(TransportRequestId id) {
     auto tr = repo.findById(id);
     if (tr is null)
       return CommandResult("", "Transport request not found");
@@ -167,10 +151,8 @@ class ManageTransportRequestsUseCase
   }
 }
 
-private TransportType parseTransportType(string s)
-{
-  switch (s)
-  {
+private TransportType parseTransportType(string s) {
+  switch (s) {
   case "workbench":
     return TransportType.workbench;
   case "customizing":
@@ -182,10 +164,8 @@ private TransportType parseTransportType(string s)
   }
 }
 
-private TransportStatus parseTransportStatus(string s)
-{
-  switch (s)
-  {
+private TransportStatus parseTransportStatus(string s) {
+  switch (s) {
   case "modifiable":
     return TransportStatus.modifiable;
   case "released":

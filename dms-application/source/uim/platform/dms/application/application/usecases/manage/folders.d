@@ -10,8 +10,8 @@ module uim.platform.dms.application.application.usecases.manage.folders;
 // 
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.folder;
-// import uim.platform.dms.application.domain.ports.folder_repository;
-// import uim.platform.dms.application.domain.ports.repository_repository;
+// import uim.platform.dms.application.domain.ports.repositories.folders;
+// import uim.platform.dms.application.domain.ports.repositories.repositorys;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

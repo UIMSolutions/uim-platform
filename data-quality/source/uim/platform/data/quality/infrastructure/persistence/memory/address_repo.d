@@ -7,7 +7,7 @@ module uim.platform.data.quality.infrastructure.persistence.memory.address_repo;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;
-import uim.platform.data.quality.domain.ports.address_repository;
+import uim.platform.data.quality.domain.ports.repositories.addresss;
 
 // import std.algorithm : filter;
 // import std.array : array;

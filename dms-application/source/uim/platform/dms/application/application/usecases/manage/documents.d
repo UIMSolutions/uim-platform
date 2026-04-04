@@ -11,9 +11,9 @@ module uim.platform.dms.application.application.usecases.manage.documents;
 // import uim.platform.dms.application.application.dto;
 // import uim.platform.dms.application.domain.entities.document;
 // import uim.platform.dms.application.domain.entities.document_version;
-// import uim.platform.dms.application.domain.ports.document_repository;
-// import uim.platform.dms.application.domain.ports.document_version_repository;
-// import uim.platform.dms.application.domain.ports.folder_repository;
+// import uim.platform.dms.application.domain.ports.repositories.documents;
+// import uim.platform.dms.application.domain.ports.repositories.document_versions;
+// import uim.platform.dms.application.domain.ports.repositories.folders;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

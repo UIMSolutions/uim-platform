@@ -10,9 +10,9 @@ module uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_retrieval_request;
-import uim.platform.data.privacy.domain.ports.data_retrieval_request_repository;
-import uim.platform.data.privacy.domain.ports.data_subject_repository;
-import uim.platform.data.privacy.domain.ports.personal_data_model_repository;
+import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
+import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
+import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 import uim.platform.data.privacy.application.dto;
 
 class ManageDataRetrievalsUseCase

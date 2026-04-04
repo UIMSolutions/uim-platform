@@ -7,7 +7,7 @@ module uim.platform.data.privacy.infrastructure.persistence.memory.consent_recor
 
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
-import uim.platform.data.privacy.domain.ports.consent_record_repository;
+import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 
 class MemoryConsentRecordRepository : ConsentRecordRepository
 {

@@ -12,10 +12,10 @@ module uim.platform.dms.application.application.usecases.browse_content;
 // import uim.platform.dms.application.domain.entities.document;
 // import uim.platform.dms.application.domain.entities.folder;
 // import uim.platform.dms.application.domain.entities.favorite;
-// import uim.platform.dms.application.domain.ports.document_repository;
-// import uim.platform.dms.application.domain.ports.folder_repository;
-// import uim.platform.dms.application.domain.ports.favorite_repository;
-// import uim.platform.dms.application.domain.ports.repository_repository;
+// import uim.platform.dms.application.domain.ports.repositories.documents;
+// import uim.platform.dms.application.domain.ports.repositories.folders;
+// import uim.platform.dms.application.domain.ports.repositories.favorites;
+// import uim.platform.dms.application.domain.ports.repositories.repositorys;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

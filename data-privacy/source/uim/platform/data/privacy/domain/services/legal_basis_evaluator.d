@@ -8,8 +8,8 @@ module uim.platform.data.privacy.domain.services.legal_basis_evaluator;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.legal_ground;
 import uim.platform.data.privacy.domain.entities.consent_record;
-import uim.platform.data.privacy.domain.ports.legal_ground_repository;
-import uim.platform.data.privacy.domain.ports.consent_record_repository;
+import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
+import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 
 /// Result of a legal basis evaluation.
 struct LegalBasisEvaluation

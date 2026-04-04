@@ -7,7 +7,7 @@ module uim.platform.destination.application.usecases.manage.certificates;
 
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.ports.certificate_repository;
+import uim.platform.destination.domain.ports.repositories.certificates;
 import uim.platform.destination.domain.services.certificate_validator;
 import uim.platform.destination.domain.types;
 

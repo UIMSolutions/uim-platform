@@ -10,8 +10,8 @@ module uim.platform.data.privacy.application.usecases.manage.blocking_requests;
 
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;
-import uim.platform.data.privacy.domain.ports.blocking_request_repository;
-import uim.platform.data.privacy.domain.ports.data_subject_repository;
+import uim.platform.data.privacy.domain.ports.repositories.blocking_requests;
+import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy.application.dto;
 
 class ManageBlockingRequestsUseCase

@@ -6,7 +6,7 @@
 module uim.platform.dms.application.infrastructure.persistence.memory.permission_repo;
 
 // import uim.platform.dms.application.domain.entities.permission;
-// import uim.platform.dms.application.domain.ports.permission_repository;
+// import uim.platform.dms.application.domain.ports.repositories.permissions;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
