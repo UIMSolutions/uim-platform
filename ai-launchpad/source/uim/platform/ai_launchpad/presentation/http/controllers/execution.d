@@ -166,6 +166,7 @@ class ExecutionController : SAPController {
   }
 
   private Json serializeExecution(Execution ex) {
+    import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.execution : OutputArtifact;
     auto j = Json.emptyObject;
     j["id"] = Json(ex.id);

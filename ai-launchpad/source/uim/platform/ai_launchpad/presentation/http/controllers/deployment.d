@@ -169,6 +169,7 @@ class DeploymentController : SAPController {
   }
 
   private Json serializeDeployment(Deployment d) {
+    import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);

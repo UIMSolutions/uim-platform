@@ -138,6 +138,7 @@ class ConnectionController : SAPController {
   }
 
   private Json serializeConnection(Connection c) {
+    import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["name"] = Json(c.name);

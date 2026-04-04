@@ -132,6 +132,7 @@ class WorkspaceController : SAPController {
   }
 
   private Json serializeWorkspace(Workspace w) {
+    import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(w.id);
     j["name"] = Json(w.name);

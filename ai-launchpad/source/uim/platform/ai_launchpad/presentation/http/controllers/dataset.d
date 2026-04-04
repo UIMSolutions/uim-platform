@@ -142,6 +142,7 @@ class DatasetController : SAPController {
   }
 
   private Json serializeDataset(Dataset d) {
+    import std.conv : to;
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["connectionId"] = Json(d.connectionId);
