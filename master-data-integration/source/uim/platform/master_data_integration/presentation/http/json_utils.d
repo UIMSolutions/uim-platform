@@ -9,8 +9,7 @@ module uim.platform.master_data_integration.presentation.http.json_utils;
 // import vibe.http.server;
 
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -22,8 +21,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false)
-{
+bool jsonBool(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -35,8 +33,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 }
 
 /// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0)
-{
+long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -48,14 +45,12 @@ long jsonLong(Json j, string key, long default_ = 0)
 }
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0)
-{
-  return cast(int) jsonLong(j, key, default_);
+int jsonInt(Json j, string key, int default_ = 0) {
+  return cast(int)jsonLong(j, key, default_);
 }
 
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;
@@ -63,8 +58,7 @@ string[] jsonStrArray(Json j, string key)
     return [];
 
   string[] result;
-  foreach (item; *v)
-  {
+  foreach (item; *v) {
     if (item.isString)
       result ~= item.get!string;
   }
@@ -72,8 +66,7 @@ string[] jsonStrArray(Json j, string key)
 }
 
 /// Extract a string-to-string map from a Json object.
-string[string] jsonStrMap(Json j, string key)
-{
+string[string] jsonStrMap(Json j, string key) {
   if (!j.isObject)
     return (string[string]).init;
   auto v = key in j;
@@ -81,8 +74,7 @@ string[string] jsonStrMap(Json j, string key)
     return (string[string]).init;
 
   string[string] result;
-  foreach (string k, val; *v)
-  {
+  foreach (string k, val; *v) {
     if (val.isString)
       result[k] = val.get!string;
   }
@@ -90,17 +82,15 @@ string[string] jsonStrMap(Json j, string key)
 }
 
 /// Write an error response as JSON.
-void writeError(scope HTTPServerResponse res, int code, string msg)
-{
+void writeError(scope HTTPServerResponse res, int code, string msg) {
   auto j = Json.emptyObject;
   j["error"] = Json(msg);
-  j["code"] = Json(cast(long) code);
-  res.writeJsonBody(j, cast(ushort) code);
+  j["code"] = Json(cast(long)code);
+  res.writeJsonBody(j, cast(ushort)code);
 }
 
 /// Extract an ID from the end of a URI path.
-string extractIdFromPath(string uri)
-{
+string extractIdFromPath(string uri) {
   // import std.string : lastIndexOf;
   auto idx = uri.lastIndexOf('/');
   if (idx < 0 || idx + 1 >= uri.length)
@@ -111,8 +101,7 @@ string extractIdFromPath(string uri)
 }
 
 /// Serialize a string array to Json array.
-Json serializeStrArray(string[] arr)
-{
+Json serializeStrArray(string[] arr) {
   auto result = Json.emptyArray;
   foreach (s; arr)
     result ~= Json(s);
@@ -120,8 +109,7 @@ Json serializeStrArray(string[] arr)
 }
 
 /// Serialize a string[string] map to Json object.
-Json serializeStrMap(string[string] map)
-{
+Json serializeStrMap(string[string] map) {
   auto result = Json.emptyObject;
   foreach (k, v; map)
     result[k] = Json(v);
@@ -129,8 +117,7 @@ Json serializeStrMap(string[string] map)
 }
 
 /// Extract a Json array of objects (generic).
-Json[] jsonObjArray(Json j, string key)
-{
+Json[] jsonObjArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;
@@ -138,8 +125,7 @@ Json[] jsonObjArray(Json j, string key)
     return [];
 
   Json[] result;
-  foreach (item; *v)
-  {
+  foreach (item; *v) {
     if (item.type == Json.Type.object)
       result ~= item;
   }
