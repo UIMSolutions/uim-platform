@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.application.usecases.manage_alert_rules;
+module uim.platform.logging.application.usecases.manage.alert_rules;
 
 import uim.platform.logging.domain.entities.alert_rule;
 import uim.platform.logging.domain.ports.alert_rule_repository;

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.application.usecases.manage_retention_policies;
+module uim.platform.logging.application.usecases.manage.retention_policies;
 
 import uim.platform.logging.domain.entities.retention_policy;
 import uim.platform.logging.domain.ports.retention_policy_repository;

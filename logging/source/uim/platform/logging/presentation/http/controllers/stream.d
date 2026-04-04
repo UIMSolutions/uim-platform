@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.stream;
 
-import uim.platform.logging.application.usecases.manage_log_streams;
+import uim.platform.logging.application.usecases.manage.log_streams;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.domain.entities.log_stream;
 import uim.platform.logging.domain.types;

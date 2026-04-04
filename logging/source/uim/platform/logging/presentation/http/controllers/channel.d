@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.logging.presentation.http.controllers.channel;
 
-import uim.platform.logging.application.usecases.manage_notification_channels;
+import uim.platform.logging.application.usecases.manage.notification_channels;
 import uim.platform.logging.application.dto;
 import uim.platform.logging.presentation.http.json_utils;
 
