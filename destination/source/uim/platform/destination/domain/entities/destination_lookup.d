@@ -11,8 +11,7 @@ import uim.platform.destination.domain.entities.auth_token;
 import uim.platform.destination.domain.entities.certificate;
 
 /// The result of a "find destination" lookup — includes destination config, resolved auth tokens, and certificates.
-struct DestinationLookup
-{
+struct DestinationLookup {
   Destination destination;
   AuthToken[] authTokens;
   Certificate[] certificates;

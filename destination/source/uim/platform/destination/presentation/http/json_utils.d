@@ -9,8 +9,7 @@ module uim.platform.destination.presentation.http.json_utils;
 // import vibe.http.server;
 
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -22,8 +21,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false)
-{
+bool jsonBool(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -35,8 +33,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 }
 
 /// Extract a double field from a Json object.
-double jsonDouble(Json j, string key, double default_ = 0)
-{
+double jsonDouble(Json j, string key, double default_ = 0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -50,8 +47,7 @@ double jsonDouble(Json j, string key, double default_ = 0)
 }
 
 /// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0)
-{
+long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -63,14 +59,12 @@ long jsonLong(Json j, string key, long default_ = 0)
 }
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0)
-{
+int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int) jsonLong(j, key, default_);
 }
 
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;
@@ -87,8 +81,7 @@ string[] jsonStrArray(Json j, string key)
 }
 
 /// Extract a string[string] map from a Json object.
-string[string] jsonStrMap(Json j, string key)
-{
+string[string] jsonStrMap(Json j, string key) {
   if (!j.isObject)
     return (string[string]).init;
   auto v = key in j;
@@ -105,8 +98,7 @@ string[string] jsonStrMap(Json j, string key)
 }
 
 /// Convert a string array to a Json array.
-Json toJsonArray(const(string[]) arr)
-{
+Json toJsonArray(const(string[]) arr) {
   auto jarr = Json.emptyArray;
   foreach (s; arr)
     jarr ~= Json(s);
@@ -114,8 +106,7 @@ Json toJsonArray(const(string[]) arr)
 }
 
 /// Convert a string[string] map to a Json object.
-Json toJsonObject(const(string[string]) map)
-{
+Json toJsonObject(const(string[string]) map) {
   auto jobj = Json.emptyObject;
   foreach (k, v; map)
     jobj[k] = Json(v);
@@ -123,16 +114,14 @@ Json toJsonObject(const(string[string]) map)
 }
 
 /// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int statusCode, string message)
-{
+void writeError(scope HTTPServerResponse res, int statusCode, string message) {
   auto j = Json.emptyObject;
   j["error"] = Json(message);
   res.writeJsonBody(j, cast(ushort) statusCode);
 }
 
 /// Extract ID from the last segment of a request URI path.
-string extractIdFromPath(string uri)
-{
+string extractIdFromPath(string uri) {
   // import std.string : lastIndexOf;
   auto qpos = lastIndexOf(uri, '?');
   auto path = qpos >= 0 ? uri[0 .. qpos] : uri;

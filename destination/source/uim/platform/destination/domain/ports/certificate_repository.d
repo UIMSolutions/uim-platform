@@ -9,8 +9,7 @@ import uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination.domain.types;
 
 /// Port: outgoing — certificate persistence.
-interface CertificateRepository
-{
+interface CertificateRepository {
   Certificate findById(CertificateId id);
   Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name);
   Certificate[] findByTenant(TenantId tenantId);

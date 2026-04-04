@@ -6,8 +6,7 @@
 module uim.platform.identity.directory.domain.ports.repositories.password_service;
 
 /// Port: outgoing — password hashing and validation.
-interface PasswordService
-{
+interface PasswordService {
   string hashPassword(string plaintext);
   bool verifyPassword(string plaintext, string hash);
 }

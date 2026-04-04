@@ -12,8 +12,7 @@ import uim.platform.destination.domain.ports.repositories.certificates;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCertificateRepository : CertificateRepository
-{
+class MemoryCertificateRepository : CertificateRepository {
   private Certificate[CertificateId] store;
 
   Certificate findById(CertificateId id)

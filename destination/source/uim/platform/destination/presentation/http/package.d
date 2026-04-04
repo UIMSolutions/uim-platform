@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.destination.presentation;
 
-public
-{
+public {
   import uim.platform.service;
 }

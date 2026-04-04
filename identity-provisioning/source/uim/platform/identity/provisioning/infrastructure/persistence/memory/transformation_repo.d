@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
 
-class MemoryTransformationRepository : TransformationRepository
-{
+class MemoryTransformationRepository : TransformationRepository {
   private Transformation[string] store;
 
   void save(Transformation entity)

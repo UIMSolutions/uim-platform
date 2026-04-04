@@ -13,8 +13,7 @@ import uim.platform.identity.directory.domain.entities.schema : SchemaAttribute;
 
 /// --- User DTOs ---
 
-struct CreateUserRequest
-{
+struct CreateUserRequest {
   TenantId tenantId;
   string externalId;
   string userName;
@@ -32,8 +31,7 @@ struct CreateUserRequest
   string[] schemas;
 }
 
-struct UpdateUserRequest
-{
+struct UpdateUserRequest {
   UserId userId;
   UserName name;
   string displayName;
@@ -48,8 +46,7 @@ struct UpdateUserRequest
   ExtendedAttribute[] extendedAttributes;
 }
 
-struct UserResponse
-{
+struct UserResponse {
   string userId;
   string error;
 
@@ -61,8 +58,7 @@ struct UserResponse
 
 /// --- Group DTOs ---
 
-struct CreateGroupRequest
-{
+struct CreateGroupRequest {
   TenantId tenantId;
   string externalId;
   string displayName;
@@ -70,29 +66,25 @@ struct CreateGroupRequest
   GroupMember[] members;
 }
 
-struct UpdateGroupRequest
-{
+struct UpdateGroupRequest {
   GroupId groupId;
   string displayName;
   string description;
 }
 
-struct AddMemberRequest
-{
+struct AddMemberRequest {
   GroupId groupId;
   string memberId;
   string memberType; // "User" or "Group"
   string display;
 }
 
-struct RemoveMemberRequest
-{
+struct RemoveMemberRequest {
   GroupId groupId;
   string memberId;
 }
 
-struct GroupResponse
-{
+struct GroupResponse {
   string groupId;
   string error;
 
@@ -104,24 +96,21 @@ struct GroupResponse
 
 /// --- Schema DTOs ---
 
-struct CreateSchemaRequest
-{
+struct CreateSchemaRequest {
   TenantId tenantId;
   string name;
   string description;
   SchemaAttribute[] attributes;
 }
 
-struct UpdateSchemaRequest
-{
+struct UpdateSchemaRequest {
   SchemaId schemaId;
   string name;
   string description;
   SchemaAttribute[] attributes;
 }
 
-struct SchemaResponse
-{
+struct SchemaResponse {
   string schemaId;
   string error;
 
@@ -133,8 +122,7 @@ struct SchemaResponse
 
 /// --- Password Policy DTOs ---
 
-struct CreatePasswordPolicyRequest
-{
+struct CreatePasswordPolicyRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -152,8 +140,7 @@ struct CreatePasswordPolicyRequest
   uint expiryDays;
 }
 
-struct PasswordPolicyResponse
-{
+struct PasswordPolicyResponse {
   string policyId;
   string error;
 
@@ -165,8 +152,7 @@ struct PasswordPolicyResponse
 
 /// --- API Client DTOs ---
 
-struct CreateApiClientRequest
-{
+struct CreateApiClientRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -174,8 +160,7 @@ struct CreateApiClientRequest
   long expiresAt; // 0 = no expiry
 }
 
-struct ApiClientResponse
-{
+struct ApiClientResponse {
   string clientId;
   string clientSecret; // only returned on creation
   string error;
@@ -188,8 +173,7 @@ struct ApiClientResponse
 
 /// --- SCIM List Response ---
 
-struct ScimListResponse(T)
-{
+struct ScimListResponse(T) {
   long totalResults;
   long startIndex;
   long itemsPerPage;

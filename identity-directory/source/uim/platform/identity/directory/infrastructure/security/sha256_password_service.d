@@ -12,8 +12,7 @@ import uim.platform.identity.directory.domain.ports.repositories.password_servic
 // import std.string : representation;
 
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
-class Sha256PasswordService : PasswordService
-{
+class Sha256PasswordService : PasswordService {
   string hashPassword(string plaintext)
   {
     auto salt = randomUUID().toString()[0 .. 8];

@@ -14,8 +14,7 @@ alias AttributeId = string;
 alias ApiClientId = string;
 
 /// SCIM 2.0 user status.
-enum UserStatus
-{
+enum UserStatus {
   active,
   inactive,
   locked,
@@ -23,15 +22,13 @@ enum UserStatus
 }
 
 /// SCIM 2.0 group type.
-enum GroupType
-{
+enum GroupType {
   standard,
   dynamic,
 }
 
 /// Attribute data types for custom schemas.
-enum AttributeType
-{
+enum AttributeType {
   stringType,
   integerType,
   booleanType,
@@ -42,8 +39,7 @@ enum AttributeType
 }
 
 /// Attribute mutability (SCIM 2.0).
-enum Mutability
-{
+enum Mutability {
   readWrite,
   readOnly,
   writeOnly,
@@ -51,8 +47,7 @@ enum Mutability
 }
 
 /// Attribute returned behavior (SCIM 2.0).
-enum Returned
-{
+enum Returned {
   always,
   never,
   default_,
@@ -60,16 +55,14 @@ enum Returned
 }
 
 /// Attribute uniqueness (SCIM 2.0).
-enum Uniqueness
-{
+enum Uniqueness {
   none,
   server,
   global,
 }
 
 /// Password policy strength level.
-enum PasswordStrength
-{
+enum PasswordStrength {
   weak,
   standard,
   strong,
@@ -77,8 +70,7 @@ enum PasswordStrength
 }
 
 /// Audit event type.
-enum AuditEventType
-{
+enum AuditEventType {
   userCreated,
   userUpdated,
   userDeleted,
@@ -103,8 +95,7 @@ enum AuditEventType
 }
 
 /// Sort order.
-enum SortOrder
-{
+enum SortOrder {
   ascending,
   descending,
 }

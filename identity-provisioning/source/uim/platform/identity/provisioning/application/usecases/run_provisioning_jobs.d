@@ -17,8 +17,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 import uim.platform.identity.provisioning.domain.services.provisioning_engine;
 import uim.platform.identity.provisioning.application.dto;
 
-class RunProvisioningJobsUseCase
-{
+class RunProvisioningJobsUseCase : UIMUseCase {
   private ProvisioningJobRepository repo;
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;

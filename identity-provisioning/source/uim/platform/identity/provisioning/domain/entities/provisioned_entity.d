@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 /// A tracked identity entity (user or group) that has been
 /// provisioned from a source to a target system.
-struct ProvisionedEntity
-{
+struct ProvisionedEntity {
   ProvisionedEntityId id;
   TenantId tenantId;
   string externalId; // id in the external system

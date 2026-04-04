@@ -10,8 +10,7 @@ import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.repositories.password_policys;
 
 /// In-memory adapter for password policy persistence.
-class MemoryPasswordPolicyRepository : PasswordPolicyRepository
-{
+class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
   private PasswordPolicy[string] store;
 
   PasswordPolicy findById(string id)

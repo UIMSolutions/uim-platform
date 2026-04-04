@@ -16,8 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.proxy_system;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class ProxySystemController
-{
+class ProxySystemController {
   private ManageProxySystemsUseCase uc;
 
   this(ManageProxySystemsUseCase uc)

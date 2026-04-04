@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 /// An audit record for a single entity operation within a
 /// provisioning job run.
-struct ProvisioningLog
-{
+struct ProvisioningLog {
   ProvisioningLogId id;
   TenantId tenantId;
   ProvisioningJobId jobId;

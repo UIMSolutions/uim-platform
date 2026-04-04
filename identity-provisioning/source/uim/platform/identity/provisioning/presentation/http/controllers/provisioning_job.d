@@ -16,8 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class ProvisioningJobController
-{
+class ProvisioningJobController {
   private RunProvisioningJobsUseCase uc;
 
   this(RunProvisioningJobsUseCase uc)

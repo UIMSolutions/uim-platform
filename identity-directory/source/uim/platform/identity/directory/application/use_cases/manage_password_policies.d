@@ -16,8 +16,7 @@ import uim.platform.identity.directory.application.dto;
 // import std.datetime.systime : Clock;
 
 /// Application use case: password policy management.
-class ManagePasswordPoliciesUseCase
-{
+class ManagePasswordPoliciesUseCase : UIMUseCase {
   private PasswordPolicyRepository policyRepo;
   private AuditRepository auditRepo;
 

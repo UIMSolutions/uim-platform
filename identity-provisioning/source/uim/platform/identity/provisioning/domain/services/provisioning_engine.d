@@ -23,8 +23,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_
 /// Core domain service that orchestrates the provisioning pipeline:
 /// reads entities from a source, applies transformations, and writes
 /// to a target system.
-class ProvisioningEngine
-{
+class ProvisioningEngine {
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;
   private ProvisioningJobRepository jobRepo;

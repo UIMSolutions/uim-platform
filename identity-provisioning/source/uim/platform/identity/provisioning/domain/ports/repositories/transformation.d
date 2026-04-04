@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.transformati
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;
 
-interface TransformationRepository
-{
+interface TransformationRepository {
   Transformation[] findByTenant(TenantId tenantId);
   Transformation* findById(TransformationId id, TenantId tenantId);
   Transformation[] findBySystem(string systemId, TenantId tenantId);

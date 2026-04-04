@@ -15,8 +15,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.source_syste
 import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 import uim.platform.identity.provisioning.application.dto;
 
-class ManageProxySystemsUseCase
-{
+class ManageProxySystemsUseCase : UIMUseCase {
   private ProxySystemRepository repo;
   private SourceSystemRepository sourceRepo;
   private TargetSystemRepository targetRepo;

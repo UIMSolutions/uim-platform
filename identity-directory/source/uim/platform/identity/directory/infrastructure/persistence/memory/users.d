@@ -13,8 +13,7 @@ import uim.platform.identity.directory.domain.ports.repositories.users;
 // import std.string : toLower, indexOf;
 
 /// In-memory adapter for user persistence.
-class MemoryUserRepository : UserRepository
-{
+class MemoryUserRepository : UserRepository {
   private User[UserId] store;
 
   User findById(UserId id)

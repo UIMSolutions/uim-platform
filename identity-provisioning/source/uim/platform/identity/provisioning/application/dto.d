@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 // --- Source System ---
 
-struct CreateSourceSystemRequest
-{
+struct CreateSourceSystemRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -19,8 +18,7 @@ struct CreateSourceSystemRequest
   UserId createdBy;
 }
 
-struct UpdateSourceSystemRequest
-{
+struct UpdateSourceSystemRequest {
   SourceSystemId id;
   TenantId tenantId;
   string name;
@@ -30,8 +28,7 @@ struct UpdateSourceSystemRequest
 
 // --- Target System ---
 
-struct CreateTargetSystemRequest
-{
+struct CreateTargetSystemRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -40,8 +37,7 @@ struct CreateTargetSystemRequest
   UserId createdBy;
 }
 
-struct UpdateTargetSystemRequest
-{
+struct UpdateTargetSystemRequest {
   TargetSystemId id;
   TenantId tenantId;
   string name;
@@ -51,8 +47,7 @@ struct UpdateTargetSystemRequest
 
 // --- Proxy System ---
 
-struct CreateProxySystemRequest
-{
+struct CreateProxySystemRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -63,8 +58,7 @@ struct CreateProxySystemRequest
   UserId createdBy;
 }
 
-struct UpdateProxySystemRequest
-{
+struct UpdateProxySystemRequest {
   ProxySystemId id;
   TenantId tenantId;
   string name;
@@ -74,8 +68,7 @@ struct UpdateProxySystemRequest
 
 // --- Transformation ---
 
-struct CreateTransformationRequest
-{
+struct CreateTransformationRequest {
   TenantId tenantId;
   string systemId;
   SystemRole systemRole;
@@ -85,8 +78,7 @@ struct CreateTransformationRequest
   UserId createdBy;
 }
 
-struct UpdateTransformationRequest
-{
+struct UpdateTransformationRequest {
   TransformationId id;
   TenantId tenantId;
   string name;
@@ -96,8 +88,7 @@ struct UpdateTransformationRequest
 
 // --- Provisioning Job ---
 
-struct CreateProvisioningJobRequest
-{
+struct CreateProvisioningJobRequest {
   TenantId tenantId;
   SourceSystemId sourceSystemId;
   TargetSystemId targetSystemId;
@@ -108,8 +99,7 @@ struct CreateProvisioningJobRequest
 
 // --- Command Result ---
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 

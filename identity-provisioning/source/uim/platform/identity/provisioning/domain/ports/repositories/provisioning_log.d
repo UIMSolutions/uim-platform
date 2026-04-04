@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 
-interface ProvisioningLogRepository
-{
+interface ProvisioningLogRepository {
   ProvisioningLog[] findByTenant(TenantId tenantId);
   ProvisioningLog* findById(ProvisioningLogId id, TenantId tenantId);
   ProvisioningLog[] findByJob(ProvisioningJobId jobId, TenantId tenantId);

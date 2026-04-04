@@ -19,8 +19,7 @@ alias UserId = string;
 // --- Enums ---
 
 /// Type of connected system.
-enum SystemType
-{
+enum SystemType {
   ias,
   ldap,
   sap_hr,
@@ -31,8 +30,7 @@ enum SystemType
 }
 
 /// Operational status of a system connection.
-enum SystemStatus
-{
+enum SystemStatus {
   active,
   inactive,
   error,
@@ -40,24 +38,21 @@ enum SystemStatus
 }
 
 /// Role of a system in the provisioning pipeline.
-enum SystemRole
-{
+enum SystemRole {
   source,
   target,
   proxy
 }
 
 /// Type of provisioning job.
-enum JobType
-{
+enum JobType {
   full,
   delta,
   simulate
 }
 
 /// Status of a provisioning job.
-enum JobStatus
-{
+enum JobStatus {
   scheduled,
   running,
   completed,
@@ -66,8 +61,7 @@ enum JobStatus
 }
 
 /// Type of provisioning operation on a single entity.
-enum OperationType
-{
+enum OperationType {
   create,
   update,
   delete_,
@@ -75,23 +69,20 @@ enum OperationType
 }
 
 /// Outcome of a single provisioning operation.
-enum LogStatus
-{
+enum LogStatus {
   success,
   failed,
   skipped
 }
 
 /// Kind of identity entity being provisioned.
-enum EntityType
-{
+enum EntityType {
   user,
   group
 }
 
 /// Status of a provisioned entity in a target system.
-enum EntityStatus
-{
+enum EntityStatus {
   active,
   inactive,
   pending,

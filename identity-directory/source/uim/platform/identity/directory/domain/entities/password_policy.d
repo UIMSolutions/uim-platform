@@ -8,8 +8,7 @@ module uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity.directory.domain.types;
 
 /// Password policy configuration per tenant.
-struct PasswordPolicy
-{
+struct PasswordPolicy {
   string id;
   TenantId tenantId;
   string name;

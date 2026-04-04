@@ -16,8 +16,7 @@ import uim.platform.destination.domain.entities.destination;
 import uim.platform.destination.domain.types;
 import uim.platform.destination.presentation.http.json_utils;
 
-class DestinationController : SAPController
-{
+class DestinationController : SAPController {
   private ManageDestinationsUseCase uc;
 
   this(ManageDestinationsUseCase uc)

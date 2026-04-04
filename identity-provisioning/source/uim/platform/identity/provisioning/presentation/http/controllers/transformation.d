@@ -16,8 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.transformation;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class TransformationController
-{
+class TransformationController {
   private ManageTransformationsUseCase uc;
 
   this(ManageTransformationsUseCase uc)

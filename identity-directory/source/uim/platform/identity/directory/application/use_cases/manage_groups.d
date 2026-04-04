@@ -20,8 +20,7 @@ import uim.platform.identity.directory.application.dto;
 // import std.array : array;
 
 /// Application use case: SCIM 2.0 group management.
-class ManageGroupsUseCase
-{
+class ManageGroupsUseCase : UIMUseCase {
   private GroupRepository groupRepo;
   private UserRepository userRepo;
   private AuditRepository auditRepo;

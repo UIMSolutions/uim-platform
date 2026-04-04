@@ -14,8 +14,7 @@ import uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for API client management.
-class ApiClientController
-{
+class ApiClientController {
   private ManageApiClientsUseCase useCase;
 
   this(ManageApiClientsUseCase useCase)

@@ -13,8 +13,7 @@ import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for audit log queries.
-class AuditController
-{
+class AuditController {
   private QueryAuditLogUseCase useCase;
 
   this(QueryAuditLogUseCase useCase)

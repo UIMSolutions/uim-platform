@@ -10,8 +10,7 @@ import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.repositories.api_clients;
 
 /// In-memory adapter for API client persistence.
-class MemoryApiClientRepository : ApiClientRepository
-{
+class MemoryApiClientRepository : ApiClientRepository {
   private ApiClient[ApiClientId] store;
 
   ApiClient findById(ApiClientId id)

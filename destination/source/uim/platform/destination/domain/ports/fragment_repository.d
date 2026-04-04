@@ -9,8 +9,7 @@ import uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.types;
 
 /// Port: outgoing — destination fragment persistence.
-interface FragmentRepository
-{
+interface FragmentRepository {
   DestinationFragment findById(FragmentId id);
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name);
   DestinationFragment[] findByTenant(TenantId tenantId);

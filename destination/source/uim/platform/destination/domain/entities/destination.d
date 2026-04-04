@@ -8,8 +8,7 @@ module uim.platform.destination.domain.entities.destination;
 import uim.platform.destination.domain.types;
 
 /// A destination configuration — defines how to connect to a remote system.
-struct Destination
-{
+struct Destination {
   DestinationId id;
   TenantId tenantId;
   SubaccountId subaccountId;

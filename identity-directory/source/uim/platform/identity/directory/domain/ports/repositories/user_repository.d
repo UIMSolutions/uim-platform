@@ -9,8 +9,7 @@ import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — user persistence (SCIM 2.0 compliant).
-interface UserRepository
-{
+interface UserRepository {
   User findById(UserId id);
   User findByUserName(TenantId tenantId, string userName);
   User findByExternalId(TenantId tenantId, string externalId);

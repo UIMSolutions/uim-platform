@@ -15,11 +15,9 @@ import uim.platform.identity.directory.infrastructure.container;
 // import std.stdio : writefln;
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     // Load configuration

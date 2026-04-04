@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 /// A source system from which identities (users/groups) are read
 /// during provisioning runs.
-struct SourceSystem
-{
+struct SourceSystem {
   SourceSystemId id;
   TenantId tenantId;
   string name;

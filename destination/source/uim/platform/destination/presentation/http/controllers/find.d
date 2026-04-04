@@ -14,8 +14,7 @@ import uim.platform.destination.application.usecases.find_destination;
 import uim.platform.destination.application.dto;
 import uim.platform.destination.presentation.http.json_utils;
 
-class FindController
-{
+class FindController {
   private FindDestinationUseCase uc;
 
   this(FindDestinationUseCase uc)

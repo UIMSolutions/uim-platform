@@ -11,8 +11,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.transformati
 
 /// Domain service that applies transformation rules to identity
 /// attributes during provisioning.
-class TransformationEngine
-{
+class TransformationEngine {
   private TransformationRepository repo;
 
   this(TransformationRepository repo)

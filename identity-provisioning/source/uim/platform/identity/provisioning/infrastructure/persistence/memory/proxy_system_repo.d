@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.proxy_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.proxy_systems;
 
-class MemoryProxySystemRepository : ProxySystemRepository
-{
+class MemoryProxySystemRepository : ProxySystemRepository {
   private ProxySystem[string] store;
 
   void save(ProxySystem entity)

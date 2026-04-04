@@ -11,8 +11,7 @@ import uim.platform.destination.domain.types;
 // import std.datetime.systime : Clock;
 
 /// Result of certificate validation.
-struct ValidationResult
-{
+struct ValidationResult {
   bool isValid;
   CertificateStatus status;
   string message;
@@ -20,8 +19,7 @@ struct ValidationResult
 }
 
 /// Domain service: validates certificates and checks expiry.
-struct CertificateValidator
-{
+struct CertificateValidator {
   enum SECONDS_PER_DAY = 86_400;
   enum EXPIRY_WARNING_DAYS = 30;
 

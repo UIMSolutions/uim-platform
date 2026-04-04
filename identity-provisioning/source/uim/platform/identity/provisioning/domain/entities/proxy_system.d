@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 /// A proxy system that acts as an intermediary between a source
 /// and target system, applying transformations and access control.
-struct ProxySystem
-{
+struct ProxySystem {
   ProxySystemId id;
   TenantId tenantId;
   string name;

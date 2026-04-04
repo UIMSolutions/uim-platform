@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.proxy_system
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.proxy_system;
 
-interface ProxySystemRepository
-{
+interface ProxySystemRepository {
   ProxySystem[] findByTenant(TenantId tenantId);
   ProxySystem* findById(ProxySystemId id, TenantId tenantId);
   ProxySystem* findByName(TenantId tenantId, string name);

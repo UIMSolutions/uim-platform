@@ -9,8 +9,7 @@ import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — audit event persistence.
-interface AuditRepository
-{
+interface AuditRepository {
   void save(AuditEvent event);
   AuditEvent[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
   AuditEvent[] findByActor(string actorId, uint offset = 0, uint limit = 100);

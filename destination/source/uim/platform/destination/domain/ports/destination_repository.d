@@ -9,8 +9,7 @@ import uim.platform.destination.domain.entities.destination;
 import uim.platform.destination.domain.types;
 
 /// Port: outgoing — destination configuration persistence.
-interface DestinationRepository
-{
+interface DestinationRepository {
   Destination findById(DestinationId id);
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name);
   Destination[] findByTenant(TenantId tenantId);

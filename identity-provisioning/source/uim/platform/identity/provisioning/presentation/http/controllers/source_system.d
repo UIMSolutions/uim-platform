@@ -16,8 +16,7 @@ import uim.platform.identity.provisioning.domain.entities.source_system;
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.presentation.http.json_utils;
 
-class SourceSystemController
-{
+class SourceSystemController {
   private ManageSourceSystemsUseCase uc;
 
   this(ManageSourceSystemsUseCase uc)

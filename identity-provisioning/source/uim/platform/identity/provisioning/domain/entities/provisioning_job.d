@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 
 /// A provisioning job that synchronises identities from a source
 /// system to a target system.
-struct ProvisioningJob
-{
+struct ProvisioningJob {
   ProvisioningJobId id;
   TenantId tenantId;
   SourceSystemId sourceSystemId;

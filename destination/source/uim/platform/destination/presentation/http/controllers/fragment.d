@@ -16,8 +16,7 @@ import uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.types;
 import uim.platform.destination.presentation.http.json_utils;
 
-class FragmentController
-{
+class FragmentController {
   private ManageFragmentsUseCase uc;
 
   this(ManageFragmentsUseCase uc)

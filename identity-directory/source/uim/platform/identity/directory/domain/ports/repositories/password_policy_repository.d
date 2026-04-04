@@ -9,8 +9,7 @@ import uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity.directory.domain.types;
 
 /// Port: outgoing — password policy persistence.
-interface PasswordPolicyRepository
-{
+interface PasswordPolicyRepository {
   PasswordPolicy findById(string id);
   PasswordPolicy findActiveForTenant(TenantId tenantId);
   PasswordPolicy[] findByTenant(TenantId tenantId);

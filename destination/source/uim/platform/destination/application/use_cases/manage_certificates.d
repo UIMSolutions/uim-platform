@@ -14,8 +14,7 @@ import uim.platform.destination.domain.types;
 // import std.conv : to;
 
 /// Application service for certificate CRUD operations.
-class ManageCertificatesUseCase
-{
+class ManageCertificatesUseCase : UIMUseCase {
   private CertificateRepository repo;
 
   this(CertificateRepository repo)

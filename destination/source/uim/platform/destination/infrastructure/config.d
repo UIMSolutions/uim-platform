@@ -6,16 +6,14 @@
 module uim.platform.destination.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8094;
   string serviceName = "Destination Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;

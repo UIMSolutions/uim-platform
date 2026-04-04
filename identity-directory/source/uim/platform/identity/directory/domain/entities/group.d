@@ -8,16 +8,14 @@ module uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory.domain.types;
 
 /// Member reference within a group.
-struct GroupMember
-{
+struct GroupMember {
   string value; // user or group ID
   string type; // "User" or "Group"
   string display;
 }
 
 /// SCIM 2.0 group entity.
-struct Group
-{
+struct Group {
   GroupId id;
   TenantId tenantId;
   string externalId;

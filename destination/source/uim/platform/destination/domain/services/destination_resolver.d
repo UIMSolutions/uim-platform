@@ -14,8 +14,7 @@ import uim.platform.destination.domain.types;
 // import std.datetime.systime : Clock;
 
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.
-struct DestinationResolver
-{
+struct DestinationResolver {
   /// Merge fragment properties into a destination configuration.
   static Destination applyFragments(Destination dest, const DestinationFragment[] fragments)
   {

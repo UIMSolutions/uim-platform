@@ -8,8 +8,7 @@ module uim.platform.identity.directory.domain.entities.api_client;
 import uim.platform.identity.directory.domain.types;
 
 /// API client / technical user for service-to-service access.
-struct ApiClient
-{
+struct ApiClient {
   ApiClientId id;
   TenantId tenantId;
   string name;

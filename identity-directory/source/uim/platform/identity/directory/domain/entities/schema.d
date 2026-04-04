@@ -8,8 +8,7 @@ module uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity.directory.domain.types;
 
 /// Attribute definition within a custom schema.
-struct SchemaAttribute
-{
+struct SchemaAttribute {
   AttributeId id;
   string name;
   string description;
@@ -24,8 +23,7 @@ struct SchemaAttribute
 }
 
 /// Custom schema definition (SCIM 2.0 schema extension).
-struct Schema
-{
+struct Schema {
   SchemaId id; // URN, e.g., "urn:sap:cloud:scim:schemas:extension:custom:2.0:MySchema"
   TenantId tenantId;
   string name;

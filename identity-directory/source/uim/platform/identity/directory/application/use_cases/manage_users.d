@@ -19,8 +19,7 @@ import uim.platform.identity.directory.application.dto;
 // import std.datetime.systime : Clock;
 
 /// Application use case: SCIM 2.0 user management (CRUD + search).
-class ManageUsersUseCase
-{
+class ManageUsersUseCase : UIMUseCase {
   private UserRepository userRepo;
   private PasswordService passwordSvc;
   private PasswordPolicyRepository policyRepo;

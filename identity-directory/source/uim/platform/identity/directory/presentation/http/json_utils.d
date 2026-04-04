@@ -9,8 +9,7 @@ module uim.platform.identity_authentication.presentation.http.json_utils;
 // import std.traits;
 
 /// Serialize a struct to JSON.
-Json toJsonValue(T)(T val)
-{
+Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
   static foreach (i, field; T.tupleof)
   {
@@ -55,8 +54,7 @@ Json toJsonValue(T)(T val)
 }
 
 /// Serialize an array of structs.
-Json toJsonArray(T)(T[] items)
-{
+Json toJsonArray(T)(T[] items) {
   auto arr = Json.emptyArray;
   foreach (item; items)
     arr ~= toJsonValue(item);
@@ -64,8 +62,7 @@ Json toJsonArray(T)(T[] items)
 }
 
 /// Read a string field from JSON, or return default.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (j.type == Json.Type.object)
   {
     auto val = key in j;
@@ -76,8 +73,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Read a boolean field from JSON.
-bool jsonBool(Json j, string key, bool default_ = false)
-{
+bool jsonBool(Json j, string key, bool default_ = false) {
   if (j.type == Json.Type.object)
   {
     auto val = key in j;
@@ -91,8 +87,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 }
 
 /// Read an integer field from JSON.
-long jsonLong(Json j, string key, long default_ = 0)
-{
+long jsonLong(Json j, string key, long default_ = 0) {
   if (j.type == Json.Type.object)
   {
     auto val = key in j;
@@ -103,14 +98,12 @@ long jsonLong(Json j, string key, long default_ = 0)
 }
 
 /// Read a uint field from JSON.
-uint jsonUint(Json j, string key, uint default_ = 0)
-{
+uint jsonUint(Json j, string key, uint default_ = 0) {
   return cast(uint) jsonLong(j, key, default_);
 }
 
 /// Read a string array from JSON.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   string[] result;
   if (j.type == Json.Type.object)
   {
@@ -128,8 +121,7 @@ string[] jsonStrArray(Json j, string key)
 }
 
 /// Extract ID from the last segment of a URL path.
-string extractIdFromPath(string path)
-{
+string extractIdFromPath(string path) {
   // import std.string : lastIndexOf;
   auto idx = path.lastIndexOf('/');
   if (idx >= 0 && idx + 1 < path.length)

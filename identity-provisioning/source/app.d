@@ -14,11 +14,9 @@ import uim.platform.identity.provisioning.infrastructure.container;
 
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto config = loadConfig();

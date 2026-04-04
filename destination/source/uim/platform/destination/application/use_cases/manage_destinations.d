@@ -14,8 +14,7 @@ import uim.platform.destination.domain.types;
 // import std.conv : to;
 
 /// Application service for destination CRUD operations.
-class ManageDestinationsUseCase
-{
+class ManageDestinationsUseCase : UIMUseCase {
   private DestinationRepository repo;
 
   this(DestinationRepository repo)

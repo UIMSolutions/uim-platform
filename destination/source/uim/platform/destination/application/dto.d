@@ -9,8 +9,7 @@ import uim.platform.destination.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -18,8 +17,7 @@ struct CommandResult
 
 /// --- Destination DTOs ---
 
-struct CreateDestinationRequest
-{
+struct CreateDestinationRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   ServiceInstanceId serviceInstanceId;
@@ -68,8 +66,7 @@ struct CreateDestinationRequest
   string createdBy;
 }
 
-struct UpdateDestinationRequest
-{
+struct UpdateDestinationRequest {
   string description;
   string url;
   string authenticationType;
@@ -95,8 +92,7 @@ struct UpdateDestinationRequest
 
 /// --- Certificate DTOs ---
 
-struct UploadCertificateRequest
-{
+struct UploadCertificateRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -113,8 +109,7 @@ struct UploadCertificateRequest
   string uploadedBy;
 }
 
-struct UpdateCertificateRequest
-{
+struct UpdateCertificateRequest {
   string description;
   string content;
   string password;
@@ -124,8 +119,7 @@ struct UpdateCertificateRequest
 
 /// --- Destination Fragment DTOs ---
 
-struct CreateFragmentRequest
-{
+struct CreateFragmentRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -146,8 +140,7 @@ struct CreateFragmentRequest
   string createdBy;
 }
 
-struct UpdateFragmentRequest
-{
+struct UpdateFragmentRequest {
   string description;
   string url;
   string authenticationType;
@@ -165,8 +158,7 @@ struct UpdateFragmentRequest
 
 /// --- Find Destination DTO ---
 
-struct FindDestinationRequest
-{
+struct FindDestinationRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -175,8 +167,7 @@ struct FindDestinationRequest
 
 /// --- Destination Lookup Result DTO ---
 
-struct DestinationLookupResponse
-{
+struct DestinationLookupResponse {
   bool found;
   string destinationName;
   string url;
@@ -190,16 +181,14 @@ struct DestinationLookupResponse
   string error;
 }
 
-struct AuthTokenDto
-{
+struct AuthTokenDto {
   string type_;
   string value_;
   long expiresAt;
   string httpHeaderSuggestion;
 }
 
-struct CertificateDto
-{
+struct CertificateDto {
   string name;
   string type_;
   string format_;

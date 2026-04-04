@@ -16,8 +16,7 @@ import uim.platform.identity.directory.application.dto;
 // import std.datetime.systime : Clock;
 
 /// Application use case: API client / technical user management.
-class ManageApiClientsUseCase
-{
+class ManageApiClientsUseCase : UIMUseCase {
   private ApiClientRepository clientRepo;
   private AuditRepository auditRepo;
 

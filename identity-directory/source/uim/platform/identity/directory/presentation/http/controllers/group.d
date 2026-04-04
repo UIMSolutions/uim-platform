@@ -14,8 +14,7 @@ import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 group management.
-class GroupController
-{
+class GroupController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase)
@@ -196,8 +195,7 @@ class GroupController
   }
 }
 
-private GroupMember[] parseMembers(Json j)
-{
+private GroupMember[] parseMembers(Json j) {
   import uim.platform.identity.directory.domain.entities.group : GroupMember;
 
   GroupMember[] result;
@@ -214,8 +212,7 @@ private GroupMember[] parseMembers(Json j)
   return result;
 }
 
-private void writeScimError(scope HTTPServerResponse res, int status, string detail)
-{
+private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
   auto errRes = Json.emptyObject;
   errRes["schemas"] = Json.emptyArray;
   errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");

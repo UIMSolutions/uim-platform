@@ -8,8 +8,7 @@ module uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory.domain.types;
 
 /// Immutable audit log entry.
-struct AuditEvent
-{
+struct AuditEvent {
   string id;
   TenantId tenantId;
   AuditEventType eventType;

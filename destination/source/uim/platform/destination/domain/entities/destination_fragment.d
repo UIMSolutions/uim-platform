@@ -8,8 +8,7 @@ module uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.types;
 
 /// A reusable destination fragment — partial configuration that can be merged into destinations.
-struct DestinationFragment
-{
+struct DestinationFragment {
   FragmentId id;
   TenantId tenantId;
   SubaccountId subaccountId;

@@ -14,8 +14,7 @@ import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for custom schema management.
-class SchemaController
-{
+class SchemaController {
   private ManageSchemasUseCase useCase;
 
   this(ManageSchemasUseCase useCase)
@@ -137,8 +136,7 @@ class SchemaController
   }
 }
 
-private SchemaAttribute[] parseSchemaAttributes(Json j)
-{
+private SchemaAttribute[] parseSchemaAttributes(Json j) {
   SchemaAttribute[] result;
   if (!j.isObject)
     return result;
@@ -153,8 +151,7 @@ private SchemaAttribute[] parseSchemaAttributes(Json j)
   return result;
 }
 
-private void writeScimError(scope HTTPServerResponse res, int status, string detail)
-{
+private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
   auto errRes = Json.emptyObject;
   errRes["schemas"] = Json.emptyArray;
   errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");

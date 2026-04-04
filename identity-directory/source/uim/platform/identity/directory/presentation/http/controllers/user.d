@@ -14,8 +14,7 @@ import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for SCIM 2.0 user management.
-class UserController
-{
+class UserController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase)
@@ -212,8 +211,7 @@ class UserController
   }
 }
 
-private Json serializeUser(User user)
-{
+private Json serializeUser(User user) {
   auto j = Json.emptyObject;
   j["id"] = Json(user.id);
   j["externalId"] = Json(user.externalId);
@@ -268,16 +266,14 @@ private Json serializeUser(User user)
   return j;
 }
 
-private Json serializeUsers(User[] users)
-{
+private Json serializeUsers(User[] users) {
   auto arr = Json.emptyArray;
   foreach (u; users)
     arr ~= serializeUser(u);
   return arr;
 }
 
-private UserName parseUserName(Json j)
-{
+private UserName parseUserName(Json j) {
   if (!j.isObject)
     return UserName.init;
 
@@ -291,8 +287,7 @@ private UserName parseUserName(Json j)
       n.getString("honorificPrefix"), n.getString("honorificSuffix"),);
 }
 
-private Email[] parseEmails(Json j)
-{
+private Email[] parseEmails(Json j) {
   Email[] result;
   if (!j.isObject)
     return result;
@@ -306,8 +301,7 @@ private Email[] parseEmails(Json j)
   return result;
 }
 
-private PhoneNumber[] parsePhoneNumbers(Json j)
-{
+private PhoneNumber[] parsePhoneNumbers(Json j) {
   PhoneNumber[] result;
   if (!j.isObject)
     return result;
@@ -322,8 +316,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j)
   return result;
 }
 
-private Address[] parseAddresses(Json j)
-{
+private Address[] parseAddresses(Json j) {
   Address[] result;
   if (!j.isObject)
     return result;
@@ -340,8 +333,7 @@ private Address[] parseAddresses(Json j)
   return result;
 }
 
-private void writeScimError(scope HTTPServerResponse res, int status, string detail)
-{
+private void writeScimError(scope HTTPServerResponse res, int status, string detail) {
   auto errRes = Json.emptyObject;
   errRes["schemas"] = Json.emptyArray;
   errRes["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:Error");

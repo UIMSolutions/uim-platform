@@ -10,8 +10,7 @@ import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.repositories.audits;
 
 /// Application use case: query audit logs.
-class QueryAuditLogUseCase
-{
+class QueryAuditLogUseCase : UIMUseCase {
   private AuditRepository auditRepo;
 
   this(AuditRepository auditRepo)

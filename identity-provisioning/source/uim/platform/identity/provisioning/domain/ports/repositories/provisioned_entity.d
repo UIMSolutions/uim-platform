@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.provisioned_
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
-interface ProvisionedEntityRepository
-{
+interface ProvisionedEntityRepository {
   ProvisionedEntity[] findByTenant(TenantId tenantId);
   ProvisionedEntity* findById(ProvisionedEntityId id, TenantId tenantId);
   ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targetId, TenantId tenantId);

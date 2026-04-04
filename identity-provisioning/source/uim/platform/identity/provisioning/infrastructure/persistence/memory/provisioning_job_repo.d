@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
 
-class MemoryProvisioningJobRepository : ProvisioningJobRepository
-{
+class MemoryProvisioningJobRepository : ProvisioningJobRepository {
   private ProvisioningJob[string] store;
 
   void save(ProvisioningJob entity)

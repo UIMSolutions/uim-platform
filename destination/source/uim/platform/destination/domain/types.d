@@ -14,8 +14,7 @@ alias SubaccountId = string;
 alias ServiceInstanceId = string;
 
 /// Type of destination connection.
-enum DestinationType
-{
+enum DestinationType {
   http,
   rfc,
   mail,
@@ -23,8 +22,7 @@ enum DestinationType
 }
 
 /// Authentication method for the destination.
-enum AuthenticationType
-{
+enum AuthenticationType {
   noAuthentication,
   basicAuthentication,
   oauth2ClientCredentials,
@@ -41,30 +39,26 @@ enum AuthenticationType
 }
 
 /// Proxy type for network routing.
-enum ProxyType
-{
+enum ProxyType {
   internet,
   onPremise,
   privateLink,
 }
 
 /// Level at which the destination is defined.
-enum DestinationLevel
-{
+enum DestinationLevel {
   subaccount,
   serviceInstance,
 }
 
 /// Certificate type for keystore/truststore management.
-enum CertificateType
-{
+enum CertificateType {
   keystore,
   truststore,
 }
 
 /// Certificate format.
-enum CertificateFormat
-{
+enum CertificateFormat {
   p12,
   jks,
   pem,
@@ -72,8 +66,7 @@ enum CertificateFormat
 }
 
 /// Status of a certificate.
-enum CertificateStatus
-{
+enum CertificateStatus {
   valid,
   expiring,
   expired,
@@ -81,24 +74,21 @@ enum CertificateStatus
 }
 
 /// Status of a destination configuration.
-enum DestinationStatus
-{
+enum DestinationStatus {
   active,
   inactive,
   error,
 }
 
 /// Status of an auth-token resolution.
-enum TokenStatus
-{
+enum TokenStatus {
   valid,
   expired,
   error,
 }
 
 /// HTTP method used during destination health checks or probing.
-enum HttpMethod
-{
+enum HttpMethod {
   get_,
   post_,
   put_,

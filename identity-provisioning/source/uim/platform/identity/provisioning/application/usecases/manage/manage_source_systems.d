@@ -13,8 +13,7 @@ import uim.platform.identity.provisioning.domain.entities.source_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
 import uim.platform.identity.provisioning.application.dto;
 
-class ManageSourceSystemsUseCase
-{
+class ManageSourceSystemsUseCase : UIMUseCase {
   private SourceSystemRepository repo;
 
   this(SourceSystemRepository repo)

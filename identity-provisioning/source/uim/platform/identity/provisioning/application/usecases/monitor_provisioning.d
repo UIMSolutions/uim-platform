@@ -16,8 +16,7 @@ import uim.platform.identity.provisioning.domain.ports.repositories.source_syste
 import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 
 /// Summary of a provisioning job for monitoring dashboards.
-struct JobSummary
-{
+struct JobSummary {
   ProvisioningJobId jobId;
   string sourceName;
   string targetName;
@@ -31,8 +30,7 @@ struct JobSummary
 }
 
 /// Overall provisioning pipeline health.
-struct ProvisioningSummary
-{
+struct ProvisioningSummary {
   int totalSourceSystems;
   int activeSourceSystems;
   int totalTargetSystems;
@@ -44,8 +42,7 @@ struct ProvisioningSummary
   long totalProvisionedEntities;
 }
 
-class MonitorProvisioningUseCase
-{
+class MonitorProvisioningUseCase : UIMUseCase {
   private ProvisioningJobRepository jobRepo;
   private ProvisioningLogRepository logRepo;
   private ProvisionedEntityRepository entityRepo;

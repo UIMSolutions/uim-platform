@@ -12,8 +12,7 @@ import uim.platform.destination.domain.ports.repositories.destinations;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDestinationRepository : DestinationRepository
-{
+class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
   Destination findById(DestinationId id)

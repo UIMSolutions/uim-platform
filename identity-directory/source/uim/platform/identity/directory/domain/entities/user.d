@@ -8,8 +8,7 @@ module uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
 
 /// SCIM 2.0 user name component.
-struct UserName
-{
+struct UserName {
   string formatted;
   string familyName;
   string givenName;
@@ -19,24 +18,21 @@ struct UserName
 }
 
 /// SCIM 2.0 email entry.
-struct Email
-{
+struct Email {
   string value;
   string type; // "work", "home", "other"
   bool primary;
 }
 
 /// SCIM 2.0 phone number entry.
-struct PhoneNumber
-{
+struct PhoneNumber {
   string value;
   string type; // "work", "mobile", "fax", "other"
   bool primary;
 }
 
 /// SCIM 2.0 address entry.
-struct Address
-{
+struct Address {
   string formatted;
   string streetAddress;
   string locality;
@@ -48,16 +44,14 @@ struct Address
 }
 
 /// Extended attributes stored as key-value pairs (custom schema extensions).
-struct ExtendedAttribute
-{
+struct ExtendedAttribute {
   string schemaId;
   string attributeName;
   string value;
 }
 
 /// Core user entity — SCIM 2.0 compliant.
-struct User
-{
+struct User {
   UserId id;
   TenantId tenantId;
   string externalId;

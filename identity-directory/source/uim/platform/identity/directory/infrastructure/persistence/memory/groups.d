@@ -10,8 +10,7 @@ import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.repositories.groups;
 
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : GroupRepository
-{
+class MemoryGroupRepository : GroupRepository {
   private Group[GroupId] store;
 
   Group findById(GroupId id)

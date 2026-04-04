@@ -8,8 +8,7 @@ module uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination.domain.types;
 
 /// A certificate (keystore or truststore) uploaded for destination authentication.
-struct Certificate
-{
+struct Certificate {
   CertificateId id;
   TenantId tenantId;
   SubaccountId subaccountId;

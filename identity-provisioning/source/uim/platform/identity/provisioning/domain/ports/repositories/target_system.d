@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.target_syste
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.target_system;
 
-interface TargetSystemRepository
-{
+interface TargetSystemRepository {
   TargetSystem[] findByTenant(TenantId tenantId);
   TargetSystem* findById(TargetSystemId id, TenantId tenantId);
   TargetSystem* findByName(TenantId tenantId, string name);

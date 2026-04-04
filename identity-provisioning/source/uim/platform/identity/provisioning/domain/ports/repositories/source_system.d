@@ -8,8 +8,7 @@ module uim.platform.identity.provisioning.domain.ports.repositories.source_syste
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.source_system;
 
-interface SourceSystemRepository
-{
+interface SourceSystemRepository {
   SourceSystem[] findByTenant(TenantId tenantId);
   SourceSystem* findById(SourceSystemId id, TenantId tenantId);
   SourceSystem* findByName(TenantId tenantId, string name);

@@ -14,8 +14,7 @@ import uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// HTTP controller for password policy management.
-class PasswordPolicyController
-{
+class PasswordPolicyController {
   private ManagePasswordPoliciesUseCase useCase;
 
   this(ManagePasswordPoliciesUseCase useCase)

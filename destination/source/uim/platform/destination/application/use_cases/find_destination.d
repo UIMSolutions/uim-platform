@@ -20,8 +20,7 @@ import uim.platform.destination.domain.types;
 
 /// Application service for the "Find Destination" API — resolves a destination
 /// by name, merges fragments, resolves auth tokens, and collects certificates.
-class FindDestinationUseCase
-{
+class FindDestinationUseCase : UIMUseCase {
   private DestinationRepository destRepo;
   private FragmentRepository fragRepo;
   private CertificateRepository certRepo;

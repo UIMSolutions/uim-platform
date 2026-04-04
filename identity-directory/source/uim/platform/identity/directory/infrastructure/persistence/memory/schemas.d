@@ -10,8 +10,7 @@ import uim.platform.identity.directory.domain.types;
 import uim.platform.identity.directory.domain.ports.repositories.schemas;
 
 /// In-memory adapter for custom schema persistence.
-class MemorySchemaRepository : SchemaRepository
-{
+class MemorySchemaRepository : SchemaRepository {
   private Schema[SchemaId] store;
 
   Schema findById(SchemaId id)

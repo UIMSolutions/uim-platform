@@ -12,8 +12,7 @@ import uim.platform.destination.domain.ports.repositories.fragments;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryFragmentRepository : FragmentRepository
-{
+class MemoryFragmentRepository : FragmentRepository {
   private DestinationFragment[FragmentId] store;
 
   DestinationFragment findById(FragmentId id)

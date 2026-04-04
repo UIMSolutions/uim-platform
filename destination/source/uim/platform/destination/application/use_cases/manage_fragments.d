@@ -13,8 +13,7 @@ import uim.platform.destination.domain.types;
 // import std.conv : to;
 
 /// Application service for destination fragment CRUD operations.
-class ManageFragmentsUseCase
-{
+class ManageFragmentsUseCase : UIMUseCase {
   private FragmentRepository repo;
 
   this(FragmentRepository repo)

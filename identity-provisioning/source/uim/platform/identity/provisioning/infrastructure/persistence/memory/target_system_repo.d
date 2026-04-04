@@ -9,8 +9,7 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.target_system;
 import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 
-class MemoryTargetSystemRepository : TargetSystemRepository
-{
+class MemoryTargetSystemRepository : TargetSystemRepository {
   private TargetSystem[string] store;
 
   void save(TargetSystem entity)

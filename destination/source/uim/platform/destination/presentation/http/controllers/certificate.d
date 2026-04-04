@@ -16,8 +16,7 @@ import uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination.domain.types;
 import uim.platform.destination.presentation.http.json_utils;
 
-class CertificateController
-{
+class CertificateController {
   private ManageCertificatesUseCase uc;
 
   this(ManageCertificatesUseCase uc)
