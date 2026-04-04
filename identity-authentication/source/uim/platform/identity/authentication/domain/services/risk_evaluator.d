@@ -13,8 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Domain service: evaluates risk level for an authentication attempt.
-struct RiskEvaluationContext
-{
+struct RiskEvaluationContext {
   string ipAddress;
   string userAgent;
   AuthMethod authMethod;
@@ -23,8 +22,7 @@ struct RiskEvaluationContext
 }
 
 /// Pure domain logic for risk evaluation.
-RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
-{
+RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   RiskLevel highest = RiskLevel.low;
 
   foreach (rule; rules)
@@ -43,8 +41,7 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
 }
 
 /// Check which MFA is required given the evaluated risk.
-MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx)
-{
+MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   MfaType required = MfaType.none;
 
   foreach (rule; rules)
@@ -62,8 +59,7 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
   return required;
 }
 
-private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx)
-{
+private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx) {
   // import std.algorithm : canFind;
 
   foreach (cond; conditions)
@@ -74,8 +70,7 @@ private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEva
   return true;
 }
 
-private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx)
-{
+private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationContext ctx) {
   // import std.conv : to;
   // import std.algorithm : canFind;
 

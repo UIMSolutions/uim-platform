@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Core user entity in the identity directory.
-struct User
-{
+struct User {
   UserId id;
   TenantId tenantId;
   string userName;

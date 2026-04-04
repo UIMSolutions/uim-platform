@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence.file;
 
-public
-{
+public {
 
 }

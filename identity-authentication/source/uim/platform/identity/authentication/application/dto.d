@@ -13,8 +13,7 @@ import uim.platform.identity_authentication;
 
 mixin(ShowModule!());
 @safe:
-struct AuthRequest
-{
+struct AuthRequest {
   TenantId tenantId;
   ApplicationId applicationId;
   string email;
@@ -24,8 +23,7 @@ struct AuthRequest
   string userAgent;
 }
 
-struct AuthResult
-{
+struct AuthResult {
   bool success;
   string message;
   bool mfaRequired;
@@ -36,8 +34,7 @@ struct AuthResult
 
 /// --- User DTOs ---
 
-struct CreateUserRequest
-{
+struct CreateUserRequest {
   TenantId tenantId;
   string userName;
   string email;
@@ -47,16 +44,14 @@ struct CreateUserRequest
   string phoneNumber;
 }
 
-struct UpdateUserRequest
-{
+struct UpdateUserRequest {
   UserId userId;
   string firstName;
   string lastName;
   string phoneNumber;
 }
 
-struct UserResponse
-{
+struct UserResponse {
   string userId;
   string error;
 
@@ -68,15 +63,13 @@ struct UserResponse
 
 /// --- IdaGroup DTOs ---
 
-struct CreateGroupRequest
-{
+struct CreateGroupRequest {
   TenantId tenantId;
   string name;
   string description;
 }
 
-struct GroupResponse
-{
+struct GroupResponse {
   string groupId;
   string error;
 
@@ -88,8 +81,7 @@ struct GroupResponse
 
 /// --- Application DTOs ---
 
-struct CreateAppRequest
-{
+struct CreateAppRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -100,16 +92,14 @@ struct CreateAppRequest
   string samlAcsUrl;
 }
 
-struct UpdateAppRequest
-{
+struct UpdateAppRequest {
   ApplicationId applicationId;
   string name;
   string[] redirectUris;
   string[] allowedScopes;
 }
 
-struct AppResponse
-{
+struct AppResponse {
   string applicationId;
   string clientId;
   string clientSecret;
@@ -123,8 +113,7 @@ struct AppResponse
 
 /// --- Tenant DTOs ---
 
-struct CreateTenantRequest
-{
+struct CreateTenantRequest {
   string name;
   string subdomain;
   SsoProtocol defaultSsoProtocol = SsoProtocol.oidc;
@@ -132,15 +121,13 @@ struct CreateTenantRequest
   bool mfaEnforced;
 }
 
-struct UpdateTenantRequest
-{
+struct UpdateTenantRequest {
   TenantId tenantId;
   string name;
   AuthMethod[] allowedAuthMethods;
 }
 
-struct TenantResponse
-{
+struct TenantResponse {
   string tenantId;
   string error;
 
@@ -152,8 +139,7 @@ struct TenantResponse
 
 /// --- Policy DTOs ---
 
-struct CreatePolicyRequest
-{
+struct CreatePolicyRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -161,8 +147,7 @@ struct CreatePolicyRequest
   string[] applicationIds;
 }
 
-struct PolicyResponse
-{
+struct PolicyResponse {
   string policyId;
   string error;
 

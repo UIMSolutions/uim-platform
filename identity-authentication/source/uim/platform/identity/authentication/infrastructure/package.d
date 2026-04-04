@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.infrastructure;
 
-public
-{
+public {
   import uim.platform.identity_authentication.infrastructure.config;
   import uim.platform.identity_authentication.infrastructure.container;
   import uim.platform.identity_authentication.infrastructure.persistence;

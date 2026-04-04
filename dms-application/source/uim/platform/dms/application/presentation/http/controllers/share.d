@@ -21,8 +21,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class ShareController : SAPController
-{
+class ShareController : SAPController {
   private ManageSharesUseCase uc;
 
   this(ManageSharesUseCase uc)

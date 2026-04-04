@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for risk rule persistence.
-class MemoryRiskRuleRepository : RiskRuleRepository
-{
+class MemoryRiskRuleRepository : RiskRuleRepository {
   private RiskRule[string] store;
 
   bool existsById(string id)

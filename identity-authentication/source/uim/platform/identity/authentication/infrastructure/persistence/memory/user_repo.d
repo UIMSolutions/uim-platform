@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for user persistence (swap for DB adapter in production).
-class MemoryUserRepository : UserRepository
-{
+class MemoryUserRepository : UserRepository {
   private User[UserId] store;
 
   bool existsById(UserId id)

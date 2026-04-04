@@ -10,16 +10,14 @@ import uim.platform.identity_authentication.domain.entities.user;
 import uim.platform.identity_authentication.domain.types;
 
 /// Domain service: evaluates authorization policies against a user.
-struct PolicyEvaluationContext
-{
+struct PolicyEvaluationContext {
   string ipAddress;
   AuthMethod authMethod;
   string[] userGroupIds;
 }
 
 /// Returns true if the user satisfies all rules in the policy.
-bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationContext ctx)
-{
+bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationContext ctx) {
   if (!policy.active)
     return true; // Inactive policies pass
 
@@ -33,8 +31,7 @@ bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationConte
 
 /// Returns the list of policies that deny access.
 AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
-    User user, PolicyEvaluationContext ctx)
-{
+    User user, PolicyEvaluationContext ctx) {
   AuthorizationPolicy[] denying;
   foreach (policy; policies)
   {
@@ -44,8 +41,7 @@ AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
   return denying;
 }
 
-private bool evaluateRule(PolicyRule rule, User user, PolicyEvaluationContext ctx)
-{
+private bool evaluateRule(PolicyRule rule, User user, PolicyEvaluationContext ctx) {
   // import std.conv : to;
   // import std.algorithm : canFind;
 

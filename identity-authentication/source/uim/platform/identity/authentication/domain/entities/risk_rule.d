@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Risk-based authentication rule.
-struct RiskRule
-{
+struct RiskRule {
   string id;
   TenantId tenantId;
   string name;
@@ -31,8 +30,7 @@ struct RiskRule
 }
 
 /// Condition that triggers a risk evaluation.
-struct RiskCondition
-{
+struct RiskCondition {
   string conditionType; // "ip_range", "group", "user_type", "auth_method", "geo"
   string operator_; // "eq", "not_eq", "in", "not_in"
   string value;

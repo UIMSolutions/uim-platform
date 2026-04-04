@@ -14,8 +14,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class MemoryFavoriteRepository : IFavoriteRepository
-{
+class MemoryFavoriteRepository : IFavoriteRepository {
   private Favorite[string] store;
 
   Favorite[] findByTenant(TenantId tenantId)

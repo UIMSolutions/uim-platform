@@ -11,8 +11,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IShareRepository
-{
+interface IShareRepository {
   Share[] findByTenant(TenantId tenantId);
   Share findById(ShareId id, TenantId tenantId);
   Share[] findByDocument(DocumentId documentId, TenantId tenantId);

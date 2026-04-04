@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Authenticated session.
-struct IdaSession
-{
+struct IdaSession {
   SessionId id;
   UserId userId;
   TenantId tenantId;

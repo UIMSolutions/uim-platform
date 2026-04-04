@@ -12,8 +12,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// External Identity Provider configuration for delegated authentication.
-struct IdpConfig
-{
+struct IdpConfig {
   string id;
   TenantId tenantId;
   string name;

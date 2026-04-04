@@ -14,8 +14,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageVersionsUseCase
-{
+class ManageVersionsUseCase : UIMUseCase {
   private VersioningService versioningService;
 
   this(VersioningService versioningService)

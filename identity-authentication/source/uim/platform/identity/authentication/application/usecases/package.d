@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.application.usecases;
 
-public
-{
+public {
   import uim.platform.identity_authentication.application.usecases.authenticate_user;
   import uim.platform.identity_authentication.application.usecases.delegated_auth;
   import uim.platform.identity_authentication.application.usecases.issue_token;

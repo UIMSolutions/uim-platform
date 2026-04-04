@@ -18,8 +18,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for group management API.
-class GroupController : SAPController
-{
+class GroupController : SAPController {
   private ManageGroupsUseCase useCase;
 
   this(ManageGroupsUseCase useCase)

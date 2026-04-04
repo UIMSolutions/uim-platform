@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.presentation.http;
 
-public
-{
+public {
   import uim.platform.identity_authentication.presentation.http.controllers;
   import uim.platform.identity_authentication.presentation.http.json_utils;
 }

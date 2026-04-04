@@ -20,8 +20,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Domain service for document version management (checkout/checkin model).
-class VersioningService
-{
+class VersioningService {
   private IDocumentRepository docRepo;
   private IDocumentVersionRepository versionRepo;
 

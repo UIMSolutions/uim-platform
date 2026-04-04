@@ -12,8 +12,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — risk rule persistence.
-interface RiskRuleRepository
-{
+interface RiskRuleRepository {
   RiskRule findById(string id);
   RiskRule[] findByTenant(TenantId tenantId);
   void save(RiskRule rule);

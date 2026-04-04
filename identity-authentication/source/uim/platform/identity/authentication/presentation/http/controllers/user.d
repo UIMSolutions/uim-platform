@@ -18,8 +18,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for SCIM-like user management API.
-class UserController : SAPController
-{
+class UserController : SAPController {
   private ManageUsersUseCase useCase;
 
   this(ManageUsersUseCase useCase)
@@ -186,8 +185,7 @@ class UserController : SAPController
   }
 }
 
-private string extractIdFromPath(string path)
-{
+private string extractIdFromPath(string path) {
   // import std.string : lastIndexOf;
 
   auto idx = path.lastIndexOf('/');

@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.domain.services;
 
-public
-{
+public {
   import uim.platform.identity_authentication.domain.services.policy_evaluator;
   import uim.platform.identity_authentication.domain.services.risk_evaluator;
 }

@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for group persistence.
-class MemoryGroupRepository : GroupRepository
-{
+class MemoryGroupRepository : GroupRepository {
   private IdaGroup[GroupId] store;
 
   IdaGroup findById(GroupId id)

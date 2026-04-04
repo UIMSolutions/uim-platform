@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.repository;
 
 import uim.platform.dms.application.domain.types;
 
-class Repository
-{
+class Repository {
   RepositoryId id;
   TenantId tenantId;
   string name;

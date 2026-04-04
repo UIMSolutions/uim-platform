@@ -11,8 +11,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IFolderRepository
-{
+interface IFolderRepository {
   Folder[] findByTenant(TenantId tenantId);
   Folder findById(FolderId id, TenantId tenantId);
   Folder[] findByRepository(RepositoryId repositoryId, TenantId tenantId);

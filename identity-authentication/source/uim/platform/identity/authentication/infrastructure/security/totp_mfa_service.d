@@ -18,8 +18,7 @@ mixin(ShowModule!());
 @safe:
 /// Adapter: TOTP-based MFA service.
 /// In production, implement with proper RFC 6238 TOTP and SMS/email gateways.
-class TotpMfaService : MfaService
-{
+class TotpMfaService : MfaService {
   string generateSecret(MfaType mfaType)
   {
     return randomUUID().toString();

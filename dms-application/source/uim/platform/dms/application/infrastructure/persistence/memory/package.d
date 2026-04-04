@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.dms.application.infrastructure.persistence.memory.document_repo;
   import uim.platform.dms.application.infrastructure.persistence.memory.document_version_repo;
   import uim.platform.dms.application.infrastructure.persistence.memory.favorite_repo;

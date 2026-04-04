@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for application/service provider persistence.
-class MemoryApplicationRepository : ApplicationRepository
-{
+class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 
   Application findById(ApplicationId id)

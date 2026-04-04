@@ -10,8 +10,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8080;
   string jwtSecret = "change-me-in-production-use-env-var";
@@ -20,8 +19,7 @@ struct AppConfig
 }
 
 /// Load configuration (extend to read from env vars or config files).
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;

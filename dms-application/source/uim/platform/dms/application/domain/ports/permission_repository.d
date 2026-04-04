@@ -11,8 +11,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IPermissionRepository
-{
+interface IPermissionRepository {
   Permission[] findByTenant(TenantId tenantId);
   Permission findById(PermissionId id, TenantId tenantId);
   Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId);

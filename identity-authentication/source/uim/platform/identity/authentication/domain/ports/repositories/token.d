@@ -12,8 +12,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token persistence.
-interface TokenRepository
-{
+interface TokenRepository {
   Token findById(TokenId id);
   Token findByValue(string tokenValue);
   Token[] findByUser(UserId userId);

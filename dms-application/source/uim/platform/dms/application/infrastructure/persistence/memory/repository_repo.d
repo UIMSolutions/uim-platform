@@ -13,8 +13,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryRepositoryRepository : IRepositoryRepository
-{
+class MemoryRepositoryRepository : IRepositoryRepository {
   private Repository[string] store;
 
   Repository[] findByTenant(TenantId tenantId)

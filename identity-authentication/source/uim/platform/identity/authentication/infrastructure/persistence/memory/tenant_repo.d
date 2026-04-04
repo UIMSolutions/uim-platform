@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for tenant persistence.
-class MemoryTenantRepository : TenantRepository
-{
+class MemoryTenantRepository : TenantRepository {
   private Tenant[TenantId] store;
 
   bool existsById(TenantId id)

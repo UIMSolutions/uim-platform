@@ -14,8 +14,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Domain service for access control checks.
-class AccessControlService
-{
+class AccessControlService {
   private IPermissionRepository permRepo;
 
   this(IPermissionRepository permRepo)

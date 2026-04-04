@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.document;
 
 import uim.platform.dms.application.domain.types;
 
-class Document
-{
+class Document {
   DocumentId id;
   TenantId tenantId;
   RepositoryId repositoryId;

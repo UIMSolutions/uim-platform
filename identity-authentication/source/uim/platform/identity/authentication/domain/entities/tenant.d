@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Tenant represents an isolated identity namespace.
-struct Tenant
-{
+struct Tenant {
   TenantId id;
   string name;
   string subdomain;

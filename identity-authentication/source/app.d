@@ -14,11 +14,9 @@ import uim.platform.identity_authentication.infrastructure.container;
 // import vibe.d;
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     // Load configuration

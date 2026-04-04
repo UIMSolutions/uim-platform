@@ -18,8 +18,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageSharesUseCase
-{
+class ManageSharesUseCase : UIMUseCase {
   private IShareRepository shareRepo;
   private IDocumentRepository docRepo;
 

@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.infrastructure.persistence;
 
-public
-{
+public {
   import uim.platform.dms.application.infrastructure.persistence.memory;
 }

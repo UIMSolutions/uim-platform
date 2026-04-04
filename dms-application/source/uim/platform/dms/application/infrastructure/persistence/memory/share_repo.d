@@ -13,8 +13,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryShareRepository : IShareRepository
-{
+class MemoryShareRepository : IShareRepository {
   private Share[string] store;
 
   Share[] findByTenant(TenantId tenantId)

@@ -24,8 +24,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: issue OAuth2/OIDC tokens after successful authentication.
-class IssueTokenUseCase
-{
+class IssueTokenUseCase : UIMUseCase {
   private UserRepository userRepo;
   private ApplicationRepository appRepo;
   private TokenRepository tokenRepo;
@@ -85,16 +84,14 @@ class IssueTokenUseCase
   }
 }
 
-struct TokenRequest
-{
+struct TokenRequest {
   string sessionId;
   string clientId;
   string clientSecret;
   string[] scopes;
 }
 
-struct TokenResponse
-{
+struct TokenResponse {
   string accessToken;
   string refreshToken;
   string idToken;

@@ -20,8 +20,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class DocumentController : SAPController
-{
+class DocumentController : SAPController {
   private ManageDocumentsUseCase uc;
 
   this(ManageDocumentsUseCase uc)

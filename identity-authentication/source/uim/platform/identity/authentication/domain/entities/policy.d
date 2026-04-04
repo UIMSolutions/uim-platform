@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Authorization policy for controlling access to applications.
-struct AuthorizationPolicy
-{
+struct AuthorizationPolicy {
   PolicyId id;
   TenantId tenantId;
   string name;
@@ -33,8 +32,7 @@ struct AuthorizationPolicy
 }
 
 /// A single rule within a policy.
-struct PolicyRule
-{
+struct PolicyRule {
   string attribute; // e.g., "group", "ip_range", "user_type", "auth_method"
   string operator_; // e.g., "eq", "in", "not_in", "matches"
   string value;

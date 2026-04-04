@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.domain.entities;
 
-public
-{
+public {
   import uim.platform.identity_authentication.domain.entities.application;
   import uim.platform.identity_authentication.domain.entities.group;
   import uim.platform.identity_authentication.domain.entities.idp_config;

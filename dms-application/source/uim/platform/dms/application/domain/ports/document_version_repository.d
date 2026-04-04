@@ -11,8 +11,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-interface IDocumentVersionRepository
-{
+interface IDocumentVersionRepository {
   DocumentVersion[] findByTenant(TenantId tenantId);
   DocumentVersion findById(DocumentVersionId id, TenantId tenantId);
   DocumentVersion[] findByDocument(DocumentId documentId, TenantId tenantId);

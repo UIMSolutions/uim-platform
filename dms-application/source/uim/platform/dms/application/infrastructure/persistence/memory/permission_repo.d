@@ -13,8 +13,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPermissionRepository : IPermissionRepository
-{
+class MemoryPermissionRepository : IPermissionRepository {
   private Permission[string] store;
 
   Permission[] findByTenant(TenantId tenantId)

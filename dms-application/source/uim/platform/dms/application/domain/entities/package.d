@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.entities;
 
-public
-{
+public {
   import uim.platform.dms.application.domain.entities.document;
   import uim.platform.dms.application.domain.entities.document_version;
   import uim.platform.dms.application.domain.entities.favorite;

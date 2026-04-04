@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application (Service Provider) registered for SSO.
-struct Application
-{
+struct Application {
   ApplicationId id;
   TenantId tenantId;
   string name;

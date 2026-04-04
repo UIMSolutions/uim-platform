@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.domain.ports;
 
-public
-{
+public {
   import uim.platform.dms.application.domain.ports.repositories.documents;
   import uim.platform.dms.application.domain.ports.repositories.document_versions;
   import uim.platform.dms.application.domain.ports.repositories.favorites;

@@ -13,8 +13,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Serialize a struct to JSON.
-Json toJsonValue(T)(T val)
-{
+Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
   static foreach (i, field; T.tupleof)
   {
@@ -46,8 +45,7 @@ Json toJsonValue(T)(T val)
 }
 
 /// Serialize an array of structs.
-Json toJsonArray(T)(T[] items)
-{
+Json toJsonArray(T)(T[] items) {
   auto arr = Json.emptyArray;
   foreach (item; items)
     arr ~= toJsonValue(item);
@@ -55,8 +53,7 @@ Json toJsonArray(T)(T[] items)
 }
 
 /// Read a string field from JSON, or return default.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (j.type == Json.Type.object)
   {
     auto val = key in j;
@@ -67,8 +64,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Read a string array from JSON.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   string[] result;
   if (j.type == Json.Type.object)
   {

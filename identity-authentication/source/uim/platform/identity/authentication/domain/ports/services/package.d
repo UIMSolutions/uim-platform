@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.pl.domain.ports.repositories.services;
 
-public
-{
+public {
   import uim.platform.identity_authentication.domain.ports.repositories.services.mfa;
   import uim.platform.identity_authentication.domain.ports.repositories.services.password;
   import uim.platform.identity_authentication.domain.ports.repositories.services.token;

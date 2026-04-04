@@ -23,8 +23,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Browsing summary for a repository.
-struct RepositorySummary
-{
+struct RepositorySummary {
   string repositoryId;
   string name;
   long totalDocuments;
@@ -33,8 +32,7 @@ struct RepositorySummary
 }
 
 /// Use case for browsing content, searching, and managing favorites.
-class BrowseContentUseCase
-{
+class BrowseContentUseCase : UIMUseCase {
   private IDocumentRepository docRepo;
   private IFolderRepository folderRepo;
   private IFavoriteRepository favRepo;
@@ -118,8 +116,7 @@ class BrowseContentUseCase
   }
 }
 
-struct FolderContents
-{
+struct FolderContents {
   Folder[] subfolders;
   Document[] documents;
 }

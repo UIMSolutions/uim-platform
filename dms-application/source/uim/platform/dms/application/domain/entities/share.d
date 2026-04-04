@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.share;
 
 import uim.platform.dms.application.domain.types;
 
-class Share
-{
+class Share {
   ShareId id;
   TenantId tenantId;
   DocumentId documentId;

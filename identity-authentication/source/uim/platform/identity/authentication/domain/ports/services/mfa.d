@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — multi-factor authentication adapter.
-interface MfaService
-{
+interface MfaService {
   /// Generate a new MFA secret (e.g., TOTP seed).
   string generateSecret(MfaType mfaType);
 

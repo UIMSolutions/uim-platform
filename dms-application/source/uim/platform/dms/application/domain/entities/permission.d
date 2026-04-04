@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.permission;
 
 import uim.platform.dms.application.domain.types;
 
-class Permission
-{
+class Permission {
   PermissionId id;
   TenantId tenantId;
   string resourceId; // documentId or folderId

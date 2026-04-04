@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.document_version;
 
 import uim.platform.dms.application.domain.types;
 
-class DocumentVersion
-{
+class DocumentVersion {
   DocumentVersionId id;
   TenantId tenantId;
   DocumentId documentId;

@@ -44,8 +44,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryRepositoryRepository repoRepo;
   MemoryFolderRepository folderRepo;
@@ -80,8 +79,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

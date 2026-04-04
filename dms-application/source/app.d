@@ -15,11 +15,9 @@ module app;
 import uim.platform.dms.application;
 
 @safe:
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto config = loadConfig();

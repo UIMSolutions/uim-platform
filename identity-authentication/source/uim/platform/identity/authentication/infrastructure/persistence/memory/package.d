@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.identity_authentication.infrastructure.persistence.memory.app_repo;
   import uim.platform.identity_authentication.infrastructure.persistence.memory.group_repo;
   import uim.platform.identity_authentication.infrastructure.persistence.memory.idp_config_repo;

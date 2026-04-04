@@ -15,8 +15,7 @@ alias SessionId = string;
 alias TokenId = string;
 
 /// Authentication method supported by the platform.
-enum AuthMethod
-{
+enum AuthMethod {
   form,
   spnego,
   social,
@@ -27,8 +26,7 @@ enum AuthMethod
 }
 
 /// Multi-factor authentication type.
-enum MfaType
-{
+enum MfaType {
   none,
   totp,
   sms,
@@ -36,15 +34,13 @@ enum MfaType
 }
 
 /// SSO protocol.
-enum SsoProtocol
-{
+enum SsoProtocol {
   saml2,
   oidc,
 }
 
 /// User status in the identity directory.
-enum UserStatus
-{
+enum UserStatus {
   active,
   inactive,
   locked,
@@ -52,8 +48,7 @@ enum UserStatus
 }
 
 /// Risk level determined by risk-based authentication.
-enum RiskLevel
-{
+enum RiskLevel {
   low,
   medium,
   high,
@@ -61,8 +56,7 @@ enum RiskLevel
 }
 
 /// Token type.
-enum TokenType
-{
+enum TokenType {
   access,
   refresh,
   idToken,
@@ -70,8 +64,7 @@ enum TokenType
 }
 
 /// Provisioning job status.
-enum JobStatus
-{
+enum JobStatus {
   pending,
   running,
   completed,
@@ -79,8 +72,7 @@ enum JobStatus
 }
 
 /// Identity provider type for delegation.
-enum IdpType
-{
+enum IdpType {
   local,
   saml,
   oidc,

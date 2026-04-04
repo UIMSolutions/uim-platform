@@ -13,8 +13,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class MemoryFolderRepository : IFolderRepository
-{
+class MemoryFolderRepository : IFolderRepository {
   private Folder[string] store;
 
   Folder[] findByTenant(TenantId tenantId)

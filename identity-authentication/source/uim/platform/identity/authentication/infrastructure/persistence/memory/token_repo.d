@@ -14,8 +14,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for token persistence.
-class MemoryTokenRepository : TokenRepository
-{
+class MemoryTokenRepository : TokenRepository {
   private Token[TokenId] store;
 
   Token findById(TokenId id)

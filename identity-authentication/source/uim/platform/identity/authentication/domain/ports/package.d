@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity_authentication.domain.ports;
 
-public
-{
+public {
   import uim.platform.identity_authentication.domain.ports.repositories.repositories;
   import uim.platform.identity_authentication.domain.ports.repositories.services;
 }

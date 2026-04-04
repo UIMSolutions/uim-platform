@@ -12,8 +12,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Port: outgoing — external IdP configuration persistence.
-interface IdpConfigRepository
-{
+interface IdpConfigRepository {
   IdpConfig findById(string id);
   IdpConfig findDefaultForTenant(TenantId tenantId);
   IdpConfig[] findByTenant(TenantId tenantId);

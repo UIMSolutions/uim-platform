@@ -16,8 +16,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for authorization policy persistence.
-class MemoryPolicyRepository : PolicyRepository
-{
+class MemoryPolicyRepository : PolicyRepository {
   private AuthorizationPolicy[PolicyId] store;
 
   bool existsById(PolicyId id)

@@ -16,8 +16,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// In-memory adapter for session persistence.
-class MemorySessionRepository : SessionRepository
-{
+class MemorySessionRepository : SessionRepository {
   private IdaSession[SessionId] store;
 
   bool existsById(SessionId id)

@@ -11,8 +11,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// IdaGroup entity for organizing users.
-struct IdaGroup
-{
+struct IdaGroup {
   GroupId id;
   TenantId tenantId;
   string name;

@@ -18,8 +18,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authorization policy management.
-class PolicyController : SAPController
-{
+class PolicyController : SAPController {
   private ManagePoliciesUseCase useCase;
 
   this(ManagePoliciesUseCase useCase)

@@ -20,8 +20,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class ManageDocumentsUseCase
-{
+class ManageDocumentsUseCase : UIMUseCase {
   private IDocumentRepository docRepo;
   private IDocumentVersionRepository versionRepo;
   private IFolderRepository folderRepo;

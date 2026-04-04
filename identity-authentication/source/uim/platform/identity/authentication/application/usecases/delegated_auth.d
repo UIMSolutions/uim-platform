@@ -17,8 +17,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// Application use case: delegate authentication to an external IdP.
-class DelegatedAuthUseCase
-{
+class DelegatedAuthUseCase : UIMUseCase {
   private IdpConfigRepository idpRepo;
   private UserRepository userRepo;
 

@@ -7,8 +7,7 @@ module uim.platform.dms.application.domain.entities.folder;
 
 import uim.platform.dms.application.domain.types;
 
-class Folder
-{
+class Folder {
   FolderId id;
   TenantId tenantId;
   RepositoryId repositoryId;

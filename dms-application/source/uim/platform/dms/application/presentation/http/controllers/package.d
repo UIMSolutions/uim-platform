@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.dms.application.presentation.http.controllers;
 
-public
-{
+public {
   import uim.platform.dms.application.presentation.http.controllers.browse;
   import uim.platform.dms.application.presentation.http.controllers.document;
   import uim.platform.dms.application.presentation.http.controllers.folder;
