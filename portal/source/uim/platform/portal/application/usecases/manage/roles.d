@@ -7,7 +7,7 @@ module uim.platform.portal.application.usecases.manage_roles;
 
 import uim.platform.portal.domain.entities.role;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.role_repository;
+import uim.platform.portal.domain.ports.repositories.roles;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;
@@ -15,17 +15,14 @@ import uim.platform.portal.application.dto;
 // import std.algorithm : canFind, filter;
 // import std.array : array;
 
-class ManageRolesUseCase
-{
+class ManageRolesUseCase : UIMUseCase {
   private RoleRepository roleRepo;
 
-  this(RoleRepository roleRepo)
-  {
+  this(RoleRepository roleRepo) {
     this.roleRepo = roleRepo;
   }
 
-  RoleResponse createRole(CreateRoleRequest req)
-  {
+  RoleResponse createRole(CreateRoleRequest req) {
     if (req.name.length == 0)
       return RoleResponse("", "Role name is required");
 
@@ -36,24 +33,21 @@ class ManageRolesUseCase
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto role = Role(id, req.tenantId, req.name, req.description, req.scope_, [], // userIds
-        [], // groupIds
-        now, now,);
+      [], // groupIds
+      now, now,);
     roleRepo.save(role);
     return RoleResponse(id, "");
   }
 
-  Role getRole(RoleId id)
-  {
+  Role getRole(RoleId id) {
     return roleRepo.findById(id);
   }
 
-  Role[] listRoles(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Role[] listRoles(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return roleRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateRole(UpdateRoleRequest req)
-  {
+  string updateRole(UpdateRoleRequest req) {
     auto role = roleRepo.findById(req.roleId);
     if (role == Role.init)
       return "Role not found";
@@ -65,19 +59,16 @@ class ManageRolesUseCase
     return "";
   }
 
-  string assignRole(AssignRoleRequest req)
-  {
+  string assignRole(AssignRoleRequest req) {
     auto role = roleRepo.findById(req.roleId);
     if (role == Role.init)
       return "Role not found";
 
-    foreach (uid; req.userIds)
-    {
+    foreach (uid; req.userIds) {
       if (!role.userIds.canFind(uid))
         role.userIds ~= uid;
     }
-    foreach (gid; req.groupIds)
-    {
+    foreach (gid; req.groupIds) {
       if (!role.groupIds.canFind(gid))
         role.groupIds ~= gid;
     }
@@ -86,8 +77,7 @@ class ManageRolesUseCase
     return "";
   }
 
-  string unassignUsers(RoleId roleId, string[] userIds)
-  {
+  string unassignUsers(RoleId roleId, string[] userIds) {
     auto role = roleRepo.findById(roleId);
     if (role == Role.init)
       return "Role not found";
@@ -98,8 +88,7 @@ class ManageRolesUseCase
     return "";
   }
 
-  string deleteRole(RoleId id)
-  {
+  string deleteRole(RoleId id) {
     auto role = roleRepo.findById(id);
     if (role == Role.init)
       return "Role not found";

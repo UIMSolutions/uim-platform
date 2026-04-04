@@ -13,7 +13,7 @@ import uim.platform.portal.application.dto;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageCatalogsUseCase {
+class ManageCatalogsUseCase : UIMUseCase {
   private CatalogRepository catalogRepo;
 
   this(CatalogRepository catalogRepo) {

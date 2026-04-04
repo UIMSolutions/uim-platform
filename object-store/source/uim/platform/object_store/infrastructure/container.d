@@ -5,34 +5,38 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.container;
 
-import uim.platform.object_store.infrastructure.config;
+// import uim.platform.object_store.infrastructure.config;
 
-// Repositories
-import uim.platform.object_store.infrastructure.persistence.memory.bucket;
-import uim.platform.object_store.infrastructure.persistence.memory.storage_object;
-import uim.platform.object_store.infrastructure.persistence.memory.object_version;
-import uim.platform.object_store.infrastructure.persistence.memory.access_policy;
-import uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule;
-import uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
-import uim.platform.object_store.infrastructure.persistence.memory.service_binding;
+// // Repositories
+// import uim.platform.object_store.infrastructure.persistence.memory.bucket;
+// import uim.platform.object_store.infrastructure.persistence.memory.storage_object;
+// import uim.platform.object_store.infrastructure.persistence.memory.object_version;
+// import uim.platform.object_store.infrastructure.persistence.memory.access_policy;
+// import uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule;
+// import uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
+// import uim.platform.object_store.infrastructure.persistence.memory.service_binding;
 
-// Use Cases
-import uim.platform.object_store.application.usecases.manage_buckets;
-import uim.platform.object_store.application.usecases.manage_objects;
-import uim.platform.object_store.application.usecases.manage_access_policies;
-import uim.platform.object_store.application.usecases.manage_lifecycle_rules;
-import uim.platform.object_store.application.usecases.manage_cors_rules;
-import uim.platform.object_store.application.usecases.manage_service_bindings;
+// // Use Cases
+// import uim.platform.object_store.application.usecases.manage_buckets;
+// import uim.platform.object_store.application.usecases.manage_objects;
+// import uim.platform.object_store.application.usecases.manage_access_policies;
+// import uim.platform.object_store.application.usecases.manage_lifecycle_rules;
+// import uim.platform.object_store.application.usecases.manage_cors_rules;
+// import uim.platform.object_store.application.usecases.manage_service_bindings;
 
-// Controllers
-import uim.platform.object_store.presentation.http.controllers.bucket;
-import uim.platform.object_store.presentation.http.controllers.object;
-import uim.platform.object_store.presentation.http.controllers.access_policy;
-import uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
-import uim.platform.object_store.presentation.http.controllers.cors_rule;
-import uim.platform.object_store.presentation.http.controllers.service_binding;
-import uim.platform.object_store.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.object_store.presentation.http.controllers.bucket;
+// import uim.platform.object_store.presentation.http.controllers.object;
+// import uim.platform.object_store.presentation.http.controllers.access_policy;
+// import uim.platform.object_store.presentation.http.controllers.lifecycle_rule;
+// import uim.platform.object_store.presentation.http.controllers.cors_rule;
+// import uim.platform.object_store.presentation.http.controllers.service_binding;
+// import uim.platform.object_store.presentation.http.controllers.health;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)

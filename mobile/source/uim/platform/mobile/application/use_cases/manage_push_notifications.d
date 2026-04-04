@@ -13,7 +13,7 @@ import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManagePushNotificationsUseCase {
+class ManagePushNotificationsUseCase : UIMUseCase {
     private PushNotificationRepository repo;
 
     this(PushNotificationRepository repo) {

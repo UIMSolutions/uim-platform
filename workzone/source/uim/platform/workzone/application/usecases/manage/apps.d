@@ -13,7 +13,7 @@ import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.ports.app_repository;
 import uim.platform.workzone.application.dto;
 
-class ManageAppsUseCase {
+class ManageAppsUseCase : UIMUseCase {
   private AppRepository repo;
 
   this(AppRepository repo) {

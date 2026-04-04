@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
 
-import uim.platform.object_store.domain.types;
-import uim.platform.object_store.domain.entities.cors_rule;
-import uim.platform.object_store.domain.ports.repositories.cors_rule;
-
+// import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.cors_rule;
+// import uim.platform.object_store.domain.ports.repositories.cors_rule;
+// 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryCorsRuleRepository : CorsRuleRepository {
   private CorsRule[CorsRuleId] store;
 

@@ -13,7 +13,7 @@ import uim.platform.mobile.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageOfflineStoresUseCase {
+class ManageOfflineStoresUseCase : UIMUseCase {
     private OfflineStoreRepository repo;
 
     this(OfflineStoreRepository repo) {

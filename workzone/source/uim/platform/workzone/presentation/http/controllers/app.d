@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class AppController {
+class AppController : SAPController {
   private ManageAppsUseCase useCase;
 
   this(ManageAppsUseCase useCase) {
@@ -22,6 +22,8 @@ class AppController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     router.get("/api/v1/apps/*", &handleGet);
@@ -61,13 +63,11 @@ class AppController {
     try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto apps = useCase.listApps(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (ref a; apps)
-        arr ~= serializeApp(a);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)apps.length);
-      res.writeJsonBody(resp, 200);
+      auto arr = apps.map!(a => serializeApp(a)).array.toJson;
+      auto response = Json.emptyObject;
+      response["items"] = arr;
+      response["totalCount"] = Json(cast(long)apps.length);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
