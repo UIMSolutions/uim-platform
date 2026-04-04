@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class CleansingRuleController : SAPController
-{
+class CleansingRuleController : SAPController {
   private ManageCleansingRulesUseCase uc;
 
   this(ManageCleansingRulesUseCase uc)

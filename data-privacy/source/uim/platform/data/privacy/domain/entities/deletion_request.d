@@ -8,8 +8,7 @@ module uim.platform.data.privacy.domain.entities.deletion_request;
 import uim.platform.data.privacy.domain.types;
 
 /// A request to erase personal data for a data subject (GDPR Art. 17).
-struct DeletionRequest
-{
+struct DeletionRequest {
   DeletionRequestId id;
   TenantId tenantId;
   DataSubjectId dataSubjectId;

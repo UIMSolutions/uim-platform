@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
 
-class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository
-{
+class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
   private DataRetrievalRequest[] store;
 
   DataRetrievalRequest[] findByTenant(TenantId tenantId)

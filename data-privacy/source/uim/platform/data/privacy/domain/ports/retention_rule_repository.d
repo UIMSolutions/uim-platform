@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.retention_rule;
 
 /// Port for persisting data retention rules.
-interface RetentionRuleRepository
-{
+interface RetentionRuleRepository {
   RetentionRule[] findByTenant(TenantId tenantId);
   RetentionRule* findById(RetentionRuleId id, TenantId tenantId);
   RetentionRule* findDefault(TenantId tenantId);

@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality.domain.types;
 
 /// A data cleansing / transformation rule.
-struct CleansingRule
-{
+struct CleansingRule {
   RuleId id;
   TenantId tenantId;
   string name;

@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
 import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 
-class MemoryConsentRecordRepository : ConsentRecordRepository
-{
+class MemoryConsentRecordRepository : ConsentRecordRepository {
   private ConsentRecord[] store;
 
   ConsentRecord[] findByTenant(TenantId tenantId)

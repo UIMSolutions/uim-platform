@@ -16,8 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.legal_ground;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class LegalGroundController
-{
+class LegalGroundController {
   private ManageLegalGroundsUseCase uc;
 
   this(ManageLegalGroundsUseCase uc)

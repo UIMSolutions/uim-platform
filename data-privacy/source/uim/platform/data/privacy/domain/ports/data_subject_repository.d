@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_subject;
 
 /// Port for persisting and querying data subjects.
-interface DataSubjectRepository
-{
+interface DataSubjectRepository {
   DataSubject[] findByTenant(TenantId tenantId);
   DataSubject* findById(DataSubjectId id, TenantId tenantId);
   DataSubject* findByExternalId(string externalId, TenantId tenantId);

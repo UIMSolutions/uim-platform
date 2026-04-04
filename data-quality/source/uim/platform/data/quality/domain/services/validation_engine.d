@@ -14,8 +14,7 @@ import uim.platform.data.quality.domain.entities.validation_result;
 // import std.uni : toLower;
 
 /// Domain service - evaluates validation rules against record field values.
-class ValidationEngine
-{
+class ValidationEngine {
   /// Validate a set of field values against applicable rules.
   ValidationResult validate(RecordId recordId, TenantId tenantId,
       DatasetId datasetId, string[string] fieldValues, ValidationRule[] rules)

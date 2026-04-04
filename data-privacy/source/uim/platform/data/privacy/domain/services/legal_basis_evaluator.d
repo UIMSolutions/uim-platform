@@ -12,16 +12,14 @@ import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 
 /// Result of a legal basis evaluation.
-struct LegalBasisEvaluation
-{
+struct LegalBasisEvaluation {
   bool hasValidBasis;
   string[] activeBases; // descriptions of valid legal grounds
   string[] issues; // reasons if no valid basis found
 }
 
 /// Domain service — evaluates whether processing has a valid legal basis.
-class LegalBasisEvaluator
-{
+class LegalBasisEvaluator {
   private LegalGroundRepository groundRepo;
   private ConsentRecordRepository consentRepo;
 

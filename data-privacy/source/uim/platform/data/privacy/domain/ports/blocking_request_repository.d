@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;
 
 /// Port for persisting data blocking / restriction requests.
-interface BlockingRequestRepository
-{
+interface BlockingRequestRepository {
   BlockingRequest[] findByTenant(TenantId tenantId);
   BlockingRequest* findById(BlockingRequestId id, TenantId tenantId);
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

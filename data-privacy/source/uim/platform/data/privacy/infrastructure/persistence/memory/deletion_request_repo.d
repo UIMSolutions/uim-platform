@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.deletion_request;
 import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 
-class MemoryDeletionRequestRepository : DeletionRequestRepository
-{
+class MemoryDeletionRequestRepository : DeletionRequestRepository {
   private DeletionRequest[] store;
 
   DeletionRequest[] findByTenant(TenantId tenantId)

@@ -15,8 +15,7 @@ import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 import uim.platform.data.privacy.application.dto;
 
-class ManageDataRetrievalsUseCase
-{
+class ManageDataRetrievalsUseCase : UIMUseCase {
   private DataRetrievalRequestRepository repo;
   private DataSubjectRepository subjectRepo;
   private PersonalDataModelRepository modelRepo;

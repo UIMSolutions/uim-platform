@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.legal_ground;
 
 /// Port for persisting legal grounds for data processing.
-interface LegalGroundRepository
-{
+interface LegalGroundRepository {
   LegalGround[] findByTenant(TenantId tenantId);
   LegalGround* findById(LegalGroundId id, TenantId tenantId);
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

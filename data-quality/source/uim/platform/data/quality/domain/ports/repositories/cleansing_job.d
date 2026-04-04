@@ -9,8 +9,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;
 
 /// Port for persisting cleansing job records.
-interface CleansingJobRepository
-{
+interface CleansingJobRepository {
   CleansingJob[] findByTenant(TenantId tenantId);
   CleansingJob* findById(CleansingJobId id, TenantId tenantId);
   CleansingJob[] findByDataset(TenantId tenantId, DatasetId datasetId);

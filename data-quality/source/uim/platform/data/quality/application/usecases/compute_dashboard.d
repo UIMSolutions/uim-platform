@@ -14,8 +14,7 @@ import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 import uim.platform.data.quality.domain.services.quality_scorer;
 import uim.platform.data.quality.application.dto;
 
-class ComputeDashboardUseCase
-{
+class ComputeDashboardUseCase : UIMUseCase {
   private ValidationResultRepository resultRepo;
   private DataProfileRepository profileRepo;
   private QualityScorer scorer;

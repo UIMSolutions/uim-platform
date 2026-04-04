@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 
-class MemoryDataSubjectRepository : DataSubjectRepository
-{
+class MemoryDataSubjectRepository : DataSubjectRepository {
   private DataSubject[] store;
 
   DataSubject[] findByTenant(TenantId tenantId)

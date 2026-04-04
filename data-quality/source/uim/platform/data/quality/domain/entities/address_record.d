@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.address_record;
 import uim.platform.data.quality.domain.types;
 
 /// An address record for cleansing and geocoding.
-struct AddressRecord
-{
+struct AddressRecord {
   AddressId id;
   TenantId tenantId;
   RecordId sourceRecordId; // link to originating record

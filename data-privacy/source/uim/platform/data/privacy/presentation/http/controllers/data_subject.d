@@ -16,8 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class DataSubjectController
-{
+class DataSubjectController {
   private ManageDataSubjectsUseCase uc;
 
   this(ManageDataSubjectsUseCase uc)

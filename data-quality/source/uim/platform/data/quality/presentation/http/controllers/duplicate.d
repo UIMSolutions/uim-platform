@@ -17,8 +17,7 @@ import uim.platform.data.quality.domain.entities.match_group;
 import uim.platform.data.quality.domain.services.duplicate_detector : RecordEntry;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class DuplicateController
-{
+class DuplicateController {
   private DetectDuplicatesUseCase uc;
 
   this(DetectDuplicatesUseCase uc)

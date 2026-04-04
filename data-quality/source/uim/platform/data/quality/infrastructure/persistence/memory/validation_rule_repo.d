@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryValidationRuleRepository : ValidationRuleRepository
-{
+class MemoryValidationRuleRepository : ValidationRuleRepository {
   private ValidationRule[RuleId] store;
 
   ValidationRule[] findAll()

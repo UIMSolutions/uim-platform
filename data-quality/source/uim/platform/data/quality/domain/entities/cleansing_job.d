@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.cleansing_job;
 import uim.platform.data.quality.domain.types;
 
 /// An asynchronous data cleansing job.
-struct CleansingJob
-{
+struct CleansingJob {
   CleansingJobId id;
   TenantId tenantId;
   DatasetId datasetId;

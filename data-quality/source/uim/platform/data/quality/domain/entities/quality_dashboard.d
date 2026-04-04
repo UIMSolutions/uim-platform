@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.quality_dashboard;
 import uim.platform.data.quality.domain.types;
 
 /// Aggregated data quality metrics for a tenant / dataset.
-struct QualityDashboard
-{
+struct QualityDashboard {
   TenantId tenantId;
   DatasetId datasetId;
   string datasetName;
@@ -44,15 +43,13 @@ struct QualityDashboard
 }
 
 /// Count of violations per severity level.
-struct RuleSeverityCount
-{
+struct RuleSeverityCount {
   RuleSeverity severity;
   int count;
 }
 
 /// A historical quality score data point.
-struct QualityTrendPoint
-{
+struct QualityTrendPoint {
   long timestamp;
   double score;
   long recordCount;

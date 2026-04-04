@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.legal_ground;
 import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 
-class MemoryLegalGroundRepository : LegalGroundRepository
-{
+class MemoryLegalGroundRepository : LegalGroundRepository {
   private LegalGround[] store;
 
   LegalGround[] findByTenant(TenantId tenantId)

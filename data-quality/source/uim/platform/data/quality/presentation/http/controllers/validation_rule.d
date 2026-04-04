@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.validation_rule;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class ValidationRuleController : SAPController
-{
+class ValidationRuleController : SAPController {
   private ManageValidationRulesUseCase uc;
 
   this(ManageValidationRulesUseCase uc)

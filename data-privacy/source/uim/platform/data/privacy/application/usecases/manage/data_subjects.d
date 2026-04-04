@@ -13,8 +13,7 @@ import uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy.application.dto;
 
-class ManageDataSubjectsUseCase
-{
+class ManageDataSubjectsUseCase : UIMUseCase {
   private DataSubjectRepository repo;
 
   this(DataSubjectRepository repo)

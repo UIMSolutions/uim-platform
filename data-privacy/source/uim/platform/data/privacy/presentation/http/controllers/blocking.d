@@ -16,8 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class BlockingController
-{
+class BlockingController {
   private ManageBlockingRequestsUseCase uc;
 
   this(ManageBlockingRequestsUseCase uc)

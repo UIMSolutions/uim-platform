@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
 
 /// Port for persisting consent records.
-interface ConsentRecordRepository
-{
+interface ConsentRecordRepository {
   ConsentRecord[] findByTenant(TenantId tenantId);
   ConsentRecord* findById(ConsentRecordId id, TenantId tenantId);
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

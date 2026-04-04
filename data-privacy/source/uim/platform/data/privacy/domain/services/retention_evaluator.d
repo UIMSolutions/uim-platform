@@ -10,8 +10,7 @@ import uim.platform.data.privacy.domain.entities.retention_rule;
 import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
 
 /// Result of a retention evaluation.
-struct RetentionEvaluation
-{
+struct RetentionEvaluation {
   bool isExpired;
   int maxRetentionDays;
   string applicableRule;
@@ -19,8 +18,7 @@ struct RetentionEvaluation
 }
 
 /// Domain service — evaluates whether data retention has exceeded its allowed period.
-class RetentionEvaluator
-{
+class RetentionEvaluator {
   private RetentionRuleRepository ruleRepo;
 
   this(RetentionRuleRepository ruleRepo)

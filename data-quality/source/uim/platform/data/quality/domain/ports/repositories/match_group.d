@@ -9,8 +9,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.match_group;
 
 /// Port for persisting duplicate match groups.
-interface MatchGroupRepository
-{
+interface MatchGroupRepository {
   MatchGroup[] findByTenant(TenantId tenantId);
   MatchGroup* findById(MatchGroupId id, TenantId tenantId);
   MatchGroup[] findByDataset(TenantId tenantId, DatasetId datasetId);

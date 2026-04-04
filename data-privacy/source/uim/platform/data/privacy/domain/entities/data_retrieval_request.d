@@ -8,8 +8,7 @@ module uim.platform.data.privacy.domain.entities.data_retrieval_request;
 import uim.platform.data.privacy.domain.types;
 
 /// A data subject access request — retrieve all personal data (GDPR Art. 15).
-struct DataRetrievalRequest
-{
+struct DataRetrievalRequest {
   DataRetrievalRequestId id;
   TenantId tenantId;
   DataSubjectId dataSubjectId;

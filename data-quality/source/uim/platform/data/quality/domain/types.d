@@ -18,8 +18,7 @@ alias TenantId = string;
 alias UserId = string;
 
 /// Data quality validation rule type.
-enum RuleType
-{
+enum RuleType {
   required, // field must not be empty
   format_, // regex / pattern match
   range, // min/max numeric range
@@ -31,8 +30,7 @@ enum RuleType
 }
 
 /// Severity of a rule violation.
-enum RuleSeverity
-{
+enum RuleSeverity {
   info,
   warning,
   error,
@@ -40,16 +38,14 @@ enum RuleSeverity
 }
 
 /// Status of a validation rule.
-enum RuleStatus
-{
+enum RuleStatus {
   active,
   inactive,
   draft,
 }
 
 /// Overall quality score rating.
-enum QualityRating
-{
+enum QualityRating {
   excellent, // >= 95%
   good, // >= 80%
   fair, // >= 60%
@@ -58,8 +54,7 @@ enum QualityRating
 }
 
 /// Status of a cleansing job.
-enum JobStatus
-{
+enum JobStatus {
   pending,
   running,
   completed,
@@ -68,8 +63,7 @@ enum JobStatus
 }
 
 /// Address type for cleansing.
-enum AddressType
-{
+enum AddressType {
   residential,
   business,
   poBox,
@@ -78,8 +72,7 @@ enum AddressType
 }
 
 /// Address quality level after cleansing.
-enum AddressQuality
-{
+enum AddressQuality {
   verified, // fully verified against postal DB
   corrected, // corrected and verified
   partial, // partially matched
@@ -88,8 +81,7 @@ enum AddressQuality
 }
 
 /// Match confidence level for duplicate detection.
-enum MatchConfidence
-{
+enum MatchConfidence {
   exact, // 100% match
   high, // >= 90%
   medium, // >= 70%
@@ -98,8 +90,7 @@ enum MatchConfidence
 }
 
 /// Match strategy for duplicate detection.
-enum MatchStrategy
-{
+enum MatchStrategy {
   exact, // exact field comparison
   fuzzy, // Levenshtein / Jaro-Winkler
   phonetic, // Soundex / Metaphone
@@ -107,8 +98,7 @@ enum MatchStrategy
 }
 
 /// Data profiling column type detected.
-enum ProfiledDataType
-{
+enum ProfiledDataType {
   string_,
   integer,
   float_,
@@ -121,8 +111,7 @@ enum ProfiledDataType
 }
 
 /// Cleansing action applied to a field.
-enum CleansingAction
-{
+enum CleansingAction {
   none,
   trimmed,
   normalized,
@@ -134,8 +123,7 @@ enum CleansingAction
 }
 
 /// Geocoding precision level.
-enum GeocodePrecision
-{
+enum GeocodePrecision {
   rooftop, // exact building
   interpolated, // estimated along street
   centroid, // center of area

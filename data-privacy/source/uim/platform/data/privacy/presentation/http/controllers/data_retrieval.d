@@ -16,8 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class DataRetrievalController
-{
+class DataRetrievalController {
   private ManageDataRetrievalsUseCase uc;
 
   this(ManageDataRetrievalsUseCase uc)

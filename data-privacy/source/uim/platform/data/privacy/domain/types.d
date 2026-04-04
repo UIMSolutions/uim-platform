@@ -18,8 +18,7 @@ alias TenantId = string;
 alias UserId = string;
 
 /// Type of data subject whose personal data is processed.
-enum DataSubjectType
-{
+enum DataSubjectType {
   naturalPerson,
   employee,
   customer,
@@ -29,8 +28,7 @@ enum DataSubjectType
 }
 
 /// Categories of personal data (GDPR Art. 9 special categories marked).
-enum PersonalDataCategory
-{
+enum PersonalDataCategory {
   identification, // name, ID number, date of birth
   contact, // address, email, phone
   financial, // bank account, salary, tax
@@ -47,8 +45,7 @@ enum PersonalDataCategory
 }
 
 /// Legal basis for processing personal data (GDPR Art. 6).
-enum LegalBasis
-{
+enum LegalBasis {
   consent, // Art. 6(1)(a)
   contract, // Art. 6(1)(b)
   legalObligation, // Art. 6(1)(c)
@@ -58,8 +55,7 @@ enum LegalBasis
 }
 
 /// Purpose for which personal data is processed.
-enum ProcessingPurpose
-{
+enum ProcessingPurpose {
   serviceDelivery,
   marketing,
   analytics,
@@ -72,8 +68,7 @@ enum ProcessingPurpose
 }
 
 /// Status of a consent record.
-enum ConsentStatus
-{
+enum ConsentStatus {
   pending,
   granted,
   revoked,
@@ -81,8 +76,7 @@ enum ConsentStatus
 }
 
 /// Status of a data deletion request (GDPR Art. 17).
-enum DeletionStatus
-{
+enum DeletionStatus {
   requested,
   inProgress,
   completed,
@@ -91,16 +85,14 @@ enum DeletionStatus
 }
 
 /// Status of a data blocking / restriction request (GDPR Art. 18).
-enum BlockingStatus
-{
+enum BlockingStatus {
   requested,
   active,
   released,
 }
 
 /// Status of a data retrieval / access request (GDPR Art. 15).
-enum RetrievalStatus
-{
+enum RetrievalStatus {
   requested,
   inProgress,
   completed,
@@ -108,16 +100,14 @@ enum RetrievalStatus
 }
 
 /// Sensitivity classification for personal data fields.
-enum DataSensitivity
-{
+enum DataSensitivity {
   standard,
   sensitive, // GDPR Art. 9 special categories
   highlyConfidential,
 }
 
 /// Type of data subject rights request.
-enum RequestType
-{
+enum RequestType {
   access, // Art. 15
   deletion, // Art. 17
   rectification, // Art. 16
@@ -127,8 +117,7 @@ enum RequestType
 }
 
 /// Retention rule status.
-enum RetentionRuleStatus
-{
+enum RetentionRuleStatus {
   active,
   inactive,
   expired,

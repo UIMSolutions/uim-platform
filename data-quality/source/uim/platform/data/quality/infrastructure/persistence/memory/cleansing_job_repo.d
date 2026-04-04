@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCleansingJobRepository : CleansingJobRepository
-{
+class MemoryCleansingJobRepository : CleansingJobRepository {
   private CleansingJob[CleansingJobId] store;
 
   CleansingJob[] findByTenant(TenantId tenantId)

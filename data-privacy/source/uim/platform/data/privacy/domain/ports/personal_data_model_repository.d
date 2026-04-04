@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.personal_data_model;
 
 /// Port for persisting personal data model definitions.
-interface PersonalDataModelRepository
-{
+interface PersonalDataModelRepository {
   PersonalDataModel[] findByTenant(TenantId tenantId);
   PersonalDataModel* findById(PersonalDataModelId id, TenantId tenantId);
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);

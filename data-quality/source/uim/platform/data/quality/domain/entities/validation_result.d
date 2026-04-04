@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.validation_result;
 import uim.platform.data.quality.domain.types;
 
 /// Result of running validation rules against a single record.
-struct ValidationResult
-{
+struct ValidationResult {
   RecordId recordId;
   TenantId tenantId;
   DatasetId datasetId;
@@ -22,8 +21,7 @@ struct ValidationResult
 }
 
 /// A single rule violation found during validation.
-struct RuleViolation
-{
+struct RuleViolation {
   RuleId ruleId;
   string ruleName;
   string fieldName;

@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.validation_rule;
 import uim.platform.data.quality.domain.types;
 
 /// A configurable data quality validation rule.
-struct ValidationRule
-{
+struct ValidationRule {
   RuleId id;
   TenantId tenantId;
   string name;

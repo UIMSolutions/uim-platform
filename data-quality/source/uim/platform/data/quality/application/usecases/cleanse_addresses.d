@@ -9,12 +9,11 @@ module uim.platform.data.quality.application.usecases.cleanse_addresses;
 
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;
-import uim.platform.data.quality.domain.ports.repositories.addresss;
+import uim.platform.data.quality.domain.ports.repositories.addresses;
 import uim.platform.data.quality.domain.services.address_cleanser;
 import uim.platform.data.quality.application.dto;
 
-class CleanseAddressesUseCase
-{
+class CleanseAddressesUseCase : UIMUseCase {
   private AddressRepository repo;
   private AddressCleanser cleanser;
 

@@ -14,8 +14,7 @@ import uim.platform.data.quality.domain.entities.data_profile;
 import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 import uim.platform.data.quality.application.dto;
 
-class ProfileDataUseCase
-{
+class ProfileDataUseCase : UIMUseCase {
   private DataProfileRepository repo;
 
   this(DataProfileRepository repo)

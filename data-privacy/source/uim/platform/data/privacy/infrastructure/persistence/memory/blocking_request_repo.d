@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;
 import uim.platform.data.privacy.domain.ports.repositories.blocking_requests;
 
-class MemoryBlockingRequestRepository : BlockingRequestRepository
-{
+class MemoryBlockingRequestRepository : BlockingRequestRepository {
   private BlockingRequest[] store;
 
   BlockingRequest[] findByTenant(TenantId tenantId)

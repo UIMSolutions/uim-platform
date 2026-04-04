@@ -13,8 +13,7 @@ import uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 import uim.platform.data.quality.application.dto;
 
-class ManageCleansingRulesUseCase
-{
+class ManageCleansingRulesUseCase : UIMUseCase {
   private CleansingRuleRepository repo;
 
   this(CleansingRuleRepository repo)

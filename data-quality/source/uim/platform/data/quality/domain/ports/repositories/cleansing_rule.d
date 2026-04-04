@@ -9,8 +9,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_rule;
 
 /// Port for persisting data cleansing rules.
-interface CleansingRuleRepository
-{
+interface CleansingRuleRepository {
   CleansingRule[] findAll();
   CleansingRule[] findByTenant(TenantId tenantId);
   CleansingRule* findById(RuleId id);

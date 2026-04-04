@@ -15,8 +15,7 @@ import uim.platform.data.quality.domain.entities.match_group;
 // import std.uuid;
 
 /// Domain service - detects duplicate records using configurable strategies.
-class DuplicateDetector
-{
+class DuplicateDetector {
   /// Detect duplicates among a set of records.
   /// Each record is a map of field name to value.
   MatchGroup[] detect(TenantId tenantId, DatasetId datasetId, string[][] matchFields,
@@ -279,8 +278,7 @@ class DuplicateDetector
 }
 
 /// Input record for duplicate detection.
-struct RecordEntry
-{
+struct RecordEntry {
   RecordId recordId;
   string[string] fields;
 }

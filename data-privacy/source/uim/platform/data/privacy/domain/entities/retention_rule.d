@@ -8,8 +8,7 @@ module uim.platform.data.privacy.domain.entities.retention_rule;
 import uim.platform.data.privacy.domain.types;
 
 /// Defines how long personal data may be retained for a given purpose.
-struct RetentionRule
-{
+struct RetentionRule {
   RetentionRuleId id;
   TenantId tenantId;
   string name;

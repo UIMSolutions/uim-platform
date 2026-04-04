@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.data_profile;
 import uim.platform.data.quality.domain.types;
 
 /// Profile analysis result for a dataset.
-struct DataProfile
-{
+struct DataProfile {
   ProfileId id;
   TenantId tenantId;
   DatasetId datasetId;
@@ -24,8 +23,7 @@ struct DataProfile
 }
 
 /// Profiling statistics for a single column / field.
-struct ColumnProfile
-{
+struct ColumnProfile {
   string fieldName;
   ProfiledDataType detectedType;
   long totalValues;

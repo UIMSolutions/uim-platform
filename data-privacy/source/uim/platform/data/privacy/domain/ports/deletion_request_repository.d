@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.deletion_request;
 
 /// Port for persisting data deletion requests.
-interface DeletionRequestRepository
-{
+interface DeletionRequestRepository {
   DeletionRequest[] findByTenant(TenantId tenantId);
   DeletionRequest* findById(DeletionRequestId id, TenantId tenantId);
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

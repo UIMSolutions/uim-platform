@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.match_groups;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryMatchGroupRepository : MatchGroupRepository
-{
+class MemoryMatchGroupRepository : MatchGroupRepository {
   private MatchGroup[MatchGroupId] store;
 
   MatchGroup[] findByTenant(TenantId tenantId)

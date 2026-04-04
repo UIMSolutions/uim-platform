@@ -14,8 +14,7 @@ import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy.application.dto;
 
-class ManageDeletionRequestsUseCase
-{
+class ManageDeletionRequestsUseCase : UIMUseCase {
   private DeletionRequestRepository repo;
   private DataSubjectRepository subjectRepo;
 

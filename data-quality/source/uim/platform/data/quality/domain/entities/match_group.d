@@ -8,8 +8,7 @@ module uim.platform.data.quality.domain.entities.match_group;
 import uim.platform.data.quality.domain.types;
 
 /// A group of records identified as potential duplicates.
-struct MatchGroup
-{
+struct MatchGroup {
   MatchGroupId id;
   TenantId tenantId;
   DatasetId datasetId;
@@ -22,8 +21,7 @@ struct MatchGroup
 }
 
 /// A candidate record within a match group.
-struct MatchCandidate
-{
+struct MatchCandidate {
   RecordId recordId;
   double score; // 0.0 - 100.0
   MatchConfidence confidence;
@@ -32,8 +30,7 @@ struct MatchCandidate
 }
 
 /// Per-field match detail for duplicate detection.
-struct FieldMatch
-{
+struct FieldMatch {
   string fieldName;
   string valueA;
   string valueB;

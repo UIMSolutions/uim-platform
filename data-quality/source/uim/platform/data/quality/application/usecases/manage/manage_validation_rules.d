@@ -13,8 +13,7 @@ import uim.platform.data.quality.domain.entities.validation_rule;
 import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 import uim.platform.data.quality.application.dto;
 
-class ManageValidationRulesUseCase
-{
+class ManageValidationRulesUseCase : UIMUseCase {
   private ValidationRuleRepository repo;
 
   this(ValidationRuleRepository repo)

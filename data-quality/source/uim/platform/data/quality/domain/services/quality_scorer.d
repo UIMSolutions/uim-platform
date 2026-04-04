@@ -13,8 +13,7 @@ import uim.platform.data.quality.domain.entities.data_profile;
 // import std.datetime.systime : Clock;
 
 /// Domain service - computes quality scores and dashboard metrics.
-class QualityScorer
-{
+class QualityScorer {
   /// Compute a quality dashboard from validation results and profile data.
   QualityDashboard computeDashboard(TenantId tenantId, DatasetId datasetId,
       string datasetName, ValidationResult[] results, DataProfile* profile)

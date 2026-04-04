@@ -14,8 +14,7 @@ import uim.platform.data.quality.domain.entities.address_record;
 // import std.datetime.systime : Clock;
 
 /// Domain service - cleanses and standardizes address data.
-class AddressCleanser
-{
+class AddressCleanser {
   /// Cleanse a raw address record, returning the corrected version.
   AddressRecord cleanse(AddressRecord input)
   {

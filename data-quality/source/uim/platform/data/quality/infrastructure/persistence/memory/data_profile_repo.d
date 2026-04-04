@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 // import std.algorithm : filter, sort;
 // import std.array : array;
 
-class MemoryDataProfileRepository : DataProfileRepository
-{
+class MemoryDataProfileRepository : DataProfileRepository {
   private DataProfile[ProfileId] store;
 
   DataProfile[] findByTenant(TenantId tenantId)

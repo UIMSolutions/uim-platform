@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCleansingRuleRepository : CleansingRuleRepository
-{
+class MemoryCleansingRuleRepository : CleansingRuleRepository {
   private CleansingRule[RuleId] store;
 
   CleansingRule[] findAll()

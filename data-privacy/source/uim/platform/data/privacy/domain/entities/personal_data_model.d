@@ -8,8 +8,7 @@ module uim.platform.data.privacy.domain.entities.personal_data_model;
 import uim.platform.data.privacy.domain.types;
 
 /// Defines a field of personal data within a system — what data exists and where.
-struct PersonalDataModel
-{
+struct PersonalDataModel {
   PersonalDataModelId id;
   TenantId tenantId;
   string fieldName; // e.g. "employee.firstName"

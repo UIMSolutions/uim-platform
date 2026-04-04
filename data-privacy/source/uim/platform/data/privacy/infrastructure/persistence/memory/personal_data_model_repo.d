@@ -9,8 +9,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.personal_data_model;
 import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 
-class MemoryPersonalDataModelRepository : PersonalDataModelRepository
-{
+class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
   private PersonalDataModel[] store;
 
   PersonalDataModel[] findByTenant(TenantId tenantId)

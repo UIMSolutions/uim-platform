@@ -12,8 +12,7 @@ import uim.platform.data.quality.domain.ports.repositories.addresss;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryAddressRepository : AddressRepository
-{
+class MemoryAddressRepository : AddressRepository {
   private AddressRecord[AddressId] store;
 
   AddressRecord[] findByTenant(TenantId tenantId)

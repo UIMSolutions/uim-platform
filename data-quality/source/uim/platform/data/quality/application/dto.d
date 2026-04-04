@@ -14,8 +14,7 @@ import uim.platform.data.quality.domain.entities.quality_dashboard : RuleSeverit
 
 // ──────────────── Validation Rule DTOs ────────────────
 
-struct CreateValidationRuleRequest
-{
+struct CreateValidationRuleRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -36,8 +35,7 @@ struct CreateValidationRuleRequest
   int priority;
 }
 
-struct UpdateValidationRuleRequest
-{
+struct UpdateValidationRuleRequest {
   RuleId id;
   TenantId tenantId;
   string name;
@@ -62,31 +60,27 @@ struct UpdateValidationRuleRequest
 
 // ──────────────── Validation Execution DTOs ────────────────
 
-struct ValidateRecordRequest
-{
+struct ValidateRecordRequest {
   TenantId tenantId;
   DatasetId datasetId;
   RecordId recordId;
   string[string] fieldValues;
 }
 
-struct ValidateBatchRequest
-{
+struct ValidateBatchRequest {
   TenantId tenantId;
   DatasetId datasetId;
   RecordFieldValues[] records;
 }
 
-struct RecordFieldValues
-{
+struct RecordFieldValues {
   RecordId recordId;
   string[string] fieldValues;
 }
 
 // ──────────────── Address Cleansing DTOs ────────────────
 
-struct CleanseAddressRequest
-{
+struct CleanseAddressRequest {
   TenantId tenantId;
   RecordId sourceRecordId;
   string line1;
@@ -97,16 +91,14 @@ struct CleanseAddressRequest
   string country;
 }
 
-struct CleanseBatchAddressRequest
-{
+struct CleanseBatchAddressRequest {
   TenantId tenantId;
   CleanseAddressRequest[] addresses;
 }
 
 // ──────────────── Duplicate Detection DTOs ────────────────
 
-struct DetectDuplicatesRequest
-{
+struct DetectDuplicatesRequest {
   TenantId tenantId;
   DatasetId datasetId;
   string[][] matchFields; // groups of fields to compare
@@ -115,14 +107,12 @@ struct DetectDuplicatesRequest
   DuplicateRecordInput[] records;
 }
 
-struct DuplicateRecordInput
-{
+struct DuplicateRecordInput {
   RecordId recordId;
   string[string] fieldValues;
 }
 
-struct ResolveDuplicateRequest
-{
+struct ResolveDuplicateRequest {
   TenantId tenantId;
   MatchGroupId groupId;
   RecordId survivorRecordId; // chosen golden record
@@ -130,24 +120,21 @@ struct ResolveDuplicateRequest
 
 // ──────────────── Data Profiling DTOs ────────────────
 
-struct ProfileDatasetRequest
-{
+struct ProfileDatasetRequest {
   TenantId tenantId;
   DatasetId datasetId;
   string datasetName;
   ProfileRecordInput[] records;
 }
 
-struct ProfileRecordInput
-{
+struct ProfileRecordInput {
   RecordId recordId;
   string[string] fieldValues;
 }
 
 // ──────────────── Cleansing Rule DTOs ────────────────
 
-struct CreateCleansingRuleRequest
-{
+struct CreateCleansingRuleRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -169,8 +156,7 @@ struct CreateCleansingRuleRequest
   int priority;
 }
 
-struct UpdateCleansingRuleRequest
-{
+struct UpdateCleansingRuleRequest {
   RuleId id;
   TenantId tenantId;
   string name;
@@ -196,8 +182,7 @@ struct UpdateCleansingRuleRequest
 
 // ──────────────── Cleansing Job DTOs ────────────────
 
-struct CreateCleansingJobRequest
-{
+struct CreateCleansingJobRequest {
   TenantId tenantId;
   DatasetId datasetId;
   UserId requestedBy;
@@ -206,8 +191,7 @@ struct CreateCleansingJobRequest
 
 // ──────────────── Quality Dashboard DTOs ────────────────
 
-struct ComputeDashboardRequest
-{
+struct ComputeDashboardRequest {
   TenantId tenantId;
   DatasetId datasetId;
   string datasetName;
@@ -215,8 +199,7 @@ struct ComputeDashboardRequest
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 

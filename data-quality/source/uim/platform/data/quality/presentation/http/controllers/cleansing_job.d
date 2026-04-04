@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class CleansingJobController
-{
+class CleansingJobController {
   private ManageCleansingJobsUseCase uc;
 
   this(ManageCleansingJobsUseCase uc)

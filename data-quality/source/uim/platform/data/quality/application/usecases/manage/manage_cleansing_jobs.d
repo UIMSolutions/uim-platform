@@ -13,8 +13,7 @@ import uim.platform.data.quality.domain.entities.cleansing_job;
 import uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 import uim.platform.data.quality.application.dto;
 
-class ManageCleansingJobsUseCase
-{
+class ManageCleansingJobsUseCase : UIMUseCase {
   private CleansingJobRepository repo;
 
   this(CleansingJobRepository repo)

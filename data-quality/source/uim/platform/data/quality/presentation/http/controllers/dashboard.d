@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.quality_dashboard;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class DashboardController
-{
+class DashboardController {
   private ComputeDashboardUseCase uc;
 
   this(ComputeDashboardUseCase uc)

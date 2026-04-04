@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.data_profile;
 import uim.platform.data.quality.presentation.http.json_utils;
 
-class ProfileController
-{
+class ProfileController {
   private ProfileDataUseCase uc;
 
   this(ProfileDataUseCase uc)

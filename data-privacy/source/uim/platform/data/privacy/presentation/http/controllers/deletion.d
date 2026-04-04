@@ -16,8 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.deletion_request;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class DeletionController
-{
+class DeletionController {
   private ManageDeletionRequestsUseCase uc;
 
   this(ManageDeletionRequestsUseCase uc)

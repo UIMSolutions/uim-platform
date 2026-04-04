@@ -8,8 +8,7 @@ module uim.platform.data.privacy.domain.entities.data_subject;
 import uim.platform.data.privacy.domain.types;
 
 /// A data subject — an identified or identifiable natural person (GDPR Art. 4(1)).
-struct DataSubject
-{
+struct DataSubject {
   DataSubjectId id;
   TenantId tenantId;
   DataSubjectType subjectType = DataSubjectType.naturalPerson;

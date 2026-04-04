@@ -13,8 +13,7 @@ import uim.platform.data.quality.application.dto;
 
 // import std.datetime.systime : Clock;
 
-class DetectDuplicatesUseCase
-{
+class DetectDuplicatesUseCase : UIMUseCase {
   private MatchGroupRepository repo;
   private DuplicateDetector detector;
 

@@ -14,8 +14,7 @@ import uim.platform.data.privacy.domain.ports.repositories.blocking_requests;
 import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
 import uim.platform.data.privacy.application.dto;
 
-class ManageBlockingRequestsUseCase
-{
+class ManageBlockingRequestsUseCase : UIMUseCase {
   private BlockingRequestRepository repo;
   private DataSubjectRepository subjectRepo;
 
