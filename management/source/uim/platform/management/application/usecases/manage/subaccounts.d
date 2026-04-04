@@ -8,8 +8,8 @@ module uim.platform.management.application.usecases.manage.subaccounts;
 import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.entities.platform_event;
-import uim.platform.management.domain.ports.subaccount_repository;
-import uim.platform.management.domain.ports.platform_event_repository;
+import uim.platform.management.domain.ports.repositories.subaccounts;
+import uim.platform.management.domain.ports.repositories.platform_events;
 import uim.platform.management.domain.types;
 
 /// Use case: manage subaccount lifecycle within global accounts.

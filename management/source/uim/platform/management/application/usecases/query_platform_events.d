@@ -7,7 +7,7 @@ module uim.platform.management.application.usecases.query_platform_events;
 
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.platform_event;
-// import uim.platform.management.domain.ports.platform_event_repository;
+// import uim.platform.management.domain.ports.repositories.platform_events;
 // import uim.platform.management.domain.types;
 
 import uim.platform.management;

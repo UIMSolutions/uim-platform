@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.usecases.manage.distribu
 
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.distribution_model;
-import uim.platform.master_data_integration.domain.ports.distribution_model_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.distribution_models;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for distribution model management.

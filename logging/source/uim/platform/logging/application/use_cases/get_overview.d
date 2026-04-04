@@ -5,13 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.get_overview;
 
-import uim.platform.logging.domain.ports.log_entry_repository;
-import uim.platform.logging.domain.ports.span_repository;
-import uim.platform.logging.domain.ports.log_stream_repository;
-import uim.platform.logging.domain.ports.dashboard_repository;
-import uim.platform.logging.domain.ports.alert_repository;
-import uim.platform.logging.domain.ports.pipeline_repository;
-import uim.platform.logging.domain.ports.notification_channel_repository;
+import uim.platform.logging.domain.ports.repositories.log_entrys;
+import uim.platform.logging.domain.ports.repositories.spans;
+import uim.platform.logging.domain.ports.repositories.log_streams;
+import uim.platform.logging.domain.ports.repositories.dashboards;
+import uim.platform.logging.domain.ports.repositories.alerts;
+import uim.platform.logging.domain.ports.repositories.pipelines;
+import uim.platform.logging.domain.ports.repositories.notification_channels;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 

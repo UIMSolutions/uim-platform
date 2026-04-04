@@ -7,7 +7,7 @@ module uim.platform.management.application.usecases.manage.directories;
 
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.directory;
-// import uim.platform.management.domain.ports.directory_repository;
+// import uim.platform.management.domain.ports.repositories.directorys;
 // import uim.platform.management.domain.types;
 
 import uim.platform.management;

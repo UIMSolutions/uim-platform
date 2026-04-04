@@ -6,7 +6,7 @@
 module uim.platform.logging.application.usecases.manage.log_streams;
 
 import uim.platform.logging.domain.entities.log_stream;
-import uim.platform.logging.domain.ports.log_stream_repository;
+import uim.platform.logging.domain.ports.repositories.log_streams;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 

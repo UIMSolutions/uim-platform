@@ -6,7 +6,7 @@
 module uim.platform.logging.application.usecases.manage.dashboards;
 
 import uim.platform.logging.domain.entities.dashboard;
-import uim.platform.logging.domain.ports.dashboard_repository;
+import uim.platform.logging.domain.ports.repositories.dashboards;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 

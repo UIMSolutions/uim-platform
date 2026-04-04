@@ -8,8 +8,8 @@ module uim.platform.master_data_integration.application.usecases.manage.master_d
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.master_data_object;
 import uim.platform.master_data_integration.domain.entities.change_log_entry;
-import uim.platform.master_data_integration.domain.ports.master_data_object_repository;
-import uim.platform.master_data_integration.domain.ports.change_log_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.master_data_objects;
+import uim.platform.master_data_integration.domain.ports.repositories.change_logs;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for master data object CRUD and lifecycle.

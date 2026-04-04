@@ -7,7 +7,7 @@ module uim.platform.management.infrastructure.persistence.memory.global_account_
 
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.global_account;
-// import uim.platform.management.domain.ports.global_account_repository;
+// import uim.platform.management.domain.ports.repositories.global_accounts;
 
 // // import std.algorithm : filter;
 // // import std.array : array;

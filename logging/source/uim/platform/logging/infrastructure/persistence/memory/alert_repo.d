@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.alert_repo;
 
 import uim.platform.logging.domain.entities.alert;
-import uim.platform.logging.domain.ports.alert_repository;
+import uim.platform.logging.domain.ports.repositories.alerts;
 import uim.platform.logging.domain.types;
 
 class MemoryAlertRepository : AlertRepository {

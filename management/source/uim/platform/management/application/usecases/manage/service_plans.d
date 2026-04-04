@@ -7,7 +7,7 @@ module uim.platform.management.application.usecases.manage.service_plans;
 
 import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.service_plan;
-import uim.platform.management.domain.ports.service_plan_repository;
+import uim.platform.management.domain.ports.repositories.service_plans;
 import uim.platform.management.domain.types;
 
 /// Use case: manage the service plan catalog.

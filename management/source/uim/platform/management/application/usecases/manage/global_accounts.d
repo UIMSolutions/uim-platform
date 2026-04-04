@@ -8,8 +8,8 @@ module uim.platform.management.application.usecases.manage.global_accounts;
 import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.global_account;
 import uim.platform.management.domain.entities.platform_event;
-import uim.platform.management.domain.ports.global_account_repository;
-import uim.platform.management.domain.ports.platform_event_repository;
+import uim.platform.management.domain.ports.repositories.global_accounts;
+import uim.platform.management.domain.ports.repositories.platform_events;
 import uim.platform.management.domain.types;
 
 /// Use case: manage global account lifecycle.

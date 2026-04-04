@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.span_repo;
 
 import uim.platform.logging.domain.entities.span;
-import uim.platform.logging.domain.ports.span_repository;
+import uim.platform.logging.domain.ports.repositories.spans;
 import uim.platform.logging.domain.types;
 
 import std.algorithm : filter;

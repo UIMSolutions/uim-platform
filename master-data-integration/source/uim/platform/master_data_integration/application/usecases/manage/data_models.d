@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.usecases.manage.data_mod
 
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.data_model;
-import uim.platform.master_data_integration.domain.ports.data_model_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.data_models;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for data model / schema management.

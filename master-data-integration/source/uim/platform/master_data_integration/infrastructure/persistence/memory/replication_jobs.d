@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.infrastructure.persistence.memory.re
 
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.domain.entities.replication_job;
-import uim.platform.master_data_integration.domain.ports.replication_job_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.replication_jobs;
 
 // import std.algorithm : filter;
 // import std.array : array;

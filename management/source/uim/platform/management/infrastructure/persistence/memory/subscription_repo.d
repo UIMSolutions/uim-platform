@@ -7,7 +7,7 @@ module uim.platform.management.infrastructure.persistence.memory.subscription_re
 
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.subscription;
-// import uim.platform.management.domain.ports.subscription_repository;
+// import uim.platform.management.domain.ports.repositories.subscriptions;
 
 // // import std.algorithm : filter;
 // // import std.array : array;

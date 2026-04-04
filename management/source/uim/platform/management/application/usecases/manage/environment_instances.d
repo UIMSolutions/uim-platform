@@ -8,8 +8,8 @@ module uim.platform.management.application.usecases.manage.environment_instances
 import uim.platform.management.application.dto;
 import uim.platform.management.domain.entities.environment_instance;
 import uim.platform.management.domain.entities.subaccount;
-import uim.platform.management.domain.ports.environment_instance_repository;
-import uim.platform.management.domain.ports.subaccount_repository;
+import uim.platform.management.domain.ports.repositories.environment_instances;
+import uim.platform.management.domain.ports.repositories.subaccounts;
 import uim.platform.management.domain.services.environment_provisioner;
 import uim.platform.management.domain.types;
 

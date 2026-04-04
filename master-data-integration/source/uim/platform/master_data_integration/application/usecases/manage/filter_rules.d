@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.usecases.manage.filter_r
 
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.filter_rule;
-import uim.platform.master_data_integration.domain.ports.filter_rule_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.filter_rules;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for filter rule management.

@@ -7,7 +7,7 @@ module uim.platform.management.infrastructure.persistence.memory.entitlement_rep
 
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.entitlement;
-// import uim.platform.management.domain.ports.entitlement_repository;
+// import uim.platform.management.domain.ports.repositories.entitlements;
 
 // // import std.algorithm : filter;
 // // import std.array : array;

@@ -6,14 +6,14 @@
 module uim.platform.logging.domain.ports;
 
 public {
-  import uim.platform.logging.domain.ports.log_entry_repository;
-  import uim.platform.logging.domain.ports.log_stream_repository;
-  import uim.platform.logging.domain.ports.span_repository;
-  import uim.platform.logging.domain.ports.dashboard_repository;
-  import uim.platform.logging.domain.ports.retention_policy_repository;
-  import uim.platform.logging.domain.ports.alert_rule_repository;
-  import uim.platform.logging.domain.ports.alert_repository;
-  import uim.platform.logging.domain.ports.notification_channel_repository;
-  import uim.platform.logging.domain.ports.pipeline_repository;
-  import uim.platform.logging.domain.ports.ingestion_token_repository;
+  import uim.platform.logging.domain.ports.repositories.log_entrys;
+  import uim.platform.logging.domain.ports.repositories.log_streams;
+  import uim.platform.logging.domain.ports.repositories.spans;
+  import uim.platform.logging.domain.ports.repositories.dashboards;
+  import uim.platform.logging.domain.ports.repositories.retention_policys;
+  import uim.platform.logging.domain.ports.repositories.alert_rules;
+  import uim.platform.logging.domain.ports.repositories.alerts;
+  import uim.platform.logging.domain.ports.repositories.notification_channels;
+  import uim.platform.logging.domain.ports.repositories.pipelines;
+  import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 }

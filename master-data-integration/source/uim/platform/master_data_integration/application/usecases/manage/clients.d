@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.usecases.manage.clients;
 
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.client;
-import uim.platform.master_data_integration.domain.ports.client_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.clients;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for connected client system management.

@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.pipeline_repo;
 
 import uim.platform.logging.domain.entities.pipeline;
-import uim.platform.logging.domain.ports.pipeline_repository;
+import uim.platform.logging.domain.ports.repositories.pipelines;
 import uim.platform.logging.domain.types;
 
 class MemoryPipelineRepository : PipelineRepository {

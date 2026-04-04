@@ -7,7 +7,7 @@ module uim.platform.management.infrastructure.persistence.memory.subaccount_repo
 
 // import uim.platform.management.domain.types;
 // import uim.platform.management.domain.entities.subaccount;
-// import uim.platform.management.domain.ports.subaccount_repository;
+// import uim.platform.management.domain.ports.repositories.subaccounts;
 
 // // import std.algorithm : filter;
 // // import std.array : array;

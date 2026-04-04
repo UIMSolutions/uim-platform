@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.dashboard_repo;
 
 import uim.platform.logging.domain.entities.dashboard;
-import uim.platform.logging.domain.ports.dashboard_repository;
+import uim.platform.logging.domain.ports.repositories.dashboards;
 import uim.platform.logging.domain.types;
 
 class MemoryDashboardRepository : DashboardRepository {

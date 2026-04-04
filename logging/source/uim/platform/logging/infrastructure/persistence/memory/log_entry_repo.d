@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.log_entry_repo;
 
 import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.ports.log_entry_repository;
+import uim.platform.logging.domain.ports.repositories.log_entrys;
 import uim.platform.logging.domain.types;
 
 import std.algorithm : filter;

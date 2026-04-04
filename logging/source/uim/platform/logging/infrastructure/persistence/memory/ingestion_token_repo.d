@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.ingestion_token_repo;
 
 import uim.platform.logging.domain.entities.ingestion_token;
-import uim.platform.logging.domain.ports.ingestion_token_repository;
+import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
 import uim.platform.logging.domain.types;
 
 class MemoryIngestionTokenRepository : IngestionTokenRepository {

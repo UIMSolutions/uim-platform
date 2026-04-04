@@ -6,7 +6,7 @@
 module uim.platform.logging.application.usecases.manage.alerts;
 
 import uim.platform.logging.domain.entities.alert;
-import uim.platform.logging.domain.ports.alert_repository;
+import uim.platform.logging.domain.ports.repositories.alerts;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 

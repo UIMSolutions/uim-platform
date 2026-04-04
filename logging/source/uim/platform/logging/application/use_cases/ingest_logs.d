@@ -6,8 +6,8 @@
 module uim.platform.logging.application.usecases.ingest_logs;
 
 import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.ports.log_entry_repository;
-import uim.platform.logging.domain.ports.log_stream_repository;
+import uim.platform.logging.domain.ports.repositories.log_entrys;
+import uim.platform.logging.domain.ports.repositories.log_streams;
 import uim.platform.logging.domain.services.log_parser;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;

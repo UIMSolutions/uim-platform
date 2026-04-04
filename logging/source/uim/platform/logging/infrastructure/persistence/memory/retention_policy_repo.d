@@ -6,7 +6,7 @@
 module uim.platform.logging.infrastructure.persistence.memory.retention_policy_repo;
 
 import uim.platform.logging.domain.entities.retention_policy;
-import uim.platform.logging.domain.ports.retention_policy_repository;
+import uim.platform.logging.domain.ports.repositories.retention_policys;
 import uim.platform.logging.domain.types;
 
 class MemoryRetentionPolicyRepository : RetentionPolicyRepository {

@@ -7,7 +7,7 @@ module uim.platform.master_data_integration.application.usecases.manage.key_mapp
 
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.key_mapping;
-import uim.platform.master_data_integration.domain.ports.key_mapping_repository;
+import uim.platform.master_data_integration.domain.ports.repositories.key_mappings;
 import uim.platform.master_data_integration.domain.services.key_mapping_resolver;
 import uim.platform.master_data_integration.domain.types;
 
