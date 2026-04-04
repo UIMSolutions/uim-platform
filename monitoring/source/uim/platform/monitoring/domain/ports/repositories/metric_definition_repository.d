@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.metric_definition;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - metric definition persistence.
-interface MetricDefinitionRepository
-{
+interface MetricDefinitionRepository {
   MetricDefinition findById(MetricDefinitionId id);
   MetricDefinition[] findByTenant(TenantId tenantId);
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category);

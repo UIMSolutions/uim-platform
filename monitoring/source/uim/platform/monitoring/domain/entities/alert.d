@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.types;
 
 /// An active or resolved alert triggered by a rule breach.
-struct Alert
-{
+struct Alert {
   AlertId id;
   TenantId tenantId;
   AlertRuleId ruleId;

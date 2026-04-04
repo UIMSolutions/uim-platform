@@ -18,8 +18,7 @@ import uim.platform.object_store.domain.types;
 // import std.conv : to;
 
 /// Application service for storage object CRUD operations.
-class ManageObjectsUseCase
-{
+class ManageObjectsUseCase : UIMUseCase {
   private StorageObjectRepository objectRepo;
   private BucketRepository bucketRepo;
   private ObjectVersionRepository versionRepo;
@@ -242,8 +241,7 @@ class ManageObjectsUseCase
   }
 }
 
-private StorageClass parseStorageClass(string s)
-{
+private StorageClass parseStorageClass(string s) {
   switch (s)
   {
   case "nearline":
@@ -257,16 +255,14 @@ private StorageClass parseStorageClass(string s)
   }
 }
 
-private string generateEtag(string id)
-{
+private string generateEtag(string id) {
   // import std.digest.md : md5Of, toHexString;
   // import std.string : representation;
   auto hash = md5Of(id.representation);
   return toHexString(hash).idup;
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   // import std.datetime.systime : Clock;
   return Clock.currStdTime();
 }

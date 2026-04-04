@@ -14,8 +14,7 @@ import uim.platform.object_store.domain.types;
 // import std.conv : to;
 
 /// Application service for bucket CRUD operations.
-class ManageBucketsUseCase
-{
+class ManageBucketsUseCase : UIMUseCase {
   private BucketRepository repo;
 
   this(BucketRepository repo)
@@ -109,8 +108,7 @@ class ManageBucketsUseCase
   }
 }
 
-private StorageClass parseStorageClass(string s)
-{
+private StorageClass parseStorageClass(string s) {
   switch (s)
   {
   case "nearline":
@@ -124,8 +122,7 @@ private StorageClass parseStorageClass(string s)
   }
 }
 
-private EncryptionType parseEncryptionType(string s)
-{
+private EncryptionType parseEncryptionType(string s) {
   switch (s)
   {
   case "sse_s3":
@@ -139,8 +136,7 @@ private EncryptionType parseEncryptionType(string s)
   }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   import core.time : Duration;
 
   // import std.datetime.systime : Clock;

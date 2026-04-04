@@ -18,58 +18,50 @@ alias UserId = string;
 
 // --- Enumerations ---
 
-enum StorageClass
-{
+enum StorageClass {
   standard,
   nearline,
   coldline,
   archive,
 }
 
-enum BucketStatus
-{
+enum BucketStatus {
   active,
   suspended,
   deleted,
 }
 
-enum ObjectStatus
-{
+enum ObjectStatus {
   active,
   archived,
   deleted,
 }
 
-enum EncryptionType
-{
+enum EncryptionType {
   none,
   sse_s3,
   sse_kms,
   sse_c,
 }
 
-enum PolicyEffect
-{
+enum PolicyEffect {
   allow,
   deny,
 }
 
-enum BindingPermission
-{
+enum BindingPermission {
   readOnly,
   readWrite,
   admin,
 }
 
-enum BindingStatus
-{
+enum BindingStatus {
   active,
   revoked,
   expired,
 }
 
-enum RuleStatus
-{
+enum RuleStatus {
   enabled,
   disabled,
 }

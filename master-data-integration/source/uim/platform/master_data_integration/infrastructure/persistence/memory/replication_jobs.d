@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.replicatio
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryReplicationJobRepository : ReplicationJobRepository
-{
+class MemoryReplicationJobRepository : ReplicationJobRepository {
   private ReplicationJob[ReplicationJobId] store;
 
   ReplicationJob findById(ReplicationJobId id)

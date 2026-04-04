@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -18,8 +17,7 @@ struct CommandResult
 
 /// --- Monitored Resource DTOs ---
 
-struct RegisterResourceRequest
-{
+struct RegisterResourceRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -33,8 +31,7 @@ struct RegisterResourceRequest
   string registeredBy;
 }
 
-struct UpdateResourceRequest
-{
+struct UpdateResourceRequest {
   string description;
   string url;
   string runtime;
@@ -45,8 +42,7 @@ struct UpdateResourceRequest
 
 /// --- Metric Definition DTOs ---
 
-struct CreateMetricDefinitionRequest
-{
+struct CreateMetricDefinitionRequest {
   TenantId tenantId;
   string name;
   string displayName;
@@ -57,8 +53,7 @@ struct CreateMetricDefinitionRequest
   string createdBy;
 }
 
-struct UpdateMetricDefinitionRequest
-{
+struct UpdateMetricDefinitionRequest {
   string displayName;
   string description;
   string aggregation;
@@ -67,8 +62,7 @@ struct UpdateMetricDefinitionRequest
 
 /// --- Metric DTOs ---
 
-struct PushMetricRequest
-{
+struct PushMetricRequest {
   TenantId tenantId;
   MonitoredResourceId resourceId;
   string name;
@@ -78,14 +72,12 @@ struct PushMetricRequest
   string[string] labels;
 }
 
-struct PushMetricBatchRequest
-{
+struct PushMetricBatchRequest {
   TenantId tenantId;
   PushMetricRequest[] metrics;
 }
 
-struct QueryMetricsRequest
-{
+struct QueryMetricsRequest {
   TenantId tenantId;
   MonitoredResourceId resourceId;
   string metricName;
@@ -95,8 +87,7 @@ struct QueryMetricsRequest
 
 /// --- Health Check DTOs ---
 
-struct CreateHealthCheckRequest
-{
+struct CreateHealthCheckRequest {
   TenantId tenantId;
   MonitoredResourceId resourceId;
   string name;
@@ -115,8 +106,7 @@ struct CreateHealthCheckRequest
   string createdBy;
 }
 
-struct UpdateHealthCheckRequest
-{
+struct UpdateHealthCheckRequest {
   string description;
   bool isEnabled;
   int intervalSeconds;
@@ -127,8 +117,7 @@ struct UpdateHealthCheckRequest
   string thresholdOperator;
 }
 
-struct RecordCheckResultRequest
-{
+struct RecordCheckResultRequest {
   TenantId tenantId;
   HealthCheckId checkId;
   MonitoredResourceId resourceId;
@@ -141,8 +130,7 @@ struct RecordCheckResultRequest
 
 /// --- Alert Rule DTOs ---
 
-struct CreateAlertRuleRequest
-{
+struct CreateAlertRuleRequest {
   TenantId tenantId;
   MonitoredResourceId resourceId;
   string name;
@@ -159,8 +147,7 @@ struct CreateAlertRuleRequest
   string createdBy;
 }
 
-struct UpdateAlertRuleRequest
-{
+struct UpdateAlertRuleRequest {
   string description;
   double warningThreshold;
   double criticalThreshold;
@@ -173,15 +160,13 @@ struct UpdateAlertRuleRequest
 
 /// --- Alert DTOs ---
 
-struct AcknowledgeAlertRequest
-{
+struct AcknowledgeAlertRequest {
   AlertId alertId;
   TenantId tenantId;
   string acknowledgedBy;
 }
 
-struct ResolveAlertRequest
-{
+struct ResolveAlertRequest {
   AlertId alertId;
   TenantId tenantId;
   string resolvedBy;
@@ -189,8 +174,7 @@ struct ResolveAlertRequest
 
 /// --- Notification Channel DTOs ---
 
-struct CreateNotificationChannelRequest
-{
+struct CreateNotificationChannelRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -213,8 +197,7 @@ struct CreateNotificationChannelRequest
   string createdBy;
 }
 
-struct UpdateNotificationChannelRequest
-{
+struct UpdateNotificationChannelRequest {
   string description;
   string state; // "active", "inactive"
   string[] emailRecipients;
@@ -227,8 +210,7 @@ struct UpdateNotificationChannelRequest
 
 /// --- Dashboard DTOs ---
 
-struct DashboardSummary
-{
+struct DashboardSummary {
   long totalResources;
   long healthyResources;
   long unhealthyResources;

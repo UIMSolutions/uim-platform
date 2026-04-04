@@ -12,8 +12,7 @@ import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryMetricDefinitionRepository : MetricDefinitionRepository
-{
+class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   private MetricDefinition[MetricDefinitionId] store;
 
   MetricDefinition findById(MetricDefinitionId id)

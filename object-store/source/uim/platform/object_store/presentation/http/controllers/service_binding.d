@@ -15,8 +15,7 @@ import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.service_binding;
 import uim.platform.object_store.presentation.http.json_utils;
 
-class ServiceBindingController
-{
+class ServiceBindingController {
   private ManageServiceBindingsUseCase uc;
 
   this(ManageServiceBindingsUseCase uc)

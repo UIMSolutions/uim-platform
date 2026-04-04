@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.monitored_resource;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - monitored resource persistence.
-interface MonitoredResourceRepository
-{
+interface MonitoredResourceRepository {
   MonitoredResource findById(MonitoredResourceId id);
   MonitoredResource[] findByTenant(TenantId tenantId);
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type);

@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.clients;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryClientRepository : ClientRepository
-{
+class MemoryClientRepository : ClientRepository {
   private Client[ClientId] store;
 
   Client findById(ClientId id)

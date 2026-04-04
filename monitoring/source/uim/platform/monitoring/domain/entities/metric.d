@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.metric;
 import uim.platform.monitoring.domain.types;
 
 /// A single metric data point.
-struct Metric
-{
+struct Metric {
   MetricId id;
   TenantId tenantId;
   MonitoredResourceId resourceId;
@@ -23,8 +22,7 @@ struct Metric
 }
 
 /// Aggregated metric summary over a time window.
-struct MetricSummary
-{
+struct MetricSummary {
   string name;
   MonitoredResourceId resourceId;
   double minValue;

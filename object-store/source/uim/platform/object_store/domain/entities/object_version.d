@@ -7,8 +7,7 @@ module uim.platform.object_store.domain.entities.object_version;
 
 import uim.platform.object_store.domain.types;
 
-class ObjectVersion
-{
+class ObjectVersion {
   ObjectVersionId id;
   TenantId tenantId;
   ObjectId objectId;

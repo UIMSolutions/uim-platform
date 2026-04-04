@@ -10,8 +10,7 @@ import uim.platform.monitoring.domain.entities.metric;
 import uim.platform.monitoring.domain.types;
 
 /// Result of evaluating a metric against an alert rule.
-struct EvaluationResult
-{
+struct EvaluationResult {
   bool breached;
   AlertSeverity severity;
   string message;
@@ -20,8 +19,7 @@ struct EvaluationResult
 }
 
 /// Domain service: evaluates metric values against alert rule thresholds.
-struct ThresholdEvaluator
-{
+struct ThresholdEvaluator {
   /// Evaluate a single metric value against an alert rule.
   static EvaluationResult evaluate(double value_, const ref AlertRule rule)
   {

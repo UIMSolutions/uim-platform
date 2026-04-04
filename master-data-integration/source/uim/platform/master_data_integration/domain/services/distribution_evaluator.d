@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.types;
 
 /// Domain service: evaluates whether a master data object matches distribution
 /// model criteria and filter rules.
-class DistributionEvaluator
-{
+class DistributionEvaluator {
   /// Check if an object's category is covered by the distribution model.
   bool matchesDistribution(DistributionModel model, MasterDataObject obj)
   {

@@ -11,8 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.replicatio
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for replication job lifecycle management.
-class ManageReplicationJobsUseCase
-{
+class ManageReplicationJobsUseCase : UIMUseCase {
   private ReplicationJobRepository repo;
 
   this(ReplicationJobRepository repo)
@@ -206,8 +205,7 @@ class ManageReplicationJobsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

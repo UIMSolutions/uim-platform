@@ -20,8 +20,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class BucketController : SAPController
-{
+class BucketController : SAPController {
   private ManageBucketsUseCase uc;
 
   this(ManageBucketsUseCase uc)

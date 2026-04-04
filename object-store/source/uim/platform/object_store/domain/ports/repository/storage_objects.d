@@ -9,8 +9,7 @@ import uim.platform.object_store.domain.entities.storage_object;
 import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - storage object persistence.
-interface StorageObjectRepository
-{
+interface StorageObjectRepository {
   StorageObject findById(ObjectId id);
   StorageObject findByKey(BucketId bucketId, string key);
   StorageObject[] findByBucket(BucketId bucketId);

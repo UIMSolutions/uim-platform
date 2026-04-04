@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.alert_rule;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - alert rule persistence.
-interface AlertRuleRepository
-{
+interface AlertRuleRepository {
   AlertRule findById(AlertRuleId id);
   AlertRule[] findByTenant(TenantId tenantId);
   AlertRule[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.metric;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - metric data point persistence.
-interface MetricRepository
-{
+interface MetricRepository {
   Metric findById(MetricId id);
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
   Metric[] findByName(TenantId tenantId, string metricName);

@@ -13,8 +13,7 @@ import uim.platform.monitoring.application.usecases.get_dashboard;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class DashboardController
-{
+class DashboardController {
   private GetDashboardUseCase uc;
 
   this(GetDashboardUseCase uc)

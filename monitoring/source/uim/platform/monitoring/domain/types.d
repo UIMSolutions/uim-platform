@@ -18,8 +18,7 @@ alias TenantId = string;
 alias SubaccountId = string;
 
 /// Type of monitored resource.
-enum ResourceType
-{
+enum ResourceType {
   javaApplication,
   html5Application,
   hanaXsApplication,
@@ -30,8 +29,7 @@ enum ResourceType
 }
 
 /// Current state of a monitored resource.
-enum ResourceState
-{
+enum ResourceState {
   started,
   stopped,
   error,
@@ -39,8 +37,7 @@ enum ResourceState
 }
 
 /// Category of a metric.
-enum MetricCategory
-{
+enum MetricCategory {
   cpu,
   memory,
   disk,
@@ -55,8 +52,7 @@ enum MetricCategory
 }
 
 /// Unit of a metric value.
-enum MetricUnit
-{
+enum MetricUnit {
   percent,
   bytes_,
   kilobytes,
@@ -71,8 +67,7 @@ enum MetricUnit
 }
 
 /// Aggregation method for metric time-series.
-enum AggregationMethod
-{
+enum AggregationMethod {
   average,
   sum,
   min,
@@ -82,8 +77,7 @@ enum AggregationMethod
 }
 
 /// Type of health check.
-enum CheckType
-{
+enum CheckType {
   availability,
   jmx,
   customHttp,
@@ -93,8 +87,7 @@ enum CheckType
 }
 
 /// Result status of a health check execution.
-enum CheckStatus
-{
+enum CheckStatus {
   ok,
   warning,
   critical,
@@ -103,8 +96,7 @@ enum CheckStatus
 }
 
 /// Severity level for alerts.
-enum AlertSeverity
-{
+enum AlertSeverity {
   info,
   warning,
   critical,
@@ -112,8 +104,7 @@ enum AlertSeverity
 }
 
 /// Current state of an alert.
-enum AlertState
-{
+enum AlertState {
   open,
   acknowledged,
   resolved,
@@ -121,8 +112,7 @@ enum AlertState
 }
 
 /// Type of comparison for alert rule thresholds.
-enum ThresholdOperator
-{
+enum ThresholdOperator {
   greaterThan,
   greaterOrEqual,
   lessThan,
@@ -132,16 +122,14 @@ enum ThresholdOperator
 }
 
 /// Type of notification channel.
-enum ChannelType
-{
+enum ChannelType {
   email,
   webhook,
   onPremise,
 }
 
 /// State of a notification channel.
-enum ChannelState
-{
+enum ChannelState {
   active,
   inactive,
   error,

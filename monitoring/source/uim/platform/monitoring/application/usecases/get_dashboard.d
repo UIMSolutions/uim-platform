@@ -18,8 +18,7 @@ import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 import uim.platform.monitoring.domain.types;
 
 /// Application service: aggregates monitoring data for dashboard overview.
-class GetDashboardUseCase
-{
+class GetDashboardUseCase : UIMUseCase {
   private MonitoredResourceRepository resourceRepo;
   private AlertRepository alertRepo;
   private HealthCheckRepository checkRepo;

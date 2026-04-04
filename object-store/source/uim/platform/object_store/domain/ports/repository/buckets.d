@@ -9,8 +9,7 @@ import uim.platform.object_store.domain.entities.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - bucket persistence.
-interface BucketRepository
-{
+interface BucketRepository {
   Bucket findById(BucketId id);
   Bucket findByName(TenantId tenantId, string name);
   Bucket[] findByTenant(TenantId tenantId);

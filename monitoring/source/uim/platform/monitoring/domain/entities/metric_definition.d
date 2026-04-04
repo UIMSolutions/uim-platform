@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.metric_definition;
 import uim.platform.monitoring.domain.types;
 
 /// Definition of a metric that can be collected for monitored resources.
-struct MetricDefinition
-{
+struct MetricDefinition {
   MetricDefinitionId id;
   TenantId tenantId;
   string name;

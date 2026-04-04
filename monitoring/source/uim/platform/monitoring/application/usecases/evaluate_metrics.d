@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.application.usecases.manage.alerts;
 
 /// Application service: evaluates metrics against alert rules and triggers alerts.
-class EvaluateMetricsUseCase
-{
+class EvaluateMetricsUseCase : UIMUseCase {
   private AlertRuleRepository ruleRepo;
   private MetricRepository metricRepo;
   private ManageAlertsUseCase alertsUseCase;

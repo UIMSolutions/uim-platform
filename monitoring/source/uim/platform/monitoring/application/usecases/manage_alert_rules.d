@@ -13,8 +13,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for alert rule CRUD (thresholds and checks configuration).
-class ManageAlertRulesUseCase
-{
+class ManageAlertRulesUseCase : UIMUseCase {
   private AlertRuleRepository repo;
 
   this(AlertRuleRepository repo)

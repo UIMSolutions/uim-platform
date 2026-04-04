@@ -12,8 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for CORS rule management.
-class ManageCorsRulesUseCase
-{
+class ManageCorsRulesUseCase : UIMUseCase {
   private CorsRuleRepository corsRepo;
   private BucketRepository bucketRepo;
 
@@ -96,8 +95,7 @@ class ManageCorsRulesUseCase
   }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   // import std.datetime.systime : Clock;
 
   return Clock.currStdTime();

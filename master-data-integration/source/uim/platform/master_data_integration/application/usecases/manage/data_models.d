@@ -11,8 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for data model / schema management.
-class ManageDataModelsUseCase
-{
+class ManageDataModelsUseCase : UIMUseCase {
   private DataModelRepository repo;
 
   this(DataModelRepository repo)
@@ -174,8 +173,7 @@ class ManageDataModelsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

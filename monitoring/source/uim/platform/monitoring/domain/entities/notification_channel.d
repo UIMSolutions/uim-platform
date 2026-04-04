@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.notification_channel;
 import uim.platform.monitoring.domain.types;
 
 /// A notification channel for delivering alert notifications.
-struct NotificationChannel
-{
+struct NotificationChannel {
   NotificationChannelId id;
   TenantId tenantId;
   string name;

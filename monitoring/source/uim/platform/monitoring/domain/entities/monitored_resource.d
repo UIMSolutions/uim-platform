@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.monitored_resource;
 import uim.platform.monitoring.domain.types;
 
 /// A monitored application, database system, or service on SAP BTP.
-struct MonitoredResource
-{
+struct MonitoredResource {
   MonitoredResourceId id;
   TenantId tenantId;
   SubaccountId subaccountId;

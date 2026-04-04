@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDataModelRepository : DataModelRepository
-{
+class MemoryDataModelRepository : DataModelRepository {
   private DataModel[DataModelId] store;
 
   DataModel findById(DataModelId id)

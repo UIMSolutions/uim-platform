@@ -7,8 +7,7 @@ module uim.platform.object_store.domain.entities.lifecycle_rule;
 
 import uim.platform.object_store.domain.types;
 
-class LifecycleRule
-{
+class LifecycleRule {
   LifecycleRuleId id;
   TenantId tenantId;
   BucketId bucketId;

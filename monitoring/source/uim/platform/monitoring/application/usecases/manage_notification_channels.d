@@ -13,8 +13,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for notification channel CRUD (email, webhook, on-premise).
-class ManageNotificationChannelsUseCase
-{
+class ManageNotificationChannelsUseCase : UIMUseCase {
   private NotificationChannelRepository repo;
 
   this(NotificationChannelRepository repo)

@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.types;
 
 /// A connected client system participating in master data integration.
-struct Client
-{
+struct Client {
   ClientId id;
   TenantId tenantId;
   string name;

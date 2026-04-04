@@ -39,8 +39,7 @@ import uim.platform.monitoring.presentation.http.dashboard;
 import uim.platform.monitoring.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryMonitoredResourceRepository resourceRepo;
   MemoryMetricDefinitionRepository metricDefRepo;
@@ -74,8 +73,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class AlertController
-{
+class AlertController {
   private ManageAlertsUseCase uc;
 
   this(ManageAlertsUseCase uc)

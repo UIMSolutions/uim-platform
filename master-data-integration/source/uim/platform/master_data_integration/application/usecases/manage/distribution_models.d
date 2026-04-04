@@ -11,8 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.distributi
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for distribution model management.
-class ManageDistributionModelsUseCase
-{
+class ManageDistributionModelsUseCase : UIMUseCase {
   private DistributionModelRepository repo;
 
   this(DistributionModelRepository repo)
@@ -196,8 +195,7 @@ class ManageDistributionModelsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

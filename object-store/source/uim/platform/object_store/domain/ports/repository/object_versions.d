@@ -9,8 +9,7 @@ import uim.platform.object_store.domain.entities.object_version;
 import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - object version persistence.
-interface ObjectVersionRepository
-{
+interface ObjectVersionRepository {
   ObjectVersion findById(ObjectVersionId id);
   ObjectVersion[] findByObject(ObjectId objectId);
   ObjectVersion findLatest(ObjectId objectId);

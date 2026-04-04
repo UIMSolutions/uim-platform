@@ -18,8 +18,7 @@ alias TenantId = string;
 alias VersionId = string;
 
 /// Category of master data object.
-enum MasterDataCategory
-{
+enum MasterDataCategory {
   businessPartner,
   costCenter,
   profitCenter,
@@ -35,8 +34,7 @@ enum MasterDataCategory
 }
 
 /// Status of a master data record.
-enum RecordStatus
-{
+enum RecordStatus {
   active,
   inactive,
   blocked,
@@ -44,8 +42,7 @@ enum RecordStatus
 }
 
 /// Type of change in a change log.
-enum ChangeType
-{
+enum ChangeType {
   create_,
   update_,
   delete_,
@@ -55,24 +52,21 @@ enum ChangeType
 }
 
 /// Status of a distribution model.
-enum DistributionModelStatus
-{
+enum DistributionModelStatus {
   active,
   inactive,
   draft,
 }
 
 /// Direction of data flow in distribution.
-enum DistributionDirection
-{
+enum DistributionDirection {
   outbound,
   inbound,
   bidirectional,
 }
 
 /// Status of a connected client system.
-enum ClientStatus
-{
+enum ClientStatus {
   connected,
   disconnected,
   error,
@@ -80,8 +74,7 @@ enum ClientStatus
 }
 
 /// Type of the connected client.
-enum ClientType
-{
+enum ClientType {
   sapS4Hana,
   sapSuccessFactors,
   sapAriba,
@@ -93,8 +86,7 @@ enum ClientType
 }
 
 /// Status of a replication job.
-enum ReplicationJobStatus
-{
+enum ReplicationJobStatus {
   pending,
   running,
   completed,
@@ -104,8 +96,7 @@ enum ReplicationJobStatus
 }
 
 /// Trigger mode for replication.
-enum ReplicationTrigger
-{
+enum ReplicationTrigger {
   manual,
   scheduled,
   eventDriven,
@@ -113,8 +104,7 @@ enum ReplicationTrigger
 }
 
 /// Filter operator for filtering rules.
-enum FilterOperator
-{
+enum FilterOperator {
   equals,
   notEquals,
   contains,
@@ -130,8 +120,7 @@ enum FilterOperator
 }
 
 /// Data model field type.
-enum FieldType
-{
+enum FieldType {
   string_,
   integer_,
   decimal_,
@@ -144,8 +133,7 @@ enum FieldType
 }
 
 /// Key mapping source type.
-enum KeyMappingSourceType
-{
+enum KeyMappingSourceType {
   local,
   remote,
   universal,

@@ -9,8 +9,7 @@ import uim.platform.object_store.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -18,8 +17,7 @@ struct CommandResult
 
 /// --- Bucket DTOs ---
 
-struct CreateBucketRequest
-{
+struct CreateBucketRequest {
   TenantId tenantId;
   string name;
   string region;
@@ -31,8 +29,7 @@ struct CreateBucketRequest
   UserId createdBy;
 }
 
-struct UpdateBucketRequest
-{
+struct UpdateBucketRequest {
   string storageClass;
   bool versioningEnabled;
   string encryptionType;
@@ -42,8 +39,7 @@ struct UpdateBucketRequest
 
 /// --- Storage Object DTOs ---
 
-struct CreateObjectRequest
-{
+struct CreateObjectRequest {
   TenantId tenantId;
   BucketId bucketId;
   string key;
@@ -54,15 +50,13 @@ struct CreateObjectRequest
   UserId createdBy;
 }
 
-struct UpdateObjectMetadataRequest
-{
+struct UpdateObjectMetadataRequest {
   string contentType;
   string metadata;
   string storageClass;
 }
 
-struct CopyObjectRequest
-{
+struct CopyObjectRequest {
   TenantId tenantId;
   BucketId sourceBucketId;
   string sourceKey;
@@ -73,8 +67,7 @@ struct CopyObjectRequest
 
 /// --- Access Policy DTOs ---
 
-struct CreateAccessPolicyRequest
-{
+struct CreateAccessPolicyRequest {
   TenantId tenantId;
   BucketId bucketId;
   string name;
@@ -85,8 +78,7 @@ struct CreateAccessPolicyRequest
   UserId createdBy;
 }
 
-struct UpdateAccessPolicyRequest
-{
+struct UpdateAccessPolicyRequest {
   string name;
   string effect;
   string principal;
@@ -96,8 +88,7 @@ struct UpdateAccessPolicyRequest
 
 /// --- Lifecycle Rule DTOs ---
 
-struct CreateLifecycleRuleRequest
-{
+struct CreateLifecycleRuleRequest {
   TenantId tenantId;
   BucketId bucketId;
   string name;
@@ -110,8 +101,7 @@ struct CreateLifecycleRuleRequest
   UserId createdBy;
 }
 
-struct UpdateLifecycleRuleRequest
-{
+struct UpdateLifecycleRuleRequest {
   string name;
   string prefix;
   string status;
@@ -123,8 +113,7 @@ struct UpdateLifecycleRuleRequest
 
 /// --- CORS Rule DTOs ---
 
-struct CreateCorsRuleRequest
-{
+struct CreateCorsRuleRequest {
   TenantId tenantId;
   BucketId bucketId;
   string allowedOrigins; // JSON array
@@ -134,8 +123,7 @@ struct CreateCorsRuleRequest
   int maxAgeSeconds;
 }
 
-struct UpdateCorsRuleRequest
-{
+struct UpdateCorsRuleRequest {
   string allowedOrigins;
   string allowedMethods;
   string allowedHeaders;
@@ -145,8 +133,7 @@ struct UpdateCorsRuleRequest
 
 /// --- Service Binding DTOs ---
 
-struct CreateServiceBindingRequest
-{
+struct CreateServiceBindingRequest {
   TenantId tenantId;
   BucketId bucketId;
   string name;

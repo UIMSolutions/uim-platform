@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.health_check_result;
 import uim.platform.monitoring.domain.types;
 
 /// Result of executing a health check.
-struct HealthCheckResult
-{
+struct HealthCheckResult {
   HealthCheckResultId id;
   TenantId tenantId;
   HealthCheckId checkId;

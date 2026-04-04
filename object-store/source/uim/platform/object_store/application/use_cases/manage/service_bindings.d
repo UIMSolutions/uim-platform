@@ -14,8 +14,7 @@ import uim.platform.object_store.domain.types;
 // import std.conv : to;
 
 /// Application service for service binding management (credentials for programmatic access).
-class ManageServiceBindingsUseCase
-{
+class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository bindingRepo;
   private BucketRepository bucketRepo;
 
@@ -92,8 +91,7 @@ class ManageServiceBindingsUseCase
   }
 }
 
-private BindingPermission parsePermission(string s)
-{
+private BindingPermission parsePermission(string s) {
   switch (s)
   {
   case "readWrite":
@@ -105,8 +103,7 @@ private BindingPermission parsePermission(string s)
   }
 }
 
-private string hashSecret(string secret)
-{
+private string hashSecret(string secret) {
   // import std.digest.md : md5Of, toHexString;
   // import std.string : representation;
 
@@ -114,8 +111,7 @@ private string hashSecret(string secret)
   return toHexString(hash).idup;
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   // import std.datetime.systime : Clock;
 
   return Clock.currStdTime();

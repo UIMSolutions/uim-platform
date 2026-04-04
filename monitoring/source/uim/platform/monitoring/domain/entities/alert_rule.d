@@ -8,8 +8,7 @@ module uim.platform.monitoring.domain.entities.alert_rule;
 import uim.platform.monitoring.domain.types;
 
 /// An alert rule that defines thresholds for triggering alerts.
-struct AlertRule
-{
+struct AlertRule {
   AlertRuleId id;
   TenantId tenantId;
   MonitoredResourceId resourceId;

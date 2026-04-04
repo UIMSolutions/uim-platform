@@ -13,8 +13,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.distributi
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDistributionModelRepository : DistributionModelRepository
-{
+class MemoryDistributionModelRepository : DistributionModelRepository {
   private DistributionModel[DistributionModelId] store;
 
   DistributionModel findById(DistributionModelId id)

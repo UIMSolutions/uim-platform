@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - alert persistence.
-interface AlertRepository
-{
+interface AlertRepository {
   Alert findById(AlertId id);
   Alert[] findByTenant(TenantId tenantId);
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

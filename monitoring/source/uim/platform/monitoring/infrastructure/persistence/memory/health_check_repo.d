@@ -12,8 +12,7 @@ import uim.platform.monitoring.domain.ports.repositories.health_checks;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryHealthCheckRepository : HealthCheckRepository
-{
+class MemoryHealthCheckRepository : HealthCheckRepository {
   private HealthCheck[HealthCheckId] store;
 
   HealthCheck findById(HealthCheckId id)

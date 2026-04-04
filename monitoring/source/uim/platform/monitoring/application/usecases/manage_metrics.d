@@ -15,8 +15,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for metric retrieval, push, and custom metric definitions.
-class ManageMetricsUseCase
-{
+class ManageMetricsUseCase : UIMUseCase {
   private MetricRepository metricRepo;
   private MetricDefinitionRepository definitionRepo;
 

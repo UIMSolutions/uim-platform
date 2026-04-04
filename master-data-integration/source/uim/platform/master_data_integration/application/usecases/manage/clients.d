@@ -11,8 +11,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.clients;
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for connected client system management.
-class ManageClientsUseCase
-{
+class ManageClientsUseCase : UIMUseCase {
   private ClientRepository repo;
 
   this(ClientRepository repo)
@@ -218,8 +217,7 @@ class ManageClientsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

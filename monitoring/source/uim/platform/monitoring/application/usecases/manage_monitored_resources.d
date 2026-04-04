@@ -13,8 +13,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for monitored resource CRUD operations.
-class ManageMonitoredResourcesUseCase
-{
+class ManageMonitoredResourcesUseCase : UIMUseCase {
   private MonitoredResourceRepository repo;
 
   this(MonitoredResourceRepository repo)

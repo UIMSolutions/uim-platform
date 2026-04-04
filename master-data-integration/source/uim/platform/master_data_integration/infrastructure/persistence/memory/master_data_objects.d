@@ -13,8 +13,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.master_dat
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryMasterDataObjectRepository : MasterDataObjectRepository
-{
+class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
   private MasterDataObject[MasterDataObjectId] store;
 
   MasterDataObject findById(MasterDataObjectId id)

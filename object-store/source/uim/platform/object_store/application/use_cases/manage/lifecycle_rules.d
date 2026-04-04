@@ -12,8 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for lifecycle rule management.
-class ManageLifecycleRulesUseCase
-{
+class ManageLifecycleRulesUseCase : UIMUseCase {
   private LifecycleRuleRepository ruleRepo;
   private BucketRepository bucketRepo;
 
@@ -105,8 +104,7 @@ class ManageLifecycleRulesUseCase
   }
 }
 
-private RuleStatus parseRuleStatus(string s)
-{
+private RuleStatus parseRuleStatus(string s) {
   switch (s)
   {
   case "disabled":
@@ -116,8 +114,7 @@ private RuleStatus parseRuleStatus(string s)
   }
 }
 
-private StorageClass parseStorageClass(string s)
-{
+private StorageClass parseStorageClass(string s) {
   switch (s)
   {
   case "nearline":
@@ -131,8 +128,7 @@ private StorageClass parseStorageClass(string s)
   }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   // import std.datetime.systime : Clock;
 
   return Clock.currStdTime();

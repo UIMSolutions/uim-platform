@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.management;
 
-public
-{
+public {
   import uim.platform.service;
 }

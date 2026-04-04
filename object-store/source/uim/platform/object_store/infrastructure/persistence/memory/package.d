@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.object_store.infrastructure.persistence.memory.bucket;
   import uim.platform.object_store.infrastructure.persistence.memory.cors_rule;
   import uim.platform.object_store.infrastructure.persistence.memory.lifecycle_rule;

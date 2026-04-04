@@ -13,8 +13,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for master data object CRUD and lifecycle.
-class ManageMasterDataObjectsUseCase
-{
+class ManageMasterDataObjectsUseCase : UIMUseCase {
   private MasterDataObjectRepository repo;
   private ChangeLogRepository changeLogRepo;
 
@@ -229,8 +228,7 @@ class ManageMasterDataObjectsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

@@ -9,8 +9,7 @@ import uim.platform.master_data_integration.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -18,8 +17,7 @@ struct CommandResult
 
 /// --- Master Data Object DTOs ---
 
-struct CreateMasterDataObjectRequest
-{
+struct CreateMasterDataObjectRequest {
   TenantId tenantId;
   DataModelId dataModelId;
   string category; // "businessPartner", "costCenter", etc.
@@ -34,8 +32,7 @@ struct CreateMasterDataObjectRequest
   string createdBy;
 }
 
-struct UpdateMasterDataObjectRequest
-{
+struct UpdateMasterDataObjectRequest {
   string displayName;
   string description;
   string status; // "active", "inactive", "blocked", "markedForDeletion"
@@ -45,8 +42,7 @@ struct UpdateMasterDataObjectRequest
 
 /// --- Data Model DTOs ---
 
-struct CreateDataModelRequest
-{
+struct CreateDataModelRequest {
   TenantId tenantId;
   string name;
   string namespace;
@@ -59,8 +55,7 @@ struct CreateDataModelRequest
   string createdBy;
 }
 
-struct UpdateDataModelRequest
-{
+struct UpdateDataModelRequest {
   string description;
   string version_;
   FieldDefinitionDto[] fields;
@@ -68,8 +63,7 @@ struct UpdateDataModelRequest
   string[] requiredFields;
 }
 
-struct FieldDefinitionDto
-{
+struct FieldDefinitionDto {
   string name;
   string displayName;
   string type_; // "string", "integer", "decimal", etc.
@@ -83,8 +77,7 @@ struct FieldDefinitionDto
 
 /// --- Distribution Model DTOs ---
 
-struct CreateDistributionModelRequest
-{
+struct CreateDistributionModelRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -99,8 +92,7 @@ struct CreateDistributionModelRequest
   string createdBy;
 }
 
-struct UpdateDistributionModelRequest
-{
+struct UpdateDistributionModelRequest {
   string name;
   string description;
   string status; // "active", "inactive", "draft"
@@ -114,8 +106,7 @@ struct UpdateDistributionModelRequest
 
 /// --- Key Mapping DTOs ---
 
-struct CreateKeyMappingRequest
-{
+struct CreateKeyMappingRequest {
   TenantId tenantId;
   MasterDataObjectId masterDataObjectId;
   string category;
@@ -123,13 +114,11 @@ struct CreateKeyMappingRequest
   KeyMappingEntryDto[] entries;
 }
 
-struct UpdateKeyMappingRequest
-{
+struct UpdateKeyMappingRequest {
   KeyMappingEntryDto[] entries;
 }
 
-struct KeyMappingEntryDto
-{
+struct KeyMappingEntryDto {
   ClientId clientId;
   string systemId;
   string localKey;
@@ -137,8 +126,7 @@ struct KeyMappingEntryDto
   bool isPrimary;
 }
 
-struct LookupKeyRequest
-{
+struct LookupKeyRequest {
   TenantId tenantId;
   ClientId sourceClientId;
   string sourceLocalKey;
@@ -147,8 +135,7 @@ struct LookupKeyRequest
 
 /// --- Client DTOs ---
 
-struct CreateClientRequest
-{
+struct CreateClientRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -166,8 +153,7 @@ struct CreateClientRequest
   string createdBy;
 }
 
-struct UpdateClientRequest
-{
+struct UpdateClientRequest {
   string name;
   string description;
   string status; // "connected", "disconnected", "error", "suspended"
@@ -182,8 +168,7 @@ struct UpdateClientRequest
 
 /// --- Replication Job DTOs ---
 
-struct CreateReplicationJobRequest
-{
+struct CreateReplicationJobRequest {
   TenantId tenantId;
   DistributionModelId distributionModelId;
   string name;
@@ -198,8 +183,7 @@ struct CreateReplicationJobRequest
 
 /// --- Filter Rule DTOs ---
 
-struct CreateFilterRuleRequest
-{
+struct CreateFilterRuleRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -211,8 +195,7 @@ struct CreateFilterRuleRequest
   string createdBy;
 }
 
-struct UpdateFilterRuleRequest
-{
+struct UpdateFilterRuleRequest {
   string name;
   string description;
   FilterConditionDto[] conditions;
@@ -220,8 +203,7 @@ struct UpdateFilterRuleRequest
   bool isActive;
 }
 
-struct FilterConditionDto
-{
+struct FilterConditionDto {
   string fieldName;
   string operator; // "equals", "contains", "inList", etc.
   string value;
@@ -232,8 +214,7 @@ struct FilterConditionDto
 
 /// --- Change Log DTOs ---
 
-struct ChangeLogQueryRequest
-{
+struct ChangeLogQueryRequest {
   TenantId tenantId;
   MasterDataObjectId objectId;
   string category;

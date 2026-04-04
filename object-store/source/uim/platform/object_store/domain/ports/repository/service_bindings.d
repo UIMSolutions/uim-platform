@@ -9,8 +9,7 @@ import uim.platform.object_store.domain.entities.service_binding;
 import uim.platform.object_store.domain.types;
 
 /// Port: outgoing - service binding persistence.
-interface ServiceBindingRepository
-{
+interface ServiceBindingRepository {
   ServiceBinding findById(ServiceBindingId id);
   ServiceBinding[] findByBucket(BucketId bucketId);
   ServiceBinding[] findByTenant(TenantId tenantId);

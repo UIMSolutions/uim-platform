@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.ports.repositories.change_log
 // import std.algorithm : filter, sort;
 // import std.array : array;
 
-class MemoryChangeLogRepository : ChangeLogRepository
-{
+class MemoryChangeLogRepository : ChangeLogRepository {
   private ChangeLogEntry[ChangeLogEntryId] store;
 
   ChangeLogEntry findById(ChangeLogEntryId id)

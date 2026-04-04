@@ -13,8 +13,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for alert lifecycle management (list, acknowledge, resolve).
-class ManageAlertsUseCase
-{
+class ManageAlertsUseCase : UIMUseCase {
   private AlertRepository repo;
 
   this(AlertRepository repo)

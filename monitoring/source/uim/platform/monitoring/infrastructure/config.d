@@ -6,16 +6,14 @@
 module uim.platform.monitoring.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8093;
   string serviceName = "Monitoring Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;

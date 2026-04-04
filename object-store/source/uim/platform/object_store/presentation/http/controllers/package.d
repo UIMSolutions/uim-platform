@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.presentation.http.controllers;
 
-public
-{
+public {
   import uim.platform.object_store.presentation.http.controllers.access_policy;
   import uim.platform.object_store.presentation.http.controllers.bucket;
   import uim.platform.object_store.presentation.http.controllers.cors_rule;

@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.types;
 // import std.conv : to;
 
 /// Application service for health check CRUD and result recording.
-class ManageHealthChecksUseCase
-{
+class ManageHealthChecksUseCase : UIMUseCase {
   private HealthCheckRepository checkRepo;
   private HealthCheckResultRepository resultRepo;
 

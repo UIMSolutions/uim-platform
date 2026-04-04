@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.notification_channel;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - notification channel persistence.
-interface NotificationChannelRepository
-{
+interface NotificationChannelRepository {
   NotificationChannel findById(NotificationChannelId id);
   NotificationChannel[] findByTenant(TenantId tenantId);
   NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType);

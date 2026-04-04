@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.entities.notification_channel;
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class ChannelController : SAPController
-{
+class ChannelController : SAPController {
   private ManageNotificationChannelsUseCase uc;
 
   this(ManageNotificationChannelsUseCase uc)

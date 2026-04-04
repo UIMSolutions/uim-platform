@@ -12,8 +12,7 @@ import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryNotificationChannelRepository : NotificationChannelRepository
-{
+class MemoryNotificationChannelRepository : NotificationChannelRepository {
   private NotificationChannel[NotificationChannelId] store;
 
   NotificationChannel findById(NotificationChannelId id)

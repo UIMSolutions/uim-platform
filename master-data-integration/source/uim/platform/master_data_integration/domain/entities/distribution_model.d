@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.distribution_model;
 import uim.platform.master_data_integration.domain.types;
 
 /// A distribution model defines which data flows from/to which clients.
-struct DistributionModel
-{
+struct DistributionModel {
   DistributionModelId id;
   TenantId tenantId;
   string name;

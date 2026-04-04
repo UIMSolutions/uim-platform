@@ -20,8 +20,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class AccessPolicyController : SAPController
-{
+class AccessPolicyController : SAPController {
   private ManageAccessPoliciesUseCase uc;
 
   this(ManageAccessPoliciesUseCase uc)

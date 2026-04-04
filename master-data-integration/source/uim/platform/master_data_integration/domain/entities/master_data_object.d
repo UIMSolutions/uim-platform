@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.master_data_object;
 import uim.platform.master_data_integration.domain.types;
 
 /// A master data record — the core entity managed by MDI.
-struct MasterDataObject
-{
+struct MasterDataObject {
   MasterDataObjectId id;
   TenantId tenantId;
   DataModelId dataModelId;

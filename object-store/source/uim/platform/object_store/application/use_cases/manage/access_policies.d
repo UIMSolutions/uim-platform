@@ -12,8 +12,7 @@ import uim.platform.object_store.domain.ports.repositories.bucket;
 import uim.platform.object_store.domain.types;
 
 /// Application service for bucket access policy management.
-class ManageAccessPoliciesUseCase
-{
+class ManageAccessPoliciesUseCase : UIMUseCase {
   private AccessPolicyRepository policyRepo;
   private BucketRepository bucketRepo;
 
@@ -99,8 +98,7 @@ class ManageAccessPoliciesUseCase
   }
 }
 
-private PolicyEffect parseEffect(string s)
-{
+private PolicyEffect parseEffect(string s) {
   switch (s)
   {
   case "deny":
@@ -110,8 +108,7 @@ private PolicyEffect parseEffect(string s)
   }
 }
 
-private long currentTimestamp()
-{
+private long currentTimestamp() {
   // import std.datetime.systime : Clock;
 
   return Clock.currStdTime();

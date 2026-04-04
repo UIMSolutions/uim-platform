@@ -7,8 +7,7 @@ module uim.platform.object_store.domain.entities.storage_object;
 
 import uim.platform.object_store.domain.types;
 
-class StorageObject
-{
+class StorageObject {
   ObjectId id;
   TenantId tenantId;
   BucketId bucketId;

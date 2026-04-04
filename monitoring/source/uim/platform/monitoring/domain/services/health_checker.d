@@ -9,15 +9,13 @@ import uim.platform.monitoring.domain.entities.health_check;
 import uim.platform.monitoring.domain.types;
 
 /// Result of validating a health check configuration.
-struct ValidationResult
-{
+struct ValidationResult {
   bool valid;
   string[] errors;
 }
 
 /// Domain service: validates health check configurations.
-struct HealthChecker
-{
+struct HealthChecker {
   /// Validate a health check configuration for correctness.
   static ValidationResult validate(const ref HealthCheck check)
   {

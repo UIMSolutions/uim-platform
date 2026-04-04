@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.entities.monitored_resource;
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class ResourceController
-{
+class ResourceController {
   private ManageMonitoredResourcesUseCase uc;
 
   this(ManageMonitoredResourcesUseCase uc)

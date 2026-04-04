@@ -9,8 +9,7 @@ import uim.platform.monitoring.domain.entities.health_check_result;
 import uim.platform.monitoring.domain.types;
 
 /// Port: outgoing - health check result persistence.
-interface HealthCheckResultRepository
-{
+interface HealthCheckResultRepository {
   HealthCheckResult findById(HealthCheckResultId id);
   HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId);
   HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);

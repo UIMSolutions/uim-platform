@@ -16,8 +16,7 @@ import uim.platform.monitoring.domain.entities.metric;
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class MetricController
-{
+class MetricController {
   private ManageMetricsUseCase uc;
 
   this(ManageMetricsUseCase uc)

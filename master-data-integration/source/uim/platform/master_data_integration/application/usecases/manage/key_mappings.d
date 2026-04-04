@@ -12,8 +12,7 @@ import uim.platform.master_data_integration.domain.services.key_mapping_resolver
 import uim.platform.master_data_integration.domain.types;
 
 /// Application service for cross-system key mapping management.
-class ManageKeyMappingsUseCase
-{
+class ManageKeyMappingsUseCase : UIMUseCase {
   private KeyMappingRepository repo;
   private KeyMappingResolver resolver;
 
@@ -159,8 +158,7 @@ class ManageKeyMappingsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

@@ -17,8 +17,7 @@ import uim.platform.monitoring.domain.entities.health_check_result;
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.presentation.http.json_utils;
 
-class CheckController : SAPController
-{
+class CheckController : SAPController {
   private ManageHealthChecksUseCase uc;
 
   this(ManageHealthChecksUseCase uc)

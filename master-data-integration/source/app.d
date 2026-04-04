@@ -16,11 +16,9 @@ import uim.platform.master_data_integration.infrastructure.container;
 
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto config = loadConfig();

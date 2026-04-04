@@ -45,8 +45,7 @@ import uim.platform.master_data_integration.presentation.http.change_log;
 import uim.platform.master_data_integration.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryMasterDataObjectRepository mdoRepo;
   MemoryDataModelRepository dataModelRepo;
@@ -84,8 +83,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
