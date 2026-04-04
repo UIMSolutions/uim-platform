@@ -18,12 +18,12 @@ import uim.platform.monitoring.infrastructure.persistence.memory.alert_repo;
 import uim.platform.monitoring.infrastructure.persistence.memory.notification_channel_repo;
 
 // Use Cases
-import uim.platform.monitoring.application.usecases.manage_monitored_resources;
-import uim.platform.monitoring.application.usecases.manage_metrics;
-import uim.platform.monitoring.application.usecases.manage_health_checks;
-import uim.platform.monitoring.application.usecases.manage_alert_rules;
-import uim.platform.monitoring.application.usecases.manage_alerts;
-import uim.platform.monitoring.application.usecases.manage_notification_channels;
+import uim.platform.monitoring.application.usecases.manage.monitored_resources;
+import uim.platform.monitoring.application.usecases.manage.metrics;
+import uim.platform.monitoring.application.usecases.manage.health_checks;
+import uim.platform.monitoring.application.usecases.manage.alert_rules;
+import uim.platform.monitoring.application.usecases.manage.alerts;
+import uim.platform.monitoring.application.usecases.manage.notification_channels;
 import uim.platform.monitoring.application.usecases.evaluate_metrics;
 import uim.platform.monitoring.application.usecases.get_dashboard;
 

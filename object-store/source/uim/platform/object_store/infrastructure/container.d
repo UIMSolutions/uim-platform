@@ -17,12 +17,12 @@ module uim.platform.object_store.infrastructure.container;
 // import uim.platform.object_store.infrastructure.persistence.memory.service_binding;
 
 // // Use Cases
-// import uim.platform.object_store.application.usecases.manage_buckets;
-// import uim.platform.object_store.application.usecases.manage_objects;
-// import uim.platform.object_store.application.usecases.manage_access_policies;
-// import uim.platform.object_store.application.usecases.manage_lifecycle_rules;
-// import uim.platform.object_store.application.usecases.manage_cors_rules;
-// import uim.platform.object_store.application.usecases.manage_service_bindings;
+// import uim.platform.object_store.application.usecases.manage.buckets;
+// import uim.platform.object_store.application.usecases.manage.objects;
+// import uim.platform.object_store.application.usecases.manage.access_policies;
+// import uim.platform.object_store.application.usecases.manage.lifecycle_rules;
+// import uim.platform.object_store.application.usecases.manage.cors_rules;
+// import uim.platform.object_store.application.usecases.manage.service_bindings;
 
 // // Controllers
 // import uim.platform.object_store.presentation.http.controllers.bucket;

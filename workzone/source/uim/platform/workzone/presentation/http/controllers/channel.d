@@ -8,7 +8,7 @@ module uim.platform.workzone.presentation.http.controllers.channel;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage_channels;
+import uim.platform.workzone.application.usecases.manage.channels;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;

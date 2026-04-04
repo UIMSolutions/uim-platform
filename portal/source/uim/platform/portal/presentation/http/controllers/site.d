@@ -8,7 +8,7 @@ module uim.platform.portal.presentation.http.controllers.site;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.portal.application.usecases.manage_sites;
+// import uim.platform.portal.application.usecases.manage.sites;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.site;
 // import uim.platform.portal.domain.types;

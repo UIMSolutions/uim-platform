@@ -10,7 +10,7 @@ module uim.platform.monitoring.presentation.http.controllers.alert;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage_alerts;
+import uim.platform.monitoring.application.usecases.manage.alerts;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.types;

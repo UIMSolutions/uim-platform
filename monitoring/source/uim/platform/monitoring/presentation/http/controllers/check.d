@@ -10,7 +10,7 @@ module uim.platform.monitoring.presentation.http.check;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage_health_checks;
+import uim.platform.monitoring.application.usecases.manage.health_checks;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.health_check;
 import uim.platform.monitoring.domain.entities.health_check_result;

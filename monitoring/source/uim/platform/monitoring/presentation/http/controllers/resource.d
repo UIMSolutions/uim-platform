@@ -10,7 +10,7 @@ module uim.platform.monitoring.presentation.http.resource;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage_monitored_resources;
+import uim.platform.monitoring.application.usecases.manage.monitored_resources;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.monitored_resource;
 import uim.platform.monitoring.domain.types;

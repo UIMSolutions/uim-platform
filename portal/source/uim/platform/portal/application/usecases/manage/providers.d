@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.portal.application.usecases.manage_providers;
+module uim.platform.portal.application.usecases.manage.providers;
 
 import uim.platform.portal.domain.entities.content_provider;
 import uim.platform.portal.domain.types;

@@ -8,7 +8,7 @@ module uim.platform.identity_authentication.presentation.http.notification;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage_notifications;
+import uim.platform.workzone.application.usecases.manage.notifications;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;

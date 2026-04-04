@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.usage_report;
 
-import uim.platform.mobile.application.usecases.manage_usage_reports;
+import uim.platform.mobile.application.usecases.manage.usage_reports;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

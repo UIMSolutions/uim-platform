@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.user_session;
 
-import uim.platform.mobile.application.usecases.manage_user_sessions;
+import uim.platform.mobile.application.usecases.manage.user_sessions;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

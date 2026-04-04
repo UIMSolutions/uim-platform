@@ -13,7 +13,7 @@ import uim.platform.monitoring.domain.ports.metric_repository;
 import uim.platform.monitoring.domain.services.threshold_evaluator;
 import uim.platform.monitoring.domain.types;
 
-import uim.platform.monitoring.application.usecases.manage_alerts;
+import uim.platform.monitoring.application.usecases.manage.alerts;
 
 /// Application service: evaluates metrics against alert rules and triggers alerts.
 class EvaluateMetricsUseCase

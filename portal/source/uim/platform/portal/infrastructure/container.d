@@ -20,16 +20,16 @@ module uim.platform.portal.infrastructure.container;
 // import uim.platform.portal.infrastructure.persistence.memory.translation_repo;
 // 
 // // Use Cases
-// import uim.platform.portal.application.usecases.manage_sites;
-// import uim.platform.portal.application.usecases.manage_pages;
-// import uim.platform.portal.application.usecases.manage_sections;
-// import uim.platform.portal.application.usecases.manage_tiles;
-// import uim.platform.portal.application.usecases.manage_catalogs;
-// import uim.platform.portal.application.usecases.manage_providers;
-// import uim.platform.portal.application.usecases.manage_roles;
-// import uim.platform.portal.application.usecases.manage_themes;
-// import uim.platform.portal.application.usecases.manage_menu_items;
-// import uim.platform.portal.application.usecases.manage_translations;
+// import uim.platform.portal.application.usecases.manage.sites;
+// import uim.platform.portal.application.usecases.manage.pages;
+// import uim.platform.portal.application.usecases.manage.sections;
+// import uim.platform.portal.application.usecases.manage.tiles;
+// import uim.platform.portal.application.usecases.manage.catalogs;
+// import uim.platform.portal.application.usecases.manage.providers;
+// import uim.platform.portal.application.usecases.manage.roles;
+// import uim.platform.portal.application.usecases.manage.themes;
+// import uim.platform.portal.application.usecases.manage.menu_items;
+// import uim.platform.portal.application.usecases.manage.translations;
 // 
 // // Controllers
 // import uim.platform.identity_authentication.presentation.http.site;

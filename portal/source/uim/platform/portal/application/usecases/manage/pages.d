@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.portal.application.usecases.manage_pages;
+module uim.platform.portal.application.usecases.manage.pages;
 
 import uim.platform.portal.domain.entities.page;
 import uim.platform.portal.domain.entities.site;

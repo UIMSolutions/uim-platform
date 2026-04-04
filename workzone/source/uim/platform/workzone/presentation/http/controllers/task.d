@@ -8,7 +8,7 @@ module uim.platform.identity_authentication.presentation.http.task;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage_tasks;
+import uim.platform.workzone.application.usecases.manage.tasks;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;

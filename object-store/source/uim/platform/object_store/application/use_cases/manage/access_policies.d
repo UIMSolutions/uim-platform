@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.object_store.application.usecases.manage_access_policies;
+module uim.platform.object_store.application.usecases.manage.access_policies;
 
 import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.access_policy;

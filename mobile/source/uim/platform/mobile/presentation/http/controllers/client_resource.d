@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.client_resource;
 
-import uim.platform.mobile.application.usecases.manage_client_resources;
+import uim.platform.mobile.application.usecases.manage.client_resources;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

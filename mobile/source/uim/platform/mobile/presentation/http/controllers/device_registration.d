@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.device_registration;
 
-import uim.platform.mobile.application.usecases.manage_device_registrations;
+import uim.platform.mobile.application.usecases.manage.device_registrations;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

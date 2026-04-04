@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.feature_restriction;
 
-import uim.platform.mobile.application.usecases.manage_feature_restrictions;
+import uim.platform.mobile.application.usecases.manage.feature_restrictions;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

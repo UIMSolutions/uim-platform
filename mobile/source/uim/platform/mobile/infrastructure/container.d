@@ -22,18 +22,18 @@ import uim.platform.mobile.infrastructure.persistence.memory.user_sessions;
 import uim.platform.mobile.infrastructure.persistence.memory.client_logs;
 
 // Use Cases
-import uim.platform.mobile.application.usecases.manage_mobile_apps;
-import uim.platform.mobile.application.usecases.manage_device_registrations;
-import uim.platform.mobile.application.usecases.manage_push_notifications;
-import uim.platform.mobile.application.usecases.manage_push_registrations;
-import uim.platform.mobile.application.usecases.manage_app_configurations;
-import uim.platform.mobile.application.usecases.manage_feature_restrictions;
-import uim.platform.mobile.application.usecases.manage_client_resources;
-import uim.platform.mobile.application.usecases.manage_app_versions;
-import uim.platform.mobile.application.usecases.manage_usage_reports;
-import uim.platform.mobile.application.usecases.manage_offline_stores;
-import uim.platform.mobile.application.usecases.manage_user_sessions;
-import uim.platform.mobile.application.usecases.manage_client_logs;
+import uim.platform.mobile.application.usecases.manage.mobile_apps;
+import uim.platform.mobile.application.usecases.manage.device_registrations;
+import uim.platform.mobile.application.usecases.manage.push_notifications;
+import uim.platform.mobile.application.usecases.manage.push_registrations;
+import uim.platform.mobile.application.usecases.manage.app_configurations;
+import uim.platform.mobile.application.usecases.manage.feature_restrictions;
+import uim.platform.mobile.application.usecases.manage.client_resources;
+import uim.platform.mobile.application.usecases.manage.app_versions;
+import uim.platform.mobile.application.usecases.manage.usage_reports;
+import uim.platform.mobile.application.usecases.manage.offline_stores;
+import uim.platform.mobile.application.usecases.manage.user_sessions;
+import uim.platform.mobile.application.usecases.manage.client_logs;
 import uim.platform.mobile.application.usecases.get_overview;
 
 // Controllers

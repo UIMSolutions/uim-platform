@@ -10,7 +10,7 @@ module uim.platform.monitoring.presentation.http.metric_definition;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage_metrics;
+import uim.platform.monitoring.application.usecases.manage.metrics;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.metric_definition;
 import uim.platform.monitoring.domain.types;

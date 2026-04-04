@@ -8,7 +8,7 @@ module uim.platform.portal.presentation.http.controllers.tile;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.portal.application.usecases.manage_tiles;
+// import uim.platform.portal.application.usecases.manage.tiles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.tile;
 // import uim.platform.portal.domain.types;

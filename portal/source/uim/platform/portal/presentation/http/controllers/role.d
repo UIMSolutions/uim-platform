@@ -8,7 +8,7 @@ module uim.platform.portal.presentation.http.controllers.role;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.portal.application.usecases.manage_roles;
+// import uim.platform.portal.application.usecases.manage.roles;
 // import uim.platform.portal.application.dto;
 // import uim.platform.portal.domain.entities.role;
 // import uim.platform.portal.domain.types;

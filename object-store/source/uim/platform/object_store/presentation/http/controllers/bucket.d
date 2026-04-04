@@ -10,7 +10,7 @@ module uim.platform.object_store.presentation.http.controllers.bucket;
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.object_store.application.usecases.manage_buckets;
+// import uim.platform.object_store.application.usecases.manage.buckets;
 // import uim.platform.object_store.application.dto;
 // import uim.platform.object_store.domain.entities.bucket;
 // import uim.platform.object_store.presentation.http.json_utils;
