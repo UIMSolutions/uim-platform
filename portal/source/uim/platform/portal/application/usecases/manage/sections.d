@@ -8,8 +8,8 @@ module uim.platform.portal.application.usecases.manage_sections;
 import uim.platform.portal.domain.entities.section;
 import uim.platform.portal.domain.entities.page;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.section_repository;
-import uim.platform.portal.domain.ports.page_repository;
+import uim.platform.portal.domain.ports.repositories.sections;
+import uim.platform.portal.domain.ports.repositories.pages;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;
@@ -17,19 +17,16 @@ import uim.platform.portal.application.dto;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class ManageSectionsUseCase
-{
+class ManageSectionsUseCase : UIMUseCase{
   private SectionRepository sectionRepo;
   private PageRepository pageRepo;
 
-  this(SectionRepository sectionRepo, PageRepository pageRepo)
-  {
+  this(SectionRepository sectionRepo, PageRepository pageRepo) {
     this.sectionRepo = sectionRepo;
     this.pageRepo = pageRepo;
   }
 
-  SectionResponse createSection(CreateSectionRequest req)
-  {
+  SectionResponse createSection(CreateSectionRequest req) {
     auto page = pageRepo.findById(req.pageId);
     if (page == Page.init)
       return SectionResponse("", "Page not found");
@@ -37,7 +34,7 @@ class ManageSectionsUseCase
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto section = Section(id, req.pageId, req.tenantId, req.title, [], // tileIds
-        req.sortOrder, req.visible, req.columns > 0 ? req.columns : 3, now, now,);
+      req.sortOrder, req.visible, req.columns > 0 ? req.columns : 3, now, now,);
     sectionRepo.save(section);
 
     page.sectionIds ~= id;
@@ -47,18 +44,15 @@ class ManageSectionsUseCase
     return SectionResponse(id, "");
   }
 
-  Section getSection(SectionId id)
-  {
+  Section getSection(SectionId id) {
     return sectionRepo.findById(id);
   }
 
-  Section[] listSections(PageId pageId)
-  {
+  Section[] listSections(PageId pageId) {
     return sectionRepo.findByPage(pageId);
   }
 
-  string updateSection(UpdateSectionRequest req)
-  {
+  string updateSection(UpdateSectionRequest req) {
     auto section = sectionRepo.findById(req.sectionId);
     if (section == Section.init)
       return "Section not found";
@@ -72,8 +66,7 @@ class ManageSectionsUseCase
     return "";
   }
 
-  string deleteSection(SectionId sectionId, PageId pageId)
-  {
+  string deleteSection(SectionId sectionId, PageId pageId) {
     auto section = sectionRepo.findById(sectionId);
     if (section == Section.init)
       return "Section not found";
@@ -81,8 +74,7 @@ class ManageSectionsUseCase
     sectionRepo.remove(sectionId);
 
     auto page = pageRepo.findById(pageId);
-    if (page != Page.init)
-    {
+    if (page != Page.init) {
       page.sectionIds = page.sectionIds.filter!(s => s != sectionId).array;
       page.updatedAt = Clock.currStdTime();
       pageRepo.update(page);

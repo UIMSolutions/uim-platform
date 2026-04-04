@@ -7,53 +7,46 @@ module uim.platform.portal.application.usecases.manage_translations;
 
 import uim.platform.portal.domain.entities.translation;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.translation_repository;
+import uim.platform.portal.domain.ports.repositories.translations;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageTranslationsUseCase
-{
+class ManageTranslationsUseCase : UIMUseCase {
   private TranslationRepository translationRepo;
 
-  this(TranslationRepository translationRepo)
-  {
+  this(TranslationRepository translationRepo) {
     this.translationRepo = translationRepo;
   }
 
-  TranslationResponse createTranslation(CreateTranslationRequest req)
-  {
+  TranslationResponse createTranslation(CreateTranslationRequest req) {
     if (req.fieldName.length == 0 || req.language.length == 0)
       return TranslationResponse("", "Field name and language are required");
 
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto translation = Translation(id, req.tenantId, req.resourceType,
-        req.resourceId, req.fieldName, req.language, req.value, now, now,);
+      req.resourceId, req.fieldName, req.language, req.value, now, now,);
     translationRepo.save(translation);
     return TranslationResponse(id, "");
   }
 
-  Translation getTranslation(TranslationId id)
-  {
+  Translation getTranslation(TranslationId id) {
     return translationRepo.findById(id);
   }
 
   Translation[] getTranslationsForResource(string resourceType,
-      string resourceId, string language = "")
-  {
+    string resourceId, string language = "") {
     return translationRepo.findByResource(resourceType, resourceId, language);
   }
 
   Translation[] listTranslations(TenantId tenantId, string language, uint offset = 0,
-      uint limit = 100)
-  {
+    uint limit = 100) {
     return translationRepo.findByLanguage(tenantId, language, offset, limit);
   }
 
-  string updateTranslation(UpdateTranslationRequest req)
-  {
+  string updateTranslation(UpdateTranslationRequest req) {
     auto translation = translationRepo.findById(req.translationId);
     if (translation == Translation.init)
       return "Translation not found";
@@ -64,8 +57,7 @@ class ManageTranslationsUseCase
     return "";
   }
 
-  string deleteTranslation(TranslationId id)
-  {
+  string deleteTranslation(TranslationId id) {
     auto translation = translationRepo.findById(id);
     if (translation == Translation.init)
       return "Translation not found";
@@ -74,8 +66,7 @@ class ManageTranslationsUseCase
     return "";
   }
 
-  string deleteTranslationsForResource(string resourceType, string resourceId)
-  {
+  string deleteTranslationsForResource(string resourceType, string resourceId) {
     translationRepo.removeByResource(resourceType, resourceId);
     return "";
   }

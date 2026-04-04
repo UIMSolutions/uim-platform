@@ -13,42 +13,36 @@ import uim.platform.portal.application.dto;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageProvidersUseCase
-{
+class ManageProvidersUseCase : UIMUseCase {
   private ProviderRepository providerRepo;
 
-  this(ProviderRepository providerRepo)
-  {
+  this(ProviderRepository providerRepo) {
     this.providerRepo = providerRepo;
   }
 
-  ProviderResponse createProvider(CreateProviderRequest req)
-  {
+  ProviderResponse createProvider(CreateProviderRequest req) {
     if (req.name.length == 0)
       return ProviderResponse("", "Provider name is required");
 
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto provider = ContentProvider(id, req.tenantId, req.name, req.description,
-        req.providerType, req.contentEndpointUrl, req.authToken, true, // active
-        [], // catalogIds
-        now, now,);
+      req.providerType, req.contentEndpointUrl, req.authToken, true, // active
+      [], // catalogIds
+      now, now,);
     providerRepo.save(provider);
     return ProviderResponse(id, "");
   }
 
-  ContentProvider getProvider(ProviderId id)
-  {
+  ContentProvider getProvider(ProviderId id) {
     return providerRepo.findById(id);
   }
 
-  ContentProvider[] listProviders(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  ContentProvider[] listProviders(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return providerRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateProvider(UpdateProviderRequest req)
-  {
+  string updateProvider(UpdateProviderRequest req) {
     auto provider = providerRepo.findById(req.providerId);
     if (provider == ContentProvider.init)
       return "Content provider not found";
@@ -64,8 +58,7 @@ class ManageProvidersUseCase
     return "";
   }
 
-  string deleteProvider(ProviderId id)
-  {
+  string deleteProvider(ProviderId id) {
     auto provider = providerRepo.findById(id);
     if (provider == ContentProvider.init)
       return "Content provider not found";

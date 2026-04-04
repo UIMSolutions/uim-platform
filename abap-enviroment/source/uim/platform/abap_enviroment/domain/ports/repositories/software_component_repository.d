@@ -3,18 +3,23 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.domain.ports.software_component_repository;
+module uim.platform.abap_enviroment.domain.ports.repositories.software_component_repository;
 
 import uim.platform.abap_enviroment.domain.entities.software_component;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - software component persistence.
-interface SoftwareComponentRepository
-{
-  SoftwareComponent* findById(SoftwareComponentId id);
+interface SoftwareComponentRepository {
+
+  bool existsId(SoftwareComponentId id);
+  SoftwareComponent findById(SoftwareComponentId id);
+
+  bool existsName(SystemInstanceId systemId, string name);
+  SoftwareComponent findByName(SystemInstanceId systemId, string name);
+
   SoftwareComponent[] findBySystem(SystemInstanceId systemId);
   SoftwareComponent[] findByTenant(TenantId tenantId);
-  SoftwareComponent* findByName(SystemInstanceId systemId, string name);
+  
   void save(SoftwareComponent component);
   void update(SoftwareComponent component);
   void remove(SoftwareComponentId id);

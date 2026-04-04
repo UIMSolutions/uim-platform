@@ -7,24 +7,21 @@ module uim.platform.abap_enviroment.application.usecases.manage.service_bindings
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.service_binding;
-import uim.platform.abap_enviroment.domain.ports.service_binding_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.service_bindings;
 import uim.platform.abap_enviroment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
 
 /// Application service for service binding CRUD.
-class ManageServiceBindingsUseCase
-{
+class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository repo;
 
-  this(ServiceBindingRepository repo)
-  {
+  this(ServiceBindingRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createBinding(CreateServiceBindingRequest req)
-  {
+  CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Service binding name is required");
     if (req.systemInstanceId.length == 0)
@@ -54,8 +51,7 @@ class ManageServiceBindingsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req)
-  {
+  CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
     auto binding = repo.findById(id);
     if (binding is null)
       return CommandResult("", "Service binding not found");
@@ -74,18 +70,15 @@ class ManageServiceBindingsUseCase
     return CommandResult(id, "");
   }
 
-  ServiceBinding* getBinding(ServiceBindingId id)
-  {
+  ServiceBinding* getBinding(ServiceBindingId id) {
     return repo.findById(id);
   }
 
-  ServiceBinding[] listBindings(SystemInstanceId systemId)
-  {
+  ServiceBinding[] listBindings(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteBinding(ServiceBindingId id)
-  {
+  CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = repo.findById(id);
     if (binding is null)
       return CommandResult("", "Service binding not found");
@@ -95,10 +88,8 @@ class ManageServiceBindingsUseCase
   }
 }
 
-private BindingType parseBindingType(string s)
-{
-  switch (s)
-  {
+private BindingType parseBindingType(string s) {
+  switch (s) {
   case "odataV2":
     return BindingType.odataV2;
   case "odataV4":
@@ -116,10 +107,8 @@ private BindingType parseBindingType(string s)
   }
 }
 
-private BindingStatus parseBindingStatus(string s)
-{
-  switch (s)
-  {
+private BindingStatus parseBindingStatus(string s) {
+  switch (s) {
   case "active":
     return BindingStatus.active;
   case "inactive":

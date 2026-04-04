@@ -7,24 +7,21 @@ module uim.platform.abap_enviroment.application.usecases.manage.communication_ar
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
-import uim.platform.abap_enviroment.domain.ports.communication_arrangement_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.communication_arrangements;
 import uim.platform.abap_enviroment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
 
 /// Application service for communication arrangement CRUD.
-class ManageCommunicationArrangementsUseCase
-{
+class ManageCommunicationArrangementsUseCase : UIMUseCase {
   private CommunicationArrangementRepository repo;
 
-  this(CommunicationArrangementRepository repo)
-  {
+  this(CommunicationArrangementRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createArrangement(CreateCommunicationArrangementRequest req)
-  {
+  CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Arrangement name is required");
     if (req.scenarioId.length == 0)
@@ -61,8 +58,7 @@ class ManageCommunicationArrangementsUseCase
   }
 
   CommandResult updateArrangement(CommunicationArrangementId id,
-      UpdateCommunicationArrangementRequest req)
-  {
+    UpdateCommunicationArrangementRequest req) {
     auto arr = repo.findById(id);
     if (arr is null)
       return CommandResult("", "Communication arrangement not found");
@@ -95,18 +91,15 @@ class ManageCommunicationArrangementsUseCase
     return CommandResult(id, "");
   }
 
-  CommunicationArrangement* getArrangement(CommunicationArrangementId id)
-  {
+  CommunicationArrangement* getArrangement(CommunicationArrangementId id) {
     return repo.findById(id);
   }
 
-  CommunicationArrangement[] listArrangements(SystemInstanceId systemId)
-  {
+  CommunicationArrangement[] listArrangements(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteArrangement(CommunicationArrangementId id)
-  {
+  CommandResult deleteArrangement(CommunicationArrangementId id) {
     auto arr = repo.findById(id);
     if (arr is null)
       return CommandResult("", "Communication arrangement not found");
@@ -116,10 +109,8 @@ class ManageCommunicationArrangementsUseCase
   }
 }
 
-private CommunicationDirection parseDirection(string s)
-{
-  switch (s)
-  {
+private CommunicationDirection parseDirection(string s) {
+  switch (s) {
   case "inbound":
     return CommunicationDirection.inbound;
   case "outbound":
@@ -129,10 +120,8 @@ private CommunicationDirection parseDirection(string s)
   }
 }
 
-private CommunicationAuthMethod parseAuthMethod(string s)
-{
-  switch (s)
-  {
+private CommunicationAuthMethod parseAuthMethod(string s) {
+  switch (s) {
   case "basicAuthentication":
     return CommunicationAuthMethod.basicAuthentication;
   case "oauth2ClientCredentials":
@@ -148,10 +137,8 @@ private CommunicationAuthMethod parseAuthMethod(string s)
   }
 }
 
-private ArrangementStatus parseArrangementStatus(string s)
-{
-  switch (s)
-  {
+private ArrangementStatus parseArrangementStatus(string s) {
+  switch (s) {
   case "active":
     return ArrangementStatus.active;
   case "inactive":

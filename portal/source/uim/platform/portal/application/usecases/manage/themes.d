@@ -7,37 +7,32 @@ module uim.platform.portal.application.usecases.manage_themes;
 
 import uim.platform.portal.domain.entities.theme;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.theme_repository;
+import uim.platform.portal.domain.ports.repositories.themes;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageThemesUseCase
-{
+class ManageThemesUseCase {
   private ThemeRepository themeRepo;
 
-  this(ThemeRepository themeRepo)
-  {
+  this(ThemeRepository themeRepo) {
     this.themeRepo = themeRepo;
   }
 
-  ThemeResponse createTheme(CreateThemeRequest req)
-  {
+  ThemeResponse createTheme(CreateThemeRequest req) {
     if (req.name.length == 0)
       return ThemeResponse("", "Theme name is required");
 
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto theme = Theme(id, req.tenantId, req.name, req.description, req.mode,
-        req.baseTheme, req.colors, req.fonts, req.customCss, req.isDefault, now, now,);
+      req.baseTheme, req.colors, req.fonts, req.customCss, req.isDefault, now, now,);
 
     // If this is the default, unset previous default
-    if (req.isDefault)
-    {
+    if (req.isDefault) {
       auto currentDefault = themeRepo.findDefault(req.tenantId);
-      if (currentDefault != Theme.init)
-      {
+      if (currentDefault != Theme.init) {
         currentDefault.isDefault = false;
         currentDefault.updatedAt = now;
         themeRepo.update(currentDefault);
@@ -48,23 +43,19 @@ class ManageThemesUseCase
     return ThemeResponse(id, "");
   }
 
-  Theme getTheme(ThemeId id)
-  {
+  Theme getTheme(ThemeId id) {
     return themeRepo.findById(id);
   }
 
-  Theme getDefaultTheme(TenantId tenantId)
-  {
+  Theme getDefaultTheme(TenantId tenantId) {
     return themeRepo.findDefault(tenantId);
   }
 
-  Theme[] listThemes(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Theme[] listThemes(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return themeRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateTheme(UpdateThemeRequest req)
-  {
+  string updateTheme(UpdateThemeRequest req) {
     auto theme = themeRepo.findById(req.themeId);
     if (theme == Theme.init)
       return "Theme not found";
@@ -76,11 +67,9 @@ class ManageThemesUseCase
     theme.fonts = req.fonts;
     theme.customCss = req.customCss;
 
-    if (req.isDefault && !theme.isDefault)
-    {
+    if (req.isDefault && !theme.isDefault) {
       auto currentDefault = themeRepo.findDefault(theme.tenantId);
-      if (currentDefault != Theme.init && currentDefault.id != theme.id)
-      {
+      if (currentDefault != Theme.init && currentDefault.id != theme.id) {
         currentDefault.isDefault = false;
         currentDefault.updatedAt = Clock.currStdTime();
         themeRepo.update(currentDefault);
@@ -92,8 +81,7 @@ class ManageThemesUseCase
     return "";
   }
 
-  string deleteTheme(ThemeId id)
-  {
+  string deleteTheme(ThemeId id) {
     auto theme = themeRepo.findById(id);
     if (theme == Theme.init)
       return "Theme not found";
