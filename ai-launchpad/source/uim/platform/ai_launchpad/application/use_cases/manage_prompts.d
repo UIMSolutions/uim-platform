@@ -14,7 +14,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManagePromptsUseCase {
+class ManagePromptsUseCase : UIMUseCase {
   private IPromptRepository repo;
   private PromptEnricher enricher;
 

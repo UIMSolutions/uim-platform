@@ -10,7 +10,7 @@ import uim.platform.ai_core.domain.entities.executable;
 import uim.platform.ai_core.domain.ports.executable_repository;
 import uim.platform.ai_core.application.dto;
 
-class ManageExecutablesUseCase {
+class ManageExecutablesUseCase : UIMUseCase {
     private ExecutableRepository repo;
 
     this(ExecutableRepository repo) {

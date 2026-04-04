@@ -13,7 +13,7 @@ import uim.platform.ai_core.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class GetMetricsUseCase {
+class GetMetricsUseCase : UIMUseCase {
   private MetricRepository repo;
 
   this(MetricRepository repo) {

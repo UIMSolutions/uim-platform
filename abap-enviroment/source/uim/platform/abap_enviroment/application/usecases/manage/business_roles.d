@@ -7,24 +7,21 @@ module uim.platform.abap_enviroment.application.usecases.manage.business_roles;
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.business_role;
-import uim.platform.abap_enviroment.domain.ports.business_role_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.business_roles;
 import uim.platform.abap_enviroment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
 
 /// Application service for business role management.
-class ManageBusinessRolesUseCase
-{
+class ManageBusinessRolesUseCase : UIMUseCase {
   private BusinessRoleRepository repo;
 
-  this(BusinessRoleRepository repo)
-  {
+  this(BusinessRoleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRole(CreateBusinessRoleRequest req)
-  {
+  CommandResult createRole(CreateBusinessRoleRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Role name is required");
     if (req.systemInstanceId.length == 0)
@@ -53,8 +50,7 @@ class ManageBusinessRolesUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req)
-  {
+  CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req) {
     auto role = repo.findById(id);
     if (role is null)
       return CommandResult("", "Business role not found");
@@ -75,18 +71,15 @@ class ManageBusinessRolesUseCase
     return CommandResult(id, "");
   }
 
-  BusinessRole* getRole(BusinessRoleId id)
-  {
+  BusinessRole* getRole(BusinessRoleId id) {
     return repo.findById(id);
   }
 
-  BusinessRole[] listRoles(SystemInstanceId systemId)
-  {
+  BusinessRole[] listRoles(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteRole(BusinessRoleId id)
-  {
+  CommandResult deleteRole(BusinessRoleId id) {
     auto role = repo.findById(id);
     if (role is null)
       return CommandResult("", "Business role not found");
@@ -96,10 +89,8 @@ class ManageBusinessRolesUseCase
   }
 }
 
-private RoleType parseRoleType(string s)
-{
-  switch (s)
-  {
+private RoleType parseRoleType(string s) {
+  switch (s) {
   case "unrestricted":
     return RoleType.unrestricted;
   case "restricted":

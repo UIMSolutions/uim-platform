@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageConfigurationsUseCase {
+class ManageConfigurationsUseCase : UIMUseCase {
   private IConfigurationRepository repo;
 
   this(IConfigurationRepository repo) {

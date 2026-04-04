@@ -7,24 +7,21 @@ module uim.platform.abap_enviroment.application.usecases.manage.application_jobs
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.application_job;
-import uim.platform.abap_enviroment.domain.ports.application_job_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.application_jobs;
 import uim.platform.abap_enviroment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
 
 /// Application service for application job scheduling and management.
-class ManageApplicationJobsUseCase
-{
+class ManageApplicationJobsUseCase : UIMUseCase {
   private ApplicationJobRepository repo;
 
-  this(ApplicationJobRepository repo)
-  {
+  this(ApplicationJobRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createJob(CreateApplicationJobRequest req)
-  {
+  CommandResult createJob(CreateApplicationJobRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Job name is required");
     if (req.jobTemplateName.length == 0)
@@ -55,8 +52,7 @@ class ManageApplicationJobsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest req)
-  {
+  CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest req) {
     auto job = repo.findById(id);
     if (job is null)
       return CommandResult("", "Application job not found");
@@ -80,8 +76,7 @@ class ManageApplicationJobsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult cancelJob(ApplicationJobId id)
-  {
+  CommandResult cancelJob(ApplicationJobId id) {
     auto job = repo.findById(id);
     if (job is null)
       return CommandResult("", "Application job not found");
@@ -99,18 +94,15 @@ class ManageApplicationJobsUseCase
     return CommandResult(id, "");
   }
 
-  ApplicationJob* getJob(ApplicationJobId id)
-  {
+  ApplicationJob* getJob(ApplicationJobId id) {
     return repo.findById(id);
   }
 
-  ApplicationJob[] listJobs(SystemInstanceId systemId)
-  {
+  ApplicationJob[] listJobs(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteJob(ApplicationJobId id)
-  {
+  CommandResult deleteJob(ApplicationJobId id) {
     auto job = repo.findById(id);
     if (job is null)
       return CommandResult("", "Application job not found");
@@ -120,10 +112,8 @@ class ManageApplicationJobsUseCase
   }
 }
 
-private JobFrequency parseFrequency(string s)
-{
-  switch (s)
-  {
+private JobFrequency parseFrequency(string s) {
+  switch (s) {
   case "once":
     return JobFrequency.once;
   case "hourly":

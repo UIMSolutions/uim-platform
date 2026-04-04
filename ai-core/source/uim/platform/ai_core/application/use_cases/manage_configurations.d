@@ -13,7 +13,7 @@ import uim.platform.ai_core.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageConfigurationsUseCase {
+class ManageConfigurationsUseCase : UIMUseCase {
   private ConfigurationRepository repo;
 
   this(ConfigurationRepository repo) {

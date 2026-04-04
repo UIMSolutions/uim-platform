@@ -13,7 +13,7 @@ import uim.platform.ai_core.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageArtifactsUseCase {
+class ManageArtifactsUseCase : UIMUseCase {
   private ArtifactRepository repo;
 
   this(ArtifactRepository repo) {

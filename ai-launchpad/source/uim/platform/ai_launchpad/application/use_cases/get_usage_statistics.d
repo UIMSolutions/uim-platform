@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.domain.entities.usage_statistic : UsageStatisti
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;
 
-class GetUsageStatisticsUseCase {
+class GetUsageStatisticsUseCase : UIMUseCase {
   private IUsageStatisticRepository repo;
 
   this(IUsageStatisticRepository repo) {

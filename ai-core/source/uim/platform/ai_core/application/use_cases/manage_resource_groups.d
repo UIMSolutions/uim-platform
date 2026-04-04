@@ -10,7 +10,7 @@ import uim.platform.ai_core.domain.entities.resource_group;
 import uim.platform.ai_core.domain.ports.resource_group_repository;
 import uim.platform.ai_core.application.dto;
 
-class ManageResourceGroupsUseCase {
+class ManageResourceGroupsUseCase : UIMUseCase {
   private ResourceGroupRepository repo;
 
   this(ResourceGroupRepository repo) {

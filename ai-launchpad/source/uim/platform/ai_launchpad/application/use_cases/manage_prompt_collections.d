@@ -13,7 +13,7 @@ import uim.platform.ai_launchpad.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManagePromptCollectionsUseCase {
+class ManagePromptCollectionsUseCase : UIMUseCase {
   private IPromptCollectionRepository repo;
 
   this(IPromptCollectionRepository repo) {
