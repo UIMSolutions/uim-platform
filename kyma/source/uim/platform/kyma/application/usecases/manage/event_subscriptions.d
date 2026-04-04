@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.application.usecases.manage_event_subscriptions;
+module uim.platform.kyma.application.usecases.manage.event_subscriptions;
 
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.event_subscription;

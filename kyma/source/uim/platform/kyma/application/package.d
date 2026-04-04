@@ -1,3 +1,6 @@
 module uim.platform.kyma.application;
 
-kage.datetime
+public { // Packages
+  import uim.platform.kyma.application.usecases;
+  import uim.platform.kyma.application.dto;
+}

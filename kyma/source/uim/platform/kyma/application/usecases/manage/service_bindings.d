@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.application.usecases.manage_service_bindings;
+module uim.platform.kyma.application.usecases.manage.service_bindings;
 
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.service_binding;
