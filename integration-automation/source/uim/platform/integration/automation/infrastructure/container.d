@@ -37,8 +37,7 @@ import uim.platform.integration.automation.presentation.http.monitoring;
 import uim.platform.integration.automation.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryScenarioRepository scenarioRepo;
   MemoryWorkflowRepository workflowRepo;
@@ -70,8 +69,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)
@@ -89,7 +87,7 @@ Container buildContainer(AppConfig config)
   // Application use cases
   c.manageScenarios = new ManageScenariosUseCase(c.scenarioRepo);
   c.manageWorkflows = new ManageWorkflowsUseCase(c.workflowRepo, c.stepRepo,
-      c.scenarioRepo, c.workflowEngine);
+    c.scenarioRepo, c.workflowEngine);
   c.manageSteps = new ManageStepsUseCase(c.stepRepo, c.stepExecutor, c.workflowEngine);
   c.manageSystems = new ManageSystemsUseCase(c.systemRepo);
   c.manageDestinations = new ManageDestinationsUseCase(c.destinationRepo, c.systemRepo);

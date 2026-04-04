@@ -3,14 +3,13 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.domain.ports.event_subscription_repository;
+module uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 
 import uim.platform.kyma.domain.entities.event_subscription;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — event subscription persistence.
-interface EventSubscriptionRepository
-{
+interface EventSubscriptionRepository {
   EventSubscription findById(EventSubscriptionId id);
   EventSubscription findByName(NamespaceId nsId, string name);
   EventSubscription[] findByNamespace(NamespaceId nsId);
