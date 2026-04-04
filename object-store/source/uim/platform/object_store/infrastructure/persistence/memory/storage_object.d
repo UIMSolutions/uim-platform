@@ -12,49 +12,41 @@ import uim.platform.object_store.domain.ports.repositories.storage_object;
 // import std.algorithm : filter, startsWith;
 // import std.array : array;
 
-class MemoryStorageObjectRepository : StorageObjectRepository
-{
+class MemoryStorageObjectRepository : StorageObjectRepository {
   private StorageObject[ObjectId] store;
 
-  StorageObject findById(ObjectId id)
-  {
+  StorageObject findById(ObjectId id) {
     if (auto p = id in store)
       return *p;
     return null;
   }
 
-  StorageObject findByKey(BucketId bucketId, string key)
-  {
+  StorageObject findByKey(BucketId bucketId, string key) {
     foreach (ref e; store.byValue())
       if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
         return e;
     return null;
   }
 
-  StorageObject[] findByBucket(BucketId bucketId)
-  {
+  StorageObject[] findByBucket(BucketId bucketId) {
     return store.byValue().filter!(e => e.bucketId == bucketId
         && e.status == ObjectStatus.active).array;
   }
 
-  StorageObject[] findByPrefix(BucketId bucketId, string prefix)
-  {
+  StorageObject[] findByPrefix(BucketId bucketId, string prefix) {
     return store.byValue().filter!(e => e.bucketId == bucketId
         && e.status == ObjectStatus.active && e.key.startsWith(prefix)).array;
   }
 
-  void save(StorageObject entity)
-  {
+  void save(StorageObject entity) {
     store[entity.id] = entity;
   }
 
-  void update(StorageObject entity)
-  {
+  void update(StorageObject entity) {
     store[entity.id] = entity;
   }
 
-  void remove(ObjectId id)
-  {
+  void remove(ObjectId id) {
     store.remove(id);
   }
 }

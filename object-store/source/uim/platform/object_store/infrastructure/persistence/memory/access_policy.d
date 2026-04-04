@@ -12,39 +12,32 @@ import uim.platform.object_store.domain.ports.repositories.access_policy;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryAccessPolicyRepository : AccessPolicyRepository
-{
+class MemoryAccessPolicyRepository : AccessPolicyRepository {
   private AccessPolicy[AccessPolicyId] store;
 
-  AccessPolicy findById(AccessPolicyId id)
-  {
+  AccessPolicy findById(AccessPolicyId id) {
     if (auto p = id in store)
       return *p;
     return null;
   }
 
-  AccessPolicy[] findByBucket(BucketId bucketId)
-  {
+  AccessPolicy[] findByBucket(BucketId bucketId) {
     return store.byValue().filter!(e => e.bucketId == bucketId).array;
   }
 
-  AccessPolicy[] findByTenant(TenantId tenantId)
-  {
+  AccessPolicy[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void save(AccessPolicy entity)
-  {
+  void save(AccessPolicy entity) {
     store[entity.id] = entity;
   }
 
-  void update(AccessPolicy entity)
-  {
+  void update(AccessPolicy entity) {
     store[entity.id] = entity;
   }
 
-  void remove(AccessPolicyId id)
-  {
+  void remove(AccessPolicyId id) {
     store.remove(id);
   }
 }

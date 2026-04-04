@@ -34,8 +34,7 @@ import uim.platform.object_store.presentation.http.controllers.service_binding;
 import uim.platform.object_store.presentation.http.controllers.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryBucketRepository bucketRepo;
   MemoryStorageObjectRepository objectRepo;
@@ -64,8 +63,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
