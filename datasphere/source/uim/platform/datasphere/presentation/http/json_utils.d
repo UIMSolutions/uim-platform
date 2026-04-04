@@ -87,7 +87,7 @@ string[][] jsonKeyValuePairs(Json j, string key) {
   return result;
 }
 
-Json toJsonArray(string[] arr) {
+Json stringsToJsonArray(string[] arr) {
   auto jarr = Json.emptyArray;
   foreach (s; arr)
     jarr ~= Json(s);

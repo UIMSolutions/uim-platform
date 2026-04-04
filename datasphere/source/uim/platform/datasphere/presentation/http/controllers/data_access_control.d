@@ -94,8 +94,8 @@ class DataAccessControlController : SAPController {
       resp["name"] = Json(dac.name);
       resp["description"] = Json(dac.description);
       resp["isEnabled"] = Json(dac.isEnabled);
-      resp["targetViewIds"] = toJsonArray(dac.targetViewIds);
-      resp["assignedUserIds"] = toJsonArray(dac.assignedUserIds);
+      resp["targetViewIds"] = stringsToJsonArray(dac.targetViewIds);
+      resp["assignedUserIds"] = stringsToJsonArray(dac.assignedUserIds);
       resp["createdAt"] = Json(dac.createdAt);
       resp["modifiedAt"] = Json(dac.modifiedAt);
       res.writeJsonBody(resp, 200);

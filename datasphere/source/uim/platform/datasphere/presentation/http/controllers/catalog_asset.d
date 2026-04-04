@@ -129,7 +129,7 @@ class CatalogAssetController : SAPController {
       resp["businessName"] = Json(ca.businessName);
       resp["sourceObjectId"] = Json(ca.sourceObjectId);
       resp["owner"] = Json(ca.owner);
-      resp["glossaryTerms"] = toJsonArray(ca.glossaryTerms);
+      resp["glossaryTerms"] = stringsToJsonArray(ca.glossaryTerms);
       resp["accessCount"] = Json(ca.accessCount);
       resp["createdAt"] = Json(ca.createdAt);
       resp["modifiedAt"] = Json(ca.modifiedAt);
