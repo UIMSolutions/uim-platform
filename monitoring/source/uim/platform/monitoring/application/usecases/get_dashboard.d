@@ -9,12 +9,12 @@ import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.alert;
 import uim.platform.monitoring.domain.entities.health_check_result;
 import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.ports.alert_repository;
-import uim.platform.monitoring.domain.ports.health_check_repository;
-import uim.platform.monitoring.domain.ports.health_check_result_repository;
-import uim.platform.monitoring.domain.ports.metric_definition_repository;
-import uim.platform.monitoring.domain.ports.monitored_resource_repository;
-import uim.platform.monitoring.domain.ports.notification_channel_repository;
+import uim.platform.monitoring.domain.ports.repositories.alerts;
+import uim.platform.monitoring.domain.ports.repositories.health_checks;
+import uim.platform.monitoring.domain.ports.repositories.health_check_results;
+import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
+import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
+import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 import uim.platform.monitoring.domain.types;
 
 /// Application service: aggregates monitoring data for dashboard overview.

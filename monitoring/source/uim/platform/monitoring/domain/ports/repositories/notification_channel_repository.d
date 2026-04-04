@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.domain.ports.notification_channel_repository;
+module uim.platform.monitoring.domain.ports.repositories.notification_channels;
 
 import uim.platform.monitoring.domain.entities.notification_channel;
 import uim.platform.monitoring.domain.types;

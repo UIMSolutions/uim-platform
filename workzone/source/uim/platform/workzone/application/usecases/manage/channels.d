@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.channels;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
-import uim.platform.workzone.domain.ports.channel_repository;
+import uim.platform.workzone.domain.ports.repositories.channels;
 import uim.platform.workzone.application.dto;
 
 class ManageChannelsUseCase

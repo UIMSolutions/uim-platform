@@ -7,7 +7,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.alert_repo;
 
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.domain.entities.alert;
-import uim.platform.monitoring.domain.ports.alert_repository;
+import uim.platform.monitoring.domain.ports.repositories.alerts;
 
 // import std.algorithm : filter;
 // import std.array : array;

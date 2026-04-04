@@ -7,7 +7,7 @@ module uim.platform.monitoring.infrastructure.persistence.memory.metric_repo;
 
 import uim.platform.monitoring.domain.types;
 import uim.platform.monitoring.domain.entities.metric;
-import uim.platform.monitoring.domain.ports.metric_repository;
+import uim.platform.monitoring.domain.ports.repositories.metrics;
 
 // import std.algorithm : filter;
 // import std.array : array;

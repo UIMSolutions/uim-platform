@@ -7,7 +7,7 @@ module uim.platform.monitoring.application.usecases.manage.notification_channels
 
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.notification_channel;
-import uim.platform.monitoring.domain.ports.notification_channel_repository;
+import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 import uim.platform.monitoring.domain.types;
 
 // import std.conv : to;

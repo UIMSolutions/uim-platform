@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.offline_store_repo;
 
 import uim.platform.mobile.domain.entities.offline_store;
-import uim.platform.mobile.domain.ports.offline_store_repository;
+import uim.platform.mobile.domain.ports.repositories.offline_stores;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

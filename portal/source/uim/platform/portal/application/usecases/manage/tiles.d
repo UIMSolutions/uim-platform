@@ -7,7 +7,7 @@ module uim.platform.portal.application.usecases.manage.tiles;
 
 import uim.platform.portal.domain.entities.tile;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.tile_repository;
+import uim.platform.portal.domain.ports.repositories.tiles;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.device_registrations;
 
-import uim.platform.mobile.domain.ports.device_registration_repository;
+import uim.platform.mobile.domain.ports.repositories.device_registrations;
 import uim.platform.mobile.domain.entities.device_registration;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

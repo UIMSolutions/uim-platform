@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.push_notification_repo;
 
 import uim.platform.mobile.domain.entities.push_notification;
-import uim.platform.mobile.domain.ports.push_notification_repository;
+import uim.platform.mobile.domain.ports.repositories.push_notifications;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

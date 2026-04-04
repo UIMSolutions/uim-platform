@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.content;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.content_item;
-import uim.platform.workzone.domain.ports.content_repository;
+import uim.platform.workzone.domain.ports.repositories.contents;
 import uim.platform.workzone.domain.services.content_search;
 import uim.platform.workzone.application.dto;
 

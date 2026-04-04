@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.client_log_repo;
 
 import uim.platform.mobile.domain.entities.client_log_entry;
-import uim.platform.mobile.domain.ports.client_log_repository;
+import uim.platform.mobile.domain.ports.repositories.client_logs;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.tasks;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;
-import uim.platform.workzone.domain.ports.task_repository;
+import uim.platform.workzone.domain.ports.repositories.tasks;
 import uim.platform.workzone.application.dto;
 
 class ManageTasksUseCase

@@ -6,16 +6,16 @@
 module uim.platform.mobile.domain.ports;
 
 public {
-  import uim.platform.mobile.domain.ports.mobile_apps;
-  import uim.platform.mobile.domain.ports.device_registrations;
-  import uim.platform.mobile.domain.ports.push_notifications;
-  import uim.platform.mobile.domain.ports.push_registrations;
-  import uim.platform.mobile.domain.ports.app_configurations;
-  import uim.platform.mobile.domain.ports.feature_restrictions;
-  import uim.platform.mobile.domain.ports.client_resources;
-  import uim.platform.mobile.domain.ports.app_versions;
-  import uim.platform.mobile.domain.ports.usage_reports;
-  import uim.platform.mobile.domain.ports.offline_stores;
-  import uim.platform.mobile.domain.ports.user_sessions;
-  import uim.platform.mobile.domain.ports.client_logs;
+  import uim.platform.mobile.domain.ports.repositories.mobile_apps;
+  import uim.platform.mobile.domain.ports.repositories.device_registrations;
+  import uim.platform.mobile.domain.ports.repositories.push_notifications;
+  import uim.platform.mobile.domain.ports.repositories.push_registrations;
+  import uim.platform.mobile.domain.ports.repositories.app_configurations;
+  import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
+  import uim.platform.mobile.domain.ports.repositories.client_resources;
+  import uim.platform.mobile.domain.ports.repositories.app_versions;
+  import uim.platform.mobile.domain.ports.repositories.usage_reports;
+  import uim.platform.mobile.domain.ports.repositories.offline_stores;
+  import uim.platform.mobile.domain.ports.repositories.user_sessions;
+  import uim.platform.mobile.domain.ports.repositories.client_logs;
 }

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.app_configurations;
 
-import uim.platform.mobile.domain.ports.app_configuration_repository;
+import uim.platform.mobile.domain.ports.repositories.app_configurations;
 import uim.platform.mobile.domain.entities.app_configuration;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

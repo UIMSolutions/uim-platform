@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.cards;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
-import uim.platform.workzone.domain.ports.card_repository;
+import uim.platform.workzone.domain.ports.repositories.cards;
 import uim.platform.workzone.application.dto;
 
 class ManageCardsUseCase

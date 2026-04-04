@@ -8,8 +8,8 @@ module uim.platform.monitoring.application.usecases.manage.health_checks;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.health_check;
 import uim.platform.monitoring.domain.entities.health_check_result;
-import uim.platform.monitoring.domain.ports.health_check_repository;
-import uim.platform.monitoring.domain.ports.health_check_result_repository;
+import uim.platform.monitoring.domain.ports.repositories.health_checks;
+import uim.platform.monitoring.domain.ports.repositories.health_check_results;
 import uim.platform.monitoring.domain.services.health_checker;
 import uim.platform.monitoring.domain.types;
 

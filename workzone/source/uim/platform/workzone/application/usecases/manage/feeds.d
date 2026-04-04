@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.feeds;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
-import uim.platform.workzone.domain.ports.feed_repository;
+import uim.platform.workzone.domain.ports.repositories.feeds;
 import uim.platform.workzone.application.dto;
 
 class ManageFeedsUseCase

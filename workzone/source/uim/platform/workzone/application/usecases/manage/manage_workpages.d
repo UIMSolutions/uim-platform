@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.workpages;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
-import uim.platform.workzone.domain.ports.workpage_repository;
+import uim.platform.workzone.domain.ports.repositories.workpages;
 import uim.platform.workzone.application.dto;
 
 class ManageWorkpagesUseCase

@@ -7,7 +7,7 @@ module uim.platform.portal.infrastructure.persistence.memory.themes;
 
 // import uim.platform.portal.domain.entities.theme;
 // import uim.platform.portal.domain.types;
-// import uim.platform.portal.domain.ports.theme_repository;
+// import uim.platform.portal.domain.ports.repositories.themes;
 import uim.platform.portal;
 
 mixin(ShowModule!());

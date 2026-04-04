@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.app_versions;
 
-import uim.platform.mobile.domain.ports.app_version_repository;
+import uim.platform.mobile.domain.ports.repositories.app_versions;
 import uim.platform.mobile.domain.entities.app_version;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

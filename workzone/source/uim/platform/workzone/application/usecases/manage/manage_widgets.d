@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.widgets;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
-import uim.platform.workzone.domain.ports.widget_repository;
+import uim.platform.workzone.domain.ports.repositories.widgets;
 import uim.platform.workzone.application.dto;
 
 class ManageWidgetsUseCase

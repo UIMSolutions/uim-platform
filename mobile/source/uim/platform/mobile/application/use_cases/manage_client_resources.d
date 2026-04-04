@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.client_resources;
 
-import uim.platform.mobile.domain.ports.client_resource_repository;
+import uim.platform.mobile.domain.ports.repositories.client_resources;
 import uim.platform.mobile.domain.entities.client_resource;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

@@ -7,7 +7,7 @@ module uim.platform.portal.infrastructure.persistence.memory.tiles;
 
 // import uim.platform.portal.domain.entities.tile;
 // import uim.platform.portal.domain.types;
-// import uim.platform.portal.domain.ports.tile_repository;
+// import uim.platform.portal.domain.ports.repositories.tiles;
 
 // import std.string : toLower, indexOf;
 import uim.platform.portal;

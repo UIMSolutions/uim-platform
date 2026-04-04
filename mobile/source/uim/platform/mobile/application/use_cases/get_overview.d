@@ -5,12 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.get_overview;
 
-import uim.platform.mobile.domain.ports.mobile_app_repository;
-import uim.platform.mobile.domain.ports.device_registration_repository;
-import uim.platform.mobile.domain.ports.push_notification_repository;
-import uim.platform.mobile.domain.ports.usage_report_repository;
-import uim.platform.mobile.domain.ports.user_session_repository;
-import uim.platform.mobile.domain.ports.client_log_repository;
+import uim.platform.mobile.domain.ports.repositories.mobile_apps;
+import uim.platform.mobile.domain.ports.repositories.device_registrations;
+import uim.platform.mobile.domain.ports.repositories.push_notifications;
+import uim.platform.mobile.domain.ports.repositories.usage_reports;
+import uim.platform.mobile.domain.ports.repositories.user_sessions;
+import uim.platform.mobile.domain.ports.repositories.client_logs;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;
 

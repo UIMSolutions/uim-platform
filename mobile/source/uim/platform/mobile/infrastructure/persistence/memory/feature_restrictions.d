@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.feature_restriction_repo;
 
 import uim.platform.mobile.domain.entities.feature_restriction;
-import uim.platform.mobile.domain.ports.feature_restriction_repository;
+import uim.platform.mobile.domain.ports.repositories.feature_restrictions;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.offline_stores;
 
-import uim.platform.mobile.domain.ports.offline_store_repository;
+import uim.platform.mobile.domain.ports.repositories.offline_stores;
 import uim.platform.mobile.domain.entities.offline_store;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.domain.services.offline_sync_service;

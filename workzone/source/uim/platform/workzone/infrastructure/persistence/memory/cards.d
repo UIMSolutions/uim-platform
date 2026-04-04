@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.card_repo;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
-import uim.platform.workzone.domain.ports.card_repository;
+import uim.platform.workzone.domain.ports.repositories.cards;
 
 // import std.algorithm : filter;
 // import std.array : array;

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.usage_reports;
 
-import uim.platform.mobile.domain.ports.usage_report_repository;
+import uim.platform.mobile.domain.ports.repositories.usage_reports;
 import uim.platform.mobile.domain.entities.usage_report;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

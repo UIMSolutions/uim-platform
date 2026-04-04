@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.widget_repo;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
-import uim.platform.workzone.domain.ports.widget_repository;
+import uim.platform.workzone.domain.ports.repositories.widgets;
 
 // import std.algorithm : filter;
 // import std.array : array;

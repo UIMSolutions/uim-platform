@@ -7,7 +7,7 @@ module uim.platform.portal.infrastructure.persistence.memory.roles;
 
 // import uim.platform.portal.domain.entities.role;
 // import uim.platform.portal.domain.types;
-// import uim.platform.portal.domain.ports.role_repository;
+// import uim.platform.portal.domain.ports.repositories.roles;
 
 // import std.algorithm : canFind;
 

@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.mobile_app_repo;
 
 import uim.platform.mobile.domain.entities.mobile_app;
-import uim.platform.mobile.domain.ports.mobile_app_repository;
+import uim.platform.mobile.domain.ports.repositories.mobile_apps;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

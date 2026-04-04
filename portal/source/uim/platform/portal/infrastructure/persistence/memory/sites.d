@@ -7,7 +7,7 @@ module uim.platform.portal.infrastructure.persistence.memory.sites;
 
 // import uim.platform.portal.domain.entities.site;
 // import uim.platform.portal.domain.types;
-// import uim.platform.portal.domain.ports.site_repository;
+// import uim.platform.portal.domain.ports.repositories.sites;
 
 import uim.platform.portal;
 

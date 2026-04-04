@@ -6,5 +6,5 @@
 module uim.platform.mobile.domain.ports;
 
 public {
-  import uim.platform.mobile.domain.ports.repositories;
+  import uim.platform.mobile.domain.ports.repositories.repositories;
 }

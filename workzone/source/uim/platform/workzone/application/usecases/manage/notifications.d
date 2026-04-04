@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.notifications;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
-import uim.platform.workzone.domain.ports.notification_repository;
+import uim.platform.workzone.domain.ports.repositories.notifications;
 import uim.platform.workzone.application.dto;
 
 class ManageNotificationsUseCase

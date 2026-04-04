@@ -8,8 +8,8 @@ module uim.platform.monitoring.application.usecases.evaluate_metrics;
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.alert_rule;
 import uim.platform.monitoring.domain.entities.metric;
-import uim.platform.monitoring.domain.ports.alert_rule_repository;
-import uim.platform.monitoring.domain.ports.metric_repository;
+import uim.platform.monitoring.domain.ports.repositories.alert_rules;
+import uim.platform.monitoring.domain.ports.repositories.metrics;
 import uim.platform.monitoring.domain.services.threshold_evaluator;
 import uim.platform.monitoring.domain.types;
 

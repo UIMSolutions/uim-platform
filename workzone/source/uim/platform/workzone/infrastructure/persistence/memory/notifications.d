@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.notification_repo
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
-import uim.platform.workzone.domain.ports.notification_repository;
+import uim.platform.workzone.domain.ports.repositories.notifications;
 
 // import std.algorithm : filter;
 // import std.array : array;

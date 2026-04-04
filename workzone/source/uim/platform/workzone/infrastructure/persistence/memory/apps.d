@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.app_repo;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
-import uim.platform.workzone.domain.ports.app_repository;
+import uim.platform.workzone.domain.ports.repositories.apps;
 
 // import std.algorithm : filter;
 // import std.array : array;

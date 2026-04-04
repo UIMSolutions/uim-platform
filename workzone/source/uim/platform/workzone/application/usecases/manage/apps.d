@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.apps;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
-import uim.platform.workzone.domain.ports.app_repository;
+import uim.platform.workzone.domain.ports.repositories.apps;
 import uim.platform.workzone.application.dto;
 
 class ManageAppsUseCase : UIMUseCase {

@@ -7,7 +7,7 @@ module uim.platform.monitoring.application.usecases.manage.monitored_resources;
 
 import uim.platform.monitoring.application.dto;
 import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.ports.monitored_resource_repository;
+import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
 import uim.platform.monitoring.domain.types;
 
 // import std.conv : to;

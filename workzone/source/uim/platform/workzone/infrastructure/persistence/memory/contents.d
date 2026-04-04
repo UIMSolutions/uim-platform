@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.content_repo;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.content_item;
-import uim.platform.workzone.domain.ports.content_repository;
+import uim.platform.workzone.domain.ports.repositories.contents;
 
 // import std.algorithm : canFind, filter;
 // import std.array : array;

@@ -10,7 +10,7 @@ module uim.platform.workzone.application.usecases.manage.workspaces;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
-import uim.platform.workzone.domain.ports.workspace_repository;
+import uim.platform.workzone.domain.ports.repositories.workspaces;
 import uim.platform.workzone.application.dto;
 
 class ManageWorkspacesUseCase

@@ -7,7 +7,7 @@ module uim.platform.workzone.infrastructure.persistence.memory.channel_repo;
 
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
-import uim.platform.workzone.domain.ports.channel_repository;
+import uim.platform.workzone.domain.ports.repositories.channels;
 
 // import std.algorithm : filter;
 // import std.array : array;

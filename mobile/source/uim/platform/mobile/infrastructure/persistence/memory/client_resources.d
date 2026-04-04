@@ -6,7 +6,7 @@
 module uim.platform.mobile.infrastructure.persistence.memory.client_resource_repo;
 
 import uim.platform.mobile.domain.entities.client_resource;
-import uim.platform.mobile.domain.ports.client_resource_repository;
+import uim.platform.mobile.domain.ports.repositories.client_resources;
 import uim.platform.mobile.domain.types;
 
 import std.algorithm : filter;

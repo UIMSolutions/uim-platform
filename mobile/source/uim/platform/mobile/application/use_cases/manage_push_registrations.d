@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.usecases.manage.push_registrations;
 
-import uim.platform.mobile.domain.ports.push_registration_repository;
+import uim.platform.mobile.domain.ports.repositories.push_registrations;
 import uim.platform.mobile.domain.entities.push_registration;
 import uim.platform.mobile.domain.types;
 import uim.platform.mobile.application.dto;

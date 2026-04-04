@@ -7,7 +7,7 @@ module uim.platform.portal.infrastructure.persistence.memory.sections;
 
 // import uim.platform.portal.domain.entities.section;
 // import uim.platform.portal.domain.types;
-// import uim.platform.portal.domain.ports.section_repository;
+// import uim.platform.portal.domain.ports.repositories.sections;
 
 import uim.platform.portal;
 
