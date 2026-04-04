@@ -16,17 +16,16 @@ import uim.platform.master_data_integration.domain.entities.master_data_object;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class MasterDataController
-{
+class MasterDataController : SAPController {
   private ManageMasterDataObjectsUseCase uc;
 
-  this(ManageMasterDataObjectsUseCase uc)
-  {
+  this(ManageMasterDataObjectsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/master-data", &handleCreate);
     router.get("/api/v1/master-data", &handleList);
     router.get("/api/v1/master-data/lookup", &handleLookupByGlobalId);
@@ -35,10 +34,8 @@ class MasterDataController
     router.delete_("/api/v1/master-data/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       CreateMasterDataObjectRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,25 +52,19 @@ class MasterDataController
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto category = req.params.get("category", "");
 
@@ -89,64 +80,49 @@ class MasterDataController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) objs.length);
+      resp["totalCount"] = Json(cast(long)objs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto globalId = req.params.get("globalId", "");
-      if (globalId.length == 0)
-      {
+      if (globalId.length == 0) {
         writeError(res, 400, "globalId query parameter is required");
         return;
       }
 
       auto obj = uc.findByGlobalId(tenantId, globalId);
-      if (obj.id.length == 0)
-      {
+      if (obj.id.length == 0) {
         writeError(res, 404, "Master data object not found");
         return;
       }
       res.writeJsonBody(serializeObj(obj), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto obj = uc.getObject(id);
-      if (obj.id.length == 0)
-      {
+      if (obj.id.length == 0) {
         writeError(res, 404, "Master data object not found");
         return;
       }
       res.writeJsonBody(serializeObj(obj), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateMasterDataObjectRequest r;
@@ -161,32 +137,25 @@ class MasterDataController
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteObject(id);
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private Json serializeObj(ref MasterDataObject o)
-  {
+  private Json serializeObj(ref MasterDataObject o) {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);

@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.key_mapping;
 import uim.platform.master_data_integration.domain.types;
 
 /// A key mapping entry — maps IDs across different systems.
-struct KeyMapping
-{
+struct KeyMapping {
   KeyMappingId id;
   TenantId tenantId;
   MasterDataObjectId masterDataObjectId;
@@ -25,8 +24,7 @@ struct KeyMapping
 }
 
 /// A single system-to-key mapping entry.
-struct KeyMappingEntry
-{
+struct KeyMappingEntry {
   ClientId clientId;
   string systemId;
   string localKey;

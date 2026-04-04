@@ -16,17 +16,16 @@ import uim.platform.master_data_integration.domain.entities.replication_job;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class ReplicationController
-{
+class ReplicationController : SAPController {
   private ManageReplicationJobsUseCase uc;
 
-  this(ManageReplicationJobsUseCase uc)
-  {
+  this(ManageReplicationJobsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/replication-jobs", &handleCreate);
     router.get("/api/v1/replication-jobs", &handleList);
     router.get("/api/v1/replication-jobs/*", &handleGetById);
@@ -36,10 +35,8 @@ class ReplicationController
     router.delete_("/api/v1/replication-jobs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       CreateReplicationJobRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -54,25 +51,19 @@ class ReplicationController
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto status = req.params.get("status", "");
       auto modelId = req.params.get("distributionModelId", "");
@@ -91,104 +82,80 @@ class ReplicationController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) jobs.length);
+      resp["totalCount"] = Json(cast(long)jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getJob(id);
-      if (job.id.length == 0)
-      {
+      if (job.id.length == 0) {
         writeError(res, 404, "Replication job not found");
         return;
       }
       res.writeJsonBody(serializeJob(job), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.startJob(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.pauseJob(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.cancelJob(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteJob(id);
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private Json serializeJob(ref ReplicationJob j)
-  {
+  private Json serializeJob(ref ReplicationJob j) {
     auto o = Json.emptyObject;
     o["id"] = Json(j.id);
     o["tenantId"] = Json(j.tenantId);

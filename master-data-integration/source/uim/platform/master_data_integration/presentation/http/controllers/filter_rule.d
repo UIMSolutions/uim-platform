@@ -16,17 +16,16 @@ import uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class FilterRuleController
-{
+class FilterRuleController : SAPController {
   private ManageFilterRulesUseCase uc;
 
-  this(ManageFilterRulesUseCase uc)
-  {
+  this(ManageFilterRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/filter-rules", &handleCreate);
     router.get("/api/v1/filter-rules", &handleList);
     router.get("/api/v1/filter-rules/*", &handleGetById);
@@ -34,10 +33,8 @@ class FilterRuleController
     router.delete_("/api/v1/filter-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       CreateFilterRuleRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -51,25 +48,19 @@ class FilterRuleController
       r.conditions = parseConditions(j);
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto category = req.params.get("category", "");
       auto activeOnly = req.params.get("active", "");
@@ -88,38 +79,29 @@ class FilterRuleController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) rules.length);
+      resp["totalCount"] = Json(cast(long)rules.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule.id.length == 0)
-      {
+      if (rule.id.length == 0) {
         writeError(res, 404, "Filter rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateFilterRuleRequest r;
@@ -134,36 +116,28 @@ class FilterRuleController
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private FilterConditionDto[] parseConditions(Json j)
-  {
+  private FilterConditionDto[] parseConditions(Json j) {
     FilterConditionDto[] conditions;
     auto condsArr = jsonObjArray(j, "conditions");
-    foreach (ref cj; condsArr)
-    {
+    foreach (ref cj; condsArr) {
       FilterConditionDto c;
       c.fieldName = cj.getString("fieldName");
       c.operator = cj.getString("operator");
@@ -176,8 +150,7 @@ class FilterRuleController
     return conditions;
   }
 
-  private Json serializeRule(ref FilterRule r)
-  {
+  private Json serializeRule(ref FilterRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -190,8 +163,7 @@ class FilterRuleController
     j["isActive"] = Json(r.isActive);
 
     auto condsArr = Json.emptyArray;
-    foreach (ref c; r.conditions)
-    {
+    foreach (ref c; r.conditions) {
       auto cj = Json.emptyObject;
       cj["fieldName"] = Json(c.fieldName);
       cj["operator"] = Json(c.operator.to!string);

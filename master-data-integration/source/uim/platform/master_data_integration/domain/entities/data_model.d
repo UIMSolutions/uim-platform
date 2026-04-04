@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.data_model;
 import uim.platform.master_data_integration.domain.types;
 
 /// Defines the schema/structure of a master data entity type.
-struct DataModel
-{
+struct DataModel {
   DataModelId id;
   TenantId tenantId;
   string name; // e.g. "BusinessPartner", "CostCenter"
@@ -29,8 +28,7 @@ struct DataModel
 }
 
 /// A field definition within a data model.
-struct FieldDefinition
-{
+struct FieldDefinition {
   string name;
   string displayName;
   FieldType type_ = FieldType.string_;

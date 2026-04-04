@@ -1,1 +1,5 @@
 module uim.platform.master_data_integration.infrastructure.persistence.files;
+
+public {
+    
+}

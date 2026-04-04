@@ -16,25 +16,22 @@ import uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class ChangeLogController
-{
+class ChangeLogController : SAPController {
   private QueryChangeLogUseCase uc;
 
-  this(QueryChangeLogUseCase uc)
-  {
+  this(QueryChangeLogUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get("/api/v1/change-log", &handleQuery);
     router.get("/api/v1/change-log/*", &handleGetById);
   }
 
-  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       ChangeLogQueryRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.objectId = req.params.get("objectId", "");
@@ -42,13 +39,11 @@ class ChangeLogController
       r.deltaToken = req.params.get("deltaToken", "");
 
       auto sinceStr = req.params.get("since", "");
-      if (sinceStr.length > 0)
-      {
+      if (sinceStr.length > 0) {
         // import std.conv : to;
         try
           r.sinceTimestamp = sinceStr.to!long;
-        catch (Exception)
-        {
+        catch (Exception) {
         }
       }
 
@@ -60,41 +55,33 @@ class ChangeLogController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) entries.length);
+      resp["totalCount"] = Json(cast(long)entries.length);
 
       // Provide the last delta token for incremental polling
       if (entries.length > 0)
         resp["nextDeltaToken"] = Json(entries[$ - 1].deltaToken);
 
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto entry = uc.getEntry(id);
-      if (entry.id.length == 0)
-      {
+      if (entry.id.length == 0) {
         writeError(res, 404, "Change log entry not found");
         return;
       }
       res.writeJsonBody(serializeEntry(entry), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private Json serializeEntry(ref ChangeLogEntry e)
-  {
+  private Json serializeEntry(ref ChangeLogEntry e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

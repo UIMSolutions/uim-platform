@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.filter_rule;
 import uim.platform.master_data_integration.domain.types;
 
 /// A filter rule for selective master data distribution.
-struct FilterRule
-{
+struct FilterRule {
   FilterRuleId id;
   TenantId tenantId;
   string name;
@@ -31,8 +30,7 @@ struct FilterRule
 }
 
 /// A single filter condition.
-struct FilterCondition
-{
+struct FilterCondition {
   string fieldName;
   FilterOperator operator = FilterOperator.equals;
   string value;

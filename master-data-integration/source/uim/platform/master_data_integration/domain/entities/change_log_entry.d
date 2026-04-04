@@ -8,8 +8,7 @@ module uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
 
 /// A change log entry for tracking master data modifications.
-struct ChangeLogEntry
-{
+struct ChangeLogEntry {
   ChangeLogEntryId id;
   TenantId tenantId;
   MasterDataObjectId objectId;

@@ -16,17 +16,16 @@ import uim.platform.master_data_integration.domain.entities.key_mapping;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class KeyMappingController
-{
+class KeyMappingController : SAPController {
   private ManageKeyMappingsUseCase uc;
 
-  this(ManageKeyMappingsUseCase uc)
-  {
+  this(ManageKeyMappingsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/key-mappings", &handleCreate);
     router.get("/api/v1/key-mappings", &handleList);
     router.get("/api/v1/key-mappings/lookup", &handleLookup);
@@ -35,10 +34,8 @@ class KeyMappingController
     router.delete_("/api/v1/key-mappings/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       CreateKeyMappingRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -48,25 +45,19 @@ class KeyMappingController
       r.entries = parseEntries(j);
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto objectId = req.params.get("objectId", "");
       auto category = req.params.get("category", "");
@@ -85,19 +76,15 @@ class KeyMappingController
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) mappings.length);
+      resp["totalCount"] = Json(cast(long)mappings.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       LookupKeyRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.sourceClientId = req.params.get("sourceClientId", "");
@@ -105,15 +92,13 @@ class KeyMappingController
       r.targetClientId = req.params.get("targetClientId", "");
 
       if (r.sourceClientId.length == 0 || r.sourceLocalKey.length == 0
-          || r.targetClientId.length == 0)
-      {
+        || r.targetClientId.length == 0) {
         writeError(res, 400, "sourceClientId, sourceLocalKey, and targetClientId are required");
         return;
       }
 
       auto targetKey = uc.lookupKey(r);
-      if (targetKey.length == 0)
-      {
+      if (targetKey.length == 0) {
         writeError(res, 404, "Key mapping not found");
         return;
       }
@@ -124,36 +109,27 @@ class KeyMappingController
       resp["sourceLocalKey"] = Json(r.sourceLocalKey);
       resp["targetClientId"] = Json(r.targetClientId);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto mapping = uc.getMapping(id);
-      if (mapping.id.length == 0)
-      {
+      if (mapping.id.length == 0) {
         writeError(res, 404, "Key mapping not found");
         return;
       }
       res.writeJsonBody(serializeMapping(mapping), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateKeyMappingRequest r;
@@ -164,36 +140,28 @@ class KeyMappingController
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteMapping(id);
       if (result.success)
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private KeyMappingEntryDto[] parseEntries(Json j)
-  {
+  private KeyMappingEntryDto[] parseEntries(Json j) {
     KeyMappingEntryDto[] entries;
     auto entriesArr = jsonObjArray(j, "entries");
-    foreach (ref ej; entriesArr)
-    {
+    foreach (ref ej; entriesArr) {
       KeyMappingEntryDto e;
       e.clientId = ej.getString("clientId");
       e.systemId = ej.getString("systemId");
@@ -205,8 +173,7 @@ class KeyMappingController
     return entries;
   }
 
-  private Json serializeMapping(ref KeyMapping m)
-  {
+  private Json serializeMapping(ref KeyMapping m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["tenantId"] = Json(m.tenantId);
@@ -215,8 +182,7 @@ class KeyMappingController
     j["objectType"] = Json(m.objectType);
 
     auto entriesArr = Json.emptyArray;
-    foreach (ref e; m.entries)
-    {
+    foreach (ref e; m.entries) {
       auto ej = Json.emptyObject;
       ej["clientId"] = Json(e.clientId);
       ej["systemId"] = Json(e.systemId);
