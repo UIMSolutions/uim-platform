@@ -11,8 +11,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 /// Domain service: performs analytical computations on raw data rows.
-struct AnalyticsEngine
-{
+struct AnalyticsEngine {
 
   /// Aggregate a column of numeric values using the given function.
   static double aggregate(double[] values, AggregationType aggType)

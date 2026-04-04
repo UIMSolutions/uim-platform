@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 /// A Dashboard is a collection of pages, each containing analytical widgets.
 /// Corresponds to an "Analytic Application" in SAP Analytics Cloud.
-class Dashboard
-{
+class Dashboard {
   EntityId id;
   string name;
   string description;
@@ -74,8 +73,7 @@ class Dashboard
 }
 
 /// A page / tab within a dashboard.
-struct Page
-{
+struct Page {
   EntityId id;
   string title;
   EntityId[] widgetIds;

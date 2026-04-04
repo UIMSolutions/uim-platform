@@ -6,8 +6,7 @@
 module uim.platform.analytics.domain.values.chart_type;
 
 /// Supported visualization / chart types (mirrors SAC widget library).
-enum ChartType
-{
+enum ChartType {
   Bar,
   Column,
   Line,

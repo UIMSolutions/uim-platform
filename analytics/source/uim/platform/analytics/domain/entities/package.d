@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.entities;
 
-public
-{
+public {
   import uim.platform.analytics.domain.entities.dashboard;
   import uim.platform.analytics.domain.entities.story;
   import uim.platform.analytics.domain.entities.dataset;

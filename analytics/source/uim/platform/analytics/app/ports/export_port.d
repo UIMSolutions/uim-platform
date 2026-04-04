@@ -7,8 +7,7 @@ module uim.platform.analytics.app.ports.export_port;
 @safe:
 
 /// Outgoing port: export analytics artifacts to various formats.
-interface ExportPort
-{
+interface ExportPort {
   /// Export artifact to PDF bytes.
   ubyte[] exportPdf(string artifactId, string artifactType);
 

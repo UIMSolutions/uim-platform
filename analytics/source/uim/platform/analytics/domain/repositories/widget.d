@@ -12,8 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface WidgetRepository
-{
+interface WidgetRepository {
   Widget findById(EntityId id);
   Widget[] findByDataset(EntityId datasetId);
   Widget[] findAll();

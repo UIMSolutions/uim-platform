@@ -9,8 +9,7 @@ import uim.platform.analytics.domain.entities.widget;
 import uim.platform.analytics.domain.repositories.widget;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryWidgetRepository : WidgetRepository
-{
+class MemoryWidgetRepository : WidgetRepository {
   private Widget[string] store;
 
   Widget findById(EntityId id)

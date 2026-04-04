@@ -13,8 +13,7 @@ import uim.platform.analytics.infrastructure.web.json_utils;
 
 @safe:
 
-class StoryHandler
-{
+class StoryHandler {
   private StoryUseCases useCases;
 
   this(StoryUseCases useCases)
@@ -79,8 +78,7 @@ class StoryHandler
   }
 }
 
-private string extractIdFromPath(string uri, string resource)
-{
+private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
   auto parts = uri.split("/");
   foreach (i, part; parts)

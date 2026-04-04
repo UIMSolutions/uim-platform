@@ -16,8 +16,7 @@ import uim.platform.foundry.domain.entities.route;
 import uim.platform.foundry.domain.ports;
 
 /// Read-only summaries for application health and space resource usage.
-struct AppHealthSummary
-{
+struct AppHealthSummary {
   AppId appId;
   string appName;
   AppState state;
@@ -28,8 +27,7 @@ struct AppHealthSummary
   int totalDiskMb;
 }
 
-struct SpaceUsageSummary
-{
+struct SpaceUsageSummary {
   SpaceId spaceId;
   int totalApps;
   int runningApps;
@@ -41,8 +39,7 @@ struct SpaceUsageSummary
   int totalRoutes;
 }
 
-class MonitorAppsUseCase
-{
+class MonitorAppsUseCase : UIMUseCase {
   private AppRepository appRepo;
   private ServiceInstanceRepository siRepo;
   private RouteRepository routeRepo;

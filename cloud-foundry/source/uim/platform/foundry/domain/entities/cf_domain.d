@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 /// A Cloud Foundry domain — a DNS namespace under which routes are created.
 /// Can be shared (platform-wide), private (org-scoped), or internal.
-struct CfDomain
-{
+struct CfDomain {
   DomainId id;
   OrgId ownerOrgId; // empty for shared domains
   TenantId tenantId;

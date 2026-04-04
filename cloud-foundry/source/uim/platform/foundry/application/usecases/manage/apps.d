@@ -16,8 +16,7 @@ import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.domain.services.app_lifecycle_manager;
 import uim.platform.foundry.application.dto;
 
-class ManageAppsUseCase
-{
+class ManageAppsUseCase : UIMUseCase {
   private AppRepository repo;
   private AppLifecycleManager lifecycle;
 

@@ -15,11 +15,9 @@ import uim.platform.foundry.infrastructure.container;
 // import std.stdio : writefln;
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto config = loadConfig();

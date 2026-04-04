@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.domain;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryDomainRepository : DomainRepository
-{
+class MemoryDomainRepository : DomainRepository {
   private CfDomain[DomainId] store;
 
   CfDomain[] findByOrg(OrgId orgId, TenantId tenantId)

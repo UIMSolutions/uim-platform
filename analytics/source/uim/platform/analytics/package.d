@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics;
 
-public
-{
+public {
   import uim.platform.service;
 
   import uim.platform.analytics.app;

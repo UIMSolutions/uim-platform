@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.buildpack;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryBuildpackRepository : BuildpackRepository
-{
+class MemoryBuildpackRepository : BuildpackRepository {
   private Buildpack[BuildpackId] store;
 
   Buildpack[] findByTenant(TenantId tenantId)

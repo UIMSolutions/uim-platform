@@ -12,16 +12,14 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-struct CreateDatasetRequest
-{
+struct CreateDatasetRequest {
   string name;
   string description;
   string dataSourceId;
   string userId;
 }
 
-struct DatasetResponse
-{
+struct DatasetResponse {
   string id;
   string name;
   string description;
@@ -42,8 +40,7 @@ struct DatasetResponse
   }
 }
 
-struct ColumnResponse
-{
+struct ColumnResponse {
   string name;
   string role;
   string dataType;

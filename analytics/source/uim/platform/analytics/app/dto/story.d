@@ -11,15 +11,13 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreateStoryRequest
-{
+struct CreateStoryRequest {
   string title;
   string description;
   string ownerId;
 }
 
-struct StoryResponse
-{
+struct StoryResponse {
   string id;
   string title;
   string description;
@@ -43,8 +41,7 @@ struct StoryResponse
   }
 }
 
-struct SectionResponse
-{
+struct SectionResponse {
   string id;
   string heading;
   string narrative;

@@ -27,11 +27,9 @@ import uim.platform.analytics;
 
 @safe:
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     auto cfg = ServiceConfig.load();

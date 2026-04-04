@@ -9,8 +9,7 @@ import uim.platform.analytics;
 
 @safe:
 /// Service configuration (read from environment or defaults).
-struct ServiceConfig
-{
+struct ServiceConfig {
   string host = "0.0.0.0";
   ushort port = 8082;
   string serviceName = "analytics";

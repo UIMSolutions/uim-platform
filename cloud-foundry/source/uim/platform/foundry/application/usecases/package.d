@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.application.usecases;
 
-public
-{
+public {
   import uim.platform.foundry.application.usecases.manage.apps;
   import uim.platform.foundry.application.usecases.manage.buildpacks;
   import uim.platform.foundry.application.usecases.manage.orgs;

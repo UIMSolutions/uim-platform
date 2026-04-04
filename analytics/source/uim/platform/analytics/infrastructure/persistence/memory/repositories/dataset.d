@@ -13,8 +13,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDatasetRepository : DatasetRepository
-{
+class MemoryDatasetRepository : DatasetRepository {
   private Dataset[string] store;
 
   Dataset findById(EntityId id)

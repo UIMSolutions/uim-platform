@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 /// A service binding — connects an application to a service instance,
 /// injecting credentials into the application's VCAP_SERVICES environment.
-struct ServiceBinding
-{
+struct ServiceBinding {
   ServiceBindingId id;
   AppId appId;
   ServiceInstanceId serviceInstanceId;

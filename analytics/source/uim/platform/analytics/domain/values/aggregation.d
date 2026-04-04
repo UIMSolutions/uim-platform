@@ -6,8 +6,7 @@
 module uim.platform.analytics.domain.values.aggregation;
 
 /// Aggregation functions available for measures.
-enum AggregationType
-{
+enum AggregationType {
   Sum,
   Average,
   Count,

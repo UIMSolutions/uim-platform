@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.space;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemorySpaceRepository : SpaceRepository
-{
+class MemorySpaceRepository : SpaceRepository {
   private Space[SpaceId] store;
 
   Space[] findByOrg(OrgId orgId, TenantId tenantId)

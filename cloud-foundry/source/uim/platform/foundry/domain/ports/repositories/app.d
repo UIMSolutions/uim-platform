@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
 
 /// Port for persisting and querying applications.
-interface IAppRepository
-{
+interface IAppRepository {
   Application[] findBySpace(SpaceId spaceId, TenantId tenantId);
   Application* findById(AppId id, TenantId tenantId);
   Application* findByName(SpaceId spaceId, TenantId tenantId, string name);

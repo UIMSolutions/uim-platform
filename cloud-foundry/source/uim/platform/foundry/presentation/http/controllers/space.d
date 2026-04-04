@@ -16,8 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.space;
 import uim.platform.foundry.presentation.http.json_utils;
 
-class SpaceController
-{
+class SpaceController {
   private ManageSpacesUseCase useCase;
 
   this(ManageSpacesUseCase useCase)

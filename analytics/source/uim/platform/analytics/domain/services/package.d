@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.services;
 
-public
-{
+public {
   import uim.platform.analytics.domain.services.engines;
 }

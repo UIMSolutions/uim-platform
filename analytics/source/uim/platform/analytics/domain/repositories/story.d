@@ -12,8 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface StoryRepository
-{
+interface StoryRepository {
   Story findById(EntityId id);
   Story[] findByOwner(EntityId ownerId);
   Story[] findAll();

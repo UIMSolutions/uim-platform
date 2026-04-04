@@ -12,8 +12,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreatePlanningModelRequest
-{
+struct CreatePlanningModelRequest {
   string name;
   string description;
   string datasetId;
@@ -21,8 +20,7 @@ struct CreatePlanningModelRequest
   string userId;
 }
 
-struct PlanningModelResponse
-{
+struct PlanningModelResponse {
   string id;
   string name;
   string description;
@@ -45,8 +43,7 @@ struct PlanningModelResponse
   }
 }
 
-struct VersionResponse
-{
+struct VersionResponse {
   string id;
   string name;
   string versionType;

@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.route;
 // import std.algorithm : canFind, filter;
 // import std.array : array;
 
-class MemoryRouteRepository : RouteRepository
-{
+class MemoryRouteRepository : RouteRepository {
   private Route[RouteId] store;
 
   Route[] findBySpace(SpaceId spaceId, TenantId tenantId)

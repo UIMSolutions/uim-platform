@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 /// An organization — the top-level grouping for spaces, users, and quotas
 /// within a Cloud Foundry environment.
-struct Organization
-{
+struct Organization {
   OrgId id;
   TenantId tenantId;
   string name;

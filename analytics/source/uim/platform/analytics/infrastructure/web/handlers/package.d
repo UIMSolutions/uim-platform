@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.web.handlers;
 
-public
-{
+public {
   import uim.platform.analytics.infrastructure.web.handlers.dashboard;
   import uim.platform.analytics.infrastructure.web.handlers.story;
   import uim.platform.analytics.infrastructure.web.handlers.dataset;

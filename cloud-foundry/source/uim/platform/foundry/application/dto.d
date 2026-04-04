@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 // ──────────────── Organization DTOs ────────────────
 
-struct CreateOrgRequest
-{
+struct CreateOrgRequest {
   TenantId tenantId;
   string name;
   int memoryQuotaMb;
@@ -21,8 +20,7 @@ struct CreateOrgRequest
   string createdBy;
 }
 
-struct UpdateOrgRequest
-{
+struct UpdateOrgRequest {
   OrgId id;
   TenantId tenantId;
   string name;
@@ -36,8 +34,7 @@ struct UpdateOrgRequest
 
 // ──────────────── Space DTOs ────────────────
 
-struct CreateSpaceRequest
-{
+struct CreateSpaceRequest {
   OrgId orgId;
   TenantId tenantId;
   string name;
@@ -45,8 +42,7 @@ struct CreateSpaceRequest
   string createdBy;
 }
 
-struct UpdateSpaceRequest
-{
+struct UpdateSpaceRequest {
   SpaceId id;
   TenantId tenantId;
   string name;
@@ -56,8 +52,7 @@ struct UpdateSpaceRequest
 
 // ──────────────── Application DTOs ────────────────
 
-struct CreateAppRequest
-{
+struct CreateAppRequest {
   SpaceId spaceId;
   TenantId tenantId;
   string name;
@@ -75,8 +70,7 @@ struct CreateAppRequest
   string createdBy;
 }
 
-struct UpdateAppRequest
-{
+struct UpdateAppRequest {
   AppId id;
   TenantId tenantId;
   string name;
@@ -93,8 +87,7 @@ struct UpdateAppRequest
   string dockerImage;
 }
 
-struct ScaleAppRequest
-{
+struct ScaleAppRequest {
   AppId id;
   TenantId tenantId;
   int instances;
@@ -104,8 +97,7 @@ struct ScaleAppRequest
 
 // ──────────────── Service Instance DTOs ────────────────
 
-struct CreateServiceInstanceRequest
-{
+struct CreateServiceInstanceRequest {
   SpaceId spaceId;
   TenantId tenantId;
   string name;
@@ -116,8 +108,7 @@ struct CreateServiceInstanceRequest
   string createdBy;
 }
 
-struct UpdateServiceInstanceRequest
-{
+struct UpdateServiceInstanceRequest {
   ServiceInstanceId id;
   TenantId tenantId;
   string name;
@@ -128,8 +119,7 @@ struct UpdateServiceInstanceRequest
 
 // ──────────────── Service Binding DTOs ────────────────
 
-struct CreateServiceBindingRequest
-{
+struct CreateServiceBindingRequest {
   AppId appId;
   ServiceInstanceId serviceInstanceId;
   TenantId tenantId;
@@ -140,8 +130,7 @@ struct CreateServiceBindingRequest
 
 // ──────────────── Route DTOs ────────────────
 
-struct CreateRouteRequest
-{
+struct CreateRouteRequest {
   SpaceId spaceId;
   DomainId domainId;
   TenantId tenantId;
@@ -152,8 +141,7 @@ struct CreateRouteRequest
   string createdBy;
 }
 
-struct MapRouteRequest
-{
+struct MapRouteRequest {
   RouteId routeId;
   AppId appId;
   TenantId tenantId;
@@ -161,8 +149,7 @@ struct MapRouteRequest
 
 // ──────────────── Domain DTOs ────────────────
 
-struct CreateDomainRequest
-{
+struct CreateDomainRequest {
   OrgId ownerOrgId;
   TenantId tenantId;
   string name;
@@ -173,8 +160,7 @@ struct CreateDomainRequest
 
 // ──────────────── Buildpack DTOs ────────────────
 
-struct CreateBuildpackRequest
-{
+struct CreateBuildpackRequest {
   TenantId tenantId;
   string name;
   BuildpackType type_;
@@ -184,8 +170,7 @@ struct CreateBuildpackRequest
   string createdBy;
 }
 
-struct UpdateBuildpackRequest
-{
+struct UpdateBuildpackRequest {
   BuildpackId id;
   TenantId tenantId;
   string name;
@@ -198,8 +183,7 @@ struct UpdateBuildpackRequest
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 

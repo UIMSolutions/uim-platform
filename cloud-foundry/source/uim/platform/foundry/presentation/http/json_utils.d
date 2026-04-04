@@ -11,8 +11,7 @@ module uim.platform.foundry.presentation.http.json_utils;
 import uim.platform.foundry.domain.types;
 
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -24,8 +23,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false)
-{
+bool jsonBool(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -37,8 +35,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 }
 
 /// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0)
-{
+long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -50,20 +47,17 @@ long jsonLong(Json j, string key, long default_ = 0)
 }
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0)
-{
+int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int) jsonLong(j, key, default_);
 }
 
 /// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0)
-{
+ushort jsonUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort) jsonLong(j, key, default_);
 }
 
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;
@@ -80,8 +74,7 @@ string[] jsonStrArray(Json j, string key)
 }
 
 /// Extract the last path segment from a URI (for wildcard routes).
-string extractIdFromPath(string uri)
-{
+string extractIdFromPath(string uri) {
   // import std.string : indexOf;
   auto qpos = uri.indexOf('?');
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
@@ -95,8 +88,7 @@ string extractIdFromPath(string uri)
   return path;
 }
 
-private long lastIndexOf(string s, char c)
-{
+private long lastIndexOf(string s, char c) {
   for (long i = cast(long) s.length - 1; i >= 0; --i)
     if (s[cast(size_t) i] == c)
       return i;
@@ -104,8 +96,7 @@ private long lastIndexOf(string s, char c)
 }
 
 /// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message)
-{
+void writeError(scope HTTPServerResponse res, int status, string message) {
   auto j = Json.emptyObject;
   j["error"] = Json(message);
   j["status"] = Json(status);
@@ -113,8 +104,7 @@ void writeError(scope HTTPServerResponse res, int status, string message)
 }
 
 /// Convert a string array to a Json array.
-Json toJsonArray(const(string[]) arr)
-{
+Json toJsonArray(const(string[]) arr) {
   auto j = Json.emptyArray;
   foreach (s; arr)
     j ~= Json(s);
@@ -123,8 +113,7 @@ Json toJsonArray(const(string[]) arr)
 
 // --- Enum parsers ---
 
-OrgStatus parseOrgStatus(string s)
-{
+OrgStatus parseOrgStatus(string s) {
   switch (s)
   {
   case "active":
@@ -136,8 +125,7 @@ OrgStatus parseOrgStatus(string s)
   }
 }
 
-SpaceStatus parseSpaceStatus(string s)
-{
+SpaceStatus parseSpaceStatus(string s) {
   switch (s)
   {
   case "active":
@@ -149,8 +137,7 @@ SpaceStatus parseSpaceStatus(string s)
   }
 }
 
-AppState parseAppState(string s)
-{
+AppState parseAppState(string s) {
   switch (s)
   {
   case "stopped":
@@ -166,8 +153,7 @@ AppState parseAppState(string s)
   }
 }
 
-HealthCheckType parseHealthCheckType(string s)
-{
+HealthCheckType parseHealthCheckType(string s) {
   switch (s)
   {
   case "http":
@@ -181,8 +167,7 @@ HealthCheckType parseHealthCheckType(string s)
   }
 }
 
-RouteProtocol parseRouteProtocol(string s)
-{
+RouteProtocol parseRouteProtocol(string s) {
   switch (s)
   {
   case "http":
@@ -194,8 +179,7 @@ RouteProtocol parseRouteProtocol(string s)
   }
 }
 
-DomainScope parseDomainScope(string s)
-{
+DomainScope parseDomainScope(string s) {
   switch (s)
   {
   case "shared":
@@ -209,8 +193,7 @@ DomainScope parseDomainScope(string s)
   }
 }
 
-BuildpackType parseBuildpackType(string s)
-{
+BuildpackType parseBuildpackType(string s) {
   switch (s)
   {
   case "system":

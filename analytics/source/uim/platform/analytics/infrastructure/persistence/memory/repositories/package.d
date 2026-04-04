@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.persistence.memory.repositories;
 
-public
-{
+public {
   import uim.platform.analytics.infrastructure.persistence.memory.repositories.dashboard;
   import uim.platform.analytics.infrastructure.persistence.memory.repositories.story;
   import uim.platform.analytics.infrastructure.persistence.memory.repositories.dataset;

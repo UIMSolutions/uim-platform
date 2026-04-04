@@ -9,8 +9,7 @@ import uim.platform.analytics.domain.entities.planning;
 import uim.platform.analytics.domain.repositories.planning;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryPlanningRepository : PlanningRepository
-{
+class MemoryPlanningRepository : PlanningRepository {
   private PlanningModel[string] store;
 
   PlanningModel findById(EntityId id)

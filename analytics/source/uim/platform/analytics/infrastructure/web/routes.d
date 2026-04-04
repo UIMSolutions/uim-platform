@@ -16,8 +16,7 @@ mixin(ShowModule!());
 void registerRoutes(URLRouter router, DashboardHandler dashboards,
     StoryHandler stories, DatasetHandler datasets, WidgetHandler widgets,
     PlanningHandler planning, PredictionHandler predictions,
-    DataSourceHandler dataSources, HealthHandler health)
-{
+    DataSourceHandler dataSources, HealthHandler health) {
 
   // Middleware
   router.any("*", &corsMiddleware);

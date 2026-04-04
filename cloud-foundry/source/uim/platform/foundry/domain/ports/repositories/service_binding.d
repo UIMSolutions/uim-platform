@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_binding;
 
 /// Port for persisting and querying service bindings.
-interface IServiceBindingRepository
-{
+interface IServiceBindingRepository {
   ServiceBinding[] findByApp(AppId appId, TenantId tenantId);
   ServiceBinding* findById(ServiceBindingId id, TenantId tenantId);
   ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId, TenantId tenantId);

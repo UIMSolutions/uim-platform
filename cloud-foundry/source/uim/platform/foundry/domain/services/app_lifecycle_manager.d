@@ -18,8 +18,7 @@ import uim.platform.foundry.domain.ports;
 
 /// Domain service that manages application lifecycle transitions —
 /// staging, starting, stopping, scaling, and quota enforcement.
-class AppLifecycleManager
-{
+class AppLifecycleManager {
   private AppRepository appRepo;
   private OrgRepository orgRepo;
   private SpaceRepository spaceRepo;

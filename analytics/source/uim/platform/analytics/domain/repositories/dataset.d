@@ -12,8 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface DatasetRepository
-{
+interface DatasetRepository {
   Dataset findById(EntityId id);
   Dataset[] findAll();
   void save(Dataset dataset);

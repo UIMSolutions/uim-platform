@@ -18,22 +18,19 @@ alias TenantId = string;
 alias UserId = string;
 
 /// Organization lifecycle status.
-enum OrgStatus
-{
+enum OrgStatus {
   active,
   suspended,
 }
 
 /// Space lifecycle status.
-enum SpaceStatus
-{
+enum SpaceStatus {
   active,
   suspended,
 }
 
 /// Application runtime state.
-enum AppState
-{
+enum AppState {
   stopped,
   started,
   staging,
@@ -41,8 +38,7 @@ enum AppState
 }
 
 /// Individual application instance state.
-enum InstanceState
-{
+enum InstanceState {
   running,
   crashed,
   starting,
@@ -50,8 +46,7 @@ enum InstanceState
 }
 
 /// Service instance provisioning status.
-enum ServiceInstanceStatus
-{
+enum ServiceInstanceStatus {
   creating,
   active,
   updateInProgress,
@@ -60,8 +55,7 @@ enum ServiceInstanceStatus
 }
 
 /// Service binding lifecycle status.
-enum BindingStatus
-{
+enum BindingStatus {
   creating,
   active,
   deleteInProgress,
@@ -69,30 +63,26 @@ enum BindingStatus
 }
 
 /// Route protocol.
-enum RouteProtocol
-{
+enum RouteProtocol {
   http,
   tcp,
 }
 
 /// Domain ownership scope.
-enum DomainScope
-{
+enum DomainScope {
   shared_,
   private_,
   internal_,
 }
 
 /// Buildpack origin type.
-enum BuildpackType
-{
+enum BuildpackType {
   system,
   custom,
 }
 
 /// Application health check strategy.
-enum HealthCheckType
-{
+enum HealthCheckType {
   http,
   port,
   process,

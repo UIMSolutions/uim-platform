@@ -13,8 +13,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class StoryUseCases
-{
+class StoryUseCases {
   private StoryRepository repo;
 
   this(StoryRepository repo)

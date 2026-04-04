@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// A Prediction encapsulates a predictive/ML model run (SAC Smart Predict).
-class Prediction
-{
+class Prediction {
   EntityId id;
   string name;
   string description;
@@ -62,8 +61,7 @@ class Prediction
   }
 }
 
-enum PredictionType
-{
+enum PredictionType {
   Classification,
   Regression,
   TimeSeries,
@@ -71,8 +69,7 @@ enum PredictionType
   AnomalyDetection,
 }
 
-enum PredictionStatus
-{
+enum PredictionStatus {
   Created,
   Training,
   Ready,
@@ -80,16 +77,14 @@ enum PredictionStatus
   Archived,
 }
 
-struct PredictionConfig
-{
+struct PredictionConfig {
   string targetColumn;
   string[] featureColumns;
   int horizonPeriods = 12;
   double trainTestSplit = 0.8;
 }
 
-struct PredictionResult
-{
+struct PredictionResult {
   double accuracy = 0.0;
   double rmse = 0.0;
   double confidenceLevel = 0.0;

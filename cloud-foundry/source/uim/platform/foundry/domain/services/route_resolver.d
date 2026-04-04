@@ -15,8 +15,7 @@ import uim.platform.foundry.domain.ports.repositories.domain;
 
 /// Domain service that handles route resolution —
 /// validates host/domain uniqueness and manages app-to-route mappings.
-class RouteResolver
-{
+class RouteResolver {
   private RouteRepository routeRepo;
   private DomainRepository domainRepo;
 

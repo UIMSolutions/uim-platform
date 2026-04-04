@@ -8,8 +8,7 @@ module uim.platform.analytics.infrastructure.adapters.stub_data_connector;
 import uim.platform.analytics.app.ports.dataconnector;
 
 /// Stub adapter: simulates data fetching for development / testing.
-class StubDataConnector : DataConnector
-{
+class StubDataConnector : DataConnector {
 
   string[][string][] fetchData(string connectionString, string query)
   {

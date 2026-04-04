@@ -14,8 +14,7 @@ mixin(ShowModule!());
 @safe:
 
 /// A Widget is a single visualization component placed on a dashboard page or story section.
-class Widget
-{
+class Widget {
   EntityId id;
   string title;
   ChartType chartType;
@@ -61,14 +60,12 @@ class Widget
   }
 }
 
-struct WidgetBinding
-{
+struct WidgetBinding {
   string columnName;
   AggregationType aggregation;
 }
 
-enum FilterOperator
-{
+enum FilterOperator {
   Equals,
   NotEquals,
   GreaterThan,
@@ -81,15 +78,13 @@ enum FilterOperator
   IsNotNull,
 }
 
-struct FilterSpec
-{
+struct FilterSpec {
   string column;
   FilterOperator operator;
   string[] values;
 }
 
-struct WidgetStyle
-{
+struct WidgetStyle {
   int width = 6;
   int height = 4;
   int posX = 0;

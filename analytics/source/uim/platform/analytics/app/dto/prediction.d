@@ -11,8 +11,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreatePredictionRequest
-{
+struct CreatePredictionRequest {
   string name;
   string description;
   string datasetId;
@@ -22,13 +21,11 @@ struct CreatePredictionRequest
   string userId;
 }
 
-Json toJson(CreatePredictionRequest request)
-{
+Json toJson(CreatePredictionRequest request) {
   return serializeToJson(request);
 }
 
-struct PredictionResponse
-{
+struct PredictionResponse {
   string id;
   string name;
   string description;

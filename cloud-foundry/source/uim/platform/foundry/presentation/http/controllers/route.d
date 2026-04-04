@@ -17,8 +17,7 @@ import uim.platform.foundry.domain.entities.route;
 import uim.platform.foundry.domain.entities.cf_domain;
 import uim.platform.foundry.presentation.http.json_utils;
 
-class RouteController
-{
+class RouteController {
   private ManageRoutesUseCase useCase;
 
   this(ManageRoutesUseCase useCase)

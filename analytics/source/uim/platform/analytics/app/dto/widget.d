@@ -13,16 +13,14 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-struct CreateWidgetRequest
-{
+struct CreateWidgetRequest {
   string title;
   string chartType;
   string datasetId;
   string userId;
 }
 
-struct WidgetResponse
-{
+struct WidgetResponse {
   string id;
   string title;
   string chartType;

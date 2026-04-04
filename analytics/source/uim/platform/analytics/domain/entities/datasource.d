@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Represents an external data connection (database, file, API, live connection).
-class DataSource
-{
+class DataSource {
   EntityId id;
   string name;
   DataSourceType sourceType;
@@ -52,8 +51,7 @@ class DataSource
   }
 }
 
-enum DataSourceType
-{
+enum DataSourceType {
   Database,
   CSV,
   Excel,
@@ -65,16 +63,14 @@ enum DataSourceType
   LiveConnection,
 }
 
-enum DataSourceStatus
-{
+enum DataSourceStatus {
   Connected,
   Disconnected,
   Error,
   Importing,
 }
 
-struct ConnectionInfo
-{
+struct ConnectionInfo {
   string host;
   int port;
   string databaseName;
@@ -83,8 +79,7 @@ struct ConnectionInfo
   string lastError;
 }
 
-struct ImportSchedule
-{
+struct ImportSchedule {
   bool enabled = false;
   string cronExpression = "";
   string timezone = "UTC";

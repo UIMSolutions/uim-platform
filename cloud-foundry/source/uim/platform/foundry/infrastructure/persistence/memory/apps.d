@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.app;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryAppRepository : AppRepository
-{
+class MemoryAppRepository : AppRepository {
   private Application[AppId] store;
 
   Application[] findBySpace(SpaceId spaceId, TenantId tenantId)

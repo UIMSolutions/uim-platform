@@ -12,8 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface PlanningRepository
-{
+interface PlanningRepository {
   PlanningModel findById(EntityId id);
   PlanningModel[] findAll();
   void save(PlanningModel model);

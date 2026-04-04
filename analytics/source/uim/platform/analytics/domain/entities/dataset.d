@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A Dataset (data model) defines the structure for analytical consumption.
 /// Combines dimensions and measures — similar to SAC "Models".
-class Dataset
-{
+class Dataset {
   EntityId id;
   string name;
   string description;
@@ -69,15 +68,13 @@ class Dataset
   }
 }
 
-enum ColumnRole
-{
+enum ColumnRole {
   Dimension,
   Measure,
   Attribute,
 }
 
-enum ColumnDataType
-{
+enum ColumnDataType {
   String,
   Integer,
   Decimal,
@@ -86,8 +83,7 @@ enum ColumnDataType
   Boolean,
 }
 
-struct Column
-{
+struct Column {
   string name;
   ColumnRole role;
   ColumnDataType dataType;

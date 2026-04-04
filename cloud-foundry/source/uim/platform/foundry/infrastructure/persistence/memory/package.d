@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.foundry.infrastructure.persistence.memory.app;
   import uim.platform.foundry.infrastructure.persistence.memory.org;
   import uim.platform.foundry.infrastructure.persistence.memory.space;

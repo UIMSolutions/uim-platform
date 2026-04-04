@@ -16,8 +16,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-class PlanningUseCases
-{
+class PlanningUseCases {
   private PlanningRepository repo;
 
   this(PlanningRepository repo)

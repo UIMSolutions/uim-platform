@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.service_binding;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryServiceBindingRepository : ServiceBindingRepository
-{
+class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
   ServiceBinding[] findByApp(AppId appId, TenantId tenantId)

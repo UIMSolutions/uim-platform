@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.organization;
 
 /// Port for persisting and querying organizations.
-interface IOrgRepository
-{
+interface IOrgRepository {
   Organization[] findByTenant(TenantId tenantId);
   Organization* findById(OrgId id, TenantId tenantId);
   Organization* findByName(TenantId tenantId, string name);

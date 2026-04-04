@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 /// A route — maps incoming HTTP/TCP traffic to one or more applications
 /// via a domain, optional host prefix, and optional URL path.
-struct Route
-{
+struct Route {
   RouteId id;
   SpaceId spaceId;
   DomainId domainId;

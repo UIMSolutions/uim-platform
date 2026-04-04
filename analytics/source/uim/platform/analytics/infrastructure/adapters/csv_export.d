@@ -8,8 +8,7 @@ module uim.platform.analytics.infrastructure.adapters.csv_export;
 import uim.platform.analytics.app.ports.export_port;
 
 /// Adapter: simple CSV export implementation.
-class CsvExportAdapter : ExportPort
-{
+class CsvExportAdapter : ExportPort {
 
   ubyte[] exportPdf(string artifactId, string artifactType)
   {

@@ -14,8 +14,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 /// Application service: dashboard use cases.
-class DashboardUseCases
-{
+class DashboardUseCases {
   private DashboardRepository repo;
 
   this(DashboardRepository repo)

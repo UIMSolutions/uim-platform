@@ -7,8 +7,7 @@ module uim.platform.analytics.app.ports.dataconnector;
 
 @safe:
 /// Outgoing port: abstracts fetching raw data from external sources.
-interface DataConnector
-{
+interface DataConnector {
   /// Retrieve rows from source; returns an array of associative-array rows.
   string[][string][] fetchData(string connectionString, string query);
 

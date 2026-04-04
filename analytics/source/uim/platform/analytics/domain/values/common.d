@@ -9,8 +9,7 @@ import uim.platform.analytics;
 
 @safe:
 /// Strongly-typed identifier wrapping a UUID string.
-struct EntityId
-{
+struct EntityId {
   string value;
 
   static EntityId generate()
@@ -37,14 +36,12 @@ struct EntityId
   }
 }
 
-Json toJson(EntityId id)
-{
+Json toJson(EntityId id) {
   return serializeToJson(id);
 }
 
 /// Audit metadata attached to every domain entity.
-struct AuditInfo
-{
+struct AuditInfo {
   SysTime createdAt;
   string createdBy;
   SysTime updatedAt;
@@ -70,8 +67,7 @@ struct AuditInfo
 }
 
 /// Sharing / visibility scope.
-enum Visibility
-{
+enum Visibility {
   Private,
   Team,
   Organization,
@@ -79,8 +75,7 @@ enum Visibility
 }
 
 /// Status of an analytical artifact.
-enum ArtifactStatus
-{
+enum ArtifactStatus {
   Draft,
   Published,
   Archived,

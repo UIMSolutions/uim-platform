@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.service_instance;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryServiceInstanceRepository : ServiceInstanceRepository
-{
+class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 
   ServiceInstance[] findBySpace(SpaceId spaceId, TenantId tenantId)

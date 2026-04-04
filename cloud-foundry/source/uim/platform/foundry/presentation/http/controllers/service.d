@@ -17,8 +17,7 @@ import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
 import uim.platform.foundry.presentation.http.json_utils;
 
-class ServiceController
-{
+class ServiceController {
   private ManageServicesUseCase useCase;
 
   this(ManageServicesUseCase useCase)

@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.domain.repositories;
 
-public
-{
+public {
   import uim.platform.analytics.domain.repositories.dashboard;
   import uim.platform.analytics.domain.repositories.story;
   import uim.platform.analytics.domain.repositories.dataset;

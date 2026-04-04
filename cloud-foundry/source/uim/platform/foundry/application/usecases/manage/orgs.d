@@ -16,8 +16,7 @@ import uim.platform.foundry.domain.entities.organization;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 
-class ManageOrgsUseCase
-{
+class ManageOrgsUseCase : UIMUseCase {
   private OrgRepository repo;
   private SpaceRepository spaceRepo;
 

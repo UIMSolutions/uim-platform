@@ -13,8 +13,7 @@ import uim.platform.analytics.infrastructure.web.json_utils;
 
 @safe:
 
-class WidgetHandler
-{
+class WidgetHandler {
   private WidgetUseCases useCases;
 
   this(WidgetUseCases useCases)
@@ -68,8 +67,7 @@ class WidgetHandler
   }
 }
 
-private string extractIdFromPath(string uri, string resource)
-{
+private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
   auto parts = uri.split("/");
   foreach (i, part; parts)

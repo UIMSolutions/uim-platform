@@ -14,8 +14,7 @@ import uim.platform.foundry.application.usecases.monitor_apps;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.presentation.http.json_utils;
 
-class MonitoringController
-{
+class MonitoringController {
   private MonitorAppsUseCase useCase;
 
   this(MonitorAppsUseCase useCase)

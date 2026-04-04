@@ -13,8 +13,7 @@ import uim.platform.analytics.infrastructure.web.json_utils;
 
 @safe:
 
-class DashboardHandler
-{
+class DashboardHandler {
   private DashboardUseCases useCases;
 
   this(DashboardUseCases useCases)
@@ -96,8 +95,7 @@ class DashboardHandler
   }
 }
 
-private string extractId(scope HTTPServerRequest req)
-{
+private string extractId(scope HTTPServerRequest req) {
   // import std.conv : to;
   // import std.string : split;
   auto path = req.requestURI;

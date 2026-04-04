@@ -12,8 +12,7 @@ import uim.platform.analytics.app.dto.planning;
 import uim.platform.analytics.infrastructure.web.json_utils;
 
 @safe:
-class PlanningHandler
-{
+class PlanningHandler {
   private PlanningUseCases useCases;
 
   this(PlanningUseCases useCases)
@@ -91,8 +90,7 @@ class PlanningHandler
   }
 }
 
-private string extractIdFromPath(string uri, string resource)
-{
+private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
   auto parts = uri.split("/");
   foreach (i, part; parts)

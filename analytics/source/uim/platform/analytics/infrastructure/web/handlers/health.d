@@ -9,8 +9,7 @@ module uim.platform.analytics.infrastructure.web.handlers.health;
 // import vibe.data.json;
 @safe:
 
-class HealthHandler
-{
+class HealthHandler {
   void check(scope HTTPServerRequest req, scope HTTPServerResponse res)
   {
     auto j = Json.emptyObject;

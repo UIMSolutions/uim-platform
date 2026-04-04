@@ -16,8 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.organization;
 import uim.platform.foundry.presentation.http.json_utils;
 
-class OrgController
-{
+class OrgController {
   private ManageOrgsUseCase useCase;
 
   this(ManageOrgsUseCase useCase)

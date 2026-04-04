@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 
 /// A service instance — a provisioned instance of a marketplace service
 /// (e.g. XSUAA, HANA, Destination Service) within a space.
-struct ServiceInstance
-{
+struct ServiceInstance {
   ServiceInstanceId id;
   SpaceId spaceId;
   TenantId tenantId;

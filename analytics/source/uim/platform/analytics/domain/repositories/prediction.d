@@ -12,8 +12,7 @@ import uim.platform.analytics;
 mixin(ShowModule!());
 @safe:
 
-interface PredictionRepository
-{
+interface PredictionRepository {
   Prediction findById(EntityId id);
   Prediction[] findByDataset(EntityId datasetId);
   Prediction[] findAll();

@@ -12,8 +12,7 @@ import uim.platform.foundry.domain.ports.repositories.org;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryOrgRepository : OrgRepository
-{
+class MemoryOrgRepository : OrgRepository {
   private Organization[OrgId] store;
 
   Organization[] findByTenant(TenantId tenantId)

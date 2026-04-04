@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 
 /// A PlanningModel supports budget planning, forecasting, and what-if scenarios (SAC Planning).
-class PlanningModel
-{
+class PlanningModel {
   EntityId id;
   string name;
   string description;
@@ -67,8 +66,7 @@ class PlanningModel
   }
 }
 
-enum PlanningStatus
-{
+enum PlanningStatus {
   Draft,
   InProgress,
   Locked,
@@ -76,16 +74,14 @@ enum PlanningStatus
   Published,
 }
 
-enum VersionType
-{
+enum VersionType {
   Actual,
   Plan,
   Forecast,
   WhatIf,
 }
 
-struct PlanningVersion
-{
+struct PlanningVersion {
   EntityId id;
   string name;
   VersionType versionType;

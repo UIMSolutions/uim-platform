@@ -13,8 +13,7 @@ mixin(ShowModule!());
 
 /// A Story is a narrative-driven analytical report (SAC "Story" mode).
 /// Contains sections with embedded visualizations, text, and images.
-class Story
-{
+class Story {
   EntityId id;
   string title;
   string description;
@@ -61,8 +60,7 @@ class Story
 }
 
 /// A section within a story, mixing text and widget references.
-struct Section
-{
+struct Section {
   EntityId id;
   string heading;
   string narrative;

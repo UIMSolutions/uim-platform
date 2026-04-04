@@ -15,8 +15,7 @@ mixin(ShowModule!());
 @safe:
 
 /// In-memory adapter implementing DashboardRepository port.
-class MemoryDashboardRepository : DashboardRepository
-{
+class MemoryDashboardRepository : DashboardRepository {
   private Dashboard[string] store;
 
   Dashboard findById(EntityId id)

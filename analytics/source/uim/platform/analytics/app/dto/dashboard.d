@@ -13,15 +13,13 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreateDashboardRequest
-{
+struct CreateDashboardRequest {
   string name;
   string description;
   string ownerId;
 }
 
-struct DashboardResponse
-{
+struct DashboardResponse {
   string id;
   string name;
   string description;
@@ -45,8 +43,7 @@ struct DashboardResponse
   }
 }
 
-struct PageResponse
-{
+struct PageResponse {
   string id;
   string title;
 }

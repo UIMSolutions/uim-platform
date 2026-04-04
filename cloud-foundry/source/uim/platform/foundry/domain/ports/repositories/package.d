@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.foundry.domain.ports.repositories.repositories;
 
-public
-{
+public {
   import uim.platform.foundry.domain.ports.repositories.app;
   import uim.platform.foundry.domain.ports.repositories.buildpack;
   import uim.platform.foundry.domain.ports.repositories.domain;

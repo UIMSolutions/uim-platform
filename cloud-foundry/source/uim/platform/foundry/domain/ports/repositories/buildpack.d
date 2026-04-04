@@ -9,8 +9,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.buildpack;
 
 /// Port for persisting and querying buildpacks.
-interface IBuildpackRepository
-{
+interface IBuildpackRepository {
   Buildpack[] findByTenant(TenantId tenantId);
   Buildpack* findById(BuildpackId id, TenantId tenantId);
   Buildpack* findByName(TenantId tenantId, string name);

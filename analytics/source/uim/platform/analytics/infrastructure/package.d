@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure;
 
-public
-{
+public {
   import uim.platform.analytics.infrastructure.persistence;
   import uim.platform.analytics.infrastructure.web;
   import uim.platform.analytics.infrastructure.adapters;

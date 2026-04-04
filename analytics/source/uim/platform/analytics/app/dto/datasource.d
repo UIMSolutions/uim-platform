@@ -11,8 +11,7 @@ import uim.platform.analytics;
 
 mixin(ShowModule!());
 @safe:
-struct CreateDataSourceRequest
-{
+struct CreateDataSourceRequest {
   string name;
   string sourceType;
   string host;
@@ -22,8 +21,7 @@ struct CreateDataSourceRequest
   string userId;
 }
 
-struct DataSourceResponse
-{
+struct DataSourceResponse {
   string id;
   string name;
   string sourceType;

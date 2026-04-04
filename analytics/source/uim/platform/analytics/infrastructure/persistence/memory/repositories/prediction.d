@@ -9,8 +9,7 @@ import uim.platform.analytics.domain.entities.prediction;
 import uim.platform.analytics.domain.repositories.prediction;
 import uim.platform.analytics.domain.values.common;
 
-class MemoryPredictionRepository : PredictionRepository
-{
+class MemoryPredictionRepository : PredictionRepository {
   private Prediction[string] store;
 
   Prediction findById(EntityId id)

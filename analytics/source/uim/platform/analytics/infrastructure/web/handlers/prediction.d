@@ -14,8 +14,7 @@ import uim.platform.analytics;
 
 @safe:
 
-class PredictionHandler
-{
+class PredictionHandler {
   private PredictionUseCases useCases;
 
   this(PredictionUseCases useCases)
@@ -86,8 +85,7 @@ class PredictionHandler
   }
 }
 
-private string extractIdFromPath(string uri, string resource)
-{
+private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
 
   auto parts = uri.split("/");
