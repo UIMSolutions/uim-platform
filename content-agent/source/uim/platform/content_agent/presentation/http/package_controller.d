@@ -10,7 +10,7 @@ module uim.platform.content_agent.presentation.http.package;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.content_agent.application.usecases.manage_content_packages;
+import uim.platform.content_agent.application.usecases.manage.content_packages;
 import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.types;

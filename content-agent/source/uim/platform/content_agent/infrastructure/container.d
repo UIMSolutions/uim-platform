@@ -17,12 +17,12 @@ import uim.platform.content_agent.infrastructure.persistence.memory.transport_qu
 import uim.platform.content_agent.infrastructure.persistence.memory.content_activity_repo;
 
 // Use Cases
-import uim.platform.content_agent.application.usecases.manage_content_packages;
-import uim.platform.content_agent.application.usecases.manage_content_providers;
-import uim.platform.content_agent.application.usecases.manage_transport_requests;
+import uim.platform.content_agent.application.usecases.manage.content_packages;
+import uim.platform.content_agent.application.usecases.manage.content_providers;
+import uim.platform.content_agent.application.usecases.manage.transport_requests;
 import uim.platform.content_agent.application.usecases.export_content;
 import uim.platform.content_agent.application.usecases.import_content;
-import uim.platform.content_agent.application.usecases.manage_transport_queues;
+import uim.platform.content_agent.application.usecases.manage.transport_queues;
 import uim.platform.content_agent.application.usecases.monitor_activities;
 
 // Controllers

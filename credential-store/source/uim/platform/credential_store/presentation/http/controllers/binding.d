@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.binding;
 
-import uim.platform.credential_store.application.usecases.manage_service_bindings;
+import uim.platform.credential_store.application.usecases.manage.service_bindings;
 import uim.platform.credential_store.application.dto;
 import uim.platform.credential_store.presentation.http.json_utils;
 

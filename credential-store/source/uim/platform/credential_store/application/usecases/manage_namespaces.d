@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.credential_store.application.usecases.manage_namespaces;
+module uim.platform.credential_store.application.usecases.manage.namespaces;
 
 import uim.platform.credential_store.domain.ports.namespace_repository;
 import uim.platform.credential_store.domain.entities.namespace;

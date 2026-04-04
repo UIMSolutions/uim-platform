@@ -10,7 +10,7 @@ module uim.platform.content_agent.presentation.http.queue;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.content_agent.application.usecases.manage_transport_queues;
+import uim.platform.content_agent.application.usecases.manage.transport_queues;
 import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
