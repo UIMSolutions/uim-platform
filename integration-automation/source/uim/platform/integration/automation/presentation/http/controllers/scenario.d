@@ -10,7 +10,7 @@ module uim.platform.integration.automation.presentation.http.scenario;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.integration.automation.application.usecases.manage_scenarios;
+import uim.platform.integration.automation.application.usecases.manage.scenarios;
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;

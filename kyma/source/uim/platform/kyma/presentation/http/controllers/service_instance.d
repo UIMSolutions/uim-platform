@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.service_instance;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_service_instances;
+import uim.platform.kyma.application.usecases.manage.service_instances;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.service_instance;
 import uim.platform.kyma.domain.types;

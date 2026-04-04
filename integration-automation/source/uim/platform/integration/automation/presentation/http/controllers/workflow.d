@@ -10,7 +10,7 @@ module uim.platform.integration.automation.presentation.http.workflow;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.integration.automation.application.usecases.manage_workflows;
+import uim.platform.integration.automation.application.usecases.manage.workflows;
 import uim.platform.integration.automation.application.dto;
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;

@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.service_binding;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_service_bindings;
+import uim.platform.kyma.application.usecases.manage.service_bindings;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.service_binding;
 import uim.platform.kyma.domain.types;

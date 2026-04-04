@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.namespace;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_namespaces;
+import uim.platform.kyma.application.usecases.manage.namespaces;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.namespace;
 import uim.platform.kyma.domain.types;

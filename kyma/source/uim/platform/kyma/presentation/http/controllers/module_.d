@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.controllers.module_;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_modules;
+import uim.platform.kyma.application.usecases.manage.modules;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.kyma_module;
 import uim.platform.kyma.domain.types;

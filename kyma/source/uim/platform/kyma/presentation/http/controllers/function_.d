@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.controllers.function_;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_functions;
+import uim.platform.kyma.application.usecases.manage.functions;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.serverless_function;
 import uim.platform.kyma.domain.types;

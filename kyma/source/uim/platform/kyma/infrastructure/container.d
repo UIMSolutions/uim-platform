@@ -23,15 +23,15 @@ import uim.platform.kyma.domain.services.module_dependency_resolver;
 import uim.platform.kyma.domain.services.function_validator;
 
 // Use Cases
-import uim.platform.kyma.application.usecases.manage_environments;
-import uim.platform.kyma.application.usecases.manage_namespaces;
-import uim.platform.kyma.application.usecases.manage_functions;
-import uim.platform.kyma.application.usecases.manage_api_rules;
-import uim.platform.kyma.application.usecases.manage_service_instances;
-import uim.platform.kyma.application.usecases.manage_service_bindings;
-import uim.platform.kyma.application.usecases.manage_event_subscriptions;
-import uim.platform.kyma.application.usecases.manage_modules;
-import uim.platform.kyma.application.usecases.manage_applications;
+import uim.platform.kyma.application.usecases.manage.environments;
+import uim.platform.kyma.application.usecases.manage.namespaces;
+import uim.platform.kyma.application.usecases.manage.functions;
+import uim.platform.kyma.application.usecases.manage.api_rules;
+import uim.platform.kyma.application.usecases.manage.service_instances;
+import uim.platform.kyma.application.usecases.manage.service_bindings;
+import uim.platform.kyma.application.usecases.manage.event_subscriptions;
+import uim.platform.kyma.application.usecases.manage.modules;
+import uim.platform.kyma.application.usecases.manage.applications;
 
 // Controllers
 import uim.platform.kyma.presentation.http.environment;

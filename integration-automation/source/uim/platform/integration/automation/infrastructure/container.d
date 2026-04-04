@@ -20,11 +20,11 @@ import uim.platform.integration.automation.domain.services.workflow_engine;
 import uim.platform.integration.automation.domain.services.step_executor;
 
 // Use Cases
-import uim.platform.integration.automation.application.usecases.manage_scenarios;
-import uim.platform.integration.automation.application.usecases.manage_workflows;
-import uim.platform.integration.automation.application.usecases.manage_steps;
-import uim.platform.integration.automation.application.usecases.manage_systems;
-import uim.platform.integration.automation.application.usecases.manage_destinations;
+import uim.platform.integration.automation.application.usecases.manage.scenarios;
+import uim.platform.integration.automation.application.usecases.manage.workflows;
+import uim.platform.integration.automation.application.usecases.manage.steps;
+import uim.platform.integration.automation.application.usecases.manage.systems;
+import uim.platform.integration.automation.application.usecases.manage.destinations;
 import uim.platform.integration.automation.application.usecases.monitor_executions;
 
 // Controllers

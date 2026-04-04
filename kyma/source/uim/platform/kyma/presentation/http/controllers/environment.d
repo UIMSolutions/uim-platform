@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.environment;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_environments;
+import uim.platform.kyma.application.usecases.manage.environments;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.kyma_environment;
 import uim.platform.kyma.domain.types;

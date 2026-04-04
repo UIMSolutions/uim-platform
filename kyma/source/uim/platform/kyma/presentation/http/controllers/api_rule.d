@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.controllers.api_rule;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_api_rules;
+import uim.platform.kyma.application.usecases.manage.api_rules;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.api_rule;
 import uim.platform.kyma.domain.types;

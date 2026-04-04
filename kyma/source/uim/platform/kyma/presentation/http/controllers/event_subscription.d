@@ -10,7 +10,7 @@ module uim.platform.kyma.presentation.http.event_subscription;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage_event_subscriptions;
+import uim.platform.kyma.application.usecases.manage.event_subscriptions;
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.event_subscription;
 import uim.platform.kyma.domain.types;
