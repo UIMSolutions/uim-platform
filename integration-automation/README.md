@@ -48,7 +48,7 @@ integration-automation/
 │   │       └── step_executor.d                #     Step lifecycle transitions & logging
 │   ├── application/                           #   Application layer (use cases)
 │   │   ├── dto.d                              #     Request / Response DTOs & CommandResult
-│   │   └── use_cases/                         #     Application services
+│   │   └── usecases/                         #     Application services
 │   │       ├── manage_scenarios.d
 │   │       ├── manage_workflows.d
 │   │       ├── manage_steps.d

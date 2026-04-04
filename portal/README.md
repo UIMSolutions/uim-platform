@@ -59,7 +59,7 @@ portal/
 │   │       └── site_publisher.d           #     Validate publish readiness
 │   ├── application/                       #   Use case orchestration
 │   │   ├── dto.d                          #   Request/response DTOs
-│   │   └── use_cases/
+│   │   └── usecases/
 │   │       ├── manage_sites.d
 │   │       ├── manage_pages.d
 │   │       ├── manage_sections.d

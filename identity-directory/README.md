@@ -51,7 +51,7 @@ identity-directory/
 │   │       └── schema_validator.d                  #     Extended attribute validation
 │   ├── application/                                #   Application layer (use cases)
 │   │   ├── dto.d                                   #     Request / Response DTOs & SCIM list response
-│   │   └── use_cases/                              #     Application services
+│   │   └── usecases/                              #     Application services
 │   │       ├── manage_users.d
 │   │       ├── manage_groups.d
 │   │       ├── manage_schemas.d

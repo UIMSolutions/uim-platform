@@ -49,7 +49,7 @@ connectivity/
 │   │       └── access_control_evaluator.d          #     Longest-prefix access rule matching
 │   ├── application/                                #   Application layer (use cases)
 │   │   ├── dto.d                                   #     Request DTOs & CommandResult
-│   │   └── use_cases/                              #     Application services
+│   │   └── usecases/                              #     Application services
 │   │       ├── manage_destinations.d               #       Destination CRUD with auth validation
 │   │       ├── manage_connectors.d                 #       Connector register/heartbeat/disconnect
 │   │       ├── manage_channels.d                   #       Channel create/open/close with connector checks

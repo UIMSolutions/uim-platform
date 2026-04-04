@@ -53,7 +53,7 @@ data-quality/
 │   │       └── quality_scorer.d
 │   ├── application/                   #   Use case orchestration
 │   │   ├── dto.d                      #   Request/response DTOs
-│   │   └── use_cases/
+│   │   └── usecases/
 │   │       ├── manage_validation_rules.d
 │   │       ├── validate_data.d
 │   │       ├── cleanse_addresses.d

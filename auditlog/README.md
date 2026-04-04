@@ -52,7 +52,7 @@ auditlog/
 │   │       └── retention_enforcer.d                #     Purge expired entries across all log types
 │   ├── application/                                #   Application layer (use cases)
 │   │   ├── dto.d                                   #     Request DTOs & CommandResult
-│   │   └── use_cases/                              #     Application services
+│   │   └── usecases/                              #     Application services
 │   │       ├── write_audit_log.d                   #       Write audit entry with config checks
 │   │       ├── retrieve_audit_logs.d               #       Query, getById, getByCategory/User/Correlation
 │   │       ├── manage_retention.d                  #       Retention policy CRUD

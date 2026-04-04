@@ -7,27 +7,24 @@ module uim.platform.abap_enviroment.application.usecases.manage.software_compone
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.software_component;
-import uim.platform.abap_enviroment.domain.ports.software_component_repository;
-import uim.platform.abap_enviroment.domain.ports.system_instance_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.software_components;
+import uim.platform.abap_enviroment.domain.ports.repositories.system_instances;
 import uim.platform.abap_enviroment.domain.types;
 
 // import std.conv : to;
 // import std.uuid : randomUUID;
 
 /// Application service for software component lifecycle (clone, pull, manage).
-class ManageSoftwareComponentsUseCase
-{
+class ManageSoftwareComponentsUseCase : UIMUseCase {
   private SoftwareComponentRepository repo;
   private SystemInstanceRepository systemRepo;
 
-  this(SoftwareComponentRepository repo, SystemInstanceRepository systemRepo)
-  {
+  this(SoftwareComponentRepository repo, SystemInstanceRepository systemRepo) {
     this.repo = repo;
     this.systemRepo = systemRepo;
   }
 
-  CommandResult createComponent(CreateSoftwareComponentRequest req)
-  {
+  CommandResult createComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Component name is required");
     if (req.systemInstanceId.length == 0)
@@ -65,8 +62,7 @@ class ManageSoftwareComponentsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req)
-  {
+  CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
     auto comp = repo.findById(id);
     if (comp is null)
       return CommandResult("", "Software component not found");
@@ -97,8 +93,7 @@ class ManageSoftwareComponentsUseCase
     return CommandResult(id, "");
   }
 
-  CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req)
-  {
+  CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
     auto comp = repo.findById(id);
     if (comp is null)
       return CommandResult("", "Software component not found");
@@ -128,18 +123,15 @@ class ManageSoftwareComponentsUseCase
     return CommandResult(id, "");
   }
 
-  SoftwareComponent* getComponent(SoftwareComponentId id)
-  {
+  SoftwareComponent* getComponent(SoftwareComponentId id) {
     return repo.findById(id);
   }
 
-  SoftwareComponent[] listComponents(SystemInstanceId systemId)
-  {
+  SoftwareComponent[] listComponents(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteComponent(SoftwareComponentId id)
-  {
+  CommandResult deleteComponent(SoftwareComponentId id) {
     auto comp = repo.findById(id);
     if (comp is null)
       return CommandResult("", "Software component not found");
@@ -149,10 +141,8 @@ class ManageSoftwareComponentsUseCase
   }
 }
 
-private ComponentType parseComponentType(string s)
-{
-  switch (s)
-  {
+private ComponentType parseComponentType(string s) {
+  switch (s) {
   case "developmentPackage":
     return ComponentType.developmentPackage;
   case "businessConfiguration":
@@ -166,10 +156,8 @@ private ComponentType parseComponentType(string s)
   }
 }
 
-private BranchStrategy parseBranchStrategy(string s)
-{
-  switch (s)
-  {
+private BranchStrategy parseBranchStrategy(string s) {
+  switch (s) {
   case "main":
     return BranchStrategy.main;
   case "release":

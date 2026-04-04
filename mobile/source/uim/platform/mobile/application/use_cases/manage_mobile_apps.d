@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.mobile.application.use_cases.manage_mobile_apps;
+module uim.platform.mobile.application.usecases.manage_mobile_apps;
 
 import uim.platform.mobile.domain.ports.mobile_app_repository;
 import uim.platform.mobile.domain.entities.mobile_app;

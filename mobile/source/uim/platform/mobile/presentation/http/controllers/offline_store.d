@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.offline_store;
 
-import uim.platform.mobile.application.use_cases.manage_offline_stores;
+import uim.platform.mobile.application.usecases.manage_offline_stores;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 

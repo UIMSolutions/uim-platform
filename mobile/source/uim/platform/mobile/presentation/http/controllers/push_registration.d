@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.presentation.http.controllers.push_registration;
 
-import uim.platform.mobile.application.use_cases.manage_push_registrations;
+import uim.platform.mobile.application.usecases.manage_push_registrations;
 import uim.platform.mobile.application.dto;
 import uim.platform.mobile.presentation.http.json_utils;
 
