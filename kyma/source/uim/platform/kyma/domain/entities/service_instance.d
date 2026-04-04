@@ -8,8 +8,7 @@ module uim.platform.kyma.domain.entities.service_instance;
 import uim.platform.kyma.domain.types;
 
 /// A service instance provisioned from the BTP service catalog.
-struct ServiceInstance
-{
+struct ServiceInstance {
   ServiceInstanceId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;

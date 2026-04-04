@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.applications;
 import uim.platform.kyma.domain.types;
 
 /// Application service for external application connectivity.
-class ManageApplicationsUseCase
-{
+class ManageApplicationsUseCase : UIMUseCase {
   private ApplicationRepository repo;
 
   this(ApplicationRepository repo)
@@ -191,8 +190,7 @@ class ManageApplicationsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

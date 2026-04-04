@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.serverless_function;
 import uim.platform.kyma.domain.types;
 
 /// Domain service: validates serverless function configurations.
-class FunctionValidator
-{
+class FunctionValidator {
   /// Validate function configuration before deployment.
   string validate(ServerlessFunction fn)
   {

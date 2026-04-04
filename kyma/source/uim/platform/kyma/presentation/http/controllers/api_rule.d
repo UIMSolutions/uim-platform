@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.api_rule;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class ApiRuleController
-{
+class ApiRuleController {
   private ManageApiRulesUseCase uc;
 
   this(ManageApiRulesUseCase uc)

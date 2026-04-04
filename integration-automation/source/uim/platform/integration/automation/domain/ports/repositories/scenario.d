@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
 
 /// Port for persisting and querying integration scenarios.
-interface ScenarioRepository
-{
+interface ScenarioRepository {
   IntegrationScenario[] findByTenant(TenantId tenantId);
   IntegrationScenario* findById(ScenarioId id, TenantId tenantId);
   IntegrationScenario[] findByCategory(TenantId tenantId, ScenarioCategory category);

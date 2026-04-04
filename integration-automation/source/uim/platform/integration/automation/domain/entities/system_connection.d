@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// A system in the customer landscape — represents an endpoint
 /// that participates in integration scenarios.
-struct SystemConnection
-{
+struct SystemConnection {
   SystemId id;
   TenantId tenantId;
   string name; // e.g. "Production S/4HANA"

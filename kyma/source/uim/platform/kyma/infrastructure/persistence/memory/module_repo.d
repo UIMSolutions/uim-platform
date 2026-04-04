@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.modules;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryModuleRepository : ModuleRepository
-{
+class MemoryModuleRepository : ModuleRepository {
   private KymaModule[ModuleId] store;
 
   KymaModule findById(ModuleId id)

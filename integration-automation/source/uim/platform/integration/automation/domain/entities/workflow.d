@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// A workflow instance — a running execution of an integration scenario
 /// for a specific tenant. Contains the current execution progress.
-struct Workflow
-{
+struct Workflow {
   WorkflowId id;
   TenantId tenantId;
   ScenarioId scenarioId;

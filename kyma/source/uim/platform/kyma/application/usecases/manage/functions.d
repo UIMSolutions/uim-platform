@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.services.function_validator;
 import uim.platform.kyma.domain.types;
 
 /// Application service for serverless function lifecycle management.
-class ManageFunctionsUseCase
-{
+class ManageFunctionsUseCase : UIMUseCase {
   private FunctionRepository repo;
   private FunctionValidator validator;
 
@@ -172,8 +171,7 @@ class ManageFunctionsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// A destination configuration — defines how to connect to a target system
 /// for automated step execution. Mirrors SAP BTP destination service concepts.
-struct Destination
-{
+struct Destination {
   DestinationId id;
   TenantId tenantId;
   string name; // unique destination name

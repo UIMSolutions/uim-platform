@@ -16,8 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class WorkflowController
-{
+class WorkflowController {
   private ManageWorkflowsUseCase useCase;
 
   this(ManageWorkflowsUseCase useCase)

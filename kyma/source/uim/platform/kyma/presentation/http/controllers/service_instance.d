@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.service_instance;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class ServiceInstanceController
-{
+class ServiceInstanceController {
   private ManageServiceInstancesUseCase uc;
 
   this(ManageServiceInstancesUseCase uc)

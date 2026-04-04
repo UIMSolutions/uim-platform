@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 
 /// Port for persisting and querying workflow steps.
-interface StepRepository
-{
+interface StepRepository {
   WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId);
   WorkflowStep* findById(StepId id, TenantId tenantId);
   WorkflowStep[] findByAssignee(TenantId tenantId, UserId assignedTo);

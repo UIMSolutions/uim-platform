@@ -16,8 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class StepController
-{
+class StepController {
   private ManageStepsUseCase useCase;
 
   this(ManageStepsUseCase useCase)

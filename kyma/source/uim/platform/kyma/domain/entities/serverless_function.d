@@ -8,8 +8,7 @@ module uim.platform.kyma.domain.entities.serverless_function;
 import uim.platform.kyma.domain.types;
 
 /// A serverless function deployed in a Kyma namespace.
-struct ServerlessFunction
-{
+struct ServerlessFunction {
   FunctionId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;

@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.environments;
 import uim.platform.kyma.domain.types;
 
 /// Application service for Kyma environment lifecycle management.
-class ManageEnvironmentsUseCase
-{
+class ManageEnvironmentsUseCase : UIMUseCase {
   private EnvironmentRepository repo;
 
   this(EnvironmentRepository repo)
@@ -133,8 +132,7 @@ class ManageEnvironmentsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

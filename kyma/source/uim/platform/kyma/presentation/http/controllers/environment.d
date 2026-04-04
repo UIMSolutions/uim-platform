@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.kyma_environment;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class EnvironmentController
-{
+class EnvironmentController {
   private ManageEnvironmentsUseCase uc;
 
   this(ManageEnvironmentsUseCase uc)

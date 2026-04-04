@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryEventSubscriptionRepository : EventSubscriptionRepository
-{
+class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   private EventSubscription[EventSubscriptionId] store;
 
   EventSubscription findById(EventSubscriptionId id)

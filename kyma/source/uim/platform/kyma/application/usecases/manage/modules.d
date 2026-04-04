@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.services.module_dependency_resolver;
 import uim.platform.kyma.domain.types;
 
 /// Application service for Kyma module management.
-class ManageModulesUseCase
-{
+class ManageModulesUseCase : UIMUseCase {
   private ModuleRepository repo;
   private ModuleDependencyResolver depResolver;
 
@@ -181,8 +180,7 @@ class ManageModulesUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

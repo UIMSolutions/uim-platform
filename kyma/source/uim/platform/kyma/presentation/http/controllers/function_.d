@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.serverless_function;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class FunctionController
-{
+class FunctionController {
   private ManageFunctionsUseCase uc;
 
   this(ManageFunctionsUseCase uc)

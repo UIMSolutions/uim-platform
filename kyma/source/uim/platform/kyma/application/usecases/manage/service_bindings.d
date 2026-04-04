@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.service_bindings;
 import uim.platform.kyma.domain.types;
 
 /// Application service for service binding management.
-class ManageServiceBindingsUseCase
-{
+class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository repo;
 
   this(ServiceBindingRepository repo)
@@ -100,8 +99,7 @@ class ManageServiceBindingsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

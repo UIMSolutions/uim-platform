@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.applications;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryApplicationRepository : ApplicationRepository
-{
+class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 
   Application findById(ApplicationId id)

@@ -8,8 +8,7 @@ module uim.platform.kyma.domain.entities.api_rule;
 import uim.platform.kyma.domain.types;
 
 /// An API rule — exposes a service or function via the API Gateway.
-struct ApiRule
-{
+struct ApiRule {
   ApiRuleId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
@@ -49,8 +48,7 @@ struct ApiRule
 }
 
 /// A single rule entry within an API rule.
-struct ApiRuleEntry
-{
+struct ApiRuleEntry {
   string path;
   ApiHttpMethod[] methods;
   AccessStrategy accessStrategy = AccessStrategy.noAuth;

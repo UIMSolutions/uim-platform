@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 
 /// Port for persisting and querying workflow instances.
-interface WorkflowRepository
-{
+interface WorkflowRepository {
   Workflow[] findByTenant(TenantId tenantId);
   Workflow* findById(WorkflowId id, TenantId tenantId);
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId);

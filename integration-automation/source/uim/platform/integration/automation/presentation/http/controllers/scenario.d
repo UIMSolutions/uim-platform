@@ -16,8 +16,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class ScenarioController
-{
+class ScenarioController {
   private ManageScenariosUseCase useCase;
 
   this(ManageScenariosUseCase useCase)
@@ -242,8 +241,7 @@ class ScenarioController
   }
 }
 
-ScenarioCategory parseScenarioCategory(string s)
-{
+ScenarioCategory parseScenarioCategory(string s) {
   switch (s)
   {
   case "leadToCash":
@@ -267,8 +265,7 @@ ScenarioCategory parseScenarioCategory(string s)
   }
 }
 
-ScenarioStatus parseScenarioStatus(string s)
-{
+ScenarioStatus parseScenarioStatus(string s) {
   switch (s)
   {
   case "draft":
@@ -284,8 +281,7 @@ ScenarioStatus parseScenarioStatus(string s)
   }
 }
 
-SystemType parseSystemType(string s)
-{
+SystemType parseSystemType(string s) {
   switch (s)
   {
   case "sapS4Hana":
@@ -315,8 +311,7 @@ SystemType parseSystemType(string s)
   }
 }
 
-StepType parseStepType(string s)
-{
+StepType parseStepType(string s) {
   switch (s)
   {
   case "manual":
@@ -332,8 +327,7 @@ StepType parseStepType(string s)
   }
 }
 
-StepPriority parseStepPriority(string s)
-{
+StepPriority parseStepPriority(string s) {
   switch (s)
   {
   case "low":

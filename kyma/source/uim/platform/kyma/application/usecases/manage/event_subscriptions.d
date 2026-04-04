@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 import uim.platform.kyma.domain.types;
 
 /// Application service for event subscription management.
-class ManageEventSubscriptionsUseCase
-{
+class ManageEventSubscriptionsUseCase : UIMUseCase {
   private EventSubscriptionRepository repo;
 
   this(EventSubscriptionRepository repo)
@@ -156,8 +155,7 @@ class ManageEventSubscriptionsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

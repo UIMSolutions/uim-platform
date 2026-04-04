@@ -17,8 +17,7 @@ alias TenantId = string;
 alias UserId = string;
 
 /// Integration scenario lifecycle status.
-enum ScenarioStatus
-{
+enum ScenarioStatus {
   draft,
   active,
   deprecated_,
@@ -26,8 +25,7 @@ enum ScenarioStatus
 }
 
 /// Workflow instance execution status.
-enum WorkflowStatus
-{
+enum WorkflowStatus {
   planned,
   inProgress,
   completed,
@@ -37,8 +35,7 @@ enum WorkflowStatus
 }
 
 /// Type of workflow step / task.
-enum StepType
-{
+enum StepType {
   manual,
   automated,
   approval,
@@ -46,8 +43,7 @@ enum StepType
 }
 
 /// Status of an individual workflow step.
-enum StepStatus
-{
+enum StepStatus {
   pending,
   inProgress,
   completed,
@@ -57,8 +53,7 @@ enum StepStatus
 }
 
 /// Priority level for tasks.
-enum StepPriority
-{
+enum StepPriority {
   low,
   medium,
   high,
@@ -66,8 +61,7 @@ enum StepPriority
 }
 
 /// SAP system types supported in the landscape.
-enum SystemType
-{
+enum SystemType {
   sapS4Hana,
   sapS4HanaCloud,
   sapBtp,
@@ -82,8 +76,7 @@ enum SystemType
 }
 
 /// Connection status of a system in the landscape.
-enum ConnectionStatus
-{
+enum ConnectionStatus {
   active,
   inactive,
   error,
@@ -91,8 +84,7 @@ enum ConnectionStatus
 }
 
 /// Destination / API protocol type.
-enum DestinationType
-{
+enum DestinationType {
   http,
   rfc,
   odata,
@@ -101,8 +93,7 @@ enum DestinationType
 }
 
 /// Authentication method for destinations.
-enum AuthenticationType
-{
+enum AuthenticationType {
   basic,
   oauth2ClientCredentials,
   oauth2Saml,
@@ -113,16 +104,14 @@ enum AuthenticationType
 }
 
 /// Proxy type for destination routing.
-enum ProxyType
-{
+enum ProxyType {
   internet,
   onPremise,
   privateLink,
 }
 
 /// Outcome of executing a step or automation.
-enum ExecutionOutcome
-{
+enum ExecutionOutcome {
   success,
   failure,
   skipped,
@@ -131,8 +120,7 @@ enum ExecutionOutcome
 }
 
 /// Category of an integration scenario.
-enum ScenarioCategory
-{
+enum ScenarioCategory {
   leadToCash,
   sourceToPay,
   recruitToRetire,

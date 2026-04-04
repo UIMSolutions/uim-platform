@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.integration.automation.domain.ports.repositories.repositories;
 
-public
-{
+public {
   import uim.platform.integration.automation.domain.ports.repositories.destination;
   import uim.platform.integration.automation.domain.ports.repositories.execution_log;
   import uim.platform.integration.automation.domain.ports.repositories.scenario;

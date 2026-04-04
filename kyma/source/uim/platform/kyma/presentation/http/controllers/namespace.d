@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.namespace;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class NamespaceController
-{
+class NamespaceController {
   private ManageNamespacesUseCase uc;
 
   this(ManageNamespacesUseCase uc)

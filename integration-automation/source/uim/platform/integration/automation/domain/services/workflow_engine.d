@@ -15,8 +15,7 @@ import uim.platform.integration.automation.domain.ports;
 
 /// Domain service that orchestrates workflow progression —
 /// advances to the next step, checks dependencies, and updates status.
-class WorkflowEngine
-{
+class WorkflowEngine {
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
 

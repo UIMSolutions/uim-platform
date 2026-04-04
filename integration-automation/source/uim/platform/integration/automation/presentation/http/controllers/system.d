@@ -17,8 +17,7 @@ import uim.platform.integration.automation.domain.entities.system_connection;
 import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
-class SystemController
-{
+class SystemController {
   private ManageSystemsUseCase useCase;
 
   this(ManageSystemsUseCase useCase)
@@ -229,8 +228,7 @@ class SystemController
   }
 }
 
-ConnectionStatus parseConnectionStatus(string s)
-{
+ConnectionStatus parseConnectionStatus(string s) {
   switch (s)
   {
   case "active":

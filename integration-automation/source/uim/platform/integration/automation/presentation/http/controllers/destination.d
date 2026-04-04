@@ -17,8 +17,7 @@ import uim.platform.integration.automation.domain.entities.destination;
 import uim.platform.integration.automation.presentation.http.json_utils;
 import uim.platform.integration.automation.presentation.http.scenario_controller : parseSystemType;
 
-class DestinationController
-{
+class DestinationController {
   private ManageDestinationsUseCase useCase;
 
   this(ManageDestinationsUseCase useCase)
@@ -208,8 +207,7 @@ class DestinationController
   }
 }
 
-DestinationType parseDestinationType(string s)
-{
+DestinationType parseDestinationType(string s) {
   switch (s)
   {
   case "http":
@@ -227,8 +225,7 @@ DestinationType parseDestinationType(string s)
   }
 }
 
-AuthenticationType parseAuthenticationType(string s)
-{
+AuthenticationType parseAuthenticationType(string s) {
   switch (s)
   {
   case "basic":
@@ -250,8 +247,7 @@ AuthenticationType parseAuthenticationType(string s)
   }
 }
 
-ProxyType parseProxyType(string s)
-{
+ProxyType parseProxyType(string s) {
   switch (s)
   {
   case "internet":

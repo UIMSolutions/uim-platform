@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.api_rules;
 import uim.platform.kyma.domain.types;
 
 /// Application service for API rule management.
-class ManageApiRulesUseCase
-{
+class ManageApiRulesUseCase : UIMUseCase {
   private ApiRuleRepository repo;
 
   this(ApiRuleRepository repo)
@@ -201,8 +200,7 @@ class ManageApiRulesUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

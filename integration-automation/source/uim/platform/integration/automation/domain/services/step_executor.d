@@ -18,8 +18,7 @@ import uim.platform.integration.automation.domain.ports;
 
 /// Domain service that handles step execution —
 /// completing manual steps, invoking automated steps, recording execution logs.
-class StepExecutor
-{
+class StepExecutor {
   private StepRepository stepRepo;
   private ExecutionLogRepository logRepo;
 

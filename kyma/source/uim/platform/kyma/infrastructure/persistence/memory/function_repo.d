@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.functions;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryFunctionRepository : FunctionRepository
-{
+class MemoryFunctionRepository : FunctionRepository {
   private ServerlessFunction[FunctionId] store;
 
   ServerlessFunction findById(FunctionId id)

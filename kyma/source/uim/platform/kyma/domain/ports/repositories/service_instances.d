@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.service_instance;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — service instance persistence.
-interface ServiceInstanceRepository
-{
+interface ServiceInstanceRepository {
   ServiceInstance findById(ServiceInstanceId id);
   ServiceInstance findByName(NamespaceId nsId, string name);
   ServiceInstance[] findByNamespace(NamespaceId nsId);

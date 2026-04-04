@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.namespaces;
 import uim.platform.kyma.domain.types;
 
 /// Application service for Kubernetes namespace management.
-class ManageNamespacesUseCase
-{
+class ManageNamespacesUseCase : UIMUseCase {
   private NamespaceRepository repo;
 
   this(NamespaceRepository repo)
@@ -124,8 +123,7 @@ class ManageNamespacesUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

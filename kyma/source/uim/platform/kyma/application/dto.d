@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.types;
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -18,8 +17,7 @@ struct CommandResult
 
 /// --- Environment DTOs ---
 
-struct CreateEnvironmentRequest
-{
+struct CreateEnvironmentRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -38,8 +36,7 @@ struct CreateEnvironmentRequest
   string createdBy;
 }
 
-struct UpdateEnvironmentRequest
-{
+struct UpdateEnvironmentRequest {
   string description;
   int machineCount;
   string machineType;
@@ -52,8 +49,7 @@ struct UpdateEnvironmentRequest
 
 /// --- Namespace DTOs ---
 
-struct CreateNamespaceRequest
-{
+struct CreateNamespaceRequest {
   KymaEnvironmentId environmentId;
   TenantId tenantId;
   string name;
@@ -70,8 +66,7 @@ struct CreateNamespaceRequest
   string createdBy;
 }
 
-struct UpdateNamespaceRequest
-{
+struct UpdateNamespaceRequest {
   string description;
   string cpuLimit;
   string memoryLimit;
@@ -86,8 +81,7 @@ struct UpdateNamespaceRequest
 
 /// --- Serverless Function DTOs ---
 
-struct CreateFunctionRequest
-{
+struct CreateFunctionRequest {
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -110,8 +104,7 @@ struct CreateFunctionRequest
   string createdBy;
 }
 
-struct UpdateFunctionRequest
-{
+struct UpdateFunctionRequest {
   string description;
   string sourceCode;
   string handler;
@@ -130,8 +123,7 @@ struct UpdateFunctionRequest
 
 /// --- API Rule DTOs ---
 
-struct CreateApiRuleRequest
-{
+struct CreateApiRuleRequest {
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -152,8 +144,7 @@ struct CreateApiRuleRequest
   string createdBy;
 }
 
-struct UpdateApiRuleRequest
-{
+struct UpdateApiRuleRequest {
   string description;
   string serviceName;
   int servicePort;
@@ -168,8 +159,7 @@ struct UpdateApiRuleRequest
   string[string] labels;
 }
 
-struct ApiRuleEntryDto
-{
+struct ApiRuleEntryDto {
   string path;
   string[] methods;
   string accessStrategy;
@@ -180,8 +170,7 @@ struct ApiRuleEntryDto
 
 /// --- Service Instance DTOs ---
 
-struct CreateServiceInstanceRequest
-{
+struct CreateServiceInstanceRequest {
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -196,8 +185,7 @@ struct CreateServiceInstanceRequest
   string createdBy;
 }
 
-struct UpdateServiceInstanceRequest
-{
+struct UpdateServiceInstanceRequest {
   string description;
   string servicePlanName;
   string servicePlanId;
@@ -207,8 +195,7 @@ struct UpdateServiceInstanceRequest
 
 /// --- Service Binding DTOs ---
 
-struct CreateServiceBindingRequest
-{
+struct CreateServiceBindingRequest {
   ServiceInstanceId serviceInstanceId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
@@ -222,8 +209,7 @@ struct CreateServiceBindingRequest
   string createdBy;
 }
 
-struct UpdateServiceBindingRequest
-{
+struct UpdateServiceBindingRequest {
   string description;
   string secretName;
   string parametersJson;
@@ -232,8 +218,7 @@ struct UpdateServiceBindingRequest
 
 /// --- Event Subscription DTOs ---
 
-struct CreateEventSubscriptionRequest
-{
+struct CreateEventSubscriptionRequest {
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -252,8 +237,7 @@ struct CreateEventSubscriptionRequest
   string createdBy;
 }
 
-struct UpdateEventSubscriptionRequest
-{
+struct UpdateEventSubscriptionRequest {
   string description;
   string[] eventTypes;
   string sinkUrl;
@@ -267,8 +251,7 @@ struct UpdateEventSubscriptionRequest
 
 /// --- Kyma Module DTOs ---
 
-struct EnableModuleRequest
-{
+struct EnableModuleRequest {
   KymaEnvironmentId environmentId;
   TenantId tenantId;
   string name;
@@ -280,8 +263,7 @@ struct EnableModuleRequest
   string enabledBy;
 }
 
-struct UpdateModuleRequest
-{
+struct UpdateModuleRequest {
   string version_;
   string channel;
   string customResourcePolicy;
@@ -290,8 +272,7 @@ struct UpdateModuleRequest
 
 /// --- Application DTOs ---
 
-struct RegisterApplicationRequest
-{
+struct RegisterApplicationRequest {
   KymaEnvironmentId environmentId;
   TenantId tenantId;
   string name;
@@ -305,8 +286,7 @@ struct RegisterApplicationRequest
   string createdBy;
 }
 
-struct UpdateApplicationRequest
-{
+struct UpdateApplicationRequest {
   string description;
   string connectorUrl;
   AppApiEntryDto[] apis;
@@ -315,8 +295,7 @@ struct UpdateApplicationRequest
   string[string] labels;
 }
 
-struct AppApiEntryDto
-{
+struct AppApiEntryDto {
   string name;
   string description;
   string targetUrl;
@@ -324,8 +303,7 @@ struct AppApiEntryDto
   string authType;
 }
 
-struct AppEventEntryDto
-{
+struct AppEventEntryDto {
   string name;
   string description;
   string version_;

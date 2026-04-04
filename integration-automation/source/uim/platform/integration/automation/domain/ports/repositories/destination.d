@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.destination;
 
 /// Port for persisting and querying destinations.
-interface DestinationRepository
-{
+interface DestinationRepository {
   Destination[] findByTenant(TenantId tenantId);
   Destination* findById(DestinationId id, TenantId tenantId);
   Destination[] findBySystem(TenantId tenantId, SystemId systemId);

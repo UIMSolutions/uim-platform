@@ -15,8 +15,7 @@ import uim.platform.integration.automation.domain.entities.workflow_step;
 // import uim.platform.integration.automation.domain.ports.repositories.steps;
 import uim.platform.integration.automation.domain.ports;
 
-class MonitorExecutionsUseCase
-{
+class MonitorExecutionsUseCase : UIMUseCase {
   private ExecutionLogRepository logRepo;
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
@@ -95,8 +94,7 @@ class MonitorExecutionsUseCase
 }
 
 /// Summary of workflow progress for monitoring.
-struct WorkflowSummary
-{
+struct WorkflowSummary {
   WorkflowId workflowId;
   string workflowName;
   WorkflowStatus status;

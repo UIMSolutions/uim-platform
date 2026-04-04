@@ -15,8 +15,7 @@ import uim.platform.integration.automation.domain.entities.integration_scenario;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 
-class ManageScenariosUseCase
-{
+class ManageScenariosUseCase : UIMUseCase {
   private ScenarioRepository repo;
 
   this(ScenarioRepository repo)

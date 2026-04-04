@@ -8,8 +8,7 @@ module uim.platform.kyma.domain.entities.event_subscription;
 import uim.platform.kyma.domain.types;
 
 /// An event subscription — subscribes to events from a source.
-struct EventSubscription
-{
+struct EventSubscription {
   EventSubscriptionId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;

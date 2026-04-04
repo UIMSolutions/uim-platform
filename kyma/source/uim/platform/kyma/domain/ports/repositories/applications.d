@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.application;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — external application connectivity persistence.
-interface ApplicationRepository
-{
+interface ApplicationRepository {
   Application findById(ApplicationId id);
   Application findByName(KymaEnvironmentId envId, string name);
   Application[] findByEnvironment(KymaEnvironmentId envId);

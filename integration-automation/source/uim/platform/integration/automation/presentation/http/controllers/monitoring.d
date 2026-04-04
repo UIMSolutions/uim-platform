@@ -15,8 +15,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
 import uim.platform.integration.automation.presentation.http.json_utils;
 
-class MonitoringController
-{
+class MonitoringController {
   private MonitorExecutionsUseCase useCase;
 
   this(MonitorExecutionsUseCase useCase)

@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.namespace;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — namespace persistence.
-interface NamespaceRepository
-{
+interface NamespaceRepository {
   Namespace findById(NamespaceId id);
   Namespace findByName(KymaEnvironmentId envId, string name);
   Namespace[] findByEnvironment(KymaEnvironmentId envId);

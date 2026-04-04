@@ -393,8 +393,7 @@ CIA_HOST=127.0.0.1 CIA_PORT=9090 ./build/uim-integration-automation-platform-ser
 
 All error responses return a JSON body:
 
-```json
-{
+```json {
   "error": "Human-readable error message",
   "status": 400
 }
@@ -441,8 +440,7 @@ curl -X POST http://localhost:8090/api/v1/scenarios \
 
 Response (`201`):
 
-```json
-{ "id": "550e8400-e29b-41d4-a716-446655440000" }
+```json { "id": "550e8400-e29b-41d4-a716-446655440000" }
 ```
 
 #### Create a Workflow from Scenario
@@ -484,8 +482,7 @@ curl http://localhost:8090/api/v1/monitoring/summary/workflow-uuid \
 
 Response:
 
-```json
-{
+```json {
   "workflowId": "workflow-uuid",
   "workflowName": "Q1 Migration Workflow",
   "status": "inProgress",

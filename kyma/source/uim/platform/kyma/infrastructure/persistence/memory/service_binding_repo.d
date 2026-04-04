@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.service_bindings;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryServiceBindingRepository : ServiceBindingRepository
-{
+class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
   ServiceBinding findById(ServiceBindingId id)

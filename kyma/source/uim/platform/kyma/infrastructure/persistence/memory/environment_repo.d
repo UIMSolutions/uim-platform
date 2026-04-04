@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.environments;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryEnvironmentRepository : EnvironmentRepository
-{
+class MemoryEnvironmentRepository : EnvironmentRepository {
   private KymaEnvironment[KymaEnvironmentId] store;
 
   KymaEnvironment findById(KymaEnvironmentId id)

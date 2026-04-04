@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.event_subscription;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class EventSubscriptionController
-{
+class EventSubscriptionController {
   private ManageEventSubscriptionsUseCase uc;
 
   this(ManageEventSubscriptionsUseCase uc)

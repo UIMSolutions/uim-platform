@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.kyma_module;
 import uim.platform.kyma.domain.types;
 
 /// Domain service: resolves module dependencies and validates enable/disable operations.
-class ModuleDependencyResolver
-{
+class ModuleDependencyResolver {
   /// Check whether all required dependencies are satisfied for enabling a module.
   bool canEnable(KymaModule mod, KymaModule[] allModules)
   {

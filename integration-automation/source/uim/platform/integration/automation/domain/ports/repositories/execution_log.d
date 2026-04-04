@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
 
 /// Port for persisting and querying execution logs.
-interface ExecutionLogRepository
-{
+interface ExecutionLogRepository {
   ExecutionLog[] findByWorkflow(WorkflowId workflowId, TenantId tenantId);
   ExecutionLog[] findByStep(StepId stepId, TenantId tenantId);
   ExecutionLog[] findByTenant(TenantId tenantId);

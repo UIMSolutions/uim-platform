@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// An individual step / task within a workflow instance.
 /// Can be manual (requires user action) or automated (executed via API).
-struct WorkflowStep
-{
+struct WorkflowStep {
   StepId id;
   WorkflowId workflowId;
   TenantId tenantId;

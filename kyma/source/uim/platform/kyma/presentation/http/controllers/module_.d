@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.kyma_module;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class ModuleController
-{
+class ModuleController {
   private ManageModulesUseCase uc;
 
   this(ManageModulesUseCase uc)

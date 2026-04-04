@@ -16,8 +16,7 @@ import uim.platform.kyma.domain.entities.application;
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.presentation.http.json_utils;
 
-class ApplicationController
-{
+class ApplicationController {
   private ManageApplicationsUseCase uc;
 
   this(ManageApplicationsUseCase uc)

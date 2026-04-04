@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.ports.repositories.service_instances;
 import uim.platform.kyma.domain.types;
 
 /// Application service for BTP service instance management in Kyma.
-class ManageServiceInstancesUseCase
-{
+class ManageServiceInstancesUseCase : UIMUseCase {
   private ServiceInstanceRepository repo;
 
   this(ServiceInstanceRepository repo)
@@ -106,8 +105,7 @@ class ManageServiceInstancesUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;

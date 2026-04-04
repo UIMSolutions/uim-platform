@@ -8,8 +8,7 @@ module uim.platform.kyma.domain.entities.application;
 import uim.platform.kyma.domain.types;
 
 /// An external application connected to the Kyma environment.
-struct Application
-{
+struct Application {
   ApplicationId id;
   KymaEnvironmentId environmentId;
   TenantId tenantId;
@@ -41,8 +40,7 @@ struct Application
 }
 
 /// An API entry registered by an external application.
-struct AppApiEntry
-{
+struct AppApiEntry {
   string name;
   string description;
   string targetUrl;
@@ -51,8 +49,7 @@ struct AppApiEntry
 }
 
 /// An event type registered by an external application.
-struct AppEventEntry
-{
+struct AppEventEntry {
   string name;
   string description;
   string version_;

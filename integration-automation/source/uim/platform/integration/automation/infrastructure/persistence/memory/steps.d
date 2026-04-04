@@ -14,8 +14,7 @@ import uim.platform.integration.automation.domain.ports;
 // import std.algorithm : filter, sort;
 // import std.array : array;
 
-class MemoryStepRepository : StepRepository
-{
+class MemoryStepRepository : StepRepository {
   private WorkflowStep[StepId] store;
 
   WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId)

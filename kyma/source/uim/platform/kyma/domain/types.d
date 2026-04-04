@@ -20,8 +20,7 @@ alias SubaccountId = string;
 alias ClusterId = string;
 
 /// Status of a Kyma environment/cluster.
-enum EnvironmentStatus
-{
+enum EnvironmentStatus {
   provisioning,
   running,
   updating,
@@ -32,8 +31,7 @@ enum EnvironmentStatus
 }
 
 /// Kyma plan / machine type.
-enum KymaPlan
-{
+enum KymaPlan {
   azure,
   aws,
   gcp,
@@ -43,15 +41,13 @@ enum KymaPlan
 }
 
 /// Status of a Kubernetes namespace.
-enum NamespaceStatus
-{
+enum NamespaceStatus {
   active,
   terminating,
 }
 
 /// Serverless function runtime language.
-enum FunctionRuntime
-{
+enum FunctionRuntime {
   nodejs18,
   nodejs20,
   python39,
@@ -59,8 +55,7 @@ enum FunctionRuntime
 }
 
 /// Status of a serverless function.
-enum FunctionStatus
-{
+enum FunctionStatus {
   building,
   deploying,
   running,
@@ -69,15 +64,13 @@ enum FunctionStatus
 }
 
 /// Scaling type for serverless functions.
-enum ScalingType
-{
+enum ScalingType {
   fixed,
   auto_,
 }
 
 /// API rule access strategy.
-enum AccessStrategy
-{
+enum AccessStrategy {
   noAuth,
   oauth2Introspection,
   jwt,
@@ -85,16 +78,14 @@ enum AccessStrategy
 }
 
 /// API rule status.
-enum ApiRuleStatus
-{
+enum ApiRuleStatus {
   ok,
   error,
   notReady,
 }
 
 /// HTTP methods for API rules.
-enum ApiHttpMethod
-{
+enum ApiHttpMethod {
   get_,
   post_,
   put_,
@@ -105,8 +96,7 @@ enum ApiHttpMethod
 }
 
 /// Status of a service instance.
-enum ServiceInstanceStatus
-{
+enum ServiceInstanceStatus {
   creating,
   ready,
   failed,
@@ -115,8 +105,7 @@ enum ServiceInstanceStatus
 }
 
 /// Status of a service binding.
-enum ServiceBindingStatus
-{
+enum ServiceBindingStatus {
   creating,
   ready,
   failed,
@@ -124,15 +113,13 @@ enum ServiceBindingStatus
 }
 
 /// Event type encoding.
-enum EventTypeEncoding
-{
+enum EventTypeEncoding {
   exact,
   prefix,
 }
 
 /// Status of an event subscription.
-enum SubscriptionStatus
-{
+enum SubscriptionStatus {
   active,
   pending,
   error,
@@ -140,8 +127,7 @@ enum SubscriptionStatus
 }
 
 /// Kyma module status.
-enum ModuleStatus
-{
+enum ModuleStatus {
   enabled,
   disabled,
   installing,
@@ -151,8 +137,7 @@ enum ModuleStatus
 }
 
 /// Known Kyma module types.
-enum ModuleType
-{
+enum ModuleType {
   istio,
   apiGateway,
   serverless,
@@ -166,8 +151,7 @@ enum ModuleType
 }
 
 /// Application connectivity status.
-enum AppConnectivityStatus
-{
+enum AppConnectivityStatus {
   connected,
   disconnected,
   pairing,
@@ -175,16 +159,14 @@ enum AppConnectivityStatus
 }
 
 /// Application registration type.
-enum AppRegistrationType
-{
+enum AppRegistrationType {
   api,
   events,
   apiAndEvents,
 }
 
 /// Resource quota enforcement level.
-enum QuotaEnforcement
-{
+enum QuotaEnforcement {
   enforce,
   warn_,
   none,

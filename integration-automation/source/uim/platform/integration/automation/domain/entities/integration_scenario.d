@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// An integration scenario template — defines a reusable set of steps
 /// for integrating SAP cloud solutions with on-premise or other cloud systems.
-struct IntegrationScenario
-{
+struct IntegrationScenario {
   ScenarioId id;
   TenantId tenantId;
   string name; // e.g. "SAP S/4HANA Cloud Integration"
@@ -28,8 +27,7 @@ struct IntegrationScenario
 }
 
 /// Template for a step within a scenario — used to instantiate WorkflowSteps.
-struct ScenarioStepTemplate
-{
+struct ScenarioStepTemplate {
   string name;
   string description;
   StepType type_;

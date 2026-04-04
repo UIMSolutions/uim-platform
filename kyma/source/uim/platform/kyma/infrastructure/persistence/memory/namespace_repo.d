@@ -12,8 +12,7 @@ import uim.platform.kyma.domain.ports.repositories.namespaces;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryNamespaceRepository : NamespaceRepository
-{
+class MemoryNamespaceRepository : NamespaceRepository {
   private Namespace[NamespaceId] store;
 
   Namespace findById(NamespaceId id)

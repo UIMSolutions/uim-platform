@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.system_connection;
 
 /// Port for persisting and querying system connections.
-interface SystemRepository
-{
+interface SystemRepository {
   SystemConnection[] findByTenant(TenantId tenantId);
   SystemConnection* findById(SystemId id, TenantId tenantId);
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType);

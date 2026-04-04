@@ -9,8 +9,7 @@ import uim.platform.integration.automation.domain.types;
 
 /// An execution log entry — records the execution of a workflow step
 /// for monitoring, auditing, and troubleshooting purposes.
-struct ExecutionLog
-{
+struct ExecutionLog {
   ExecutionLogId id;
   WorkflowId workflowId;
   StepId stepId;

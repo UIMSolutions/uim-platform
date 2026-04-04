@@ -9,8 +9,7 @@ import uim.platform.kyma.domain.entities.kyma_module;
 import uim.platform.kyma.domain.types;
 
 /// Port: outgoing — Kyma module persistence.
-interface ModuleRepository
-{
+interface ModuleRepository {
   KymaModule findById(ModuleId id);
   KymaModule findByName(KymaEnvironmentId envId, string name);
   KymaModule[] findByEnvironment(KymaEnvironmentId envId);
