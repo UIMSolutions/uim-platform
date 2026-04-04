@@ -3,33 +3,33 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.presentation.http.workpage;
+module uim.platform.workzone.presentation.http.controllers.channel;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage_workpages;
+import uim.platform.workzone.application.usecases.manage_channels;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
-import uim.platform.workzone.domain.entities.workpage;
+import uim.platform.workzone.domain.entities.channel;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WorkpageController
+class ChannelController
 {
-  private ManageWorkpagesUseCase useCase;
+  private ManageChannelsUseCase useCase;
 
-  this(ManageWorkpagesUseCase useCase)
+  this(ManageChannelsUseCase useCase)
   {
     this.useCase = useCase;
   }
 
   override void registerRoutes(URLRouter router)
   {
-    router.post("/api/v1/workpages", &handleCreate);
-    router.get("/api/v1/workpages", &handleList);
-    router.get("/api/v1/workpages/*", &handleGet);
-    router.put("/api/v1/workpages/*", &handleUpdate);
-    router.delete_("/api/v1/workpages/*", &handleDelete);
+    router.post("/api/v1/channels", &handleCreate);
+    router.get("/api/v1/channels", &handleList);
+    router.get("/api/v1/channels/*", &handleGet);
+    router.put("/api/v1/channels/*", &handleUpdate);
+    router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
@@ -37,15 +37,25 @@ class WorkpageController
     try
     {
       auto j = req.json;
-      auto r = CreateWorkpageRequest();
+      auto r = CreateChannelRequest();
       r.workspaceId = j.getString("workspaceId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.title = j.getString("title");
+      r.name = j.getString("name");
       r.description = j.getString("description");
-      r.sortOrder = j.getInteger("sortOrder");
-      r.isDefault = j.getBoolean("isDefault");
 
-      auto result = useCase.createWorkpage(r);
+      auto ctStr = j.getString("channelType");
+      if (ctStr == "notification")
+        r.channelType = ChannelType.notification;
+      else if (ctStr == "custom")
+        r.channelType = ChannelType.custom;
+      else if (ctStr == "external")
+        r.channelType = ChannelType.external;
+      else
+        r.channelType = ChannelType.activity;
+
+      r.config = parseChannelConfig(j);
+
+      auto result = useCase.createChannel(r);
       if (result.isSuccess())
       {
         auto resp = Json.emptyObject;
@@ -69,13 +79,13 @@ class WorkpageController
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
-      auto pages = useCase.listByWorkspace(workspaceId, tenantId);
+      auto channels = useCase.listByWorkspace(workspaceId, tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; pages)
-        arr ~= serializePage(p);
+      foreach (ref c; channels)
+        arr ~= serializeChannel(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) pages.length);
+      resp["totalCount"] = Json(cast(long) channels.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -90,13 +100,13 @@ class WorkpageController
     {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto page = useCase.getWorkpage(id, tenantId);
-      if (page is null)
+      auto ch = useCase.getChannel(id, tenantId);
+      if (ch is null)
       {
-        writeError(res, 404, "Page not found");
+        writeError(res, 404, "Channel not found");
         return;
       }
-      res.writeJsonBody(serializePage(*page), 200);
+      res.writeJsonBody(serializeChannel(*ch), 200);
     }
     catch (Exception e)
     {
@@ -109,15 +119,15 @@ class WorkpageController
     try
     {
       auto j = req.json;
-      auto r = UpdateWorkpageRequest();
+      auto r = UpdateChannelRequest();
       r.id = extractIdFromPath(req.requestURI);
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.title = j.getString("title");
+      r.name = j.getString("name");
       r.description = j.getString("description");
-      r.sortOrder = j.getInteger("sortOrder");
-      r.visible = j.getBoolean("visible", true);
+      r.active = j.getBoolean("active", true);
+      r.config = parseChannelConfig(j);
 
-      auto result = useCase.updateWorkpage(r);
+      auto result = useCase.updateChannel(r);
       if (result.isSuccess())
       {
         auto resp = Json.emptyObject;
@@ -141,7 +151,7 @@ class WorkpageController
     {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      useCase.deleteWorkpage(id, tenantId);
+      useCase.deleteChannel(id, tenantId);
       res.writeBody("", 204);
     }
     catch (Exception e)
@@ -151,18 +161,44 @@ class WorkpageController
   }
 }
 
-private Json serializePage(ref Workpage p)
+private ChannelConfig parseChannelConfig(Json j)
 {
+  import uim.platform.workzone.domain.entities.channel : ChannelConfig;
+
+  ChannelConfig cfg;
+  auto v = "config" in j;
+  if (v !is null && (*v).type == Json.Type.object)
+  {
+    auto c = *v;
+    cfg.sourceUrl = c.getString("sourceUrl");
+    cfg.pollIntervalSec = jsonInt(c, "pollIntervalSec");
+    cfg.authType = c.getString("authType");
+    cfg.authToken = c.getString("authToken");
+    cfg.maxItems = jsonInt(c, "maxItems");
+  }
+  return cfg;
+}
+
+private Json serializeChannel(ref Channel c)
+{
+  // import std.conv : to;
   auto j = Json.emptyObject;
-  j["id"] = Json(p.id);
-  j["workspaceId"] = Json(p.workspaceId);
-  j["tenantId"] = Json(p.tenantId);
-  j["title"] = Json(p.title);
-  j["description"] = Json(p.description);
-  j["sortOrder"] = Json(p.sortOrder);
-  j["visible"] = Json(p.visible);
-  j["isDefault"] = Json(p.isDefault);
-  j["createdAt"] = Json(p.createdAt);
-  j["updatedAt"] = Json(p.updatedAt);
+  j["id"] = Json(c.id);
+  j["workspaceId"] = Json(c.workspaceId);
+  j["tenantId"] = Json(c.tenantId);
+  j["name"] = Json(c.name);
+  j["description"] = Json(c.description);
+  j["channelType"] = Json(c.channelType.to!string);
+  j["active"] = Json(c.active);
+  j["createdAt"] = Json(c.createdAt);
+  j["updatedAt"] = Json(c.updatedAt);
+
+  auto cfg = Json.emptyObject;
+  cfg["sourceUrl"] = Json(c.config.sourceUrl);
+  cfg["pollIntervalSec"] = Json(c.config.pollIntervalSec);
+  cfg["authType"] = Json(c.config.authType);
+  cfg["maxItems"] = Json(c.config.maxItems);
+  j["config"] = cfg;
+
   return j;
 }

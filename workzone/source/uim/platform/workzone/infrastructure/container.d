@@ -45,8 +45,7 @@ import uim.platform.identity_authentication.presentation.http.widget;
 import uim.platform.identity_authentication.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryWorkspaceRepository workspaceRepo;
   MemoryWorkpageRepository workpageRepo;
@@ -86,8 +85,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

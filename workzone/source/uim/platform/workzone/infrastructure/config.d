@@ -6,16 +6,14 @@
 module uim.platform.workzone.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8084;
   string serviceName = "Workzone Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;
@@ -25,13 +23,11 @@ AppConfig loadConfig()
     config.host = host;
 
   auto portStr = environment.get("WZ_PORT", "");
-  if (portStr.length > 0)
-  {
+  if (portStr.length > 0) {
     // import std.conv : to;
     try
       config.port = portStr.to!ushort;
-    catch (Exception)
-    {
+    catch (Exception) {
     }
   }
 
