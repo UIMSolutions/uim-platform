@@ -22,12 +22,12 @@ import uim.platform.foundry.domain.services.app_lifecycle_manager;
 import uim.platform.foundry.domain.services.route_resolver;
 
 // Use Cases
-import uim.platform.foundry.application.usecases.manage_orgs;
-import uim.platform.foundry.application.usecases.manage_spaces;
-import uim.platform.foundry.application.usecases.manage_apps;
-import uim.platform.foundry.application.usecases.manage_services;
-import uim.platform.foundry.application.usecases.manage_routes;
-import uim.platform.foundry.application.usecases.manage_buildpacks;
+import uim.platform.foundry.application.usecases.manage.orgs;
+import uim.platform.foundry.application.usecases.manage.spaces;
+import uim.platform.foundry.application.usecases.manage.apps;
+import uim.platform.foundry.application.usecases.manage.services;
+import uim.platform.foundry.application.usecases.manage.routes;
+import uim.platform.foundry.application.usecases.manage.buildpacks;
 import uim.platform.foundry.application.usecases.monitor_apps;
 
 // Controllers
@@ -41,8 +41,7 @@ import uim.platform.foundry.presentation.http.monitoring;
 import uim.platform.foundry.presentation.http.health;
 
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryOrgRepository orgRepo;
   MemorySpaceRepository spaceRepo;
@@ -78,8 +77,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters (driven ports)
