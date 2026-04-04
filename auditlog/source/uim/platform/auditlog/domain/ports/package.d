@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.ports;
 
-public
-{
+public {
   import uim.platform.auditlog.domain.ports.repositories.audit_configs;
   import uim.platform.auditlog.domain.ports.repositories.audit_logs;
   import uim.platform.auditlog.domain.ports.repositories.config_change_logs;

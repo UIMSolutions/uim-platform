@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.abap_enviroment.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.abap_enviroment.infrastructure.persistence.memory.application_repo;
   import uim.platform.abap_enviroment.infrastructure.persistence.memory.business_role_repo;
   import uim.platform.abap_enviroment.infrastructure.persistence.memory.business_user_repo;

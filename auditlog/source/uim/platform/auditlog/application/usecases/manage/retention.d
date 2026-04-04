@@ -14,8 +14,7 @@ import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 import uim.platform.auditlog.application.dto;
 
 @safe:
-class ManageRetentionUseCase
-{
+class ManageRetentionUseCase : UIMUseCase {
   private RetentionPolicyRepository policyRepo;
 
   this(RetentionPolicyRepository policyRepo)

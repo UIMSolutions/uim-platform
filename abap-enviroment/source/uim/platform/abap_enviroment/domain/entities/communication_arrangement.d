@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Inbound/outbound communication endpoint configuration.
-struct CommunicationEndpoint
-{
+struct CommunicationEndpoint {
   string url;
   CommunicationProtocol protocol = CommunicationProtocol.httpRest;
   ushort port;
@@ -17,8 +16,7 @@ struct CommunicationEndpoint
 }
 
 /// Communication arrangement linking scenario, system, and credentials.
-struct CommunicationArrangement
-{
+struct CommunicationArrangement {
   CommunicationArrangementId id;
   TenantId tenantId;
   SystemInstanceId systemInstanceId;

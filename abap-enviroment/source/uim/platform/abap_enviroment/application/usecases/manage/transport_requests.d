@@ -15,7 +15,7 @@ import uim.platform.abap_enviroment.domain.types;
 // import std.uuid : randomUUID;
 
 /// Application service for transport request management (CTS-like).
-class ManageTransportRequestsUseCase {
+class ManageTransportRequestsUseCase : UIMUseCase {
   private TransportRequestRepository repo;
 
   this(TransportRequestRepository repo) {

@@ -8,16 +8,14 @@ module uim.platform.abap_enviroment.domain.entities.business_user;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Business role assignment carried by a user.
-struct RoleAssignment
-{
+struct RoleAssignment {
   BusinessRoleId roleId;
   string roleName;
   long assignedAt;
 }
 
 /// Business user in the ABAP environment.
-struct BusinessUser
-{
+struct BusinessUser {
   BusinessUserId id;
   TenantId tenantId;
   SystemInstanceId systemInstanceId;

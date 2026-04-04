@@ -9,8 +9,7 @@ import uim.platform.abap_enviroment.domain.entities.service_binding;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Port: outgoing - service binding persistence.
-interface ServiceBindingRepository
-{
+interface ServiceBindingRepository {
   ServiceBinding* findById(ServiceBindingId id);
   ServiceBinding[] findBySystem(SystemInstanceId systemId);
   ServiceBinding[] findByTenant(TenantId tenantId);

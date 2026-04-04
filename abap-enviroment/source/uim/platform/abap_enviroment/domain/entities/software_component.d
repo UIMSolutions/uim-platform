@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.software_component;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Commit entry in a software component's history.
-struct ComponentCommit
-{
+struct ComponentCommit {
   string commitId;
   string message;
   string author;
@@ -17,8 +16,7 @@ struct ComponentCommit
 }
 
 /// ABAP software component (git-managed development object container).
-struct SoftwareComponent
-{
+struct SoftwareComponent {
   SoftwareComponentId id;
   TenantId tenantId;
   SystemInstanceId systemInstanceId;

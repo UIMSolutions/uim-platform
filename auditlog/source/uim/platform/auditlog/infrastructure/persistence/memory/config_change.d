@@ -13,8 +13,7 @@ import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 // import std.array : array;
 
 @safe:
-class MemoryConfigChangeLogRepository : ConfigChangeLogRepository
-{
+class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
   private ConfigChangeLog[] store;
 
   bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId)

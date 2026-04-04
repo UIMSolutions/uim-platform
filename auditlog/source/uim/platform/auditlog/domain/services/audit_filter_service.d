@@ -15,8 +15,7 @@ mixin(ShowModule!());
 
 /// Domain service — provides search and filtering over audit logs.
 @safe:
-class AuditFilterService
-{
+class AuditFilterService {
   private AuditLogRepository repo;
 
   this(AuditLogRepository repo)

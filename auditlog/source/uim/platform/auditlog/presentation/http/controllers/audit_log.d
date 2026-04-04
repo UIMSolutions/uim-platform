@@ -21,8 +21,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class AuditLogController : SAPController
-{
+class AuditLogController : SAPController {
   private WriteAuditLogUseCase writeUC;
   private RetrieveAuditLogsUseCase retrieveUC;
 

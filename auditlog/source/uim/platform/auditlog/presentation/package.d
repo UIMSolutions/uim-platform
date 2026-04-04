@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.presentation;
 
-public
-{
+public {
   import uim.platform.auditlog.presentation.http;
 }

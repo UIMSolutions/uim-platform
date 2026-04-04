@@ -21,8 +21,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class BusinessRoleController : SAPController
-{
+class BusinessRoleController : SAPController {
   private ManageBusinessRolesUseCase uc;
 
   this(ManageBusinessRolesUseCase uc)

@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Individual task within a transport request.
-struct TransportTask
-{
+struct TransportTask {
   string taskId;
   string owner;
   TransportStatus status = TransportStatus.modifiable;
@@ -20,8 +19,7 @@ struct TransportTask
 }
 
 /// Transport request for managing changes between systems (CTS-like).
-struct TransportRequest
-{
+struct TransportRequest {
   TransportRequestId id;
   TenantId tenantId;
   SystemInstanceId sourceSystemId;

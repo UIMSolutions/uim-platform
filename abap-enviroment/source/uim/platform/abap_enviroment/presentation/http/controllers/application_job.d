@@ -21,8 +21,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class ApplicationJobController
-{
+class ApplicationJobController {
   private ManageApplicationJobsUseCase uc;
 
   this(ManageApplicationJobsUseCase uc)

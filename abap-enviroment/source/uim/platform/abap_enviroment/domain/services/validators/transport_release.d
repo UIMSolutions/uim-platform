@@ -9,15 +9,13 @@ import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Validation result for transport operations.
-struct TransportValidation
-{
+struct TransportValidation {
   bool valid;
   string[] errors;
 }
 
 /// Domain service: validates transport request release preconditions.
-struct TransportReleaseValidator
-{
+struct TransportReleaseValidator {
   /// Validate that a transport request can be released.
   static TransportValidation validateRelease(ref const TransportRequest request)
   {

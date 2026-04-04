@@ -14,8 +14,7 @@ mixin(ShowModule!());
 
 /// Port for persisting data access log records.
 @safe:
-interface DataAccessLogRepository
-{
+interface DataAccessLogRepository {
   DataAccessLog[] findByTenant(TenantId tenantId);
 
   bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId);

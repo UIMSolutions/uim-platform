@@ -20,8 +20,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ExportController : SAPController
-{
+class ExportController : SAPController {
   private ManageExportsUseCase useCase;
 
   this(ManageExportsUseCase useCase)

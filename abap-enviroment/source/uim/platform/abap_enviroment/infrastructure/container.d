@@ -39,8 +39,7 @@ module uim.platform.abap_enviroment.infrastructure.container;
 // import uim.platform.abap_enviroment.presentation.http.health;
 
 /// Dependency injection container - wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemorySystemInstanceRepository systemInstanceRepo;
   MemorySoftwareComponentRepository softwareComponentRepo;
@@ -74,8 +73,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

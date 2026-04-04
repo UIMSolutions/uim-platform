@@ -15,8 +15,7 @@ import uim.platform.auditlog.domain.ports.repositories.audit_configs;
 import uim.platform.auditlog.application.dto;
 
 @safe:
-class WriteAuditLogUseCase
-{
+class WriteAuditLogUseCase : UIMUseCase {
   private AuditLogRepository logRepo;
   private AuditConfigRepository configRepo;
 

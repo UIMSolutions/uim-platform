@@ -7,16 +7,14 @@ module uim.platform.auditlog.infrastructure.config;
 
 /// Service configuration.
 @safe:
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8085;
   string serviceName = "AuditLog Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;

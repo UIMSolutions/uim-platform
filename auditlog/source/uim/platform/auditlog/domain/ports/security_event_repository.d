@@ -14,8 +14,7 @@ mixin(ShowModule!());
 
 /// Port for persisting enriched security events.
 @safe:
-interface SecurityEventRepository
-{
+interface SecurityEventRepository {
   bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
   SecurityEvent findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
 

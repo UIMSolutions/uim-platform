@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.service_binding;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Exposed service endpoint from a binding.
-struct ExposedEndpoint
-{
+struct ExposedEndpoint {
   string path;
   string serviceName;
   string serviceVersion;
@@ -17,8 +16,7 @@ struct ExposedEndpoint
 }
 
 /// Service binding that exposes CDS/RAP services via OData/REST/SOAP.
-struct ServiceBinding
-{
+struct ServiceBinding {
   ServiceBindingId id;
   TenantId tenantId;
   SystemInstanceId systemInstanceId;

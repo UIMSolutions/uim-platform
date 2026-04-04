@@ -16,8 +16,7 @@ import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 import uim.platform.auditlog.application.dto;
 
 @safe:
-class WriteConfigChangeUseCase
-{
+class WriteConfigChangeUseCase : UIMUseCase {
   private AuditLogRepository auditRepo;
   private ConfigChangeLogRepository cclRepo;
 

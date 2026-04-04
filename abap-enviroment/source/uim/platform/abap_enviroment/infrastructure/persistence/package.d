@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.abap_enviroment.infrastructure.persistence;
 
-public
-{
+public {
   import uim.platform.abap_enviroment.infrastructure.persistence.memory;
 }

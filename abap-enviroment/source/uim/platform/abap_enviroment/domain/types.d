@@ -22,8 +22,7 @@ alias CommunicationScenarioId = string;
 // ─── System Instance ───
 
 /// ABAP system provisioning plan.
-enum SystemPlan
-{
+enum SystemPlan {
   standard,
   free_,
   development,
@@ -32,8 +31,7 @@ enum SystemPlan
 }
 
 /// Lifecycle status of an ABAP system instance.
-enum SystemStatus
-{
+enum SystemStatus {
   provisioning,
   active,
   updating,
@@ -44,8 +42,7 @@ enum SystemStatus
 }
 
 /// Software component type.
-enum ComponentType
-{
+enum ComponentType {
   developmentPackage,
   businessConfiguration,
   extensibility,
@@ -53,8 +50,7 @@ enum ComponentType
 }
 
 /// Status of a software component clone / pull.
-enum ComponentStatus
-{
+enum ComponentStatus {
   notCloned,
   cloning,
   cloned,
@@ -63,8 +59,7 @@ enum ComponentStatus
 }
 
 /// Branch strategy for a software component.
-enum BranchStrategy
-{
+enum BranchStrategy {
   main,
   release,
   feature,
@@ -74,15 +69,13 @@ enum BranchStrategy
 // ─── Communication ───
 
 /// Communication direction.
-enum CommunicationDirection
-{
+enum CommunicationDirection {
   inbound,
   outbound,
 }
 
 /// Communication protocol.
-enum CommunicationProtocol
-{
+enum CommunicationProtocol {
   httpRest,
   httpSoap,
   rfc,
@@ -91,8 +84,7 @@ enum CommunicationProtocol
 }
 
 /// Authentication method used in communication arrangements.
-enum CommunicationAuthMethod
-{
+enum CommunicationAuthMethod {
   basicAuthentication,
   oauth2ClientCredentials,
   oauth2SAMLBearerAssertion,
@@ -101,8 +93,7 @@ enum CommunicationAuthMethod
 }
 
 /// Status of a communication arrangement.
-enum ArrangementStatus
-{
+enum ArrangementStatus {
   active,
   inactive,
   error,
@@ -111,8 +102,7 @@ enum ArrangementStatus
 // ─── Service Binding ───
 
 /// Binding type for service exposure.
-enum BindingType
-{
+enum BindingType {
   odataV2,
   odataV4,
   soapHttp,
@@ -122,8 +112,7 @@ enum BindingType
 }
 
 /// Status of a service binding.
-enum BindingStatus
-{
+enum BindingStatus {
   active,
   inactive,
   deprecated_,
@@ -132,8 +121,7 @@ enum BindingStatus
 // ─── Users and Roles ───
 
 /// Business user status.
-enum UserStatus
-{
+enum UserStatus {
   active,
   inactive,
   locked,
@@ -141,8 +129,7 @@ enum UserStatus
 }
 
 /// Business role type.
-enum RoleType
-{
+enum RoleType {
   unrestricted,
   restricted,
   custom,
@@ -151,16 +138,14 @@ enum RoleType
 // ─── Transport Management ───
 
 /// Transport request type (CTS-like).
-enum TransportType
-{
+enum TransportType {
   workbench,
   customizing,
   transportOfCopies,
 }
 
 /// Transport request status.
-enum TransportStatus
-{
+enum TransportStatus {
   modifiable,
   released,
   imported,
@@ -170,8 +155,7 @@ enum TransportStatus
 // ─── Application Jobs ───
 
 /// Job scheduling frequency.
-enum JobFrequency
-{
+enum JobFrequency {
   once,
   hourly,
   daily,
@@ -180,8 +164,7 @@ enum JobFrequency
 }
 
 /// Application job execution status.
-enum JobStatus
-{
+enum JobStatus {
   scheduled,
   running,
   completed,

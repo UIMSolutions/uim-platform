@@ -20,8 +20,7 @@ import uim.platform.abap_enviroment;
 
 mixin(ShowModule!());
 @safe:
-class SoftwareComponentController : SAPController
-{
+class SoftwareComponentController : SAPController {
   private ManageSoftwareComponentsUseCase uc;
 
   this(ManageSoftwareComponentsUseCase uc)

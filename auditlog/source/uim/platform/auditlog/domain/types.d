@@ -20,8 +20,7 @@ alias UserId = string;
 alias ServiceId = string;
 
 /// Predefined SAP audit event categories.
-enum AuditCategory
-{
+enum AuditCategory {
   securityEvents, // audit.security-events
   configuration, // audit.configuration
   dataAccess, // audit.data-access
@@ -29,8 +28,7 @@ enum AuditCategory
 }
 
 /// Severity / log level of an audit event.
-enum AuditSeverity
-{
+enum AuditSeverity {
   info,
   warning,
   error,
@@ -38,8 +36,7 @@ enum AuditSeverity
 }
 
 /// Concrete action that triggered the audit entry.
-enum AuditAction
-{
+enum AuditAction {
   create,
   read_,
   update,
@@ -62,8 +59,7 @@ enum AuditAction
 }
 
 /// Outcome of the audited operation.
-enum AuditOutcome
-{
+enum AuditOutcome {
   success,
   failure,
   denied,
@@ -71,16 +67,14 @@ enum AuditOutcome
 }
 
 /// Retention policy status.
-enum RetentionStatus
-{
+enum RetentionStatus {
   active,
   inactive,
   expired,
 }
 
 /// Export job status.
-enum ExportStatus
-{
+enum ExportStatus {
   pending,
   inProgress,
   completed,
@@ -88,15 +82,13 @@ enum ExportStatus
 }
 
 /// Export output format.
-enum ExportFormat
-{
+enum ExportFormat {
   json,
   csv,
 }
 
 /// Audit log configuration status.
-enum ConfigStatus
-{
+enum ConfigStatus {
   enabled,
   disabled,
 }

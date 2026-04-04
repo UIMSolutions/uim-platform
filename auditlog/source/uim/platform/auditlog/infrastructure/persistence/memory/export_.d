@@ -13,8 +13,7 @@ import uim.platform.auditlog.domain.ports.repositories.export_jobs;
 // import std.array : array;
 
 @safe:
-class MemoryExportJobRepository : ExportJobRepository
-{
+class MemoryExportJobRepository : ExportJobRepository {
   private ExportJob[ExportJobId] store;
 
   bool existsById(ExportJobId id, TenantId tenantId)

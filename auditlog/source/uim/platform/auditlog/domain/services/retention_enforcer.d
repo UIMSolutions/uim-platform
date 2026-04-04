@@ -18,8 +18,7 @@ mixin(ShowModule!());
 
 /// Domain service — enforces retention policies by purging expired entries.
 @safe:
-class RetentionEnforcer
-{
+class RetentionEnforcer {
   private AuditLogRepository auditRepo;
   private RetentionPolicyRepository policyRepo;
   private SecurityEventRepository secRepo;

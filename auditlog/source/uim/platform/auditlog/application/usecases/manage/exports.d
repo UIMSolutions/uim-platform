@@ -18,8 +18,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class ManageExportsUseCase
-{
+class ManageExportsUseCase : UIMUseCase {
   private ExportJobRepository jobRepo;
   private AuditLogRepository auditRepo;
 

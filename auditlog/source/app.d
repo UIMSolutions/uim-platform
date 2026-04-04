@@ -18,8 +18,7 @@ import uim.platform.auditlog;
 
 @safe:
 
-void main()
-{
+void main() {
   auto config = loadConfig();
   auto container = buildContainer(config);
 

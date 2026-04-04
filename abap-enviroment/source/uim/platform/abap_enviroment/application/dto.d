@@ -14,8 +14,7 @@ import uim.platform.abap_enviroment.domain.entities.transport_request : Transpor
 
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 
@@ -27,8 +26,7 @@ struct CommandResult
 
 // ─── System Instance DTOs ───
 
-struct CreateSystemInstanceRequest
-{
+struct CreateSystemInstanceRequest {
   TenantId tenantId;
   SubaccountId subaccountId;
   string name;
@@ -43,8 +41,7 @@ struct CreateSystemInstanceRequest
   string stackVersion;
 }
 
-struct UpdateSystemInstanceRequest
-{
+struct UpdateSystemInstanceRequest {
   string description;
   string status; // lifecycle transition target
   ushort abapRuntimeSize;
@@ -54,8 +51,7 @@ struct UpdateSystemInstanceRequest
 
 // ─── Software Component DTOs ───
 
-struct CreateSoftwareComponentRequest
-{
+struct CreateSoftwareComponentRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   string name;
@@ -67,21 +63,18 @@ struct CreateSoftwareComponentRequest
   string namespace;
 }
 
-struct CloneSoftwareComponentRequest
-{
+struct CloneSoftwareComponentRequest {
   string branch;
   string commitId;
 }
 
-struct PullSoftwareComponentRequest
-{
+struct PullSoftwareComponentRequest {
   string commitId;
 }
 
 // ─── Communication Arrangement DTOs ───
 
-struct CreateCommunicationArrangementRequest
-{
+struct CreateCommunicationArrangementRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   CommunicationScenarioId scenarioId;
@@ -99,8 +92,7 @@ struct CreateCommunicationArrangementRequest
   CommunicationEndpoint[] outboundServices;
 }
 
-struct UpdateCommunicationArrangementRequest
-{
+struct UpdateCommunicationArrangementRequest {
   string description;
   string status; // "active", "inactive"
   string authMethod;
@@ -115,8 +107,7 @@ struct UpdateCommunicationArrangementRequest
 
 // ─── Service Binding DTOs ───
 
-struct CreateServiceBindingRequest
-{
+struct CreateServiceBindingRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   ServiceDefinitionId serviceDefinitionId;
@@ -126,8 +117,7 @@ struct CreateServiceBindingRequest
   ExposedEndpoint[] endpoints;
 }
 
-struct UpdateServiceBindingRequest
-{
+struct UpdateServiceBindingRequest {
   string description;
   string status; // "active", "inactive", "deprecated_"
   ExposedEndpoint[] endpoints;
@@ -135,8 +125,7 @@ struct UpdateServiceBindingRequest
 
 // ─── Business User DTOs ───
 
-struct CreateBusinessUserRequest
-{
+struct CreateBusinessUserRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   string username;
@@ -146,8 +135,7 @@ struct CreateBusinessUserRequest
   string[] roleIds;
 }
 
-struct UpdateBusinessUserRequest
-{
+struct UpdateBusinessUserRequest {
   string firstName;
   string lastName;
   string email;
@@ -157,8 +145,7 @@ struct UpdateBusinessUserRequest
 
 // ─── Business Role DTOs ───
 
-struct CreateBusinessRoleRequest
-{
+struct CreateBusinessRoleRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   string name;
@@ -168,8 +155,7 @@ struct CreateBusinessRoleRequest
   CatalogAssignment[] assignedCatalogs;
 }
 
-struct UpdateBusinessRoleRequest
-{
+struct UpdateBusinessRoleRequest {
   string description;
   string roleType;
   string[] restrictionTypes;
@@ -178,8 +164,7 @@ struct UpdateBusinessRoleRequest
 
 // ─── Transport Request DTOs ───
 
-struct CreateTransportRequestRequest
-{
+struct CreateTransportRequestRequest {
   TenantId tenantId;
   SystemInstanceId sourceSystemId;
   string targetSystemId;
@@ -188,8 +173,7 @@ struct CreateTransportRequestRequest
   string transportType; // "workbench", "customizing", "transportOfCopies"
 }
 
-struct AddTransportTaskRequest
-{
+struct AddTransportTaskRequest {
   string owner;
   string description;
   string[] objectList;
@@ -197,8 +181,7 @@ struct AddTransportTaskRequest
 
 // ─── Application Job DTOs ───
 
-struct CreateApplicationJobRequest
-{
+struct CreateApplicationJobRequest {
   TenantId tenantId;
   SystemInstanceId systemInstanceId;
   string name;
@@ -210,8 +193,7 @@ struct CreateApplicationJobRequest
   string[string] jobParameters;
 }
 
-struct UpdateApplicationJobRequest
-{
+struct UpdateApplicationJobRequest {
   string description;
   string frequency;
   long scheduledAt;

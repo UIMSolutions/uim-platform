@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog;
 
-public
-{
+public {
   import uim.platform.service;
 
   import uim.platform.auditlog.application;

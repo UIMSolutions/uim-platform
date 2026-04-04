@@ -16,8 +16,7 @@ import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 import uim.platform.auditlog.presentation.http.json_utils;
 
 @safe:
-class ConfigChangeController : SAPController
-{
+class ConfigChangeController : SAPController {
   private WriteConfigChangeUseCase useCase;
 
   this(WriteConfigChangeUseCase useCase)

@@ -6,16 +6,14 @@
 module uim.platform.abap_enviroment.infrastructure.config;
 
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8090;
   string serviceName = "ABAP Environment Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;

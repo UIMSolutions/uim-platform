@@ -17,8 +17,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class MemoryTransportRequestRepository : TransportRequestRepository
-{
+class MemoryTransportRequestRepository : TransportRequestRepository {
   private TransportRequest[TransportRequestId] store;
 
   TransportRequest* findById(TransportRequestId id)

@@ -8,15 +8,13 @@ module uim.platform.abap_enviroment.domain.services.validators.system_lifecycle;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Validation result for system lifecycle transitions.
-struct LifecycleValidation
-{
+struct LifecycleValidation {
   bool valid;
   string error;
 }
 
 /// Domain service: validates system instance state transitions.
-struct SystemLifecycleValidator
-{
+struct SystemLifecycleValidator {
   /// Check whether a status transition is permitted.
   static LifecycleValidation validateTransition(SystemStatus from, SystemStatus target)
   {

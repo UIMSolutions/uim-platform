@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.application_job;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Execution log entry for a job run.
-struct JobExecutionLog
-{
+struct JobExecutionLog {
   string executionId;
   JobStatus status;
   long startedAt;
@@ -19,8 +18,7 @@ struct JobExecutionLog
 }
 
 /// Application job definition and schedule.
-struct ApplicationJob
-{
+struct ApplicationJob {
   ApplicationJobId id;
   TenantId tenantId;
   SystemInstanceId systemInstanceId;

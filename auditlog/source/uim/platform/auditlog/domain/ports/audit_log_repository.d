@@ -14,8 +14,7 @@ mixin(ShowModule!());
 
 /// Port for persisting and querying audit log entries.
 @safe:
-interface AuditLogRepository
-{
+interface AuditLogRepository {
   AuditLogEntry[] findByTenant(TenantId tenantId);
 
   bool existsById(AuditLogId id, TenantId tenantId);

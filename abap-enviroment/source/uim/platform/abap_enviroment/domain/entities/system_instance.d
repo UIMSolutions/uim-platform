@@ -8,8 +8,7 @@ module uim.platform.abap_enviroment.domain.entities.system_instance;
 import uim.platform.abap_enviroment.domain.types;
 
 /// Provisioned ABAP Cloud system instance.
-struct SystemInstance
-{
+struct SystemInstance {
   SystemInstanceId id;
   TenantId tenantId;
   SubaccountId subaccountId;

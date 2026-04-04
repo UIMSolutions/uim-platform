@@ -42,8 +42,7 @@ mixin(ShowModule!());
 
 /// Dependency injection container — wires all layers together.
 @safe:
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemoryAuditLogRepository auditLogRepo;
   MemoryRetentionPolicyRepository retentionRepo;
@@ -75,8 +74,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters
