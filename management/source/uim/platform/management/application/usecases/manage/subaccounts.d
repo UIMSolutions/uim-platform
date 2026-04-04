@@ -13,8 +13,7 @@ import uim.platform.management.domain.ports.repositories.platform_events;
 import uim.platform.management.domain.types;
 
 /// Use case: manage subaccount lifecycle within global accounts.
-class ManageSubaccountsUseCase
-{
+class ManageSubaccountsUseCase : UIMUseCase {
   private SubaccountRepository repo;
   private PlatformEventRepository eventRepo;
 

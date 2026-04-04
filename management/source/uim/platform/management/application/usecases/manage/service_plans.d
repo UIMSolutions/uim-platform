@@ -11,8 +11,7 @@ import uim.platform.management.domain.ports.repositories.service_plans;
 import uim.platform.management.domain.types;
 
 /// Use case: manage the service plan catalog.
-class ManageServicePlansUseCase
-{
+class ManageServicePlansUseCase : UIMUseCase {
   private ServicePlanRepository repo;
 
   this(ServicePlanRepository repo)

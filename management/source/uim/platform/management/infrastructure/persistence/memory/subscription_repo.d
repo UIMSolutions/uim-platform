@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubscriptionRepository : SubscriptionRepository
-{
+class MemorySubscriptionRepository : SubscriptionRepository {
   private Subscription[SubscriptionId] store;
 
   Subscription findById(SubscriptionId id)

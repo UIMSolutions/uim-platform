@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.service_plan;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — service plan catalog persistence.
-interface ServicePlanRepository
-{
+interface ServicePlanRepository {
   ServicePlan findById(ServicePlanId id);
   ServicePlan[] findByService(string serviceName);
   ServicePlan[] findByCategory(ServicePlanCategory category);

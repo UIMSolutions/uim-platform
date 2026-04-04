@@ -14,8 +14,7 @@ mixin(ShowModule!());
 /// A subaccount is the primary organizational unit where cloud services
 /// and applications are deployed. It is always part of a global account
 /// and optionally part of a directory.
-struct Subaccount
-{
+struct Subaccount {
   SubaccountId id;
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId; // empty if directly under global account

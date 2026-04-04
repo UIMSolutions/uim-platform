@@ -16,8 +16,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryDirectoryRepository : DirectoryRepository
-{
+class MemoryDirectoryRepository : DirectoryRepository {
   private Directory[DirectoryId] store;
 
   Directory findById(DirectoryId id)

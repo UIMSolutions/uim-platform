@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.infrastructure.persistence.memory;
 
-public
-{
+public {
   import uim.platform.management.infrastructure.persistence.memory.directory_repo;
   import uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
   import uim.platform.management.infrastructure.persistence.memory.environment_instance_repo;

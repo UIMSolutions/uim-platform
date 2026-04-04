@@ -13,8 +13,7 @@ import uim.platform.management.domain.ports.repositories.platform_events;
 import uim.platform.management.domain.types;
 
 /// Use case: manage SaaS application subscriptions.
-class ManageSubscriptionsUseCase
-{
+class ManageSubscriptionsUseCase : UIMUseCase {
   private SubscriptionRepository repo;
   private PlatformEventRepository eventRepo;
 

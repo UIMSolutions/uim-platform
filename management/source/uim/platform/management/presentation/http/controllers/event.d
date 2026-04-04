@@ -17,8 +17,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EventController
-{
+class EventController {
   private QueryPlatformEventsUseCase uc;
 
   this(QueryPlatformEventsUseCase uc)
@@ -82,8 +81,7 @@ class EventController
   }
 }
 
-private Json serializeEvent(ref PlatformEvent ev)
-{
+private Json serializeEvent(ref PlatformEvent ev) {
   auto j = Json.emptyObject;
   j["id"] = Json(ev.id);
   j["globalAccountId"] = Json(ev.globalAccountId);
@@ -102,8 +100,7 @@ private Json serializeEvent(ref PlatformEvent ev)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

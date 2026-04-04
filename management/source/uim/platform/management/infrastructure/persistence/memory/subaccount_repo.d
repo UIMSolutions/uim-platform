@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemorySubaccountRepository : SubaccountRepository
-{
+class MemorySubaccountRepository : SubaccountRepository {
   private Subaccount[SubaccountId] store;
 
   Subaccount findById(SubaccountId id)

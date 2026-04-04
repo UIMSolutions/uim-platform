@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A directory is a grouping entity within a global account for
 /// organizing subaccounts and managing entitlements/authorizations.
-struct Directory
-{
+struct Directory {
   DirectoryId id;
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId; // empty if root-level

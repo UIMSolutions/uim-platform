@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class DirectoryController : SAPController
-{
+class DirectoryController : SAPController {
   private ManageDirectoriesUseCase uc;
 
   this(ManageDirectoriesUseCase uc)
@@ -150,8 +149,7 @@ class DirectoryController : SAPController
   }
 }
 
-private Json serializeDirectory(ref Directory d)
-{
+private Json serializeDirectory(ref Directory d) {
   auto j = Json.emptyObject;
   j["id"] = Json(d.id);
   j["globalAccountId"] = Json(d.globalAccountId);
@@ -171,8 +169,7 @@ private Json serializeDirectory(ref Directory d)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

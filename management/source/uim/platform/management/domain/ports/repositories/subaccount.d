@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — subaccount persistence.
-interface SubaccountRepository
-{
+interface SubaccountRepository {
   Subaccount findById(SubaccountId id);
   Subaccount findBySubdomain(string subdomain);
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId);

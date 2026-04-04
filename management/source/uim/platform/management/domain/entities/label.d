@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A label is a key-value tag attached to a BTP resource for
 /// organizing and categorizing global accounts, directories, subaccounts, etc.
-struct Label
-{
+struct Label {
   LabelId id;
   LabeledResourceType resourceType;
   string resourceId; // ID of the labeled resource

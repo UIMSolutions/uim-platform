@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class GlobalAccountController : SAPController
-{
+class GlobalAccountController : SAPController {
   private ManageGlobalAccountsUseCase uc;
 
   this(ManageGlobalAccountsUseCase uc)
@@ -181,8 +180,7 @@ class GlobalAccountController : SAPController
   }
 }
 
-private Json serializeGlobalAccount(ref GlobalAccount ga)
-{
+private Json serializeGlobalAccount(ref GlobalAccount ga) {
   auto j = Json.emptyObject;
   j["id"] = Json(ga.id);
   j["displayName"] = Json(ga.displayName);
@@ -205,8 +203,7 @@ private Json serializeGlobalAccount(ref GlobalAccount ga)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

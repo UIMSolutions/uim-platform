@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryGlobalAccountRepository : GlobalAccountRepository
-{
+class MemoryGlobalAccountRepository : GlobalAccountRepository {
   private GlobalAccount[GlobalAccountId] store;
 
   GlobalAccount findById(GlobalAccountId id)

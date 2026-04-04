@@ -16,8 +16,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class MemoryPlatformEventRepository : PlatformEventRepository
-{
+class MemoryPlatformEventRepository : PlatformEventRepository {
   private PlatformEvent[PlatformEventId] store;
 
   PlatformEvent findById(PlatformEventId id)

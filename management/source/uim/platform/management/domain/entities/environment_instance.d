@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// An environment instance represents a provisioned runtime environment
 /// (Cloud Foundry org, Kyma cluster, ABAP system, etc.) within a subaccount.
-struct EnvironmentInstance
-{
+struct EnvironmentInstance {
   EnvironmentInstanceId id;
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;

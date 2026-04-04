@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EntitlementController
-{
+class EntitlementController {
   private ManageEntitlementsUseCase uc;
 
   this(ManageEntitlementsUseCase uc)
@@ -165,8 +164,7 @@ class EntitlementController
   }
 }
 
-private Json serializeEntitlement(ref Entitlement e)
-{
+private Json serializeEntitlement(ref Entitlement e) {
   auto j = Json.emptyObject;
   j["id"] = Json(e.id);
   j["globalAccountId"] = Json(e.globalAccountId);
@@ -189,8 +187,7 @@ private Json serializeEntitlement(ref Entitlement e)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

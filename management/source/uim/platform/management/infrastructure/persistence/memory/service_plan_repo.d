@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryServicePlanRepository : ServicePlanRepository
-{
+class MemoryServicePlanRepository : ServicePlanRepository {
   private ServicePlan[ServicePlanId] store;
 
   ServicePlan findById(ServicePlanId id)

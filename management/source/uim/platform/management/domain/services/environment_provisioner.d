@@ -10,8 +10,7 @@ import uim.platform.management.domain.entities.subaccount;
 import uim.platform.management.domain.types;
 
 /// Domain service: validates environment provisioning constraints.
-class EnvironmentProvisioner
-{
+class EnvironmentProvisioner {
   /// Validate that an environment can be provisioned in the given subaccount.
   ProvisionValidation validateProvisioning(EnvironmentType envType,
       string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances)
@@ -62,8 +61,7 @@ class EnvironmentProvisioner
 }
 
 /// Result of provisioning validation.
-struct ProvisionValidation
-{
+struct ProvisionValidation {
   bool valid;
   string reason;
 }

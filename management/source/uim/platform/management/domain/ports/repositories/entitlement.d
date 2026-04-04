@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.entitlement;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — entitlement persistence.
-interface EntitlementRepository
-{
+interface EntitlementRepository {
   Entitlement findById(EntitlementId id);
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Entitlement[] findBySubaccount(SubaccountId subaccountId);

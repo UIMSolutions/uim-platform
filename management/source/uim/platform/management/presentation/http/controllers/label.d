@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class LabelController
-{
+class LabelController {
   private ManageLabelsUseCase uc;
 
   this(ManageLabelsUseCase uc)
@@ -141,8 +140,7 @@ class LabelController
   }
 }
 
-private Json serializeLabel(ref Label l)
-{
+private Json serializeLabel(ref Label l) {
   auto j = Json.emptyObject;
   j["id"] = Json(l.id);
   j["resourceType"] = Json(enumStr(l.resourceType));
@@ -155,8 +153,7 @@ private Json serializeLabel(ref Label l)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

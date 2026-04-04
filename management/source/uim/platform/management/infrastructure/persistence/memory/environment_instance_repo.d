@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository
-{
+class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
   private EnvironmentInstance[EnvironmentInstanceId] store;
 
   EnvironmentInstance findById(EnvironmentInstanceId id)

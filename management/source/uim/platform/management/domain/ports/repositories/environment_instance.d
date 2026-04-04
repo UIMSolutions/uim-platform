@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.environment_instance;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — environment instance persistence.
-interface EnvironmentInstanceRepository
-{
+interface EnvironmentInstanceRepository {
   EnvironmentInstance findById(EnvironmentInstanceId id);
   EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId);
   EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType);

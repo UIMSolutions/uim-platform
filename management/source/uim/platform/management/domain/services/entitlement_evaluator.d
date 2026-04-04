@@ -14,8 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// Domain service: evaluates entitlement quota constraints,
 /// checks availability of service plan quotas.
-class EntitlementEvaluator
-{
+class EntitlementEvaluator {
   /// Check if a quota assignment is valid.
   QuotaValidation validateQuotaAssignment(int requestedQuota,
       int currentlyAssigned, int maxAvailable, bool unlimited)
@@ -60,8 +59,7 @@ class EntitlementEvaluator
 }
 
 /// Result of quota validation.
-struct QuotaValidation
-{
+struct QuotaValidation {
   bool valid;
   string reason;
 }

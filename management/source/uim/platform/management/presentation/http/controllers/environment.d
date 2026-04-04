@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EnvironmentController : SAPController
-{
+class EnvironmentController : SAPController {
   private ManageEnvironmentInstancesUseCase uc;
 
   this(ManageEnvironmentInstancesUseCase uc)
@@ -153,8 +152,7 @@ class EnvironmentController : SAPController
   }
 }
 
-private Json serializeEnvironment(ref EnvironmentInstance inst)
-{
+private Json serializeEnvironment(ref EnvironmentInstance inst) {
   auto j = Json.emptyObject;
   j["id"] = Json(inst.id);
   j["subaccountId"] = Json(inst.subaccountId);
@@ -178,8 +176,7 @@ private Json serializeEnvironment(ref EnvironmentInstance inst)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

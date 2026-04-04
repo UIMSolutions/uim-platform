@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubaccountController : SAPController
-{
+class SubaccountController : SAPController {
   private ManageSubaccountsUseCase uc;
 
   this(ManageSubaccountsUseCase uc)
@@ -210,8 +209,7 @@ class SubaccountController : SAPController
   }
 }
 
-private Json serializeSubaccount(ref Subaccount s)
-{
+private Json serializeSubaccount(ref Subaccount s) {
   auto j = Json.emptyObject;
   j["id"] = Json(s.id);
   j["globalAccountId"] = Json(s.globalAccountId);
@@ -233,8 +231,7 @@ private Json serializeSubaccount(ref Subaccount s)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

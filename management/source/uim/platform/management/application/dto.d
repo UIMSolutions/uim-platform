@@ -14,8 +14,7 @@ mixin(ShowModule!());
 @safe:
 /// --- Command result ---
 
-struct CommandResult
-{
+struct CommandResult {
   bool success;
   string id;
   string error;
@@ -23,8 +22,7 @@ struct CommandResult
 
 /// --- Global Account DTOs ---
 
-struct CreateGlobalAccountRequest
-{
+struct CreateGlobalAccountRequest {
   string displayName;
   string description;
   string contractNumber;
@@ -39,8 +37,7 @@ struct CreateGlobalAccountRequest
   string[string] customProperties;
 }
 
-struct UpdateGlobalAccountRequest
-{
+struct UpdateGlobalAccountRequest {
   string displayName;
   string description;
   string costCenter;
@@ -50,8 +47,7 @@ struct UpdateGlobalAccountRequest
 
 /// --- Directory DTOs ---
 
-struct CreateDirectoryRequest
-{
+struct CreateDirectoryRequest {
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId;
   string displayName;
@@ -64,8 +60,7 @@ struct CreateDirectoryRequest
   string[string] customProperties;
 }
 
-struct UpdateDirectoryRequest
-{
+struct UpdateDirectoryRequest {
   string displayName;
   string description;
   string[string] labels;
@@ -74,8 +69,7 @@ struct UpdateDirectoryRequest
 
 /// --- Subaccount DTOs ---
 
-struct CreateSubaccountRequest
-{
+struct CreateSubaccountRequest {
   GlobalAccountId globalAccountId;
   DirectoryId parentDirectoryId;
   string displayName;
@@ -90,8 +84,7 @@ struct CreateSubaccountRequest
   string[string] customProperties;
 }
 
-struct UpdateSubaccountRequest
-{
+struct UpdateSubaccountRequest {
   string displayName;
   string description;
   string usage;
@@ -101,15 +94,13 @@ struct UpdateSubaccountRequest
   string[string] customProperties;
 }
 
-struct MoveSubaccountRequest
-{
+struct MoveSubaccountRequest {
   DirectoryId targetDirectoryId; // empty = move to global account root
 }
 
 /// --- Entitlement DTOs ---
 
-struct AssignEntitlementRequest
-{
+struct AssignEntitlementRequest {
   GlobalAccountId globalAccountId;
   DirectoryId directoryId;
   SubaccountId subaccountId;
@@ -122,16 +113,14 @@ struct AssignEntitlementRequest
   string assignedBy;
 }
 
-struct UpdateEntitlementQuotaRequest
-{
+struct UpdateEntitlementQuotaRequest {
   int quotaAssigned;
   bool unlimited;
 }
 
 /// --- Environment Instance DTOs ---
 
-struct CreateEnvironmentInstanceRequest
-{
+struct CreateEnvironmentInstanceRequest {
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
   string name;
@@ -147,8 +136,7 @@ struct CreateEnvironmentInstanceRequest
   string[string] labels;
 }
 
-struct UpdateEnvironmentInstanceRequest
-{
+struct UpdateEnvironmentInstanceRequest {
   string description;
   int memoryQuotaMb;
   int routeQuota;
@@ -159,8 +147,7 @@ struct UpdateEnvironmentInstanceRequest
 
 /// --- Subscription DTOs ---
 
-struct CreateSubscriptionRequest
-{
+struct CreateSubscriptionRequest {
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;
   string appName;
@@ -170,16 +157,14 @@ struct CreateSubscriptionRequest
   string[string] labels;
 }
 
-struct UpdateSubscriptionRequest
-{
+struct UpdateSubscriptionRequest {
   string planName;
   string[string] parameters;
 }
 
 /// --- Service Plan DTOs ---
 
-struct CreateServicePlanRequest
-{
+struct CreateServicePlanRequest {
   string serviceName;
   string serviceDisplayName;
   string planName;
@@ -197,8 +182,7 @@ struct CreateServicePlanRequest
   string[string] metadata;
 }
 
-struct UpdateServicePlanRequest
-{
+struct UpdateServicePlanRequest {
   string planDisplayName;
   string description;
   string[] availableRegions;
@@ -210,8 +194,7 @@ struct UpdateServicePlanRequest
 
 /// --- Label DTOs ---
 
-struct CreateLabelRequest
-{
+struct CreateLabelRequest {
   string resourceType; // "globalAccount", "directory", "subaccount"
   string resourceId;
   string key;
@@ -219,15 +202,13 @@ struct CreateLabelRequest
   string createdBy;
 }
 
-struct UpdateLabelRequest
-{
+struct UpdateLabelRequest {
   string[] values;
 }
 
 /// --- Platform Event DTOs ---
 
-struct QueryEventsRequest
-{
+struct QueryEventsRequest {
   GlobalAccountId globalAccountId;
   SubaccountId subaccountId;
   string category;
@@ -237,8 +218,7 @@ struct QueryEventsRequest
 
 /// --- Dashboard/overview DTOs ---
 
-struct AccountOverview
-{
+struct AccountOverview {
   long totalSubaccounts;
   long activeSubaccounts;
   long totalDirectories;

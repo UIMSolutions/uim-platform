@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.global_account;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — global account persistence.
-interface GlobalAccountRepository
-{
+interface GlobalAccountRepository {
   GlobalAccount findById(GlobalAccountId id);
   GlobalAccount[] findByStatus(GlobalAccountStatus status);
   GlobalAccount[] findAll();

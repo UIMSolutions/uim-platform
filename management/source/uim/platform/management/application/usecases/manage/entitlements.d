@@ -12,8 +12,7 @@ import uim.platform.management.domain.services.entitlement_evaluator;
 import uim.platform.management.domain.types;
 
 /// Use case: manage service plan entitlements and quota assignments.
-class ManageEntitlementsUseCase
-{
+class ManageEntitlementsUseCase : UIMUseCase {
   private EntitlementRepository repo;
   private EntitlementEvaluator evaluator;
 

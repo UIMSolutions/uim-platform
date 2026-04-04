@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A subscription represents a SaaS application that a subaccount
 /// has subscribed to (multitenant application consumption).
-struct Subscription
-{
+struct Subscription {
   SubscriptionId id;
   SubaccountId subaccountId;
   GlobalAccountId globalAccountId;

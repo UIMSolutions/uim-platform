@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// An entitlement represents the assignment of a service plan's quota
 /// to a global account, directory, or subaccount.
-struct Entitlement
-{
+struct Entitlement {
   EntitlementId id;
   GlobalAccountId globalAccountId;
   DirectoryId directoryId; // optional — directory-level entitlement

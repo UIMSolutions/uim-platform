@@ -11,8 +11,7 @@ import uim.platform.management.domain.ports.repositories.labels;
 import uim.platform.management.domain.types;
 
 /// Use case: manage labels (tags) on BTP resources.
-class ManageLabelsUseCase
-{
+class ManageLabelsUseCase : UIMUseCase {
   private LabelRepository repo;
 
   this(LabelRepository repo)

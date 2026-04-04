@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A service plan represents an available service offering in the
 /// BTP service marketplace with its pricing and capabilities.
-struct ServicePlan
-{
+struct ServicePlan {
   ServicePlanId id;
   string serviceName; // e.g. "xsuaa", "hana-cloud", "connectivity"
   string serviceDisplayName;

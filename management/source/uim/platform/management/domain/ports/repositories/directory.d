@@ -9,8 +9,7 @@ import uim.platform.management.domain.entities.directory;
 import uim.platform.management.domain.types;
 
 /// Port: outgoing — directory persistence.
-interface DirectoryRepository
-{
+interface DirectoryRepository {
   Directory findById(DirectoryId id);
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Directory[] findByParent(DirectoryId parentDirectoryId);

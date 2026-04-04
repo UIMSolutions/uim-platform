@@ -13,8 +13,7 @@ import uim.platform.management.domain.ports.repositories.platform_events;
 import uim.platform.management.domain.types;
 
 /// Use case: manage global account lifecycle.
-class ManageGlobalAccountsUseCase
-{
+class ManageGlobalAccountsUseCase : UIMUseCase {
   private GlobalAccountRepository repo;
   private PlatformEventRepository eventRepo;
 
@@ -197,15 +196,13 @@ class ManageGlobalAccountsUseCase
   }
 }
 
-private long clockSeconds()
-{
+private long clockSeconds() {
   import core.time : MonoTime;
 
   return MonoTime.currTime.ticks / 10_000_000;
 }
 
-private LicenseType parseLicenseType(string s)
-{
+private LicenseType parseLicenseType(string s) {
   switch (s)
   {
   case "enterprise":

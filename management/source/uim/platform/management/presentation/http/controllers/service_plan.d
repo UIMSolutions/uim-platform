@@ -18,8 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class ServicePlanController : SAPController
-{
+class ServicePlanController : SAPController {
   private ManageServicePlansUseCase uc;
 
   this(ManageServicePlansUseCase uc)
@@ -163,8 +162,7 @@ class ServicePlanController : SAPController
   }
 }
 
-private Json serializeServicePlan(ref ServicePlan p)
-{
+private Json serializeServicePlan(ref ServicePlan p) {
   auto j = Json.emptyObject;
   j["id"] = Json(p.id);
   j["serviceName"] = Json(p.serviceName);
@@ -188,8 +186,7 @@ private Json serializeServicePlan(ref ServicePlan p)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

@@ -13,8 +13,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 /// Extract a string field from a Json object.
-string jsonStr(Json j, string key)
-{
+string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;
@@ -26,8 +25,7 @@ string jsonStr(Json j, string key)
 }
 
 /// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false)
-{
+bool jsonBool(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -39,8 +37,7 @@ bool jsonBool(Json j, string key, bool default_ = false)
 }
 
 /// Extract a long field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0)
-{
+long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -52,14 +49,12 @@ long jsonLong(Json j, string key, long default_ = 0)
 }
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0)
-{
+int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int) jsonLong(j, key, default_);
 }
 
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key)
-{
+string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;
@@ -76,8 +71,7 @@ string[] jsonStrArray(Json j, string key)
 }
 
 /// Extract a string-to-string map from a Json object.
-string[string] jsonStrMap(Json j, string key)
-{
+string[string] jsonStrMap(Json j, string key) {
   if (!j.isObject)
     return (string[string]).init;
   auto v = key in j;
@@ -94,8 +88,7 @@ string[string] jsonStrMap(Json j, string key)
 }
 
 /// Write an error response.
-void writeError(scope HTTPServerResponse res, int status, string message)
-{
+void writeError(scope HTTPServerResponse res, int status, string message) {
   auto j = Json.emptyObject;
   j["error"] = Json(message);
   j["status"] = Json(cast(long) status);
@@ -103,8 +96,7 @@ void writeError(scope HTTPServerResponse res, int status, string message)
 }
 
 /// Extract the last path segment as ID from a URI.
-string extractId(string uri)
-{
+string extractId(string uri) {
   // import std.string : lastIndexOf;
 
   auto qIdx = uri.lastIndexOf('?');
@@ -116,8 +108,7 @@ string extractId(string uri)
 }
 
 /// Serialize a string-to-string map to Json.
-Json serializeStrMap(string[string] map)
-{
+Json serializeStrMap(string[string] map) {
   auto j = Json.emptyObject;
   foreach (k, v; map)
     j[k] = Json(v);
@@ -125,8 +116,7 @@ Json serializeStrMap(string[string] map)
 }
 
 /// Serialize a string array to Json.
-Json serializeStrArray(string[] arr)
-{
+Json serializeStrArray(string[] arr) {
   auto j = Json.emptyArray;
   foreach (s; arr)
     j ~= Json(s);

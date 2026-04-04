@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryLabelRepository : LabelRepository
-{
+class MemoryLabelRepository : LabelRepository {
   private Label[LabelId] store;
 
   Label findById(LabelId id)

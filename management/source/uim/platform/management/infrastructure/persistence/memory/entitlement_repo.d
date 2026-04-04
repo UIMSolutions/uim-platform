@@ -17,8 +17,7 @@ import uim.platform.management;
 mixin(ShowModule!());
 @safe:
 
-class MemoryEntitlementRepository : EntitlementRepository
-{
+class MemoryEntitlementRepository : EntitlementRepository {
   private Entitlement[EntitlementId] store;
 
   Entitlement findById(EntitlementId id)

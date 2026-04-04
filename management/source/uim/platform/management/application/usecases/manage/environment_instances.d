@@ -14,8 +14,7 @@ import uim.platform.management.domain.services.environment_provisioner;
 import uim.platform.management.domain.types;
 
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
-class ManageEnvironmentInstancesUseCase
-{
+class ManageEnvironmentInstancesUseCase : UIMUseCase {
   private EnvironmentInstanceRepository repo;
   private SubaccountRepository subaccountRepo;
   private EnvironmentProvisioner provisioner;

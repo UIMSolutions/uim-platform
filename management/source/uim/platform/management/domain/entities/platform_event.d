@@ -13,8 +13,7 @@ mixin(ShowModule!());
 @safe:
 /// A platform event represents an auditable action or state change
 /// on a BTP resource (subaccount created, entitlement changed, etc.).
-struct PlatformEvent
-{
+struct PlatformEvent {
   PlatformEventId id;
   GlobalAccountId globalAccountId;
   SubaccountId subaccountId; // optional — if subaccount-scoped

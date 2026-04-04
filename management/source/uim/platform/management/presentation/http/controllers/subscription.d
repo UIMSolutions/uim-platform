@@ -19,8 +19,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubscriptionController : SAPController
-{
+class SubscriptionController : SAPController {
   private ManageSubscriptionsUseCase uc;
 
   this(ManageSubscriptionsUseCase uc)
@@ -142,8 +141,7 @@ class SubscriptionController : SAPController
   }
 }
 
-private Json serializeSubscription(ref Subscription s)
-{
+private Json serializeSubscription(ref Subscription s) {
   auto j = Json.emptyObject;
   j["id"] = Json(s.id);
   j["subaccountId"] = Json(s.subaccountId);
@@ -163,8 +161,7 @@ private Json serializeSubscription(ref Subscription s)
   return j;
 }
 
-private string enumStr(E)(E val)
-{
+private string enumStr(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

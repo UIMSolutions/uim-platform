@@ -16,8 +16,7 @@ mixin(ShowModule!());
 
 @safe:
 /// Use case: query platform events for audit and monitoring.
-class QueryPlatformEventsUseCase
-{
+class QueryPlatformEventsUseCase : UIMUseCase {
   private PlatformEventRepository repo;
 
   this(PlatformEventRepository repo)

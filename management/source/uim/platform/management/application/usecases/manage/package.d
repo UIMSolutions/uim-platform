@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage;
 
-public
-{
+public {
   import uim.platform.management.application.usecases.manage.directories;
   import uim.platform.management.application.usecases.manage.entitlements;
   import uim.platform.management.application.usecases.manage.environment_instances;
