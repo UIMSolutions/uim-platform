@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.data_retrieval;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage_data_retrievals;
+import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_retrieval_request;

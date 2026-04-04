@@ -11,7 +11,7 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.data.attribute_recommendation.application.usecases.manage_deployments;
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.deployments;
 // import uim.platform.data.attribute_recommendation.application.dto;
 // import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 // import uim.platform.data.attribute_recommendation.domain.types;

@@ -18,14 +18,14 @@ import uim.platform.data.privacy.infrastructure.persistence.memory.consent_recor
 import uim.platform.data.privacy.infrastructure.persistence.memory.data_retrieval_repo;
 
 // Use Cases
-import uim.platform.data.privacy.application.usecases.manage_data_subjects;
-import uim.platform.data.privacy.application.usecases.manage_personal_data_models;
-import uim.platform.data.privacy.application.usecases.manage_deletion_requests;
-import uim.platform.data.privacy.application.usecases.manage_blocking_requests;
-import uim.platform.data.privacy.application.usecases.manage_legal_grounds;
-import uim.platform.data.privacy.application.usecases.manage_retention_rules;
-import uim.platform.data.privacy.application.usecases.manage_consent_records;
-import uim.platform.data.privacy.application.usecases.manage_data_retrievals;
+import uim.platform.data.privacy.application.usecases.manage.data_subjects;
+import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
+import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
+import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
+import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
+import uim.platform.data.privacy.application.usecases.manage.retention_rules;
+import uim.platform.data.privacy.application.usecases.manage.consent_records;
+import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 
 // Controllers
 import uim.platform.data.privacy.presentation.http.data_subject;

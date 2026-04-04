@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.retention_rule;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage_retention_rules;
+import uim.platform.data.privacy.application.usecases.manage.retention_rules;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.retention_rule;

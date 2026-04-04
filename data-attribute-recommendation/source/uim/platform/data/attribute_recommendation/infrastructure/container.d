@@ -26,10 +26,10 @@ import uim.platform.data.attribute_recommendation.domain.services.model_trainer;
 import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
 
 // Use cases
-import uim.platform.data.attribute_recommendation.application.usecases.manage_datasets;
-import uim.platform.data.attribute_recommendation.application.usecases.manage_data_records;
-import uim.platform.data.attribute_recommendation.application.usecases.manage_models;
-import uim.platform.data.attribute_recommendation.application.usecases.manage_deployments;
+import uim.platform.data.attribute_recommendation.application.usecases.manage.datasets;
+import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
+import uim.platform.data.attribute_recommendation.application.usecases.manage.models;
+import uim.platform.data.attribute_recommendation.application.usecases.manage.deployments;
 import uim.platform.data.attribute_recommendation.application.usecases.process_inference;
 import uim.platform.data.attribute_recommendation.application.usecases.monitor_training;
 

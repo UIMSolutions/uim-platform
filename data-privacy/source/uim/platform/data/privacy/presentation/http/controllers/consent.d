@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.consent;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage_consent_records;
+import uim.platform.data.privacy.application.usecases.manage.consent_records;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;

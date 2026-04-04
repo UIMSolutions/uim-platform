@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.blocking;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage_blocking_requests;
+import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.blocking_request;

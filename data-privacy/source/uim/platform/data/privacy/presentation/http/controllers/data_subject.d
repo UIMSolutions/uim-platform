@@ -10,7 +10,7 @@ module uim.platform.data.privacy.presentation.http.data_subject;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage_data_subjects;
+import uim.platform.data.privacy.application.usecases.manage.data_subjects;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_subject;

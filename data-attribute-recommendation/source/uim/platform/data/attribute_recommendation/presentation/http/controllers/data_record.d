@@ -10,7 +10,7 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers.
 // import vibe.data.json;
 // // import std.conv : to;
 // 
-// import uim.platform.data.attribute_recommendation.application.usecases.manage_data_records;
+// import uim.platform.data.attribute_recommendation.application.usecases.manage.data_records;
 // import uim.platform.data.attribute_recommendation.application.dto;
 // import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 // import uim.platform.data.attribute_recommendation.domain.types;
