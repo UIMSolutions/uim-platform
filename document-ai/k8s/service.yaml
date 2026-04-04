@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-ai
+  labels:
+    app: document-ai
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: document-ai
+  ports:
+  - name: http
+    port: 8096
+    targetPort: 8096
+    protocol: TCP

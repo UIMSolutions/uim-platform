@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-ai-config
+  labels:
+    app: document-ai
+    part-of: uim-platform
+data:
+  DOCAI_HOST: "0.0.0.0"
+  DOCAI_PORT: "8096"

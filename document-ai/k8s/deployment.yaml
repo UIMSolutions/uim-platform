@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-ai
+  labels:
+    app: document-ai
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-ai
+  template:
+    metadata:
+      labels:
+        app: document-ai
+    spec:
+      containers:
+      - name: document-ai
+        image: uim-platform/document-ai:latest
+        ports:
+        - containerPort: 8096
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: document-ai-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false

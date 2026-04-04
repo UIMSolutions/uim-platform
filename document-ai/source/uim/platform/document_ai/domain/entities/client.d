@@ -3,10 +3,24 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.html_repository.infrastructure.persistence;
+module uim.platform.document_ai.domain.entities.client;
 
-public {
-  import uim.platform.html_repository.infrastructure.persistence.files;
-  import uim.platform.html_repository.infrastructure.persistence.memory;
-  import uim.platform.html_repository.infrastructure.persistence.mongo;
+import uim.platform.document_ai.domain.types;
+
+struct ClientLabel {
+  string key;
+  string value;
+}
+
+struct Client {
+  ClientId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  int documentQuota;
+  int documentsProcessed;
+  bool dataFeedbackEnabled;
+  ClientLabel[] labels;
+  long createdAt;
+  long modifiedAt;
 }
