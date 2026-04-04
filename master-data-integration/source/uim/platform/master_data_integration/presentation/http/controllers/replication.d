@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.presentation.http.replication;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.master_data_integration.application.usecases.manage_replication_jobs;
+import uim.platform.master_data_integration.application.usecases.manage.replication_jobs;
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.replication_job;
 import uim.platform.master_data_integration.domain.types;

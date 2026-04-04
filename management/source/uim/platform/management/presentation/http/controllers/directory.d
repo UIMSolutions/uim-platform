@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.directory;
 // import vibe.http.router;
 // import vibe.data.json;
 // 
-// import uim.platform.management.application.usecases.manage_directories;
+// import uim.platform.management.application.usecases.manage.directories;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.directory;
 // import uim.platform.management.domain.types;

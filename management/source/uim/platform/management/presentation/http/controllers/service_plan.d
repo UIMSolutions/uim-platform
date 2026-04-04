@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.service_plan;
 // import vibe.http.router;
 // import vibe.data.json;
 // 
-// import uim.platform.management.application.usecases.manage_service_plans;
+// import uim.platform.management.application.usecases.manage.service_plans;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.service_plan;
 // import uim.platform.management.domain.types;

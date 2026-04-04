@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.presentation.http.data_model;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.master_data_integration.application.usecases.manage_data_models;
+import uim.platform.master_data_integration.application.usecases.manage.data_models;
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.data_model;
 import uim.platform.master_data_integration.domain.types;

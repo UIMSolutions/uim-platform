@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.environment;
 // import vibe.http.router;
 // import vibe.data.json;
 // 
-// import uim.platform.management.application.usecases.manage_environment_instances;
+// import uim.platform.management.application.usecases.manage.environment_instances;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.environment_instance;
 // import uim.platform.management.domain.types;

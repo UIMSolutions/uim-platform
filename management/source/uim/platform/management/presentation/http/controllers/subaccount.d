@@ -9,7 +9,7 @@ module uim.platform.management.presentation.http.controllers.subaccount;
 // import vibe.http.router;
 // import vibe.data.json;
 
-// import uim.platform.management.application.usecases.manage_subaccounts;
+// import uim.platform.management.application.usecases.manage.subaccounts;
 // import uim.platform.management.application.dto;
 // import uim.platform.management.domain.entities.subaccount;
 // import uim.platform.management.domain.types;

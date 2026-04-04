@@ -10,7 +10,7 @@ module uim.platform.master_data_integration.presentation.http.distribution;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.master_data_integration.application.usecases.manage_distribution_models;
+import uim.platform.master_data_integration.application.usecases.manage.distribution_models;
 import uim.platform.master_data_integration.application.dto;
 import uim.platform.master_data_integration.domain.entities.distribution_model;
 import uim.platform.master_data_integration.domain.types;
