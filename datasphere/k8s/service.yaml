@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-datasphere
+  labels:
+    app: cloud-datasphere
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: cloud-datasphere
+  ports:
+  - name: http
+    port: 8095
+    targetPort: 8095
+    protocol: TCP

@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-datasphere
+  labels:
+    app: cloud-datasphere
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-datasphere
+  template:
+    metadata:
+      labels:
+        app: cloud-datasphere
+    spec:
+      containers:
+      - name: cloud-datasphere
+        image: uim-platform/cloud-datasphere:latest
+        ports:
+        - containerPort: 8095
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: cloud-datasphere-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8095
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8095
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false

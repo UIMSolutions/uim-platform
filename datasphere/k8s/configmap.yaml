@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-datasphere-config
+  labels:
+    app: cloud-datasphere
+    part-of: uim-platform
+data:
+  DATASPHERE_HOST: "0.0.0.0"
+  DATASPHERE_PORT: "8095"
