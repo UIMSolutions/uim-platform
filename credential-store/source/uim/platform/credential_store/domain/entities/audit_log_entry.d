@@ -6,7 +6,11 @@
 module uim.platform.credential_store.domain.entities.audit_log_entry;
 
 import uim.platform.credential_store.domain.types;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct AuditLogEntry {
   AuditLogEntryId id;
   TenantId tenantId;

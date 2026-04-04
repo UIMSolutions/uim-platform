@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-hana-config
+  labels:
+    app: cloud-hana
+    part-of: uim-platform
+data:
+  HANA_HOST: "0.0.0.0"
+  HANA_PORT: "8097"

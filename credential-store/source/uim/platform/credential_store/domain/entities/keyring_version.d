@@ -6,7 +6,11 @@
 module uim.platform.credential_store.domain.entities.keyring_version;
 
 import uim.platform.credential_store.domain.types;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct KeyringVersion {
   KeyringVersionId id;
   CredentialId keyringId;

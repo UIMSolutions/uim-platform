@@ -6,7 +6,11 @@
 module uim.platform.credential_store.domain.entities.service_binding;
 
 import uim.platform.credential_store.domain.types;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 struct ServiceBinding {
   ServiceBindingId id;
   TenantId tenantId;
