@@ -11,6 +11,7 @@ import uim.platform.datasphere.domain.ports.repositories.data_flows;
 import uim.platform.datasphere.domain.services.task_scheduler;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageDataFlowsUseCase : UIMUseCase {

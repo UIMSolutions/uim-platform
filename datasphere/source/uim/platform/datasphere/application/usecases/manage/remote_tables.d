@@ -10,6 +10,7 @@ import uim.platform.datasphere.domain.entities.remote_table;
 import uim.platform.datasphere.domain.ports.repositories.remote_tables;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageRemoteTablesUseCase : UIMUseCase {

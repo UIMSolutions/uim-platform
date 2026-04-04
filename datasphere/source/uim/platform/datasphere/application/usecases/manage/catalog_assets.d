@@ -10,6 +10,7 @@ import uim.platform.datasphere.domain.entities.catalog_asset;
 import uim.platform.datasphere.domain.ports.repositories.catalog_assets;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageCatalogAssetsUseCase : UIMUseCase {

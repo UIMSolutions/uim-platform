@@ -11,6 +11,7 @@ import uim.platform.datasphere.domain.ports.repositories.spaces;
 import uim.platform.datasphere.domain.services.space_validator;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageSpacesUseCase : UIMUseCase {

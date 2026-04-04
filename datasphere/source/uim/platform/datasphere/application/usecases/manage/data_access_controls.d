@@ -10,6 +10,7 @@ import uim.platform.datasphere.domain.entities.data_access_control;
 import uim.platform.datasphere.domain.ports.repositories.data_access_controls;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageDataAccessControlsUseCase : UIMUseCase {

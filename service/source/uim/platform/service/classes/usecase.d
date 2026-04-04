@@ -6,7 +6,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMUseCase : UIMUseCase {
+class UIMUseCase {
   this() {
     // Initialization logic for the use case
   }

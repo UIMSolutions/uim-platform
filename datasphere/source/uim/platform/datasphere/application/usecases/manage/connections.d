@@ -10,6 +10,7 @@ import uim.platform.datasphere.domain.entities.connection;
 import uim.platform.datasphere.domain.ports.repositories.connections;
 import uim.platform.datasphere.application.dto;
 
+import uim.platform.service;
 import std.conv : to;
 
 class ManageConnectionsUseCase : UIMUseCase {
