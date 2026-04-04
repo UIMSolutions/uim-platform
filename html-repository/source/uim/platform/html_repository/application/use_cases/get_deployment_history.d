@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.get_deployment_history;
 
-import uim.platform.html_repository.domain.ports.deployment_record_repository;
+import uim.platform.html_repository.domain.ports.repositories.deployment_records;
 import uim.platform.html_repository.domain.entities.deployment_record;
 import uim.platform.html_repository.domain.types;
 

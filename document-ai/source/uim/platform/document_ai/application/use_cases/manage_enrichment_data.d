@@ -7,7 +7,7 @@ module uim.platform.document_ai.application.usecases.manage.enrichment_data;
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.enrichment_data;
-import uim.platform.document_ai.domain.ports.enrichment_data_repository;
+import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;

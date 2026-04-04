@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.app_files;
 
-import uim.platform.html_repository.domain.ports.app_file_repository;
+import uim.platform.html_repository.domain.ports.repositories.app_files;
 import uim.platform.html_repository.domain.entities.app_file;
 import uim.platform.html_repository.domain.services.content_delivery_service;
 import uim.platform.html_repository.domain.services.deployment_validator;

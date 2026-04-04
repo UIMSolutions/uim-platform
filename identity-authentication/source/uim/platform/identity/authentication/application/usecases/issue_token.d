@@ -9,11 +9,11 @@ module uim.platform.identity_authentication.application.usecases.issue_token;
 // import uim.platform.identity_authentication.domain.entities.application;
 // import uim.platform.identity_authentication.domain.entities.token;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.user;
-// import uim.platform.identity_authentication.domain.ports.application;
-// import uim.platform.identity_authentication.domain.ports.token;
-// import uim.platform.identity_authentication.domain.ports.session;
-// import uim.platform.identity_authentication.domain.ports.token_service;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.application;
+// import uim.platform.identity_authentication.domain.ports.repositories.token;
+// import uim.platform.identity_authentication.domain.ports.repositories.session;
+// import uim.platform.identity_authentication.domain.ports.repositories.token_service;
 // 
 // // import std.uuid;
 // import core.time;

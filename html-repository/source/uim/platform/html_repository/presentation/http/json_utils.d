@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.json_utils;
 
-import uim.platform.html_repository;
+import uim.platform.htmls;
 
 string jsonStr(Json j, string key) {
   if (!j.isObject)

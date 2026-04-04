@@ -7,7 +7,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.training_job_r
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.training_job;
-import uim.platform.document_ai.domain.ports.training_job_repository;
+import uim.platform.document_ai.domain.ports.repositories.training_jobs;
 
 import std.algorithm : filter;
 import std.array : array;

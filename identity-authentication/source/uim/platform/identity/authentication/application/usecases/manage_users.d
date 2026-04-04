@@ -7,8 +7,8 @@ module uim.platform.identity_authentication.application.usecases.manage.users;
 
 // import uim.platform.identity_authentication.domain.entities.user;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.user;
-// import uim.platform.identity_authentication.domain.ports.password_service;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.password_service;
 // import uim.platform.identity_authentication.application.dto;
 // 
 // // import std.uuid;

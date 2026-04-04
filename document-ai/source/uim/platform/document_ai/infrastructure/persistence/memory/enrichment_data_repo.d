@@ -7,7 +7,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.enrichment_dat
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.enrichment_data;
-import uim.platform.document_ai.domain.ports.enrichment_data_repository;
+import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 
 import std.algorithm : filter;
 import std.array : array;

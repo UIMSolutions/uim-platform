@@ -7,7 +7,7 @@ module uim.platform.identity_authentication.application.usecases.manage.policies
 
 // import uim.platform.identity_authentication.domain.entities.policy;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.policy;
+// import uim.platform.identity_authentication.domain.ports.repositories.policy;
 // import uim.platform.identity_authentication.application.dto;
 // 
 // // import std.uuid;

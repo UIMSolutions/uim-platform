@@ -7,7 +7,7 @@ module uim.platform.identity_authentication.infrastructure.persistence.memory.ri
 
 // import uim.platform.identity_authentication.domain.entities.risk_rule;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.risk_rule;
+// import uim.platform.identity_authentication.domain.ports.repositories.risk_rule;
 
 import uim.platform.identity_authentication;
 

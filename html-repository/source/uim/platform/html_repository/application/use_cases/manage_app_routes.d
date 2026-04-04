@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.app_routes;
 
-import uim.platform.html_repository.domain.ports.app_route_repository;
+import uim.platform.html_repository.domain.ports.repositories.app_routes;
 import uim.platform.html_repository.domain.entities.app_route;
 import uim.platform.html_repository.domain.services.deployment_validator;
 import uim.platform.html_repository.domain.types;

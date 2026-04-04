@@ -7,7 +7,7 @@ module uim.platform.document_ai.application.usecases.manage.schemas;
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.schema;
-import uim.platform.document_ai.domain.ports.schema_repository;
+import uim.platform.document_ai.domain.ports.repositories.schemas;
 import uim.platform.document_ai.application.dto;
 
 import std.uuid : randomUUID;

@@ -8,13 +8,13 @@ module uim.platform.html_repository.infrastructure.container;
 import uim.platform.html_repository.infrastructure.config;
 
 // Repositories
-import uim.platform.html_repository.infrastructure.persistence.memory.html_app_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_version_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_file_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.app_route_memory_repository;
-import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_memory_repository;
+import uim.platform.html_repository.infrastructure.persistence.memory.html_app_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.app_version_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.app_file_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.service_instance_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.deployment_record_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.app_route_memorys;
+import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_memorys;
 
 // Use Cases
 import uim.platform.html_repository.application.usecases.manage.html_apps;

@@ -9,11 +9,11 @@ module uim.platform.identity_authentication.application.usecases.authenticate_us
 // import uim.platform.identity_authentication.domain.entities.session;
 // import uim.platform.identity_authentication.domain.entities.risk_rule;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.user;
-// import uim.platform.identity_authentication.domain.ports.password_service;
-// import uim.platform.identity_authentication.domain.ports.session;
-// import uim.platform.identity_authentication.domain.ports.risk_rule;
-// import uim.platform.identity_authentication.domain.ports.mfa_service;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.password_service;
+// import uim.platform.identity_authentication.domain.ports.repositories.session;
+// import uim.platform.identity_authentication.domain.ports.repositories.risk_rule;
+// import uim.platform.identity_authentication.domain.ports.repositories.mfa_service;
 // import uim.platform.identity_authentication.domain.services.risk_evaluator;
 // import uim.platform.identity_authentication.application.dto;
 // 

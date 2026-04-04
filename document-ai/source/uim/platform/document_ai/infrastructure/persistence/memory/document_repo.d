@@ -7,7 +7,7 @@ module uim.platform.document_ai.infrastructure.persistence.memory.document_repo;
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document;
-import uim.platform.document_ai.domain.ports.document_repository;
+import uim.platform.document_ai.domain.ports.repositories.documents;
 
 import std.algorithm : filter;
 import std.array : array;

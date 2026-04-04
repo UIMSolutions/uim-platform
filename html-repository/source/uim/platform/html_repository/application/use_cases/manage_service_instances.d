@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.service_instances;
 
-import uim.platform.html_repository.domain.ports.service_instance_repository;
+import uim.platform.html_repository.domain.ports.repositories.service_instances;
 import uim.platform.html_repository.domain.entities.service_instance;
 import uim.platform.html_repository.domain.services.deployment_validator;
 import uim.platform.html_repository.domain.types;

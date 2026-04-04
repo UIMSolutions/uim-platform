@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.manage.content_cache;
 
-import uim.platform.html_repository.domain.ports.content_cache_repository;
+import uim.platform.html_repository.domain.ports.repositories.content_caches;
 import uim.platform.html_repository.domain.entities.content_cache;
 import uim.platform.html_repository.domain.services.content_delivery_service;
 import uim.platform.html_repository.domain.types;

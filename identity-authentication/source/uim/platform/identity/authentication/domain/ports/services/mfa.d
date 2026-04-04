@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.domain.ports.services.mfa;
+module uim.platform.identity_authentication.domain.ports.repositories.services.mfa;
 
 // import uim.platform.identity_authentication.domain.types;
 import uim.platform.identity_authentication;

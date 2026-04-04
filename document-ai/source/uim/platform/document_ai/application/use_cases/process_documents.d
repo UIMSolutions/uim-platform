@@ -8,8 +8,8 @@ module uim.platform.document_ai.application.usecases.process_documents;
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document;
 import uim.platform.document_ai.domain.entities.extraction_result;
-import uim.platform.document_ai.domain.ports.document_repository;
-import uim.platform.document_ai.domain.ports.extraction_result_repository;
+import uim.platform.document_ai.domain.ports.repositories.documents;
+import uim.platform.document_ai.domain.ports.repositories.extraction_results;
 import uim.platform.document_ai.domain.services.document_validator;
 import uim.platform.document_ai.application.dto;
 

@@ -10,7 +10,7 @@ import uim.platform.html_repository.application.usecases.get_deployment_history;
 import uim.platform.html_repository.application.dto;
 import uim.platform.html_repository.presentation.http.json_utils;
 
-import uim.platform.html_repository;
+import uim.platform.htmls;
 
 import std.conv : to;
 

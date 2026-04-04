@@ -7,7 +7,7 @@ module uim.platform.identity_authentication.infrastructure.persistence.memory.us
 
 // import uim.platform.identity_authentication.domain.entities.user;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
 
 import uim.platform.identity_authentication;
 

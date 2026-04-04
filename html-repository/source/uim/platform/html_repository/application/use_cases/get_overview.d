@@ -5,13 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.get_overview;
 
-import uim.platform.html_repository.domain.ports.html_app_repository;
-import uim.platform.html_repository.domain.ports.app_version_repository;
-import uim.platform.html_repository.domain.ports.app_file_repository;
-import uim.platform.html_repository.domain.ports.service_instance_repository;
-import uim.platform.html_repository.domain.ports.deployment_record_repository;
-import uim.platform.html_repository.domain.ports.app_route_repository;
-import uim.platform.html_repository.domain.ports.content_cache_repository;
+import uim.platform.html_repository.domain.ports.repositories.html_apps;
+import uim.platform.html_repository.domain.ports.repositories.app_versions;
+import uim.platform.html_repository.domain.ports.repositories.app_files;
+import uim.platform.html_repository.domain.ports.repositories.service_instances;
+import uim.platform.html_repository.domain.ports.repositories.deployment_records;
+import uim.platform.html_repository.domain.ports.repositories.app_routes;
+import uim.platform.html_repository.domain.ports.repositories.content_caches;
 import uim.platform.html_repository.domain.types;
 import uim.platform.html_repository.application.dto;
 

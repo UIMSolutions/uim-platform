@@ -5,9 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.usecases.deploy_application;
 
-import uim.platform.html_repository.domain.ports.deployment_record_repository;
-import uim.platform.html_repository.domain.ports.html_app_repository;
-import uim.platform.html_repository.domain.ports.app_version_repository;
+import uim.platform.html_repository.domain.ports.repositories.deployment_records;
+import uim.platform.html_repository.domain.ports.repositories.html_apps;
+import uim.platform.html_repository.domain.ports.repositories.app_versions;
 import uim.platform.html_repository.domain.entities.deployment_record;
 import uim.platform.html_repository.domain.entities.html_app;
 import uim.platform.html_repository.domain.entities.app_version;

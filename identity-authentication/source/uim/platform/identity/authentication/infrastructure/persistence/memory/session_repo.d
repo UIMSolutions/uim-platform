@@ -7,7 +7,7 @@ module uim.platform.identity_authentication.infrastructure.persistence.memory.se
 
 // import uim.platform.identity_authentication.domain.entities.session;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.session;
+// import uim.platform.identity_authentication.domain.ports.repositories.session;
 // 
 // // import std.datetime.systime : Clock;
 

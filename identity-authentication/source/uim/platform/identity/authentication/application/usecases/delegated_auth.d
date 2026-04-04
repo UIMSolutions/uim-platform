@@ -8,8 +8,8 @@ module uim.platform.identity_authentication.application.usecases.delegated_auth;
 // import uim.platform.identity_authentication.domain.entities.idp_config;
 // import uim.platform.identity_authentication.domain.entities.user;
 // import uim.platform.identity_authentication.domain.types;
-// import uim.platform.identity_authentication.domain.ports.idp_config;
-// import uim.platform.identity_authentication.domain.ports.user;
+// import uim.platform.identity_authentication.domain.ports.repositories.idp_config;
+// import uim.platform.identity_authentication.domain.ports.repositories.user;
 // 
 // // import std.string : split;
 import uim.platform.identity_authentication;

@@ -6,12 +6,12 @@
 module uim.platform.document_ai.domain.ports;
 
 public {
-  import uim.platform.document_ai.domain.ports.document_repository;
-  import uim.platform.document_ai.domain.ports.extraction_result_repository;
-  import uim.platform.document_ai.domain.ports.schema_repository;
-  import uim.platform.document_ai.domain.ports.template_repository;
-  import uim.platform.document_ai.domain.ports.document_type_repository;
-  import uim.platform.document_ai.domain.ports.enrichment_data_repository;
-  import uim.platform.document_ai.domain.ports.training_job_repository;
-  import uim.platform.document_ai.domain.ports.client_repository;
+  import uim.platform.document_ai.domain.ports.repositories.documents;
+  import uim.platform.document_ai.domain.ports.repositories.extraction_results;
+  import uim.platform.document_ai.domain.ports.repositories.schemas;
+  import uim.platform.document_ai.domain.ports.repositories.templates;
+  import uim.platform.document_ai.domain.ports.repositories.document_types;
+  import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
+  import uim.platform.document_ai.domain.ports.repositories.training_jobs;
+  import uim.platform.document_ai.domain.ports.repositories.clients;
 }
