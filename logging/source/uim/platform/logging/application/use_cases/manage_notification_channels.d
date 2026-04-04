@@ -12,7 +12,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManageNotificationChannelsUseCase {
+class ManageNotificationChannelsUseCase : UIMUseCase {
   private NotificationChannelRepository repo;
 
   this(NotificationChannelRepository repo) {

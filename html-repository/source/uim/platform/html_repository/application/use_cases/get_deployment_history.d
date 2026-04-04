@@ -9,7 +9,7 @@ import uim.platform.html_repository.domain.ports.deployment_record_repository;
 import uim.platform.html_repository.domain.entities.deployment_record;
 import uim.platform.html_repository.domain.types;
 
-class GetDeploymentHistoryUseCase {
+class GetDeploymentHistoryUseCase : UIMUseCase {
     private DeploymentRecordRepository repo;
 
     this(DeploymentRecordRepository repo) {

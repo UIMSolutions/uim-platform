@@ -13,7 +13,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManageRetentionPoliciesUseCase {
+class ManageRetentionPoliciesUseCase : UIMUseCase {
   private RetentionPolicyRepository repo;
 
   this(RetentionPolicyRepository repo) {

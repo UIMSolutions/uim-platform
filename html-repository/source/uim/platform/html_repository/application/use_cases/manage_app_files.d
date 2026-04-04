@@ -15,7 +15,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageAppFilesUseCase {
+class ManageAppFilesUseCase : UIMUseCase {
     private AppFileRepository repo;
 
     this(AppFileRepository repo) {

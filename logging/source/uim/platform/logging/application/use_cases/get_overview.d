@@ -15,7 +15,7 @@ import uim.platform.logging.domain.ports.notification_channel_repository;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 
-class GetOverviewUseCase {
+class GetOverviewUseCase : UIMUseCase {
   private LogEntryRepository logRepo;
   private SpanRepository spanRepo;
   private LogStreamRepository streamRepo;

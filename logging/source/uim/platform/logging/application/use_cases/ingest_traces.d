@@ -13,7 +13,7 @@ import uim.platform.logging.application.dto;
 import std.conv : to;
 import std.format : format;
 
-class IngestTracesUseCase {
+class IngestTracesUseCase : UIMUseCase {
   private SpanRepository spanRepo;
 
   this(SpanRepository spanRepo) {

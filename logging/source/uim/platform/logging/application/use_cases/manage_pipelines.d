@@ -12,7 +12,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManagePipelinesUseCase {
+class ManagePipelinesUseCase : UIMUseCase {
   private PipelineRepository repo;
 
   this(PipelineRepository repo) {

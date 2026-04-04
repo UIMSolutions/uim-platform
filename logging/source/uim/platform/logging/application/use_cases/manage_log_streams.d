@@ -12,7 +12,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManageLogStreamsUseCase {
+class ManageLogStreamsUseCase : UIMUseCase {
   private LogStreamRepository repo;
 
   this(LogStreamRepository repo) {

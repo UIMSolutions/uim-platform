@@ -12,7 +12,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManageDashboardsUseCase {
+class ManageDashboardsUseCase : UIMUseCase {
   private DashboardRepository repo;
 
   this(DashboardRepository repo) {

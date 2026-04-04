@@ -16,7 +16,7 @@ import uim.platform.integration.automation.domain.entities.destination;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 
-class ManageDestinationsUseCase {
+class ManageDestinationsUseCase : UIMUseCase {
   private DestinationRepository repo;
   private SystemRepository systemRepo;
 

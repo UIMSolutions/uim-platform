@@ -14,7 +14,7 @@ import uim.platform.html_repository.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageAppRoutesUseCase {
+class ManageAppRoutesUseCase : UIMUseCase {
     private AppRouteRepository repo;
 
     this(AppRouteRepository repo) {

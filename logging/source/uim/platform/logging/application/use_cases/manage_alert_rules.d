@@ -12,7 +12,7 @@ import uim.platform.logging.application.dto;
 
 import std.conv : to;
 
-class ManageAlertRulesUseCase {
+class ManageAlertRulesUseCase : UIMUseCase {
   private AlertRuleRepository repo;
 
   this(AlertRuleRepository repo) {

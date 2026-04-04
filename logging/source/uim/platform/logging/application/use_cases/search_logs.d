@@ -11,7 +11,7 @@ import uim.platform.logging.domain.services.log_parser;
 import uim.platform.logging.domain.types;
 import uim.platform.logging.application.dto;
 
-class SearchLogsUseCase {
+class SearchLogsUseCase : UIMUseCase {
   private LogEntryRepository logRepo;
 
   this(LogEntryRepository logRepo) {

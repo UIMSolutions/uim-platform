@@ -15,7 +15,7 @@ import uim.platform.logging.application.dto;
 import std.conv : to;
 import std.format : format;
 
-class IngestLogsUseCase {
+class IngestLogsUseCase : UIMUseCase {
   private LogEntryRepository logRepo;
   private LogStreamRepository streamRepo;
 
