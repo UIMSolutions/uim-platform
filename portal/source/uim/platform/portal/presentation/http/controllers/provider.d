@@ -14,17 +14,16 @@ import uim.platform.portal.domain.entities.content_provider;
 import uim.platform.portal.domain.types;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ProviderController
-{
+class ProviderController : SAPController {
   private ManageProvidersUseCase useCase;
 
-  this(ManageProvidersUseCase useCase)
-  {
+  this(ManageProvidersUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/providers", &handleCreate);
     router.get("/api/v1/providers", &handleList);
     router.get("/api/v1/providers/*", &handleGet);
@@ -32,105 +31,81 @@ class ProviderController
     router.delete_("/api/v1/providers/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto createReq = CreateProviderRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("name"), j.getString("description"), jsonEnum!ProviderType(j,
-            "providerType", ProviderType.local),
-          j.getString("contentEndpointUrl"), j.getString("authToken"),);
+        j.getString("name"), j.getString("description"), jsonEnum!ProviderType(j,
+          "providerType", ProviderType.local),
+        j.getString("contentEndpointUrl"), j.getString("authToken"),);
 
       auto result = useCase.createProvider(createReq);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto response = Json.emptyObject;
         response["id"] = Json(result.providerId);
         res.writeJsonBody(response, 201);
-      }
-      else
-      {
+      } else {
         writeApiError(res, 400, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto providers = useCase.listProviders(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) providers.length);
+      response["totalResults"] = Json(cast(long)providers.length);
       response["resources"] = toJsonArray(providers);
       res.writeJsonBody(response, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto provider = useCase.getProvider(providerId);
-      if (provider == ContentProvider.init)
-      {
+      if (provider == ContentProvider.init) {
         writeApiError(res, 404, "Content provider not found");
         return;
       }
       res.writeJsonBody(toJsonValue(provider), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateProviderRequest(providerId, j.getString("name"),
-          j.getString("description"), j.getString("contentEndpointUrl"),
-          j.getString("authToken"), j.getBoolean("active", true),);
+        j.getString("description"), j.getString("contentEndpointUrl"),
+        j.getString("authToken"), j.getBoolean("active", true),);
 
       auto error = useCase.updateProvider(updateReq);
       if (error.length > 0)
         writeApiError(res, 404, error);
       else
         res.writeJsonBody(Json.emptyObject, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto providerId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteProvider(providerId);
       if (error.length > 0)
         writeApiError(res, 404, error);
       else
         res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
   }
