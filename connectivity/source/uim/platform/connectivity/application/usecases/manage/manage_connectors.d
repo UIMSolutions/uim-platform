@@ -8,8 +8,8 @@ module uim.platform.connectivity.application.usecases.manage.connectors;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.cloud_connector;
 // import uim.platform.connectivity.domain.entities.connectivity_log;
-// import uim.platform.connectivity.domain.ports.connector_repository;
-// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.ports.repositories.connectors;
+// import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 

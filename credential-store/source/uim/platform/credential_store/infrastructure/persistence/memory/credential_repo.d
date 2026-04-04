@@ -6,7 +6,7 @@
 module uim.platform.credential_store.infrastructure.persistence.memory.credential_repo;
 
 import uim.platform.credential_store.domain.entities.credential;
-import uim.platform.credential_store.domain.ports.credential_repository;
+import uim.platform.credential_store.domain.ports.repositories.credentials;
 import uim.platform.credential_store.domain.types;
 
 import std.algorithm : filter;

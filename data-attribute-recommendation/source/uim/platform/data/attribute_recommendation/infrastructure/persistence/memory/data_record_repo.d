@@ -8,7 +8,7 @@ module uim.platform.data.attribute_recommendation.infrastructure.persistence
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;
-import uim.platform.data.attribute_recommendation.domain.ports.data_record_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
 
 class MemoryDataRecordRepository : DataRecordRepository
 {

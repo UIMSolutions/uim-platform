@@ -7,7 +7,7 @@ module uim.platform.content_agent.infrastructure.persistence.memory.in_memory_im
 
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.import_job;
-import uim.platform.content_agent.domain.ports.import_job_repository;
+import uim.platform.content_agent.domain.ports.repositories.import_jobs;
 
 // import std.algorithm : filter;
 // import std.array : array;

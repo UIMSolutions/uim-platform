@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.manage.keyrings;
 
-import uim.platform.credential_store.domain.ports.credential_repository;
-import uim.platform.credential_store.domain.ports.keyring_version_repository;
+import uim.platform.credential_store.domain.ports.repositories.credentials;
+import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
 import uim.platform.credential_store.domain.entities.credential;
 import uim.platform.credential_store.domain.entities.keyring_version;
 import uim.platform.credential_store.domain.services.keyring_manager;

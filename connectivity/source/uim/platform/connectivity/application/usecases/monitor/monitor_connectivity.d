@@ -6,7 +6,7 @@
 module uim.platform.connectivity.application.usecases.monitor_connectivity;
 
 // import uim.platform.connectivity.domain.entities.connectivity_log;
-// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 // import uim.platform.connectivity.domain.types;
 
 import uim.platform.connectivity;

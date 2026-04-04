@@ -5,10 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.get_overview;
 
-import uim.platform.credential_store.domain.ports.namespace_repository;
-import uim.platform.credential_store.domain.ports.credential_repository;
-import uim.platform.credential_store.domain.ports.service_binding_repository;
-import uim.platform.credential_store.domain.ports.audit_log_repository;
+import uim.platform.credential_store.domain.ports.repositories.namespaces;
+import uim.platform.credential_store.domain.ports.repositories.credentials;
+import uim.platform.credential_store.domain.ports.repositories.service_bindings;
+import uim.platform.credential_store.domain.ports.repositories.audit_logs;
 import uim.platform.credential_store.domain.types;
 import uim.platform.credential_store.application.dto;
 

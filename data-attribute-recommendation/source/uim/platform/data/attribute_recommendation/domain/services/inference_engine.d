@@ -12,9 +12,9 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_deployment;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
-import uim.platform.data.attribute_recommendation.domain.ports.deployment_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.inference_request_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.inference_result_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.deployments;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
 
 /// Domain service that processes inference requests against deployed
 /// models. Validates deployment state and generates simulated predictions.

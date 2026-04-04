@@ -7,7 +7,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.certificate_r
 
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.certificate;
-// import uim.platform.connectivity.domain.ports.certificate_repository;
+// import uim.platform.connectivity.domain.ports.repositories.certificates;
 // 
 // // import std.algorithm : filter;
 // // import std.array : array;

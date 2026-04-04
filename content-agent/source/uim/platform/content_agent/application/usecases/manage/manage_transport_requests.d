@@ -10,10 +10,10 @@ import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.transport_request_repository;
-import uim.platform.content_agent.domain.ports.content_package_repository;
-import uim.platform.content_agent.domain.ports.transport_queue_repository;
-import uim.platform.content_agent.domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.ports.repositories.transport_requests;
+import uim.platform.content_agent.domain.ports.repositories.content_packages;
+import uim.platform.content_agent.domain.ports.repositories.transport_queues;
+import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 import uim.platform.content_agent.domain.services.transport_validator;
 import uim.platform.content_agent.domain.types;
 

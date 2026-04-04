@@ -12,10 +12,10 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
 import uim.platform.data.attribute_recommendation.domain.entities.training_job;
-import uim.platform.data.attribute_recommendation.domain.ports.dataset_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.model_config_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.training_job_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.data_record_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.training_jobs;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.data_records;
 
 /// Domain service that orchestrates the training lifecycle:
 /// validates dataset readiness, creates training jobs, and

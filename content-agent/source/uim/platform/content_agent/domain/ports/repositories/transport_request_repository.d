@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.domain.ports.repositories.transport_request_repository;
+module uim.platform.content_agent.domain.ports.repositories.transport_requests;
 
 import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.types;

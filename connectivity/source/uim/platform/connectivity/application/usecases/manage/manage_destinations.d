@@ -7,8 +7,8 @@ module uim.platform.connectivity.application.usecases.manage.destinations;
 
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.destination;
-// import uim.platform.connectivity.domain.ports.destination_repository;
-// import uim.platform.connectivity.domain.ports.connectivity_log_repository;
+// import uim.platform.connectivity.domain.ports.repositories.destinations;
+// import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;
 // import uim.platform.connectivity.domain.services.auth_flow_resolver;
 // import uim.platform.connectivity.domain.types;
 // 

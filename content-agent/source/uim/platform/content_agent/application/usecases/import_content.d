@@ -9,9 +9,9 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.entities.content_package;
 import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.import_job_repository;
-import uim.platform.content_agent.domain.ports.content_package_repository;
-import uim.platform.content_agent.domain.ports.content_activity_repository;
+import uim.platform.content_agent.domain.ports.repositories.import_jobs;
+import uim.platform.content_agent.domain.ports.repositories.content_packages;
+import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 import uim.platform.content_agent.domain.types;
 
 // import std.conv : to;

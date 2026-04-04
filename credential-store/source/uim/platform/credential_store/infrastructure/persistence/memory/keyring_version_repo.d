@@ -6,7 +6,7 @@
 module uim.platform.credential_store.infrastructure.persistence.memory.keyring_version_repo;
 
 import uim.platform.credential_store.domain.entities.keyring_version;
-import uim.platform.credential_store.domain.ports.keyring_version_repository;
+import uim.platform.credential_store.domain.ports.repositories.keyring_versions;
 import uim.platform.credential_store.domain.types;
 
 import std.algorithm : filter;

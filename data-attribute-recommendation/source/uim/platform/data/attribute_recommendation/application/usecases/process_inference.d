@@ -11,8 +11,8 @@ module uim.platform.data.attribute_recommendation.application.usecases.process_i
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
-import uim.platform.data.attribute_recommendation.domain.ports.inference_request_repository;
-import uim.platform.data.attribute_recommendation.domain.ports.inference_result_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_requests;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.inference_results;
 import uim.platform.data.attribute_recommendation.domain.services.inference_engine;
 import uim.platform.data.attribute_recommendation.application.dto;
 

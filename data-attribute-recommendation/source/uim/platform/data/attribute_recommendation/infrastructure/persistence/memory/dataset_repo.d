@@ -7,7 +7,7 @@ module uim.platform.data.attribute_recommendation.infrastructure.persistence.mem
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.dataset;
-import uim.platform.data.attribute_recommendation.domain.ports.dataset_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.datasets;
 
 class MemoryDatasetRepository : DatasetRepository
 {

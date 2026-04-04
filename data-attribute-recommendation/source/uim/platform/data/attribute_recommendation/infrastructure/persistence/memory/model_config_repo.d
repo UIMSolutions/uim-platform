@@ -8,7 +8,7 @@ module uim.platform.data.attribute_recommendation.infrastructure.persistence
 
 import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.model_configuration;
-import uim.platform.data.attribute_recommendation.domain.ports.model_config_repository;
+import uim.platform.data.attribute_recommendation.domain.ports.repositories.model_configs;
 
 class MemoryModelConfigRepository : ModelConfigRepository
 {

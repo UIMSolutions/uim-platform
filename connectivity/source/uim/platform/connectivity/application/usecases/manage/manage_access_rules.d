@@ -7,8 +7,8 @@ module uim.platform.connectivity.application.usecases.manage.manage_access_rules
 
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.access_rule;
-// import uim.platform.connectivity.domain.ports.access_rule_repository;
-// import uim.platform.connectivity.domain.ports.connector_repository;
+// import uim.platform.connectivity.domain.ports.repositories.access_rules;
+// import uim.platform.connectivity.domain.ports.repositories.connectors;
 // import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity;
 

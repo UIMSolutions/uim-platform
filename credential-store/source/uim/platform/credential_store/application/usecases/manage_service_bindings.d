@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.usecases.manage.service_bindings;
 
-import uim.platform.credential_store.domain.ports.service_binding_repository;
+import uim.platform.credential_store.domain.ports.repositories.service_bindings;
 import uim.platform.credential_store.domain.entities.service_binding;
 import uim.platform.credential_store.domain.types;
 import uim.platform.credential_store.application.dto;

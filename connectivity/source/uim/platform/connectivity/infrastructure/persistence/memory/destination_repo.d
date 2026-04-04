@@ -7,7 +7,7 @@ module uim.platform.connectivity.infrastructure.persistence.memory.destination_r
 
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.destination;
-// import uim.platform.connectivity.domain.ports.destination_repository;
+// import uim.platform.connectivity.domain.ports.repositories.destinations;
 // 
 // // import std.algorithm : filter;
 // // import std.array : array;
