@@ -1,0 +1,50 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.document_ai.infrastructure.persistence.memory.client_repo;
+
+import uim.platform.document_ai.domain.types;
+import uim.platform.document_ai.domain.entities.client;
+import uim.platform.document_ai.domain.ports.client_repository;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class MemoryClientRepository : ClientRepository {
+  private Client[] store;
+
+  Client findById(ClientId id) {
+    foreach (ref c; store) {
+      if (c.id == id)
+        return c;
+    }
+    return Client.init;
+  }
+
+  Client[] findByTenant(TenantId tenantId) {
+    return store.filter!(c => c.tenantId == tenantId).array;
+  }
+
+  void save(Client c) {
+    store ~= c;
+  }
+
+  void update(Client c) {
+    foreach (ref existing; store) {
+      if (existing.id == c.id) {
+        existing = c;
+        return;
+      }
+    }
+  }
+
+  void remove(ClientId id) {
+    store = store.filter!(c => c.id != id).array;
+  }
+
+  long countByTenant(TenantId tenantId) {
+    return cast(long) store.filter!(c => c.tenantId == tenantId).array.length;
+  }
+}

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.infrastructure.persistence.memory.in_memory_api_rule_repo;
+module uim.platform.kyma.infrastructure.persistence.memory.api_rule_repo;
 
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.domain.entities.api_rule;
