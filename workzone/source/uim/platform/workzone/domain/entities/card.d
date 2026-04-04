@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.card;
 import uim.platform.workzone.domain.types;
 
 /// Integration card — a modular content unit displaying data from business systems.
-struct Card
-{
+struct Card {
   CardId id;
   TenantId tenantId;
   string title;
@@ -26,8 +25,7 @@ struct Card
 }
 
 /// Data source configuration for a card.
-struct CardDataSource
-{
+struct CardDataSource {
   string url; // OData or REST endpoint
   string method; // GET, POST
   string path; // request path
@@ -37,8 +35,7 @@ struct CardDataSource
 }
 
 /// Card manifest (simplified descriptor).
-struct CardManifest
-{
+struct CardManifest {
   string type; // "sap.card"
   string version_;
   string minVersion;

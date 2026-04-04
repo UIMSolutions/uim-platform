@@ -6,7 +6,7 @@
 module uim.platform.mobile.domain.ports;
 
 public {
-  import uim.platform.mobile.domain.ports.mobile_appS;
+  import uim.platform.mobile.domain.ports.mobile_apps;
   import uim.platform.mobile.domain.ports.device_registrations;
   import uim.platform.mobile.domain.ports.push_notifications;
   import uim.platform.mobile.domain.ports.push_registrations;

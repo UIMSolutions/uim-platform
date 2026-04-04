@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.workzone.application.usecases.manage_apps;
+module uim.platform.workzone.application.usecases.manage.apps;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
@@ -13,17 +13,14 @@ import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.ports.app_repository;
 import uim.platform.workzone.application.dto;
 
-class ManageAppsUseCase
-{
+class ManageAppsUseCase {
   private AppRepository repo;
 
-  this(AppRepository repo)
-  {
+  this(AppRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createApp(CreateAppRequest req)
-  {
+  CommandResult createApp(CreateAppRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "App name is required");
 
@@ -48,23 +45,19 @@ class ManageAppsUseCase
     return CommandResult(app.id, "");
   }
 
-  AppRegistration* getApp(AppId id, TenantId tenantId)
-  {
+  AppRegistration* getApp(AppId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  AppRegistration[] listApps(TenantId tenantId)
-  {
+  AppRegistration[] listApps(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  AppRegistration[] listByStatus(AppStatus status, TenantId tenantId)
-  {
+  AppRegistration[] listByStatus(AppStatus status, TenantId tenantId) {
     return repo.findByStatus(status, tenantId);
   }
 
-  CommandResult updateApp(UpdateAppRequest req)
-  {
+  CommandResult updateApp(UpdateAppRequest req) {
     auto app = repo.findById(req.id, req.tenantId);
     if (app is null)
       return CommandResult("", "App not found");
@@ -85,8 +78,7 @@ class ManageAppsUseCase
     return CommandResult(app.id, "");
   }
 
-  void deleteApp(AppId id, TenantId tenantId)
-  {
+  void deleteApp(AppId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }
