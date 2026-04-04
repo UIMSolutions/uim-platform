@@ -26,19 +26,19 @@ import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_grou
 import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistic_repo;
 
 // Use Cases
-import uim.platform.ai_launchpad.application.use_cases.manage_connections;
-import uim.platform.ai_launchpad.application.use_cases.manage_workspaces;
-import uim.platform.ai_launchpad.application.use_cases.manage_scenarios;
-import uim.platform.ai_launchpad.application.use_cases.manage_configurations;
-import uim.platform.ai_launchpad.application.use_cases.manage_executions;
-import uim.platform.ai_launchpad.application.use_cases.manage_deployments;
-import uim.platform.ai_launchpad.application.use_cases.manage_models;
-import uim.platform.ai_launchpad.application.use_cases.manage_datasets;
-import uim.platform.ai_launchpad.application.use_cases.manage_prompts;
-import uim.platform.ai_launchpad.application.use_cases.manage_prompt_collections;
-import uim.platform.ai_launchpad.application.use_cases.manage_resource_groups;
-import uim.platform.ai_launchpad.application.use_cases.get_usage_statistics;
-import uim.platform.ai_launchpad.application.use_cases.get_capabilities;
+import uim.platform.ai_launchpad.application.usecases.manage_connections;
+import uim.platform.ai_launchpad.application.usecases.manage_workspaces;
+import uim.platform.ai_launchpad.application.usecases.manage_scenarios;
+import uim.platform.ai_launchpad.application.usecases.manage_configurations;
+import uim.platform.ai_launchpad.application.usecases.manage_executions;
+import uim.platform.ai_launchpad.application.usecases.manage_deployments;
+import uim.platform.ai_launchpad.application.usecases.manage_models;
+import uim.platform.ai_launchpad.application.usecases.manage_datasets;
+import uim.platform.ai_launchpad.application.usecases.manage_prompts;
+import uim.platform.ai_launchpad.application.usecases.manage_prompt_collections;
+import uim.platform.ai_launchpad.application.usecases.manage_resource_groups;
+import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
+import uim.platform.ai_launchpad.application.usecases.get_capabilities;
 
 // Controllers
 import uim.platform.ai_launchpad.presentation.http.controllers.connection;

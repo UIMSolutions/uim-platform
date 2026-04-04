@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.workspace;
 
-import uim.platform.ai_launchpad.application.use_cases.manage_workspaces;
+import uim.platform.ai_launchpad.application.usecases.manage_workspaces;
 import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad.presentation.http.json_utils;
 

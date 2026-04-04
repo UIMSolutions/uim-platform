@@ -7,5 +7,5 @@ module uim.platform.ai_core.application;
 
 public {
   import uim.platform.ai_core.application.dto;
-  import uim.platform.ai_core.application.use_cases;
+  import uim.platform.ai_core.application.usecases;
 }

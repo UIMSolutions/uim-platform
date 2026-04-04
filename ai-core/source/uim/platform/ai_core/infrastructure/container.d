@@ -18,14 +18,14 @@ import uim.platform.ai_core.infrastructure.persistence.memory.resource_group_rep
 import uim.platform.ai_core.infrastructure.persistence.memory.metric_repo;
 
 // Use Cases
-import uim.platform.ai_core.application.use_cases.manage_scenarios;
-import uim.platform.ai_core.application.use_cases.manage_executables;
-import uim.platform.ai_core.application.use_cases.manage_configurations;
-import uim.platform.ai_core.application.use_cases.manage_executions;
-import uim.platform.ai_core.application.use_cases.manage_deployments;
-import uim.platform.ai_core.application.use_cases.manage_artifacts;
-import uim.platform.ai_core.application.use_cases.manage_resource_groups;
-import uim.platform.ai_core.application.use_cases.get_metrics;
+import uim.platform.ai_core.application.usecases.manage_scenarios;
+import uim.platform.ai_core.application.usecases.manage_executables;
+import uim.platform.ai_core.application.usecases.manage_configurations;
+import uim.platform.ai_core.application.usecases.manage_executions;
+import uim.platform.ai_core.application.usecases.manage_deployments;
+import uim.platform.ai_core.application.usecases.manage_artifacts;
+import uim.platform.ai_core.application.usecases.manage_resource_groups;
+import uim.platform.ai_core.application.usecases.get_metrics;
 
 // Controllers
 import uim.platform.ai_core.presentation.http.controllers.scenario;

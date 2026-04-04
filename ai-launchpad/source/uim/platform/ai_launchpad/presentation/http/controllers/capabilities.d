@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.capabilities;
 
-import uim.platform.ai_launchpad.application.use_cases.get_capabilities;
+import uim.platform.ai_launchpad.application.usecases.get_capabilities;
 import uim.platform.ai_launchpad.application.dto;
 import uim.platform.ai_launchpad.presentation.http.json_utils;
 

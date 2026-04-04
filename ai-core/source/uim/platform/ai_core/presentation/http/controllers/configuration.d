@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.configuration;
 
-import uim.platform.ai_core.application.use_cases.manage_configurations;
+import uim.platform.ai_core.application.usecases.manage_configurations;
 import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core.presentation.http.json_utils;
 

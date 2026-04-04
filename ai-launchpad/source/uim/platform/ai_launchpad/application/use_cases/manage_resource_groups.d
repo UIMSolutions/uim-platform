@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ai_launchpad.application.use_cases.manage_resource_groups;
+module uim.platform.ai_launchpad.application.usecases.manage_resource_groups;
 
 import uim.platform.ai_launchpad.domain.ports.resource_group_repository;
 import uim.platform.ai_launchpad.domain.entities.resource_group;

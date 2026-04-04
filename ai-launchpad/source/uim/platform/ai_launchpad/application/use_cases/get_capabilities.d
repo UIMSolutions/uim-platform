@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ai_launchpad.application.use_cases.get_capabilities;
+module uim.platform.ai_launchpad.application.usecases.get_capabilities;
 
 import uim.platform.ai_launchpad.application.dto;
 

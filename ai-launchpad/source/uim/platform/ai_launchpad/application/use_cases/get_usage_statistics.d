@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.ai_launchpad.application.use_cases.get_usage_statistics;
+module uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
 
 import uim.platform.ai_launchpad.domain.ports.usage_statistic_repository;
 import uim.platform.ai_launchpad.domain.entities.usage_statistic : UsageStatistic;

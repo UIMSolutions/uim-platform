@@ -174,7 +174,7 @@ ai-launchpad/
         services/                  # ConnectionValidator, PromptEnricher
       application/
         dto.d                      # 22 request/response DTOs
-        use_cases/                 # 13 use case classes
+        usecases/                 # 13 use case classes
       infrastructure/
         config.d                   # AppConfig + env loading
         container.d                # DI wiring
