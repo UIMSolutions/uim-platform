@@ -8,11 +8,11 @@ module uim.platform.credential_store.infrastructure.container;
 import uim.platform.credential_store.infrastructure.config;
 
 // Repositories
-import uim.platform.credential_store.infrastructure.persistence.memory.namespace_repo;
-import uim.platform.credential_store.infrastructure.persistence.memory.credential_repo;
-import uim.platform.credential_store.infrastructure.persistence.memory.keyring_version_repo;
-import uim.platform.credential_store.infrastructure.persistence.memory.service_binding_repo;
-import uim.platform.credential_store.infrastructure.persistence.memory.audit_log_repo;
+import uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
+import uim.platform.credential_store.infrastructure.persistence.memory.credentials;
+import uim.platform.credential_store.infrastructure.persistence.memory.keyring_versions;
+import uim.platform.credential_store.infrastructure.persistence.memory.service_bindings;
+import uim.platform.credential_store.infrastructure.persistence.memory.audit_logs;
 
 // Use Cases
 import uim.platform.credential_store.application.usecases.manage.namespaces;

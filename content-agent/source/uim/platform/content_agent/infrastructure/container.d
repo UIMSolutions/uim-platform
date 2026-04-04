@@ -8,13 +8,13 @@ module uim.platform.content_agent.infrastructure.container;
 import uim.platform.content_agent.infrastructure.config;
 
 // Repositories
-import uim.platform.content_agent.infrastructure.persistence.memory.content_package_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.content_provider_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.transport_request_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.export_job_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.import_job_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.transport_queue_repo;
-import uim.platform.content_agent.infrastructure.persistence.memory.content_activity_repo;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_packages;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_providers;
+import uim.platform.content_agent.infrastructure.persistence.memory.transport_requests;
+import uim.platform.content_agent.infrastructure.persistence.memory.export_jobs;
+import uim.platform.content_agent.infrastructure.persistence.memory.import_jobs;
+import uim.platform.content_agent.infrastructure.persistence.memory.transport_queues;
+import uim.platform.content_agent.infrastructure.persistence.memory.content_activities;
 
 // Use Cases
 import uim.platform.content_agent.application.usecases.manage.content_packages;

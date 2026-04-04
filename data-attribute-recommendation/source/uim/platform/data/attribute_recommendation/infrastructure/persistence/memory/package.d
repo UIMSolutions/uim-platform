@@ -6,9 +6,11 @@
 module uim.platform.data.attribute_recommendation.infrastructure.persistence.memory;
 
 public {
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.data_record_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.inference_request_repo;
+    import uim.platform.data.attribute_recommendation.infrastructure
+        .persistence.memory.data_records;
+    import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.datasets;
+    import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployments;
+    import uim.platform.data.attribute_recommendation.infrastructure
+        .persistence.memory.inference_requests;
 
 }

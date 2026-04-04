@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.credential_store.infrastructure.persistence.memory.namespace_repo;
+module uim.platform.credential_store.infrastructure.persistence.memory.namespaces;
 
 import uim.platform.credential_store.domain.entities.namespace;
 import uim.platform.credential_store.domain.ports.repositories.namespaces;
@@ -46,6 +46,6 @@ class MemoryNamespaceRepository : NamespaceRepository {
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(ns => ns.tenantId == tenantId).array.length;
+    return cast(long)store.values.filter!(ns => ns.tenantId == tenantId).array.length;
   }
 }
