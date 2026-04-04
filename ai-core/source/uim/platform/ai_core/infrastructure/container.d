@@ -8,14 +8,14 @@ module uim.platform.ai_core.infrastructure.container;
 import uim.platform.ai_core.infrastructure.config;
 
 // Repositories
-import uim.platform.ai_core.infrastructure.persistence.memory.scenario_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.executable_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.configuration_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.execution_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.deployment_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.artifact_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.resource_group_repo;
-import uim.platform.ai_core.infrastructure.persistence.memory.metric_repo;
+import uim.platform.ai_core.infrastructure.persistence.memory.scenarios;
+import uim.platform.ai_core.infrastructure.persistence.memory.executables;
+import uim.platform.ai_core.infrastructure.persistence.memory.configurations;
+import uim.platform.ai_core.infrastructure.persistence.memory.executions;
+import uim.platform.ai_core.infrastructure.persistence.memory.deployments;
+import uim.platform.ai_core.infrastructure.persistence.memory.artifacts;
+import uim.platform.ai_core.infrastructure.persistence.memory.resource_groups;
+import uim.platform.ai_core.infrastructure.persistence.memory.metrics;
 
 // Use Cases
 import uim.platform.ai_core.application.usecases.manage.scenarios;

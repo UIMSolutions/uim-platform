@@ -8,12 +8,12 @@ module uim.platform.connectivity.infrastructure.container;
 import uim.platform.connectivity.infrastructure.config;
 
 // Repositories
-import uim.platform.connectivity.infrastructure.persistence.memory.destination_repo;
-import uim.platform.connectivity.infrastructure.persistence.memory.connector_repo;
-import uim.platform.connectivity.infrastructure.persistence.memory.channel_repo;
-import uim.platform.connectivity.infrastructure.persistence.memory.access_rule_repo;
-import uim.platform.connectivity.infrastructure.persistence.memory.certificate_repo;
-import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_log_repo;
+import uim.platform.connectivity.infrastructure.persistence.memory.destinations;
+import uim.platform.connectivity.infrastructure.persistence.memory.connectors;
+import uim.platform.connectivity.infrastructure.persistence.memory.channels;
+import uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
+import uim.platform.connectivity.infrastructure.persistence.memory.certificates;
+import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_logs;
 
 // Use Cases
 import uim.platform.connectivity.application.usecases.manage.destinations;

@@ -6,16 +6,16 @@
 module uim.platform.ai_launchpad.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.connection_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.workspace_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.scenario_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.configuration_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.execution_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.deployment_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.model_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.dataset_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collection_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_group_repo;
-  import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistic_repo;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.connections;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.workspaces;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.scenarios;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.configurations;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.executions;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.deployments;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.models;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.datasets;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompts;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.prompt_collections;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_groups;
+  import uim.platform.ai_launchpad.infrastructure.persistence.memory.usage_statistics;
 }
