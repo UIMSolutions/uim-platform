@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity_authentication.application.usecases.manage_policies;
+module uim.platform.identity_authentication.application.usecases.manage.policies;
 
 // import uim.platform.identity_authentication.domain.entities.policy;
 // import uim.platform.identity_authentication.domain.types;

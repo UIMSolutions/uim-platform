@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.presentation.http.controllers.content;
 
-import uim.platform.html_repository.application.usecases.manage_app_files;
-import uim.platform.html_repository.application.usecases.manage_content_cache;
+import uim.platform.html_repository.application.usecases.manage.app_files;
+import uim.platform.html_repository.application.usecases.manage.content_cache;
 import uim.platform.html_repository.application.dto;
 import uim.platform.html_repository.presentation.http.json_utils;
 

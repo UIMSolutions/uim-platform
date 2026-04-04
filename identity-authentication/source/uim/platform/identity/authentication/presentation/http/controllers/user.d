@@ -8,7 +8,7 @@ module uim.platform.identity_authentication.presentation.http.controllers.user;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-// import uim.platform.identity_authentication.application.usecases.manage_users;
+// import uim.platform.identity_authentication.application.usecases.manage.users;
 // import uim.platform.identity_authentication.application.dto;
 // import uim.platform.identity_authentication.domain.entities.user;
 // import uim.platform.identity_authentication.presentation.http.json_utils;

@@ -17,13 +17,13 @@ import uim.platform.html_repository.infrastructure.persistence.memory.app_route_
 import uim.platform.html_repository.infrastructure.persistence.memory.content_cache_memory_repository;
 
 // Use Cases
-import uim.platform.html_repository.application.usecases.manage_html_apps;
-import uim.platform.html_repository.application.usecases.manage_app_versions;
-import uim.platform.html_repository.application.usecases.manage_app_files;
-import uim.platform.html_repository.application.usecases.manage_service_instances;
+import uim.platform.html_repository.application.usecases.manage.html_apps;
+import uim.platform.html_repository.application.usecases.manage.app_versions;
+import uim.platform.html_repository.application.usecases.manage.app_files;
+import uim.platform.html_repository.application.usecases.manage.service_instances;
 import uim.platform.html_repository.application.usecases.deploy_application;
-import uim.platform.html_repository.application.usecases.manage_app_routes;
-import uim.platform.html_repository.application.usecases.manage_content_cache;
+import uim.platform.html_repository.application.usecases.manage.app_routes;
+import uim.platform.html_repository.application.usecases.manage.content_cache;
 import uim.platform.html_repository.application.usecases.get_deployment_history;
 import uim.platform.html_repository.application.usecases.get_overview;
 
