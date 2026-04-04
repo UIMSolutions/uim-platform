@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.executable;
 
-import uim.platform.ai_core.application.usecases.manage_executables;
+import uim.platform.ai_core.application.usecases.manage.executables;
 import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core.presentation.http.json_utils;
 

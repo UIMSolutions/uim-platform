@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_core.presentation.http.controllers.scenario;
 
-import uim.platform.ai_core.application.usecases.manage_scenarios;
+import uim.platform.ai_core.application.usecases.manage.scenarios;
 import uim.platform.ai_core.application.dto;
 import uim.platform.ai_core.presentation.http.json_utils;
 
