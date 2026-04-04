@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.overview;
 
-import uim.platform.credential_store.application.usecases.get_overview;
-import uim.platform.credential_store.application.dto;
-import uim.platform.credential_store.presentation.http.json_utils;
+// import uim.platform.credential_store.application.usecases.get_overview;
+// import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 
 class OverviewController : SAPController {
   private GetOverviewUseCase uc;

@@ -7,6 +7,10 @@ module uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
+
 string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";

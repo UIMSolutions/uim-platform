@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.credential;
 
-import uim.platform.credential_store.application.usecases.manage.credentials;
-import uim.platform.credential_store.application.dto;
-import uim.platform.credential_store.presentation.http.json_utils;
+// import uim.platform.credential_store.application.usecases.manage.credentials;
+// import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 
 class CredentialController : SAPController {
   private ManageCredentialsUseCase uc;

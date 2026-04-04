@@ -3,15 +3,20 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.credential_store.infrastructure.persistence.memory.audit_log_repo;
+module uim.platform.credential_store.infrastructure.persistence.memory.audit_logs;
 
-import uim.platform.credential_store.domain.entities.audit_log_entry;
-import uim.platform.credential_store.domain.ports.repositories.audit_logs;
-import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.domain.entities.audit_log_entry;
+// import uim.platform.credential_store.domain.ports.repositories.audit_logs;
+// import uim.platform.credential_store.domain.types;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryAuditLogRepository : AuditLogRepository {
   private AuditLogEntry[] store;
 

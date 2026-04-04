@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.encryption;
 
-import uim.platform.credential_store.application.usecases.encrypt_dek;
-import uim.platform.credential_store.application.dto;
-import uim.platform.credential_store.presentation.http.json_utils;
+// import uim.platform.credential_store.application.usecases.encrypt_dek;
+// import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
+
+mixin(ShowModule!());
+
+@safe:
 
 class EncryptionController : SAPController {
   private EncryptDekUseCase uc;

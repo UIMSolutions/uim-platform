@@ -5,14 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.presentation.http.controllers.audit;
 
-import uim.platform.credential_store.application.usecases.get_audit_logs;
-import uim.platform.credential_store.application.dto;
-import uim.platform.credential_store.domain.entities.audit_log_entry;
-import uim.platform.credential_store.domain.types;
-import uim.platform.credential_store.presentation.http.json_utils;
+// import uim.platform.credential_store.application.usecases.get_audit_logs;
+// import uim.platform.credential_store.application.dto;
+// import uim.platform.credential_store.domain.entities.audit_log_entry;
+// import uim.platform.credential_store.domain.types;
+// import uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
 
+mixin(ShowModule!());
+
+@safe:
 class AuditController : SAPController {
   private GetAuditLogsUseCase uc;
 
