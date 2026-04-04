@@ -13,9 +13,9 @@ import uim.platform.destination.infrastructure.persistence.memory.certificate_re
 import uim.platform.destination.infrastructure.persistence.memory.fragment_repo;
 
 // Use Cases
-import uim.platform.destination.application.usecases.manage_destinations;
-import uim.platform.destination.application.usecases.manage_certificates;
-import uim.platform.destination.application.usecases.manage_fragments;
+import uim.platform.destination.application.usecases.manage.destinations;
+import uim.platform.destination.application.usecases.manage.certificates;
+import uim.platform.destination.application.usecases.manage.fragments;
 import uim.platform.destination.application.usecases.find_destination;
 
 // Controllers

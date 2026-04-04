@@ -10,7 +10,7 @@ module uim.platform.destination.presentation.http.fragment;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.destination.application.usecases.manage_fragments;
+import uim.platform.destination.application.usecases.manage.fragments;
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.destination_fragment;
 import uim.platform.destination.domain.types;

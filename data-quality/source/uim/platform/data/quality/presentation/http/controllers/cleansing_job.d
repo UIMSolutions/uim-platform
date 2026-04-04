@@ -10,7 +10,7 @@ module uim.platform.data.quality.presentation.http.cleansing_job;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.quality.application.usecases.manage_cleansing_jobs;
+import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;

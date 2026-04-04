@@ -10,7 +10,7 @@ module uim.platform.data - quality.presentation.http.controllers.validation_rule
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.quality.application.usecases.manage_validation_rules;
+import uim.platform.data.quality.application.usecases.manage.validation_rules;
 import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.validation_rule;

@@ -23,13 +23,13 @@ import uim.platform.data.quality.domain.services.duplicate_detector;
 import uim.platform.data.quality.domain.services.quality_scorer;
 
 // Use cases
-import uim.platform.data.quality.application.usecases.manage_validation_rules;
+import uim.platform.data.quality.application.usecases.manage.validation_rules;
 import uim.platform.data.quality.application.usecases.validate_data;
 import uim.platform.data.quality.application.usecases.cleanse_addresses;
 import uim.platform.data.quality.application.usecases.detect_duplicates;
 import uim.platform.data.quality.application.usecases.profile_data;
-import uim.platform.data.quality.application.usecases.manage_cleansing_rules;
-import uim.platform.data.quality.application.usecases.manage_cleansing_jobs;
+import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
+import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 import uim.platform.data.quality.application.usecases.compute_dashboard;
 
 // Controllers

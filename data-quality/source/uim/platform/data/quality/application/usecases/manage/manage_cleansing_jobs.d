@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.quality.application.usecases.manage_cleansing_jobs;
+module uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;

@@ -10,7 +10,7 @@ module uim.platform.destination.presentation.http.controllers.certificate;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.destination.application.usecases.manage_certificates;
+import uim.platform.destination.application.usecases.manage.certificates;
 import uim.platform.destination.application.dto;
 import uim.platform.destination.domain.entities.certificate;
 import uim.platform.destination.domain.types;
