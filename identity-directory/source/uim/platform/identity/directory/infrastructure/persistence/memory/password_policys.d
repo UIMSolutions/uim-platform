@@ -7,7 +7,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.passwor
 
 import uim.platform.identity.directory.domain.entities.password_policy;
 import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.password_policy_repository;
+import uim.platform.identity.directory.domain.ports.repositories.password_policys;
 
 /// In-memory adapter for password policy persistence.
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository

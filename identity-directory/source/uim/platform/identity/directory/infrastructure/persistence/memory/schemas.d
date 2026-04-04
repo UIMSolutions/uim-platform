@@ -7,7 +7,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.schema_
 
 import uim.platform.identity.directory.domain.entities.schema;
 import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.schema_repository;
+import uim.platform.identity.directory.domain.ports.repositories.schemas;
 
 /// In-memory adapter for custom schema persistence.
 class MemorySchemaRepository : SchemaRepository

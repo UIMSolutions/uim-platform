@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.application.usecases.manage.source_sys
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.source_system;
-import uim.platform.identity.provisioning.domain.ports.source_system_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
 import uim.platform.identity.provisioning.application.dto;
 
 class ManageSourceSystemsUseCase

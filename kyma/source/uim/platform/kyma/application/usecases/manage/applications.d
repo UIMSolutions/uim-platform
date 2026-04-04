@@ -7,7 +7,7 @@ module uim.platform.kyma.application.usecases.manage.applications;
 
 import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.application;
-import uim.platform.kyma.domain.ports.application_repository;
+import uim.platform.kyma.domain.ports.repositories.applications;
 import uim.platform.kyma.domain.types;
 
 /// Application service for external application connectivity.

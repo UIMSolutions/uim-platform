@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.application.usecases.manage.target_sys
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.target_system;
-import uim.platform.identity.provisioning.domain.ports.target_system_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 import uim.platform.identity.provisioning.application.dto;
 
 class ManageTargetSystemsUseCase

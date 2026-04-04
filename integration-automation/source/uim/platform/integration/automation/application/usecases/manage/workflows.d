@@ -13,9 +13,9 @@ import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
 
-// import uim.platform.integration.automation.domain.ports.workflow_repository;
-// import uim.platform.integration.automation.domain.ports.step_repository;
-// import uim.platform.integration.automation.domain.ports.scenario_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.workflows;
+// import uim.platform.integration.automation.domain.ports.repositories.steps;
+// import uim.platform.integration.automation.domain.ports.repositories.scenarios;
 import uim.platform.integration.automation.domain.ports;
 
 import uim.platform.integration.automation.domain.services.workflow_engine;

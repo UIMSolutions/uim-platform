@@ -1,2 +1,2 @@
-module uim.platform.identity.provisioning.domain.ports.repositories;
+module uim.platform.identity.provisioning.domain.ports.repositories.repositories;
 

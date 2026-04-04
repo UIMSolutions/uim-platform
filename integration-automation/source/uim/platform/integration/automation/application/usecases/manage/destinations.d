@@ -11,8 +11,8 @@ module uim.platform.integration.automation.application.usecases.manage.destinati
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.destination;
 
-// import uim.platform.integration.automation.domain.ports.destination_repository;
-// import uim.platform.integration.automation.domain.ports.system_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.destinations;
+// import uim.platform.integration.automation.domain.ports.repositories.systems;
 import uim.platform.integration.automation.domain.ports;
 import uim.platform.integration.automation.application.dto;
 

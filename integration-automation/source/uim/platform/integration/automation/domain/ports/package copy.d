@@ -1,2 +1,2 @@
-module uim.platform.integration.automation.domain.ports.package copy;
+module uim.platform.integration.automation.domain.ports.repositories.package copy;
 

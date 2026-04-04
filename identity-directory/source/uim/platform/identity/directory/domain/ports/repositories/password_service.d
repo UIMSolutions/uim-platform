@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.directory.domain.ports.password_service;
+module uim.platform.identity.directory.domain.ports.repositories.password_service;
 
 /// Port: outgoing — password hashing and validation.
 interface PasswordService

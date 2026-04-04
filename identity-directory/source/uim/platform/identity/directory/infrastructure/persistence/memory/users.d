@@ -7,7 +7,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.user_re
 
 import uim.platform.identity.directory.domain.entities.user;
 import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.user_repository;
+import uim.platform.identity.directory.domain.ports.repositories.users;
 
 // import std.algorithm : canFind;
 // import std.string : toLower, indexOf;

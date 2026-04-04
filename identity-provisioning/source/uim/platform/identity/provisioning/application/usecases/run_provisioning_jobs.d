@@ -10,10 +10,10 @@ module uim.platform.identity.provisioning.application.usecases.run_provisioning_
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
-import uim.platform.identity.provisioning.domain.ports.source_system_repository;
-import uim.platform.identity.provisioning.domain.ports.target_system_repository;
-import uim.platform.identity.provisioning.domain.ports.provisioning_log_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
 import uim.platform.identity.provisioning.domain.services.provisioning_engine;
 import uim.platform.identity.provisioning.application.dto;
 

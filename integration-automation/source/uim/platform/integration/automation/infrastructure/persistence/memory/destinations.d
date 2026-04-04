@@ -8,7 +8,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.des
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.destination;
 
-// import uim.platform.integration.automation.domain.ports.destination_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.destinations;
 import uim.platform.integration.automation.domain.ports;
 
 // import std.algorithm : filter;

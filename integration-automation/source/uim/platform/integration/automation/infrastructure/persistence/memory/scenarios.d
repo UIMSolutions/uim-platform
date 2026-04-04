@@ -8,7 +8,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.sce
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.integration_scenario;
 
-// import uim.platform.integration.automation.domain.ports.scenario_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.scenarios;
 import uim.platform.integration.automation.domain.ports;
 
 // import std.algorithm : filter;

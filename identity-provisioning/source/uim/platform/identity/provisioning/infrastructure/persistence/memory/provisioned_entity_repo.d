@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.prov
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.ports.provisioned_entity_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
 
 class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
   private ProvisionedEntity[string] store;

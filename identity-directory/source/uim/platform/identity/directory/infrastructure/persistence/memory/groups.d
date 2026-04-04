@@ -7,7 +7,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.groups;
 
 import uim.platform.identity.directory.domain.entities.group;
 import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.group_repository;
+import uim.platform.identity.directory.domain.ports.repositories.groups;
 
 /// In-memory adapter for group persistence.
 class MemoryGroupRepository : GroupRepository

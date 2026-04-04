@@ -9,11 +9,11 @@ import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
 import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
-import uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
-import uim.platform.identity.provisioning.domain.ports.provisioning_log_repository;
-import uim.platform.identity.provisioning.domain.ports.provisioned_entity_repository;
-import uim.platform.identity.provisioning.domain.ports.source_system_repository;
-import uim.platform.identity.provisioning.domain.ports.target_system_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_logs;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioned_entitys;
+import uim.platform.identity.provisioning.domain.ports.repositories.source_systems;
+import uim.platform.identity.provisioning.domain.ports.repositories.target_systems;
 
 /// Summary of a provisioning job for monitoring dashboards.
 struct JobSummary

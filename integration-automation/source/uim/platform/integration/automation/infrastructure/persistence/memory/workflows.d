@@ -8,7 +8,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.wor
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;
 
-// import uim.platform.integration.automation.domain.ports.workflow_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.workflows;
 import uim.platform.integration.automation.domain.ports;
 
 // import std.algorithm : filter;

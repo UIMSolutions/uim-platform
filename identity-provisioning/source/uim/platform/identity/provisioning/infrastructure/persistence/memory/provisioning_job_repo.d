@@ -7,7 +7,7 @@ module uim.platform.identity.provisioning.infrastructure.persistence.memory.prov
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.provisioning_job;
-import uim.platform.identity.provisioning.domain.ports.provisioning_job_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.provisioning_jobs;
 
 class MemoryProvisioningJobRepository : ProvisioningJobRepository
 {

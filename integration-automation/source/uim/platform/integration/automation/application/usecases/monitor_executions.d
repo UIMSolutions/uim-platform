@@ -10,9 +10,9 @@ import uim.platform.integration.automation.domain.entities.execution_log;
 import uim.platform.integration.automation.domain.entities.workflow;
 import uim.platform.integration.automation.domain.entities.workflow_step;
 
-// import uim.platform.integration.automation.domain.ports.execution_log_repository;
-// import uim.platform.integration.automation.domain.ports.workflow_repository;
-// import uim.platform.integration.automation.domain.ports.step_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.execution_logs;
+// import uim.platform.integration.automation.domain.ports.repositories.workflows;
+// import uim.platform.integration.automation.domain.ports.repositories.steps;
 import uim.platform.integration.automation.domain.ports;
 
 class MonitorExecutionsUseCase

@@ -7,7 +7,7 @@ module uim.platform.kyma.infrastructure.persistence.memory.function_repo;
 
 import uim.platform.kyma.domain.types;
 import uim.platform.kyma.domain.entities.serverless_function;
-import uim.platform.kyma.domain.ports.function_repository;
+import uim.platform.kyma.domain.ports.repositories.functions;
 
 // import std.algorithm : filter;
 // import std.array : array;

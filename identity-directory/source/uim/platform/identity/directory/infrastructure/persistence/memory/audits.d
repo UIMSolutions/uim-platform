@@ -7,7 +7,7 @@ module uim.platform.identity.directory.infrastructure.persistence.memory.audits;
 
 import uim.platform.identity.directory.domain.entities.audit_event;
 import uim.platform.identity.directory.domain.types;
-import uim.platform.identity.directory.domain.ports.audit_repository;
+import uim.platform.identity.directory.domain.ports.repositories.audits;
 
 /// In-memory adapter for audit event persistence (append-only).
 class MemoryAuditRepository : AuditRepository {

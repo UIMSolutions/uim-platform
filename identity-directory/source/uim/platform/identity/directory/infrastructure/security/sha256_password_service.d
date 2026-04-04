@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.identity.directory.infrastructure.security.sha256_password_service;
 
-import uim.platform.identity.directory.domain.ports.password_service;
+import uim.platform.identity.directory.domain.ports.repositories.password_service;
 
 // import std.digest.sha;
 // import std.uuid;

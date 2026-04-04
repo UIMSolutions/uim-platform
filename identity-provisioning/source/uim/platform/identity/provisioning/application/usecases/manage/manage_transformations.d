@@ -10,7 +10,7 @@ module uim.platform.identity.provisioning.application.usecases.manage.transforma
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;
-import uim.platform.identity.provisioning.domain.ports.transformation_repository;
+import uim.platform.identity.provisioning.domain.ports.repositories.transformations;
 import uim.platform.identity.provisioning.domain.services.transformation_engine;
 import uim.platform.identity.provisioning.application.dto;
 

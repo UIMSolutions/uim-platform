@@ -8,7 +8,7 @@ module uim.platform.integration.automation.infrastructure.persistence.memory.exe
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.execution_log;
 
-// import uim.platform.integration.automation.domain.ports.execution_log_repository;
+// import uim.platform.integration.automation.domain.ports.repositories.execution_logs;
 import uim.platform.integration.automation.domain.ports;
 
 // import std.algorithm : filter;
