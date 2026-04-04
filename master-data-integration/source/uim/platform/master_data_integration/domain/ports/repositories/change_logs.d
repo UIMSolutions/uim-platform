@@ -9,8 +9,7 @@ import uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
 
 /// Port: outgoing — change log persistence.
-interface ChangeLogRepository
-{
+interface ChangeLogRepository {
   ChangeLogEntry findById(ChangeLogEntryId id);
   ChangeLogEntry[] findByTenant(TenantId tenantId);
   ChangeLogEntry[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId);
