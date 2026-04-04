@@ -6,7 +6,7 @@
 module uim.platform.mobile.domain.services;
 
 public {
-  import uim.platform.mobile.domain.services.push_delivery_service;
-  import uim.platform.mobile.domain.services.offline_sync_service;
-  import uim.platform.mobile.domain.services.feature_evaluation_service;
+  import uim.platform.mobile.domain.services.push_delivery;
+  import uim.platform.mobile.domain.services.offline_sync;
+  import uim.platform.mobile.domain.services.feature_evaluation;
 }
