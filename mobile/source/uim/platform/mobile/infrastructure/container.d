@@ -8,18 +8,18 @@ module uim.platform.mobile.infrastructure.container;
 import uim.platform.mobile.infrastructure.config;
 
 // Repositories
-import uim.platform.mobile.infrastructure.persistence.memory.mobile_app_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.device_registration_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.push_notification_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.push_registration_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.app_configuration_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.feature_restriction_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.client_resource_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.app_version_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.usage_report_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.offline_store_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.user_session_repo;
-import uim.platform.mobile.infrastructure.persistence.memory.client_log_repo;
+import uim.platform.mobile.infrastructure.persistence.memory.mobile_apps;
+import uim.platform.mobile.infrastructure.persistence.memory.device_registrations;
+import uim.platform.mobile.infrastructure.persistence.memory.push_notifications;
+import uim.platform.mobile.infrastructure.persistence.memory.push_registrations;
+import uim.platform.mobile.infrastructure.persistence.memory.app_configurations;
+import uim.platform.mobile.infrastructure.persistence.memory.feature_restrictions;
+import uim.platform.mobile.infrastructure.persistence.memory.client_resources;
+import uim.platform.mobile.infrastructure.persistence.memory.app_versions;
+import uim.platform.mobile.infrastructure.persistence.memory.usage_reports;
+import uim.platform.mobile.infrastructure.persistence.memory.offline_stores;
+import uim.platform.mobile.infrastructure.persistence.memory.user_sessions;
+import uim.platform.mobile.infrastructure.persistence.memory.client_logs;
 
 // Use Cases
 import uim.platform.mobile.application.use_cases.manage_mobile_apps;
