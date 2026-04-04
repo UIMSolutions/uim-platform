@@ -10,7 +10,7 @@ module uim.platform.foundry.presentation.http.controllers.space;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.foundry.application.usecases.manage_spaces;
+import uim.platform.foundry.application.usecases.manage.spaces;
 import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.space;

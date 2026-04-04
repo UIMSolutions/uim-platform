@@ -10,7 +10,7 @@ module uim.platform.foundry.presentation.http.controllers.buildpack;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.foundry.application.usecases.manage_buildpacks;
+import uim.platform.foundry.application.usecases.manage.buildpacks;
 import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.buildpack;

@@ -10,7 +10,7 @@ module uim.platform.connectivity.presentation.http.controllers.certificate;
 // import vibe.data.json;
 // // import std.conv : to;
 
-// import uim.platform.connectivity.application.usecases.manage_certificates;
+// import uim.platform.connectivity.application.usecases.manage.certificates;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.certificate;
 // import uim.platform.connectivity.presentation.http.json_utils;

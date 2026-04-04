@@ -16,11 +16,11 @@ import uim.platform.connectivity.infrastructure.persistence.memory.certificate_r
 import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_log_repo;
 
 // Use Cases
-import uim.platform.connectivity.application.usecases.manage_destinations;
-import uim.platform.connectivity.application.usecases.manage_connectors;
-import uim.platform.connectivity.application.usecases.manage_channels;
-import uim.platform.connectivity.application.usecases.manage_access_rules;
-import uim.platform.connectivity.application.usecases.manage_certificates;
+import uim.platform.connectivity.application.usecases.manage.destinations;
+import uim.platform.connectivity.application.usecases.manage.connectors;
+import uim.platform.connectivity.application.usecases.manage.channels;
+import uim.platform.connectivity.application.usecases.manage.access_rules;
+import uim.platform.connectivity.application.usecases.manage.certificates;
 import uim.platform.connectivity.application.usecases.monitor_connectivity;
 
 // Controllers
