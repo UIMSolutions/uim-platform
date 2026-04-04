@@ -1,0 +1,168 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.hana.presentation.http.controllers.database_connection;
+
+import uim.platform.hana.application.usecases.manage.database_connections;
+import uim.platform.hana.application.dto;
+import uim.platform.hana.presentation.http.json_utils;
+
+import uim.platform.hana;
+
+class DatabaseConnectionController : SAPController {
+  private ManageDatabaseConnectionsUseCase uc;
+
+  this(ManageDatabaseConnectionsUseCase uc) {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.get("/api/v1/hana/connections", &handleList);
+    router.get("/api/v1/hana/connections/*", &handleGet);
+    router.post("/api/v1/hana/connections", &handleCreate);
+    router.put("/api/v1/hana/connections/*", &handleUpdate);
+    router.delete_("/api/v1/hana/connections/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      CreateDatabaseConnectionRequest r;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.instanceId = jsonStr(j, "instanceId");
+      r.id = jsonStr(j, "id");
+      r.name = jsonStr(j, "name");
+      r.description = jsonStr(j, "description");
+      r.type = jsonStr(j, "type");
+      r.host = jsonStr(j, "host");
+      r.port = jsonInt(j, "port", 443);
+      r.database = jsonStr(j, "database");
+      r.user = jsonStr(j, "user");
+      r.password = jsonStr(j, "password");
+      r.useTls = jsonBool(j, "useTls", true);
+      r.minConnections = jsonInt(j, "minConnections", 1);
+      r.maxConnections = jsonInt(j, "maxConnections", 10);
+      r.properties = jsonKeyValuePairs(j, "properties");
+
+      auto result = uc.create(r);
+      if (result.success) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["message"] = Json("Database connection created");
+        res.writeJsonBody(resp, 201);
+      } else {
+        writeError(res, 400, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto conns = uc.list(tenantId);
+
+      auto jarr = Json.emptyArray;
+      foreach (ref c; conns) {
+        auto cj = Json.emptyObject;
+        cj["id"] = Json(c.id);
+        cj["instanceId"] = Json(c.instanceId);
+        cj["name"] = Json(c.name);
+        cj["type"] = Json(c.type.to!string);
+        cj["status"] = Json(c.status.to!string);
+        cj["host"] = Json(c.host);
+        cj["port"] = Json(cast(long) c.port);
+        cj["createdAt"] = Json(c.createdAt);
+        jarr ~= cj;
+      }
+
+      auto resp = Json.emptyObject;
+      resp["count"] = Json(cast(long) conns.length);
+      resp["resources"] = jarr;
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto c = uc.get_(id);
+      if (c.id.length == 0) {
+        writeError(res, 404, "Database connection not found");
+        return;
+      }
+
+      auto resp = Json.emptyObject;
+      resp["id"] = Json(c.id);
+      resp["instanceId"] = Json(c.instanceId);
+      resp["name"] = Json(c.name);
+      resp["description"] = Json(c.description);
+      resp["type"] = Json(c.type.to!string);
+      resp["status"] = Json(c.status.to!string);
+      resp["host"] = Json(c.host);
+      resp["port"] = Json(cast(long) c.port);
+      resp["database"] = Json(c.database);
+      resp["user"] = Json(c.user);
+      resp["useTls"] = Json(c.useTls);
+      resp["createdAt"] = Json(c.createdAt);
+      resp["modifiedAt"] = Json(c.modifiedAt);
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+
+      auto j = req.json;
+      UpdateDatabaseConnectionRequest r;
+      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.id = extractIdFromPath(req.requestURI.to!string);
+      r.name = jsonStr(j, "name");
+      r.description = jsonStr(j, "description");
+      r.host = jsonStr(j, "host");
+      r.port = jsonInt(j, "port", 443);
+      r.database = jsonStr(j, "database");
+      r.user = jsonStr(j, "user");
+      r.password = jsonStr(j, "password");
+
+      auto result = uc.update(r);
+      if (result.success) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["message"] = Json("Database connection updated");
+        res.writeJsonBody(resp, 200);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto result = uc.remove(id);
+      if (result.success) {
+        res.writeJsonBody(Json.emptyObject, 204);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+}

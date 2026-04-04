@@ -1,0 +1,58 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.hana.infrastructure.persistence.memory.configuration_repo;
+
+import uim.platform.hana.domain.types;
+import uim.platform.hana.domain.entities.configuration;
+import uim.platform.hana.domain.ports.repositories.configurations;
+
+import std.algorithm : filter;
+import std.array : array;
+
+class MemoryConfigurationRepository : ConfigurationRepository {
+  private Configuration[] store;
+
+  Configuration findById(ConfigurationId id) {
+    foreach (ref c; store) {
+      if (c.id == id)
+        return c;
+    }
+    return Configuration.init;
+  }
+
+  Configuration[] findByTenant(TenantId tenantId) {
+    return store.filter!(c => c.tenantId == tenantId).array;
+  }
+
+  Configuration[] findByInstance(InstanceId instanceId) {
+    return store.filter!(c => c.instanceId == instanceId).array;
+  }
+
+  Configuration[] findBySection(InstanceId instanceId, string section) {
+    return store.filter!(c => c.instanceId == instanceId && c.section == section).array;
+  }
+
+  void save(Configuration c) {
+    store ~= c;
+  }
+
+  void update(Configuration c) {
+    foreach (ref existing; store) {
+      if (existing.id == c.id) {
+        existing = c;
+        return;
+      }
+    }
+  }
+
+  void remove(ConfigurationId id) {
+    store = store.filter!(c => c.id != id).array;
+  }
+
+  long countByTenant(TenantId tenantId) {
+    return cast(long) store.filter!(c => c.tenantId == tenantId).array.length;
+  }
+}
