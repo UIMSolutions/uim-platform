@@ -17,8 +17,7 @@ import uim.platform.portal.application.dto;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class ManageMenuItemsUseCase
-{
+class ManageMenuItemsUseCase : UIMUseCase {
   private MenuItemRepository menuRepo;
   private SiteRepository siteRepo;
 

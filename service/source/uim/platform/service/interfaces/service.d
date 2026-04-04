@@ -9,8 +9,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-interface IUIMService
-{
+interface IUIMService {
   IUIMConfig config();
   void config(IUIMConfig cfg);
 

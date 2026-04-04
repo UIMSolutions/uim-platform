@@ -10,8 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class UIMTenant : UIMEntity, IUIMTenant
-{
+class UIMTenant : UIMEntity, IUIMTenant {
   mixin(UIMEntityTemplate!UIMTenant);
 
   override bool initialize(Json[string] initData = null)

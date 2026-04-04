@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.workzone.domain.types;
 
 /// An activity feed entry — records actions and events in a workspace.
-struct FeedEntry
-{
+struct FeedEntry {
   FeedEntryId id;
   WorkspaceId workspaceId;
   TenantId tenantId;

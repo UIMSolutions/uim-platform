@@ -9,14 +9,12 @@ import uim.platform.portal.domain.entities.site;
 import uim.platform.portal.domain.types;
 
 /// Domain service: validates whether a site is ready for publishing.
-struct PublishValidationResult
-{
+struct PublishValidationResult {
   bool valid;
   string[] errors;
 }
 
-PublishValidationResult validateForPublish(const ref Site site)
-{
+PublishValidationResult validateForPublish(const ref Site site) {
   string[] errors;
 
   if (site.name.length == 0)

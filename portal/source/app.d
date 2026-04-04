@@ -16,11 +16,9 @@ module app;
 import uim.platform.portal;
 
 
-version (unittest)
-{
+version (unittest) {
 }
-else
-{
+else {
   void main()
   {
     // Load configuration

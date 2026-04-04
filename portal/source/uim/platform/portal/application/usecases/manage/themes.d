@@ -13,7 +13,7 @@ import uim.platform.portal.application.dto;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageThemesUseCase {
+class ManageThemesUseCase : UIMUseCase {
   private ThemeRepository themeRepo;
 
   this(ThemeRepository themeRepo) {

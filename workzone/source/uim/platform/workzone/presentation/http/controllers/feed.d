@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class FeedController
-{
+class FeedController {
   private ManageFeedsUseCase useCase;
 
   this(ManageFeedsUseCase useCase)
@@ -122,8 +121,7 @@ class FeedController
   }
 }
 
-private Json serializeFeed(ref FeedEntry e)
-{
+private Json serializeFeed(ref FeedEntry e) {
   auto j = Json.emptyObject;
   j["id"] = Json(e.id);
   j["workspaceId"] = Json(e.workspaceId);

@@ -11,6 +11,5 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMMemoryTenant
-{
+class UIMMemoryTenant {
 }

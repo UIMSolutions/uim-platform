@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.entities.widget : WidgetConfig;
 
 // ──────────────── Workspace DTOs ────────────────
 
-struct CreateWorkspaceRequest
-{
+struct CreateWorkspaceRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -25,8 +24,7 @@ struct CreateWorkspaceRequest
   WorkspaceSettings settings;
 }
 
-struct UpdateWorkspaceRequest
-{
+struct UpdateWorkspaceRequest {
   WorkspaceId id;
   TenantId tenantId;
   string name;
@@ -35,8 +33,7 @@ struct UpdateWorkspaceRequest
   WorkspaceSettings settings;
 }
 
-struct AddMemberRequest
-{
+struct AddMemberRequest {
   WorkspaceId workspaceId;
   TenantId tenantId;
   UserId userId;
@@ -46,8 +43,7 @@ struct AddMemberRequest
 
 // ──────────────── Workpage DTOs ────────────────
 
-struct CreateWorkpageRequest
-{
+struct CreateWorkpageRequest {
   WorkspaceId workspaceId;
   TenantId tenantId;
   string title;
@@ -56,8 +52,7 @@ struct CreateWorkpageRequest
   bool isDefault;
 }
 
-struct UpdateWorkpageRequest
-{
+struct UpdateWorkpageRequest {
   WorkpageId id;
   TenantId tenantId;
   string title;
@@ -68,8 +63,7 @@ struct UpdateWorkpageRequest
 
 // ──────────────── Card DTOs ────────────────
 
-struct CreateCardRequest
-{
+struct CreateCardRequest {
   TenantId tenantId;
   string title;
   string subtitle;
@@ -80,8 +74,7 @@ struct CreateCardRequest
   CardManifest manifest;
 }
 
-struct UpdateCardRequest
-{
+struct UpdateCardRequest {
   CardId id;
   TenantId tenantId;
   string title;
@@ -95,8 +88,7 @@ struct UpdateCardRequest
 
 // ──────────────── Content DTOs ────────────────
 
-struct CreateContentRequest
-{
+struct CreateContentRequest {
   WorkspaceId workspaceId;
   TenantId tenantId;
   string title;
@@ -109,8 +101,7 @@ struct CreateContentRequest
   string language;
 }
 
-struct UpdateContentRequest
-{
+struct UpdateContentRequest {
   ContentId id;
   TenantId tenantId;
   string title;
@@ -123,8 +114,7 @@ struct UpdateContentRequest
 
 // ──────────────── Feed DTOs ────────────────
 
-struct CreateFeedEntryRequest
-{
+struct CreateFeedEntryRequest {
   WorkspaceId workspaceId;
   TenantId tenantId;
   UserId actorId;
@@ -138,8 +128,7 @@ struct CreateFeedEntryRequest
 
 // ──────────────── Notification DTOs ────────────────
 
-struct CreateNotificationRequest
-{
+struct CreateNotificationRequest {
   TenantId tenantId;
   UserId recipientId;
   string title;
@@ -154,8 +143,7 @@ struct CreateNotificationRequest
 
 // ──────────────── Task DTOs ────────────────
 
-struct CreateTaskRequest
-{
+struct CreateTaskRequest {
   TenantId tenantId;
   UserId assigneeId;
   string assigneeName;
@@ -172,8 +160,7 @@ struct CreateTaskRequest
   long dueDate;
 }
 
-struct UpdateTaskRequest
-{
+struct UpdateTaskRequest {
   TaskId id;
   TenantId tenantId;
   TaskStatus status;
@@ -185,8 +172,7 @@ struct UpdateTaskRequest
 
 // ──────────────── Channel DTOs ────────────────
 
-struct CreateChannelRequest
-{
+struct CreateChannelRequest {
   WorkspaceId workspaceId;
   TenantId tenantId;
   string name;
@@ -195,8 +181,7 @@ struct CreateChannelRequest
   ChannelConfig config;
 }
 
-struct UpdateChannelRequest
-{
+struct UpdateChannelRequest {
   ChannelId id;
   TenantId tenantId;
   string name;
@@ -207,8 +192,7 @@ struct UpdateChannelRequest
 
 // ──────────────── App Registration DTOs ────────────────
 
-struct CreateAppRequest
-{
+struct CreateAppRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -221,8 +205,7 @@ struct CreateAppRequest
   AppConfig appConfig;
 }
 
-struct UpdateAppRequest
-{
+struct UpdateAppRequest {
   AppId id;
   TenantId tenantId;
   string name;
@@ -235,8 +218,7 @@ struct UpdateAppRequest
 
 // ──────────────── Widget DTOs ────────────────
 
-struct CreateWidgetRequest
-{
+struct CreateWidgetRequest {
   WorkpageId pageId;
   TenantId tenantId;
   string title;
@@ -249,8 +231,7 @@ struct CreateWidgetRequest
   WidgetConfig config;
 }
 
-struct UpdateWidgetRequest
-{
+struct UpdateWidgetRequest {
   WidgetId id;
   TenantId tenantId;
   string title;
@@ -264,8 +245,7 @@ struct UpdateWidgetRequest
 
 // ──────────────── Generic result ────────────────
 
-struct CommandResult
-{
+struct CommandResult {
   string id;
   string error;
 

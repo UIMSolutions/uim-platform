@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class NotificationController
-{
+class NotificationController {
   private ManageNotificationsUseCase useCase;
 
   this(ManageNotificationsUseCase useCase)
@@ -189,8 +188,7 @@ class NotificationController
   }
 }
 
-private Json serializeNotification(ref Notification n)
-{
+private Json serializeNotification(ref Notification n) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(n.id);

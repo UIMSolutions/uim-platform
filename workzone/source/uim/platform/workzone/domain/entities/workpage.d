@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.workpage;
 import uim.platform.workzone.domain.types;
 
 /// A page within a workspace — containers for widgets and content.
-struct Workpage
-{
+struct Workpage {
   WorkpageId id;
   WorkspaceId workspaceId;
   TenantId tenantId;

@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.contents;
 // import std.algorithm : canFind, filter;
 // import std.array : array;
 
-class MemoryContentRepository : ContentRepository
-{
+class MemoryContentRepository : ContentRepository {
   private ContentItem[ContentId] store;
 
   ContentItem[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)

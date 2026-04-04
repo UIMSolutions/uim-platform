@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.apps;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
 
-interface AppRepository
-{
+interface AppRepository {
   AppRegistration[] findByTenant(TenantId tenantId);
   AppRegistration* findById(AppId id, TenantId tenantId);
   AppRegistration[] findByStatus(AppStatus status, TenantId tenantId);

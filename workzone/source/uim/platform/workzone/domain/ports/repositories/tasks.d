@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.tasks;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;
 
-interface TaskRepository
-{
+interface TaskRepository {
   Task[] findByAssignee(UserId assigneeId, TenantId tenantId);
   Task* findById(TaskId id, TenantId tenantId);
   Task[] findByStatus(TaskStatus status, UserId assigneeId, TenantId tenantId);

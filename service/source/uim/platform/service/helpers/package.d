@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.helpers;
 
-public
-{
+public {
   import uim.platform.service.helpers.contains;
   import uim.platform.service.helpers.convert;
   import uim.platform.service.helpers.helper;

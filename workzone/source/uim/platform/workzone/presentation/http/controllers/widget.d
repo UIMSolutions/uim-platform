@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WidgetController
-{
+class WidgetController {
   private ManageWidgetsUseCase useCase;
 
   this(ManageWidgetsUseCase useCase)
@@ -177,8 +176,7 @@ class WidgetController
   }
 }
 
-private WidgetConfig parseWidgetConfig(Json j)
-{
+private WidgetConfig parseWidgetConfig(Json j) {
   import uim.platform.workzone.domain.entities.widget : WidgetConfig;
 
   WidgetConfig cfg;
@@ -194,8 +192,7 @@ private WidgetConfig parseWidgetConfig(Json j)
   return cfg;
 }
 
-private Json serializeWidget(ref Widget w)
-{
+private Json serializeWidget(ref Widget w) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(w.id);

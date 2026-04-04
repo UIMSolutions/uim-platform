@@ -14,8 +14,7 @@ import uim.platform.portal.application.dto;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageSitesUseCase
-{
+class ManageSitesUseCase : UIMUseCase {
   private SiteRepository siteRepo;
 
   this(SiteRepository siteRepo)

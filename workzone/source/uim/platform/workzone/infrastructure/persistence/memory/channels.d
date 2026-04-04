@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.channels;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryChannelRepository : ChannelRepository
-{
+class MemoryChannelRepository : ChannelRepository {
   private Channel[ChannelId] store;
 
   Channel[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)

@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-Json set(Json data, string key, Json value)
-{
+Json set(Json data, string key, Json value) {
   if (!data.isObject)
     return data;
 
@@ -20,8 +19,7 @@ Json set(Json data, string key, Json value)
   return data;
 }
 
-Json set(Json data, string key, string value)
-{
+Json set(Json data, string key, string value) {
   if (!data.isObject)
     return data;
 
@@ -29,8 +27,7 @@ Json set(Json data, string key, string value)
   return data;
 }
 
-Json set(Json data, string key, bool value)
-{
+Json set(Json data, string key, bool value) {
   if (!data.isObject)
     return data;
 
@@ -38,8 +35,7 @@ Json set(Json data, string key, bool value)
   return data;
 }
 
-Json set(Json data, string key, int value)
-{
+Json set(Json data, string key, int value) {
   if (!data.isObject)
     return data;
 
@@ -47,8 +43,7 @@ Json set(Json data, string key, int value)
   return data;
 }
 
-Json set(Json data, string key, long value)
-{
+Json set(Json data, string key, long value) {
   if (!data.isObject)
     return data;
 
@@ -56,8 +51,7 @@ Json set(Json data, string key, long value)
   return data;
 }
 
-Json set(Json data, string key, double value)
-{
+Json set(Json data, string key, double value) {
   if (!data.isObject)
     return data;
 
@@ -65,8 +59,7 @@ Json set(Json data, string key, double value)
   return data;
 }
 
-Json set(Json data, string key, size_t value)
-{
+Json set(Json data, string key, size_t value) {
   if (!data.isObject)
     return data;
 
@@ -74,8 +67,7 @@ Json set(Json data, string key, size_t value)
   return data;
 }
 
-Json set(T)(Json data, string key, T[] values)
-{
+Json set(T)(Json data, string key, T[] values) {
   if (!data.isObject)
     return data;
 

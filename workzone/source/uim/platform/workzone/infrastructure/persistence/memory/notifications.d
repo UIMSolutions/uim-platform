@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.notifications;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryNotificationRepository : NotificationRepository
-{
+class MemoryNotificationRepository : NotificationRepository {
   private Notification[NotificationId] store;
 
   Notification[] findByRecipient(UserId recipientId, TenantId tenantId)

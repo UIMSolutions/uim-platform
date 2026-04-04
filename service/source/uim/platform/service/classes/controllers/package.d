@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.classes.controllers;
 
-public
-{
+public {
   import uim.platform.service.classes.controllers.health;
   import uim.platform.service.classes.controllers.controller;
 }

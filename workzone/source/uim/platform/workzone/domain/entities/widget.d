@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.widget;
 import uim.platform.workzone.domain.types;
 
 /// A widget instance placed on a workspace page.
-struct Widget
-{
+struct Widget {
   WidgetId id;
   WorkpageId pageId;
   TenantId tenantId;
@@ -27,8 +26,7 @@ struct Widget
 }
 
 /// Per-instance widget configuration.
-struct WidgetConfig
-{
+struct WidgetConfig {
   string customTitle;
   int maxItems;
   int refreshIntervalSec;

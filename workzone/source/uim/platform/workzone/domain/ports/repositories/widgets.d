@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.widgets;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
 
-interface WidgetRepository
-{
+interface WidgetRepository {
   Widget[] findByPage(WorkpageId pageId, TenantId tenantId);
   Widget* findById(WidgetId id, TenantId tenantId);
   void save(Widget widget);

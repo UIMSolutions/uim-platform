@@ -20,8 +20,7 @@ alias TenantId = string;
 alias TranslationId = string;
 
 /// Site status.
-enum SiteStatus
-{
+enum SiteStatus {
   draft,
   published,
   unpublished,
@@ -29,8 +28,7 @@ enum SiteStatus
 }
 
 /// Page layout type.
-enum PageLayout
-{
+enum PageLayout {
   freeform,
   anchored,
   twoColumn,
@@ -39,8 +37,7 @@ enum PageLayout
 }
 
 /// Tile type (app launcher type).
-enum TileType
-{
+enum TileType {
   static_, // simple link tile
   dynamic, // tile with dynamic data count
   custom, // custom widget tile
@@ -49,8 +46,7 @@ enum TileType
 }
 
 /// App type for tiles.
-enum AppType
-{
+enum AppType {
   sapui5,
   webDynpro,
   sapGuiHtml,
@@ -60,16 +56,14 @@ enum AppType
 }
 
 /// Content provider type.
-enum ProviderType
-{
+enum ProviderType {
   local,
   remote,
   federated,
 }
 
 /// Theme mode.
-enum ThemeMode
-{
+enum ThemeMode {
   light,
   dark,
   highContrast,
@@ -77,16 +71,14 @@ enum ThemeMode
 }
 
 /// Navigation target type.
-enum NavigationTarget
-{
+enum NavigationTarget {
   inPlace,
   newWindow,
   embedded,
 }
 
 /// Transport status.
-enum TransportStatus
-{
+enum TransportStatus {
   pending,
   inProgress,
   completed,
@@ -94,8 +86,7 @@ enum TransportStatus
 }
 
 /// Role assignment scope.
-enum RoleScope
-{
+enum RoleScope {
   site,
   catalog,
   group,

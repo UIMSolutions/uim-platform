@@ -10,8 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class UIMValidationException : UIMException
-{
+class UIMValidationException : UIMException {
   this(string message)
   {
     super("Validation error: " ~ message);
@@ -23,8 +22,7 @@ class UIMValidationException : UIMException
   }
 }
 ///
-unittest
-{
+unittest {
   UIMValidationException ex1 = new UIMValidationException("Test message");
   assert(ex1.message == "Validation error: Test message");
 

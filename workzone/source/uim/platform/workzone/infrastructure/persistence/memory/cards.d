@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.cards;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryCardRepository : CardRepository
-{
+class MemoryCardRepository : CardRepository {
   private Card[CardId] store;
 
   Card[] findByTenant(TenantId tenantId)

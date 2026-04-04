@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-bool optionalBoolean(Json data, string key, bool fallback)
-{
+bool optionalBoolean(Json data, string key, bool fallback) {
   if (!(key in data) || data[key].isNull)
     return fallback;
 
@@ -20,8 +19,7 @@ bool optionalBoolean(Json data, string key, bool fallback)
   return data[key].get!bool;
 }
 
-string optionalString(Json data, string key, string fallback)
-{
+string optionalString(Json data, string key, string fallback) {
   if (!(key in data) || data[key].isNull)
     return fallback;
 
@@ -29,8 +27,7 @@ string optionalString(Json data, string key, string fallback)
   return data[key].getString;
 }
 
-Json optionalObject(Json data, string key, Json fallback = Json.emptyObject)
-{
+Json optionalObject(Json data, string key, Json fallback = Json.emptyObject) {
   if (!(key in data) || data[key].isNull)
   {
     return fallback;

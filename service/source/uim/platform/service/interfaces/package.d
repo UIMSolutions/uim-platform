@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.interfaces;
 
-public
-{
+public {
   import uim.platform.service.interfaces.config;
   import uim.platform.service.interfaces.server;
   import uim.platform.service.interfaces.service;

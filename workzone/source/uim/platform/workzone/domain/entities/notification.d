@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.notification;
 import uim.platform.workzone.domain.types;
 
 /// A user notification — cross-system alerts and action items.
-struct Notification
-{
+struct Notification {
   NotificationId id;
   TenantId tenantId;
   UserId recipientId;

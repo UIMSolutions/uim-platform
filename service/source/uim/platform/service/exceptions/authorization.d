@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMAuthorizationException : UIMException
-{
+class UIMAuthorizationException : UIMException {
   this(string message)
   {
     super("Unauthorized: " ~ message);
@@ -24,8 +23,7 @@ class UIMAuthorizationException : UIMException
   }
 }
 ///
-unittest
-{
+unittest {
   UIMAuthorizationException ex1 = new UIMAuthorizationException("Test message");
   assert(ex1.message == "Unauthorized: Test message");
 

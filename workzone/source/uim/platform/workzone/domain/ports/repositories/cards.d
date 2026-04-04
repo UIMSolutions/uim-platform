@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.cards;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
 
-interface CardRepository
-{
+interface CardRepository {
   Card[] findByTenant(TenantId tenantId);
   Card* findById(CardId id, TenantId tenantId);
   Card[] findByType(CardType cardType, TenantId tenantId);

@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.workpages;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
 
-interface WorkpageRepository
-{
+interface WorkpageRepository {
   Workpage[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
   Workpage* findById(WorkpageId id, TenantId tenantId);
   void save(Workpage page);

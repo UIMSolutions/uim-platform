@@ -18,8 +18,7 @@ mixin(ShowModule!());
   * @param message A human-readable error message
   * @param statusCode The HTTP status code to use (e.g. 400, 404, 500)
   */
-void respondError(HTTPServerResponse res, string message, int statusCode)
-{
+void respondError(HTTPServerResponse res, string message, int statusCode) {
   Json payload = Json.emptyObject.set("success", false).set("message", message)
     .set("statusCode", statusCode);
 
@@ -32,8 +31,7 @@ void respondError(HTTPServerResponse res, string message, int statusCode)
   * @param subPath The URL path after the base path (e.g. "/v1/tenants/123")
   * @return An array of path segments (e.g. ["v1", "tenants", "123"]) or null if the path is empty
   */
-string[] normalizedSegments(string subPath)
-{
+string[] normalizedSegments(string subPath) {
   auto clean = subPath;
   if (clean.length > 0 && clean[0] == '/')
   {
@@ -65,8 +63,7 @@ string[] normalizedSegments(string subPath)
   * @param req The HTTP request object to read from
   * @return The parsed JSON object, or an empty JSON object if parsing fails
   */
-Json parseBody(HTTPServerRequest req)
-{
+Json parseBody(HTTPServerRequest req) {
   try
   {
     return req.json();

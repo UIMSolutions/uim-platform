@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WorkspaceController
-{
+class WorkspaceController {
   private ManageWorkspacesUseCase useCase;
 
   this(ManageWorkspacesUseCase useCase)
@@ -210,8 +209,7 @@ class WorkspaceController
   }
 }
 
-private WorkspaceSettings parseWorkspaceSettings(Json j)
-{
+private WorkspaceSettings parseWorkspaceSettings(Json j) {
   WorkspaceSettings s;
   auto sv = "settings" in j;
   if (sv !is null && (*sv).type == Json.Type.object)
@@ -228,8 +226,7 @@ private WorkspaceSettings parseWorkspaceSettings(Json j)
   return s;
 }
 
-private Json serializeWorkspace(ref Workspace w)
-{
+private Json serializeWorkspace(ref Workspace w) {
   // import std.conv : to;
 
   auto j = Json.emptyObject;

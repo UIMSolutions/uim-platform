@@ -24,8 +24,7 @@ mixin(ShowModule!());
   *   (other routes are implemented in subclasses)
 
   */
-class UIMServer
-{
+class UIMServer {
   this()
   {
     initialize();

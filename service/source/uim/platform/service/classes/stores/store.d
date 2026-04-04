@@ -12,8 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMStore
-{
+class UIMStore {
 
   protected Mutex _lock;
 

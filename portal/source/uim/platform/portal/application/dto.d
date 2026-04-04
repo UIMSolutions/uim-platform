@@ -12,8 +12,7 @@ import uim.platform.portal.domain.entities.theme : ThemeColors, ThemeFonts;
 
 /// --- Site DTOs ---
 
-struct CreateSiteRequest
-{
+struct CreateSiteRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -22,8 +21,7 @@ struct CreateSiteRequest
   SiteSettings settings;
 }
 
-struct UpdateSiteRequest
-{
+struct UpdateSiteRequest {
   SiteId siteId;
   string name;
   string description;
@@ -32,8 +30,7 @@ struct UpdateSiteRequest
   SiteSettings settings;
 }
 
-struct SiteResponse
-{
+struct SiteResponse {
   string siteId;
   string error;
 
@@ -45,8 +42,7 @@ struct SiteResponse
 
 /// --- Page DTOs ---
 
-struct CreatePageRequest
-{
+struct CreatePageRequest {
   SiteId siteId;
   TenantId tenantId;
   string title;
@@ -58,8 +54,7 @@ struct CreatePageRequest
   bool visible;
 }
 
-struct UpdatePageRequest
-{
+struct UpdatePageRequest {
   PageId pageId;
   string title;
   string description;
@@ -70,8 +65,7 @@ struct UpdatePageRequest
   bool visible;
 }
 
-struct PageResponse
-{
+struct PageResponse {
   string pageId;
   string error;
 
@@ -83,8 +77,7 @@ struct PageResponse
 
 /// --- Section DTOs ---
 
-struct CreateSectionRequest
-{
+struct CreateSectionRequest {
   PageId pageId;
   TenantId tenantId;
   string title;
@@ -93,8 +86,7 @@ struct CreateSectionRequest
   int columns;
 }
 
-struct UpdateSectionRequest
-{
+struct UpdateSectionRequest {
   SectionId sectionId;
   string title;
   int sortOrder;
@@ -102,8 +94,7 @@ struct UpdateSectionRequest
   int columns;
 }
 
-struct SectionResponse
-{
+struct SectionResponse {
   string sectionId;
   string error;
 
@@ -115,8 +106,7 @@ struct SectionResponse
 
 /// --- Tile DTOs ---
 
-struct CreateTileRequest
-{
+struct CreateTileRequest {
   TenantId tenantId;
   CatalogId catalogId;
   string title;
@@ -134,8 +124,7 @@ struct CreateTileRequest
   TileConfiguration configuration;
 }
 
-struct UpdateTileRequest
-{
+struct UpdateTileRequest {
   TileId tileId;
   string title;
   string subtitle;
@@ -152,8 +141,7 @@ struct UpdateTileRequest
   TileConfiguration configuration;
 }
 
-struct TileResponse
-{
+struct TileResponse {
   string tileId;
   string error;
 
@@ -165,8 +153,7 @@ struct TileResponse
 
 /// --- Catalog DTOs ---
 
-struct CreateCatalogRequest
-{
+struct CreateCatalogRequest {
   TenantId tenantId;
   string title;
   string description;
@@ -175,8 +162,7 @@ struct CreateCatalogRequest
   bool active;
 }
 
-struct UpdateCatalogRequest
-{
+struct UpdateCatalogRequest {
   CatalogId catalogId;
   string title;
   string description;
@@ -184,8 +170,7 @@ struct UpdateCatalogRequest
   bool active;
 }
 
-struct CatalogResponse
-{
+struct CatalogResponse {
   string catalogId;
   string error;
 
@@ -197,8 +182,7 @@ struct CatalogResponse
 
 /// --- Content Provider DTOs ---
 
-struct CreateProviderRequest
-{
+struct CreateProviderRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -207,8 +191,7 @@ struct CreateProviderRequest
   string authToken;
 }
 
-struct UpdateProviderRequest
-{
+struct UpdateProviderRequest {
   ProviderId providerId;
   string name;
   string description;
@@ -217,8 +200,7 @@ struct UpdateProviderRequest
   bool active;
 }
 
-struct ProviderResponse
-{
+struct ProviderResponse {
   string providerId;
   string error;
 
@@ -230,30 +212,26 @@ struct ProviderResponse
 
 /// --- Role DTOs ---
 
-struct CreateRoleRequest
-{
+struct CreateRoleRequest {
   TenantId tenantId;
   string name;
   string description;
   RoleScope scope_;
 }
 
-struct UpdateRoleRequest
-{
+struct UpdateRoleRequest {
   RoleId roleId;
   string name;
   string description;
 }
 
-struct AssignRoleRequest
-{
+struct AssignRoleRequest {
   RoleId roleId;
   string[] userIds;
   string[] groupIds;
 }
 
-struct RoleResponse
-{
+struct RoleResponse {
   string roleId;
   string error;
 
@@ -265,8 +243,7 @@ struct RoleResponse
 
 /// --- Theme DTOs ---
 
-struct CreateThemeRequest
-{
+struct CreateThemeRequest {
   TenantId tenantId;
   string name;
   string description;
@@ -278,8 +255,7 @@ struct CreateThemeRequest
   bool isDefault;
 }
 
-struct UpdateThemeRequest
-{
+struct UpdateThemeRequest {
   ThemeId themeId;
   string name;
   string description;
@@ -290,8 +266,7 @@ struct UpdateThemeRequest
   bool isDefault;
 }
 
-struct ThemeResponse
-{
+struct ThemeResponse {
   string themeId;
   string error;
 
@@ -303,8 +278,7 @@ struct ThemeResponse
 
 /// --- Menu Item DTOs ---
 
-struct CreateMenuItemRequest
-{
+struct CreateMenuItemRequest {
   SiteId siteId;
   TenantId tenantId;
   string title;
@@ -318,8 +292,7 @@ struct CreateMenuItemRequest
   bool visible;
 }
 
-struct UpdateMenuItemRequest
-{
+struct UpdateMenuItemRequest {
   MenuItemId menuItemId;
   string title;
   string icon;
@@ -332,8 +305,7 @@ struct UpdateMenuItemRequest
   bool visible;
 }
 
-struct MenuItemResponse
-{
+struct MenuItemResponse {
   string menuItemId;
   string error;
 
@@ -345,8 +317,7 @@ struct MenuItemResponse
 
 /// --- Translation DTOs ---
 
-struct CreateTranslationRequest
-{
+struct CreateTranslationRequest {
   TenantId tenantId;
   string resourceType;
   string resourceId;
@@ -355,14 +326,12 @@ struct CreateTranslationRequest
   string value;
 }
 
-struct UpdateTranslationRequest
-{
+struct UpdateTranslationRequest {
   TranslationId translationId;
   string value;
 }
 
-struct TranslationResponse
-{
+struct TranslationResponse {
   string translationId;
   string error;
 
@@ -374,8 +343,7 @@ struct TranslationResponse
 
 /// --- Paged list ---
 
-struct PagedListResponse
-{
+struct PagedListResponse {
   ulong totalResults;
   uint startIndex;
   uint itemsPerPage;

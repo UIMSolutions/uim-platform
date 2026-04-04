@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.content_item;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ContentController
-{
+class ContentController {
   private ManageContentUseCase useCase;
 
   this(ManageContentUseCase useCase)
@@ -208,8 +207,7 @@ class ContentController
   }
 }
 
-private Json serializeContent(ref ContentItem c)
-{
+private Json serializeContent(ref ContentItem c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);

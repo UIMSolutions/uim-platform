@@ -10,6 +10,5 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-interface IUIMServer
-{
+interface IUIMServer {
 }

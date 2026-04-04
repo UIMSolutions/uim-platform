@@ -9,8 +9,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
 
 /// Domain service — evaluates workspace membership and access rules.
-struct WorkspaceAccessService
-{
+struct WorkspaceAccessService {
   /// Check whether a user is a member of the given workspace.
   static bool isMember(const ref Workspace ws, UserId userId)
   {

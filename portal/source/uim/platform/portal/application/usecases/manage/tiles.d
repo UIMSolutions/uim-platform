@@ -13,8 +13,7 @@ import uim.platform.portal.application.dto;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageTilesUseCase
-{
+class ManageTilesUseCase : UIMUseCase {
   private TileRepository tileRepo;
 
   this(TileRepository tileRepo)

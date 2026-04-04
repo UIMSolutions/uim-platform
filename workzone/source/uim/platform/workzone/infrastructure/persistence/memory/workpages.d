@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.workpages;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryWorkpageRepository : WorkpageRepository
-{
+class MemoryWorkpageRepository : WorkpageRepository {
   private Workpage[WorkpageId] store;
 
   Workpage[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)

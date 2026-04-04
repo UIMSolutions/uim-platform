@@ -13,8 +13,7 @@ import uim.platform.workzone.domain.entities.task;
 import uim.platform.workzone.domain.ports.repositories.tasks;
 import uim.platform.workzone.application.dto;
 
-class ManageTasksUseCase
-{
+class ManageTasksUseCase : UIMUseCase {
   private TaskRepository repo;
 
   this(TaskRepository repo)

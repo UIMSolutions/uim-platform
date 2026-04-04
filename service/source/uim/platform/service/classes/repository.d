@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SAPRepository(T)
-{
+class SAPRepository(T) {
   // Placeholder for repository methods
   // This class can be extended to implement specific data access logic for the service
 

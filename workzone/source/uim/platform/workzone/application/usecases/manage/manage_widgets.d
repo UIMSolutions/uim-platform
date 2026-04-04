@@ -13,8 +13,7 @@ import uim.platform.workzone.domain.entities.widget;
 import uim.platform.workzone.domain.ports.repositories.widgets;
 import uim.platform.workzone.application.dto;
 
-class ManageWidgetsUseCase
-{
+class ManageWidgetsUseCase : UIMUseCase {
   private WidgetRepository repo;
 
   this(WidgetRepository repo)

@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class ChannelController
-{
+class ChannelController {
   private ManageChannelsUseCase useCase;
 
   this(ManageChannelsUseCase useCase)
@@ -161,8 +160,7 @@ class ChannelController
   }
 }
 
-private ChannelConfig parseChannelConfig(Json j)
-{
+private ChannelConfig parseChannelConfig(Json j) {
   import uim.platform.workzone.domain.entities.channel : ChannelConfig;
 
   ChannelConfig cfg;
@@ -179,8 +177,7 @@ private ChannelConfig parseChannelConfig(Json j)
   return cfg;
 }
 
-private Json serializeChannel(ref Channel c)
-{
+private Json serializeChannel(ref Channel c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);

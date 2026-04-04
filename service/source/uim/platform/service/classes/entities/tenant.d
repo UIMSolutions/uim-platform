@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMTenantEntity : UIMEntity
-{
+class UIMTenantEntity : UIMEntity {
   mixin(UIMEntityTemplate!UIMTenantEntity);
 
   this(UUID tenantId)

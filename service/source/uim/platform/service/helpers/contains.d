@@ -11,17 +11,14 @@ mixin(ShowModule!());
 
 @safe:
 
-bool containsTenant(string[] values, string tenantId)
-{
+bool containsTenant(string[] values, string tenantId) {
   return values.any!(v => v == tenantId);
 }
 
-bool containsTenant(string[] values, UUID tenantId)
-{
+bool containsTenant(string[] values, UUID tenantId) {
   return values.any!(v => v == tenantId.toString);
 }
 
-bool containsTenant(UUID[] ids, UUID tenantId)
-{
+bool containsTenant(UUID[] ids, UUID tenantId) {
   return ids.any!(id => id == tenantId);
 }

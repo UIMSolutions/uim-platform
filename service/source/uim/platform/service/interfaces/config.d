@@ -10,8 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-interface IUIMConfig
-{
+interface IUIMConfig {
   string serviceName();
   void serviceName(string name);
 

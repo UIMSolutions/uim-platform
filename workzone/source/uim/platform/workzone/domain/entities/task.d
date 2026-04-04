@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.task;
 import uim.platform.workzone.domain.types;
 
 /// A unified task — aggregated from multiple backend systems into a single inbox.
-struct Task
-{
+struct Task {
   TaskId id;
   TenantId tenantId;
   UserId assigneeId;

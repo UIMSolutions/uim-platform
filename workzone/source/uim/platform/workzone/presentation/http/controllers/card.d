@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.card;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class CardController
-{
+class CardController {
   private ManageCardsUseCase useCase;
 
   this(ManageCardsUseCase useCase)
@@ -155,8 +154,7 @@ class CardController
   }
 }
 
-private CardType parseCardType(string s)
-{
+private CardType parseCardType(string s) {
   switch (s)
   {
   case "adaptive":
@@ -180,8 +178,7 @@ private CardType parseCardType(string s)
   }
 }
 
-private CardDataSource parseDataSource(Json j)
-{
+private CardDataSource parseDataSource(Json j) {
   CardDataSource ds;
   auto v = "dataSource" in j;
   if (v !is null && (*v).type == Json.Type.object)
@@ -197,8 +194,7 @@ private CardDataSource parseDataSource(Json j)
   return ds;
 }
 
-private CardManifest parseManifest(Json j)
-{
+private CardManifest parseManifest(Json j) {
   CardManifest m;
   auto v = "manifest" in j;
   if (v !is null && (*v).type == Json.Type.object)
@@ -216,8 +212,7 @@ private CardManifest parseManifest(Json j)
   return m;
 }
 
-private Json serializeCard(ref Card c)
-{
+private Json serializeCard(ref Card c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);

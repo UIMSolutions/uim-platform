@@ -10,8 +10,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-class HealthController : SAPController
-{
+class HealthController : SAPController {
   this()
   {
     super();

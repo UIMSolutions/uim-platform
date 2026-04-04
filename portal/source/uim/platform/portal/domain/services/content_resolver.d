@@ -13,21 +13,18 @@ import uim.platform.portal.domain.entities.menu_item;
 import uim.platform.portal.domain.types;
 
 /// Resolved site tree — a fully expanded view of a site for rendering.
-struct ResolvedSite
-{
+struct ResolvedSite {
   Site site;
   ResolvedPage[] pages;
   MenuItem[] menuItems;
 }
 
-struct ResolvedPage
-{
+struct ResolvedPage {
   Page page;
   ResolvedSection[] sections;
 }
 
-struct ResolvedSection
-{
+struct ResolvedSection {
   Section section;
   Tile[] tiles;
 }

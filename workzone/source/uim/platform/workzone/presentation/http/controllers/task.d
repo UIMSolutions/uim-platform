@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.task;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class TaskController
-{
+class TaskController {
   private ManageTasksUseCase useCase;
 
   this(ManageTasksUseCase useCase)
@@ -212,8 +211,7 @@ class TaskController
   }
 }
 
-private Json serializeTask(ref Task t)
-{
+private Json serializeTask(ref Task t) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(t.id);

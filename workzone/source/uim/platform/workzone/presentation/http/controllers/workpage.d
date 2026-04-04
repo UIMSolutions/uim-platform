@@ -14,8 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class WorkpageController
-{
+class WorkpageController {
   private ManageWorkpagesUseCase useCase;
 
   this(ManageWorkpagesUseCase useCase)
@@ -151,8 +150,7 @@ class WorkpageController
   }
 }
 
-private Json serializePage(ref Workpage p)
-{
+private Json serializePage(ref Workpage p) {
   auto j = Json.emptyObject;
   j["id"] = Json(p.id);
   j["workspaceId"] = Json(p.workspaceId);

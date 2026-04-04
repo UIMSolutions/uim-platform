@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.channels;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
 
-interface ChannelRepository
-{
+interface ChannelRepository {
   Channel[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
   Channel* findById(ChannelId id, TenantId tenantId);
   void save(Channel channel);

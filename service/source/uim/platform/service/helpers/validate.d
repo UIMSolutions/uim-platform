@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-bool validateTenant(string tenantId)
-{
+bool validateTenant(string tenantId) {
   if (tenantId.length == 0)
   {
     throw new UIMValidationException("Tenant ID cannot be empty");
@@ -21,13 +20,11 @@ bool validateTenant(string tenantId)
   return validateTenant(UUID(tenantId));
 }
 
-bool validateTenant(UUID tenantId)
-{
+bool validateTenant(UUID tenantId) {
   return validateId(tenantId, "Tenant ID");
 }
 
-bool validateId(string value, string fieldName)
-{
+bool validateId(string value, string fieldName) {
   if (value.length == 0)
   {
     throw new UIMValidationException(fieldName ~ " cannot be empty");
@@ -35,8 +32,7 @@ bool validateId(string value, string fieldName)
   return true;
 }
 
-bool validateId(UUID value, string fieldName)
-{
+bool validateId(UUID value, string fieldName) {
   if (value == NULLUUID)
   {
     throw new UIMValidationException(fieldName ~ " should be a valid UUID");
@@ -48,8 +44,7 @@ bool validateId(UUID value, string fieldName)
   * If the config does not require an auth token, this function does nothing.
   * Throws UIMAuthorizationException if validation fails.
   */
-bool validateAuth(HTTPServerRequest req, IUIMConfig cfg)
-{
+bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
   if (!cfg.requireAuthToken)
   {
     return true; // No auth required, allow all requests
@@ -81,8 +76,7 @@ bool validateAuth(HTTPServerRequest req, IUIMConfig cfg)
 //     throw new PDMAuthorizationException("Invalid bearer token");
 // }
 
-string[] segments(string path)
-{
+string[] segments(string path) {
   auto parts = path.split("/");
   string[] segs;
   foreach (p; parts)
@@ -91,8 +85,7 @@ string[] segments(string path)
   return segs;
 }
 
-bool validateString(string value, string fieldName)
-{
+bool validateString(string value, string fieldName) {
   if (value.length == 0)
   {
     throw new UIMValidationException(fieldName ~ " cannot be empty");

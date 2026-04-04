@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMConfigurationException : UIMException
-{
+class UIMConfigurationException : UIMException {
   this(string message)
   {
     super("Configuration error: " ~ message);
@@ -24,8 +23,7 @@ class UIMConfigurationException : UIMException
   }
 }
 ///
-unittest
-{
+unittest {
   UIMConfigurationException ex1 = new UIMConfigurationException("Test message");
   assert(ex1.message == "Configuration error: Test message");
 

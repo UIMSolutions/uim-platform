@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.feeds;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
 
-interface FeedRepository
-{
+interface FeedRepository {
   FeedEntry[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
   FeedEntry* findById(FeedEntryId id, TenantId tenantId);
   FeedEntry[] findByActor(UserId actorId, TenantId tenantId);

@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.ports.repositories.workspaces;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workspace;
 
-interface WorkspaceRepository
-{
+interface WorkspaceRepository {
   Workspace[] findByTenant(TenantId tenantId);
   Workspace* findById(WorkspaceId id, TenantId tenantId);
   Workspace* findByAlias(string alias_, TenantId tenantId);

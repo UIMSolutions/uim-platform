@@ -21,8 +21,7 @@ alias UserId = string;
 alias RoleId = string;
 
 /// Workspace type.
-enum WorkspaceType
-{
+enum WorkspaceType {
   project,
   team,
   department,
@@ -31,16 +30,14 @@ enum WorkspaceType
 }
 
 /// Workspace status.
-enum WorkspaceStatus
-{
+enum WorkspaceStatus {
   active,
   archived,
   suspended,
 }
 
 /// Card type (integration card manifest type).
-enum CardType
-{
+enum CardType {
   adaptive,
   analytical,
   list,
@@ -52,8 +49,7 @@ enum CardType
 }
 
 /// Content type within a workspace.
-enum ContentType
-{
+enum ContentType {
   blogPost,
   wikiPage,
   knowledgeBase,
@@ -63,8 +59,7 @@ enum ContentType
 }
 
 /// Content status / lifecycle.
-enum ContentStatus
-{
+enum ContentStatus {
   draft,
   published,
   archived,
@@ -72,8 +67,7 @@ enum ContentStatus
 }
 
 /// Notification priority.
-enum NotificationPriority
-{
+enum NotificationPriority {
   low,
   medium,
   high,
@@ -81,8 +75,7 @@ enum NotificationPriority
 }
 
 /// Notification status.
-enum NotificationStatus
-{
+enum NotificationStatus {
   unread,
   read_,
   dismissed,
@@ -90,8 +83,7 @@ enum NotificationStatus
 }
 
 /// Task status.
-enum TaskStatus
-{
+enum TaskStatus {
   open,
   inProgress,
   completed,
@@ -100,8 +92,7 @@ enum TaskStatus
 }
 
 /// Task priority.
-enum TaskPriority
-{
+enum TaskPriority {
   low,
   medium,
   high,
@@ -109,8 +100,7 @@ enum TaskPriority
 }
 
 /// Channel type (content feed source).
-enum ChannelType
-{
+enum ChannelType {
   activity,
   notification,
   custom,
@@ -118,16 +108,14 @@ enum ChannelType
 }
 
 /// Application status (registered app lifecycle).
-enum AppStatus
-{
+enum AppStatus {
   active,
   inactive,
   deprecated_,
 }
 
 /// Widget size on a workspace page.
-enum WidgetSize
-{
+enum WidgetSize {
   small,
   medium,
   large,
@@ -135,8 +123,7 @@ enum WidgetSize
 }
 
 /// Member role within a workspace.
-enum MemberRole
-{
+enum MemberRole {
   viewer,
   contributor,
   admin,

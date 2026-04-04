@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.classes.tenants;
 
-public
-{
+public {
   import uim.platform.service.classes.tenants.controller;
   import uim.platform.service.classes.tenants.middleware;
   import uim.platform.service.classes.tenants.repository;

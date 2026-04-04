@@ -9,8 +9,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-string sapServerTemplate()
-{
+string sapServerTemplate() {
   return q{
   this() {
     super();
@@ -26,7 +25,6 @@ string sapServerTemplate()
   };
 }
 
-template UIMServerTemplate(alias Symbol)
-{
+template UIMServerTemplate(alias Symbol) {
   const char[] SAPServerTemplate = sapServerTemplate();
 }

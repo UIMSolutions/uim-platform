@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.workzone.domain.types;
 
 /// A registered business application — SAP or third-party app entry.
-struct AppRegistration
-{
+struct AppRegistration {
   AppId id;
   TenantId tenantId;
   string name;
@@ -28,8 +27,7 @@ struct AppRegistration
 }
 
 /// App-specific configuration.
-struct AppConfig
-{
+struct AppConfig {
   string authType; // "saml", "oauth2", "basic", "none"
   string authEndpoint;
   bool enableSso;

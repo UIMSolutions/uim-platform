@@ -12,8 +12,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMEntity
-{
+class UIMEntity {
   this()
   {
     initialize();

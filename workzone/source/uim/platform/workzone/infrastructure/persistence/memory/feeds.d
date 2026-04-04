@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.feeds;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryFeedRepository : FeedRepository
-{
+class MemoryFeedRepository : FeedRepository {
   private FeedEntry[FeedEntryId] store;
 
   FeedEntry[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)

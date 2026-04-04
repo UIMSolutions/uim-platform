@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.widgets;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryWidgetRepository : WidgetRepository
-{
+class MemoryWidgetRepository : WidgetRepository {
   private Widget[WidgetId] store;
 
   Widget[] findByPage(WorkpageId pageId, TenantId tenantId)

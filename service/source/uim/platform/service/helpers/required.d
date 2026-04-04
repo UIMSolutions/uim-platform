@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-UUID requiredUUID(Json request, string key)
-{
+UUID requiredUUID(Json request, string key) {
   requiredKey(request, key);
   requiredStringType(request, key);
 
@@ -29,8 +28,7 @@ UUID requiredUUID(Json request, string key)
   * Validates that the specified key exists in the JSON object and is a non-empty string.
   * Returns the string value if valid, otherwise throws UIMValidationException.
   */
-string requiredString(Json data, string key)
-{
+string requiredString(Json data, string key) {
   requiredKey(data, key);
   requiredStringType(data, key);
 
@@ -43,40 +41,35 @@ string requiredString(Json data, string key)
   return value;
 }
 
-void requiredBooleanType(Json data, string key)
-{
+void requiredBooleanType(Json data, string key) {
   if (!data[key].isBoolean)
   {
     throw new UIMValidationException(key ~ " must be a boolean");
   }
 }
 
-void requiredStringType(Json data, string key)
-{
+void requiredStringType(Json data, string key) {
   if (!data[key].isString)
   {
     throw new UIMValidationException(key ~ " must be string");
   }
 }
 
-void requiredArrayType(Json data, string key)
-{
+void requiredArrayType(Json data, string key) {
   if (!data[key].isArray)
   {
     throw new UIMValidationException(key ~ " must be array");
   }
 }
 
-void requiredObjectType(Json data, string key)
-{
+void requiredObjectType(Json data, string key) {
   if (!data[key].isObject)
   {
     throw new UIMValidationException(key ~ " must be object");
   }
 }
 
-void requiredKey(Json data, string key)
-{
+void requiredKey(Json data, string key) {
   if (!(key in data))
   {
     throw new UIMValidationException(key ~ " is required");

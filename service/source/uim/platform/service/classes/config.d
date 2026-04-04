@@ -29,8 +29,7 @@ mixin(ShowModule!());
   *   }
   * }
   */
-class UIMConfig : IUIMConfig
-{
+class UIMConfig : IUIMConfig {
   this()
   {
     initialize();

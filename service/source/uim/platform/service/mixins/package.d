@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service.mixins;
 
-public
-{
+public {
   import uim.platform.service.mixins.config;
   import uim.platform.service.mixins.obj;
   import uim.platform.service.mixins.server;

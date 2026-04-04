@@ -5,8 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.service;
 
-public
-{
+public {
   import uim.framework;
 
   import uim.platform.service.classes;

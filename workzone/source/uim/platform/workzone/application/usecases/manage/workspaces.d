@@ -13,8 +13,7 @@ import uim.platform.workzone.domain.entities.workspace;
 import uim.platform.workzone.domain.ports.repositories.workspaces;
 import uim.platform.workzone.application.dto;
 
-class ManageWorkspacesUseCase
-{
+class ManageWorkspacesUseCase : UIMUseCase {
   private WorkspaceRepository repo;
 
   this(WorkspaceRepository repo)

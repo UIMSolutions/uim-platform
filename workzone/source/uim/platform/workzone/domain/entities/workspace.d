@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.workspace;
 import uim.platform.workzone.domain.types;
 
 /// A collaborative workspace — teams, projects, or departments.
-struct Workspace
-{
+struct Workspace {
   WorkspaceId id;
   TenantId tenantId;
   string name;
@@ -28,8 +27,7 @@ struct Workspace
 }
 
 /// Membership record within a workspace.
-struct WorkspaceMember
-{
+struct WorkspaceMember {
   UserId userId;
   string displayName;
   MemberRole role = MemberRole.contributor;
@@ -37,8 +35,7 @@ struct WorkspaceMember
 }
 
 /// Workspace-level settings.
-struct WorkspaceSettings
-{
+struct WorkspaceSettings {
   bool allowExternalMembers;
   bool enableNotifications;
   bool enableFeeds;

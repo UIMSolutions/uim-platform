@@ -17,8 +17,7 @@ import uim.platform.portal.application.dto;
 // import std.algorithm : filter, canFind;
 // import std.array : array;
 
-class ManagePagesUseCase
-{
+class ManagePagesUseCase : UIMUseCase {
   private PageRepository pageRepo;
   private SiteRepository siteRepo;
 

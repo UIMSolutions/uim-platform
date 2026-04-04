@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IUIMTenant : IUIMEntity
-{
+interface IUIMTenant : IUIMEntity {
   bool isValid();
 
   bool validate();

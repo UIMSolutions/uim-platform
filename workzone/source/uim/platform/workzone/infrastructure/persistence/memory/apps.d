@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.apps;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryAppRepository : AppRepository
-{
+class MemoryAppRepository : AppRepository {
   private AppRegistration[AppId] store;
 
   AppRegistration[] findByTenant(TenantId tenantId)

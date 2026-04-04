@@ -12,8 +12,7 @@ import uim.platform.workzone.domain.ports.repositories.tasks;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryTaskRepository : TaskRepository
-{
+class MemoryTaskRepository : TaskRepository {
   private Task[TaskId] store;
 
   Task[] findByAssignee(UserId assigneeId, TenantId tenantId)

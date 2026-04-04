@@ -8,8 +8,7 @@ module uim.platform.workzone.domain.entities.channel;
 import uim.platform.workzone.domain.types;
 
 /// A content channel — a feed source within a workspace for activity streams.
-struct Channel
-{
+struct Channel {
   ChannelId id;
   WorkspaceId workspaceId;
   TenantId tenantId;
@@ -24,8 +23,7 @@ struct Channel
 }
 
 /// Channel-specific configuration.
-struct ChannelConfig
-{
+struct ChannelConfig {
   string sourceUrl; // external feed URL
   int pollIntervalSec; // how often to poll
   string authType;

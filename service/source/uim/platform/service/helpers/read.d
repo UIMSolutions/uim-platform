@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-SysTime parseTime(string value)
-{
+SysTime parseTime(string value) {
   try
   {
     return SysTime.fromISOExtString(value);
@@ -23,14 +22,12 @@ SysTime parseTime(string value)
   }
 }
 
-SysTime readTime(Json item, string key)
-{
+SysTime readTime(Json item, string key) {
   return !(key in item) || !item[key].isString
     ? SysTime.fromISOExtString("1970-01-01T00:00:00Z") : parseTime(item[key].get!string);
 }
 
-string[] readStringArray(Json data, string key)
-{
+string[] readStringArray(Json data, string key) {
   string[] values;
   if (!(key in data) || data[key].isNull)
     return values;
@@ -47,8 +44,7 @@ string[] readStringArray(Json data, string key)
   return values;
 }
 /// 
-unittest
-{
+unittest {
   // import std.stdio : writeln;
 
   void testReadStringArray()
@@ -69,8 +65,7 @@ unittest
   }
 }
 
-Json readObject(Json data, string key, Json fallback = Json.emptyObject)
-{
+Json readObject(Json data, string key, Json fallback = Json.emptyObject) {
   if (!(key in data) || data[key].isNull)
   {
     return fallback;

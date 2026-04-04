@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-interface IUIMEntity
-{
+interface IUIMEntity {
   UUID id(); // Unique identifier for the entity
   void id(UUID id);
 

@@ -9,8 +9,7 @@ import uim.platform.service;
 mixin(ShowModule!());
 
 @safe:
-string uimConfigTemplate()
-{
+string uimConfigTemplate() {
   return "
   this() {
   super();
@@ -22,7 +21,6 @@ string uimConfigTemplate()
   ";
 }
 
-template UIMConfigTemplate(alias Symbol)
-{
+template UIMConfigTemplate(alias Symbol) {
   const char[] UIMConfigTemplate = uimConfigTemplate();
 }

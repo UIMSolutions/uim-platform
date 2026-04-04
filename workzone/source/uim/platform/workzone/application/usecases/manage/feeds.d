@@ -13,8 +13,7 @@ import uim.platform.workzone.domain.entities.feed_entry;
 import uim.platform.workzone.domain.ports.repositories.feeds;
 import uim.platform.workzone.application.dto;
 
-class ManageFeedsUseCase
-{
+class ManageFeedsUseCase : UIMUseCase {
   private FeedRepository repo;
 
   this(FeedRepository repo)

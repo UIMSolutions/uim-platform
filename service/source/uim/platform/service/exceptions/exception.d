@@ -11,8 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UIMException : Exception
-{
+class UIMException : Exception {
   this(string msg)
   {
     super(msg);
@@ -24,8 +23,7 @@ class UIMException : Exception
   }
 }
 ///
-unittest
-{
+unittest {
   UIMException ex1 = new UIMException("Test message");
   assert(ex1.message == "Test message");
 
