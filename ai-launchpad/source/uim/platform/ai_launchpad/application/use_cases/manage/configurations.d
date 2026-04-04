@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.configurations;
 
-import uim.platform.ai_launchpad.domain.ports.configuration_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.configurations;
 import uim.platform.ai_launchpad.domain.entities.configuration;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;

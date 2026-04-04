@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.scenario_repo;
 
-import uim.platform.ai_launchpad.domain.ports.scenario_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.scenarios;
 import uim.platform.ai_launchpad.domain.entities.scenario : Scenario;
 import uim.platform.ai_launchpad.domain.types;
 

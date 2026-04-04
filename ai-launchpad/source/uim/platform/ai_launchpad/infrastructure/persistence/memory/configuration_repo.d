@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.configuration_repo;
 
-import uim.platform.ai_launchpad.domain.ports.configuration_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.configurations;
 import uim.platform.ai_launchpad.domain.entities.configuration : Configuration;
 import uim.platform.ai_launchpad.domain.types;
 

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.execution_repo;
 
-import uim.platform.ai_launchpad.domain.ports.execution_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.executions;
 import uim.platform.ai_launchpad.domain.entities.execution : Execution;
 import uim.platform.ai_launchpad.domain.types;
 

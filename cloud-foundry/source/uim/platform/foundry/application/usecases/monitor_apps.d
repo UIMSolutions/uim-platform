@@ -10,9 +10,9 @@ import uim.platform.foundry.domain.entities.application;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.route;
 
-// import uim.platform.foundry.domain.ports.app;
-// import uim.platform.foundry.domain.ports.service_instance;
-// import uim.platform.foundry.domain.ports.route;
+// import uim.platform.foundry.domain.ports.repositories.app;
+// import uim.platform.foundry.domain.ports.repositories.service_instance;
+// import uim.platform.foundry.domain.ports.repositories.route;
 import uim.platform.foundry.domain.ports;
 
 /// Read-only summaries for application health and space resource usage.

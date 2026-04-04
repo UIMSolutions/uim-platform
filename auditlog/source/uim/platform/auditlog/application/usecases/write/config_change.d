@@ -11,8 +11,8 @@ module uim.platform.auditlog.application.usecases.write.config_change;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.entities.config_change_log;
-import uim.platform.auditlog.domain.ports.audit_log_repository;
-import uim.platform.auditlog.domain.ports.config_change_log_repository;
+import uim.platform.auditlog.domain.ports.repositories.audit_logs;
+import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 import uim.platform.auditlog.application.dto;
 
 @safe:

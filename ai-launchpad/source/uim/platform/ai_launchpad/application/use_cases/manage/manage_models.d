@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.models;
 
-import uim.platform.ai_launchpad.domain.ports.model_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.models;
 import uim.platform.ai_launchpad.domain.entities.model : Model;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;

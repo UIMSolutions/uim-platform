@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.manage.datasets;
 
-import uim.platform.ai_launchpad.domain.ports.dataset_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.datasets;
 import uim.platform.ai_launchpad.domain.entities.dataset : Dataset;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;

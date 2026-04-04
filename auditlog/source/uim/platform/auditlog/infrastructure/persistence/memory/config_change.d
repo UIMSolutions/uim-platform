@@ -7,7 +7,7 @@ module uim.platform.auditlog.infrastructure.persistence.memory.config_change;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.config_change_log;
-import uim.platform.auditlog.domain.ports.config_change_log_repository;
+import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 
 // import std.algorithm : filter;
 // import std.array : array;

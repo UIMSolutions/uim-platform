@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.dataset_repo;
 
-import uim.platform.ai_launchpad.domain.ports.dataset_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.datasets;
 import uim.platform.ai_launchpad.domain.entities.dataset : Dataset;
 import uim.platform.ai_launchpad.domain.types;
 

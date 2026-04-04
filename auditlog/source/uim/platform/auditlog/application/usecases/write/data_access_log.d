@@ -11,8 +11,8 @@ module uim.platform.auditlog.application.usecases.write.data_access_log;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry;
 import uim.platform.auditlog.domain.entities.data_access_log;
-import uim.platform.auditlog.domain.ports.audit_log_repository;
-import uim.platform.auditlog.domain.ports.data_access_log_repository;
+import uim.platform.auditlog.domain.ports.repositories.audit_logs;
+import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
 import uim.platform.auditlog.application.dto;
 
 @safe:

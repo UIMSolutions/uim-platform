@@ -7,7 +7,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.apps;
 
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
-import uim.platform.foundry.domain.ports.app;
+import uim.platform.foundry.domain.ports.repositories.app;
 
 // import std.algorithm : filter;
 // import std.array : array;

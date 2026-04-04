@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.resource_group_repo;
 
-import uim.platform.ai_launchpad.domain.ports.resource_group_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.resource_groups;
 import uim.platform.ai_launchpad.domain.entities.resource_group : ResourceGroup;
 import uim.platform.ai_launchpad.domain.types;
 

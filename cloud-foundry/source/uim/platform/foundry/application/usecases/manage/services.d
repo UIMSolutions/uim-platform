@@ -12,8 +12,8 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
 
-// import uim.platform.foundry.domain.ports.service_instance;
-// import uim.platform.foundry.domain.ports.service_binding;
+// import uim.platform.foundry.domain.ports.repositories.service_instance;
+// import uim.platform.foundry.domain.ports.repositories.service_binding;
 import uim.platform.foundry.domain.ports;
 import uim.platform.foundry.application.dto;
 

@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.manage_deployments;
 
-import uim.platform.ai_launchpad.domain.ports.deployment_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.deployments;
 import uim.platform.ai_launchpad.domain.entities.deployment : Deployment;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;

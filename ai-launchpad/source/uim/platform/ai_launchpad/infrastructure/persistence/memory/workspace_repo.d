@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.workspace_repo;
 
-import uim.platform.ai_launchpad.domain.ports.workspace_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.workspaces;
 import uim.platform.ai_launchpad.domain.entities.workspace : Workspace;
 import uim.platform.ai_launchpad.domain.types;
 

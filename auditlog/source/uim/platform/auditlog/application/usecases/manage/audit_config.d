@@ -10,7 +10,7 @@ module uim.platform.auditlog.application.usecases.manage.audit_config;
 // 
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_config;
-// import uim.platform.auditlog.domain.ports.audit_config_repository;
+// import uim.platform.auditlog.domain.ports.repositories.audit_configs;
 // import uim.platform.auditlog.application.dto;
 
 import uim.platform.auditlog;

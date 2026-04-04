@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
 
-import uim.platform.ai_launchpad.domain.ports.usage_statistic_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.usage_statistics;
 import uim.platform.ai_launchpad.domain.entities.usage_statistic : UsageStatistic;
 import uim.platform.ai_launchpad.domain.types;
 import uim.platform.ai_launchpad.application.dto;

@@ -7,7 +7,7 @@ module uim.platform.foundry.infrastructure.persistence.memory.route;
 
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.route;
-import uim.platform.foundry.domain.ports.route;
+import uim.platform.foundry.domain.ports.repositories.route;
 
 // import std.algorithm : canFind, filter;
 // import std.array : array;

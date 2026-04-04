@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.infrastructure.persistence.memory.connection_repo;
 
-import uim.platform.ai_launchpad.domain.ports.connection_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.connections;
 import uim.platform.ai_launchpad.domain.entities.connection : Connection;
 import uim.platform.ai_launchpad.domain.types;
 

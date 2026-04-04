@@ -10,7 +10,7 @@ module uim.platform.auditlog.application.usecases.manage.retention;
 
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.retention_policy;
-import uim.platform.auditlog.domain.ports.retention_policy_repository;
+import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 import uim.platform.auditlog.application.dto;
 
 @safe:

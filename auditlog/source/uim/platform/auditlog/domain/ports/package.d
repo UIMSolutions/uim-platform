@@ -7,12 +7,12 @@ module uim.platform.auditlog.domain.ports;
 
 public
 {
-  import uim.platform.auditlog.domain.ports.audit_config_repository;
-  import uim.platform.auditlog.domain.ports.audit_log_repository;
-  import uim.platform.auditlog.domain.ports.config_change_log_repository;
-  import uim.platform.auditlog.domain.ports.data_access_log_repository;
-  import uim.platform.auditlog.domain.ports.export_job_repository;
-  import uim.platform.auditlog.domain.ports.retention_policy_repository;
-  import uim.platform.auditlog.domain.ports.security_event_repository;
+  import uim.platform.auditlog.domain.ports.repositories.audit_configs;
+  import uim.platform.auditlog.domain.ports.repositories.audit_logs;
+  import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
+  import uim.platform.auditlog.domain.ports.repositories.data_access_logs;
+  import uim.platform.auditlog.domain.ports.repositories.export_jobs;
+  import uim.platform.auditlog.domain.ports.repositories.retention_policys;
+  import uim.platform.auditlog.domain.ports.repositories.security_events;
 
 }

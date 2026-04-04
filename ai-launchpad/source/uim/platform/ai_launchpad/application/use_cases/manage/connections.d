@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.use_cases.manage.connections;
 
-import uim.platform.ai_launchpad.domain.ports.connection_repository;
+import uim.platform.ai_launchpad.domain.ports.repositories.connections;
 import uim.platform.ai_launchpad.domain.entities.connection : Connection;
 import uim.platform.ai_launchpad.domain.services.connection_validator;
 import uim.platform.ai_launchpad.domain.types;
