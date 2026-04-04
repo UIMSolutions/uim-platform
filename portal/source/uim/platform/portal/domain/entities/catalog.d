@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.catalog;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Content catalog — groups tiles for content administration.
-struct Catalog
-{
+struct Catalog {
   CatalogId id;
   TenantId tenantId;
   string title;

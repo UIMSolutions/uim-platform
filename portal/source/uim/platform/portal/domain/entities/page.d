@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.page;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// A page within a site; contains sections.
-struct Page
-{
+struct Page {
   PageId id;
   SiteId siteId;
   TenantId tenantId;

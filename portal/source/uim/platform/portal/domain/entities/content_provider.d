@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.content_provider;
 
-import uim.platform.portal.domain.types;
+// mport uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Content provider — source of apps and content.
-struct ContentProvider
-{
+struct ContentProvider {
   ProviderId id;
   TenantId tenantId;
   string name;

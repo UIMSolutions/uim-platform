@@ -7,47 +7,41 @@ module uim.platform.portal.application.usecases.manage.catalogs;
 
 import uim.platform.portal.domain.entities.catalog;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.catalog_repository;
+import uim.platform.portal.domain.ports.repositories.catalogs;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-class ManageCatalogsUseCase
-{
+class ManageCatalogsUseCase {
   private CatalogRepository catalogRepo;
 
-  this(CatalogRepository catalogRepo)
-  {
+  this(CatalogRepository catalogRepo) {
     this.catalogRepo = catalogRepo;
   }
 
-  CatalogResponse createCatalog(CreateCatalogRequest req)
-  {
+  CatalogResponse createCatalog(CreateCatalogRequest req) {
     if (req.title.length == 0)
       return CatalogResponse("", "Catalog title is required");
 
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto catalog = Catalog(id, req.tenantId, req.title, req.description,
-        req.providerId, [], // tileIds
-        req.allowedRoleIds, req.active, now, now,);
+      req.providerId, [], // tileIds
+      req.allowedRoleIds, req.active, now, now,);
     catalogRepo.save(catalog);
     return CatalogResponse(id, "");
   }
 
-  Catalog getCatalog(CatalogId id)
-  {
+  Catalog getCatalog(CatalogId id) {
     return catalogRepo.findById(id);
   }
 
-  Catalog[] listCatalogs(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Catalog[] listCatalogs(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return catalogRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateCatalog(UpdateCatalogRequest req)
-  {
+  string updateCatalog(UpdateCatalogRequest req) {
     auto catalog = catalogRepo.findById(req.catalogId);
     if (catalog == Catalog.init)
       return "Catalog not found";
@@ -61,8 +55,7 @@ class ManageCatalogsUseCase
     return "";
   }
 
-  string deleteCatalog(CatalogId id)
-  {
+  string deleteCatalog(CatalogId id) {
     auto catalog = catalogRepo.findById(id);
     if (catalog == Catalog.init)
       return "Catalog not found";

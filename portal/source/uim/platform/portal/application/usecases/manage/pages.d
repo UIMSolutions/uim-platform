@@ -8,8 +8,8 @@ module uim.platform.portal.application.usecases.manage_pages;
 import uim.platform.portal.domain.entities.page;
 import uim.platform.portal.domain.entities.site;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.page_repository;
-import uim.platform.portal.domain.ports.site_repository;
+import uim.platform.portal.domain.ports.repositories.pages;
+import uim.platform.portal.domain.ports.repositories.sites;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;

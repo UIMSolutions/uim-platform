@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.theme;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Theme definition for portal sites.
-struct Theme
-{
+struct Theme {
   ThemeId id;
   TenantId tenantId;
   string name;
@@ -25,8 +28,7 @@ struct Theme
 }
 
 /// Theme color palette.
-struct ThemeColors
-{
+struct ThemeColors {
   string primaryColor;
   string secondaryColor;
   string accentColor;
@@ -40,8 +42,7 @@ struct ThemeColors
 }
 
 /// Theme font configuration.
-struct ThemeFonts
-{
+struct ThemeFonts {
   string fontFamily;
   string headerFontFamily;
   string fontSize;

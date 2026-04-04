@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.site;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Portal site — the top-level container for pages, navigation, and content.
-struct Site
-{
+struct Site {
   SiteId id;
   TenantId tenantId;
   string name;
@@ -25,15 +28,13 @@ struct Site
   long updatedAt;
   string createdBy;
 
-  bool isPublished() const
-  {
+  bool isPublished() const {
     return status == SiteStatus.published;
   }
 }
 
 /// Site-level settings.
-struct SiteSettings
-{
+struct SiteSettings {
   string logoUrl;
   string faviconUrl;
   string footerText;

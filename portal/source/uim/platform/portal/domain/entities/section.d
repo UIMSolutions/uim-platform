@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.section;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
 
+import uim.platform.portal;
+
+mixin(ShowModule!());
+
+@safe:
 /// A section within a page — groups tiles together.
-struct Section
-{
+struct Section {
   SectionId id;
   PageId pageId;
   TenantId tenantId;

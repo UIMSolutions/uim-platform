@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.role;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Role for portal access — controls what content users can see.
-struct Role
-{
+struct Role {
   RoleId id;
   TenantId tenantId;
   string name;

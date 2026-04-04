@@ -8,8 +8,8 @@ module uim.platform.portal.application.usecases.manage_menu_items;
 import uim.platform.portal.domain.entities.menu_item;
 import uim.platform.portal.domain.entities.site;
 import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.menu_item_repository;
-import uim.platform.portal.domain.ports.site_repository;
+import uim.platform.portal.domain.ports.repositories.menu_items;
+import uim.platform.portal.domain.ports.repositories.sites;
 import uim.platform.portal.application.dto;
 
 // import std.uuid;

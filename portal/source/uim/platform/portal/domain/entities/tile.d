@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.tile;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// A tile / app launcher within a section.
-struct Tile
-{
+struct Tile {
   TileId id;
   TenantId tenantId;
   CatalogId catalogId;
@@ -33,8 +36,7 @@ struct Tile
 }
 
 /// Additional tile configuration.
-struct TileConfiguration
-{
+struct TileConfiguration {
   string serviceUrl; // OData service URL for dynamic tiles
   string serviceRefreshInterval; // refresh interval in seconds
   string numberUnit; // KPI unit

@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.entities.menu_item;
 
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Navigation menu item within a site.
-struct MenuItem
-{
+struct MenuItem {
   MenuItemId id;
   SiteId siteId;
   TenantId tenantId;
