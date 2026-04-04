@@ -8,12 +8,16 @@ module uim.platform.portal.presentation.http.controllers.role;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.portal.application.usecases.manage_roles;
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.entities.role;
-import uim.platform.portal.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.portal.application.usecases.manage_roles;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.role;
+// import uim.platform.portal.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class RoleController : SAPController {
   private ManageRolesUseCase useCase;
 
@@ -23,7 +27,7 @@ class RoleController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/roles", &handleCreate);
     router.get("/api/v1/roles", &handleList);
     router.get("/api/v1/roles/*", &handleGet);

@@ -5,28 +5,27 @@
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.persistence.memory.translations;
 
-import uim.platform.portal.domain.entities.translation;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.translation_repository;
+// import uim.platform.portal.domain.entities.translation;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.translation_repository;
+import uim.platform.portal;
 
-class MemoryTranslationRepository : TranslationRepository
-{
+mixin(ShowModule!());
+
+@safe:
+class MemoryTranslationRepository : TranslationRepository {
   private Translation[TranslationId] store;
 
-  Translation findById(TranslationId id)
-  {
+  Translation findById(TranslationId id) {
     if (auto p = id in store)
       return *p;
     return Translation.init;
   }
 
-  Translation[] findByResource(string resourceType, string resourceId, string language = "")
-  {
+  Translation[] findByResource(string resourceType, string resourceId, string language = "") {
     Translation[] result;
-    foreach (t; store.byValue())
-    {
-      if (t.resourceType == resourceType && t.resourceId == resourceId)
-      {
+    foreach (t; store.byValue()) {
+      if (t.resourceType == resourceType && t.resourceId == resourceId) {
         if (language.length == 0 || t.language == language)
           result ~= t;
       }
@@ -34,14 +33,11 @@ class MemoryTranslationRepository : TranslationRepository
     return result;
   }
 
-  Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100)
-  {
+  Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100) {
     Translation[] result;
     uint idx;
-    foreach (t; store.byValue())
-    {
-      if (t.tenantId == tenantId && t.language == language)
-      {
+    foreach (t; store.byValue()) {
+      if (t.tenantId == tenantId && t.language == language) {
         if (idx >= offset && result.length < limit)
           result ~= t;
         idx++;
@@ -50,26 +46,21 @@ class MemoryTranslationRepository : TranslationRepository
     return result;
   }
 
-  void save(Translation translation)
-  {
+  void save(Translation translation) {
     store[translation.id] = translation;
   }
 
-  void update(Translation translation)
-  {
+  void update(Translation translation) {
     store[translation.id] = translation;
   }
 
-  void remove(TranslationId id)
-  {
+  void remove(TranslationId id) {
     store.remove(id);
   }
 
-  void removeByResource(string resourceType, string resourceId)
-  {
+  void removeByResource(string resourceType, string resourceId) {
     TranslationId[] toRemove;
-    foreach (kv; store.byKeyValue())
-    {
+    foreach (kv; store.byKeyValue()) {
       if (kv.value.resourceType == resourceType && kv.value.resourceId == resourceId)
         toRemove ~= kv.key;
     }

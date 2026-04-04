@@ -5,17 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.config;
 
+import uim.platform.portal;
+
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
-struct AppConfig
-{
+struct AppConfig {
   string host = "0.0.0.0";
   ushort port = 8083;
   string serviceName = "Cloud Portal Service";
 }
 
 /// Load configuration from environment variables.
-AppConfig loadConfig()
-{
+AppConfig loadConfig() {
   // import std.process : environment;
 
   AppConfig config;
@@ -25,13 +28,11 @@ AppConfig loadConfig()
     config.host = host;
 
   auto portStr = environment.get("CPS_PORT", "");
-  if (portStr.length > 0)
-  {
+  if (portStr.length > 0) {
     // import std.conv : to;
     try
       config.port = portStr.to!ushort;
-    catch (Exception)
-    {
+    catch (Exception) {
     }
   }
 

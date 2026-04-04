@@ -5,29 +5,29 @@
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.persistence.memory.providers;
 
-import uim.platform.portal.domain.entities.content_provider;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.provider_repository;
+// import uim.platform.portal.domain.entities.content_provider;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.provider_repository;
 
-class MemoryProviderRepository : ProviderRepository
-{
+import uim.platform.portal;
+
+mixin(ShowModule!());
+
+@safe:
+class MemoryProviderRepository : ProviderRepository {
   private ContentProvider[ProviderId] store;
 
-  ContentProvider findById(ProviderId id)
-  {
+  ContentProvider findById(ProviderId id) {
     if (auto p = id in store)
       return *p;
     return ContentProvider.init;
   }
 
-  ContentProvider[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  ContentProvider[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     ContentProvider[] result;
     uint idx;
-    foreach (cp; store.byValue())
-    {
-      if (cp.tenantId == tenantId)
-      {
+    foreach (cp; store.byValue()) {
+      if (cp.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= cp;
         idx++;
@@ -36,18 +36,15 @@ class MemoryProviderRepository : ProviderRepository
     return result;
   }
 
-  void save(ContentProvider provider)
-  {
+  void save(ContentProvider provider) {
     store[provider.id] = provider;
   }
 
-  void update(ContentProvider provider)
-  {
+  void update(ContentProvider provider) {
     store[provider.id] = provider;
   }
 
-  void remove(ProviderId id)
-  {
+  void remove(ProviderId id) {
     store.remove(id);
   }
 }

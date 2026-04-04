@@ -8,12 +8,17 @@ module uim.platform.portal.presentation.http.controllers.catalog;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.portal.application.usecases.manage_catalogs;
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.entities.catalog;
-import uim.platform.portal.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.portal.application.usecases.manage_catalogs;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.catalog;
+// import uim.platform.portal.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+// 
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class CatalogController : SAPController {
   private ManageCatalogsUseCase useCase;
 
@@ -23,7 +28,7 @@ class CatalogController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/catalogs", &handleCreate);
     router.get("/api/v1/catalogs", &handleList);
     router.get("/api/v1/catalogs/*", &handleGet);

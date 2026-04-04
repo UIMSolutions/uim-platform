@@ -5,48 +5,52 @@
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.container;
 
-import uim.platform.portal.infrastructure.config;
+// import uim.platform.portal.infrastructure.config;
+// 
+// // Repositories
+// import uim.platform.portal.infrastructure.persistence.memory.site_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.page_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.section_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.tile_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.catalog_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.provider_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.role_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.theme_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.menu_item_repo;
+// import uim.platform.portal.infrastructure.persistence.memory.translation_repo;
+// 
+// // Use Cases
+// import uim.platform.portal.application.usecases.manage_sites;
+// import uim.platform.portal.application.usecases.manage_pages;
+// import uim.platform.portal.application.usecases.manage_sections;
+// import uim.platform.portal.application.usecases.manage_tiles;
+// import uim.platform.portal.application.usecases.manage_catalogs;
+// import uim.platform.portal.application.usecases.manage_providers;
+// import uim.platform.portal.application.usecases.manage_roles;
+// import uim.platform.portal.application.usecases.manage_themes;
+// import uim.platform.portal.application.usecases.manage_menu_items;
+// import uim.platform.portal.application.usecases.manage_translations;
+// 
+// // Controllers
+// import uim.platform.identity_authentication.presentation.http.site;
+// import uim.platform.identity_authentication.presentation.http.page;
+// import uim.platform.identity_authentication.presentation.http.section;
+// import uim.platform.identity_authentication.presentation.http.tile;
+// import uim.platform.identity_authentication.presentation.http.catalog;
+// import uim.platform.identity_authentication.presentation.http.provider;
+// import uim.platform.identity_authentication.presentation.http.role;
+// import uim.platform.identity_authentication.presentation.http.theme;
+// import uim.platform.identity_authentication.presentation.http.menu_item;
+// import uim.platform.identity_authentication.presentation.http.translation;
+// import uim.platform.identity_authentication.presentation.http.health;
 
-// Repositories
-import uim.platform.portal.infrastructure.persistence.memory.site_repo;
-import uim.platform.portal.infrastructure.persistence.memory.page_repo;
-import uim.platform.portal.infrastructure.persistence.memory.section_repo;
-import uim.platform.portal.infrastructure.persistence.memory.tile_repo;
-import uim.platform.portal.infrastructure.persistence.memory.catalog_repo;
-import uim.platform.portal.infrastructure.persistence.memory.provider_repo;
-import uim.platform.portal.infrastructure.persistence.memory.role_repo;
-import uim.platform.portal.infrastructure.persistence.memory.theme_repo;
-import uim.platform.portal.infrastructure.persistence.memory.menu_item_repo;
-import uim.platform.portal.infrastructure.persistence.memory.translation_repo;
+import uim.platform.portal;
 
-// Use Cases
-import uim.platform.portal.application.usecases.manage_sites;
-import uim.platform.portal.application.usecases.manage_pages;
-import uim.platform.portal.application.usecases.manage_sections;
-import uim.platform.portal.application.usecases.manage_tiles;
-import uim.platform.portal.application.usecases.manage_catalogs;
-import uim.platform.portal.application.usecases.manage_providers;
-import uim.platform.portal.application.usecases.manage_roles;
-import uim.platform.portal.application.usecases.manage_themes;
-import uim.platform.portal.application.usecases.manage_menu_items;
-import uim.platform.portal.application.usecases.manage_translations;
+mixin(ShowModule!());
 
-// Controllers
-import uim.platform.identity_authentication.presentation.http.site;
-import uim.platform.identity_authentication.presentation.http.page;
-import uim.platform.identity_authentication.presentation.http.section;
-import uim.platform.identity_authentication.presentation.http.tile;
-import uim.platform.identity_authentication.presentation.http.catalog;
-import uim.platform.identity_authentication.presentation.http.provider;
-import uim.platform.identity_authentication.presentation.http.role;
-import uim.platform.identity_authentication.presentation.http.theme;
-import uim.platform.identity_authentication.presentation.http.menu_item;
-import uim.platform.identity_authentication.presentation.http.translation;
-import uim.platform.identity_authentication.presentation.http.health;
-
+@safe:
 /// Dependency injection container — wires all layers together.
-struct Container
-{
+struct Container {
   // Repositories (driven adapters)
   MemorySiteRepository siteRepo;
   MemoryPageRepository pageRepo;
@@ -86,8 +90,7 @@ struct Container
 }
 
 /// Build the full dependency graph.
-Container buildContainer(AppConfig config)
-{
+Container buildContainer(AppConfig config) {
   Container c;
 
   // Infrastructure adapters

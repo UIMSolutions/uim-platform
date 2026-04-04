@@ -5,9 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.portal.infrastructure.persistence.memory.catalogs;
 
-import uim.platform.portal.domain.entities.catalog;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.catalog_repository;
+// import uim.platform.portal.domain.entities.catalog;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.catalog_repository;
+
+import uim.platform.portal;
+
+mixin(ShowModule!());
+
+@safe:
 
 class MemoryCatalogRepository : CatalogRepository {
   private Catalog[CatalogId] store;

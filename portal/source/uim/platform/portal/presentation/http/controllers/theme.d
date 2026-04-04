@@ -8,12 +8,16 @@ module uim.platform.portal.presentation.http.controllers.theme;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.portal.application.usecases.manage_themes;
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.entities.theme;
-import uim.platform.portal.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.portal.application.usecases.manage_themes;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.theme;
+// import uim.platform.portal.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ThemeController : SAPController {
   private ManageThemesUseCase useCase;
 
@@ -23,7 +27,7 @@ class ThemeController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/themes", &handleCreate);
     router.get("/api/v1/themes", &handleList);
     router.get("/api/v1/themes/default", &handleGetDefault);

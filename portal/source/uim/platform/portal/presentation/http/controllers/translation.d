@@ -8,12 +8,16 @@ module uim.platform.portal.presentation.http.controllers.translation;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.portal.application.usecases.manage_translations;
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.entities.translation;
-import uim.platform.portal.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.portal.application.usecases.manage_translations;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.translation;
+// import uim.platform.portal.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class TranslationController : SAPController {
   private ManageTranslationsUseCase useCase;
 
@@ -23,7 +27,7 @@ class TranslationController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/translations", &handleCreate);
     router.get("/api/v1/translations", &handleList);
     router.get("/api/v1/translations/*", &handleGet);

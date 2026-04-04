@@ -8,12 +8,16 @@ module uim.platform.portal.presentation.http.controllers.provider;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.portal.application.usecases.manage_providers;
-import uim.platform.portal.application.dto;
-import uim.platform.portal.domain.entities.content_provider;
-import uim.platform.portal.domain.types;
-import uim.platform.identity_authentication.presentation.http.json_utils;
+// import uim.platform.portal.application.usecases.manage_providers;
+// import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.content_provider;
+// import uim.platform.portal.domain.types;
+// import uim.platform.identity_authentication.presentation.http.json_utils;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ProviderController : SAPController {
   private ManageProvidersUseCase useCase;
 
@@ -23,7 +27,7 @@ class ProviderController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/providers", &handleCreate);
     router.get("/api/v1/providers", &handleList);
     router.get("/api/v1/providers/*", &handleGet);
