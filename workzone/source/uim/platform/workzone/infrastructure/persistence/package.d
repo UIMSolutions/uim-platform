@@ -1,1 +1,5 @@
 module uim.platform.workzone.infrastructure.persistence;
+
+public {
+    
+}

@@ -12,41 +12,33 @@ import uim.platform.master_data_integration.domain.ports.key_mapping_repository;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class MemoryKeyMappingRepository : KeyMappingRepository
-{
+class MemoryKeyMappingRepository : KeyMappingRepository {
   private KeyMapping[KeyMappingId] store;
 
-  KeyMapping findById(KeyMappingId id)
-  {
+  KeyMapping findById(KeyMappingId id) {
     if (auto p = id in store)
       return *p;
     return KeyMapping.init;
   }
 
-  KeyMapping[] findByTenant(TenantId tenantId)
-  {
+  KeyMapping[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  KeyMapping[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId)
-  {
+  KeyMapping[] findByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.masterDataObjectId == objectId).array;
   }
 
-  KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category)
-  {
+  KeyMapping[] findByCategory(TenantId tenantId, MasterDataCategory category) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
-  KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey)
-  {
-    foreach (ref mapping; store.byValue())
-    {
+  KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
+    foreach (ref mapping; store.byValue()) {
       if (mapping.tenantId != tenantId)
         continue;
-      foreach (ref entry; mapping.entries)
-      {
+      foreach (ref entry; mapping.entries) {
         if (entry.clientId == clientId && entry.localKey == localKey)
           return mapping;
       }
@@ -54,18 +46,15 @@ class MemoryKeyMappingRepository : KeyMappingRepository
     return KeyMapping.init;
   }
 
-  void save(KeyMapping mapping)
-  {
+  void save(KeyMapping mapping) {
     store[mapping.id] = mapping;
   }
 
-  void update(KeyMapping mapping)
-  {
+  void update(KeyMapping mapping) {
     store[mapping.id] = mapping;
   }
 
-  void remove(KeyMappingId id)
-  {
+  void remove(KeyMappingId id) {
     store.remove(id);
   }
 }
