@@ -1,0 +1,198 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.ai_launchpad.presentation.http.controllers.execution;
+
+import uim.platform.ai_launchpad.application.use_cases.manage_executions;
+import uim.platform.ai_launchpad.application.dto;
+import uim.platform.ai_launchpad.presentation.http.json_utils;
+
+import uim.platform.ai_launchpad;
+
+class ExecutionController : SAPController {
+  private ManageExecutionsUseCase uc;
+
+  this(ManageExecutionsUseCase uc) {
+    this.uc = uc;
+  }
+
+  override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    router.post("/api/v1/executions", &handleCreate);
+    router.get("/api/v1/executions", &handleList);
+    router.get("/api/v1/executions/*", &handleGet);
+    router.patch("/api/v1/executions/bulk", &handleBulkPatch);
+    router.patch("/api/v1/executions/*", &handlePatch);
+    router.delete_("/api/v1/executions/*", &handleDelete);
+  }
+
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+
+      CreateExecutionRequest r;
+      r.connectionId = connectionId;
+      r.configurationId = jsonStr(j, "configurationId");
+      r.resourceGroupId = jsonStr(j, "resourceGroupId");
+
+      auto result = uc.create(r);
+      if (result.success) {
+        auto resp = Json.emptyObject;
+        resp["id"] = Json(result.id);
+        resp["message"] = Json("Execution created");
+        res.writeJsonBody(resp, 201);
+      } else {
+        writeError(res, 400, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+      auto scenarioId = req.headers.get("X-Scenario-Id", "");
+
+      typeof(uc.listByConnection(connectionId)) executions;
+      if (scenarioId.length > 0)
+        executions = uc.listByScenario(scenarioId, connectionId);
+      else
+        executions = uc.listByConnection(connectionId);
+
+      auto jarr = Json.emptyArray;
+      foreach (ref e; executions) {
+        jarr ~= serializeExecution(e);
+      }
+
+      auto resp = Json.emptyObject;
+      resp["count"] = Json(cast(long) executions.length);
+      resp["resources"] = jarr;
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+
+      auto ex = uc.get_(id, connectionId);
+      if (ex.id.length == 0) {
+        writeError(res, 404, "Execution not found");
+        return;
+      }
+
+      res.writeJsonBody(serializeExecution(ex), 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto j = req.json;
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+
+      PatchExecutionRequest r;
+      r.connectionId = connectionId;
+      r.executionId = id;
+      r.targetStatus = jsonStr(j, "targetStatus");
+
+      auto result = uc.patch(r);
+      if (result.success) {
+        auto resp = Json.emptyObject;
+        resp["message"] = Json("Execution updated");
+        res.writeJsonBody(resp, 200);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleBulkPatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      auto j = req.json;
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+
+      BulkPatchExecutionRequest r;
+      r.connectionId = connectionId;
+      r.executionIds = jsonStrArray(j, "executionIds");
+      r.targetStatus = jsonStr(j, "targetStatus");
+
+      auto results = uc.bulkPatch(r);
+      auto jarr = Json.emptyArray;
+      foreach (ref result; results) {
+        auto rj = Json.emptyObject;
+        rj["id"] = Json(result.id);
+        rj["success"] = Json(result.success);
+        if (result.error.length > 0) rj["error"] = Json(result.error);
+        jarr ~= rj;
+      }
+
+      auto resp = Json.emptyObject;
+      resp["results"] = jarr;
+      res.writeJsonBody(resp, 200);
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
+      import std.conv : to;
+      auto id = extractIdFromPath(req.requestURI.to!string);
+      auto connectionId = req.headers.get("X-Connection-Id", "");
+
+      auto result = uc.remove(id, connectionId);
+      if (result.success) {
+        res.writeJsonBody(Json.emptyObject, 204);
+      } else {
+        writeError(res, 404, result.error);
+      }
+    } catch (Exception e) {
+      writeError(res, 500, "Internal server error");
+    }
+  }
+
+  private Json serializeExecution(Execution ex) {
+    import uim.platform.ai_launchpad.domain.entities.execution : OutputArtifact;
+    auto j = Json.emptyObject;
+    j["id"] = Json(ex.id);
+    j["connectionId"] = Json(ex.connectionId);
+    j["configurationId"] = Json(ex.configurationId);
+    j["scenarioId"] = Json(ex.scenarioId);
+    j["resourceGroupId"] = Json(ex.resourceGroupId);
+    j["status"] = Json(ex.status.to!string);
+    j["targetStatus"] = Json(ex.targetStatus);
+
+    auto artifacts = Json.emptyArray;
+    foreach (ref a; ex.outputArtifacts) {
+      auto aj = Json.emptyObject;
+      aj["name"] = Json(a.name);
+      aj["artifactId"] = Json(a.artifactId);
+      aj["artifactUrl"] = Json(a.artifactUrl);
+      artifacts ~= aj;
+    }
+    j["outputArtifacts"] = artifacts;
+
+    j["startedAt"] = Json(ex.startedAt);
+    j["completedAt"] = Json(ex.completedAt);
+    j["duration"] = Json(ex.duration);
+    j["logsUrl"] = Json(ex.logsUrl);
+    j["statusMessage"] = Json(ex.statusMessage);
+    j["createdAt"] = Json(ex.createdAt);
+    j["modifiedAt"] = Json(ex.modifiedAt);
+    return j;
+  }
+}
