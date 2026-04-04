@@ -7,7 +7,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.execution_repo;
 
 import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core.domain.entities.execution;
-import uim.platform.ai_core.domain.ports.execution_repository;
+import uim.platform.ai_core.domain.ports.repositories.executions;
 
 import std.algorithm : filter;
 import std.array : array;

@@ -7,7 +7,7 @@ module uim.platform.ai_core.infrastructure.persistence.memory.resource_group_rep
 
 import uim.platform.ai_core.domain.types;
 import uim.platform.ai_core.domain.entities.resource_group;
-import uim.platform.ai_core.domain.ports.resource_group_repository;
+import uim.platform.ai_core.domain.ports.repositories.resource_groups;
 
 import std.algorithm : filter;
 import std.array : array;

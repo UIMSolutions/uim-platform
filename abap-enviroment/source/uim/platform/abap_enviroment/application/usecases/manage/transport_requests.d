@@ -7,7 +7,7 @@ module uim.platform.abap_enviroment.application.usecases.manage.transport_reques
 
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
-import uim.platform.abap_enviroment.domain.ports.transport_request_repository;
+import uim.platform.abap_enviroment.domain.ports.repositories.transport_request;
 import uim.platform.abap_enviroment.domain.services.transport_release_validator;
 import uim.platform.abap_enviroment.domain.types;
 
