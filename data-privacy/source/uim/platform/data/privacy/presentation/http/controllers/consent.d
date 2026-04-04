@@ -16,7 +16,7 @@ import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
 import uim.platform.data.privacy.presentation.http.json_utils;
 
-class ConsentController {
+class ConsentController : SAPController {
   private ManageConsentRecordsUseCase uc;
 
   this(ManageConsentRecordsUseCase uc) {
@@ -24,6 +24,8 @@ class ConsentController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/consents", &handleGrant);
     router.get("/api/v1/consents", &handleList);
     router.get("/api/v1/consents/active", &handleListActive);

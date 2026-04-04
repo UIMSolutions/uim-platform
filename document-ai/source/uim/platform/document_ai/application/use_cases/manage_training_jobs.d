@@ -14,7 +14,7 @@ import uim.platform.document_ai.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageTrainingJobsUseCase {
+class ManageTrainingJobsUseCase : UIMUseCase {
   private TrainingJobRepository jobRepo;
   private DocumentRepository docRepo;
 

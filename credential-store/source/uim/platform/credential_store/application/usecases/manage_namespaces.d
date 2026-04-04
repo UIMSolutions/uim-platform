@@ -14,7 +14,7 @@ import uim.platform.credential_store.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageNamespacesUseCase {
+class ManageNamespacesUseCase : UIMUseCase {
   private NamespaceRepository repo;
 
   this(NamespaceRepository repo) {

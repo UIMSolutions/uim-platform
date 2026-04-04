@@ -13,7 +13,7 @@ import uim.platform.credential_store.application.dto;
 import std.uuid : randomUUID;
 import std.conv : to;
 
-class ManageServiceBindingsUseCase {
+class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository repo;
 
   this(ServiceBindingRepository repo) {
