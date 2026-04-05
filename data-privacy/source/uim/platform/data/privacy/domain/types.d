@@ -14,6 +14,19 @@ alias LegalGroundId = string;
 alias RetentionRuleId = string;
 alias ConsentRecordId = string;
 alias DataRetrievalRequestId = string;
+alias DataControllerId = string;
+alias DataControllerGroupId = string;
+alias BusinessContextId = string;
+alias BusinessProcessId = string;
+alias BusinessSubprocessId = string;
+alias CorrectionRequestId = string;
+alias ArchiveRequestId = string;
+alias DestructionRequestId = string;
+alias PurposeRecordId = string;
+alias ConsentPurposeId = string;
+alias RuleSetId = string;
+alias InformationReportId = string;
+alias AnonymizationConfigId = string;
 alias TenantId = string;
 alias UserId = string;
 
@@ -121,4 +134,104 @@ enum RetentionRuleStatus {
   active,
   inactive,
   expired,
+}
+
+/// Status of a correction request (GDPR Art. 16).
+enum CorrectionStatus {
+  requested,
+  inProgress,
+  completed,
+  rejected,
+}
+
+/// Status of an archive request.
+enum ArchiveStatus {
+  scheduled,
+  inProgress,
+  completed,
+  failed,
+}
+
+/// Status of a destruction request.
+enum DestructionStatus {
+  scheduled,
+  inProgress,
+  completed,
+  failed,
+}
+
+/// Status of a purpose record.
+enum PurposeRecordStatus {
+  active,
+  expiring,
+  expired,
+  deactivated,
+}
+
+/// Status of a consent purpose configuration.
+enum ConsentPurposeStatus {
+  draft,
+  active,
+  inactive,
+  deprecated_,
+}
+
+/// Status of a rule set.
+enum RuleSetStatus {
+  draft,
+  active,
+  inactive,
+}
+
+/// Status of an information report.
+enum InformationReportStatus {
+  requested,
+  generating,
+  completed,
+  failed,
+}
+
+/// Export format for information reports.
+enum ExportFormat {
+  pdf,
+  json,
+  xml,
+  csv,
+}
+
+/// Status of a business context version.
+enum BusinessContextStatus {
+  draft,
+  active,
+  inactive,
+}
+
+/// Anonymization method.
+enum AnonymizationMethod {
+  masking,
+  generalization,
+  suppression,
+  pseudonymization,
+  tokenization,
+  noise,
+}
+
+/// Status of an anonymization config.
+enum AnonymizationConfigStatus {
+  draft,
+  active,
+  inactive,
+}
+
+/// Rule operator for rule set conditions.
+enum RuleOperator {
+  equals,
+  notEquals,
+  contains,
+  startsWith,
+  endsWith,
+  greaterThan,
+  lessThan,
+  in_,
+  notIn,
 }

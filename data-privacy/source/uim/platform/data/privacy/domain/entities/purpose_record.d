@@ -1,0 +1,26 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.data.privacy.domain.entities.purpose_record;
+
+import uim.platform.data.privacy.domain.types;
+
+/// A purpose record — tracks a specific purpose with retention/residence and expiration.
+struct PurposeRecord {
+  PurposeRecordId id;
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  BusinessContextId businessContextId;
+  ProcessingPurpose purpose;
+  PurposeRecordStatus status = PurposeRecordStatus.active;
+  LegalBasis legalBasis;
+  int residenceDays; // how long data resides before blocking
+  int retentionDays; // how long blocked data is retained before destruction
+  long validFrom;
+  long validUntil; // 0 = indefinite
+  long deactivatedAt;
+  long createdAt;
+  long updatedAt;
+}
