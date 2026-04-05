@@ -190,3 +190,295 @@ struct CommandResult {
     return error.length == 0;
   }
 }
+
+// ──────────────── Data Controller DTOs ────────────────
+
+struct CreateDataControllerRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string legalEntityName;
+  string contactEmail;
+  string contactPhone;
+  string address;
+  string country;
+  string dpoName;
+  string dpoEmail;
+}
+
+struct UpdateDataControllerRequest {
+  DataControllerId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string legalEntityName;
+  string contactEmail;
+  string contactPhone;
+  string address;
+  string country;
+  string dpoName;
+  string dpoEmail;
+  bool isActive;
+}
+
+// ──────────────── Data Controller Group DTOs ────────────────
+
+struct CreateDataControllerGroupRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  DataControllerId[] controllerIds;
+}
+
+struct UpdateDataControllerGroupRequest {
+  DataControllerGroupId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  DataControllerId[] controllerIds;
+  bool isActive;
+}
+
+// ──────────────── Business Context DTOs ────────────────
+
+struct CreateBusinessContextRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  DataControllerGroupId controllerGroupId;
+  PersonalDataCategory[] dataCategories;
+  ProcessingPurpose[] purposes;
+  string[] dataCategoryAttributes;
+  bool isCrossRoleEnabled;
+}
+
+struct UpdateBusinessContextRequest {
+  BusinessContextId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  PersonalDataCategory[] dataCategories;
+  ProcessingPurpose[] purposes;
+  string[] dataCategoryAttributes;
+  bool isCrossRoleEnabled;
+}
+
+struct ActivateBusinessContextRequest {
+  BusinessContextId id;
+  TenantId tenantId;
+}
+
+// ──────────────── Business Process DTOs ────────────────
+
+struct CreateBusinessProcessRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  DataControllerId controllerId;
+  ProcessingPurpose[] purposes;
+  LegalBasis[] legalBases;
+  string owner;
+}
+
+struct UpdateBusinessProcessRequest {
+  BusinessProcessId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  ProcessingPurpose[] purposes;
+  LegalBasis[] legalBases;
+  string owner;
+  bool isActive;
+}
+
+// ──────────────── Business Subprocess DTOs ────────────────
+
+struct CreateBusinessSubprocessRequest {
+  TenantId tenantId;
+  BusinessProcessId parentProcessId;
+  string name;
+  string description;
+  ProcessingPurpose[] purposes;
+  PersonalDataCategory[] dataCategories;
+  string owner;
+}
+
+struct UpdateBusinessSubprocessRequest {
+  BusinessSubprocessId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  ProcessingPurpose[] purposes;
+  PersonalDataCategory[] dataCategories;
+  string owner;
+  bool isActive;
+}
+
+// ──────────────── Correction Request DTOs ────────────────
+
+struct CreateCorrectionRequest {
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  UserId requestedBy;
+  string[] targetSystems;
+  string fieldName;
+  string currentValue;
+  string correctedValue;
+  string reason;
+}
+
+struct UpdateCorrectionStatusRequest {
+  CorrectionRequestId id;
+  TenantId tenantId;
+  CorrectionStatus status;
+}
+
+// ──────────────── Archive Request DTOs ────────────────
+
+struct CreateArchiveRequest {
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  UserId requestedBy;
+  string[] targetSystems;
+  PersonalDataCategory[] categories;
+  string archiveLocation;
+  string reason;
+  bool isTestMode;
+  long scheduledAt;
+}
+
+struct UpdateArchiveStatusRequest {
+  ArchiveRequestId id;
+  TenantId tenantId;
+  ArchiveStatus status;
+}
+
+// ──────────────── Destruction Request DTOs ────────────────
+
+struct CreateDestructionRequest {
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  UserId requestedBy;
+  string[] targetSystems;
+  ArchiveRequestId archiveRequestId;
+  BlockingRequestId blockingRequestId;
+  string reason;
+  long scheduledAt;
+}
+
+struct UpdateDestructionStatusRequest {
+  DestructionRequestId id;
+  TenantId tenantId;
+  DestructionStatus status;
+}
+
+// ──────────────── Purpose Record DTOs ────────────────
+
+struct CreatePurposeRecordRequest {
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  BusinessContextId businessContextId;
+  ProcessingPurpose purpose;
+  LegalBasis legalBasis;
+  int residenceDays;
+  int retentionDays;
+  long validFrom;
+  long validUntil;
+}
+
+struct DeactivatePurposeRecordRequest {
+  PurposeRecordId id;
+  TenantId tenantId;
+}
+
+// ──────────────── Consent Purpose DTOs ────────────────
+
+struct CreateConsentPurposeRequest {
+  TenantId tenantId;
+  DataControllerId controllerId;
+  string name;
+  string description;
+  ProcessingPurpose purpose;
+  PersonalDataCategory[] dataCategories;
+  string consentFormTemplate;
+  string version_;
+  bool requiresExplicitConsent;
+  long validFrom;
+  long validUntil;
+}
+
+struct UpdateConsentPurposeRequest {
+  ConsentPurposeId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string consentFormTemplate;
+  string version_;
+  bool requiresExplicitConsent;
+  ConsentPurposeStatus status;
+}
+
+// ──────────────── Rule Set DTOs ────────────────
+
+struct CreateRuleSetRequest {
+  TenantId tenantId;
+  BusinessContextId businessContextId;
+  string name;
+  string description;
+  string conditionsJson; // serialized RuleCondition array
+  string resultPurposesJson; // serialized ProcessingPurpose array
+  int priority;
+}
+
+struct UpdateRuleSetRequest {
+  RuleSetId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string conditionsJson;
+  string resultPurposesJson;
+  int priority;
+  RuleSetStatus status;
+}
+
+// ──────────────── Information Report DTOs ────────────────
+
+struct CreateInformationReportRequest {
+  TenantId tenantId;
+  DataSubjectId dataSubjectId;
+  UserId requestedBy;
+  string format; // pdf, json, xml, csv
+  string[] targetSystems;
+  PersonalDataCategory[] categories;
+  string reason;
+}
+
+struct UpdateInformationReportStatusRequest {
+  InformationReportId id;
+  TenantId tenantId;
+  InformationReportStatus status;
+  string downloadUrl;
+  long totalRecords;
+}
+
+// ──────────────── Anonymization Config DTOs ────────────────
+
+struct CreateAnonymizationConfigRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string rulesJson; // serialized AnonymizationRule array
+  bool isReversible;
+  string[] targetSystems;
+}
+
+struct UpdateAnonymizationConfigRequest {
+  AnonymizationConfigId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string rulesJson;
+  bool isReversible;
+  string[] targetSystems;
+  AnonymizationConfigStatus status;
+}
