@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module app;
 
-import uim.platform.hana.infrastructure.config;
-import uim.platform.hana.infrastructure.container;
+// import uim.platform.hana.infrastructure.config;
+// import uim.platform.hana.infrastructure.container;
 
-import std.stdio : writefln;
-import vibe.http.router : URLRouter;
-import vibe.http.server : HTTPServerSettings;
-import vibe.http.server : listenHTTP;
-import vibe.core.core : runApplication;
+// import std.stdio : writefln;
+// import vibe.http.router : URLRouter;
+// import vibe.http.server : HTTPServerSettings;
+// import vibe.http.server : listenHTTP;
+// import vibe.core.core : runApplication;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 version (unittest) {
 } else {
     void main() {

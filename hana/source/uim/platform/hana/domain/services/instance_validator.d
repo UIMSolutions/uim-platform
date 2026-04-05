@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.hana.domain.services.instance_validator;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 struct InstanceValidator {
   static bool validateName(string name) {
     return name.length > 0 && name.length <= 256;

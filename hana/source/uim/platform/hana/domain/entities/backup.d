@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.entities.backup;
 
-import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.types;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 struct BackupSchedule {
   string cronExpression;
   int retentionDays;

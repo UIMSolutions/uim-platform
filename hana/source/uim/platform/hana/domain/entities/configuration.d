@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.entities.configuration;
 
-import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.types;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 struct Configuration {
   ConfigurationId id;
   TenantId tenantId;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.entities.database_user;
 
-import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.types;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 struct UserPrivilege {
   PrivilegeType type;
   string name;
