@@ -7,6 +7,10 @@ module uim.platform.hana.presentation.http.json_utils;
 
 import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
+
 string jsonStr(Json j, string key) {
   if (!j.isObject)
     return "";
@@ -66,14 +70,17 @@ double jsonDouble(Json j, string key, double default_ = 0.0) {
 
 string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (!j.hasKey(key))
+    return null;
+
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+
   string[] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isString)
       result ~= item.get!string;
   }
@@ -82,14 +89,17 @@ string[] jsonStrArray(Json j, string key) {
 
 string[][] jsonKeyValuePairs(Json j, string key) {
   if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
+    return null;
+
+  if (!j.hasKey(key))
+    return null;
+  
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+  
   string[][] result;
-  foreach (item; *v) {
+  foreach (item; v.toArray) {
     if (item.isObject) {
       auto k = jsonStr(item, "key");
       auto val = jsonStr(item, "value");
@@ -111,7 +121,7 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   auto j = Json.emptyObject;
   j["error"] = Json.emptyObject;
   j["error"]["message"] = Json(message);
-  j["error"]["code"] = Json(cast(long) status);
+  j["error"]["code"] = Json(cast(long)status);
   res.writeJsonBody(j, status);
 }
 

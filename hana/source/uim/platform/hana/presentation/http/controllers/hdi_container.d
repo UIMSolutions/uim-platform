@@ -5,11 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.hdi_container;
 
-import uim.platform.hana.application.usecases.manage.hdi_containers;
-import uim.platform.hana.application.dto;
-import uim.platform.hana.presentation.http.json_utils;
-
+// import uim.platform.hana.application.usecases.manage.hdi_containers;
+// import uim.platform.hana.application.dto;
+// import uim.platform.hana.presentation.http.json_utils;
 import uim.platform.hana;
+
+mixin(ShowModule!());
+
+@safe:
 
 class HDIContainerController : SAPController {
   private ManageHDIContainersUseCase uc;

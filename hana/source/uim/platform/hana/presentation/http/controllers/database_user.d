@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.hana.presentation.http.controllers.database_user;
 
-import uim.platform.hana.application.usecases.manage.database_users;
-import uim.platform.hana.application.dto;
-import uim.platform.hana.presentation.http.json_utils;
+// import uim.platform.hana.application.usecases.manage.database_users;
+// import uim.platform.hana.application.dto;
+// import uim.platform.hana.presentation.http.json_utils;
 
 import uim.platform.hana;
+
+mixin(ShowModule!());
+
+@safe:
 
 class DatabaseUserController : SAPController {
   private ManageDatabaseUsersUseCase uc;
