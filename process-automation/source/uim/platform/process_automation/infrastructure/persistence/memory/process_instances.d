@@ -1,0 +1,56 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.process_automation.infrastructure.persistence.memory.process_instances;
+
+import uim.platform.process_automation;
+
+mixin(ShowModule!());
+
+@safe:
+class MemoryProcessInstanceRepository : ProcessInstanceRepository {
+    private ProcessInstance[] store;
+
+    ProcessInstance findById(ProcessInstanceId id) {
+        foreach (ref i; store) {
+            if (i.id == id)
+                return i;
+        }
+        return ProcessInstance.init;
+    }
+
+    ProcessInstance[] findByTenant(TenantId tenantId) {
+        return store.filter!(i => i.tenantId == tenantId).array;
+    }
+
+    ProcessInstance[] findByProcess(ProcessId processId) {
+        return store.filter!(i => i.processId == processId).array;
+    }
+
+    ProcessInstance[] findByStatus(TenantId tenantId, InstanceStatus status) {
+        return store.filter!(i => i.tenantId == tenantId && i.status == status).array;
+    }
+
+    void save(ProcessInstance i) {
+        store ~= i;
+    }
+
+    void update(ProcessInstance i) {
+        foreach (ref existing; store) {
+            if (existing.id == i.id) {
+                existing = i;
+                return;
+            }
+        }
+    }
+
+    void remove(ProcessInstanceId id) {
+        store = store.filter!(i => i.id != id).array;
+    }
+
+    long countByTenant(TenantId tenantId) {
+        return cast(long) store.filter!(i => i.tenantId == tenantId).array.length;
+    }
+}
