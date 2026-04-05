@@ -1,0 +1,37 @@
+# Containerfile for Podman
+# Process Automation Service
+
+# Stage 1: Build
+FROM dlang2/ldc-ubuntu:1.40.1 AS builder
+
+WORKDIR /app
+
+COPY dub.sdl dub.selections.json ./
+COPY source/ source/
+
+RUN dub build --build=release --config=defaultRun
+
+# Stage 2: Runtime
+FROM ubuntu:24.04
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates curl && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN useradd --system --no-create-home appuser
+
+WORKDIR /app
+
+COPY --from=builder /app/build/uim-process-automation-platform-service .
+
+USER appuser
+
+EXPOSE 8099
+
+ENV PROCESS_AUTOMATION_HOST=0.0.0.0
+ENV PROCESS_AUTOMATION_PORT=8099
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8099/api/v1/health || exit 1
+
+ENTRYPOINT ["./uim-process-automation-platform-service"]

@@ -5,45 +5,49 @@
 *****************************************************************************************************************/
 module uim.platform.process_automation.infrastructure.container;
 
-import uim.platform.process_automation.infrastructure.config;
+// import uim.platform.process_automation.infrastructure.config;
 
-// Repositories
-import uim.platform.process_automation.infrastructure.persistence.memory.processes;
-import uim.platform.process_automation.infrastructure.persistence.memory.process_instances;
-import uim.platform.process_automation.infrastructure.persistence.memory.tasks;
-import uim.platform.process_automation.infrastructure.persistence.memory.decisions;
-import uim.platform.process_automation.infrastructure.persistence.memory.forms;
-import uim.platform.process_automation.infrastructure.persistence.memory.automations;
-import uim.platform.process_automation.infrastructure.persistence.memory.triggers;
-import uim.platform.process_automation.infrastructure.persistence.memory.actions;
-import uim.platform.process_automation.infrastructure.persistence.memory.visibilities;
-import uim.platform.process_automation.infrastructure.persistence.memory.artifacts;
+// // Repositories
+// import uim.platform.process_automation.infrastructure.persistence.memory.processes;
+// import uim.platform.process_automation.infrastructure.persistence.memory.process_instances;
+// import uim.platform.process_automation.infrastructure.persistence.memory.tasks;
+// import uim.platform.process_automation.infrastructure.persistence.memory.decisions;
+// import uim.platform.process_automation.infrastructure.persistence.memory.forms;
+// import uim.platform.process_automation.infrastructure.persistence.memory.automations;
+// import uim.platform.process_automation.infrastructure.persistence.memory.triggers;
+// import uim.platform.process_automation.infrastructure.persistence.memory.actions;
+// import uim.platform.process_automation.infrastructure.persistence.memory.visibilities;
+// import uim.platform.process_automation.infrastructure.persistence.memory.artifacts;
 
-// Use Cases
-import uim.platform.process_automation.application.usecases.manage.processes;
-import uim.platform.process_automation.application.usecases.manage.process_instances;
-import uim.platform.process_automation.application.usecases.manage.tasks;
-import uim.platform.process_automation.application.usecases.manage.decisions;
-import uim.platform.process_automation.application.usecases.manage.forms;
-import uim.platform.process_automation.application.usecases.manage.automations;
-import uim.platform.process_automation.application.usecases.manage.triggers;
-import uim.platform.process_automation.application.usecases.manage.actions;
-import uim.platform.process_automation.application.usecases.manage.visibilities;
-import uim.platform.process_automation.application.usecases.manage.artifacts;
+// // Use Cases
+// import uim.platform.process_automation.application.usecases.manage.processes;
+// import uim.platform.process_automation.application.usecases.manage.process_instances;
+// import uim.platform.process_automation.application.usecases.manage.tasks;
+// import uim.platform.process_automation.application.usecases.manage.decisions;
+// import uim.platform.process_automation.application.usecases.manage.forms;
+// import uim.platform.process_automation.application.usecases.manage.automations;
+// import uim.platform.process_automation.application.usecases.manage.triggers;
+// import uim.platform.process_automation.application.usecases.manage.actions;
+// import uim.platform.process_automation.application.usecases.manage.visibilities;
+// import uim.platform.process_automation.application.usecases.manage.artifacts;
 
-// Controllers
-import uim.platform.process_automation.presentation.http.controllers.process;
-import uim.platform.process_automation.presentation.http.controllers.process_instance;
-import uim.platform.process_automation.presentation.http.controllers.task;
-import uim.platform.process_automation.presentation.http.controllers.decision;
-import uim.platform.process_automation.presentation.http.controllers.form;
-import uim.platform.process_automation.presentation.http.controllers.automation;
-import uim.platform.process_automation.presentation.http.controllers.trigger;
-import uim.platform.process_automation.presentation.http.controllers.action;
-import uim.platform.process_automation.presentation.http.controllers.visibility;
-import uim.platform.process_automation.presentation.http.controllers.artifact;
-import uim.platform.process_automation.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.process_automation.presentation.http.controllers.process;
+// import uim.platform.process_automation.presentation.http.controllers.process_instance;
+// import uim.platform.process_automation.presentation.http.controllers.task;
+// import uim.platform.process_automation.presentation.http.controllers.decision;
+// import uim.platform.process_automation.presentation.http.controllers.form;
+// import uim.platform.process_automation.presentation.http.controllers.automation;
+// import uim.platform.process_automation.presentation.http.controllers.trigger;
+// import uim.platform.process_automation.presentation.http.controllers.action;
+// import uim.platform.process_automation.presentation.http.controllers.visibility;
+// import uim.platform.process_automation.presentation.http.controllers.artifact;
+// import uim.platform.process_automation.presentation.http.controllers.health;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 struct Container {
     // Repositories (driven adapters)
     MemoryProcessRepository processRepo;
