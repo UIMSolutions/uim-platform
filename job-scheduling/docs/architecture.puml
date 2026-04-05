@@ -1,0 +1,442 @@
+@startuml Job Scheduling Service - Hexagonal Architecture
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam componentStyle rectangle
+skinparam defaultTextAlignment center
+skinparam packageBorderColor #333333
+skinparam packageFontSize 14
+
+title **UIM Platform - Job Scheduling Service**\nHexagonal Architecture (Clean + Ports & Adapters)
+
+' ============================================================
+' DRIVING ADAPTERS (Left Side - Primary / Inbound)
+' ============================================================
+
+package "Driving Adapters\n(Presentation Layer)" as driving #E3F2FD {
+
+    package "HTTP Controllers" as controllers {
+        component [JobController] as JC #BBDEFB
+        component [ScheduleController] as SC #BBDEFB
+        component [RunLogController] as RLC #BBDEFB
+        component [ConfigurationController] as CC #BBDEFB
+        component [HealthController] as HC #BBDEFB
+    }
+
+    component [json_utils] as JU #90CAF9
+}
+
+' ============================================================
+' APPLICATION LAYER (Use Cases)
+' ============================================================
+
+package "Application Layer\n(Use Cases & DTOs)" as application #FFF3E0 {
+
+    component [ManageJobsUseCase] as MJU #FFE0B2
+    component [ManageSchedulesUseCase] as MSU #FFE0B2
+    component [ManageRunLogsUseCase] as MRLU #FFE0B2
+    component [ManageConfigurationsUseCase] as MCU #FFE0B2
+
+    component [DTOs\n(CreateJobRequest,\nUpdateScheduleRequest,\nCommandResult, ...)] as DTO #FFCC80
+}
+
+' ============================================================
+' DOMAIN LAYER (Core)
+' ============================================================
+
+package "Domain Layer\n(Business Core)" as domain #E8F5E9 {
+
+    package "Entities" as entities {
+        component [Job] as JE #C8E6C9
+        component [Schedule] as SE #C8E6C9
+        component [RunLog] as RLE #C8E6C9
+        component [Configuration] as CFE #C8E6C9
+    }
+
+    package "Value Types" as types {
+        component [JobId, ScheduleId,\nRunLogId, TenantId] as IDs #A5D6A7
+        component [JobStatus, RunStatus,\nScheduleType, ScheduleFormat,\nHttpMethod, JobType] as Enums #A5D6A7
+    }
+
+    package "Ports\n(Repository Interfaces)" as ports {
+        interface "JobRepository" as JRI
+        interface "ScheduleRepository" as SRI
+        interface "RunLogRepository" as RLRI
+        interface "ConfigurationRepository" as CRI
+    }
+
+    package "Domain Services" as services {
+        component [ScheduleValidator] as SV #81C784
+        component [RunTracker] as RT #81C784
+    }
+}
+
+' ============================================================
+' DRIVEN ADAPTERS (Right Side - Secondary / Outbound)
+' ============================================================
+
+package "Driven Adapters\n(Infrastructure Layer)" as driven #FCE4EC {
+
+    package "In-Memory Persistence" as memory {
+        component [MemoryJobRepository] as MJR #F8BBD0
+        component [MemoryScheduleRepository] as MSR #F8BBD0
+        component [MemoryRunLogRepository] as MRLR #F8BBD0
+        component [MemoryConfigurationRepository] as MCR #F8BBD0
+    }
+
+    component [AppConfig\n+ loadConfig()] as ACfg #F48FB1
+    component [Container\n+ buildContainer()] as DI #F48FB1
+}
+
+' ============================================================
+' EXTERNAL ACTORS
+' ============================================================
+
+actor "REST Client\n(API Consumer)" as Client
+database "In-Memory\nStore" as DB
+cloud "Action Endpoint\n(Target App)" as Target
+
+' ============================================================
+' RELATIONSHIPS
+' ============================================================
+
+' Client to Controllers
+Client --> JC : "POST/GET/PUT/DELETE\n/api/v1/scheduler/jobs"
+Client --> SC : "CRUD\n/api/v1/scheduler/jobs/{id}/schedules"
+Client --> RLC : "GET/PUT\n.../runLogs"
+Client --> CC : "GET/PUT\n/api/v1/scheduler/configuration"
+Client --> HC : "GET\n/api/v1/health"
+
+' Controllers to Use Cases
+JC --> MJU
+JC --> MSU : "inline schedules"
+SC --> MSU
+RLC --> MRLU
+CC --> MCU
+
+' Controllers use json_utils
+JC ..> JU
+SC ..> JU
+RLC ..> JU
+CC ..> JU
+
+' Use Cases to DTOs
+MJU ..> DTO
+MSU ..> DTO
+MRLU ..> DTO
+MCU ..> DTO
+
+' Use Cases to Domain Ports
+MJU --> JRI
+MSU --> SRI
+MRLU --> RLRI
+MCU --> CRI
+
+' Use Cases to Domain Services
+MSU ..> SV : "validate cron"
+MRLU ..> RT : "status transitions"
+
+' Domain Ports implemented by Driven Adapters
+JRI <|.. MJR
+SRI <|.. MSR
+RLRI <|.. MRLR
+CRI <|.. MCR
+
+' Driven Adapters to Storage
+MJR --> DB
+MSR --> DB
+MRLR --> DB
+MCR --> DB
+
+' DI Container wires everything
+DI ..> memory : "creates"
+DI ..> application : "creates"
+DI ..> controllers : "creates"
+ACfg ..> DI : "configures"
+
+' Future: Job execution
+MJU ..> Target : "<<future>>\ninvokes action endpoint"
+
+' ============================================================
+' LEGEND
+' ============================================================
+
+legend right
+  |= Color |= Layer |
+  | <#E3F2FD> | Presentation (Driving Adapters) |
+  | <#FFF3E0> | Application (Use Cases) |
+  | <#E8F5E9> | Domain (Business Core) |
+  | <#FCE4EC> | Infrastructure (Driven Adapters) |
+  --
+  **Dependency Rule**: Dependencies point inward.
+  Outer layers depend on inner layers, never the reverse.
+  Domain has zero external dependencies.
+endlegend
+
+@enduml
+
+' ============================================================
+' CLASS DIAGRAM
+' ============================================================
+
+@startuml Job Scheduling Service - Class Diagram
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam classAttributeIconSize 0
+
+title **Job Scheduling Service - Domain Model**
+
+package "Domain Entities" {
+
+    class Job {
+        +id: JobId
+        +tenantId: TenantId
+        +name: string
+        +description: string
+        +actionUrl: string
+        +httpMethod: HttpMethod
+        +type: JobType
+        +status: JobStatus
+        +active: bool
+        +startTime: long
+        +endTime: long
+        +createdAt: long
+        +modifiedAt: long
+    }
+
+    class Schedule {
+        +id: ScheduleId
+        +jobId: JobId
+        +tenantId: TenantId
+        +description: string
+        +type: ScheduleType
+        +format: ScheduleFormat
+        +status: ScheduleStatus
+        +active: bool
+        +cronExpression: string
+        +humanReadableSchedule: string
+        +repeatInterval: long
+        +repeatAt: string
+        +time: string
+        +startTime: long
+        +endTime: long
+        +nextRunAt: long
+        +createdAt: long
+        +modifiedAt: long
+    }
+
+    class RunLog {
+        +id: RunLogId
+        +scheduleId: ScheduleId
+        +jobId: JobId
+        +tenantId: TenantId
+        +status: RunStatus
+        +statusMessage: string
+        +httpStatus: int
+        +scheduledAt: long
+        +triggeredAt: long
+        +completedAt: long
+        +executionDurationMs: long
+        +createdAt: long
+    }
+
+    class Configuration {
+        +id: ConfigId
+        +tenantId: TenantId
+        +defaultRetries: int
+        +defaultRetryDelayMs: long
+        +maxRunDurationMs: long
+        +enableAsyncMode: bool
+        +enableAlertNotifications: bool
+        +createdAt: long
+        +modifiedAt: long
+    }
+}
+
+package "Value Types" {
+    enum JobType {
+        httpEndpoint
+        cloudFoundryTask
+    }
+    enum HttpMethod {
+        get
+        post
+        put
+        delete_
+        patch
+    }
+    enum JobStatus {
+        active
+        inactive
+    }
+    enum ScheduleType {
+        oneTime
+        recurring
+    }
+    enum ScheduleFormat {
+        cron
+        humanReadable
+        repeatInterval
+        repeatAt
+    }
+    enum ScheduleStatus {
+        active
+        inactive
+    }
+    enum RunStatus {
+        scheduled
+        triggered
+        running
+        completed
+        failed
+        deadLettered
+    }
+}
+
+' Relationships
+Job "1" *-- "0..*" Schedule : contains
+Schedule "1" *-- "0..*" RunLog : generates
+Job ..> JobType
+Job ..> HttpMethod
+Job ..> JobStatus
+Schedule ..> ScheduleType
+Schedule ..> ScheduleFormat
+Schedule ..> ScheduleStatus
+RunLog ..> RunStatus
+Configuration "1" -- "1" TenantId : per tenant
+
+@enduml
+
+' ============================================================
+' SEQUENCE DIAGRAM - Create Job with Schedules
+' ============================================================
+
+@startuml Job Scheduling Service - Create Job Sequence
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title **Create Job with Inline Schedules**
+
+actor Client
+participant "JobController" as JC #BBDEFB
+participant "ManageJobsUseCase" as MJU #FFE0B2
+participant "ManageSchedulesUseCase" as MSU #FFE0B2
+participant "MemoryJobRepository" as MJR #F8BBD0
+participant "MemoryScheduleRepository" as MSR #F8BBD0
+
+Client -> JC : POST /api/v1/scheduler/jobs\n{name, action, schedules: [...]}
+activate JC
+
+JC -> JC : Parse JSON, extract X-Tenant-Id
+JC -> MJU : create(CreateJobRequest)
+activate MJU
+
+MJU -> MJU : Validate (name, actionUrl)
+MJU -> MJU : Generate UUID
+MJU -> MJR : save(Job)
+activate MJR
+MJR --> MJU : void
+deactivate MJR
+
+MJU --> JC : CommandResult(success, jobId)
+deactivate MJU
+
+loop for each inline schedule
+    JC -> MSU : create(CreateScheduleRequest)
+    activate MSU
+    MSU -> MSU : Validate cron (if provided)
+    MSU -> MSU : Generate UUID
+    MSU -> MSR : save(Schedule)
+    activate MSR
+    MSR --> MSU : void
+    deactivate MSR
+    MSU --> JC : CommandResult(success, scheduleId)
+    deactivate MSU
+end
+
+JC --> Client : 201 Created\n{id, message}
+deactivate JC
+
+@enduml
+
+' ============================================================
+' SEQUENCE DIAGRAM - Schedule Lifecycle
+' ============================================================
+
+@startuml Job Scheduling Service - Run Log Lifecycle
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title **Schedule Run Lifecycle (Status Transitions)**
+
+[*] --> scheduled : Schedule triggered
+
+scheduled --> triggered : Service picks up schedule
+triggered --> running : Action endpoint invoked
+running --> completed : HTTP 2xx response
+running --> failed : HTTP error / timeout
+failed --> deadLettered : Max retries exceeded
+
+completed --> [*]
+deadLettered --> [*]
+
+note right of scheduled : RunLog created\nwith scheduledAt timestamp
+note right of triggered : triggeredAt set
+note right of running : Action endpoint called
+note right of completed : completedAt +\nexecutionDurationMs set
+note right of failed : statusMessage +\nhttpStatus recorded
+
+@enduml
+
+' ============================================================
+' COMPONENT DIAGRAM - Deployment
+' ============================================================
+
+@startuml Job Scheduling Service - Deployment
+
+!theme plain
+skinparam backgroundColor #FEFEFE
+
+title **Deployment Architecture**\n(Docker / Podman / Kubernetes)
+
+node "Kubernetes Cluster" as k8s {
+
+    node "Pod: cloud-job-scheduling" as pod {
+        component [uim-job-scheduling\n-platform-service] as svc #BBDEFB
+        component [In-Memory Store] as mem #F8BBD0
+        svc --> mem
+    }
+
+    component [ConfigMap\ncloud-job-scheduling-config\n---\nJOB_SCHEDULING_HOST=0.0.0.0\nJOB_SCHEDULING_PORT=8096] as cm #FFF3E0
+
+    component [Service\ncloud-job-scheduling\nClusterIP:8096] as ksvc #E8F5E9
+
+    cm --> pod : envFrom
+    ksvc --> pod : routes traffic
+}
+
+node "Container Build" as build {
+    component [dlang2/ldc-ubuntu:1.40.1\n(Builder Stage)] as builder
+    component [ubuntu:24.04\n(Runtime Stage)] as runtime
+    builder --> runtime : "COPY binary"
+}
+
+actor "API Consumer" as client
+client --> ksvc : "HTTP :8096"
+
+note bottom of pod
+  **Health Probes**
+  Liveness:  GET /api/v1/health
+  Readiness: GET /api/v1/health
+  **Resources**
+  Request: 64Mi / 100m
+  Limit:   256Mi / 500m
+  **Security**
+  runAsNonRoot: true
+  readOnlyRootFilesystem: true
+end note
+
+@enduml
