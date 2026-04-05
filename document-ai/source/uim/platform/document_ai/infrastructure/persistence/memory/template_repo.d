@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.template_;
 import uim.platform.document_ai.domain.ports.repositories.templates;
 
-import std.algorithm : filter;
+import std.algorithm : filter, remove;
 import std.array : array;
 
 class MemoryTemplateRepository : TemplateRepository {
@@ -66,7 +66,7 @@ class MemoryTemplateRepository : TemplateRepository {
 
   void remove(TemplateId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(t => t.id != id).array;
+      *cl = (*cl).remove!(t => t.id == id);
     }
   }
 

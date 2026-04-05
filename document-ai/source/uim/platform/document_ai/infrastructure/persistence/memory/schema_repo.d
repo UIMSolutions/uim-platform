@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.schema;
 import uim.platform.document_ai.domain.ports.repositories.schemas;
 
-import std.algorithm : filter;
+import std.algorithm : filter, remove;
 import std.array : array;
 
 class MemorySchemaRepository : SchemaRepository {
@@ -60,7 +60,7 @@ class MemorySchemaRepository : SchemaRepository {
 
   void remove(SchemaId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(s => s.id != id).array;
+      *cl = (*cl).remove!(s => s.id == id);
     }
   }
 
