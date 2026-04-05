@@ -11,6 +11,10 @@ import uim.platform.workzone.domain.entities.card : CardDataSource, CardManifest
 import uim.platform.workzone.domain.entities.channel : ChannelConfig;
 import uim.platform.workzone.domain.entities.app_registration : AppConfig;
 import uim.platform.workzone.domain.entities.widget : WidgetConfig;
+import uim.platform.workzone.domain.entities.site : SiteSettings;
+import uim.platform.workzone.domain.entities.survey : SurveyQuestion;
+import uim.platform.workzone.domain.entities.theme : ThemeColors;
+import uim.platform.workzone.domain.entities.page_template : TemplateSection;
 
 // ──────────────── Workspace DTOs ────────────────
 
@@ -253,4 +257,314 @@ struct CommandResult {
   {
     return error.length == 0;
   }
+}
+
+// ──────────────── Site DTOs ────────────────
+
+struct CreateSiteRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string alias_;
+  string themeId;
+  string createdBy;
+  SiteSettings settings;
+}
+
+struct UpdateSiteRequest {
+  SiteId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string themeId;
+  SiteSettings settings;
+}
+
+// ──────────────── Role DTOs ────────────────
+
+struct CreateRoleRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string[] permissions;
+  bool isDefault;
+}
+
+struct UpdateRoleRequest {
+  RoleId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string[] permissions;
+}
+
+// ──────────────── Event DTOs ────────────────
+
+struct CreateEventRequest {
+  TenantId tenantId;
+  WorkspaceId workspaceId;
+  string title;
+  string description;
+  string location;
+  string meetingUrl;
+  UserId organizerId;
+  string organizerName;
+  bool allDay;
+  long startTime;
+  long endTime;
+  string timezone;
+  string recurrenceRule;
+}
+
+struct UpdateEventRequest {
+  EventId id;
+  TenantId tenantId;
+  string title;
+  string description;
+  string location;
+  string meetingUrl;
+  long startTime;
+  long endTime;
+}
+
+// ──────────────── Survey DTOs ────────────────
+
+struct CreateSurveyRequest {
+  TenantId tenantId;
+  WorkspaceId workspaceId;
+  string title;
+  string description;
+  UserId creatorId;
+  string creatorName;
+  bool anonymous;
+  bool allowMultipleResponses;
+  long startsAt;
+  long endsAt;
+  SurveyQuestion[] questions;
+}
+
+struct UpdateSurveyRequest {
+  SurveyId id;
+  TenantId tenantId;
+  string title;
+  string description;
+}
+
+// ──────────────── Forum Topic DTOs ────────────────
+
+struct CreateForumTopicRequest {
+  TenantId tenantId;
+  WorkspaceId workspaceId;
+  string title;
+  string body_;
+  UserId authorId;
+  string authorName;
+  string[] tags;
+}
+
+struct UpdateForumTopicRequest {
+  ForumTopicId id;
+  TenantId tenantId;
+  string title;
+  string body_;
+  bool pinned;
+  bool locked;
+}
+
+// ──────────────── Knowledge Base Article DTOs ────────────────
+
+struct CreateKBArticleRequest {
+  TenantId tenantId;
+  WorkspaceId workspaceId;
+  string title;
+  string body_;
+  string summary;
+  UserId authorId;
+  string authorName;
+  string category;
+  string[] tags;
+  string language;
+}
+
+struct UpdateKBArticleRequest {
+  KBArticleId id;
+  TenantId tenantId;
+  string title;
+  string body_;
+  string summary;
+  string category;
+  string[] tags;
+}
+
+// ──────────────── User Profile DTOs ────────────────
+
+struct CreateUserProfileRequest {
+  TenantId tenantId;
+  UserId userId;
+  string displayName;
+  string email;
+  string firstName;
+  string lastName;
+  string jobTitle;
+  string department;
+  string timezone;
+  string language;
+}
+
+struct UpdateUserProfileRequest {
+  UserProfileId id;
+  TenantId tenantId;
+  string displayName;
+  string email;
+  string jobTitle;
+  string avatarUrl;
+}
+
+// ──────────────── Group DTOs ────────────────
+
+struct CreateGroupRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  GroupType type;
+}
+
+struct UpdateGroupRequest {
+  GroupId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  bool active;
+}
+
+// ──────────────── Tag DTOs ────────────────
+
+struct CreateTagRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string color;
+  string parentTagId;
+}
+
+struct UpdateTagRequest {
+  TagId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string color;
+}
+
+// ──────────────── Theme DTOs ────────────────
+
+struct CreateThemeRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string baseTheme;
+  string logoUrl;
+  string faviconUrl;
+  string customCss;
+  bool isDefault;
+  ThemeColors colors;
+}
+
+struct UpdateThemeRequest {
+  ThemeId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string customCss;
+  bool isDefault;
+  ThemeColors colors;
+}
+
+// ──────────────── Navigation Item DTOs ────────────────
+
+struct CreateNavigationItemRequest {
+  TenantId tenantId;
+  SiteId siteId;
+  string title;
+  string icon;
+  string targetUrl;
+  string targetAppId;
+  string targetPageId;
+  NavigationItemId parentId;
+  int sortOrder;
+  bool openInNewWindow;
+  NavigationItemType type;
+}
+
+struct UpdateNavigationItemRequest {
+  NavigationItemId id;
+  TenantId tenantId;
+  string title;
+  string icon;
+  string targetUrl;
+  int sortOrder;
+  bool visible;
+}
+
+// ──────────────── Page Template DTOs ────────────────
+
+struct CreatePageTemplateRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string thumbnailUrl;
+  bool isDefault;
+  bool isPublic;
+  TemplateSection[] sections;
+}
+
+struct UpdatePageTemplateRequest {
+  PageTemplateId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  bool isDefault;
+  bool isPublic;
+  TemplateSection[] sections;
+}
+
+// ──────────────── External Content Provider DTOs ────────────────
+
+struct CreateExternalContentProviderRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  ProviderType type;
+  string endpointUrl;
+  string authType;
+  string authConfig;
+  int refreshIntervalSec;
+}
+
+struct UpdateExternalContentProviderRequest {
+  ExternalContentProviderId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string endpointUrl;
+}
+
+// ──────────────── Shell Plugin DTOs ────────────────
+
+struct CreateShellPluginRequest {
+  TenantId tenantId;
+  string name;
+  string description;
+  string version_;
+  string vendor;
+  string scriptUrl;
+  string configSchemaUrl;
+  string[] hookPoints;
+}
+
+struct UpdateShellPluginRequest {
+  ShellPluginId id;
+  TenantId tenantId;
+  string name;
+  string description;
+  string scriptUrl;
 }
