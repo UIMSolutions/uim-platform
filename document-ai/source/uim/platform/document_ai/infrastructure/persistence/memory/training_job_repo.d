@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.training_job;
 import uim.platform.document_ai.domain.ports.repositories.training_jobs;
 
-import std.algorithm : filter;
+import std.algorithm : filter, count, remove;
 import std.array : array;
 
 class MemoryTrainingJobRepository : TrainingJobRepository {
@@ -60,7 +60,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   void remove(TrainingJobId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(tj => tj.id != id).array;
+      *cl = (*cl).remove!(tj => tj.id == id);
     }
   }
 
@@ -72,7 +72,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   long countByStatus(TrainingJobStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
-      return cast(long)(*cl).filter!(tj => tj.status == status).array.length;
+      return cast(long)(*cl).count!(tj => tj.status == status);
     return 0;
   }
 }

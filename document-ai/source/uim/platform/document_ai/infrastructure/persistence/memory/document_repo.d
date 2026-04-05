@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document;
 import uim.platform.document_ai.domain.ports.repositories.documents;
 
-import std.algorithm : filter;
+import std.algorithm : filter, count, remove;
 import std.array : array;
 
 class MemoryDocumentRepository : DocumentRepository {
@@ -66,7 +66,7 @@ class MemoryDocumentRepository : DocumentRepository {
 
   void remove(DocumentId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(d => d.id != id).array;
+      *cl = (*cl).remove!(d => d.id == id);
     }
   }
 
@@ -78,7 +78,7 @@ class MemoryDocumentRepository : DocumentRepository {
 
   long countByStatus(DocumentStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
-      return cast(long)(*cl).filter!(d => d.status == status).array.length;
+      return cast(long)(*cl).count!(d => d.status == status);
     return 0;
   }
 }

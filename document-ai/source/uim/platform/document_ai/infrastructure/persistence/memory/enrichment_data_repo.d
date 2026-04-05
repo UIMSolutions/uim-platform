@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.enrichment_data;
 import uim.platform.document_ai.domain.ports.repositories.enrichment_datas;
 
-import std.algorithm : filter;
+import std.algorithm : filter, remove;
 import std.array : array;
 
 class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
@@ -60,7 +60,7 @@ class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
 
   void remove(EnrichmentDataId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(ed => ed.id != id).array;
+      *cl = (*cl).remove!(ed => ed.id == id);
     }
   }
 
