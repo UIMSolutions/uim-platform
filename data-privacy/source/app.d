@@ -33,6 +33,19 @@ version (unittest) {
     container.consentController.registerRoutes(router);
     container.dataRetrievalController.registerRoutes(router);
     container.healthController.registerRoutes(router);
+    container.dataControllerController.registerRoutes(router);
+    container.dataControllerGroupController.registerRoutes(router);
+    container.businessContextController.registerRoutes(router);
+    container.businessProcessController.registerRoutes(router);
+    container.businessSubprocessController.registerRoutes(router);
+    container.correctionRequestController.registerRoutes(router);
+    container.archiveRequestController.registerRoutes(router);
+    container.destructionRequestController.registerRoutes(router);
+    container.purposeRecordController.registerRoutes(router);
+    container.consentPurposeController.registerRoutes(router);
+    container.ruleSetController.registerRoutes(router);
+    container.informationReportController.registerRoutes(router);
+    container.anonymizationConfigController.registerRoutes(router);
 
     auto settings = new HTTPServerSettings();
     settings.port = config.port;
@@ -53,6 +66,19 @@ version (unittest) {
     writefln("    CRUD  /api/v1/retention-rules                         ");
     writefln("    CRUD  /api/v1/consents                                ");
     writefln("    CRUD  /api/v1/data-retrievals                         ");
+    writefln("    CRUD  /api/v1/data-controllers                        ");
+    writefln("    CRUD  /api/v1/controller-groups                       ");
+    writefln("    CRUD  /api/v1/business-contexts                       ");
+    writefln("    CRUD  /api/v1/business-processes                      ");
+    writefln("    CRUD  /api/v1/business-subprocesses                   ");
+    writefln("    CRUD  /api/v1/correction-requests                     ");
+    writefln("    CRUD  /api/v1/archive-requests                        ");
+    writefln("    CRUD  /api/v1/destruction-requests                    ");
+    writefln("    CRUD  /api/v1/purpose-records                         ");
+    writefln("    CRUD  /api/v1/consent-purposes                        ");
+    writefln("    CRUD  /api/v1/rule-sets                               ");
+    writefln("    CRUD  /api/v1/information-reports                     ");
+    writefln("    CRUD  /api/v1/anonymization-configs                   ");
     writefln("    GET   /api/v1/health                                  ");
     writefln("==========================================================");
 
