@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.config;
 
-// import std.process : environment;
-// import std.conv : to;
+import std.process : environment;
+import std.conv : to;
 import uim.platform.hana;
 
 mixin(ShowModule!());

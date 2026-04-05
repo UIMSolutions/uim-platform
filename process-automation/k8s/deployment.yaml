@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-process-automation
+  labels:
+    app: cloud-process-automation
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-process-automation
+  template:
+    metadata:
+      labels:
+        app: cloud-process-automation
+    spec:
+      containers:
+      - name: cloud-process-automation
+        image: uim-platform/cloud-process-automation:latest
+        ports:
+        - containerPort: 8099
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: cloud-process-automation-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8099
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8099
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true

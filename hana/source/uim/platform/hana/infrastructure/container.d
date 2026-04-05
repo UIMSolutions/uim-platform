@@ -5,45 +5,50 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.container;
 
-import uim.platform.hana.infrastructure.config;
+// import uim.platform.hana.infrastructure.config;
 
-// Repositories
-import uim.platform.hana.infrastructure.persistence.memory.instances;
-import uim.platform.hana.infrastructure.persistence.memory.data_lakes;
-import uim.platform.hana.infrastructure.persistence.memory.schemas;
-import uim.platform.hana.infrastructure.persistence.memory.database_users;
-import uim.platform.hana.infrastructure.persistence.memory.backups;
-import uim.platform.hana.infrastructure.persistence.memory.alerts;
-import uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
-import uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
-import uim.platform.hana.infrastructure.persistence.memory.configurations;
-import uim.platform.hana.infrastructure.persistence.memory.database_connections;
+// // Repositories
+// import uim.platform.hana.infrastructure.persistence.memory.instances;
+// import uim.platform.hana.infrastructure.persistence.memory.data_lakes;
+// import uim.platform.hana.infrastructure.persistence.memory.schemas;
+// import uim.platform.hana.infrastructure.persistence.memory.database_users;
+// import uim.platform.hana.infrastructure.persistence.memory.backups;
+// import uim.platform.hana.infrastructure.persistence.memory.alerts;
+// import uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
+// import uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
+// import uim.platform.hana.infrastructure.persistence.memory.configurations;
+// import uim.platform.hana.infrastructure.persistence.memory.database_connections;
 
-// Use Cases
-import uim.platform.hana.application.usecases.manage.instances;
-import uim.platform.hana.application.usecases.manage.data_lakes;
-import uim.platform.hana.application.usecases.manage.schemas;
-import uim.platform.hana.application.usecases.manage.database_users;
-import uim.platform.hana.application.usecases.manage.backups;
-import uim.platform.hana.application.usecases.manage.alerts;
-import uim.platform.hana.application.usecases.manage.hdi_containers;
-import uim.platform.hana.application.usecases.manage.replication_tasks;
-import uim.platform.hana.application.usecases.manage.configurations;
-import uim.platform.hana.application.usecases.manage.database_connections;
+// // Use Cases
+// import uim.platform.hana.application.usecases.manage.instances;
+// import uim.platform.hana.application.usecases.manage.data_lakes;
+// import uim.platform.hana.application.usecases.manage.schemas;
+// import uim.platform.hana.application.usecases.manage.database_users;
+// import uim.platform.hana.application.usecases.manage.backups;
+// import uim.platform.hana.application.usecases.manage.alerts;
+// import uim.platform.hana.application.usecases.manage.hdi_containers;
+// import uim.platform.hana.application.usecases.manage.replication_tasks;
+// import uim.platform.hana.application.usecases.manage.configurations;
+// import uim.platform.hana.application.usecases.manage.database_connections;
 
-// Controllers
-import uim.platform.hana.presentation.http.controllers.instance;
-import uim.platform.hana.presentation.http.controllers.data_lake;
-import uim.platform.hana.presentation.http.controllers.schema;
-import uim.platform.hana.presentation.http.controllers.database_user;
-import uim.platform.hana.presentation.http.controllers.backup;
-import uim.platform.hana.presentation.http.controllers.alert;
-import uim.platform.hana.presentation.http.controllers.hdi_container;
-import uim.platform.hana.presentation.http.controllers.replication_task;
-import uim.platform.hana.presentation.http.controllers.configuration;
-import uim.platform.hana.presentation.http.controllers.database_connection;
-import uim.platform.hana.presentation.http.controllers.health;
+// // Controllers
+// import uim.platform.hana.presentation.http.controllers.instance;
+// import uim.platform.hana.presentation.http.controllers.data_lake;
+// import uim.platform.hana.presentation.http.controllers.schema;
+// import uim.platform.hana.presentation.http.controllers.database_user;
+// import uim.platform.hana.presentation.http.controllers.backup;
+// import uim.platform.hana.presentation.http.controllers.alert;
+// import uim.platform.hana.presentation.http.controllers.hdi_container;
+// import uim.platform.hana.presentation.http.controllers.replication_task;
+// import uim.platform.hana.presentation.http.controllers.configuration;
+// import uim.platform.hana.presentation.http.controllers.database_connection;
+// import uim.platform.hana.presentation.http.controllers.health;
 
+import uim.platform.hana;
+
+mixin(ShowModule!());
+
+@safe:
 struct Container {
   // Repositories (driven adapters)
   MemoryInstanceRepository instanceRepo;
@@ -121,7 +126,7 @@ Container buildContainer(AppConfig config) {
   c.replicationTaskController = new ReplicationTaskController(c.manageReplicationTasks);
   c.configurationController = new ConfigurationController(c.manageConfigurations);
   c.databaseConnectionController = new DatabaseConnectionController(c.manageDatabaseConnections);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("hana-cloud");
 
   return c;
 }

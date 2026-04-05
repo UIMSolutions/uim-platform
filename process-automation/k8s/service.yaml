@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-process-automation
+  labels:
+    app: cloud-process-automation
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: cloud-process-automation
+  ports:
+  - name: http
+    port: 8099
+    targetPort: 8099
+    protocol: TCP

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-process-automation-config
+  labels:
+    app: cloud-process-automation
+    part-of: uim-platform
+data:
+  PROCESS_AUTOMATION_HOST: "0.0.0.0"
+  PROCESS_AUTOMATION_PORT: "8099"
