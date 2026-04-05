@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.notification_channels;
 
-import uim.platform.logging.domain.entities.notification_channel;
-import uim.platform.logging.domain.ports.repositories.notification_channels;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.notification_channel;
+// import uim.platform.logging.domain.ports.repositories.notification_channels;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.application.dto;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageNotificationChannelsUseCase : UIMUseCase {
   private NotificationChannelRepository repo;
 

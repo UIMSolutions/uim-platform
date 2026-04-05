@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.alert;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct Alert {
   AlertId id;
   TenantId tenantId;

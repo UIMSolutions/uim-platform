@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.get_overview;
 
-import uim.platform.logging.domain.ports.repositories.log_entrys;
-import uim.platform.logging.domain.ports.repositories.spans;
-import uim.platform.logging.domain.ports.repositories.log_streams;
-import uim.platform.logging.domain.ports.repositories.dashboards;
-import uim.platform.logging.domain.ports.repositories.alerts;
-import uim.platform.logging.domain.ports.repositories.pipelines;
-import uim.platform.logging.domain.ports.repositories.notification_channels;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.ports.repositories.log_entrys;
+// import uim.platform.logging.domain.ports.repositories.spans;
+// import uim.platform.logging.domain.ports.repositories.log_streams;
+// import uim.platform.logging.domain.ports.repositories.dashboards;
+// import uim.platform.logging.domain.ports.repositories.alerts;
+// import uim.platform.logging.domain.ports.repositories.pipelines;
+// import uim.platform.logging.domain.ports.repositories.notification_channels;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.application.dto;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class GetOverviewUseCase : UIMUseCase {
   private LogEntryRepository logRepo;
   private SpanRepository spanRepo;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.retention_policy;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct RetentionPolicy {
   RetentionPolicyId id;
   TenantId tenantId;

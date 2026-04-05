@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.pipelines;
 
-import uim.platform.logging.domain.entities.pipeline;
-import uim.platform.logging.domain.ports.repositories.pipelines;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.pipeline;
+// import uim.platform.logging.domain.ports.repositories.pipelines;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.application.dto;
 
-import std.conv : to;
+// import std.conv : to;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class ManagePipelinesUseCase : UIMUseCase {
   private PipelineRepository repo;
 

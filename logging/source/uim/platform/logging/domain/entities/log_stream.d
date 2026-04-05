@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.log_stream;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct LogStream {
   LogStreamId id;
   TenantId tenantId;

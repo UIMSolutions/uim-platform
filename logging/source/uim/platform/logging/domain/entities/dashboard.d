@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.dashboard;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct DashboardPanel {
   PanelId id;
   string title;

@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.entities.notification_channel;
 
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct NotificationChannel {
   NotificationChannelId id;
   TenantId tenantId;

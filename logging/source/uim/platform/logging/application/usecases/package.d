@@ -9,12 +9,7 @@ public {
   import uim.platform.logging.application.usecases.ingest_logs;
   import uim.platform.logging.application.usecases.ingest_traces;
   import uim.platform.logging.application.usecases.search_logs;
-  import uim.platform.logging.application.usecases.manage.log_streams;
-  import uim.platform.logging.application.usecases.manage.dashboards;
-  import uim.platform.logging.application.usecases.manage.retention_policies;
-  import uim.platform.logging.application.usecases.manage.alert_rules;
-  import uim.platform.logging.application.usecases.manage.alerts;
-  import uim.platform.logging.application.usecases.manage.notification_channels;
-  import uim.platform.logging.application.usecases.manage.pipelines;
   import uim.platform.logging.application.usecases.get_overview;
+  
+  import uim.platform.logging.application.usecases.manage;
 }

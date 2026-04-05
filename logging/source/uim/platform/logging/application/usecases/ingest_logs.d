@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.ingest_logs;
 
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.ports.repositories.log_entrys;
-import uim.platform.logging.domain.ports.repositories.log_streams;
-import uim.platform.logging.domain.services.log_parser;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.ports.repositories.log_entrys;
+// import uim.platform.logging.domain.ports.repositories.log_streams;
+// import uim.platform.logging.domain.services.log_parser;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.application.dto;
 
-import std.conv : to;
-import std.format : format;
+// import std.conv : to;
+// import std.format : format;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class IngestLogsUseCase : UIMUseCase {
   private LogEntryRepository logRepo;
   private LogStreamRepository streamRepo;
