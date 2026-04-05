@@ -91,8 +91,8 @@ string[][] jsonKeyValuePairs(Json j, string key) {
   string[][] result;
   foreach (item; *v) {
     if (item.isObject) {
-      auto k = jsonStr(item, "key");
-      auto val = jsonStr(item, "value");
+      auto k = item.getString("key");
+      auto val = item.getString("value");
       if (k.length > 0)
         result ~= [k, val];
     }
@@ -111,9 +111,9 @@ string[][] jsonFieldArray(Json j, string key) {
   string[][] result;
   foreach (item; *v) {
     if (item.isObject) {
-      auto name = jsonStr(item, "name");
-      auto label = jsonStr(item, "label");
-      auto type = jsonStr(item, "type");
+      auto name = item.getString("name");
+      auto label = item.getString("label");
+      auto type = item.getString("type");
       auto req = jsonBool(item, "required") ? "true" : "false";
       if (name.length > 0)
         result ~= [name, label, type, req];
@@ -135,7 +135,7 @@ string[][] jsonRegionArray(Json j, string key) {
   string[][] result;
   foreach (item; *v) {
     if (item.isObject) {
-      auto fieldName = jsonStr(item, "fieldName");
+      auto fieldName = item.getString("fieldName");
       auto page = jsonInt(item, "page").to!string;
       auto x = jsonDouble(item, "x").to!string;
       auto y = jsonDouble(item, "y").to!string;

@@ -79,8 +79,8 @@ string[][] jsonKeyValuePairs(Json j, string key) {
   string[][] result;
   foreach (item; *v) {
     if (item.isObject) {
-      auto k = jsonStr(item, "key");
-      auto val = jsonStr(item, "value");
+      auto k = item.getString("key");
+      auto val = item.getString("value");
       if (k.length > 0)
         result ~= [k, val];
     }
