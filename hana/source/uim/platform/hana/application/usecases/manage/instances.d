@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.instances;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.instance;
-import uim.platform.hana.domain.ports.repositories.instances;
-import uim.platform.hana.domain.services.instance_validator;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.instance;
+// import uim.platform.hana.domain.ports.repositories.instances;
+// import uim.platform.hana.domain.services.instance_validator;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageInstancesUseCase : UIMUseCase {
   private InstanceRepository repo;
 

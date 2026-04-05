@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.hdi_containers;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.hdi_container;
-import uim.platform.hana.domain.ports.repositories.hdi_containers;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.hdi_container;
+// import uim.platform.hana.domain.ports.repositories.hdi_containers;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageHDIContainersUseCase : UIMUseCase {
   private HDIContainerRepository repo;
 

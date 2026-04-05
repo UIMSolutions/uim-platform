@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.alerts;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.alert;
-import uim.platform.hana.domain.ports.repositories.alerts;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.alert;
+// import uim.platform.hana.domain.ports.repositories.alerts;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageAlertsUseCase : UIMUseCase {
   private AlertRepository repo;
 

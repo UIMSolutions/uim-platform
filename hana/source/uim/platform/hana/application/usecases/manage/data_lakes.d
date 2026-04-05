@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.data_lakes;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.data_lake;
-import uim.platform.hana.domain.ports.repositories.data_lakes;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.data_lake;
+// import uim.platform.hana.domain.ports.repositories.data_lakes;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDataLakesUseCase : UIMUseCase {
   private DataLakeRepository repo;
 

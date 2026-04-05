@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.backups;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.backup;
-import uim.platform.hana.domain.ports.repositories.backups;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.backup;
+// import uim.platform.hana.domain.ports.repositories.backups;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageBackupsUseCase : UIMUseCase {
   private BackupRepository repo;
 

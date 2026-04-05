@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.schemas;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.schema;
-import uim.platform.hana.domain.ports.repositories.schemas;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.schema;
+// import uim.platform.hana.domain.ports.repositories.schemas;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSchemasUseCase : UIMUseCase {
   private SchemaRepository repo;
 

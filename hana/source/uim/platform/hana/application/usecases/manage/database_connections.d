@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.database_connections;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.database_connection;
-import uim.platform.hana.domain.ports.repositories.database_connections;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.database_connection;
+// import uim.platform.hana.domain.ports.repositories.database_connections;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDatabaseConnectionsUseCase : UIMUseCase {
   private DatabaseConnectionRepository repo;
 

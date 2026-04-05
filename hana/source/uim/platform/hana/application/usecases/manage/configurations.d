@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.usecases.manage.configurations;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.configuration;
-import uim.platform.hana.domain.ports.repositories.configurations;
-import uim.platform.hana.application.dto;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.configuration;
+// import uim.platform.hana.domain.ports.repositories.configurations;
+// import uim.platform.hana.application.dto;
 
-import uim.platform.service;
-import std.conv : to;
+// import uim.platform.service;
+// import std.conv : to;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageConfigurationsUseCase : UIMUseCase {
   private ConfigurationRepository repo;
 
