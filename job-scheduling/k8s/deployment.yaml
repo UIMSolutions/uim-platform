@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-job-scheduling
+  labels:
+    app: cloud-job-scheduling
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-job-scheduling
+  template:
+    metadata:
+      labels:
+        app: cloud-job-scheduling
+    spec:
+      containers:
+      - name: cloud-job-scheduling
+        image: uim-platform/cloud-job-scheduling:latest
+        ports:
+        - containerPort: 8096
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: cloud-job-scheduling-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8096
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false

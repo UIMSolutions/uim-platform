@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-job-scheduling-config
+  labels:
+    app: cloud-job-scheduling
+    part-of: uim-platform
+data:
+  JOB_SCHEDULING_HOST: "0.0.0.0"
+  JOB_SCHEDULING_PORT: "8096"
