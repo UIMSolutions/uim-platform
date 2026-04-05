@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.ports.repositories.notification_channels;
 
-import uim.platform.logging.domain.entities.notification_channel;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.notification_channel;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 interface NotificationChannelRepository {
   NotificationChannel findById(NotificationChannelId id);
   NotificationChannel[] findByTenant(TenantId tenantId);

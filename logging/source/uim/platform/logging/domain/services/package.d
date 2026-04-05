@@ -7,6 +7,6 @@ module uim.platform.logging.domain.services;
 
 public {
   import uim.platform.logging.domain.services.log_parser;
-  import uim.platform.logging.domain.services.retention_evaluator;
   import uim.platform.logging.domain.services.pattern_matcher;
+  import uim.platform.logging.domain.services.retention_evaluator;
 }

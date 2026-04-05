@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.ports.repositories.spans;
 
-import uim.platform.logging.domain.entities.span;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.span;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 interface SpanRepository {
   Span findById(SpanId id);
   Span[] findByTraceId(TenantId tenantId, TraceId traceId);

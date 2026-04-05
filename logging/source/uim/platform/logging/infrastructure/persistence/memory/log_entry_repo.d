@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.log_entry_repo;
 
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.ports.repositories.log_entrys;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.ports.repositories.log_entrys;
+// import uim.platform.logging.domain.types;
 
-import std.algorithm : filter;
-import std.array : array;
-import std.string : indexOf;
+// import std.algorithm : filter;
+// import std.array : array;
+// import std.string : indexOf;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryLogEntryRepository : LogEntryRepository {
   private LogEntry[] store;
 

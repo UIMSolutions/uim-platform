@@ -3,11 +3,15 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.logging.domain.ports.repositories.log_entrys;
+module uim.platform.logging.domain.ports.repositories.log_entries;
 
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 interface LogEntryRepository {
   LogEntry findById(LogEntryId id);
   LogEntry[] findByTenant(TenantId tenantId);

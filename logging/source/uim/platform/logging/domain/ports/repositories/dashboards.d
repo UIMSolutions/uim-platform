@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.ports.repositories.dashboards;
 
-import uim.platform.logging.domain.entities.dashboard;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.dashboard;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 interface DashboardRepository {
   Dashboard findById(DashboardId id);
   Dashboard[] findByTenant(TenantId tenantId);

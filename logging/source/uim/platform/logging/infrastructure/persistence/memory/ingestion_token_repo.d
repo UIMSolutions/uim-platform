@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.ingestion_token_repo;
 
-import uim.platform.logging.domain.entities.ingestion_token;
-import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.ingestion_token;
+// import uim.platform.logging.domain.ports.repositories.ingestion_tokens;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryIngestionTokenRepository : IngestionTokenRepository {
   private IngestionToken[IngestionTokenId] store;
 

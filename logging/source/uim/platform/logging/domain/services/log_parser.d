@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.services.log_parser;
 
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct ParseResult {
   bool valid;
   string[] errors;

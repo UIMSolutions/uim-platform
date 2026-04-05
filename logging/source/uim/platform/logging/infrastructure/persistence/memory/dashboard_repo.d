@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.dashboard_repo;
 
-import uim.platform.logging.domain.entities.dashboard;
-import uim.platform.logging.domain.ports.repositories.dashboards;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.dashboard;
+// import uim.platform.logging.domain.ports.repositories.dashboards;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDashboardRepository : DashboardRepository {
   private Dashboard[DashboardId] store;
 

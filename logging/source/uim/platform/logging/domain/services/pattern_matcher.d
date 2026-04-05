@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.services.pattern_matcher;
 
-import uim.platform.logging.domain.entities.alert_rule;
-import uim.platform.logging.domain.entities.log_entry;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.alert_rule;
+// import uim.platform.logging.domain.entities.log_entry;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 struct MatchResult {
   bool matched;
   string reason;

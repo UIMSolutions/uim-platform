@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.logging.infrastructure.persistence.memory.alert_rule_repo;
 
-import uim.platform.logging.domain.entities.alert_rule;
-import uim.platform.logging.domain.ports.repositories.alert_rules;
-import uim.platform.logging.domain.types;
+// import uim.platform.logging.domain.entities.alert_rule;
+// import uim.platform.logging.domain.ports.repositories.alert_rules;
+// import uim.platform.logging.domain.types;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryAlertRuleRepository : AlertRuleRepository {
   private AlertRule[AlertRuleId] store;
 
