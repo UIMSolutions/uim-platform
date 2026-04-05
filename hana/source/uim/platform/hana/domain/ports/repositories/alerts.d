@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.alerts;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.alert;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.alert;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface AlertRepository {
   Alert findById(AlertId id);
   Alert[] findByTenant(TenantId tenantId);

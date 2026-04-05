@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.backups;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.backup;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.backup;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface BackupRepository {
   Backup findById(BackupId id);
   Backup[] findByTenant(TenantId tenantId);

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.schemas;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.schema;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.schema;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface SchemaRepository {
   Schema findById(SchemaId id);
   Schema[] findByTenant(TenantId tenantId);

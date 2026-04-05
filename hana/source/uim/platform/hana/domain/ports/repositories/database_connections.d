@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.database_connections;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.database_connection;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.database_connection;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface DatabaseConnectionRepository {
   DatabaseConnection findById(DatabaseConnectionId id);
   DatabaseConnection[] findByTenant(TenantId tenantId);

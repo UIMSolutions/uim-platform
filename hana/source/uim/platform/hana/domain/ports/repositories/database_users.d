@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.database_users;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.database_user;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.database_user;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface DatabaseUserRepository {
   DatabaseUser findById(DatabaseUserId id);
   DatabaseUser[] findByTenant(TenantId tenantId);

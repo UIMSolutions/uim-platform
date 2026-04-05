@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.data_lakes;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.data_lake;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.data_lake;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface DataLakeRepository {
   DataLake findById(DataLakeId id);
   DataLake[] findByTenant(TenantId tenantId);

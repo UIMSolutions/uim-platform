@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.configurations;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.configuration;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.configuration;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface ConfigurationRepository {
   Configuration findById(ConfigurationId id);
   Configuration[] findByTenant(TenantId tenantId);

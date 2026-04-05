@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.instances;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.instance;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.instance;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface InstanceRepository {
   DatabaseInstance findById(InstanceId id);
   DatabaseInstance[] findByTenant(TenantId tenantId);

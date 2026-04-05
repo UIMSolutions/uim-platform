@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.hana.domain.ports.repositories.hdi_containers;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.hdi_container;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.hdi_container;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 interface HDIContainerRepository {
   HDIContainer findById(HDIContainerId id);
   HDIContainer[] findByTenant(TenantId tenantId);
