@@ -1,0 +1,86 @@
+/****************************************************************************************************************
+* Copyright: © 2018-2026 Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*) 
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
+* Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.workzone.application.usecases.manage.manage_shell_plugins;
+
+// import std.uuid;
+// import std.datetime.systime : Clock;
+
+import uim.platform.workzone.domain.types;
+import uim.platform.workzone.domain.entities.shell_plugin;
+import uim.platform.workzone.domain.ports.repositories.shell_plugins;
+import uim.platform.workzone.application.dto;
+
+class ManageShellPluginsUseCase : UIMUseCase {
+  private ShellPluginRepository repo;
+
+  this(ShellPluginRepository repo)
+  {
+    this.repo = repo;
+  }
+
+  CommandResult createPlugin(CreateShellPluginRequest req)
+  {
+    if (req.name.length == 0)
+      return CommandResult("", "Plugin name is required");
+
+    auto now = Clock.currStdTime();
+    auto p = ShellPlugin();
+    p.id = randomUUID().toString();
+    p.tenantId = req.tenantId;
+    p.name = req.name;
+    p.description = req.description;
+    p.version_ = req.version_;
+    p.vendor = req.vendor;
+    p.scriptUrl = req.scriptUrl;
+    p.configSchemaUrl = req.configSchemaUrl;
+    p.status = PluginStatus.inactive;
+    p.hookPoints = req.hookPoints;
+    p.installedAt = now;
+    p.updatedAt = now;
+
+    repo.save(p);
+    return CommandResult(p.id, "");
+  }
+
+  ShellPlugin* getPlugin(ShellPluginId id, TenantId tenantId)
+  {
+    return repo.findById(id, tenantId);
+  }
+
+  ShellPlugin[] listPlugins(TenantId tenantId)
+  {
+    return repo.findByTenant(tenantId);
+  }
+
+  CommandResult updatePlugin(UpdateShellPluginRequest req)
+  {
+    auto p = repo.findById(req.id, req.tenantId);
+    if (p is null)
+      return CommandResult("", "Plugin not found");
+
+    if (req.name.length > 0)
+      p.name = req.name;
+    if (req.description.length > 0)
+      p.description = req.description;
+    if (req.scriptUrl.length > 0)
+      p.scriptUrl = req.scriptUrl;
+    p.status = req.status;
+    p.updatedAt = Clock.currStdTime();
+
+    repo.update(*p);
+    return CommandResult(p.id, "");
+  }
+
+  CommandResult deletePlugin(ShellPluginId id, TenantId tenantId)
+  {
+    auto p = repo.findById(id, tenantId);
+    if (p is null)
+      return CommandResult("", "Plugin not found");
+
+    repo.remove(id, tenantId);
+    return CommandResult(id, "");
+  }
+}
