@@ -19,6 +19,20 @@ alias WidgetId = string;
 alias TenantId = string;
 alias UserId = string;
 alias RoleId = string;
+alias SiteId = string;
+alias EventId = string;
+alias SurveyId = string;
+alias ForumTopicId = string;
+alias KBArticleId = string;
+alias GroupId = string;
+alias TagId = string;
+alias ThemeId = string;
+alias NavigationItemId = string;
+alias PageTemplateId = string;
+alias ExternalContentProviderId = string;
+alias ShellPluginId = string;
+alias UserProfileId = string;
+alias MemberId = string;
 
 /// Workspace type.
 enum WorkspaceType {
@@ -128,4 +142,92 @@ enum MemberRole {
   contributor,
   admin,
   owner,
+}
+
+/// Site status.
+enum SiteStatus {
+  draft,
+  published,
+  maintenance,
+  archived,
+}
+
+/// Event status.
+enum EventStatus {
+  scheduled,
+  ongoing,
+  completed,
+  cancelled,
+}
+
+/// Survey status.
+enum SurveyStatus {
+  draft,
+  active,
+  closed,
+  archived,
+}
+
+/// Survey question type.
+enum QuestionType {
+  singleChoice,
+  multipleChoice,
+  freeText,
+  rating,
+  scale,
+}
+
+/// Forum topic status.
+enum ForumTopicStatus {
+  open,
+  closed,
+  pinned,
+  archived,
+}
+
+/// KB article status.
+enum KBArticleStatus {
+  draft,
+  published,
+  review,
+  archived,
+}
+
+/// Group type.
+enum GroupType {
+  security,
+  distribution,
+  dynamic,
+}
+
+/// Navigation item type.
+enum NavigationItemType {
+  link,
+  group,
+  separator,
+  app,
+  externalLink,
+}
+
+/// Plugin status.
+enum PluginStatus {
+  active,
+  inactive,
+  error,
+}
+
+/// External content provider status.
+enum ProviderStatus {
+  connected,
+  disconnected,
+  error,
+}
+
+/// External content provider type.
+enum ProviderType {
+  odata,
+  rest,
+  graphql,
+  sapBtp,
+  custom,
 }
