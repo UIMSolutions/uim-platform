@@ -8,24 +8,27 @@ module uim.platform.data.privacy.application.usecases.manage.deletion_requests;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.deletion_request;
-import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
-import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
-import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.deletion_request;
+// import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
+// import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
+// import uim.platform.data.privacy.application.dto;
 
+import uim.platform.data.privacy;
+
+mixin(ShowModule!());
+
+@safe:
 class ManageDeletionRequestsUseCase : UIMUseCase {
   private DeletionRequestRepository repo;
   private DataSubjectRepository subjectRepo;
 
-  this(DeletionRequestRepository repo, DataSubjectRepository subjectRepo)
-  {
+  this(DeletionRequestRepository repo, DataSubjectRepository subjectRepo) {
     this.repo = repo;
     this.subjectRepo = subjectRepo;
   }
 
-  CommandResult createRequest(CreateDeletionRequest req)
-  {
+  CommandResult createRequest(CreateDeletionRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.dataSubjectId.length == 0)
@@ -57,28 +60,23 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DeletionRequest* getRequest(DeletionRequestId id, TenantId tenantId)
-  {
+  DeletionRequest* getRequest(DeletionRequestId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  DeletionRequest[] listRequests(TenantId tenantId)
-  {
+  DeletionRequest[] listRequests(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DeletionRequest[] listByStatus(TenantId tenantId, DeletionStatus status)
-  {
+  DeletionRequest[] listByStatus(TenantId tenantId, DeletionStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 
-  DeletionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId)
-  {
+  DeletionRequest[] listByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     return repo.findByDataSubject(tenantId, subjectId);
   }
 
-  CommandResult updateStatus(UpdateDeletionStatusRequest req)
-  {
+  CommandResult updateStatus(UpdateDeletionStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
     if (request is null)
       return CommandResult("", "Deletion request not found");
@@ -93,8 +91,7 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  void deleteRequest(DeletionRequestId id, TenantId tenantId)
-  {
+  void deleteRequest(DeletionRequestId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

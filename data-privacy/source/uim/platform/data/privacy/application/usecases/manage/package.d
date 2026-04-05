@@ -6,5 +6,15 @@
 module uim.platform.data.privacy.presentation;
 
 public {
-    
+  import uim.platform.data.privacy.domain.entities.data_processing_activity;
+  import uim.platform.data.privacy.domain.entities.data_access_request;
+  import uim.platform.data.privacy.domain.entities.consent;
+  import uim.platform.data.privacy.domain.entities.privacy_policy;
+  import uim.platform.data.privacy.domain.entities.data_subject;
+  
+  import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
+  import uim.platform.data.privacy.domain.ports.repositories.data_processing_activities;
+  import uim.platform.data.privacy.domain.ports.repositories.data_access_requests;
+  import uim.platform.data.privacy.domain.ports.repositories.consents;
+  import uim.platform.data.privacy.domain.ports.repositories.privacy_policies;
 }

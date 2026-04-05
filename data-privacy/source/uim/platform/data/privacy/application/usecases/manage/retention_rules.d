@@ -8,21 +8,23 @@ module uim.platform.data.privacy.application.usecases.manage.retention_rules;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.retention_rule;
-import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
-import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.retention_rule;
+// import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
+// import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageRetentionRulesUseCase : UIMUseCase {
   private RetentionRuleRepository repo;
 
-  this(RetentionRuleRepository repo)
-  {
+  this(RetentionRuleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRule(CreateRetentionRuleRequest req)
-  {
+  CommandResult createRule(CreateRetentionRuleRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -49,23 +51,19 @@ class ManageRetentionRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  RetentionRule* getRule(RetentionRuleId id, TenantId tenantId)
-  {
+  RetentionRule* getRule(RetentionRuleId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  RetentionRule[] listRules(TenantId tenantId)
-  {
+  RetentionRule[] listRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  RetentionRule[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-  {
+  RetentionRule[] listByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     return repo.findByPurpose(tenantId, purpose);
   }
 
-  CommandResult updateRule(UpdateRetentionRuleRequest req)
-  {
+  CommandResult updateRule(UpdateRetentionRuleRequest req) {
     auto rule = repo.findById(req.id, req.tenantId);
     if (rule is null)
       return CommandResult("", "Retention rule not found");
@@ -87,8 +85,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  void deleteRule(RetentionRuleId id, TenantId tenantId)
-  {
+  void deleteRule(RetentionRuleId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

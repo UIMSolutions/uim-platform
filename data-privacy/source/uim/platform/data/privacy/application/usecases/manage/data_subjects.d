@@ -8,29 +8,30 @@ module uim.platform.data.privacy.application.usecases.manage.data_subjects;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.data_subject;
-import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
-import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.data_subject;
+// import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
+// import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDataSubjectsUseCase : UIMUseCase {
   private DataSubjectRepository repo;
 
-  this(DataSubjectRepository repo)
-  {
+  this(DataSubjectRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createSubject(CreateDataSubjectRequest req)
-  {
+  CommandResult createSubject(CreateDataSubjectRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.displayName.length == 0)
       return CommandResult("", "Display name is required");
 
     // Check for duplicate external ID
-    if (req.externalId.length > 0)
-    {
+    if (req.externalId.length > 0) {
       auto existing = repo.findByExternalId(req.externalId, req.tenantId);
       if (existing !is null)
         return CommandResult("", "Data subject with this external ID already exists");
@@ -54,23 +55,19 @@ class ManageDataSubjectsUseCase : UIMUseCase {
     return CommandResult(subject.id, "");
   }
 
-  DataSubject* getSubject(DataSubjectId id, TenantId tenantId)
-  {
+  DataSubject* getSubject(DataSubjectId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  DataSubject[] listSubjects(TenantId tenantId)
-  {
+  DataSubject[] listSubjects(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataSubject[] listByType(TenantId tenantId, DataSubjectType subjectType)
-  {
+  DataSubject[] listByType(TenantId tenantId, DataSubjectType subjectType) {
     return repo.findByType(tenantId, subjectType);
   }
 
-  CommandResult updateSubject(UpdateDataSubjectRequest req)
-  {
+  CommandResult updateSubject(UpdateDataSubjectRequest req) {
     auto subject = repo.findById(req.id, req.tenantId);
     if (subject is null)
       return CommandResult("", "Data subject not found");
@@ -91,8 +88,7 @@ class ManageDataSubjectsUseCase : UIMUseCase {
     return CommandResult(subject.id, "");
   }
 
-  void deleteSubject(DataSubjectId id, TenantId tenantId)
-  {
+  void deleteSubject(DataSubjectId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

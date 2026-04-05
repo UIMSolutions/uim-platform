@@ -8,28 +8,30 @@ module uim.platform.data.privacy.application.usecases.manage.data_retrievals;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.data_retrieval_request;
-import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
-import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
-import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
-import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.data_retrieval_request;
+// import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_requests;
+// import uim.platform.data.privacy.domain.ports.repositories.data_subjects;
+// import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
+// import uim.platform.data.privacy.application.dto;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageDataRetrievalsUseCase : UIMUseCase {
   private DataRetrievalRequestRepository repo;
   private DataSubjectRepository subjectRepo;
   private PersonalDataModelRepository modelRepo;
 
   this(DataRetrievalRequestRepository repo, DataSubjectRepository subjectRepo,
-      PersonalDataModelRepository modelRepo)
-  {
+    PersonalDataModelRepository modelRepo) {
     this.repo = repo;
     this.subjectRepo = subjectRepo;
     this.modelRepo = modelRepo;
   }
 
-  CommandResult createRequest(CreateDataRetrievalRequest req)
-  {
+  CommandResult createRequest(CreateDataRetrievalRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.dataSubjectId.length == 0)
@@ -59,14 +61,11 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     // Simulate retrieval: count matching personal data fields
     auto models = modelRepo.findByTenant(req.tenantId);
     long fieldCount = 0;
-    foreach (ref m; models)
-    {
-      if (req.targetSystems.length > 0)
-      {
+    foreach (ref m; models) {
+      if (req.targetSystems.length > 0) {
         bool systemMatch = false;
         foreach (s; req.targetSystems)
-          if (s == m.sourceSystem)
-          {
+          if (s == m.sourceSystem) {
             systemMatch = true;
             break;
           }
@@ -84,23 +83,19 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DataRetrievalRequest* getRequest(DataRetrievalRequestId id, TenantId tenantId)
-  {
+  DataRetrievalRequest* getRequest(DataRetrievalRequestId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  DataRetrievalRequest[] listRequests(TenantId tenantId)
-  {
+  DataRetrievalRequest[] listRequests(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataRetrievalRequest[] listByStatus(TenantId tenantId, RetrievalStatus status)
-  {
+  DataRetrievalRequest[] listByStatus(TenantId tenantId, RetrievalStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult updateStatus(UpdateRetrievalStatusRequest req)
-  {
+  CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
     if (request is null)
       return CommandResult("", "Data retrieval request not found");
@@ -117,8 +112,7 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  void deleteRequest(DataRetrievalRequestId id, TenantId tenantId)
-  {
+  void deleteRequest(DataRetrievalRequestId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }
