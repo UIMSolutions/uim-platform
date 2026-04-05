@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.backups;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.backup;
-import uim.platform.hana.domain.ports.repositories.backups;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.backup;
+// import uim.platform.hana.domain.ports.repositories.backups;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryBackupRepository : BackupRepository {
   private Backup[] store;
 

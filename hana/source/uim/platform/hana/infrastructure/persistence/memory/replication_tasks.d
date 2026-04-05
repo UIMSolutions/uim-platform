@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.replication_tasks;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.replication_task;
-import uim.platform.hana.domain.ports.repositories.replication_tasks;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.replication_task;
+// import uim.platform.hana.domain.ports.repositories.replication_tasks;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryReplicationTaskRepository : ReplicationTaskRepository {
   private ReplicationTask[] store;
 

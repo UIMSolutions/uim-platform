@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.alerts;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.alert;
-import uim.platform.hana.domain.ports.repositories.alerts;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.alert;
+// import uim.platform.hana.domain.ports.repositories.alerts;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryAlertRepository : AlertRepository {
   private Alert[] store;
 

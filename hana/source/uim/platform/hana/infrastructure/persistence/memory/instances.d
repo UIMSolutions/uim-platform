@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.instances;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.instance;
-import uim.platform.hana.domain.ports.repositories.instances;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.instance;
+// import uim.platform.hana.domain.ports.repositories.instances;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryInstanceRepository : InstanceRepository {
   private DatabaseInstance[] store;
 

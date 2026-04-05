@@ -3,39 +3,48 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
+module uim.platform.hana.infrastructure.persistence.memory.configurations;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.hdi_container;
-import uim.platform.hana.domain.ports.repositories.hdi_containers;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.configuration;
+// import uim.platform.hana.domain.ports.repositories.configurations;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
 
-import std.algorithm : filter;
-import std.array : array;
+import uim.platform.hana;
 
-class MemoryHDIContainerRepository : HDIContainerRepository {
-  private HDIContainer[] store;
+mixin(ShowModule!());
 
-  HDIContainer findById(HDIContainerId id) {
+@safe:
+class MemoryConfigurationRepository : ConfigurationRepository {
+  private Configuration[] store;
+
+  Configuration findById(ConfigurationId id) {
     foreach (ref c; store) {
       if (c.id == id)
         return c;
     }
-    return HDIContainer.init;
+    return Configuration.init;
   }
 
-  HDIContainer[] findByTenant(TenantId tenantId) {
+  Configuration[] findByTenant(TenantId tenantId) {
     return store.filter!(c => c.tenantId == tenantId).array;
   }
 
-  HDIContainer[] findByInstance(InstanceId instanceId) {
+  Configuration[] findByInstance(InstanceId instanceId) {
     return store.filter!(c => c.instanceId == instanceId).array;
   }
 
-  void save(HDIContainer c) {
+  Configuration[] findBySection(InstanceId instanceId, string section) {
+    return store.filter!(c => c.instanceId == instanceId && c.section == section).array;
+  }
+
+  void save(Configuration c) {
     store ~= c;
   }
 
-  void update(HDIContainer c) {
+  void update(Configuration c) {
     foreach (ref existing; store) {
       if (existing.id == c.id) {
         existing = c;
@@ -44,7 +53,7 @@ class MemoryHDIContainerRepository : HDIContainerRepository {
     }
   }
 
-  void remove(HDIContainerId id) {
+  void remove(ConfigurationId id) {
     store = store.filter!(c => c.id != id).array;
   }
 

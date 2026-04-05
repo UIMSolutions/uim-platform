@@ -3,43 +3,43 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.hana.infrastructure.persistence.memory.configurations;
+module uim.platform.hana.infrastructure.persistence.memory.database_connections;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.configuration;
-import uim.platform.hana.domain.ports.repositories.configurations;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.database_connection;
+// import uim.platform.hana.domain.ports.repositories.database_connections;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
-class MemoryConfigurationRepository : ConfigurationRepository {
-  private Configuration[] store;
+mixin(ShowModule!());
 
-  Configuration findById(ConfigurationId id) {
+@safe:
+class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
+  private DatabaseConnection[] store;
+
+  DatabaseConnection findById(DatabaseConnectionId id) {
     foreach (ref c; store) {
       if (c.id == id)
         return c;
     }
-    return Configuration.init;
+    return DatabaseConnection.init;
   }
 
-  Configuration[] findByTenant(TenantId tenantId) {
+  DatabaseConnection[] findByTenant(TenantId tenantId) {
     return store.filter!(c => c.tenantId == tenantId).array;
   }
 
-  Configuration[] findByInstance(InstanceId instanceId) {
+  DatabaseConnection[] findByInstance(InstanceId instanceId) {
     return store.filter!(c => c.instanceId == instanceId).array;
   }
 
-  Configuration[] findBySection(InstanceId instanceId, string section) {
-    return store.filter!(c => c.instanceId == instanceId && c.section == section).array;
-  }
-
-  void save(Configuration c) {
+  void save(DatabaseConnection c) {
     store ~= c;
   }
 
-  void update(Configuration c) {
+  void update(DatabaseConnection c) {
     foreach (ref existing; store) {
       if (existing.id == c.id) {
         existing = c;
@@ -48,7 +48,7 @@ class MemoryConfigurationRepository : ConfigurationRepository {
     }
   }
 
-  void remove(ConfigurationId id) {
+  void remove(DatabaseConnectionId id) {
     store = store.filter!(c => c.id != id).array;
   }
 

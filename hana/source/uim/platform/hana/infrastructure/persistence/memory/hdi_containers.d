@@ -3,39 +3,43 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.hana.infrastructure.persistence.memory.database_connections;
+module uim.platform.hana.infrastructure.persistence.memory.hdi_containers;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.database_connection;
-import uim.platform.hana.domain.ports.repositories.database_connections;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.hdi_container;
+// import uim.platform.hana.domain.ports.repositories.hdi_containers;
+// 
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
-import std.algorithm : filter;
-import std.array : array;
+mixin(ShowModule!());
 
-class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
-  private DatabaseConnection[] store;
+@safe:
+class MemoryHDIContainerRepository : HDIContainerRepository {
+  private HDIContainer[] store;
 
-  DatabaseConnection findById(DatabaseConnectionId id) {
+  HDIContainer findById(HDIContainerId id) {
     foreach (ref c; store) {
       if (c.id == id)
         return c;
     }
-    return DatabaseConnection.init;
+    return HDIContainer.init;
   }
 
-  DatabaseConnection[] findByTenant(TenantId tenantId) {
+  HDIContainer[] findByTenant(TenantId tenantId) {
     return store.filter!(c => c.tenantId == tenantId).array;
   }
 
-  DatabaseConnection[] findByInstance(InstanceId instanceId) {
+  HDIContainer[] findByInstance(InstanceId instanceId) {
     return store.filter!(c => c.instanceId == instanceId).array;
   }
 
-  void save(DatabaseConnection c) {
+  void save(HDIContainer c) {
     store ~= c;
   }
 
-  void update(DatabaseConnection c) {
+  void update(HDIContainer c) {
     foreach (ref existing; store) {
       if (existing.id == c.id) {
         existing = c;
@@ -44,7 +48,7 @@ class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
     }
   }
 
-  void remove(DatabaseConnectionId id) {
+  void remove(HDIContainerId id) {
     store = store.filter!(c => c.id != id).array;
   }
 

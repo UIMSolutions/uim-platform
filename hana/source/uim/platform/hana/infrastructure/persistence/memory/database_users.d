@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.hana.infrastructure.persistence.memory.database_users;
 
-import uim.platform.hana.domain.types;
-import uim.platform.hana.domain.entities.database_user;
-import uim.platform.hana.domain.ports.repositories.database_users;
+// import uim.platform.hana.domain.types;
+// import uim.platform.hana.domain.entities.database_user;
+// import uim.platform.hana.domain.ports.repositories.database_users;
 
-import std.algorithm : filter;
-import std.array : array;
+// import std.algorithm : filter;
+// import std.array : array;
+import uim.platform.hana;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDatabaseUserRepository : DatabaseUserRepository {
   private DatabaseUser[] store;
 
