@@ -5,13 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.logging.application.usecases.manage.alert_rules;
 
-import uim.platform.logging.domain.entities.alert_rule;
-import uim.platform.logging.domain.ports.repositories.alert_rules;
-import uim.platform.logging.domain.types;
-import uim.platform.logging.application.dto;
+// import uim.platform.logging.domain.entities.alert_rule;
+// import uim.platform.logging.domain.ports.repositories.alert_rules;
+// import uim.platform.logging.domain.types;
+// import uim.platform.logging.application.dto;
+// 
+// import std.conv : to;
 
-import std.conv : to;
+import uim.platform.logging;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageAlertRulesUseCase : UIMUseCase {
   private AlertRuleRepository repo;
 
