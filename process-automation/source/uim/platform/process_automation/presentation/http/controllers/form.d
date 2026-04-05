@@ -1,0 +1,156 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.process_automation.presentation.http.controllers.form;
+
+import uim.platform.process_automation.application.usecases.manage.forms;
+import uim.platform.process_automation.application.dto;
+import uim.platform.process_automation.presentation.http.json_utils;
+
+import uim.platform.process_automation;
+
+class FormController : SAPController {
+    private ManageFormsUseCase uc;
+
+    this(ManageFormsUseCase uc) {
+        this.uc = uc;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        router.get("/api/v1/process-automation/forms", &handleList);
+        router.get("/api/v1/process-automation/forms/*", &handleGet);
+        router.post("/api/v1/process-automation/forms", &handleCreate);
+        router.put("/api/v1/process-automation/forms/*", &handleUpdate);
+        router.delete_("/api/v1/process-automation/forms/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto j = req.json;
+            CreateFormRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.projectId = jsonStr(j, "projectId");
+            r.id = jsonStr(j, "id");
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.version_ = jsonStr(j, "version");
+            r.createdBy = jsonStr(j, "createdBy");
+
+            auto result = uc.create(r);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Form created");
+                res.writeJsonBody(resp, 201);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto forms = uc.list(tenantId);
+
+            auto jarr = Json.emptyArray;
+            foreach (ref f; forms) {
+                auto fj = Json.emptyObject;
+                fj["id"] = Json(f.id);
+                fj["name"] = Json(f.name);
+                fj["description"] = Json(f.description);
+                fj["status"] = Json(f.status.to!string);
+                fj["version"] = Json(f.version_);
+                fj["createdAt"] = Json(f.createdAt);
+                fj["modifiedAt"] = Json(f.modifiedAt);
+                jarr ~= fj;
+            }
+
+            auto resp = Json.emptyObject;
+            resp["count"] = Json(cast(long) forms.length);
+            resp["resources"] = jarr;
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto f = uc.get_(id);
+            if (f.id.length == 0) {
+                writeError(res, 404, "Form not found");
+                return;
+            }
+
+            auto resp = Json.emptyObject;
+            resp["id"] = Json(f.id);
+            resp["name"] = Json(f.name);
+            resp["description"] = Json(f.description);
+            resp["status"] = Json(f.status.to!string);
+            resp["version"] = Json(f.version_);
+            resp["projectId"] = Json(f.projectId);
+            resp["createdBy"] = Json(f.createdBy);
+            resp["modifiedBy"] = Json(f.modifiedBy);
+            resp["createdAt"] = Json(f.createdAt);
+            resp["modifiedAt"] = Json(f.modifiedAt);
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto j = req.json;
+            UpdateFormRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.version_ = jsonStr(j, "version");
+            r.modifiedBy = jsonStr(j, "modifiedBy");
+
+            auto result = uc.update(r);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Form updated");
+                res.writeJsonBody(resp, 200);
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto result = uc.remove(id);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Form deleted");
+                res.writeJsonBody(resp, 200);
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}
