@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-personal-data-config
+  labels:
+    app: cloud-personal-data
+    part-of: uim-platform
+data:
+  PERSONAL_DATA_HOST: "0.0.0.0"
+  PERSONAL_DATA_PORT: "8102"

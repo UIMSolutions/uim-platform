@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloud-personal-data
+  labels:
+    app: cloud-personal-data
+    part-of: uim-platform
+spec:
+  type: ClusterIP
+  selector:
+    app: cloud-personal-data
+  ports:
+  - name: http
+    port: 8102
+    targetPort: 8102
+    protocol: TCP
