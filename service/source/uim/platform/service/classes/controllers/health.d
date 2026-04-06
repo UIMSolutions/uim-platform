@@ -40,8 +40,8 @@ class HealthController : SAPController {
     return _serviceVersion;
   }
 
-  @property void serviceVersion(string version) {
-    _serviceVersion = version;
+  @property void serviceVersion(string version_) {
+    _serviceVersion = version_;
   }
 
   override void registerRoutes(URLRouter router) {

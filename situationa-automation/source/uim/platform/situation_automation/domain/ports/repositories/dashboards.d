@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.dashboards;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.dashboard;
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.dashboard;
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface DashboardRepository {
     Dashboard findById(DashboardId id);

@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.situation_instances;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.situation_instance;
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.situation_instance;
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface SituationInstanceRepository {
     SituationInstance findById(SituationInstanceId id);

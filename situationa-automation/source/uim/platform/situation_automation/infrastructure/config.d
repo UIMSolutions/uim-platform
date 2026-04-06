@@ -5,7 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.infrastructure.config;
 
-import uim.platform.hana;
+import std.process;
+import uim.platform.situation_automation;
 
 mixin(ShowModule!());
 

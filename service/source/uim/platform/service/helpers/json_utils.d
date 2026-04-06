@@ -5,8 +5,11 @@
 *****************************************************************************************************************/
 module uim.platform.service.helpers.json_utils;
 
-import vibe.data.json;
-import vibe.http.server;
+import uim.platform.service;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
@@ -20,7 +23,7 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0) {
-  if (j.type != Json.Type.object)
+  if (!j.isObject)
     return default_;
 
   auto v = key in j;
@@ -44,57 +47,91 @@ ushort jsonUshort(Json j, string key, ushort default_ = 0) {
 }
 
 double jsonDouble(Json j, string key) {
-  if (j.type != Json.Type.object)
+  if (!j.hasKey(key))
     return 0.0;
 
-  auto v = key in j;
-  if (v is null)
-    return 0.0;
+  auto v = j[key];
+  if (v.isFloat)
+    return v.get!double;
 
-  if ((*v).type == Json.Type.float_)
-    return (*v).get!double;
-
-  if ((*v).type == Json.Type.int_)
-    return cast(double)(*v).get!long;
+  if (v.isInteger)
+    return cast(double)v.get!long;
   return 0.0;
 }
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
-  if (j.type != Json.Type.object)
+  if (!j.hasKey(key) || j[key] == Json(null))
     return null;
 
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
+  auto v = j[key];
+  if (v.type != Json.Type.array)
     return null;
 
   string[] result;
-  foreach (item; *v) {
-    if (item.type == Json.Type.string)
+  foreach (item; v.toArray) {
+    if (item.isString)
       result ~= item.get!string;
   }
   return result;
 }
 
+string[][] jsonKeyValuePairs(Json json, string key) {
+  if (!json.hasKey(key))
+    return null;
+
+  auto v = json[key];
+  if (v == Json(null))
+    return null;
+  if (!v.isArray)
+    return null;
+
+  string[][] result;
+  foreach (item; v.toArray) {
+    if (item.isObject) {
+      if (!item.hasKey("key") || !item.hasKey("value"))
+        continue;
+
+      auto k = item["key"];
+      auto val = item["value"];
+      result ~= [k.get!string, val.get!string];
+    } else if (item.isArray) {
+      string[] pair;
+      foreach (elem; item.toArray) {
+        if (elem.isString)
+          pair ~= elem.get!string;
+      }
+      if (pair.length >= 2)
+        result ~= pair;
+    }
+  }
+  return result;
+}
+
+Json stringsToJsonArray(string[] arr) {
+  auto jarr = Json.emptyArray;
+  foreach (s; arr)
+    jarr ~= Json(s);
+  return jarr;
+}
+
 string[][] jsonPairArray(Json j, string key) {
-  if (j.type != Json.Type.object)
+  if (!j.isObject)
     return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
+  auto v = j[key];
+  if (!v.isArray)
     return [];
   string[][] result;
-  foreach (ref elem; *v) {
-    if (elem.type == Json.Type.object) {
+  foreach (elem; v.toArray) {
+    if (elem.isObject) {
       auto k = "key" in elem;
       auto val = "value" in elem;
       if (k !is null && val !is null) {
         result ~= [(*k).get!string, (*val).get!string];
       }
-    } else if (elem.type == Json.Type.array) {
+    } else if (elem.isArray) {
       string[] pair;
-      foreach (ref item; elem) {
-        if (item.type == Json.Type.string)
+      foreach (item; elem.toArray) {
+        if (item.isString)
           pair ~= item.get!string;
       }
       if (pair.length >= 2)
@@ -105,16 +142,15 @@ string[][] jsonPairArray(Json j, string key) {
 }
 
 string[][] jsonMessageArray(Json j, string key) {
-  if (j.type != Json.Type.object)
-    return [];
-  auto v = key in j;
-  if (v is null)
-    return [];
-  if ((*v).type != Json.Type.array)
-    return [];
+  if (!j.isObject)
+    return null;
+  auto v = j[key];
+  if (!v.isArray)
+    return null;
+
   string[][] result;
-  foreach (ref elem; *v) {
-    if (elem.type == Json.Type.object) {
+  foreach (elem; v.toArray) {
+    if (elem.isObject) {
       auto role = "role" in elem;
       auto content = "content" in elem;
       if (role !is null && content !is null) {
@@ -129,7 +165,10 @@ string extractIdFromPath(string uri) {
   // Strip query string
   long qpos = -1;
   foreach (i, c; uri) {
-    if (c == '?') { qpos = cast(long)i; break; }
+    if (c == '?') {
+      qpos = cast(long)i;
+      break;
+    }
   }
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 
@@ -177,16 +216,16 @@ Json toJsonArray(string[] arr) {
 }
 
 string[string] jsonStrMap(Json j, string key) {
-  if (j.type != Json.Type.object)
+  if (!j.isObject)
     return null;
 
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.object)
+  auto v = j[key];
+  if (!v.isObject)
     return null;
 
   string[string] result;
-  foreach (string k, val; *v) {
-    if (val.type == Json.Type.string)
+  foreach (string k, val; v.toMap) {
+    if (val.isString)
       result[k] = val.get!string;
   }
   return result;

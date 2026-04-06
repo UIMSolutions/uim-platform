@@ -80,32 +80,6 @@ string[] jsonStrArray(Json j, string key) {
     return result;
 }
 
-string[][] jsonKeyValuePairs(Json j, string key) {
-    if (!j.isObject)
-        return [];
-    auto v = key in j;
-    if (v is null)
-        return [];
-    if ((*v).type != Json.Type.array)
-        return [];
-    string[][] result;
-    foreach (item; *v) {
-        if (item.isObject) {
-            auto k = item.getString("key");
-            auto val = item.getString("value");
-            if (k.length > 0)
-                result ~= [k, val];
-        }
-    }
-    return result;
-}
-
-Json stringsToJsonArray(string[] arr) {
-    auto jarr = Json.emptyArray;
-    foreach (s; arr)
-        jarr ~= Json(s);
-    return jarr;
-}
 
 void writeError(scope HTTPServerResponse res, int statusCode, string message) {
     auto j = Json.emptyObject;

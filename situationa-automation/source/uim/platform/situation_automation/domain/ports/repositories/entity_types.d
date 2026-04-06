@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.entity_types;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.entity_type;
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.entity_type;
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface EntityTypeRepository {
     EntityType findById(EntityTypeId id);

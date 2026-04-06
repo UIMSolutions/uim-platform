@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.notifications;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.notification;
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.notification;
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface NotificationRepository {
     Notification findById(NotificationId id);

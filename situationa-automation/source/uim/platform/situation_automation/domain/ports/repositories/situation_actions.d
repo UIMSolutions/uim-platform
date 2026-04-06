@@ -4,9 +4,15 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.situation_actions;
+// 
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.situation_action;
+// 
+import uim.platform.situation_automation;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.situation_action;
+mixin(ShowModule!());
+
+@safe:
 
 interface SituationActionRepository {
     SituationAction findById(SituationActionId id);

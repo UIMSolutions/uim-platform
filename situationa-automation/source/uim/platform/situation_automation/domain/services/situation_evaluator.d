@@ -5,6 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.services.situation_evaluator;
 
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
+
 struct SituationEvaluator {
     static string validate(string id, string name) {
         if (id.length == 0)

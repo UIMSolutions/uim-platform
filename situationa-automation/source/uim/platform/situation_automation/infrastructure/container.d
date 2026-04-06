@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.infrastructure.container;
 
-import uim.platform.hana;
+import uim.platform.situation_automation;
 
 mixin(ShowModule!());
 

@@ -5,8 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.ports.repositories.data_contexts;
 
-import uim.platform.situation_automation.domain.types;
-import uim.platform.situation_automation.domain.entities.data_context;
+// import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.entities.data_context;
+
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 interface DataContextRepository {
     DataContext findById(DataContextId id);
