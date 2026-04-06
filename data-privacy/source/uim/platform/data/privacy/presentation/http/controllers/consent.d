@@ -14,7 +14,6 @@ import uim.platform.data.privacy.application.usecases.manage.consent_records;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.consent_record;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class ConsentController : SAPController {
   private ManageConsentRecordsUseCase uc;

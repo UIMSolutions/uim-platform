@@ -9,7 +9,6 @@ import uim.platform.data.privacy.application.usecases.manage.anonymization_confi
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.anonymization_config;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class AnonymizationConfigController {
   private ManageAnonymizationConfigsUseCase uc;

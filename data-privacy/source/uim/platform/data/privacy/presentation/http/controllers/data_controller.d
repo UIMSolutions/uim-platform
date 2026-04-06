@@ -9,7 +9,6 @@ import uim.platform.data.privacy.application.usecases.manage.data_controllers;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.data_controller;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class DataControllerController {
   private ManageDataControllersUseCase uc;

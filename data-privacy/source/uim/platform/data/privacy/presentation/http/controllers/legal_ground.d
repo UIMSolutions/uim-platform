@@ -14,7 +14,6 @@ import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.legal_ground;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class LegalGroundController {
   private ManageLegalGroundsUseCase uc;

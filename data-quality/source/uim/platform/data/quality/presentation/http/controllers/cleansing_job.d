@@ -14,27 +14,22 @@ import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
 import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;
-import uim.platform.data.quality.presentation.http.json_utils;
 
 class CleansingJobController {
   private ManageCleansingJobsUseCase uc;
 
-  this(ManageCleansingJobsUseCase uc)
-  {
+  this(ManageCleansingJobsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/cleansing-jobs", &handleCreate);
     router.get("/api/v1/cleansing-jobs", &handleList);
     router.get("/api/v1/cleansing-jobs/*", &handleGetById);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto r = CreateCleansingJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -43,28 +38,21 @@ class CleansingJobController {
       r.ruleIds = jsonStrArray(j, "ruleIds");
 
       auto result = uc.create(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("pending");
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
@@ -73,37 +61,29 @@ class CleansingJobController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) jobs.length);
+      resp["totalCount"] = Json(cast(long)jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto job = uc.getById(id, tenantId);
-      if (job is null)
-      {
+      if (job is null) {
         writeError(res, 404, "Cleansing job not found");
         return;
       }
       res.writeJsonBody(serializeJob(*job), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeJob(ref const CleansingJob j)
-  {
+  private static Json serializeJob(ref const CleansingJob j) {
     auto r = Json.emptyObject;
     r["id"] = Json(j.id);
     r["tenantId"] = Json(j.tenantId);
@@ -121,8 +101,7 @@ class CleansingJobController {
     if (j.errorMessage.length > 0)
       r["errorMessage"] = Json(j.errorMessage);
 
-    if (j.ruleIds.length > 0)
-    {
+    if (j.ruleIds.length > 0) {
       auto ids = Json.emptyArray;
       foreach (id; j.ruleIds)
         ids ~= Json(id);

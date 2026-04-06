@@ -14,7 +14,6 @@ import uim.platform.data.privacy.application.usecases.manage.retention_rules;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.retention_rule;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class RetentionRuleController {
   private ManageRetentionRulesUseCase uc;

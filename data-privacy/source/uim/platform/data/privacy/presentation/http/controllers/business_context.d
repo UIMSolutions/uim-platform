@@ -9,7 +9,6 @@ import uim.platform.data.privacy.application.usecases.manage.business_contexts;
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.business_context;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class BusinessContextController {
   private ManageBusinessContextsUseCase uc;

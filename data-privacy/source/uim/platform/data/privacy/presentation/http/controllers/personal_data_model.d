@@ -14,7 +14,6 @@ import uim.platform.data.privacy.application.usecases.manage.personal_data_model
 import uim.platform.data.privacy.application.dto;
 import uim.platform.data.privacy.domain.types;
 import uim.platform.data.privacy.domain.entities.personal_data_model;
-import uim.platform.data.privacy.presentation.http.json_utils;
 
 class PersonalDataModelController {
   private ManagePersonalDataModelsUseCase uc;
