@@ -1,0 +1,47 @@
+name "task-center"
+description "UIM Platform Task Center Service - Centralized task federation and processing"
+authors "Ozan Nurettin Suel"
+copyright "Copyright (c) 2018-2026 Ozan Nurettin Suel"
+license "Apache-2.0"
+
+dependency "uim-platform:service" path=".."
+
+targetType "none"
+
+sourcePaths "source"
+importPaths "source"
+
+configuration "defaultRun" {
+    targetType "executable"
+    targetName "uim-task-center-platform-service"
+    targetPath "build"
+}
+
+configuration "defaultTest" {
+    targetType "library"
+}
+
+configuration "modules" {
+    targetType "library"
+    versions "show_module"
+}
+
+configuration "tests" {
+    targetType "library"
+    versions "show_module" "show_test"
+}
+
+configuration "inits" {
+    targetType "library"
+    versions "show_module" "show_init"
+}
+
+configuration "calls" {
+    targetType "library"
+    versions "show_module" "show_call"
+}
+
+configuration "verbose" {
+    targetType "library"
+    versions "show_module" "show_test" "show_init" "show_call"
+}

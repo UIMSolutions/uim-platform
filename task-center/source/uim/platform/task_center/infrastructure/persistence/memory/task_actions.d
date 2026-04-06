@@ -1,0 +1,57 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.task_center.infrastructure.persistence.memory.task_actions;
+
+import uim.platform.task_center;
+
+mixin(ShowModule!());
+
+@safe:
+
+class MemoryTaskActionRepository : TaskActionRepository {
+    private TaskAction[][string] store;
+
+    TaskAction findById(string tenantId, string id) {
+        if (auto arr = tenantId in store)
+            foreach (ref a; *arr)
+                if (a.id == id) return a;
+        return TaskAction.init;
+    }
+
+    TaskAction[] findByTenant(string tenantId) {
+        if (auto arr = tenantId in store) return *arr;
+        return [];
+    }
+
+    TaskAction[] findByTask(string tenantId, string taskId) {
+        TaskAction[] result;
+        if (auto arr = tenantId in store)
+            foreach (ref a; *arr)
+                if (a.taskId == taskId) result ~= a;
+        return result;
+    }
+
+    TaskAction[] findByPerformer(string tenantId, string performerId) {
+        TaskAction[] result;
+        if (auto arr = tenantId in store)
+            foreach (ref a; *arr)
+                if (a.performedBy == performerId) result ~= a;
+        return result;
+    }
+
+    void save(string tenantId, TaskAction entity) {
+        store[tenantId] ~= entity;
+    }
+
+    void remove(string tenantId, string id) {
+        if (auto arr = tenantId in store) {
+            TaskAction[] filtered;
+            foreach (ref a; *arr)
+                if (a.id != id) filtered ~= a;
+            store[tenantId] = filtered;
+        }
+    }
+}

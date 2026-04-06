@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: task-center-config
+  namespace: uim-platform
+  labels:
+    app: task-center
+    part-of: uim-platform
+data:
+  TASK_CENTER_HOST: "0.0.0.0"
+  TASK_CENTER_PORT: "8103"
