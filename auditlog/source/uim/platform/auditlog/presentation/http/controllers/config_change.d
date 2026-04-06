@@ -13,7 +13,6 @@ import uim.platform.auditlog.application.usecases.write.config_change;
 import uim.platform.auditlog.application.dto;
 import uim.platform.auditlog.domain.types;
 import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
-import uim.platform.auditlog.presentation.http.json_utils;
 
 @safe:
 class ConfigChangeController : SAPController {

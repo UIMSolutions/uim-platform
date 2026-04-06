@@ -146,6 +146,5 @@ Json toJsonArray(string[] arr) {
   auto jarr = Json.emptyArray;
   foreach (ref s; arr) {
     jarr ~= Json(s);
-  }
   return jarr;
 }
