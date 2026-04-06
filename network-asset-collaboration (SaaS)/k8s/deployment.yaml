@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-asset-collaboration
+  namespace: uim-platform
+  labels:
+    app: network-asset-collaboration
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: network-asset-collaboration
+  template:
+    metadata:
+      labels:
+        app: network-asset-collaboration
+    spec:
+      containers:
+      - name: network-asset-collaboration
+        image: uim-platform/network-asset-collaboration:latest
+        ports:
+        - containerPort: 8104
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: network-asset-collaboration-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8104
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8104
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

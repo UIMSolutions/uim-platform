@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: network-asset-collaboration-config
+  namespace: uim-platform
+  labels:
+    app: network-asset-collaboration
+    part-of: uim-platform
+data:
+  NETWORK_ASSET_COLLABORATION_HOST: "0.0.0.0"
+  NETWORK_ASSET_COLLABORATION_PORT: "8104"
