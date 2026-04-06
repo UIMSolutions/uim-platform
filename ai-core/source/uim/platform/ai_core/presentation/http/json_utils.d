@@ -7,16 +7,6 @@ module uim.platform.ai_core.presentation.http.json_utils;
 
 import uim.platform.ai_core;
 
-string jsonStr(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
 
 bool jsonBool(Json j, string key, bool default_ = false) {
   if (!j.isObject)
@@ -40,16 +30,7 @@ int jsonInt(Json j, string key, int default_ = 0) {
   return default_;
 }
 
-long jsonLong(Json j, string key, long default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return (*v).get!long;
-  return default_;
-}
+
 
 string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)

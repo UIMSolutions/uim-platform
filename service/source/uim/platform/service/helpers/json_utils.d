@@ -22,38 +22,50 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
     return default_;
+
   auto v = key in j;
   if (v is null)
     return default_;
+
   if ((*v).isInteger)
     return (*v).get!long;
+    
   return default_;
 }
 
 /// Extract an int field from a Json object.
 int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
+  return cast(int)jsonLong(j, key, default_);
+}
+
+/// Extract a ushort field from a Json object.
+ushort jsonUshort(Json j, string key, ushort default_ = 0) {
+  return cast(ushort)jsonLong(j, key, default_);
 }
 
 double jsonDouble(Json j, string key) {
-  if (j.type != Json.Type.object) return 0.0;
+  if (j.type != Json.Type.object)
+    return 0.0;
   auto v = key in j;
-  if (v is null) return 0.0;
-  if ((*v).type == Json.Type.float_) return (*v).get!double;
-  if ((*v).type == Json.Type.int_) return cast(double)(*v).get!long;
+  if (v is null)
+    return 0.0;
+  if ((*v).type == Json.Type.float_)
+    return (*v).get!double;
+  if ((*v).type == Json.Type.int_)
+    return cast(double)(*v).get!long;
   return 0.0;
 }
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
-    return [];
+    return null;
+
   auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
+  if (v is null || !(*v).isArray)
+    return null;
 
   string[] result;
-  foreach (item; *v)
-  {
+  foreach (item; *v) {
     if (item.isString)
       result ~= item.get!string;
   }
@@ -61,10 +73,13 @@ string[] jsonStrArray(Json j, string key) {
 }
 
 string[][] jsonPairArray(Json j, string key) {
-  if (j.type != Json.Type.object) return [];
+  if (j.type != Json.Type.object)
+    return [];
   auto v = key in j;
-  if (v is null) return [];
-  if ((*v).type != Json.Type.array) return [];
+  if (v is null)
+    return [];
+  if (!(*v).isArray)
+    return [];
   string[][] result;
   foreach (ref elem; *v) {
     if (elem.type == Json.Type.object) {
@@ -76,19 +91,24 @@ string[][] jsonPairArray(Json j, string key) {
     } else if (elem.type == Json.Type.array) {
       string[] pair;
       foreach (ref item; elem) {
-        if (item.type == Json.Type.string) pair ~= item.get!string;
+        if (item.type == Json.Type.string)
+          pair ~= item.get!string;
       }
-      if (pair.length >= 2) result ~= pair;
+      if (pair.length >= 2)
+        result ~= pair;
     }
   }
   return result;
 }
 
 string[][] jsonMessageArray(Json j, string key) {
-  if (j.type != Json.Type.object) return [];
+  if (j.type != Json.Type.object)
+    return [];
   auto v = key in j;
-  if (v is null) return [];
-  if ((*v).type != Json.Type.array) return [];
+  if (v is null)
+    return [];
+  if (!(*v).isArray)
+    return [];
   string[][] result;
   foreach (ref elem; *v) {
     if (elem.type == Json.Type.object) {
@@ -120,8 +140,8 @@ string extractIdFromPath(string uri) {
 }
 
 private long lastIndexOf(string s, char c) {
-  for (long i = cast(long) s.length - 1; i >= 0; --i)
-    if (s[cast(size_t) i] == c)
+  for (long i = cast(long)s.length - 1; i >= 0; --i)
+    if (s[cast(size_t)i] == c)
       return i;
   return -1;
 }
@@ -136,6 +156,7 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
 
 string extractIdFromPath2(string path) {
   import std.string : lastIndexOf;
+
   auto idx = path.lastIndexOf('/');
   if (idx >= 0 && idx + 1 < path.length)
     return path[idx + 1 .. $];
@@ -146,5 +167,5 @@ Json toJsonArray(string[] arr) {
   auto jarr = Json.emptyArray;
   foreach (ref s; arr) {
     jarr ~= Json(s);
-  return jarr;
-}
+    return jarr;
+  }

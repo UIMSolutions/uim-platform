@@ -8,68 +8,6 @@ module uim.platform.connectivity.presentation.http.json_utils;
 // import vibe.data.json;
 // import vibe.http.server;
 
-/// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-/// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
-
-/// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return (*v).get!long;
-  return default_;
-}
-
-/// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
-
-/// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
-  return cast(ushort) jsonLong(j, key, default_);
-}
-
-/// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key) {
-  if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
-
-  string[] result;
-  foreach (item; *v)
-  {
-    if (item.isString)
-      result ~= item.get!string;
-  }
-  return result;
-}
 
 /// Convert a string array to a Json array.
 Json toJsonArray(const(string[]) arr) {

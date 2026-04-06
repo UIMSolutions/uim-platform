@@ -10,27 +10,6 @@ module uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-string jsonStr(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
-
-bool jsonBool(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
 
 double jsonDouble(Json j, string key, double default_ = 0) {
   if (!j.isObject)
@@ -45,16 +24,7 @@ double jsonDouble(Json j, string key, double default_ = 0) {
   return default_;
 }
 
-long jsonLong(Json j, string key, long default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isInteger)
-    return (*v).get!long;
-  return default_;
-}
+
 
 int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int) jsonLong(j, key, default_);
