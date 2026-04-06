@@ -14,7 +14,6 @@ module uim.platform.abap_enviroment.http.controllers.application_job;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.application_job;
 // import uim.platform.abap_enviroment.domain.types;
-// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 import uim.platform.abap_enviroment;
 

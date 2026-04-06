@@ -3,15 +3,10 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.abap_enviroment.presentation.http.json_utils;
+module uim.platform.service.helpers.json_utils;
 
 // import vibe.data.json;
 // import vibe.http.server;
-
-import uim.platform.abap_enviroment;
-
-mixin(ShowModule!());
-@safe:
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
@@ -54,11 +49,6 @@ int jsonInt(Json j, string key, int default_ = 0) {
   return cast(int) jsonLong(j, key, default_);
 }
 
-/// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
-  return cast(ushort) jsonLong(j, key, default_);
-}
-
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
@@ -78,15 +68,17 @@ string[] jsonStrArray(Json j, string key) {
 
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
+  // Strip query string
   // import std.string : indexOf;
-
   auto qpos = uri.indexOf('?');
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 
+  // Strip trailing slash
   if (path.length > 0 && path[$ - 1] == '/')
     path = path[0 .. $ - 1];
 
-  auto spos = lastIndexOf(path, '/');
+  // Find last slash
+  auto spos = path.lastIndexOf('/');
   if (spos >= 0 && spos + 1 < path.length)
     return path[spos + 1 .. $];
   return path;

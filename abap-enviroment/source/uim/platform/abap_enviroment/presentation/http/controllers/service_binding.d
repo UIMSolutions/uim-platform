@@ -14,7 +14,6 @@ module uim.platform.abap_enviroment.http.controllers.service_binding;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.service_binding;
 // import uim.platform.abap_enviroment.domain.types;
-// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 import uim.platform.abap_enviroment;
 

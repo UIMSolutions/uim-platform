@@ -14,7 +14,6 @@ import uim.platform.abap_enviroment.application.usecases.manage.transport_reques
 import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
-import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 class TransportRequestController {
   private ManageTransportRequestsUseCase uc;

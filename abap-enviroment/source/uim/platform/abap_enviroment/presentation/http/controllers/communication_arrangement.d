@@ -14,7 +14,6 @@ module uim.platform.abap_enviroment.http.controllers.communication_arrangement;
 // import uim.platform.abap_enviroment.application.dto;
 // import uim.platform.abap_enviroment.domain.entities.communication_arrangement;
 // import uim.platform.abap_enviroment.domain.types;
-// import uim.platform.abap_enviroment.presentation.http.json_utils;
 
 import uim.platform.abap_enviroment;
 
