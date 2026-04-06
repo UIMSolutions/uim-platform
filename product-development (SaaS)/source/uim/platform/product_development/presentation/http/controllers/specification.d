@@ -20,6 +20,7 @@ class SpecificationController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/product-development/specifications", &handleList);
         router.get("/api/v1/product-development/specifications/*", &handleGet);
         router.post("/api/v1/product-development/specifications", &handleCreate);
