@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-situation-automation-config
+  labels:
+    app: cloud-situation-automation
+    part-of: uim-platform
+data:
+  SITUATION_AUTOMATION_HOST: "0.0.0.0"
+  SITUATION_AUTOMATION_PORT: "8100"

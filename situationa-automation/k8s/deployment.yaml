@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-situation-automation
+  labels:
+    app: cloud-situation-automation
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloud-situation-automation
+  template:
+    metadata:
+      labels:
+        app: cloud-situation-automation
+    spec:
+      containers:
+      - name: cloud-situation-automation
+        image: uim-platform/cloud-situation-automation:latest
+        ports:
+        - containerPort: 8100
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: cloud-situation-automation-config
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8100
+          initialDelaySeconds: 5
+          periodSeconds: 30
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8100
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true

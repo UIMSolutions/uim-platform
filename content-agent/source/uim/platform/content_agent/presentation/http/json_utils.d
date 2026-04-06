@@ -9,24 +9,6 @@ module uim.platform.content_agent.presentation.http.json_utils;
 // import vibe.http.server;
 
 
-
-/// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).isBoolean)
-    return (*v).get!bool;
-  return default_;
-}
-
-/// Extract an integer field from a Json object.
-
-
-/// Extract an int field from a Json object.
-
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
   if (!j.isObject)
