@@ -16,7 +16,6 @@ module uim.platform.data.attribute_recommendation.presentation.http.controllers
 // import uim.platform.data.attribute_recommendation.domain.entities.inference_request;
 // import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 // import uim.platform.data.attribute_recommendation.domain.types;
-// import uim.platform.data.attribute_recommendation.presentation.http.json_utils;
 import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());

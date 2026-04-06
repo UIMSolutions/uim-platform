@@ -13,7 +13,6 @@ module uim.platform.connectivity.presentation.http.controllers.certificate;
 // import uim.platform.connectivity.application.usecases.manage.certificates;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.certificate;
-// import uim.platform.connectivity.presentation.http.json_utils;
 import uim.platform.connectivity;
 
 mixin(ShowModule!());

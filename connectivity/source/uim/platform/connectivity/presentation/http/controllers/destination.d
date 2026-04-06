@@ -13,7 +13,6 @@ module uim.platform.connectivity.presentation.http.controllers.connector;
 import uim.platform.connectivity.application.usecases.manage.destinations;
 import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
-import uim.platform.connectivity.presentation.http.json_utils;
 
 class DestinationController {
   private ManageDestinationsUseCase uc;

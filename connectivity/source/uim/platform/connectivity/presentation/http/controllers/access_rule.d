@@ -13,7 +13,6 @@ module uim.platform.connectivity.presentation.http.controllers.access_rule;
 // import uim.platform.connectivity.application.usecases.manage.access_rules;
 // import uim.platform.connectivity.application.dto;
 // import uim.platform.connectivity.domain.entities.access_rule;
-// import uim.platform.connectivity.presentation.http.json_utils;
 import uim.platform.connectivity;
 
 mixin(ShowModule!());

@@ -7,7 +7,6 @@ module uim.platform.credential_store.presentation.http.controllers.namespace;
 
 // import uim.platform.credential_store.application.usecases.manage.namespaces;
 // import uim.platform.credential_store.application.dto;
-// import uim.platform.credential_store.presentation.http.json_utils;
 
 import uim.platform.credential_store;
 
@@ -24,6 +23,7 @@ class NamespaceController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/namespaces", &handleCreate);
     router.get("/api/v1/namespaces", &handleList);
     router.get("/api/v1/namespaces/*", &handleGet);
@@ -70,7 +70,7 @@ class NamespaceController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) namespaces.length);
+      resp["totalCount"] = Json(cast(long)namespaces.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

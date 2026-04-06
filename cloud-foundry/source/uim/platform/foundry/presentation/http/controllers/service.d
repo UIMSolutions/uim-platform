@@ -15,18 +15,15 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
-import uim.platform.foundry.presentation.http.json_utils;
 
 class ServiceController {
   private ManageServicesUseCase useCase;
 
-  this(ManageServicesUseCase useCase)
-  {
+  this(ManageServicesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     // Service instances
     router.post("/api/v1/service-instances", &handleCreateInstance);
     router.get("/api/v1/service-instances", &handleListInstances);
@@ -41,10 +38,8 @@ class ServiceController {
 
   // --- Service Instances ---
 
-  private void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto r = CreateServiceInstanceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -57,25 +52,19 @@ class ServiceController {
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createInstance(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = useCase.listInstances(tenantId);
 
@@ -85,39 +74,30 @@ class ServiceController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto si = useCase.getInstance(id, tenantId);
-      if (si is null)
-      {
+      if (si is null) {
         writeError(res, 404, "Service instance not found");
         return;
       }
       res.writeJsonBody(serializeInstance(*si), 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleUpdateInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateServiceInstanceRequest();
@@ -128,49 +108,37 @@ class ServiceController {
       r.tags = j.getString("tags");
 
       auto result = useCase.updateInstance(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteInstance(id, tenantId);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   // --- Service Bindings ---
 
-  private void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleCreateBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -181,25 +149,19 @@ class ServiceController {
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createBinding(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = useCase.listBindings(tenantId);
 
@@ -209,41 +171,32 @@ class ServiceController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
-    try
-    {
+  private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteBinding(id, tenantId);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
-    {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   // --- Serializers ---
 
-  private static Json serializeInstance(ref const ServiceInstance si)
-  {
+  private static Json serializeInstance(ref const ServiceInstance si) {
     auto j = Json.emptyObject;
     j["id"] = Json(si.id);
     j["spaceId"] = Json(si.spaceId);
@@ -261,8 +214,7 @@ class ServiceController {
     return j;
   }
 
-  private static Json serializeBinding(ref const ServiceBinding b)
-  {
+  private static Json serializeBinding(ref const ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["appId"] = Json(b.appId);

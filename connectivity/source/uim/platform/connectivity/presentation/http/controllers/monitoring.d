@@ -13,7 +13,6 @@ module uim.platform.connectivity.presentation.http.controllers.monitoring;
 // import uim.platform.connectivity.application.usecases.monitor_connectivity;
 // import uim.platform.connectivity.domain.entities.connectivity_log;
 // import uim.platform.connectivity.domain.types;
-// import uim.platform.connectivity.presentation.http.json_utils;
 
 import uim.platform.connectivity;
 

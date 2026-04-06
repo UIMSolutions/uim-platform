@@ -14,7 +14,6 @@ import uim.platform.content_agent.application.usecases.manage.content_providers;
 import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
-import uim.platform.content_agent.presentation.http.json_utils;
 
 class ProviderController {
   private ManageContentProvidersUseCase uc;
