@@ -13,7 +13,6 @@ module uim.platform.content_agent.presentation.http.activity;
 import uim.platform.content_agent.application.usecases.monitor_activities;
 import uim.platform.content_agent.domain.entities.content_activity;
 import uim.platform.content_agent.domain.types;
-import uim.platform.content_agent.presentation.http.json_utils;
 
 class ActivityController {
   private MonitorActivitiesUseCase uc;

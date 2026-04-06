@@ -10,17 +10,7 @@ module uim.platform.foundry.presentation.http.json_utils;
 
 import uim.platform.foundry.domain.types;
 
-/// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
+
 
 /// Extract a boolean field from a Json object.
 bool jsonBool(Json j, string key, bool default_ = false) {

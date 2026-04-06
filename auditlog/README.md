@@ -74,7 +74,6 @@ auditlog/
 │   │       └── in_memory_config_change_repo.d
 │   └── presentation/                               #   HTTP driving adapters
 │       └── http/
-│           ├── json_utils.d                        #     JSON helper functions
 │           ├── health_controller.d
 │           ├── audit_log_controller.d
 │           ├── retention_controller.d

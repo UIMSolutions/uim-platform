@@ -9,24 +9,24 @@ Part of the [UIM Platform](https://www.sueel.de/uim/sap) suite.
 
 ## Features
 
-| Capability | Description |
-|---|---|
-| **Dashboards** | Multi-page analytical dashboards with widget placement, publishing lifecycle (Draft → Published → Archived), visibility scoping (Private / Team / Organization / Public) |
-| **Stories** | Narrative-driven analytics with sections combining text and visualizations |
-| **Datasets (Models)** | Structured data models with typed columns (Dimension / Measure / Attribute), aggregation defaults, and data source binding |
-| **Widgets (Visualizations)** | 20 chart types (Bar, Line, Pie, Scatter, Heatmap, KPI, GeoMap, Sankey, etc.) with dimension/measure bindings, filters, and configurable styles |
-| **Data Sources (Connections)** | 9 connector types (Database, CSV, Excel, OData, REST API, HANA, S3, Google Sheets, Live Connection) with connection testing and import scheduling |
-| **Planning Models** | Budget and forecast planning with versioning (Actual / Plan / Forecast / What-If), time granularity control, and approval workflows (Draft → Locked → Approved → Published) |
-| **Predictions (Smart Predict)** | ML model types (Classification, Regression, Time Series, Clustering, Anomaly Detection) with training, accuracy metrics, and confidence levels |
-| **Analytics Engine** | Server-side aggregations — Sum, Average, Count, CountDistinct, Min, Max, Median, Variance, StdDev, Running Total, Weighted Average |
-| **Forecasting Engine** | Simple exponential smoothing, Holt's method (level + trend), and moving average |
-| **Export** | PDF, CSV, and Excel export (CSV implemented, PDF/Excel stubs) |
-| **Notifications** | User and group notifications (console adapter for development) |
+| Capability                            | Description                                                                                                                                                                    |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Dashboards**                  | Multi-page analytical dashboards with widget placement, publishing lifecycle (Draft → Published → Archived), visibility scoping (Private / Team / Organization / Public)     |
+| **Stories**                     | Narrative-driven analytics with sections combining text and visualizations                                                                                                     |
+| **Datasets (Models)**           | Structured data models with typed columns (Dimension / Measure / Attribute), aggregation defaults, and data source binding                                                     |
+| **Widgets (Visualizations)**    | 20 chart types (Bar, Line, Pie, Scatter, Heatmap, KPI, GeoMap, Sankey, etc.) with dimension/measure bindings, filters, and configurable styles                                 |
+| **Data Sources (Connections)**  | 9 connector types (Database, CSV, Excel, OData, REST API, HANA, S3, Google Sheets, Live Connection) with connection testing and import scheduling                              |
+| **Planning Models**             | Budget and forecast planning with versioning (Actual / Plan / Forecast / What-If), time granularity control, and approval workflows (Draft → Locked → Approved → Published) |
+| **Predictions (Smart Predict)** | ML model types (Classification, Regression, Time Series, Clustering, Anomaly Detection) with training, accuracy metrics, and confidence levels                                 |
+| **Analytics Engine**            | Server-side aggregations — Sum, Average, Count, CountDistinct, Min, Max, Median, Variance, StdDev, Running Total, Weighted Average                                            |
+| **Forecasting Engine**          | Simple exponential smoothing, Holt's method (level + trend), and moving average                                                                                                |
+| **Export**                      | PDF, CSV, and Excel export (CSV implemented, PDF/Excel stubs)                                                                                                                  |
+| **Notifications**               | User and group notifications (console adapter for development)                                                                                                                 |
 
 ## Architecture
 
 ```
-analytics/
+nalytics/
 ├── source/
 │   ├── app.d                              # Entry point & composition root
 │   └── analytics/
@@ -203,33 +203,33 @@ ANALYTICS_HOST=127.0.0.1 ANALYTICS_PORT=9090 ./build/analytics
 
 ## Configuration
 
-| Variable | Default | Description |
-|---|---|---|
+| Variable           | Default     | Description       |
+| ------------------ | ----------- | ----------------- |
 | `ANALYTICS_HOST` | `0.0.0.0` | HTTP bind address |
-| `ANALYTICS_PORT` | `8082` | HTTP listen port |
+| `ANALYTICS_PORT` | `8082`    | HTTP listen port  |
 
 ## Domain Model Overview
 
 ### Value Objects & Enums
 
-| Type | Values |
-|---|---|
-| **EntityId** | Strongly-typed UUID wrapper with `generate()`, equality, hashing |
-| **AuditInfo** | `createdAt`, `createdBy`, `updatedAt`, `updatedBy` with `create()` / `touch()` |
-| **Visibility** | Private, Team, Organization, Public |
-| **ArtifactStatus** | Draft, Published, Archived |
-| **ChartType** | Bar, Column, Line, Area, Pie, Donut, Scatter, Bubble, Heatmap, Treemap, Waterfall, Gauge, KPI, Table, CrossTab, GeoMap, Sankey, BoxPlot, Histogram, Combo |
-| **AggregationType** | Sum, Average, Count, CountDistinct, Min, Max, Median, Variance, StdDev, First, Last, RunningTotal, WeightedAverage |
-| **TimeGranularity** | Yearly, Quarterly, Monthly, Weekly, Daily, Hourly |
-| **ColumnRole** | Dimension, Measure, Attribute |
-| **ColumnDataType** | String, Integer, Decimal, Date, DateTime, Boolean |
-| **DataSourceType** | Database, CSV, Excel, OData, RestAPI, HANA, S3, GoogleSheets, LiveConnection |
-| **DataSourceStatus** | Connected, Disconnected, Error, Importing |
-| **PlanningStatus** | Draft, InProgress, Locked, Approved, Published |
-| **VersionType** | Actual, Plan, Forecast, WhatIf |
-| **PredictionType** | Classification, Regression, TimeSeries, Clustering, AnomalyDetection |
-| **PredictionStatus** | Created, Training, Ready, Failed, Archived |
-| **FilterOperator** | Equals, NotEquals, GreaterThan, LessThan, Between, In, NotIn, Contains, IsNull, IsNotNull |
+| Type                       | Values                                                                                                                                                    |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **EntityId**         | Strongly-typed UUID wrapper with `generate()`, equality, hashing                                                                                        |
+| **AuditInfo**        | `createdAt`, `createdBy`, `updatedAt`, `updatedBy` with `create()` / `touch()`                                                                |
+| **Visibility**       | Private, Team, Organization, Public                                                                                                                       |
+| **ArtifactStatus**   | Draft, Published, Archived                                                                                                                                |
+| **ChartType**        | Bar, Column, Line, Area, Pie, Donut, Scatter, Bubble, Heatmap, Treemap, Waterfall, Gauge, KPI, Table, CrossTab, GeoMap, Sankey, BoxPlot, Histogram, Combo |
+| **AggregationType**  | Sum, Average, Count, CountDistinct, Min, Max, Median, Variance, StdDev, First, Last, RunningTotal, WeightedAverage                                        |
+| **TimeGranularity**  | Yearly, Quarterly, Monthly, Weekly, Daily, Hourly                                                                                                         |
+| **ColumnRole**       | Dimension, Measure, Attribute                                                                                                                             |
+| **ColumnDataType**   | String, Integer, Decimal, Date, DateTime, Boolean                                                                                                         |
+| **DataSourceType**   | Database, CSV, Excel, OData, RestAPI, HANA, S3, GoogleSheets, LiveConnection                                                                              |
+| **DataSourceStatus** | Connected, Disconnected, Error, Importing                                                                                                                 |
+| **PlanningStatus**   | Draft, InProgress, Locked, Approved, Published                                                                                                            |
+| **VersionType**      | Actual, Plan, Forecast, WhatIf                                                                                                                            |
+| **PredictionType**   | Classification, Regression, TimeSeries, Clustering, AnomalyDetection                                                                                      |
+| **PredictionStatus** | Created, Training, Ready, Failed, Archived                                                                                                                |
+| **FilterOperator**   | Equals, NotEquals, GreaterThan, LessThan, Between, In, NotIn, Contains, IsNull, IsNotNull                                                                 |
 
 ### Analytics Engine
 
@@ -248,13 +248,13 @@ Static time-series forecasting methods:
 
 ## HTTP Status Codes
 
-| Code | Usage |
-|---|---|
+| Code    | Usage                         |
+| ------- | ----------------------------- |
 | `200` | Successful GET or action POST |
-| `201` | Successful resource creation |
-| `204` | Successful DELETE |
-| `400` | Invalid request body |
-| `404` | Resource not found |
+| `201` | Successful resource creation  |
+| `204` | Successful DELETE             |
+| `400` | Invalid request body          |
+| `404` | Resource not found            |
 
 ## Technology
 

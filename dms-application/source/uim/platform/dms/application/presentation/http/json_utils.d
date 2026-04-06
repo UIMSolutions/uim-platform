@@ -14,17 +14,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-/// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
-  if (!j.isObject)
-    return "";
-  auto v = key in j;
-  if (v is null)
-    return "";
-  if ((*v).isString)
-    return (*v).get!string;
-  return "";
-}
+
 
 /// Extract a long field from a Json object.
 
