@@ -59,12 +59,12 @@ double jsonDouble(Json j, string key) {
   return 0.0;
 }
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key) {
-  if (!j.hasKey(key) || j[key] == Json(null))
+string[] jsonStrArray(Json json, string key) {
+  if (!json.hasKey(key) || json[key] == Json(null))
     return null;
 
-  auto v = j[key];
-  if (v.type != Json.Type.array)
+  auto v = json[key];
+  if (!v.isArray)
     return null;
 
   string[] result;
