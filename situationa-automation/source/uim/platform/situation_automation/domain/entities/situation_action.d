@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.situation_action;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct ApiConfig {
     string baseUrl;
     string path;

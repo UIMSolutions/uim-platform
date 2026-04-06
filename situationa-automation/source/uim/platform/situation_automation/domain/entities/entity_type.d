@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.entity_type;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct EntityAttribute {
     string name;
     string type;

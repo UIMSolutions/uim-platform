@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.data_context;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct DataContext {
     DataContextId id;
     SituationInstanceId instanceId;

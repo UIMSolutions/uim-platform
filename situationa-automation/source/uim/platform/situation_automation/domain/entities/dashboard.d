@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.dashboard;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct DashboardMetric {
     string name;
     MetricType type;

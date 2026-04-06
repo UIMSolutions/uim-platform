@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.situation_instance;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
+import uim.platform.situation_automation;
 
+mixin(ShowModule!());
+
+@safe:
 struct ResolutionInfo {
     ResolutionType type;
     string resolvedBy;

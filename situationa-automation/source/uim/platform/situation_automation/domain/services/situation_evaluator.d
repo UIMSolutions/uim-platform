@@ -5,7 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.services.situation_evaluator;
 
-
 import uim.platform.situation_automation;
 
 mixin(ShowModule!());

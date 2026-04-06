@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: field-service
+  namespace: uim-platform
+  labels:
+    app: field-service
+    part-of: uim-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: field-service
+  template:
+    metadata:
+      labels:
+        app: field-service
+    spec:
+      containers:
+      - name: field-service
+        image: uim-platform/field-service:latest
+        ports:
+        - containerPort: 8107
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: field-service-config
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8107
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8107
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"

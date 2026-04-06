@@ -5,8 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.domain.entities.automation_rule;
 
-import uim.platform.situation_automation.domain.types;
+// import uim.platform.situation_automation.domain.types;
 
+import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 struct RuleCondition {
     string field;
     ConditionOperator operator;
