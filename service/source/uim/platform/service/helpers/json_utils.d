@@ -53,7 +53,7 @@ double jsonDouble(Json j, string key) {
 
   if ((*v).type == Json.Type.float_)
     return (*v).get!double;
-    
+
   if ((*v).type == Json.Type.int_)
     return cast(double)(*v).get!long;
   return 0.0;
@@ -172,3 +172,20 @@ Json toJsonArray(string[] arr) {
     jarr ~= Json(s);
     return jarr;
   }
+}
+
+string[string] jsonStrMap(Json j, string key) {
+  if (!j.isObject)
+    return null;
+
+  auto v = key in j;
+  if (v is null || (*v).type != Json.Type.object)
+    return null;
+
+  string[string] result;
+  foreach (string k, val; *v) {
+    if (val.isString)
+      result[k] = val.get!string;
+  }
+  return result;
+}

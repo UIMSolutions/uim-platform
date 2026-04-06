@@ -78,12 +78,7 @@ string[string] jsonStrMap(Json j, string key) {
 }
 
 /// Convert a string array to a Json array.
-Json toJsonArray(const(string[]) arr) {
-  auto jarr = Json.emptyArray;
-  foreach (s; arr)
-    jarr ~= Json(s);
-  return jarr;
-}
+
 
 /// Convert a string[string] map to a Json object.
 Json toJsonObject(const(string[string]) map) {
@@ -94,11 +89,7 @@ Json toJsonObject(const(string[string]) map) {
 }
 
 /// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int statusCode, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  res.writeJsonBody(j, cast(ushort) statusCode);
-}
+
 
 /// Extract ID from the last segment of a request URI path.
 string extractIdFromPath(string uri) {

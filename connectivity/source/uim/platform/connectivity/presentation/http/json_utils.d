@@ -10,12 +10,7 @@ module uim.platform.connectivity.presentation.http.json_utils;
 
 
 /// Convert a string array to a Json array.
-Json toJsonArray(const(string[]) arr) {
-  auto jarr = Json.emptyArray;
-  foreach (s; arr)
-    jarr ~= Json(s);
-  return jarr;
-}
+
 
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
