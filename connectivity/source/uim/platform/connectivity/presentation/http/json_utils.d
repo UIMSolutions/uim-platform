@@ -28,12 +28,7 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
-private long lastIndexOf(string s, char c) {
-  for (long i = cast(long) s.length - 1; i >= 0; --i)
-    if (s[cast(size_t) i] == c)
-      return i;
-  return -1;
-}
+
 
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {

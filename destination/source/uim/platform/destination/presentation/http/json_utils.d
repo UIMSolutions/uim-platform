@@ -20,22 +20,7 @@ module uim.platform.destination.presentation.http.json_utils;
 
 /// Extract an int field from a Json object.
 
-/// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key) {
-  if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
 
-  string[] result;
-  foreach (item; *v)
-  {
-    if (item.isString)
-      result ~= item.get!string;
-  }
-  return result;
-}
 
 /// Extract a string[string] map from a Json object.
 string[string] jsonStrMap(Json j, string key) {

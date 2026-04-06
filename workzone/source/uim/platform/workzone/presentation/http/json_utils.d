@@ -16,22 +16,7 @@ module uim.platform.identity_authentication.presentation.http.json_utils;
 
 /// Extract an int field from a Json object.
 
-/// Extract a string array from a Json object.
-string[] jsonStrArray(Json j, string key) {
-  if (!j.isObject)
-    return [];
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.array)
-    return [];
 
-  string[] result;
-  foreach (item; *v)
-  {
-    if (item.isString)
-      result ~= item.get!string;
-  }
-  return result;
-}
 
 /// Extract a ushort field from a Json object.
 ushort jsonUshort(Json j, string key, ushort default_ = 0) {
@@ -56,12 +41,7 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
-private long lastIndexOf(string s, char c) {
-  for (long i = cast(long) s.length - 1; i >= 0; --i)
-    if (s[cast(size_t) i] == c)
-      return i;
-  return -1;
-}
+
 
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {

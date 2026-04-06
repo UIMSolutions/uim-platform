@@ -142,7 +142,7 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
-private long lastIndexOf(string s, char c) {
+long lastIndexOf(string s, char c) {
   for (long i = cast(long)s.length - 1; i >= 0; --i)
     if (s[cast(size_t)i] == c)
       return i;
