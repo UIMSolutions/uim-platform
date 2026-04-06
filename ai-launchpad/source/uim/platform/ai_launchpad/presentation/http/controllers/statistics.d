@@ -7,7 +7,6 @@ module uim.platform.ai_launchpad.presentation.http.controllers.statistics;
 
 import uim.platform.ai_launchpad.application.usecases.get_usage_statistics;
 import uim.platform.ai_launchpad.application.dto;
-import uim.platform.ai_launchpad.presentation.http.json_utils;
 
 import uim.platform.ai_launchpad;
 

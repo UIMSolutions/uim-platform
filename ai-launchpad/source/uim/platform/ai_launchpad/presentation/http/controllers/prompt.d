@@ -7,7 +7,6 @@ module uim.platform.ai_launchpad.presentation.http.controllers.prompt;
 
 import uim.platform.ai_launchpad.application.usecases.manage.prompts;
 import uim.platform.ai_launchpad.application.dto;
-import uim.platform.ai_launchpad.presentation.http.json_utils;
 
 import uim.platform.ai_launchpad;
 
