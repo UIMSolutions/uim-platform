@@ -38,9 +38,6 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 /// Extract a ushort field from a Json object.
 ushort jsonUshort(Json j, string key, ushort default_ = 0) {

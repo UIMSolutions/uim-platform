@@ -15,9 +15,6 @@ module uim.platform.identity_authentication.presentation.http.json_utils;
 
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {

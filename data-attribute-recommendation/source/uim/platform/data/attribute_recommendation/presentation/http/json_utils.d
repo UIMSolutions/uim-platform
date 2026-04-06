@@ -27,9 +27,6 @@ string jsonStr(Json j, string key) {
 
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {

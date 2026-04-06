@@ -104,9 +104,6 @@ uint jsonUint(Json j, string key, uint default_ = 0) {
 }
 
 /// Read an int field from JSON.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 /// Read a string array from JSON.
 string[] jsonStrArray(Json j, string key) {

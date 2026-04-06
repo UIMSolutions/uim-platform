@@ -36,9 +36,6 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 
 /// Extract an int field from a Json object.
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 /// Extract a double field from a Json object.
 double jsonDouble(Json j, string key, double default_ = 0.0) {

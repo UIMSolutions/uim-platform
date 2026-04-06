@@ -15,9 +15,6 @@ import uim.platform.logging;
 
 
 
-int jsonInt(Json j, string key, int default_ = 0) {
-  return cast(int) jsonLong(j, key, default_);
-}
 
 
 
