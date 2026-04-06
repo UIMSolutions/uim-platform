@@ -1,0 +1,169 @@
+/****************************************************************************************************************
+* Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+* License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
+* Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
+*****************************************************************************************************************/
+module uim.platform.situation_automation.presentation.http.controllers.automation_rule;
+
+import uim.platform.situation_automation.application.usecases.manage.automation_rules;
+import uim.platform.situation_automation.application.dto;
+import uim.platform.situation_automation.presentation.http.json_utils;
+
+import uim.platform.situation_automation;
+
+class AutomationRuleController : SAPController {
+    private ManageAutomationRulesUseCase uc;
+
+    this(ManageAutomationRulesUseCase uc) {
+        this.uc = uc;
+    }
+
+    override void registerRoutes(URLRouter router) {
+        super.registerRoutes(router);
+        router.get("/api/v1/situation-automation/rules", &handleList);
+        router.get("/api/v1/situation-automation/rules/*", &handleGet);
+        router.post("/api/v1/situation-automation/rules", &handleCreate);
+        router.put("/api/v1/situation-automation/rules/*", &handleUpdate);
+        router.delete_("/api/v1/situation-automation/rules/*", &handleDelete);
+    }
+
+    private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto j = req.json;
+            CreateAutomationRuleRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.templateId = jsonStr(j, "templateId");
+            r.id = jsonStr(j, "id");
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.priority = jsonStr(j, "priority");
+            r.executionOrder = jsonInt(j, "executionOrder");
+            r.createdBy = jsonStr(j, "createdBy");
+
+            auto result = uc.create(r);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Automation rule created");
+                res.writeJsonBody(resp, 201);
+            } else {
+                writeError(res, 400, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto rules = uc.list(tenantId);
+
+            auto jarr = Json.emptyArray;
+            foreach (ref r; rules) {
+                auto rj = Json.emptyObject;
+                rj["id"] = Json(r.id);
+                rj["name"] = Json(r.name);
+                rj["templateId"] = Json(r.templateId);
+                rj["status"] = Json(r.status.to!string);
+                rj["priority"] = Json(r.priority.to!string);
+                rj["enabled"] = Json(r.enabled);
+                rj["executionOrder"] = Json(cast(long) r.executionOrder);
+                rj["triggerCount"] = Json(r.triggerCount);
+                rj["successCount"] = Json(r.successCount);
+                rj["failureCount"] = Json(r.failureCount);
+                rj["createdAt"] = Json(r.createdAt);
+                jarr ~= rj;
+            }
+
+            auto resp = Json.emptyObject;
+            resp["count"] = Json(cast(long) rules.length);
+            resp["resources"] = jarr;
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto r = uc.get_(id);
+            if (r.id.length == 0) {
+                writeError(res, 404, "Automation rule not found");
+                return;
+            }
+
+            auto resp = Json.emptyObject;
+            resp["id"] = Json(r.id);
+            resp["name"] = Json(r.name);
+            resp["description"] = Json(r.description);
+            resp["templateId"] = Json(r.templateId);
+            resp["status"] = Json(r.status.to!string);
+            resp["priority"] = Json(r.priority.to!string);
+            resp["enabled"] = Json(r.enabled);
+            resp["executionOrder"] = Json(cast(long) r.executionOrder);
+            resp["createdBy"] = Json(r.createdBy);
+            resp["modifiedBy"] = Json(r.modifiedBy);
+            resp["createdAt"] = Json(r.createdAt);
+            resp["modifiedAt"] = Json(r.modifiedAt);
+            resp["lastTriggeredAt"] = Json(r.lastTriggeredAt);
+            resp["triggerCount"] = Json(r.triggerCount);
+            resp["successCount"] = Json(r.successCount);
+            resp["failureCount"] = Json(r.failureCount);
+            res.writeJsonBody(resp, 200);
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto j = req.json;
+            UpdateAutomationRuleRequest r;
+            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.id = extractIdFromPath(req.requestURI.to!string);
+            r.name = jsonStr(j, "name");
+            r.description = jsonStr(j, "description");
+            r.priority = jsonStr(j, "priority");
+            r.executionOrder = jsonInt(j, "executionOrder");
+            r.enabled = jsonBool(j, "enabled", true);
+            r.modifiedBy = jsonStr(j, "modifiedBy");
+
+            auto result = uc.update(r);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Automation rule updated");
+                res.writeJsonBody(resp, 200);
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+
+    private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
+        try {
+            import std.conv : to;
+
+            auto id = extractIdFromPath(req.requestURI.to!string);
+            auto result = uc.remove(id);
+            if (result.success) {
+                auto resp = Json.emptyObject;
+                resp["id"] = Json(result.id);
+                resp["message"] = Json("Automation rule deleted");
+                res.writeJsonBody(resp, 200);
+            } else {
+                writeError(res, 404, result.error);
+            }
+        } catch (Exception e) {
+            writeError(res, 500, "Internal server error");
+        }
+    }
+}
