@@ -33,18 +33,7 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 }
 
 /// Extract a double field from a Json object.
-double jsonDouble(Json j, string key, double default_ = 0) {
-  if (!j.isObject)
-    return default_;
-  auto v = key in j;
-  if (v is null)
-    return default_;
-  if ((*v).type == Json.Type.float_)
-    return (*v).get!double;
-  if ((*v).isInteger)
-    return cast(double)(*v).get!long;
-  return default_;
-}
+
 
 /// Extract an integer field from a Json object.
 

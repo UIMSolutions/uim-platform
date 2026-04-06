@@ -29,7 +29,7 @@ long jsonLong(Json j, string key, long default_ = 0) {
 
   if ((*v).isInteger)
     return (*v).get!long;
-    
+
   return default_;
 }
 
@@ -46,11 +46,14 @@ ushort jsonUshort(Json j, string key, ushort default_ = 0) {
 double jsonDouble(Json j, string key) {
   if (j.type != Json.Type.object)
     return 0.0;
+
   auto v = key in j;
   if (v is null)
     return 0.0;
+
   if ((*v).type == Json.Type.float_)
     return (*v).get!double;
+    
   if ((*v).type == Json.Type.int_)
     return cast(double)(*v).get!long;
   return 0.0;
