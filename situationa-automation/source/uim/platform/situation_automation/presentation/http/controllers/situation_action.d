@@ -4,12 +4,16 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.situation_action;
-
-import uim.platform.situation_automation.application.usecases.manage.situation_actions;
-import uim.platform.situation_automation.application.dto;
-import uim.platform.situation_automation.presentation.http.json_utils;
-
+// 
+// import uim.platform.situation_automation.application.usecases.manage.situation_actions;
+// import uim.platform.situation_automation.application.dto;
+// import uim.platform.situation_automation.presentation.http.json_utils;
+// 
 import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class SituationActionController : SAPController {
     private ManageSituationActionsUseCase uc;

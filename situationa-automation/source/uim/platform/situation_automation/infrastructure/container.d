@@ -75,7 +75,7 @@ Container buildContainer(AppConfig config) {
     c.dataContextController = new DataContextController(c.manageDataContexts);
     c.notificationController = new NotificationController(c.manageNotifications);
     c.dashboardController = new DashboardController(c.manageDashboards);
-    c.healthController = new HealthController();
+    c.healthController = new HealthController("situation-automation", "1.0.0");
 
     return c;
 }

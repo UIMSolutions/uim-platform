@@ -6,7 +6,7 @@
 module uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
-
+/*
 string jsonStr(Json j, string key) {
     if (!j.isObject)
         return "";
@@ -124,3 +124,4 @@ string extractIdFromPath(string path) {
         return "";
     return path[idx + 1 .. $];
 }
+*/

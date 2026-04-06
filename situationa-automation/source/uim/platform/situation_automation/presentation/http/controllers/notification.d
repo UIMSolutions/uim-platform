@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.notification;
 
-import uim.platform.situation_automation.application.usecases.manage.notifications;
-import uim.platform.situation_automation.application.dto;
-import uim.platform.situation_automation.presentation.http.json_utils;
+// import uim.platform.situation_automation.application.usecases.manage.notifications;
+// import uim.platform.situation_automation.application.dto;
+// import uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class NotificationController : SAPController {
     private ManageNotificationsUseCase uc;

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.automation_rule;
 
-import uim.platform.situation_automation.application.usecases.manage.automation_rules;
-import uim.platform.situation_automation.application.dto;
-import uim.platform.situation_automation.presentation.http.json_utils;
-
+// import uim.platform.situation_automation.application.usecases.manage.automation_rules;
+// import uim.platform.situation_automation.application.dto;
+// import uim.platform.situation_automation.presentation.http.json_utils;
+// 
 import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class AutomationRuleController : SAPController {
     private ManageAutomationRulesUseCase uc;

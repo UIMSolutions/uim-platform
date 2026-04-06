@@ -11,40 +11,50 @@ mixin(ShowModule!());
 
 @safe:
 class HealthController : SAPController {
-  this()
-  {
+  this() {
     super();
   }
 
-  this(string serviceName)
-  {
+  this(string serviceName) {
     super();
     this.serviceName = serviceName;
   }
 
+  this(string serviceName, string serviceVersion) {
+    super();
+    this.serviceName = serviceName;
+    this.serviceVersion = serviceVersion;
+  }
+
   protected string _serviceName = "service";
-  @property string serviceName()
-  {
+  @property string serviceName() {
     return _serviceName;
   }
 
-  @property void serviceName(string name)
-  {
+  @property void serviceName(string name) {
     _serviceName = name;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  protected string _serviceVersion = "1.0.0";
+  @property string serviceVersion() {
+    return _serviceVersion;
+  }
+
+  @property void serviceVersion(string version) {
+    _serviceVersion = version;
+  }
+
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.get("/api/v1/health", &handleHealth);
   }
 
-  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject;
     j["status"] = Json("UP");
-    j["service"] = serviceName;
+    j["serviceName"] = serviceName;
+    j["serviceVersion"] = serviceVersion;
     res.writeJsonBody(j, 200);
   }
 }

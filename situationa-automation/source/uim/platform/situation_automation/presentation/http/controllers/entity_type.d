@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.entity_type;
 
-import uim.platform.situation_automation.application.usecases.manage.entity_types;
-import uim.platform.situation_automation.application.dto;
-import uim.platform.situation_automation.presentation.http.json_utils;
+// import uim.platform.situation_automation.application.usecases.manage.entity_types;
+// import uim.platform.situation_automation.application.dto;
+// import uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class EntityTypeController : SAPController {
     private ManageEntityTypesUseCase uc;

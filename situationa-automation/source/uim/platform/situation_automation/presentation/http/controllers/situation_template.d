@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.situation_automation.presentation.http.controllers.situation_template;
 
-import uim.platform.situation_automation.application.usecases.manage.situation_templates;
-import uim.platform.situation_automation.application.dto;
-import uim.platform.situation_automation.presentation.http.json_utils;
+// import uim.platform.situation_automation.application.usecases.manage.situation_templates;
+// import uim.platform.situation_automation.application.dto;
+// import uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
+
+mixin(ShowModule!());
+
+@safe:
 
 class SituationTemplateController : SAPController {
     private ManageSituationTemplatesUseCase uc;
