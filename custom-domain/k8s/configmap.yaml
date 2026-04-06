@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloud-custom-domain-config
+  labels:
+    app: cloud-custom-domain
+    part-of: uim-platform
+data:
+  CUSTOM_DOMAIN_HOST: "0.0.0.0"
+  CUSTOM_DOMAIN_PORT: "8101"
