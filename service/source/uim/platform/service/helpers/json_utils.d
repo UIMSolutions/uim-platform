@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.service.helpers.json_utils;
 
-// import vibe.data.json;
-// import vibe.http.server;
+import vibe.data.json;
+import vibe.http.server;
 
 /// Extract a string field from a Json object.
 string jsonStr(Json j, string key) {
@@ -20,14 +20,14 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0) {
-  if (!j.isObject)
+  if (j.type != Json.Type.object)
     return default_;
 
   auto v = key in j;
   if (v is null)
     return default_;
 
-  if ((*v).isInteger)
+  if ((*v).type == Json.Type.int_)
     return (*v).get!long;
 
   return default_;
@@ -60,16 +60,16 @@ double jsonDouble(Json j, string key) {
 }
 /// Extract a string array from a Json object.
 string[] jsonStrArray(Json j, string key) {
-  if (!j.isObject)
+  if (j.type != Json.Type.object)
     return null;
 
   auto v = key in j;
-  if (v is null || !(*v).isArray)
+  if (v is null || (*v).type != Json.Type.array)
     return null;
 
   string[] result;
   foreach (item; *v) {
-    if (item.isString)
+    if (item.type == Json.Type.string)
       result ~= item.get!string;
   }
   return result;
@@ -81,7 +81,7 @@ string[][] jsonPairArray(Json j, string key) {
   auto v = key in j;
   if (v is null)
     return [];
-  if (!(*v).isArray)
+  if ((*v).type != Json.Type.array)
     return [];
   string[][] result;
   foreach (ref elem; *v) {
@@ -110,7 +110,7 @@ string[][] jsonMessageArray(Json j, string key) {
   auto v = key in j;
   if (v is null)
     return [];
-  if (!(*v).isArray)
+  if ((*v).type != Json.Type.array)
     return [];
   string[][] result;
   foreach (ref elem; *v) {
@@ -127,8 +127,10 @@ string[][] jsonMessageArray(Json j, string key) {
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
   // Strip query string
-  // import std.string : indexOf;
-  auto qpos = uri.indexOf('?');
+  long qpos = -1;
+  foreach (i, c; uri) {
+    if (c == '?') { qpos = cast(long)i; break; }
+  }
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 
   // Strip trailing slash
@@ -151,10 +153,10 @@ long lastIndexOf(string s, char c) {
 
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  j["status"] = Json(status);
-  res.writeJsonBody(j, status);
+  auto error = Json.emptyObject;
+  error["error"] = Json(message);
+  error["status"] = Json(status);
+  res.writeJsonBody(error, status);
 }
 
 string extractIdFromPath2(string path) {
@@ -170,12 +172,12 @@ Json toJsonArray(string[] arr) {
   auto jarr = Json.emptyArray;
   foreach (ref s; arr) {
     jarr ~= Json(s);
-    return jarr;
   }
+  return jarr;
 }
 
 string[string] jsonStrMap(Json j, string key) {
-  if (!j.isObject)
+  if (j.type != Json.Type.object)
     return null;
 
   auto v = key in j;
@@ -184,7 +186,7 @@ string[string] jsonStrMap(Json j, string key) {
 
   string[string] result;
   foreach (string k, val; *v) {
-    if (val.isString)
+    if (val.type == Json.Type.string)
       result[k] = val.get!string;
   }
   return result;

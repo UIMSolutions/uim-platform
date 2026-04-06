@@ -3,46 +3,48 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.content_agent.presentation.http.export;
+module uim.platform.content_agent.presentation.http.controllers.import_controller;
+
+
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.content_agent.application.usecases.export_content;
+import uim.platform.content_agent.application.usecases.import_content;
 import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.export_job;
+import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 
-class ExportController {
-  private ExportContentUseCase uc;
+class ImportController {
+  private ImportContentUseCase uc;
 
-  this(ExportContentUseCase uc)
+  this(ImportContentUseCase uc)
   {
     this.uc = uc;
   }
 
   override void registerRoutes(URLRouter router)
   {
-    router.post("/api/v1/exports", &handleStartExport);
-    router.get("/api/v1/exports", &handleList);
-    router.get("/api/v1/exports/*", &handleGetById);
+    router.post("/api/v1/imports", &handleStartImport);
+    router.get("/api/v1/imports", &handleList);
+    router.get("/api/v1/imports/*", &handleGetById);
   }
 
-  private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res)
+  private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res)
   {
     try
     {
       auto j = req.json;
-      auto r = StartExportRequest();
+      auto r = StartImportRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
-      r.queueId = j.getString("queueId");
+      r.sourceFilePath = j.getString("sourceFilePath");
       r.startedBy = req.headers.get("X-User-Id", "");
 
-      auto result = uc.startExport(r);
+      auto result = uc.startImport(r);
       if (result.success)
       {
         auto resp = Json.emptyObject;
@@ -66,11 +68,11 @@ class ExportController {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto jobs = uc.listExportJobs(tenantId);
+      auto jobs = uc.listImportJobs(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (ref j; jobs)
-        arr ~= serializeExportJob(j);
+        arr ~= serializeImportJob(j);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -88,13 +90,13 @@ class ExportController {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
-      auto job = uc.getExportJob(id);
+      auto job = uc.getImportJob(id);
       if (job.id.length == 0)
       {
-        writeError(res, 404, "Export job not found");
+        writeError(res, 404, "Import job not found");
         return;
       }
-      res.writeJsonBody(serializeExportJob(job), 200);
+      res.writeJsonBody(serializeImportJob(job), 200);
     }
     catch (Exception e)
     {
@@ -102,21 +104,21 @@ class ExportController {
     }
   }
 
-  private static Json serializeExportJob(ref const ExportJob e)
+  private static Json serializeImportJob(ref const ImportJob imp)
   {
     auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["packageId"] = Json(e.packageId);
-    j["transportRequestId"] = Json(e.transportRequestId);
-    j["queueId"] = Json(e.queueId);
-    j["status"] = Json(e.status.to!string);
-    j["exportedFilePath"] = Json(e.exportedFilePath);
-    j["exportedSizeBytes"] = Json(e.exportedSizeBytes);
-    j["createdBy"] = Json(e.createdBy);
-    j["startedAt"] = Json(e.startedAt);
-    j["completedAt"] = Json(e.completedAt);
-    j["errorMessage"] = Json(e.errorMessage);
+    j["id"] = Json(imp.id);
+    j["tenantId"] = Json(imp.tenantId);
+    j["packageId"] = Json(imp.packageId);
+    j["transportRequestId"] = Json(imp.transportRequestId);
+    j["status"] = Json(imp.status.to!string);
+    j["sourceFilePath"] = Json(imp.sourceFilePath);
+    j["importedSizeBytes"] = Json(imp.importedSizeBytes);
+    j["createdBy"] = Json(imp.createdBy);
+    j["startedAt"] = Json(imp.startedAt);
+    j["completedAt"] = Json(imp.completedAt);
+    j["errorMessage"] = Json(imp.errorMessage);
+    j["deployedItems"] = toJsonArray(imp.deployedItems);
     return j;
   }
 }

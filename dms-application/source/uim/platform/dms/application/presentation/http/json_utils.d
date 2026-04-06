@@ -49,13 +49,6 @@ string extractIdFromPath(string uri) {
 
 
 
-/// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  j["status"] = Json(status);
-  res.writeJsonBody(j, status);
-}
 
 // --- Enum parsers ---
 
