@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.data_subject;
 
 /// Port for persisting and querying data subjects.
 interface DataSubjectRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DataSubject[] findByTenant(TenantId tenantId);
  
   bool existsId(DataSubjectId id, TenantId tenantId);

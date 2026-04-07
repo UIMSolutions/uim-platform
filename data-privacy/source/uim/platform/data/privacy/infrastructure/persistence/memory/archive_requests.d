@@ -15,11 +15,11 @@ mixin(ShowModule!());
 @safe:
 class MemoryArchiveRequestRepository : ArchiveRequestRepository {
   private ArchiveRequest[TypeInfo_Array] store;
-    bool existsTenant(TenantId tenantId) {
+    bool existsByTenant(TenantId tenantId) {
       return tenantId in store;
     }
   ArchiveRequest[] findByTenant(TenantId tenantId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ArchiveRequest[] result;
@@ -30,7 +30,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
   }
 
   ArchiveRequest* findById(ArchiveRequestId id, TenantId tenantId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     foreach (ref s; store[tenantId].byValue)

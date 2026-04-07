@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.business_process;
 
 /// Port for persisting and querying business processes.
 interface BusinessProcessRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   BusinessProcess[] findByTenant(TenantId tenantId);
  
   bool existsId(BusinessProcessId id, TenantId tenantId);

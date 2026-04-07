@@ -16,19 +16,19 @@ mixin(ShowModule!());
 class MemoryConsentPurposeRepository : ConsentPurposeRepository {
   private ConsentPurpose[ConsentPurposeId][TenantId] store;
 
-  bool existsTenant(TenantId tenantId) {
+  bool existsByTenant(TenantId tenantId) {
     return tenantId in store;
   }
 
   ConsentPurpose[] findByTenant(TenantId tenantId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     return store[tenantId].byValue.array;
   }
 
   bool existsId(ConsentPurposeId id, TenantId tenantId) {
-    return (existsTenant(tenantId) && (id in store[tenantId]));
+    return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   ConsentPurpose findById(ConsentPurposeId id, TenantId tenantId) {
@@ -36,7 +36,7 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
   }
 
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentPurpose[] result;
@@ -47,7 +47,7 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
   }
 
   ConsentPurpose[] findByStatus(TenantId tenantId, ConsentPurposeStatus status) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentPurpose[] result;
@@ -58,7 +58,7 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
   }
 
   void save(ConsentPurpose entity) {
-    if (!existsTenant(entity.tenantId)) {
+    if (!existsByTenant(entity.tenantId)) {
       ConsentPurpose[ConsentPurposeId] purposes;
       store[entity.tenantId] = purposes;
     }

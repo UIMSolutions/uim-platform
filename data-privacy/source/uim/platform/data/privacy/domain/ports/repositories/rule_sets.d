@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.rule_set;
 
 /// Port for persisting and querying rule sets.
 interface RuleSetRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   RuleSet[] findByTenant(TenantId tenantId);
  
   bool existsId(RuleSetId id, TenantId tenantId);

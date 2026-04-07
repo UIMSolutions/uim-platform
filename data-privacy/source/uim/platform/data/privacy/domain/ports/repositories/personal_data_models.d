@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.personal_data_model;
 
 /// Port for persisting personal data model definitions.
 interface PersonalDataModelRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   PersonalDataModel[] findByTenant(TenantId tenantId);
  
   bool existsId(PersonalDataModelId id, TenantId tenantId);

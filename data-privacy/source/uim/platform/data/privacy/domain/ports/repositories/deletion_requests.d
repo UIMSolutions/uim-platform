@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.deletion_request;
 
 /// Port for persisting data deletion requests.
 interface DeletionRequestRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DeletionRequest[] findByTenant(TenantId tenantId);
 
   bool existsId(DeletionRequestId id, TenantId tenantId);

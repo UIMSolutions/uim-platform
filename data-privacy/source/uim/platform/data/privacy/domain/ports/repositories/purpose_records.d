@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.purpose_record;
 
 /// Port for persisting and querying purpose records.
 interface PurposeRecordRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   PurposeRecord[] findByTenant(TenantId tenantId);
  
   bool existsId(PurposeRecordId id, TenantId tenantId);

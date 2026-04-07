@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.business_context;
 
 /// Port for persisting and querying business contexts.
 interface BusinessContextRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   BusinessContext[] findByTenant(TenantId tenantId);
   
   bool existsId(BusinessContextId id, TenantId tenantId);

@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.correction_request;
 
 /// Port for persisting and querying correction requests.
 interface CorrectionRequestRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   CorrectionRequest[] findByTenant(TenantId tenantId);
  
   bool existsId(CorrectionRequestId id, TenantId tenantId);

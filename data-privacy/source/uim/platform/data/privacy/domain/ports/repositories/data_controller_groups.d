@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.data_controller_group;
 
 /// Port for persisting and querying data controller groups.
 interface DataControllerGroupRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DataControllerGroup[] findByTenant(TenantId tenantId);
  
   bool existsId(DataControllerGroupId id, TenantId tenantId);

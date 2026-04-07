@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.legal_ground;
 
 /// Port for persisting legal grounds for data processing.
 interface LegalGroundRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   LegalGround[] findByTenant(TenantId tenantId);
  
   bool existsId(LegalGroundId id, TenantId tenantId);

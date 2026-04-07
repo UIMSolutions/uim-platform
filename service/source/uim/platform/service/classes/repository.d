@@ -27,19 +27,19 @@ class SAPRepository(T) {
 class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
   private TEntity[TId][TenantId] store;
 
-  bool existsTenant(TenantId tenantId) {
+  bool existsByTenant(TenantId tenantId) {
     return tenantId in store;
   }
 
   TEntity[] findByTenant(TenantId tenantId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     return store[tenantId].byValue.array;
   }
 
   bool existsId(TId id, TenantId tenantId) {
-    return (existsTenant(tenantId) && (id in store[tenantId]));
+    return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   TEntity findById(TId id, TenantId tenantId) {
@@ -50,7 +50,7 @@ class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
   }
 
   void save(TEntity entity) {
-    if (!existsTenant(entity.tenantId)) {
+    if (!existsByTenant(entity.tenantId)) {
       TEntity[TId] entities;
       store[entity.tenantId] = entities;
     }

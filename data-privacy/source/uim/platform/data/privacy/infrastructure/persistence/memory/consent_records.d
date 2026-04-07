@@ -16,12 +16,12 @@ mixin(ShowModule!());
 class MemoryConsentRecordRepository : ConsentRecordRepository {
   private ConsentRecord[ConsentRecordId][TenantId] store;
 
-  bool existsTenant(TenantId tenantId) {
+  bool existsByTenant(TenantId tenantId) {
     return tenantId in store;
   }
 
   ConsentRecord[] findByTenant(TenantId tenantId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     return store[tenantId].byValue.array;
@@ -35,7 +35,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentRecord[] result;
@@ -46,7 +46,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentRecord[] result;
@@ -57,7 +57,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentRecord[] result;
@@ -68,7 +68,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     ConsentRecord[] result;
@@ -79,7 +79,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   void save(ConsentRecord record) {
-    if (!existsTenant(record.tenantId)) {
+    if (!existsByTenant(record.tenantId)) {
       ConsentRecord[ConsentRecordId] records;
       store[record.tenantId] = records;
     }

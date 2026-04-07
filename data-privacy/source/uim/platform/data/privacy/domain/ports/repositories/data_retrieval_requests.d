@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 
 /// Port for persisting data subject access / retrieval requests.
 interface DataRetrievalRequestRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DataRetrievalRequest[] findByTenant(TenantId tenantId);
  
   bool existsId(DataRetrievalRequestId id, TenantId tenantId);

@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.data_controller;
 
 /// Port for persisting and querying data controllers.
 interface DataControllerRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DataController[] findByTenant(TenantId tenantId);
  
   bool existsId(DataControllerId id, TenantId tenantId);

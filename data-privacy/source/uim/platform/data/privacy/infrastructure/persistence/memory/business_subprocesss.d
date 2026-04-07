@@ -24,7 +24,7 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
   }
 
   bool existsId(BusinessSubprocessId id, TenantId tenantId) {
-    return (existsTenant(tenantId) && (id in store[tenantId]));
+    return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   BusinessSubprocess findById(BusinessSubprocessId id, TenantId tenantId) {
@@ -35,14 +35,14 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
   }
 
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    if (!existsTenant(tenantId))
+    if (!existsByTenant(tenantId))
       return null;
 
     return store[tenantId].byValue.filter!(s => s.parentProcessId == parentId).array;
   }
 
   void save(BusinessSubprocess entity) {
-    if (!existsTenant(entity.tenantId)) {
+    if (!existsByTenant(entity.tenantId)) {
       BusinessSubprocess[BusinessSubprocessId] subprocesses;
       store[entity.tenantId] = subprocesses;
     }

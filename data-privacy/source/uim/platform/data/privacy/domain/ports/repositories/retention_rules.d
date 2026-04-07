@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.retention_rule;
 
 /// Port for persisting data retention rules.
 interface RetentionRuleRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   RetentionRule[] findByTenant(TenantId tenantId);
  
   bool existsId(RetentionRuleId id, TenantId tenantId);

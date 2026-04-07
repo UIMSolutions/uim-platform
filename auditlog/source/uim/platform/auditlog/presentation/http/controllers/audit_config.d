@@ -97,11 +97,11 @@ class AuditConfigController : SAPController {
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto cfg = useCase.getConfig(tenantId);
-      if (cfg is null) {
+      if (!useCase.hasConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
       }
+      auto cfg = useCase.getConfig(tenantId);
       res.writeJsonBody(serializeConfig(cfg), 200);
     }
     catch (Exception e) {

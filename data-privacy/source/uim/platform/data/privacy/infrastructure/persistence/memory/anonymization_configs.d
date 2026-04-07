@@ -16,7 +16,7 @@ mixin(ShowModule!());
 class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
   private AnonymizationConfig[AnonymizationConfigId][TenantId] store;
 
-  bool existsTenant(TenantId tenantId) {
+  bool existsByTenant(TenantId tenantId) {
     return tenantId in store;
   }
 
@@ -25,7 +25,7 @@ class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
   }
 
   bool existsId(AnonymizationConfigId id, TenantId tenantId) {
-    return (existsTenant(tenantId) && (id in store[tenantId]));
+    return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   AnonymizationConfig findById(AnonymizationConfigId id, TenantId tenantId) {
@@ -40,7 +40,7 @@ class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
   }
 
   void save(AnonymizationConfig entity) {
-    if (!existsTenant(entity.tenantId)) {
+    if (!existsByTenant(entity.tenantId)) {
       AnonymizationConfig[AnonymizationConfigId] configs;
       store[entity.tenantId] = configs;
     }

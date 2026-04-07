@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.blocking_request;
 
 /// Port for persisting data blocking / restriction requests.
 interface BlockingRequestRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   BlockingRequest[] findByTenant(TenantId tenantId);
  
   bool existsId(BlockingRequestId id, TenantId tenantId);

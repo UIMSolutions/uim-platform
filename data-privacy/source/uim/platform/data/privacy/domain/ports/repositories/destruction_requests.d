@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.destruction_request;
 
 /// Port for persisting and querying destruction requests.
 interface DestructionRequestRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   DestructionRequest[] findByTenant(TenantId tenantId);
  
   bool existsId(DestructionRequestId id, TenantId tenantId);

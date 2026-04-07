@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.consent_purpose;
 
 /// Port for persisting and querying consent purpose configurations.
 interface ConsentPurposeRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   ConsentPurpose[] findByTenant(TenantId tenantId);
  
   bool existsId(ConsentPurposeId id, TenantId tenantId);

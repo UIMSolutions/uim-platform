@@ -7,7 +7,7 @@ mixin(ShowModule!());
 @safe:
 
 interface IBaseRepository(TEntity, TId) {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   TEntity[] findByTenant(TenantId tenantId);
  
   bool existsId(TId id, TenantId tenantId);

@@ -10,7 +10,7 @@ import uim.platform.data.privacy.domain.entities.consent_record;
 
 /// Port for persisting consent records.
 interface ConsentRecordRepository {
-  bool existsTenant(TenantId tenantId);
+  bool existsByTenant(TenantId tenantId);
   ConsentRecord[] findByTenant(TenantId tenantId);
  
   bool existsId(ConsentRecordId id, TenantId tenantId);

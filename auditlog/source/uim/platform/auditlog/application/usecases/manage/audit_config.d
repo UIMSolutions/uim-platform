@@ -54,6 +54,10 @@ class ManageAuditConfigUseCase : UIMUseCase {
     return CommandResult(cfg.id, "");
   }
 
+  bool hasConfig(TenantId tenantId) {
+    return configRepo.existsByTenant(tenantId);
+  }
+
   AuditConfig getConfig(TenantId tenantId) {
     return configRepo.findByTenant(tenantId);
   }
