@@ -34,10 +34,10 @@ class DatasetController : SAPController {
 
       RegisterDatasetRequest r;
       r.connectionId = connectionId;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.url = jsonStr(j, "url");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.scenarioId = j.getString("scenarioId");
+      r.url = j.getString("url");
       r.size = jsonLong(j, "size");
       r.labels = jsonStrArray(j, "labels");
 
@@ -108,8 +108,8 @@ class DatasetController : SAPController {
       PatchDatasetRequest r;
       r.connectionId = connectionId;
       r.datasetId = id;
-      r.description = jsonStr(j, "description");
-      r.status = jsonStr(j, "status");
+      r.description = j.getString("description");
+      r.status = j.getString("status");
 
       auto result = uc.patch(r);
       if (result.success) {

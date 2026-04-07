@@ -32,9 +32,9 @@ class ConfigurationController : SAPController {
       CreateConfigurationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.executableId = jsonStr(j, "executableId");
-      r.name = jsonStr(j, "name");
+      r.scenarioId = j.getString("scenarioId");
+      r.executableId = j.getString("executableId");
+      r.name = j.getString("name");
       r.parameterValues = jsonKeyValuePairs(j, "parameterBindings");
       r.inputArtifacts = jsonKeyValuePairs(j, "inputArtifactBindings");
 
@@ -44,7 +44,7 @@ class ConfigurationController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Configuration created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -139,7 +139,7 @@ class ConfigurationController : SAPController {
       auto result = uc.remove(id, rgId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

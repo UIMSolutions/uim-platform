@@ -58,15 +58,15 @@ class AssignmentController : SAPController {
         try {
             auto j = req.json;
             AssignmentDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.activityId = jsonStr(j, "activityId");
-            dto.technicianId = jsonStr(j, "technicianId");
-            dto.assignedDate = jsonStr(j, "assignedDate");
-            dto.schedulingPolicy = jsonStr(j, "schedulingPolicy");
-            dto.matchScore = jsonStr(j, "matchScore");
-            dto.notes = jsonStr(j, "notes");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.activityId = j.getString("activityId");
+            dto.technicianId = j.getString("technicianId");
+            dto.assignedDate = j.getString("assignedDate");
+            dto.schedulingPolicy = j.getString("schedulingPolicy");
+            dto.matchScore = j.getString("matchScore");
+            dto.notes = j.getString("notes");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -89,12 +89,12 @@ class AssignmentController : SAPController {
             auto j = req.json;
             AssignmentDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.acceptedDate = jsonStr(j, "acceptedDate");
-            dto.startedDate = jsonStr(j, "startedDate");
-            dto.completedDate = jsonStr(j, "completedDate");
-            dto.travelDistance = jsonStr(j, "travelDistance");
-            dto.notes = jsonStr(j, "notes");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.acceptedDate = j.getString("acceptedDate");
+            dto.startedDate = j.getString("startedDate");
+            dto.completedDate = j.getString("completedDate");
+            dto.travelDistance = j.getString("travelDistance");
+            dto.notes = j.getString("notes");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

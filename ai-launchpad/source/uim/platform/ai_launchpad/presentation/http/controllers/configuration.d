@@ -33,9 +33,9 @@ class ConfigurationController : SAPController {
 
       CreateConfigurationRequest r;
       r.connectionId = connectionId;
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.executableId = jsonStr(j, "executableId");
-      r.name = jsonStr(j, "name");
+      r.scenarioId = j.getString("scenarioId");
+      r.executableId = j.getString("executableId");
+      r.name = j.getString("name");
       r.parameterValues = jsonPairArray(j, "parameterValues");
       r.inputArtifacts = jsonPairArray(j, "inputArtifacts");
 

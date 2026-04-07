@@ -31,12 +31,12 @@ class PrivateKeyController : SAPController {
             auto j = req.json;
             CreatePrivateKeyRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.subject = jsonStr(j, "subject");
+            r.id = j.getString("id");
+            r.subject = j.getString("subject");
             r.domains = jsonStrArray(j, "domains");
-            r.algorithm = jsonStr(j, "algorithm");
+            r.algorithm = j.getString("algorithm");
             r.keySize = jsonInt(j, "keySize");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {

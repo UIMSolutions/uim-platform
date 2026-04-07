@@ -58,16 +58,16 @@ class SmartformController : SAPController {
         try {
             auto j = req.json;
             SmartformDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.serviceCallId = jsonStr(j, "serviceCallId");
-            dto.activityId = jsonStr(j, "activityId");
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.formType = jsonStr(j, "formType");
-            dto.templateId = jsonStr(j, "templateId");
-            dto.safetyLabel = jsonStr(j, "safetyLabel");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.serviceCallId = j.getString("serviceCallId");
+            dto.activityId = j.getString("activityId");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.formType = j.getString("formType");
+            dto.templateId = j.getString("templateId");
+            dto.safetyLabel = j.getString("safetyLabel");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -90,14 +90,14 @@ class SmartformController : SAPController {
             auto j = req.json;
             SmartformDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.formData = jsonStr(j, "formData");
-            dto.signatureData = jsonStr(j, "signatureData");
-            dto.submittedBy = jsonStr(j, "submittedBy");
-            dto.submittedDate = jsonStr(j, "submittedDate");
-            dto.approvedBy = jsonStr(j, "approvedBy");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.formData = j.getString("formData");
+            dto.signatureData = j.getString("signatureData");
+            dto.submittedBy = j.getString("submittedBy");
+            dto.submittedDate = j.getString("submittedDate");
+            dto.approvedBy = j.getString("approvedBy");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

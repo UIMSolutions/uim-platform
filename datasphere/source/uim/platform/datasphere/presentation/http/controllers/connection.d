@@ -33,13 +33,13 @@ class ConnectionController : SAPController {
       CreateConnectionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.host = jsonStr(j, "host");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.host = j.getString("host");
       r.port = jsonInt(j, "port", 0);
-      r.database = jsonStr(j, "database");
-      r.user = jsonStr(j, "user");
+      r.database = j.getString("database");
+      r.user = j.getString("user");
 
       auto result = uc.create(r);
       if (result.success) {

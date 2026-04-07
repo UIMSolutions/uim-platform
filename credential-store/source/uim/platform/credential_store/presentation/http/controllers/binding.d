@@ -37,12 +37,12 @@ class BindingController : SAPController {
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.permission = jsonStr(j, "permission");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.permission = j.getString("permission");
       r.allowedNamespaces = jsonStrArray(j, "allowedNamespaces");
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
 
@@ -121,9 +121,9 @@ class BindingController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateServiceBindingRequest r;
-      r.description = jsonStr(j, "description");
-      r.permission = jsonStr(j, "permission");
-      r.status = jsonStr(j, "status");
+      r.description = j.getString("description");
+      r.permission = j.getString("permission");
+      r.status = j.getString("status");
       r.allowedNamespaces = jsonStrArray(j, "allowedNamespaces");
 
       auto result = uc.update(id, r);

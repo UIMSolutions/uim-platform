@@ -32,18 +32,18 @@ class ActionController : SAPController {
             auto j = req.json;
             CreateActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.projectId = jsonStr(j, "projectId");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.method = jsonStr(j, "method");
-            r.baseUrl = jsonStr(j, "baseUrl");
-            r.path = jsonStr(j, "path");
-            r.authType = jsonStr(j, "authType");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.version_ = jsonStr(j, "version");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.projectId = j.getString("projectId");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.method = j.getString("method");
+            r.baseUrl = j.getString("baseUrl");
+            r.path = j.getString("path");
+            r.authType = j.getString("authType");
+            r.destinationName = j.getString("destinationName");
+            r.version_ = j.getString("version");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -129,14 +129,14 @@ class ActionController : SAPController {
             UpdateActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.baseUrl = jsonStr(j, "baseUrl");
-            r.path = jsonStr(j, "path");
-            r.authType = jsonStr(j, "authType");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.version_ = jsonStr(j, "version");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.baseUrl = j.getString("baseUrl");
+            r.path = j.getString("path");
+            r.authType = j.getString("authType");
+            r.destinationName = j.getString("destinationName");
+            r.version_ = j.getString("version");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

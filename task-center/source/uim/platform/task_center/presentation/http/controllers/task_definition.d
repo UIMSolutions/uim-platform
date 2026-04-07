@@ -34,13 +34,13 @@ class TaskDefinitionController : SAPController {
             auto j = req.json;
             CreateTaskDefinitionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.providerId = jsonStr(j, "providerId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
-            r.taskSchema = jsonStr(j, "taskSchema");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.providerId = j.getString("providerId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
+            r.taskSchema = j.getString("taskSchema");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -111,11 +111,11 @@ class TaskDefinitionController : SAPController {
             UpdateTaskDefinitionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.category = jsonStr(j, "category");
-            r.taskSchema = jsonStr(j, "taskSchema");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.category = j.getString("category");
+            r.taskSchema = j.getString("taskSchema");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

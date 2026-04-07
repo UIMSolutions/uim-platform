@@ -35,10 +35,10 @@ class DocumentTypeController : SAPController {
       CreateDocumentTypeRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.category = jsonStr(j, "category");
-      r.defaultSchemaId = jsonStr(j, "defaultSchemaId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.category = j.getString("category");
+      r.defaultSchemaId = j.getString("defaultSchemaId");
       r.supportedFileTypes = jsonStrArray(j, "supportedFileTypes");
 
       auto result = uc.create(r);
@@ -104,10 +104,10 @@ class DocumentTypeController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
       r.documentTypeId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.category = jsonStr(j, "category");
-      r.defaultSchemaId = jsonStr(j, "defaultSchemaId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.category = j.getString("category");
+      r.defaultSchemaId = j.getString("defaultSchemaId");
 
       auto result = uc.update(r);
       if (result.success) {

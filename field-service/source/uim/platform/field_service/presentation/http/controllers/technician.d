@@ -58,21 +58,21 @@ class TechnicianController : SAPController {
         try {
             auto j = req.json;
             TechnicianDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.firstName = jsonStr(j, "firstName");
-            dto.lastName = jsonStr(j, "lastName");
-            dto.email = jsonStr(j, "email");
-            dto.phone = jsonStr(j, "phone");
-            dto.region = jsonStr(j, "region");
-            dto.address = jsonStr(j, "address");
-            dto.latitude = jsonStr(j, "latitude");
-            dto.longitude = jsonStr(j, "longitude");
-            dto.availabilityStart = jsonStr(j, "availabilityStart");
-            dto.availabilityEnd = jsonStr(j, "availabilityEnd");
-            dto.maxWorkload = jsonStr(j, "maxWorkload");
-            dto.travelRadius = jsonStr(j, "travelRadius");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.firstName = j.getString("firstName");
+            dto.lastName = j.getString("lastName");
+            dto.email = j.getString("email");
+            dto.phone = j.getString("phone");
+            dto.region = j.getString("region");
+            dto.address = j.getString("address");
+            dto.latitude = j.getString("latitude");
+            dto.longitude = j.getString("longitude");
+            dto.availabilityStart = j.getString("availabilityStart");
+            dto.availabilityEnd = j.getString("availabilityEnd");
+            dto.maxWorkload = j.getString("maxWorkload");
+            dto.travelRadius = j.getString("travelRadius");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -95,13 +95,13 @@ class TechnicianController : SAPController {
             auto j = req.json;
             TechnicianDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.firstName = jsonStr(j, "firstName");
-            dto.lastName = jsonStr(j, "lastName");
-            dto.email = jsonStr(j, "email");
-            dto.phone = jsonStr(j, "phone");
-            dto.region = jsonStr(j, "region");
-            dto.address = jsonStr(j, "address");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.firstName = j.getString("firstName");
+            dto.lastName = j.getString("lastName");
+            dto.email = j.getString("email");
+            dto.phone = j.getString("phone");
+            dto.region = j.getString("region");
+            dto.address = j.getString("address");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -31,10 +31,10 @@ class PromptCollectionController : SAPController {
       auto j = req.json;
 
       CreatePromptCollectionRequest r;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.workspaceId = jsonStr(j, "workspaceId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.scenarioId = j.getString("scenarioId");
+      r.workspaceId = j.getString("workspaceId");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -99,8 +99,8 @@ class PromptCollectionController : SAPController {
 
       PatchPromptCollectionRequest r;
       r.collectionId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
 
       auto result = uc.patch(r);
       if (result.success) {

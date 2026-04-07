@@ -34,16 +34,16 @@ class TaskController : SAPController {
             auto j = req.json;
             CreateTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.processInstanceId = jsonStr(j, "processInstanceId");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.priority = jsonStr(j, "priority");
-            r.assignee = jsonStr(j, "assignee");
+            r.processInstanceId = j.getString("processInstanceId");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.priority = j.getString("priority");
+            r.assignee = j.getString("assignee");
             r.candidateUsers = jsonStrArray(j, "candidateUsers");
             r.candidateGroups = jsonStrArray(j, "candidateGroups");
-            r.formId = jsonStr(j, "formId");
+            r.formId = j.getString("formId");
             r.dueDate = jsonLong(j, "dueDate");
 
             auto result = uc.create(r);
@@ -132,10 +132,10 @@ class TaskController : SAPController {
             UpdateTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.priority = jsonStr(j, "priority");
-            r.assignee = jsonStr(j, "assignee");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.priority = j.getString("priority");
+            r.assignee = j.getString("assignee");
             r.dueDate = jsonLong(j, "dueDate");
 
             auto result = uc.update(r);
@@ -170,7 +170,7 @@ class TaskController : SAPController {
             ClaimTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.userId = jsonStr(j, "userId");
+            r.userId = j.getString("userId");
 
             auto result = uc.claim(r);
             if (result.success) {
@@ -204,9 +204,9 @@ class TaskController : SAPController {
             CompleteTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.completedBy = jsonStr(j, "completedBy");
-            r.outcome = jsonStr(j, "outcome");
-            r.formData = jsonStr(j, "formData");
+            r.completedBy = j.getString("completedBy");
+            r.outcome = j.getString("outcome");
+            r.formData = j.getString("formData");
 
             auto result = uc.complete(r);
             if (result.success) {

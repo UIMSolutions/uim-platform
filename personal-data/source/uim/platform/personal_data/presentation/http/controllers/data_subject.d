@@ -35,17 +35,17 @@ class DataSubjectController : SAPController {
             auto j = req.json;
             CreateDataSubjectRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.subjectType = jsonStr(j, "subjectType");
-            r.firstName = jsonStr(j, "firstName");
-            r.lastName = jsonStr(j, "lastName");
-            r.email = jsonStr(j, "email");
-            r.phone = jsonStr(j, "phone");
-            r.dateOfBirth = jsonStr(j, "dateOfBirth");
-            r.organizationName = jsonStr(j, "organizationName");
-            r.organizationId = jsonStr(j, "organizationId");
-            r.externalId = jsonStr(j, "externalId");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.subjectType = j.getString("subjectType");
+            r.firstName = j.getString("firstName");
+            r.lastName = j.getString("lastName");
+            r.email = j.getString("email");
+            r.phone = j.getString("phone");
+            r.dateOfBirth = j.getString("dateOfBirth");
+            r.organizationName = j.getString("organizationName");
+            r.organizationId = j.getString("organizationId");
+            r.externalId = j.getString("externalId");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -138,14 +138,14 @@ class DataSubjectController : SAPController {
             UpdateDataSubjectRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.firstName = jsonStr(j, "firstName");
-            r.lastName = jsonStr(j, "lastName");
-            r.email = jsonStr(j, "email");
-            r.phone = jsonStr(j, "phone");
-            r.dateOfBirth = jsonStr(j, "dateOfBirth");
-            r.organizationName = jsonStr(j, "organizationName");
-            r.organizationId = jsonStr(j, "organizationId");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.firstName = j.getString("firstName");
+            r.lastName = j.getString("lastName");
+            r.email = j.getString("email");
+            r.phone = j.getString("phone");
+            r.dateOfBirth = j.getString("dateOfBirth");
+            r.organizationName = j.getString("organizationName");
+            r.organizationId = j.getString("organizationId");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

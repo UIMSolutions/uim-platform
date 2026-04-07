@@ -32,10 +32,10 @@ class TaskCommentController : SAPController {
             auto j = req.json;
             CreateTaskCommentRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.taskId = jsonStr(j, "taskId");
-            r.author = jsonStr(j, "author");
-            r.content = jsonStr(j, "content");
+            r.id = j.getString("id");
+            r.taskId = j.getString("taskId");
+            r.author = j.getString("author");
+            r.content = j.getString("content");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -102,7 +102,7 @@ class TaskCommentController : SAPController {
             UpdateTaskCommentRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.content = jsonStr(j, "content");
+            r.content = j.getString("content");
 
             auto result = uc.update(r);
             if (result.success) {

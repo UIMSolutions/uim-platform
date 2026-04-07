@@ -35,16 +35,16 @@ class DatabaseConnectionController : SAPController {
       auto j = req.json;
       CreateDatabaseConnectionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.host = jsonStr(j, "host");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.host = j.getString("host");
       r.port = jsonInt(j, "port", 443);
-      r.database = jsonStr(j, "database");
-      r.user = jsonStr(j, "user");
-      r.password = jsonStr(j, "password");
+      r.database = j.getString("database");
+      r.user = j.getString("user");
+      r.password = j.getString("password");
       r.useTls = jsonBool(j, "useTls", true);
       r.minConnections = jsonInt(j, "minConnections", 1);
       r.maxConnections = jsonInt(j, "maxConnections", 10);
@@ -131,13 +131,13 @@ class DatabaseConnectionController : SAPController {
       UpdateDatabaseConnectionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.host = jsonStr(j, "host");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.host = j.getString("host");
       r.port = jsonInt(j, "port", 443);
-      r.database = jsonStr(j, "database");
-      r.user = jsonStr(j, "user");
-      r.password = jsonStr(j, "password");
+      r.database = j.getString("database");
+      r.user = j.getString("user");
+      r.password = j.getString("password");
 
       auto result = uc.update(r);
       if (result.success) {

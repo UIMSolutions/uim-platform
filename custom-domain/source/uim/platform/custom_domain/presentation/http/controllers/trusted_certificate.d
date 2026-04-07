@@ -31,11 +31,11 @@ class TrustedCertificateController : SAPController {
             auto j = req.json;
             CreateTrustedCertificateRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.customDomainId = jsonStr(j, "customDomainId");
-            r.certificatePem = jsonStr(j, "certificatePem");
-            r.authMode = jsonStr(j, "authMode");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.customDomainId = j.getString("customDomainId");
+            r.certificatePem = j.getString("certificatePem");
+            r.authMode = j.getString("authMode");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {

@@ -41,15 +41,15 @@ class ScheduleController : SAPController {
             CreateScheduleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.jobId = jobId;
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.format = jsonStr(j, "format");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.format = j.getString("format");
             r.active = jsonBool(j, "active", true);
-            r.cronExpression = jsonStr(j, "cron");
-            r.humanReadableSchedule = jsonStr(j, "humanReadableSchedule");
+            r.cronExpression = j.getString("cron");
+            r.humanReadableSchedule = j.getString("humanReadableSchedule");
             r.repeatInterval = jsonLong(j, "repeatInterval");
-            r.repeatAt = jsonStr(j, "repeatAt");
-            r.time = jsonStr(j, "time");
+            r.repeatAt = j.getString("repeatAt");
+            r.time = j.getString("time");
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 
@@ -121,13 +121,13 @@ class ScheduleController : SAPController {
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.jobId = ids[0];
             r.scheduleId = ids[1];
-            r.description = jsonStr(j, "description");
+            r.description = j.getString("description");
             r.active = jsonBool(j, "active", true);
-            r.cronExpression = jsonStr(j, "cron");
-            r.humanReadableSchedule = jsonStr(j, "humanReadableSchedule");
+            r.cronExpression = j.getString("cron");
+            r.humanReadableSchedule = j.getString("humanReadableSchedule");
             r.repeatInterval = jsonLong(j, "repeatInterval");
-            r.repeatAt = jsonStr(j, "repeatAt");
-            r.time = jsonStr(j, "time");
+            r.repeatAt = j.getString("repeatAt");
+            r.time = j.getString("time");
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 

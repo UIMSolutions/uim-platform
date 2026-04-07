@@ -34,13 +34,13 @@ class UserSessionController : SAPController {
       auto j = req.json;
       CreateUserSessionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.deviceId = jsonStr(j, "deviceId");
-      r.userId = jsonStr(j, "userId");
-      r.ipAddress = jsonStr(j, "ipAddress");
-      r.userAgent = jsonStr(j, "userAgent");
-      r.platform = jsonStr(j, "platform");
-      r.appVersion = jsonStr(j, "appVersion");
+      r.appId = j.getString("appId");
+      r.deviceId = j.getString("deviceId");
+      r.userId = j.getString("userId");
+      r.ipAddress = j.getString("ipAddress");
+      r.userAgent = j.getString("userAgent");
+      r.platform = j.getString("platform");
+      r.appVersion = j.getString("appVersion");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;

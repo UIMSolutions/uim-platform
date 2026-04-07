@@ -36,9 +36,9 @@ class NamespaceController : SAPController {
       auto j = req.json;
       CreateNamespaceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -110,7 +110,7 @@ class NamespaceController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateNamespaceRequest r;
-      r.description = jsonStr(j, "description");
+      r.description = j.getString("description");
 
       auto result = uc.update(id, r);
       if (result.success) {

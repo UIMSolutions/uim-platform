@@ -31,15 +31,15 @@ class ArtifactController : SAPController {
         try {
             auto j = req.json;
             CreateArtifactRequest r;
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.version_ = jsonStr(j, "version");
-            r.author = jsonStr(j, "author");
-            r.category = jsonStr(j, "category");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.version_ = j.getString("version");
+            r.author = j.getString("author");
+            r.category = j.getString("category");
             r.tags = jsonStrArray(j, "tags");
-            r.contentUrl = jsonStr(j, "contentUrl");
+            r.contentUrl = j.getString("contentUrl");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -123,10 +123,10 @@ class ArtifactController : SAPController {
             auto j = req.json;
             UpdateArtifactRequest r;
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.version_ = jsonStr(j, "version");
-            r.contentUrl = jsonStr(j, "contentUrl");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.version_ = j.getString("version");
+            r.contentUrl = j.getString("contentUrl");
 
             auto result = uc.update(r);
             if (result.success) {

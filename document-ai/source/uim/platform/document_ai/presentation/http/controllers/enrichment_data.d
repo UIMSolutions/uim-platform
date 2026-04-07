@@ -35,10 +35,10 @@ class EnrichmentDataController : SAPController {
       CreateEnrichmentDataRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.documentTypeId = jsonStr(j, "documentTypeId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.subtype = jsonStr(j, "subtype");
+      r.documentTypeId = j.getString("documentTypeId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.subtype = j.getString("subtype");
       r.fields = jsonKeyValuePairs(j, "fields");
 
       auto result = uc.create(r);
@@ -104,8 +104,8 @@ class EnrichmentDataController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
       r.enrichmentDataId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.fields = jsonKeyValuePairs(j, "fields");
 
       auto result = uc.update(r);

@@ -37,19 +37,19 @@ class TaskController : SAPController {
             auto j = req.json;
             CreateTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.taskDefinitionId = jsonStr(j, "taskDefinitionId");
-            r.providerId = jsonStr(j, "providerId");
-            r.externalTaskId = jsonStr(j, "externalTaskId");
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
-            r.priority = jsonStr(j, "priority");
-            r.category = jsonStr(j, "category");
-            r.assignee = jsonStr(j, "assignee");
-            r.creator = jsonStr(j, "creator");
-            r.sourceApplication = jsonStr(j, "sourceApplication");
-            r.dueDate = jsonStr(j, "dueDate");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.taskDefinitionId = j.getString("taskDefinitionId");
+            r.providerId = j.getString("providerId");
+            r.externalTaskId = j.getString("externalTaskId");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
+            r.priority = j.getString("priority");
+            r.category = j.getString("category");
+            r.assignee = j.getString("assignee");
+            r.creator = j.getString("creator");
+            r.sourceApplication = j.getString("sourceApplication");
+            r.dueDate = j.getString("dueDate");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -126,12 +126,12 @@ class TaskController : SAPController {
             UpdateTaskRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.title = jsonStr(j, "title");
-            r.description = jsonStr(j, "description");
-            r.priority = jsonStr(j, "priority");
-            r.assignee = jsonStr(j, "assignee");
-            r.dueDate = jsonStr(j, "dueDate");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.title = j.getString("title");
+            r.description = j.getString("description");
+            r.priority = j.getString("priority");
+            r.assignee = j.getString("assignee");
+            r.dueDate = j.getString("dueDate");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {
@@ -155,7 +155,7 @@ class TaskController : SAPController {
             auto id = extractIdFromPath(stripped);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto j = req.json;
-            auto userId = jsonStr(j, "userId");
+            auto userId = j.getString("userId");
 
             auto result = uc.claim(tenantId, id, userId);
             if (result.success) {
@@ -201,8 +201,8 @@ class TaskController : SAPController {
             auto id = extractIdFromPath(stripped);
             auto tenantId = req.headers.get("X-Tenant-Id", "");
             auto j = req.json;
-            auto toUser = jsonStr(j, "toUser");
-            auto comment = jsonStr(j, "comment");
+            auto toUser = j.getString("toUser");
+            auto comment = j.getString("comment");
 
             auto result = uc.forward(tenantId, id, toUser, comment);
             if (result.success) {

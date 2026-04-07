@@ -32,10 +32,10 @@ class ProcessInstanceController : SAPController {
             auto j = req.json;
             StartProcessInstanceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.processId = jsonStr(j, "processId");
-            r.id = jsonStr(j, "id");
-            r.startedBy = jsonStr(j, "startedBy");
-            r.priority = jsonStr(j, "priority");
+            r.processId = j.getString("processId");
+            r.id = j.getString("id");
+            r.startedBy = j.getString("startedBy");
+            r.priority = j.getString("priority");
             r.dueDate = jsonLong(j, "dueDate");
             r.context = jsonKeyValuePairs(j, "context");
 
@@ -129,7 +129,7 @@ class ProcessInstanceController : SAPController {
             ProcessInstanceActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.action = jsonStr(j, "action");
+            r.action = j.getString("action");
 
             auto result = uc.performAction(r);
             if (result.success) {

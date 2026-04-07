@@ -34,16 +34,16 @@ class MobileAppController : SAPController {
       auto j = req.json;
       CreateMobileAppRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.bundleId = jsonStr(j, "bundleId");
-      r.platform = jsonStr(j, "platform");
-      r.securityConfig = jsonStr(j, "securityConfig");
-      r.authProvider = jsonStr(j, "authProvider");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.bundleId = j.getString("bundleId");
+      r.platform = j.getString("platform");
+      r.securityConfig = j.getString("securityConfig");
+      r.authProvider = j.getString("authProvider");
       r.pushEnabled = jsonBool(j, "pushEnabled");
       r.offlineEnabled = jsonBool(j, "offlineEnabled");
-      r.iconUrl = jsonStr(j, "iconUrl");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.iconUrl = j.getString("iconUrl");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -113,14 +113,14 @@ class MobileAppController : SAPController {
       auto j = req.json;
       UpdateMobileAppRequest r;
       r.id = id;
-      r.description = jsonStr(j, "description");
-      r.securityConfig = jsonStr(j, "securityConfig");
-      r.authProvider = jsonStr(j, "authProvider");
-      r.status = jsonStr(j, "status");
+      r.description = j.getString("description");
+      r.securityConfig = j.getString("securityConfig");
+      r.authProvider = j.getString("authProvider");
+      r.status = j.getString("status");
       r.pushEnabled = jsonBool(j, "pushEnabled");
       r.offlineEnabled = jsonBool(j, "offlineEnabled");
-      r.iconUrl = jsonStr(j, "iconUrl");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.iconUrl = j.getString("iconUrl");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;

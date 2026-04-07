@@ -36,12 +36,12 @@ class KeyringController : SAPController {
       auto j = req.json;
       CreateKeyringRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.namespaceId = req.headers.get("X-Namespace-Id", jsonStr(j, "namespaceId"));
-      r.name = jsonStr(j, "name");
-      r.metadata = jsonStr(j, "metadata");
-      r.format = jsonStr(j, "format");
+      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.name = j.getString("name");
+      r.metadata = j.getString("metadata");
+      r.format = j.getString("format");
       r.rotationPeriodDays = jsonInt(j, "rotationPeriodDays", 90);
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -123,7 +123,7 @@ class KeyringController : SAPController {
     try {
       auto j = req.json;
       RotateKeyringRequest r;
-      r.keyringId = jsonStr(j, "keyringId");
+      r.keyringId = j.getString("keyringId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
 
       auto result = uc.rotate(r);
@@ -142,7 +142,7 @@ class KeyringController : SAPController {
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto keyringId = jsonStr(j, "keyringId");
+      auto keyringId = j.getString("keyringId");
 
       auto result = uc.disable(keyringId);
       if (result.success) {

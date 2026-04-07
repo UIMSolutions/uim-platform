@@ -35,13 +35,13 @@ class AutomationRuleController : SAPController {
             auto j = req.json;
             CreateAutomationRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.templateId = jsonStr(j, "templateId");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.priority = jsonStr(j, "priority");
+            r.templateId = j.getString("templateId");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.priority = j.getString("priority");
             r.executionOrder = jsonInt(j, "executionOrder");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -130,12 +130,12 @@ class AutomationRuleController : SAPController {
             UpdateAutomationRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.priority = jsonStr(j, "priority");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.priority = j.getString("priority");
             r.executionOrder = jsonInt(j, "executionOrder");
             r.enabled = jsonBool(j, "enabled", true);
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

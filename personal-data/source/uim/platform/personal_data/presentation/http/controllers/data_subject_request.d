@@ -32,14 +32,14 @@ class DataSubjectRequestController : SAPController {
             auto j = req.json;
             CreateDataSubjectRequestRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
-            r.requestType = jsonStr(j, "requestType");
-            r.priority = jsonStr(j, "priority");
-            r.description = jsonStr(j, "description");
-            r.assignedTo = jsonStr(j, "assignedTo");
-            r.dueDate = jsonStr(j, "dueDate");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.dataSubjectId = j.getString("dataSubjectId");
+            r.requestType = j.getString("requestType");
+            r.priority = j.getString("priority");
+            r.description = j.getString("description");
+            r.assignedTo = j.getString("assignedTo");
+            r.dueDate = j.getString("dueDate");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -114,13 +114,13 @@ class DataSubjectRequestController : SAPController {
             UpdateDataSubjectRequestRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.status = jsonStr(j, "status");
-            r.priority = jsonStr(j, "priority");
-            r.assignedTo = jsonStr(j, "assignedTo");
-            r.dueDate = jsonStr(j, "dueDate");
-            r.comment = jsonStr(j, "comment");
-            r.rejectionReason = jsonStr(j, "rejectionReason");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.status = j.getString("status");
+            r.priority = j.getString("priority");
+            r.assignedTo = j.getString("assignedTo");
+            r.dueDate = j.getString("dueDate");
+            r.comment = j.getString("comment");
+            r.rejectionReason = j.getString("rejectionReason");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

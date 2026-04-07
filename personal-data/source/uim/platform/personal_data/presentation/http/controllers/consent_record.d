@@ -32,16 +32,16 @@ class ConsentRecordController : SAPController {
             auto j = req.json;
             CreateConsentRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
-            r.purposeId = jsonStr(j, "purposeId");
-            r.consentText = jsonStr(j, "consentText");
-            r.consentVersion = jsonStr(j, "consentVersion");
-            r.expiresAt = jsonStr(j, "expiresAt");
-            r.ipAddress = jsonStr(j, "ipAddress");
-            r.userAgent = jsonStr(j, "userAgent");
-            r.source = jsonStr(j, "source");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.dataSubjectId = j.getString("dataSubjectId");
+            r.purposeId = j.getString("purposeId");
+            r.consentText = j.getString("consentText");
+            r.consentVersion = j.getString("consentVersion");
+            r.expiresAt = j.getString("expiresAt");
+            r.ipAddress = j.getString("ipAddress");
+            r.userAgent = j.getString("userAgent");
+            r.source = j.getString("source");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -114,8 +114,8 @@ class ConsentRecordController : SAPController {
             auto j = req.json;
             WithdrawConsentRequest r;
             r.id = id;
-            r.reason = jsonStr(j, "reason");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.reason = j.getString("reason");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.withdraw(r);
             if (result.success) {

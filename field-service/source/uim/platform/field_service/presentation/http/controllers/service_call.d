@@ -58,22 +58,22 @@ class ServiceCallController : SAPController {
         try {
             auto j = req.json;
             ServiceCallDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.customerId = jsonStr(j, "customerId");
-            dto.equipmentId = jsonStr(j, "equipmentId");
-            dto.subject = jsonStr(j, "subject");
-            dto.description = jsonStr(j, "description");
-            dto.serviceType = jsonStr(j, "serviceType");
-            dto.contactPerson = jsonStr(j, "contactPerson");
-            dto.contactPhone = jsonStr(j, "contactPhone");
-            dto.contactEmail = jsonStr(j, "contactEmail");
-            dto.reportedDate = jsonStr(j, "reportedDate");
-            dto.dueDate = jsonStr(j, "dueDate");
-            dto.address = jsonStr(j, "address");
-            dto.latitude = jsonStr(j, "latitude");
-            dto.longitude = jsonStr(j, "longitude");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.customerId = j.getString("customerId");
+            dto.equipmentId = j.getString("equipmentId");
+            dto.subject = j.getString("subject");
+            dto.description = j.getString("description");
+            dto.serviceType = j.getString("serviceType");
+            dto.contactPerson = j.getString("contactPerson");
+            dto.contactPhone = j.getString("contactPhone");
+            dto.contactEmail = j.getString("contactEmail");
+            dto.reportedDate = j.getString("reportedDate");
+            dto.dueDate = j.getString("dueDate");
+            dto.address = j.getString("address");
+            dto.latitude = j.getString("latitude");
+            dto.longitude = j.getString("longitude");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,13 +96,13 @@ class ServiceCallController : SAPController {
             auto j = req.json;
             ServiceCallDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.subject = jsonStr(j, "subject");
-            dto.description = jsonStr(j, "description");
-            dto.contactPerson = jsonStr(j, "contactPerson");
-            dto.contactPhone = jsonStr(j, "contactPhone");
-            dto.contactEmail = jsonStr(j, "contactEmail");
-            dto.resolution = jsonStr(j, "resolution");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.subject = j.getString("subject");
+            dto.description = j.getString("description");
+            dto.contactPerson = j.getString("contactPerson");
+            dto.contactPhone = j.getString("contactPhone");
+            dto.contactEmail = j.getString("contactEmail");
+            dto.resolution = j.getString("resolution");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

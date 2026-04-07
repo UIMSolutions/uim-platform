@@ -35,10 +35,10 @@ class TemplateController : SAPController {
       CreateTemplateRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.schemaId = jsonStr(j, "schemaId");
-      r.documentTypeId = jsonStr(j, "documentTypeId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.schemaId = j.getString("schemaId");
+      r.documentTypeId = j.getString("documentTypeId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.regions = jsonRegionArray(j, "regions");
 
       auto result = uc.create(r);
@@ -104,9 +104,9 @@ class TemplateController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
       r.templateId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.status = jsonStr(j, "status");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.status = j.getString("status");
 
       auto result = uc.update(r);
       if (result.success) {

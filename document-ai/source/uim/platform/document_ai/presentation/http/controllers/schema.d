@@ -35,9 +35,9 @@ class SchemaController : SAPController {
       CreateSchemaRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.documentTypeId = jsonStr(j, "documentTypeId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.documentTypeId = j.getString("documentTypeId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.headerFields = jsonFieldArray(j, "headerFields");
       r.lineItemFields = jsonFieldArray(j, "lineItemFields");
       r.supportedLanguages = jsonStrArray(j, "supportedLanguages");
@@ -105,9 +105,9 @@ class SchemaController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
       r.schemaId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.status = jsonStr(j, "status");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.status = j.getString("status");
 
       auto result = uc.update(r);
       if (result.success) {

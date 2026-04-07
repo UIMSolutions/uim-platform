@@ -32,13 +32,13 @@ class VisibilityController : SAPController {
             auto j = req.json;
             CreateVisibilityRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.dashboardType = jsonStr(j, "dashboardType");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.dashboardType = j.getString("dashboardType");
             r.processIds = jsonStrArray(j, "processIds");
-            r.refreshIntervalSeconds = jsonStr(j, "refreshIntervalSeconds");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -118,10 +118,10 @@ class VisibilityController : SAPController {
             UpdateVisibilityRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.refreshIntervalSeconds = jsonStr(j, "refreshIntervalSeconds");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.refreshIntervalSeconds = j.getString("refreshIntervalSeconds");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

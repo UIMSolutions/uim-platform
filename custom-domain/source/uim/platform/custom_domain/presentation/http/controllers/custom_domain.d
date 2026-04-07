@@ -34,12 +34,12 @@ class CustomDomainController : SAPController {
             auto j = req.json;
             CreateCustomDomainRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.domainName = jsonStr(j, "domainName");
-            r.organizationId = jsonStr(j, "organizationId");
-            r.spaceId = jsonStr(j, "spaceId");
-            r.environment = jsonStr(j, "environment");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.domainName = j.getString("domainName");
+            r.organizationId = j.getString("organizationId");
+            r.spaceId = j.getString("spaceId");
+            r.environment = j.getString("environment");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -133,12 +133,12 @@ class CustomDomainController : SAPController {
             UpdateCustomDomainRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.activeCertificateId = jsonStr(j, "activeCertificateId");
-            r.tlsConfigurationId = jsonStr(j, "tlsConfigurationId");
+            r.activeCertificateId = j.getString("activeCertificateId");
+            r.tlsConfigurationId = j.getString("tlsConfigurationId");
             r.isShared = jsonBool(j, "isShared");
-            r.sharedWithOrgs = jsonStr(j, "sharedWithOrgs");
+            r.sharedWithOrgs = j.getString("sharedWithOrgs");
             r.clientAuthEnabled = jsonBool(j, "clientAuthEnabled");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

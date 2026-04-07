@@ -34,14 +34,14 @@ class AppVersionController : SAPController {
       auto j = req.json;
       CreateAppVersionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.versionCode = jsonStr(j, "versionCode");
+      r.appId = j.getString("appId");
+      r.versionCode = j.getString("versionCode");
       r.buildNumber = jsonInt(j, "buildNumber");
-      r.platform = jsonStr(j, "platform");
-      r.releaseNotes = jsonStr(j, "releaseNotes");
-      r.downloadUrl = jsonStr(j, "downloadUrl");
+      r.platform = j.getString("platform");
+      r.releaseNotes = j.getString("releaseNotes");
+      r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -109,11 +109,11 @@ class AppVersionController : SAPController {
       auto j = req.json;
       UpdateAppVersionRequest r;
       r.id = id;
-      r.releaseNotes = jsonStr(j, "releaseNotes");
-      r.downloadUrl = jsonStr(j, "downloadUrl");
+      r.releaseNotes = j.getString("releaseNotes");
+      r.downloadUrl = j.getString("downloadUrl");
       r.sizeBytes = jsonLong(j, "sizeBytes");
-      r.status = jsonStr(j, "status");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.status = j.getString("status");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;

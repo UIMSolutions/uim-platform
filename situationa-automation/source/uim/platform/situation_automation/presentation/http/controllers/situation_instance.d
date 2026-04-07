@@ -36,16 +36,16 @@ class SituationInstanceController : SAPController {
             auto j = req.json;
             CreateSituationInstanceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.templateId = jsonStr(j, "templateId");
-            r.id = jsonStr(j, "id");
-            r.description = jsonStr(j, "description");
-            r.severity = jsonStr(j, "severity");
-            r.entityId = jsonStr(j, "entityId");
-            r.entityTypeId = jsonStr(j, "entityTypeId");
+            r.templateId = j.getString("templateId");
+            r.id = j.getString("id");
+            r.description = j.getString("description");
+            r.severity = j.getString("severity");
+            r.entityId = j.getString("entityId");
+            r.entityTypeId = j.getString("entityTypeId");
             r.contextData = jsonKeyValuePairs(j, "contextData");
-            r.assignedTo = jsonStr(j, "assignedTo");
-            r.sourceSystem = jsonStr(j, "sourceSystem");
-            r.sourceInstanceId = jsonStr(j, "sourceInstanceId");
+            r.assignedTo = j.getString("assignedTo");
+            r.sourceSystem = j.getString("sourceSystem");
+            r.sourceInstanceId = j.getString("sourceInstanceId");
             r.dueAt = jsonLong(j, "dueAt");
 
             auto result = uc.create(r);
@@ -142,9 +142,9 @@ class SituationInstanceController : SAPController {
             UpdateSituationInstanceRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.status = jsonStr(j, "status");
-            r.severity = jsonStr(j, "severity");
-            r.assignedTo = jsonStr(j, "assignedTo");
+            r.status = j.getString("status");
+            r.severity = j.getString("severity");
+            r.assignedTo = j.getString("assignedTo");
 
             auto result = uc.update(r);
             if (result.success) {
@@ -178,11 +178,11 @@ class SituationInstanceController : SAPController {
             ResolveSituationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.resolutionType = jsonStr(j, "resolutionType");
-            r.resolvedBy = jsonStr(j, "resolvedBy");
-            r.actionId = jsonStr(j, "actionId");
-            r.ruleId = jsonStr(j, "ruleId");
-            r.outcome = jsonStr(j, "outcome");
+            r.resolutionType = j.getString("resolutionType");
+            r.resolvedBy = j.getString("resolvedBy");
+            r.actionId = j.getString("actionId");
+            r.ruleId = j.getString("ruleId");
+            r.outcome = j.getString("outcome");
 
             auto result = uc.resolve(r);
             if (result.success) {

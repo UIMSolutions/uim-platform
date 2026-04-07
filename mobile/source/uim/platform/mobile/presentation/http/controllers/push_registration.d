@@ -33,10 +33,10 @@ class PushRegistrationController : SAPController {
       auto j = req.json;
       RegisterPushRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.deviceId = jsonStr(j, "deviceId");
-      r.provider = jsonStr(j, "provider");
-      r.pushToken = jsonStr(j, "pushToken");
+      r.appId = j.getString("appId");
+      r.deviceId = j.getString("deviceId");
+      r.provider = j.getString("provider");
+      r.pushToken = j.getString("pushToken");
       r.topics = jsonStrArray(j, "topics");
       auto result = uc.register(r);
       if (result.success) {

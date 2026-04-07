@@ -35,12 +35,12 @@ class DataContextController : SAPController {
             auto j = req.json;
             CreateDataContextRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.instanceId = jsonStr(j, "instanceId");
-            r.id = jsonStr(j, "id");
-            r.entityId = jsonStr(j, "entityId");
-            r.entityTypeId = jsonStr(j, "entityTypeId");
+            r.instanceId = j.getString("instanceId");
+            r.id = j.getString("id");
+            r.entityId = j.getString("entityId");
+            r.entityTypeId = j.getString("entityTypeId");
             r.data = jsonKeyValuePairs(j, "data");
-            r.sourceSystem = jsonStr(j, "sourceSystem");
+            r.sourceSystem = j.getString("sourceSystem");
             r.containsPersonalData = jsonBool(j, "containsPersonalData");
             r.expiresAt = jsonLong(j, "expiresAt");
 

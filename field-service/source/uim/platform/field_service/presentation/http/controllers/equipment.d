@@ -58,22 +58,22 @@ class EquipmentController : SAPController {
         try {
             auto j = req.json;
             EquipmentDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.customerId = jsonStr(j, "customerId");
-            dto.serialNumber = jsonStr(j, "serialNumber");
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.equipmentType = jsonStr(j, "equipmentType");
-            dto.manufacturer = jsonStr(j, "manufacturer");
-            dto.model = jsonStr(j, "model");
-            dto.installationDate = jsonStr(j, "installationDate");
-            dto.warrantyEndDate = jsonStr(j, "warrantyEndDate");
-            dto.locationAddress = jsonStr(j, "locationAddress");
-            dto.latitude = jsonStr(j, "latitude");
-            dto.longitude = jsonStr(j, "longitude");
-            dto.measuringPoint = jsonStr(j, "measuringPoint");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.customerId = j.getString("customerId");
+            dto.serialNumber = j.getString("serialNumber");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.equipmentType = j.getString("equipmentType");
+            dto.manufacturer = j.getString("manufacturer");
+            dto.model = j.getString("model");
+            dto.installationDate = j.getString("installationDate");
+            dto.warrantyEndDate = j.getString("warrantyEndDate");
+            dto.locationAddress = j.getString("locationAddress");
+            dto.latitude = j.getString("latitude");
+            dto.longitude = j.getString("longitude");
+            dto.measuringPoint = j.getString("measuringPoint");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -96,14 +96,14 @@ class EquipmentController : SAPController {
             auto j = req.json;
             EquipmentDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.manufacturer = jsonStr(j, "manufacturer");
-            dto.model = jsonStr(j, "model");
-            dto.locationAddress = jsonStr(j, "locationAddress");
-            dto.lastServiceDate = jsonStr(j, "lastServiceDate");
-            dto.nextServiceDate = jsonStr(j, "nextServiceDate");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.manufacturer = j.getString("manufacturer");
+            dto.model = j.getString("model");
+            dto.locationAddress = j.getString("locationAddress");
+            dto.lastServiceDate = j.getString("lastServiceDate");
+            dto.nextServiceDate = j.getString("nextServiceDate");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

@@ -37,16 +37,16 @@ class AlertController : SAPController {
       auto j = req.json;
       CreateAlertRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.severity = jsonStr(j, "severity");
-      r.category = jsonStr(j, "category");
-      r.metricName = jsonStr(j, "metricName");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.severity = j.getString("severity");
+      r.category = j.getString("category");
+      r.metricName = j.getString("metricName");
       r.warningValue = jsonDouble(j, "warningValue");
       r.criticalValue = jsonDouble(j, "criticalValue");
-      r.unit = jsonStr(j, "unit");
+      r.unit = j.getString("unit");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -128,9 +128,9 @@ class AlertController : SAPController {
       UpdateAlertRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.severity = jsonStr(j, "severity");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.severity = j.getString("severity");
       r.warningValue = jsonDouble(j, "warningValue");
       r.criticalValue = jsonDouble(j, "criticalValue");
 
@@ -166,7 +166,7 @@ class AlertController : SAPController {
       AcknowledgeAlertRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = id;
-      r.acknowledgedBy = jsonStr(j, "acknowledgedBy");
+      r.acknowledgedBy = j.getString("acknowledgedBy");
 
       auto result = uc.acknowledge(r);
       if (result.success) {

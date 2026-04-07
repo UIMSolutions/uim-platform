@@ -31,15 +31,15 @@ class ConnectionController : SAPController {
     try {
       auto j = req.json;
       CreateConnectionRequest r;
-      r.workspaceId = jsonStr(j, "workspaceId");
-      r.name = jsonStr(j, "name");
-      r.type = jsonStr(j, "type");
-      r.url = jsonStr(j, "url");
-      r.authUrl = jsonStr(j, "authUrl");
-      r.clientId = jsonStr(j, "clientId");
-      r.clientSecret = jsonStr(j, "clientSecret");
-      r.description = jsonStr(j, "description");
-      r.defaultResourceGroupId = jsonStr(j, "defaultResourceGroupId");
+      r.workspaceId = j.getString("workspaceId");
+      r.name = j.getString("name");
+      r.type = j.getString("type");
+      r.url = j.getString("url");
+      r.authUrl = j.getString("authUrl");
+      r.clientId = j.getString("clientId");
+      r.clientSecret = j.getString("clientSecret");
+      r.description = j.getString("description");
+      r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -104,9 +104,9 @@ class ConnectionController : SAPController {
 
       PatchConnectionRequest r;
       r.connectionId = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.defaultResourceGroupId = jsonStr(j, "defaultResourceGroupId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.defaultResourceGroupId = j.getString("defaultResourceGroupId");
 
       auto result = uc.patch(r);
       if (result.success) {

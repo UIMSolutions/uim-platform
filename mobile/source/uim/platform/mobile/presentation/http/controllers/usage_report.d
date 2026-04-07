@@ -32,15 +32,15 @@ class UsageReportController : SAPController {
       auto j = req.json;
       CreateUsageReportRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.deviceId = jsonStr(j, "deviceId");
-      r.userId = jsonStr(j, "userId");
-      r.metricType = jsonStr(j, "metricType");
-      r.metricKey = jsonStr(j, "metricKey");
-      r.metricValue = jsonStr(j, "metricValue");
-      r.sessionId = jsonStr(j, "sessionId");
-      r.platform = jsonStr(j, "platform");
-      r.appVersion = jsonStr(j, "appVersion");
+      r.appId = j.getString("appId");
+      r.deviceId = j.getString("deviceId");
+      r.userId = j.getString("userId");
+      r.metricType = j.getString("metricType");
+      r.metricKey = j.getString("metricKey");
+      r.metricValue = j.getString("metricValue");
+      r.sessionId = j.getString("sessionId");
+      r.platform = j.getString("platform");
+      r.appVersion = j.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
       auto result = uc.report(r);
       if (result.success) {

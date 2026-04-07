@@ -58,18 +58,18 @@ class SkillController : SAPController {
         try {
             auto j = req.json;
             SkillDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.technicianId = jsonStr(j, "technicianId");
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.category = jsonStr(j, "category");
-            dto.proficiencyLevel = jsonStr(j, "proficiencyLevel");
-            dto.certificationDate = jsonStr(j, "certificationDate");
-            dto.expirationDate = jsonStr(j, "expirationDate");
-            dto.certificationNumber = jsonStr(j, "certificationNumber");
-            dto.issuingAuthority = jsonStr(j, "issuingAuthority");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.technicianId = j.getString("technicianId");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.category = j.getString("category");
+            dto.proficiencyLevel = j.getString("proficiencyLevel");
+            dto.certificationDate = j.getString("certificationDate");
+            dto.expirationDate = j.getString("expirationDate");
+            dto.certificationNumber = j.getString("certificationNumber");
+            dto.issuingAuthority = j.getString("issuingAuthority");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -92,12 +92,12 @@ class SkillController : SAPController {
             auto j = req.json;
             SkillDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.certificationDate = jsonStr(j, "certificationDate");
-            dto.expirationDate = jsonStr(j, "expirationDate");
-            dto.issuingAuthority = jsonStr(j, "issuingAuthority");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.certificationDate = j.getString("certificationDate");
+            dto.expirationDate = j.getString("expirationDate");
+            dto.issuingAuthority = j.getString("issuingAuthority");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

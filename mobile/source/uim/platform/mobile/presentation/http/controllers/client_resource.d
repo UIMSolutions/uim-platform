@@ -34,13 +34,13 @@ class ClientResourceController : SAPController {
       auto j = req.json;
       CreateClientResourceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.contentType = jsonStr(j, "contentType");
-      r.data = jsonStr(j, "data");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.appId = j.getString("appId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.contentType = j.getString("contentType");
+      r.data = j.getString("data");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -106,12 +106,12 @@ class ClientResourceController : SAPController {
       auto j = req.json;
       UpdateClientResourceRequest r;
       r.id = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.contentType = jsonStr(j, "contentType");
-      r.data = jsonStr(j, "data");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.contentType = j.getString("contentType");
+      r.data = j.getString("data");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;

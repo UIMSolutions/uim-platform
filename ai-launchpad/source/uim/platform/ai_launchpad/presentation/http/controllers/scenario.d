@@ -32,9 +32,9 @@ class ScenarioController : SAPController {
 
       SyncScenarioRequest r;
       r.connectionId = connectionId;
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.scenarioId = j.getString("scenarioId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.labels = jsonStrArray(j, "labels");
 
       auto result = uc.sync(r);

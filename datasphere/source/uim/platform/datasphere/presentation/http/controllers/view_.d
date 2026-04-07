@@ -33,11 +33,11 @@ class ViewController : SAPController {
       CreateViewRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.businessName = jsonStr(j, "businessName");
-      r.semantic = jsonStr(j, "semantic");
-      r.sqlExpression = jsonStr(j, "sqlExpression");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.businessName = j.getString("businessName");
+      r.semantic = j.getString("semantic");
+      r.sqlExpression = j.getString("sqlExpression");
       r.isExposed = jsonBool(j, "isExposed", false);
 
       auto result = uc.create(r);
@@ -120,10 +120,10 @@ class ViewController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
       r.viewId = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.businessName = jsonStr(j, "businessName");
-      r.sqlExpression = jsonStr(j, "sqlExpression");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.businessName = j.getString("businessName");
+      r.sqlExpression = j.getString("sqlExpression");
       r.isExposed = jsonBool(j, "isExposed", false);
       r.isPersisted = jsonBool(j, "isPersisted", false);
 

@@ -30,10 +30,10 @@ class PromptController : SAPController {
       auto j = req.json;
 
       CreatePromptRequest r;
-      r.collectionId = jsonStr(j, "collectionId");
-      r.name = jsonStr(j, "name");
-      r.modelName = jsonStr(j, "modelName");
-      r.modelVersion = jsonStr(j, "modelVersion");
+      r.collectionId = j.getString("collectionId");
+      r.name = j.getString("name");
+      r.modelName = j.getString("modelName");
+      r.modelVersion = j.getString("modelVersion");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = jsonDouble(j, "temperature");
       r.maxTokens = jsonInt(j, "maxTokens");
@@ -41,7 +41,7 @@ class PromptController : SAPController {
       r.frequencyPenalty = jsonDouble(j, "frequencyPenalty");
       r.presencePenalty = jsonDouble(j, "presencePenalty");
       r.inputParams = jsonStrArray(j, "inputParams");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -106,8 +106,8 @@ class PromptController : SAPController {
 
       PatchPromptRequest r;
       r.promptId = id;
-      r.name = jsonStr(j, "name");
-      r.status = jsonStr(j, "status");
+      r.name = j.getString("name");
+      r.status = j.getString("status");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = jsonDouble(j, "temperature");
       r.maxTokens = jsonInt(j, "maxTokens");

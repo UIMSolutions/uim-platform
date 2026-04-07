@@ -34,11 +34,11 @@ class AppRouteController : SAPController {
       auto j = req.json;
       CreateAppRouteRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.pathPrefix = jsonStr(j, "pathPrefix");
-      r.targetUrl = jsonStr(j, "targetUrl");
-      r.description = jsonStr(j, "description");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.appId = j.getString("appId");
+      r.pathPrefix = j.getString("pathPrefix");
+      r.targetUrl = j.getString("targetUrl");
+      r.description = j.getString("description");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
@@ -115,9 +115,9 @@ class AppRouteController : SAPController {
       UpdateAppRouteRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = jsonStr(j, "description");
-      r.targetUrl = jsonStr(j, "targetUrl");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.description = j.getString("description");
+      r.targetUrl = j.getString("targetUrl");
+      r.modifiedBy = j.getString("modifiedBy");
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

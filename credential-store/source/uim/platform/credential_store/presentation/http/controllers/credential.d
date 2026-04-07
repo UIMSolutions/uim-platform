@@ -79,14 +79,14 @@ class CredentialController : SAPController {
       auto j = req.json;
       CreateCredentialRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.namespaceId = req.headers.get("X-Namespace-Id", jsonStr(j, "namespaceId"));
-      r.name = jsonStr(j, "name");
+      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.name = j.getString("name");
       r.type = type;
-      r.value = jsonStr(j, "value");
-      r.metadata = jsonStr(j, "metadata");
-      r.format = jsonStr(j, "format");
-      r.username = jsonStr(j, "username");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.value = j.getString("value");
+      r.metadata = j.getString("metadata");
+      r.format = j.getString("format");
+      r.username = j.getString("username");
+      r.createdBy = j.getString("createdBy");
       r.ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto result = uc.create(r);

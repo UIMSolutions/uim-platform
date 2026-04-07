@@ -32,7 +32,7 @@ class ResourceGroupController : SAPController {
       auto j = req.json;
       CreateResourceGroupRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.resourceGroupId = jsonStr(j, "resourceGroupId");
+      r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = uc.create(r);

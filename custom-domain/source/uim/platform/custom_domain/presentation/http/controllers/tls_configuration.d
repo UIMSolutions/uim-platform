@@ -32,16 +32,16 @@ class TlsConfigurationController : SAPController {
             auto j = req.json;
             CreateTlsConfigurationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.minProtocolVersion = jsonStr(j, "minProtocolVersion");
-            r.maxProtocolVersion = jsonStr(j, "maxProtocolVersion");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.minProtocolVersion = j.getString("minProtocolVersion");
+            r.maxProtocolVersion = j.getString("maxProtocolVersion");
             r.http2Enabled = jsonBool(j, "http2Enabled");
             r.hstsEnabled = jsonBool(j, "hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
             r.hstsIncludeSubDomains = jsonBool(j, "hstsIncludeSubDomains");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -125,15 +125,15 @@ class TlsConfigurationController : SAPController {
             UpdateTlsConfigurationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.minProtocolVersion = jsonStr(j, "minProtocolVersion");
-            r.maxProtocolVersion = jsonStr(j, "maxProtocolVersion");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.minProtocolVersion = j.getString("minProtocolVersion");
+            r.maxProtocolVersion = j.getString("maxProtocolVersion");
             r.http2Enabled = jsonBool(j, "http2Enabled");
             r.hstsEnabled = jsonBool(j, "hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
             r.hstsIncludeSubDomains = jsonBool(j, "hstsIncludeSubDomains");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

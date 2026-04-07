@@ -33,12 +33,12 @@ class ModelController : SAPController {
 
       RegisterModelRequest r;
       r.connectionId = connectionId;
-      r.name = jsonStr(j, "name");
-      r.version_ = jsonStr(j, "version");
-      r.description = jsonStr(j, "description");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.executionId = jsonStr(j, "executionId");
-      r.url = jsonStr(j, "url");
+      r.name = j.getString("name");
+      r.version_ = j.getString("version");
+      r.description = j.getString("description");
+      r.scenarioId = j.getString("scenarioId");
+      r.executionId = j.getString("executionId");
+      r.url = j.getString("url");
       r.size = jsonLong(j, "size");
       r.labels = jsonStrArray(j, "labels");
 
@@ -109,8 +109,8 @@ class ModelController : SAPController {
       PatchModelRequest r;
       r.connectionId = connectionId;
       r.modelId = id;
-      r.description = jsonStr(j, "description");
-      r.status = jsonStr(j, "status");
+      r.description = j.getString("description");
+      r.status = j.getString("status");
 
       auto result = uc.patch(r);
       if (result.success) {

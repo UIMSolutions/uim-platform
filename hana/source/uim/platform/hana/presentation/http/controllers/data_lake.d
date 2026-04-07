@@ -36,10 +36,10 @@ class DataLakeController : SAPController {
       auto j = req.json;
       CreateDataLakeRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.computeNodes = jsonInt(j, "computeNodes", 1);
       r.storage = jsonKeyValuePairs(j, "storage");
 
@@ -119,8 +119,8 @@ class DataLakeController : SAPController {
       UpdateDataLakeRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.computeNodes = jsonInt(j, "computeNodes", 1);
 
       auto result = uc.update(r);

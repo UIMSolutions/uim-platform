@@ -31,12 +31,12 @@ class TaskAttachmentController : SAPController {
             auto j = req.json;
             CreateTaskAttachmentRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.taskId = jsonStr(j, "taskId");
-            r.fileName = jsonStr(j, "fileName");
-            r.fileSize = jsonStr(j, "fileSize");
-            r.mimeType = jsonStr(j, "mimeType");
-            r.uploadedBy = jsonStr(j, "uploadedBy");
+            r.id = j.getString("id");
+            r.taskId = j.getString("taskId");
+            r.fileName = j.getString("fileName");
+            r.fileSize = j.getString("fileSize");
+            r.mimeType = j.getString("mimeType");
+            r.uploadedBy = j.getString("uploadedBy");
 
             auto result = uc.create(r);
             if (result.success) {

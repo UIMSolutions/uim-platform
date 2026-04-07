@@ -34,13 +34,13 @@ class AppConfigurationController : SAPController {
       auto j = req.json;
       CreateAppConfigurationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.key = jsonStr(j, "key");
-      r.value = jsonStr(j, "value");
-      r.description = jsonStr(j, "description");
+      r.appId = j.getString("appId");
+      r.key = j.getString("key");
+      r.value = j.getString("value");
+      r.description = j.getString("description");
       r.isSecret = jsonBool(j, "isSecret");
-      r.platform = jsonStr(j, "platform");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.platform = j.getString("platform");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -106,11 +106,11 @@ class AppConfigurationController : SAPController {
       auto j = req.json;
       UpdateAppConfigurationRequest r;
       r.id = id;
-      r.value = jsonStr(j, "value");
-      r.description = jsonStr(j, "description");
+      r.value = j.getString("value");
+      r.description = j.getString("description");
       r.isSecret = jsonBool(j, "isSecret");
-      r.platform = jsonStr(j, "platform");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.platform = j.getString("platform");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;

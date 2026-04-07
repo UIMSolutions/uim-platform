@@ -34,13 +34,13 @@ class DeviceRegistrationController : SAPController {
       auto j = req.json;
       RegisterDeviceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.deviceModel = jsonStr(j, "deviceModel");
-      r.osVersion = jsonStr(j, "osVersion");
-      r.appVersion = jsonStr(j, "appVersion");
-      r.platform = jsonStr(j, "platform");
-      r.userId = jsonStr(j, "userId");
-      r.deviceToken = jsonStr(j, "deviceToken");
+      r.appId = j.getString("appId");
+      r.deviceModel = j.getString("deviceModel");
+      r.osVersion = j.getString("osVersion");
+      r.appVersion = j.getString("appVersion");
+      r.platform = j.getString("platform");
+      r.userId = j.getString("userId");
+      r.deviceToken = j.getString("deviceToken");
       auto result = uc.register(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -105,7 +105,7 @@ class DeviceRegistrationController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
-      auto status = jsonStr(j, "status");
+      auto status = j.getString("status");
       auto result = uc.updateStatus(id, status);
       if (result.success) {
         auto resp = Json.emptyObject;

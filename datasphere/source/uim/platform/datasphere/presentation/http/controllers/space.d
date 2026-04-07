@@ -32,10 +32,10 @@ class SpaceController : SAPController {
       auto j = req.json;
       CreateSpaceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.businessName = jsonStr(j, "businessName");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.businessName = j.getString("businessName");
       r.priority = jsonInt(j, "priority", 0);
 
       auto result = uc.create(r);
@@ -112,9 +112,9 @@ class SpaceController : SAPController {
       UpdateSpaceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.businessName = jsonStr(j, "businessName");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.businessName = j.getString("businessName");
       r.priority = jsonInt(j, "priority", 0);
 
       auto result = uc.update(r);

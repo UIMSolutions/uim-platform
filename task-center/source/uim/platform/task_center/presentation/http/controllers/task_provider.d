@@ -35,15 +35,15 @@ class TaskProviderController : SAPController {
             auto j = req.json;
             CreateTaskProviderRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.providerType = jsonStr(j, "providerType");
-            r.authType = jsonStr(j, "authType");
-            r.endpointUrl = jsonStr(j, "endpointUrl");
-            r.authEndpointUrl = jsonStr(j, "authEndpointUrl");
-            r.clientId = jsonStr(j, "clientId");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.providerType = j.getString("providerType");
+            r.authType = j.getString("authType");
+            r.endpointUrl = j.getString("endpointUrl");
+            r.authEndpointUrl = j.getString("authEndpointUrl");
+            r.clientId = j.getString("clientId");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -106,12 +106,12 @@ class TaskProviderController : SAPController {
             UpdateTaskProviderRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.endpointUrl = jsonStr(j, "endpointUrl");
-            r.authEndpointUrl = jsonStr(j, "authEndpointUrl");
-            r.clientId = jsonStr(j, "clientId");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.endpointUrl = j.getString("endpointUrl");
+            r.authEndpointUrl = j.getString("authEndpointUrl");
+            r.clientId = j.getString("clientId");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

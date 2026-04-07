@@ -35,10 +35,10 @@ class TrainingJobController : SAPController {
       CreateTrainingJobRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.documentTypeId = jsonStr(j, "documentTypeId");
-      r.schemaId = jsonStr(j, "schemaId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.documentTypeId = j.getString("documentTypeId");
+      r.schemaId = j.getString("schemaId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -103,7 +103,7 @@ class TrainingJobController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
       r.trainingJobId = id;
-      r.targetStatus = jsonStr(j, "targetStatus");
+      r.targetStatus = j.getString("targetStatus");
 
       auto result = uc.patch(r);
       if (result.success) {

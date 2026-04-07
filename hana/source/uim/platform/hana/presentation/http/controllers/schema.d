@@ -36,11 +36,11 @@ class SchemaController : SAPController {
       auto j = req.json;
       CreateSchemaRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.owner = jsonStr(j, "owner");
-      r.type = jsonStr(j, "type");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.owner = j.getString("owner");
+      r.type = j.getString("type");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -120,7 +120,7 @@ class SchemaController : SAPController {
       UpdateSchemaRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.owner = jsonStr(j, "owner");
+      r.owner = j.getString("owner");
 
       auto result = uc.update(r);
       if (result.success) {

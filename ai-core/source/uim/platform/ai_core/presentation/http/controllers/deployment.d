@@ -33,7 +33,7 @@ class DeploymentController : SAPController {
       CreateDeploymentRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.configurationId = jsonStr(j, "configurationId");
+      r.configurationId = j.getString("configurationId");
       r.ttl = jsonInt(j, "ttl");
 
       auto result = uc.create(r);
@@ -43,7 +43,7 @@ class DeploymentController : SAPController {
         resp["message"] = Json("Deployment scheduled");
         resp["status"] = Json("PENDING");
         res.writeJsonBody(resp, 202);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -99,8 +99,8 @@ class DeploymentController : SAPController {
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.deploymentId = id;
-      r.targetStatus = jsonStr(j, "targetStatus");
-      r.configurationId = jsonStr(j, "configurationId");
+      r.targetStatus = j.getString("targetStatus");
+      r.configurationId = j.getString("configurationId");
       r.ttl = jsonInt(j, "ttl");
 
       auto result = uc.patch(r);
@@ -109,7 +109,7 @@ class DeploymentController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Deployment modified");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

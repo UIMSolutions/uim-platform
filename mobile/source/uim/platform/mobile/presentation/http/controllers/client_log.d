@@ -32,16 +32,16 @@ class ClientLogController : SAPController {
       auto j = req.json;
       UploadClientLogRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.deviceId = jsonStr(j, "deviceId");
-      r.userId = jsonStr(j, "userId");
-      r.level = jsonStr(j, "level");
-      r.source = jsonStr(j, "source");
-      r.message = jsonStr(j, "message");
-      r.stackTrace = jsonStr(j, "stackTrace");
-      r.metadata = jsonStr(j, "metadata");
-      r.platform = jsonStr(j, "platform");
-      r.appVersion = jsonStr(j, "appVersion");
+      r.appId = j.getString("appId");
+      r.deviceId = j.getString("deviceId");
+      r.userId = j.getString("userId");
+      r.level = j.getString("level");
+      r.source = j.getString("source");
+      r.message = j.getString("message");
+      r.stackTrace = j.getString("stackTrace");
+      r.metadata = j.getString("metadata");
+      r.platform = j.getString("platform");
+      r.appVersion = j.getString("appVersion");
       r.timestamp = jsonLong(j, "timestamp");
       auto result = uc.upload(r);
       if (result.success) {

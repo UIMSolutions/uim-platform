@@ -32,12 +32,12 @@ class RemoteTableController : SAPController {
       CreateRemoteTableRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.connectionId = jsonStr(j, "connectionId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.remoteSchema = jsonStr(j, "remoteSchema");
-      r.remoteObjectName = jsonStr(j, "remoteObjectName");
-      r.replicationMode = jsonStr(j, "replicationMode");
+      r.connectionId = j.getString("connectionId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.remoteSchema = j.getString("remoteSchema");
+      r.remoteObjectName = j.getString("remoteObjectName");
+      r.replicationMode = j.getString("replicationMode");
 
       auto result = uc.create(r);
       if (result.success) {

@@ -36,13 +36,13 @@ class BackupController : SAPController {
       auto j = req.json;
       CreateBackupRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.type = jsonStr(j, "type");
-      r.destination = jsonStr(j, "destination");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.type = j.getString("type");
+      r.destination = j.getString("destination");
       r.encrypted = jsonBool(j, "encrypted");
-      r.cronExpression = jsonStr(j, "cronExpression");
+      r.cronExpression = j.getString("cronExpression");
       r.retentionDays = jsonInt(j, "retentionDays", 30);
 
       auto result = uc.create(r);
@@ -123,9 +123,9 @@ class BackupController : SAPController {
       UpdateBackupRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.destination = jsonStr(j, "destination");
-      r.cronExpression = jsonStr(j, "cronExpression");
+      r.name = j.getString("name");
+      r.destination = j.getString("destination");
+      r.cronExpression = j.getString("cronExpression");
       r.retentionDays = jsonInt(j, "retentionDays", 30);
 
       auto result = uc.update(r);

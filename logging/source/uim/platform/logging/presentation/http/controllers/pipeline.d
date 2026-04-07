@@ -32,12 +32,12 @@ class PipelineController : SAPController {
       auto j = req.json;
       CreatePipelineRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.sourceType = jsonStr(j, "sourceType");
-      r.format = jsonStr(j, "format");
-      r.targetStreamId = jsonStr(j, "targetStreamId");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.sourceType = j.getString("sourceType");
+      r.format = j.getString("format");
+      r.targetStreamId = j.getString("targetStreamId");
+      r.createdBy = j.getString("createdBy");
 
       auto processorsVal = "processors" in j;
       if (processorsVal !is null && (*processorsVal).type == Json.Type.array) {
@@ -118,9 +118,9 @@ class PipelineController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdatePipelineRequest r;
-      r.description = jsonStr(j, "description");
-      r.format = jsonStr(j, "format");
-      r.targetStreamId = jsonStr(j, "targetStreamId");
+      r.description = j.getString("description");
+      r.format = j.getString("format");
+      r.targetStreamId = j.getString("targetStreamId");
       r.isActive = jsonBool(j, "isActive", true);
 
       auto result = uc.update(id, r);

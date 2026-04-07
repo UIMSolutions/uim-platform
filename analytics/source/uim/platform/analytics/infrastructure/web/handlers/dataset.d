@@ -49,7 +49,7 @@ class DatasetHandler {
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
     catch (Exception e) {
-      res.writeJsonBody(toJsonValue(result)("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
 

@@ -37,14 +37,14 @@ class InstanceController : SAPController {
       auto j = req.json;
       CreateInstanceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.size = jsonStr(j, "size");
-      r.version_ = jsonStr(j, "version");
-      r.region = jsonStr(j, "region");
-      r.availabilityZone = jsonStr(j, "availabilityZone");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.size = j.getString("size");
+      r.version_ = j.getString("version");
+      r.region = j.getString("region");
+      r.availabilityZone = j.getString("availabilityZone");
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = jsonInt(j, "vcpus");
       r.storageGB = jsonLong(j, "storageGB");
@@ -144,8 +144,8 @@ class InstanceController : SAPController {
       UpdateInstanceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = jsonInt(j, "vcpus");
       r.storageGB = jsonLong(j, "storageGB");
@@ -187,7 +187,7 @@ class InstanceController : SAPController {
       InstanceActionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = id;
-      r.action = jsonStr(j, "action");
+      r.action = j.getString("action");
 
       auto result = uc.performAction(r);
       if (result.success) {

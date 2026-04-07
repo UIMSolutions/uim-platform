@@ -35,15 +35,15 @@ class FeatureRestrictionController : SAPController {
       auto j = req.json;
       CreateFeatureRestrictionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.featureKey = jsonStr(j, "featureKey");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
+      r.appId = j.getString("appId");
+      r.featureKey = j.getString("featureKey");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
       r.enabled = jsonBool(j, "enabled");
       r.percentage = jsonInt(j, "percentage");
       r.whitelist = jsonStrArray(j, "whitelist");
-      r.metadata = jsonStr(j, "metadata");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.metadata = j.getString("metadata");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -111,13 +111,13 @@ class FeatureRestrictionController : SAPController {
       auto j = req.json;
       UpdateFeatureRestrictionRequest r;
       r.id = id;
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
       r.enabled = jsonBool(j, "enabled");
       r.percentage = jsonInt(j, "percentage");
       r.whitelist = jsonStrArray(j, "whitelist");
-      r.metadata = jsonStr(j, "metadata");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.metadata = j.getString("metadata");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -148,9 +148,9 @@ class FeatureRestrictionController : SAPController {
   private void handleEvaluate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto featureId = jsonStr(j, "featureId");
-      auto userId = jsonStr(j, "userId");
-      auto deviceId = jsonStr(j, "deviceId");
+      auto featureId = j.getString("featureId");
+      auto userId = j.getString("userId");
+      auto deviceId = j.getString("deviceId");
       auto result = uc.evaluate(featureId, userId, deviceId);
       auto resp = Json.emptyObject;
       resp["enabled"] = Json(result.enabled);

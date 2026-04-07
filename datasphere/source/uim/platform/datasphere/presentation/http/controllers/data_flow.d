@@ -33,10 +33,10 @@ class DataFlowController : SAPController {
       CreateDataFlowRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.scheduleExpression = jsonStr(j, "scheduleExpression");
-      r.scheduleFrequency = jsonStr(j, "scheduleFrequency");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.scheduleExpression = j.getString("scheduleExpression");
+      r.scheduleFrequency = j.getString("scheduleFrequency");
 
       auto result = uc.create(r);
       if (result.success) {

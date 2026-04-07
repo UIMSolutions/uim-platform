@@ -33,10 +33,10 @@ class UserTaskFilterController : SAPController {
             auto j = req.json;
             CreateUserTaskFilterRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.userId = jsonStr(j, "userId");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.id = j.getString("id");
+            r.userId = j.getString("userId");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -107,8 +107,8 @@ class UserTaskFilterController : SAPController {
             UpdateUserTaskFilterRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
 
             auto result = uc.update(r);
             if (result.success) {

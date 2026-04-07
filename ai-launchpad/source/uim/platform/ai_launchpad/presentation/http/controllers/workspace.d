@@ -31,8 +31,8 @@ class WorkspaceController : SAPController {
       auto j = req.json;
       CreateWorkspaceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -98,8 +98,8 @@ class WorkspaceController : SAPController {
       PatchWorkspaceRequest r;
       r.workspaceId = id;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
 
       auto result = uc.patch(r);
       if (result.success) {

@@ -34,14 +34,14 @@ class RegisteredApplicationController : SAPController {
             auto j = req.json;
             CreateRegisteredApplicationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.endpointUrl = jsonStr(j, "endpointUrl");
-            r.apiVersion = jsonStr(j, "apiVersion");
-            r.contactEmail = jsonStr(j, "contactEmail");
-            r.contactName = jsonStr(j, "contactName");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.endpointUrl = j.getString("endpointUrl");
+            r.apiVersion = j.getString("apiVersion");
+            r.contactEmail = j.getString("contactEmail");
+            r.contactName = j.getString("contactName");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -104,13 +104,13 @@ class RegisteredApplicationController : SAPController {
             UpdateRegisteredApplicationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.endpointUrl = jsonStr(j, "endpointUrl");
-            r.apiVersion = jsonStr(j, "apiVersion");
-            r.contactEmail = jsonStr(j, "contactEmail");
-            r.contactName = jsonStr(j, "contactName");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.endpointUrl = j.getString("endpointUrl");
+            r.apiVersion = j.getString("apiVersion");
+            r.contactEmail = j.getString("contactEmail");
+            r.contactName = j.getString("contactName");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -31,12 +31,12 @@ class TaskActionController : SAPController {
             auto j = req.json;
             PerformTaskActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.taskId = jsonStr(j, "taskId");
-            r.actionType = jsonStr(j, "actionType");
-            r.performedBy = jsonStr(j, "performedBy");
-            r.forwardTo = jsonStr(j, "forwardTo");
-            r.comment = jsonStr(j, "comment");
+            r.id = j.getString("id");
+            r.taskId = j.getString("taskId");
+            r.actionType = j.getString("actionType");
+            r.performedBy = j.getString("performedBy");
+            r.forwardTo = j.getString("forwardTo");
+            r.comment = j.getString("comment");
 
             auto result = uc.create(r);
             if (result.success) {

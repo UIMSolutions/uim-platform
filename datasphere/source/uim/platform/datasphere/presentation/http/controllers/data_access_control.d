@@ -33,9 +33,9 @@ class DataAccessControlController : SAPController {
       CreateDataAccessControlRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.criteriaType = jsonStr(j, "criteriaType");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.criteriaType = j.getString("criteriaType");
       r.targetViewIds = jsonStrArray(j, "targetViewIds");
       r.assignedUserIds = jsonStrArray(j, "assignedUserIds");
 

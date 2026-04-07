@@ -35,11 +35,11 @@ class HDIContainerController : SAPController {
       auto j = req.json;
       CreateHDIContainerRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.appUser = jsonStr(j, "appUser");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.appUser = j.getString("appUser");
       r.grantedSchemas = jsonStrArray(j, "grantedSchemas");
 
       auto result = uc.create(r);
@@ -121,8 +121,8 @@ class HDIContainerController : SAPController {
       UpdateHDIContainerRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.grantedSchemas = jsonStrArray(j, "grantedSchemas");
 
       auto result = uc.update(r);

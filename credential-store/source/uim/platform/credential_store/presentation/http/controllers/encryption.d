@@ -34,8 +34,8 @@ class EncryptionController : SAPController {
       auto j = req.json;
       GenerateDekRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.namespaceId = req.headers.get("X-Namespace-Id", jsonStr(j, "namespaceId"));
-      r.keyringName = jsonStr(j, "keyringName");
+      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.keyringName = j.getString("keyringName");
 
       auto result = uc.generate(r);
       if (result.success) {
@@ -58,9 +58,9 @@ class EncryptionController : SAPController {
       auto j = req.json;
       EncryptDekRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.namespaceId = req.headers.get("X-Namespace-Id", jsonStr(j, "namespaceId"));
-      r.keyringName = jsonStr(j, "keyringName");
-      r.dek = jsonStr(j, "dek");
+      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.keyringName = j.getString("keyringName");
+      r.dek = j.getString("dek");
 
       auto result = uc.encrypt(r);
       if (result.success) {
@@ -82,9 +82,9 @@ class EncryptionController : SAPController {
       auto j = req.json;
       DecryptDekRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.namespaceId = req.headers.get("X-Namespace-Id", jsonStr(j, "namespaceId"));
-      r.keyringName = jsonStr(j, "keyringName");
-      r.encryptedDek = jsonStr(j, "encryptedDek");
+      r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
+      r.keyringName = j.getString("keyringName");
+      r.encryptedDek = j.getString("encryptedDek");
       r.keyringVersion = jsonLong(j, "keyringVersion");
 
       auto result = uc.decrypt(r);

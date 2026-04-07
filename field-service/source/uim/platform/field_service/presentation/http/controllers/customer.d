@@ -58,21 +58,21 @@ class CustomerController : SAPController {
         try {
             auto j = req.json;
             CustomerDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.customerType = jsonStr(j, "customerType");
-            dto.contactPerson = jsonStr(j, "contactPerson");
-            dto.email = jsonStr(j, "email");
-            dto.phone = jsonStr(j, "phone");
-            dto.address = jsonStr(j, "address");
-            dto.latitude = jsonStr(j, "latitude");
-            dto.longitude = jsonStr(j, "longitude");
-            dto.website = jsonStr(j, "website");
-            dto.industry = jsonStr(j, "industry");
-            dto.accountNumber = jsonStr(j, "accountNumber");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.customerType = j.getString("customerType");
+            dto.contactPerson = j.getString("contactPerson");
+            dto.email = j.getString("email");
+            dto.phone = j.getString("phone");
+            dto.address = j.getString("address");
+            dto.latitude = j.getString("latitude");
+            dto.longitude = j.getString("longitude");
+            dto.website = j.getString("website");
+            dto.industry = j.getString("industry");
+            dto.accountNumber = j.getString("accountNumber");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -95,13 +95,13 @@ class CustomerController : SAPController {
             auto j = req.json;
             CustomerDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.name = jsonStr(j, "name");
-            dto.description = jsonStr(j, "description");
-            dto.contactPerson = jsonStr(j, "contactPerson");
-            dto.email = jsonStr(j, "email");
-            dto.phone = jsonStr(j, "phone");
-            dto.address = jsonStr(j, "address");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.name = j.getString("name");
+            dto.description = j.getString("description");
+            dto.contactPerson = j.getString("contactPerson");
+            dto.email = j.getString("email");
+            dto.phone = j.getString("phone");
+            dto.address = j.getString("address");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

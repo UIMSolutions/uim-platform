@@ -36,14 +36,14 @@ class ConfigurationController : SAPController {
       auto j = req.json;
       CreateConfigurationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.section = jsonStr(j, "section");
-      r.key = jsonStr(j, "key");
-      r.value = jsonStr(j, "value");
-      r.scope_ = jsonStr(j, "scope");
-      r.dataType = jsonStr(j, "dataType");
-      r.description = jsonStr(j, "description");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.section = j.getString("section");
+      r.key = j.getString("key");
+      r.value = j.getString("value");
+      r.scope_ = j.getString("scope");
+      r.dataType = j.getString("dataType");
+      r.description = j.getString("description");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -123,7 +123,7 @@ class ConfigurationController : SAPController {
       UpdateConfigurationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.value = jsonStr(j, "value");
+      r.value = j.getString("value");
 
       auto result = uc.update(r);
       if (result.success) {

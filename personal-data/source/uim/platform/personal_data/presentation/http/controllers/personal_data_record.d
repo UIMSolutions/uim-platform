@@ -31,17 +31,17 @@ class PersonalDataRecordController : SAPController {
             auto j = req.json;
             CreatePersonalDataRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
-            r.applicationId = jsonStr(j, "applicationId");
-            r.dataCategory = jsonStr(j, "dataCategory");
-            r.sensitivity = jsonStr(j, "sensitivity");
-            r.fieldName = jsonStr(j, "fieldName");
-            r.fieldValue = jsonStr(j, "fieldValue");
-            r.purposeId = jsonStr(j, "purposeId");
-            r.legalBasis = jsonStr(j, "legalBasis");
-            r.retentionRuleId = jsonStr(j, "retentionRuleId");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.dataSubjectId = j.getString("dataSubjectId");
+            r.applicationId = j.getString("applicationId");
+            r.dataCategory = j.getString("dataCategory");
+            r.sensitivity = j.getString("sensitivity");
+            r.fieldName = j.getString("fieldName");
+            r.fieldValue = j.getString("fieldValue");
+            r.purposeId = j.getString("purposeId");
+            r.legalBasis = j.getString("legalBasis");
+            r.retentionRuleId = j.getString("retentionRuleId");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {

@@ -32,17 +32,17 @@ class ChannelController : SAPController {
       auto j = req.json;
       CreateNotificationChannelRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.channelType = jsonStr(j, "channelType");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.channelType = j.getString("channelType");
       r.emailRecipients = jsonStrArray(j, "emailRecipients");
-      r.emailSubjectPrefix = jsonStr(j, "emailSubjectPrefix");
-      r.webhookUrl = jsonStr(j, "webhookUrl");
-      r.webhookSecret = jsonStr(j, "webhookSecret");
-      r.webhookMethod = jsonStr(j, "webhookMethod");
-      r.slackWebhookUrl = jsonStr(j, "slackWebhookUrl");
-      r.slackChannel = jsonStr(j, "slackChannel");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
+      r.webhookUrl = j.getString("webhookUrl");
+      r.webhookSecret = j.getString("webhookSecret");
+      r.webhookMethod = j.getString("webhookMethod");
+      r.slackWebhookUrl = j.getString("slackWebhookUrl");
+      r.slackChannel = j.getString("slackChannel");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -108,14 +108,14 @@ class ChannelController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateNotificationChannelRequest r;
-      r.description = jsonStr(j, "description");
-      r.state = jsonStr(j, "state");
+      r.description = j.getString("description");
+      r.state = j.getString("state");
       r.emailRecipients = jsonStrArray(j, "emailRecipients");
-      r.emailSubjectPrefix = jsonStr(j, "emailSubjectPrefix");
-      r.webhookUrl = jsonStr(j, "webhookUrl");
-      r.webhookSecret = jsonStr(j, "webhookSecret");
-      r.slackWebhookUrl = jsonStr(j, "slackWebhookUrl");
-      r.slackChannel = jsonStr(j, "slackChannel");
+      r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
+      r.webhookUrl = j.getString("webhookUrl");
+      r.webhookSecret = j.getString("webhookSecret");
+      r.slackWebhookUrl = j.getString("slackWebhookUrl");
+      r.slackChannel = j.getString("slackChannel");
 
       auto result = uc.update(id, r);
       if (result.success) {

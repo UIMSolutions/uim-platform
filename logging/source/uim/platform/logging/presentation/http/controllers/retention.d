@@ -32,13 +32,13 @@ class RetentionController : SAPController {
       auto j = req.json;
       CreateRetentionPolicyRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.dataType = jsonStr(j, "dataType");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.dataType = j.getString("dataType");
       r.retentionDays = jsonInt(j, "retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
       r.isDefault = jsonBool(j, "isDefault");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -111,7 +111,7 @@ class RetentionController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateRetentionPolicyRequest r;
-      r.description = jsonStr(j, "description");
+      r.description = j.getString("description");
       r.retentionDays = jsonInt(j, "retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
       r.isDefault = jsonBool(j, "isDefault");

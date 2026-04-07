@@ -34,10 +34,10 @@ class DashboardController : SAPController {
       auto j = req.json;
       CreateDashboardRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.isDefault = jsonBool(j, "isDefault");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto panelsVal = "panels" in j;
       if (panelsVal !is null && (*panelsVal).type == Json.Type.array) {
@@ -138,8 +138,8 @@ class DashboardController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateDashboardRequest r;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.isDefault = jsonBool(j, "isDefault");
 
       auto result = uc.update(id, r);

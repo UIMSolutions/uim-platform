@@ -32,13 +32,13 @@ class DnsRecordController : SAPController {
             auto j = req.json;
             CreateDnsRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.customDomainId = jsonStr(j, "customDomainId");
-            r.recordType = jsonStr(j, "recordType");
-            r.hostname = jsonStr(j, "hostname");
-            r.value = jsonStr(j, "value");
+            r.id = j.getString("id");
+            r.customDomainId = j.getString("customDomainId");
+            r.recordType = j.getString("recordType");
+            r.hostname = j.getString("hostname");
+            r.value = j.getString("value");
             r.ttl = jsonInt(j, "ttl");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -120,7 +120,7 @@ class DnsRecordController : SAPController {
             UpdateDnsRecordRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.value = jsonStr(j, "value");
+            r.value = j.getString("value");
             r.ttl = jsonInt(j, "ttl");
 
             auto result = uc.update(r);

@@ -31,16 +31,16 @@ class DataProcessingLogController : SAPController {
             auto j = req.json;
             CreateDataProcessingLogRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.dataSubjectId = jsonStr(j, "dataSubjectId");
-            r.requestId = jsonStr(j, "requestId");
-            r.applicationId = jsonStr(j, "applicationId");
-            r.entryType = jsonStr(j, "entryType");
-            r.severity = jsonStr(j, "severity");
-            r.action = jsonStr(j, "action");
-            r.details = jsonStr(j, "details");
-            r.ipAddress = jsonStr(j, "ipAddress");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.dataSubjectId = j.getString("dataSubjectId");
+            r.requestId = j.getString("requestId");
+            r.applicationId = j.getString("applicationId");
+            r.entryType = j.getString("entryType");
+            r.severity = j.getString("severity");
+            r.action = j.getString("action");
+            r.details = j.getString("details");
+            r.ipAddress = j.getString("ipAddress");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {

@@ -35,11 +35,11 @@ class DeploymentController : SAPController {
       auto j = req.json;
       DeployApplicationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.versionId = jsonStr(j, "versionId");
-      r.serviceInstanceId = jsonStr(j, "serviceInstanceId");
-      r.operation = jsonStr(j, "operation");
-      r.deployedBy = jsonStr(j, "deployedBy");
+      r.appId = j.getString("appId");
+      r.versionId = j.getString("versionId");
+      r.serviceInstanceId = j.getString("serviceInstanceId");
+      r.operation = j.getString("operation");
+      r.deployedBy = j.getString("deployedBy");
 
       auto result = deployApp.deploy(r);
       if (result.isSuccess()) {

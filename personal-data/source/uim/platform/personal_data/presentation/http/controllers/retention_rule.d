@@ -32,15 +32,15 @@ class RetentionRuleController : SAPController {
             auto j = req.json;
             CreateRetentionRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.retentionPeriod = jsonStr(j, "retentionPeriod");
-            r.periodUnit = jsonStr(j, "periodUnit");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.retentionPeriod = j.getString("retentionPeriod");
+            r.periodUnit = j.getString("periodUnit");
             r.autoDelete = jsonBool(j, "autoDelete");
             r.notifyBeforeExpiry = jsonBool(j, "notifyBeforeExpiry");
-            r.notifyDaysBefore = jsonStr(j, "notifyDaysBefore");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.notifyDaysBefore = j.getString("notifyDaysBefore");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -98,14 +98,14 @@ class RetentionRuleController : SAPController {
             UpdateRetentionRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.retentionPeriod = jsonStr(j, "retentionPeriod");
-            r.periodUnit = jsonStr(j, "periodUnit");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.retentionPeriod = j.getString("retentionPeriod");
+            r.periodUnit = j.getString("periodUnit");
             r.autoDelete = jsonBool(j, "autoDelete");
             r.notifyBeforeExpiry = jsonBool(j, "notifyBeforeExpiry");
-            r.notifyDaysBefore = jsonStr(j, "notifyDaysBefore");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.notifyDaysBefore = j.getString("notifyDaysBefore");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -32,13 +32,13 @@ class ExecutableController : SAPController {
       CreateExecutableRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.versionId = jsonStr(j, "versionId");
-      r.deployable = jsonStr(j, "deployable");
+      r.scenarioId = j.getString("scenarioId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.versionId = j.getString("versionId");
+      r.deployable = j.getString("deployable");
 
       auto result = uc.create(r);
       if (result.success) {

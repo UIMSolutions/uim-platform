@@ -20,7 +20,7 @@ class TaskController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/tasks", &handleList);
     router.get("/api/v1/datasphere/tasks/*", &handleGet);
     router.post("/api/v1/datasphere/tasks", &handleCreate);
@@ -33,12 +33,12 @@ class TaskController : SAPController {
       CreateTaskRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.type = jsonStr(j, "type");
-      r.targetObjectId = jsonStr(j, "targetObjectId");
-      r.scheduleExpression = jsonStr(j, "scheduleExpression");
-      r.scheduleFrequency = jsonStr(j, "scheduleFrequency");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.type = j.getString("type");
+      r.targetObjectId = j.getString("targetObjectId");
+      r.scheduleExpression = j.getString("scheduleExpression");
+      r.scheduleFrequency = j.getString("scheduleFrequency");
       r.maxRetries = jsonInt(j, "maxRetries", 3);
 
       auto result = uc.create(r);

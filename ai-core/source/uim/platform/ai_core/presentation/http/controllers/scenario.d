@@ -32,9 +32,9 @@ class ScenarioController : SAPController {
       CreateScenarioRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
       r.labels = jsonStrArray(j, "labels");
 
       auto result = uc.create(r);

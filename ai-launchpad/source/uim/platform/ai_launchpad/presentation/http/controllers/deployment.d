@@ -34,8 +34,8 @@ class DeploymentController : SAPController {
 
       CreateDeploymentRequest r;
       r.connectionId = connectionId;
-      r.configurationId = jsonStr(j, "configurationId");
-      r.resourceGroupId = jsonStr(j, "resourceGroupId");
+      r.configurationId = j.getString("configurationId");
+      r.resourceGroupId = j.getString("resourceGroupId");
       r.ttl = jsonInt(j, "ttl");
 
       auto result = uc.create(r);
@@ -105,8 +105,8 @@ class DeploymentController : SAPController {
       PatchDeploymentRequest r;
       r.connectionId = connectionId;
       r.deploymentId = id;
-      r.targetStatus = jsonStr(j, "targetStatus");
-      r.configurationId = jsonStr(j, "configurationId");
+      r.targetStatus = j.getString("targetStatus");
+      r.configurationId = j.getString("configurationId");
       r.ttl = jsonInt(j, "ttl");
 
       auto result = uc.patch(r);
@@ -130,7 +130,7 @@ class DeploymentController : SAPController {
       BulkPatchDeploymentRequest r;
       r.connectionId = connectionId;
       r.deploymentIds = jsonStrArray(j, "deploymentIds");
-      r.targetStatus = jsonStr(j, "targetStatus");
+      r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);
       auto jarr = Json.emptyArray;

@@ -36,14 +36,14 @@ class ReplicationTaskController : SAPController {
       auto j = req.json;
       CreateReplicationTaskRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.instanceId = jsonStr(j, "instanceId");
-      r.id = jsonStr(j, "id");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.mode = jsonStr(j, "mode");
-      r.sourceConnectionId = jsonStr(j, "sourceConnectionId");
-      r.targetConnectionId = jsonStr(j, "targetConnectionId");
-      r.scheduleExpression = jsonStr(j, "scheduleExpression");
+      r.instanceId = j.getString("instanceId");
+      r.id = j.getString("id");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.mode = j.getString("mode");
+      r.sourceConnectionId = j.getString("sourceConnectionId");
+      r.targetConnectionId = j.getString("targetConnectionId");
+      r.scheduleExpression = j.getString("scheduleExpression");
       r.mappings = jsonKeyValuePairs(j, "mappings");
 
       auto result = uc.create(r);
@@ -128,10 +128,10 @@ class ReplicationTaskController : SAPController {
       UpdateReplicationTaskRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.id = extractIdFromPath(req.requestURI.to!string);
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.mode = jsonStr(j, "mode");
-      r.scheduleExpression = jsonStr(j, "scheduleExpression");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.mode = j.getString("mode");
+      r.scheduleExpression = j.getString("scheduleExpression");
 
       auto result = uc.update(r);
       if (result.success) {

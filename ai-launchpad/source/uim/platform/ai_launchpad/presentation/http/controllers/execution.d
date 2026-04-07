@@ -35,8 +35,8 @@ class ExecutionController : SAPController {
 
       CreateExecutionRequest r;
       r.connectionId = connectionId;
-      r.configurationId = jsonStr(j, "configurationId");
-      r.resourceGroupId = jsonStr(j, "resourceGroupId");
+      r.configurationId = j.getString("configurationId");
+      r.resourceGroupId = j.getString("resourceGroupId");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -105,7 +105,7 @@ class ExecutionController : SAPController {
       PatchExecutionRequest r;
       r.connectionId = connectionId;
       r.executionId = id;
-      r.targetStatus = jsonStr(j, "targetStatus");
+      r.targetStatus = j.getString("targetStatus");
 
       auto result = uc.patch(r);
       if (result.success) {
@@ -128,7 +128,7 @@ class ExecutionController : SAPController {
       BulkPatchExecutionRequest r;
       r.connectionId = connectionId;
       r.executionIds = jsonStrArray(j, "executionIds");
-      r.targetStatus = jsonStr(j, "targetStatus");
+      r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);
       auto jarr = Json.emptyArray;

@@ -33,7 +33,7 @@ class ResourceGroupController : SAPController {
 
       CreateResourceGroupRequest r;
       r.connectionId = connectionId;
-      r.resourceGroupId = jsonStr(j, "resourceGroupId");
+      r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonPairArray(j, "labels");
 
       auto result = uc.create(r);

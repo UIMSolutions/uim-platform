@@ -32,18 +32,18 @@ class AlertRuleController : SAPController {
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.query = jsonStr(j, "query");
-      r.condition = jsonStr(j, "condition");
-      r.field = jsonStr(j, "field");
-      r.pattern = jsonStr(j, "pattern");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.query = j.getString("query");
+      r.condition = j.getString("condition");
+      r.field = j.getString("field");
+      r.pattern = j.getString("pattern");
       r.thresholdValue = jsonDouble(j, "thresholdValue");
-      r.thresholdOperator = jsonStr(j, "thresholdOperator");
+      r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
-      r.severity = jsonStr(j, "severity");
+      r.severity = j.getString("severity");
       r.channelIds = jsonStrArray(j, "channelIds");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -114,15 +114,15 @@ class AlertRuleController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateAlertRuleRequest r;
-      r.description = jsonStr(j, "description");
-      r.query = jsonStr(j, "query");
-      r.condition = jsonStr(j, "condition");
-      r.field = jsonStr(j, "field");
-      r.pattern = jsonStr(j, "pattern");
+      r.description = j.getString("description");
+      r.query = j.getString("query");
+      r.condition = j.getString("condition");
+      r.field = j.getString("field");
+      r.pattern = j.getString("pattern");
       r.thresholdValue = jsonDouble(j, "thresholdValue");
-      r.thresholdOperator = jsonStr(j, "thresholdOperator");
+      r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
-      r.severity = jsonStr(j, "severity");
+      r.severity = j.getString("severity");
       r.isEnabled = jsonBool(j, "isEnabled", true);
       r.channelIds = jsonStrArray(j, "channelIds");
 

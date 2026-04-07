@@ -34,11 +34,11 @@ class ServiceInstanceController : SAPController {
       auto j = req.json;
       CreateServiceInstanceRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.spaceId = jsonStr(j, "spaceId");
-      r.plan = jsonStr(j, "plan");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.spaceId = j.getString("spaceId");
+      r.plan = j.getString("plan");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
@@ -117,8 +117,8 @@ class ServiceInstanceController : SAPController {
       UpdateServiceInstanceRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = jsonStr(j, "description");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.description = j.getString("description");
+      r.modifiedBy = j.getString("modifiedBy");
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

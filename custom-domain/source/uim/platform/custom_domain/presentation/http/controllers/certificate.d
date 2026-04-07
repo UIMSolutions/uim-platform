@@ -34,10 +34,10 @@ class CertificateController : SAPController {
             auto j = req.json;
             CreateCertificateRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.keyId = jsonStr(j, "keyId");
-            r.certificateType = jsonStr(j, "certificateType");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.keyId = j.getString("keyId");
+            r.certificateType = j.getString("certificateType");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -145,7 +145,7 @@ class CertificateController : SAPController {
             UploadCertificateChainRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.certificatePem = jsonStr(j, "certificatePem");
+            r.certificatePem = j.getString("certificatePem");
 
             auto result = uc.uploadChain(r);
             if (result.success) {

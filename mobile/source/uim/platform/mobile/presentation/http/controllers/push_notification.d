@@ -33,17 +33,17 @@ class PushNotificationController : SAPController {
       auto j = req.json;
       SendPushNotificationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.title = jsonStr(j, "title");
-      r.body_ = jsonStr(j, "body");
-      r.payload = jsonStr(j, "payload");
-      r.provider = jsonStr(j, "provider");
-      r.priority = jsonStr(j, "priority");
+      r.appId = j.getString("appId");
+      r.title = j.getString("title");
+      r.body_ = j.getString("body");
+      r.payload = j.getString("payload");
+      r.provider = j.getString("provider");
+      r.priority = j.getString("priority");
       r.targetDevices = jsonStrArray(j, "targetDevices");
       r.targetTopics = jsonStrArray(j, "targetTopics");
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.send(r);
       if (result.success) {
         auto resp = Json.emptyObject;

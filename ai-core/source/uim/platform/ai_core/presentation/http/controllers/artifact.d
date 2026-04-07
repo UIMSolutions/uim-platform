@@ -32,11 +32,11 @@ class ArtifactController : SAPController {
       CreateArtifactRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
-      r.scenarioId = jsonStr(j, "scenarioId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.kind = jsonStr(j, "kind");
-      r.url = jsonStr(j, "url");
+      r.scenarioId = j.getString("scenarioId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.kind = j.getString("kind");
+      r.url = j.getString("url");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = uc.create(r);
@@ -45,7 +45,7 @@ class ArtifactController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Artifact registered");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -107,7 +107,7 @@ class ArtifactController : SAPController {
       auto result = uc.remove(id, rgId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

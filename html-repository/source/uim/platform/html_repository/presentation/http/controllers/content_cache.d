@@ -34,11 +34,11 @@ class ContentCacheController : SAPController {
       auto j = req.json;
       CreateContentCacheRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.fileId = jsonStr(j, "fileId");
-      r.filePath = jsonStr(j, "filePath");
-      r.contentType = jsonStr(j, "contentType");
-      r.data = jsonStr(j, "data");
-      r.etag = jsonStr(j, "etag");
+      r.fileId = j.getString("fileId");
+      r.filePath = j.getString("filePath");
+      r.contentType = j.getString("contentType");
+      r.data = j.getString("data");
+      r.etag = j.getString("etag");
       r.ttlSeconds = jsonLong(j, "ttlSeconds");
 
       auto result = uc.create(r);

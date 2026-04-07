@@ -88,9 +88,9 @@ class AlertController : SAPController {
     try {
       auto j = req.json;
       AcknowledgeAlertRequest r;
-      r.alertId = jsonStr(j, "alertId");
+      r.alertId = j.getString("alertId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.acknowledgedBy = jsonStr(j, "acknowledgedBy");
+      r.acknowledgedBy = j.getString("acknowledgedBy");
 
       auto result = uc.acknowledge(r);
       if (result.success) {
@@ -109,9 +109,9 @@ class AlertController : SAPController {
     try {
       auto j = req.json;
       ResolveAlertRequest r;
-      r.alertId = jsonStr(j, "alertId");
+      r.alertId = j.getString("alertId");
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.resolvedBy = jsonStr(j, "resolvedBy");
+      r.resolvedBy = j.getString("resolvedBy");
 
       auto result = uc.resolve(r);
       if (result.success) {

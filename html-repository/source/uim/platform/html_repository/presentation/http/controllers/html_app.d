@@ -34,13 +34,13 @@ class HtmlAppController : SAPController {
       auto j = req.json;
       CreateHtmlAppRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.namespace_ = jsonStr(j, "namespace");
-      r.description = jsonStr(j, "description");
-      r.spaceId = jsonStr(j, "spaceId");
-      r.serviceInstanceId = jsonStr(j, "serviceInstanceId");
-      r.visibility = jsonStr(j, "visibility");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.name = j.getString("name");
+      r.namespace_ = j.getString("namespace");
+      r.description = j.getString("description");
+      r.spaceId = j.getString("spaceId");
+      r.serviceInstanceId = j.getString("serviceInstanceId");
+      r.visibility = j.getString("visibility");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.isSuccess()) {
@@ -120,9 +120,9 @@ class HtmlAppController : SAPController {
       UpdateHtmlAppRequest r;
       r.id = id;
       r.tenantId = tenantId;
-      r.description = jsonStr(j, "description");
-      r.visibility = jsonStr(j, "visibility");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.description = j.getString("description");
+      r.visibility = j.getString("visibility");
+      r.modifiedBy = j.getString("modifiedBy");
 
       auto result = uc.update(r);
       if (result.isSuccess()) {

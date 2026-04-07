@@ -36,13 +36,13 @@ class DocumentController : SAPController {
       UploadDocumentRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = req.headers.get("X-Client-Id", "");
-      r.fileName = jsonStr(j, "fileName");
-      r.mimeType = jsonStr(j, "mimeType");
+      r.fileName = j.getString("fileName");
+      r.mimeType = j.getString("mimeType");
       r.fileSize = jsonLong(j, "fileSize");
-      r.schemaId = jsonStr(j, "schemaId");
-      r.templateId = jsonStr(j, "templateId");
-      r.documentTypeId = jsonStr(j, "documentTypeId");
-      r.language = jsonStr(j, "language");
+      r.schemaId = j.getString("schemaId");
+      r.templateId = j.getString("templateId");
+      r.documentTypeId = j.getString("documentTypeId");
+      r.language = j.getString("language");
       r.labels = jsonKeyValuePairs(j, "labels");
 
       auto result = uc.upload(r);

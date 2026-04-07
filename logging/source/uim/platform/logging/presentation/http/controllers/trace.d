@@ -32,14 +32,14 @@ class TraceController : SAPController {
       auto j = req.json;
       IngestSpanRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.traceId = jsonStr(j, "traceId");
-      r.parentSpanId = jsonStr(j, "parentSpanId");
-      r.operationName = jsonStr(j, "operationName");
-      r.serviceName = jsonStr(j, "serviceName");
+      r.traceId = j.getString("traceId");
+      r.parentSpanId = j.getString("parentSpanId");
+      r.operationName = j.getString("operationName");
+      r.serviceName = j.getString("serviceName");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
-      r.status = jsonStr(j, "status");
-      r.kind = jsonStr(j, "kind");
+      r.status = j.getString("status");
+      r.kind = j.getString("kind");
       r.attributes = jsonStrMap(j, "attributes");
       r.resourceAttributes = jsonStrMap(j, "resourceAttributes");
 

@@ -20,7 +20,7 @@ class CatalogAssetController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/catalog", &handleList);
     router.get("/api/v1/datasphere/catalog/search", &handleSearch);
     router.get("/api/v1/datasphere/catalog/*", &handleGet);
@@ -34,12 +34,12 @@ class CatalogAssetController : SAPController {
       CreateCatalogAssetRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.spaceId = req.headers.get("X-Space-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.businessName = jsonStr(j, "businessName");
-      r.assetType = jsonStr(j, "assetType");
-      r.sourceObjectId = jsonStr(j, "sourceObjectId");
-      r.owner = jsonStr(j, "owner");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.businessName = j.getString("businessName");
+      r.assetType = j.getString("assetType");
+      r.sourceObjectId = j.getString("sourceObjectId");
+      r.owner = j.getString("owner");
       r.glossaryTerms = jsonStrArray(j, "glossaryTerms");
 
       auto result = uc.create(r);

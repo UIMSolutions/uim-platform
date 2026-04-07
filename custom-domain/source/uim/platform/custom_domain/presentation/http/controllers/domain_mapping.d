@@ -32,15 +32,15 @@ class DomainMappingController : SAPController {
             auto j = req.json;
             CreateDomainMappingRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.customDomainId = jsonStr(j, "customDomainId");
-            r.standardRoute = jsonStr(j, "standardRoute");
-            r.customRoute = jsonStr(j, "customRoute");
-            r.mappingType = jsonStr(j, "mappingType");
-            r.applicationName = jsonStr(j, "applicationName");
-            r.organizationId = jsonStr(j, "organizationId");
-            r.spaceId = jsonStr(j, "spaceId");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.customDomainId = j.getString("customDomainId");
+            r.standardRoute = j.getString("standardRoute");
+            r.customRoute = j.getString("customRoute");
+            r.mappingType = j.getString("mappingType");
+            r.applicationName = j.getString("applicationName");
+            r.organizationId = j.getString("organizationId");
+            r.spaceId = j.getString("spaceId");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {

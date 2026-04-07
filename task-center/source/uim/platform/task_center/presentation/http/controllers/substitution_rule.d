@@ -34,13 +34,13 @@ class SubstitutionRuleController : SAPController {
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.userId = jsonStr(j, "userId");
-            r.substituteId = jsonStr(j, "substituteId");
-            r.taskDefinitionId = jsonStr(j, "taskDefinitionId");
-            r.startDate = jsonStr(j, "startDate");
-            r.endDate = jsonStr(j, "endDate");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.userId = j.getString("userId");
+            r.substituteId = j.getString("substituteId");
+            r.taskDefinitionId = j.getString("taskDefinitionId");
+            r.startDate = j.getString("startDate");
+            r.endDate = j.getString("endDate");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -111,11 +111,11 @@ class SubstitutionRuleController : SAPController {
             UpdateSubstitutionRuleRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = id;
-            r.substituteId = jsonStr(j, "substituteId");
-            r.taskDefinitionId = jsonStr(j, "taskDefinitionId");
-            r.startDate = jsonStr(j, "startDate");
-            r.endDate = jsonStr(j, "endDate");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.substituteId = j.getString("substituteId");
+            r.taskDefinitionId = j.getString("taskDefinitionId");
+            r.startDate = j.getString("startDate");
+            r.endDate = j.getString("endDate");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

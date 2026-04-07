@@ -58,20 +58,20 @@ class ActivityController : SAPController {
         try {
             auto j = req.json;
             ActivityDTO dto;
-            dto.id = jsonStr(j, "id");
+            dto.id = j.getString("id");
             dto.tenantId = req.headers.get("X-Tenant-Id", "");
-            dto.serviceCallId = jsonStr(j, "serviceCallId");
-            dto.technicianId = jsonStr(j, "technicianId");
-            dto.subject = jsonStr(j, "subject");
-            dto.description = jsonStr(j, "description");
-            dto.activityType = jsonStr(j, "activityType");
-            dto.plannedStart = jsonStr(j, "plannedStart");
-            dto.plannedEnd = jsonStr(j, "plannedEnd");
-            dto.address = jsonStr(j, "address");
-            dto.latitude = jsonStr(j, "latitude");
-            dto.longitude = jsonStr(j, "longitude");
-            dto.notes = jsonStr(j, "notes");
-            dto.createdBy = jsonStr(j, "createdBy");
+            dto.serviceCallId = j.getString("serviceCallId");
+            dto.technicianId = j.getString("technicianId");
+            dto.subject = j.getString("subject");
+            dto.description = j.getString("description");
+            dto.activityType = j.getString("activityType");
+            dto.plannedStart = j.getString("plannedStart");
+            dto.plannedEnd = j.getString("plannedEnd");
+            dto.address = j.getString("address");
+            dto.latitude = j.getString("latitude");
+            dto.longitude = j.getString("longitude");
+            dto.notes = j.getString("notes");
+            dto.createdBy = j.getString("createdBy");
 
             auto result = uc.create(dto);
             if (result.success) {
@@ -94,15 +94,15 @@ class ActivityController : SAPController {
             auto j = req.json;
             ActivityDTO dto;
             dto.id = extractIdFromPath(path);
-            dto.subject = jsonStr(j, "subject");
-            dto.description = jsonStr(j, "description");
-            dto.plannedStart = jsonStr(j, "plannedStart");
-            dto.plannedEnd = jsonStr(j, "plannedEnd");
-            dto.actualStart = jsonStr(j, "actualStart");
-            dto.actualEnd = jsonStr(j, "actualEnd");
-            dto.notes = jsonStr(j, "notes");
-            dto.feedbackCode = jsonStr(j, "feedbackCode");
-            dto.modifiedBy = jsonStr(j, "modifiedBy");
+            dto.subject = j.getString("subject");
+            dto.description = j.getString("description");
+            dto.plannedStart = j.getString("plannedStart");
+            dto.plannedEnd = j.getString("plannedEnd");
+            dto.actualStart = j.getString("actualStart");
+            dto.actualEnd = j.getString("actualEnd");
+            dto.notes = j.getString("notes");
+            dto.feedbackCode = j.getString("feedbackCode");
+            dto.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(dto);
             if (result.success) {

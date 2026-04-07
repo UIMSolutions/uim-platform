@@ -34,11 +34,11 @@ class StreamController : SAPController {
       auto j = req.json;
       CreateLogStreamRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.sourceType = jsonStr(j, "sourceType");
-      r.retentionPolicyId = jsonStr(j, "retentionPolicyId");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.sourceType = j.getString("sourceType");
+      r.retentionPolicyId = j.getString("retentionPolicyId");
+      r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -109,8 +109,8 @@ class StreamController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       UpdateLogStreamRequest r;
-      r.description = jsonStr(j, "description");
-      r.retentionPolicyId = jsonStr(j, "retentionPolicyId");
+      r.description = j.getString("description");
+      r.retentionPolicyId = j.getString("retentionPolicyId");
       r.isActive = jsonBool(j, "isActive", true);
 
       auto result = uc.update(id, r);

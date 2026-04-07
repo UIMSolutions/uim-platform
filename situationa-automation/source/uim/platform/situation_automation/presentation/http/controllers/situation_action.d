@@ -35,19 +35,19 @@ class SituationActionController : SAPController {
             auto j = req.json;
             CreateSituationActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.baseUrl = jsonStr(j, "baseUrl");
-            r.path = jsonStr(j, "path");
-            r.method = jsonStr(j, "method");
-            r.authType = jsonStr(j, "authType");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.webhookUrl = jsonStr(j, "webhookUrl");
-            r.emailTemplate = jsonStr(j, "emailTemplate");
-            r.scriptContent = jsonStr(j, "scriptContent");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.baseUrl = j.getString("baseUrl");
+            r.path = j.getString("path");
+            r.method = j.getString("method");
+            r.authType = j.getString("authType");
+            r.destinationName = j.getString("destinationName");
+            r.webhookUrl = j.getString("webhookUrl");
+            r.emailTemplate = j.getString("emailTemplate");
+            r.scriptContent = j.getString("scriptContent");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -138,15 +138,15 @@ class SituationActionController : SAPController {
             UpdateSituationActionRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.baseUrl = jsonStr(j, "baseUrl");
-            r.path = jsonStr(j, "path");
-            r.authType = jsonStr(j, "authType");
-            r.destinationName = jsonStr(j, "destinationName");
-            r.webhookUrl = jsonStr(j, "webhookUrl");
-            r.emailTemplate = jsonStr(j, "emailTemplate");
-            r.modifiedBy = jsonStr(j, "modifiedBy");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.baseUrl = j.getString("baseUrl");
+            r.path = j.getString("path");
+            r.authType = j.getString("authType");
+            r.destinationName = j.getString("destinationName");
+            r.webhookUrl = j.getString("webhookUrl");
+            r.emailTemplate = j.getString("emailTemplate");
+            r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);
             if (result.success) {

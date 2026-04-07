@@ -34,12 +34,12 @@ class OfflineStoreController : SAPController {
       auto j = req.json;
       CreateOfflineStoreRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.appId = jsonStr(j, "appId");
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.storeType = jsonStr(j, "storeType");
-      r.syncPolicy = jsonStr(j, "syncPolicy");
-      r.createdBy = jsonStr(j, "createdBy");
+      r.appId = j.getString("appId");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.storeType = j.getString("storeType");
+      r.syncPolicy = j.getString("syncPolicy");
+      r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -105,11 +105,11 @@ class OfflineStoreController : SAPController {
       auto j = req.json;
       UpdateOfflineStoreRequest r;
       r.id = id;
-      r.name = jsonStr(j, "name");
-      r.description = jsonStr(j, "description");
-      r.syncPolicy = jsonStr(j, "syncPolicy");
-      r.status = jsonStr(j, "status");
-      r.modifiedBy = jsonStr(j, "modifiedBy");
+      r.name = j.getString("name");
+      r.description = j.getString("description");
+      r.syncPolicy = j.getString("syncPolicy");
+      r.status = j.getString("status");
+      r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);
       if (result.success) {
         auto resp = Json.emptyObject;

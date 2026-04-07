@@ -35,14 +35,14 @@ class NotificationController : SAPController {
             auto j = req.json;
             CreateNotificationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.instanceId = jsonStr(j, "instanceId");
-            r.id = jsonStr(j, "id");
-            r.recipientId = jsonStr(j, "recipientId");
-            r.title = jsonStr(j, "title");
-            r.message = jsonStr(j, "message");
-            r.channel = jsonStr(j, "channel");
-            r.priority = jsonStr(j, "priority");
-            r.actionUrl = jsonStr(j, "actionUrl");
+            r.instanceId = j.getString("instanceId");
+            r.id = j.getString("id");
+            r.recipientId = j.getString("recipientId");
+            r.title = j.getString("title");
+            r.message = j.getString("message");
+            r.channel = j.getString("channel");
+            r.priority = j.getString("priority");
+            r.actionUrl = j.getString("actionUrl");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -125,7 +125,7 @@ class NotificationController : SAPController {
             UpdateNotificationRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.status = jsonStr(j, "status");
+            r.status = j.getString("status");
 
             auto result = uc.update(r);
             if (result.success) {

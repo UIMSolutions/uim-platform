@@ -86,8 +86,8 @@ class RunLogController : SAPController {
             UpdateRunLogRequest r;
             r.runLogId = runLogId;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.status = jsonStr(j, "status");
-            r.statusMessage = jsonStr(j, "statusMessage");
+            r.status = j.getString("status");
+            r.statusMessage = j.getString("statusMessage");
             r.httpStatus = jsonInt(j, "httpStatus");
             r.completedAt = jsonLong(j, "completedAt");
             r.executionDurationMs = jsonLong(j, "executionDurationMs");

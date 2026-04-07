@@ -32,16 +32,16 @@ class TriggerController : SAPController {
             auto j = req.json;
             CreateTriggerRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
-            r.processId = jsonStr(j, "processId");
-            r.id = jsonStr(j, "id");
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.type = jsonStr(j, "type");
-            r.cronExpression = jsonStr(j, "cronExpression");
-            r.eventType = jsonStr(j, "eventType");
-            r.eventSource = jsonStr(j, "eventSource");
-            r.filterExpression = jsonStr(j, "filterExpression");
-            r.createdBy = jsonStr(j, "createdBy");
+            r.processId = j.getString("processId");
+            r.id = j.getString("id");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.type = j.getString("type");
+            r.cronExpression = j.getString("cronExpression");
+            r.eventType = j.getString("eventType");
+            r.eventSource = j.getString("eventSource");
+            r.filterExpression = j.getString("filterExpression");
+            r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
             if (result.success) {
@@ -125,11 +125,11 @@ class TriggerController : SAPController {
             UpdateTriggerRequest r;
             r.tenantId = req.headers.get("X-Tenant-Id", "");
             r.id = extractIdFromPath(req.requestURI.to!string);
-            r.name = jsonStr(j, "name");
-            r.description = jsonStr(j, "description");
-            r.cronExpression = jsonStr(j, "cronExpression");
-            r.eventType = jsonStr(j, "eventType");
-            r.filterExpression = jsonStr(j, "filterExpression");
+            r.name = j.getString("name");
+            r.description = j.getString("description");
+            r.cronExpression = j.getString("cronExpression");
+            r.eventType = j.getString("eventType");
+            r.filterExpression = j.getString("filterExpression");
 
             auto result = uc.update(r);
             if (result.success) {

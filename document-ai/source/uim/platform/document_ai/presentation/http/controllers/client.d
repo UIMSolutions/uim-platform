@@ -34,8 +34,8 @@ class ClientController : SAPController {
       auto j = req.json;
       CreateClientRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
-      r.clientName = jsonStr(j, "clientName");
-      r.description = jsonStr(j, "description");
+      r.clientName = j.getString("clientName");
+      r.description = j.getString("description");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -99,8 +99,8 @@ class ClientController : SAPController {
       PatchClientRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.clientId = id;
-      r.clientName = jsonStr(j, "clientName");
-      r.description = jsonStr(j, "description");
+      r.clientName = j.getString("clientName");
+      r.description = j.getString("description");
 
       auto result = uc.patch(r);
       if (result.success) {
