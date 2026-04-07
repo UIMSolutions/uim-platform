@@ -18,13 +18,11 @@ import uim.platform.data.privacy.domain.entities.blocking_request;
 class BlockingController {
   private ManageBlockingRequestsUseCase uc;
 
-  this(ManageBlockingRequestsUseCase uc)
-  {
+  this(ManageBlockingRequestsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/blocking-requests", &handleCreate);
     router.get("/api/v1/blocking-requests", &handleList);
     router.get("/api/v1/blocking-requests/*", &handleGetById);
@@ -32,8 +30,7 @@ class BlockingController {
     router.delete_("/api/v1/blocking-requests/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -58,8 +55,7 @@ class BlockingController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -84,8 +80,7 @@ class BlockingController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -102,8 +97,7 @@ class BlockingController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -126,8 +120,7 @@ class BlockingController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -139,8 +132,7 @@ class BlockingController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const BlockingRequest e)
-  {
+  private static Json serialize(ref const BlockingRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -165,8 +157,7 @@ class BlockingController {
     return j;
   }
 
-  private static BlockingStatus parseBlockingStatus(string s)
-  {
+  private static BlockingStatus parseBlockingStatus(string s) {
     switch (s)
     {
     case "active":

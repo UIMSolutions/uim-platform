@@ -21,14 +21,12 @@ struct RetentionEvaluation {
 class RetentionEvaluator {
   private RetentionRuleRepository ruleRepo;
 
-  this(RetentionRuleRepository ruleRepo)
-  {
+  this(RetentionRuleRepository ruleRepo) {
     this.ruleRepo = ruleRepo;
   }
 
   /// Check if data of a given purpose has exceeded its retention period.
-  RetentionEvaluation evaluate(TenantId tenantId, ProcessingPurpose purpose, long dataTimestamp)
-  {
+  RetentionEvaluation evaluate(TenantId tenantId, ProcessingPurpose purpose, long dataTimestamp) {
     // import std.datetime.systime : Clock;
     // import std.conv : to;
 

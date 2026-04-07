@@ -27,8 +27,7 @@ class ModelTrainer {
   private DataRecordRepository recordRepo;
 
   this(DatasetRepository datasetRepo, ModelConfigRepository configRepo,
-      TrainingJobRepository jobRepo, DataRecordRepository recordRepo)
-  {
+      TrainingJobRepository jobRepo, DataRecordRepository recordRepo) {
     this.datasetRepo = datasetRepo;
     this.configRepo = configRepo;
     this.jobRepo = jobRepo;
@@ -36,8 +35,7 @@ class ModelTrainer {
   }
 
   /// Validate that a model configuration can be trained.
-  bool canTrain(ModelConfigId configId, TenantId tenantId)
-  {
+  bool canTrain(ModelConfigId configId, TenantId tenantId) {
     auto config = configRepo.findById(configId, tenantId);
     if (config is null)
       return false;
@@ -55,8 +53,7 @@ class ModelTrainer {
   }
 
   /// Start a training job for the given model configuration.
-  TrainingJob* startTraining(ModelConfigId configId, TenantId tenantId, UserId userId)
-  {
+  TrainingJob* startTraining(ModelConfigId configId, TenantId tenantId, UserId userId) {
     if (!canTrain(configId, tenantId))
       return null;
 
@@ -88,8 +85,7 @@ class ModelTrainer {
   }
 
   /// Simulate training completion with generated quality metrics.
-  void completeTraining(TrainingJobId jobId, TenantId tenantId)
-  {
+  void completeTraining(TrainingJobId jobId, TenantId tenantId) {
     auto job = jobRepo.findById(jobId, tenantId);
     if (job is null)
       return;
@@ -113,8 +109,7 @@ class ModelTrainer {
   }
 
   /// Cancel a running training job.
-  bool cancelTraining(TrainingJobId jobId, TenantId tenantId)
-  {
+  bool cancelTraining(TrainingJobId jobId, TenantId tenantId) {
     auto job = jobRepo.findById(jobId, tenantId);
     if (job is null || job.status != JobStatus.running)
       return false;

@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.data_retrieval_reques
 class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
   private DataRetrievalRequest[] store;
 
-  DataRetrievalRequest[] findByTenant(TenantId tenantId)
-  {
+  DataRetrievalRequest[] findByTenant(TenantId tenantId) {
     DataRetrievalRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId)
@@ -21,16 +20,14 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
     return result;
   }
 
-  DataRetrievalRequest* findById(DataRetrievalRequestId id, TenantId tenantId)
-  {
+  DataRetrievalRequest* findById(DataRetrievalRequestId id, TenantId tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
   }
 
-  DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     DataRetrievalRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
@@ -38,8 +35,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
     return result;
   }
 
-  DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status)
-  {
+  DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status) {
     DataRetrievalRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.status == status)
@@ -47,13 +43,11 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
     return result;
   }
 
-  void save(DataRetrievalRequest request)
-  {
+  void save(DataRetrievalRequest request) {
     store ~= request;
   }
 
-  void update(DataRetrievalRequest request)
-  {
+  void update(DataRetrievalRequest request) {
     foreach (ref r; store)
       if (r.id == request.id && r.tenantId == request.tenantId)
       {
@@ -62,8 +56,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
       }
   }
 
-  void remove(DataRetrievalRequestId id, TenantId tenantId)
-  {
+  void remove(DataRetrievalRequestId id, TenantId tenantId) {
     DataRetrievalRequest[] kept;
     foreach (ref r; store)
       if (!(r.id == id && r.tenantId == tenantId))

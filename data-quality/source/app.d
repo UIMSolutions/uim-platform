@@ -18,8 +18,7 @@ import uim.platform.data.quality.infrastructure.container;
 version (unittest) {
 }
 else {
-  void main()
-  {
+  void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 

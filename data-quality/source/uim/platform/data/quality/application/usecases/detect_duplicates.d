@@ -17,15 +17,13 @@ class DetectDuplicatesUseCase : UIMUseCase {
   private MatchGroupRepository repo;
   private DuplicateDetector detector;
 
-  this(MatchGroupRepository repo, DuplicateDetector detector)
-  {
+  this(MatchGroupRepository repo, DuplicateDetector detector) {
     this.repo = repo;
     this.detector = detector;
   }
 
   /// Run duplicate detection on a set of records.
-  MatchGroup[] detect(DetectDuplicatesRequest req)
-  {
+  MatchGroup[] detect(DetectDuplicatesRequest req) {
     // Convert DTO records to domain RecordEntry
     RecordEntry[] entries;
     foreach (ref r; req.records)
@@ -47,8 +45,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
   }
 
   /// Resolve a duplicate group by selecting a survivor record.
-  CommandResult resolve(ResolveDuplicateRequest req)
-  {
+  CommandResult resolve(ResolveDuplicateRequest req) {
     auto group = repo.findById(req.groupId, req.tenantId);
     if (group is null)
       return CommandResult("", "Match group not found");
@@ -67,20 +64,17 @@ class DetectDuplicatesUseCase : UIMUseCase {
   }
 
   /// Get all match groups for a dataset.
-  MatchGroup[] getByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  MatchGroup[] getByDataset(TenantId tenantId, DatasetId datasetId) {
     return repo.findByDataset(tenantId, datasetId);
   }
 
   /// Get unresolved match groups.
-  MatchGroup[] getUnresolved(TenantId tenantId)
-  {
+  MatchGroup[] getUnresolved(TenantId tenantId) {
     return repo.findUnresolved(tenantId);
   }
 
   /// Get a single match group by ID.
-  MatchGroup* getById(MatchGroupId id, TenantId tenantId)
-  {
+  MatchGroup* getById(MatchGroupId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 }

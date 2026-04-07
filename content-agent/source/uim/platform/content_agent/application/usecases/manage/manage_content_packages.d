@@ -24,15 +24,13 @@ class ManageContentPackagesUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(ContentPackageRepository packageRepo,
-      ContentProviderRepository providerRepo, ContentActivityRepository activityRepo)
-  {
+      ContentProviderRepository providerRepo, ContentActivityRepository activityRepo) {
     this.packageRepo = packageRepo;
     this.providerRepo = providerRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult createPackage(CreatePackageRequest req)
-  {
+  CommandResult createPackage(CreatePackageRequest req) {
     auto existing = packageRepo.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Package with name '" ~ req.name ~ "' already exists");
@@ -68,8 +66,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req)
-  {
+  CommandResult updatePackage(ContentPackageId id, UpdatePackageRequest req) {
     auto pkg = packageRepo.findById(id);
     if (pkg.id.length == 0)
       return CommandResult(false, "", "Package not found");
@@ -92,8 +89,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult assemblePackage(AssemblePackageRequest req)
-  {
+  CommandResult assemblePackage(AssemblePackageRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
     if (pkg.id.length == 0)
       return CommandResult(false, "", "Package not found");
@@ -127,24 +123,20 @@ class ManageContentPackagesUseCase : UIMUseCase {
     return CommandResult(true, req.packageId, "");
   }
 
-  ContentPackage getPackage(ContentPackageId id)
-  {
+  ContentPackage getPackage(ContentPackageId id) {
     return packageRepo.findById(id);
   }
 
-  ContentPackage[] listPackages(TenantId tenantId)
-  {
+  ContentPackage[] listPackages(TenantId tenantId) {
     return packageRepo.findByTenant(tenantId);
   }
 
-  ContentPackage[] listByStatus(TenantId tenantId, string statusStr)
-  {
+  ContentPackage[] listByStatus(TenantId tenantId, string statusStr) {
     auto status = parsePackageStatus(statusStr);
     return packageRepo.findByStatus(tenantId, status);
   }
 
-  CommandResult deletePackage(ContentPackageId id)
-  {
+  CommandResult deletePackage(ContentPackageId id) {
     auto pkg = packageRepo.findById(id);
     if (pkg.id.length == 0)
       return CommandResult(false, "", "Package not found");
@@ -156,8 +148,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -172,14 +163,12 @@ class ManageContentPackagesUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static ContentFormat parseContentFormat(string s)
-  {
+  private static ContentFormat parseContentFormat(string s) {
     switch (s)
     {
     case "zip":
@@ -191,8 +180,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
     }
   }
 
-  private static PackageStatus parsePackageStatus(string s)
-  {
+  private static PackageStatus parsePackageStatus(string s) {
     switch (s)
     {
     case "draft":

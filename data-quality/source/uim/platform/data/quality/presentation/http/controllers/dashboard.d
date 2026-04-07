@@ -18,18 +18,15 @@ import uim.platform.data.quality.domain.entities.quality_dashboard;
 class DashboardController {
   private ComputeDashboardUseCase uc;
 
-  this(ComputeDashboardUseCase uc)
-  {
+  this(ComputeDashboardUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/dashboard", &handleCompute);
   }
 
-  private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCompute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -47,8 +44,7 @@ class DashboardController {
     }
   }
 
-  private static Json serializeDashboard(ref const QualityDashboard d)
-  {
+  private static Json serializeDashboard(ref const QualityDashboard d) {
     auto j = Json.emptyObject;
     j["tenantId"] = Json(d.tenantId);
     j["datasetId"] = Json(d.datasetId);

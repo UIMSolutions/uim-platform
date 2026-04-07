@@ -19,21 +19,18 @@ import uim.platform.data.quality.domain.services.duplicate_detector : RecordEntr
 class DuplicateController {
   private DetectDuplicatesUseCase uc;
 
-  this(DetectDuplicatesUseCase uc)
-  {
+  this(DetectDuplicatesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/duplicates/detect", &handleDetect);
     router.post("/api/v1/duplicates/resolve", &handleResolve);
     router.get("/api/v1/duplicates", &handleList);
     router.get("/api/v1/duplicates/*", &handleGetById);
   }
 
-  private void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -75,8 +72,7 @@ class DuplicateController {
     }
   }
 
-  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -104,8 +100,7 @@ class DuplicateController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -125,8 +120,7 @@ class DuplicateController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -145,8 +139,7 @@ class DuplicateController {
     }
   }
 
-  private static Json serializeGroup(ref const MatchGroup g)
-  {
+  private static Json serializeGroup(ref const MatchGroup g) {
     auto j = Json.emptyObject;
     j["id"] = Json(g.id);
     j["tenantId"] = Json(g.tenantId);
@@ -171,8 +164,7 @@ class DuplicateController {
     return j;
   }
 
-  private static MatchStrategy parseStrategy(string s)
-  {
+  private static MatchStrategy parseStrategy(string s) {
     switch (s)
     {
     case "exact":

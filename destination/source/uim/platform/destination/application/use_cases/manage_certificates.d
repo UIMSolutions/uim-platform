@@ -17,13 +17,11 @@ import uim.platform.destination.domain.types;
 class ManageCertificatesUseCase : UIMUseCase {
   private CertificateRepository repo;
 
-  this(CertificateRepository repo)
-  {
+  this(CertificateRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult upload(UploadCertificateRequest req)
-  {
+  CommandResult upload(UploadCertificateRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Certificate name is required");
 
@@ -64,8 +62,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req)
-  {
+  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
     auto c = repo.findById(id);
     if (c.id.length == 0)
       return CommandResult(false, "", "Certificate not found");
@@ -89,36 +86,30 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Certificate getCertificate(CertificateId id)
-  {
+  Certificate getCertificate(CertificateId id) {
     return repo.findById(id);
   }
 
-  Certificate[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  Certificate[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  Certificate[] listByType(TenantId tenantId, SubaccountId subaccountId, string typeStr)
-  {
+  Certificate[] listByType(TenantId tenantId, SubaccountId subaccountId, string typeStr) {
     return repo.findByType(tenantId, subaccountId, parseCertType(typeStr));
   }
 
-  Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp)
-  {
+  Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp) {
     return repo.findExpiring(tenantId, beforeTimestamp);
   }
 
-  ValidationResult validateCertificate(CertificateId id)
-  {
+  ValidationResult validateCertificate(CertificateId id) {
     auto c = repo.findById(id);
     if (c.id.length == 0)
       return ValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
     return CertificateValidator.validate(c);
   }
 
-  CommandResult removeCertificate(CertificateId id)
-  {
+  CommandResult removeCertificate(CertificateId id) {
     auto c = repo.findById(id);
     if (c.id.length == 0)
       return CommandResult(false, "", "Certificate not found");
@@ -126,14 +117,12 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static CertificateType parseCertType(string s)
-  {
+  private static CertificateType parseCertType(string s) {
     switch (s)
     {
     case "truststore":
@@ -143,8 +132,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     }
   }
 
-  private static CertificateFormat parseCertFormat(string s)
-  {
+  private static CertificateFormat parseCertFormat(string s) {
     switch (s)
     {
     case "jks":

@@ -15,31 +15,26 @@ import uim.platform.content_agent.domain.ports.repositories.content_activitys;
 class MemoryContentActivityRepository : ContentActivityRepository {
   private ContentActivity[] store;
 
-  ContentActivity findById(ContentActivityId id)
-  {
+  ContentActivity findById(ContentActivityId id) {
     foreach (ref e; store)
       if (e.id == id)
         return e;
     return ContentActivity.init;
   }
 
-  ContentActivity[] findByTenant(TenantId tenantId)
-  {
+  ContentActivity[] findByTenant(TenantId tenantId) {
     return store.filter!(e => e.tenantId == tenantId).array;
   }
 
-  ContentActivity[] findByEntity(string entityId)
-  {
+  ContentActivity[] findByEntity(string entityId) {
     return store.filter!(e => e.entityId == entityId).array;
   }
 
-  ContentActivity[] findByType(TenantId tenantId, ActivityType activityType)
-  {
+  ContentActivity[] findByType(TenantId tenantId, ActivityType activityType) {
     return store.filter!(e => e.tenantId == tenantId && e.activityType == activityType).array;
   }
 
-  ContentActivity[] findRecent(TenantId tenantId, int limit)
-  {
+  ContentActivity[] findRecent(TenantId tenantId, int limit) {
     auto filtered = store.filter!(e => e.tenantId == tenantId).array;
     filtered.sort!((a, b) => a.timestamp > b.timestamp);
     if (filtered.length > limit)
@@ -47,8 +42,7 @@ class MemoryContentActivityRepository : ContentActivityRepository {
     return filtered;
   }
 
-  void save(ContentActivity activity)
-  {
+  void save(ContentActivity activity) {
     store ~= activity;
   }
 }

@@ -12,33 +12,28 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.depl
 class MemoryDeploymentRepository : DeploymentRepository {
   private ModelDeployment[string] store;
 
-  void save(ModelDeployment entity)
-  {
+  void save(ModelDeployment entity) {
     store[entity.id] = entity;
   }
 
-  void update(ModelDeployment entity)
-  {
+  void update(ModelDeployment entity) {
     store[entity.id] = entity;
   }
 
-  void remove(DeploymentId id, TenantId tenantId)
-  {
+  void remove(DeploymentId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ModelDeployment* findById(DeploymentId id, TenantId tenantId)
-  {
+  ModelDeployment* findById(DeploymentId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ModelDeployment[] findByTenant(TenantId tenantId)
-  {
+  ModelDeployment[] findByTenant(TenantId tenantId) {
     ModelDeployment[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -46,8 +41,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return result;
   }
 
-  ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId)
-  {
+  ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId) {
     ModelDeployment[] result;
     foreach (ref e; store)
       if (e.modelConfigId == configId && e.tenantId == tenantId)
@@ -55,8 +49,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return result;
   }
 
-  ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status)
-  {
+  ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
     ModelDeployment[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)
@@ -64,8 +57,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return result;
   }
 
-  ModelDeployment* findByTrainingJob(TrainingJobId jobId, TenantId tenantId)
-  {
+  ModelDeployment* findByTrainingJob(TrainingJobId jobId, TenantId tenantId) {
     foreach (ref e; store)
       if (e.trainingJobId == jobId && e.tenantId == tenantId)
         return &e;

@@ -15,21 +15,18 @@ import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 class MemoryDataProfileRepository : DataProfileRepository {
   private DataProfile[ProfileId] store;
 
-  DataProfile[] findByTenant(TenantId tenantId)
-  {
+  DataProfile[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  DataProfile* findById(ProfileId id, TenantId tenantId)
-  {
+  DataProfile* findById(ProfileId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile* latest;
     long latestTime = 0;
     foreach (ref p; store.byValue())
@@ -43,18 +40,15 @@ class MemoryDataProfileRepository : DataProfileRepository {
     return latest;
   }
 
-  DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  DataProfile[] findByDataset(TenantId tenantId, DatasetId datasetId) {
     return store.byValue().filter!(p => p.tenantId == tenantId && p.datasetId == datasetId).array;
   }
 
-  void save(DataProfile profile)
-  {
+  void save(DataProfile profile) {
     store[profile.id] = profile;
   }
 
-  void remove(ProfileId id, TenantId tenantId)
-  {
+  void remove(ProfileId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

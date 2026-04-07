@@ -17,8 +17,7 @@ import uim.platform.data.quality.domain.entities.validation_result;
 class ValidationEngine {
   /// Validate a set of field values against applicable rules.
   ValidationResult validate(RecordId recordId, TenantId tenantId,
-      DatasetId datasetId, string[string] fieldValues, ValidationRule[] rules)
-  {
+      DatasetId datasetId, string[string] fieldValues, ValidationRule[] rules) {
     ValidationResult result;
     result.recordId = recordId;
     result.tenantId = tenantId;
@@ -64,8 +63,7 @@ class ValidationEngine {
   }
 
   private RuleViolation evaluateRule(ref const ValidationRule rule,
-      string fieldValue, string[string] allFields)
-  {
+      string fieldValue, string[string] allFields) {
     RuleViolation empty;
 
     final switch (rule.ruleType)
@@ -168,8 +166,7 @@ class ValidationEngine {
   }
 
   private static RuleViolation makeViolation(ref const ValidationRule rule,
-      string fieldValue, string message)
-  {
+      string fieldValue, string message) {
     RuleViolation v;
     v.ruleId = rule.id;
     v.ruleName = rule.name;

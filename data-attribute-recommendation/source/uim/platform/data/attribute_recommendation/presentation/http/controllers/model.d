@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class ModelController : SAPController {
   private ManageModelsUseCase uc;
 
-  this(ManageModelsUseCase uc)
-  {
+  this(ManageModelsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/models", &handleCreate);
@@ -39,8 +37,7 @@ class ModelController : SAPController {
     router.post("/api/v1/models/train/*", &handleTrain);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -93,8 +89,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -148,8 +142,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -174,8 +167,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleTrain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -201,8 +193,7 @@ class ModelController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -226,8 +217,7 @@ class ModelController : SAPController {
     }
   }
 
-  private static Json serializeConfig(ref const ModelConfiguration c)
-  {
+  private static Json serializeConfig(ref const ModelConfiguration c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

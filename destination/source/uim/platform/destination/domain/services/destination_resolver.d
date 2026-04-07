@@ -16,8 +16,7 @@ import uim.platform.destination.domain.types;
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.
 struct DestinationResolver {
   /// Merge fragment properties into a destination configuration.
-  static Destination applyFragments(Destination dest, const DestinationFragment[] fragments)
-  {
+  static Destination applyFragments(Destination dest, const DestinationFragment[] fragments) {
     Destination result = dest;
 
     foreach (ref frag; fragments)
@@ -56,8 +55,7 @@ struct DestinationResolver {
 
   /// Generate a mock auth token based on the destination's authentication type.
   /// In production, this would call actual OAuth2 token endpoints or STS services.
-  static AuthToken resolveAuthToken(const ref Destination dest)
-  {
+  static AuthToken resolveAuthToken(const ref Destination dest) {
     AuthToken token;
     token.httpHeaderSuggestion = "Authorization";
 
@@ -117,20 +115,17 @@ struct DestinationResolver {
     return token;
   }
 
-  private static string generateMockOAuthToken(const ref Destination dest)
-  {
+  private static string generateMockOAuthToken(const ref Destination dest) {
     // import std.uuid : randomUUID;
     return "mock-oauth2-" ~ randomUUID().toString();
   }
 
-  private static string generateMockSAMLToken(const ref Destination dest)
-  {
+  private static string generateMockSAMLToken(const ref Destination dest) {
     // import std.uuid : randomUUID;
     return "mock-saml-" ~ randomUUID().toString();
   }
 
-  static AuthenticationType parseAuthType(string s)
-  {
+  static AuthenticationType parseAuthType(string s) {
     switch (s)
     {
     case "BasicAuthentication":
@@ -162,8 +157,7 @@ struct DestinationResolver {
     }
   }
 
-  static ProxyType parseProxyType(string s)
-  {
+  static ProxyType parseProxyType(string s) {
     switch (s)
     {
     case "OnPremise":
@@ -175,8 +169,7 @@ struct DestinationResolver {
     }
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     return Clock.currTime().toUnixTime();
   }
 }

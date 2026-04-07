@@ -18,14 +18,12 @@ class ManageDatasetsUseCase : UIMUseCase {
   private DatasetRepository repo;
   private DataRecordRepository recordRepo;
 
-  this(DatasetRepository repo, DataRecordRepository recordRepo)
-  {
+  this(DatasetRepository repo, DataRecordRepository recordRepo) {
     this.repo = repo;
     this.recordRepo = recordRepo;
   }
 
-  CommandResult createDataset(CreateDatasetRequest req)
-  {
+  CommandResult createDataset(CreateDatasetRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -52,18 +50,15 @@ class ManageDatasetsUseCase : UIMUseCase {
     return CommandResult(ds.id, "");
   }
 
-  Dataset* getDataset(DatasetId id, TenantId tenantId)
-  {
+  Dataset* getDataset(DatasetId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Dataset[] listDatasets(TenantId tenantId)
-  {
+  Dataset[] listDatasets(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateDataset(UpdateDatasetRequest req)
-  {
+  CommandResult updateDataset(UpdateDatasetRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Dataset ID is required");
     if (req.tenantId.length == 0)
@@ -90,8 +85,7 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   /// Validate a dataset and transition it to 'ready' status.
-  CommandResult validateDataset(DatasetId id, TenantId tenantId)
-  {
+  CommandResult validateDataset(DatasetId id, TenantId tenantId) {
     auto ds = repo.findById(id, tenantId);
     if (ds is null)
       return CommandResult("", "Dataset not found");
@@ -113,8 +107,7 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   /// Process a dataset (simulate data preparation).
-  CommandResult processDataset(DatasetId id, TenantId tenantId)
-  {
+  CommandResult processDataset(DatasetId id, TenantId tenantId) {
     auto ds = repo.findById(id, tenantId);
     if (ds is null)
       return CommandResult("", "Dataset not found");
@@ -130,8 +123,7 @@ class ManageDatasetsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteDataset(DatasetId id, TenantId tenantId)
-  {
+  CommandResult deleteDataset(DatasetId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Dataset not found");

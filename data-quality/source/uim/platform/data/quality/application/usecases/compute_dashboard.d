@@ -20,16 +20,14 @@ class ComputeDashboardUseCase : UIMUseCase {
   private QualityScorer scorer;
 
   this(ValidationResultRepository resultRepo, DataProfileRepository profileRepo,
-      QualityScorer scorer)
-  {
+      QualityScorer scorer) {
     this.resultRepo = resultRepo;
     this.profileRepo = profileRepo;
     this.scorer = scorer;
   }
 
   /// Compute a quality dashboard for a dataset.
-  QualityDashboard compute(ComputeDashboardRequest req)
-  {
+  QualityDashboard compute(ComputeDashboardRequest req) {
     auto results = resultRepo.findByDataset(req.tenantId, req.datasetId);
     auto profile = profileRepo.findLatestByDataset(req.tenantId, req.datasetId);
 

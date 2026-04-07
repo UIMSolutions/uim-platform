@@ -16,13 +16,11 @@ import uim.platform.destination.domain.types;
 class ManageFragmentsUseCase : UIMUseCase {
   private FragmentRepository repo;
 
-  this(FragmentRepository repo)
-  {
+  this(FragmentRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateFragmentRequest req)
-  {
+  CommandResult create(CreateFragmentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Fragment name is required");
 
@@ -60,8 +58,7 @@ class ManageFragmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req)
-  {
+  CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {
     auto f = repo.findById(id);
     if (f.id.length == 0)
       return CommandResult(false, "", "Fragment not found");
@@ -98,18 +95,15 @@ class ManageFragmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  DestinationFragment getFragment(FragmentId id)
-  {
+  DestinationFragment getFragment(FragmentId id) {
     return repo.findById(id);
   }
 
-  DestinationFragment[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  DestinationFragment[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  CommandResult removeFragment(FragmentId id)
-  {
+  CommandResult removeFragment(FragmentId id) {
     auto f = repo.findById(id);
     if (f.id.length == 0)
       return CommandResult(false, "", "Fragment not found");
@@ -117,14 +111,12 @@ class ManageFragmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static DestinationLevel parseLevel(string s)
-  {
+  private static DestinationLevel parseLevel(string s) {
     switch (s)
     {
     case "serviceInstance":

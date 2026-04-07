@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.legal_grounds;
 class MemoryLegalGroundRepository : LegalGroundRepository {
   private LegalGround[] store;
 
-  LegalGround[] findByTenant(TenantId tenantId)
-  {
+  LegalGround[] findByTenant(TenantId tenantId) {
     LegalGround[] result;
     foreach (ref g; store)
       if (g.tenantId == tenantId)
@@ -21,16 +20,14 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  LegalGround* findById(LegalGroundId id, TenantId tenantId)
-  {
+  LegalGround* findById(LegalGroundId id, TenantId tenantId) {
     foreach (ref g; store)
       if (g.id == id && g.tenantId == tenantId)
         return &g;
     return null;
   }
 
-  LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
     foreach (ref g; store)
       if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId)
@@ -38,8 +35,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis)
-  {
+  LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis) {
     LegalGround[] result;
     foreach (ref g; store)
       if (g.tenantId == tenantId && g.basis == basis)
@@ -47,8 +43,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-  {
+  LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     LegalGround[] result;
     foreach (ref g; store)
       if (g.tenantId == tenantId && g.purpose == purpose)
@@ -56,8 +51,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
     foreach (ref g; store)
       if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId && g.isActive)
@@ -65,13 +59,11 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  void save(LegalGround ground)
-  {
+  void save(LegalGround ground) {
     store ~= ground;
   }
 
-  void update(LegalGround ground)
-  {
+  void update(LegalGround ground) {
     foreach (ref g; store)
       if (g.id == ground.id && g.tenantId == ground.tenantId)
       {
@@ -80,8 +72,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
       }
   }
 
-  void remove(LegalGroundId id, TenantId tenantId)
-  {
+  void remove(LegalGroundId id, TenantId tenantId) {
     LegalGround[] kept;
     foreach (ref g; store)
       if (!(g.id == id && g.tenantId == tenantId))

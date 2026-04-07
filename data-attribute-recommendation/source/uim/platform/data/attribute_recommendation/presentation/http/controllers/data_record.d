@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class DataRecordController : SAPController {
   private ManageDataRecordsUseCase uc;
 
-  this(ManageDataRecordsUseCase uc)
-  {
+  this(ManageDataRecordsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/data-records", &handleCreate);
@@ -40,8 +38,7 @@ class DataRecordController : SAPController {
     router.delete_("/api/v1/data-records/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -88,8 +84,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto datasetId = extractIdFromPath(req.requestURI);
@@ -111,8 +106,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -134,8 +128,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +150,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -179,8 +171,7 @@ class DataRecordController : SAPController {
     }
   }
 
-  private static Json serializeRecord(ref const DataRecord r)
-  {
+  private static Json serializeRecord(ref const DataRecord r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["datasetId"] = Json(r.datasetId);

@@ -40,8 +40,7 @@ string extractIdFromPath(string uri) {
 // --- Enum parsers ---
 
 DataType parseDataType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "product":
     return DataType.product;
   case "material":
@@ -58,8 +57,7 @@ DataType parseDataType(string s) {
 }
 
 ModelType parseModelType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "classification":
     return ModelType.classification;
   case "regression":

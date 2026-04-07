@@ -18,13 +18,11 @@ import uim.platform.data.privacy.domain.entities.personal_data_model;
 class PersonalDataModelController {
   private ManagePersonalDataModelsUseCase uc;
 
-  this(ManagePersonalDataModelsUseCase uc)
-  {
+  this(ManagePersonalDataModelsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/personal-data-models", &handleCreate);
     router.get("/api/v1/personal-data-models", &handleList);
     router.get("/api/v1/personal-data-models/special", &handleListSpecial);
@@ -33,8 +31,7 @@ class PersonalDataModelController {
     router.delete_("/api/v1/personal-data-models/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -90,8 +86,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -110,8 +105,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -128,8 +122,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -159,8 +152,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -172,8 +164,7 @@ class PersonalDataModelController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const PersonalDataModel e)
-  {
+  private static Json serialize(ref const PersonalDataModel e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -191,8 +182,7 @@ class PersonalDataModelController {
     return j;
   }
 
-  private static PersonalDataCategory parseCategory(string s)
-  {
+  private static PersonalDataCategory parseCategory(string s) {
     switch (s)
     {
     case "identification":
@@ -226,8 +216,7 @@ class PersonalDataModelController {
     }
   }
 
-  private static DataSensitivity parseSensitivity(string s)
-  {
+  private static DataSensitivity parseSensitivity(string s) {
     switch (s)
     {
     case "sensitive":
@@ -239,8 +228,7 @@ class PersonalDataModelController {
     }
   }
 
-  private static DataSubjectType parseSubjectType(string s)
-  {
+  private static DataSubjectType parseSubjectType(string s) {
     switch (s)
     {
     case "employee":

@@ -19,16 +19,14 @@ class ValidateDataUseCase : UIMUseCase {
   private ValidationEngine engine;
 
   this(ValidationRuleRepository ruleRepo, ValidationResultRepository resultRepo,
-      ValidationEngine engine)
-  {
+      ValidationEngine engine) {
     this.ruleRepo = ruleRepo;
     this.resultRepo = resultRepo;
     this.engine = engine;
   }
 
   /// Validate a single record against active rules.
-  ValidationResult validateRecord(ValidateRecordRequest req)
-  {
+  ValidationResult validateRecord(ValidateRecordRequest req) {
     auto rules = ruleRepo.findActive(req.tenantId);
     auto result = engine.validate(req.recordId, req.tenantId, req.datasetId,
         req.fieldValues, rules);
@@ -37,8 +35,7 @@ class ValidateDataUseCase : UIMUseCase {
   }
 
   /// Validate a batch of records.
-  ValidationResult[] validateBatch(ValidateBatchRequest req)
-  {
+  ValidationResult[] validateBatch(ValidateBatchRequest req) {
     auto rules = ruleRepo.findActive(req.tenantId);
     ValidationResult[] results;
 
@@ -54,14 +51,12 @@ class ValidateDataUseCase : UIMUseCase {
   }
 
   /// Retrieve validation results for a dataset.
-  ValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  ValidationResult[] getResultsByDataset(TenantId tenantId, DatasetId datasetId) {
     return resultRepo.findByDataset(tenantId, datasetId);
   }
 
   /// Retrieve validation result for a single record.
-  ValidationResult* getResultByRecord(RecordId recordId, TenantId tenantId)
-  {
+  ValidationResult* getResultByRecord(RecordId recordId, TenantId tenantId) {
     return resultRepo.findByRecord(recordId, tenantId);
   }
 }

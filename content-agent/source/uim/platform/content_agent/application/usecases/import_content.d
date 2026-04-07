@@ -23,15 +23,13 @@ class ImportContentUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(ImportJobRepository importRepo, ContentPackageRepository packageRepo,
-      ContentActivityRepository activityRepo)
-  {
+      ContentActivityRepository activityRepo) {
     this.importRepo = importRepo;
     this.packageRepo = packageRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult startImport(StartImportRequest req)
-  {
+  CommandResult startImport(StartImportRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
     if (pkg.id.length == 0)
       return CommandResult(false, "", "Package not found");
@@ -79,24 +77,20 @@ class ImportContentUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ImportJob getImportJob(ImportJobId id)
-  {
+  ImportJob getImportJob(ImportJobId id) {
     return importRepo.findById(id);
   }
 
-  ImportJob[] listImportJobs(TenantId tenantId)
-  {
+  ImportJob[] listImportJobs(TenantId tenantId) {
     return importRepo.findByTenant(tenantId);
   }
 
-  ImportJob[] listByPackage(ContentPackageId packageId)
-  {
+  ImportJob[] listByPackage(ContentPackageId packageId) {
     return importRepo.findByPackage(packageId);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -111,8 +105,7 @@ class ImportContentUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }

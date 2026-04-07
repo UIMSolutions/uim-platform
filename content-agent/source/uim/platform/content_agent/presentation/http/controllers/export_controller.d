@@ -18,20 +18,17 @@ import uim.platform.content_agent.domain.types;
 class ExportController {
   private ExportContentUseCase uc;
 
-  this(ExportContentUseCase uc)
-  {
+  this(ExportContentUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/exports", &handleStartExport);
     router.get("/api/v1/exports", &handleList);
     router.get("/api/v1/exports/*", &handleGetById);
   }
 
-  private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -61,8 +58,7 @@ class ExportController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -83,8 +79,7 @@ class ExportController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -102,8 +97,7 @@ class ExportController {
     }
   }
 
-  private static Json serializeExportJob(ref const ExportJob e)
-  {
+  private static Json serializeExportJob(ref const ExportJob e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

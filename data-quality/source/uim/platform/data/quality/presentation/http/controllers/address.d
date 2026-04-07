@@ -18,20 +18,17 @@ import uim.platform.data.quality.domain.entities.address_record;
 class AddressController {
   private CleanseAddressesUseCase uc;
 
-  this(CleanseAddressesUseCase uc)
-  {
+  this(CleanseAddressesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/addresses/cleanse", &handleCleanse);
     router.post("/api/v1/addresses/cleanse/batch", &handleCleanseBatch);
     router.get("/api/v1/addresses", &handleList);
   }
 
-  private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -54,8 +51,7 @@ class AddressController {
     }
   }
 
-  private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -99,8 +95,7 @@ class AddressController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -120,8 +115,7 @@ class AddressController {
     }
   }
 
-  private static Json serializeAddress(ref const AddressRecord r)
-  {
+  private static Json serializeAddress(ref const AddressRecord r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

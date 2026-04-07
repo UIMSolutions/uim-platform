@@ -15,40 +15,33 @@ import uim.platform.content_agent.domain.ports.repositories.export_jobs;
 class MemoryExportJobRepository : ExportJobRepository {
   private ExportJob[ExportJobId] store;
 
-  ExportJob findById(ExportJobId id)
-  {
+  ExportJob findById(ExportJobId id) {
     if (auto p = id in store)
       return *p;
     return ExportJob.init;
   }
 
-  ExportJob[] findByTenant(TenantId tenantId)
-  {
+  ExportJob[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  ExportJob[] findByPackage(ContentPackageId packageId)
-  {
+  ExportJob[] findByPackage(ContentPackageId packageId) {
     return store.byValue().filter!(e => e.packageId == packageId).array;
   }
 
-  ExportJob[] findByStatus(TenantId tenantId, ExportStatus status)
-  {
+  ExportJob[] findByStatus(TenantId tenantId, ExportStatus status) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  void save(ExportJob job)
-  {
+  void save(ExportJob job) {
     store[job.id] = job;
   }
 
-  void update(ExportJob job)
-  {
+  void update(ExportJob job) {
     store[job.id] = job;
   }
 
-  void remove(ExportJobId id)
-  {
+  void remove(ExportJobId id) {
     store.remove(id);
   }
 }

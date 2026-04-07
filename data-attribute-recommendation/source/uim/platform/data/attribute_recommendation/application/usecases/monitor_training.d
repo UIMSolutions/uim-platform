@@ -54,16 +54,14 @@ class MonitorTrainingUseCase : UIMUseCase {
   private InferenceRequestRepository inferenceRepo;
 
   this(TrainingJobRepository jobRepo, DeploymentRepository deploymentRepo,
-      ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo)
-  {
+      ModelConfigRepository configRepo, InferenceRequestRepository inferenceRepo) {
     this.jobRepo = jobRepo;
     this.deploymentRepo = deploymentRepo;
     this.configRepo = configRepo;
     this.inferenceRepo = inferenceRepo;
   }
 
-  TrainingJobSummary[] listTrainingJobs(TenantId tenantId)
-  {
+  TrainingJobSummary[] listTrainingJobs(TenantId tenantId) {
     auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
     foreach (ref job; jobs)
@@ -71,16 +69,14 @@ class MonitorTrainingUseCase : UIMUseCase {
     return result;
   }
 
-  TrainingJobSummary getTrainingJob(TrainingJobId id, TenantId tenantId)
-  {
+  TrainingJobSummary getTrainingJob(TrainingJobId id, TenantId tenantId) {
     auto job = jobRepo.findById(id, tenantId);
     if (job is null)
       return TrainingJobSummary.init;
     return buildJobSummary(*job, tenantId);
   }
 
-  DeploymentSummary[] listDeploymentSummaries(TenantId tenantId)
-  {
+  DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
     auto deps = deploymentRepo.findByTenant(tenantId);
     DeploymentSummary[] result;
     foreach (ref dep; deps)
@@ -88,8 +84,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     return result;
   }
 
-  PipelineSummary getPipelineSummary(TenantId tenantId)
-  {
+  PipelineSummary getPipelineSummary(TenantId tenantId) {
     PipelineSummary s;
 
     auto configs = configRepo.findByTenant(tenantId);
@@ -119,8 +114,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     return s;
   }
 
-  private TrainingJobSummary buildJobSummary(ref TrainingJob job, TenantId tenantId)
-  {
+  private TrainingJobSummary buildJobSummary(ref TrainingJob job, TenantId tenantId) {
     TrainingJobSummary s;
     s.jobId = job.id;
     s.modelConfigId = job.modelConfigId;
@@ -138,8 +132,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     return s;
   }
 
-  private DeploymentSummary buildDeploymentSummary(ref ModelDeployment dep, TenantId tenantId)
-  {
+  private DeploymentSummary buildDeploymentSummary(ref ModelDeployment dep, TenantId tenantId) {
     DeploymentSummary s;
     s.deploymentId = dep.id;
     s.deploymentName = dep.name;

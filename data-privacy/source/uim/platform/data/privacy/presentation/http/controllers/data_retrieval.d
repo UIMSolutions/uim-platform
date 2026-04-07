@@ -18,13 +18,11 @@ import uim.platform.data.privacy.domain.entities.data_retrieval_request;
 class DataRetrievalController {
   private ManageDataRetrievalsUseCase uc;
 
-  this(ManageDataRetrievalsUseCase uc)
-  {
+  this(ManageDataRetrievalsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/data-retrievals", &handleCreate);
     router.get("/api/v1/data-retrievals", &handleList);
     router.get("/api/v1/data-retrievals/*", &handleGetById);
@@ -32,8 +30,7 @@ class DataRetrievalController {
     router.delete_("/api/v1/data-retrievals/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -58,8 +55,7 @@ class DataRetrievalController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -85,8 +81,7 @@ class DataRetrievalController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -103,8 +98,7 @@ class DataRetrievalController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -129,8 +123,7 @@ class DataRetrievalController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +135,7 @@ class DataRetrievalController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DataRetrievalRequest e)
-  {
+  private static Json serialize(ref const DataRetrievalRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -171,8 +163,7 @@ class DataRetrievalController {
     return j;
   }
 
-  private static RetrievalStatus parseRetrievalStatus(string s)
-  {
+  private static RetrievalStatus parseRetrievalStatus(string s) {
     switch (s)
     {
     case "inProgress":

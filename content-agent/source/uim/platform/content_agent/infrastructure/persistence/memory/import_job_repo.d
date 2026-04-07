@@ -15,40 +15,33 @@ import uim.platform.content_agent.domain.ports.repositories.import_jobs;
 class MemoryImportJobRepository : ImportJobRepository {
   private ImportJob[ImportJobId] store;
 
-  ImportJob findById(ImportJobId id)
-  {
+  ImportJob findById(ImportJobId id) {
     if (auto p = id in store)
       return *p;
     return ImportJob.init;
   }
 
-  ImportJob[] findByTenant(TenantId tenantId)
-  {
+  ImportJob[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  ImportJob[] findByPackage(ContentPackageId packageId)
-  {
+  ImportJob[] findByPackage(ContentPackageId packageId) {
     return store.byValue().filter!(e => e.packageId == packageId).array;
   }
 
-  ImportJob[] findByStatus(TenantId tenantId, ImportStatus status)
-  {
+  ImportJob[] findByStatus(TenantId tenantId, ImportStatus status) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  void save(ImportJob job)
-  {
+  void save(ImportJob job) {
     store[job.id] = job;
   }
 
-  void update(ImportJob job)
-  {
+  void update(ImportJob job) {
     store[job.id] = job;
   }
 
-  void remove(ImportJobId id)
-  {
+  void remove(ImportJobId id) {
     store.remove(id);
   }
 }

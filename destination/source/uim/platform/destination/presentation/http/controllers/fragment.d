@@ -19,13 +19,11 @@ import uim.platform.destination.presentation.http.json_utils;
 class FragmentController {
   private ManageFragmentsUseCase uc;
 
-  this(ManageFragmentsUseCase uc)
-  {
+  this(ManageFragmentsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/fragments", &handleCreate);
     router.get("/api/v1/fragments", &handleList);
     router.get("/api/v1/fragments/*", &handleGetById);
@@ -33,8 +31,7 @@ class FragmentController {
     router.delete_("/api/v1/fragments/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class FragmentController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -99,8 +95,7 @@ class FragmentController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -118,8 +113,7 @@ class FragmentController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +151,7 @@ class FragmentController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -180,8 +173,7 @@ class FragmentController {
     }
   }
 
-  private static Json serializeFragment(const ref DestinationFragment f)
-  {
+  private static Json serializeFragment(const ref DestinationFragment f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["tenantId"] = Json(f.tenantId);

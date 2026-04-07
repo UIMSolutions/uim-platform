@@ -17,18 +17,15 @@ import uim.platform.destination.presentation.http.json_utils;
 class FindController {
   private FindDestinationUseCase uc;
 
-  this(FindDestinationUseCase uc)
-  {
+  this(FindDestinationUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/destinations/find", &handleFind);
   }
 
-  private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       FindDestinationRequest r;

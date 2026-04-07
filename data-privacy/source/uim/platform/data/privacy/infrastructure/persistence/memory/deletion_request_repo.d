@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
 class MemoryDeletionRequestRepository : DeletionRequestRepository {
   private DeletionRequest[] store;
 
-  DeletionRequest[] findByTenant(TenantId tenantId)
-  {
+  DeletionRequest[] findByTenant(TenantId tenantId) {
     DeletionRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId)
@@ -21,16 +20,14 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
     return result;
   }
 
-  DeletionRequest* findById(DeletionRequestId id, TenantId tenantId)
-  {
+  DeletionRequest* findById(DeletionRequestId id, TenantId tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
   }
 
-  DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     DeletionRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.dataSubjectId == dataSubjectId)
@@ -38,8 +35,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
     return result;
   }
 
-  DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status)
-  {
+  DeletionRequest[] findByStatus(TenantId tenantId, DeletionStatus status) {
     DeletionRequest[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.status == status)
@@ -47,13 +43,11 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
     return result;
   }
 
-  void save(DeletionRequest request)
-  {
+  void save(DeletionRequest request) {
     store ~= request;
   }
 
-  void update(DeletionRequest request)
-  {
+  void update(DeletionRequest request) {
     foreach (ref r; store)
       if (r.id == request.id && r.tenantId == request.tenantId)
       {
@@ -62,8 +56,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
       }
   }
 
-  void remove(DeletionRequestId id, TenantId tenantId)
-  {
+  void remove(DeletionRequestId id, TenantId tenantId) {
     DeletionRequest[] kept;
     foreach (ref r; store)
       if (!(r.id == id && r.tenantId == tenantId))

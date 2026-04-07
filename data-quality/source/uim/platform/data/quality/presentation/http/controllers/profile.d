@@ -18,20 +18,17 @@ import uim.platform.data.quality.domain.entities.data_profile;
 class ProfileController {
   private ProfileDataUseCase uc;
 
-  this(ProfileDataUseCase uc)
-  {
+  this(ProfileDataUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/profiles", &handleProfile);
     router.get("/api/v1/profiles", &handleList);
     router.get("/api/v1/profiles/*", &handleGetById);
   }
 
-  private void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleProfile(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class ProfileController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -85,8 +81,7 @@ class ProfileController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -105,8 +100,7 @@ class ProfileController {
     }
   }
 
-  private static Json serializeProfile(ref const DataProfile p)
-  {
+  private static Json serializeProfile(ref const DataProfile p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);

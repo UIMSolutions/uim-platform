@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.retention_rules;
 class MemoryRetentionRuleRepository : RetentionRuleRepository {
   private RetentionRule[] store;
 
-  RetentionRule[] findByTenant(TenantId tenantId)
-  {
+  RetentionRule[] findByTenant(TenantId tenantId) {
     RetentionRule[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId)
@@ -21,24 +20,21 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
     return result;
   }
 
-  RetentionRule* findById(RetentionRuleId id, TenantId tenantId)
-  {
+  RetentionRule* findById(RetentionRuleId id, TenantId tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
   }
 
-  RetentionRule* findDefault(TenantId tenantId)
-  {
+  RetentionRule* findDefault(TenantId tenantId) {
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.isDefault && r.status == RetentionRuleStatus.active)
         return &r;
     return null;
   }
 
-  RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-  {
+  RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     RetentionRule[] result;
     foreach (ref r; store)
       if (r.tenantId == tenantId && r.purpose == purpose)
@@ -46,13 +42,11 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
     return result;
   }
 
-  void save(RetentionRule rule)
-  {
+  void save(RetentionRule rule) {
     store ~= rule;
   }
 
-  void update(RetentionRule rule)
-  {
+  void update(RetentionRule rule) {
     foreach (ref r; store)
       if (r.id == rule.id && r.tenantId == rule.tenantId)
       {
@@ -61,8 +55,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
       }
   }
 
-  void remove(RetentionRuleId id, TenantId tenantId)
-  {
+  void remove(RetentionRuleId id, TenantId tenantId) {
     RetentionRule[] kept;
     foreach (ref r; store)
       if (!(r.id == id && r.tenantId == tenantId))

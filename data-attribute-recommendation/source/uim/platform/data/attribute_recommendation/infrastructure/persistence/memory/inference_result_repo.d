@@ -13,41 +13,35 @@ import uim.platform.data.attribute_recommendation.domain.ports.repositories.infe
 class MemoryInferenceResultRepository : InferenceResultRepository {
   private InferenceResult[string] store;
 
-  void save(InferenceResult entity)
-  {
+  void save(InferenceResult entity) {
     store[entity.id] = entity;
   }
 
-  void update(InferenceResult entity)
-  {
+  void update(InferenceResult entity) {
     store[entity.id] = entity;
   }
 
-  void remove(InferenceResultId id, TenantId tenantId)
-  {
+  void remove(InferenceResultId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  InferenceResult* findById(InferenceResultId id, TenantId tenantId)
-  {
+  InferenceResult* findById(InferenceResultId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  InferenceResult* findByRequest(InferenceRequestId requestId, TenantId tenantId)
-  {
+  InferenceResult* findByRequest(InferenceRequestId requestId, TenantId tenantId) {
     foreach (ref e; store)
       if (e.requestId == requestId && e.tenantId == tenantId)
         return &e;
     return null;
   }
 
-  InferenceResult[] findByTenant(TenantId tenantId)
-  {
+  InferenceResult[] findByTenant(TenantId tenantId) {
     InferenceResult[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)

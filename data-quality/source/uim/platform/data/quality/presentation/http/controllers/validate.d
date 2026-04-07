@@ -18,20 +18,17 @@ import uim.platform.data.quality.domain.entities.validation_result;
 class ValidateController {
   private ValidateDataUseCase uc;
 
-  this(ValidateDataUseCase uc)
-  {
+  this(ValidateDataUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/validate", &handleValidate);
     router.post("/api/v1/validate/batch", &handleValidateBatch);
     router.get("/api/v1/validate/results/*", &handleGetResult);
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -50,8 +47,7 @@ class ValidateController {
     }
   }
 
-  private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -90,8 +86,7 @@ class ValidateController {
     }
   }
 
-  private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto recordId = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class ValidateController {
     }
   }
 
-  private static Json serializeResult(ref const ValidationResult r)
-  {
+  private static Json serializeResult(ref const ValidationResult r) {
     auto j = Json.emptyObject;
     j["recordId"] = Json(r.recordId);
     j["tenantId"] = Json(r.tenantId);

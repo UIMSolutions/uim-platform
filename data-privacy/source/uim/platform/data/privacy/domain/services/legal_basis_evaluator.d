@@ -23,16 +23,14 @@ class LegalBasisEvaluator {
   private LegalGroundRepository groundRepo;
   private ConsentRecordRepository consentRepo;
 
-  this(LegalGroundRepository groundRepo, ConsentRecordRepository consentRepo)
-  {
+  this(LegalGroundRepository groundRepo, ConsentRecordRepository consentRepo) {
     this.groundRepo = groundRepo;
     this.consentRepo = consentRepo;
   }
 
   /// Check if a data subject has a valid legal basis for a given purpose.
   LegalBasisEvaluation evaluate(TenantId tenantId, DataSubjectId subjectId,
-      ProcessingPurpose purpose)
-  {
+      ProcessingPurpose purpose) {
     // import std.datetime.systime : Clock;
     // import std.conv : to;
 

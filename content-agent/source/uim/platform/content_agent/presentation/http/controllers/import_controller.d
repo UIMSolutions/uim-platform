@@ -20,20 +20,17 @@ import uim.platform.content_agent.domain.types;
 class ImportController {
   private ImportContentUseCase uc;
 
-  this(ImportContentUseCase uc)
-  {
+  this(ImportContentUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/imports", &handleStartImport);
     router.get("/api/v1/imports", &handleList);
     router.get("/api/v1/imports/*", &handleGetById);
   }
 
-  private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -63,8 +60,7 @@ class ImportController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -85,8 +81,7 @@ class ImportController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -104,8 +99,7 @@ class ImportController {
     }
   }
 
-  private static Json serializeImportJob(ref const ImportJob imp)
-  {
+  private static Json serializeImportJob(ref const ImportJob imp) {
     auto j = Json.emptyObject;
     j["id"] = Json(imp.id);
     j["tenantId"] = Json(imp.tenantId);

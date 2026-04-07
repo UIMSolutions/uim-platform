@@ -18,13 +18,11 @@ import uim.platform.content_agent.domain.types;
 class PackageController : SAPController {
   private ManageContentPackagesUseCase uc;
 
-  this(ManageContentPackagesUseCase uc)
-  {
+  this(ManageContentPackagesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/packages", &handleCreate);
@@ -35,8 +33,7 @@ class PackageController : SAPController {
     router.post("/api/v1/packages/assemble", &handleAssemble);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -69,8 +66,7 @@ class PackageController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -91,8 +87,7 @@ class PackageController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class PackageController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -140,8 +134,7 @@ class PackageController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -163,8 +156,7 @@ class PackageController : SAPController {
     }
   }
 
-  private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -192,8 +184,7 @@ class PackageController : SAPController {
     }
   }
 
-  private static ContentItem[] parseContentItems(Json j)
-  {
+  private static ContentItem[] parseContentItems(Json j) {
     ContentItem[] items;
     auto v = "items" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -218,8 +209,7 @@ class PackageController : SAPController {
     return items;
   }
 
-  private static ContentCategory parseContentCategory(string s)
-  {
+  private static ContentCategory parseContentCategory(string s) {
     switch (s)
     {
     case "integrationFlow":
@@ -263,8 +253,7 @@ class PackageController : SAPController {
     }
   }
 
-  private static Json serializePackage(ref const ContentPackage p)
-  {
+  private static Json serializePackage(ref const ContentPackage p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);

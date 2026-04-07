@@ -24,16 +24,14 @@ class InferenceEngine {
   private InferenceResultRepository resultRepo;
 
   this(DeploymentRepository deploymentRepo,
-      InferenceRequestRepository requestRepo, InferenceResultRepository resultRepo)
-  {
+      InferenceRequestRepository requestRepo, InferenceResultRepository resultRepo) {
     this.deploymentRepo = deploymentRepo;
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;
   }
 
   /// Check whether a deployment is available for inference.
-  bool isDeploymentReady(DeploymentId deploymentId, TenantId tenantId)
-  {
+  bool isDeploymentReady(DeploymentId deploymentId, TenantId tenantId) {
     auto dep = deploymentRepo.findById(deploymentId, tenantId);
     if (dep is null)
       return false;
@@ -41,8 +39,7 @@ class InferenceEngine {
   }
 
   /// Process an inference request: validate, run prediction, store result.
-  InferenceResult* predict(InferenceRequestId requestId, TenantId tenantId)
-  {
+  InferenceResult* predict(InferenceRequestId requestId, TenantId tenantId) {
     auto request = requestRepo.findById(requestId, tenantId);
     if (request is null)
       return null;

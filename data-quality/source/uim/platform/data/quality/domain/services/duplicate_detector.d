@@ -19,8 +19,7 @@ class DuplicateDetector {
   /// Detect duplicates among a set of records.
   /// Each record is a map of field name to value.
   MatchGroup[] detect(TenantId tenantId, DatasetId datasetId, string[][] matchFields,
-      MatchStrategy strategy, double threshold, RecordEntry[] records)
-  {
+      MatchStrategy strategy, double threshold, RecordEntry[] records) {
     MatchGroup[] groups;
 
     // Simple O(n^2) pairwise comparison — suitable for moderate datasets
@@ -71,8 +70,7 @@ class DuplicateDetector {
   }
 
   private double compareRecords(string[string] fieldsA, string[string] fieldsB,
-      string[][] matchFields, MatchStrategy strategy)
-  {
+      string[][] matchFields, MatchStrategy strategy) {
     if (matchFields.length == 0)
       return 0.0;
 
@@ -116,8 +114,7 @@ class DuplicateDetector {
   }
 
   /// Jaro-Winkler similarity (0.0 - 1.0).
-  static double jaroWinklerSimilarity(string s1, string s2)
-  {
+  static double jaroWinklerSimilarity(string s1, string s2) {
     if (s1.length == 0 && s2.length == 0)
       return 1.0;
     if (s1.length == 0 || s2.length == 0)
@@ -196,8 +193,7 @@ class DuplicateDetector {
   }
 
   /// Simple Soundex implementation.
-  static string soundex(string s)
-  {
+  static string soundex(string s) {
     if (s.length == 0)
       return "0000";
 
@@ -224,8 +220,7 @@ class DuplicateDetector {
     return cast(string) result;
   }
 
-  private static char soundexCode(char c)
-  {
+  private static char soundexCode(char c) {
     switch (c)
     {
     case 'b', 'f', 'p', 'v':
@@ -245,8 +240,7 @@ class DuplicateDetector {
     }
   }
 
-  private static MatchConfidence scoreToConfidence(double score)
-  {
+  private static MatchConfidence scoreToConfidence(double score) {
     if (score >= 100.0)
       return MatchConfidence.exact;
     if (score >= 90.0)
@@ -258,8 +252,7 @@ class DuplicateDetector {
     return MatchConfidence.noMatch;
   }
 
-  private static MatchCandidate makeCandidate(RecordEntry entry, double score, MatchConfidence conf)
-  {
+  private static MatchCandidate makeCandidate(RecordEntry entry, double score, MatchConfidence conf) {
     MatchCandidate c;
     c.recordId = entry.recordId;
     c.score = score;
@@ -267,8 +260,7 @@ class DuplicateDetector {
     return c;
   }
 
-  private static string toLowerStr(string s)
-  {
+  private static string toLowerStr(string s) {
     char[] result;
     result.length = s.length;
     foreach (i, c; s)

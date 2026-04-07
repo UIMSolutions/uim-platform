@@ -27,16 +27,14 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(TransportRequestRepository requestRepo, ContentPackageRepository packageRepo,
-      TransportQueueRepository queueRepo, ContentActivityRepository activityRepo)
-  {
+      TransportQueueRepository queueRepo, ContentActivityRepository activityRepo) {
     this.requestRepo = requestRepo;
     this.packageRepo = packageRepo;
     this.queueRepo = queueRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult createTransportRequest(CreateTransportRequest req)
-  {
+  CommandResult createTransportRequest(CreateTransportRequest req) {
     if (req.packageIds.length == 0)
       return CommandResult(false, "", "At least one package is required");
 
@@ -95,8 +93,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult releaseTransport(ReleaseTransportRequest req)
-  {
+  CommandResult releaseTransport(ReleaseTransportRequest req) {
     auto tr = requestRepo.findById(req.requestId);
     if (tr.id.length == 0)
       return CommandResult(false, "", "Transport request not found");
@@ -115,8 +112,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     return CommandResult(true, req.requestId, "");
   }
 
-  CommandResult cancelTransport(TransportRequestId id)
-  {
+  CommandResult cancelTransport(TransportRequestId id) {
     auto tr = requestRepo.findById(id);
     if (tr.id.length == 0)
       return CommandResult(false, "", "Transport request not found");
@@ -128,25 +124,21 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  TransportRequest getTransportRequest(TransportRequestId id)
-  {
+  TransportRequest getTransportRequest(TransportRequestId id) {
     return requestRepo.findById(id);
   }
 
-  TransportRequest[] listTransportRequests(TenantId tenantId)
-  {
+  TransportRequest[] listTransportRequests(TenantId tenantId) {
     return requestRepo.findByTenant(tenantId);
   }
 
-  TransportRequest[] listByStatus(TenantId tenantId, string statusStr)
-  {
+  TransportRequest[] listByStatus(TenantId tenantId, string statusStr) {
     auto status = parseTransportStatus(statusStr);
     return requestRepo.findByStatus(tenantId, status);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -161,14 +153,12 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static TransportMode parseTransportMode(string s)
-  {
+  private static TransportMode parseTransportMode(string s) {
     switch (s)
     {
     case "ctsPlus":
@@ -182,8 +172,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     }
   }
 
-  private static TransportStatus parseTransportStatus(string s)
-  {
+  private static TransportStatus parseTransportStatus(string s) {
     switch (s)
     {
     case "created":

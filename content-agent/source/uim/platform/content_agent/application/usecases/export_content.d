@@ -23,15 +23,13 @@ class ExportContentUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(ExportJobRepository exportRepo, ContentPackageRepository packageRepo,
-      ContentActivityRepository activityRepo)
-  {
+      ContentActivityRepository activityRepo) {
     this.exportRepo = exportRepo;
     this.packageRepo = packageRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult startExport(StartExportRequest req)
-  {
+  CommandResult startExport(StartExportRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
     if (pkg.id.length == 0)
       return CommandResult(false, "", "Package not found");
@@ -75,24 +73,20 @@ class ExportContentUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ExportJob getExportJob(ExportJobId id)
-  {
+  ExportJob getExportJob(ExportJobId id) {
     return exportRepo.findById(id);
   }
 
-  ExportJob[] listExportJobs(TenantId tenantId)
-  {
+  ExportJob[] listExportJobs(TenantId tenantId) {
     return exportRepo.findByTenant(tenantId);
   }
 
-  ExportJob[] listByPackage(ContentPackageId packageId)
-  {
+  ExportJob[] listByPackage(ContentPackageId packageId) {
     return exportRepo.findByPackage(packageId);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -107,8 +101,7 @@ class ExportContentUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }

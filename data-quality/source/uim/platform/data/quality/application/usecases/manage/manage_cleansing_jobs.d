@@ -16,13 +16,11 @@ import uim.platform.data.quality.application.dto;
 class ManageCleansingJobsUseCase : UIMUseCase {
   private CleansingJobRepository repo;
 
-  this(CleansingJobRepository repo)
-  {
+  this(CleansingJobRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateCleansingJobRequest req)
-  {
+  CommandResult create(CreateCleansingJobRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.datasetId.length == 0)
@@ -41,23 +39,19 @@ class ManageCleansingJobsUseCase : UIMUseCase {
     return CommandResult(job.id, "");
   }
 
-  CleansingJob* getById(CleansingJobId id, TenantId tenantId)
-  {
+  CleansingJob* getById(CleansingJobId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  CleansingJob[] listByTenant(TenantId tenantId)
-  {
+  CleansingJob[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CleansingJob[] listByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  CleansingJob[] listByDataset(TenantId tenantId, DatasetId datasetId) {
     return repo.findByDataset(tenantId, datasetId);
   }
 
-  CleansingJob[] listByStatus(TenantId tenantId, JobStatus status)
-  {
+  CleansingJob[] listByStatus(TenantId tenantId, JobStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 }

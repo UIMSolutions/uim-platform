@@ -21,15 +21,13 @@ class ManageModelsUseCase : UIMUseCase {
   private DatasetRepository datasetRepo;
   private ModelTrainer trainer;
 
-  this(ModelConfigRepository repo, DatasetRepository datasetRepo, ModelTrainer trainer)
-  {
+  this(ModelConfigRepository repo, DatasetRepository datasetRepo, ModelTrainer trainer) {
     this.repo = repo;
     this.datasetRepo = datasetRepo;
     this.trainer = trainer;
   }
 
-  CommandResult createModelConfig(CreateModelConfigRequest req)
-  {
+  CommandResult createModelConfig(CreateModelConfigRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.datasetId.length == 0)
@@ -66,18 +64,15 @@ class ManageModelsUseCase : UIMUseCase {
     return CommandResult(config.id, "");
   }
 
-  ModelConfiguration* getModelConfig(ModelConfigId id, TenantId tenantId)
-  {
+  ModelConfiguration* getModelConfig(ModelConfigId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ModelConfiguration[] listModelConfigs(TenantId tenantId)
-  {
+  ModelConfiguration[] listModelConfigs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateModelConfig(UpdateModelConfigRequest req)
-  {
+  CommandResult updateModelConfig(UpdateModelConfigRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Model configuration ID is required");
     if (req.tenantId.length == 0)
@@ -109,8 +104,7 @@ class ManageModelsUseCase : UIMUseCase {
   }
 
   /// Mark a model configuration as ready for training.
-  CommandResult activateConfig(ModelConfigId id, TenantId tenantId)
-  {
+  CommandResult activateConfig(ModelConfigId id, TenantId tenantId) {
     auto config = repo.findById(id, tenantId);
     if (config is null)
       return CommandResult("", "Model configuration not found");
@@ -128,8 +122,7 @@ class ManageModelsUseCase : UIMUseCase {
   }
 
   /// Start training on a model configuration.
-  CommandResult startTraining(StartTrainingRequest req)
-  {
+  CommandResult startTraining(StartTrainingRequest req) {
     if (req.modelConfigId.length == 0)
       return CommandResult("", "Model configuration ID is required");
     if (req.tenantId.length == 0)
@@ -143,8 +136,7 @@ class ManageModelsUseCase : UIMUseCase {
     return CommandResult(job.id, "");
   }
 
-  CommandResult deleteModelConfig(ModelConfigId id, TenantId tenantId)
-  {
+  CommandResult deleteModelConfig(ModelConfigId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Model configuration not found");

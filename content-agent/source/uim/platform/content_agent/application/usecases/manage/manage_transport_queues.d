@@ -19,14 +19,12 @@ class ManageTransportQueuesUseCase : UIMUseCase {
   private TransportQueueRepository queueRepo;
   private ContentActivityRepository activityRepo;
 
-  this(TransportQueueRepository queueRepo, ContentActivityRepository activityRepo)
-  {
+  this(TransportQueueRepository queueRepo, ContentActivityRepository activityRepo) {
     this.queueRepo = queueRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult createQueue(CreateQueueRequest req)
-  {
+  CommandResult createQueue(CreateQueueRequest req) {
     auto existing = queueRepo.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Queue with name '" ~ req.name ~ "' already exists");
@@ -57,8 +55,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req)
-  {
+  CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req) {
     auto queue = queueRepo.findById(id);
     if (queue.id.length == 0)
       return CommandResult(false, "", "Queue not found");
@@ -76,8 +73,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult deleteQueue(TransportQueueId id)
-  {
+  CommandResult deleteQueue(TransportQueueId id) {
     auto queue = queueRepo.findById(id);
     if (queue.id.length == 0)
       return CommandResult(false, "", "Queue not found");
@@ -86,24 +82,20 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  TransportQueue getQueue(TransportQueueId id)
-  {
+  TransportQueue getQueue(TransportQueueId id) {
     return queueRepo.findById(id);
   }
 
-  TransportQueue[] listQueues(TenantId tenantId)
-  {
+  TransportQueue[] listQueues(TenantId tenantId) {
     return queueRepo.findByTenant(tenantId);
   }
 
-  TransportQueue getDefaultQueue(TenantId tenantId)
-  {
+  TransportQueue getDefaultQueue(TenantId tenantId) {
     return queueRepo.findDefault(tenantId);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -118,14 +110,12 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static QueueType parseQueueType(string s)
-  {
+  private static QueueType parseQueueType(string s) {
     switch (s)
     {
     case "ctsPlus":

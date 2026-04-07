@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.consent_records;
 class MemoryConsentRecordRepository : ConsentRecordRepository {
   private ConsentRecord[] store;
 
-  ConsentRecord[] findByTenant(TenantId tenantId)
-  {
+  ConsentRecord[] findByTenant(TenantId tenantId) {
     ConsentRecord[] result;
     foreach (ref c; store)
       if (c.tenantId == tenantId)
@@ -21,16 +20,14 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  ConsentRecord* findById(ConsentRecordId id, TenantId tenantId)
-  {
+  ConsentRecord* findById(ConsentRecordId id, TenantId tenantId) {
     foreach (ref c; store)
       if (c.id == id && c.tenantId == tenantId)
         return &c;
     return null;
   }
 
-  ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     ConsentRecord[] result;
     foreach (ref c; store)
       if (c.tenantId == tenantId && c.dataSubjectId == dataSubjectId)
@@ -38,8 +35,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose)
-  {
+  ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     ConsentRecord[] result;
     foreach (ref c; store)
       if (c.tenantId == tenantId && c.purpose == purpose)
@@ -47,8 +43,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status)
-  {
+  ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
     ConsentRecord[] result;
     foreach (ref c; store)
       if (c.tenantId == tenantId && c.status == status)
@@ -56,8 +51,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId)
-  {
+  ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
     ConsentRecord[] result;
     foreach (ref c; store)
       if (c.tenantId == tenantId && c.dataSubjectId == dataSubjectId
@@ -66,13 +60,11 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
     return result;
   }
 
-  void save(ConsentRecord record)
-  {
+  void save(ConsentRecord record) {
     store ~= record;
   }
 
-  void update(ConsentRecord record)
-  {
+  void update(ConsentRecord record) {
     foreach (ref c; store)
       if (c.id == record.id && c.tenantId == record.tenantId)
       {
@@ -81,8 +73,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
       }
   }
 
-  void remove(ConsentRecordId id, TenantId tenantId)
-  {
+  void remove(ConsentRecordId id, TenantId tenantId) {
     ConsentRecord[] kept;
     foreach (ref c; store)
       if (!(c.id == id && c.tenantId == tenantId))

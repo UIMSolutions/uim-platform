@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class InferenceController : SAPController {
   private ProcessInferenceUseCase uc;
 
-  this(ProcessInferenceUseCase uc)
-  {
+  this(ProcessInferenceUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/inference", &handleSubmit);
@@ -38,8 +36,7 @@ class InferenceController : SAPController {
     router.get("/api/v1/inference", &handleListRequests);
   }
 
-  private void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -65,8 +62,7 @@ class InferenceController : SAPController {
     }
   }
 
-  private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -95,8 +91,7 @@ class InferenceController : SAPController {
     }
   }
 
-  private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -120,8 +115,7 @@ class InferenceController : SAPController {
     }
   }
 
-  private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -142,8 +136,7 @@ class InferenceController : SAPController {
     }
   }
 
-  private static Json serializeRequest(ref const InferenceRequest r)
-  {
+  private static Json serializeRequest(ref const InferenceRequest r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -154,8 +147,7 @@ class InferenceController : SAPController {
     return j;
   }
 
-  private static Json serializeResult(ref const InferenceResult r)
-  {
+  private static Json serializeResult(ref const InferenceResult r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

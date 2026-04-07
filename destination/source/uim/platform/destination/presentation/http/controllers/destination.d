@@ -19,13 +19,11 @@ import uim.platform.destination.presentation.http.json_utils;
 class DestinationController : SAPController {
   private ManageDestinationsUseCase uc;
 
-  this(ManageDestinationsUseCase uc)
-  {
+  this(ManageDestinationsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
     router.get("/api/v1/destinations/*", &handleGetById);
@@ -33,8 +31,7 @@ class DestinationController : SAPController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -95,8 +92,7 @@ class DestinationController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -124,8 +120,7 @@ class DestinationController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -143,8 +138,7 @@ class DestinationController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -190,8 +184,7 @@ class DestinationController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -213,8 +206,7 @@ class DestinationController : SAPController {
     }
   }
 
-  private static Json serializeDestination(const ref Destination d)
-  {
+  private static Json serializeDestination(const ref Destination d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

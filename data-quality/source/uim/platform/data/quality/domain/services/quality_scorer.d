@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.entities.data_profile;
 class QualityScorer {
   /// Compute a quality dashboard from validation results and profile data.
   QualityDashboard computeDashboard(TenantId tenantId, DatasetId datasetId,
-      string datasetName, ValidationResult[] results, DataProfile* profile)
-  {
+      string datasetName, ValidationResult[] results, DataProfile* profile) {
     QualityDashboard d;
     d.tenantId = tenantId;
     d.datasetId = datasetId;
@@ -98,8 +97,7 @@ class QualityScorer {
     return d;
   }
 
-  private static double computeCompleteness(ColumnProfile[] columns)
-  {
+  private static double computeCompleteness(ColumnProfile[] columns) {
     if (columns.length == 0)
       return 100.0;
     double total = 0.0;
@@ -108,8 +106,7 @@ class QualityScorer {
     return total / columns.length;
   }
 
-  private static double computeUniqueness(ColumnProfile[] columns)
-  {
+  private static double computeUniqueness(ColumnProfile[] columns) {
     if (columns.length == 0)
       return 100.0;
     double total = 0.0;
@@ -118,8 +115,7 @@ class QualityScorer {
     return total / columns.length;
   }
 
-  static QualityRating scoreToRating(double score)
-  {
+  static QualityRating scoreToRating(double score) {
     if (score >= 95.0)
       return QualityRating.excellent;
     if (score >= 80.0)

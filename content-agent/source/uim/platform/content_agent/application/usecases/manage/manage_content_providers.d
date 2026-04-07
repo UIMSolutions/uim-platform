@@ -19,14 +19,12 @@ class ManageContentProvidersUseCase : UIMUseCase {
   private ContentProviderRepository providerRepo;
   private ContentActivityRepository activityRepo;
 
-  this(ContentProviderRepository providerRepo, ContentActivityRepository activityRepo)
-  {
+  this(ContentProviderRepository providerRepo, ContentActivityRepository activityRepo) {
     this.providerRepo = providerRepo;
     this.activityRepo = activityRepo;
   }
 
-  CommandResult registerProvider(RegisterProviderRequest req)
-  {
+  CommandResult registerProvider(RegisterProviderRequest req) {
     auto existing = providerRepo.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Provider with name '" ~ req.name ~ "' already exists");
@@ -57,8 +55,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateProvider(ContentProviderId id, UpdateProviderRequest req)
-  {
+  CommandResult updateProvider(ContentProviderId id, UpdateProviderRequest req) {
     auto provider = providerRepo.findById(id);
     if (provider.id.length == 0)
       return CommandResult(false, "", "Provider not found");
@@ -74,8 +71,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult deregisterProvider(ContentProviderId id)
-  {
+  CommandResult deregisterProvider(ContentProviderId id) {
     auto provider = providerRepo.findById(id);
     if (provider.id.length == 0)
       return CommandResult(false, "", "Provider not found");
@@ -89,8 +85,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult syncProvider(ContentProviderId id)
-  {
+  CommandResult syncProvider(ContentProviderId id) {
     auto provider = providerRepo.findById(id);
     if (provider.id.length == 0)
       return CommandResult(false, "", "Provider not found");
@@ -106,24 +101,20 @@ class ManageContentProvidersUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ContentProvider getProvider(ContentProviderId id)
-  {
+  ContentProvider getProvider(ContentProviderId id) {
     return providerRepo.findById(id);
   }
 
-  ContentProvider[] listProviders(TenantId tenantId)
-  {
+  ContentProvider[] listProviders(TenantId tenantId) {
     return providerRepo.findByTenant(tenantId);
   }
 
-  ContentProvider[] listActiveProviders(TenantId tenantId)
-  {
+  ContentProvider[] listActiveProviders(TenantId tenantId) {
     return providerRepo.findByStatus(tenantId, ProviderStatus.active);
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by)
-  {
+      string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID().toString();
@@ -138,8 +129,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }

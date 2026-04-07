@@ -15,43 +15,36 @@ import uim.platform.content_agent.domain.ports.repositories.content_packages;
 class MemoryContentPackageRepository : ContentPackageRepository {
   private ContentPackage[ContentPackageId] store;
 
-  ContentPackage findById(ContentPackageId id)
-  {
+  ContentPackage findById(ContentPackageId id) {
     if (auto p = id in store)
       return *p;
     return ContentPackage.init;
   }
 
-  ContentPackage[] findByTenant(TenantId tenantId)
-  {
+  ContentPackage[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status)
-  {
+  ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  ContentPackage findByName(TenantId tenantId, string name)
-  {
+  ContentPackage findByName(TenantId tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return ContentPackage.init;
   }
 
-  void save(ContentPackage pkg)
-  {
+  void save(ContentPackage pkg) {
     store[pkg.id] = pkg;
   }
 
-  void update(ContentPackage pkg)
-  {
+  void update(ContentPackage pkg) {
     store[pkg.id] = pkg;
   }
 
-  void remove(ContentPackageId id)
-  {
+  void remove(ContentPackageId id) {
     store.remove(id);
   }
 }

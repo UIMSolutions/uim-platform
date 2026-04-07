@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class DatasetController : SAPController {
   private ManageDatasetsUseCase uc;
 
-  this(ManageDatasetsUseCase uc)
-  {
+  this(ManageDatasetsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/datasets", &handleCreate);
@@ -39,8 +37,7 @@ class DatasetController : SAPController {
     router.post("/api/v1/datasets/process/*", &handleProcess);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -90,8 +86,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -168,8 +161,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -194,8 +186,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -216,8 +207,7 @@ class DatasetController : SAPController {
     }
   }
 
-  private static Json serializeDataset(ref const Dataset d)
-  {
+  private static Json serializeDataset(ref const Dataset d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

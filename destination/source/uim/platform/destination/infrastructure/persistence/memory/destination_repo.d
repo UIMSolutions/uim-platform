@@ -15,56 +15,47 @@ import uim.platform.destination.domain.ports.repositories.destinations;
 class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
-  Destination findById(DestinationId id)
-  {
+  Destination findById(DestinationId id) {
     if (auto p = id in store)
       return *p;
     return Destination.init;
   }
 
-  Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name)
-  {
+  Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return e;
     return Destination.init;
   }
 
-  Destination[] findByTenant(TenantId tenantId)
-  {
+  Destination[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 
-  Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId)
-  {
+  Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.serviceInstanceId == instanceId).array;
   }
 
-  Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level)
-  {
+  Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId && e.level == level).array;
   }
 
-  void save(Destination dest)
-  {
+  void save(Destination dest) {
     store[dest.id] = dest;
   }
 
-  void update(Destination dest)
-  {
+  void update(Destination dest) {
     store[dest.id] = dest;
   }
 
-  void remove(DestinationId id)
-  {
+  void remove(DestinationId id) {
     store.remove(id);
   }
 }

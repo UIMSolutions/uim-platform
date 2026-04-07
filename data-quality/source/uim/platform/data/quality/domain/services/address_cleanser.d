@@ -16,8 +16,7 @@ import uim.platform.data.quality.domain.entities.address_record;
 /// Domain service - cleanses and standardizes address data.
 class AddressCleanser {
   /// Cleanse a raw address record, returning the corrected version.
-  AddressRecord cleanse(AddressRecord input)
-  {
+  AddressRecord cleanse(AddressRecord input) {
     auto record = input;
     CleansingAction[] actions;
     string[] changes;
@@ -103,8 +102,7 @@ class AddressCleanser {
     return record;
   }
 
-  private AddressQuality assessQuality(ref const AddressRecord r)
-  {
+  private AddressQuality assessQuality(ref const AddressRecord r) {
     // Simple quality heuristic
     if (r.line1.length > 0 && r.city.length > 0 && r.postalCode.length > 0 && r.country.length > 0)
       return AddressQuality.corrected;
@@ -115,8 +113,7 @@ class AddressCleanser {
     return AddressQuality.unverifiable;
   }
 
-  private static string titleCase(string s)
-  {
+  private static string titleCase(string s) {
     char[] result;
     result.length = s.length;
     bool capitalize = true;
@@ -141,8 +138,7 @@ class AddressCleanser {
     return cast(string) result;
   }
 
-  private static string standardizeCountry(string country)
-  {
+  private static string standardizeCountry(string country) {
     // Common country name to ISO-2 mapping
     auto upper = country.toUpper();
     if (upper.length == 2)
@@ -185,8 +181,7 @@ class AddressCleanser {
     }
   }
 
-  private static string standardizePostalCode(string code, string countryIso2)
-  {
+  private static string standardizePostalCode(string code, string countryIso2) {
     // import std.string : strip;
 
     auto cleaned = code.strip();
@@ -210,8 +205,7 @@ class AddressCleanser {
     return cleaned.toUpper();
   }
 
-  private static string standardizeAbbreviations(string line)
-  {
+  private static string standardizeAbbreviations(string line) {
     string result = line;
     // Common address abbreviations
     result = result.replace("Str.", "Street");

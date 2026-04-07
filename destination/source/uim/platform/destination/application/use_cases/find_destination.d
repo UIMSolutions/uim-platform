@@ -25,15 +25,13 @@ class FindDestinationUseCase : UIMUseCase {
   private FragmentRepository fragRepo;
   private CertificateRepository certRepo;
 
-  this(DestinationRepository destRepo, FragmentRepository fragRepo, CertificateRepository certRepo)
-  {
+  this(DestinationRepository destRepo, FragmentRepository fragRepo, CertificateRepository certRepo) {
     this.destRepo = destRepo;
     this.fragRepo = fragRepo;
     this.certRepo = certRepo;
   }
 
-  DestinationLookupResponse find(FindDestinationRequest req)
-  {
+  DestinationLookupResponse find(FindDestinationRequest req) {
     DestinationLookupResponse resp;
 
     if (req.name.length == 0)

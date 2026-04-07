@@ -42,8 +42,7 @@ string[string] jsonStrMap(Json j, string key) {
     return (string[string]).init;
 
   string[string] result;
-  foreach (string k, val; *v)
-  {
+  foreach (string k, val; *v) {
     if (val.isString)
       result[k] = val.get!string;
   }
@@ -59,8 +58,7 @@ string[][] jsonStrArrayArray(Json j, string key) {
     return [];
 
   string[][] result;
-  foreach (item; *v)
-  {
+  foreach (item; *v) {
     if (item.type == Json.Type.array)
     {
       string[] inner;

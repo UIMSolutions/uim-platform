@@ -17,14 +17,12 @@ import uim.platform.data.quality.application.dto;
 class ProfileDataUseCase : UIMUseCase {
   private DataProfileRepository repo;
 
-  this(DataProfileRepository repo)
-  {
+  this(DataProfileRepository repo) {
     this.repo = repo;
   }
 
   /// Profile a dataset and compute column statistics.
-  DataProfile profile(ProfileDatasetRequest req)
-  {
+  DataProfile profile(ProfileDatasetRequest req) {
     auto startTime = Clock.currStdTime();
 
     // Discover all field names
@@ -70,25 +68,21 @@ class ProfileDataUseCase : UIMUseCase {
   }
 
   /// Get latest profile for a dataset.
-  DataProfile* getLatest(TenantId tenantId, DatasetId datasetId)
-  {
+  DataProfile* getLatest(TenantId tenantId, DatasetId datasetId) {
     return repo.findLatestByDataset(tenantId, datasetId);
   }
 
   /// Get profile by ID.
-  DataProfile* getById(ProfileId id, TenantId tenantId)
-  {
+  DataProfile* getById(ProfileId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
   /// Get all profiles for a tenant.
-  DataProfile[] listByTenant(TenantId tenantId)
-  {
+  DataProfile[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records)
-  {
+  private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records) {
     ColumnProfile cp;
     cp.fieldName = fieldName;
     cp.totalValues = cast(long) records.length;
@@ -154,8 +148,7 @@ class ProfileDataUseCase : UIMUseCase {
     return cp;
   }
 
-  private static ProfiledDataType detectType(string[] values)
-  {
+  private static ProfiledDataType detectType(string[] values) {
     if (values.length == 0)
       return ProfiledDataType.unknown;
 
@@ -184,8 +177,7 @@ class ProfileDataUseCase : UIMUseCase {
     return ProfiledDataType.string_;
   }
 
-  private static bool isInteger(string s)
-  {
+  private static bool isInteger(string s) {
     if (s.length == 0)
       return false;
     size_t start = (s[0] == '-' || s[0] == '+') ? 1 : 0;
@@ -197,8 +189,7 @@ class ProfileDataUseCase : UIMUseCase {
     return true;
   }
 
-  private static bool isFloat(string s)
-  {
+  private static bool isFloat(string s) {
     if (s.length == 0)
       return false;
     bool hasDot = false;
@@ -219,16 +210,14 @@ class ProfileDataUseCase : UIMUseCase {
     return hasDot;
   }
 
-  private static bool isEmail(string s)
-  {
+  private static bool isEmail(string s) {
     // import std.string : indexOf;
 
     auto at = s.indexOf('@');
     return at > 0 && at < cast(long) s.length - 1 && s.indexOf('.', at) > at;
   }
 
-  private static string[] topN(int[string] freqMap, int n)
-  {
+  private static string[] topN(int[string] freqMap, int n) {
     // import std.algorithm : sort;
     // import std.array : array;
 
@@ -250,8 +239,7 @@ class ProfileDataUseCase : UIMUseCase {
     return result;
   }
 
-  private static QualityRating scoreToRating(double score)
-  {
+  private static QualityRating scoreToRating(double score) {
     if (score >= 95.0)
       return QualityRating.excellent;
     if (score >= 80.0)

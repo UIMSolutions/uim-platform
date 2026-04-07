@@ -18,13 +18,11 @@ import uim.platform.content_agent.domain.types;
 class ProviderController {
   private ManageContentProvidersUseCase uc;
 
-  this(ManageContentProvidersUseCase uc)
-  {
+  this(ManageContentProvidersUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/providers", &handleRegister);
     router.get("/api/v1/providers", &handleList);
     router.get("/api/v1/providers/*", &handleGetById);
@@ -33,8 +31,7 @@ class ProviderController {
     router.post("/api/v1/providers/sync", &handleSync);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class ProviderController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -86,8 +82,7 @@ class ProviderController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -105,8 +100,7 @@ class ProviderController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -134,8 +128,7 @@ class ProviderController {
     }
   }
 
-  private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +150,7 @@ class ProviderController {
     }
   }
 
-  private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -182,8 +174,7 @@ class ProviderController {
     }
   }
 
-  private static Json serializeProvider(ref const ContentProvider p)
-  {
+  private static Json serializeProvider(ref const ContentProvider p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);

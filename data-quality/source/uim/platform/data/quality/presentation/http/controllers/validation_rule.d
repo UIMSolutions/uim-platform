@@ -18,13 +18,11 @@ import uim.platform.data.quality.domain.entities.validation_rule;
 class ValidationRuleController : SAPController {
   private ManageValidationRulesUseCase uc;
 
-  this(ManageValidationRulesUseCase uc)
-  {
+  this(ManageValidationRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/validation-rules", &handleCreate);
@@ -34,8 +32,7 @@ class ValidationRuleController : SAPController {
     router.delete_("/api/v1/validation-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -75,8 +72,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -96,8 +92,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -115,8 +110,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -158,8 +152,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -176,8 +169,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private static Json serializeRule(ref const ValidationRule r)
-  {
+  private static Json serializeRule(ref const ValidationRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -207,8 +199,7 @@ class ValidationRuleController : SAPController {
     return j;
   }
 
-  private static RuleType parseRuleType(string s)
-  {
+  private static RuleType parseRuleType(string s) {
     switch (s)
     {
     case "required":
@@ -232,8 +223,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private static RuleSeverity parseSeverity(string s)
-  {
+  private static RuleSeverity parseSeverity(string s) {
     switch (s)
     {
     case "warning":
@@ -247,8 +237,7 @@ class ValidationRuleController : SAPController {
     }
   }
 
-  private static RuleStatus parseRuleStatus(string s)
-  {
+  private static RuleStatus parseRuleStatus(string s) {
     switch (s)
     {
     case "active":

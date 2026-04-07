@@ -17,13 +17,11 @@ import uim.platform.destination.domain.types;
 class ManageDestinationsUseCase : UIMUseCase {
   private DestinationRepository repo;
 
-  this(DestinationRepository repo)
-  {
+  this(DestinationRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDestinationRequest req)
-  {
+  CommandResult create(CreateDestinationRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Destination name is required");
 
@@ -86,8 +84,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req)
-  {
+  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
     auto d = repo.findById(id);
     if (d.id.length == 0)
       return CommandResult(false, "", "Destination not found");
@@ -140,28 +137,23 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Destination getDestination(DestinationId id)
-  {
+  Destination getDestination(DestinationId id) {
     return repo.findById(id);
   }
 
-  Destination[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  Destination[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
 
-  Destination[] listByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId)
-  {
+  Destination[] listByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId) {
     return repo.findByServiceInstance(tenantId, instanceId);
   }
 
-  Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name)
-  {
+  Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     return repo.findByName(tenantId, subaccountId, name);
   }
 
-  CommandResult removeDestination(DestinationId id)
-  {
+  CommandResult removeDestination(DestinationId id) {
     auto d = repo.findById(id);
     if (d.id.length == 0)
       return CommandResult(false, "", "Destination not found");
@@ -169,14 +161,12 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static DestinationType parseDestType(string s)
-  {
+  private static DestinationType parseDestType(string s) {
     switch (s)
     {
     case "rfc":
@@ -190,8 +180,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     }
   }
 
-  private static DestinationLevel parseLevel(string s)
-  {
+  private static DestinationLevel parseLevel(string s) {
     switch (s)
     {
     case "serviceInstance":
@@ -201,8 +190,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     }
   }
 
-  private static DestinationStatus parseDestStatus(string s)
-  {
+  private static DestinationStatus parseDestStatus(string s) {
     switch (s)
     {
     case "inactive":

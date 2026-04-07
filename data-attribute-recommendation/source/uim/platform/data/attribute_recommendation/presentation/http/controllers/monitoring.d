@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class MonitoringController : SAPController {
   private MonitorTrainingUseCase uc;
 
-  this(MonitorTrainingUseCase uc)
-  {
+  this(MonitorTrainingUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.get("/api/v1/monitoring/jobs", &handleListJobs);
@@ -36,8 +34,7 @@ class MonitoringController : SAPController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -58,8 +55,7 @@ class MonitoringController : SAPController {
     }
   }
 
-  private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -78,8 +74,7 @@ class MonitoringController : SAPController {
     }
   }
 
-  private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -100,8 +95,7 @@ class MonitoringController : SAPController {
     }
   }
 
-  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -123,8 +117,7 @@ class MonitoringController : SAPController {
     }
   }
 
-  private static Json serializeJobSummary(ref const TrainingJobSummary s)
-  {
+  private static Json serializeJobSummary(ref const TrainingJobSummary s) {
     auto j = Json.emptyObject;
     j["jobId"] = Json(s.jobId);
     j["modelConfigId"] = Json(s.modelConfigId);
@@ -138,8 +131,7 @@ class MonitoringController : SAPController {
     return j;
   }
 
-  private static Json serializeDeploymentSummary(ref const DeploymentSummary s)
-  {
+  private static Json serializeDeploymentSummary(ref const DeploymentSummary s) {
     auto j = Json.emptyObject;
     j["deploymentId"] = Json(s.deploymentId);
     j["deploymentName"] = Json(s.deploymentName);

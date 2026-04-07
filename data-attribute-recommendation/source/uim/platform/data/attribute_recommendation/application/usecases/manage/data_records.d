@@ -19,14 +19,12 @@ class ManageDataRecordsUseCase : UIMUseCase {
   private DataRecordRepository repo;
   private DatasetRepository datasetRepo;
 
-  this(DataRecordRepository repo, DatasetRepository datasetRepo)
-  {
+  this(DataRecordRepository repo, DatasetRepository datasetRepo) {
     this.repo = repo;
     this.datasetRepo = datasetRepo;
   }
 
-  CommandResult createRecord(CreateDataRecordRequest req)
-  {
+  CommandResult createRecord(CreateDataRecordRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.datasetId.length == 0)
@@ -55,18 +53,15 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  DataRecord* getRecord(DataRecordId id, TenantId tenantId)
-  {
+  DataRecord* getRecord(DataRecordId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  DataRecord[] listByDataset(DatasetId datasetId, TenantId tenantId)
-  {
+  DataRecord[] listByDataset(DatasetId datasetId, TenantId tenantId) {
     return repo.findByDataset(datasetId, tenantId);
   }
 
-  CommandResult validateRecord(DataRecordId id, TenantId tenantId)
-  {
+  CommandResult validateRecord(DataRecordId id, TenantId tenantId) {
     auto record = repo.findById(id, tenantId);
     if (record is null)
       return CommandResult("", "Record not found");
@@ -76,8 +71,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult rejectRecord(DataRecordId id, TenantId tenantId)
-  {
+  CommandResult rejectRecord(DataRecordId id, TenantId tenantId) {
     auto record = repo.findById(id, tenantId);
     if (record is null)
       return CommandResult("", "Record not found");
@@ -87,8 +81,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteRecord(DataRecordId id, TenantId tenantId)
-  {
+  CommandResult deleteRecord(DataRecordId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Record not found");

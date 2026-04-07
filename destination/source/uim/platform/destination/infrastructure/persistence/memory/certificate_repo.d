@@ -15,56 +15,47 @@ import uim.platform.destination.domain.ports.repositories.certificates;
 class MemoryCertificateRepository : CertificateRepository {
   private Certificate[CertificateId] store;
 
-  Certificate findById(CertificateId id)
-  {
+  Certificate findById(CertificateId id) {
     if (auto p = id in store)
       return *p;
     return Certificate.init;
   }
 
-  Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name)
-  {
+  Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
         return e;
     return Certificate.init;
   }
 
-  Certificate[] findByTenant(TenantId tenantId)
-  {
+  Certificate[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 
-  Certificate[] findByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type)
-  {
+  Certificate[] findByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId && e.certificateType == type).array;
   }
 
-  Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp)
-  {
+  Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.validTo > 0
         && e.validTo <= beforeTimestamp).array;
   }
 
-  void save(Certificate cert)
-  {
+  void save(Certificate cert) {
     store[cert.id] = cert;
   }
 
-  void update(Certificate cert)
-  {
+  void update(Certificate cert) {
     store[cert.id] = cert;
   }
 
-  void remove(CertificateId id)
-  {
+  void remove(CertificateId id) {
     store.remove(id);
   }
 }

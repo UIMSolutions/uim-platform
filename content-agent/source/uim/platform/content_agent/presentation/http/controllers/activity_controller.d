@@ -17,19 +17,16 @@ import uim.platform.content_agent.domain.types;
 class ActivityController {
   private MonitorActivitiesUseCase uc;
 
-  this(MonitorActivitiesUseCase uc)
-  {
+  this(MonitorActivitiesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/activities", &handleList);
     router.get("/api/v1/activities/summary", &handleSummary);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -50,8 +47,7 @@ class ActivityController {
     }
   }
 
-  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -70,8 +66,7 @@ class ActivityController {
     }
   }
 
-  private static Json serializeActivity(ref const ContentActivity a)
-  {
+  private static Json serializeActivity(ref const ContentActivity a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);

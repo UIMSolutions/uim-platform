@@ -19,13 +19,11 @@ import uim.platform.content_agent.presentation.http.json_utils;
 class TransportController {
   private ManageTransportRequestsUseCase uc;
 
-  this(ManageTransportRequestsUseCase uc)
-  {
+  this(ManageTransportRequestsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
     router.get("/api/v1/transports/*", &handleGetById);
@@ -33,8 +31,7 @@ class TransportController {
     router.post("/api/v1/transports/cancel", &handleCancel);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class TransportController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -88,8 +84,7 @@ class TransportController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class TransportController {
     }
   }
 
-  private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -136,8 +130,7 @@ class TransportController {
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -162,8 +155,7 @@ class TransportController {
     }
   }
 
-  private static Json serializeTransport(ref const TransportRequest t)
-  {
+  private static Json serializeTransport(ref const TransportRequest t) {
     auto j = Json.emptyObject;
     j["id"] = Json(t.id);
     j["tenantId"] = Json(t.tenantId);

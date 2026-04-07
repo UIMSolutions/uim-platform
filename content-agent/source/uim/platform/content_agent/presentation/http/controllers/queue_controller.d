@@ -18,13 +18,11 @@ import uim.platform.content_agent.domain.types;
 class QueueController {
   private ManageTransportQueuesUseCase uc;
 
-  this(ManageTransportQueuesUseCase uc)
-  {
+  this(ManageTransportQueuesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/queues", &handleCreate);
     router.get("/api/v1/queues", &handleList);
     router.get("/api/v1/queues/*", &handleGetById);
@@ -32,8 +30,7 @@ class QueueController {
     router.delete_("/api/v1/queues/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -65,8 +62,7 @@ class QueueController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -87,8 +83,7 @@ class QueueController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -106,8 +101,7 @@ class QueueController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -136,8 +130,7 @@ class QueueController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -159,8 +152,7 @@ class QueueController {
     }
   }
 
-  private static Json serializeQueue(ref const TransportQueue q)
-  {
+  private static Json serializeQueue(ref const TransportQueue q) {
     auto j = Json.emptyObject;
     j["id"] = Json(q.id);
     j["tenantId"] = Json(q.tenantId);

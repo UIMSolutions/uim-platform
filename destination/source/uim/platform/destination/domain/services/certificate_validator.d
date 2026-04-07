@@ -24,8 +24,7 @@ struct CertificateValidator {
   enum EXPIRY_WARNING_DAYS = 30;
 
   /// Validate a certificate's current status.
-  static ValidationResult validate(const ref Certificate cert)
-  {
+  static ValidationResult validate(const ref Certificate cert) {
     ValidationResult result;
     auto now = clockSeconds();
 
@@ -73,13 +72,11 @@ struct CertificateValidator {
     return result;
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     return Clock.currTime().toUnixTime();
   }
 
-  private static string formatLong(long v)
-  {
+  private static string formatLong(long v) {
     // import std.format : format;
     return format("%d", v);
   }

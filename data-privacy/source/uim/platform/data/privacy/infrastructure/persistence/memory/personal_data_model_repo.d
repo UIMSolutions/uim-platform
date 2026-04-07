@@ -12,8 +12,7 @@ import uim.platform.data.privacy.domain.ports.repositories.personal_data_models;
 class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
   private PersonalDataModel[] store;
 
-  PersonalDataModel[] findByTenant(TenantId tenantId)
-  {
+  PersonalDataModel[] findByTenant(TenantId tenantId) {
     PersonalDataModel[] result;
     foreach (ref m; store)
       if (m.tenantId == tenantId)
@@ -21,16 +20,14 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  PersonalDataModel* findById(PersonalDataModelId id, TenantId tenantId)
-  {
+  PersonalDataModel* findById(PersonalDataModelId id, TenantId tenantId) {
     foreach (ref m; store)
       if (m.id == id && m.tenantId == tenantId)
         return &m;
     return null;
   }
 
-  PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category)
-  {
+  PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category) {
     PersonalDataModel[] result;
     foreach (ref m; store)
       if (m.tenantId == tenantId && m.category == category)
@@ -38,8 +35,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem)
-  {
+  PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     PersonalDataModel[] result;
     foreach (ref m; store)
       if (m.tenantId == tenantId && m.sourceSystem == sourceSystem)
@@ -47,8 +43,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType)
-  {
+  PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
     PersonalDataModel[] result;
     foreach (ref m; store)
       if (m.tenantId == tenantId && m.subjectType == subjectType)
@@ -56,8 +51,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  PersonalDataModel[] findSpecialCategories(TenantId tenantId)
-  {
+  PersonalDataModel[] findSpecialCategories(TenantId tenantId) {
     PersonalDataModel[] result;
     foreach (ref m; store)
       if (m.tenantId == tenantId && m.isSpecialCategory)
@@ -65,13 +59,11 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  void save(PersonalDataModel model)
-  {
+  void save(PersonalDataModel model) {
     store ~= model;
   }
 
-  void update(PersonalDataModel model)
-  {
+  void update(PersonalDataModel model) {
     foreach (ref m; store)
       if (m.id == model.id && m.tenantId == model.tenantId)
       {
@@ -80,8 +72,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
       }
   }
 
-  void remove(PersonalDataModelId id, TenantId tenantId)
-  {
+  void remove(PersonalDataModelId id, TenantId tenantId) {
     PersonalDataModel[] kept;
     foreach (ref m; store)
       if (!(m.id == id && m.tenantId == tenantId))

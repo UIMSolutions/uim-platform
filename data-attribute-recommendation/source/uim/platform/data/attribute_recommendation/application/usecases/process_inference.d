@@ -22,16 +22,14 @@ class ProcessInferenceUseCase : UIMUseCase {
   private InferenceEngine engine;
 
   this(InferenceRequestRepository requestRepo,
-      InferenceResultRepository resultRepo, InferenceEngine engine)
-  {
+      InferenceResultRepository resultRepo, InferenceEngine engine) {
     this.requestRepo = requestRepo;
     this.resultRepo = resultRepo;
     this.engine = engine;
   }
 
   /// Submit an inference request and get immediate prediction.
-  CommandResult submitInference(SubmitInferenceRequest req)
-  {
+  CommandResult submitInference(SubmitInferenceRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.deploymentId.length == 0)
@@ -61,23 +59,19 @@ class ProcessInferenceUseCase : UIMUseCase {
     return CommandResult(result.id, "");
   }
 
-  InferenceResult* getResult(InferenceResultId id, TenantId tenantId)
-  {
+  InferenceResult* getResult(InferenceResultId id, TenantId tenantId) {
     return resultRepo.findById(id, tenantId);
   }
 
-  InferenceResult* getResultByRequest(InferenceRequestId requestId, TenantId tenantId)
-  {
+  InferenceResult* getResultByRequest(InferenceRequestId requestId, TenantId tenantId) {
     return resultRepo.findByRequest(requestId, tenantId);
   }
 
-  InferenceRequest[] listRequests(TenantId tenantId)
-  {
+  InferenceRequest[] listRequests(TenantId tenantId) {
     return requestRepo.findByTenant(tenantId);
   }
 
-  InferenceRequest[] listByDeployment(DeploymentId deploymentId, TenantId tenantId)
-  {
+  InferenceRequest[] listByDeployment(DeploymentId deploymentId, TenantId tenantId) {
     return requestRepo.findByDeployment(deploymentId, tenantId);
   }
 }

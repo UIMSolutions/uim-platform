@@ -16,30 +16,25 @@ import uim.platform.content_agent.domain.types;
 class MonitorActivitiesUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
-  this(ContentActivityRepository activityRepo)
-  {
+  this(ContentActivityRepository activityRepo) {
     this.activityRepo = activityRepo;
   }
 
-  ContentActivity[] listActivities(TenantId tenantId, int limit = 50)
-  {
+  ContentActivity[] listActivities(TenantId tenantId, int limit = 50) {
     return activityRepo.findRecent(tenantId, limit);
   }
 
-  ContentActivity[] listByEntity(string entityId)
-  {
+  ContentActivity[] listByEntity(string entityId) {
     return activityRepo.findByEntity(entityId);
   }
 
-  ContentActivity[] listByType(TenantId tenantId, string activityTypeStr)
-  {
+  ContentActivity[] listByType(TenantId tenantId, string activityTypeStr) {
     auto actType = parseActivityType(activityTypeStr);
     return activityRepo.findByType(tenantId, actType);
   }
 
   /// Produce a summary of recent activities by type.
-  ActivitySummary getSummary(TenantId tenantId)
-  {
+  ActivitySummary getSummary(TenantId tenantId) {
     auto all = activityRepo.findRecent(tenantId, 1000);
 
     ActivitySummary summary;
@@ -64,8 +59,7 @@ class MonitorActivitiesUseCase : UIMUseCase {
     return summary;
   }
 
-  private static ActivityType parseActivityType(string s)
-  {
+  private static ActivityType parseActivityType(string s) {
     switch (s)
     {
     case "packageCreated":

@@ -20,8 +20,7 @@ struct TransportValidationResult {
 struct TransportValidator {
   /// Validate a transport request against its packages and target queue.
   static TransportValidationResult validate(const ref TransportRequest request,
-      const ContentPackage[] packages, const ref TransportQueue queue)
-  {
+      const ContentPackage[] packages, const ref TransportQueue queue) {
     string[] errors;
 
     if (request.packageIds.length == 0)

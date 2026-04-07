@@ -18,13 +18,11 @@ import uim.platform.data.quality.domain.entities.cleansing_rule;
 class CleansingRuleController : SAPController {
   private ManageCleansingRulesUseCase uc;
 
-  this(ManageCleansingRulesUseCase uc)
-  {
+  this(ManageCleansingRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/cleansing-rules", &handleCreate);
@@ -34,8 +32,7 @@ class CleansingRuleController : SAPController {
     router.delete_("/api/v1/cleansing-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -97,8 +93,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -116,8 +111,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -160,8 +154,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -178,8 +171,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private static Json serializeRule(ref const CleansingRule r)
-  {
+  private static Json serializeRule(ref const CleansingRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -203,8 +195,7 @@ class CleansingRuleController : SAPController {
     return j;
   }
 
-  private static CleansingAction parseCleansingAction(string s)
-  {
+  private static CleansingAction parseCleansingAction(string s) {
     switch (s)
     {
     case "trimmed":
@@ -226,8 +217,7 @@ class CleansingRuleController : SAPController {
     }
   }
 
-  private static RuleStatus parseRuleStatus(string s)
-  {
+  private static RuleStatus parseRuleStatus(string s) {
     switch (s)
     {
     case "active":

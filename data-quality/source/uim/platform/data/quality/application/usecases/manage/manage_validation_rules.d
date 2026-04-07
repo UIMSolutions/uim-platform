@@ -16,13 +16,11 @@ import uim.platform.data.quality.application.dto;
 class ManageValidationRulesUseCase : UIMUseCase {
   private ValidationRuleRepository repo;
 
-  this(ValidationRuleRepository repo)
-  {
+  this(ValidationRuleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateValidationRuleRequest req)
-  {
+  CommandResult create(CreateValidationRuleRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -56,8 +54,7 @@ class ManageValidationRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  CommandResult update(UpdateValidationRuleRequest req)
-  {
+  CommandResult update(UpdateValidationRuleRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Rule ID is required");
 
@@ -90,8 +87,7 @@ class ManageValidationRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  CommandResult remove(RuleId id, TenantId tenantId)
-  {
+  CommandResult remove(RuleId id, TenantId tenantId) {
     auto existing = repo.findById(id);
     if (existing is null)
       return CommandResult("", "Validation rule not found");
@@ -102,18 +98,15 @@ class ManageValidationRulesUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  ValidationRule* getById(RuleId id)
-  {
+  ValidationRule* getById(RuleId id) {
     return repo.findById(id);
   }
 
-  ValidationRule[] listByTenant(TenantId tenantId)
-  {
+  ValidationRule[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  ValidationRule[] listActive(TenantId tenantId)
-  {
+  ValidationRule[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 }

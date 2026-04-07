@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class DeploymentController : SAPController {
   private ManageDeploymentsUseCase uc;
 
-  this(ManageDeploymentsUseCase uc)
-  {
+  this(ManageDeploymentsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/deployments", &handleCreate);
@@ -39,8 +37,7 @@ class DeploymentController : SAPController {
     router.delete_("/api/v1/deployments/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -67,8 +64,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -89,8 +85,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -109,8 +104,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -135,8 +129,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -161,8 +154,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -183,8 +175,7 @@ class DeploymentController : SAPController {
     }
   }
 
-  private static Json serializeDeployment(ref const ModelDeployment d)
-  {
+  private static Json serializeDeployment(ref const ModelDeployment d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

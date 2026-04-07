@@ -15,31 +15,26 @@ import uim.platform.data.quality.domain.ports.repositories.validation_results;
 class MemoryValidationResultRepository : ValidationResultRepository {
   private ValidationResult[RecordId] store;
 
-  ValidationResult[] findByTenant(TenantId tenantId)
-  {
+  ValidationResult[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(r => r.tenantId == tenantId).array;
   }
 
-  ValidationResult* findByRecord(RecordId recordId, TenantId tenantId)
-  {
+  ValidationResult* findByRecord(RecordId recordId, TenantId tenantId) {
     if (auto p = recordId in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  ValidationResult[] findByDataset(TenantId tenantId, DatasetId datasetId) {
     return store.byValue().filter!(r => r.tenantId == tenantId && r.datasetId == datasetId).array;
   }
 
-  void save(ValidationResult result)
-  {
+  void save(ValidationResult result) {
     store[result.recordId] = result;
   }
 
-  void removeByDataset(TenantId tenantId, DatasetId datasetId)
-  {
+  void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     RecordId[] toRemove;
     foreach (ref r; store.byValue())
       if (r.tenantId == tenantId && r.datasetId == datasetId)
