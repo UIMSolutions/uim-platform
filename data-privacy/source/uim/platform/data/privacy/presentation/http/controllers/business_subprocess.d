@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.business_subprocess;
 
-import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.business_subprocess;
+// import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.business_subprocess;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class BusinessSubprocessController {
   private ManageBusinessSubprocessesUseCase uc;
 

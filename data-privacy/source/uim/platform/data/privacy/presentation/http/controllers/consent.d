@@ -10,11 +10,15 @@ module uim.platform.data.privacy.presentation.http.consent;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage.consent_records;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.consent_record;
+// import uim.platform.data.privacy.application.usecases.manage.consent_records;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.consent_record;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class ConsentController : SAPController {
   private ManageConsentRecordsUseCase uc;
 

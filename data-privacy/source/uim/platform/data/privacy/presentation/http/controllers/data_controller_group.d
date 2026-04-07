@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.data_controller_group;
 
-import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.data_controller_group;
+// import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.data_controller_group;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class DataControllerGroupController {
   private ManageDataControllerGroupsUseCase uc;
 

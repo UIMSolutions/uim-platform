@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.information_report;
 
-import uim.platform.data.privacy.application.usecases.manage.information_reports;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.information_report;
+// import uim.platform.data.privacy.application.usecases.manage.information_reports;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.information_report;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class InformationReportController {
   private ManageInformationReportsUseCase uc;
 

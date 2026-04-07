@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.destruction_request;
 
-import uim.platform.data.privacy.application.usecases.manage.destruction_requests;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.destruction_request;
-import uim.platform.data.privacy.presentation.http.json_utils;
+// import uim.platform.data.privacy.application.usecases.manage.destruction_requests;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.destruction_request;
+// import uim.platform.data.privacy.presentation.http.json_utils;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class DestructionRequestController {
   private ManageDestructionRequestsUseCase uc;
 

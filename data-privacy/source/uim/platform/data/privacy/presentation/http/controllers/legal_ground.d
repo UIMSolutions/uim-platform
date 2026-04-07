@@ -10,11 +10,15 @@ module uim.platform.data.privacy.presentation.http.legal_ground;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.legal_ground;
+// import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.legal_ground;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class LegalGroundController {
   private ManageLegalGroundsUseCase uc;
 

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.anonymization_config;
 
-import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.anonymization_config;
+// import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.anonymization_config;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class AnonymizationConfigController {
   private ManageAnonymizationConfigsUseCase uc;
 

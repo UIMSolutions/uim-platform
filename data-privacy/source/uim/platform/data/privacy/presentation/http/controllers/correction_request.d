@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.correction_request;
 
-import uim.platform.data.privacy.application.usecases.manage.correction_requests;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.correction_request;
+// import uim.platform.data.privacy.application.usecases.manage.correction_requests;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.correction_request;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class CorrectionRequestController {
   private ManageCorrectionRequestsUseCase uc;
 
