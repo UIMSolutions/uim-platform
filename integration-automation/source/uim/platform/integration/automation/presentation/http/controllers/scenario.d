@@ -19,13 +19,11 @@ import uim.platform.integration.automation.presentation.http.json_utils;
 class ScenarioController {
   private ManageScenariosUseCase useCase;
 
-  this(ManageScenariosUseCase useCase)
-  {
+  this(ManageScenariosUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/scenarios", &handleCreate);
     router.get("/api/v1/scenarios", &handleList);
     router.get("/api/v1/scenarios/*", &handleGetById);
@@ -33,8 +31,7 @@ class ScenarioController {
     router.delete_("/api/v1/scenarios/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class ScenarioController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -90,8 +86,7 @@ class ScenarioController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class ScenarioController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -147,8 +141,7 @@ class ScenarioController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -171,8 +164,7 @@ class ScenarioController {
     }
   }
 
-  private static Json serializeScenario(ref const IntegrationScenario s)
-  {
+  private static Json serializeScenario(ref const IntegrationScenario s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);
@@ -211,8 +203,7 @@ class ScenarioController {
     return j;
   }
 
-  private static ScenarioStepTemplate[] parseStepTemplates(Json j)
-  {
+  private static ScenarioStepTemplate[] parseStepTemplates(Json j) {
     ScenarioStepTemplate[] result;
     auto v = "stepTemplates" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -242,8 +233,7 @@ class ScenarioController {
 }
 
 ScenarioCategory parseScenarioCategory(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "leadToCash":
     return ScenarioCategory.leadToCash;
   case "sourceToPay":
@@ -266,8 +256,7 @@ ScenarioCategory parseScenarioCategory(string s) {
 }
 
 ScenarioStatus parseScenarioStatus(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "draft":
     return ScenarioStatus.draft;
   case "active":
@@ -282,8 +271,7 @@ ScenarioStatus parseScenarioStatus(string s) {
 }
 
 SystemType parseSystemType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "sapS4Hana":
     return SystemType.sapS4Hana;
   case "sapS4HanaCloud":
@@ -312,8 +300,7 @@ SystemType parseSystemType(string s) {
 }
 
 StepType parseStepType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "manual":
     return StepType.manual;
   case "automated":
@@ -328,8 +315,7 @@ StepType parseStepType(string s) {
 }
 
 StepPriority parseStepPriority(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "low":
     return StepPriority.low;
   case "medium":

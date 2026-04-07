@@ -17,8 +17,7 @@ mixin(ShowModule!());
 class EntitlementEvaluator {
   /// Check if a quota assignment is valid.
   QuotaValidation validateQuotaAssignment(int requestedQuota,
-      int currentlyAssigned, int maxAvailable, bool unlimited)
-  {
+      int currentlyAssigned, int maxAvailable, bool unlimited) {
     QuotaValidation v;
     v.valid = true;
 
@@ -43,15 +42,13 @@ class EntitlementEvaluator {
   }
 
   /// Calculate remaining quota after an assignment.
-  int calculateRemaining(int assigned, int used)
-  {
+  int calculateRemaining(int assigned, int used) {
     auto rem = assigned - used;
     return rem > 0 ? rem : 0;
   }
 
   /// Check if an entitlement has exceeded its quota.
-  bool isOverQuota(Entitlement ent)
-  {
+  bool isOverQuota(Entitlement ent) {
     if (ent.unlimited)
       return false;
     return ent.quotaUsed > ent.quotaAssigned;

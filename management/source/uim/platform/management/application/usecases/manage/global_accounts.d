@@ -17,14 +17,12 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   private GlobalAccountRepository repo;
   private PlatformEventRepository eventRepo;
 
-  this(GlobalAccountRepository repo, PlatformEventRepository eventRepo)
-  {
+  this(GlobalAccountRepository repo, PlatformEventRepository eventRepo) {
     this.repo = repo;
     this.eventRepo = eventRepo;
   }
 
-  CommandResult create(CreateGlobalAccountRequest req)
-  {
+  CommandResult create(CreateGlobalAccountRequest req) {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
     if (req.region.length == 0)
@@ -58,8 +56,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req)
-  {
+  CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     auto ga = repo.findById(id);
     if (ga.id.length == 0)
       return CommandResult(false, "", "Global account not found");
@@ -80,8 +77,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult suspend(GlobalAccountId id)
-  {
+  CommandResult suspend(GlobalAccountId id) {
     auto ga = repo.findById(id);
     if (ga.id.length == 0)
       return CommandResult(false, "", "Global account not found");
@@ -97,8 +93,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult reactivate(GlobalAccountId id)
-  {
+  CommandResult reactivate(GlobalAccountId id) {
     auto ga = repo.findById(id);
     if (ga.id.length == 0)
       return CommandResult(false, "", "Global account not found");
@@ -111,23 +106,19 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  GlobalAccount getById(GlobalAccountId id)
-  {
+  GlobalAccount getById(GlobalAccountId id) {
     return repo.findById(id);
   }
 
-  GlobalAccount[] listAll()
-  {
+  GlobalAccount[] listAll() {
     return repo.findAll();
   }
 
-  GlobalAccount[] listByStatus(string status)
-  {
+  GlobalAccount[] listByStatus(string status) {
     return repo.findByStatus(parseGlobalAccountStatus(status));
   }
 
-  CommandResult remove(GlobalAccountId id)
-  {
+  CommandResult remove(GlobalAccountId id) {
     auto ga = repo.findById(id);
     if (ga.id.length == 0)
       return CommandResult(false, "", "Global account not found");
@@ -136,8 +127,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   }
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-      string eventType, string desc, string initiatedBy)
-  {
+      string eventType, string desc, string initiatedBy) {
     // import std.uuid : randomUUID;
 
     PlatformEvent ev;
@@ -154,15 +144,13 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     eventRepo.save(ev);
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;
   }
 
-  private GlobalAccountStatus parseGlobalAccountStatus(string s)
-  {
+  private GlobalAccountStatus parseGlobalAccountStatus(string s) {
     switch (s)
     {
     case "active":
@@ -178,8 +166,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     }
   }
 
-  private LicenseType parseLicenseType(string s)
-  {
+  private LicenseType parseLicenseType(string s) {
     switch (s)
     {
     case "enterprise":
@@ -203,8 +190,7 @@ private long clockSeconds() {
 }
 
 private LicenseType parseLicenseType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "enterprise":
     return LicenseType.enterprise;
   case "trial":

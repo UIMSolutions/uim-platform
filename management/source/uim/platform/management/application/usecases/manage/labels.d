@@ -14,13 +14,11 @@ import uim.platform.management.domain.types;
 class ManageLabelsUseCase : UIMUseCase {
   private LabelRepository repo;
 
-  this(LabelRepository repo)
-  {
+  this(LabelRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateLabelRequest req)
-  {
+  CommandResult create(CreateLabelRequest req) {
     if (req.resourceId.length == 0)
       return CommandResult(false, "", "Resource ID is required");
     if (req.key.length == 0)
@@ -46,8 +44,7 @@ class ManageLabelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult update(LabelId id, UpdateLabelRequest req)
-  {
+  CommandResult update(LabelId id, UpdateLabelRequest req) {
     auto lbl = repo.findById(id);
     if (lbl.id.length == 0)
       return CommandResult(false, "", "Label not found");
@@ -58,23 +55,19 @@ class ManageLabelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Label getById(LabelId id)
-  {
+  Label getById(LabelId id) {
     return repo.findById(id);
   }
 
-  Label[] listByResource(string resourceType, string resourceId)
-  {
+  Label[] listByResource(string resourceType, string resourceId) {
     return repo.findByResource(parseResourceType(resourceType), resourceId);
   }
 
-  Label[] listByKey(string resourceType, string key)
-  {
+  Label[] listByKey(string resourceType, string key) {
     return repo.findByKey(parseResourceType(resourceType), key);
   }
 
-  CommandResult remove(LabelId id)
-  {
+  CommandResult remove(LabelId id) {
     auto lbl = repo.findById(id);
     if (lbl.id.length == 0)
       return CommandResult(false, "", "Label not found");
@@ -82,14 +75,12 @@ class ManageLabelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult removeByResource(string resourceType, string resourceId)
-  {
+  CommandResult removeByResource(string resourceType, string resourceId) {
     repo.removeByResource(parseResourceType(resourceType), resourceId);
     return CommandResult(true, "", "");
   }
 
-  private LabeledResourceType parseResourceType(string s)
-  {
+  private LabeledResourceType parseResourceType(string s) {
     switch (s)
     {
     case "globalAccount":
@@ -107,8 +98,7 @@ class ManageLabelsUseCase : UIMUseCase {
     }
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;

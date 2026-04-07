@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class EnvironmentController : SAPController {
   private ManageEnvironmentInstancesUseCase uc;
 
-  this(ManageEnvironmentInstancesUseCase uc)
-  {
+  this(ManageEnvironmentInstancesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/environments", &handleCreate);
     router.get("/api/v1/environments", &handleList);
     router.get("/api/v1/environments/*", &handleGet);
@@ -35,8 +33,7 @@ class EnvironmentController : SAPController {
     router.post("/api/v1/environments/deprovision/*", &handleDeprovision);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -69,8 +66,7 @@ class EnvironmentController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto subId = req.params.get("subaccountId");
@@ -95,8 +91,7 @@ class EnvironmentController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -112,8 +107,7 @@ class EnvironmentController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -136,8 +130,7 @@ class EnvironmentController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

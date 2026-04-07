@@ -20,13 +20,11 @@ import uim.platform.integration.automation.presentation.http.scenario_controller
 class DestinationController {
   private ManageDestinationsUseCase useCase;
 
-  this(ManageDestinationsUseCase useCase)
-  {
+  this(ManageDestinationsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/destinations", &handleCreate);
     router.get("/api/v1/destinations", &handleList);
     router.get("/api/v1/destinations/*", &handleGetById);
@@ -34,8 +32,7 @@ class DestinationController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -74,8 +71,7 @@ class DestinationController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -96,8 +92,7 @@ class DestinationController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -116,8 +111,7 @@ class DestinationController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -158,8 +152,7 @@ class DestinationController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -182,8 +175,7 @@ class DestinationController {
     }
   }
 
-  private static Json serializeDestination(ref const Destination d)
-  {
+  private static Json serializeDestination(ref const Destination d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);
@@ -208,8 +200,7 @@ class DestinationController {
 }
 
 DestinationType parseDestinationType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "http":
     return DestinationType.http;
   case "rfc":
@@ -226,8 +217,7 @@ DestinationType parseDestinationType(string s) {
 }
 
 AuthenticationType parseAuthenticationType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "basic":
     return AuthenticationType.basic;
   case "oauth2ClientCredentials":
@@ -248,8 +238,7 @@ AuthenticationType parseAuthenticationType(string s) {
 }
 
 ProxyType parseProxyType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "internet":
     return ProxyType.internet;
   case "onPremise":

@@ -32,8 +32,7 @@ string[string] jsonStrMap(Json j, string key) {
     return (string[string]).init;
 
   string[string] result;
-  foreach (string k, val; *v)
-  {
+  foreach (string k, val; *v) {
     if (val.isString)
       result[k] = val.get!string;
   }

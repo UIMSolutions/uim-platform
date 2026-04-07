@@ -16,14 +16,12 @@ class ManageEntitlementsUseCase : UIMUseCase {
   private EntitlementRepository repo;
   private EntitlementEvaluator evaluator;
 
-  this(EntitlementRepository repo, EntitlementEvaluator evaluator)
-  {
+  this(EntitlementRepository repo, EntitlementEvaluator evaluator) {
     this.repo = repo;
     this.evaluator = evaluator;
   }
 
-  CommandResult assign(AssignEntitlementRequest req)
-  {
+  CommandResult assign(AssignEntitlementRequest req) {
     if (req.globalAccountId.length == 0)
       return CommandResult(false, "", "Global account ID is required");
     if (req.servicePlanId.length == 0)
@@ -62,8 +60,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req)
-  {
+  CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
     auto ent = repo.findById(id);
     if (ent.id.length == 0)
       return CommandResult(false, "", "Entitlement not found");
@@ -76,8 +73,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult revoke(EntitlementId id)
-  {
+  CommandResult revoke(EntitlementId id) {
     auto ent = repo.findById(id);
     if (ent.id.length == 0)
       return CommandResult(false, "", "Entitlement not found");
@@ -88,28 +84,23 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Entitlement getById(EntitlementId id)
-  {
+  Entitlement getById(EntitlementId id) {
     return repo.findById(id);
   }
 
-  Entitlement[] listByGlobalAccount(GlobalAccountId gaId)
-  {
+  Entitlement[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }
 
-  Entitlement[] listBySubaccount(SubaccountId subId)
-  {
+  Entitlement[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
-  Entitlement[] listByDirectory(DirectoryId dirId)
-  {
+  Entitlement[] listByDirectory(DirectoryId dirId) {
     return repo.findByDirectory(dirId);
   }
 
-  CommandResult remove(EntitlementId id)
-  {
+  CommandResult remove(EntitlementId id) {
     auto ent = repo.findById(id);
     if (ent.id.length == 0)
       return CommandResult(false, "", "Entitlement not found");
@@ -117,8 +108,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;

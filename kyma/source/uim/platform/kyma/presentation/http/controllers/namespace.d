@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class NamespaceController {
   private ManageNamespacesUseCase uc;
 
-  this(ManageNamespacesUseCase uc)
-  {
+  this(ManageNamespacesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/namespaces", &handleCreate);
     router.get("/api/v1/namespaces", &handleList);
     router.get("/api/v1/namespaces/*", &handleGetById);
@@ -33,8 +31,7 @@ class NamespaceController {
     router.delete_("/api/v1/namespaces/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -70,8 +67,7 @@ class NamespaceController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto envIdParam = req.params.get("environmentId");
@@ -93,8 +89,7 @@ class NamespaceController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -112,8 +107,7 @@ class NamespaceController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class NamespaceController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -159,8 +152,7 @@ class NamespaceController {
     }
   }
 
-  private Json serializeNs(ref Namespace ns)
-  {
+  private Json serializeNs(ref Namespace ns) {
     auto j = Json.emptyObject;
     j["id"] = Json(ns.id);
     j["environmentId"] = Json(ns.environmentId);

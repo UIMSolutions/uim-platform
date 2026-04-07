@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageApplicationsUseCase : UIMUseCase {
   private ApplicationRepository repo;
 
-  this(ApplicationRepository repo)
-  {
+  this(ApplicationRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult register(RegisterApplicationRequest req)
-  {
+  CommandResult register(RegisterApplicationRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Application name is required");
     if (req.environmentId.length == 0)
@@ -78,8 +76,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req)
-  {
+  CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req) {
     auto app = repo.findById(id);
     if (app.id.length == 0)
       return CommandResult(false, "", "Application not found");
@@ -128,8 +125,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult connectApplication(ApplicationId id)
-  {
+  CommandResult connectApplication(ApplicationId id) {
     auto app = repo.findById(id);
     if (app.id.length == 0)
       return CommandResult(false, "", "Application not found");
@@ -139,8 +135,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult disconnectApplication(ApplicationId id)
-  {
+  CommandResult disconnectApplication(ApplicationId id) {
     auto app = repo.findById(id);
     if (app.id.length == 0)
       return CommandResult(false, "", "Application not found");
@@ -150,23 +145,19 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Application getApplication(ApplicationId id)
-  {
+  Application getApplication(ApplicationId id) {
     return repo.findById(id);
   }
 
-  Application[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  Application[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  Application[] listByTenant(TenantId tenantId)
-  {
+  Application[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(ApplicationId id)
-  {
+  CommandResult deleteApplication(ApplicationId id) {
     auto app = repo.findById(id);
     if (app.id.length == 0)
       return CommandResult(false, "", "Application not found");
@@ -174,8 +165,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private AppRegistrationType parseRegistrationType(string s)
-  {
+  private AppRegistrationType parseRegistrationType(string s) {
     switch (s)
     {
     case "api":

@@ -19,20 +19,17 @@ mixin(ShowModule!());
 class OverviewController : SAPController {
   private GetAccountOverviewUseCase uc;
 
-  this(GetAccountOverviewUseCase uc)
-  {
+  this(GetAccountOverviewUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.get("/api/v1/overview", &handleOverview);
   }
 
-  private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto gaId = req.params.get("globalAccountId");

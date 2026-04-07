@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class ServicePlanController : SAPController {
   private ManageServicePlansUseCase uc;
 
-  this(ManageServicePlansUseCase uc)
-  {
+  this(ManageServicePlansUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/service-plans", &handleCreate);
@@ -37,8 +35,7 @@ class ServicePlanController : SAPController {
     router.delete_("/api/v1/service-plans/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class ServicePlanController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto serviceName = req.params.get("serviceName");
@@ -104,8 +100,7 @@ class ServicePlanController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -121,8 +116,7 @@ class ServicePlanController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -146,8 +140,7 @@ class ServicePlanController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

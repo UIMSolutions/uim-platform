@@ -16,14 +16,12 @@ class ManageFunctionsUseCase : UIMUseCase {
   private FunctionRepository repo;
   private FunctionValidator validator;
 
-  this(FunctionRepository repo, FunctionValidator validator)
-  {
+  this(FunctionRepository repo, FunctionValidator validator) {
     this.repo = repo;
     this.validator = validator;
   }
 
-  CommandResult create(CreateFunctionRequest req)
-  {
+  CommandResult create(CreateFunctionRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Function name is required");
     if (req.namespaceId.length == 0)
@@ -71,8 +69,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateFunction(FunctionId id, UpdateFunctionRequest req)
-  {
+  CommandResult updateFunction(FunctionId id, UpdateFunctionRequest req) {
     auto fn = repo.findById(id);
     if (fn.id.length == 0)
       return CommandResult(false, "", "Function not found");
@@ -116,23 +113,19 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServerlessFunction getFunction(FunctionId id)
-  {
+  ServerlessFunction getFunction(FunctionId id) {
     return repo.findById(id);
   }
 
-  ServerlessFunction[] listByNamespace(NamespaceId nsId)
-  {
+  ServerlessFunction[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ServerlessFunction[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  ServerlessFunction[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteFunction(FunctionId id)
-  {
+  CommandResult deleteFunction(FunctionId id) {
     auto fn = repo.findById(id);
     if (fn.id.length == 0)
       return CommandResult(false, "", "Function not found");
@@ -140,8 +133,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private FunctionRuntime parseRuntime(string s)
-  {
+  private FunctionRuntime parseRuntime(string s) {
     switch (s)
     {
     case "nodejs18":
@@ -157,8 +149,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     }
   }
 
-  private ScalingType parseScalingType(string s)
-  {
+  private ScalingType parseScalingType(string s) {
     switch (s)
     {
     case "fixed":

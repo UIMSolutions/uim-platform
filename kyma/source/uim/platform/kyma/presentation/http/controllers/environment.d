@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class EnvironmentController {
   private ManageEnvironmentsUseCase uc;
 
-  this(ManageEnvironmentsUseCase uc)
-  {
+  this(ManageEnvironmentsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/environments", &handleCreate);
     router.get("/api/v1/environments", &handleList);
     router.get("/api/v1/environments/*", &handleGetById);
@@ -33,8 +31,7 @@ class EnvironmentController {
     router.delete_("/api/v1/environments/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -72,8 +69,7 @@ class EnvironmentController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -100,8 +96,7 @@ class EnvironmentController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -119,8 +114,7 @@ class EnvironmentController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -147,8 +141,7 @@ class EnvironmentController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class EnvironmentController {
     }
   }
 
-  private Json serializeEnv(ref KymaEnvironment e)
-  {
+  private Json serializeEnv(ref KymaEnvironment e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

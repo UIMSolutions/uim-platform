@@ -22,36 +22,30 @@ class ManageStepsUseCase : UIMUseCase {
   private StepExecutor executor;
   private WorkflowEngine engine;
 
-  this(StepRepository repo, StepExecutor executor, WorkflowEngine engine)
-  {
+  this(StepRepository repo, StepExecutor executor, WorkflowEngine engine) {
     this.repo = repo;
     this.executor = executor;
     this.engine = engine;
   }
 
-  WorkflowStep[] listSteps(WorkflowId workflowId, TenantId tenantId)
-  {
+  WorkflowStep[] listSteps(WorkflowId workflowId, TenantId tenantId) {
     return repo.findByWorkflow(workflowId, tenantId);
   }
 
-  WorkflowStep* getStep(StepId id, TenantId tenantId)
-  {
+  WorkflowStep* getStep(StepId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  WorkflowStep[] getMyTasks(TenantId tenantId, UserId userId)
-  {
+  WorkflowStep[] getMyTasks(TenantId tenantId, UserId userId) {
     return repo.findByAssignee(tenantId, userId);
   }
 
-  WorkflowStep[] getTasksByRole(TenantId tenantId, string role)
-  {
+  WorkflowStep[] getTasksByRole(TenantId tenantId, string role) {
     return repo.findByRole(tenantId, role);
   }
 
   /// Start a step (mark as in-progress).
-  CommandResult startStep(StepId id, TenantId tenantId, UserId userId)
-  {
+  CommandResult startStep(StepId id, TenantId tenantId, UserId userId) {
     if (!engine.areDependenciesMet(*repo.findById(id, tenantId), tenantId))
       return CommandResult("", "Step dependencies are not yet met");
 
@@ -61,8 +55,7 @@ class ManageStepsUseCase : UIMUseCase {
   }
 
   /// Complete a step and advance the workflow.
-  CommandResult completeStep(CompleteStepRequest req)
-  {
+  CommandResult completeStep(CompleteStepRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Step ID is required");
     if (req.tenantId.length == 0)
@@ -80,16 +73,14 @@ class ManageStepsUseCase : UIMUseCase {
   }
 
   /// Mark a step as failed.
-  CommandResult failStep(FailStepRequest req)
-  {
+  CommandResult failStep(FailStepRequest req) {
     if (!executor.failStep(req.id, req.tenantId, req.reportedBy, req.errorMessage))
       return CommandResult("", "Cannot fail step — not found");
     return CommandResult(req.id, "");
   }
 
   /// Skip a step and advance the workflow.
-  CommandResult skipStep(SkipStepRequest req)
-  {
+  CommandResult skipStep(SkipStepRequest req) {
     if (!executor.skipStep(req.id, req.tenantId, req.skippedBy, req.reason))
       return CommandResult("", "Cannot skip step — not found");
 
@@ -101,8 +92,7 @@ class ManageStepsUseCase : UIMUseCase {
   }
 
   /// Assign a step to a user.
-  CommandResult assignStep(AssignStepRequest req)
-  {
+  CommandResult assignStep(AssignStepRequest req) {
     auto step = repo.findById(req.id, req.tenantId);
     if (step is null)
       return CommandResult("", "Step not found");

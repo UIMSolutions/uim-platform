@@ -20,41 +20,34 @@ class MonitorExecutionsUseCase : UIMUseCase {
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
 
-  this(ExecutionLogRepository logRepo, WorkflowRepository workflowRepo, StepRepository stepRepo)
-  {
+  this(ExecutionLogRepository logRepo, WorkflowRepository workflowRepo, StepRepository stepRepo) {
     this.logRepo = logRepo;
     this.workflowRepo = workflowRepo;
     this.stepRepo = stepRepo;
   }
 
-  ExecutionLog[] getWorkflowLogs(WorkflowId workflowId, TenantId tenantId)
-  {
+  ExecutionLog[] getWorkflowLogs(WorkflowId workflowId, TenantId tenantId) {
     return logRepo.findByWorkflow(workflowId, tenantId);
   }
 
-  ExecutionLog[] getStepLogs(StepId stepId, TenantId tenantId)
-  {
+  ExecutionLog[] getStepLogs(StepId stepId, TenantId tenantId) {
     return logRepo.findByStep(stepId, tenantId);
   }
 
-  ExecutionLog[] getAllLogs(TenantId tenantId)
-  {
+  ExecutionLog[] getAllLogs(TenantId tenantId) {
     return logRepo.findByTenant(tenantId);
   }
 
-  ExecutionLog[] getFailures(TenantId tenantId)
-  {
+  ExecutionLog[] getFailures(TenantId tenantId) {
     return logRepo.findByOutcome(tenantId, ExecutionOutcome.failure);
   }
 
-  ExecutionLog[] getLogsByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
-  {
+  ExecutionLog[] getLogsByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return logRepo.findByTimeRange(tenantId, timeFrom, timeTo);
   }
 
   /// Get a workflow status summary suitable for a monitoring dashboard.
-  WorkflowSummary getWorkflowSummary(WorkflowId workflowId, TenantId tenantId)
-  {
+  WorkflowSummary getWorkflowSummary(WorkflowId workflowId, TenantId tenantId) {
     auto wf = workflowRepo.findById(workflowId, tenantId);
     if (wf is null)
       return WorkflowSummary.init;

@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class ApiRuleController {
   private ManageApiRulesUseCase uc;
 
-  this(ManageApiRulesUseCase uc)
-  {
+  this(ManageApiRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/api-rules", &handleCreate);
     router.get("/api/v1/api-rules", &handleList);
     router.get("/api/v1/api-rules/*", &handleGetById);
@@ -33,8 +31,7 @@ class ApiRuleController {
     router.delete_("/api/v1/api-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class ApiRuleController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto nsId = req.params.get("namespaceId");
@@ -106,8 +102,7 @@ class ApiRuleController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -125,8 +120,7 @@ class ApiRuleController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +151,7 @@ class ApiRuleController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -174,8 +167,7 @@ class ApiRuleController {
     }
   }
 
-  private ApiRuleEntryDto[] parseRuleEntries(Json j)
-  {
+  private ApiRuleEntryDto[] parseRuleEntries(Json j) {
     ApiRuleEntryDto[] entries;
     auto v = "rules" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -194,8 +186,7 @@ class ApiRuleController {
     return entries;
   }
 
-  private Json serializeRule(ref ApiRule rule)
-  {
+  private Json serializeRule(ref ApiRule rule) {
     auto j = Json.emptyObject;
     j["id"] = Json(rule.id);
     j["namespaceId"] = Json(rule.namespaceId);

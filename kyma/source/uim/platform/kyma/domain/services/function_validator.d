@@ -11,8 +11,7 @@ import uim.platform.kyma.domain.types;
 /// Domain service: validates serverless function configurations.
 class FunctionValidator {
   /// Validate function configuration before deployment.
-  string validate(ServerlessFunction fn)
-  {
+  string validate(ServerlessFunction fn) {
     if (fn.name.length == 0)
       return "Function name is required";
     if (fn.sourceCode.length == 0)
@@ -29,15 +28,13 @@ class FunctionValidator {
   }
 
   /// Check if a runtime is supported.
-  bool isRuntimeSupported(FunctionRuntime runtime)
-  {
+  bool isRuntimeSupported(FunctionRuntime runtime) {
     return runtime == FunctionRuntime.nodejs18 || runtime == FunctionRuntime.nodejs20
       || runtime == FunctionRuntime.python39 || runtime == FunctionRuntime.python312;
   }
 
   /// Validate resource limits.
-  string validateResources(string cpuReq, string cpuLim, string memReq, string memLim)
-  {
+  string validateResources(string cpuReq, string cpuLim, string memReq, string memLim) {
     // Basic presence checks for resource constraints
     if (cpuReq.length > 0 && cpuLim.length == 0)
       return "CPU limit is required when CPU request is set";

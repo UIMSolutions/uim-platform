@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class ServiceInstanceController {
   private ManageServiceInstancesUseCase uc;
 
-  this(ManageServiceInstancesUseCase uc)
-  {
+  this(ManageServiceInstancesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/service-instances", &handleCreate);
     router.get("/api/v1/service-instances", &handleList);
     router.get("/api/v1/service-instances/*", &handleGetById);
@@ -33,8 +31,7 @@ class ServiceInstanceController {
     router.delete_("/api/v1/service-instances/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class ServiceInstanceController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto nsId = req.params.get("namespaceId");
@@ -98,8 +94,7 @@ class ServiceInstanceController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -117,8 +112,7 @@ class ServiceInstanceController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class ServiceInstanceController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -159,8 +152,7 @@ class ServiceInstanceController {
     }
   }
 
-  private Json serializeInst(ref ServiceInstance inst)
-  {
+  private Json serializeInst(ref ServiceInstance inst) {
     auto j = Json.emptyObject;
     j["id"] = Json(inst.id);
     j["namespaceId"] = Json(inst.namespaceId);

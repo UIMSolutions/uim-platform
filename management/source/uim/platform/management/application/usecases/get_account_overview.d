@@ -30,8 +30,7 @@ class GetAccountOverviewUseCase : UIMUseCase {
 
   this(SubaccountRepository subaccountRepo, DirectoryRepository directoryRepo, EntitlementRepository entitlementRepo,
       EnvironmentInstanceRepository environmentRepo,
-      SubscriptionRepository subscriptionRepo, PlatformEventRepository eventRepo)
-  {
+      SubscriptionRepository subscriptionRepo, PlatformEventRepository eventRepo) {
     this.subaccountRepo = subaccountRepo;
     this.directoryRepo = directoryRepo;
     this.entitlementRepo = entitlementRepo;
@@ -40,8 +39,7 @@ class GetAccountOverviewUseCase : UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  AccountOverview getOverview(GlobalAccountId gaId)
-  {
+  AccountOverview getOverview(GlobalAccountId gaId) {
     AccountOverview ov;
 
     auto subaccounts = subaccountRepo.findByGlobalAccount(gaId);

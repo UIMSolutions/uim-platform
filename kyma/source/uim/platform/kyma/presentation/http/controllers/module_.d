@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class ModuleController {
   private ManageModulesUseCase uc;
 
-  this(ManageModulesUseCase uc)
-  {
+  this(ManageModulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/modules", &handleEnable);
     router.get("/api/v1/modules", &handleList);
     router.get("/api/v1/modules/*", &handleGetById);
@@ -34,8 +32,7 @@ class ModuleController {
     router.delete_("/api/v1/modules/*", &handleDelete);
   }
 
-  private void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class ModuleController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto envIdParam = req.params.get("environmentId");
@@ -89,8 +85,7 @@ class ModuleController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -108,8 +103,7 @@ class ModuleController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -132,8 +126,7 @@ class ModuleController {
     }
   }
 
-  private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -149,8 +142,7 @@ class ModuleController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -166,8 +158,7 @@ class ModuleController {
     }
   }
 
-  private Json serializeModule(ref KymaModule m)
-  {
+  private Json serializeModule(ref KymaModule m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["environmentId"] = Json(m.environmentId);

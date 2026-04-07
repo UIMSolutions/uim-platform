@@ -19,13 +19,11 @@ import uim.platform.integration.automation.presentation.http.json_utils;
 class StepController {
   private ManageStepsUseCase useCase;
 
-  this(ManageStepsUseCase useCase)
-  {
+  this(ManageStepsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/steps", &handleListByWorkflow);
     router.get("/api/v1/steps/*", &handleGetById);
     router.get("/api/v1/my-tasks", &handleMyTasks);
@@ -36,8 +34,7 @@ class StepController {
     router.put("/api/v1/steps/assign/*", &handleAssign);
   }
 
-  private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -59,8 +56,7 @@ class StepController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -79,8 +75,7 @@ class StepController {
     }
   }
 
-  private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -102,8 +97,7 @@ class StepController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -129,8 +123,7 @@ class StepController {
     }
   }
 
-  private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -160,8 +153,7 @@ class StepController {
     }
   }
 
-  private void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -191,8 +183,7 @@ class StepController {
     }
   }
 
-  private void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -222,8 +213,7 @@ class StepController {
     }
   }
 
-  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -252,8 +242,7 @@ class StepController {
     }
   }
 
-  private static Json serializeStep(ref const WorkflowStep s)
-  {
+  private static Json serializeStep(ref const WorkflowStep s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["workflowId"] = Json(s.workflowId);

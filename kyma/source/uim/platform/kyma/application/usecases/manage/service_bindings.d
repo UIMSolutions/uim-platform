@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository repo;
 
-  this(ServiceBindingRepository repo)
-  {
+  this(ServiceBindingRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateServiceBindingRequest req)
-  {
+  CommandResult create(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Binding name is required");
     if (req.serviceInstanceId.length == 0)
@@ -54,8 +52,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req)
-  {
+  CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
     auto binding = repo.findById(id);
     if (binding.id.length == 0)
       return CommandResult(false, "", "Service binding not found");
@@ -74,23 +71,19 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServiceBinding getBinding(ServiceBindingId id)
-  {
+  ServiceBinding getBinding(ServiceBindingId id) {
     return repo.findById(id);
   }
 
-  ServiceBinding[] listByNamespace(NamespaceId nsId)
-  {
+  ServiceBinding[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ServiceBinding[] listByServiceInstance(ServiceInstanceId instId)
-  {
+  ServiceBinding[] listByServiceInstance(ServiceInstanceId instId) {
     return repo.findByServiceInstance(instId);
   }
 
-  CommandResult deleteBinding(ServiceBindingId id)
-  {
+  CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = repo.findById(id);
     if (binding.id.length == 0)
       return CommandResult(false, "", "Service binding not found");

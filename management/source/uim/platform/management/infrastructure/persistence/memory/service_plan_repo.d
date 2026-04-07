@@ -20,45 +20,37 @@ mixin(ShowModule!());
 class MemoryServicePlanRepository : ServicePlanRepository {
   private ServicePlan[ServicePlanId] store;
 
-  ServicePlan findById(ServicePlanId id)
-  {
+  ServicePlan findById(ServicePlanId id) {
     if (auto p = id in store)
       return *p;
     return ServicePlan.init;
   }
 
-  ServicePlan[] findByService(string serviceName)
-  {
+  ServicePlan[] findByService(string serviceName) {
     return store.byValue().filter!(e => e.serviceName == serviceName).array;
   }
 
-  ServicePlan[] findByCategory(ServicePlanCategory category)
-  {
+  ServicePlan[] findByCategory(ServicePlanCategory category) {
     return store.byValue().filter!(e => e.category == category).array;
   }
 
-  ServicePlan[] findByRegion(string region)
-  {
+  ServicePlan[] findByRegion(string region) {
     return store.byValue().filter!(e => e.availableRegions.canFind(region)).array;
   }
 
-  ServicePlan[] findAll()
-  {
+  ServicePlan[] findAll() {
     return store.byValue().array;
   }
 
-  void save(ServicePlan plan)
-  {
+  void save(ServicePlan plan) {
     store[plan.id] = plan;
   }
 
-  void update(ServicePlan plan)
-  {
+  void update(ServicePlan plan) {
     store[plan.id] = plan;
   }
 
-  void remove(ServicePlanId id)
-  {
+  void remove(ServicePlanId id) {
     store.remove(id);
   }
 }

@@ -16,14 +16,12 @@ class ManageModulesUseCase : UIMUseCase {
   private ModuleRepository repo;
   private ModuleDependencyResolver depResolver;
 
-  this(ModuleRepository repo, ModuleDependencyResolver depResolver)
-  {
+  this(ModuleRepository repo, ModuleDependencyResolver depResolver) {
     this.repo = repo;
     this.depResolver = depResolver;
   }
 
-  CommandResult enableModule(EnableModuleRequest req)
-  {
+  CommandResult enableModule(EnableModuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Module name is required");
     if (req.environmentId.length == 0)
@@ -70,8 +68,7 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult disableModule(ModuleId id)
-  {
+  CommandResult disableModule(ModuleId id) {
     auto mod = repo.findById(id);
     if (mod.id.length == 0)
       return CommandResult(false, "", "Module not found");
@@ -94,8 +91,7 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateModule(ModuleId id, UpdateModuleRequest req)
-  {
+  CommandResult updateModule(ModuleId id, UpdateModuleRequest req) {
     auto mod = repo.findById(id);
     if (mod.id.length == 0)
       return CommandResult(false, "", "Module not found");
@@ -114,18 +110,15 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  KymaModule getModule(ModuleId id)
-  {
+  KymaModule getModule(ModuleId id) {
     return repo.findById(id);
   }
 
-  KymaModule[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  KymaModule[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteModule(ModuleId id)
-  {
+  CommandResult deleteModule(ModuleId id) {
     auto mod = repo.findById(id);
     if (mod.id.length == 0)
       return CommandResult(false, "", "Module not found");
@@ -133,8 +126,7 @@ class ManageModulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private ModuleType parseModuleType(string s)
-  {
+  private ModuleType parseModuleType(string s) {
     switch (s)
     {
     case "istio":
@@ -160,8 +152,7 @@ class ManageModulesUseCase : UIMUseCase {
     }
   }
 
-  private string[] getKnownDependencies(ModuleType t)
-  {
+  private string[] getKnownDependencies(ModuleType t) {
     switch (t)
     {
     case ModuleType.apiGateway:

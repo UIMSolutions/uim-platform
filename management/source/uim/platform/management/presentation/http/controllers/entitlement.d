@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class EntitlementController {
   private ManageEntitlementsUseCase uc;
 
-  this(ManageEntitlementsUseCase uc)
-  {
+  this(ManageEntitlementsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/entitlements", &handleAssign);
     router.get("/api/v1/entitlements", &handleList);
     router.get("/api/v1/entitlements/*", &handleGet);
@@ -36,8 +34,7 @@ class EntitlementController {
     router.delete_("/api/v1/entitlements/*", &handleDelete);
   }
 
-  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -67,8 +64,7 @@ class EntitlementController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto gaId = req.params.get("globalAccountId");
@@ -96,8 +92,7 @@ class EntitlementController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -113,8 +108,7 @@ class EntitlementController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -133,8 +127,7 @@ class EntitlementController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -148,8 +141,7 @@ class EntitlementController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

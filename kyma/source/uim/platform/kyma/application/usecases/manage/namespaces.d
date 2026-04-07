@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageNamespacesUseCase : UIMUseCase {
   private NamespaceRepository repo;
 
-  this(NamespaceRepository repo)
-  {
+  this(NamespaceRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateNamespaceRequest req)
-  {
+  CommandResult create(CreateNamespaceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Namespace name is required");
     if (req.environmentId.length == 0)
@@ -57,8 +55,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req)
-  {
+  CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
     auto ns = repo.findById(id);
     if (ns.id.length == 0)
       return CommandResult(false, "", "Namespace not found");
@@ -88,18 +85,15 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Namespace getNamespace(NamespaceId id)
-  {
+  Namespace getNamespace(NamespaceId id) {
     return repo.findById(id);
   }
 
-  Namespace[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  Namespace[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteNamespace(NamespaceId id)
-  {
+  CommandResult deleteNamespace(NamespaceId id) {
     auto ns = repo.findById(id);
     if (ns.id.length == 0)
       return CommandResult(false, "", "Namespace not found");
@@ -107,8 +101,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private QuotaEnforcement parseQuotaEnforcement(string s)
-  {
+  private QuotaEnforcement parseQuotaEnforcement(string s) {
     switch (s)
     {
     case "enforce":

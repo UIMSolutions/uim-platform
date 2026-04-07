@@ -19,13 +19,11 @@ import uim.platform.integration.automation.presentation.http.json_utils;
 class WorkflowController {
   private ManageWorkflowsUseCase useCase;
 
-  this(ManageWorkflowsUseCase useCase)
-  {
+  this(ManageWorkflowsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/workflows", &handleCreate);
     router.get("/api/v1/workflows", &handleList);
     router.get("/api/v1/workflows/*", &handleGetById);
@@ -36,8 +34,7 @@ class WorkflowController {
     router.delete_("/api/v1/workflows/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class WorkflowController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -90,8 +86,7 @@ class WorkflowController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class WorkflowController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -135,8 +129,7 @@ class WorkflowController {
     }
   }
 
-  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -160,8 +153,7 @@ class WorkflowController {
     }
   }
 
-  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -185,8 +177,7 @@ class WorkflowController {
     }
   }
 
-  private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleTerminate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -210,8 +201,7 @@ class WorkflowController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -234,8 +224,7 @@ class WorkflowController {
     }
   }
 
-  private static Json serializeWorkflow(ref const Workflow w)
-  {
+  private static Json serializeWorkflow(ref const Workflow w) {
     auto j = Json.emptyObject;
     j["id"] = Json(w.id);
     j["tenantId"] = Json(w.tenantId);

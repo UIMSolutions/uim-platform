@@ -18,13 +18,11 @@ import uim.platform.integration.automation.application.dto;
 class ManageSystemsUseCase : UIMUseCase {
   private SystemRepository repo;
 
-  this(SystemRepository repo)
-  {
+  this(SystemRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createSystem(CreateSystemRequest req)
-  {
+  CommandResult createSystem(CreateSystemRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -57,23 +55,19 @@ class ManageSystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SystemConnection* getSystem(SystemId id, TenantId tenantId)
-  {
+  SystemConnection* getSystem(SystemId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  SystemConnection[] listSystems(TenantId tenantId)
-  {
+  SystemConnection[] listSystems(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  SystemConnection[] listByType(TenantId tenantId, SystemType systemType)
-  {
+  SystemConnection[] listByType(TenantId tenantId, SystemType systemType) {
     return repo.findByType(tenantId, systemType);
   }
 
-  CommandResult updateSystem(UpdateSystemRequest req)
-  {
+  CommandResult updateSystem(UpdateSystemRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
     if (req.tenantId.length == 0)
@@ -112,8 +106,7 @@ class ManageSystemsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSystem(SystemId id, TenantId tenantId)
-  {
+  CommandResult deleteSystem(SystemId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "System not found");
@@ -123,8 +116,7 @@ class ManageSystemsUseCase : UIMUseCase {
   }
 
   /// Test a system connection (simulated).
-  CommandResult testConnection(SystemId id, TenantId tenantId)
-  {
+  CommandResult testConnection(SystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "System not found");

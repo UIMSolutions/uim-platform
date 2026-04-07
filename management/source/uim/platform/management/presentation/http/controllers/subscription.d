@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class SubscriptionController : SAPController {
   private ManageSubscriptionsUseCase uc;
 
-  this(ManageSubscriptionsUseCase uc)
-  {
+  this(ManageSubscriptionsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/subscriptions", &handleSubscribe);
@@ -38,8 +36,7 @@ class SubscriptionController : SAPController {
     router.post("/api/v1/subscriptions/unsubscribe/*", &handleUnsubscribe);
   }
 
-  private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class SubscriptionController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto subId = req.params.get("subaccountId");
@@ -88,8 +84,7 @@ class SubscriptionController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -105,8 +100,7 @@ class SubscriptionController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -125,8 +119,7 @@ class SubscriptionController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

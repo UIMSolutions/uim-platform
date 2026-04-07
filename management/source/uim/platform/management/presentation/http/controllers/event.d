@@ -20,19 +20,16 @@ mixin(ShowModule!());
 class EventController {
   private QueryPlatformEventsUseCase uc;
 
-  this(QueryPlatformEventsUseCase uc)
-  {
+  this(QueryPlatformEventsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/events", &handleList);
     router.get("/api/v1/events/*", &handleGet);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto gaId = req.params.get("globalAccountId");
@@ -63,8 +60,7 @@ class EventController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

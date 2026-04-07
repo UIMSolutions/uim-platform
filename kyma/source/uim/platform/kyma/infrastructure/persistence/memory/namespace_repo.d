@@ -15,43 +15,36 @@ import uim.platform.kyma.domain.ports.repositories.namespaces;
 class MemoryNamespaceRepository : NamespaceRepository {
   private Namespace[NamespaceId] store;
 
-  Namespace findById(NamespaceId id)
-  {
+  Namespace findById(NamespaceId id) {
     if (auto p = id in store)
       return *p;
     return Namespace.init;
   }
 
-  Namespace findByName(KymaEnvironmentId envId, string name)
-  {
+  Namespace findByName(KymaEnvironmentId envId, string name) {
     foreach (ref e; store.byValue())
       if (e.environmentId == envId && e.name == name)
         return e;
     return Namespace.init;
   }
 
-  Namespace[] findByEnvironment(KymaEnvironmentId envId)
-  {
+  Namespace[] findByEnvironment(KymaEnvironmentId envId) {
     return store.byValue().filter!(e => e.environmentId == envId).array;
   }
 
-  Namespace[] findByTenant(TenantId tenantId)
-  {
+  Namespace[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void save(Namespace ns)
-  {
+  void save(Namespace ns) {
     store[ns.id] = ns;
   }
 
-  void update(Namespace ns)
-  {
+  void update(Namespace ns) {
     store[ns.id] = ns;
   }
 
-  void remove(NamespaceId id)
-  {
+  void remove(NamespaceId id) {
     store.remove(id);
   }
 }

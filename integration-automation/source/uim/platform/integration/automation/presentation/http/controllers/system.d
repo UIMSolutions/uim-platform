@@ -20,13 +20,11 @@ import uim.platform.integration.automation.presentation.http.scenario_controller
 class SystemController {
   private ManageSystemsUseCase useCase;
 
-  this(ManageSystemsUseCase useCase)
-  {
+  this(ManageSystemsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/systems", &handleCreate);
     router.get("/api/v1/systems", &handleList);
     router.get("/api/v1/systems/*", &handleGetById);
@@ -35,8 +33,7 @@ class SystemController {
     router.post("/api/v1/systems/test/*", &handleTestConnection);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class SystemController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -95,8 +91,7 @@ class SystemController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -115,8 +110,7 @@ class SystemController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -155,8 +149,7 @@ class SystemController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -179,8 +172,7 @@ class SystemController {
     }
   }
 
-  private void handleTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -204,8 +196,7 @@ class SystemController {
     }
   }
 
-  private static Json serializeSystem(ref const SystemConnection s)
-  {
+  private static Json serializeSystem(ref const SystemConnection s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);
@@ -229,8 +220,7 @@ class SystemController {
 }
 
 ConnectionStatus parseConnectionStatus(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "active":
     return ConnectionStatus.active;
   case "inactive":

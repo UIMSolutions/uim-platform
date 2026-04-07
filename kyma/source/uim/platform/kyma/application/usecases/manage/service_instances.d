@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageServiceInstancesUseCase : UIMUseCase {
   private ServiceInstanceRepository repo;
 
-  this(ServiceInstanceRepository repo)
-  {
+  this(ServiceInstanceRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateServiceInstanceRequest req)
-  {
+  CommandResult create(CreateServiceInstanceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Service instance name is required");
     if (req.serviceOfferingName.length == 0)
@@ -57,8 +55,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req)
-  {
+  CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
     auto inst = repo.findById(id);
     if (inst.id.length == 0)
       return CommandResult(false, "", "Service instance not found");
@@ -80,23 +77,19 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServiceInstance getServiceInstance(ServiceInstanceId id)
-  {
+  ServiceInstance getServiceInstance(ServiceInstanceId id) {
     return repo.findById(id);
   }
 
-  ServiceInstance[] listByNamespace(NamespaceId nsId)
-  {
+  ServiceInstance[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ServiceInstance[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  ServiceInstance[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteServiceInstance(ServiceInstanceId id)
-  {
+  CommandResult deleteServiceInstance(ServiceInstanceId id) {
     auto inst = repo.findById(id);
     if (inst.id.length == 0)
       return CommandResult(false, "", "Service instance not found");

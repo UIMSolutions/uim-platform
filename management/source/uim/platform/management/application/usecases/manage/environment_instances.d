@@ -20,15 +20,13 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   private EnvironmentProvisioner provisioner;
 
   this(EnvironmentInstanceRepository repo, SubaccountRepository subaccountRepo,
-      EnvironmentProvisioner provisioner)
-  {
+      EnvironmentProvisioner provisioner) {
     this.repo = repo;
     this.subaccountRepo = subaccountRepo;
     this.provisioner = provisioner;
   }
 
-  CommandResult create(CreateEnvironmentInstanceRequest req)
-  {
+  CommandResult create(CreateEnvironmentInstanceRequest req) {
     if (req.subaccountId.length == 0)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.name.length == 0)
@@ -80,8 +78,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req)
-  {
+  CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
     auto inst = repo.findById(id);
     if (inst.id.length == 0)
       return CommandResult(false, "", "Environment instance not found");
@@ -104,8 +101,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult deprovision(EnvironmentInstanceId id)
-  {
+  CommandResult deprovision(EnvironmentInstanceId id) {
     auto inst = repo.findById(id);
     if (inst.id.length == 0)
       return CommandResult(false, "", "Environment instance not found");
@@ -121,23 +117,19 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  EnvironmentInstance getById(EnvironmentInstanceId id)
-  {
+  EnvironmentInstance getById(EnvironmentInstanceId id) {
     return repo.findById(id);
   }
 
-  EnvironmentInstance[] listBySubaccount(SubaccountId subId)
-  {
+  EnvironmentInstance[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
-  EnvironmentInstance[] listByType(SubaccountId subId, string envType)
-  {
+  EnvironmentInstance[] listByType(SubaccountId subId, string envType) {
     return repo.findByType(subId, parseEnvironmentType(envType));
   }
 
-  private EnvironmentType parseEnvironmentType(string s)
-  {
+  private EnvironmentType parseEnvironmentType(string s) {
     switch (s)
     {
     case "cloudFoundry":
@@ -153,8 +145,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     }
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;

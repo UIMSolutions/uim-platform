@@ -17,28 +17,23 @@ import uim.platform.integration.automation.domain.ports;
 class MemoryExecutionLogRepository : ExecutionLogRepository {
   private ExecutionLog[] store;
 
-  ExecutionLog[] findByWorkflow(WorkflowId workflowId, TenantId tenantId)
-  {
+  ExecutionLog[] findByWorkflow(WorkflowId workflowId, TenantId tenantId) {
     return store.filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).array;
   }
 
-  ExecutionLog[] findByStep(StepId stepId, TenantId tenantId)
-  {
+  ExecutionLog[] findByStep(StepId stepId, TenantId tenantId) {
     return store.filter!(e => e.stepId == stepId && e.tenantId == tenantId).array;
   }
 
-  ExecutionLog[] findByTenant(TenantId tenantId)
-  {
+  ExecutionLog[] findByTenant(TenantId tenantId) {
     return store.filter!(e => e.tenantId == tenantId).array;
   }
 
-  ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome)
-  {
+  ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome) {
     return store.filter!(e => e.tenantId == tenantId && e.outcome == outcome).array;
   }
 
-  ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
-  {
+  ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return store.filter!((e) {
       if (e.tenantId != tenantId)
         return false;
@@ -50,23 +45,19 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
     }).array;
   }
 
-  long countByWorkflow(WorkflowId workflowId, TenantId tenantId)
-  {
+  long countByWorkflow(WorkflowId workflowId, TenantId tenantId) {
     return cast(long) findByWorkflow(workflowId, tenantId).length;
   }
 
-  void save(ExecutionLog log)
-  {
+  void save(ExecutionLog log) {
     store ~= log;
   }
 
-  void removeByWorkflow(WorkflowId workflowId, TenantId tenantId)
-  {
+  void removeByWorkflow(WorkflowId workflowId, TenantId tenantId) {
     store = store.filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
   }
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp)
-  {
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 }

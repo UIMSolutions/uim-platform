@@ -18,13 +18,11 @@ import uim.platform.integration.automation.application.dto;
 class ManageScenariosUseCase : UIMUseCase {
   private ScenarioRepository repo;
 
-  this(ScenarioRepository repo)
-  {
+  this(ScenarioRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createScenario(CreateScenarioRequest req)
-  {
+  CommandResult createScenario(CreateScenarioRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -50,28 +48,23 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(scenario.id, "");
   }
 
-  IntegrationScenario* getScenario(ScenarioId id, TenantId tenantId)
-  {
+  IntegrationScenario* getScenario(ScenarioId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  IntegrationScenario[] listScenarios(TenantId tenantId)
-  {
+  IntegrationScenario[] listScenarios(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  IntegrationScenario[] listByCategory(TenantId tenantId, ScenarioCategory category)
-  {
+  IntegrationScenario[] listByCategory(TenantId tenantId, ScenarioCategory category) {
     return repo.findByCategory(tenantId, category);
   }
 
-  IntegrationScenario[] listActive(TenantId tenantId)
-  {
+  IntegrationScenario[] listActive(TenantId tenantId) {
     return repo.findByStatus(tenantId, ScenarioStatus.active);
   }
 
-  CommandResult updateScenario(UpdateScenarioRequest req)
-  {
+  CommandResult updateScenario(UpdateScenarioRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Scenario ID is required");
     if (req.tenantId.length == 0)
@@ -102,8 +95,7 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteScenario(ScenarioId id, TenantId tenantId)
-  {
+  CommandResult deleteScenario(ScenarioId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Scenario not found");

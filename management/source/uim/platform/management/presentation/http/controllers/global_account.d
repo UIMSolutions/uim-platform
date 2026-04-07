@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class GlobalAccountController : SAPController {
   private ManageGlobalAccountsUseCase uc;
 
-  this(ManageGlobalAccountsUseCase uc)
-  {
+  this(ManageGlobalAccountsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/accounts", &handleCreate);
     router.get("/api/v1/accounts", &handleList);
     router.get("/api/v1/accounts/*", &handleGet);
@@ -37,8 +35,7 @@ class GlobalAccountController : SAPController {
     router.delete_("/api/v1/accounts/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -70,8 +67,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto statusFilter = req.params.get("status");
@@ -94,8 +90,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -111,8 +106,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -134,8 +128,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -149,8 +142,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);
@@ -164,8 +156,7 @@ class GlobalAccountController : SAPController {
       writeError(res, 500, "Internal server error");
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractId(req.requestURI);

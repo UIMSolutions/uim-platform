@@ -19,15 +19,13 @@ class WorkflowEngine {
   private WorkflowRepository workflowRepo;
   private StepRepository stepRepo;
 
-  this(WorkflowRepository workflowRepo, StepRepository stepRepo)
-  {
+  this(WorkflowRepository workflowRepo, StepRepository stepRepo) {
     this.workflowRepo = workflowRepo;
     this.stepRepo = stepRepo;
   }
 
   /// Check if all dependencies of a step are satisfied.
-  bool areDependenciesMet(WorkflowStep step, TenantId tenantId)
-  {
+  bool areDependenciesMet(WorkflowStep step, TenantId tenantId) {
     if (step.dependencies.length == 0)
       return true;
 
@@ -41,8 +39,7 @@ class WorkflowEngine {
   }
 
   /// Advance the workflow to the next pending step if possible.
-  bool advanceWorkflow(WorkflowId workflowId, TenantId tenantId)
-  {
+  bool advanceWorkflow(WorkflowId workflowId, TenantId tenantId) {
     auto wf = workflowRepo.findById(workflowId, tenantId);
     if (wf is null || wf.status != WorkflowStatus.inProgress)
       return false;
@@ -90,8 +87,7 @@ class WorkflowEngine {
   }
 
   /// Check if the active workflow limit for a tenant is reached (SAP limit: 15).
-  bool isWorkflowLimitReached(TenantId tenantId)
-  {
+  bool isWorkflowLimitReached(TenantId tenantId) {
     return workflowRepo.countActiveByTenant(tenantId) >= 15;
   }
 }

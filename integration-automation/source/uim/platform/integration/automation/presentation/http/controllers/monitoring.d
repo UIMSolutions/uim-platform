@@ -18,13 +18,11 @@ import uim.platform.integration.automation.presentation.http.json_utils;
 class MonitoringController {
   private MonitorExecutionsUseCase useCase;
 
-  this(MonitorExecutionsUseCase useCase)
-  {
+  this(MonitorExecutionsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/monitoring/logs", &handleGetLogs);
     router.get("/api/v1/monitoring/logs/workflow/*", &handleGetWorkflowLogs);
     router.get("/api/v1/monitoring/logs/step/*", &handleGetStepLogs);
@@ -32,8 +30,7 @@ class MonitoringController {
     router.get("/api/v1/monitoring/summary/*", &handleGetSummary);
   }
 
-  private void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -54,8 +51,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto workflowId = extractIdFromPath(req.requestURI);
@@ -77,8 +73,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto stepId = extractIdFromPath(req.requestURI);
@@ -100,8 +95,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -122,8 +116,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto workflowId = extractIdFromPath(req.requestURI);
@@ -149,8 +142,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeLog(ref const ExecutionLog l)
-  {
+  private static Json serializeLog(ref const ExecutionLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["workflowId"] = Json(l.workflowId);

@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class ServiceBindingController {
   private ManageServiceBindingsUseCase uc;
 
-  this(ManageServiceBindingsUseCase uc)
-  {
+  this(ManageServiceBindingsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
     router.get("/api/v1/service-bindings/*", &handleGetById);
@@ -33,8 +31,7 @@ class ServiceBindingController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -67,8 +64,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto nsId = req.params.get("namespaceId");
@@ -97,8 +93,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -116,8 +111,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -140,8 +134,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +150,7 @@ class ServiceBindingController {
     }
   }
 
-  private Json serializeBinding(ref ServiceBinding b)
-  {
+  private Json serializeBinding(ref ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["serviceInstanceId"] = Json(b.serviceInstanceId);

@@ -28,8 +28,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   private WorkflowEngine engine;
 
   this(WorkflowRepository workflowRepo, StepRepository stepRepo,
-      ScenarioRepository scenarioRepo, WorkflowEngine engine)
-  {
+      ScenarioRepository scenarioRepo, WorkflowEngine engine) {
     this.workflowRepo = workflowRepo;
     this.stepRepo = stepRepo;
     this.scenarioRepo = scenarioRepo;
@@ -37,8 +36,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   }
 
   /// Create a new workflow instance from a scenario template.
-  CommandResult createWorkflow(CreateWorkflowRequest req)
-  {
+  CommandResult createWorkflow(CreateWorkflowRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.scenarioId.length == 0)
@@ -107,24 +105,20 @@ class ManageWorkflowsUseCase : UIMUseCase {
     return CommandResult(wf.id, "");
   }
 
-  Workflow* getWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  Workflow* getWorkflow(WorkflowId id, TenantId tenantId) {
     return workflowRepo.findById(id, tenantId);
   }
 
-  Workflow[] listWorkflows(TenantId tenantId)
-  {
+  Workflow[] listWorkflows(TenantId tenantId) {
     return workflowRepo.findByTenant(tenantId);
   }
 
-  Workflow[] listByStatus(TenantId tenantId, WorkflowStatus status)
-  {
+  Workflow[] listByStatus(TenantId tenantId, WorkflowStatus status) {
     return workflowRepo.findByStatus(tenantId, status);
   }
 
   /// Start a planned workflow.
-  CommandResult startWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  CommandResult startWorkflow(WorkflowId id, TenantId tenantId) {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -141,8 +135,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   }
 
   /// Suspend an in-progress workflow.
-  CommandResult suspendWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  CommandResult suspendWorkflow(WorkflowId id, TenantId tenantId) {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -156,8 +149,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   }
 
   /// Resume a suspended workflow.
-  CommandResult resumeWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  CommandResult resumeWorkflow(WorkflowId id, TenantId tenantId) {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -173,8 +165,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   }
 
   /// Terminate a workflow.
-  CommandResult terminateWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  CommandResult terminateWorkflow(WorkflowId id, TenantId tenantId) {
     auto wf = workflowRepo.findById(id, tenantId);
     if (wf is null)
       return CommandResult("", "Workflow not found");
@@ -188,8 +179,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteWorkflow(WorkflowId id, TenantId tenantId)
-  {
+  CommandResult deleteWorkflow(WorkflowId id, TenantId tenantId) {
     auto existing = workflowRepo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Workflow not found");

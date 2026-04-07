@@ -15,43 +15,36 @@ import uim.platform.kyma.domain.ports.repositories.service_bindings;
 class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
-  ServiceBinding findById(ServiceBindingId id)
-  {
+  ServiceBinding findById(ServiceBindingId id) {
     if (auto p = id in store)
       return *p;
     return ServiceBinding.init;
   }
 
-  ServiceBinding findByName(NamespaceId nsId, string name)
-  {
+  ServiceBinding findByName(NamespaceId nsId, string name) {
     foreach (ref e; store.byValue())
       if (e.namespaceId == nsId && e.name == name)
         return e;
     return ServiceBinding.init;
   }
 
-  ServiceBinding[] findByNamespace(NamespaceId nsId)
-  {
+  ServiceBinding[] findByNamespace(NamespaceId nsId) {
     return store.byValue().filter!(e => e.namespaceId == nsId).array;
   }
 
-  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId)
-  {
+  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId) {
     return store.byValue().filter!(e => e.serviceInstanceId == instanceId).array;
   }
 
-  void save(ServiceBinding binding)
-  {
+  void save(ServiceBinding binding) {
     store[binding.id] = binding;
   }
 
-  void update(ServiceBinding binding)
-  {
+  void update(ServiceBinding binding) {
     store[binding.id] = binding;
   }
 
-  void remove(ServiceBindingId id)
-  {
+  void remove(ServiceBindingId id) {
     store.remove(id);
   }
 }

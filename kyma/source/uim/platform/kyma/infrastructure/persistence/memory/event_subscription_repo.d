@@ -15,53 +15,44 @@ import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   private EventSubscription[EventSubscriptionId] store;
 
-  EventSubscription findById(EventSubscriptionId id)
-  {
+  EventSubscription findById(EventSubscriptionId id) {
     if (auto p = id in store)
       return *p;
     return EventSubscription.init;
   }
 
-  EventSubscription findByName(NamespaceId nsId, string name)
-  {
+  EventSubscription findByName(NamespaceId nsId, string name) {
     foreach (ref e; store.byValue())
       if (e.namespaceId == nsId && e.name == name)
         return e;
     return EventSubscription.init;
   }
 
-  EventSubscription[] findByNamespace(NamespaceId nsId)
-  {
+  EventSubscription[] findByNamespace(NamespaceId nsId) {
     return store.byValue().filter!(e => e.namespaceId == nsId).array;
   }
 
-  EventSubscription[] findByEnvironment(KymaEnvironmentId envId)
-  {
+  EventSubscription[] findByEnvironment(KymaEnvironmentId envId) {
     return store.byValue().filter!(e => e.environmentId == envId).array;
   }
 
-  EventSubscription[] findBySource(string source)
-  {
+  EventSubscription[] findBySource(string source) {
     return store.byValue().filter!(e => e.source == source).array;
   }
 
-  EventSubscription[] findByStatus(SubscriptionStatus status)
-  {
+  EventSubscription[] findByStatus(SubscriptionStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  void save(EventSubscription sub)
-  {
+  void save(EventSubscription sub) {
     store[sub.id] = sub;
   }
 
-  void update(EventSubscription sub)
-  {
+  void update(EventSubscription sub) {
     store[sub.id] = sub;
   }
 
-  void remove(EventSubscriptionId id)
-  {
+  void remove(EventSubscriptionId id) {
     store.remove(id);
   }
 }

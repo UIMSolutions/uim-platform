@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageEventSubscriptionsUseCase : UIMUseCase {
   private EventSubscriptionRepository repo;
 
-  this(EventSubscriptionRepository repo)
-  {
+  this(EventSubscriptionRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateEventSubscriptionRequest req)
-  {
+  CommandResult create(CreateEventSubscriptionRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Subscription name is required");
     if (req.source.length == 0)
@@ -61,8 +59,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateSubscription(EventSubscriptionId id, UpdateEventSubscriptionRequest req)
-  {
+  CommandResult updateSubscription(EventSubscriptionId id, UpdateEventSubscriptionRequest req) {
     auto sub = repo.findById(id);
     if (sub.id.length == 0)
       return CommandResult(false, "", "Subscription not found");
@@ -90,8 +87,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult pauseSubscription(EventSubscriptionId id)
-  {
+  CommandResult pauseSubscription(EventSubscriptionId id) {
     auto sub = repo.findById(id);
     if (sub.id.length == 0)
       return CommandResult(false, "", "Subscription not found");
@@ -101,8 +97,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult resumeSubscription(EventSubscriptionId id)
-  {
+  CommandResult resumeSubscription(EventSubscriptionId id) {
     auto sub = repo.findById(id);
     if (sub.id.length == 0)
       return CommandResult(false, "", "Subscription not found");
@@ -112,28 +107,23 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  EventSubscription getSubscription(EventSubscriptionId id)
-  {
+  EventSubscription getSubscription(EventSubscriptionId id) {
     return repo.findById(id);
   }
 
-  EventSubscription[] listByNamespace(NamespaceId nsId)
-  {
+  EventSubscription[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  EventSubscription[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  EventSubscription[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  EventSubscription[] listBySource(string source)
-  {
+  EventSubscription[] listBySource(string source) {
     return repo.findBySource(source);
   }
 
-  CommandResult deleteSubscription(EventSubscriptionId id)
-  {
+  CommandResult deleteSubscription(EventSubscriptionId id) {
     auto sub = repo.findById(id);
     if (sub.id.length == 0)
       return CommandResult(false, "", "Subscription not found");
@@ -141,8 +131,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private EventTypeEncoding parseTypeEncoding(string s)
-  {
+  private EventTypeEncoding parseTypeEncoding(string s) {
     switch (s)
     {
     case "exact":

@@ -20,35 +20,29 @@ mixin(ShowModule!());
 class MemoryGlobalAccountRepository : GlobalAccountRepository {
   private GlobalAccount[GlobalAccountId] store;
 
-  GlobalAccount findById(GlobalAccountId id)
-  {
+  GlobalAccount findById(GlobalAccountId id) {
     if (auto p = id in store)
       return *p;
     return GlobalAccount.init;
   }
 
-  GlobalAccount[] findByStatus(GlobalAccountStatus status)
-  {
+  GlobalAccount[] findByStatus(GlobalAccountStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  GlobalAccount[] findAll()
-  {
+  GlobalAccount[] findAll() {
     return store.byValue().array;
   }
 
-  void save(GlobalAccount account)
-  {
+  void save(GlobalAccount account) {
     store[account.id] = account;
   }
 
-  void update(GlobalAccount account)
-  {
+  void update(GlobalAccount account) {
     store[account.id] = account;
   }
 
-  void remove(GlobalAccountId id)
-  {
+  void remove(GlobalAccountId id) {
     store.remove(id);
   }
 }

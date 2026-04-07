@@ -15,41 +15,34 @@ import uim.platform.kyma.domain.ports.repositories.environments;
 class MemoryEnvironmentRepository : EnvironmentRepository {
   private KymaEnvironment[KymaEnvironmentId] store;
 
-  KymaEnvironment findById(KymaEnvironmentId id)
-  {
+  KymaEnvironment findById(KymaEnvironmentId id) {
     if (auto p = id in store)
       return *p;
     return KymaEnvironment.init;
   }
 
-  KymaEnvironment[] findByTenant(TenantId tenantId)
-  {
+  KymaEnvironment[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId)
-  {
+  KymaEnvironment[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.subaccountId == subaccountId).array;
   }
 
-  KymaEnvironment[] findByStatus(EnvironmentStatus status)
-  {
+  KymaEnvironment[] findByStatus(EnvironmentStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  void save(KymaEnvironment env)
-  {
+  void save(KymaEnvironment env) {
     store[env.id] = env;
   }
 
-  void update(KymaEnvironment env)
-  {
+  void update(KymaEnvironment env) {
     store[env.id] = env;
   }
 
-  void remove(KymaEnvironmentId id)
-  {
+  void remove(KymaEnvironmentId id) {
     store.remove(id);
   }
 }

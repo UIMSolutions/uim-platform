@@ -14,13 +14,11 @@ import uim.platform.management.domain.types;
 class ManageServicePlansUseCase : UIMUseCase {
   private ServicePlanRepository repo;
 
-  this(ServicePlanRepository repo)
-  {
+  this(ServicePlanRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateServicePlanRequest req)
-  {
+  CommandResult create(CreateServicePlanRequest req) {
     if (req.serviceName.length == 0)
       return CommandResult(false, "", "Service name is required");
     if (req.planName.length == 0)
@@ -54,8 +52,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult update(ServicePlanId id, UpdateServicePlanRequest req)
-  {
+  CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
     auto plan = repo.findById(id);
     if (plan.id.length == 0)
       return CommandResult(false, "", "Service plan not found");
@@ -78,33 +75,27 @@ class ManageServicePlansUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServicePlan getById(ServicePlanId id)
-  {
+  ServicePlan getById(ServicePlanId id) {
     return repo.findById(id);
   }
 
-  ServicePlan[] listAll()
-  {
+  ServicePlan[] listAll() {
     return repo.findAll();
   }
 
-  ServicePlan[] listByService(string serviceName)
-  {
+  ServicePlan[] listByService(string serviceName) {
     return repo.findByService(serviceName);
   }
 
-  ServicePlan[] listByCategory(string category)
-  {
+  ServicePlan[] listByCategory(string category) {
     return repo.findByCategory(parseCategory(category));
   }
 
-  ServicePlan[] listByRegion(string region)
-  {
+  ServicePlan[] listByRegion(string region) {
     return repo.findByRegion(region);
   }
 
-  CommandResult remove(ServicePlanId id)
-  {
+  CommandResult remove(ServicePlanId id) {
     auto plan = repo.findById(id);
     if (plan.id.length == 0)
       return CommandResult(false, "", "Service plan not found");
@@ -112,8 +103,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private ServicePlanCategory parseCategory(string s)
-  {
+  private ServicePlanCategory parseCategory(string s) {
     switch (s)
     {
     case "service":
@@ -129,8 +119,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     }
   }
 
-  private PricingModel parsePricingModel(string s)
-  {
+  private PricingModel parsePricingModel(string s) {
     switch (s)
     {
     case "free":
@@ -146,8 +135,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     }
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;

@@ -15,48 +15,40 @@ import uim.platform.kyma.domain.ports.repositories.functions;
 class MemoryFunctionRepository : FunctionRepository {
   private ServerlessFunction[FunctionId] store;
 
-  ServerlessFunction findById(FunctionId id)
-  {
+  ServerlessFunction findById(FunctionId id) {
     if (auto p = id in store)
       return *p;
     return ServerlessFunction.init;
   }
 
-  ServerlessFunction findByName(NamespaceId nsId, string name)
-  {
+  ServerlessFunction findByName(NamespaceId nsId, string name) {
     foreach (ref e; store.byValue())
       if (e.namespaceId == nsId && e.name == name)
         return e;
     return ServerlessFunction.init;
   }
 
-  ServerlessFunction[] findByNamespace(NamespaceId nsId)
-  {
+  ServerlessFunction[] findByNamespace(NamespaceId nsId) {
     return store.byValue().filter!(e => e.namespaceId == nsId).array;
   }
 
-  ServerlessFunction[] findByEnvironment(KymaEnvironmentId envId)
-  {
+  ServerlessFunction[] findByEnvironment(KymaEnvironmentId envId) {
     return store.byValue().filter!(e => e.environmentId == envId).array;
   }
 
-  ServerlessFunction[] findByStatus(FunctionStatus status)
-  {
+  ServerlessFunction[] findByStatus(FunctionStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  void save(ServerlessFunction fn)
-  {
+  void save(ServerlessFunction fn) {
     store[fn.id] = fn;
   }
 
-  void update(ServerlessFunction fn)
-  {
+  void update(ServerlessFunction fn) {
     store[fn.id] = fn;
   }
 
-  void remove(FunctionId id)
-  {
+  void remove(FunctionId id) {
     store.remove(id);
   }
 }

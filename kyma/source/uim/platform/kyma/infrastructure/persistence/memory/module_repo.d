@@ -15,48 +15,40 @@ import uim.platform.kyma.domain.ports.repositories.modules;
 class MemoryModuleRepository : ModuleRepository {
   private KymaModule[ModuleId] store;
 
-  KymaModule findById(ModuleId id)
-  {
+  KymaModule findById(ModuleId id) {
     if (auto p = id in store)
       return *p;
     return KymaModule.init;
   }
 
-  KymaModule findByName(KymaEnvironmentId envId, string name)
-  {
+  KymaModule findByName(KymaEnvironmentId envId, string name) {
     foreach (ref e; store.byValue())
       if (e.environmentId == envId && e.name == name)
         return e;
     return KymaModule.init;
   }
 
-  KymaModule[] findByEnvironment(KymaEnvironmentId envId)
-  {
+  KymaModule[] findByEnvironment(KymaEnvironmentId envId) {
     return store.byValue().filter!(e => e.environmentId == envId).array;
   }
 
-  KymaModule[] findByStatus(ModuleStatus status)
-  {
+  KymaModule[] findByStatus(ModuleStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  KymaModule[] findByType(ModuleType moduleType)
-  {
+  KymaModule[] findByType(ModuleType moduleType) {
     return store.byValue().filter!(e => e.moduleType == moduleType).array;
   }
 
-  void save(KymaModule mod)
-  {
+  void save(KymaModule mod) {
     store[mod.id] = mod;
   }
 
-  void update(KymaModule mod)
-  {
+  void update(KymaModule mod) {
     store[mod.id] = mod;
   }
 
-  void remove(ModuleId id)
-  {
+  void remove(ModuleId id) {
     store.remove(id);
   }
 }

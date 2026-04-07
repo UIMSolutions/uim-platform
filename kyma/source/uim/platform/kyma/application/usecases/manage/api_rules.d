@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageApiRulesUseCase : UIMUseCase {
   private ApiRuleRepository repo;
 
-  this(ApiRuleRepository repo)
-  {
+  this(ApiRuleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateApiRuleRequest req)
-  {
+  CommandResult create(CreateApiRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "API rule name is required");
     if (req.serviceName.length == 0)
@@ -83,8 +81,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req)
-  {
+  CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "API rule not found");
@@ -135,23 +132,19 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ApiRule getApiRule(ApiRuleId id)
-  {
+  ApiRule getApiRule(ApiRuleId id) {
     return repo.findById(id);
   }
 
-  ApiRule[] listByNamespace(NamespaceId nsId)
-  {
+  ApiRule[] listByNamespace(NamespaceId nsId) {
     return repo.findByNamespace(nsId);
   }
 
-  ApiRule[] listByEnvironment(KymaEnvironmentId envId)
-  {
+  ApiRule[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteApiRule(ApiRuleId id)
-  {
+  CommandResult deleteApiRule(ApiRuleId id) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "API rule not found");
@@ -159,8 +152,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private AccessStrategy parseAccessStrategy(string s)
-  {
+  private AccessStrategy parseAccessStrategy(string s) {
     switch (s)
     {
     case "noAuth":
@@ -176,8 +168,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     }
   }
 
-  private ApiHttpMethod parseHttpMethod(string s)
-  {
+  private ApiHttpMethod parseHttpMethod(string s) {
     switch (s)
     {
     case "GET":

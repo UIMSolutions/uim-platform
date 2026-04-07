@@ -13,8 +13,7 @@ import uim.platform.management.domain.types;
 class EnvironmentProvisioner {
   /// Validate that an environment can be provisioned in the given subaccount.
   ProvisionValidation validateProvisioning(EnvironmentType envType,
-      string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances)
-  {
+      string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances) {
     ProvisionValidation v;
     v.valid = true;
 
@@ -53,8 +52,7 @@ class EnvironmentProvisioner {
   }
 
   /// Determine if an environment can be deleted.
-  bool canDelete(EnvironmentInstance inst)
-  {
+  bool canDelete(EnvironmentInstance inst) {
     return inst.status == EnvironmentStatus.active
       || inst.status == EnvironmentStatus.error || inst.status == EnvironmentStatus.suspended;
   }

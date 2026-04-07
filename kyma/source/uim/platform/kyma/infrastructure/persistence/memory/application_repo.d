@@ -15,48 +15,40 @@ import uim.platform.kyma.domain.ports.repositories.applications;
 class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 
-  Application findById(ApplicationId id)
-  {
+  Application findById(ApplicationId id) {
     if (auto p = id in store)
       return *p;
     return Application.init;
   }
 
-  Application findByName(KymaEnvironmentId envId, string name)
-  {
+  Application findByName(KymaEnvironmentId envId, string name) {
     foreach (ref e; store.byValue())
       if (e.environmentId == envId && e.name == name)
         return e;
     return Application.init;
   }
 
-  Application[] findByEnvironment(KymaEnvironmentId envId)
-  {
+  Application[] findByEnvironment(KymaEnvironmentId envId) {
     return store.byValue().filter!(e => e.environmentId == envId).array;
   }
 
-  Application[] findByStatus(AppConnectivityStatus status)
-  {
+  Application[] findByStatus(AppConnectivityStatus status) {
     return store.byValue().filter!(e => e.status == status).array;
   }
 
-  Application[] findByTenant(TenantId tenantId)
-  {
+  Application[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void save(Application app)
-  {
+  void save(Application app) {
     store[app.id] = app;
   }
 
-  void update(Application app)
-  {
+  void update(Application app) {
     store[app.id] = app;
   }
 
-  void remove(ApplicationId id)
-  {
+  void remove(ApplicationId id) {
     store.remove(id);
   }
 }

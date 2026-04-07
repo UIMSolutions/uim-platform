@@ -20,13 +20,11 @@ mixin(ShowModule!());
 class ManageDirectoriesUseCase : UIMUseCase {
   private DirectoryRepository repo;
 
-  this(DirectoryRepository repo)
-  {
+  this(DirectoryRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDirectoryRequest req)
-  {
+  CommandResult create(CreateDirectoryRequest req) {
     if (req.globalAccountId.length == 0)
       return CommandResult(false, "", "Global account ID is required");
     if (req.displayName.length == 0)
@@ -55,8 +53,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult update(DirectoryId id, UpdateDirectoryRequest req)
-  {
+  CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
     auto d = repo.findById(id);
     if (d.id.length == 0)
       return CommandResult(false, "", "Directory not found");
@@ -75,23 +72,19 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Directory getById(DirectoryId id)
-  {
+  Directory getById(DirectoryId id) {
     return repo.findById(id);
   }
 
-  Directory[] listByGlobalAccount(GlobalAccountId gaId)
-  {
+  Directory[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }
 
-  Directory[] listByParent(DirectoryId parentId)
-  {
+  Directory[] listByParent(DirectoryId parentId) {
     return repo.findByParent(parentId);
   }
 
-  CommandResult remove(DirectoryId id)
-  {
+  CommandResult remove(DirectoryId id) {
     auto d = repo.findById(id);
     if (d.id.length == 0)
       return CommandResult(false, "", "Directory not found");
@@ -101,8 +94,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private DirectoryFeature[] parseFeatures(string[] features)
-  {
+  private DirectoryFeature[] parseFeatures(string[] features) {
     DirectoryFeature[] result;
     foreach (f; features)
     {
@@ -122,8 +114,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return result;
   }
 
-  private long clockSeconds()
-  {
+  private long clockSeconds() {
     import core.time : MonoTime;
 
     return MonoTime.currTime.ticks / 10_000_000;

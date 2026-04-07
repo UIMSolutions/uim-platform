@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class FunctionController {
   private ManageFunctionsUseCase uc;
 
-  this(ManageFunctionsUseCase uc)
-  {
+  this(ManageFunctionsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/functions", &handleCreate);
     router.get("/api/v1/functions", &handleList);
     router.get("/api/v1/functions/*", &handleGetById);
@@ -33,8 +31,7 @@ class FunctionController {
     router.delete_("/api/v1/functions/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class FunctionController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto nsId = req.params.get("namespaceId");
@@ -106,8 +102,7 @@ class FunctionController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -125,8 +120,7 @@ class FunctionController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -159,8 +153,7 @@ class FunctionController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -176,8 +169,7 @@ class FunctionController {
     }
   }
 
-  private Json serializeFn(ref ServerlessFunction fn)
-  {
+  private Json serializeFn(ref ServerlessFunction fn) {
     auto j = Json.emptyObject;
     j["id"] = Json(fn.id);
     j["namespaceId"] = Json(fn.namespaceId);

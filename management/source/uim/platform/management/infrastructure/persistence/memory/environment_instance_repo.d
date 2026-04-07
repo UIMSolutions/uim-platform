@@ -20,41 +20,34 @@ mixin(ShowModule!());
 class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
   private EnvironmentInstance[EnvironmentInstanceId] store;
 
-  EnvironmentInstance findById(EnvironmentInstanceId id)
-  {
+  EnvironmentInstance findById(EnvironmentInstanceId id) {
     if (auto p = id in store)
       return *p;
     return EnvironmentInstance.init;
   }
 
-  EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId)
-  {
+  EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId) {
     return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
   }
 
-  EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType)
-  {
+  EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType) {
     return store.byValue().filter!(e => e.subaccountId == subaccountId
         && e.environmentType == envType).array;
   }
 
-  EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status)
-  {
+  EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
     return store.byValue().filter!(e => e.subaccountId == subaccountId && e.status == status).array;
   }
 
-  void save(EnvironmentInstance inst)
-  {
+  void save(EnvironmentInstance inst) {
     store[inst.id] = inst;
   }
 
-  void update(EnvironmentInstance inst)
-  {
+  void update(EnvironmentInstance inst) {
     store[inst.id] = inst;
   }
 
-  void remove(EnvironmentInstanceId id)
-  {
+  void remove(EnvironmentInstanceId id) {
     store.remove(id);
   }
 }

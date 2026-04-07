@@ -14,13 +14,11 @@ import uim.platform.kyma.domain.types;
 class ManageEnvironmentsUseCase : UIMUseCase {
   private EnvironmentRepository repo;
 
-  this(EnvironmentRepository repo)
-  {
+  this(EnvironmentRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateEnvironmentRequest req)
-  {
+  CommandResult create(CreateEnvironmentRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Environment name is required");
     if (req.plan.length == 0)
@@ -58,8 +56,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req)
-  {
+  CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req) {
     auto env = repo.findById(id);
     if (env.id.length == 0)
       return CommandResult(false, "", "Environment not found");
@@ -86,23 +83,19 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  KymaEnvironment getEnvironment(KymaEnvironmentId id)
-  {
+  KymaEnvironment getEnvironment(KymaEnvironmentId id) {
     return repo.findById(id);
   }
 
-  KymaEnvironment[] listByTenant(TenantId tenantId)
-  {
+  KymaEnvironment[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  KymaEnvironment[] listBySubaccount(TenantId tenantId, SubaccountId subId)
-  {
+  KymaEnvironment[] listBySubaccount(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
   }
 
-  CommandResult deleteEnvironment(KymaEnvironmentId id)
-  {
+  CommandResult deleteEnvironment(KymaEnvironmentId id) {
     auto env = repo.findById(id);
     if (env.id.length == 0)
       return CommandResult(false, "", "Environment not found");
@@ -110,8 +103,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private KymaPlan parsePlan(string s)
-  {
+  private KymaPlan parsePlan(string s) {
     switch (s)
     {
     case "azure":

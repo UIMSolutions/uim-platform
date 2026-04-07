@@ -19,43 +19,35 @@ mixin(ShowModule!());
 class QueryPlatformEventsUseCase : UIMUseCase {
   private PlatformEventRepository repo;
 
-  this(PlatformEventRepository repo)
-  {
+  this(PlatformEventRepository repo) {
     this.repo = repo;
   }
 
-  PlatformEvent getById(PlatformEventId id)
-  {
+  PlatformEvent getById(PlatformEventId id) {
     return repo.findById(id);
   }
 
-  PlatformEvent[] listByGlobalAccount(GlobalAccountId gaId)
-  {
+  PlatformEvent[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }
 
-  PlatformEvent[] listBySubaccount(SubaccountId subId)
-  {
+  PlatformEvent[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
-  PlatformEvent[] listByCategory(GlobalAccountId gaId, string category)
-  {
+  PlatformEvent[] listByCategory(GlobalAccountId gaId, string category) {
     return repo.findByCategory(gaId, parseCategory(category));
   }
 
-  PlatformEvent[] listBySeverity(GlobalAccountId gaId, string severity)
-  {
+  PlatformEvent[] listBySeverity(GlobalAccountId gaId, string severity) {
     return repo.findBySeverity(gaId, parseSeverity(severity));
   }
 
-  PlatformEvent[] listSince(GlobalAccountId gaId, long sinceTimestamp)
-  {
+  PlatformEvent[] listSince(GlobalAccountId gaId, long sinceTimestamp) {
     return repo.findSince(gaId, sinceTimestamp);
   }
 
-  private PlatformEventCategory parseCategory(string s)
-  {
+  private PlatformEventCategory parseCategory(string s) {
     switch (s)
     {
     case "subaccountLifecycle":
@@ -79,8 +71,7 @@ class QueryPlatformEventsUseCase : UIMUseCase {
     }
   }
 
-  private PlatformEventSeverity parseSeverity(string s)
-  {
+  private PlatformEventSeverity parseSeverity(string s) {
     switch (s)
     {
     case "info":

@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class EventSubscriptionController {
   private ManageEventSubscriptionsUseCase uc;
 
-  this(ManageEventSubscriptionsUseCase uc)
-  {
+  this(ManageEventSubscriptionsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/event-subscriptions", &handleCreate);
     router.get("/api/v1/event-subscriptions", &handleList);
     router.get("/api/v1/event-subscriptions/*", &handleGetById);
@@ -35,8 +33,7 @@ class EventSubscriptionController {
     router.post("/api/v1/event-subscriptions/resume/*", &handleResume);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -74,8 +71,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto nsId = req.params.get("namespaceId");
@@ -107,8 +103,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -126,8 +121,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -155,8 +149,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -172,8 +165,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -189,8 +181,7 @@ class EventSubscriptionController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -206,8 +197,7 @@ class EventSubscriptionController {
     }
   }
 
-  private Json serializeSub(ref EventSubscription sub)
-  {
+  private Json serializeSub(ref EventSubscription sub) {
     auto j = Json.emptyObject;
     j["id"] = Json(sub.id);
     j["namespaceId"] = Json(sub.namespaceId);

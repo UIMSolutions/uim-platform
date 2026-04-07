@@ -22,15 +22,13 @@ class StepExecutor {
   private StepRepository stepRepo;
   private ExecutionLogRepository logRepo;
 
-  this(StepRepository stepRepo, ExecutionLogRepository logRepo)
-  {
+  this(StepRepository stepRepo, ExecutionLogRepository logRepo) {
     this.stepRepo = stepRepo;
     this.logRepo = logRepo;
   }
 
   /// Mark a manual step as started.
-  bool startStep(StepId stepId, TenantId tenantId, UserId executedBy)
-  {
+  bool startStep(StepId stepId, TenantId tenantId, UserId executedBy) {
     auto step = stepRepo.findById(stepId, tenantId);
     if (step is null)
       return false;
@@ -47,8 +45,7 @@ class StepExecutor {
   }
 
   /// Complete a manual step with a result.
-  bool completeStep(StepId stepId, TenantId tenantId, UserId executedBy, string result)
-  {
+  bool completeStep(StepId stepId, TenantId tenantId, UserId executedBy, string result) {
     auto step = stepRepo.findById(stepId, tenantId);
     if (step is null)
       return false;
@@ -70,8 +67,7 @@ class StepExecutor {
   }
 
   /// Mark a step as failed.
-  bool failStep(StepId stepId, TenantId tenantId, UserId executedBy, string errorMessage)
-  {
+  bool failStep(StepId stepId, TenantId tenantId, UserId executedBy, string errorMessage) {
     auto step = stepRepo.findById(stepId, tenantId);
     if (step is null)
       return false;
@@ -87,8 +83,7 @@ class StepExecutor {
   }
 
   /// Skip a step.
-  bool skipStep(StepId stepId, TenantId tenantId, UserId executedBy, string reason)
-  {
+  bool skipStep(StepId stepId, TenantId tenantId, UserId executedBy, string reason) {
     auto step = stepRepo.findById(stepId, tenantId);
     if (step is null)
       return false;
@@ -104,8 +99,7 @@ class StepExecutor {
   }
 
   private void recordLog(WorkflowId workflowId, StepId stepId, TenantId tenantId, string action,
-      ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0)
-  {
+      ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
     auto log = ExecutionLog();
     log.id = randomUUID().toString();
     log.workflowId = workflowId;

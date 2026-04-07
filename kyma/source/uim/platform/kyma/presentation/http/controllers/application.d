@@ -19,13 +19,11 @@ import uim.platform.kyma.presentation.http.json_utils;
 class ApplicationController {
   private ManageApplicationsUseCase uc;
 
-  this(ManageApplicationsUseCase uc)
-  {
+  this(ManageApplicationsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/applications", &handleRegister);
     router.get("/api/v1/applications", &handleList);
     router.get("/api/v1/applications/*", &handleGetById);
@@ -35,8 +33,7 @@ class ApplicationController {
     router.delete_("/api/v1/applications/*", &handleDelete);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class ApplicationController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto envId = req.params.get("environmentId");
@@ -99,8 +95,7 @@ class ApplicationController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -118,8 +113,7 @@ class ApplicationController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -144,8 +138,7 @@ class ApplicationController {
     }
   }
 
-  private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -161,8 +154,7 @@ class ApplicationController {
     }
   }
 
-  private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -178,8 +170,7 @@ class ApplicationController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -195,8 +186,7 @@ class ApplicationController {
     }
   }
 
-  private AppApiEntryDto[] parseApis(Json j)
-  {
+  private AppApiEntryDto[] parseApis(Json j) {
     AppApiEntryDto[] entries;
     auto v = "apis" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -214,8 +204,7 @@ class ApplicationController {
     return entries;
   }
 
-  private AppEventEntryDto[] parseEvents(Json j)
-  {
+  private AppEventEntryDto[] parseEvents(Json j) {
     AppEventEntryDto[] entries;
     auto v = "events" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -231,8 +220,7 @@ class ApplicationController {
     return entries;
   }
 
-  private Json serializeApp(ref Application app)
-  {
+  private Json serializeApp(ref Application app) {
     auto j = Json.emptyObject;
     j["id"] = Json(app.id);
     j["environmentId"] = Json(app.environmentId);
