@@ -94,7 +94,6 @@ nalytics/
 │           └── web/                       #     HTTP driving adapters
 │               ├── routes.d              #       Route registration
 │               ├── middleware.d           #       CORS & request logging
-│               ├── json_utils.d          #       JSON helper functions
 │               └── handlers/
 │                   ├── health.d
 │                   ├── dashboard.d

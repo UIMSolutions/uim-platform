@@ -6,6 +6,5 @@
 module uim.platform.custom_domain.presentation.http;
 
 public {
-    import uim.platform.custom_domain.presentation.http.json_utils;
     import uim.platform.custom_domain.presentation.http.controllers;
 }

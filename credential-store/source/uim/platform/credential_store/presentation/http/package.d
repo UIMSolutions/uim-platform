@@ -6,6 +6,5 @@
 module uim.platform.credential_store.presentation.http;
 
 public {
-  import uim.platform.credential_store.presentation.http.json_utils;
   import uim.platform.credential_store.presentation.http.controllers;
 }
