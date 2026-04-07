@@ -95,11 +95,9 @@ class AppLifecycleManager {
 
     // Validate instance memory against org quota
     auto space = spaceRepo.findById(app.spaceId, tenantId);
-    if (space !is null)
-    {
+    if (space !is null) {
       auto org = orgRepo.findById(space.orgId, tenantId);
-      if (org !is null)
-      {
+      if (org !is null) {
         int effMemory = memoryMb > 0 ? memoryMb : app.memoryMb;
         if (org.instanceMemoryLimitMb > 0 && effMemory > org.instanceMemoryLimitMb)
           return false;
@@ -130,8 +128,7 @@ class AppLifecycleManager {
 
     auto spaces = spaceRepo.findByOrg(orgId, tenantId);
     long totalUsed = 0;
-    foreach (ref s; spaces)
-    {
+    foreach (ref s; spaces) {
       auto apps = appRepo.findBySpace(s.id, tenantId);
       foreach (ref a; apps)
         totalUsed += a.instances * a.memoryMb;

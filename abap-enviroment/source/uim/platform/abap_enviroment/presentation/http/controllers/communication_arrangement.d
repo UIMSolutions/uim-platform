@@ -38,8 +38,7 @@ class CommunicationArrangementController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateCommunicationArrangementRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -57,8 +56,7 @@ class CommunicationArrangementController : SAPController {
       r.certificateId = j.getString("certificateId");
 
       auto result = uc.createArrangement(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -68,15 +66,13 @@ class CommunicationArrangementController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto arrangements = uc.listArrangements(systemId);
       auto arr = Json.emptyArray;
@@ -87,33 +83,28 @@ class CommunicationArrangementController : SAPController {
       resp["totalCount"] = Json(cast(long) arrangements.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto arrangement = uc.getArrangement(id);
-      if (arrangement is null)
-      {
+      if (arrangement is null) {
         writeError(res, 404, "Communication arrangement not found");
         return;
       }
       res.writeJsonBody(serializeArrangement(*arrangement), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateCommunicationArrangementRequest r;
@@ -127,8 +118,7 @@ class CommunicationArrangementController : SAPController {
       r.tokenEndpoint = j.getString("tokenEndpoint");
 
       auto result = uc.updateArrangement(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -138,19 +128,16 @@ class CommunicationArrangementController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteArrangement(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -160,8 +147,7 @@ class CommunicationArrangementController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

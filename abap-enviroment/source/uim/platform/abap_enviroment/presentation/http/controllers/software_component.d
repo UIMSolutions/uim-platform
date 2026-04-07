@@ -38,8 +38,7 @@ class SoftwareComponentController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateSoftwareComponentRequest request;
       request.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -53,8 +52,7 @@ class SoftwareComponentController : SAPController {
       request.namespace = j.getString("namespace");
 
       auto result = uc.createComponent(request);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -64,15 +62,13 @@ class SoftwareComponentController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.json.getString("systemInstanceId");
       if (systemId.length == 0)
         systemId = req.headers.get("X-System-Id", "");
@@ -85,33 +81,28 @@ class SoftwareComponentController : SAPController {
       resp["totalCount"] = Json(cast(long) components.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto comp = uc.getComponent(id);
-      if (comp is null)
-      {
+      if (comp is null) {
         writeError(res, 404, "Software component not found");
         return;
       }
       res.writeJsonBody(serializeComponent(*comp), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       CloneSoftwareComponentRequest r;
@@ -119,8 +110,7 @@ class SoftwareComponentController : SAPController {
       r.commitId = j.getString("commitId");
 
       auto result = uc.cloneComponent(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("cloned");
         res.writeJsonBody(resp, 200);
@@ -130,23 +120,20 @@ class SoftwareComponentController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       PullSoftwareComponentRequest r;
       r.commitId = j.getString("commitId");
 
       auto result = uc.pullComponent(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("pulled");
         res.writeJsonBody(resp, 200);
@@ -156,19 +143,16 @@ class SoftwareComponentController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteComponent(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -178,8 +162,7 @@ class SoftwareComponentController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -203,11 +186,9 @@ class SoftwareComponentController : SAPController {
     j["createdAt"] = Json(comp.createdAt);
     j["updatedAt"] = Json(comp.updatedAt);
 
-    if (comp.commitHistory.length > 0)
-    {
+    if (comp.commitHistory.length > 0) {
       auto hist = Json.emptyArray;
-      foreach (ref c; comp.commitHistory)
-      {
+      foreach (ref c; comp.commitHistory) {
         auto hj = Json.emptyObject;
         hj["commitId"] = Json(c.commitId);
         hj["message"] = Json(c.message);

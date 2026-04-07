@@ -79,10 +79,8 @@ class MonitorAppsUseCase : UIMUseCase {
     s.totalServiceInstances = cast(int) instances.length;
     s.totalRoutes = cast(int) routes.length;
 
-    foreach (app; apps)
-    {
-      final switch (app.state)
-      {
+    foreach (app; apps) {
+      final switch (app.state) {
       case AppState.started:
         s.runningApps++;
         s.totalMemoryUsedMb += app.instances * app.memoryMb;
@@ -110,13 +108,11 @@ class MonitorAppsUseCase : UIMUseCase {
     h.totalMemoryMb = app.instances * app.memoryMb;
     h.totalDiskMb = app.instances * app.diskMb;
 
-    if (app.state == AppState.started)
-    {
+    if (app.state == AppState.started) {
       h.runningInstances = app.runningInstances > 0 ? app.runningInstances : app.instances;
       h.crashedInstances = app.instances - h.runningInstances;
     }
-    else if (app.state == AppState.crashed)
-    {
+    else if (app.state == AppState.crashed) {
       h.crashedInstances = app.instances;
     }
     return h;

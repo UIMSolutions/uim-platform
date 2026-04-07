@@ -30,10 +30,8 @@ struct TransportReleaseValidator {
       errors ~= "Transport request must have an owner";
 
     // All tasks must be released before the request
-    foreach (ref task; request.tasks)
-    {
-      if (task.status == TransportStatus.modifiable)
-      {
+    foreach (ref task; request.tasks) {
+      if (task.status == TransportStatus.modifiable) {
         errors ~= "Task '" ~ task.taskId ~ "' is still modifiable - release all tasks first";
       }
     }

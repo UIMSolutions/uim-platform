@@ -25,8 +25,7 @@ struct SystemLifecycleValidator {
     //   deleting     -> deleted | error
     //   error        -> deleting
 
-    switch (from)
-    {
+    switch (from) {
     case SystemStatus.provisioning:
       if (target == SystemStatus.active
           || target == SystemStatus.error)
@@ -70,8 +69,7 @@ struct SystemLifecycleValidator {
     if (sid.length != 3)
       return LifecycleValidation(false, "SAP System ID must be exactly 3 characters");
 
-    foreach (c; sid)
-    {
+    foreach (c; sid) {
       if (c < 'A' || c > 'Z')
         return LifecycleValidation(false, "SAP System ID must contain only uppercase letters");
     }

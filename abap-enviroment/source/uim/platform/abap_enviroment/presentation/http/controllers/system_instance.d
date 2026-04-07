@@ -37,8 +37,7 @@ class SystemInstanceController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateSystemInstanceRequest request;
       request.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,8 +54,7 @@ class SystemInstanceController : SAPController {
       request.stackVersion = j.getString("stackVersion");
 
       auto result = uc.createInstance(request);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -66,15 +64,13 @@ class SystemInstanceController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto instances = uc.listInstances(tenantId);
       auto arr = Json.emptyArray;
@@ -85,33 +81,28 @@ class SystemInstanceController : SAPController {
       resp["totalCount"] = Json(cast(long) instances.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto inst = uc.getInstance(id);
-      if (inst is null)
-      {
+      if (inst is null) {
         writeError(res, 404, "System instance not found");
         return;
       }
       res.writeJsonBody(serializeInstance(*inst), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateSystemInstanceRequest r;
@@ -122,8 +113,7 @@ class SystemInstanceController : SAPController {
       r.softwareVersion = j.getString("softwareVersion");
 
       auto result = uc.updateInstance(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -133,19 +123,16 @@ class SystemInstanceController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteInstance(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleting");
         res.writeJsonBody(resp, 200);
@@ -155,8 +142,7 @@ class SystemInstanceController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

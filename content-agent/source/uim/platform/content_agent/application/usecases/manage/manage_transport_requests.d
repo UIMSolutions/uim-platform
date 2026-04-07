@@ -40,8 +40,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
     // Resolve packages
     ContentPackage[] packages;
-    foreach (pid; req.packageIds)
-    {
+    foreach (pid; req.packageIds) {
       auto pkg = packageRepo.findById(pid);
       if (pkg.id.length == 0)
         return CommandResult(false, "", "Package not found: " ~ pid);
@@ -74,11 +73,9 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
     // Validate transport
     auto validation = TransportValidator.validate(tr, packages, queue);
-    if (!validation.valid)
-    {
+    if (!validation.valid) {
       string msg = "Transport validation failed: ";
-      foreach (i, e; validation.errors)
-      {
+      foreach (i, e; validation.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -159,8 +156,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   private static TransportMode parseTransportMode(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "ctsPlus":
       return TransportMode.ctsPlus;
     case "directExport":
@@ -173,8 +169,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   private static TransportStatus parseTransportStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "created":
       return TransportStatus.created;
     case "readyForExport":

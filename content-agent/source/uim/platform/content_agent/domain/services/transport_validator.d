@@ -40,14 +40,12 @@ struct TransportValidator {
     foreach (ref p; packages)
       pkgIds[p.id] = true;
 
-    foreach (ref pid; request.packageIds)
-    {
+    foreach (ref pid; request.packageIds) {
       if (pid !in pkgIds)
         errors ~= "Referenced package not found: " ~ pid;
     }
 
-    foreach (ref p; packages)
-    {
+    foreach (ref p; packages) {
       if (p.status != PackageStatus.assembled && p.status != PackageStatus.exported)
         errors ~= "Package '" ~ p.name ~ "' is not in assembled/exported state";
     }

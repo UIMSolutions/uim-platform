@@ -48,10 +48,8 @@ class MonitorConnectivityUseCase : UIMUseCase {
     ConnectivitySummary summary;
     summary.totalEvents = logs.length;
 
-    foreach (log; logs)
-    {
-      final switch (log.severity)
-      {
+    foreach (log; logs) {
+      final switch (log.severity) {
       case LogSeverity.info:
         summary.infoCount++;
         break;

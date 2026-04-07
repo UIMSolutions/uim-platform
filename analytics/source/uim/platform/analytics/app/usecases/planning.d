@@ -25,12 +25,10 @@ class PlanningUseCases {
 
   PlanningModelResponse create(CreatePlanningModelRequest req) {
     TimeGranularity gran;
-    try
-    {
+    try {
       gran = req.granularity.to!TimeGranularity;
     }
-    catch (Exception)
-    {
+    catch (Exception) {
       gran = TimeGranularity.Monthly;
     }
     auto pm = PlanningModel.create(req.name, req.description, req.datasetId, gran, req.userId);

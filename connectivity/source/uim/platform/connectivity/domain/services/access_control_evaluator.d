@@ -24,8 +24,7 @@ struct AccessControlEvaluator {
     AccessRule* bestMatch = null;
     size_t bestLen = 0;
 
-    foreach (ref rule; rules)
-    {
+    foreach (ref rule; rules) {
       if (rule.virtualHost != virtualHost)
         continue;
       if (rule.virtualPort != virtualPort)
@@ -33,8 +32,7 @@ struct AccessControlEvaluator {
       if (!pathStartsWith(urlPath, rule.urlPathPrefix))
         continue;
 
-      if (rule.urlPathPrefix.length >= bestLen)
-      {
+      if (rule.urlPathPrefix.length >= bestLen) {
         bestLen = rule.urlPathPrefix.length;
         bestMatch = &rule;
       }

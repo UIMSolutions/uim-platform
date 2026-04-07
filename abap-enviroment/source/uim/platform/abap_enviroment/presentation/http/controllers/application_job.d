@@ -37,8 +37,7 @@ class ApplicationJobController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateApplicationJobRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -51,8 +50,7 @@ class ApplicationJobController {
       r.cronExpression = j.getString("cronExpression");
 
       auto result = uc.createJob(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -62,15 +60,13 @@ class ApplicationJobController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto jobs = uc.listJobs(systemId);
       auto arr = Json.emptyArray;
@@ -81,33 +77,28 @@ class ApplicationJobController {
       resp["totalCount"] = Json(cast(long) jobs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getJob(id);
-      if (job is null)
-      {
+      if (job is null) {
         writeError(res, 404, "Application job not found");
         return;
       }
       res.writeJsonBody(serializeJob(*job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateApplicationJobRequest r;
@@ -118,8 +109,7 @@ class ApplicationJobController {
       r.active = j.getBoolean("active", true);
 
       auto result = uc.updateJob(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -129,19 +119,16 @@ class ApplicationJobController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.cancelJob(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("canceled");
         res.writeJsonBody(resp, 200);
@@ -151,19 +138,16 @@ class ApplicationJobController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteJob(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -173,8 +157,7 @@ class ApplicationJobController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -195,11 +178,9 @@ class ApplicationJobController {
     j["createdAt"] = Json(job.createdAt);
     j["updatedAt"] = Json(job.updatedAt);
 
-    if (job.executionHistory.length > 0)
-    {
+    if (job.executionHistory.length > 0) {
       auto hist = Json.emptyArray;
-      foreach (ref ex; job.executionHistory)
-      {
+      foreach (ref ex; job.executionHistory) {
         auto ej = Json.emptyObject;
         ej["executionId"] = Json(ex.executionId);
         ej["status"] = Json(ex.status.to!string);

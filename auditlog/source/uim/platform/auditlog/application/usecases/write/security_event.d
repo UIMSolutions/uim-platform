@@ -77,8 +77,7 @@ class WriteSecurityEventUseCase : UIMUseCase {
   }
 
   private AuditAction mapEventTypeToAction(string eventType) {
-    switch (eventType)
-    {
+    switch (eventType) {
     case "login":
       return AuditAction.login;
     case "logout":

@@ -32,8 +32,7 @@ class SecurityEventController : SAPController {
   }
 
   private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = WriteSecurityEventRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -59,8 +58,7 @@ class SecurityEventController : SAPController {
         r.outcome = AuditOutcome.success;
 
       auto result = useCase.writeEvent(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -70,8 +68,7 @@ class SecurityEventController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

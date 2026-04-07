@@ -42,7 +42,7 @@ class DeploymentController : SAPController {
         resp["message"] = Json("Deployment scheduled");
         resp["status"] = Json("PENDING");
         res.writeJsonBody(resp, 202);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -108,7 +108,7 @@ class DeploymentController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Deployment modified");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -126,7 +126,7 @@ class DeploymentController : SAPController {
       auto result = uc.remove(id, rgId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

@@ -27,8 +27,7 @@ class MonitoringController {
   }
 
   private void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = useCase.listAppHealth(tenantId);
 
@@ -41,34 +40,29 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto h = useCase.getAppHealth(id, tenantId);
-      if (h.appId.length == 0)
-      {
+      if (h.appId.length == 0) {
         writeError(res, 404, "Application not found");
         return;
       }
       res.writeJsonBody(serializeHealth(h), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto spaceId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto u = useCase.getSpaceUsage(spaceId, tenantId);
@@ -85,8 +79,7 @@ class MonitoringController {
       j["totalRoutes"] = Json(u.totalRoutes);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

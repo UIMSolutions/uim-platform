@@ -46,7 +46,7 @@ class DatasetController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Dataset registered");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -115,7 +115,7 @@ class DatasetController : SAPController {
         auto resp = Json.emptyObject;
         resp["message"] = Json("Dataset updated");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -132,7 +132,7 @@ class DatasetController : SAPController {
       auto result = uc.remove(id, connectionId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

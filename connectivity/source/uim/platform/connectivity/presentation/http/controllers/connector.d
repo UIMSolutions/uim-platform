@@ -32,8 +32,7 @@ class ConnectorController {
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = RegisterConnectorRequest();
       r.subaccountId = j.getString("subaccountId");
@@ -46,8 +45,7 @@ class ConnectorController {
       r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
       auto result = uc.registerConnector(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class ConnectorController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto conns = uc.listByTenant(tenantId);
 
@@ -78,38 +74,32 @@ class ConnectorController {
       resp["totalCount"] = Json(cast(long) conns.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto cc = uc.getConnector(id);
-      if (cc.id.length == 0)
-      {
+      if (cc.id.length == 0) {
         writeError(res, 404, "Connector not found");
         return;
       }
       res.writeJsonBody(serializeConnector(cc), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // Extract connector id from /api/v1/connectors/{id}/heartbeat
       auto uri = req.requestURI;
       auto parts = splitPath(uri);
-      if (parts.length < 5)
-      {
+      if (parts.length < 5) {
         writeError(res, 400, "Invalid path");
         return;
       }
@@ -120,8 +110,7 @@ class ConnectorController {
       r.connectorVersion = j.getString("connectorVersion");
 
       auto result = uc.heartbeat(connectorId, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("acknowledged");
         res.writeJsonBody(resp, 200);
@@ -131,19 +120,16 @@ class ConnectorController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.unregister(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -153,8 +139,7 @@ class ConnectorController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -25,12 +25,10 @@ class WidgetUseCases {
 
   WidgetResponse create(CreateWidgetRequest req) {
     ChartType ct;
-    try
-    {
+    try {
       ct = req.chartType.to!ChartType;
     }
-    catch (Exception)
-    {
+    catch (Exception) {
       ct = ChartType.Bar;
     }
     auto w = Widget.create(req.title, ct, req.datasetId, req.userId);

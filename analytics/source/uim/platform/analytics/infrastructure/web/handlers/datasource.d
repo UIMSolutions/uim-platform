@@ -25,14 +25,12 @@ class DataSourceHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
-    if (id.length == 0)
-    {
+    if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0)
-    {
+    if (item.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -40,8 +38,7 @@ class DataSourceHandler {
   }
 
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto json = req.json;
       auto cmd = CreateDataSourceRequest(json["name"].get!string,
           json["sourceType"].get!string, json["host"].get!string,
@@ -49,8 +46,7 @@ class DataSourceHandler {
           json["username"].get!string, json["userId"].get!string,);
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
@@ -58,8 +54,7 @@ class DataSourceHandler {
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     auto result = useCases.testConnection(id);
-    if (result.id.length == 0)
-    {
+    if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -77,8 +72,7 @@ private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
   auto parts = uri.split("/");
   foreach (i, part; parts)
-    if (part == resource && i + 1 < parts.length)
-    {
+    if (part == resource && i + 1 < parts.length) {
       auto c = parts[i + 1];
       if (c.length > 0 && c != "test")
         return c;

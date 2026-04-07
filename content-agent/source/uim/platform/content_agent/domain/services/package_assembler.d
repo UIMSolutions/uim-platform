@@ -32,18 +32,15 @@ struct PackageAssembler {
 
     // Collect all item IDs in this package
     bool[string] itemIds;
-    foreach (ref item; pkg.items)
-    {
+    foreach (ref item; pkg.items) {
       if (item.id in itemIds)
         errors ~= "Duplicate content item: " ~ item.name;
       itemIds[item.id] = true;
     }
 
     // Validate dependencies
-    foreach (ref item; pkg.items)
-    {
-      foreach (ref dep; item.dependencies)
-      {
+    foreach (ref item; pkg.items) {
+      foreach (ref dep; item.dependencies) {
         if (dep !in itemIds)
         {
           deps ~= dep;
@@ -56,8 +53,7 @@ struct PackageAssembler {
     foreach (ref p; providers)
       providerIds[p.id] = true;
 
-    foreach (ref item; pkg.items)
-    {
+    foreach (ref item; pkg.items) {
       if (item.providerId.length > 0 && item.providerId !in providerIds)
         errors ~= "Item '" ~ item.name ~ "' references unknown provider: " ~ item.providerId;
     }

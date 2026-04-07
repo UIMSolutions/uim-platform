@@ -99,11 +99,9 @@ class ManageContentPackagesUseCase : UIMUseCase {
 
     auto providers = providerRepo.findByTenant(req.tenantId);
     auto result = PackageAssembler.validate(pkg, providers);
-    if (!result.valid)
-    {
+    if (!result.valid) {
       string msg = "Assembly validation failed: ";
-      foreach (i, e; result.errors)
-      {
+      foreach (i, e; result.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -169,8 +167,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
   }
 
   private static ContentFormat parseContentFormat(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "zip":
       return ContentFormat.zip;
     case "json":
@@ -181,8 +178,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
   }
 
   private static PackageStatus parsePackageStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "draft":
       return PackageStatus.draft;
     case "assembled":

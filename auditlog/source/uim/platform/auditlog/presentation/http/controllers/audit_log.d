@@ -38,8 +38,7 @@ class AuditLogController : SAPController {
   }
 
   private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = WriteAuditLogRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -61,8 +60,7 @@ class AuditLogController : SAPController {
       r.originApp = j.getString("originApp");
 
       auto result = writeUC.writeLog(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -72,23 +70,20 @@ class AuditLogController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto queryReq = AuditLogQueryRequest();
       queryReq.tenantId = tenantId;
 
       // Parse category filter (comma-separated)
       auto catParam = req.headers.get("X-Category-Filter", "");
-      if (catParam.length > 0)
-      {
+      if (catParam.length > 0) {
         // import std.string : split;
 
         foreach (c; catParam.split(","))
@@ -108,19 +103,16 @@ class AuditLogController : SAPController {
       resp["totalCount"] = Json(cast(long) entries.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      if (!retrieveUC.existsById(id, tenantId))
-      {
+      if (!retrieveUC.existsById(id, tenantId)) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }
@@ -128,8 +120,7 @@ class AuditLogController : SAPController {
       auto entry = retrieveUC.getById(id, tenantId);
       res.writeJsonBody(serializeEntry(*entry), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -156,11 +147,9 @@ class AuditLogController : SAPController {
     j["timestamp"] = Json(e.timestamp);
     j["formatVersion"] = Json(e.formatVersion);
 
-    if (e.attributes.length > 0)
-    {
+    if (e.attributes.length > 0) {
       auto attrs = Json.emptyArray;
-      foreach (ref a; e.attributes)
-      {
+      foreach (ref a; e.attributes) {
         auto aj = Json.emptyObject;
         aj["name"] = Json(a.name);
         aj["oldValue"] = Json(a.oldValue);
@@ -175,18 +164,15 @@ class AuditLogController : SAPController {
   private static AuditAttribute[] parseAttributes(Json j) {
     AuditAttribute[] result;
 
-    if (j.hasKey("attributes"))
-    {
+    if (j.hasKey("attributes")) {
       if (j.isNull)
         return null;
       if (j.type != Json.Type.array)
         return result;
     }
 
-    foreach (item; j["attributes"].toArray)
-    {
-      if (item.isObject)
-      {
+    foreach (item; j["attributes"].toArray) {
+      if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),
             item.getString("oldValue"), item.getString("newValue"));
       }
@@ -195,8 +181,7 @@ class AuditLogController : SAPController {
   }
 
   private static AuditCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "audit.security-events", "securityEvents":
       return AuditCategory.securityEvents;
     case "audit.configuration", "configuration":
@@ -211,8 +196,7 @@ class AuditLogController : SAPController {
   }
 
   private static string categoryToString(AuditCategory c) {
-    final switch (c)
-    {
+    final switch (c) {
     case AuditCategory.securityEvents:
       return "audit.security-events";
     case AuditCategory.configuration:
@@ -225,8 +209,7 @@ class AuditLogController : SAPController {
   }
 
   private static AuditSeverity parseSeverity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "warning":
       return AuditSeverity.warning;
     case "error":
@@ -239,8 +222,7 @@ class AuditLogController : SAPController {
   }
 
   private static AuditAction parseAction(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "create":
       return AuditAction.create;
     case "read":
@@ -285,8 +267,7 @@ class AuditLogController : SAPController {
   }
 
   private static AuditOutcome parseOutcome(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "failure":
       return AuditOutcome.failure;
     case "denied":

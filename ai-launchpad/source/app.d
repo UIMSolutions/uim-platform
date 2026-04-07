@@ -11,7 +11,7 @@ import uim.platform.ai_launchpad.infrastructure.container;
 @safe:
 
 version (unittest) {
-} else {
+} ) {
     void main() {
         auto config = loadConfig();
         auto container = buildContainer(config);

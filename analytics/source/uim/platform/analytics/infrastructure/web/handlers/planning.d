@@ -24,14 +24,12 @@ class PlanningHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
-    if (id.length == 0)
-    {
+    if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0)
-    {
+    if (item.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -39,16 +37,14 @@ class PlanningHandler {
   }
 
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto json = req.json;
       auto cmd = CreatePlanningModelRequest(json["name"].get!string,
           json["description"].get!string, json["datasetId"].get!string,
           json["granularity"].get!string, json["userId"].get!string,);
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
@@ -56,8 +52,7 @@ class PlanningHandler {
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.lock(id);
-    if (result.id.length == 0)
-    {
+    if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -67,8 +62,7 @@ class PlanningHandler {
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.approve(id);
-    if (result.id.length == 0)
-    {
+    if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -86,8 +80,7 @@ private string extractIdFromPath(string uri, string resource) {
   // import std.string : split;
   auto parts = uri.split("/");
   foreach (i, part; parts)
-    if (part == resource && i + 1 < parts.length)
-    {
+    if (part == resource && i + 1 < parts.length) {
       auto c = parts[i + 1];
       if (c.length > 0 && c != "lock" && c != "approve")
         return c;

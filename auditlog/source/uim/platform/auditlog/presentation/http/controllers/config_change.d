@@ -29,8 +29,7 @@ class ConfigChangeController : SAPController {
   }
 
   private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = WriteConfigChangeLogRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -41,8 +40,7 @@ class ConfigChangeController : SAPController {
       r.changes = parseChanges(j);
 
       auto result = useCase.writeChange(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -52,8 +50,7 @@ class ConfigChangeController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,10 +60,8 @@ class ConfigChangeController : SAPController {
     auto v = "changes" in j;
     if (v is null || (*v).type != Json.Type.array)
       return result;
-    foreach (item; *v)
-    {
-      if (item.type == Json.Type.object)
-      {
+    foreach (item; *v) {
+      if (item.type == Json.Type.object) {
         result ~= AuditAttribute(item.getString("name"),
             item.getString("oldValue"), item.getString("newValue"));
       }

@@ -45,7 +45,7 @@ class CertificateController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Certificate created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -153,7 +153,7 @@ class CertificateController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Certificate chain uploaded");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -181,7 +181,7 @@ class CertificateController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Certificate activated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -203,7 +203,7 @@ class CertificateController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Certificate deactivated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -222,7 +222,7 @@ class CertificateController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Certificate deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

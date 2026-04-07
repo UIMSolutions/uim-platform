@@ -33,8 +33,7 @@ class TransportRequestController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateTransportRequestRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,8 +44,7 @@ class TransportRequestController {
       r.transportType = j.getString("transportType");
 
       auto result = uc.createRequest(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -56,15 +54,13 @@ class TransportRequestController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto requests = uc.listRequests(systemId);
       auto arr = Json.emptyArray;
@@ -75,33 +71,28 @@ class TransportRequestController {
       resp["totalCount"] = Json(cast(long) requests.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tr = uc.getRequest(id);
-      if (tr is null)
-      {
+      if (tr is null) {
         writeError(res, 404, "Transport request not found");
         return;
       }
       res.writeJsonBody(serializeRequest(*tr), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto requestId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       AddTransportTaskRequest r;
@@ -110,8 +101,7 @@ class TransportRequestController {
       r.objectList = jsonStrArray(j, "objectList");
 
       auto result = uc.addTask(requestId, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["taskId"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -121,19 +111,16 @@ class TransportRequestController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.releaseRequest(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("released");
         res.writeJsonBody(resp, 200);
@@ -143,22 +130,19 @@ class TransportRequestController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto requestId = j.getString("requestId");
       auto taskId = extractIdFromPath(req.requestURI);
 
       auto result = uc.releaseTask(requestId, taskId);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("released");
         res.writeJsonBody(resp, 200);
@@ -168,19 +152,16 @@ class TransportRequestController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRequest(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -190,8 +171,7 @@ class TransportRequestController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -210,11 +190,9 @@ class TransportRequestController {
     j["releasedAt"] = Json(tr.releasedAt);
     j["importedAt"] = Json(tr.importedAt);
 
-    if (tr.tasks.length > 0)
-    {
+    if (tr.tasks.length > 0) {
       auto tasks = Json.emptyArray;
-      foreach (ref t; tr.tasks)
-      {
+      foreach (ref t; tr.tasks) {
         auto tj = Json.emptyObject;
         tj["taskId"] = Json(t.taskId);
         tj["owner"] = Json(t.owner);

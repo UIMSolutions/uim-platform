@@ -25,14 +25,12 @@ class DatasetHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasets");
-    if (id.length == 0)
-    {
+    if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0)
-    {
+    if (item.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -40,16 +38,14 @@ class DatasetHandler {
   }
 
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto json = req.json;
       auto cmd = CreateDatasetRequest(json["name"].get!string,
           json["description"].get!string, json["dataSourceId"].get!string,
           json["userId"].get!string,);
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }

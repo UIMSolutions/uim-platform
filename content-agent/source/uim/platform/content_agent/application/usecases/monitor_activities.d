@@ -40,10 +40,8 @@ class MonitorActivitiesUseCase : UIMUseCase {
     ActivitySummary summary;
     summary.totalCount = cast(long) all.length;
 
-    foreach (ref a; all)
-    {
-      final switch (a.severity)
-      {
+    foreach (ref a; all) {
+      final switch (a.severity) {
       case ActivitySeverity.info:
         summary.infoCount++;
         break;
@@ -60,8 +58,7 @@ class MonitorActivitiesUseCase : UIMUseCase {
   }
 
   private static ActivityType parseActivityType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "packageCreated":
       return ActivityType.packageCreated;
     case "packageAssembled":

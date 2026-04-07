@@ -48,7 +48,7 @@ class ModelController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Model registered");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -117,7 +117,7 @@ class ModelController : SAPController {
         auto resp = Json.emptyObject;
         resp["message"] = Json("Model updated");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -134,7 +134,7 @@ class ModelController : SAPController {
       auto result = uc.remove(id, connectionId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

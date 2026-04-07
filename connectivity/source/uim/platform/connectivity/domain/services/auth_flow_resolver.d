@@ -22,8 +22,7 @@ struct AuthFlowResolver {
   static AuthFlowResult validate(const ref Destination dest) {
     string[] errors;
 
-    final switch (dest.authType)
-    {
+    final switch (dest.authType) {
     case AuthenticationType.noAuthentication:
       break;
 

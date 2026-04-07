@@ -26,14 +26,12 @@ class DashboardHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
-    if (id.length == 0)
-    {
+    if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing dashboard id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0)
-    {
+    if (item.id.length == 0) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -41,30 +39,26 @@ class DashboardHandler {
   }
 
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto json = req.json;
       auto cmd = CreateDashboardRequest(json["name"].get!string,
           json["description"].get!string, json["ownerId"].get!string,);
       auto result = useCases.create(cmd);
       res.writeJsonBody(toJsonValue(result), HTTPStatus.created);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
 
   void addPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
-    try
-    {
+    try {
       auto json = req.json;
       auto result = useCases.addPage(id, json["title"].get!string);
       res.writeJsonBody(toJsonValue(result));
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
@@ -72,8 +66,7 @@ class DashboardHandler {
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     auto result = useCases.publish(id);
-    if (result.id.length == 0)
-    {
+    if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -94,8 +87,7 @@ private string extractId(scope HTTPServerRequest req) {
   auto parts = path.split("/");
   // /api/v1/dashboards/{id}...
   foreach (i, part; parts) {
-    if (part == "dashboards" && i + 1 < parts.length)
-    {
+    if (part == "dashboards" && i + 1 < parts.length) {
       auto candidate = parts[i + 1];
       // Skip sub-resource keywords
       if (candidate != "publish" && candidate != "pages" && candidate.length > 0)

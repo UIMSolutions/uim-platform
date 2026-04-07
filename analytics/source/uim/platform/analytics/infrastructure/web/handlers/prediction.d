@@ -26,14 +26,12 @@ class PredictionHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
-    if (id.length == 0)
-    {
+    if (id.length == 0) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0)
-    {
+    if (item.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -41,12 +39,10 @@ class PredictionHandler {
   }
 
   void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto json = req.json;
       string[] features;
-      if ("featureColumns" in json)
-      {
+      if ("featureColumns" in json) {
         features = json["featureColumns"].toArray.map!(f => f.get!string).array;
       }
       auto cmd = CreatePredictionRequest(json.getString("name"), json.getString("description"),
@@ -54,8 +50,7 @@ class PredictionHandler {
           json.getString("targetColumn"), features, json.getString("userId"));
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
@@ -63,8 +58,7 @@ class PredictionHandler {
   void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
     auto result = useCases.train(id);
-    if (result.id.length == 0)
-    {
+    if (result.id.length == 0) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -83,8 +77,7 @@ private string extractIdFromPath(string uri, string resource) {
 
   auto parts = uri.split("/");
   foreach (i, part; parts)
-    if (part == resource && i + 1 < parts.length)
-    {
+    if (part == resource && i + 1 < parts.length) {
       auto c = parts[i + 1];
       if (c.length > 0 && c != "train")
         return c;

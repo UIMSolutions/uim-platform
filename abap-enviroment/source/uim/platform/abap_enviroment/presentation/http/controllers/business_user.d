@@ -38,8 +38,7 @@ class BusinessUserController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateBusinessUserRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -51,8 +50,7 @@ class BusinessUserController : SAPController {
       r.roleIds = jsonStrArray(j, "roleIds");
 
       auto result = uc.createUser(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -62,15 +60,13 @@ class BusinessUserController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto users = uc.listUsers(systemId);
       auto arr = Json.emptyArray;
@@ -81,33 +77,28 @@ class BusinessUserController : SAPController {
       resp["totalCount"] = Json(cast(long) users.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto user = uc.getUser(id);
-      if (user is null)
-      {
+      if (user is null) {
         writeError(res, 404, "Business user not found");
         return;
       }
       res.writeJsonBody(serializeUser(*user), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateBusinessUserRequest r;
@@ -118,8 +109,7 @@ class BusinessUserController : SAPController {
       r.roleIds = jsonStrArray(j, "roleIds");
 
       auto result = uc.updateUser(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -129,19 +119,16 @@ class BusinessUserController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteUser(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -151,8 +138,7 @@ class BusinessUserController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -172,11 +158,9 @@ class BusinessUserController : SAPController {
     j["createdAt"] = Json(u.createdAt);
     j["updatedAt"] = Json(u.updatedAt);
 
-    if (u.roleAssignments.length > 0)
-    {
+    if (u.roleAssignments.length > 0) {
       auto roles = Json.emptyArray;
-      foreach (ref ra; u.roleAssignments)
-      {
+      foreach (ref ra; u.roleAssignments) {
         auto rj = Json.emptyObject;
         rj["roleId"] = Json(ra.roleId);
         rj["roleName"] = Json(ra.roleName);

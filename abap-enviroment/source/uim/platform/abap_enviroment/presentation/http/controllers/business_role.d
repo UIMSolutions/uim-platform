@@ -38,8 +38,7 @@ class BusinessRoleController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateBusinessRoleRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -50,8 +49,7 @@ class BusinessRoleController : SAPController {
       r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
 
       auto result = uc.createRole(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -61,15 +59,13 @@ class BusinessRoleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto roles = uc.listRoles(systemId);
       auto arr = Json.emptyArray;
@@ -80,33 +76,28 @@ class BusinessRoleController : SAPController {
       resp["totalCount"] = Json(cast(long) roles.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto role = uc.getRole(id);
-      if (role is null)
-      {
+      if (role is null) {
         writeError(res, 404, "Business role not found");
         return;
       }
       res.writeJsonBody(serializeRole(*role), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateBusinessRoleRequest r;
@@ -115,8 +106,7 @@ class BusinessRoleController : SAPController {
       r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
 
       auto result = uc.updateRole(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -126,19 +116,16 @@ class BusinessRoleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRole(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -148,8 +135,7 @@ class BusinessRoleController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -165,19 +151,16 @@ class BusinessRoleController : SAPController {
     j["createdAt"] = Json(role.createdAt);
     j["updatedAt"] = Json(role.updatedAt);
 
-    if (role.restrictionTypes.length > 0)
-    {
+    if (role.restrictionTypes.length > 0) {
       auto rt = Json.emptyArray;
       foreach (ref r; role.restrictionTypes)
         rt ~= Json(r);
       j["restrictionTypes"] = rt;
     }
 
-    if (role.assignedCatalogs.length > 0)
-    {
+    if (role.assignedCatalogs.length > 0) {
       auto cats = Json.emptyArray;
-      foreach (ref c; role.assignedCatalogs)
-      {
+      foreach (ref c; role.assignedCatalogs) {
         auto cj = Json.emptyObject;
         cj["catalogId"] = Json(c.catalogId);
         cj["catalogName"] = Json(c.catalogName);

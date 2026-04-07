@@ -221,8 +221,7 @@ package "Domain Layer  «core»" as DOM <<Rectangle>> {
 
     class AnalyticsEngine << (S,#FFB74D) >> {
       {static} + aggregate(values, type) : double
-      {static} + sum() / median() / variance()
-      {static} + unique(values) : double[]
+      {static} + sum() / median() / variance() {static} + unique(values) : double[]
     }
 
     class ForecastingEngine << (S,#FFB74D) >> {

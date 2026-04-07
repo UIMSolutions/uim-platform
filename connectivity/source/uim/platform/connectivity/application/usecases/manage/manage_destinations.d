@@ -66,11 +66,9 @@ class ManageDestinationsUseCase : UIMUseCase {
 
     // Validate auth configuration
     auto authResult = AuthFlowResolver.validate(dest);
-    if (!authResult.valid)
-    {
+    if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authResult.errors)
-      {
+      foreach (i, e; authResult.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -119,11 +117,9 @@ class ManageDestinationsUseCase : UIMUseCase {
       dest.additionalHeaders = req.additionalHeaders;
 
     auto authResult = AuthFlowResolver.validate(dest);
-    if (!authResult.valid)
-    {
+    if (!authResult.valid) {
       string msg = "Auth validation failed: ";
-      foreach (i, e; authResult.errors)
-      {
+      foreach (i, e; authResult.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;

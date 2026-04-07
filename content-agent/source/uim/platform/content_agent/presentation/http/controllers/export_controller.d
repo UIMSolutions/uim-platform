@@ -29,8 +29,7 @@ class ExportController {
   }
 
   private void handleStartExport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = StartExportRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -40,8 +39,7 @@ class ExportController {
       r.startedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.startExport(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -52,15 +50,13 @@ class ExportController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = uc.listExportJobs(tenantId);
 
@@ -73,26 +69,22 @@ class ExportController {
       resp["totalCount"] = Json(cast(long) jobs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getExportJob(id);
-      if (job.id.length == 0)
-      {
+      if (job.id.length == 0) {
         writeError(res, 404, "Export job not found");
         return;
       }
       res.writeJsonBody(serializeExportJob(job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -56,7 +56,7 @@ class DomainDashboardController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Dashboard refreshed");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

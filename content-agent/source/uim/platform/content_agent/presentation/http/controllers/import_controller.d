@@ -31,8 +31,7 @@ class ImportController {
   }
 
   private void handleStartImport(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = StartImportRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class ImportController {
       r.startedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.startImport(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -54,15 +52,13 @@ class ImportController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = uc.listImportJobs(tenantId);
 
@@ -75,26 +71,22 @@ class ImportController {
       resp["totalCount"] = Json(cast(long) jobs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getImportJob(id);
-      if (job.id.length == 0)
-      {
+      if (job.id.length == 0) {
         writeError(res, 404, "Import job not found");
         return;
       }
       res.writeJsonBody(serializeImportJob(job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

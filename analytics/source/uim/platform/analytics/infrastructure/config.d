@@ -22,14 +22,12 @@ struct ServiceConfig {
     ServiceConfig cfg;
     if (auto h = environment.get("ANALYTICS_HOST"))
       cfg.host = h;
-    if (auto p = environment.get("ANALYTICS_PORT"))
-    {
+    if (auto p = environment.get("ANALYTICS_PORT")) {
       try
       {
         cfg.port = p.to!ushort;
       }
-      catch (Exception)
-      {
+      catch (Exception) {
       }
     }
     return cfg;

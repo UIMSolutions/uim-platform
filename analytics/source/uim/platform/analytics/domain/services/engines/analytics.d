@@ -18,8 +18,7 @@ struct AnalyticsEngine {
     if (values.length == 0)
       return 0.0;
 
-    final switch (aggType)
-    {
+    final switch (aggType) {
     case AggregationType.Sum:
       return sum(values);
     case AggregationType.Average:
@@ -94,10 +93,8 @@ struct AnalyticsEngine {
   static double[] unique(double[] v) {
     double[] result;
     bool[double] seen;
-    foreach (x; v)
-    {
-      if (x !in seen)
-      {
+    foreach (x; v) {
+      if (x !in seen) {
         seen[x] = true;
         result ~= x;
       }

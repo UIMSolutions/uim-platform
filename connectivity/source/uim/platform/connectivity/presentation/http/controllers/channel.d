@@ -33,8 +33,7 @@ class ChannelController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.connectorId = j.getString("connectorId");
@@ -47,8 +46,7 @@ class ChannelController {
       r.backendPort = jsonUshort(j, "backendPort");
 
       auto result = uc.createChannel(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -58,15 +56,13 @@ class ChannelController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto channels = uc.listByTenant(tenantId);
 
@@ -79,44 +75,37 @@ class ChannelController {
       resp["totalCount"] = Json(cast(long) channels.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto ch = uc.getChannel(id);
-      if (ch.id.length == 0)
-      {
+      if (ch.id.length == 0) {
         writeError(res, 404, "Channel not found");
         return;
       }
       res.writeJsonBody(serializeChannel(ch), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto parts = splitPath(req.requestURI);
-      if (parts.length < 5)
-      {
+      if (parts.length < 5) {
         writeError(res, 400, "Invalid path");
         return;
       }
       auto channelId = parts[$ - 2];
 
       auto result = uc.openChannel(channelId);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("opened");
         res.writeJsonBody(resp, 200);
@@ -126,26 +115,22 @@ class ChannelController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto parts = splitPath(req.requestURI);
-      if (parts.length < 5)
-      {
+      if (parts.length < 5) {
         writeError(res, 400, "Invalid path");
         return;
       }
       auto channelId = parts[$ - 2];
 
       auto result = uc.closeChannel(channelId);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("closed");
         res.writeJsonBody(resp, 200);
@@ -155,19 +140,16 @@ class ChannelController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteChannel(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -177,8 +159,7 @@ class ChannelController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -36,8 +36,7 @@ class ServiceBindingController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateServiceBindingRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -48,8 +47,7 @@ class ServiceBindingController : SAPController {
       r.bindingType = j.getString("bindingType");
 
       auto result = uc.createBinding(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -59,15 +57,13 @@ class ServiceBindingController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto bindings = uc.listBindings(systemId);
       auto arr = Json.emptyArray;
@@ -78,33 +74,28 @@ class ServiceBindingController : SAPController {
       resp["totalCount"] = Json(cast(long) bindings.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto binding = uc.getBinding(id);
-      if (binding is null)
-      {
+      if (binding is null) {
         writeError(res, 404, "Service binding not found");
         return;
       }
       res.writeJsonBody(serializeBinding(*binding), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateServiceBindingRequest r;
@@ -112,8 +103,7 @@ class ServiceBindingController : SAPController {
       r.status = j.getString("status");
 
       auto result = uc.updateBinding(id, r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -123,19 +113,16 @@ class ServiceBindingController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBinding(id);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
@@ -145,8 +132,7 @@ class ServiceBindingController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -166,11 +152,9 @@ class ServiceBindingController : SAPController {
     j["createdAt"] = Json(b.createdAt);
     j["updatedAt"] = Json(b.updatedAt);
 
-    if (b.endpoints.length > 0)
-    {
+    if (b.endpoints.length > 0) {
       auto eps = Json.emptyArray;
-      foreach (ref ep; b.endpoints)
-      {
+      foreach (ref ep; b.endpoints) {
         auto ej = Json.emptyObject;
         ej["path"] = Json(ep.path);
         ej["serviceName"] = Json(ep.serviceName);

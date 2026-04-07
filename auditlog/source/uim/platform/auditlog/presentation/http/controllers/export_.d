@@ -36,8 +36,7 @@ class ExportController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateExportJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -57,8 +56,7 @@ class ExportController : SAPController {
         r.categories ~= parseCategory(c);
 
       auto result = useCase.createExport(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -68,15 +66,13 @@ class ExportController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = useCase.listExports(tenantId);
       auto arr = Json.emptyArray;
@@ -87,34 +83,29 @@ class ExportController : SAPController {
       resp["totalCount"] = Json(cast(long) jobs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto job = useCase.getExport(id, tenantId);
-      if (job is null)
-      {
+      if (job is null) {
         writeError(res, 404, "Export job not found");
         return;
       }
       res.writeJsonBody(serializeJob(job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteExport(id, tenantId);
@@ -122,8 +113,7 @@ class ExportController : SAPController {
       resp["status"] = Json("deleted");
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -143,8 +133,7 @@ class ExportController : SAPController {
     o["completedAt"] = Json(j.completedAt);
     o["errorMessage"] = Json(j.errorMessage);
 
-    if (j.categories.length > 0)
-    {
+    if (j.categories.length > 0) {
       auto cats = Json.emptyArray;
       foreach (ref c; j.categories)
         cats ~= Json(categoryToString(c));
@@ -154,8 +143,7 @@ class ExportController : SAPController {
   }
 
   private static AuditCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "audit.security-events", "securityEvents":
       return AuditCategory.securityEvents;
     case "audit.configuration", "configuration":
@@ -170,8 +158,7 @@ class ExportController : SAPController {
   }
 
   private static string categoryToString(AuditCategory c) {
-    final switch (c)
-    {
+    final switch (c) {
     case AuditCategory.securityEvents:
       return "audit.security-events";
     case AuditCategory.configuration:

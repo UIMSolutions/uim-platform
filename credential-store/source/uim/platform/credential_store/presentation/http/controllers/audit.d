@@ -42,7 +42,7 @@ class AuditController : SAPController {
         entries = uc.listByNamespace(tenantId, namespaceId);
       } else if (resourceType.length > 0) {
         entries = uc.listByResourceType(tenantId, resourceType);
-      } else {
+      } ) {
         entries = uc.list(tenantId);
       }
 

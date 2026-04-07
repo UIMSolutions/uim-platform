@@ -40,8 +40,7 @@ struct ForecastingEngine {
     double level = data[0];
     double trend = data[1] - data[0];
 
-    foreach (i; 1 .. data.length)
-    {
+    foreach (i; 1 .. data.length) {
       double newLevel = alpha * data[i] + (1.0 - alpha) * (level + trend);
       double newTrend = beta * (newLevel - level) + (1.0 - beta) * trend;
       level = newLevel;
@@ -69,8 +68,7 @@ struct ForecastingEngine {
       windowSum += data[i];
     result[0] = windowSum / window;
 
-    foreach (i; window .. data.length)
-    {
+    foreach (i; window .. data.length) {
       windowSum += data[i] - data[i - window];
       result[i - window + 1] = windowSum / window;
     }

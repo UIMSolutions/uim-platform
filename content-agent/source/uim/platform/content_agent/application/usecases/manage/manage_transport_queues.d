@@ -116,8 +116,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
   }
 
   private static QueueType parseQueueType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "ctsPlus":
       return QueueType.ctsPlus;
     case "local":

@@ -34,8 +34,7 @@ class PackageController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreatePackageRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -49,8 +48,7 @@ class PackageController : SAPController {
       r.items = parseContentItems(j);
 
       auto result = uc.createPackage(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -60,15 +58,13 @@ class PackageController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto packages = uc.listPackages(tenantId);
 
@@ -81,33 +77,28 @@ class PackageController : SAPController {
       resp["totalCount"] = Json(cast(long) packages.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto pkg = uc.getPackage(id);
-      if (pkg.id.length == 0)
-      {
+      if (pkg.id.length == 0) {
         writeError(res, 404, "Package not found");
         return;
       }
       res.writeJsonBody(serializePackage(pkg), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdatePackageRequest();
@@ -117,8 +108,7 @@ class PackageController : SAPController {
       r.items = parseContentItems(j);
 
       auto result = uc.updatePackage(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -128,19 +118,16 @@ class PackageController : SAPController {
         writeError(res, result.error == "Package not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deletePackage(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -150,15 +137,13 @@ class PackageController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAssemble(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = AssemblePackageRequest();
       r.packageId = j.getString("packageId");
@@ -166,8 +151,7 @@ class PackageController : SAPController {
       r.assembledBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.assemblePackage(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("assembled");
@@ -178,8 +162,7 @@ class PackageController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -190,8 +173,7 @@ class PackageController : SAPController {
     if (v is null || (*v).type != Json.Type.array)
       return items;
 
-    foreach (itemJson; *v)
-    {
+    foreach (itemJson; *v) {
       if (itemJson.type != Json.Type.object)
         continue;
       ContentItem item;
@@ -210,8 +192,7 @@ class PackageController : SAPController {
   }
 
   private static ContentCategory parseContentCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "integrationFlow":
       return ContentCategory.integrationFlow;
     case "destination":
@@ -269,11 +250,9 @@ class PackageController : SAPController {
     j["assembledAt"] = Json(p.assembledAt);
     j["packageSizeBytes"] = Json(p.packageSizeBytes);
 
-    if (p.items.length > 0)
-    {
+    if (p.items.length > 0) {
       auto arr = Json.emptyArray;
-      foreach (ref item; p.items)
-      {
+      foreach (ref item; p.items) {
         auto ij = Json.emptyObject;
         ij["id"] = Json(item.id);
         ij["name"] = Json(item.name);

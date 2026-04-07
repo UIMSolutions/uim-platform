@@ -46,7 +46,7 @@ class ConnectionController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Connection created");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -112,7 +112,7 @@ class ConnectionController : SAPController {
         auto resp = Json.emptyObject;
         resp["message"] = Json("Connection updated");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -128,7 +128,7 @@ class ConnectionController : SAPController {
       auto result = uc.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

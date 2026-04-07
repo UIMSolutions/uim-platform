@@ -32,8 +32,7 @@ class ProviderController {
   }
 
   private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = RegisterProviderRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class ProviderController {
       r.registeredBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.registerProvider(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class ProviderController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto providers = uc.listProviders(tenantId);
 
@@ -76,33 +72,28 @@ class ProviderController {
       resp["totalCount"] = Json(cast(long) providers.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto provider = uc.getProvider(id);
-      if (provider.id.length == 0)
-      {
+      if (provider.id.length == 0) {
         writeError(res, 404, "Provider not found");
         return;
       }
       res.writeJsonBody(serializeProvider(provider), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateProviderRequest();
@@ -111,8 +102,7 @@ class ProviderController {
       r.authToken = j.getString("authToken");
 
       auto result = uc.updateProvider(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -122,19 +112,16 @@ class ProviderController {
         writeError(res, result.error == "Provider not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDeregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deregisterProvider(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deregistered"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -144,21 +131,18 @@ class ProviderController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleSync(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto providerId = j.getString("providerId");
 
       auto result = uc.syncProvider(providerId);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["synced"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -168,8 +152,7 @@ class ProviderController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -186,11 +169,9 @@ class ProviderController {
     j["registeredAt"] = Json(p.registeredAt);
     j["lastSyncAt"] = Json(p.lastSyncAt);
 
-    if (p.contentTypes.length > 0)
-    {
+    if (p.contentTypes.length > 0) {
       auto arr = Json.emptyArray;
-      foreach (ref ct; p.contentTypes)
-      {
+      foreach (ref ct; p.contentTypes) {
         auto ctj = Json.emptyObject;
         ctj["typeId"] = Json(ct.typeId);
         ctj["name"] = Json(ct.name);

@@ -27,12 +27,10 @@ class DataSourceUseCases {
 
   DataSourceResponse create(CreateDataSourceRequest req) {
     DataSourceType st;
-    try
-    {
+    try {
       st = req.sourceType.to!DataSourceType;
     }
-    catch (Exception)
-    {
+    catch (Exception) {
       st = DataSourceType.Database;
     }
     auto conn = ConnectionInfo(req.host, req.port, req.databaseName, req.username, "");
@@ -58,8 +56,7 @@ class DataSourceUseCases {
       return DataSourceResponse.init;
 
     auto connStr = ds.connection.host ~ ":" ~ ds.connection.port.to!string;
-    if (connector !is null && connector.testConnection(connStr))
-    {
+    if (connector !is null && connector.testConnection(connStr)) {
       ds.markConnected();
     }
     else

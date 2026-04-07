@@ -35,8 +35,7 @@ class MonitoringController {
   }
 
   private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = uc.listLogs(tenantId);
 
@@ -49,15 +48,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getSummary(tenantId);
 
@@ -69,8 +66,7 @@ class MonitoringController {
       j["critical"] = Json(cast(long) summary.criticalCount);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

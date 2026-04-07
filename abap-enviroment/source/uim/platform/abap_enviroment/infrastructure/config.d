@@ -28,8 +28,7 @@ AppConfig loadConfig() {
 
     try
       config.port = portStr.to!ushort;
-    catch (Exception)
-    {
+    catch (Exception) {
     }
   }
 

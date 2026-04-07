@@ -28,8 +28,7 @@ AppConfig loadConfig() {
     // import std.conv : to;
     try
       config.port = portStr.to!ushort;
-    catch (Exception)
-    {
+    catch (Exception) {
     }
   }
 

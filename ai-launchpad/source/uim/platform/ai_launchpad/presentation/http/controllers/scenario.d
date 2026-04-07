@@ -43,7 +43,7 @@ class ScenarioController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Scenario synced");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -102,7 +102,7 @@ class ScenarioController : SAPController {
       auto result = uc.remove(id, connectionId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

@@ -36,8 +36,7 @@ class RetentionController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateRetentionPolicyRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -48,8 +47,7 @@ class RetentionController : SAPController {
       r.categories = parseCategoryArray(j);
 
       auto result = useCase.createPolicy(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -59,15 +57,13 @@ class RetentionController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto policies = useCase.listPolicies(tenantId);
       auto arr = Json.emptyArray;
@@ -78,34 +74,29 @@ class RetentionController : SAPController {
       resp["totalCount"] = Json(cast(long) policies.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      if (!useCase.hasPolicy(id, tenantId))
-      {
+      if (!useCase.hasPolicy(id, tenantId)) {
         writeError(res, 404, "Retention policy not found");
         return;
       }
       auto policy = useCase.getPolicy(id, tenantId);
       res.writeJsonBody(serializePolicy(policy), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateRetentionPolicyRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -124,8 +115,7 @@ class RetentionController : SAPController {
         r.status = RetentionStatus.active;
 
       auto result = useCase.updatePolicy(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -135,15 +125,13 @@ class RetentionController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deletePolicy(id, tenantId);
@@ -151,8 +139,7 @@ class RetentionController : SAPController {
       resp["status"] = Json("deleted");
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -169,8 +156,7 @@ class RetentionController : SAPController {
     j["createdAt"] = Json(p.createdAt);
     j["updatedAt"] = Json(p.updatedAt);
 
-    if (p.categories.length > 0)
-    {
+    if (p.categories.length > 0) {
       auto cats = Json.emptyArray;
       foreach (ref c; p.categories)
         cats ~= Json(categoryToString(c));
@@ -188,8 +174,7 @@ class RetentionController : SAPController {
   }
 
   private static AuditCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "audit.security-events", "securityEvents":
       return AuditCategory.securityEvents;
     case "audit.configuration", "configuration":
@@ -204,8 +189,7 @@ class RetentionController : SAPController {
   }
 
   private static string categoryToString(AuditCategory c) {
-    final switch (c)
-    {
+    final switch (c) {
     case AuditCategory.securityEvents:
       return "audit.security-events";
     case AuditCategory.configuration:

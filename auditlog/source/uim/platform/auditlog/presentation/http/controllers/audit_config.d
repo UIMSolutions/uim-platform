@@ -37,8 +37,7 @@ class AuditConfigController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto request = CreateAuditConfigRequest();
       request.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -64,8 +63,7 @@ class AuditConfigController : SAPController {
       request.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
       auto result = useCase.createConfig(request);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -75,15 +73,13 @@ class AuditConfigController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto configs = useCase.listConfigs();
       auto arr = Json.emptyArray;
       foreach (ref c; configs)
@@ -93,33 +89,28 @@ class AuditConfigController : SAPController {
       resp["totalCount"] = configs.length;
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto cfg = useCase.getConfig(tenantId);
-      if (cfg is null)
-      {
+      if (cfg is null) {
         writeError(res, 404, "Audit config not found");
         return;
       }
       res.writeJsonBody(serializeConfig(cfg), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -151,8 +142,7 @@ class AuditConfigController : SAPController {
         r.minimumSeverity = AuditSeverity.info;
 
       auto result = useCase.updateConfig(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -162,15 +152,13 @@ class AuditConfigController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteConfig(id, tenantId);
@@ -178,8 +166,7 @@ class AuditConfigController : SAPController {
       resp["status"] = Json("deleted");
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -200,15 +187,13 @@ class AuditConfigController : SAPController {
     j["createdAt"] = Json(c.createdAt);
     j["updatedAt"] = Json(c.updatedAt);
 
-    if (c.maskedFields.length > 0)
-    {
+    if (c.maskedFields.length > 0) {
       auto mf = Json.emptyArray;
       foreach (ref f; c.maskedFields)
         mf ~= Json(f);
       j["maskedFields"] = mf;
     }
-    if (c.excludedServices.length > 0)
-    {
+    if (c.excludedServices.length > 0) {
       auto es = Json.emptyArray;
       foreach (ref s; c.excludedServices)
         es ~= Json(s);
