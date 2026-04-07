@@ -33,8 +33,7 @@ class ValidationRuleController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateValidationRuleRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,8 +54,7 @@ class ValidationRuleController : SAPController {
       r.priority = j.getInteger("priority");
 
       auto result = uc.create(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -66,15 +64,13 @@ class ValidationRuleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto rules = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
@@ -86,33 +82,28 @@ class ValidationRuleController : SAPController {
       resp["totalCount"] = Json(cast(long) rules.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getById(id);
-      if (rule is null)
-      {
+      if (rule is null) {
         writeError(res, 404, "Validation rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(*rule), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -135,8 +126,7 @@ class ValidationRuleController : SAPController {
       r.priority = j.getInteger("priority");
 
       auto result = uc.update(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -146,15 +136,13 @@ class ValidationRuleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.remove(id, tenantId);
@@ -163,8 +151,7 @@ class ValidationRuleController : SAPController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -188,8 +175,7 @@ class ValidationRuleController : SAPController {
     j["createdAt"] = Json(r.createdAt);
     j["updatedAt"] = Json(r.updatedAt);
 
-    if (r.allowedValues.length > 0)
-    {
+    if (r.allowedValues.length > 0) {
       auto arr = Json.emptyArray;
       foreach (v; r.allowedValues)
         arr ~= Json(v);
@@ -200,8 +186,7 @@ class ValidationRuleController : SAPController {
   }
 
   private static RuleType parseRuleType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "required":
       return RuleType.required;
     case "format":
@@ -224,8 +209,7 @@ class ValidationRuleController : SAPController {
   }
 
   private static RuleSeverity parseSeverity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "warning":
       return RuleSeverity.warning;
     case "error":
@@ -238,8 +222,7 @@ class ValidationRuleController : SAPController {
   }
 
   private static RuleStatus parseRuleStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return RuleStatus.active;
     case "inactive":

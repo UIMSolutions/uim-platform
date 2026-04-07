@@ -100,8 +100,7 @@ class ModelTrainer {
 
     // Update model config to trained
     auto config = configRepo.findById(job.modelConfigId, tenantId);
-    if (config !is null)
-    {
+    if (config !is null) {
       config.status = ModelConfigStatus.trained;
       config.updatedAt = now;
       configRepo.update(*config);
@@ -121,8 +120,7 @@ class ModelTrainer {
 
     // Revert config status
     auto config = configRepo.findById(job.modelConfigId, tenantId);
-    if (config !is null)
-    {
+    if (config !is null) {
       config.status = ModelConfigStatus.ready;
       config.updatedAt = now;
       configRepo.update(*config);

@@ -34,8 +34,7 @@ class FindDestinationUseCase : UIMUseCase {
   DestinationLookupResponse find(FindDestinationRequest req) {
     DestinationLookupResponse resp;
 
-    if (req.name.length == 0)
-    {
+    if (req.name.length == 0) {
       resp.found = false;
       resp.error = "Destination name is required";
       return resp;
@@ -43,15 +42,13 @@ class FindDestinationUseCase : UIMUseCase {
 
     // Look up the destination by name
     auto dest = destRepo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (dest.id.length == 0)
-    {
+    if (dest.id.length == 0) {
       resp.found = false;
       resp.error = "Destination '" ~ req.name ~ "' not found";
       return resp;
     }
 
-    if (dest.status == DestinationStatus.inactive)
-    {
+    if (dest.status == DestinationStatus.inactive) {
       resp.found = false;
       resp.error = "Destination '" ~ req.name ~ "' is inactive";
       return resp;
@@ -60,11 +57,9 @@ class FindDestinationUseCase : UIMUseCase {
     // Resolve fragments
     DestinationFragment[] fragments;
     string[] fragmentNames;
-    foreach (fid; dest.fragmentIds)
-    {
+    foreach (fid; dest.fragmentIds) {
       auto frag = fragRepo.findById(fid);
-      if (frag.id.length > 0)
-      {
+      if (frag.id.length > 0) {
         fragments ~= frag;
         fragmentNames ~= frag.name;
       }
@@ -78,14 +73,12 @@ class FindDestinationUseCase : UIMUseCase {
 
     // Collect referenced certificates
     Certificate[] certs;
-    if (resolved.keystoreId.length > 0)
-    {
+    if (resolved.keystoreId.length > 0) {
       auto ks = certRepo.findById(resolved.keystoreId);
       if (ks.id.length > 0)
         certs ~= ks;
     }
-    if (resolved.truststoreId.length > 0)
-    {
+    if (resolved.truststoreId.length > 0) {
       auto ts = certRepo.findById(resolved.truststoreId);
       if (ts.id.length > 0)
         certs ~= ts;
@@ -101,8 +94,7 @@ class FindDestinationUseCase : UIMUseCase {
     resp.properties = resolved.properties;
     resp.appliedFragments = fragmentNames;
 
-    if (token.type_.length > 0)
-    {
+    if (token.type_.length > 0) {
       AuthTokenDto td;
       td.type_ = token.type_;
       td.value_ = token.value_;
@@ -111,8 +103,7 @@ class FindDestinationUseCase : UIMUseCase {
       resp.authTokens ~= td;
     }
 
-    foreach (ref c; certs)
-    {
+    foreach (ref c; certs) {
       CertificateDto cd;
       cd.name = c.name;
       cd.type_ = c.certificateType.to!string;

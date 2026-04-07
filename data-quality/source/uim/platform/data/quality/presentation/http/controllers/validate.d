@@ -29,8 +29,7 @@ class ValidateController {
   }
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = ValidateRecordRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -41,23 +40,20 @@ class ValidateController {
       auto result = uc.validateRecord(r);
       res.writeJsonBody(serializeResult(result), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleValidateBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = ValidateBatchRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.datasetId = j.getString("datasetId");
 
       auto recordsJson = "records" in j;
-      if (recordsJson !is null && (*recordsJson).type == Json.Type.array)
-      {
+      if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
         foreach (item; *recordsJson)
         {
           if (item.type == Json.Type.object)
@@ -80,27 +76,23 @@ class ValidateController {
       resp["totalCount"] = Json(cast(long) results.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto recordId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.getResultByRecord(recordId, tenantId);
-      if (result is null)
-      {
+      if (result is null) {
         writeError(res, 404, "Validation result not found");
         return;
       }
       res.writeJsonBody(serializeResult(*result), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -116,11 +108,9 @@ class ValidateController {
     j["qualityScore"] = Json(r.qualityScore);
     j["validatedAt"] = Json(r.validatedAt);
 
-    if (r.violations.length > 0)
-    {
+    if (r.violations.length > 0) {
       auto violations = Json.emptyArray;
-      foreach (ref v; r.violations)
-      {
+      foreach (ref v; r.violations) {
         auto vj = Json.emptyObject;
         vj["ruleId"] = Json(v.ruleId);
         vj["ruleName"] = Json(v.ruleName);

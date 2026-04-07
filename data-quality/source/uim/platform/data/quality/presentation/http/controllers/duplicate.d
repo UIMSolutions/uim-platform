@@ -31,8 +31,7 @@ class DuplicateController {
   }
 
   private void handleDetect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = DetectDuplicatesRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class DuplicateController {
       r.threshold = jsonDouble(j, "threshold", 70.0);
 
       auto recordsJson = "records" in j;
-      if (recordsJson !is null && (*recordsJson).type == Json.Type.array)
-      {
+      if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
         foreach (item; *recordsJson)
         {
           if (item.type == Json.Type.object)
@@ -66,15 +64,13 @@ class DuplicateController {
       resp["totalGroups"] = Json(cast(long) groups.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = ResolveDuplicateRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -82,8 +78,7 @@ class DuplicateController {
       r.survivorRecordId = j.getString("survivorRecordId");
 
       auto result = uc.resolve(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["resolved"] = Json(true);
@@ -94,15 +89,13 @@ class DuplicateController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto groups = uc.getUnresolved(tenantId);
       auto arr = Json.emptyArray;
@@ -114,27 +107,23 @@ class DuplicateController {
       resp["totalCount"] = Json(cast(long) groups.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto group = uc.getById(id, tenantId);
-      if (group is null)
-      {
+      if (group is null) {
         writeError(res, 404, "Match group not found");
         return;
       }
       res.writeJsonBody(serializeGroup(*group), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -150,8 +139,7 @@ class DuplicateController {
     j["detectedAt"] = Json(g.detectedAt);
 
     auto candidates = Json.emptyArray;
-    foreach (ref c; g.candidates)
-    {
+    foreach (ref c; g.candidates) {
       auto cj = Json.emptyObject;
       cj["recordId"] = Json(c.recordId);
       cj["score"] = Json(c.score);
@@ -165,8 +153,7 @@ class DuplicateController {
   }
 
   private static MatchStrategy parseStrategy(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "exact":
       return MatchStrategy.exact;
     case "fuzzy":

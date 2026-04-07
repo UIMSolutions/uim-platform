@@ -46,8 +46,7 @@ class AccessControlService {
   }
 
   private static int permissionRank(PermissionLevel level) {
-    final switch (level)
-    {
+    final switch (level) {
     case PermissionLevel.read:
       return 1;
     case PermissionLevel.write:

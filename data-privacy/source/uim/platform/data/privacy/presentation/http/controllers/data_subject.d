@@ -31,8 +31,7 @@ class DataSubjectController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateDataSubjectRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class DataSubjectController {
       r.subjectType = parseSubjectType(j.getString("subjectType"));
 
       auto result = uc.createSubject(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -58,8 +56,7 @@ class DataSubjectController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
@@ -83,13 +80,11 @@ class DataSubjectController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getSubject(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Data subject not found");
         return;
       }
@@ -100,8 +95,7 @@ class DataSubjectController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateDataSubjectRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -114,8 +108,7 @@ class DataSubjectController {
       r.isActive = j.getBoolean("isActive", true);
 
       auto result = uc.updateSubject(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -128,8 +121,7 @@ class DataSubjectController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteSubject(id, tenantId);
@@ -156,8 +148,7 @@ class DataSubjectController {
   }
 
   private static DataSubjectType parseSubjectType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "employee":
       return DataSubjectType.employee;
     case "customer":

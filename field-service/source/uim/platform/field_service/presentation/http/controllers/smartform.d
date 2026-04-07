@@ -75,7 +75,7 @@ class SmartformController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Smartform created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -105,7 +105,7 @@ class SmartformController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Smartform updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -123,7 +123,7 @@ class SmartformController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Smartform deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

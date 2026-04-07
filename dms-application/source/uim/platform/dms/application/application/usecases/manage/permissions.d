@@ -36,8 +36,7 @@ class ManagePermissionsUseCase : UIMUseCase {
     // Check if permission already exists for this user+resource
     auto existing = permRepo.findByResourceAndUser(r.resourceId,
         r.resourceType, r.userId, r.tenantId);
-    if (existing !is null)
-    {
+    if (existing !is null) {
       // Update existing
       existing.level = r.level;
       permRepo.update(existing);

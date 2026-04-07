@@ -34,8 +34,7 @@ class CertificateController {
   }
 
   private void handleUpload(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UploadCertificateRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -54,8 +53,7 @@ class CertificateController {
       r.uploadedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.upload(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -65,15 +63,13 @@ class CertificateController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto subaccountId = req.headers.get("X-Subaccount-Id", "");
       auto typeFilter = req.params.get("type");
@@ -93,15 +89,13 @@ class CertificateController {
       resp["totalCount"] = Json(cast(long) certs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       // import std.datetime.systime : Clock;
 
@@ -119,33 +113,28 @@ class CertificateController {
       resp["totalCount"] = Json(cast(long) certs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto c = uc.getCertificate(id);
-      if (c.id.length == 0)
-      {
+      if (c.id.length == 0) {
         writeError(res, 404, "Certificate not found");
         return;
       }
       res.writeJsonBody(serializeCertificate(c), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateCertificateRequest r;
@@ -156,8 +145,7 @@ class CertificateController {
       r.validTo = jsonLong(j, "validTo");
 
       auto result = uc.updateCertificate(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -167,19 +155,16 @@ class CertificateController {
         writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.removeCertificate(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -189,15 +174,13 @@ class CertificateController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.validateCertificate(id);
 
@@ -208,8 +191,7 @@ class CertificateController {
       resp["daysUntilExpiry"] = Json(result.daysUntilExpiry);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

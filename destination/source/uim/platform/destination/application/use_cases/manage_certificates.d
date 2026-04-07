@@ -123,8 +123,7 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   private static CertificateType parseCertType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "truststore":
       return CertificateType.truststore;
     default:
@@ -133,8 +132,7 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   private static CertificateFormat parseCertFormat(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "jks":
       return CertificateFormat.jks;
     case "pem":

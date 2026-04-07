@@ -66,8 +66,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
 
   void update(ConsentRecord record) {
     foreach (ref c; store)
-      if (c.id == record.id && c.tenantId == record.tenantId)
-      {
+      if (c.id == record.id && c.tenantId == record.tenantId) {
         c = record;
         return;
       }

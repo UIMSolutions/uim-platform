@@ -48,8 +48,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
 
   void update(RetentionRule rule) {
     foreach (ref r; store)
-      if (r.id == rule.id && r.tenantId == rule.tenantId)
-      {
+      if (r.id == rule.id && r.tenantId == rule.tenantId) {
         r = rule;
         return;
       }

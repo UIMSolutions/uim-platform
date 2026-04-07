@@ -31,8 +31,7 @@ class RetentionRuleController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateRetentionRuleRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class RetentionRuleController {
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = uc.createRule(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -58,8 +56,7 @@ class RetentionRuleController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
@@ -83,13 +80,11 @@ class RetentionRuleController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getRule(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Retention rule not found");
         return;
       }
@@ -100,8 +95,7 @@ class RetentionRuleController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateRetentionRuleRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -113,8 +107,7 @@ class RetentionRuleController {
       r.status = parseRuleStatus(j.getString("status"));
 
       auto result = uc.updateRule(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -127,8 +120,7 @@ class RetentionRuleController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteRule(id, tenantId);
@@ -161,8 +153,7 @@ class RetentionRuleController {
   }
 
   private static ProcessingPurpose parsePurpose(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "serviceDelivery":
       return ProcessingPurpose.serviceDelivery;
     case "marketing":
@@ -187,8 +178,7 @@ class RetentionRuleController {
   }
 
   private static RetentionRuleStatus parseRuleStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "inactive":
       return RetentionRuleStatus.inactive;
     case "expired":

@@ -31,8 +31,7 @@ class BlockingController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateBlockingRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class BlockingController {
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -56,8 +54,7 @@ class BlockingController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
@@ -81,13 +78,11 @@ class BlockingController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getRequest(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Blocking request not found");
         return;
       }
@@ -98,8 +93,7 @@ class BlockingController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateBlockingStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -107,8 +101,7 @@ class BlockingController {
       r.status = parseBlockingStatus(j.getString("status"));
 
       auto result = uc.updateStatus(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -121,8 +114,7 @@ class BlockingController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteRequest(id, tenantId);
@@ -158,8 +150,7 @@ class BlockingController {
   }
 
   private static BlockingStatus parseBlockingStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return BlockingStatus.active;
     case "released":

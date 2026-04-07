@@ -56,8 +56,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   void update(DataSubject subject) {
     foreach (ref s; store)
-      if (s.id == subject.id && s.tenantId == subject.tenantId)
-      {
+      if (s.id == subject.id && s.tenantId == subject.tenantId) {
         s = subject;
         return;
       }

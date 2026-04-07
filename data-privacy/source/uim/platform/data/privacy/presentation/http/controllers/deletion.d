@@ -31,8 +31,7 @@ class DeletionController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateDeletionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class DeletionController {
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -56,8 +54,7 @@ class DeletionController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -84,13 +81,11 @@ class DeletionController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getRequest(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Deletion request not found");
         return;
       }
@@ -101,8 +96,7 @@ class DeletionController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateDeletionStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -111,8 +105,7 @@ class DeletionController {
       r.blockerReason = j.getString("blockerReason");
 
       auto result = uc.updateStatus(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -125,8 +118,7 @@ class DeletionController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteRequest(id, tenantId);
@@ -164,8 +156,7 @@ class DeletionController {
   }
 
   private static DeletionStatus parseDeletionStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "inProgress":
       return DeletionStatus.inProgress;
     case "completed":

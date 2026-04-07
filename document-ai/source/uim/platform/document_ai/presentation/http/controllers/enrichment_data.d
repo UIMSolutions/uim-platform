@@ -47,7 +47,7 @@ class EnrichmentDataController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Enrichment data created");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -114,7 +114,7 @@ class EnrichmentDataController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Enrichment data updated");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -132,7 +132,7 @@ class EnrichmentDataController : SAPController {
       auto result = uc.remove(id, clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

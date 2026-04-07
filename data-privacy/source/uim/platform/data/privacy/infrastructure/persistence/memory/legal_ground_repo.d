@@ -65,8 +65,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   void update(LegalGround ground) {
     foreach (ref g; store)
-      if (g.id == ground.id && g.tenantId == ground.tenantId)
-      {
+      if (g.id == ground.id && g.tenantId == ground.tenantId) {
         g = ground;
         return;
       }

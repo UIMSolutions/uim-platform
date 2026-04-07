@@ -35,8 +35,7 @@ class MonitoringController : SAPController {
   }
 
   private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = uc.listTrainingJobs(tenantId);
 
@@ -49,34 +48,29 @@ class MonitoringController : SAPController {
       resp["totalCount"] = Json(cast(long) jobs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto job = uc.getTrainingJob(id, tenantId);
-      if (job.jobId.length == 0)
-      {
+      if (job.jobId.length == 0) {
         writeError(res, 404, "Training job not found");
         return;
       }
       res.writeJsonBody(serializeJobSummary(job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto deps = uc.listDeploymentSummaries(tenantId);
 
@@ -89,15 +83,13 @@ class MonitoringController : SAPController {
       resp["totalCount"] = Json(cast(long) deps.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getPipelineSummary(tenantId);
 
@@ -111,8 +103,7 @@ class MonitoringController : SAPController {
       j["totalInferenceRequests"] = Json(summary.totalInferenceRequests);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

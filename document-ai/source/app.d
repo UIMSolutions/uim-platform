@@ -11,7 +11,7 @@ import uim.platform.document_ai.infrastructure.container;
 @safe:
 
 version (unittest) {
-} else {
+} ) {
     void main() {
         auto config = loadConfig();
         auto container = buildContainer(config);

@@ -43,7 +43,7 @@ class CleansingJobController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("pending");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

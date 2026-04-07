@@ -39,15 +39,13 @@ class VersionController : SAPController {
   }
 
   private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto docId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto userId = req.headers.get("X-User-Id", "system");
 
       auto result = uc.checkOut(docId, tenantId, userId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["documentId"] = Json(docId);
         resp["status"] = Json("locked");
@@ -56,15 +54,13 @@ class VersionController : SAPController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CheckInRequest();
       r.documentId = j.getString("documentId");
@@ -78,8 +74,7 @@ class VersionController : SAPController {
       r.checksum = j.getString("checksum");
 
       auto result = uc.checkIn(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["versionId"] = Json(result.id);
         resp["documentId"] = Json(r.documentId);
@@ -89,21 +84,18 @@ class VersionController : SAPController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto docId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
 
       auto result = uc.cancelCheckOut(docId, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["documentId"] = Json(docId);
         resp["status"] = Json("active");
@@ -112,15 +104,13 @@ class VersionController : SAPController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto docId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto versions = uc.getAllVersions(docId, tenantId);
@@ -134,27 +124,23 @@ class VersionController : SAPController {
       resp["totalCount"] = Json(cast(long) versions.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto docId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto ver = uc.getCurrentVersion(docId, tenantId);
-      if (ver is null)
-      {
+      if (ver is null) {
         writeError(res, 404, "No current version found");
         return;
       }
       res.writeJsonBody(serializeVersion(ver), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

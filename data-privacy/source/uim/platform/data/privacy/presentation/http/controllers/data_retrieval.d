@@ -31,8 +31,7 @@ class DataRetrievalController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateDataRetrievalRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class DataRetrievalController {
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -56,8 +54,7 @@ class DataRetrievalController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -82,13 +79,11 @@ class DataRetrievalController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getRequest(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Data retrieval request not found");
         return;
       }
@@ -99,8 +94,7 @@ class DataRetrievalController {
   }
 
   private void handleUpdateStatus(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateRetrievalStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -110,8 +104,7 @@ class DataRetrievalController {
       r.totalFields = jsonLong(j, "totalFields");
 
       auto result = uc.updateStatus(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -124,8 +117,7 @@ class DataRetrievalController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteRequest(id, tenantId);
@@ -164,8 +156,7 @@ class DataRetrievalController {
   }
 
   private static RetrievalStatus parseRetrievalStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "inProgress":
       return RetrievalStatus.inProgress;
     case "completed":

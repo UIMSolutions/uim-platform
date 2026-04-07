@@ -19,8 +19,7 @@ struct DestinationResolver {
   static Destination applyFragments(Destination dest, const DestinationFragment[] fragments) {
     Destination result = dest;
 
-    foreach (ref frag; fragments)
-    {
+    foreach (ref frag; fragments) {
       // Fragment overrides only non-empty fields
       if (frag.url.length > 0)
         result.url = frag.url;
@@ -59,8 +58,7 @@ struct DestinationResolver {
     AuthToken token;
     token.httpHeaderSuggestion = "Authorization";
 
-    final switch (dest.authenticationType)
-    {
+    final switch (dest.authenticationType) {
     case AuthenticationType.noAuthentication:
       token.type_ = "";
       token.value_ = "";
@@ -126,8 +124,7 @@ struct DestinationResolver {
   }
 
   static AuthenticationType parseAuthType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "BasicAuthentication":
       return AuthenticationType.basicAuthentication;
     case "OAuth2ClientCredentials":
@@ -158,8 +155,7 @@ struct DestinationResolver {
   }
 
   static ProxyType parseProxyType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "OnPremise":
       return ProxyType.onPremise;
     case "PrivateLink":

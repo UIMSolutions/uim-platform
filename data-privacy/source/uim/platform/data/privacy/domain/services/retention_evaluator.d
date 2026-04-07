@@ -36,12 +36,10 @@ class RetentionEvaluator {
     // Find rules for this purpose
     auto rules = ruleRepo.findByPurpose(tenantId, purpose);
 
-    if (rules.length == 0)
-    {
+    if (rules.length == 0) {
       // Try default rule
       auto defaultRule = ruleRepo.findDefault(tenantId);
-      if (defaultRule !is null)
-      {
+      if (defaultRule !is null) {
         result.maxRetentionDays = defaultRule.retentionDays;
         result.applicableRule = defaultRule.name;
       }
@@ -57,16 +55,14 @@ class RetentionEvaluator {
       // Use the longest applicable retention rule
       int maxDays = 0;
       string ruleName;
-      foreach (ref r; rules)
-      {
+      foreach (ref r; rules) {
         if (r.status == RetentionRuleStatus.active && r.retentionDays > maxDays)
         {
           maxDays = r.retentionDays;
           ruleName = r.name;
         }
       }
-      if (maxDays > 0)
-      {
+      if (maxDays > 0) {
         result.maxRetentionDays = maxDays;
         result.applicableRule = ruleName;
       }
@@ -82,8 +78,7 @@ class RetentionEvaluator {
     long cutoff = now - (cast(long) result.maxRetentionDays * 24 * 60 * 60 * 10_000_000L);
     result.isExpired = dataTimestamp < cutoff;
 
-    if (result.isExpired)
-    {
+    if (result.isExpired) {
       result.warnings ~= "Data has exceeded retention period of "
         ~ result.maxRetentionDays.to!string ~ " days";
     }

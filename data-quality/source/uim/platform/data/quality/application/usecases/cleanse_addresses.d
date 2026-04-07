@@ -43,8 +43,7 @@ class CleanseAddressesUseCase : UIMUseCase {
   /// Cleanse a batch of addresses.
   AddressRecord[] cleanseBatch(CleanseBatchAddressRequest req) {
     AddressRecord[] results;
-    foreach (ref addr; req.addresses)
-    {
+    foreach (ref addr; req.addresses) {
       results ~= cleanse(addr);
     }
     return results;

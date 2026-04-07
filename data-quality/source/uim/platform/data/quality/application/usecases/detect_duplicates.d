@@ -26,8 +26,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
   MatchGroup[] detect(DetectDuplicatesRequest req) {
     // Convert DTO records to domain RecordEntry
     RecordEntry[] entries;
-    foreach (ref r; req.records)
-    {
+    foreach (ref r; req.records) {
       RecordEntry e;
       e.recordId = r.recordId;
       e.fields = r.fieldValues;

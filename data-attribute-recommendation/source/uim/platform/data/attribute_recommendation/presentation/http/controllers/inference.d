@@ -37,8 +37,7 @@ class InferenceController : SAPController {
   }
 
   private void handleSubmit(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = SubmitInferenceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class InferenceController : SAPController {
       r.inputData = j.getString("inputData");
 
       auto result = uc.submitInference(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["resultId"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -56,22 +54,19 @@ class InferenceController : SAPController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
 
       // Try as inference request
       auto requests = uc.listByDeployment(id, tenantId);
-      if (requests.length > 0)
-      {
+      if (requests.length > 0) {
         auto arr = Json.emptyArray;
         foreach (ref r; requests)
           arr ~= serializeRequest(r);
@@ -85,39 +80,33 @@ class InferenceController : SAPController {
 
       writeError(res, 404, "Inference request not found");
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.getResult(id, tenantId);
-      if (result is null)
-      {
+      if (result is null) {
         // Try by request id
         result = uc.getResultByRequest(id, tenantId);
       }
-      if (result is null)
-      {
+      if (result is null) {
         writeError(res, 404, "Inference result not found");
         return;
       }
       res.writeJsonBody(serializeResult(*result), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listRequests(tenantId);
 
@@ -130,8 +119,7 @@ class InferenceController : SAPController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

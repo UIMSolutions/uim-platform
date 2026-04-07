@@ -31,8 +31,7 @@ class LegalGroundController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateLegalGroundRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,8 +44,7 @@ class LegalGroundController {
       r.validUntil = jsonLong(j, "validUntil");
 
       auto result = uc.createGround(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -59,8 +57,7 @@ class LegalGroundController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto basisParam = req.headers.get("X-Basis-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
@@ -90,13 +87,11 @@ class LegalGroundController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getGround(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Legal ground not found");
         return;
       }
@@ -107,8 +102,7 @@ class LegalGroundController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdateLegalGroundRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -119,8 +113,7 @@ class LegalGroundController {
       r.validUntil = jsonLong(j, "validUntil");
 
       auto result = uc.updateGround(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -133,8 +126,7 @@ class LegalGroundController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteGround(id, tenantId);
@@ -167,8 +159,7 @@ class LegalGroundController {
   }
 
   private static LegalBasis parseLegalBasis(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "consent":
       return LegalBasis.consent;
     case "contract":
@@ -187,8 +178,7 @@ class LegalGroundController {
   }
 
   private static ProcessingPurpose parsePurpose(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "serviceDelivery":
       return ProcessingPurpose.serviceDelivery;
     case "marketing":

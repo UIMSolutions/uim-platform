@@ -29,40 +29,33 @@ class AddressCleanser {
     record.postalCode = strip(input.inputPostalCode);
     record.country = strip(input.inputCountry);
 
-    if (record.line1 != input.inputLine1 || record.city != input.inputCity)
-    {
+    if (record.line1 != input.inputLine1 || record.city != input.inputCity) {
       actions ~= CleansingAction.trimmed;
       changes ~= "Trimmed whitespace";
     }
 
     // 2. Normalize case - Title case for city / region, upper for country
-    if (record.city.length > 0)
-    {
+    if (record.city.length > 0) {
       auto normalized = titleCase(record.city);
-      if (normalized != record.city)
-      {
+      if (normalized != record.city) {
         record.city = normalized;
         actions ~= CleansingAction.normalized;
         changes ~= "Normalized city case";
       }
     }
 
-    if (record.region.length > 0)
-    {
+    if (record.region.length > 0) {
       auto normalized = titleCase(record.region);
-      if (normalized != record.region)
-      {
+      if (normalized != record.region) {
         record.region = normalized;
         changes ~= "Normalized region case";
       }
     }
 
     // 3. Standardize country to uppercase ISO
-    if (record.country.length > 0)
-    {
+    if (record.country.length > 0) {
       auto iso = standardizeCountry(record.country);
-      if (iso != record.country)
-      {
+      if (iso != record.country) {
         record.country = iso;
         record.countryIso2 = iso.length == 2 ? iso : "";
         actions ~= CleansingAction.standardized;
@@ -71,22 +64,18 @@ class AddressCleanser {
     }
 
     // 4. Standardize postal code
-    if (record.postalCode.length > 0)
-    {
+    if (record.postalCode.length > 0) {
       auto standardized = standardizePostalCode(record.postalCode, record.countryIso2);
-      if (standardized != record.postalCode)
-      {
+      if (standardized != record.postalCode) {
         record.postalCode = standardized;
         changes ~= "Standardized postal code";
       }
     }
 
     // 5. Standardize common address abbreviations
-    if (record.line1.length > 0)
-    {
+    if (record.line1.length > 0) {
       auto standardized = standardizeAbbreviations(record.line1);
-      if (standardized != record.line1)
-      {
+      if (standardized != record.line1) {
         record.line1 = standardized;
         actions ~= CleansingAction.standardized;
         changes ~= "Standardized address abbreviations";
@@ -117,15 +106,12 @@ class AddressCleanser {
     char[] result;
     result.length = s.length;
     bool capitalize = true;
-    foreach (i, c; s)
-    {
-      if (isWhite(c) || c == '-' || c == '\'')
-      {
+    foreach (i, c; s) {
+      if (isWhite(c) || c == '-' || c == '\'') {
         result[i] = c;
         capitalize = true;
       }
-      else if (capitalize && isAlpha(c))
-      {
+      else if (capitalize && isAlpha(c)) {
         result[i] = cast(char) toUpper(cast(dchar) c);
         capitalize = false;
       }
@@ -144,8 +130,7 @@ class AddressCleanser {
     if (upper.length == 2)
       return upper;
 
-    switch (upper)
-    {
+    switch (upper) {
     case "GERMANY", "DEUTSCHLAND":
       return "DE";
     case "UNITED STATES", "USA", "US", "U.S.A.":
@@ -191,11 +176,9 @@ class AddressCleanser {
       cleaned = cleaned.replace(" ", "");
 
     // UK postal codes: ensure space
-    if (countryIso2 == "GB" && cleaned.length >= 5)
-    {
+    if (countryIso2 == "GB" && cleaned.length >= 5) {
       auto noSpace = cleaned.replace(" ", "");
-      if (noSpace.length >= 5)
-      {
+      if (noSpace.length >= 5) {
         auto inward = noSpace[$ - 3 .. $];
         auto outward = noSpace[0 .. $ - 3];
         cleaned = outward ~ " " ~ inward;

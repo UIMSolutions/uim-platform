@@ -32,8 +32,7 @@ class ProfileDataUseCase : UIMUseCase {
         fieldIndex[key] = key;
 
     ColumnProfile[] columns;
-    foreach (fieldName; fieldIndex.byKey())
-    {
+    foreach (fieldName; fieldIndex.byKey()) {
       columns ~= profileColumn(fieldName, req.records);
     }
 
@@ -47,8 +46,7 @@ class ProfileDataUseCase : UIMUseCase {
     profile.columns = columns;
 
     // Overall quality from column completeness and uniqueness
-    if (columns.length > 0)
-    {
+    if (columns.length > 0) {
       double totalComp = 0.0;
       foreach (ref c; columns)
         totalComp += c.completeness;
@@ -95,17 +93,14 @@ class ProfileDataUseCase : UIMUseCase {
     long maxLen = 0;
     long totalLen = 0;
 
-    foreach (ref rec; records)
-    {
+    foreach (ref rec; records) {
       auto v = fieldName in rec.fieldValues;
-      if (v is null)
-      {
+      if (v is null) {
         ++nullCount;
         continue;
       }
       string val = *v;
-      if (val.length == 0)
-      {
+      if (val.length == 0) {
         ++emptyCount;
         continue;
       }
@@ -132,8 +127,7 @@ class ProfileDataUseCase : UIMUseCase {
       : 100.0;
     cp.validity = 100.0; // would need rules to compute
 
-    if (values.length > 0)
-    {
+    if (values.length > 0) {
       cp.minLength = minLen;
       cp.maxLength = maxLen;
       cp.avgLength = cast(double) totalLen / values.length;
@@ -153,8 +147,7 @@ class ProfileDataUseCase : UIMUseCase {
       return ProfiledDataType.unknown;
 
     int intCount, floatCount, boolCount, emailCount;
-    foreach (v; values)
-    {
+    foreach (v; values) {
       if (isInteger(v))
         ++intCount;
       else if (isFloat(v))
@@ -196,10 +189,8 @@ class ProfileDataUseCase : UIMUseCase {
     size_t start = (s[0] == '-' || s[0] == '+') ? 1 : 0;
     if (start >= s.length)
       return false;
-    foreach (c; s[start .. $])
-    {
-      if (c == '.')
-      {
+    foreach (c; s[start .. $]) {
+      if (c == '.') {
         if (hasDot)
           return false;
         hasDot = true;

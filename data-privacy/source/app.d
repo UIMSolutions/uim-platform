@@ -16,7 +16,7 @@ import uim.platform.data.privacy.infrastructure.container;
 @safe:
 
 version (unittest) {
-} else {
+} ) {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);

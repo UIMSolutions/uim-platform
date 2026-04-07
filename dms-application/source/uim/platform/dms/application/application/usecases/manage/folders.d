@@ -40,8 +40,7 @@ class ManageFoldersUseCase : UIMUseCase {
 
     // Build path
     string path = "/" ~ r.name;
-    if (r.parentFolderId.length > 0)
-    {
+    if (r.parentFolderId.length > 0) {
       auto parent = folderRepo.findById(r.parentFolderId, r.tenantId);
       if (parent is null)
         return CommandResult("", "Parent folder not found");
@@ -85,8 +84,7 @@ class ManageFoldersUseCase : UIMUseCase {
     if (entity is null)
       return CommandResult("", "Folder not found");
 
-    if (r.name.length > 0)
-    {
+    if (r.name.length > 0) {
       entity.name = r.name;
       // Update path
       auto lastSlash = lastIndexOf(entity.path, '/');
@@ -108,8 +106,7 @@ class ManageFoldersUseCase : UIMUseCase {
     if (entity is null)
       return CommandResult("", "Folder not found");
 
-    if (r.newParentFolderId.length > 0)
-    {
+    if (r.newParentFolderId.length > 0) {
       auto newParent = folderRepo.findById(r.newParentFolderId, r.tenantId);
       if (newParent is null)
         return CommandResult("", "New parent folder not found");

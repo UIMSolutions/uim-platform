@@ -26,8 +26,7 @@ class FindController {
   }
 
   private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       FindDestinationRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
@@ -36,8 +35,7 @@ class FindController {
 
       auto result = uc.find(r);
 
-      if (!result.found)
-      {
+      if (!result.found) {
         writeError(res, 404, result.error);
         return;
       }
@@ -53,8 +51,7 @@ class FindController {
 
       // Auth tokens
       auto tokenArr = Json.emptyArray;
-      foreach (ref t; result.authTokens)
-      {
+      foreach (ref t; result.authTokens) {
         auto tj = Json.emptyObject;
         tj["type"] = Json(t.type_);
         tj["value"] = Json(t.value_);
@@ -66,8 +63,7 @@ class FindController {
 
       // Certificates
       auto certArr = Json.emptyArray;
-      foreach (ref c; result.certificates)
-      {
+      foreach (ref c; result.certificates) {
         auto cj = Json.emptyObject;
         cj["name"] = Json(c.name);
         cj["type"] = Json(c.type_);
@@ -79,8 +75,7 @@ class FindController {
 
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

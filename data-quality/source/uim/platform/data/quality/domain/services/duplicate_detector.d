@@ -26,16 +26,14 @@ class DuplicateDetector {
     bool[] grouped;
     grouped.length = records.length;
 
-    foreach (i; 0 .. records.length)
-    {
+    foreach (i; 0 .. records.length) {
       if (grouped[i])
         continue;
 
       MatchCandidate[] candidates;
       candidates ~= makeCandidate(records[i], 100.0, MatchConfidence.exact);
 
-      foreach (j; i + 1 .. records.length)
-      {
+      foreach (j; i + 1 .. records.length) {
         if (grouped[j])
           continue;
 
@@ -49,8 +47,7 @@ class DuplicateDetector {
         }
       }
 
-      if (candidates.length > 1)
-      {
+      if (candidates.length > 1) {
         MatchGroup g;
         g.id = randomUUID().toString();
         g.tenantId = tenantId;
@@ -77,10 +74,8 @@ class DuplicateDetector {
     double totalScore = 0.0;
     int compared = 0;
 
-    foreach (fieldGroup; matchFields)
-    {
-      foreach (field; fieldGroup)
-      {
+    foreach (fieldGroup; matchFields) {
+      foreach (field; fieldGroup) {
         auto va = field in fieldsA;
         auto vb = field in fieldsB;
         string a = va ? *va : "";
@@ -138,8 +133,7 @@ class DuplicateDetector {
     int matches = 0;
     int transpositions = 0;
 
-    foreach (i; 0 .. a.length)
-    {
+    foreach (i; 0 .. a.length) {
       int start = cast(int) i - maxDist;
       if (start < 0)
         start = 0;
@@ -147,8 +141,7 @@ class DuplicateDetector {
       if (end > cast(int) b.length)
         end = cast(int) b.length;
 
-      foreach (j; start .. end)
-      {
+      foreach (j; start .. end) {
         if (matchedB[j] || a[i] != b[j])
           continue;
         matchedA[i] = true;
@@ -162,8 +155,7 @@ class DuplicateDetector {
       return 0.0;
 
     int k = 0;
-    foreach (i; 0 .. a.length)
-    {
+    foreach (i; 0 .. a.length) {
       if (!matchedA[i])
         continue;
       while (!matchedB[k])
@@ -181,8 +173,7 @@ class DuplicateDetector {
     auto lim = a.length < b.length ? a.length : b.length;
     if (lim > 4)
       lim = 4;
-    foreach (i; 0 .. lim)
-    {
+    foreach (i; 0 .. lim) {
       if (a[i] == b[i])
         ++prefix;
       else
@@ -204,13 +195,11 @@ class DuplicateDetector {
     int idx = 1;
     char lastCode = soundexCode(input[0]);
 
-    foreach (i; 1 .. input.length)
-    {
+    foreach (i; 1 .. input.length) {
       if (idx >= 4)
         break;
       char code = soundexCode(input[i]);
-      if (code != '0' && code != lastCode)
-      {
+      if (code != '0' && code != lastCode) {
         result[idx] = code;
         ++idx;
       }
@@ -221,8 +210,7 @@ class DuplicateDetector {
   }
 
   private static char soundexCode(char c) {
-    switch (c)
-    {
+    switch (c) {
     case 'b', 'f', 'p', 'v':
       return '1';
     case 'c', 'g', 'j', 'k', 'q', 's', 'x', 'z':

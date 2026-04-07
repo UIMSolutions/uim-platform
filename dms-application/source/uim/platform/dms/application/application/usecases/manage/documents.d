@@ -39,8 +39,7 @@ class ManageDocumentsUseCase : UIMUseCase {
       return CommandResult("", "Repository ID is required");
 
     // Validate folder exists if provided
-    if (r.folderId.length > 0)
-    {
+    if (r.folderId.length > 0) {
       auto folder = folderRepo.findById(r.folderId, r.tenantId);
       if (folder is null)
         return CommandResult("", "Folder not found");
@@ -133,8 +132,7 @@ class ManageDocumentsUseCase : UIMUseCase {
     if (doc is null)
       return CommandResult("", "Document not found");
 
-    if (r.newFolderId.length > 0)
-    {
+    if (r.newFolderId.length > 0) {
       auto folder = folderRepo.findById(r.newFolderId, r.tenantId);
       if (folder is null)
         return CommandResult("", "Target folder not found");

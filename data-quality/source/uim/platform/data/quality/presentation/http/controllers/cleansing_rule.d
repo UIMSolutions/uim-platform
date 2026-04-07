@@ -33,8 +33,7 @@ class CleansingRuleController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateCleansingRuleRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -56,8 +55,7 @@ class CleansingRuleController : SAPController {
       r.priority = j.getInteger("priority");
 
       auto result = uc.create(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -67,15 +65,13 @@ class CleansingRuleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto rules = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
@@ -87,33 +83,28 @@ class CleansingRuleController : SAPController {
       resp["totalCount"] = Json(cast(long) rules.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getById(id);
-      if (rule is null)
-      {
+      if (rule is null) {
         writeError(res, 404, "Cleansing rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(*rule), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateCleansingRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -137,8 +128,7 @@ class CleansingRuleController : SAPController {
       r.priority = j.getInteger("priority");
 
       auto result = uc.update(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -148,15 +138,13 @@ class CleansingRuleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.remove(id, tenantId);
@@ -165,8 +153,7 @@ class CleansingRuleController : SAPController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -196,8 +183,7 @@ class CleansingRuleController : SAPController {
   }
 
   private static CleansingAction parseCleansingAction(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "trimmed":
       return CleansingAction.trimmed;
     case "normalized":
@@ -218,8 +204,7 @@ class CleansingRuleController : SAPController {
   }
 
   private static RuleStatus parseRuleStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return RuleStatus.active;
     case "inactive":

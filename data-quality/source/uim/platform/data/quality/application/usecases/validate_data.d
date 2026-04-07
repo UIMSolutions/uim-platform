@@ -39,8 +39,7 @@ class ValidateDataUseCase : UIMUseCase {
     auto rules = ruleRepo.findActive(req.tenantId);
     ValidationResult[] results;
 
-    foreach (ref rec; req.records)
-    {
+    foreach (ref rec; req.records) {
       auto result = engine.validate(rec.recordId, req.tenantId, req.datasetId,
           rec.fieldValues, rules);
       resultRepo.save(result);

@@ -65,8 +65,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   void update(PersonalDataModel model) {
     foreach (ref m; store)
-      if (m.id == model.id && m.tenantId == model.tenantId)
-      {
+      if (m.id == model.id && m.tenantId == model.tenantId) {
         m = model;
         return;
       }

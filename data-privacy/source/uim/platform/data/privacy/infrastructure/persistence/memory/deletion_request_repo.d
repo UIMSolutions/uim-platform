@@ -49,8 +49,7 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
 
   void update(DeletionRequest request) {
     foreach (ref r; store)
-      if (r.id == request.id && r.tenantId == request.tenantId)
-      {
+      if (r.id == request.id && r.tenantId == request.tenantId) {
         r = request;
         return;
       }

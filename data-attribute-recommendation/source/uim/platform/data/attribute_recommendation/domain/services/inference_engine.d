@@ -44,8 +44,7 @@ class InferenceEngine {
     if (request is null)
       return null;
 
-    if (!isDeploymentReady(request.deploymentId, tenantId))
-    {
+    if (!isDeploymentReady(request.deploymentId, tenantId)) {
       request.status = InferenceStatus.failed;
       requestRepo.update(*request);
       return null;

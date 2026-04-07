@@ -27,8 +27,7 @@ class ValidationEngine {
     int passed = 0;
     int failed = 0;
 
-    foreach (ref rule; rules)
-    {
+    foreach (ref rule; rules) {
       if (rule.status != RuleStatus.active)
         continue;
 
@@ -36,8 +35,7 @@ class ValidationEngine {
       string fieldVal = value ? *value : "";
 
       auto violation = evaluateRule(rule, fieldVal, fieldValues);
-      if (violation.ruleId.length > 0)
-      {
+      if (violation.ruleId.length > 0) {
         result.violations ~= violation;
         ++failed;
       }
@@ -66,8 +64,7 @@ class ValidationEngine {
       string fieldValue, string[string] allFields) {
     RuleViolation empty;
 
-    final switch (rule.ruleType)
-    {
+    final switch (rule.ruleType) {
     case RuleType.required:
       if (fieldValue.length == 0)
         return makeViolation(rule,
@@ -75,8 +72,7 @@ class ValidationEngine {
       break;
 
     case RuleType.format_:
-      if (fieldValue.length > 0 && rule.pattern.length > 0)
-      {
+      if (fieldValue.length > 0 && rule.pattern.length > 0) {
         try
         {
           auto r = regex(rule.pattern);
@@ -91,8 +87,7 @@ class ValidationEngine {
       break;
 
     case RuleType.range:
-      if (fieldValue.length > 0)
-      {
+      if (fieldValue.length > 0) {
         try
         {
           auto val = fieldValue.to!double;
@@ -109,8 +104,7 @@ class ValidationEngine {
       break;
 
     case RuleType.enumeration:
-      if (fieldValue.length > 0 && rule.allowedValues.length > 0)
-      {
+      if (fieldValue.length > 0 && rule.allowedValues.length > 0) {
         bool found = false;
         foreach (av; rule.allowedValues)
           if (av == fieldValue)
@@ -124,8 +118,7 @@ class ValidationEngine {
       break;
 
     case RuleType.length:
-      if (fieldValue.length > 0)
-      {
+      if (fieldValue.length > 0) {
         try
         {
           if (rule.minValue.length > 0 && fieldValue.length < rule.minValue.to!size_t)
@@ -143,8 +136,7 @@ class ValidationEngine {
       break;
 
     case RuleType.crossField:
-      if (rule.crossFieldName.length > 0)
-      {
+      if (rule.crossFieldName.length > 0) {
         auto other = rule.crossFieldName in allFields;
         string otherVal = other ? *other : "";
         if (fieldValue != otherVal)

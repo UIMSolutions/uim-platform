@@ -28,15 +28,13 @@ class QualityScorer {
     int totalViolations = 0;
     int[4] severityCounts; // info, warning, error, critical
 
-    foreach (ref r; results)
-    {
+    foreach (ref r; results) {
       if (r.violations.length == 0)
         ++valid;
       else
         ++invalid;
 
-      foreach (ref v; r.violations)
-      {
+      foreach (ref v; r.violations) {
         ++totalViolations;
         final switch (v.severity)
         {
@@ -64,8 +62,7 @@ class QualityScorer {
     d.validityScore = d.totalRecords > 0 ? (cast(double) valid / d.totalRecords) * 100.0 : 100.0;
 
     // Completeness and uniqueness from profile
-    if (profile !is null)
-    {
+    if (profile !is null) {
       d.completenessScore = computeCompleteness(profile.columns);
       d.uniquenessScore = computeUniqueness(profile.columns);
     }

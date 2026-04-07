@@ -41,8 +41,7 @@ class BrowseController : SAPController {
   }
 
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto folderId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto contents = uc.browseFolderContents(folderId, tenantId);
@@ -62,21 +61,18 @@ class BrowseController : SAPController {
       resp["totalDocuments"] = Json(cast(long) contents.documents.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto repoId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getRepositorySummary(repoId, tenantId);
 
-      if (summary.repositoryId.length == 0)
-      {
+      if (summary.repositoryId.length == 0) {
         writeError(res, 404, "Repository not found");
         return;
       }
@@ -89,15 +85,13 @@ class BrowseController : SAPController {
       j["status"] = Json(summary.status.to!string);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateFavoriteRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -106,8 +100,7 @@ class BrowseController : SAPController {
       r.resourceType = parseResourceType(j.getString("resourceType"));
 
       auto result = uc.addFavorite(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -115,15 +108,13 @@ class BrowseController : SAPController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto userId = req.headers.get("X-User-Id", "system");
       auto items = uc.getFavorites(userId, tenantId);
@@ -137,20 +128,17 @@ class BrowseController : SAPController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.removeFavorite(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -158,8 +146,7 @@ class BrowseController : SAPController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

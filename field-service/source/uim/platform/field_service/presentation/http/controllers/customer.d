@@ -80,7 +80,7 @@ class CustomerController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Customer created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -109,7 +109,7 @@ class CustomerController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Customer updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -127,7 +127,7 @@ class CustomerController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Customer deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

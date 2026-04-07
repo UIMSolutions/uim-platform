@@ -28,8 +28,7 @@ struct CertificateValidator {
     ValidationResult result;
     auto now = clockSeconds();
 
-    if (cert.content.length == 0)
-    {
+    if (cert.content.length == 0) {
       result.isValid = false;
       result.status = CertificateStatus.invalid_;
       result.message = "Certificate content is empty";
@@ -37,8 +36,7 @@ struct CertificateValidator {
       return result;
     }
 
-    if (cert.validTo > 0 && now > cert.validTo)
-    {
+    if (cert.validTo > 0 && now > cert.validTo) {
       result.isValid = false;
       result.status = CertificateStatus.expired;
       result.message = "Certificate has expired";
@@ -46,8 +44,7 @@ struct CertificateValidator {
       return result;
     }
 
-    if (cert.validFrom > 0 && now < cert.validFrom)
-    {
+    if (cert.validFrom > 0 && now < cert.validFrom) {
       result.isValid = false;
       result.status = CertificateStatus.invalid_;
       result.message = "Certificate is not yet valid";
@@ -58,8 +55,7 @@ struct CertificateValidator {
     auto daysLeft = cert.validTo > 0 ? (cert.validTo - now) / SECONDS_PER_DAY : 999;
     result.daysUntilExpiry = daysLeft;
 
-    if (daysLeft <= EXPIRY_WARNING_DAYS)
-    {
+    if (daysLeft <= EXPIRY_WARNING_DAYS) {
       result.isValid = true;
       result.status = CertificateStatus.expiring;
       result.message = "Certificate expires in " ~ formatLong(daysLeft) ~ " days";

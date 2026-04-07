@@ -44,7 +44,7 @@ class DataAccessControlController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Data access control created");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -113,7 +113,7 @@ class DataAccessControlController : SAPController {
       auto result = uc.remove(id, spaceId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

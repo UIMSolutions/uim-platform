@@ -59,8 +59,7 @@ string[][] jsonStrArrayArray(Json j, string key) {
 
   string[][] result;
   foreach (item; *v) {
-    if (item.type == Json.Type.array)
-    {
+    if (item.type == Json.Type.array) {
       string[] inner;
       foreach (sub; item)
         if (sub.isString)

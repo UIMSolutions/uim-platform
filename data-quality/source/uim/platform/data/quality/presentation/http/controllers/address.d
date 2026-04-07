@@ -29,8 +29,7 @@ class AddressController {
   }
 
   private void handleCleanse(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CleanseAddressRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -45,22 +44,19 @@ class AddressController {
       auto result = uc.cleanse(r);
       res.writeJsonBody(serializeAddress(result), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCleanseBatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto batchReq = CleanseBatchAddressRequest();
       batchReq.tenantId = req.headers.get("X-Tenant-Id", "");
 
       auto addrJson = "addresses" in j;
-      if (addrJson !is null && (*addrJson).type == Json.Type.array)
-      {
+      if (addrJson !is null && (*addrJson).type == Json.Type.array) {
         foreach (item; *addrJson)
         {
           if (item.type == Json.Type.object)
@@ -89,15 +85,13 @@ class AddressController {
       resp["totalCount"] = Json(cast(long) results.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto records = uc.getByTenant(tenantId);
       auto arr = Json.emptyArray;
@@ -109,8 +103,7 @@ class AddressController {
       resp["totalCount"] = Json(cast(long) records.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -154,8 +147,7 @@ class AddressController {
 
     j["cleansedAt"] = Json(r.cleansedAt);
 
-    if (r.changeLog.length > 0)
-    {
+    if (r.changeLog.length > 0) {
       auto changes = Json.emptyArray;
       foreach (ch; r.changeLog)
         changes ~= Json(ch);

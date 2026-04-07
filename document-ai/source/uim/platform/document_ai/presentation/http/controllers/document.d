@@ -52,7 +52,7 @@ class DocumentController : SAPController {
         resp["status"] = Json("pending");
         resp["message"] = Json("Document uploaded for processing");
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -108,7 +108,7 @@ class DocumentController : SAPController {
       auto result = uc.remove(id, clientId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -135,7 +135,7 @@ class DocumentController : SAPController {
         resp["status"] = Json("confirmed");
         resp["message"] = Json("Document confirmed for feedback");
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

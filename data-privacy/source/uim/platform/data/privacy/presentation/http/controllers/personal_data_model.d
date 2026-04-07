@@ -32,8 +32,7 @@ class PersonalDataModelController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreatePersonalDataModelRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -48,8 +47,7 @@ class PersonalDataModelController {
       r.legalReference = j.getString("legalReference");
 
       auto result = uc.createModel(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -62,8 +60,7 @@ class PersonalDataModelController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto catParam = req.headers.get("X-Category-Filter", "");
 
@@ -87,8 +84,7 @@ class PersonalDataModelController {
   }
 
   private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listSpecialCategories(tenantId);
 
@@ -106,13 +102,11 @@ class PersonalDataModelController {
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = uc.getModel(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Personal data model not found");
         return;
       }
@@ -123,8 +117,7 @@ class PersonalDataModelController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       UpdatePersonalDataModelRequest r;
       r.id = extractIdFromPath(req.requestURI);
@@ -139,8 +132,7 @@ class PersonalDataModelController {
       r.legalReference = j.getString("legalReference");
 
       auto result = uc.updateModel(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -153,8 +145,7 @@ class PersonalDataModelController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       uc.deleteModel(id, tenantId);
@@ -183,8 +174,7 @@ class PersonalDataModelController {
   }
 
   private static PersonalDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "identification":
       return PersonalDataCategory.identification;
     case "contact":
@@ -217,8 +207,7 @@ class PersonalDataModelController {
   }
 
   private static DataSensitivity parseSensitivity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "sensitive":
       return DataSensitivity.sensitive;
     case "highlyConfidential":
@@ -229,8 +218,7 @@ class PersonalDataModelController {
   }
 
   private static DataSubjectType parseSubjectType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "employee":
       return DataSubjectType.employee;
     case "customer":

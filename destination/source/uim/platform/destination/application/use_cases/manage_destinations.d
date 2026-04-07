@@ -167,8 +167,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   }
 
   private static DestinationType parseDestType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "rfc":
       return DestinationType.rfc;
     case "mail":
@@ -181,8 +180,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   }
 
   private static DestinationLevel parseLevel(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "serviceInstance":
       return DestinationLevel.serviceInstance;
     default:
@@ -191,8 +189,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   }
 
   private static DestinationStatus parseDestStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "inactive":
       return DestinationStatus.inactive;
     case "error":

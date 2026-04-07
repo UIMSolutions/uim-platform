@@ -49,8 +49,7 @@ class MemoryBlockingRequestRepository : BlockingRequestRepository {
 
   void update(BlockingRequest request) {
     foreach (ref r; store)
-      if (r.id == request.id && r.tenantId == request.tenantId)
-      {
+      if (r.id == request.id && r.tenantId == request.tenantId) {
         r = request;
         return;
       }

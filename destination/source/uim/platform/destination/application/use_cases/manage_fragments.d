@@ -117,8 +117,7 @@ class ManageFragmentsUseCase : UIMUseCase {
   }
 
   private static DestinationLevel parseLevel(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "serviceInstance":
       return DestinationLevel.serviceInstance;
     default:
