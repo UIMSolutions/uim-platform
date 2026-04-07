@@ -55,15 +55,13 @@ class ManageGroupsUseCase : UIMUseCase {
     if (user == User.init)
       return "User not found";
 
-    if (!group.memberUserIds.canFind(userId))
-    {
+    if (!group.memberUserIds.canFind(userId)) {
       group.memberUserIds ~= userId;
       group.updatedAt = Clock.currStdTime();
       groupRepo.update(group);
 
       // Also update user's groupIds
-      if (!user.groupIds.canFind(groupId))
-      {
+      if (!user.groupIds.canFind(groupId)) {
         user.groupIds ~= groupId;
         userRepo.update(user);
       }
@@ -77,8 +75,7 @@ class ManageGroupsUseCase : UIMUseCase {
       return "IdaGroup not found";
 
     string[] updated;
-    foreach (mid; group.memberUserIds)
-    {
+    foreach (mid; group.memberUserIds) {
       if (mid != userId)
         updated ~= mid;
     }

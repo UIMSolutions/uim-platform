@@ -47,7 +47,7 @@ class ProcessController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -133,7 +133,7 @@ class ProcessController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -167,7 +167,7 @@ class ProcessController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process deployment action performed: " ~ r.action);
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -186,7 +186,7 @@ class ProcessController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

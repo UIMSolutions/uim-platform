@@ -43,7 +43,7 @@ class PushRegistrationController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -88,7 +88,7 @@ class PushRegistrationController : SAPController {
         resp["topics"] = toJsonArray(result.data.topics);
         resp["status"] = Json(result.data.status);
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -102,7 +102,7 @@ class PushRegistrationController : SAPController {
       auto result = uc.remove(id);
       if (result.success) {
         res.writeBody("", 204);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

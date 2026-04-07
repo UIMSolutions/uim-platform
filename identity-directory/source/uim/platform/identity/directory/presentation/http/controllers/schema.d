@@ -30,8 +30,7 @@ class SchemaController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateSchemaRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), parseSchemaAttributes(j),);
@@ -39,8 +38,7 @@ class SchemaController {
       auto result = useCase.createSchema(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["id"] = Json(result.schemaId);
         res.writeJsonBody(response, 201);
       }
@@ -49,15 +47,13 @@ class SchemaController {
         writeScimError(res, 409, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto schemas = useCase.listSchemas(tenantId);
       auto response = Json.emptyObject;
@@ -65,33 +61,28 @@ class SchemaController {
       response["Resources"] = toJsonArray(schemas);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto schema = useCase.getSchema(schemaId);
-      if (schema == Schema.init)
-      {
+      if (schema == Schema.init) {
         writeScimError(res, 404, "Schema not found");
         return;
       }
       res.writeJsonBody(toJsonValue(schema), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateSchemaRequest(schemaId, j.getString("name"),
@@ -106,15 +97,13 @@ class SchemaController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto schemaId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteSchema(schemaId);
       if (error.length > 0)
@@ -122,8 +111,7 @@ class SchemaController {
       else
         res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }

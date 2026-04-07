@@ -43,7 +43,7 @@ class TaskCommentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Comment created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -60,7 +60,7 @@ class TaskCommentController : SAPController {
             TaskComment[] comments;
             if (taskId.length > 0) {
                 comments = uc.listByTask(tenantId, taskId);
-            } else {
+            } ) {
                 comments = [];
             }
 
@@ -110,7 +110,7 @@ class TaskCommentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Comment updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -129,7 +129,7 @@ class TaskCommentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Comment deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

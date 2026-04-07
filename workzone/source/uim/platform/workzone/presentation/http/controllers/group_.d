@@ -30,8 +30,7 @@ class GroupController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateGroupRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -39,8 +38,7 @@ class GroupController {
       r.description = j.getString("description");
 
       auto result = useCase.createGroup(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -50,15 +48,13 @@ class GroupController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto groups = useCase.listGroups(tenantId);
       auto arr = Json.emptyArray;
@@ -69,34 +65,29 @@ class GroupController {
       resp["totalCount"] = Json(cast(long) groups.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto g = useCase.getGroup(id, tenantId);
-      if (g is null)
-      {
+      if (g is null) {
         writeError(res, 404, "Group not found");
         return;
       }
       res.writeJsonBody(serializeGroup(*g), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateGroupRequest();
@@ -112,15 +103,13 @@ class GroupController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteGroup(id, tenantId);
@@ -129,8 +118,7 @@ class GroupController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

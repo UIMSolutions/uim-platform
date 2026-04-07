@@ -47,7 +47,7 @@ class DataSubjectRequestController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject request created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -73,7 +73,7 @@ class DataSubjectRequestController : SAPController {
                 } catch (Exception) {
                     requests = uc.list(tenantId);
                 }
-            } else {
+            } ) {
                 requests = uc.list(tenantId);
             }
 
@@ -128,7 +128,7 @@ class DataSubjectRequestController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject request updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -146,7 +146,7 @@ class DataSubjectRequestController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject request deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

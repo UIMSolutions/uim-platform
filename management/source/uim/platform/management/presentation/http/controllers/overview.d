@@ -30,11 +30,9 @@ class OverviewController : SAPController {
   }
 
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto gaId = req.params.get("globalAccountId");
-      if (gaId.length == 0)
-      {
+      if (gaId.length == 0) {
         writeError(res, 400, "globalAccountId query parameter is required");
         return;
       }

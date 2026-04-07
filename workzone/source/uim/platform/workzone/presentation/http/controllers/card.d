@@ -30,8 +30,7 @@ class CardController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateCardRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class CardController {
       r.manifest = parseManifest(j);
 
       auto result = useCase.createCard(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class CardController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto cards = useCase.listCards(tenantId);
       auto arr = Json.emptyArray;
@@ -74,34 +70,29 @@ class CardController {
       resp["totalCount"] = Json(cast(long) cards.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto c = useCase.getCard(id, tenantId);
-      if (c is null)
-      {
+      if (c is null) {
         writeError(res, 404, "Card not found");
         return;
       }
       res.writeJsonBody(serializeCard(*c), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateCardRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -115,8 +106,7 @@ class CardController {
       r.manifest = parseManifest(j);
 
       auto result = useCase.updateCard(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -126,22 +116,19 @@ class CardController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteCard(id, tenantId);
       res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

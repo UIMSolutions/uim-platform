@@ -30,8 +30,7 @@ class ChannelController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateChannelRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -52,8 +51,7 @@ class ChannelController {
       r.config = parseChannelConfig(j);
 
       auto result = useCase.createChannel(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -63,15 +61,13 @@ class ChannelController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
       auto channels = useCase.listByWorkspace(workspaceId, tenantId);
@@ -83,34 +79,29 @@ class ChannelController {
       resp["totalCount"] = Json(cast(long) channels.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto ch = useCase.getChannel(id, tenantId);
-      if (ch is null)
-      {
+      if (ch is null) {
         writeError(res, 404, "Channel not found");
         return;
       }
       res.writeJsonBody(serializeChannel(*ch), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateChannelRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -121,8 +112,7 @@ class ChannelController {
       r.config = parseChannelConfig(j);
 
       auto result = useCase.updateChannel(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -132,22 +122,19 @@ class ChannelController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteChannel(id, tenantId);
       res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

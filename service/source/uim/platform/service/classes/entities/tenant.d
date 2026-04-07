@@ -25,13 +25,11 @@ class UIMTenantEntity : UIMEntity {
   }
 
   override bool initialize(Json[string] initData = null) {
-    if (!super.initialize(initData))
-    {
+    if (!super.initialize(initData)) {
       return false;
     }
 
-    if (initData.hasKey("tenant_id"))
-    {
+    if (initData.hasKey("tenant_id")) {
       _tenantId = UUID(initData["tenant_id"].getString);
     }
 

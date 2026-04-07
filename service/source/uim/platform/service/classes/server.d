@@ -30,8 +30,7 @@ class UIMServer {
   }
 
   this(Json initData) {
-    if (initData.isObject)
-    {
+    if (initData.isObject) {
       initialize(initData.toMap);
     }
   }
@@ -145,8 +144,7 @@ class UIMServer {
 
     _basePath = _service.config.basePath;
     auto path = req.requestPath.toString();
-    if (!path.startsWith(_basePath))
-    {
+    if (!path.startsWith(_basePath)) {
       respondError(res, "Not found", 404);
       return;
     }
@@ -159,14 +157,12 @@ class UIMServer {
     // Platform endpoints (no auth required)
     // ---------------------------------------------------------------
     // ── Health / readiness ────────────────────────────────────────────
-    if (_subPath == "/health" && req.method == HTTPMethod.GET)
-    {
+    if (_subPath == "/health" && req.method == HTTPMethod.GET) {
       res.writeJsonBody(_service.health(), 200);
       return;
     }
 
-    if (_subPath == "/ready" && req.method == HTTPMethod.GET)
-    {
+    if (_subPath == "/ready" && req.method == HTTPMethod.GET) {
       res.writeJsonBody(_service.ready(), 200);
       return;
     }

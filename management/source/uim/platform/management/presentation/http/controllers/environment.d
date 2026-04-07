@@ -34,8 +34,7 @@ class EnvironmentController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateEnvironmentInstanceRequest r;
       r.subaccountId = j.getString("subaccountId");
@@ -53,8 +52,7 @@ class EnvironmentController : SAPController {
       r.labels = jsonStrMap(j, "labels");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -67,8 +65,7 @@ class EnvironmentController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto subId = req.params.get("subaccountId");
       auto envType = req.params.get("environmentType");
 
@@ -92,12 +89,10 @@ class EnvironmentController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto inst = uc.getById(id);
-      if (inst.id.length == 0)
-      {
+      if (inst.id.length == 0) {
         writeError(res, 404, "Environment instance not found");
         return;
       }
@@ -108,8 +103,7 @@ class EnvironmentController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateEnvironmentInstanceRequest r;
@@ -131,8 +125,7 @@ class EnvironmentController : SAPController {
   }
 
   private void handleDeprovision(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.deprovision(id);
       if (result.success)

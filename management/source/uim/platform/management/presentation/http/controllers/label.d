@@ -34,8 +34,7 @@ class LabelController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateLabelRequest r;
       r.resourceType = j.getString("resourceType");
@@ -45,8 +44,7 @@ class LabelController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -59,8 +57,7 @@ class LabelController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto resourceType = req.params.get("resourceType");
       auto resourceId = req.params.get("resourceId");
       auto key = req.params.get("key");
@@ -85,12 +82,10 @@ class LabelController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto l = uc.getById(id);
-      if (l.id.length == 0)
-      {
+      if (l.id.length == 0) {
         writeError(res, 404, "Label not found");
         return;
       }
@@ -101,8 +96,7 @@ class LabelController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateLabelRequest r;
@@ -119,8 +113,7 @@ class LabelController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

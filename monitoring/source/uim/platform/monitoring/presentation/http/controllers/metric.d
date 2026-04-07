@@ -31,8 +31,7 @@ class MetricController {
   }
 
   private void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       PushMetricRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -43,8 +42,7 @@ class MetricController {
       r.category = j.getString("category");
 
       auto result = uc.pushMetric(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -54,15 +52,13 @@ class MetricController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto tenantId = req.headers.get("X-Tenant-Id", "");
 
@@ -70,8 +66,7 @@ class MetricController {
       batchReq.tenantId = tenantId;
 
       auto metricsVal = "metrics" in j;
-      if (metricsVal !is null && (*metricsVal).type == Json.Type.array)
-      {
+      if (metricsVal !is null && (*metricsVal).type == Json.Type.array) {
         foreach (mj; *metricsVal)
         {
           if (m!j.isObject)
@@ -92,15 +87,13 @@ class MetricController {
       resp["accepted"] = Json(cast(long) batchReq.metrics.length);
       res.writeJsonBody(resp, 201);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto resourceId = req.params.get("resourceId", "");
       auto metricName = req.params.get("name", "");
@@ -121,15 +114,13 @@ class MetricController {
       resp["totalCount"] = Json(cast(long) metrics.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto resourceId = req.params.get("resourceId", "");
       auto metricName = req.params.get("name", "");
@@ -152,8 +143,7 @@ class MetricController {
       resp["windowEndTime"] = Json(summary.windowEndTime);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

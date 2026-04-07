@@ -30,8 +30,7 @@ class KnowledgeBaseArticleController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateKBArticleRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class KnowledgeBaseArticleController {
       r.language = j.getString("language");
 
       auto result = useCase.createArticle(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class KnowledgeBaseArticleController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
       auto articles = useCase.listByWorkspace(workspaceId, tenantId);
@@ -77,34 +73,29 @@ class KnowledgeBaseArticleController {
       resp["totalCount"] = Json(cast(long) articles.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto a = useCase.getArticle(id, tenantId);
-      if (a is null)
-      {
+      if (a is null) {
         writeError(res, 404, "Article not found");
         return;
       }
       res.writeJsonBody(serializeKBArticle(*a), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateKBArticleRequest();
@@ -122,15 +113,13 @@ class KnowledgeBaseArticleController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteArticle(id, tenantId);
@@ -139,8 +128,7 @@ class KnowledgeBaseArticleController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

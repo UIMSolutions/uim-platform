@@ -37,8 +37,7 @@ class SubscriptionController : SAPController {
   }
 
   private void handleSubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateSubscriptionRequest r;
       r.subaccountId = j.getString("subaccountId");
@@ -50,8 +49,7 @@ class SubscriptionController : SAPController {
       r.labels = jsonStrMap(j, "labels");
 
       auto result = uc.subscribe(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -64,8 +62,7 @@ class SubscriptionController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto subId = req.params.get("subaccountId");
       Subscription[] items;
       if (subId.length > 0)
@@ -85,12 +82,10 @@ class SubscriptionController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto s = uc.getById(id);
-      if (s.id.length == 0)
-      {
+      if (s.id.length == 0) {
         writeError(res, 404, "Subscription not found");
         return;
       }
@@ -101,8 +96,7 @@ class SubscriptionController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateSubscriptionRequest r;
@@ -120,8 +114,7 @@ class SubscriptionController : SAPController {
   }
 
   private void handleUnsubscribe(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.unsubscribe(id);
       if (result.success)

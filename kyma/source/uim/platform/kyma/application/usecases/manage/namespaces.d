@@ -102,8 +102,7 @@ class ManageNamespacesUseCase : UIMUseCase {
   }
 
   private QuotaEnforcement parseQuotaEnforcement(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "enforce":
       return QuotaEnforcement.enforce;
     case "warn":

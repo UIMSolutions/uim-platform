@@ -16,8 +16,7 @@ class DistributionEvaluator {
   /// Check if an object's category is covered by the distribution model.
   bool matchesDistribution(DistributionModel model, MasterDataObject obj) {
     // Check if the object's category is in the model's scope
-    foreach (cat; model.categories)
-    {
+    foreach (cat; model.categories) {
       if (cat == obj.category)
         return true;
     }
@@ -30,8 +29,7 @@ class DistributionEvaluator {
     string value;
 
     // Check built-in fields first
-    switch (fieldName)
-    {
+    switch (fieldName) {
     case "objectType":
       value = obj.objectType;
       break;
@@ -69,8 +67,7 @@ class DistributionEvaluator {
 
     bool isAnd = (rule.logicOperator != "OR");
 
-    foreach (ref cond; rule.conditions)
-    {
+    foreach (ref cond; rule.conditions) {
       bool match = evaluateCondition(cond, obj);
       if (isAnd && !match)
         return false;
@@ -85,8 +82,7 @@ class DistributionEvaluator {
     // import std.algorithm : canFind;
     // import std.string : indexOf;
 
-    final switch (op)
-    {
+    final switch (op) {
     case FilterOperator.equals:
       return value == expected;
     case FilterOperator.notEquals:

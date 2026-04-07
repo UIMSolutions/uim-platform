@@ -35,8 +35,7 @@ class EntitlementController {
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       AssignEntitlementRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -51,8 +50,7 @@ class EntitlementController {
       r.assignedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.assign(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -65,8 +63,7 @@ class EntitlementController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto dirId = req.params.get("directoryId");
@@ -93,12 +90,10 @@ class EntitlementController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto ent = uc.getById(id);
-      if (ent.id.length == 0)
-      {
+      if (ent.id.length == 0) {
         writeError(res, 404, "Entitlement not found");
         return;
       }
@@ -109,8 +104,7 @@ class EntitlementController {
   }
 
   private void handleUpdateQuota(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateEntitlementQuotaRequest r;
@@ -128,8 +122,7 @@ class EntitlementController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.revoke(id);
       if (result.success)
@@ -142,8 +135,7 @@ class EntitlementController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

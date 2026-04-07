@@ -30,8 +30,7 @@ class EventController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto gaId = req.params.get("globalAccountId");
       auto subId = req.params.get("subaccountId");
       auto category = req.params.get("category");
@@ -61,12 +60,10 @@ class EventController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto ev = uc.getById(id);
-      if (ev.id.length == 0)
-      {
+      if (ev.id.length == 0) {
         writeError(res, 404, "Event not found");
         return;
       }

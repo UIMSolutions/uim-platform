@@ -36,8 +36,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateGlobalAccountRequest r;
       r.displayName = j.getString("displayName");
@@ -54,8 +53,7 @@ class GlobalAccountController : SAPController {
       r.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -68,8 +66,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto statusFilter = req.params.get("status");
       GlobalAccount[] items;
       if (statusFilter.length > 0)
@@ -91,12 +88,10 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto ga = uc.getById(id);
-      if (ga.id.length == 0)
-      {
+      if (ga.id.length == 0) {
         writeError(res, 404, "Global account not found");
         return;
       }
@@ -107,8 +102,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateGlobalAccountRequest r;
@@ -129,8 +123,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.suspend(id);
       if (result.success)
@@ -143,8 +136,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.reactivate(id);
       if (result.success)
@@ -157,8 +149,7 @@ class GlobalAccountController : SAPController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

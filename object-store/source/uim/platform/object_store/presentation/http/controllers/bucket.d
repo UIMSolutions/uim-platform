@@ -38,8 +38,7 @@ class BucketController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateBucketRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -53,8 +52,7 @@ class BucketController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createBucket(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -64,15 +62,13 @@ class BucketController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto buckets = uc.listBuckets(tenantId);
 
@@ -85,40 +81,34 @@ class BucketController : SAPController {
       resp["totalCount"] = Json(cast(long) buckets.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
-      if (!existsBucket(id))
-      {
+      if (!existsBucket(id)) {
         writeError(res, 404, "Bucket not found");
         return;
       }
 
       auto bucket = uc.getBucket(id);
-      if (bucket.id.length == 0)
-      {
+      if (bucket.id.length == 0) {
         writeError(res, 404, "Bucket not valid");
         return;
       }
 
       res.writeJsonBody(serializeBucket(bucket), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateBucketRequest();
@@ -129,8 +119,7 @@ class BucketController : SAPController {
       r.quotaBytes = jsonLong(j, "quotaBytes");
 
       auto result = uc.updateBucket(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -140,19 +129,16 @@ class BucketController : SAPController {
         writeError(res, result.error == "Bucket not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBucket(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -163,8 +149,7 @@ class BucketController : SAPController {
         writeError(res, code, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

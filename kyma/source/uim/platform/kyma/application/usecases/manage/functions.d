@@ -134,8 +134,7 @@ class ManageFunctionsUseCase : UIMUseCase {
   }
 
   private FunctionRuntime parseRuntime(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "nodejs18":
       return FunctionRuntime.nodejs18;
     case "nodejs20":
@@ -150,8 +149,7 @@ class ManageFunctionsUseCase : UIMUseCase {
   }
 
   private ScalingType parseScalingType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "fixed":
       return ScalingType.fixed;
     case "auto":

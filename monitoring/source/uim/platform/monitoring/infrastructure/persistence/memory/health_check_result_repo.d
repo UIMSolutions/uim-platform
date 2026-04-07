@@ -32,10 +32,8 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
-    foreach (ref r; store)
-    {
-      if (r.tenantId == tenantId && r.checkId == checkId)
-      {
+    foreach (ref r; store) {
+      if (r.tenantId == tenantId && r.checkId == checkId) {
         if (latest.id.length == 0 || r.executedAt > latest.executedAt)
           latest = r;
       }

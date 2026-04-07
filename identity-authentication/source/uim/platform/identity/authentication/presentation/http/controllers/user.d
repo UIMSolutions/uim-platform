@@ -36,8 +36,7 @@ class UserController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateUserRequest(j.getString("tenantId"), j.getString("userName"),
           j.getString("email"), j.getString("firstName"), j.getString("lastName"),
@@ -46,8 +45,7 @@ class UserController : SAPController {
       auto result = useCase.createUser(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["userId"] = Json(result.userId);
         res.writeJsonBody(response, 201);
       }
@@ -57,8 +55,7 @@ class UserController : SAPController {
         res.writeJsonBody(response, 409);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -66,8 +63,7 @@ class UserController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.params.get("tenantId", "");
       if (tenantId.length == 0)
         tenantId = req.headers.get("X-Tenant-Id", "");
@@ -78,8 +74,7 @@ class UserController : SAPController {
       response["resources"] = users.toJson;
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -87,16 +82,14 @@ class UserController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.conv : to;
 
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
 
       auto user = useCase.getUser(userId);
-      if (user == User.init)
-      {
+      if (user == User.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("User not found");
         res.writeJsonBody(errRes, 404);
@@ -109,8 +102,7 @@ class UserController : SAPController {
       response.remove("mfaSecret");
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -118,8 +110,7 @@ class UserController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto path = req.requestURI;
       auto userId = extractIdFromPath(path);
       auto j = req.json;
@@ -128,8 +119,7 @@ class UserController : SAPController {
           j.getString("lastName"), j.getString("phoneNumber"));
 
       auto error = useCase.updateUser(updateReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 404);
@@ -141,8 +131,7 @@ class UserController : SAPController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -150,14 +139,12 @@ class UserController : SAPController {
   }
 
   private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto error = useCase.changePassword(j.getString("userId"),
           j.getString("oldPassword"), j.getString("newPassword"));
 
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 400);
@@ -169,8 +156,7 @@ class UserController : SAPController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

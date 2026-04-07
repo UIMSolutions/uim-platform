@@ -48,7 +48,7 @@ class SubstitutionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Substitution rule created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -65,7 +65,7 @@ class SubstitutionRuleController : SAPController {
             SubstitutionRule[] rules;
             if (userId.length > 0) {
                 rules = uc.listByUser(tenantId, userId);
-            } else {
+            } ) {
                 rules = [];
             }
 
@@ -123,7 +123,7 @@ class SubstitutionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Substitution rule updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -145,7 +145,7 @@ class SubstitutionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Substitution rule activated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -167,7 +167,7 @@ class SubstitutionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Substitution rule deactivated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -186,7 +186,7 @@ class SubstitutionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Substitution rule deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

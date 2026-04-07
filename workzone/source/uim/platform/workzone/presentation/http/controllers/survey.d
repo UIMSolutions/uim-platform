@@ -30,8 +30,7 @@ class SurveyController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateSurveyRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class SurveyController {
       r.endsAt = jsonLong(j, "endsAt");
 
       auto result = useCase.createSurvey(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class SurveyController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
       auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
@@ -77,34 +73,29 @@ class SurveyController {
       resp["totalCount"] = Json(cast(long) surveys.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto s = useCase.getSurvey(id, tenantId);
-      if (s is null)
-      {
+      if (s is null) {
         writeError(res, 404, "Survey not found");
         return;
       }
       res.writeJsonBody(serializeSurvey(*s), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateSurveyRequest();
@@ -119,15 +110,13 @@ class SurveyController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteSurvey(id, tenantId);
@@ -136,8 +125,7 @@ class SurveyController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -30,8 +30,7 @@ class ThemeController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateThemeRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class ThemeController {
       r.isDefault = jsonBool(j, "isDefault");
 
       auto result = useCase.createTheme(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class ThemeController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto themes = useCase.listThemes(tenantId);
       auto arr = Json.emptyArray;
@@ -74,34 +70,29 @@ class ThemeController {
       resp["totalCount"] = Json(cast(long) themes.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto t = useCase.getTheme(id, tenantId);
-      if (t is null)
-      {
+      if (t is null) {
         writeError(res, 404, "Theme not found");
         return;
       }
       res.writeJsonBody(serializeTheme(*t), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateThemeRequest();
@@ -118,15 +109,13 @@ class ThemeController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteTheme(id, tenantId);
@@ -135,8 +124,7 @@ class ThemeController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -20,8 +20,7 @@ class MemorySchemaRepository : SchemaRepository {
   }
 
   Schema findByName(TenantId tenantId, string name) {
-    foreach (s; store.byValue())
-    {
+    foreach (s; store.byValue()) {
       if (s.tenantId == tenantId && s.name == name)
         return s;
     }
@@ -31,10 +30,8 @@ class MemorySchemaRepository : SchemaRepository {
   Schema[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Schema[] result;
     uint idx;
-    foreach (s; store.byValue())
-    {
-      if (s.tenantId == tenantId)
-      {
+    foreach (s; store.byValue()) {
+      if (s.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= s;
         idx++;

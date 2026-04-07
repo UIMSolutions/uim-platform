@@ -49,7 +49,7 @@ class PersonalDataRecordController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Personal data record created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -71,7 +71,7 @@ class PersonalDataRecordController : SAPController {
                 records = uc.listByDataSubject(dataSubjectId);
             } else if (applicationId.length > 0) {
                 records = uc.listByApplication(applicationId);
-            } else {
+            } ) {
                 records = uc.list(tenantId);
             }
 
@@ -114,7 +114,7 @@ class PersonalDataRecordController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Personal data record deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

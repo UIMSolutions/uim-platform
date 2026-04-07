@@ -35,8 +35,7 @@ class GroupController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateGroupRequest(j.getString("tenantId"),
           j.getString("name"), j.getString("description"));
@@ -44,8 +43,7 @@ class GroupController : SAPController {
       auto result = useCase.createGroup(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["groupId"] = Json(result.groupId);
         res.writeJsonBody(response, 201);
       }
@@ -55,8 +53,7 @@ class GroupController : SAPController {
         res.writeJsonBody(response, 400);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -64,8 +61,7 @@ class GroupController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
@@ -73,8 +69,7 @@ class GroupController : SAPController {
       response["resources"] = groups.toJson;
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -82,8 +77,7 @@ class GroupController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.string : lastIndexOf;
 
       auto path = req.requestURI;
@@ -91,8 +85,7 @@ class GroupController : SAPController {
       auto groupId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto group = useCase.getGroup(groupId);
-      if (group == IdaGroup.init)
-      {
+      if (group == IdaGroup.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("IdaGroup not found");
         res.writeJsonBody(errRes, 404);
@@ -101,8 +94,7 @@ class GroupController : SAPController {
 
       res.writeJsonBody(toJsonValue(group), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -110,13 +102,11 @@ class GroupController : SAPController {
   }
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto error = useCase.addMember(j.getString("groupId"), j.getString("userId"));
 
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 400);
@@ -128,8 +118,7 @@ class GroupController : SAPController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

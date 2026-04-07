@@ -32,8 +32,7 @@ class ScenarioController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateScenarioRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -48,8 +47,7 @@ class ScenarioController {
       r.createdBy = j.getString("createdBy");
 
       auto result = useCase.createScenario(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -59,15 +57,13 @@ class ScenarioController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto scenarios = useCase.listScenarios(tenantId);
 
@@ -80,34 +76,29 @@ class ScenarioController {
       resp["totalCount"] = Json(cast(long) scenarios.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto scenario = useCase.getScenario(id, tenantId);
-      if (scenario is null)
-      {
+      if (scenario is null) {
         writeError(res, 404, "Scenario not found");
         return;
       }
       res.writeJsonBody(serializeScenario(*scenario), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateScenarioRequest();
@@ -124,8 +115,7 @@ class ScenarioController {
       r.stepTemplates = parseStepTemplates(j);
 
       auto result = useCase.updateScenario(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -135,20 +125,17 @@ class ScenarioController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteScenario(id, tenantId);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -158,8 +145,7 @@ class ScenarioController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -180,11 +166,9 @@ class ScenarioController {
     j["createdAt"] = Json(s.createdAt);
     j["updatedAt"] = Json(s.updatedAt);
 
-    if (s.stepTemplates.length > 0)
-    {
+    if (s.stepTemplates.length > 0) {
       auto steps = Json.emptyArray;
-      foreach (ref t; s.stepTemplates)
-      {
+      foreach (ref t; s.stepTemplates) {
         auto sj = Json.emptyObject;
         sj["name"] = Json(t.name);
         sj["description"] = Json(t.description);
@@ -208,10 +192,8 @@ class ScenarioController {
     auto v = "stepTemplates" in j;
     if (v is null || (*v).type != Json.Type.array)
       return result;
-    foreach (item; *v)
-    {
-      if (item.type == Json.Type.object)
-      {
+    foreach (item; *v) {
+      if (item.type == Json.Type.object) {
         ScenarioStepTemplate t;
         t.name = item.getString("name");
         t.description = item.getString("description");

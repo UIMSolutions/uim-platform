@@ -31,8 +31,7 @@ class ServiceBindingController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateServiceBindingRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -43,8 +42,7 @@ class ServiceBindingController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createBinding(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -54,15 +52,13 @@ class ServiceBindingController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
       auto bindings = uc.listBindings(bucketId);
 
@@ -75,42 +71,36 @@ class ServiceBindingController {
       resp["totalCount"] = Json(cast(long) bindings.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       if (id == "revoke")
         return;
 
       auto binding = uc.getBinding(id);
-      if (binding is null || binding.id.length == 0)
-      {
+      if (binding is null || binding.id.length == 0) {
         writeError(res, 404, "Service binding not found");
         return;
       }
       res.writeJsonBody(serializeBinding(binding), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // /api/v1/service-bindings/{id}/revoke
       auto path = req.requestURI;
       // import std.string : indexOf;
       auto bindingsPos = path.indexOf("service-bindings/");
-      if (bindingsPos < 0)
-      {
+      if (bindingsPos < 0) {
         writeError(res, 400, "Invalid path");
         return;
       }
@@ -120,8 +110,7 @@ class ServiceBindingController {
       auto id = slashPos > 0 ? rest[0 .. slashPos] : rest;
 
       auto result = uc.revokeBinding(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["revoked"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -131,19 +120,16 @@ class ServiceBindingController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBinding(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -153,8 +139,7 @@ class ServiceBindingController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -104,8 +104,7 @@ class ManageServicePlansUseCase : UIMUseCase {
   }
 
   private ServicePlanCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "service":
       return ServicePlanCategory.service;
     case "application":
@@ -120,8 +119,7 @@ class ManageServicePlansUseCase : UIMUseCase {
   }
 
   private PricingModel parsePricingModel(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "free":
       return PricingModel.free;
     case "subscription":

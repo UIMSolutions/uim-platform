@@ -45,7 +45,7 @@ class RetentionController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -122,7 +122,7 @@ class RetentionController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

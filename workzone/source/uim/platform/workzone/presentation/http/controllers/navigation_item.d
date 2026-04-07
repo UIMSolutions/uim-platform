@@ -30,8 +30,7 @@ class NavigationItemController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateNavigationItemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class NavigationItemController {
       r.openInNewWindow = jsonBool(j, "openInNewWindow");
 
       auto result = useCase.createNavigationItem(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class NavigationItemController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(siteId, tenantId);
@@ -77,34 +73,29 @@ class NavigationItemController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto n = useCase.getNavigationItem(id, tenantId);
-      if (n is null)
-      {
+      if (n is null) {
         writeError(res, 404, "Navigation item not found");
         return;
       }
       res.writeJsonBody(serializeNavigationItem(*n), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateNavigationItemRequest();
@@ -122,15 +113,13 @@ class NavigationItemController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deleteNavigationItem(id, tenantId);
@@ -139,8 +128,7 @@ class NavigationItemController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

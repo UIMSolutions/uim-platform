@@ -67,26 +67,22 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     string[] changedFields;
     string[string] oldValues;
 
-    if (req.displayName.length > 0 && req.displayName != obj.displayName)
-    {
+    if (req.displayName.length > 0 && req.displayName != obj.displayName) {
       oldValues["displayName"] = obj.displayName;
       obj.displayName = req.displayName;
       changedFields ~= "displayName";
     }
-    if (req.description.length > 0 && req.description != obj.description)
-    {
+    if (req.description.length > 0 && req.description != obj.description) {
       oldValues["description"] = obj.description;
       obj.description = req.description;
       changedFields ~= "description";
     }
-    if (req.status.length > 0)
-    {
+    if (req.status.length > 0) {
       oldValues["status"] = obj.status.stringof;
       obj.status = parseStatus(req.status);
       changedFields ~= "status";
     }
-    foreach (k, v; req.attributes)
-    {
+    foreach (k, v; req.attributes) {
       if (auto p = k in obj.attributes)
         oldValues[k] = *p;
       obj.attributes[k] = v;
@@ -168,8 +164,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
   }
 
   private MasterDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "businessPartner":
       return MasterDataCategory.businessPartner;
     case "costCenter":
@@ -200,8 +195,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
   }
 
   private RecordStatus parseStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return RecordStatus.active;
     case "inactive":

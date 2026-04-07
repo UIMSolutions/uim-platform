@@ -39,8 +39,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     ws.createdBy = req.createdBy;
 
     // Creator becomes owner
-    if (req.createdBy.length > 0)
-    {
+    if (req.createdBy.length > 0) {
       ws.members = [WorkspaceMember(req.createdBy, "", MemberRole.owner, now)];
     }
 
@@ -102,8 +101,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     // import std.algorithm : remove;
     size_t idx = size_t.max;
     foreach (i, ref m; ws.members)
-      if (m.userId == userId)
-      {
+      if (m.userId == userId) {
         idx = i;
         break;
       }

@@ -73,8 +73,7 @@ private string[] splitBy(string s, char delim) {
   string[] result;
   size_t start = 0;
   foreach (i, ch; s) {
-    if (ch == delim)
-    {
+    if (ch == delim) {
       result ~= s[start .. i];
       start = i + 1;
     }

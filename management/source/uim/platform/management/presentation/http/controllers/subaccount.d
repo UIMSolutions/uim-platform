@@ -39,8 +39,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateSubaccountRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -57,8 +56,7 @@ class SubaccountController : SAPController {
       r.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -71,8 +69,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto gaId = req.params.get("globalAccountId");
       auto dirId = req.params.get("directoryId");
       auto region = req.params.get("region");
@@ -99,12 +96,10 @@ class SubaccountController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto s = uc.getById(id);
-      if (s.id.length == 0)
-      {
+      if (s.id.length == 0) {
         writeError(res, 404, "Subaccount not found");
         return;
       }
@@ -115,8 +110,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateSubaccountRequest r;
@@ -139,8 +133,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       MoveSubaccountRequest r;
@@ -157,8 +150,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.suspend(id);
       if (result.success)
@@ -171,8 +163,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleReactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.reactivate(id);
       if (result.success)
@@ -185,8 +176,7 @@ class SubaccountController : SAPController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

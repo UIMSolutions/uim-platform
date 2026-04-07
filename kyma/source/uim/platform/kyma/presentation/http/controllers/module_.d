@@ -33,8 +33,7 @@ class ModuleController {
   }
 
   private void handleEnable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       EnableModuleRequest r;
       r.environmentId = j.getString("environmentId");
@@ -48,8 +47,7 @@ class ModuleController {
       r.enabledBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.enableModule(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class ModuleController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto envIdParam = req.params.get("environmentId");
       string envId = envIdParam.length > 0 ? envIdParam : req.headers.get("X-Environment-Id", "");
 
@@ -79,33 +75,28 @@ class ModuleController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto m = uc.getModule(id);
-      if (m.id.length == 0)
-      {
+      if (m.id.length == 0) {
         writeError(res, 404, "Module not found");
         return;
       }
       res.writeJsonBody(serializeModule(m), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateModuleRequest r;
@@ -120,15 +111,13 @@ class ModuleController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDisable(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.disableModule(id);
       if (result.success)
@@ -136,15 +125,13 @@ class ModuleController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteModule(id);
       if (result.success)
@@ -152,8 +139,7 @@ class ModuleController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

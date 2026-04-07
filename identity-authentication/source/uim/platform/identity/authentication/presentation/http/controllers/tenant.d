@@ -36,8 +36,7 @@ class TenantController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateTenantRequest(j.getString("name"),
           j.getString("subdomain"), SsoProtocol.oidc, [AuthMethod.form], false);
@@ -45,8 +44,7 @@ class TenantController : SAPController {
       auto result = useCase.createTenant(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["tenantId"] = Json(result.tenantId);
         res.writeJsonBody(response, 201);
       }
@@ -56,8 +54,7 @@ class TenantController : SAPController {
         res.writeJsonBody(response, 409);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -65,16 +62,14 @@ class TenantController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenants = useCase.listTenants();
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long) tenants.length);
       response["resources"] = toJsonArray(tenants);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -82,8 +77,7 @@ class TenantController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.string : lastIndexOf;
 
       auto path = req.requestURI;
@@ -91,8 +85,7 @@ class TenantController : SAPController {
       auto tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto tenant = useCase.getTenant(tenantId);
-      if (tenant == Tenant.init)
-      {
+      if (tenant == Tenant.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("Tenant not found");
         res.writeJsonBody(errRes, 404);
@@ -101,8 +94,7 @@ class TenantController : SAPController {
 
       res.writeJsonBody(toJsonValue(tenant), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -110,8 +102,7 @@ class TenantController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.string : lastIndexOf;
 
       auto path = req.requestURI;
@@ -122,8 +113,7 @@ class TenantController : SAPController {
       auto updateReq = UpdateTenantRequest(tenantId, j.getString("name"), []);
 
       auto error = useCase.updateTenant(updateReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 404);
@@ -135,8 +125,7 @@ class TenantController : SAPController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

@@ -54,8 +54,7 @@ class ManageModulesUseCase : UIMUseCase {
 
     // Check dependencies
     auto allModules = repo.findByEnvironment(req.environmentId);
-    if (!depResolver.canEnable(mod, allModules))
-    {
+    if (!depResolver.canEnable(mod, allModules)) {
       auto missing = depResolver.getUnsatisfiedDependencies(mod, allModules);
       // import std.array : join;
       return CommandResult(false, "", "Missing required modules: " ~ missing.join(", "));
@@ -78,8 +77,7 @@ class ManageModulesUseCase : UIMUseCase {
     // Check for dependents
     auto allModules = repo.findByEnvironment(mod.environmentId);
     auto dependents = depResolver.findDependents(mod.name, allModules);
-    if (dependents.length > 0)
-    {
+    if (dependents.length > 0) {
       // import std.array : join;
       return CommandResult(false, "",
           "Cannot disable: modules depend on it: " ~ dependents.join(", "));
@@ -127,8 +125,7 @@ class ManageModulesUseCase : UIMUseCase {
   }
 
   private ModuleType parseModuleType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "istio":
       return ModuleType.istio;
     case "api-gateway":
@@ -153,8 +150,7 @@ class ManageModulesUseCase : UIMUseCase {
   }
 
   private string[] getKnownDependencies(ModuleType t) {
-    switch (t)
-    {
+    switch (t) {
     case ModuleType.apiGateway:
       return ["istio"];
     case ModuleType.serverless:

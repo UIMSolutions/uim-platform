@@ -51,7 +51,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -119,7 +119,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -141,7 +141,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider activated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -163,7 +163,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider deactivated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -185,7 +185,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider sync initiated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -204,7 +204,7 @@ class TaskProviderController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Provider deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

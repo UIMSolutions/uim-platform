@@ -55,11 +55,9 @@ class ManageHealthChecksUseCase : UIMUseCase {
     c.updatedAt = c.createdAt;
 
     auto validation = HealthChecker.validate(c);
-    if (!validation.valid)
-    {
+    if (!validation.valid) {
       string msg = "Validation failed: ";
-      foreach (i, e; validation.errors)
-      {
+      foreach (i, e; validation.errors) {
         if (i > 0)
           msg ~= "; ";
         msg ~= e;
@@ -156,8 +154,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
   }
 
   private static CheckType parseCheckType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "jmx":
       return CheckType.jmx;
     case "customHttp":
@@ -174,8 +171,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
   }
 
   private static CheckStatus parseCheckStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "ok":
       return CheckStatus.ok;
     case "warning":
@@ -190,8 +186,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
   }
 
   private static ThresholdOperator parseThresholdOperator(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "greaterOrEqual":
       return ThresholdOperator.greaterOrEqual;
     case "lessThan":

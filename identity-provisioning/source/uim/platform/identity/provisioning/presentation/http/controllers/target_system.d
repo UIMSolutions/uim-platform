@@ -34,8 +34,7 @@ class TargetSystemController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateTargetSystemRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class TargetSystemController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createTargetSystem(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class TargetSystemController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listTargetSystems(tenantId);
 
@@ -76,34 +72,29 @@ class TargetSystemController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto sys = uc.getTargetSystem(id, tenantId);
-      if (sys is null)
-      {
+      if (sys is null) {
         writeError(res, 404, "Target system not found");
         return;
       }
       res.writeJsonBody(serializeSystem(*sys), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateTargetSystemRequest();
@@ -114,8 +105,7 @@ class TargetSystemController {
       r.connectionConfig = j.getString("connectionConfig");
 
       auto result = uc.updateTargetSystem(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -126,20 +116,17 @@ class TargetSystemController {
         writeError(res, status, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.activateSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("active");
@@ -151,20 +138,17 @@ class TargetSystemController {
         writeError(res, status, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deactivateSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("inactive");
@@ -173,20 +157,17 @@ class TargetSystemController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteTargetSystem(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -194,8 +175,7 @@ class TargetSystemController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

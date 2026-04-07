@@ -48,7 +48,7 @@ class DataProcessingLogController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Processing log entry created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -68,7 +68,7 @@ class DataProcessingLogController : SAPController {
                 logs = uc.listByDataSubject(dataSubjectId);
             } else if (requestId.length > 0) {
                 logs = uc.listByRequest(requestId);
-            } else {
+            } ) {
                 logs = uc.list(tenantId);
             }
 
@@ -111,7 +111,7 @@ class DataProcessingLogController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Processing log entry deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

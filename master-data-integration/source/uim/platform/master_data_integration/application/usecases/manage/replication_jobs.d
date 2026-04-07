@@ -124,8 +124,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   }
 
   private ReplicationTrigger parseTrigger(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "manual":
       return ReplicationTrigger.manual;
     case "scheduled":
@@ -140,8 +139,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   }
 
   private ReplicationJobStatus parseJobStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "pending":
       return ReplicationJobStatus.pending;
     case "running":
@@ -161,10 +159,8 @@ class ManageReplicationJobsUseCase : UIMUseCase {
 
   private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
-    foreach (s; cats)
-    {
-      switch (s)
-      {
+    foreach (s; cats) {
+      switch (s) {
       case "businessPartner":
         result ~= MasterDataCategory.businessPartner;
         break;

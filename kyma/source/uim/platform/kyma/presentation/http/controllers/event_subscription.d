@@ -34,8 +34,7 @@ class EventSubscriptionController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateEventSubscriptionRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -56,8 +55,7 @@ class EventSubscriptionController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -65,15 +63,13 @@ class EventSubscriptionController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
       auto source = req.params.get("source");
@@ -97,33 +93,28 @@ class EventSubscriptionController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto sub = uc.getSubscription(id);
-      if (sub.id.length == 0)
-      {
+      if (sub.id.length == 0) {
         writeError(res, 404, "Subscription not found");
         return;
       }
       res.writeJsonBody(serializeSub(sub), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateEventSubscriptionRequest r;
@@ -143,15 +134,13 @@ class EventSubscriptionController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handlePause(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.pauseSubscription(id);
       if (result.success)
@@ -159,15 +148,13 @@ class EventSubscriptionController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleResume(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.resumeSubscription(id);
       if (result.success)
@@ -175,15 +162,13 @@ class EventSubscriptionController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteSubscription(id);
       if (result.success)
@@ -191,8 +176,7 @@ class EventSubscriptionController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

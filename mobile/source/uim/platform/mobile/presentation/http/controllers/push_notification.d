@@ -49,7 +49,7 @@ class PushNotificationController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -100,7 +100,7 @@ class PushNotificationController : SAPController {
         resp["status"] = Json(result.data.status);
         resp["createdBy"] = Json(result.data.createdBy);
         res.writeJsonBody(resp, 200);
-      } else {
+      } ) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -114,7 +114,7 @@ class PushNotificationController : SAPController {
       auto result = uc.remove(id);
       if (result.success) {
         res.writeBody("", 204);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

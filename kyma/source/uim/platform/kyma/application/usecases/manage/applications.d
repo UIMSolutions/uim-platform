@@ -48,8 +48,7 @@ class ManageApplicationsUseCase : UIMUseCase {
 
     // Convert API entries
     AppApiEntry[] apis;
-    foreach (ref a; req.apis)
-    {
+    foreach (ref a; req.apis) {
       AppApiEntry entry;
       entry.name = a.name;
       entry.description = a.description;
@@ -62,8 +61,7 @@ class ManageApplicationsUseCase : UIMUseCase {
 
     // Convert event entries
     AppEventEntry[] events;
-    foreach (ref e; req.events)
-    {
+    foreach (ref e; req.events) {
       AppEventEntry entry;
       entry.name = e.name;
       entry.description = e.description;
@@ -90,11 +88,9 @@ class ManageApplicationsUseCase : UIMUseCase {
     if (req.labels !is null)
       app.labels = req.labels;
 
-    if (req.apis.length > 0)
-    {
+    if (req.apis.length > 0) {
       AppApiEntry[] apis;
-      foreach (ref a; req.apis)
-      {
+      foreach (ref a; req.apis) {
         AppApiEntry entry;
         entry.name = a.name;
         entry.description = a.description;
@@ -106,11 +102,9 @@ class ManageApplicationsUseCase : UIMUseCase {
       app.apis = apis;
     }
 
-    if (req.events.length > 0)
-    {
+    if (req.events.length > 0) {
       AppEventEntry[] events;
-      foreach (ref e; req.events)
-      {
+      foreach (ref e; req.events) {
         AppEventEntry entry;
         entry.name = e.name;
         entry.description = e.description;
@@ -166,8 +160,7 @@ class ManageApplicationsUseCase : UIMUseCase {
   }
 
   private AppRegistrationType parseRegistrationType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "api":
       return AppRegistrationType.api;
     case "events":

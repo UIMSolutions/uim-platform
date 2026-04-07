@@ -32,8 +32,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
     auto rules = ruleRepo.findEnabled(tenantId);
     int triggered = 0;
 
-    foreach (ref rule; rules)
-    {
+    foreach (ref rule; rules) {
       auto now = clockSeconds();
       auto windowStart = now - rule.evaluationPeriodSeconds;
 
@@ -46,8 +45,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
       auto avg = ThresholdEvaluator.computeAverage(metrics);
       auto result = ThresholdEvaluator.evaluate(avg, rule);
 
-      if (result.breached)
-      {
+      if (result.breached) {
         alertsUseCase.triggerAlert(tenantId, rule.id, rule.resourceId, rule.name,
             rule.metricName, result.currentValue, result.thresholdValue,
             rule.operator_, result.severity, result.message);
@@ -76,8 +74,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
     auto avg = ThresholdEvaluator.computeAverage(metrics);
     auto result = ThresholdEvaluator.evaluate(avg, rule);
 
-    if (result.breached)
-    {
+    if (result.breached) {
       alertsUseCase.triggerAlert(tenantId, rule.id, rule.resourceId, rule.name,
           rule.metricName, result.currentValue, result.thresholdValue,
           rule.operator_, result.severity, result.message);

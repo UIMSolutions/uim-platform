@@ -30,8 +30,7 @@ class DelegatedAuthUseCase : UIMUseCase {
   IdpConfig resolveIdp(TenantId tenantId, string email) {
     // Extract domain from email
     auto parts = email.split("@");
-    if (parts.length == 2)
-    {
+    if (parts.length == 2) {
       auto idp = idpRepo.findByDomainHint(tenantId, parts[1]);
       if (idp != IdpConfig.init)
         return idp;

@@ -90,8 +90,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
 
   private FilterCondition[] toConditions(FilterConditionDto[] dtos) {
     FilterCondition[] result;
-    foreach (ref dto; dtos)
-    {
+    foreach (ref dto; dtos) {
       FilterCondition cond;
       cond.fieldName = dto.fieldName;
       cond.operator = parseOperator(dto.operator);
@@ -105,8 +104,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
   }
 
   private FilterOperator parseOperator(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "equals":
       return FilterOperator.equals;
     case "notEquals":
@@ -137,8 +135,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
   }
 
   private MasterDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "businessPartner":
       return MasterDataCategory.businessPartner;
     case "costCenter":

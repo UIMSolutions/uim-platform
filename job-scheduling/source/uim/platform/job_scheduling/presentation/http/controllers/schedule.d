@@ -60,7 +60,7 @@ class ScheduleController : SAPController {
                 resp["jobId"] = Json(jobId);
                 resp["message"] = Json("Schedule created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -137,7 +137,7 @@ class ScheduleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Schedule updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -155,7 +155,7 @@ class ScheduleController : SAPController {
             auto result = uc.remove(ids[1], ids[0], tenantId);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -180,7 +180,7 @@ class ScheduleController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json(r.active ? "All schedules activated" : "All schedules deactivated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

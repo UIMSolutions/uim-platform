@@ -26,8 +26,7 @@ struct ThresholdEvaluator {
     result.currentValue = value_;
 
     // Check critical threshold first
-    if (rule.criticalThreshold != 0 && breaches(value_, rule.criticalThreshold, rule.operator_))
-    {
+    if (rule.criticalThreshold != 0 && breaches(value_, rule.criticalThreshold, rule.operator_)) {
       result.breached = true;
       result.severity = AlertSeverity.critical;
       result.thresholdValue = rule.criticalThreshold;
@@ -38,8 +37,7 @@ struct ThresholdEvaluator {
     }
 
     // Check warning threshold
-    if (rule.warningThreshold != 0 && breaches(value_, rule.warningThreshold, rule.operator_))
-    {
+    if (rule.warningThreshold != 0 && breaches(value_, rule.warningThreshold, rule.operator_)) {
       result.breached = true;
       result.severity = AlertSeverity.warning;
       result.thresholdValue = rule.warningThreshold;
@@ -65,8 +63,7 @@ struct ThresholdEvaluator {
   }
 
   private static bool breaches(double value_, double threshold, ThresholdOperator op) {
-    final switch (op)
-    {
+    final switch (op) {
     case ThresholdOperator.greaterThan:
       return value_ > threshold;
     case ThresholdOperator.greaterOrEqual:
@@ -83,8 +80,7 @@ struct ThresholdEvaluator {
   }
 
   private static string operatorStr(ThresholdOperator op) {
-    final switch (op)
-    {
+    final switch (op) {
     case ThresholdOperator.greaterThan:
       return ">";
     case ThresholdOperator.greaterOrEqual:

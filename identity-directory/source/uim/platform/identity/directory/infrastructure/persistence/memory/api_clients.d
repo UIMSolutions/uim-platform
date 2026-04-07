@@ -20,8 +20,7 @@ class MemoryApiClientRepository : ApiClientRepository {
   }
 
   ApiClient findByClientId(string clientId) {
-    foreach (c; store.byValue())
-    {
+    foreach (c; store.byValue()) {
       if (c.clientId == clientId)
         return c;
     }
@@ -31,10 +30,8 @@ class MemoryApiClientRepository : ApiClientRepository {
   ApiClient[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     ApiClient[] result;
     uint idx;
-    foreach (c; store.byValue())
-    {
-      if (c.tenantId == tenantId)
-      {
+    foreach (c; store.byValue()) {
+      if (c.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= c;
         idx++;

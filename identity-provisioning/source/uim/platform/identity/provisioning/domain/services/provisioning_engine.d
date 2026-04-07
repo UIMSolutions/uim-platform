@@ -87,13 +87,11 @@ class ProvisioningEngine {
     jobRepo.update(*job);
 
     // Update system sync timestamps
-    if (src !is null)
-    {
+    if (src !is null) {
       src.lastSyncAt = job.completedAt;
       sourceRepo.update(*src);
     }
-    if (tgt !is null)
-    {
+    if (tgt !is null) {
       tgt.lastSyncAt = job.completedAt;
       targetRepo.update(*tgt);
     }
@@ -118,8 +116,7 @@ class ProvisioningEngine {
   private void simulateEntities(ProvisioningJob* job, TenantId tenantId,
       string srcName, string tgtName, EntityType eType, int count) {
     auto now = Clock.currStdTime();
-    foreach (i; 0 .. count)
-    {
+    foreach (i; 0 .. count) {
       // Create provisioned entity
       auto entity = ProvisionedEntity();
       entity.id = randomUUID().toString();

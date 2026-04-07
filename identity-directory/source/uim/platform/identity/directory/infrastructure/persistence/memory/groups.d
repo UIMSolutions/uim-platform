@@ -20,8 +20,7 @@ class MemoryGroupRepository : GroupRepository {
   }
 
   Group findByDisplayName(TenantId tenantId, string displayName) {
-    foreach (g; store.byValue())
-    {
+    foreach (g; store.byValue()) {
       if (g.tenantId == tenantId && g.displayName == displayName)
         return g;
     }
@@ -31,10 +30,8 @@ class MemoryGroupRepository : GroupRepository {
   Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Group[] result;
     uint idx;
-    foreach (g; store.byValue())
-    {
-      if (g.tenantId == tenantId)
-      {
+    foreach (g; store.byValue()) {
+      if (g.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= g;
         idx++;
@@ -45,8 +42,7 @@ class MemoryGroupRepository : GroupRepository {
 
   Group[] findByMember(string memberId) {
     Group[] result;
-    foreach (g; store.byValue())
-    {
+    foreach (g; store.byValue()) {
       if (g.hasMember(memberId))
         result ~= g;
     }
@@ -67,8 +63,7 @@ class MemoryGroupRepository : GroupRepository {
 
   ulong countByTenant(TenantId tenantId) {
     ulong count;
-    foreach (g; store.byValue())
-    {
+    foreach (g; store.byValue()) {
       if (g.tenantId == tenantId)
         count++;
     }

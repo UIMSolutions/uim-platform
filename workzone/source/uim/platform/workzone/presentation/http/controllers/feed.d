@@ -29,8 +29,7 @@ class FeedController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateFeedEntryRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -44,8 +43,7 @@ class FeedController {
       r.message = j.getString("message");
 
       auto result = useCase.createEntry(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class FeedController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
       auto entries = useCase.listByWorkspace(workspaceId, tenantId);
@@ -75,41 +71,35 @@ class FeedController {
       resp["totalCount"] = Json(cast(long) entries.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto entry = useCase.getEntry(id, tenantId);
-      if (entry is null)
-      {
+      if (entry is null) {
         writeError(res, 404, "Feed entry not found");
         return;
       }
       res.writeJsonBody(serializeFeed(*entry), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteEntry(id, tenantId);
       res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -44,7 +44,7 @@ class UserTaskFilterController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +61,7 @@ class UserTaskFilterController : SAPController {
             UserTaskFilter[] filters;
             if (userId.length > 0) {
                 filters = uc.listByUser(tenantId, userId);
-            } else {
+            } ) {
                 filters = [];
             }
 
@@ -116,7 +116,7 @@ class UserTaskFilterController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -138,7 +138,7 @@ class UserTaskFilterController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter set as default");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -157,7 +157,7 @@ class UserTaskFilterController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

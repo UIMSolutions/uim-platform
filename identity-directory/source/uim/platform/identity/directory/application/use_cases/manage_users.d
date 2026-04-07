@@ -42,11 +42,9 @@ class ManageUsersUseCase : UIMUseCase {
 
     // Validate password against policy
     auto policy = policyRepo.findActiveForTenant(req.tenantId);
-    if (policy != typeof(policy).init && req.password.length > 0)
-    {
+    if (policy != typeof(policy).init && req.password.length > 0) {
       auto validation = validatePassword(req.password, policy);
-      if (!validation.valid)
-      {
+      if (!validation.valid) {
         // import std.algorithm : joiner;
         // import std.conv : to;
         return UserResponse("", validation.violations.joiner("; ").to!string);
@@ -173,11 +171,9 @@ class ManageUsersUseCase : UIMUseCase {
 
     // Validate against policy
     auto policy = policyRepo.findActiveForTenant(user.tenantId);
-    if (policy != typeof(policy).init)
-    {
+    if (policy != typeof(policy).init) {
       auto validation = validatePassword(newPassword, policy);
-      if (!validation.valid)
-      {
+      if (!validation.valid) {
         // import std.algorithm : joiner;
         // import std.conv : to;
         return validation.violations.joiner("; ").to!string;

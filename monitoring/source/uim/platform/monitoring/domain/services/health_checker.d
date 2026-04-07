@@ -32,8 +32,7 @@ struct HealthChecker {
     if (check.intervalSeconds > 86400)
       errors ~= "Interval must not exceed 86400 seconds (24 hours)";
 
-    final switch (check.checkType)
-    {
+    final switch (check.checkType) {
     case CheckType.availability:
       if (check.url.length == 0)
         errors ~= "URL is required for availability checks";

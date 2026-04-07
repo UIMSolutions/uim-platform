@@ -130,8 +130,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   }
 
   private EnvironmentType parseEnvironmentType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "cloudFoundry":
       return EnvironmentType.cloudFoundry;
     case "kyma":

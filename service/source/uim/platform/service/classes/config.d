@@ -39,18 +39,15 @@ class UIMConfig : IUIMConfig {
   }
 
   bool initialize(Json[string] initData = null) {
-    if (initData.hasKey("serviceName") && initData.isString("serviceName"))
-    {
+    if (initData.hasKey("serviceName") && initData.isString("serviceName")) {
       serviceName(initData.getString("serviceName"));
     }
 
-    if (initData.hasKey("serviceVersion") && initData.isString("serviceVersion"))
-    {
+    if (initData.hasKey("serviceVersion") && initData.isString("serviceVersion")) {
       serviceVersion(initData.getString("serviceVersion"));
     }
 
-    if (initData.hasKey("host") && initData.isString("host"))
-    {
+    if (initData.hasKey("host") && initData.isString("host")) {
       host(initData.getString("host"));
     }
 
@@ -58,17 +55,14 @@ class UIMConfig : IUIMConfig {
     basePath(initData.getString("basePath", ""));
 
     requireAuthToken(initData.getBoolean("requireAuthToken", false));
-    if (requireAuthToken)
-    {
+    if (requireAuthToken) {
       authToken(initData.getString("authToken", ""));
     }
 
-    if (initData.hasKey("customHeaders") && initData["customHeaders"].isObject)
-    {
+    if (initData.hasKey("customHeaders") && initData["customHeaders"].isObject) {
       Json[string] headers = initData["customHeaders"].toMap;
       string[string] custHeaders;
-      foreach (key, value; headers)
-      {
+      foreach (key, value; headers) {
         custHeaders[key] = headers.getString(key);
       }
       customHeaders(custHeaders);
@@ -196,38 +190,31 @@ class UIMConfig : IUIMConfig {
   * Throws an exception if validation fails.
   */
   void validate() {
-    if (serviceName.length == 0)
-    {
+    if (serviceName.length == 0) {
       throw new Exception("Service name cannot be empty");
     }
 
-    if (serviceVersion.length == 0)
-    {
+    if (serviceVersion.length == 0) {
       throw new Exception("Service version cannot be empty");
     }
 
-    if (host.length == 0)
-    {
+    if (host.length == 0) {
       throw new Exception("Host cannot be empty");
     }
 
-    if (port == 0)
-    {
+    if (port == 0) {
       throw new Exception("Port must be greater than zero");
     }
 
-    if (basePath.length == 0)
-    {
+    if (basePath.length == 0) {
       throw new Exception("Base path cannot be empty");
     }
 
-    if (!basePath.startsWith("/"))
-    {
+    if (!basePath.startsWith("/")) {
       throw new Exception("Base path must start with '/'");
     }
 
-    if (requireAuthToken && authToken.length == 0)
-    {
+    if (requireAuthToken && authToken.length == 0) {
       throw new Exception("Auth token is required when token authentication is enabled");
     }
 

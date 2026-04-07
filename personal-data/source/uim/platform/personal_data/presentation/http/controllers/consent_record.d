@@ -49,7 +49,7 @@ class ConsentRecordController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Consent record created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -66,7 +66,7 @@ class ConsentRecordController : SAPController {
             ConsentRecord[] consents;
             if (dataSubjectId.length > 0) {
                 consents = uc.listByDataSubject(dataSubjectId);
-            } else {
+            } ) {
                 consents = uc.list(tenantId);
             }
 
@@ -123,7 +123,7 @@ class ConsentRecordController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Consent withdrawn");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -141,7 +141,7 @@ class ConsentRecordController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Consent record deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

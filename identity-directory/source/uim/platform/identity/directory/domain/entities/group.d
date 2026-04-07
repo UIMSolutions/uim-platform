@@ -36,8 +36,7 @@ struct Group {
   /// Check if a user is a member.
   bool hasMember(string userId) const
   {
-    foreach (m; members)
-    {
+    foreach (m; members) {
       if (m.value == userId)
         return true;
     }

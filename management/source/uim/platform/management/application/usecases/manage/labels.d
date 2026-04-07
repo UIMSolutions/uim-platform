@@ -81,8 +81,7 @@ class ManageLabelsUseCase : UIMUseCase {
   }
 
   private LabeledResourceType parseResourceType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "globalAccount":
       return LabeledResourceType.globalAccount;
     case "directory":

@@ -115,8 +115,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
   }
 
   private static ChannelType parseChannelType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "webhook":
       return ChannelType.webhook;
     case "onPremise":
@@ -127,8 +126,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
   }
 
   private static ChannelState parseChannelState(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "inactive":
       return ChannelState.inactive;
     case "error":

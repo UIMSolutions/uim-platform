@@ -27,8 +27,7 @@ class AuditController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto events = useCase.listEvents(tenantId);
       auto response = Json.emptyObject;
@@ -36,8 +35,7 @@ class AuditController {
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -45,8 +43,7 @@ class AuditController {
   }
 
   private void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto actorId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByActor(actorId);
       auto response = Json.emptyObject;
@@ -54,8 +51,7 @@ class AuditController {
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -63,8 +59,7 @@ class AuditController {
   }
 
   private void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto targetId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByTarget(targetId);
       auto response = Json.emptyObject;
@@ -72,8 +67,7 @@ class AuditController {
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

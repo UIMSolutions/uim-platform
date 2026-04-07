@@ -31,8 +31,7 @@ class WorkspaceController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -56,8 +55,7 @@ class WorkspaceController {
       r.settings = parseWorkspaceSettings(j);
 
       auto result = useCase.createWorkspace(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -67,15 +65,13 @@ class WorkspaceController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = Json.emptyArray;
@@ -86,41 +82,35 @@ class WorkspaceController {
       resp["totalCount"] = Json(cast(long) workspaces.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       // Check for sub-resources
-      if (id == "members")
-      {
+      if (id == "members") {
         handleAddMember(req, res);
         return;
       }
 
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto ws = useCase.getWorkspace(id, tenantId);
-      if (ws is null)
-      {
+      if (ws is null) {
         writeError(res, 404, "Workspace not found");
         return;
       }
       res.writeJsonBody(serializeWorkspace(*ws), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateWorkspaceRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -131,8 +121,7 @@ class WorkspaceController {
       r.settings = parseWorkspaceSettings(j);
 
       auto result = useCase.updateWorkspace(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -142,29 +131,25 @@ class WorkspaceController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteWorkspace(id, tenantId);
       res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = AddMemberRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -183,8 +168,7 @@ class WorkspaceController {
         r.role = MemberRole.contributor;
 
       auto result = useCase.addMember(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("member_added");
         res.writeJsonBody(resp, 200);
@@ -194,8 +178,7 @@ class WorkspaceController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

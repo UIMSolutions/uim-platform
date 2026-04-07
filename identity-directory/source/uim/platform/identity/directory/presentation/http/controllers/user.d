@@ -32,8 +32,7 @@ class UserController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateUserRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("externalId"), j.getString("userName"), parseUserName(j),
@@ -46,8 +45,7 @@ class UserController {
       auto result = useCase.createUser(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["id"] = Json(result.userId);
         response["schemas"] = Json.emptyArray;
         response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
@@ -62,15 +60,13 @@ class UserController {
         res.writeJsonBody(response, 409);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto users = useCase.listUsers(tenantId);
       auto response = Json.emptyObject;
@@ -82,19 +78,16 @@ class UserController {
       response["Resources"] = serializeUsers(users);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto userId = extractIdFromPath(req.requestURI);
       auto user = useCase.getUser(userId);
-      if (user == User.init)
-      {
+      if (user == User.init) {
         writeScimError(res, 404, "User not found");
         return;
       }
@@ -102,15 +95,13 @@ class UserController {
       auto response = serializeUser(user);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto userId = extractIdFromPath(req.requestURI);
       auto j = req.json;
 
@@ -122,8 +113,7 @@ class UserController {
           );
 
       auto error = useCase.updateUser(updateReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 404, error);
       }
       else
@@ -133,19 +123,16 @@ class UserController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto userId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteUser(userId);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 404, error);
       }
       else
@@ -153,20 +140,17 @@ class UserController {
         res.writeBody("", 204);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto error = useCase.changePassword(j.getString("userId"),
           j.getString("currentPassword"), j.getString("newPassword"));
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 400, error);
       }
       else
@@ -176,15 +160,13 @@ class UserController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto filter = req.params.get("filter", "");
       auto users = useCase.searchUsers(tenantId, filter);
@@ -195,8 +177,7 @@ class UserController {
       response["Resources"] = serializeUsers(users);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }

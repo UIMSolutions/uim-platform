@@ -38,8 +38,7 @@ class MemorySessionRepository : SessionRepository {
   }
 
   void revoke(SessionId id) {
-    if (existsById(id))
-    {
+    if (existsById(id)) {
       auto p = store[id];
       p.revoked = true;
       store[id] = p;
@@ -47,10 +46,8 @@ class MemorySessionRepository : SessionRepository {
   }
 
   void revokeAllForUser(UserId userId) {
-    foreach (s; store.byValue())
-    {
-      if (s.userId == userId)
-      {
+    foreach (s; store.byValue()) {
+      if (s.userId == userId) {
         auto updated = s;
         updated.revoked = true;
         store[s.id] = updated;
@@ -61,8 +58,7 @@ class MemorySessionRepository : SessionRepository {
   void removeExpired() {
     auto now = Clock.currStdTime();
     SessionId[] toRemove;
-    foreach (id, s; store)
-    {
+    foreach (id, s; store) {
       if (s.expiresAt < now)
         toRemove ~= id;
     }

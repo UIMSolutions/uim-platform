@@ -48,7 +48,7 @@ class TraceController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } else {
+      } ) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

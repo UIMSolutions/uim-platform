@@ -32,8 +32,7 @@ class ApiRuleController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateApiRuleRequest r;
       r.namespaceId = j.getString("namespaceId");
@@ -58,8 +57,7 @@ class ApiRuleController {
       r.rules = parseRuleEntries(j);
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -67,15 +65,13 @@ class ApiRuleController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto nsId = req.params.get("namespaceId");
       auto envId = req.params.get("environmentId");
 
@@ -96,33 +92,28 @@ class ApiRuleController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getApiRule(id);
-      if (rule.id.length == 0)
-      {
+      if (rule.id.length == 0) {
         writeError(res, 404, "API rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateApiRuleRequest r;
@@ -145,15 +136,13 @@ class ApiRuleController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteApiRule(id);
       if (result.success)
@@ -161,8 +150,7 @@ class ApiRuleController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -172,8 +160,7 @@ class ApiRuleController {
     auto v = "rules" in j;
     if (v is null || (*v).type != Json.Type.array)
       return entries;
-    foreach (item; *v)
-    {
+    foreach (item; *v) {
       ApiRuleEntryDto entry;
       entry.path = item.getString("path");
       entry.methods = jsonStrArray(item, "methods");
@@ -207,8 +194,7 @@ class ApiRuleController {
     j["modifiedAt"] = Json(rule.modifiedAt);
 
     auto rulesArr = Json.emptyArray;
-    foreach (ref entry; rule.rules)
-    {
+    foreach (ref entry; rule.rules) {
       auto ej = Json.emptyObject;
       ej["path"] = Json(entry.path);
       ej["accessStrategy"] = Json(entry.accessStrategy.to!string);

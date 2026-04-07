@@ -32,8 +32,7 @@ class MetricDefinitionController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateMetricDefinitionRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class MetricDefinitionController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createDefinition(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class MetricDefinitionController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto defs = uc.listDefinitions(tenantId);
 
@@ -78,33 +74,28 @@ class MetricDefinitionController {
       resp["totalCount"] = Json(cast(long) defs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto d = uc.getDefinition(id);
-      if (d.id.length == 0)
-      {
+      if (d.id.length == 0) {
         writeError(res, 404, "Metric definition not found");
         return;
       }
       res.writeJsonBody(serializeDefinition(d), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateMetricDefinitionRequest r;
@@ -114,8 +105,7 @@ class MetricDefinitionController {
       r.isEnabled = j.getBoolean("isEnabled", true);
 
       auto result = uc.updateDefinition(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -125,19 +115,16 @@ class MetricDefinitionController {
         writeError(res, result.error == "Metric definition not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.removeDefinition(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -147,8 +134,7 @@ class MetricDefinitionController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

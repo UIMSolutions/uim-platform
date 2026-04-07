@@ -23,8 +23,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -32,8 +31,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByExternalId(TenantId tenantId, string externalId) {
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId == tenantId && u.externalId == externalId)
         return u;
     }
@@ -42,10 +40,8 @@ class MemoryUserRepository : UserRepository {
 
   User[] findByEmail(TenantId tenantId, string email) {
     User[] result;
-    foreach (u; store.byValue())
-    {
-      if (u.tenantId == tenantId)
-      {
+    foreach (u; store.byValue()) {
+      if (u.tenantId == tenantId) {
         foreach (e; u.emails)
         {
           if (e.value == email)
@@ -62,10 +58,8 @@ class MemoryUserRepository : UserRepository {
   User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
-    foreach (u; store.byValue())
-    {
-      if (u.tenantId == tenantId)
-      {
+    foreach (u; store.byValue()) {
+      if (u.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= u;
         idx++;
@@ -76,8 +70,7 @@ class MemoryUserRepository : UserRepository {
 
   User[] findByGroupId(GroupId groupId) {
     User[] result;
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.groupIds.canFind(groupId))
         result ~= u;
     }
@@ -88,8 +81,7 @@ class MemoryUserRepository : UserRepository {
     User[] result;
     auto lowerFilter = filter.toLower();
     uint idx;
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId != tenantId)
         continue;
 
@@ -115,8 +107,7 @@ class MemoryUserRepository : UserRepository {
         }
       }
 
-      if (matches)
-      {
+      if (matches) {
         if (idx >= offset && result.length < limit)
           result ~= u;
         idx++;
@@ -139,8 +130,7 @@ class MemoryUserRepository : UserRepository {
 
   ulong countByTenant(TenantId tenantId) {
     ulong count;
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId == tenantId)
         count++;
     }

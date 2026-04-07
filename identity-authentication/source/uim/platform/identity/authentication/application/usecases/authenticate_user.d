@@ -62,8 +62,7 @@ class AuthenticateUserUseCase : UIMUseCase {
     auto requiredMfa = requiredMfaForRisk(riskRules, user, riskCtx);
 
     // Check if MFA is required but not provided
-    if (requiredMfa != MfaType.none || user.hasMfa())
-    {
+    if (requiredMfa != MfaType.none || user.hasMfa()) {
       auto effectiveMfa = requiredMfa != MfaType.none ? requiredMfa : user.mfaType;
       if (req.mfaCode.length == 0)
         return AuthResult(false, "MFA code required", true, effectiveMfa);

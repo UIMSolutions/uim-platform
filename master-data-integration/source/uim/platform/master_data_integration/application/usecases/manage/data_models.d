@@ -94,8 +94,7 @@ class ManageDataModelsUseCase : UIMUseCase {
 
   private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {
     FieldDefinition[] result;
-    foreach (ref dto; dtos)
-    {
+    foreach (ref dto; dtos) {
       FieldDefinition fd;
       fd.name = dto.name;
       fd.displayName = dto.displayName;
@@ -112,8 +111,7 @@ class ManageDataModelsUseCase : UIMUseCase {
   }
 
   private FieldType parseFieldType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "string":
       return FieldType.string_;
     case "integer":
@@ -138,8 +136,7 @@ class ManageDataModelsUseCase : UIMUseCase {
   }
 
   private MasterDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "businessPartner":
       return MasterDataCategory.businessPartner;
     case "costCenter":

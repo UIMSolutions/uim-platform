@@ -32,8 +32,7 @@ class GroupController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto members = parseMembers(j);
       auto createReq = CreateGroupRequest(req.headers.get("X-Tenant-Id", ""),
@@ -43,8 +42,7 @@ class GroupController {
       auto result = useCase.createGroup(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["id"] = Json(result.groupId);
         response["schemas"] = Json.emptyArray;
         response["schemas"] ~= Json("urn:ietf:params:scim:schemas:core:2.0:Group");
@@ -55,15 +53,13 @@ class GroupController {
         writeScimError(res, 409, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
@@ -73,40 +69,34 @@ class GroupController {
       response["Resources"] = toJsonArray(groups);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto groupId = extractIdFromPath(req.requestURI);
       auto group = useCase.getGroup(groupId);
-      if (group == Group.init)
-      {
+      if (group == Group.init) {
         writeScimError(res, 404, "Group not found");
         return;
       }
       res.writeJsonBody(toJsonValue(group), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto groupId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateGroupRequest(groupId, j.getString("displayName"),
           j.getString("description"),);
       auto error = useCase.updateGroup(updateReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 404, error);
       }
       else
@@ -116,15 +106,13 @@ class GroupController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto groupId = extractIdFromPath(req.requestURI);
       auto error = useCase.deleteGroup(groupId);
       if (error.length > 0)
@@ -132,21 +120,18 @@ class GroupController {
       else
         res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto addReq = AddMemberRequest(j.getString("groupId"),
           j.getString("memberId"), j.getString("memberType"), j.getString("display"),);
       auto error = useCase.addMember(addReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 400, error);
       }
       else
@@ -156,20 +141,17 @@ class GroupController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }
 
   private void handleRemoveMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto removeReq = RemoveMemberRequest(j.getString("groupId"), j.getString("memberId"),);
       auto error = useCase.removeMember(removeReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         writeScimError(res, 400, error);
       }
       else
@@ -179,8 +161,7 @@ class GroupController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeScimError(res, 500, "Internal server error");
     }
   }

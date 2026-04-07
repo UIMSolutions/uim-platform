@@ -33,8 +33,7 @@ class CorsRuleController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateCorsRuleRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class CorsRuleController : SAPController {
       r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
       auto result = uc.createRule(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -57,15 +55,13 @@ class CorsRuleController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
       auto rules = uc.listRules(bucketId);
 
@@ -76,33 +72,28 @@ class CorsRuleController : SAPController {
       resp["totalCount"] = Json(cast(long) rules.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule is null || rule.id.length == 0)
-      {
+      if (rule is null || rule.id.length == 0) {
         writeError(res, 404, "CORS rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateCorsRuleRequest();
@@ -113,8 +104,7 @@ class CorsRuleController : SAPController {
       r.maxAgeSeconds = j.getInteger("maxAgeSeconds");
 
       auto result = uc.updateRule(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -124,19 +114,16 @@ class CorsRuleController : SAPController {
         writeError(res, result.error == "CORS rule not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -146,8 +133,7 @@ class CorsRuleController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -34,8 +34,7 @@ class ProvisioningJobController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -46,8 +45,7 @@ class ProvisioningJobController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createJob(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("scheduled");
@@ -56,15 +54,13 @@ class ProvisioningJobController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listJobs(tenantId);
 
@@ -77,39 +73,33 @@ class ProvisioningJobController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto job = uc.getJob(id, tenantId);
-      if (job is null)
-      {
+      if (job is null) {
         writeError(res, 404, "Provisioning job not found");
         return;
       }
       res.writeJsonBody(serializeJob(*job), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.runJob(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -118,15 +108,13 @@ class ProvisioningJobController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -137,8 +125,7 @@ class ProvisioningJobController {
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.createAndRunJob(r);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -147,20 +134,17 @@ class ProvisioningJobController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.cancelJob(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("cancelled");
@@ -169,20 +153,17 @@ class ProvisioningJobController {
       else
         writeError(res, 400, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = uc.deleteJob(id, tenantId);
-      if (result.isSuccess)
-      {
+      if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -193,8 +174,7 @@ class ProvisioningJobController {
         writeError(res, status, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -30,8 +30,7 @@ class ShellPluginController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateShellPluginRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -44,8 +43,7 @@ class ShellPluginController {
       r.hookPoints = jsonStrArray(j, "hookPoints");
 
       auto result = useCase.createPlugin(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -55,15 +53,13 @@ class ShellPluginController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto plugins = useCase.listPlugins(tenantId);
       auto arr = Json.emptyArray;
@@ -74,34 +70,29 @@ class ShellPluginController {
       resp["totalCount"] = Json(cast(long) plugins.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto p = useCase.getPlugin(id, tenantId);
-      if (p is null)
-      {
+      if (p is null) {
         writeError(res, 404, "Plugin not found");
         return;
       }
       res.writeJsonBody(serializeShellPlugin(*p), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateShellPluginRequest();
@@ -117,15 +108,13 @@ class ShellPluginController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deletePlugin(id, tenantId);
@@ -134,8 +123,7 @@ class ShellPluginController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

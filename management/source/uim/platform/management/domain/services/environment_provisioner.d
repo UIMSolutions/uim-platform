@@ -18,18 +18,15 @@ class EnvironmentProvisioner {
     v.valid = true;
 
     // Subaccount must be active
-    if (subaccount.status != SubaccountStatus.active)
-    {
+    if (subaccount.status != SubaccountStatus.active) {
       v.valid = false;
       v.reason = "Subaccount must be in active status to provision environments";
       return v;
     }
 
     // Check for duplicate environment types (only one CF org per subaccount)
-    if (envType == EnvironmentType.cloudFoundry)
-    {
-      foreach (ref inst; existingInstances)
-      {
+    if (envType == EnvironmentType.cloudFoundry) {
+      foreach (ref inst; existingInstances) {
         if (inst.environmentType == EnvironmentType.cloudFoundry
             && inst.status != EnvironmentStatus.deleting && inst.status != EnvironmentStatus.error)
         {
@@ -41,8 +38,7 @@ class EnvironmentProvisioner {
     }
 
     // Validate plan name is not empty
-    if (planName.length == 0)
-    {
+    if (planName.length == 0) {
       v.valid = false;
       v.reason = "Plan name is required for environment provisioning";
       return v;

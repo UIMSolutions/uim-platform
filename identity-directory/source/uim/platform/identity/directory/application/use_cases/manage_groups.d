@@ -45,10 +45,8 @@ class ManageGroupsUseCase : UIMUseCase {
     groupRepo.save(group);
 
     // Update user groupIds for initial members
-    foreach (m; req.members)
-    {
-      if (m.type == "User")
-      {
+    foreach (m; req.members) {
+      if (m.type == "User") {
         auto user = userRepo.findById(m.value);
         if (user != User.init)
         {
@@ -111,11 +109,9 @@ class ManageGroupsUseCase : UIMUseCase {
     groupRepo.update(group);
 
     // Update user's groupIds
-    if (req.memberType == "User")
-    {
+    if (req.memberType == "User") {
       auto user = userRepo.findById(req.memberId);
-      if (user != User.init)
-      {
+      if (user != User.init) {
         user.groupIds ~= req.groupId;
         userRepo.update(user);
       }
@@ -144,8 +140,7 @@ class ManageGroupsUseCase : UIMUseCase {
 
     // Update user's groupIds
     auto user = userRepo.findById(req.memberId);
-    if (user != User.init)
-    {
+    if (user != User.init) {
       user.groupIds = user.groupIds.filter!(g => g != req.groupId).array;
       userRepo.update(user);
     }
@@ -164,10 +159,8 @@ class ManageGroupsUseCase : UIMUseCase {
       return "Group not found";
 
     // Remove group from all member users
-    foreach (m; group.members)
-    {
-      if (m.type == "User")
-      {
+    foreach (m; group.members) {
+      if (m.type == "User") {
         auto user = userRepo.findById(m.value);
         if (user != User.init)
         {

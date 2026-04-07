@@ -41,8 +41,7 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
   }
 
   MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
-    foreach (ref obj; store.byValue())
-    {
+    foreach (ref obj; store.byValue()) {
       if (obj.tenantId == tenantId && obj.globalId == globalId)
         return obj;
     }

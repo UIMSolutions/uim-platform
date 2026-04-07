@@ -50,7 +50,7 @@ class DataContextController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data context created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -123,7 +123,7 @@ class DataContextController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data context deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -139,7 +139,7 @@ class DataContextController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Personal data contexts deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

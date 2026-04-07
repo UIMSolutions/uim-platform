@@ -29,8 +29,7 @@ class ApiClientController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), jsonStrArray(j,
@@ -39,8 +38,7 @@ class ApiClientController {
       auto result = useCase.createClient(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["clientId"] = Json(result.clientId);
         response["clientSecret"] = Json(result.clientSecret);
         res.writeJsonBody(response, 201);
@@ -51,8 +49,7 @@ class ApiClientController {
         res.writeJsonBody(response, 400);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -60,8 +57,7 @@ class ApiClientController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto clients = useCase.listClients(tenantId);
       auto response = Json.emptyObject;
@@ -69,8 +65,7 @@ class ApiClientController {
 
       // Serialize without clientSecret
       auto arr = Json.emptyArray;
-      foreach (c; clients)
-      {
+      foreach (c; clients) {
         auto j = toJsonValue(c);
         j.remove("clientSecret");
         arr ~= j;
@@ -78,8 +73,7 @@ class ApiClientController {
       response["resources"] = arr;
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -87,12 +81,10 @@ class ApiClientController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto client = useCase.getClient(clientId);
-      if (client == ApiClient.init)
-      {
+      if (client == ApiClient.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("API client not found");
         res.writeJsonBody(errRes, 404);
@@ -102,8 +94,7 @@ class ApiClientController {
       response.remove("clientSecret");
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -111,12 +102,10 @@ class ApiClientController {
   }
 
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto clientId = extractIdFromPath(req.requestURI);
       auto error = useCase.revokeClient(clientId);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 404);
@@ -128,8 +117,7 @@ class ApiClientController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

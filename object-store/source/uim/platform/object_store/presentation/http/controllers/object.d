@@ -41,8 +41,7 @@ class ObjectController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateObjectRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,8 +54,7 @@ class ObjectController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createObject(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -66,15 +64,13 @@ class ObjectController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
       auto path = req.requestURI;
       auto bucketId = extractBucketIdFromPath(path);
@@ -95,37 +91,32 @@ class ObjectController : SAPController {
       resp["totalCount"] = Json(cast(long) objects.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       // Check if this is a versions request
       if (id == "versions" || id == "copy")
         return;
 
       auto obj = uc.getObject(id);
-      if (obj is null || obj.id.length == 0)
-      {
+      if (obj is null || obj.id.length == 0) {
         writeError(res, 404, "Object not found");
         return;
       }
       res.writeJsonBody(serializeObject(obj), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateObjectMetadataRequest();
@@ -134,8 +125,7 @@ class ObjectController : SAPController {
       r.storageClass = j.getString("storageClass");
 
       auto result = uc.updateObjectMetadata(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -145,19 +135,16 @@ class ObjectController : SAPController {
         writeError(res, result.error == "Object not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteObject(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -167,15 +154,13 @@ class ObjectController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CopyObjectRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -186,8 +171,7 @@ class ObjectController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.copyObject(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -197,15 +181,13 @@ class ObjectController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // /api/v1/objects/{objectId}/versions
       auto path = req.requestURI;
       auto objectId = extractObjectIdFromVersionsPath(path);
@@ -221,8 +203,7 @@ class ObjectController : SAPController {
       resp["totalCount"] = Json(cast(long) versions.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

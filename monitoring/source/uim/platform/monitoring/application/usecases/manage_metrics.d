@@ -118,8 +118,7 @@ class ManageMetricsUseCase : UIMUseCase {
 
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
-    foreach (ref r; req.metrics)
-    {
+    foreach (ref r; req.metrics) {
       // import std.uuid : randomUUID;
       Metric m;
       m.id = randomUUID().toString();
@@ -170,8 +169,7 @@ class ManageMetricsUseCase : UIMUseCase {
     s.minValue = metrics[0].value_;
     s.maxValue = metrics[0].value_;
     double sum = 0;
-    foreach (ref m; metrics)
-    {
+    foreach (ref m; metrics) {
       if (m.value_ < s.minValue)
         s.minValue = m.value_;
       if (m.value_ > s.maxValue)
@@ -189,8 +187,7 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   private static MetricCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "cpu":
       return MetricCategory.cpu;
     case "memory":
@@ -217,8 +214,7 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   private static MetricUnit parseUnit(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "percent":
       return MetricUnit.percent;
     case "bytes":
@@ -245,8 +241,7 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   private static AggregationMethod parseAggregation(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "sum":
       return AggregationMethod.sum;
     case "min":

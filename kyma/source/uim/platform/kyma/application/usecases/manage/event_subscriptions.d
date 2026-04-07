@@ -132,8 +132,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
   }
 
   private EventTypeEncoding parseTypeEncoding(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "exact":
       return EventTypeEncoding.exact;
     case "prefix":

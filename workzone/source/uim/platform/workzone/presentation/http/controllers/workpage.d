@@ -30,8 +30,7 @@ class WorkpageController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreateWorkpageRequest();
       r.workspaceId = j.getString("workspaceId");
@@ -42,8 +41,7 @@ class WorkpageController {
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createWorkpage(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -53,15 +51,13 @@ class WorkpageController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(workspaceId, tenantId);
@@ -73,34 +69,29 @@ class WorkpageController {
       resp["totalCount"] = Json(cast(long) pages.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto page = useCase.getWorkpage(id, tenantId);
-      if (page is null)
-      {
+      if (page is null) {
         writeError(res, 404, "Page not found");
         return;
       }
       res.writeJsonBody(serializePage(*page), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = UpdateWorkpageRequest();
       r.id = extractIdFromPath(req.requestURI);
@@ -111,8 +102,7 @@ class WorkpageController {
       r.visible = j.getBoolean("visible", true);
 
       auto result = useCase.updateWorkpage(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
@@ -122,22 +112,19 @@ class WorkpageController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteWorkpage(id, tenantId);
       res.writeBody("", 204);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

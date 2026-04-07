@@ -37,8 +37,7 @@ class CheckController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateHealthCheckRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -59,8 +58,7 @@ class CheckController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createCheck(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -70,15 +68,13 @@ class CheckController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto checks = uc.listChecks(tenantId);
 
@@ -91,33 +87,28 @@ class CheckController : SAPController {
       resp["totalCount"] = Json(cast(long) checks.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto c = uc.getCheck(id);
-      if (c.id.length == 0)
-      {
+      if (c.id.length == 0) {
         writeError(res, 404, "Health check not found");
         return;
       }
       res.writeJsonBody(serializeCheck(c), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateHealthCheckRequest r;
@@ -131,8 +122,7 @@ class CheckController : SAPController {
       r.thresholdOperator = j.getString("thresholdOperator");
 
       auto result = uc.updateCheck(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -142,19 +132,16 @@ class CheckController : SAPController {
         writeError(res, result.error == "Health check not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteCheck(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -164,15 +151,13 @@ class CheckController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       RecordCheckResultRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -185,8 +170,7 @@ class CheckController : SAPController {
       r.httpStatusCode = j.getInteger("httpStatusCode");
 
       auto result = uc.recordResult(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -196,15 +180,13 @@ class CheckController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto checkId = extractIdFromPath(req.requestURI);
       auto results = uc.getResults(tenantId, checkId);
@@ -218,8 +200,7 @@ class CheckController : SAPController {
       resp["totalCount"] = Json(cast(long) results.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

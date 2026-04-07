@@ -16,7 +16,7 @@ import uim.platform.identity_authentication.infrastructure.container;
 
 version (unittest) {
 }
-else {
+) {
   void main() {
     // Load configuration
     auto config = loadConfig();

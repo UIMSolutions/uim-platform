@@ -30,8 +30,7 @@ class PageTemplateController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto r = CreatePageTemplateRequest();
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -42,8 +41,7 @@ class PageTemplateController {
       r.isPublic = jsonBool(j, "isPublic");
 
       auto result = useCase.createPageTemplate(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -53,15 +51,13 @@ class PageTemplateController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto templates = useCase.listPageTemplates(tenantId);
       auto arr = Json.emptyArray;
@@ -72,34 +68,29 @@ class PageTemplateController {
       resp["totalCount"] = Json(cast(long) templates.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto t = useCase.getPageTemplate(id, tenantId);
-      if (t is null)
-      {
+      if (t is null) {
         writeError(res, 404, "Page template not found");
         return;
       }
       res.writeJsonBody(serializePageTemplate(*t), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdatePageTemplateRequest();
@@ -116,15 +107,13 @@ class PageTemplateController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto result = useCase.deletePageTemplate(id, tenantId);
@@ -133,8 +122,7 @@ class PageTemplateController {
       else
         writeError(res, 404, result.error);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -58,7 +58,7 @@ class ConfigurationController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Configuration updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

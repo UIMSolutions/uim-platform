@@ -32,8 +32,7 @@ class MonitoringController {
   }
 
   private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listJobSummaries(tenantId);
 
@@ -46,34 +45,29 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getJobSummary(id, tenantId);
-      if (summary.jobId.length == 0)
-      {
+      if (summary.jobId.length == 0) {
         writeError(res, 404, "Job not found");
         return;
       }
       res.writeJsonBody(serializeJobSummary(summary), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto jobId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = uc.getJobLogs(jobId, tenantId);
@@ -87,15 +81,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto items = uc.listProvisionedEntities(tenantId);
 
@@ -108,15 +100,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) items.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getPipelineSummary(tenantId);
 
@@ -132,8 +122,7 @@ class MonitoringController {
       j["totalProvisionedEntities"] = Json(summary.totalProvisionedEntities);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

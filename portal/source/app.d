@@ -18,7 +18,7 @@ import uim.platform.portal;
 
 version (unittest) {
 }
-else {
+) {
   void main() {
     // Load configuration
     auto config = loadConfig();

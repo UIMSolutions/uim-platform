@@ -36,8 +36,7 @@ class ServicePlanController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateServicePlanRequest r;
       r.serviceName = j.getString("serviceName");
@@ -57,8 +56,7 @@ class ServicePlanController : SAPController {
       r.metadata = jsonStrMap(j, "metadata");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -71,8 +69,7 @@ class ServicePlanController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto serviceName = req.params.get("serviceName");
       auto category = req.params.get("category");
       auto region = req.params.get("region");
@@ -101,12 +98,10 @@ class ServicePlanController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto p = uc.getById(id);
-      if (p.id.length == 0)
-      {
+      if (p.id.length == 0) {
         writeError(res, 404, "Service plan not found");
         return;
       }
@@ -117,8 +112,7 @@ class ServicePlanController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateServicePlanRequest r;
@@ -141,8 +135,7 @@ class ServicePlanController : SAPController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

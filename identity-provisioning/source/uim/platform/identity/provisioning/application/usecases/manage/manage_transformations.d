@@ -78,8 +78,7 @@ class ManageTransformationsUseCase : UIMUseCase {
     auto updated = *existing;
     if (req.name.length > 0)
       updated.name = req.name;
-    if (req.mappingRules.length > 0)
-    {
+    if (req.mappingRules.length > 0) {
       if (!engine.validateRules(req.mappingRules))
         return CommandResult("", "Invalid mapping rules format");
       updated.mappingRules = req.mappingRules;

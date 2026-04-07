@@ -104,8 +104,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
   }
 
   private KymaPlan parsePlan(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "azure":
       return KymaPlan.azure;
     case "aws":

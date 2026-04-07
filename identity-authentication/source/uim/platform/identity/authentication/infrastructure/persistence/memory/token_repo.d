@@ -24,8 +24,7 @@ class MemoryTokenRepository : TokenRepository {
   }
 
   Token findByValue(string tokenValue) {
-    foreach (t; store.byValue())
-    {
+    foreach (t; store.byValue()) {
       if (t.tokenValue == tokenValue)
         return t;
     }
@@ -34,8 +33,7 @@ class MemoryTokenRepository : TokenRepository {
 
   Token[] findByUser(UserId userId) {
     Token[] result;
-    foreach (t; store.byValue())
-    {
+    foreach (t; store.byValue()) {
       if (t.userId == userId)
         result ~= t;
     }
@@ -47,18 +45,15 @@ class MemoryTokenRepository : TokenRepository {
   }
 
   void revoke(TokenId id) {
-    if (auto p = id in store)
-    {
+    if (auto p = id in store) {
       p.revoked = true;
       store[id] = *p;
     }
   }
 
   void revokeAllForUser(UserId userId) {
-    foreach (ref t; store.byValue())
-    {
-      if (t.userId == userId)
-      {
+    foreach (ref t; store.byValue()) {
+      if (t.userId == userId) {
         auto updated = t;
         updated.revoked = true;
         store[t.id] = updated;

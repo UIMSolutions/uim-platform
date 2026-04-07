@@ -50,7 +50,7 @@ class NotificationController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Notification created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -133,7 +133,7 @@ class NotificationController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Notification updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -152,7 +152,7 @@ class NotificationController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Notification deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

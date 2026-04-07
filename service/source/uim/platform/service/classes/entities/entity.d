@@ -18,8 +18,7 @@ class UIMEntity {
   }
 
   this(Json initData) {
-    if (initData.isObject)
-    {
+    if (initData.isObject) {
       initialize(initData.toMap);
     }
   }
@@ -30,14 +29,12 @@ class UIMEntity {
 
   bool initialize(Json[string] initData = null) {
     createdAt = Clock.currTime();
-    if (initData.hasKey("created_at"))
-    {
+    if (initData.hasKey("created_at")) {
       createdAt = SysTime.fromISOExtString(initData["created_at"].getString);
     }
 
     updatedAt = createdAt;
-    if (initData.hasKey("updated_at"))
-    {
+    if (initData.hasKey("updated_at")) {
       updatedAt = SysTime.fromISOExtString(initData["updated_at"].getString);
     }
 

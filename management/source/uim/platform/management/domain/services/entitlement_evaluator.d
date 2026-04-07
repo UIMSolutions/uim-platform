@@ -21,15 +21,13 @@ class EntitlementEvaluator {
     QuotaValidation v;
     v.valid = true;
 
-    if (requestedQuota <= 0)
-    {
+    if (requestedQuota <= 0) {
       v.valid = false;
       v.reason = "Requested quota must be greater than zero";
       return v;
     }
 
-    if (!unlimited && (currentlyAssigned + requestedQuota) > maxAvailable)
-    {
+    if (!unlimited && (currentlyAssigned + requestedQuota) > maxAvailable) {
       v.valid = false;
       // import std.conv : to;
 

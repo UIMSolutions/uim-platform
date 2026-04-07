@@ -31,8 +31,7 @@ class MonitoringController {
   }
 
   private void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = useCase.getAllLogs(tenantId);
 
@@ -45,15 +44,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto workflowId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = useCase.getWorkflowLogs(workflowId, tenantId);
@@ -67,15 +64,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto stepId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = useCase.getStepLogs(stepId, tenantId);
@@ -89,15 +84,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto logs = useCase.getFailures(tenantId);
 
@@ -110,15 +103,13 @@ class MonitoringController {
       resp["totalCount"] = Json(cast(long) logs.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto workflowId = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = useCase.getWorkflowSummary(workflowId, tenantId);
@@ -136,8 +127,7 @@ class MonitoringController {
       j["totalLogEntries"] = Json(summary.totalLogEntries);
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

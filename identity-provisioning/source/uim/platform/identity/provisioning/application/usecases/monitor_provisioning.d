@@ -103,8 +103,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
 
     auto jobs = jobRepo.findByTenant(tenantId);
     s.totalJobs = cast(int) jobs.length;
-    foreach (ref j; jobs)
-    {
+    foreach (ref j; jobs) {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
       else if (j.status == JobStatus.failed)

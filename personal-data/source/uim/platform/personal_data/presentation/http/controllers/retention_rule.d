@@ -48,7 +48,7 @@ class RetentionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Retention rule created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -113,7 +113,7 @@ class RetentionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Retention rule updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -131,7 +131,7 @@ class RetentionRuleController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Retention rule deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

@@ -32,8 +32,7 @@ class AlertRuleController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateAlertRuleRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -52,8 +51,7 @@ class AlertRuleController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createRule(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -63,15 +61,13 @@ class AlertRuleController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto rules = uc.listRules(tenantId);
 
@@ -84,33 +80,28 @@ class AlertRuleController {
       resp["totalCount"] = Json(cast(long) rules.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto r = uc.getRule(id);
-      if (r.id.length == 0)
-      {
+      if (r.id.length == 0) {
         writeError(res, 404, "Alert rule not found");
         return;
       }
       res.writeJsonBody(serializeRule(r), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateAlertRuleRequest r;
@@ -124,8 +115,7 @@ class AlertRuleController {
       r.channelIds = jsonStrArray(j, "channelIds");
 
       auto result = uc.updateRule(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -135,19 +125,16 @@ class AlertRuleController {
         writeError(res, result.error == "Alert rule not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -157,8 +144,7 @@ class AlertRuleController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

@@ -50,7 +50,7 @@ class MenuItemController : SAPController {
         auto response = Json.emptyObject;
         response["id"] = Json(result.menuItemId);
         res.writeJsonBody(response, 201);
-      } else {
+      } ) {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {

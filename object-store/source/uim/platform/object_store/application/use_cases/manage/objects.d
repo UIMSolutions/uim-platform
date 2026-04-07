@@ -66,8 +66,7 @@ class ManageObjectsUseCase : UIMUseCase {
     obj.updatedAt = ts;
 
     // Create initial version if versioning is enabled
-    if (bucket.versioningEnabled)
-    {
+    if (bucket.versioningEnabled) {
       auto versionId = randomUUID().toString();
       auto ver = new ObjectVersion();
       ver.id = versionId;
@@ -141,16 +140,14 @@ class ManageObjectsUseCase : UIMUseCase {
     auto bucket = bucketRepo.findById(obj.bucketId);
 
     // If versioning enabled, add a delete marker instead of removing
-    if (bucket !is null && bucket.versioningEnabled)
-    {
+    if (bucket !is null && bucket.versioningEnabled) {
       // import std.uuid : randomUUID;
       auto versionId = randomUUID().toString();
       auto ts = currentTimestamp();
 
       // Mark current latest as not latest
       auto currentLatest = versionRepo.findLatest(id);
-      if (currentLatest !is null && currentLatest.id.length > 0)
-      {
+      if (currentLatest !is null && currentLatest.id.length > 0) {
         currentLatest.isLatest = false;
         versionRepo.save(currentLatest);
       }
@@ -178,8 +175,7 @@ class ManageObjectsUseCase : UIMUseCase {
     }
 
     // Update bucket counters
-    if (bucket !is null)
-    {
+    if (bucket !is null) {
       bucket.objectCount = bucket.objectCount > 0 ? bucket.objectCount - 1 : 0;
       bucket.usedBytes = bucket.usedBytes > obj.size ? bucket.usedBytes - obj.size : 0;
       bucket.updatedAt = currentTimestamp();

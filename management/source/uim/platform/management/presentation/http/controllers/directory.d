@@ -36,8 +36,7 @@ class DirectoryController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateDirectoryRequest r;
       r.globalAccountId = j.getString("globalAccountId");
@@ -52,8 +51,7 @@ class DirectoryController : SAPController {
       r.customProperties = jsonStrMap(j, "customProperties");
 
       auto result = uc.create(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -66,8 +64,7 @@ class DirectoryController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto gaId = req.params.get("globalAccountId");
       auto parentId = req.params.get("parentDirectoryId");
 
@@ -91,12 +88,10 @@ class DirectoryController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto d = uc.getById(id);
-      if (d.id.length == 0)
-      {
+      if (d.id.length == 0) {
         writeError(res, 404, "Directory not found");
         return;
       }
@@ -107,8 +102,7 @@ class DirectoryController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
       UpdateDirectoryRequest r;
@@ -128,8 +122,7 @@ class DirectoryController : SAPController {
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractId(req.requestURI);
       auto result = uc.remove(id);
       if (result.success)

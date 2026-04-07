@@ -83,8 +83,7 @@ class ManagePagesUseCase : UIMUseCase {
 
     // Remove from site
     auto site = siteRepo.findById(siteId);
-    if (site != Site.init)
-    {
+    if (site != Site.init) {
       site.pageIds = site.pageIds.filter!(p => p != pageId).array;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);

@@ -35,8 +35,7 @@ class StepController {
   }
 
   private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto workflowId = req.headers.get("X-Workflow-Id", "");
       auto steps = useCase.listSteps(workflowId, tenantId);
@@ -50,34 +49,29 @@ class StepController {
       resp["totalCount"] = Json(cast(long) steps.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto step = useCase.getStep(id, tenantId);
-      if (step is null)
-      {
+      if (step is null) {
         writeError(res, 404, "Step not found");
         return;
       }
       res.writeJsonBody(serializeStep(*step), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto userId = req.headers.get("X-User-Id", "");
       auto tasks = useCase.getMyTasks(tenantId, userId);
@@ -91,22 +85,19 @@ class StepController {
       resp["totalCount"] = Json(cast(long) tasks.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto userId = req.headers.get("X-User-Id", "");
 
       auto result = useCase.startStep(id, tenantId, userId);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("inProgress");
@@ -117,15 +108,13 @@ class StepController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = CompleteStepRequest();
@@ -135,8 +124,7 @@ class StepController {
       r.result = j.getString("result");
 
       auto result = useCase.completeStep(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
@@ -147,15 +135,13 @@ class StepController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleFail(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = FailStepRequest();
@@ -165,8 +151,7 @@ class StepController {
       r.errorMessage = j.getString("errorMessage");
 
       auto result = useCase.failStep(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("failed");
@@ -177,15 +162,13 @@ class StepController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleSkip(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = SkipStepRequest();
@@ -195,8 +178,7 @@ class StepController {
       r.reason = j.getString("reason");
 
       auto result = useCase.skipStep(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         resp["status"] = Json("skipped");
@@ -207,15 +189,13 @@ class StepController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = AssignStepRequest();
@@ -225,8 +205,7 @@ class StepController {
       r.assignedRole = j.getString("assignedRole");
 
       auto result = useCase.assignStep(r);
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -236,8 +215,7 @@ class StepController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

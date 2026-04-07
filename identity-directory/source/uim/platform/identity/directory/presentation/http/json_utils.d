@@ -21,27 +21,23 @@ Json toJsonValue(T)(T val) {
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
         j[name] = Json(cast(long) val.tupleof[i]);
-      else static if (is(FT == string[]))
-      {
+      else static if (is(FT == string[])) {
         auto arr = Json.emptyArray;
         foreach (s; val.tupleof[i])
           arr ~= Json(s);
         j[name] = arr;
       }
-      else static if (is(FT == enum))
-      {
+      else static if (is(FT == enum)) {
         // import std.conv : to;
         j[name] = Json(val.tupleof[i].to!string);
       }
-      else static if (is(FT == string[string]))
-      {
+      else static if (is(FT == string[string])) {
         auto obj = Json.emptyObject;
         foreach (k, v; val.tupleof[i])
           obj[k] = Json(v);
         j[name] = obj;
       }
-      else static if (isArray!FT && !is(FT == string))
-      {
+      else static if (isArray!FT && !is(FT == string)) {
         auto arr = Json.emptyArray;
         foreach (item; val.tupleof[i])
           arr ~= toJsonValue(item);
@@ -74,8 +70,7 @@ string jsonStr(Json j, string key) {
 bool jsonBool(Json j, string key, bool default_ = false) {
   if (j.type == Json.Type.object) {
     auto val = key in j;
-    if (val !is null)
-    {
+    if (val !is null) {
       if ((*val).isBoolean)
         return (*val).get!bool;
     }
@@ -103,10 +98,8 @@ string[] jsonStrArray(Json j, string key) {
   string[] result;
   if (j.type == Json.Type.object) {
     auto val = key in j;
-    if (val !is null && (*val).type == Json.Type.array)
-    {
-      foreach (item; *val)
-      {
+    if (val !is null && (*val).type == Json.Type.array) {
+      foreach (item; *val) {
         if (item.isString)
           result ~= item.get!string;
       }

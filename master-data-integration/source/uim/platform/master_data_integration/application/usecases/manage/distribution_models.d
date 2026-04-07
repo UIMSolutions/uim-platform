@@ -118,8 +118,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
   }
 
   private DistributionDirection parseDirection(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "outbound":
       return DistributionDirection.outbound;
     case "inbound":
@@ -132,8 +131,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
   }
 
   private DistributionModelStatus parseStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return DistributionModelStatus.active;
     case "inactive":
@@ -147,10 +145,8 @@ class ManageDistributionModelsUseCase : UIMUseCase {
 
   private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
-    foreach (s; cats)
-    {
-      switch (s)
-      {
+    foreach (s; cats) {
+      switch (s) {
       case "businessPartner":
         result ~= MasterDataCategory.businessPartner;
         break;

@@ -57,7 +57,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -81,7 +81,7 @@ class TaskController : SAPController {
                 tasks = uc.listByStatus(tenantId, status.to!TaskStatus);
             } else if (providerId.length > 0) {
                 tasks = uc.listByProvider(tenantId, providerId);
-            } else {
+            } ) {
                 tasks = uc.list(tenantId);
             }
 
@@ -139,7 +139,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -163,7 +163,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task claimed");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -185,7 +185,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task released");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -210,7 +210,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task forwarded");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -232,7 +232,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task completed");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -254,7 +254,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task cancelled");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -273,7 +273,7 @@ class TaskController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

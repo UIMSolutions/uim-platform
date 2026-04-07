@@ -25,8 +25,7 @@ class ManageSitesUseCase : UIMUseCase {
     if (req.name.length == 0)
       return SiteResponse("", "Site name is required");
 
-    if (req.alias_.length > 0)
-    {
+    if (req.alias_.length > 0) {
       auto existing = siteRepo.findByAlias(req.tenantId, req.alias_);
       if (existing != Site.init)
         return SiteResponse("", "Site alias already exists");
@@ -77,8 +76,7 @@ class ManageSitesUseCase : UIMUseCase {
       return "Site not found";
 
     auto result = validateForPublish(site);
-    if (!result.valid)
-    {
+    if (!result.valid) {
       // import std.algorithm : joiner;
       // import std.conv : to;
       return result.errors.joiner("; ").to!string;

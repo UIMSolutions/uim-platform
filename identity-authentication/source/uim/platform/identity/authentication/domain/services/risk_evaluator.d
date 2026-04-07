@@ -29,8 +29,7 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
     if (!rule.active)
       continue;
 
-    if (matchesAllConditions(rule.conditions, user, ctx))
-    {
+    if (matchesAllConditions(rule.conditions, user, ctx)) {
       if (rule.resultLevel > highest)
         highest = rule.resultLevel;
     }
@@ -47,8 +46,7 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
     if (!rule.active)
       continue;
 
-    if (matchesAllConditions(rule.conditions, user, ctx))
-    {
+    if (matchesAllConditions(rule.conditions, user, ctx)) {
       if (rule.requiredMfa != MfaType.none)
         required = rule.requiredMfa;
     }

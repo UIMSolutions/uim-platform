@@ -98,8 +98,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
 
   private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {
     KeyMappingEntry[] result;
-    foreach (ref dto; dtos)
-    {
+    foreach (ref dto; dtos) {
       KeyMappingEntry e;
       e.clientId = dto.clientId;
       e.systemId = dto.systemId;
@@ -112,8 +111,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
   }
 
   private KeyMappingSourceType parseSourceType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "local":
       return KeyMappingSourceType.local;
     case "remote":
@@ -126,8 +124,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
   }
 
   private MasterDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "businessPartner":
       return MasterDataCategory.businessPartner;
     case "costCenter":

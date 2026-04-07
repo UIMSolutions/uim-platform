@@ -35,8 +35,7 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
 
   Workspace[] findByMember(UserId userId, TenantId tenantId) {
     Workspace[] result;
-    foreach (ref w; store.byValue())
-    {
+    foreach (ref w; store.byValue()) {
       if (w.tenantId != tenantId)
         continue;
       foreach (ref m; w.members)

@@ -183,8 +183,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
   }
 
   private SubaccountUsage parseUsage(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "production":
       return SubaccountUsage.production;
     case "development":

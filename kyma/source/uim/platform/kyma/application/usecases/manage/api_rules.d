@@ -60,8 +60,7 @@ class ManageApiRulesUseCase : UIMUseCase {
 
     // Convert rule entry DTOs
     ApiRuleEntry[] entries;
-    foreach (ref r; req.rules)
-    {
+    foreach (ref r; req.rules) {
       ApiRuleEntry entry;
       entry.path = r.path;
       entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
@@ -107,11 +106,9 @@ class ManageApiRulesUseCase : UIMUseCase {
     if (req.labels !is null)
       rule.labels = req.labels;
 
-    if (req.rules.length > 0)
-    {
+    if (req.rules.length > 0) {
       ApiRuleEntry[] entries;
-      foreach (ref r; req.rules)
-      {
+      foreach (ref r; req.rules) {
         ApiRuleEntry entry;
         entry.path = r.path;
         entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
@@ -153,8 +150,7 @@ class ManageApiRulesUseCase : UIMUseCase {
   }
 
   private AccessStrategy parseAccessStrategy(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "noAuth":
       return AccessStrategy.noAuth;
     case "oauth2_introspection":
@@ -169,8 +165,7 @@ class ManageApiRulesUseCase : UIMUseCase {
   }
 
   private ApiHttpMethod parseHttpMethod(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "GET":
       return ApiHttpMethod.get_;
     case "POST":

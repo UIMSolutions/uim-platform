@@ -17,7 +17,7 @@ import uim.platform.identity.directory.infrastructure.container;
 
 version (unittest) {
 }
-else {
+) {
   void main() {
     // Load configuration
     auto config = loadConfig();

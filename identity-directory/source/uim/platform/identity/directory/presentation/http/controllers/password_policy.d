@@ -29,8 +29,7 @@ class PasswordPolicyController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreatePasswordPolicyRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), jsonUint(j,
@@ -44,8 +43,7 @@ class PasswordPolicyController {
       auto result = useCase.createPolicy(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["policyId"] = Json(result.policyId);
         res.writeJsonBody(response, 201);
       }
@@ -55,8 +53,7 @@ class PasswordPolicyController {
         res.writeJsonBody(response, 400);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -64,8 +61,7 @@ class PasswordPolicyController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
@@ -73,8 +69,7 @@ class PasswordPolicyController {
       response["resources"] = toJsonArray(policies);
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -82,12 +77,10 @@ class PasswordPolicyController {
   }
 
   private void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto policy = useCase.getActivePolicy(tenantId);
-      if (policy == PasswordPolicy.init)
-      {
+      if (policy == PasswordPolicy.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("No active password policy found");
         res.writeJsonBody(errRes, 404);
@@ -95,8 +88,7 @@ class PasswordPolicyController {
       }
       res.writeJsonBody(toJsonValue(policy), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -104,12 +96,10 @@ class PasswordPolicyController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto policyId = extractIdFromPath(req.requestURI);
       auto policy = useCase.getPolicy(policyId);
-      if (policy == PasswordPolicy.init)
-      {
+      if (policy == PasswordPolicy.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("Password policy not found");
         res.writeJsonBody(errRes, 404);
@@ -117,8 +107,7 @@ class PasswordPolicyController {
       }
       res.writeJsonBody(toJsonValue(policy), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

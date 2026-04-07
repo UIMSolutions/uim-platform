@@ -47,8 +47,7 @@ class QueryChangeLogUseCase : UIMUseCase {
   }
 
   private MasterDataCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "businessPartner":
       return MasterDataCategory.businessPartner;
     case "costCenter":

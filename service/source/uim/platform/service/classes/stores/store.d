@@ -21,8 +21,7 @@ class UIMStore {
   }
 
   this(Json initData) {
-    if (initData.isObject)
-    {
+    if (initData.isObject) {
       initialize(initData.toMap);
     }
   }

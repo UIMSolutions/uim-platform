@@ -35,8 +35,7 @@ class ApplicationController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       auto createReq = CreateAppRequest(j.getString("tenantId"), j.getString("name"),
           j.getString("description"), SsoProtocol.oidc, jsonStrArray(j, "redirectUris"),
@@ -46,8 +45,7 @@ class ApplicationController : SAPController {
       auto result = useCase.createApplication(createReq);
       auto response = Json.emptyObject;
 
-      if (result.isSuccess())
-      {
+      if (result.isSuccess()) {
         response["applicationId"] = Json(result.applicationId);
         response["clientId"] = Json(result.clientId);
         response["clientSecret"] = Json(result.clientSecret);
@@ -59,8 +57,7 @@ class ApplicationController : SAPController {
         res.writeJsonBody(response, 400);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -68,8 +65,7 @@ class ApplicationController : SAPController {
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto apps = useCase.listApplications(tenantId);
       auto response = Json.emptyObject;
@@ -77,8 +73,7 @@ class ApplicationController : SAPController {
       response["resources"] = apps.toJson;
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -86,8 +81,7 @@ class ApplicationController : SAPController {
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.string : lastIndexOf;
 
       auto path = req.requestURI;
@@ -95,8 +89,7 @@ class ApplicationController : SAPController {
       auto appId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto app = useCase.getApplication(appId);
-      if (app == Application.init)
-      {
+      if (app == Application.init) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json("Application not found");
         res.writeJsonBody(errRes, 404);
@@ -107,8 +100,7 @@ class ApplicationController : SAPController {
       response.remove("clientSecret"); // Don't expose secret on GET
       res.writeJsonBody(response, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);
@@ -116,8 +108,7 @@ class ApplicationController : SAPController {
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       // import std.string : lastIndexOf;
 
       auto path = req.requestURI;
@@ -129,8 +120,7 @@ class ApplicationController : SAPController {
           jsonStrArray(j, "redirectUris"), jsonStrArray(j, "allowedScopes"));
 
       auto error = useCase.updateApplication(updateReq);
-      if (error.length > 0)
-      {
+      if (error.length > 0) {
         auto errRes = Json.emptyObject;
         errRes["error"] = Json(error);
         res.writeJsonBody(errRes, 404);
@@ -142,8 +132,7 @@ class ApplicationController : SAPController {
         res.writeJsonBody(resp, 200);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       auto errRes = Json.emptyObject;
       errRes["error"] = Json("Internal server error");
       res.writeJsonBody(errRes, 500);

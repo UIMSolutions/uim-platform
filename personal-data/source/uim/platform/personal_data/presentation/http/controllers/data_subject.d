@@ -53,7 +53,7 @@ class DataSubjectController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -92,7 +92,7 @@ class DataSubjectController : SAPController {
             if (email.length > 0) {
                 auto s = uc.findByEmail(email);
                 if (s.id.length > 0) results ~= s;
-            } else {
+            } ) {
                 results = uc.search(firstName, lastName);
             }
 
@@ -153,7 +153,7 @@ class DataSubjectController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -175,7 +175,7 @@ class DataSubjectController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject blocked");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -197,7 +197,7 @@ class DataSubjectController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject erased (anonymized)");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -215,7 +215,7 @@ class DataSubjectController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

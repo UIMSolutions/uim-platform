@@ -95,8 +95,7 @@ struct User {
   /// Primary email address.
   string primaryEmail() const
   {
-    foreach (e; emails)
-    {
+    foreach (e; emails) {
       if (e.primary)
         return e.value;
     }

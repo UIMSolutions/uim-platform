@@ -44,7 +44,7 @@ class TaskAttachmentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Attachment created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +61,7 @@ class TaskAttachmentController : SAPController {
             TaskAttachment[] attachments;
             if (taskId.length > 0) {
                 attachments = uc.listByTask(tenantId, taskId);
-            } else {
+            } ) {
                 attachments = [];
             }
 
@@ -106,7 +106,7 @@ class TaskAttachmentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Attachment deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

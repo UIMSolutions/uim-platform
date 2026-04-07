@@ -25,8 +25,7 @@ class DashboardController {
   }
 
   private void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto summary = uc.getSummary(tenantId);
 
@@ -44,8 +43,7 @@ class DashboardController {
 
       res.writeJsonBody(j, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

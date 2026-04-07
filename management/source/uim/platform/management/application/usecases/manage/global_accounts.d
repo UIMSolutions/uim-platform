@@ -151,8 +151,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   }
 
   private GlobalAccountStatus parseGlobalAccountStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "active":
       return GlobalAccountStatus.active;
     case "suspended":
@@ -167,8 +166,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   }
 
   private LicenseType parseLicenseType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "enterprise":
       return LicenseType.enterprise;
     case "trial":

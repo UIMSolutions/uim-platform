@@ -48,7 +48,7 @@ class DashboardController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Dashboard created");
                 res.writeJsonBody(resp, 201);
-            } else {
+            } ) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -128,7 +128,7 @@ class DashboardController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Dashboard updated");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -147,7 +147,7 @@ class DashboardController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Dashboard deleted");
                 res.writeJsonBody(resp, 200);
-            } else {
+            } ) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

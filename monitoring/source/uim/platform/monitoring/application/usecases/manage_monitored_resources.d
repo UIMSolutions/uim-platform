@@ -102,8 +102,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
   }
 
   private static ResourceType parseResourceType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "html5Application":
       return ResourceType.html5Application;
     case "hanaXsApplication":
@@ -122,8 +121,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
   }
 
   private static ResourceState parseResourceState(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "started":
       return ResourceState.started;
     case "stopped":

@@ -20,8 +20,7 @@ struct WorkspaceAccessService {
 
   /// Check whether a user has at least the given role in a workspace.
   static bool hasRole(const ref Workspace ws, UserId userId, MemberRole requiredRole) {
-    foreach (ref m; ws.members)
-    {
+    foreach (ref m; ws.members) {
       if (m.userId == userId && m.role >= requiredRole)
         return true;
     }

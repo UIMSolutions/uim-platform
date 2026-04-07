@@ -96,10 +96,8 @@ class ManageDirectoriesUseCase : UIMUseCase {
 
   private DirectoryFeature[] parseFeatures(string[] features) {
     DirectoryFeature[] result;
-    foreach (f; features)
-    {
-      switch (f)
-      {
+    foreach (f; features) {
+      switch (f) {
       case "entitlements":
         result ~= DirectoryFeature.entitlements;
         break;

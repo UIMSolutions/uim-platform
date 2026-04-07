@@ -34,8 +34,7 @@ class ChannelController : SAPController {
   }
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto j = req.json;
       CreateNotificationChannelRequest r;
       r.tenantId = req.headers.get("X-Tenant-Id", "");
@@ -53,8 +52,7 @@ class ChannelController : SAPController {
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createChannel(r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
@@ -64,15 +62,13 @@ class ChannelController : SAPController {
         writeError(res, 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto channels = uc.listChannels(tenantId);
 
@@ -85,33 +81,28 @@ class ChannelController : SAPController {
       resp["totalCount"] = Json(cast(long) channels.length);
       res.writeJsonBody(resp, 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto ch = uc.getChannel(id);
-      if (ch.id.length == 0)
-      {
+      if (ch.id.length == 0) {
         writeError(res, 404, "Notification channel not found");
         return;
       }
       res.writeJsonBody(serializeChannel(ch), 200);
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateNotificationChannelRequest r;
@@ -126,8 +117,7 @@ class ChannelController : SAPController {
       r.onPremiseProtocol = j.getString("onPremiseProtocol");
 
       auto result = uc.updateChannel(id, r);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
@@ -137,19 +127,16 @@ class ChannelController : SAPController {
         writeError(res, result.error == "Notification channel not found" ? 404 : 400, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    try
-    {
+    try {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteChannel(id);
-      if (result.success)
-      {
+      if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
@@ -159,8 +146,7 @@ class ChannelController : SAPController {
         writeError(res, 404, result.error);
       }
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

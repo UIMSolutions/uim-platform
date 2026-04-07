@@ -114,8 +114,7 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   private static AlertState parseAlertState(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "acknowledged":
       return AlertState.acknowledged;
     case "resolved":
@@ -128,8 +127,7 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   private static AlertSeverity parseSeverity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "info":
       return AlertSeverity.info;
     case "critical":

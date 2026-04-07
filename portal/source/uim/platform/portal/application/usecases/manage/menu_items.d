@@ -87,8 +87,7 @@ class ManageMenuItemsUseCase : UIMUseCase {
     menuRepo.remove(menuItemId);
 
     auto site = siteRepo.findById(siteId);
-    if (site != Site.init)
-    {
+    if (site != Site.init) {
       site.menuItemIds = site.menuItemIds.filter!(m => m != menuItemId).array;
       site.updatedAt = Clock.currStdTime();
       siteRepo.update(site);

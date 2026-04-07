@@ -30,8 +30,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
 
     // Check for existing subscription to same app
     auto existing = repo.findByApp(req.subaccountId, req.appName);
-    foreach (ref e; existing)
-    {
+    foreach (ref e; existing) {
       if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus.subscribing)
         return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
     }

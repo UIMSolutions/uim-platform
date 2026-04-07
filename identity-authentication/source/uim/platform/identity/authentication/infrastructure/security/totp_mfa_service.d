@@ -46,8 +46,7 @@ class TotpMfaService : MfaService {
     auto hex = toHexString(digest).idup;
     // Return 6 digits
     ulong numeric;
-    foreach (c; hex[0 .. 8])
-    {
+    foreach (c; hex[0 .. 8]) {
       numeric = numeric * 16 + (c >= 'A' ? c - 'A' + 10 : c - '0');
     }
     // import std.format : format;

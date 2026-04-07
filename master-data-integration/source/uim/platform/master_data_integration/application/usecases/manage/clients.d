@@ -127,8 +127,7 @@ class ManageClientsUseCase : UIMUseCase {
   }
 
   private ClientType parseClientType(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "sapS4Hana":
       return ClientType.sapS4Hana;
     case "sapSuccessFactors":
@@ -151,8 +150,7 @@ class ManageClientsUseCase : UIMUseCase {
   }
 
   private ClientStatus parseClientStatus(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "connected":
       return ClientStatus.connected;
     case "disconnected":
@@ -168,10 +166,8 @@ class ManageClientsUseCase : UIMUseCase {
 
   private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
-    foreach (s; cats)
-    {
-      switch (s)
-      {
+    foreach (s; cats) {
+      switch (s) {
       case "businessPartner":
         result ~= MasterDataCategory.businessPartner;
         break;

@@ -28,8 +28,7 @@ class MemoryShellPluginRepository : ShellPluginRepository {
 
   ShellPlugin[] findBySite(SiteId siteId, TenantId tenantId) {
     ShellPlugin[] result;
-    foreach (ref p; store.byValue())
-    {
+    foreach (ref p; store.byValue()) {
       if (p.tenantId != tenantId)
         continue;
       foreach (ref sid; p.assignedSiteIds)

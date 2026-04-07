@@ -28,8 +28,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByEmail(TenantId tenantId, string email) {
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId == tenantId && u.email == email)
         return u;
     }
@@ -37,8 +36,7 @@ class MemoryUserRepository : UserRepository {
   }
 
   User findByUserName(TenantId tenantId, string userName) {
-    foreach (u; store.byValue())
-    {
+    foreach (u; store.byValue()) {
       if (u.tenantId == tenantId && u.userName == userName)
         return u;
     }
@@ -48,10 +46,8 @@ class MemoryUserRepository : UserRepository {
   User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
-    foreach (u; store.byValue())
-    {
-      if (u.tenantId == tenantId)
-      {
+    foreach (u; store.byValue()) {
+      if (u.tenantId == tenantId) {
         if (idx >= offset && result.length < limit)
           result ~= u;
         idx++;

@@ -29,8 +29,7 @@ class WorkflowEngine {
     if (step.dependencies.length == 0)
       return true;
 
-    foreach (depId; step.dependencies)
-    {
+    foreach (depId; step.dependencies) {
       auto dep = stepRepo.findById(depId, tenantId);
       if (dep is null || dep.status != StepStatus.completed)
         return false;
@@ -57,8 +56,7 @@ class WorkflowEngine {
     wf.completedSteps = completed;
 
     // All steps done?
-    if (completed >= wf.totalSteps)
-    {
+    if (completed >= wf.totalSteps) {
       // import std.datetime.systime : Clock;
       wf.status = WorkflowStatus.completed;
       wf.completedAt = Clock.currStdTime();
@@ -72,10 +70,8 @@ class WorkflowEngine {
     auto sorted = steps.dup;
     sorted.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
 
-    foreach (ref s; sorted)
-    {
-      if (s.status == StepStatus.pending && areDependenciesMet(s, tenantId))
-      {
+    foreach (ref s; sorted) {
+      if (s.status == StepStatus.pending && areDependenciesMet(s, tenantId)) {
         wf.currentStepIndex = s.sequenceNumber;
         workflowRepo.update(*wf);
         return true;

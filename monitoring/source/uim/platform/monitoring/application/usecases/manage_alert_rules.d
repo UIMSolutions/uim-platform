@@ -112,8 +112,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
   }
 
   private static ThresholdOperator parseOperator(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "greaterOrEqual":
       return ThresholdOperator.greaterOrEqual;
     case "lessThan":
@@ -130,8 +129,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
   }
 
   private static AlertSeverity parseSeverity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "info":
       return AlertSeverity.info;
     case "critical":

@@ -28,8 +28,7 @@ class MemoryGroupRepository : GroupRepository {
 
   Group[] findByMember(UserId userId, TenantId tenantId) {
     Group[] result;
-    foreach (ref g; store.byValue())
-    {
+    foreach (ref g; store.byValue()) {
       if (g.tenantId != tenantId)
         continue;
       foreach (ref mid; g.memberIds)

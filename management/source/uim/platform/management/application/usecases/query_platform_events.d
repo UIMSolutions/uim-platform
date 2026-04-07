@@ -48,8 +48,7 @@ class QueryPlatformEventsUseCase : UIMUseCase {
   }
 
   private PlatformEventCategory parseCategory(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "subaccountLifecycle":
       return PlatformEventCategory.subaccountLifecycle;
     case "entitlementChange":
@@ -72,8 +71,7 @@ class QueryPlatformEventsUseCase : UIMUseCase {
   }
 
   private PlatformEventSeverity parseSeverity(string s) {
-    switch (s)
-    {
+    switch (s) {
     case "info":
       return PlatformEventSeverity.info;
     case "warning":
