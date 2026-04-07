@@ -18,7 +18,7 @@ alias UsageReportId = string;
 alias OfflineStoreId = string;
 alias UserSessionId = string;
 alias ClientLogEntryId = string;
-alias TenantId = string;
+
 
 // Mobile app platform
 enum AppPlatform {

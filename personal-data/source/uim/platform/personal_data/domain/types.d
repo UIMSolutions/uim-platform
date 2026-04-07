@@ -20,7 +20,7 @@ alias ProcessingPurposeId = string;
 alias ConsentRecordId = string;
 alias RetentionRuleId = string;
 alias DataProcessingLogId = string;
-alias TenantId = string;
+
 alias UserId = string;
 
 /// Type of data subject (GDPR)

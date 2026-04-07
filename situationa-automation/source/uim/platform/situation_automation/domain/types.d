@@ -9,7 +9,7 @@ alias EntityTypeId = string;
 alias DataContextId = string;
 alias NotificationId = string;
 alias DashboardId = string;
-alias TenantId = string;
+
 alias UserId = string;
 
 // --- Situation Template ---

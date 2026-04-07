@@ -16,7 +16,7 @@ alias TriggerId = string;
 alias ActionId = string;
 alias VisibilityId = string;
 alias ArtifactId = string;
-alias TenantId = string;
+
 alias UserId = string;
 alias ProjectId = string;
 alias VersionId = string;

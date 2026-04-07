@@ -13,7 +13,7 @@ alias AccessPolicyId = string;
 alias LifecycleRuleId = string;
 alias CorsRuleId = string;
 alias ServiceBindingId = string;
-alias TenantId = string;
+
 alias UserId = string;
 
 // --- Enumerations ---

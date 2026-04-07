@@ -13,4 +13,5 @@ public {
   import uim.platform.service.helpers;
   import uim.platform.service.interfaces;
   import uim.platform.service.mixins;
+  import uim.platform.service.domain;
 }

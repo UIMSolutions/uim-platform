@@ -14,7 +14,7 @@ alias ChangeLogEntryId = string;
 alias ClientId = string;
 alias ReplicationJobId = string;
 alias FilterRuleId = string;
-alias TenantId = string;
+
 alias VersionId = string;
 
 /// Category of master data object.

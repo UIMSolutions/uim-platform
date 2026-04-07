@@ -16,7 +16,7 @@ alias TaskId = string;
 alias ChannelId = string;
 alias AppId = string;
 alias WidgetId = string;
-alias TenantId = string;
+
 alias UserId = string;
 alias RoleId = string;
 alias SiteId = string;

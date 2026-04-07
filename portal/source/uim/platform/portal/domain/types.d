@@ -16,7 +16,7 @@ alias RoleId = string;
 alias ProviderId = string;
 alias ThemeId = string;
 alias MenuItemId = string;
-alias TenantId = string;
+
 alias TranslationId = string;
 
 /// Site status.

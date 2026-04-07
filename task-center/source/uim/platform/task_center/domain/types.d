@@ -21,7 +21,7 @@ alias TaskProviderId = string;
 alias SubstitutionRuleId = string;
 alias TaskActionId = string;
 alias UserTaskFilterId = string;
-alias TenantId = string;
+
 alias UserId = string;
 
 // --- Enums ---

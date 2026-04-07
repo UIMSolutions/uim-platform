@@ -14,7 +14,7 @@ alias AlertRuleId = string;
 alias AlertId = string;
 alias NotificationChannelId = string;
 alias MonitoredResourceId = string;
-alias TenantId = string;
+
 alias SubaccountId = string;
 
 /// Type of monitored resource.

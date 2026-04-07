@@ -14,7 +14,6 @@ alias BusinessUserId = string;
 alias BusinessRoleId = string;
 alias TransportRequestId = string;
 alias ApplicationJobId = string;
-alias TenantId = string;
 alias SubaccountId = string;
 alias ServiceDefinitionId = string;
 alias CommunicationScenarioId = string;
