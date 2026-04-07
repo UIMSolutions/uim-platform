@@ -23,21 +23,18 @@ mixin(ShowModule!());
 class MonitoringController {
   private MonitorConnectivityUseCase uc;
 
-  this(MonitorConnectivityUseCase uc)
-  {
+  this(MonitorConnectivityUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.get("/api/v1/monitoring/logs", &handleListLogs);
     router.get("/api/v1/monitoring/summary", &handleSummary);
   }
 
-  private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -58,8 +55,7 @@ class MonitoringController {
     }
   }
 
-  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -79,8 +75,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeLog(ref const ConnectivityLog l)
-  {
+  private static Json serializeLog(ref const ConnectivityLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["tenantId"] = Json(l.tenantId);

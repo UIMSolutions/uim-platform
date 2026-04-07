@@ -17,13 +17,11 @@ import uim.platform.connectivity.domain.entities.service_channel;
 class ChannelController {
   private ManageChannelsUseCase uc;
 
-  this(ManageChannelsUseCase uc)
-  {
+  this(ManageChannelsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/channels", &handleCreate);
@@ -34,8 +32,7 @@ class ChannelController {
     router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -67,8 +64,7 @@ class ChannelController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -89,8 +85,7 @@ class ChannelController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -108,8 +103,7 @@ class ChannelController {
     }
   }
 
-  private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleOpen(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto parts = splitPath(req.requestURI);
@@ -138,8 +132,7 @@ class ChannelController {
     }
   }
 
-  private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleClose(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto parts = splitPath(req.requestURI);
@@ -168,8 +161,7 @@ class ChannelController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -191,8 +183,7 @@ class ChannelController {
     }
   }
 
-  private static Json serializeChannel(ref const ServiceChannel ch)
-  {
+  private static Json serializeChannel(ref const ServiceChannel ch) {
     auto j = Json.emptyObject;
     j["id"] = Json(ch.id);
     j["connectorId"] = Json(ch.connectorId);
@@ -211,8 +202,7 @@ class ChannelController {
     return j;
   }
 
-  private static string[] splitPath(string uri)
-  {
+  private static string[] splitPath(string uri) {
     // import std.string : indexOf, split;
 
     auto qpos = uri.indexOf('?');

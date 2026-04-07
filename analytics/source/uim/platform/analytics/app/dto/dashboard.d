@@ -29,8 +29,7 @@ struct DashboardResponse {
   PageResponse[] pages;
   string[] tags;
 
-  static DashboardResponse fromEntity(Dashboard d)
-  {
+  static DashboardResponse fromEntity(Dashboard d) {
     if (d is null)
       return DashboardResponse.init;
 

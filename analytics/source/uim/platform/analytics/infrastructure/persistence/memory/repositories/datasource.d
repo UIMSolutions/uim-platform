@@ -12,25 +12,21 @@ import uim.platform.analytics.domain.values.common;
 class MemoryDataSourceRepository : DataSourceRepository {
   private DataSource[string] store;
 
-  DataSource findById(EntityId id)
-  {
+  DataSource findById(EntityId id) {
     if (auto p = id.value in store)
       return *p;
     return null;
   }
 
-  DataSource[] findAll()
-  {
+  DataSource[] findAll() {
     return store.values;
   }
 
-  void save(DataSource ds)
-  {
+  void save(DataSource ds) {
     store[ds.id.value] = ds;
   }
 
-  void remove(EntityId id)
-  {
+  void remove(EntityId id) {
     store.remove(id.value);
   }
 }

@@ -26,8 +26,7 @@ struct WidgetResponse {
   string chartType;
   string datasetId;
 
-  static WidgetResponse fromEntity(Widget w)
-  {
+  static WidgetResponse fromEntity(Widget w) {
     if (w is null)
       return WidgetResponse.init;
 

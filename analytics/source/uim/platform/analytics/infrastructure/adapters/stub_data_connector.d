@@ -10,8 +10,7 @@ import uim.platform.analytics.app.ports.dataconnector;
 /// Stub adapter: simulates data fetching for development / testing.
 class StubDataConnector : DataConnector {
 
-  string[][string][] fetchData(string connectionString, string query)
-  {
+  string[][string][] fetchData(string connectionString, string query) {
     // Return sample rows for demo purposes
     string[][string][] rows;
     rows ~= ["region": ["North"], "revenue": ["120000"], "quarter": ["Q1"]];
@@ -21,8 +20,7 @@ class StubDataConnector : DataConnector {
     return rows;
   }
 
-  bool testConnection(string connectionString)
-  {
+  bool testConnection(string connectionString) {
     return connectionString.length > 0;
   }
 }

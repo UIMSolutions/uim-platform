@@ -14,8 +14,7 @@ mixin(ShowModule!());
 struct AnalyticsEngine {
 
   /// Aggregate a column of numeric values using the given function.
-  static double aggregate(double[] values, AggregationType aggType)
-  {
+  static double aggregate(double[] values, AggregationType aggType) {
     if (values.length == 0)
       return 0.0;
 
@@ -51,16 +50,14 @@ struct AnalyticsEngine {
     }
   }
 
-  static double sum(double[] v)
-  {
+  static double sum(double[] v) {
     double s = 0;
     foreach (x; v)
       s += x;
     return s;
   }
 
-  static double minVal(double[] v)
-  {
+  static double minVal(double[] v) {
     double m = v[0];
     foreach (x; v)
       if (x < m)
@@ -68,8 +65,7 @@ struct AnalyticsEngine {
     return m;
   }
 
-  static double maxVal(double[] v)
-  {
+  static double maxVal(double[] v) {
     double m = v[0];
     foreach (x; v)
       if (x > m)
@@ -77,8 +73,7 @@ struct AnalyticsEngine {
     return m;
   }
 
-  static double median(double[] v)
-  {
+  static double median(double[] v) {
     // import std.algorithm : sort;
     auto sorted = v.dup;
     sorted.sort();
@@ -88,8 +83,7 @@ struct AnalyticsEngine {
     return (sorted[n / 2 - 1] + sorted[n / 2]) / 2.0;
   }
 
-  static double variance(double[] v)
-  {
+  static double variance(double[] v) {
     double avg = sum(v) / v.length;
     double s = 0;
     foreach (x; v)
@@ -97,8 +91,7 @@ struct AnalyticsEngine {
     return s / v.length;
   }
 
-  static double[] unique(double[] v)
-  {
+  static double[] unique(double[] v) {
     double[] result;
     bool[double] seen;
     foreach (x; v)

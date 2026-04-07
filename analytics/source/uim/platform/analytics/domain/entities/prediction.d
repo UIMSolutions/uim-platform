@@ -23,13 +23,11 @@ class Prediction {
   PredictionStatus predStatus;
   AuditInfo audit;
 
-  this()
-  {
+  this() {
   }
 
   static Prediction create(string name, string description, string datasetId,
-      PredictionType ptype, PredictionConfig cfg, string userId)
-  {
+      PredictionType ptype, PredictionConfig cfg, string userId) {
     auto p = new Prediction();
     p.id = EntityId.generate();
     p.name = name;
@@ -43,19 +41,16 @@ class Prediction {
     return p;
   }
 
-  void markTraining()
-  {
+  void markTraining() {
     predStatus = PredictionStatus.Training;
   }
 
-  void markReady(PredictionResult result)
-  {
+  void markReady(PredictionResult result) {
     predStatus = PredictionStatus.Ready;
     lastResult = result;
   }
 
-  void markFailed(string error)
-  {
+  void markFailed(string error) {
     predStatus = PredictionStatus.Failed;
     lastResult.errorMessage = error;
   }

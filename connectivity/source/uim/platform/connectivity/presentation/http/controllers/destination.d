@@ -17,13 +17,11 @@ import uim.platform.connectivity.domain.entities.destination;
 class DestinationController {
   private ManageDestinationsUseCase uc;
 
-  this(ManageDestinationsUseCase uc)
-  {
+  this(ManageDestinationsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/destinations", &handleCreate);
@@ -33,8 +31,7 @@ class DestinationController {
     router.delete_("/api/v1/destinations/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class DestinationController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -98,8 +94,7 @@ class DestinationController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -117,8 +112,7 @@ class DestinationController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -158,8 +152,7 @@ class DestinationController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -181,8 +174,7 @@ class DestinationController {
     }
   }
 
-  private static Json serializeDest(ref const Destination d)
-  {
+  private static Json serializeDest(ref const Destination d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);
@@ -226,8 +218,7 @@ class DestinationController {
     return j;
   }
 
-  private static DestinationProperty[] parseProperties(Json j)
-  {
+  private static DestinationProperty[] parseProperties(Json j) {
     DestinationProperty[] result;
     auto v = "properties" in j;
     if (v is null || (*v).type != Json.Type.array)
@@ -240,8 +231,7 @@ class DestinationController {
     return result;
   }
 
-  private static DestinationProperty[] parseHeaders(Json j)
-  {
+  private static DestinationProperty[] parseHeaders(Json j) {
     DestinationProperty[] result;
     auto v = "additionalHeaders" in j;
     if (v is null || (*v).type != Json.Type.array)

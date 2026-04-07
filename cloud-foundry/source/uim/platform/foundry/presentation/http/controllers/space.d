@@ -18,13 +18,11 @@ import uim.platform.foundry.domain.entities.space;
 class SpaceController {
   private ManageSpacesUseCase useCase;
 
-  this(ManageSpacesUseCase useCase)
-  {
+  this(ManageSpacesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/spaces", &handleCreate);
     router.get("/api/v1/spaces", &handleList);
     router.get("/api/v1/spaces/*", &handleGetById);
@@ -32,8 +30,7 @@ class SpaceController {
     router.delete_("/api/v1/spaces/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -60,8 +57,7 @@ class SpaceController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -82,8 +78,7 @@ class SpaceController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -102,8 +97,7 @@ class SpaceController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -130,8 +124,7 @@ class SpaceController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -152,8 +145,7 @@ class SpaceController {
     }
   }
 
-  private static Json serializeSpace(ref const Space s)
-  {
+  private static Json serializeSpace(ref const Space s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["orgId"] = Json(s.orgId);

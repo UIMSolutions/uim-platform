@@ -19,13 +19,11 @@ mixin(ShowModule!());
 class WidgetUseCases {
   private WidgetRepository repo;
 
-  this(WidgetRepository repo)
-  {
+  this(WidgetRepository repo) {
     this.repo = repo;
   }
 
-  WidgetResponse create(CreateWidgetRequest req)
-  {
+  WidgetResponse create(CreateWidgetRequest req) {
     ChartType ct;
     try
     {
@@ -40,21 +38,18 @@ class WidgetUseCases {
     return WidgetResponse.fromEntity(w);
   }
 
-  WidgetResponse getById(string id)
-  {
+  WidgetResponse getById(string id) {
     return WidgetResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  WidgetResponse[] list()
-  {
+  WidgetResponse[] list() {
     WidgetResponse[] result;
     foreach (w; repo.findAll())
       result ~= WidgetResponse.fromEntity(w);
     return result;
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

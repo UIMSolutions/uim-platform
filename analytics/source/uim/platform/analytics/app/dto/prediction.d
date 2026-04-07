@@ -36,8 +36,7 @@ struct PredictionResponse {
   double rmse;
   string modelSummary;
 
-  static PredictionResponse fromEntity(Prediction p)
-  {
+  static PredictionResponse fromEntity(Prediction p) {
     if (p is null)
       return PredictionResponse.init;
 
@@ -47,8 +46,7 @@ struct PredictionResponse {
         p.lastResult.modelSummary,);
   }
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("id", id).set("name", name).set("description",
         description).set("datasetId", datasetId).set("predictionType",
         predictionType).set("status", status).set("accuracy", accuracy)

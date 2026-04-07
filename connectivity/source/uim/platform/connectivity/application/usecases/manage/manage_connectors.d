@@ -21,14 +21,12 @@ class ManageConnectorsUseCase : UIMUseCase {
   private ConnectorRepository repo;
   private ConnectivityLogRepository logRepo;
 
-  this(ConnectorRepository repo, ConnectivityLogRepository logRepo)
-  {
+  this(ConnectorRepository repo, ConnectivityLogRepository logRepo) {
     this.repo = repo;
     this.logRepo = logRepo;
   }
 
-  CommandResult registerConnector(RegisterConnectorRequest req)
-  {
+  CommandResult registerConnector(RegisterConnectorRequest req) {
     // Check for duplicate location ID within subaccount
     auto existing = repo.findByLocationId(req.subaccountId, req.locationId);
     if (existing.id.length > 0)
@@ -60,8 +58,7 @@ class ManageConnectorsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult heartbeat(ConnectorId id, HeartbeatRequest req)
-  {
+  CommandResult heartbeat(ConnectorId id, HeartbeatRequest req) {
     auto cc = repo.findById(id);
     if (cc.id.length == 0)
       return CommandResult(false, "", "Connector not found");
@@ -74,8 +71,7 @@ class ManageConnectorsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult disconnect(ConnectorId id)
-  {
+  CommandResult disconnect(ConnectorId id) {
     auto cc = repo.findById(id);
     if (cc.id.length == 0)
       return CommandResult(false, "", "Connector not found");
@@ -89,23 +85,19 @@ class ManageConnectorsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CloudConnector getConnector(ConnectorId id)
-  {
+  CloudConnector getConnector(ConnectorId id) {
     return repo.findById(id);
   }
 
-  CloudConnector[] listBySubaccount(SubaccountId subaccountId)
-  {
+  CloudConnector[] listBySubaccount(SubaccountId subaccountId) {
     return repo.findBySubaccount(subaccountId);
   }
 
-  CloudConnector[] listByTenant(TenantId tenantId)
-  {
+  CloudConnector[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult unregister(ConnectorId id)
-  {
+  CommandResult unregister(ConnectorId id) {
     auto cc = repo.findById(id);
     if (cc.id.length == 0)
       return CommandResult(false, "", "Connector not found");
@@ -119,8 +111,7 @@ class ManageConnectorsUseCase : UIMUseCase {
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
-      string sourceId, string sourceType, string message)
-  {
+      string sourceId, string sourceType, string message) {
     // import std.uuid : randomUUID;
 
     ConnectivityLog entry;

@@ -42,8 +42,7 @@ Json toJsonArray(const(string[]) arr) {
 // --- Enum parsers ---
 
 OrgStatus parseOrgStatus(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "active":
     return OrgStatus.active;
   case "suspended":
@@ -54,8 +53,7 @@ OrgStatus parseOrgStatus(string s) {
 }
 
 SpaceStatus parseSpaceStatus(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "active":
     return SpaceStatus.active;
   case "suspended":
@@ -66,8 +64,7 @@ SpaceStatus parseSpaceStatus(string s) {
 }
 
 AppState parseAppState(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "stopped":
     return AppState.stopped;
   case "started":
@@ -82,8 +79,7 @@ AppState parseAppState(string s) {
 }
 
 HealthCheckType parseHealthCheckType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "http":
     return HealthCheckType.http;
   case "port":
@@ -96,8 +92,7 @@ HealthCheckType parseHealthCheckType(string s) {
 }
 
 RouteProtocol parseRouteProtocol(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "http":
     return RouteProtocol.http;
   case "tcp":
@@ -108,8 +103,7 @@ RouteProtocol parseRouteProtocol(string s) {
 }
 
 DomainScope parseDomainScope(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "shared":
     return DomainScope.shared_;
   case "private":
@@ -122,8 +116,7 @@ DomainScope parseDomainScope(string s) {
 }
 
 BuildpackType parseBuildpackType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "system":
     return BuildpackType.system;
   case "custom":

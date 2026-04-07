@@ -11,8 +11,7 @@ module uim.platform.analytics.domain.services.engines.forecasting;
 struct ForecastingEngine {
 
   /// Simple exponential smoothing forecast.
-  static double[] forecast(double[] historicalData, int periods, double alpha = 0.3)
-  {
+  static double[] forecast(double[] historicalData, int periods, double alpha = 0.3) {
     if (historicalData.length == 0)
       return [];
 
@@ -34,8 +33,7 @@ struct ForecastingEngine {
   }
 
   /// Double exponential smoothing (Holt's method) for trend.
-  static double[] forecastWithTrend(double[] data, int periods, double alpha = 0.3, double beta = 0.1)
-  {
+  static double[] forecastWithTrend(double[] data, int periods, double alpha = 0.3, double beta = 0.1) {
     if (data.length < 2)
       return forecast(data, periods, alpha);
 
@@ -59,8 +57,7 @@ struct ForecastingEngine {
   }
 
   /// Moving average.
-  static double[] movingAverage(double[] data, int window)
-  {
+  static double[] movingAverage(double[] data, int window) {
     if (data.length < window)
       return [];
 

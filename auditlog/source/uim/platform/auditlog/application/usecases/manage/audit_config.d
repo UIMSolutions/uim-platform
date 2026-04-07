@@ -20,13 +20,11 @@ mixin(ShowModule!());
 class ManageAuditConfigUseCase : UIMUseCase {
   private AuditConfigRepository configRepo;
 
-  this(AuditConfigRepository configRepo)
-  {
+  this(AuditConfigRepository configRepo) {
     this.configRepo = configRepo;
   }
 
-  CommandResult createConfig(CreateAuditConfigRequest req)
-  {
+  CommandResult createConfig(CreateAuditConfigRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
 
@@ -56,18 +54,15 @@ class ManageAuditConfigUseCase : UIMUseCase {
     return CommandResult(cfg.id, "");
   }
 
-  AuditConfig getConfig(TenantId tenantId)
-  {
+  AuditConfig getConfig(TenantId tenantId) {
     return configRepo.findByTenant(tenantId);
   }
 
-  AuditConfig[] listConfigs()
-  {
+  AuditConfig[] listConfigs() {
     return configRepo.findAll();
   }
 
-  CommandResult updateConfig(UpdateAuditConfigRequest req)
-  {
+  CommandResult updateConfig(UpdateAuditConfigRequest req) {
     if (!configRepo.existsById(req.id))
       return CommandResult("", "Audit config not found");
 
@@ -91,8 +86,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     return CommandResult(cfg.id, "");
   }
 
-  void deleteConfig(AuditConfigId id, TenantId tenantId)
-  {
+  void deleteConfig(AuditConfigId id, TenantId tenantId) {
     configRepo.remove(id, tenantId);
   }
 }

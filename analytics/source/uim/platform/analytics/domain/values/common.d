@@ -12,8 +12,7 @@ import uim.platform.analytics;
 struct EntityId {
   string value;
 
-  static EntityId generate()
-  {
+  static EntityId generate() {
     return EntityId(randomUUID().toString());
   }
 
@@ -47,8 +46,7 @@ struct AuditInfo {
   SysTime updatedAt;
   string updatedBy;
 
-  static AuditInfo create(string userId)
-  {
+  static AuditInfo create(string userId) {
     auto now = Clock.currTime();
     return AuditInfo(now, userId, now, userId);
   }
@@ -58,8 +56,7 @@ struct AuditInfo {
     return AuditInfo(createdAt, createdBy, Clock.currTime(), userId);
   }
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("createdAt", createdAt.toISOExtString())
       .set("createdBy", createdBy).set("updatedAt", updatedAt.toISOExtString())
       .set("updatedBy", updatedBy);

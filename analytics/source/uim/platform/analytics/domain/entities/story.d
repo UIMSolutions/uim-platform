@@ -24,12 +24,10 @@ class Story {
   AuditInfo audit;
   string[] tags;
 
-  this()
-  {
+  this() {
   }
 
-  static Story create(string title, string description, string ownerId)
-  {
+  static Story create(string title, string description, string ownerId) {
     auto s = new Story();
     s.id = EntityId.generate();
     s.title = title;
@@ -43,18 +41,15 @@ class Story {
     return s;
   }
 
-  void addSection(string heading, string narrative)
-  {
+  void addSection(string heading, string narrative) {
     sections ~= Section(EntityId.generate(), heading, narrative, []);
   }
 
-  void publish()
-  {
+  void publish() {
     status = ArtifactStatus.Published;
   }
 
-  void archive()
-  {
+  void archive() {
     status = ArtifactStatus.Archived;
   }
 }

@@ -19,8 +19,7 @@ struct AccessEvaluation {
 struct AccessControlEvaluator {
   /// Evaluate whether a request to a virtual host/path is allowed.
   static AccessEvaluation evaluate(AccessRule[] rules, string virtualHost,
-      ushort virtualPort, string urlPath,)
-  {
+      ushort virtualPort, string urlPath,) {
     // Find the most specific matching rule (longest urlPathPrefix match).
     AccessRule* bestMatch = null;
     size_t bestLen = 0;
@@ -51,8 +50,7 @@ struct AccessControlEvaluator {
   }
 
   /// Check if a path starts with the given prefix.
-  private static bool pathStartsWith(string path, string prefix)
-  {
+  private static bool pathStartsWith(string path, string prefix) {
     if (prefix.length == 0)
       return true;
     if (path.length < prefix.length)

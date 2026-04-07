@@ -30,8 +30,7 @@ struct DataSourceResponse {
   string databaseName;
   string status;
 
-  static DataSourceResponse fromEntity(DataSource ds)
-  {
+  static DataSourceResponse fromEntity(DataSource ds) {
     if (ds is null)
       return DataSourceResponse.init;
 

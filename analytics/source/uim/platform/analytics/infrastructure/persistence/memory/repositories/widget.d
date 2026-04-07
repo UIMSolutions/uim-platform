@@ -12,15 +12,13 @@ import uim.platform.analytics.domain.values.common;
 class MemoryWidgetRepository : WidgetRepository {
   private Widget[string] store;
 
-  Widget findById(EntityId id)
-  {
+  Widget findById(EntityId id) {
     if (auto p = id.value in store)
       return *p;
     return null;
   }
 
-  Widget[] findByDataset(EntityId datasetId)
-  {
+  Widget[] findByDataset(EntityId datasetId) {
     Widget[] result;
     foreach (w; store.byValue())
       if (w.datasetId == datasetId)
@@ -28,18 +26,15 @@ class MemoryWidgetRepository : WidgetRepository {
     return result;
   }
 
-  Widget[] findAll()
-  {
+  Widget[] findAll() {
     return store.values;
   }
 
-  void save(Widget widget)
-  {
+  void save(Widget widget) {
     store[widget.id.value] = widget;
   }
 
-  void remove(EntityId id)
-  {
+  void remove(EntityId id) {
     store.remove(id.value);
   }
 }

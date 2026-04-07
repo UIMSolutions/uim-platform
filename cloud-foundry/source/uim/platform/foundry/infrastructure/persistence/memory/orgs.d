@@ -15,39 +15,33 @@ import uim.platform.foundry.domain.ports.repositories.org;
 class MemoryOrgRepository : OrgRepository {
   private Organization[OrgId] store;
 
-  Organization[] findByTenant(TenantId tenantId)
-  {
+  Organization[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Organization* findById(OrgId id, TenantId tenantId)
-  {
+  Organization* findById(OrgId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Organization* findByName(TenantId tenantId, string name)
-  {
+  Organization* findByName(TenantId tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
   }
 
-  void save(Organization org)
-  {
+  void save(Organization org) {
     store[org.id] = org;
   }
 
-  void update(Organization org)
-  {
+  void update(Organization org) {
     store[org.id] = org;
   }
 
-  void remove(OrgId id, TenantId tenantId)
-  {
+  void remove(OrgId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

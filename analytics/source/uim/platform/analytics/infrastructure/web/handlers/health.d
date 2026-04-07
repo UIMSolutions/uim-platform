@@ -10,8 +10,7 @@ module uim.platform.analytics.infrastructure.web.handlers.health;
 @safe:
 
 class HealthHandler {
-  void check(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void check(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto j = Json.emptyObject;
     j["status"] = "healthy";
     j["service"] = "analytics";

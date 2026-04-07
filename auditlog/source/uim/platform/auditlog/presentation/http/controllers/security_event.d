@@ -21,20 +21,17 @@ mixin(ShowModule!());
 class SecurityEventController : SAPController {
   private WriteSecurityEventUseCase useCase;
 
-  this(WriteSecurityEventUseCase useCase)
-  {
+  this(WriteSecurityEventUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/security-events", &handleWrite);
   }
 
-  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;

@@ -17,13 +17,11 @@ import uim.platform.connectivity.domain.entities.cloud_connector;
 class ConnectorController {
   private ManageConnectorsUseCase uc;
 
-  this(ManageConnectorsUseCase uc)
-  {
+  this(ManageConnectorsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/connectors", &handleRegister);
@@ -33,8 +31,7 @@ class ConnectorController {
     router.delete_("/api/v1/connectors/*", &handleUnregister);
   }
 
-  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRegister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class ConnectorController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -88,8 +84,7 @@ class ConnectorController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class ConnectorController {
     }
   }
 
-  private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleHeartbeat(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // Extract connector id from /api/v1/connectors/{id}/heartbeat
@@ -143,8 +137,7 @@ class ConnectorController {
     }
   }
 
-  private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -166,8 +159,7 @@ class ConnectorController {
     }
   }
 
-  private static Json serializeConnector(ref const CloudConnector c)
-  {
+  private static Json serializeConnector(ref const CloudConnector c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["subaccountId"] = Json(c.subaccountId);
@@ -186,8 +178,7 @@ class ConnectorController {
     return j;
   }
 
-  private static string[] splitPath(string uri)
-  {
+  private static string[] splitPath(string uri) {
     // import std.string : indexOf, split;
 
     auto qpos = uri.indexOf('?');

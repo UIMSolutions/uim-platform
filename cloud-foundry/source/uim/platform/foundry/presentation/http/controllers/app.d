@@ -18,13 +18,11 @@ import uim.platform.foundry.domain.entities.application;
 class AppController : SAPController {
   private ManageAppsUseCase useCase;
 
-  this(ManageAppsUseCase useCase)
-  {
+  this(ManageAppsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     // Action routes (more specific — registered before wildcard)
@@ -40,8 +38,7 @@ class AppController : SAPController {
     router.delete_("/api/v1/apps/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -78,8 +75,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -100,8 +96,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -120,8 +115,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -158,8 +152,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -180,8 +173,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -202,8 +194,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -224,8 +215,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleScale(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -253,8 +243,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -272,8 +261,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -297,8 +285,7 @@ class AppController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -319,8 +306,7 @@ class AppController : SAPController {
     }
   }
 
-  private static Json serializeApp(ref const Application a)
-  {
+  private static Json serializeApp(ref const Application a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["spaceId"] = Json(a.spaceId);

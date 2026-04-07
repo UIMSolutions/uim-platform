@@ -23,12 +23,10 @@ class Dashboard {
   AuditInfo audit;
   string[] tags;
 
-  this()
-  {
+  this() {
   }
 
-  static Dashboard create(string name, string description, string ownerId)
-  {
+  static Dashboard create(string name, string description, string ownerId) {
     auto d = new Dashboard();
     d.id = EntityId.generate();
     d.name = name;
@@ -42,23 +40,19 @@ class Dashboard {
     return d;
   }
 
-  void addPage(string title)
-  {
+  void addPage(string title) {
     pages ~= Page(EntityId.generate(), title, []);
   }
 
-  void publish()
-  {
+  void publish() {
     status = ArtifactStatus.Published;
   }
 
-  void archive()
-  {
+  void archive() {
     status = ArtifactStatus.Archived;
   }
 
-  Json toJson()
-  {
+  Json toJson() {
     auto jPages = pages.map!(p => Json.emptyObject.set("id", p.id.value)
         .set("title", p.title).set("widgetIds", p.widgetIds.map!(wid => wid.value).array)).array;
 

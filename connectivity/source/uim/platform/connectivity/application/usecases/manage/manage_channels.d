@@ -24,15 +24,13 @@ class ManageChannelsUseCase : UIMUseCase {
   private ConnectivityLogRepository logRepo;
 
   this(ChannelRepository channelRepo, ConnectorRepository connectorRepo,
-      ConnectivityLogRepository logRepo)
-  {
+      ConnectivityLogRepository logRepo) {
     this.channelRepo = channelRepo;
     this.connectorRepo = connectorRepo;
     this.logRepo = logRepo;
   }
 
-  CommandResult createChannel(CreateChannelRequest req)
-  {
+  CommandResult createChannel(CreateChannelRequest req) {
     // Validate connector exists
     auto cc = connectorRepo.findById(req.connectorId);
     if (cc.id.length == 0)
@@ -65,8 +63,7 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult openChannel(ChannelId id)
-  {
+  CommandResult openChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
     if (ch.id.length == 0)
       return CommandResult(false, "", "Channel not found");
@@ -87,8 +84,7 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult closeChannel(ChannelId id)
-  {
+  CommandResult closeChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
     if (ch.id.length == 0)
       return CommandResult(false, "", "Channel not found");
@@ -102,23 +98,19 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServiceChannel getChannel(ChannelId id)
-  {
+  ServiceChannel getChannel(ChannelId id) {
     return channelRepo.findById(id);
   }
 
-  ServiceChannel[] listByConnector(ConnectorId connectorId)
-  {
+  ServiceChannel[] listByConnector(ConnectorId connectorId) {
     return channelRepo.findByConnector(connectorId);
   }
 
-  ServiceChannel[] listByTenant(TenantId tenantId)
-  {
+  ServiceChannel[] listByTenant(TenantId tenantId) {
     return channelRepo.findByTenant(tenantId);
   }
 
-  CommandResult deleteChannel(ChannelId id)
-  {
+  CommandResult deleteChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
     if (ch.id.length == 0)
       return CommandResult(false, "", "Channel not found");
@@ -128,8 +120,7 @@ class ManageChannelsUseCase : UIMUseCase {
   }
 
   private void recordLog(TenantId tenantId, ConnectivityEventType evtType,
-      string sourceId, string sourceType, string message)
-  {
+      string sourceId, string sourceType, string message) {
     // import std.uuid : randomUUID;
 
     ConnectivityLog entry;
@@ -145,8 +136,7 @@ class ManageChannelsUseCase : UIMUseCase {
 }
 
 private ChannelType parseChannelType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "http":
     return ChannelType.http;
   case "rfc":

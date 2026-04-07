@@ -18,20 +18,17 @@ import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
 class ConfigChangeController : SAPController {
   private WriteConfigChangeUseCase useCase;
 
-  this(WriteConfigChangeUseCase useCase)
-  {
+  this(WriteConfigChangeUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/config-changes", &handleWrite);
   }
 
-  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -61,8 +58,7 @@ class ConfigChangeController : SAPController {
     }
   }
 
-  private static AuditAttribute[] parseChanges(Json j)
-  {
+  private static AuditAttribute[] parseChanges(Json j) {
     AuditAttribute[] result;
     auto v = "changes" in j;
     if (v is null || (*v).type != Json.Type.array)

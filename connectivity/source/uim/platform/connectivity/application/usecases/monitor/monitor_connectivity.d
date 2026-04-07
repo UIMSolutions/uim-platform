@@ -27,28 +27,23 @@ struct ConnectivitySummary {
 class MonitorConnectivityUseCase : UIMUseCase {
   private ConnectivityLogRepository logRepo;
 
-  this(ConnectivityLogRepository logRepo)
-  {
+  this(ConnectivityLogRepository logRepo) {
     this.logRepo = logRepo;
   }
 
-  ConnectivityLog[] listLogs(TenantId tenantId)
-  {
+  ConnectivityLog[] listLogs(TenantId tenantId) {
     return logRepo.findByTenant(tenantId);
   }
 
-  ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity)
-  {
+  ConnectivityLog[] listBySeverity(TenantId tenantId, LogSeverity severity) {
     return logRepo.findBySeverity(tenantId, severity);
   }
 
-  ConnectivityLog[] listBySource(string sourceId)
-  {
+  ConnectivityLog[] listBySource(string sourceId) {
     return logRepo.findBySource(sourceId);
   }
 
-  ConnectivitySummary getSummary(TenantId tenantId)
-  {
+  ConnectivitySummary getSummary(TenantId tenantId) {
     auto logs = logRepo.findByTenant(tenantId);
     ConnectivitySummary summary;
     summary.totalEvents = logs.length;

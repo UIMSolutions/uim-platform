@@ -15,19 +15,16 @@ import uim.platform.analytics.app.dto.dashboard;
 class DashboardHandler {
   private DashboardUseCases useCases;
 
-  this(DashboardUseCases useCases)
-  {
+  this(DashboardUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto items = useCases.list();
     res.writeJsonBody(toJsonArray(items));
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     if (id.length == 0)
     {
@@ -43,8 +40,7 @@ class DashboardHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -59,8 +55,7 @@ class DashboardHandler {
     }
   }
 
-  void addPage(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void addPage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     try
     {
@@ -74,8 +69,7 @@ class DashboardHandler {
     }
   }
 
-  void publish(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     auto result = useCases.publish(id);
     if (result.id.length == 0)
@@ -86,8 +80,7 @@ class DashboardHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
@@ -100,8 +93,7 @@ private string extractId(scope HTTPServerRequest req) {
   auto path = req.requestURI;
   auto parts = path.split("/");
   // /api/v1/dashboards/{id}...
-  foreach (i, part; parts)
-  {
+  foreach (i, part; parts) {
     if (part == "dashboards" && i + 1 < parts.length)
     {
       auto candidate = parts[i + 1];

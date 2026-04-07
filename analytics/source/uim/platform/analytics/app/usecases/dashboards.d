@@ -17,34 +17,29 @@ mixin(ShowModule!());
 class DashboardUseCases {
   private DashboardRepository repo;
 
-  this(DashboardRepository repo)
-  {
+  this(DashboardRepository repo) {
     this.repo = repo;
   }
 
-  DashboardResponse create(CreateDashboardRequest req)
-  {
+  DashboardResponse create(CreateDashboardRequest req) {
     auto dashboard = Dashboard.create(req.name, req.description, req.ownerId);
     repo.save(dashboard);
     return DashboardResponse.fromEntity(dashboard);
   }
 
-  DashboardResponse getById(string id)
-  {
+  DashboardResponse getById(string id) {
     auto d = repo.findById(EntityId(id));
     return DashboardResponse.fromEntity(d);
   }
 
-  DashboardResponse[] list()
-  {
+  DashboardResponse[] list() {
     DashboardResponse[] result;
     foreach (d; repo.findAll())
       result ~= DashboardResponse.fromEntity(d);
     return result;
   }
 
-  DashboardResponse addPage(string dashboardId, string title)
-  {
+  DashboardResponse addPage(string dashboardId, string title) {
     auto d = repo.findById(EntityId(dashboardId));
     if (d is null)
       return DashboardResponse.init;
@@ -53,8 +48,7 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  DashboardResponse publish(string dashboardId)
-  {
+  DashboardResponse publish(string dashboardId) {
     auto d = repo.findById(EntityId(dashboardId));
     if (d is null)
       return DashboardResponse.init;
@@ -63,8 +57,7 @@ class DashboardUseCases {
     return DashboardResponse.fromEntity(d);
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

@@ -15,55 +15,46 @@ import uim.platform.foundry.domain.ports.repositories.route;
 class MemoryRouteRepository : RouteRepository {
   private Route[RouteId] store;
 
-  Route[] findBySpace(SpaceId spaceId, TenantId tenantId)
-  {
+  Route[] findBySpace(SpaceId spaceId, TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
-  Route* findById(RouteId id, TenantId tenantId)
-  {
+  Route* findById(RouteId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId)
-  {
+  Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.host == host && e.domainId == domainId)
         return &e;
     return null;
   }
 
-  Route[] findByDomain(DomainId domainId, TenantId tenantId)
-  {
+  Route[] findByDomain(DomainId domainId, TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
   }
 
-  Route[] findByApp(AppId appId, TenantId tenantId)
-  {
+  Route[] findByApp(AppId appId, TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.mappedAppIds.canFind(appId)).array;
   }
 
-  Route[] findByTenant(TenantId tenantId)
-  {
+  Route[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void save(Route route)
-  {
+  void save(Route route) {
     store[route.id] = route;
   }
 
-  void update(Route route)
-  {
+  void update(Route route) {
     store[route.id] = route;
   }
 
-  void remove(RouteId id, TenantId tenantId)
-  {
+  void remove(RouteId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

@@ -23,14 +23,12 @@ class ManageDestinationsUseCase : UIMUseCase {
   private DestinationRepository repo;
   private ConnectivityLogRepository logRepo;
 
-  this(DestinationRepository repo, ConnectivityLogRepository logRepo)
-  {
+  this(DestinationRepository repo, ConnectivityLogRepository logRepo) {
     this.repo = repo;
     this.logRepo = logRepo;
   }
 
-  CommandResult createDestination(CreateDestinationRequest req)
-  {
+  CommandResult createDestination(CreateDestinationRequest req) {
     // Validate unique name within tenant
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
@@ -84,8 +82,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req)
-  {
+  CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
     auto dest = repo.findById(id);
     if (dest.id.length == 0)
       return CommandResult(false, "", "Destination not found");
@@ -138,23 +135,19 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Destination getDestination(DestinationId id)
-  {
+  Destination getDestination(DestinationId id) {
     return repo.findById(id);
   }
 
-  Destination getByName(TenantId tenantId, string name)
-  {
+  Destination getByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 
-  Destination[] listDestinations(TenantId tenantId)
-  {
+  Destination[] listDestinations(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteDestination(DestinationId id)
-  {
+  CommandResult deleteDestination(DestinationId id) {
     auto dest = repo.findById(id);
     if (dest.id.length == 0)
       return CommandResult(false, "", "Destination not found");
@@ -165,8 +158,7 @@ class ManageDestinationsUseCase : UIMUseCase {
 }
 
 private DestinationType parseDestinationType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "http":
     return DestinationType.http;
   case "rfc":
@@ -181,8 +173,7 @@ private DestinationType parseDestinationType(string s) {
 }
 
 private AuthenticationType parseAuthType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "noAuthentication":
     return AuthenticationType.noAuthentication;
   case "basicAuthentication":
@@ -211,8 +202,7 @@ private AuthenticationType parseAuthType(string s) {
 }
 
 private ProxyType parseProxyType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "internet":
     return ProxyType.internet;
   case "onPremise":

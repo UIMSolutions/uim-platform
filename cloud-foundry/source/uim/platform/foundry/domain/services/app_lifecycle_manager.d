@@ -23,16 +23,14 @@ class AppLifecycleManager {
   private OrgRepository orgRepo;
   private SpaceRepository spaceRepo;
 
-  this(AppRepository appRepo, OrgRepository orgRepo, SpaceRepository spaceRepo)
-  {
+  this(AppRepository appRepo, OrgRepository orgRepo, SpaceRepository spaceRepo) {
     this.appRepo = appRepo;
     this.orgRepo = orgRepo;
     this.spaceRepo = spaceRepo;
   }
 
   /// Stage an application (simulate buildpack detection and compilation).
-  bool stageApp(AppId appId, TenantId tenantId)
-  {
+  bool stageApp(AppId appId, TenantId tenantId) {
     auto app = appRepo.findById(appId, tenantId);
     if (app is null)
       return false;
@@ -47,8 +45,7 @@ class AppLifecycleManager {
   }
 
   /// Start an application (transition from staging/stopped to started).
-  bool startApp(AppId appId, TenantId tenantId)
-  {
+  bool startApp(AppId appId, TenantId tenantId) {
     auto app = appRepo.findById(appId, tenantId);
     if (app is null)
       return false;
@@ -61,8 +58,7 @@ class AppLifecycleManager {
   }
 
   /// Stop a running application.
-  bool stopApp(AppId appId, TenantId tenantId)
-  {
+  bool stopApp(AppId appId, TenantId tenantId) {
     auto app = appRepo.findById(appId, tenantId);
     if (app is null)
       return false;
@@ -77,8 +73,7 @@ class AppLifecycleManager {
   }
 
   /// Restart an application (stop then start).
-  bool restartApp(AppId appId, TenantId tenantId)
-  {
+  bool restartApp(AppId appId, TenantId tenantId) {
     auto app = appRepo.findById(appId, tenantId);
     if (app is null)
       return false;
@@ -93,8 +88,7 @@ class AppLifecycleManager {
   }
 
   /// Scale an application — validate against org quota before applying.
-  bool scaleApp(AppId appId, TenantId tenantId, int instances, int memoryMb, int diskMb)
-  {
+  bool scaleApp(AppId appId, TenantId tenantId, int instances, int memoryMb, int diskMb) {
     auto app = appRepo.findById(appId, tenantId);
     if (app is null)
       return false;
@@ -129,8 +123,7 @@ class AppLifecycleManager {
   }
 
   /// Check if org memory quota would be exceeded by adding the given memory.
-  bool isQuotaExceeded(OrgId orgId, TenantId tenantId, int additionalMemoryMb)
-  {
+  bool isQuotaExceeded(OrgId orgId, TenantId tenantId, int additionalMemoryMb) {
     auto org = orgRepo.findById(orgId, tenantId);
     if (org is null)
       return true;

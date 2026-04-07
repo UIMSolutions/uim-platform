@@ -17,13 +17,11 @@ import uim.platform.auditlog.application.dto;
 class ManageRetentionUseCase : UIMUseCase {
   private RetentionPolicyRepository policyRepo;
 
-  this(RetentionPolicyRepository policyRepo)
-  {
+  this(RetentionPolicyRepository policyRepo) {
     this.policyRepo = policyRepo;
   }
 
-  CommandResult createPolicy(CreateRetentionPolicyRequest req)
-  {
+  CommandResult createPolicy(CreateRetentionPolicyRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -48,18 +46,15 @@ class ManageRetentionUseCase : UIMUseCase {
     return CommandResult(policy.id, "");
   }
 
-  RetentionPolicy getPolicy(RetentionPolicyId id, TenantId tenantId)
-  {
+  RetentionPolicy getPolicy(RetentionPolicyId id, TenantId tenantId) {
     return policyRepo.findById(id, tenantId);
   }
 
-  RetentionPolicy[] listPolicies(TenantId tenantId)
-  {
+  RetentionPolicy[] listPolicies(TenantId tenantId) {
     return policyRepo.findByTenant(tenantId);
   }
 
-  CommandResult updatePolicy(UpdateRetentionPolicyRequest req)
-  {
+  CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
     if (!policyRepo.existsById(req.id, req.tenantId))
       return CommandResult("", "Retention policy not found");
 
@@ -79,8 +74,7 @@ class ManageRetentionUseCase : UIMUseCase {
     return CommandResult(policy.id, "");
   }
 
-  void deletePolicy(RetentionPolicyId id, TenantId tenantId)
-  {
+  void deletePolicy(RetentionPolicyId id, TenantId tenantId) {
     policyRepo.remove(id, tenantId);
   }
 }

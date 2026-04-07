@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class AuditConfigController : SAPController {
   private ManageAuditConfigUseCase useCase;
 
-  this(ManageAuditConfigUseCase useCase)
-  {
+  this(ManageAuditConfigUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/configs", &handleCreate);
@@ -38,8 +36,7 @@ class AuditConfigController : SAPController {
     router.delete_("/api/v1/configs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -84,8 +81,7 @@ class AuditConfigController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto configs = useCase.listConfigs();
@@ -103,8 +99,7 @@ class AuditConfigController : SAPController {
     }
   }
 
-  private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -122,8 +117,7 @@ class AuditConfigController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -174,8 +168,7 @@ class AuditConfigController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -191,8 +184,7 @@ class AuditConfigController : SAPController {
     }
   }
 
-  private static Json serializeConfig(ref const AuditConfig c)
-  {
+  private static Json serializeConfig(ref const AuditConfig c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

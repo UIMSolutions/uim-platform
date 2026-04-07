@@ -20,14 +20,12 @@ class WriteDataAccessLogUseCase : UIMUseCase {
   private AuditLogRepository auditRepo;
   private DataAccessLogRepository dalRepo;
 
-  this(AuditLogRepository auditRepo, DataAccessLogRepository dalRepo)
-  {
+  this(AuditLogRepository auditRepo, DataAccessLogRepository dalRepo) {
     this.auditRepo = auditRepo;
     this.dalRepo = dalRepo;
   }
 
-  CommandResult writeLog(WriteDataAccessLogRequest req)
-  {
+  CommandResult writeLog(WriteDataAccessLogRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
 

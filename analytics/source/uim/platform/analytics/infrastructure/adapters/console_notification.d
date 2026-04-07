@@ -12,13 +12,11 @@ import uim.platform.analytics.app.ports.notification_port;
 /// Adapter: logs notifications to console (development stand-in for email/push).
 class ConsoleNotificationAdapter : NotificationPort {
 
-  void notify(string userId, string subject, string body_)
-  {
+  void notify(string userId, string subject, string body_) {
     logInfo("NOTIFICATION [%s] %s: %s", userId, subject, body_);
   }
 
-  void notifyGroup(string[] userIds, string subject, string body_)
-  {
+  void notifyGroup(string[] userIds, string subject, string body_) {
     foreach (uid; userIds)
       notify(uid, subject, body_);
   }

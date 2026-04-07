@@ -22,12 +22,10 @@ class Dataset {
   AuditInfo audit;
   ArtifactStatus status;
 
-  this()
-  {
+  this() {
   }
 
-  static Dataset create(string name, string description, string dataSourceId, string userId)
-  {
+  static Dataset create(string name, string description, string dataSourceId, string userId) {
     auto dataset = new Dataset();
     dataset.id = EntityId.generate();
     dataset.name = name;
@@ -39,18 +37,15 @@ class Dataset {
     return dataset;
   }
 
-  void addDimension(string colName, ColumnDataType dataType)
-  {
+  void addDimension(string colName, ColumnDataType dataType) {
     columns ~= Column(colName, ColumnRole.Dimension, dataType, AggregationType.Count);
   }
 
-  void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg)
-  {
+  void addMeasure(string colName, ColumnDataType dataType, AggregationType defaultAgg) {
     columns ~= Column(colName, ColumnRole.Measure, dataType, defaultAgg);
   }
 
-  Column[] dimensions()
-  {
+  Column[] dimensions() {
     Column[] result;
     foreach (c; columns)
       if (c.role == ColumnRole.Dimension)
@@ -58,8 +53,7 @@ class Dataset {
     return result;
   }
 
-  Column[] measures()
-  {
+  Column[] measures() {
     Column[] result;
     foreach (c; columns)
       if (c.role == ColumnRole.Measure)

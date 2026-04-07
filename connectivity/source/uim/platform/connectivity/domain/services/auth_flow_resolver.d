@@ -19,8 +19,7 @@ struct AuthFlowResult {
 /// Domain service: validates and resolves authentication configuration for destinations.
 struct AuthFlowResolver {
   /// Validate that the destination has the required fields for its auth type.
-  static AuthFlowResult validate(const ref Destination dest)
-  {
+  static AuthFlowResult validate(const ref Destination dest) {
     string[] errors;
 
     final switch (dest.authType)

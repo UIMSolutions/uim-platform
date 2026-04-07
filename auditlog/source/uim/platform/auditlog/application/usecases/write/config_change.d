@@ -20,14 +20,12 @@ class WriteConfigChangeUseCase : UIMUseCase {
   private AuditLogRepository auditRepo;
   private ConfigChangeLogRepository cclRepo;
 
-  this(AuditLogRepository auditRepo, ConfigChangeLogRepository cclRepo)
-  {
+  this(AuditLogRepository auditRepo, ConfigChangeLogRepository cclRepo) {
     this.auditRepo = auditRepo;
     this.cclRepo = cclRepo;
   }
 
-  CommandResult writeChange(WriteConfigChangeLogRequest req)
-  {
+  CommandResult writeChange(WriteConfigChangeLogRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.configType.length == 0)

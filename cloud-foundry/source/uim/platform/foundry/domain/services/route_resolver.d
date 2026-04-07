@@ -19,22 +19,19 @@ class RouteResolver {
   private RouteRepository routeRepo;
   private DomainRepository domainRepo;
 
-  this(RouteRepository routeRepo, DomainRepository domainRepo)
-  {
+  this(RouteRepository routeRepo, DomainRepository domainRepo) {
     this.routeRepo = routeRepo;
     this.domainRepo = domainRepo;
   }
 
   /// Check if a host+domain combination is already taken.
-  bool isRouteAvailable(TenantId tenantId, string host, DomainId domainId)
-  {
+  bool isRouteAvailable(TenantId tenantId, string host, DomainId domainId) {
     auto existing = routeRepo.findByHostAndDomain(tenantId, host, domainId);
     return existing is null;
   }
 
   /// Validate that a domain is accessible for the given org.
-  bool isDomainAccessible(DomainId domainId, OrgId orgId, TenantId tenantId)
-  {
+  bool isDomainAccessible(DomainId domainId, OrgId orgId, TenantId tenantId) {
     auto dom = domainRepo.findById(domainId, tenantId);
     if (dom is null)
       return false;
@@ -48,8 +45,7 @@ class RouteResolver {
   }
 
   /// Map an application to a route.
-  bool mapApp(RouteId routeId, AppId appId, TenantId tenantId)
-  {
+  bool mapApp(RouteId routeId, AppId appId, TenantId tenantId) {
     auto route = routeRepo.findById(routeId, tenantId);
     if (route is null)
       return false;
@@ -64,8 +60,7 @@ class RouteResolver {
   }
 
   /// Unmap an application from a route.
-  bool unmapApp(RouteId routeId, AppId appId, TenantId tenantId)
-  {
+  bool unmapApp(RouteId routeId, AppId appId, TenantId tenantId) {
     auto route = routeRepo.findById(routeId, tenantId);
     if (route is null)
       return false;

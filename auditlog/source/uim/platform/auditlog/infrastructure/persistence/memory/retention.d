@@ -20,48 +20,40 @@ mixin(ShowModule!());
 class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
   private RetentionPolicy[RetentionPolicyId] store;
 
-  bool existsById(RetentionPolicyId id, TenantId tenantId)
-  {
+  bool existsById(RetentionPolicyId id, TenantId tenantId) {
     return id in store && store[id].tenantId == tenantId;
   }
 
-  RetentionPolicy findById(RetentionPolicyId id, TenantId tenantId)
-  {
+  RetentionPolicy findById(RetentionPolicyId id, TenantId tenantId) {
     if (existsById(id, tenantId))
       return store[id];
     return RetentionPolicy.init;
   }
 
-  bool existsDefault(TenantId tenantId)
-  {
+  bool existsDefault(TenantId tenantId) {
     return findByTenant(tenantId).any!(p => p.isDefault && p.status == RetentionStatus.active);
   }
 
-  RetentionPolicy findDefault(TenantId tenantId)
-  {
+  RetentionPolicy findDefault(TenantId tenantId) {
     foreach (ref p; findByTenant(tenantId))
       if (p.isDefault && p.status == RetentionStatus.active)
         return p;
     return RetentionPolicy.init;
   }
 
-  RetentionPolicy[] findByTenant(TenantId tenantId)
-  {
+  RetentionPolicy[] findByTenant(TenantId tenantId) {
     return store.byValue.filter!(p => p.tenantId == tenantId).array;
   }
 
-  void save(RetentionPolicy policy)
-  {
+  void save(RetentionPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void update(RetentionPolicy policy)
-  {
+  void update(RetentionPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void remove(RetentionPolicyId id, TenantId tenantId)
-  {
+  void remove(RetentionPolicyId id, TenantId tenantId) {
     if (existsById(id, tenantId))
       store.remove(id);
   }

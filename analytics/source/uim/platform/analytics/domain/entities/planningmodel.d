@@ -23,13 +23,11 @@ class PlanningModel {
   PlanningStatus planStatus;
   AuditInfo audit;
 
-  this()
-  {
+  this() {
   }
 
   static PlanningModel create(string name, string description, string datasetId,
-      TimeGranularity granularity, string userId)
-  {
+      TimeGranularity granularity, string userId) {
     auto pm = new PlanningModel();
     pm.id = EntityId.generate();
     pm.name = name;
@@ -45,23 +43,19 @@ class PlanningModel {
     return pm;
   }
 
-  void addForecastVersion(string name)
-  {
+  void addForecastVersion(string name) {
     versions ~= PlanningVersion(EntityId.generate(), name, VersionType.Forecast, false);
   }
 
-  void lock()
-  {
+  void lock() {
     planStatus = PlanningStatus.Locked;
   }
 
-  void unlock()
-  {
+  void unlock() {
     planStatus = PlanningStatus.InProgress;
   }
 
-  void approve()
-  {
+  void approve() {
     planStatus = PlanningStatus.Approved;
   }
 }

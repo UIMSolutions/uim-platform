@@ -20,14 +20,12 @@ class DataSourceUseCases {
   private DataSourceRepository repo;
   private DataConnector connector;
 
-  this(DataSourceRepository repo, DataConnector connector)
-  {
+  this(DataSourceRepository repo, DataConnector connector) {
     this.repo = repo;
     this.connector = connector;
   }
 
-  DataSourceResponse create(CreateDataSourceRequest req)
-  {
+  DataSourceResponse create(CreateDataSourceRequest req) {
     DataSourceType st;
     try
     {
@@ -43,21 +41,18 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  DataSourceResponse getById(string id)
-  {
+  DataSourceResponse getById(string id) {
     return DataSourceResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  DataSourceResponse[] list()
-  {
+  DataSourceResponse[] list() {
     DataSourceResponse[] result;
     foreach (ds; repo.findAll())
       result ~= DataSourceResponse.fromEntity(ds);
     return result;
   }
 
-  DataSourceResponse testConnection(string id)
-  {
+  DataSourceResponse testConnection(string id) {
     auto ds = repo.findById(EntityId(id));
     if (ds is null)
       return DataSourceResponse.init;
@@ -75,8 +70,7 @@ class DataSourceUseCases {
     return DataSourceResponse.fromEntity(ds);
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

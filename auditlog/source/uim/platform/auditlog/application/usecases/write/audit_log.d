@@ -19,14 +19,12 @@ class WriteAuditLogUseCase : UIMUseCase {
   private AuditLogRepository logRepo;
   private AuditConfigRepository configRepo;
 
-  this(AuditLogRepository logRepo, AuditConfigRepository configRepo)
-  {
+  this(AuditLogRepository logRepo, AuditConfigRepository configRepo) {
     this.logRepo = logRepo;
     this.configRepo = configRepo;
   }
 
-  CommandResult writeLog(WriteAuditLogRequest req)
-  {
+  CommandResult writeLog(WriteAuditLogRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
 

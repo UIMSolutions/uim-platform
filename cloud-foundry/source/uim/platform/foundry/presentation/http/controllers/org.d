@@ -18,13 +18,11 @@ import uim.platform.foundry.domain.entities.organization;
 class OrgController {
   private ManageOrgsUseCase useCase;
 
-  this(ManageOrgsUseCase useCase)
-  {
+  this(ManageOrgsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/orgs", &handleCreate);
     router.get("/api/v1/orgs", &handleList);
     router.post("/api/v1/orgs/suspend/*", &handleSuspend);
@@ -34,8 +32,7 @@ class OrgController {
     router.delete_("/api/v1/orgs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -65,8 +62,7 @@ class OrgController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -87,8 +83,7 @@ class OrgController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class OrgController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -139,8 +133,7 @@ class OrgController {
     }
   }
 
-  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -161,8 +154,7 @@ class OrgController {
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -183,8 +175,7 @@ class OrgController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -205,8 +196,7 @@ class OrgController {
     }
   }
 
-  private static Json serializeOrg(ref const Organization o)
-  {
+  private static Json serializeOrg(ref const Organization o) {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);

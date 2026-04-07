@@ -22,14 +22,12 @@ class ManageExportsUseCase : UIMUseCase {
   private ExportJobRepository jobRepo;
   private AuditLogRepository auditRepo;
 
-  this(ExportJobRepository jobRepo, AuditLogRepository auditRepo)
-  {
+  this(ExportJobRepository jobRepo, AuditLogRepository auditRepo) {
     this.jobRepo = jobRepo;
     this.auditRepo = auditRepo;
   }
 
-  CommandResult createExport(CreateExportJobRequest req)
-  {
+  CommandResult createExport(CreateExportJobRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
 
@@ -60,23 +58,19 @@ class ManageExportsUseCase : UIMUseCase {
     return CommandResult(job.id, "");
   }
 
-  bool existsExport(ExportJobId id, TenantId tenantId)
-  {
+  bool existsExport(ExportJobId id, TenantId tenantId) {
     return jobRepo.existsById(id, tenantId);
   }
 
-  ExportJob getExport(ExportJobId id, TenantId tenantId)
-  {
+  ExportJob getExport(ExportJobId id, TenantId tenantId) {
     return jobRepo.findById(id, tenantId);
   }
 
-  ExportJob[] listExports(TenantId tenantId)
-  {
+  ExportJob[] listExports(TenantId tenantId) {
     return jobRepo.findByTenant(tenantId);
   }
 
-  void deleteExport(ExportJobId id, TenantId tenantId)
-  {
+  void deleteExport(ExportJobId id, TenantId tenantId) {
     jobRepo.remove(id, tenantId);
   }
 }

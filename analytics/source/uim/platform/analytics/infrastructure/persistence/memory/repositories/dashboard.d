@@ -18,15 +18,13 @@ mixin(ShowModule!());
 class MemoryDashboardRepository : DashboardRepository {
   private Dashboard[string] store;
 
-  Dashboard findById(EntityId id)
-  {
+  Dashboard findById(EntityId id) {
     if (auto p = id.value in store)
       return *p;
     return null;
   }
 
-  Dashboard[] findByOwner(EntityId ownerId)
-  {
+  Dashboard[] findByOwner(EntityId ownerId) {
     Dashboard[] result;
     foreach (d; store.byValue())
       if (d.ownerId == ownerId)
@@ -34,8 +32,7 @@ class MemoryDashboardRepository : DashboardRepository {
     return result;
   }
 
-  Dashboard[] findByStatus(ArtifactStatus status)
-  {
+  Dashboard[] findByStatus(ArtifactStatus status) {
     Dashboard[] result;
     foreach (d; store.byValue())
       if (d.status == status)
@@ -43,18 +40,15 @@ class MemoryDashboardRepository : DashboardRepository {
     return result;
   }
 
-  Dashboard[] findAll()
-  {
+  Dashboard[] findAll() {
     return store.values;
   }
 
-  void save(Dashboard dashboard)
-  {
+  void save(Dashboard dashboard) {
     store[dashboard.id.value] = dashboard;
   }
 
-  void remove(EntityId id)
-  {
+  void remove(EntityId id) {
     store.remove(id.value);
   }
 }

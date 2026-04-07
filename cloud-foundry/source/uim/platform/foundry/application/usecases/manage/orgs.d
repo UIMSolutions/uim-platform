@@ -20,14 +20,12 @@ class ManageOrgsUseCase : UIMUseCase {
   private OrgRepository repo;
   private SpaceRepository spaceRepo;
 
-  this(OrgRepository repo, SpaceRepository spaceRepo)
-  {
+  this(OrgRepository repo, SpaceRepository spaceRepo) {
     this.repo = repo;
     this.spaceRepo = spaceRepo;
   }
 
-  CommandResult createOrg(CreateOrgRequest req)
-  {
+  CommandResult createOrg(CreateOrgRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -57,18 +55,15 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(org.id, "");
   }
 
-  Organization* getOrg(OrgId id, TenantId tenantId)
-  {
+  Organization* getOrg(OrgId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Organization[] listOrgs(TenantId tenantId)
-  {
+  Organization[] listOrgs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateOrg(UpdateOrgRequest req)
-  {
+  CommandResult updateOrg(UpdateOrgRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Organization ID is required");
     if (req.tenantId.length == 0)
@@ -97,8 +92,7 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult suspendOrg(OrgId id, TenantId tenantId)
-  {
+  CommandResult suspendOrg(OrgId id, TenantId tenantId) {
     auto org = repo.findById(id, tenantId);
     if (org is null)
       return CommandResult("", "Organization not found");
@@ -111,8 +105,7 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult activateOrg(OrgId id, TenantId tenantId)
-  {
+  CommandResult activateOrg(OrgId id, TenantId tenantId) {
     auto org = repo.findById(id, tenantId);
     if (org is null)
       return CommandResult("", "Organization not found");
@@ -125,8 +118,7 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteOrg(OrgId id, TenantId tenantId)
-  {
+  CommandResult deleteOrg(OrgId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Organization not found");

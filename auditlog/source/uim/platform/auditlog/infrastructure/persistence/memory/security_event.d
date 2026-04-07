@@ -20,47 +20,39 @@ mixin(ShowModule!());
 class MemorySecurityEventRepository : SecurityEventRepository {
   private SecurityEvent[] store;
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId)
-  {
+  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
-  SecurityEvent findByAuditLogId(AuditLogId auditLogId, TenantId tenantId)
-  {
+  SecurityEvent findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
     foreach (e; findByTenant(tenantId))
       if (e.auditLogId == auditLogId)
         return e;
     return SecurityEvent.init;
   }
 
-  SecurityEvent[] findByTenant(TenantId tenantId)
-  {
+  SecurityEvent[] findByTenant(TenantId tenantId) {
     return store.filter!(e => e.tenantId == tenantId).array;
   }
 
-  SecurityEvent[] findByUser(TenantId tenantId, UserId userId)
-  {
+  SecurityEvent[] findByUser(TenantId tenantId, UserId userId) {
     return findByTenant(tenantId).filter!(e => e.userId == userId).array;
   }
 
-  SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome)
-  {
+  SecurityEvent[] findByOutcome(TenantId tenantId, AuditOutcome outcome) {
     return findByTenant(tenantId).filter!(e => e.outcome == outcome).array;
   }
 
-  SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo)
-  {
+  SecurityEvent[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo) {
     return findByTenant(tenantId).filter!(e => e.timestamp >= timeFrom && e.timestamp <= timeTo)
       .array;
   }
 
-  void save(SecurityEvent event)
-  {
+  void save(SecurityEvent event) {
     store ~= event;
   }
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp)
-  {
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 }

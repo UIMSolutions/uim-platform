@@ -23,14 +23,12 @@ class WriteSecurityEventUseCase : UIMUseCase {
   private AuditLogRepository auditRepo;
   private SecurityEventRepository secRepo;
 
-  this(AuditLogRepository auditRepo, SecurityEventRepository secRepo)
-  {
+  this(AuditLogRepository auditRepo, SecurityEventRepository secRepo) {
     this.auditRepo = auditRepo;
     this.secRepo = secRepo;
   }
 
-  CommandResult writeEvent(WriteSecurityEventRequest req)
-  {
+  CommandResult writeEvent(WriteSecurityEventRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
 
@@ -78,8 +76,7 @@ class WriteSecurityEventUseCase : UIMUseCase {
     return CommandResult(auditId, "");
   }
 
-  private AuditAction mapEventTypeToAction(string eventType)
-  {
+  private AuditAction mapEventTypeToAction(string eventType) {
     switch (eventType)
     {
     case "login":
@@ -103,8 +100,7 @@ class WriteSecurityEventUseCase : UIMUseCase {
     }
   }
 
-  private string buildSecurityMessage(WriteSecurityEventRequest req)
-  {
+  private string buildSecurityMessage(WriteSecurityEventRequest req) {
     // import std.conv : to;
 
     return req.eventType ~ " by user " ~ req.userName ~ " from " ~ req.ipAddress

@@ -20,18 +20,15 @@ mixin(ShowModule!());
 class MemoryAuditConfigRepository : AuditConfigRepository {
   private AuditConfig[AuditConfigId] store;
 
-  AuditConfig[] findAll()
-  {
+  AuditConfig[] findAll() {
     return store.byValue().array;
   }
 
-  bool existsByTenant(TenantId tenantId)
-  {
+  bool existsByTenant(TenantId tenantId) {
     return findAll().any!(c => c.tenantId == tenantId);
   }
 
-  AuditConfig findByTenant(TenantId tenantId)
-  {
+  AuditConfig findByTenant(TenantId tenantId) {
     if (!existsByTenant(tenantId))
       return AuditConfig.init;
 
@@ -42,28 +39,23 @@ class MemoryAuditConfigRepository : AuditConfigRepository {
     return AuditConfig.init;
   }
 
-  bool existsById(AuditConfigId id)
-  {
+  bool existsById(AuditConfigId id) {
     return (id in store);
   }
 
-  AuditConfig findById(AuditConfigId id)
-  {
+  AuditConfig findById(AuditConfigId id) {
     return existsById(id) ? store[id] : AuditConfig.init;
   }
 
-  void save(AuditConfig config)
-  {
+  void save(AuditConfig config) {
     store[config.id] = config;
   }
 
-  void update(AuditConfig config)
-  {
+  void update(AuditConfig config) {
     store[config.id] = config;
   }
 
-  void remove(AuditConfigId id, TenantId tenantId)
-  {
+  void remove(AuditConfigId id, TenantId tenantId) {
     if (existsById(id) && store[id].tenantId == tenantId)
       store.remove(id);
   }

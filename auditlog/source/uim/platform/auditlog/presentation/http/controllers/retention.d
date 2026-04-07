@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class RetentionController : SAPController {
   private ManageRetentionUseCase useCase;
 
-  this(ManageRetentionUseCase useCase)
-  {
+  this(ManageRetentionUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/retention", &handleCreate);
@@ -37,8 +35,7 @@ class RetentionController : SAPController {
     router.delete_("/api/v1/retention/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -88,8 +84,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -108,8 +103,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -147,8 +141,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private static Json serializePolicy(ref const RetentionPolicy p)
-  {
+  private static Json serializePolicy(ref const RetentionPolicy p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);
@@ -187,8 +179,7 @@ class RetentionController : SAPController {
     return j;
   }
 
-  private static AuditCategory[] parseCategoryArray(Json j)
-  {
+  private static AuditCategory[] parseCategoryArray(Json j) {
     AuditCategory[] result;
     auto cats = jsonStrArray(j, "categories");
     foreach (c; cats)
@@ -196,8 +187,7 @@ class RetentionController : SAPController {
     return result;
   }
 
-  private static AuditCategory parseCategory(string s)
-  {
+  private static AuditCategory parseCategory(string s) {
     switch (s)
     {
     case "audit.security-events", "securityEvents":
@@ -213,8 +203,7 @@ class RetentionController : SAPController {
     }
   }
 
-  private static string categoryToString(AuditCategory c)
-  {
+  private static string categoryToString(AuditCategory c) {
     final switch (c)
     {
     case AuditCategory.securityEvents:

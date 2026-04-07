@@ -20,14 +20,12 @@ class ManageAppsUseCase : UIMUseCase {
   private AppRepository repo;
   private AppLifecycleManager lifecycle;
 
-  this(AppRepository repo, AppLifecycleManager lifecycle)
-  {
+  this(AppRepository repo, AppLifecycleManager lifecycle) {
     this.repo = repo;
     this.lifecycle = lifecycle;
   }
 
-  CommandResult createApp(CreateAppRequest req)
-  {
+  CommandResult createApp(CreateAppRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.spaceId.length == 0)
@@ -66,23 +64,19 @@ class ManageAppsUseCase : UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  Application* getApp(AppId id, TenantId tenantId)
-  {
+  Application* getApp(AppId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Application[] listApps(TenantId tenantId)
-  {
+  Application[] listApps(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Application[] listBySpace(SpaceId spaceId, TenantId tenantId)
-  {
+  Application[] listBySpace(SpaceId spaceId, TenantId tenantId) {
     return repo.findBySpace(spaceId, tenantId);
   }
 
-  CommandResult updateApp(UpdateAppRequest req)
-  {
+  CommandResult updateApp(UpdateAppRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Application ID is required");
     if (req.tenantId.length == 0)
@@ -123,8 +117,7 @@ class ManageAppsUseCase : UIMUseCase {
   }
 
   /// Start an application (stage then start).
-  CommandResult startApp(AppId id, TenantId tenantId)
-  {
+  CommandResult startApp(AppId id, TenantId tenantId) {
     auto app = repo.findById(id, tenantId);
     if (app is null)
       return CommandResult("", "Application not found");
@@ -138,22 +131,19 @@ class ManageAppsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult stopApp(AppId id, TenantId tenantId)
-  {
+  CommandResult stopApp(AppId id, TenantId tenantId) {
     if (!lifecycle.stopApp(id, tenantId))
       return CommandResult("", "Cannot stop application");
     return CommandResult(id, "");
   }
 
-  CommandResult restartApp(AppId id, TenantId tenantId)
-  {
+  CommandResult restartApp(AppId id, TenantId tenantId) {
     if (!lifecycle.restartApp(id, tenantId))
       return CommandResult("", "Cannot restart application");
     return CommandResult(id, "");
   }
 
-  CommandResult scaleApp(ScaleAppRequest req)
-  {
+  CommandResult scaleApp(ScaleAppRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Application ID is required");
 
@@ -163,8 +153,7 @@ class ManageAppsUseCase : UIMUseCase {
   }
 
   /// Get environment variables for an application.
-  string getEnvironment(AppId id, TenantId tenantId)
-  {
+  string getEnvironment(AppId id, TenantId tenantId) {
     auto app = repo.findById(id, tenantId);
     if (app is null)
       return "{}";
@@ -172,8 +161,7 @@ class ManageAppsUseCase : UIMUseCase {
   }
 
   /// Set environment variables for an application.
-  CommandResult setEnvironment(AppId id, TenantId tenantId, string envJson)
-  {
+  CommandResult setEnvironment(AppId id, TenantId tenantId, string envJson) {
     auto app = repo.findById(id, tenantId);
     if (app is null)
       return CommandResult("", "Application not found");
@@ -184,8 +172,7 @@ class ManageAppsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteApp(AppId id, TenantId tenantId)
-  {
+  CommandResult deleteApp(AppId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Application not found");

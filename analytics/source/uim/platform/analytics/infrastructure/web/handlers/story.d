@@ -15,18 +15,15 @@ import uim.platform.analytics.app.dto.story;
 class StoryHandler {
   private StoryUseCases useCases;
 
-  this(StoryUseCases useCases)
-  {
+  this(StoryUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     res.writeJsonBody(toJsonArray(useCases.list()));
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
     if (id.length == 0)
     {
@@ -42,8 +39,7 @@ class StoryHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -57,8 +53,7 @@ class StoryHandler {
     }
   }
 
-  void publish(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
     auto result = useCases.publish(id);
     if (result.id.length == 0)
@@ -69,8 +64,7 @@ class StoryHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "stories");
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

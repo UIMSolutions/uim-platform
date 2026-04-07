@@ -19,43 +19,36 @@ mixin(ShowModule!());
 class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
-  Destination findById(DestinationId id)
-  {
+  Destination findById(DestinationId id) {
     if (auto p = id in store)
       return *p;
     return Destination.init;
   }
 
-  Destination findByName(TenantId tenantId, string name)
-  {
+  Destination findByName(TenantId tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return Destination.init;
   }
 
-  Destination[] findByTenant(TenantId tenantId)
-  {
+  Destination[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Destination[] findByProxyType(TenantId tenantId, ProxyType proxyType)
-  {
+  Destination[] findByProxyType(TenantId tenantId, ProxyType proxyType) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.proxyType == proxyType).array;
   }
 
-  void save(Destination entity)
-  {
+  void save(Destination entity) {
     store[entity.id] = entity;
   }
 
-  void update(Destination entity)
-  {
+  void update(Destination entity) {
     store[entity.id] = entity;
   }
 
-  void remove(DestinationId id)
-  {
+  void remove(DestinationId id) {
     store.remove(id);
   }
 }

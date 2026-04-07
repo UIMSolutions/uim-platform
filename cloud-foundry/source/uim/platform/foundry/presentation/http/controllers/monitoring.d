@@ -16,20 +16,17 @@ import uim.platform.foundry.domain.types;
 class MonitoringController {
   private MonitorAppsUseCase useCase;
 
-  this(MonitorAppsUseCase useCase)
-  {
+  this(MonitorAppsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/monitoring/apps", &handleListAppHealth);
     router.get("/api/v1/monitoring/spaces/*", &handleSpaceUsage);
     router.get("/api/v1/monitoring/apps/*", &handleAppHealth);
   }
 
-  private void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -50,8 +47,7 @@ class MonitoringController {
     }
   }
 
-  private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAppHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -70,8 +66,7 @@ class MonitoringController {
     }
   }
 
-  private void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSpaceUsage(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto spaceId = extractIdFromPath(req.requestURI);
@@ -96,8 +91,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeHealth(ref const AppHealthSummary h)
-  {
+  private static Json serializeHealth(ref const AppHealthSummary h) {
     auto j = Json.emptyObject;
     j["appId"] = Json(h.appId);
     j["appName"] = Json(h.appName);

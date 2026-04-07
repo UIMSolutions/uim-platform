@@ -27,8 +27,7 @@ class RetentionEnforcer {
 
   this(AuditLogRepository auditRepo, RetentionPolicyRepository policyRepo,
       SecurityEventRepository secRepo, DataAccessLogRepository dalRepo,
-      ConfigChangeLogRepository cclRepo)
-  {
+      ConfigChangeLogRepository cclRepo) {
     this.auditRepo = auditRepo;
     this.policyRepo = policyRepo;
     this.secRepo = secRepo;
@@ -37,8 +36,7 @@ class RetentionEnforcer {
   }
 
   /// Purge logs older than the tenant's retention policy allows.
-  long enforceForTenant(TenantId tenantId)
-  {
+  long enforceForTenant(TenantId tenantId) {
     // import std.datetime.systime : Clock;
 
     auto policy = policyRepo.findDefault(tenantId);

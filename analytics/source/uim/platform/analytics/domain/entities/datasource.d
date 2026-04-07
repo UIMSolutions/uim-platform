@@ -21,13 +21,11 @@ class DataSource {
   DataSourceStatus connStatus;
   AuditInfo audit;
 
-  this()
-  {
+  this() {
   }
 
   static DataSource create(string name, DataSourceType sourceType,
-      ConnectionInfo conn, string userId)
-  {
+      ConnectionInfo conn, string userId) {
     auto ds = new DataSource();
     ds.id = EntityId.generate();
     ds.name = name;
@@ -39,13 +37,11 @@ class DataSource {
     return ds;
   }
 
-  void markConnected()
-  {
+  void markConnected() {
     connStatus = DataSourceStatus.Connected;
   }
 
-  void markError(string msg)
-  {
+  void markError(string msg) {
     connStatus = DataSourceStatus.Error;
     connection.lastError = msg;
   }

@@ -16,18 +16,15 @@ import uim.platform.analytics;
 class PredictionHandler {
   private PredictionUseCases useCases;
 
-  this(PredictionUseCases useCases)
-  {
+  this(PredictionUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     res.writeJsonBody(useCases.list().toJson);
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
     if (id.length == 0)
     {
@@ -43,8 +40,7 @@ class PredictionHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -64,8 +60,7 @@ class PredictionHandler {
     }
   }
 
-  void train(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void train(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
     auto result = useCases.train(id);
     if (result.id.length == 0)
@@ -76,8 +71,7 @@ class PredictionHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "predictions");
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class ExportController : SAPController {
   private ManageExportsUseCase useCase;
 
-  this(ManageExportsUseCase useCase)
-  {
+  this(ManageExportsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/exports", &handleCreate);
@@ -37,8 +35,7 @@ class ExportController : SAPController {
     router.delete_("/api/v1/exports/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -77,8 +74,7 @@ class ExportController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -97,8 +93,7 @@ class ExportController : SAPController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -117,8 +112,7 @@ class ExportController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -134,8 +128,7 @@ class ExportController : SAPController {
     }
   }
 
-  private static Json serializeJob(ref const ExportJob j)
-  {
+  private static Json serializeJob(ref const ExportJob j) {
     auto o = Json.emptyObject;
     o["id"] = Json(j.id);
     o["tenantId"] = Json(j.tenantId);
@@ -160,8 +153,7 @@ class ExportController : SAPController {
     return o;
   }
 
-  private static AuditCategory parseCategory(string s)
-  {
+  private static AuditCategory parseCategory(string s) {
     switch (s)
     {
     case "audit.security-events", "securityEvents":
@@ -177,8 +169,7 @@ class ExportController : SAPController {
     }
   }
 
-  private static string categoryToString(AuditCategory c)
-  {
+  private static string categoryToString(AuditCategory c) {
     final switch (c)
     {
     case AuditCategory.securityEvents:

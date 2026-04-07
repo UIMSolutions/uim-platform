@@ -15,7 +15,6 @@ module uim.platform.auditlog.presentation.http.controllers.audit_log;
 // import uim.platform.auditlog.application.dto;
 // import uim.platform.auditlog.domain.types;
 // import uim.platform.auditlog.domain.entities.audit_log_entry;
-// import uim.platform.auditlog.presentation.http.json_utils;
 
 import uim.platform.auditlog;
 
@@ -25,14 +24,12 @@ class AuditLogController : SAPController {
   private WriteAuditLogUseCase writeUC;
   private RetrieveAuditLogsUseCase retrieveUC;
 
-  this(WriteAuditLogUseCase writeUC, RetrieveAuditLogsUseCase retrieveUC)
-  {
+  this(WriteAuditLogUseCase writeUC, RetrieveAuditLogsUseCase retrieveUC) {
     this.writeUC = writeUC;
     this.retrieveUC = retrieveUC;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/auditlog", &handleWrite);
@@ -40,8 +37,7 @@ class AuditLogController : SAPController {
     router.get("/api/v1/auditlog/*", &handleGetById);
   }
 
-  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleWrite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -82,8 +78,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -119,8 +114,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -140,8 +134,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private static Json serializeEntry(ref const AuditLogEntry e)
-  {
+  private static Json serializeEntry(ref const AuditLogEntry e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -179,8 +172,7 @@ class AuditLogController : SAPController {
     return j;
   }
 
-  private static AuditAttribute[] parseAttributes(Json j)
-  {
+  private static AuditAttribute[] parseAttributes(Json j) {
     AuditAttribute[] result;
 
     if (j.hasKey("attributes"))
@@ -202,8 +194,7 @@ class AuditLogController : SAPController {
     return result;
   }
 
-  private static AuditCategory parseCategory(string s)
-  {
+  private static AuditCategory parseCategory(string s) {
     switch (s)
     {
     case "audit.security-events", "securityEvents":
@@ -219,8 +210,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private static string categoryToString(AuditCategory c)
-  {
+  private static string categoryToString(AuditCategory c) {
     final switch (c)
     {
     case AuditCategory.securityEvents:
@@ -234,8 +224,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private static AuditSeverity parseSeverity(string s)
-  {
+  private static AuditSeverity parseSeverity(string s) {
     switch (s)
     {
     case "warning":
@@ -249,8 +238,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private static AuditAction parseAction(string s)
-  {
+  private static AuditAction parseAction(string s) {
     switch (s)
     {
     case "create":
@@ -296,8 +284,7 @@ class AuditLogController : SAPController {
     }
   }
 
-  private static AuditOutcome parseOutcome(string s)
-  {
+  private static AuditOutcome parseOutcome(string s) {
     switch (s)
     {
     case "failure":

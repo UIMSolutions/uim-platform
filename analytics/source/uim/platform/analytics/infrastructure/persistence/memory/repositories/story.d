@@ -12,15 +12,13 @@ import uim.platform.analytics.domain.values.common;
 class MemoryStoryRepository : StoryRepository {
   private Story[string] store;
 
-  Story findById(EntityId id)
-  {
+  Story findById(EntityId id) {
     if (auto p = id.value in store)
       return *p;
     return null;
   }
 
-  Story[] findByOwner(EntityId ownerId)
-  {
+  Story[] findByOwner(EntityId ownerId) {
     Story[] result;
     foreach (s; store.byValue())
       if (s.ownerId == ownerId)
@@ -28,18 +26,15 @@ class MemoryStoryRepository : StoryRepository {
     return result;
   }
 
-  Story[] findAll()
-  {
+  Story[] findAll() {
     return store.values;
   }
 
-  void save(Story story)
-  {
+  void save(Story story) {
     store[story.id.value] = story;
   }
 
-  void remove(EntityId id)
-  {
+  void remove(EntityId id) {
     store.remove(id.value);
   }
 }

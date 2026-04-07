@@ -25,12 +25,10 @@ class Widget {
   WidgetStyle style;
   AuditInfo audit;
 
-  this()
-  {
+  this() {
   }
 
-  static Widget create(string title, ChartType chartType, string datasetId, string userId)
-  {
+  static Widget create(string title, ChartType chartType, string datasetId, string userId) {
     auto w = new Widget();
     w.id = EntityId.generate();
     w.title = title;
@@ -44,18 +42,15 @@ class Widget {
     return w;
   }
 
-  void bindDimension(string columnName)
-  {
+  void bindDimension(string columnName) {
     dimensions ~= WidgetBinding(columnName, AggregationType.Count);
   }
 
-  void bindMeasure(string columnName, AggregationType agg)
-  {
+  void bindMeasure(string columnName, AggregationType agg) {
     measures ~= WidgetBinding(columnName, agg);
   }
 
-  void addFilter(string column, FilterOperator op, string[] vals)
-  {
+  void addFilter(string column, FilterOperator op, string[] vals) {
     filters ~= FilterSpec(column, op, vals);
   }
 }

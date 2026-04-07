@@ -20,8 +20,7 @@ string[] jsonStrArray(Json j, string key) {
     return null;
 
   string[] result;
-  foreach (item; *v)
-  {
+  foreach (item; *v) {
     if (item.isString)
       result ~= item.get!string;
   }

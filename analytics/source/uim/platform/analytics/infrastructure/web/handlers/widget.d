@@ -15,18 +15,15 @@ import uim.platform.analytics.app.dto.widget;
 class WidgetHandler {
   private WidgetUseCases useCases;
 
-  this(WidgetUseCases useCases)
-  {
+  this(WidgetUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     res.writeJsonBody(toJsonArray(useCases.list()));
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "widgets");
     if (id.length == 0)
     {
@@ -42,8 +39,7 @@ class WidgetHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -58,8 +54,7 @@ class WidgetHandler {
     }
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "widgets");
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

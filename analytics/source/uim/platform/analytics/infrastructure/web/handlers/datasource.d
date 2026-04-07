@@ -15,18 +15,15 @@ import uim.platform.analytics.app.dto.datasource;
 class DataSourceHandler {
   private DataSourceUseCases useCases;
 
-  this(DataSourceUseCases useCases)
-  {
+  this(DataSourceUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     res.writeJsonBody(toJsonArray(useCases.list()));
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     if (id.length == 0)
     {
@@ -42,8 +39,7 @@ class DataSourceHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -59,8 +55,7 @@ class DataSourceHandler {
     }
   }
 
-  void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     auto result = useCases.testConnection(id);
     if (result.id.length == 0)
@@ -71,8 +66,7 @@ class DataSourceHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

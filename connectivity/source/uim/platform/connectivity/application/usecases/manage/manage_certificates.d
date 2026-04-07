@@ -18,13 +18,11 @@ mixin(ShowModule!());
 class ManageCertificatesUseCase : UIMUseCase {
   private CertificateRepository repo;
 
-  this(CertificateRepository repo)
-  {
+  this(CertificateRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createCertificate(CreateCertificateRequest req)
-  {
+  CommandResult createCertificate(CreateCertificateRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Certificate name is required");
 
@@ -55,8 +53,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req)
-  {
+  CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
     auto cert = repo.findById(id);
     if (cert.id.length == 0)
       return CommandResult(false, "", "Certificate not found");
@@ -69,23 +66,19 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Certificate getCertificate(CertificateId id)
-  {
+  Certificate getCertificate(CertificateId id) {
     return repo.findById(id);
   }
 
-  Certificate[] listCertificates(TenantId tenantId)
-  {
+  Certificate[] listCertificates(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Certificate[] listExpiring(TenantId tenantId, long now, uint withinDays)
-  {
+  Certificate[] listExpiring(TenantId tenantId, long now, uint withinDays) {
     return repo.findExpiring(tenantId, now, withinDays);
   }
 
-  CommandResult deleteCertificate(CertificateId id)
-  {
+  CommandResult deleteCertificate(CertificateId id) {
     auto cert = repo.findById(id);
     if (cert.id.length == 0)
       return CommandResult(false, "", "Certificate not found");
@@ -96,8 +89,7 @@ class ManageCertificatesUseCase : UIMUseCase {
 }
 
 private CertificateType parseCertType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "x509":
     return CertificateType.x509;
   case "pkcs12":
@@ -112,8 +104,7 @@ private CertificateType parseCertType(string s) {
 }
 
 private CertificateUsage parseCertUsage(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "authentication":
     return CertificateUsage.authentication;
   case "signing":

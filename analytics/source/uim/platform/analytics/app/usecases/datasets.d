@@ -16,33 +16,28 @@ mixin(ShowModule!());
 class DatasetUseCases {
   private DatasetRepository repo;
 
-  this(DatasetRepository repo)
-  {
+  this(DatasetRepository repo) {
     this.repo = repo;
   }
 
-  DatasetResponse create(CreateDatasetRequest req)
-  {
+  DatasetResponse create(CreateDatasetRequest req) {
     auto ds = Dataset.create(req.name, req.description, req.dataSourceId, req.userId);
     repo.save(ds);
     return DatasetResponse.fromEntity(ds);
   }
 
-  DatasetResponse getById(string id)
-  {
+  DatasetResponse getById(string id) {
     return DatasetResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  DatasetResponse[] list()
-  {
+  DatasetResponse[] list() {
     DatasetResponse[] result;
     foreach (d; repo.findAll())
       result ~= DatasetResponse.fromEntity(d);
     return result;
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

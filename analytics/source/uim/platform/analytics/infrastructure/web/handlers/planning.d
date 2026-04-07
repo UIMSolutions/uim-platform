@@ -14,18 +14,15 @@ import uim.platform.analytics.app.dto.planning;
 class PlanningHandler {
   private PlanningUseCases useCases;
 
-  this(PlanningUseCases useCases)
-  {
+  this(PlanningUseCases useCases) {
     this.useCases = useCases;
   }
 
-  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     res.writeJsonBody(toJsonArray(useCases.list()));
   }
 
-  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     if (id.length == 0)
     {
@@ -41,8 +38,7 @@ class PlanningHandler {
     res.writeJsonBody(toJsonValue(item));
   }
 
-  void create(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void create(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto json = req.json;
@@ -57,8 +53,7 @@ class PlanningHandler {
     }
   }
 
-  void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.lock(id);
     if (result.id.length == 0)
@@ -69,8 +64,7 @@ class PlanningHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.approve(id);
     if (result.id.length == 0)
@@ -81,8 +75,7 @@ class PlanningHandler {
     res.writeJsonBody(toJsonValue(result));
   }
 
-  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     useCases.remove(id);
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);

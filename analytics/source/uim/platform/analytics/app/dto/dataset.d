@@ -27,8 +27,7 @@ struct DatasetResponse {
   string status;
   ColumnResponse[] columns;
 
-  static DatasetResponse fromEntity(Dataset d)
-  {
+  static DatasetResponse fromEntity(Dataset d) {
     if (d is null)
       return DatasetResponse.init;
 

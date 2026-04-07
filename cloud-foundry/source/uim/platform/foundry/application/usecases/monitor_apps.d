@@ -44,16 +44,14 @@ class MonitorAppsUseCase : UIMUseCase {
   private ServiceInstanceRepository siRepo;
   private RouteRepository routeRepo;
 
-  this(AppRepository appRepo, ServiceInstanceRepository siRepo, RouteRepository routeRepo)
-  {
+  this(AppRepository appRepo, ServiceInstanceRepository siRepo, RouteRepository routeRepo) {
     this.appRepo = appRepo;
     this.siRepo = siRepo;
     this.routeRepo = routeRepo;
   }
 
   /// Get health summary for all apps belonging to the tenant.
-  AppHealthSummary[] listAppHealth(TenantId tenantId)
-  {
+  AppHealthSummary[] listAppHealth(TenantId tenantId) {
     auto apps = appRepo.findByTenant(tenantId);
     AppHealthSummary[] result;
     foreach (app; apps)
@@ -62,8 +60,7 @@ class MonitorAppsUseCase : UIMUseCase {
   }
 
   /// Get health summary for a single application.
-  AppHealthSummary getAppHealth(AppId id, TenantId tenantId)
-  {
+  AppHealthSummary getAppHealth(AppId id, TenantId tenantId) {
     auto app = appRepo.findById(id, tenantId);
     if (app is null)
       return AppHealthSummary.init;
@@ -71,8 +68,7 @@ class MonitorAppsUseCase : UIMUseCase {
   }
 
   /// Get resource usage summary for a space.
-  SpaceUsageSummary getSpaceUsage(SpaceId spaceId, TenantId tenantId)
-  {
+  SpaceUsageSummary getSpaceUsage(SpaceId spaceId, TenantId tenantId) {
     auto apps = appRepo.findBySpace(spaceId, tenantId);
     auto instances = siRepo.findBySpace(spaceId, tenantId);
     auto routes = routeRepo.findBySpace(spaceId, tenantId);
@@ -105,8 +101,7 @@ class MonitorAppsUseCase : UIMUseCase {
     return s;
   }
 
-  private AppHealthSummary buildHealthSummary(Application app)
-  {
+  private AppHealthSummary buildHealthSummary(Application app) {
     AppHealthSummary h;
     h.appId = app.id;
     h.appName = app.name;

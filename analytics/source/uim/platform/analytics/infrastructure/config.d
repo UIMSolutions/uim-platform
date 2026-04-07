@@ -15,8 +15,7 @@ struct ServiceConfig {
   string serviceName = "analytics";
   string apiVersion = "v1";
 
-  static ServiceConfig load()
-  {
+  static ServiceConfig load() {
     // import std.process : environment;
     // import std.conv : to;
 

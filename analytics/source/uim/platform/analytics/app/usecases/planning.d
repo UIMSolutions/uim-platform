@@ -19,13 +19,11 @@ mixin(ShowModule!());
 class PlanningUseCases {
   private PlanningRepository repo;
 
-  this(PlanningRepository repo)
-  {
+  this(PlanningRepository repo) {
     this.repo = repo;
   }
 
-  PlanningModelResponse create(CreatePlanningModelRequest req)
-  {
+  PlanningModelResponse create(CreatePlanningModelRequest req) {
     TimeGranularity gran;
     try
     {
@@ -40,21 +38,18 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse getById(string id)
-  {
+  PlanningModelResponse getById(string id) {
     return PlanningModelResponse.fromEntity(repo.findById(EntityId(id)));
   }
 
-  PlanningModelResponse[] list()
-  {
+  PlanningModelResponse[] list() {
     PlanningModelResponse[] result;
     foreach (pm; repo.findAll())
       result ~= PlanningModelResponse.fromEntity(pm);
     return result;
   }
 
-  PlanningModelResponse lock(string id)
-  {
+  PlanningModelResponse lock(string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm is null)
       return PlanningModelResponse.init;
@@ -63,8 +58,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  PlanningModelResponse approve(string id)
-  {
+  PlanningModelResponse approve(string id) {
     auto pm = repo.findById(EntityId(id));
     if (pm is null)
       return PlanningModelResponse.init;
@@ -73,8 +67,7 @@ class PlanningUseCases {
     return PlanningModelResponse.fromEntity(pm);
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     repo.remove(EntityId(id));
   }
 }

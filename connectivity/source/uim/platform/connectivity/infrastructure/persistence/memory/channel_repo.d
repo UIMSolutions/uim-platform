@@ -21,40 +21,33 @@ mixin(ShowModule!());
 class MemoryChannelRepository : ChannelRepository {
   private ServiceChannel[ChannelId] store;
 
-  ServiceChannel findById(ChannelId id)
-  {
+  ServiceChannel findById(ChannelId id) {
     if (auto p = id in store)
       return *p;
     return ServiceChannel.init;
   }
 
-  ServiceChannel[] findByConnector(ConnectorId connectorId)
-  {
+  ServiceChannel[] findByConnector(ConnectorId connectorId) {
     return store.byValue().filter!(e => e.connectorId == connectorId).array;
   }
 
-  ServiceChannel[] findByTenant(TenantId tenantId)
-  {
+  ServiceChannel[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status)
-  {
+  ServiceChannel[] findByStatus(TenantId tenantId, ChannelStatus status) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.status == status).array;
   }
 
-  void save(ServiceChannel entity)
-  {
+  void save(ServiceChannel entity) {
     store[entity.id] = entity;
   }
 
-  void update(ServiceChannel entity)
-  {
+  void update(ServiceChannel entity) {
     store[entity.id] = entity;
   }
 
-  void remove(ChannelId id)
-  {
+  void remove(ChannelId id) {
     store.remove(id);
   }
 }

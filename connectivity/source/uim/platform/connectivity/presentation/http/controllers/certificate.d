@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class CertificateController {
   private ManageCertificatesUseCase uc;
 
-  this(ManageCertificatesUseCase uc)
-  {
+  this(ManageCertificatesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/certificates", &handleCreate);
@@ -37,8 +35,7 @@ class CertificateController {
     router.delete_("/api/v1/certificates/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class CertificateController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -95,8 +91,7 @@ class CertificateController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -114,8 +109,7 @@ class CertificateController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class CertificateController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -165,8 +158,7 @@ class CertificateController {
     }
   }
 
-  private static Json serializeCert(ref const Certificate c)
-  {
+  private static Json serializeCert(ref const Certificate c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

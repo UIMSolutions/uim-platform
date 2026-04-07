@@ -19,13 +19,11 @@ import uim.platform.foundry.domain.entities.cf_domain;
 class RouteController {
   private ManageRoutesUseCase useCase;
 
-  this(ManageRoutesUseCase useCase)
-  {
+  this(ManageRoutesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     // Routes
     router.post("/api/v1/routes", &handleCreateRoute);
     router.get("/api/v1/routes", &handleListRoutes);
@@ -41,8 +39,7 @@ class RouteController {
 
   // --- Routes ---
 
-  private void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreateRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -72,8 +69,7 @@ class RouteController {
     }
   }
 
-  private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -94,8 +90,7 @@ class RouteController {
     }
   }
 
-  private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -114,8 +109,7 @@ class RouteController {
     }
   }
 
-  private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -136,8 +130,7 @@ class RouteController {
     }
   }
 
-  private void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleMapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto routeId = extractIdFromPath(req.requestURI);
@@ -163,8 +156,7 @@ class RouteController {
     }
   }
 
-  private void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUnmapRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto routeId = extractIdFromPath(req.requestURI);
@@ -192,8 +184,7 @@ class RouteController {
 
   // --- Domains ---
 
-  private void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreateDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -221,8 +212,7 @@ class RouteController {
     }
   }
 
-  private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -243,8 +233,7 @@ class RouteController {
     }
   }
 
-  private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -267,8 +256,7 @@ class RouteController {
 
   // --- Serializers ---
 
-  private static Json serializeRoute(ref const Route r)
-  {
+  private static Json serializeRoute(ref const Route r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["spaceId"] = Json(r.spaceId);
@@ -285,8 +273,7 @@ class RouteController {
     return j;
   }
 
-  private static Json serializeDomain(ref const CfDomain d)
-  {
+  private static Json serializeDomain(ref const CfDomain d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["ownerOrgId"] = Json(d.ownerOrgId);

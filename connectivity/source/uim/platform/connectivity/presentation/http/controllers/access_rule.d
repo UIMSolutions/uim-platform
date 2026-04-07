@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class AccessRuleController : SAPController {
   private ManageAccessRulesUseCase uc;
 
-  this(ManageAccessRulesUseCase uc)
-  {
+  this(ManageAccessRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/access-rules", &handleCreate);
@@ -37,8 +35,7 @@ class AccessRuleController : SAPController {
     router.delete_("/api/v1/access-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class AccessRuleController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -93,8 +89,7 @@ class AccessRuleController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -112,8 +107,7 @@ class AccessRuleController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class AccessRuleController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -165,8 +158,7 @@ class AccessRuleController : SAPController {
     }
   }
 
-  private static Json serializeRule(ref const AccessRule r)
-  {
+  private static Json serializeRule(ref const AccessRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["connectorId"] = Json(r.connectorId);

@@ -23,8 +23,7 @@ class ManageRoutesUseCase : UIMUseCase {
   private DomainRepository domainRepo;
   private RouteResolver resolver;
 
-  this(RouteRepository routeRepo, DomainRepository domainRepo, RouteResolver resolver)
-  {
+  this(RouteRepository routeRepo, DomainRepository domainRepo, RouteResolver resolver) {
     this.routeRepo = routeRepo;
     this.domainRepo = domainRepo;
     this.resolver = resolver;
@@ -32,8 +31,7 @@ class ManageRoutesUseCase : UIMUseCase {
 
   // --- Routes ---
 
-  CommandResult createRoute(CreateRouteRequest req)
-  {
+  CommandResult createRoute(CreateRouteRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.spaceId.length == 0)
@@ -70,23 +68,19 @@ class ManageRoutesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  Route* getRoute(RouteId id, TenantId tenantId)
-  {
+  Route* getRoute(RouteId id, TenantId tenantId) {
     return routeRepo.findById(id, tenantId);
   }
 
-  Route[] listRoutes(TenantId tenantId)
-  {
+  Route[] listRoutes(TenantId tenantId) {
     return routeRepo.findByTenant(tenantId);
   }
 
-  Route[] listBySpace(SpaceId spaceId, TenantId tenantId)
-  {
+  Route[] listBySpace(SpaceId spaceId, TenantId tenantId) {
     return routeRepo.findBySpace(spaceId, tenantId);
   }
 
-  CommandResult deleteRoute(RouteId id, TenantId tenantId)
-  {
+  CommandResult deleteRoute(RouteId id, TenantId tenantId) {
     auto existing = routeRepo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Route not found");
@@ -96,8 +90,7 @@ class ManageRoutesUseCase : UIMUseCase {
   }
 
   /// Map an application to a route.
-  CommandResult mapRoute(MapRouteRequest req)
-  {
+  CommandResult mapRoute(MapRouteRequest req) {
     if (req.routeId.length == 0)
       return CommandResult("", "Route ID is required");
     if (req.appId.length == 0)
@@ -110,8 +103,7 @@ class ManageRoutesUseCase : UIMUseCase {
   }
 
   /// Unmap an application from a route.
-  CommandResult unmapRoute(MapRouteRequest req)
-  {
+  CommandResult unmapRoute(MapRouteRequest req) {
     if (req.routeId.length == 0)
       return CommandResult("", "Route ID is required");
     if (req.appId.length == 0)
@@ -125,8 +117,7 @@ class ManageRoutesUseCase : UIMUseCase {
 
   // --- Domains ---
 
-  CommandResult createDomain(CreateDomainRequest req)
-  {
+  CommandResult createDomain(CreateDomainRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -152,13 +143,11 @@ class ManageRoutesUseCase : UIMUseCase {
     return CommandResult(d.id, "");
   }
 
-  CfDomain[] listDomains(TenantId tenantId)
-  {
+  CfDomain[] listDomains(TenantId tenantId) {
     return domainRepo.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(DomainId id, TenantId tenantId)
-  {
+  CommandResult deleteDomain(DomainId id, TenantId tenantId) {
     auto existing = domainRepo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Domain not found");

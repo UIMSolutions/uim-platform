@@ -18,13 +18,11 @@ import uim.platform.foundry.domain.entities.buildpack;
 class BuildpackController {
   private ManageBuildpacksUseCase useCase;
 
-  this(ManageBuildpacksUseCase useCase)
-  {
+  this(ManageBuildpacksUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/buildpacks", &handleCreate);
     router.get("/api/v1/buildpacks", &handleList);
     router.get("/api/v1/buildpacks/*", &handleGetById);
@@ -32,8 +30,7 @@ class BuildpackController {
     router.delete_("/api/v1/buildpacks/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -62,8 +59,7 @@ class BuildpackController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -84,8 +80,7 @@ class BuildpackController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -104,8 +99,7 @@ class BuildpackController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -136,8 +130,7 @@ class BuildpackController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -158,8 +151,7 @@ class BuildpackController {
     }
   }
 
-  private static Json serializeBuildpack(ref const Buildpack bp)
-  {
+  private static Json serializeBuildpack(ref const Buildpack bp) {
     auto j = Json.emptyObject;
     j["id"] = Json(bp.id);
     j["tenantId"] = Json(bp.tenantId);
