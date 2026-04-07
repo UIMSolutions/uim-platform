@@ -22,8 +22,7 @@ struct AuthorizationPolicy {
   long createdAt;
   long updatedAt;
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
         name).set("description", description).set("rules",
         rules.map!(r => r.toJson).array).set("applicationIds", applicationIds)
@@ -37,8 +36,7 @@ struct PolicyRule {
   string operator_; // e.g., "eq", "in", "not_in", "matches"
   string value;
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("attribute", attribute).set("operator",
         operator_).set("value", value);
   }

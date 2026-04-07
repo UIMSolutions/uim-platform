@@ -13,15 +13,13 @@ import uim.platform.identity.directory.domain.ports.repositories.password_policy
 class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
   private PasswordPolicy[string] store;
 
-  PasswordPolicy findById(string id)
-  {
+  PasswordPolicy findById(string id) {
     if (auto p = id in store)
       return *p;
     return PasswordPolicy.init;
   }
 
-  PasswordPolicy findActiveForTenant(TenantId tenantId)
-  {
+  PasswordPolicy findActiveForTenant(TenantId tenantId) {
     foreach (p; store.byValue())
     {
       if (p.tenantId == tenantId && p.active)
@@ -30,8 +28,7 @@ class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
     return PasswordPolicy.init;
   }
 
-  PasswordPolicy[] findByTenant(TenantId tenantId)
-  {
+  PasswordPolicy[] findByTenant(TenantId tenantId) {
     PasswordPolicy[] result;
     foreach (p; store.byValue())
     {
@@ -41,18 +38,15 @@ class MemoryPasswordPolicyRepository : PasswordPolicyRepository {
     return result;
   }
 
-  void save(PasswordPolicy policy)
-  {
+  void save(PasswordPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void update(PasswordPolicy policy)
-  {
+  void update(PasswordPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     store.remove(id);
   }
 }

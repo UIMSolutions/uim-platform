@@ -19,15 +19,13 @@ mixin(ShowModule!());
 class MemoryIdpConfigRepository : IdpConfigRepository {
   private IdpConfig[string] store;
 
-  IdpConfig findById(string id)
-  {
+  IdpConfig findById(string id) {
     if (auto p = id in store)
       return *p;
     return IdpConfig.init;
   }
 
-  IdpConfig findDefaultForTenant(TenantId tenantId)
-  {
+  IdpConfig findDefaultForTenant(TenantId tenantId) {
     foreach (c; store.byValue())
     {
       if (c.tenantId == tenantId && c.isDefault)
@@ -36,8 +34,7 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
     return IdpConfig.init;
   }
 
-  IdpConfig[] findByTenant(TenantId tenantId)
-  {
+  IdpConfig[] findByTenant(TenantId tenantId) {
     IdpConfig[] result;
     foreach (c; store.byValue())
     {
@@ -47,8 +44,7 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
     return result;
   }
 
-  IdpConfig findByDomainHint(TenantId tenantId, string emailDomain)
-  {
+  IdpConfig findByDomainHint(TenantId tenantId, string emailDomain) {
     foreach (c; store.byValue())
     {
       if (c.tenantId == tenantId && c.domainHints.canFind(emailDomain))
@@ -57,18 +53,15 @@ class MemoryIdpConfigRepository : IdpConfigRepository {
     return IdpConfig.init;
   }
 
-  void save(IdpConfig config)
-  {
+  void save(IdpConfig config) {
     store[config.id] = config;
   }
 
-  void update(IdpConfig config)
-  {
+  void update(IdpConfig config) {
     store[config.id] = config;
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     store.remove(id);
   }
 }

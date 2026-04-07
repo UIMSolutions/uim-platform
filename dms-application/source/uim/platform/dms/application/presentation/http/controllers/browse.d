@@ -26,13 +26,11 @@ mixin(ShowModule!());
 class BrowseController : SAPController {
   private BrowseContentUseCase uc;
 
-  this(BrowseContentUseCase uc)
-  {
+  this(BrowseContentUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.get("/api/v1/browse/folder/*", &handleBrowseFolder);
@@ -42,8 +40,7 @@ class BrowseController : SAPController {
     router.delete_("/api/v1/favorites/*", &handleRemoveFavorite);
   }
 
-  private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto folderId = extractIdFromPath(req.requestURI);
@@ -71,8 +68,7 @@ class BrowseController : SAPController {
     }
   }
 
-  private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto repoId = extractIdFromPath(req.requestURI);
@@ -99,8 +95,7 @@ class BrowseController : SAPController {
     }
   }
 
-  private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAddFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -126,8 +121,7 @@ class BrowseController : SAPController {
     }
   }
 
-  private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -149,8 +143,7 @@ class BrowseController : SAPController {
     }
   }
 
-  private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -171,8 +164,7 @@ class BrowseController : SAPController {
     }
   }
 
-  private static Json serializeFolder(ref const Folder f)
-  {
+  private static Json serializeFolder(ref const Folder f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["name"] = Json(f.name);
@@ -181,8 +173,7 @@ class BrowseController : SAPController {
     return j;
   }
 
-  private static Json serializeDoc(ref const Document d)
-  {
+  private static Json serializeDoc(ref const Document d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["name"] = Json(d.name);
@@ -192,8 +183,7 @@ class BrowseController : SAPController {
     return j;
   }
 
-  private static Json serializeFavorite(ref const Favorite f)
-  {
+  private static Json serializeFavorite(ref const Favorite f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["userId"] = Json(f.userId);

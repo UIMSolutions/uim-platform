@@ -12,33 +12,28 @@ import uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 class MemoryProvisioningJobRepository : ProvisioningJobRepository {
   private ProvisioningJob[string] store;
 
-  void save(ProvisioningJob entity)
-  {
+  void save(ProvisioningJob entity) {
     store[entity.id] = entity;
   }
 
-  void update(ProvisioningJob entity)
-  {
+  void update(ProvisioningJob entity) {
     store[entity.id] = entity;
   }
 
-  void remove(ProvisioningJobId id, TenantId tenantId)
-  {
+  void remove(ProvisioningJobId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ProvisioningJob* findById(ProvisioningJobId id, TenantId tenantId)
-  {
+  ProvisioningJob* findById(ProvisioningJobId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ProvisioningJob[] findByTenant(TenantId tenantId)
-  {
+  ProvisioningJob[] findByTenant(TenantId tenantId) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -46,8 +41,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     return result;
   }
 
-  ProvisioningJob[] findBySource(SourceSystemId sourceId, TenantId tenantId)
-  {
+  ProvisioningJob[] findBySource(SourceSystemId sourceId, TenantId tenantId) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
@@ -55,8 +49,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     return result;
   }
 
-  ProvisioningJob[] findByTarget(TargetSystemId targetId, TenantId tenantId)
-  {
+  ProvisioningJob[] findByTarget(TargetSystemId targetId, TenantId tenantId) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
@@ -64,8 +57,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     return result;
   }
 
-  ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status)
-  {
+  ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)

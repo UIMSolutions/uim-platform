@@ -39,8 +39,7 @@ class BrowseContentUseCase : UIMUseCase {
   private IRepositoryRepository repoRepo;
 
   this(IDocumentRepository docRepo, IFolderRepository folderRepo,
-      IFavoriteRepository favRepo, IRepositoryRepository repoRepo)
-  {
+      IFavoriteRepository favRepo, IRepositoryRepository repoRepo) {
     this.docRepo = docRepo;
     this.folderRepo = folderRepo;
     this.favRepo = favRepo;
@@ -48,14 +47,12 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Search documents by name.
-  Document[] searchDocuments(string query, TenantId tenantId)
-  {
+  Document[] searchDocuments(string query, TenantId tenantId) {
     return docRepo.findByName(query, tenantId);
   }
 
   /// Browse folder contents (subfolders + documents).
-  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId)
-  {
+  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId) {
     FolderContents result;
     result.subfolders = folderRepo.findByParent(folderId, tenantId);
     result.documents = docRepo.findByFolder(folderId, tenantId);
@@ -63,8 +60,7 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Get repository summary.
-  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId)
-  {
+  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId) {
     RepositorySummary summary;
     auto repo = repoRepo.findById(repositoryId, tenantId);
     if (repo is null)
@@ -79,8 +75,7 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Add a favorite.
-  CommandResult addFavorite(CreateFavoriteRequest r)
-  {
+  CommandResult addFavorite(CreateFavoriteRequest r) {
     // Check for duplicate
     auto existing = favRepo.findByUserAndResource(r.userId, r.resourceId, r.tenantId);
     if (existing !is null)
@@ -99,14 +94,12 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Get user favorites.
-  Favorite[] getFavorites(UserId userId, TenantId tenantId)
-  {
+  Favorite[] getFavorites(UserId userId, TenantId tenantId) {
     return favRepo.findByUser(userId, tenantId);
   }
 
   /// Remove a favorite.
-  CommandResult removeFavorite(FavoriteId id, TenantId tenantId)
-  {
+  CommandResult removeFavorite(FavoriteId id, TenantId tenantId) {
     auto fav = favRepo.findById(id, tenantId);
     if (fav is null)
       return CommandResult("", "Favorite not found");

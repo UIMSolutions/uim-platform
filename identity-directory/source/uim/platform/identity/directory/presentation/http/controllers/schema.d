@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class SchemaController {
   private ManageSchemasUseCase useCase;
 
-  this(ManageSchemasUseCase useCase)
-  {
+  this(ManageSchemasUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/scim/Schemas", &handleCreate);
     router.get("/scim/Schemas", &handleList);
     router.get("/scim/Schemas/*", &handleGet);
@@ -31,8 +29,7 @@ class SchemaController {
     router.delete_("/scim/Schemas/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -58,8 +55,7 @@ class SchemaController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -75,8 +71,7 @@ class SchemaController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto schemaId = extractIdFromPath(req.requestURI);
@@ -94,8 +89,7 @@ class SchemaController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto schemaId = extractIdFromPath(req.requestURI);
@@ -118,8 +112,7 @@ class SchemaController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto schemaId = extractIdFromPath(req.requestURI);
@@ -143,8 +136,7 @@ private SchemaAttribute[] parseSchemaAttributes(Json j) {
   auto val = "attributes" in j;
   if (val is null || (*val).type != Json.Type.array)
     return result;
-  foreach (item; *val)
-  {
+  foreach (item; *val) {
     result ~= SchemaAttribute(item.getString("id"), item.getString("name"),
         item.getString("description"),);
   }

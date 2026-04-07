@@ -20,15 +20,13 @@ class ManageApiClientsUseCase : UIMUseCase {
   private ApiClientRepository clientRepo;
   private AuditRepository auditRepo;
 
-  this(ApiClientRepository clientRepo, AuditRepository auditRepo)
-  {
+  this(ApiClientRepository clientRepo, AuditRepository auditRepo) {
     this.clientRepo = clientRepo;
     this.auditRepo = auditRepo;
   }
 
   /// Create a new API client.
-  ApiClientResponse createClient(CreateApiClientRequest req)
-  {
+  ApiClientResponse createClient(CreateApiClientRequest req) {
     auto now = Clock.currStdTime();
     auto id = randomUUID().toString();
     auto clientId = randomUUID().toString();
@@ -47,20 +45,17 @@ class ManageApiClientsUseCase : UIMUseCase {
   }
 
   /// Get client by ID.
-  ApiClient getClient(ApiClientId id)
-  {
+  ApiClient getClient(ApiClientId id) {
     return clientRepo.findById(id);
   }
 
   /// List clients for a tenant.
-  ApiClient[] listClients(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  ApiClient[] listClients(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return clientRepo.findByTenant(tenantId, offset, limit);
   }
 
   /// Revoke an API client.
-  string revokeClient(ApiClientId id)
-  {
+  string revokeClient(ApiClientId id) {
     auto client = clientRepo.findById(id);
     if (client == ApiClient.init)
       return "API client not found";

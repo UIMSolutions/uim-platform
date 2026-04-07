@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class PermissionController : SAPController {
   private ManagePermissionsUseCase uc;
 
-  this(ManagePermissionsUseCase uc)
-  {
+  this(ManagePermissionsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/permissions", &handleGrant);
@@ -40,8 +38,7 @@ class PermissionController : SAPController {
     router.post("/api/v1/permissions/check", &handleCheckAccess);
   }
 
-  private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGrant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -69,8 +66,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto resourceId = extractIdFromPath(req.requestURI);
@@ -95,8 +91,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto userId = extractIdFromPath(req.requestURI);
@@ -118,8 +113,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -144,8 +138,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -171,8 +164,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -193,8 +185,7 @@ class PermissionController : SAPController {
     }
   }
 
-  private static Json serializePerm(ref const Permission p)
-  {
+  private static Json serializePerm(ref const Permission p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);

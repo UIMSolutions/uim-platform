@@ -19,13 +19,11 @@ import uim.platform.identity.provisioning.presentation.http.json_utils;
 class ProvisioningJobController {
   private RunProvisioningJobsUseCase uc;
 
-  this(RunProvisioningJobsUseCase uc)
-  {
+  this(RunProvisioningJobsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/provisioning-jobs", &handleCreate);
     router.get("/api/v1/provisioning-jobs", &handleList);
     router.get("/api/v1/provisioning-jobs/*", &handleGetById);
@@ -35,8 +33,7 @@ class ProvisioningJobController {
     router.delete_("/api/v1/provisioning-jobs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -65,8 +62,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -87,8 +83,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -130,8 +124,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreateAndRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -160,8 +153,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -183,8 +175,7 @@ class ProvisioningJobController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -208,8 +199,7 @@ class ProvisioningJobController {
     }
   }
 
-  private static Json serializeJob(ref const ProvisioningJob j)
-  {
+  private static Json serializeJob(ref const ProvisioningJob j) {
     auto o = Json.emptyObject;
     o["id"] = Json(j.id);
     o["tenantId"] = Json(j.tenantId);

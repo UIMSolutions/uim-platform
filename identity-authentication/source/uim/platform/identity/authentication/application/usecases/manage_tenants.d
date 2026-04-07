@@ -20,13 +20,11 @@ mixin(ShowModule!());
 class ManageTenantsUseCase : UIMUseCase {
   private TenantRepository tenantRepo;
 
-  this(TenantRepository tenantRepo)
-  {
+  this(TenantRepository tenantRepo) {
     this.tenantRepo = tenantRepo;
   }
 
-  TenantResponse createTenant(CreateTenantRequest req)
-  {
+  TenantResponse createTenant(CreateTenantRequest req) {
     auto existing = tenantRepo.findBySubdomain(req.subdomain);
     if (existing != Tenant.init)
       return TenantResponse("", "Subdomain already in use");
@@ -38,18 +36,15 @@ class ManageTenantsUseCase : UIMUseCase {
     return TenantResponse(tenant.id, "");
   }
 
-  Tenant getTenant(TenantId id)
-  {
+  Tenant getTenant(TenantId id) {
     return tenantRepo.findById(id);
   }
 
-  Tenant[] listTenants(uint offset = 0, uint limit = 100)
-  {
+  Tenant[] listTenants(uint offset = 0, uint limit = 100) {
     return tenantRepo.findAll(offset, limit);
   }
 
-  string updateTenant(UpdateTenantRequest req)
-  {
+  string updateTenant(UpdateTenantRequest req) {
     auto tenant = tenantRepo.findById(req.tenantId);
     if (tenant == Tenant.init)
       return "Tenant not found";

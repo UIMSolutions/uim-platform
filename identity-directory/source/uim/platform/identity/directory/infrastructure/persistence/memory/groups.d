@@ -13,15 +13,13 @@ import uim.platform.identity.directory.domain.ports.repositories.groups;
 class MemoryGroupRepository : GroupRepository {
   private Group[GroupId] store;
 
-  Group findById(GroupId id)
-  {
+  Group findById(GroupId id) {
     if (auto p = id in store)
       return *p;
     return Group.init;
   }
 
-  Group findByDisplayName(TenantId tenantId, string displayName)
-  {
+  Group findByDisplayName(TenantId tenantId, string displayName) {
     foreach (g; store.byValue())
     {
       if (g.tenantId == tenantId && g.displayName == displayName)
@@ -30,8 +28,7 @@ class MemoryGroupRepository : GroupRepository {
     return Group.init;
   }
 
-  Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Group[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Group[] result;
     uint idx;
     foreach (g; store.byValue())
@@ -46,8 +43,7 @@ class MemoryGroupRepository : GroupRepository {
     return result;
   }
 
-  Group[] findByMember(string memberId)
-  {
+  Group[] findByMember(string memberId) {
     Group[] result;
     foreach (g; store.byValue())
     {
@@ -57,23 +53,19 @@ class MemoryGroupRepository : GroupRepository {
     return result;
   }
 
-  void save(Group group)
-  {
+  void save(Group group) {
     store[group.id] = group;
   }
 
-  void update(Group group)
-  {
+  void update(Group group) {
     store[group.id] = group;
   }
 
-  void remove(GroupId id)
-  {
+  void remove(GroupId id) {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId)
-  {
+  ulong countByTenant(TenantId tenantId) {
     ulong count;
     foreach (g; store.byValue())
     {

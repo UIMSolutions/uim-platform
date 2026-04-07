@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class TenantController : SAPController {
   private ManageTenantsUseCase useCase;
 
-  this(ManageTenantsUseCase useCase)
-  {
+  this(ManageTenantsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/tenants", &handleCreate);
@@ -37,8 +35,7 @@ class TenantController : SAPController {
     router.put("/api/v1/tenants/*", &handleUpdate);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -67,8 +64,7 @@ class TenantController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenants = useCase.listTenants();
@@ -85,8 +81,7 @@ class TenantController : SAPController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // import std.string : lastIndexOf;
@@ -114,8 +109,7 @@ class TenantController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // import std.string : lastIndexOf;

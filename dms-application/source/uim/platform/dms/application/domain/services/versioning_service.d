@@ -24,15 +24,13 @@ class VersioningService {
   private IDocumentRepository docRepo;
   private IDocumentVersionRepository versionRepo;
 
-  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo)
-  {
+  this(IDocumentRepository docRepo, IDocumentVersionRepository versionRepo) {
     this.docRepo = docRepo;
     this.versionRepo = versionRepo;
   }
 
   /// Check out a document (lock it for editing).
-  bool checkOut(DocumentId docId, TenantId tenantId, UserId userId)
-  {
+  bool checkOut(DocumentId docId, TenantId tenantId, UserId userId) {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return false;
@@ -47,8 +45,7 @@ class VersioningService {
 
   /// Check in a document, creating a new version.
   DocumentVersion checkIn(DocumentId docId, TenantId tenantId, UserId userId, bool isMajor,
-      string comment, string fileName, string mimeType, long fileSize, string checksum)
-  {
+      string comment, string fileName, string mimeType, long fileSize, string checksum) {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return null;
@@ -98,8 +95,7 @@ class VersioningService {
   }
 
   /// Cancel a checkout (unlock without creating a version).
-  bool cancelCheckOut(DocumentId docId, TenantId tenantId)
-  {
+  bool cancelCheckOut(DocumentId docId, TenantId tenantId) {
     auto doc = docRepo.findById(docId, tenantId);
     if (doc is null)
       return false;
@@ -113,14 +109,12 @@ class VersioningService {
   }
 
   /// Get all versions of a document.
-  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId)
-  {
+  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId) {
     return versionRepo.findByDocument(docId, tenantId);
   }
 
   /// Get the current (latest) version.
-  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId)
-  {
+  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId) {
     return versionRepo.findLatest(docId, tenantId);
   }
 }

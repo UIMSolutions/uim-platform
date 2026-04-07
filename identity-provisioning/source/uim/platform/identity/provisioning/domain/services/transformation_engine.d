@@ -14,22 +14,19 @@ import uim.platform.identity.provisioning.domain.ports.repositories.transformati
 class TransformationEngine {
   private TransformationRepository repo;
 
-  this(TransformationRepository repo)
-  {
+  this(TransformationRepository repo) {
     this.repo = repo;
   }
 
   /// Retrieve the transformation rules for a given system.
-  Transformation[] getTransformations(string systemId, TenantId tenantId)
-  {
+  Transformation[] getTransformations(string systemId, TenantId tenantId) {
     return repo.findBySystem(systemId, tenantId);
   }
 
   /// Simulate applying transformations.
   /// In a real implementation this would evaluate JSONata / expression
   /// rules to map source attributes to target attributes.
-  string applyTransformations(string inputAttributes, string systemId, TenantId tenantId)
-  {
+  string applyTransformations(string inputAttributes, string systemId, TenantId tenantId) {
     auto transforms = repo.findBySystem(systemId, tenantId);
     if (transforms.length == 0)
       return inputAttributes; // pass-through when no rules
@@ -39,8 +36,7 @@ class TransformationEngine {
   }
 
   /// Validate that transformation rules are syntactically correct.
-  bool validateRules(string mappingRules)
-  {
+  bool validateRules(string mappingRules) {
     // Minimal validation: non-empty and looks like JSON
     if (mappingRules.length < 2)
       return false;

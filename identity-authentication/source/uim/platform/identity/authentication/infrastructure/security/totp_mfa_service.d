@@ -19,20 +19,17 @@ mixin(ShowModule!());
 /// Adapter: TOTP-based MFA service.
 /// In production, implement with proper RFC 6238 TOTP and SMS/email gateways.
 class TotpMfaService : MfaService {
-  string generateSecret(MfaType mfaType)
-  {
+  string generateSecret(MfaType mfaType) {
     return randomUUID().toString();
   }
 
-  bool validateCode(MfaType mfaType, string secret, string code)
-  {
+  bool validateCode(MfaType mfaType, string secret, string code) {
     // Simplified TOTP validation: generate expected code from secret + time window
     auto expectedCode = generateCurrentCode(secret);
     return code == expectedCode;
   }
 
-  void sendOtp(MfaType mfaType, string destination, string code)
-  {
+  void sendOtp(MfaType mfaType, string destination, string code) {
     // In production: integrate with SMS gateway or email service.
     // For now, log to stdout.
     // import std.stdio : writefln;
@@ -40,8 +37,7 @@ class TotpMfaService : MfaService {
     writefln("[MFA] Sending OTP %s to %s via %s", code, destination, mfaType.to!string);
   }
 
-  private string generateCurrentCode(string secret)
-  {
+  private string generateCurrentCode(string secret) {
     auto timeWindow = Clock.currStdTime() / 300_000_000; // 30-second window
     SHA256 hasher;
     hasher.start();

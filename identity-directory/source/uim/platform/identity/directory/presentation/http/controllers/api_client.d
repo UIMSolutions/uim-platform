@@ -17,21 +17,18 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class ApiClientController {
   private ManageApiClientsUseCase useCase;
 
-  this(ManageApiClientsUseCase useCase)
-  {
+  this(ManageApiClientsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/api-clients", &handleCreate);
     router.get("/api/v1/api-clients", &handleList);
     router.get("/api/v1/api-clients/*", &handleGet);
     router.delete_("/api/v1/api-clients/*", &handleRevoke);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -62,8 +59,7 @@ class ApiClientController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -90,8 +86,7 @@ class ApiClientController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto clientId = extractIdFromPath(req.requestURI);
@@ -115,8 +110,7 @@ class ApiClientController {
     }
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto clientId = extractIdFromPath(req.requestURI);

@@ -19,40 +19,33 @@ mixin(ShowModule!());
 class MemoryPolicyRepository : PolicyRepository {
   private AuthorizationPolicy[PolicyId] store;
 
-  bool existsById(PolicyId id)
-  {
+  bool existsById(PolicyId id) {
     return (id in store) ? true : false;
   }
 
-  AuthorizationPolicy findById(PolicyId id)
-  {
+  AuthorizationPolicy findById(PolicyId id) {
     if (id in store)
       return store[id];
     return AuthorizationPolicy.init;
   }
 
-  AuthorizationPolicy[] findByTenant(TenantId tenantId)
-  {
+  AuthorizationPolicy[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  AuthorizationPolicy[] findByApplication(ApplicationId appId)
-  {
+  AuthorizationPolicy[] findByApplication(ApplicationId appId) {
     return store.byValue().filter!(p => p.applicationIds.canFind(appId)).array;
   }
 
-  void save(AuthorizationPolicy policy)
-  {
+  void save(AuthorizationPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void update(AuthorizationPolicy policy)
-  {
+  void update(AuthorizationPolicy policy) {
     store[policy.id] = policy;
   }
 
-  void remove(PolicyId id)
-  {
+  void remove(PolicyId id) {
     store.remove(id);
   }
 }

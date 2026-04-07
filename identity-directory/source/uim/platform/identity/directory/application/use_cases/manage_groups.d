@@ -25,16 +25,14 @@ class ManageGroupsUseCase : UIMUseCase {
   private UserRepository userRepo;
   private AuditRepository auditRepo;
 
-  this(GroupRepository groupRepo, UserRepository userRepo, AuditRepository auditRepo)
-  {
+  this(GroupRepository groupRepo, UserRepository userRepo, AuditRepository auditRepo) {
     this.groupRepo = groupRepo;
     this.userRepo = userRepo;
     this.auditRepo = auditRepo;
   }
 
   /// Create a new group.
-  GroupResponse createGroup(CreateGroupRequest req)
-  {
+  GroupResponse createGroup(CreateGroupRequest req) {
     auto existing = groupRepo.findByDisplayName(req.tenantId, req.displayName);
     if (existing != Group.init)
       return GroupResponse("", "Group with this displayName already exists");
@@ -68,20 +66,17 @@ class ManageGroupsUseCase : UIMUseCase {
   }
 
   /// Get group by ID.
-  Group getGroup(GroupId id)
-  {
+  Group getGroup(GroupId id) {
     return groupRepo.findById(id);
   }
 
   /// List groups for a tenant.
-  Group[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Group[] listGroups(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return groupRepo.findByTenant(tenantId, offset, limit);
   }
 
   /// Update group metadata.
-  string updateGroup(UpdateGroupRequest req)
-  {
+  string updateGroup(UpdateGroupRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
       return "Group not found";
@@ -102,8 +97,7 @@ class ManageGroupsUseCase : UIMUseCase {
   }
 
   /// Add a member to a group.
-  string addMember(AddMemberRequest req)
-  {
+  string addMember(AddMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
       return "Group not found";
@@ -135,8 +129,7 @@ class ManageGroupsUseCase : UIMUseCase {
   }
 
   /// Remove a member from a group.
-  string removeMember(RemoveMemberRequest req)
-  {
+  string removeMember(RemoveMemberRequest req) {
     auto group = groupRepo.findById(req.groupId);
     if (group == Group.init)
       return "Group not found";
@@ -165,8 +158,7 @@ class ManageGroupsUseCase : UIMUseCase {
   }
 
   /// Delete a group.
-  string deleteGroup(GroupId id)
-  {
+  string deleteGroup(GroupId id) {
     auto group = groupRepo.findById(id);
     if (group == Group.init)
       return "Group not found";

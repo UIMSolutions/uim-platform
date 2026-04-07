@@ -13,15 +13,13 @@ import uim.platform.identity.directory.domain.ports.repositories.schemas;
 class MemorySchemaRepository : SchemaRepository {
   private Schema[SchemaId] store;
 
-  Schema findById(SchemaId id)
-  {
+  Schema findById(SchemaId id) {
     if (auto p = id in store)
       return *p;
     return Schema.init;
   }
 
-  Schema findByName(TenantId tenantId, string name)
-  {
+  Schema findByName(TenantId tenantId, string name) {
     foreach (s; store.byValue())
     {
       if (s.tenantId == tenantId && s.name == name)
@@ -30,8 +28,7 @@ class MemorySchemaRepository : SchemaRepository {
     return Schema.init;
   }
 
-  Schema[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Schema[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Schema[] result;
     uint idx;
     foreach (s; store.byValue())
@@ -46,18 +43,15 @@ class MemorySchemaRepository : SchemaRepository {
     return result;
   }
 
-  void save(Schema schema)
-  {
+  void save(Schema schema) {
     store[schema.id] = schema;
   }
 
-  void update(Schema schema)
-  {
+  void update(Schema schema) {
     store[schema.id] = schema;
   }
 
-  void remove(SchemaId id)
-  {
+  void remove(SchemaId id) {
     store.remove(id);
   }
 }

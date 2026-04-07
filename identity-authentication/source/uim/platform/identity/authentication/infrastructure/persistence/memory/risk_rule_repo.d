@@ -17,35 +17,29 @@ mixin(ShowModule!());
 class MemoryRiskRuleRepository : RiskRuleRepository {
   private RiskRule[string] store;
 
-  bool existsById(string id)
-  {
+  bool existsById(string id) {
     return (id in store) ? true : false;
   }
 
-  RiskRule findById(string id)
-  {
+  RiskRule findById(string id) {
     if (existsById(id))
       return store[id];
     return RiskRule.init;
   }
 
-  RiskRule[] findByTenant(TenantId tenantId)
-  {
+  RiskRule[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(r => r.tenantId == tenantId).array;
   }
 
-  void save(RiskRule rule)
-  {
+  void save(RiskRule rule) {
     store[rule.id] = rule;
   }
 
-  void update(RiskRule rule)
-  {
+  void update(RiskRule rule) {
     store[rule.id] = rule;
   }
 
-  void remove(string id)
-  {
+  void remove(string id) {
     store.remove(id);
   }
 }

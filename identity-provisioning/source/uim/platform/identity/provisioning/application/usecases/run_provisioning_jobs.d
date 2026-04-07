@@ -26,8 +26,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
 
   this(ProvisioningJobRepository repo, SourceSystemRepository sourceRepo,
       TargetSystemRepository targetRepo, ProvisioningLogRepository logRepo,
-      ProvisioningEngine engine)
-  {
+      ProvisioningEngine engine) {
     this.repo = repo;
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
@@ -35,8 +34,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
     this.engine = engine;
   }
 
-  CommandResult createJob(CreateProvisioningJobRequest req)
-  {
+  CommandResult createJob(CreateProvisioningJobRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.sourceSystemId.length == 0)
@@ -69,8 +67,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
   }
 
   /// Run a previously created job.
-  CommandResult runJob(ProvisioningJobId id, TenantId tenantId)
-  {
+  CommandResult runJob(ProvisioningJobId id, TenantId tenantId) {
     if (!engine.canRun(id, tenantId))
       return CommandResult("",
           "Job cannot be started - verify systems are active and job is scheduled");
@@ -83,8 +80,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
   }
 
   /// Create and immediately run a job.
-  CommandResult createAndRunJob(CreateProvisioningJobRequest req)
-  {
+  CommandResult createAndRunJob(CreateProvisioningJobRequest req) {
     auto createResult = createJob(req);
     if (!createResult.isSuccess)
       return createResult;
@@ -92,31 +88,26 @@ class RunProvisioningJobsUseCase : UIMUseCase {
     return runJob(createResult.id, req.tenantId);
   }
 
-  CommandResult cancelJob(ProvisioningJobId id, TenantId tenantId)
-  {
+  CommandResult cancelJob(ProvisioningJobId id, TenantId tenantId) {
     if (!engine.cancelJob(id, tenantId))
       return CommandResult("", "Job cannot be cancelled");
 
     return CommandResult(id, "");
   }
 
-  ProvisioningJob* getJob(ProvisioningJobId id, TenantId tenantId)
-  {
+  ProvisioningJob* getJob(ProvisioningJobId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ProvisioningJob[] listJobs(TenantId tenantId)
-  {
+  ProvisioningJob[] listJobs(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status)
-  {
+  ProvisioningJob[] listByStatus(TenantId tenantId, JobStatus status) {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult deleteJob(ProvisioningJobId id, TenantId tenantId)
-  {
+  CommandResult deleteJob(ProvisioningJobId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Provisioning job not found");

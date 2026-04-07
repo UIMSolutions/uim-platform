@@ -12,41 +12,35 @@ import uim.platform.identity.provisioning.domain.ports.repositories.source_syste
 class MemorySourceSystemRepository : SourceSystemRepository {
   private SourceSystem[string] store;
 
-  void save(SourceSystem entity)
-  {
+  void save(SourceSystem entity) {
     store[entity.id] = entity;
   }
 
-  void update(SourceSystem entity)
-  {
+  void update(SourceSystem entity) {
     store[entity.id] = entity;
   }
 
-  void remove(SourceSystemId id, TenantId tenantId)
-  {
+  void remove(SourceSystemId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  SourceSystem* findById(SourceSystemId id, TenantId tenantId)
-  {
+  SourceSystem* findById(SourceSystemId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  SourceSystem* findByName(TenantId tenantId, string name)
-  {
+  SourceSystem* findByName(TenantId tenantId, string name) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.name == name)
         return &e;
     return null;
   }
 
-  SourceSystem[] findByTenant(TenantId tenantId)
-  {
+  SourceSystem[] findByTenant(TenantId tenantId) {
     SourceSystem[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -54,8 +48,7 @@ class MemorySourceSystemRepository : SourceSystemRepository {
     return result;
   }
 
-  SourceSystem[] findByType(TenantId tenantId, SystemType systemType)
-  {
+  SourceSystem[] findByType(TenantId tenantId, SystemType systemType) {
     SourceSystem[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.systemType == systemType)
@@ -63,8 +56,7 @@ class MemorySourceSystemRepository : SourceSystemRepository {
     return result;
   }
 
-  SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status)
-  {
+  SourceSystem[] findByStatus(TenantId tenantId, SystemStatus status) {
     SourceSystem[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)

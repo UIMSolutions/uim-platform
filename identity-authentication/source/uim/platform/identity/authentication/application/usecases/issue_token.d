@@ -32,8 +32,7 @@ class IssueTokenUseCase : UIMUseCase {
   private TokenService tokenSvc;
 
   this(UserRepository userRepo, ApplicationRepository appRepo,
-      TokenRepository tokenRepo, SessionRepository sessionRepo, TokenService tokenSvc)
-  {
+      TokenRepository tokenRepo, SessionRepository sessionRepo, TokenService tokenSvc) {
     this.userRepo = userRepo;
     this.appRepo = appRepo;
     this.tokenRepo = tokenRepo;
@@ -41,8 +40,7 @@ class IssueTokenUseCase : UIMUseCase {
     this.tokenSvc = tokenSvc;
   }
 
-  TokenResponse execute(TokenRequest req)
-  {
+  TokenResponse execute(TokenRequest req) {
     // Validate session
     auto session = sessionRepo.findById(req.sessionId);
     import uim.platform.identity_authentication.domain.entities.session : IdaSession;

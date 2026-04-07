@@ -18,14 +18,12 @@ class ManageTransformationsUseCase : UIMUseCase {
   private TransformationRepository repo;
   private TransformationEngine engine;
 
-  this(TransformationRepository repo, TransformationEngine engine)
-  {
+  this(TransformationRepository repo, TransformationEngine engine) {
     this.repo = repo;
     this.engine = engine;
   }
 
-  CommandResult createTransformation(CreateTransformationRequest req)
-  {
+  CommandResult createTransformation(CreateTransformationRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.systemId.length == 0)
@@ -55,23 +53,19 @@ class ManageTransformationsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Transformation* getTransformation(TransformationId id, TenantId tenantId)
-  {
+  Transformation* getTransformation(TransformationId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Transformation[] listTransformations(TenantId tenantId)
-  {
+  Transformation[] listTransformations(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Transformation[] listBySystem(string systemId, TenantId tenantId)
-  {
+  Transformation[] listBySystem(string systemId, TenantId tenantId) {
     return repo.findBySystem(systemId, tenantId);
   }
 
-  CommandResult updateTransformation(UpdateTransformationRequest req)
-  {
+  CommandResult updateTransformation(UpdateTransformationRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Transformation ID is required");
     if (req.tenantId.length == 0)
@@ -99,13 +93,11 @@ class ManageTransformationsUseCase : UIMUseCase {
   }
 
   /// Test a transformation with sample input.
-  string testTransformation(string inputAttributes, string systemId, TenantId tenantId)
-  {
+  string testTransformation(string inputAttributes, string systemId, TenantId tenantId) {
     return engine.applyTransformations(inputAttributes, systemId, tenantId);
   }
 
-  CommandResult deleteTransformation(TransformationId id, TenantId tenantId)
-  {
+  CommandResult deleteTransformation(TransformationId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Transformation not found");

@@ -44,8 +44,7 @@ struct User {
     return mfaType != MfaType.none;
   }
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("id", id).set("tenantId", tenantId)
       .set("userName", userName).set("email", email).set("firstName",
         firstName).set("lastName", lastName) // Note: Exclude passwordHash and mfaSecret from JSON for security reasons

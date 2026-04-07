@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class DocumentController : SAPController {
   private ManageDocumentsUseCase uc;
 
-  this(ManageDocumentsUseCase uc)
-  {
+  this(ManageDocumentsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/documents", &handleCreate);
@@ -42,8 +40,7 @@ class DocumentController : SAPController {
     router.post("/api/v1/documents/archive/*", &handleArchive);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -98,8 +94,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -136,8 +131,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -156,8 +150,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -189,8 +182,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -219,8 +211,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -242,8 +233,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -264,8 +254,7 @@ class DocumentController : SAPController {
     }
   }
 
-  private static Json serializeDoc(const Document d)
-  {
+  private static Json serializeDoc(const Document d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

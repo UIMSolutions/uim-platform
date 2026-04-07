@@ -21,14 +21,12 @@ class AuthController : SAPController {
   private AuthenticateUserUseCase authUseCase;
   private IssueTokenUseCase tokenUseCase;
 
-  this(AuthenticateUserUseCase authUseCase, IssueTokenUseCase tokenUseCase)
-  {
+  this(AuthenticateUserUseCase authUseCase, IssueTokenUseCase tokenUseCase) {
     this.authUseCase = authUseCase;
     this.tokenUseCase = tokenUseCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/auth/login", &handleLogin);
@@ -36,8 +34,7 @@ class AuthController : SAPController {
     router.get("/api/v1/auth/health", &handleHealth);
   }
 
-  private void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleLogin(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -74,8 +71,7 @@ class AuthController : SAPController {
     }
   }
 
-  private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleToken(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -108,8 +104,7 @@ class AuthController : SAPController {
     }
   }
 
-  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto response = Json.emptyObject;
     response["status"] = Json("healthy");
     response["service"] = Json("identity-authentication");

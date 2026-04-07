@@ -28,8 +28,7 @@ struct Application {
   long createdAt;
   long updatedAt;
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
         name).set("description", description).set("protocol", to!string(protocol))
       .set("clientId", clientId).set("redirectUris", redirectUris).set("allowedScopes", allowedScopes)

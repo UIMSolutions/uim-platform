@@ -12,20 +12,17 @@ import uim.platform.identity.provisioning.domain.ports.repositories.provisioning
 class MemoryProvisioningLogRepository : ProvisioningLogRepository {
   private ProvisioningLog[string] store;
 
-  void save(ProvisioningLog entity)
-  {
+  void save(ProvisioningLog entity) {
     store[entity.id] = entity;
   }
 
-  void remove(ProvisioningLogId id, TenantId tenantId)
-  {
+  void remove(ProvisioningLogId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  void removeByJob(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  void removeByJob(ProvisioningJobId jobId, TenantId tenantId) {
     string[] toRemove;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -34,16 +31,14 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
       store.remove(id);
   }
 
-  ProvisioningLog* findById(ProvisioningLogId id, TenantId tenantId)
-  {
+  ProvisioningLog* findById(ProvisioningLogId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ProvisioningLog[] findByTenant(TenantId tenantId)
-  {
+  ProvisioningLog[] findByTenant(TenantId tenantId) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId)
@@ -51,8 +46,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  ProvisioningLog[] findByJob(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  ProvisioningLog[] findByJob(ProvisioningJobId jobId, TenantId tenantId) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -60,8 +54,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  ProvisioningLog[] findByEntity(string entityId, TenantId tenantId)
-  {
+  ProvisioningLog[] findByEntity(string entityId, TenantId tenantId) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.entityId == entityId && e.tenantId == tenantId)
@@ -69,8 +62,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status)
-  {
+  ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.status == status)
@@ -78,8 +70,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  long countByJob(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  long countByJob(ProvisioningJobId jobId, TenantId tenantId) {
     long count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -87,8 +78,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return count;
   }
 
-  long countByJobAndStatus(ProvisioningJobId jobId, TenantId tenantId, LogStatus status)
-  {
+  long countByJobAndStatus(ProvisioningJobId jobId, TenantId tenantId, LogStatus status) {
     long count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId && e.status == status)

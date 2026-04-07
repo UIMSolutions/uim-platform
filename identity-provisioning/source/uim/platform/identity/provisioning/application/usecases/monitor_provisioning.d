@@ -51,8 +51,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
 
   this(ProvisioningJobRepository jobRepo, ProvisioningLogRepository logRepo,
       ProvisionedEntityRepository entityRepo, SourceSystemRepository sourceRepo,
-      TargetSystemRepository targetRepo)
-  {
+      TargetSystemRepository targetRepo) {
     this.jobRepo = jobRepo;
     this.logRepo = logRepo;
     this.entityRepo = entityRepo;
@@ -60,8 +59,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
     this.targetRepo = targetRepo;
   }
 
-  JobSummary[] listJobSummaries(TenantId tenantId)
-  {
+  JobSummary[] listJobSummaries(TenantId tenantId) {
     auto jobs = jobRepo.findByTenant(tenantId);
     JobSummary[] result;
     foreach (ref j; jobs)
@@ -69,31 +67,26 @@ class MonitorProvisioningUseCase : UIMUseCase {
     return result;
   }
 
-  JobSummary getJobSummary(ProvisioningJobId id, TenantId tenantId)
-  {
+  JobSummary getJobSummary(ProvisioningJobId id, TenantId tenantId) {
     auto job = jobRepo.findById(id, tenantId);
     if (job is null)
       return JobSummary.init;
     return buildJobSummary(*job, tenantId);
   }
 
-  ProvisioningLog[] getJobLogs(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  ProvisioningLog[] getJobLogs(ProvisioningJobId jobId, TenantId tenantId) {
     return logRepo.findByJob(jobId, tenantId);
   }
 
-  ProvisionedEntity[] listProvisionedEntities(TenantId tenantId)
-  {
+  ProvisionedEntity[] listProvisionedEntities(TenantId tenantId) {
     return entityRepo.findByTenant(tenantId);
   }
 
-  ProvisionedEntity[] listByTarget(TargetSystemId targetId, TenantId tenantId)
-  {
+  ProvisionedEntity[] listByTarget(TargetSystemId targetId, TenantId tenantId) {
     return entityRepo.findByTarget(targetId, tenantId);
   }
 
-  ProvisioningSummary getPipelineSummary(TenantId tenantId)
-  {
+  ProvisioningSummary getPipelineSummary(TenantId tenantId) {
     ProvisioningSummary s;
 
     auto sources = sourceRepo.findByTenant(tenantId);
@@ -126,8 +119,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
     return s;
   }
 
-  private JobSummary buildJobSummary(ref ProvisioningJob job, TenantId tenantId)
-  {
+  private JobSummary buildJobSummary(ref ProvisioningJob job, TenantId tenantId) {
     JobSummary s;
     s.jobId = job.id;
     s.jobType = job.jobType;

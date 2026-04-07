@@ -25,8 +25,7 @@ struct RiskEvaluationContext {
 RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   RiskLevel highest = RiskLevel.low;
 
-  foreach (rule; rules)
-  {
+  foreach (rule; rules) {
     if (!rule.active)
       continue;
 
@@ -44,8 +43,7 @@ RiskLevel evaluateRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
 MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ctx) {
   MfaType required = MfaType.none;
 
-  foreach (rule; rules)
-  {
+  foreach (rule; rules) {
     if (!rule.active)
       continue;
 
@@ -62,8 +60,7 @@ MfaType requiredMfaForRisk(RiskRule[] rules, User user, RiskEvaluationContext ct
 private bool matchesAllConditions(RiskCondition[] conditions, User user, RiskEvaluationContext ctx) {
   // import std.algorithm : canFind;
 
-  foreach (cond; conditions)
-  {
+  foreach (cond; conditions) {
     if (!matchesCondition(cond, user, ctx))
       return false;
   }
@@ -74,8 +71,7 @@ private bool matchesCondition(RiskCondition cond, User user, RiskEvaluationConte
   // import std.conv : to;
   // import std.algorithm : canFind;
 
-  switch (cond.conditionType)
-  {
+  switch (cond.conditionType) {
   case "ip_range":
     return cond.operator_ == "eq" ? ctx.ipAddress == cond.value : ctx.ipAddress != cond.value;
   case "group":

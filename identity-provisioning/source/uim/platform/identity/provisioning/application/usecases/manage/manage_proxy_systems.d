@@ -21,15 +21,13 @@ class ManageProxySystemsUseCase : UIMUseCase {
   private TargetSystemRepository targetRepo;
 
   this(ProxySystemRepository repo, SourceSystemRepository sourceRepo,
-      TargetSystemRepository targetRepo)
-  {
+      TargetSystemRepository targetRepo) {
     this.repo = repo;
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
   }
 
-  CommandResult createProxySystem(CreateProxySystemRequest req)
-  {
+  CommandResult createProxySystem(CreateProxySystemRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -70,18 +68,15 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  ProxySystem* getProxySystem(ProxySystemId id, TenantId tenantId)
-  {
+  ProxySystem* getProxySystem(ProxySystemId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ProxySystem[] listProxySystems(TenantId tenantId)
-  {
+  ProxySystem[] listProxySystems(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateProxySystem(UpdateProxySystemRequest req)
-  {
+  CommandResult updateProxySystem(UpdateProxySystemRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
     if (req.tenantId.length == 0)
@@ -104,8 +99,7 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult activateSystem(ProxySystemId id, TenantId tenantId)
-  {
+  CommandResult activateSystem(ProxySystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Proxy system not found");
@@ -119,8 +113,7 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deactivateSystem(ProxySystemId id, TenantId tenantId)
-  {
+  CommandResult deactivateSystem(ProxySystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Proxy system not found");
@@ -131,8 +124,7 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteProxySystem(ProxySystemId id, TenantId tenantId)
-  {
+  CommandResult deleteProxySystem(ProxySystemId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Proxy system not found");

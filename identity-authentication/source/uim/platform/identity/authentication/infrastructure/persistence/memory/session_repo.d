@@ -19,30 +19,25 @@ mixin(ShowModule!());
 class MemorySessionRepository : SessionRepository {
   private IdaSession[SessionId] store;
 
-  bool existsById(SessionId id)
-  {
+  bool existsById(SessionId id) {
     return (id in store) ? true : false;
   }
 
-  IdaSession findById(SessionId id)
-  {
+  IdaSession findById(SessionId id) {
     if (existsById(id))
       return store[id];
     return IdaSession.init;
   }
 
-  IdaSession[] findByUser(UserId userId)
-  {
+  IdaSession[] findByUser(UserId userId) {
     return store.byValue().filter!(s => s.userId == userId).array;
   }
 
-  void save(IdaSession session)
-  {
+  void save(IdaSession session) {
     store[session.id] = session;
   }
 
-  void revoke(SessionId id)
-  {
+  void revoke(SessionId id) {
     if (existsById(id))
     {
       auto p = store[id];
@@ -51,8 +46,7 @@ class MemorySessionRepository : SessionRepository {
     }
   }
 
-  void revokeAllForUser(UserId userId)
-  {
+  void revokeAllForUser(UserId userId) {
     foreach (s; store.byValue())
     {
       if (s.userId == userId)
@@ -64,8 +58,7 @@ class MemorySessionRepository : SessionRepository {
     }
   }
 
-  void removeExpired()
-  {
+  void removeExpired() {
     auto now = Clock.currStdTime();
     SessionId[] toRemove;
     foreach (id, s; store)
@@ -76,8 +69,7 @@ class MemorySessionRepository : SessionRepository {
     removeIds(toRemove);
   }
 
-  void removeIds(SessionId[] ids)
-  {
+  void removeIds(SessionId[] ids) {
     ids.each!(id => store.remove(id));
   }
 }

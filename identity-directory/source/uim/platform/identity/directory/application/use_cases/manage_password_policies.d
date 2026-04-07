@@ -20,15 +20,13 @@ class ManagePasswordPoliciesUseCase : UIMUseCase {
   private PasswordPolicyRepository policyRepo;
   private AuditRepository auditRepo;
 
-  this(PasswordPolicyRepository policyRepo, AuditRepository auditRepo)
-  {
+  this(PasswordPolicyRepository policyRepo, AuditRepository auditRepo) {
     this.policyRepo = policyRepo;
     this.auditRepo = auditRepo;
   }
 
   /// Create a new password policy.
-  PasswordPolicyResponse createPolicy(CreatePasswordPolicyRequest req)
-  {
+  PasswordPolicyResponse createPolicy(CreatePasswordPolicyRequest req) {
     auto now = Clock.currStdTime();
     auto policyId = randomUUID().toString();
     auto policy = PasswordPolicy(policyId, req.tenantId, req.name, req.description,
@@ -49,20 +47,17 @@ class ManagePasswordPoliciesUseCase : UIMUseCase {
   }
 
   /// Get policy by ID.
-  PasswordPolicy getPolicy(string id)
-  {
+  PasswordPolicy getPolicy(string id) {
     return policyRepo.findById(id);
   }
 
   /// List policies for a tenant.
-  PasswordPolicy[] listPolicies(TenantId tenantId)
-  {
+  PasswordPolicy[] listPolicies(TenantId tenantId) {
     return policyRepo.findByTenant(tenantId);
   }
 
   /// Get active policy for tenant.
-  PasswordPolicy getActivePolicy(TenantId tenantId)
-  {
+  PasswordPolicy getActivePolicy(TenantId tenantId) {
     return policyRepo.findActiveForTenant(tenantId);
   }
 }

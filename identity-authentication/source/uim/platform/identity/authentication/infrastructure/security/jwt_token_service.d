@@ -24,13 +24,11 @@ mixin(ShowModule!());
 class JwtTokenService : TokenService {
   private string signingSecret;
 
-  this(string signingSecret)
-  {
+  this(string signingSecret) {
     this.signingSecret = signingSecret;
   }
 
-  string generateToken(User user, Application app, TokenType tokenType, string[] scopes)
-  {
+  string generateToken(User user, Application app, TokenType tokenType, string[] scopes) {
     // import std.array : join;
 
     auto now = Clock.currStdTime();
@@ -42,8 +40,7 @@ class JwtTokenService : TokenService {
     return payload ~ "." ~ signature;
   }
 
-  string validateToken(string tokenValue)
-  {
+  string validateToken(string tokenValue) {
     // import std.string : lastIndexOf, split;
 
     auto dotIdx = tokenValue.lastIndexOf('.');
@@ -64,8 +61,7 @@ class JwtTokenService : TokenService {
     return parts[0]; // userId
   }
 
-  string generateSamlAssertion(User user, Application app)
-  {
+  string generateSamlAssertion(User user, Application app) {
     // Simplified SAML assertion (in production, use proper XML signing)
     return "<saml:Assertion>" ~ "<saml:Issuer>identity-authentication</saml:Issuer>"
       ~ "<saml:Subject><saml:NameID>" ~ user.email ~ "</saml:NameID></saml:Subject>"
@@ -74,8 +70,7 @@ class JwtTokenService : TokenService {
       ~ "</saml:AudienceRestriction></saml:Conditions>" ~ "</saml:Assertion>";
   }
 
-  private string sign(string data)
-  {
+  private string sign(string data) {
     SHA256 hasher;
     hasher.start();
     hasher.put(cast(const(ubyte)[])(data ~ signingSecret));

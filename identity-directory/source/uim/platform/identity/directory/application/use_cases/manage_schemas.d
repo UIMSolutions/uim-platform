@@ -20,15 +20,13 @@ class ManageSchemasUseCase : UIMUseCase {
   private SchemaRepository schemaRepo;
   private AuditRepository auditRepo;
 
-  this(SchemaRepository schemaRepo, AuditRepository auditRepo)
-  {
+  this(SchemaRepository schemaRepo, AuditRepository auditRepo) {
     this.schemaRepo = schemaRepo;
     this.auditRepo = auditRepo;
   }
 
   /// Create a new custom schema.
-  SchemaResponse createSchema(CreateSchemaRequest req)
-  {
+  SchemaResponse createSchema(CreateSchemaRequest req) {
     auto existing = schemaRepo.findByName(req.tenantId, req.name);
     if (existing != Schema.init)
       return SchemaResponse("", "Schema with this name already exists");
@@ -47,20 +45,17 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   /// Get schema by ID.
-  Schema getSchema(SchemaId id)
-  {
+  Schema getSchema(SchemaId id) {
     return schemaRepo.findById(id);
   }
 
   /// List schemas for a tenant.
-  Schema[] listSchemas(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Schema[] listSchemas(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return schemaRepo.findByTenant(tenantId, offset, limit);
   }
 
   /// Update a schema.
-  string updateSchema(UpdateSchemaRequest req)
-  {
+  string updateSchema(UpdateSchemaRequest req) {
     auto schema = schemaRepo.findById(req.schemaId);
     if (schema == Schema.init)
       return "Schema not found";
@@ -83,8 +78,7 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   /// Delete a schema.
-  string deleteSchema(SchemaId id)
-  {
+  string deleteSchema(SchemaId id) {
     auto schema = schemaRepo.findById(id);
     if (schema == Schema.init)
       return "Schema not found";

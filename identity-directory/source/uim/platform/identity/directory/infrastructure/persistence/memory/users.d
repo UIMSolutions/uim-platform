@@ -16,15 +16,13 @@ import uim.platform.identity.directory.domain.ports.repositories.users;
 class MemoryUserRepository : UserRepository {
   private User[UserId] store;
 
-  User findById(UserId id)
-  {
+  User findById(UserId id) {
     if (auto p = id in store)
       return *p;
     return User.init;
   }
 
-  User findByUserName(TenantId tenantId, string userName)
-  {
+  User findByUserName(TenantId tenantId, string userName) {
     foreach (u; store.byValue())
     {
       if (u.tenantId == tenantId && u.userName == userName)
@@ -33,8 +31,7 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User findByExternalId(TenantId tenantId, string externalId)
-  {
+  User findByExternalId(TenantId tenantId, string externalId) {
     foreach (u; store.byValue())
     {
       if (u.tenantId == tenantId && u.externalId == externalId)
@@ -43,8 +40,7 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User[] findByEmail(TenantId tenantId, string email)
-  {
+  User[] findByEmail(TenantId tenantId, string email) {
     User[] result;
     foreach (u; store.byValue())
     {
@@ -63,8 +59,7 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
     foreach (u; store.byValue())
@@ -79,8 +74,7 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  User[] findByGroupId(GroupId groupId)
-  {
+  User[] findByGroupId(GroupId groupId) {
     User[] result;
     foreach (u; store.byValue())
     {
@@ -90,8 +84,7 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100)
-  {
+  User[] search(TenantId tenantId, string filter, uint offset = 0, uint limit = 100) {
     User[] result;
     auto lowerFilter = filter.toLower();
     uint idx;
@@ -132,23 +125,19 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  void save(User user)
-  {
+  void save(User user) {
     store[user.id] = user;
   }
 
-  void update(User user)
-  {
+  void update(User user) {
     store[user.id] = user;
   }
 
-  void remove(UserId id)
-  {
+  void remove(UserId id) {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId)
-  {
+  ulong countByTenant(TenantId tenantId) {
     ulong count;
     foreach (u; store.byValue())
     {

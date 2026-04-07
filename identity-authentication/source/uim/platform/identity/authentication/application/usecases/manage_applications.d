@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class ManageApplicationsUseCase : UIMUseCase {
   private ApplicationRepository appRepo;
 
-  this(ApplicationRepository appRepo)
-  {
+  this(ApplicationRepository appRepo) {
     this.appRepo = appRepo;
   }
 
-  AppResponse createApplication(CreateAppRequest req)
-  {
+  AppResponse createApplication(CreateAppRequest req) {
     auto now = Clock.currStdTime();
     auto app = Application(randomUUID().toString(), req.tenantId, req.name,
         req.description, req.protocol, randomUUID().toString(), // clientId
@@ -39,18 +37,15 @@ class ManageApplicationsUseCase : UIMUseCase {
     return AppResponse(app.id, app.clientId, app.clientSecret, "");
   }
 
-  Application getApplication(ApplicationId id)
-  {
+  Application getApplication(ApplicationId id) {
     return appRepo.findById(id);
   }
 
-  Application[] listApplications(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Application[] listApplications(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return appRepo.findByTenant(tenantId, offset, limit);
   }
 
-  string updateApplication(UpdateAppRequest req)
-  {
+  string updateApplication(UpdateAppRequest req) {
     auto app = appRepo.findById(req.applicationId);
     if (app == Application.init)
       return "Application not found";
@@ -67,8 +62,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     return "";
   }
 
-  string deleteApplication(ApplicationId id)
-  {
+  string deleteApplication(ApplicationId id) {
     appRepo.remove(id);
     return "";
   }

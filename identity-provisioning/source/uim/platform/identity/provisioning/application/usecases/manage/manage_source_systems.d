@@ -16,13 +16,11 @@ import uim.platform.identity.provisioning.application.dto;
 class ManageSourceSystemsUseCase : UIMUseCase {
   private SourceSystemRepository repo;
 
-  this(SourceSystemRepository repo)
-  {
+  this(SourceSystemRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createSourceSystem(CreateSourceSystemRequest req)
-  {
+  CommandResult createSourceSystem(CreateSourceSystemRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -49,18 +47,15 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SourceSystem* getSourceSystem(SourceSystemId id, TenantId tenantId)
-  {
+  SourceSystem* getSourceSystem(SourceSystemId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  SourceSystem[] listSourceSystems(TenantId tenantId)
-  {
+  SourceSystem[] listSourceSystems(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateSourceSystem(UpdateSourceSystemRequest req)
-  {
+  CommandResult updateSourceSystem(UpdateSourceSystemRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
     if (req.tenantId.length == 0)
@@ -84,8 +79,7 @@ class ManageSourceSystemsUseCase : UIMUseCase {
   }
 
   /// Activate a source system for provisioning.
-  CommandResult activateSystem(SourceSystemId id, TenantId tenantId)
-  {
+  CommandResult activateSystem(SourceSystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Source system not found");
@@ -100,8 +94,7 @@ class ManageSourceSystemsUseCase : UIMUseCase {
   }
 
   /// Deactivate a source system.
-  CommandResult deactivateSystem(SourceSystemId id, TenantId tenantId)
-  {
+  CommandResult deactivateSystem(SourceSystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Source system not found");
@@ -112,8 +105,7 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteSourceSystem(SourceSystemId id, TenantId tenantId)
-  {
+  CommandResult deleteSourceSystem(SourceSystemId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Source system not found");

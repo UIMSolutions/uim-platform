@@ -20,13 +20,11 @@ mixin(ShowModule!());
 class ManagePoliciesUseCase : UIMUseCase {
   private PolicyRepository policyRepo;
 
-  this(PolicyRepository policyRepo)
-  {
+  this(PolicyRepository policyRepo) {
     this.policyRepo = policyRepo;
   }
 
-  PolicyResponse createPolicy(CreatePolicyRequest req)
-  {
+  PolicyResponse createPolicy(CreatePolicyRequest req) {
     auto now = Clock.currStdTime();
     auto policy = AuthorizationPolicy(randomUUID().toString(), req.tenantId,
         req.name, req.description, req.rules, req.applicationIds, true, now, now);
@@ -34,18 +32,15 @@ class ManagePoliciesUseCase : UIMUseCase {
     return PolicyResponse(policy.id, "");
   }
 
-  AuthorizationPolicy getPolicy(PolicyId id)
-  {
+  AuthorizationPolicy getPolicy(PolicyId id) {
     return policyRepo.findById(id);
   }
 
-  AuthorizationPolicy[] listPolicies(TenantId tenantId)
-  {
+  AuthorizationPolicy[] listPolicies(TenantId tenantId) {
     return policyRepo.findByTenant(tenantId);
   }
 
-  string deletePolicy(PolicyId id)
-  {
+  string deletePolicy(PolicyId id) {
     policyRepo.remove(id);
     return "";
   }

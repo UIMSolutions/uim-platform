@@ -17,15 +17,13 @@ mixin(ShowModule!());
 class MemoryTokenRepository : TokenRepository {
   private Token[TokenId] store;
 
-  Token findById(TokenId id)
-  {
+  Token findById(TokenId id) {
     if (auto p = id in store)
       return *p;
     return Token.init;
   }
 
-  Token findByValue(string tokenValue)
-  {
+  Token findByValue(string tokenValue) {
     foreach (t; store.byValue())
     {
       if (t.tokenValue == tokenValue)
@@ -34,8 +32,7 @@ class MemoryTokenRepository : TokenRepository {
     return Token.init;
   }
 
-  Token[] findByUser(UserId userId)
-  {
+  Token[] findByUser(UserId userId) {
     Token[] result;
     foreach (t; store.byValue())
     {
@@ -45,13 +42,11 @@ class MemoryTokenRepository : TokenRepository {
     return result;
   }
 
-  void save(Token token)
-  {
+  void save(Token token) {
     store[token.id] = token;
   }
 
-  void revoke(TokenId id)
-  {
+  void revoke(TokenId id) {
     if (auto p = id in store)
     {
       p.revoked = true;
@@ -59,8 +54,7 @@ class MemoryTokenRepository : TokenRepository {
     }
   }
 
-  void revokeAllForUser(UserId userId)
-  {
+  void revokeAllForUser(UserId userId) {
     foreach (ref t; store.byValue())
     {
       if (t.userId == userId)

@@ -13,15 +13,13 @@ import uim.platform.identity.directory.domain.ports.repositories.password_servic
 
 /// SHA-256 password hashing adapter (production: replace with bcrypt/argon2).
 class Sha256PasswordService : PasswordService {
-  string hashPassword(string plaintext)
-  {
+  string hashPassword(string plaintext) {
     auto salt = randomUUID().toString()[0 .. 8];
     auto hash = sha256Of(cast(ubyte[])(plaintext ~ salt).representation);
     return salt ~ "$" ~ toHexString(hash).idup;
   }
 
-  bool verifyPassword(string plaintext, string stored)
-  {
+  bool verifyPassword(string plaintext, string stored) {
     // import std.string : indexOf;
 
     auto sepIdx = stored.indexOf('$');

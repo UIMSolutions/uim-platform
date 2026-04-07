@@ -19,13 +19,11 @@ import uim.platform.identity.provisioning.presentation.http.json_utils;
 class MonitoringController {
   private MonitorProvisioningUseCase uc;
 
-  this(MonitorProvisioningUseCase uc)
-  {
+  this(MonitorProvisioningUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/monitoring/jobs", &handleListJobSummaries);
     router.get("/api/v1/monitoring/jobs/*", &handleGetJobSummary);
     router.get("/api/v1/monitoring/logs/*", &handleGetJobLogs);
@@ -33,8 +31,7 @@ class MonitoringController {
     router.get("/api/v1/monitoring/pipeline", &handlePipeline);
   }
 
-  private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -55,8 +52,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -75,8 +71,7 @@ class MonitoringController {
     }
   }
 
-  private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto jobId = extractIdFromPath(req.requestURI);
@@ -98,8 +93,7 @@ class MonitoringController {
     }
   }
 
-  private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -120,8 +114,7 @@ class MonitoringController {
     }
   }
 
-  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -145,8 +138,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeJobSummary(ref const JobSummary s)
-  {
+  private static Json serializeJobSummary(ref const JobSummary s) {
     auto j = Json.emptyObject;
     j["jobId"] = Json(s.jobId);
     j["sourceName"] = Json(s.sourceName);
@@ -161,8 +153,7 @@ class MonitoringController {
     return j;
   }
 
-  private static Json serializeLog(ref const ProvisioningLog l)
-  {
+  private static Json serializeLog(ref const ProvisioningLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["jobId"] = Json(l.jobId);
@@ -177,8 +168,7 @@ class MonitoringController {
     return j;
   }
 
-  private static Json serializeEntity(ref const ProvisionedEntity e)
-  {
+  private static Json serializeEntity(ref const ProvisionedEntity e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["externalId"] = Json(e.externalId);

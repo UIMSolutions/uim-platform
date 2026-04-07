@@ -33,8 +33,7 @@ class AuthenticateUserUseCase : UIMUseCase {
   private MfaService mfaSvc;
 
   this(UserRepository userRepo, PasswordService passwordSvc,
-      SessionRepository sessionRepo, RiskRuleRepository riskRuleRepo, MfaService mfaSvc)
-  {
+      SessionRepository sessionRepo, RiskRuleRepository riskRuleRepo, MfaService mfaSvc) {
     this.userRepo = userRepo;
     this.passwordSvc = passwordSvc;
     this.sessionRepo = sessionRepo;
@@ -42,8 +41,7 @@ class AuthenticateUserUseCase : UIMUseCase {
     this.mfaSvc = mfaSvc;
   }
 
-  AuthResult execute(AuthRequest req)
-  {
+  AuthResult execute(AuthRequest req) {
     // Find user
     auto user = userRepo.findByEmail(req.tenantId, req.email);
     if (user == User.init)

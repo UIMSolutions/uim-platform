@@ -17,21 +17,18 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class PasswordPolicyController {
   private ManagePasswordPoliciesUseCase useCase;
 
-  this(ManagePasswordPoliciesUseCase useCase)
-  {
+  this(ManagePasswordPoliciesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/password-policies", &handleCreate);
     router.get("/api/v1/password-policies", &handleList);
     router.get("/api/v1/password-policies/active", &handleGetActive);
     router.get("/api/v1/password-policies/*", &handleGet);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class PasswordPolicyController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -85,8 +81,7 @@ class PasswordPolicyController {
     }
   }
 
-  private void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -108,8 +103,7 @@ class PasswordPolicyController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto policyId = extractIdFromPath(req.requestURI);

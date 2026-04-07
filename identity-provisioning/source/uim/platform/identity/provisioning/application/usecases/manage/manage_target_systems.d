@@ -16,13 +16,11 @@ import uim.platform.identity.provisioning.application.dto;
 class ManageTargetSystemsUseCase : UIMUseCase {
   private TargetSystemRepository repo;
 
-  this(TargetSystemRepository repo)
-  {
+  this(TargetSystemRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createTargetSystem(CreateTargetSystemRequest req)
-  {
+  CommandResult createTargetSystem(CreateTargetSystemRequest req) {
     if (req.tenantId.length == 0)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
@@ -49,18 +47,15 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  TargetSystem* getTargetSystem(TargetSystemId id, TenantId tenantId)
-  {
+  TargetSystem* getTargetSystem(TargetSystemId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  TargetSystem[] listTargetSystems(TenantId tenantId)
-  {
+  TargetSystem[] listTargetSystems(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTargetSystem(UpdateTargetSystemRequest req)
-  {
+  CommandResult updateTargetSystem(UpdateTargetSystemRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
     if (req.tenantId.length == 0)
@@ -83,8 +78,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult activateSystem(TargetSystemId id, TenantId tenantId)
-  {
+  CommandResult activateSystem(TargetSystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Target system not found");
@@ -98,8 +92,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deactivateSystem(TargetSystemId id, TenantId tenantId)
-  {
+  CommandResult deactivateSystem(TargetSystemId id, TenantId tenantId) {
     auto sys = repo.findById(id, tenantId);
     if (sys is null)
       return CommandResult("", "Target system not found");
@@ -110,8 +103,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CommandResult deleteTargetSystem(TargetSystemId id, TenantId tenantId)
-  {
+  CommandResult deleteTargetSystem(TargetSystemId id, TenantId tenantId) {
     auto existing = repo.findById(id, tenantId);
     if (existing is null)
       return CommandResult("", "Target system not found");

@@ -29,8 +29,7 @@ struct IdpConfig {
   long createdAt;
   long updatedAt;
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
         name).set("idpType", to!string(idpType)).set("metadataUrl", metadataUrl)
       .set("authorizationEndpoint", authorizationEndpoint).set("tokenEndpoint",

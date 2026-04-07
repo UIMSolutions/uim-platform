@@ -16,20 +16,17 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class AuditController {
   private QueryAuditLogUseCase useCase;
 
-  this(QueryAuditLogUseCase useCase)
-  {
+  this(QueryAuditLogUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/audit-logs", &handleList);
     router.get("/api/v1/audit-logs/actor/*", &handleByActor);
     router.get("/api/v1/audit-logs/target/*", &handleByTarget);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -47,8 +44,7 @@ class AuditController {
     }
   }
 
-  private void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleByActor(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto actorId = extractIdFromPath(req.requestURI);
@@ -66,8 +62,7 @@ class AuditController {
     }
   }
 
-  private void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleByTarget(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto targetId = extractIdFromPath(req.requestURI);

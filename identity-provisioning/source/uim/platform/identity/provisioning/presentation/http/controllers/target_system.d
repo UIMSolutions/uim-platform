@@ -19,13 +19,11 @@ import uim.platform.identity.provisioning.presentation.http.json_utils;
 class TargetSystemController {
   private ManageTargetSystemsUseCase uc;
 
-  this(ManageTargetSystemsUseCase uc)
-  {
+  this(ManageTargetSystemsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/target-systems", &handleCreate);
     router.get("/api/v1/target-systems", &handleList);
     router.get("/api/v1/target-systems/*", &handleGetById);
@@ -35,8 +33,7 @@ class TargetSystemController {
     router.post("/api/v1/target-systems/deactivate/*", &handleDeactivate);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -86,8 +82,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -106,8 +101,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -138,8 +132,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -187,8 +179,7 @@ class TargetSystemController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -209,8 +200,7 @@ class TargetSystemController {
     }
   }
 
-  private static Json serializeSystem(ref const TargetSystem s)
-  {
+  private static Json serializeSystem(ref const TargetSystem s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

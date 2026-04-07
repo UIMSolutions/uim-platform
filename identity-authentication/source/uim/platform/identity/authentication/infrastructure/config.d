@@ -29,8 +29,7 @@ AppConfig loadConfig() {
     config.host = host;
 
   auto portStr = environment.get("IAS_PORT", "");
-  if (portStr.length > 0)
-  {
+  if (portStr.length > 0) {
     // import std.conv : to;
 
     try

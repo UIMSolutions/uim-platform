@@ -31,8 +31,7 @@ class ProvisioningEngine {
   private ProvisionedEntityRepository entityRepo;
 
   this(SourceSystemRepository sourceRepo, TargetSystemRepository targetRepo, ProvisioningJobRepository jobRepo,
-      ProvisioningLogRepository logRepo, ProvisionedEntityRepository entityRepo)
-  {
+      ProvisioningLogRepository logRepo, ProvisionedEntityRepository entityRepo) {
     this.sourceRepo = sourceRepo;
     this.targetRepo = targetRepo;
     this.jobRepo = jobRepo;
@@ -41,8 +40,7 @@ class ProvisioningEngine {
   }
 
   /// Validate that a provisioning job can be started.
-  bool canRun(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  bool canRun(ProvisioningJobId jobId, TenantId tenantId) {
     auto job = jobRepo.findById(jobId, tenantId);
     if (job is null)
       return false;
@@ -59,8 +57,7 @@ class ProvisioningEngine {
   }
 
   /// Execute a provisioning job (simulated).
-  ProvisioningJob* runJob(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  ProvisioningJob* runJob(ProvisioningJobId jobId, TenantId tenantId) {
     auto job = jobRepo.findById(jobId, tenantId);
     if (job is null)
       return null;
@@ -105,8 +102,7 @@ class ProvisioningEngine {
   }
 
   /// Cancel a running or scheduled job.
-  bool cancelJob(ProvisioningJobId jobId, TenantId tenantId)
-  {
+  bool cancelJob(ProvisioningJobId jobId, TenantId tenantId) {
     auto job = jobRepo.findById(jobId, tenantId);
     if (job is null)
       return false;
@@ -120,8 +116,7 @@ class ProvisioningEngine {
   }
 
   private void simulateEntities(ProvisioningJob* job, TenantId tenantId,
-      string srcName, string tgtName, EntityType eType, int count)
-  {
+      string srcName, string tgtName, EntityType eType, int count) {
     auto now = Clock.currStdTime();
     foreach (i; 0 .. count)
     {

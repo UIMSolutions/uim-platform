@@ -22,14 +22,12 @@ class ManagePermissionsUseCase : UIMUseCase {
   private IPermissionRepository permRepo;
   private AccessControlService accessService;
 
-  this(IPermissionRepository permRepo, AccessControlService accessService)
-  {
+  this(IPermissionRepository permRepo, AccessControlService accessService) {
     this.permRepo = permRepo;
     this.accessService = accessService;
   }
 
-  CommandResult grantPermission(CreatePermissionRequest r)
-  {
+  CommandResult grantPermission(CreatePermissionRequest r) {
     if (r.resourceId.length == 0)
       return CommandResult("", "Resource ID is required");
     if (r.userId.length == 0)
@@ -60,24 +58,20 @@ class ManagePermissionsUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  Permission[] listByResource(string resourceId, ResourceType resourceType, TenantId tenantId)
-  {
+  Permission[] listByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
     return permRepo.findByResource(resourceId, resourceType, tenantId);
   }
 
-  Permission[] listByUser(UserId userId, TenantId tenantId)
-  {
+  Permission[] listByUser(UserId userId, TenantId tenantId) {
     return permRepo.findByUser(userId, tenantId);
   }
 
   bool checkAccess(string resourceId, ResourceType resourceType, UserId userId,
-      PermissionLevel required, TenantId tenantId)
-  {
+      PermissionLevel required, TenantId tenantId) {
     return accessService.hasPermission(resourceId, resourceType, userId, required, tenantId);
   }
 
-  CommandResult updatePermission(UpdatePermissionRequest r)
-  {
+  CommandResult updatePermission(UpdatePermissionRequest r) {
     auto entity = permRepo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Permission not found");
@@ -87,8 +81,7 @@ class ManagePermissionsUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult revokePermission(PermissionId id, TenantId tenantId)
-  {
+  CommandResult revokePermission(PermissionId id, TenantId tenantId) {
     auto entity = permRepo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Permission not found");

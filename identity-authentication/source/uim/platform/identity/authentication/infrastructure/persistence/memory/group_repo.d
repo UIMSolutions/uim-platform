@@ -17,15 +17,13 @@ mixin(ShowModule!());
 class MemoryGroupRepository : GroupRepository {
   private IdaGroup[GroupId] store;
 
-  IdaGroup findById(GroupId id)
-  {
+  IdaGroup findById(GroupId id) {
     if (auto p = id in store)
       return *p;
     return IdaGroup.init;
   }
 
-  IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  IdaGroup[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     IdaGroup[] result;
     uint idx;
     foreach (g; store.byValue())
@@ -40,18 +38,15 @@ class MemoryGroupRepository : GroupRepository {
     return result;
   }
 
-  void save(IdaGroup group)
-  {
+  void save(IdaGroup group) {
     store[group.id] = group;
   }
 
-  void update(IdaGroup group)
-  {
+  void update(IdaGroup group) {
     store[group.id] = group;
   }
 
-  void remove(GroupId id)
-  {
+  void remove(GroupId id) {
     store.remove(id);
   }
 }

@@ -21,15 +21,13 @@ class DelegatedAuthUseCase : UIMUseCase {
   private IdpConfigRepository idpRepo;
   private UserRepository userRepo;
 
-  this(IdpConfigRepository idpRepo, UserRepository userRepo)
-  {
+  this(IdpConfigRepository idpRepo, UserRepository userRepo) {
     this.idpRepo = idpRepo;
     this.userRepo = userRepo;
   }
 
   /// Determine which IdP to redirect to, based on email domain or default.
-  IdpConfig resolveIdp(TenantId tenantId, string email)
-  {
+  IdpConfig resolveIdp(TenantId tenantId, string email) {
     // Extract domain from email
     auto parts = email.split("@");
     if (parts.length == 2)
@@ -44,8 +42,7 @@ class DelegatedAuthUseCase : UIMUseCase {
   }
 
   /// Build the authorization URL for the external IdP.
-  string buildAuthorizationUrl(IdpConfig idp, string redirectUri, string state)
-  {
+  string buildAuthorizationUrl(IdpConfig idp, string redirectUri, string state) {
     if (idp == IdpConfig.init)
       return "";
 
@@ -54,8 +51,7 @@ class DelegatedAuthUseCase : UIMUseCase {
   }
 
   /// List all configured IdPs for a tenant.
-  IdpConfig[] listIdps(TenantId tenantId)
-  {
+  IdpConfig[] listIdps(TenantId tenantId) {
     return idpRepo.findByTenant(tenantId);
   }
 }

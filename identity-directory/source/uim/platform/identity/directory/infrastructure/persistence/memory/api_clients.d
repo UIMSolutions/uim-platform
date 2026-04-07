@@ -13,15 +13,13 @@ import uim.platform.identity.directory.domain.ports.repositories.api_clients;
 class MemoryApiClientRepository : ApiClientRepository {
   private ApiClient[ApiClientId] store;
 
-  ApiClient findById(ApiClientId id)
-  {
+  ApiClient findById(ApiClientId id) {
     if (auto p = id in store)
       return *p;
     return ApiClient.init;
   }
 
-  ApiClient findByClientId(string clientId)
-  {
+  ApiClient findByClientId(string clientId) {
     foreach (c; store.byValue())
     {
       if (c.clientId == clientId)
@@ -30,8 +28,7 @@ class MemoryApiClientRepository : ApiClientRepository {
     return ApiClient.init;
   }
 
-  ApiClient[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  ApiClient[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     ApiClient[] result;
     uint idx;
     foreach (c; store.byValue())
@@ -46,18 +43,15 @@ class MemoryApiClientRepository : ApiClientRepository {
     return result;
   }
 
-  void save(ApiClient client)
-  {
+  void save(ApiClient client) {
     store[client.id] = client;
   }
 
-  void update(ApiClient client)
-  {
+  void update(ApiClient client) {
     store[client.id] = client;
   }
 
-  void remove(ApiClientId id)
-  {
+  void remove(ApiClientId id) {
     store.remove(id);
   }
 }

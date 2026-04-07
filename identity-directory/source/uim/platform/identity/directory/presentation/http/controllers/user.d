@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class UserController {
   private ManageUsersUseCase useCase;
 
-  this(ManageUsersUseCase useCase)
-  {
+  this(ManageUsersUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/scim/Users", &handleCreate);
     router.get("/scim/Users", &handleList);
     router.get("/scim/Users/*", &handleGet);
@@ -33,8 +31,7 @@ class UserController {
     router.get("/scim/Users/.search", &handleSearch);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class UserController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -92,8 +88,7 @@ class UserController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto userId = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class UserController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto userId = extractIdFromPath(req.requestURI);
@@ -145,8 +139,7 @@ class UserController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto userId = extractIdFromPath(req.requestURI);
@@ -166,8 +159,7 @@ class UserController {
     }
   }
 
-  private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -190,8 +182,7 @@ class UserController {
     }
   }
 
-  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -241,8 +232,7 @@ private Json serializeUser(User user) {
 
   // Groups
   auto groups = Json.emptyArray;
-  foreach (gid; user.groupIds)
-  {
+  foreach (gid; user.groupIds) {
     auto g = Json.emptyObject;
     g["value"] = Json(gid);
     groups ~= g;
@@ -294,8 +284,7 @@ private Email[] parseEmails(Json j) {
   auto val = "emails" in j;
   if (val is null || (*val).type != Json.Type.array)
     return result;
-  foreach (item; *val)
-  {
+  foreach (item; *val) {
     result ~= Email(item.getString("value"), item.getString("type"), jsonBool(item, "primary"),);
   }
   return result;
@@ -308,8 +297,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
   auto val = "phoneNumbers" in j;
   if (val is null || (*val).type != Json.Type.array)
     return result;
-  foreach (item; *val)
-  {
+  foreach (item; *val) {
     result ~= PhoneNumber(item.getString("value"), item.getString("type"),
         jsonBool(item, "primary"),);
   }
@@ -323,8 +311,7 @@ private Address[] parseAddresses(Json j) {
   auto val = "addresses" in j;
   if (val is null || (*val).type != Json.Type.array)
     return result;
-  foreach (item; *val)
-  {
+  foreach (item; *val) {
     result ~= Address(item.getString("formatted"), item.getString("streetAddress"),
         item.getString("locality"), item.getString("region"),
         item.getString("postalCode"), item.getString("country"),

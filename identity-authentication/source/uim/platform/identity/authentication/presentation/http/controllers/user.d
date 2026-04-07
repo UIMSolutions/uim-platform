@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class UserController : SAPController {
   private ManageUsersUseCase useCase;
 
-  this(ManageUsersUseCase useCase)
-  {
+  this(ManageUsersUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/users", &handleCreate);
@@ -37,8 +35,7 @@ class UserController : SAPController {
     router.post("/api/v1/users/change-password", &handleChangePassword);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class UserController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.params.get("tenantId", "");
@@ -90,8 +86,7 @@ class UserController : SAPController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // import std.conv : to;
@@ -122,8 +117,7 @@ class UserController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto path = req.requestURI;
@@ -155,8 +149,7 @@ class UserController : SAPController {
     }
   }
 
-  private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleChangePassword(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;

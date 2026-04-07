@@ -26,8 +26,7 @@ import uim.platform.identity.provisioning.domain.types;
 // --- Enum parsers ---
 
 SystemType parseSystemType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "ias":
     return SystemType.ias;
   case "ldap":
@@ -48,8 +47,7 @@ SystemType parseSystemType(string s) {
 }
 
 SystemRole parseSystemRole(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "source":
     return SystemRole.source;
   case "target":
@@ -62,8 +60,7 @@ SystemRole parseSystemRole(string s) {
 }
 
 JobType parseJobType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "full":
     return JobType.full;
   case "delta":

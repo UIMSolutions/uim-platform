@@ -22,14 +22,12 @@ class ManageFoldersUseCase : UIMUseCase {
   private IFolderRepository folderRepo;
   private IRepositoryRepository repoRepo;
 
-  this(IFolderRepository folderRepo, IRepositoryRepository repoRepo)
-  {
+  this(IFolderRepository folderRepo, IRepositoryRepository repoRepo) {
     this.folderRepo = folderRepo;
     this.repoRepo = repoRepo;
   }
 
-  CommandResult createFolder(CreateFolderRequest r)
-  {
+  CommandResult createFolder(CreateFolderRequest r) {
     if (r.name.length == 0)
       return CommandResult("", "Folder name is required");
     if (r.repositoryId.length == 0)
@@ -66,28 +64,23 @@ class ManageFoldersUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  Folder[] listFolders(TenantId tenantId)
-  {
+  Folder[] listFolders(TenantId tenantId) {
     return folderRepo.findByTenant(tenantId);
   }
 
-  Folder[] listByRepository(RepositoryId repositoryId, TenantId tenantId)
-  {
+  Folder[] listByRepository(RepositoryId repositoryId, TenantId tenantId) {
     return folderRepo.findByRepository(repositoryId, tenantId);
   }
 
-  Folder[] listChildren(FolderId parentId, TenantId tenantId)
-  {
+  Folder[] listChildren(FolderId parentId, TenantId tenantId) {
     return folderRepo.findByParent(parentId, tenantId);
   }
 
-  Folder getFolder(FolderId id, TenantId tenantId)
-  {
+  Folder getFolder(FolderId id, TenantId tenantId) {
     return folderRepo.findById(id, tenantId);
   }
 
-  CommandResult updateFolder(UpdateFolderRequest r)
-  {
+  CommandResult updateFolder(UpdateFolderRequest r) {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
@@ -110,8 +103,7 @@ class ManageFoldersUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult moveFolder(MoveFolderRequest r)
-  {
+  CommandResult moveFolder(MoveFolderRequest r) {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
@@ -135,8 +127,7 @@ class ManageFoldersUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteFolder(FolderId id, TenantId tenantId)
-  {
+  CommandResult deleteFolder(FolderId id, TenantId tenantId) {
     auto entity = folderRepo.findById(id, tenantId);
     if (entity is null)
       return CommandResult("", "Folder not found");
@@ -145,8 +136,7 @@ class ManageFoldersUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  private static long lastIndexOf(string s, char c)
-  {
+  private static long lastIndexOf(string s, char c) {
     for (long i = cast(long) s.length - 1; i >= 0; --i)
       if (s[cast(size_t) i] == c)
         return i;

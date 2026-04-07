@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class GroupController {
   private ManageGroupsUseCase useCase;
 
-  this(ManageGroupsUseCase useCase)
-  {
+  this(ManageGroupsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/scim/Groups", &handleCreate);
     router.get("/scim/Groups", &handleList);
     router.get("/scim/Groups/*", &handleGet);
@@ -33,8 +31,7 @@ class GroupController {
     router.delete_("/scim/Groups/members", &handleRemoveMember);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class GroupController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -83,8 +79,7 @@ class GroupController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto groupId = extractIdFromPath(req.requestURI);
@@ -102,8 +97,7 @@ class GroupController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto groupId = extractIdFromPath(req.requestURI);
@@ -128,8 +122,7 @@ class GroupController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto groupId = extractIdFromPath(req.requestURI);
@@ -145,8 +138,7 @@ class GroupController {
     }
   }
 
-  private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -170,8 +162,7 @@ class GroupController {
     }
   }
 
-  private void handleRemoveMember(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRemoveMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -204,8 +195,7 @@ private GroupMember[] parseMembers(Json j) {
   auto val = "members" in j;
   if (val is null || (*val).type != Json.Type.array)
     return result;
-  foreach (item; *val)
-  {
+  foreach (item; *val) {
     result ~= GroupMember(item.getString("value"), item.getString("type"),
         item.getString("display"),);
   }

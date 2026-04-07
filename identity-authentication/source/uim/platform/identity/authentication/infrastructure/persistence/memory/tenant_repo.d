@@ -17,20 +17,17 @@ mixin(ShowModule!());
 class MemoryTenantRepository : TenantRepository {
   private Tenant[TenantId] store;
 
-  bool existsById(TenantId id)
-  {
+  bool existsById(TenantId id) {
     return (id in store) ? true : false;
   }
 
-  Tenant findById(TenantId id)
-  {
+  Tenant findById(TenantId id) {
     if (existsById(id))
       return store[id];
     return Tenant.init;
   }
 
-  Tenant findBySubdomain(string subdomain)
-  {
+  Tenant findBySubdomain(string subdomain) {
     foreach (t; store.byValue())
     {
       if (t.subdomain == subdomain)
@@ -39,8 +36,7 @@ class MemoryTenantRepository : TenantRepository {
     return Tenant.init;
   }
 
-  Tenant[] findAll(uint offset = 0, uint limit = 100)
-  {
+  Tenant[] findAll(uint offset = 0, uint limit = 100) {
     Tenant[] result;
     uint idx;
     foreach (t; store.byValue())
@@ -52,18 +48,15 @@ class MemoryTenantRepository : TenantRepository {
     return result;
   }
 
-  void save(Tenant tenant)
-  {
+  void save(Tenant tenant) {
     store[tenant.id] = tenant;
   }
 
-  void update(Tenant tenant)
-  {
+  void update(Tenant tenant) {
     store[tenant.id] = tenant;
   }
 
-  void remove(TenantId id)
-  {
+  void remove(TenantId id) {
     store.remove(id);
   }
 }

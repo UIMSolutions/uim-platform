@@ -21,8 +21,7 @@ bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationConte
   if (!policy.active)
     return true; // Inactive policies pass
 
-  foreach (rule; policy.rules)
-  {
+  foreach (rule; policy.rules) {
     if (!evaluateRule(rule, user, ctx))
       return false;
   }
@@ -33,8 +32,7 @@ bool evaluatePolicy(AuthorizationPolicy policy, User user, PolicyEvaluationConte
 AuthorizationPolicy[] findDenyingPolicies(AuthorizationPolicy[] policies,
     User user, PolicyEvaluationContext ctx) {
   AuthorizationPolicy[] denying;
-  foreach (policy; policies)
-  {
+  foreach (policy; policies) {
     if (!evaluatePolicy(policy, user, ctx))
       denying ~= policy;
   }
@@ -45,8 +43,7 @@ private bool evaluateRule(PolicyRule rule, User user, PolicyEvaluationContext ct
   // import std.conv : to;
   // import std.algorithm : canFind;
 
-  switch (rule.attribute)
-  {
+  switch (rule.attribute) {
   case "group":
     bool inGroup = ctx.userGroupIds.canFind(rule.value);
     return rule.operator_ == "eq" || rule.operator_ == "in" ? inGroup : !inGroup;

@@ -15,8 +15,7 @@ mixin(ShowModule!());
 @safe:
 /// Adapter: SHA-256 based password hashing (use bcrypt/argon2 in production via C bindings).
 class Sha256PasswordService : PasswordService {
-  string hashPassword(string plaintext)
-  {
+  string hashPassword(string plaintext) {
     // Generate salt
     auto salt = randomUUID().toString()[0 .. 8];
     auto salted = salt ~ plaintext;
@@ -29,8 +28,7 @@ class Sha256PasswordService : PasswordService {
     return salt ~ "$" ~ toHexString(digest).idup;
   }
 
-  bool verifyPassword(string plaintext, string hash)
-  {
+  bool verifyPassword(string plaintext, string hash) {
     // import std.string : indexOf;
 
     auto sepIdx = hash.indexOf('$');

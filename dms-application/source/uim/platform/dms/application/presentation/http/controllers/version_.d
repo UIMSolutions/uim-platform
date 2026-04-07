@@ -24,13 +24,11 @@ mixin(ShowModule!());
 class VersionController : SAPController {
   private ManageVersionsUseCase uc;
 
-  this(ManageVersionsUseCase uc)
-  {
+  this(ManageVersionsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/versions/checkout/*", &handleCheckOut);
@@ -40,8 +38,7 @@ class VersionController : SAPController {
     router.get("/api/v1/versions/current/*", &handleGetCurrentVersion);
   }
 
-  private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto docId = extractIdFromPath(req.requestURI);
@@ -65,8 +62,7 @@ class VersionController : SAPController {
     }
   }
 
-  private void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCheckIn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -99,8 +95,7 @@ class VersionController : SAPController {
     }
   }
 
-  private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto docId = extractIdFromPath(req.requestURI);
@@ -123,8 +118,7 @@ class VersionController : SAPController {
     }
   }
 
-  private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto docId = extractIdFromPath(req.requestURI);
@@ -146,8 +140,7 @@ class VersionController : SAPController {
     }
   }
 
-  private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto docId = extractIdFromPath(req.requestURI);
@@ -166,8 +159,7 @@ class VersionController : SAPController {
     }
   }
 
-  private static Json serializeVersion(const DocumentVersion v)
-  {
+  private static Json serializeVersion(const DocumentVersion v) {
     auto j = Json.emptyObject;
     j["id"] = Json(v.id);
     j["tenantId"] = Json(v.tenantId);

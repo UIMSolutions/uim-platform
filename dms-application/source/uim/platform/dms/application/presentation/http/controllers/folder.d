@@ -24,13 +24,11 @@ mixin(ShowModule!());
 class FolderController : SAPController {
   private ManageFoldersUseCase uc;
 
-  this(ManageFoldersUseCase uc)
-  {
+  this(ManageFoldersUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/folders", &handleCreate);
@@ -42,8 +40,7 @@ class FolderController : SAPController {
     router.get("/api/v1/folders/children/*", &handleListChildren);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -93,8 +89,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -144,8 +138,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleMove(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -174,8 +167,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto parentId = extractIdFromPath(req.requestURI);
@@ -197,8 +189,7 @@ class FolderController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -219,8 +210,7 @@ class FolderController : SAPController {
     }
   }
 
-  private static Json serializeFolder(const Folder f)
-  {
+  private static Json serializeFolder(const Folder f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["tenantId"] = Json(f.tenantId);

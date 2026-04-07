@@ -21,13 +21,11 @@ mixin(ShowModule!());
 class PolicyController : SAPController {
   private ManagePoliciesUseCase useCase;
 
-  this(ManagePoliciesUseCase useCase)
-  {
+  this(ManagePoliciesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/policies", &handleCreate);
@@ -35,8 +33,7 @@ class PolicyController : SAPController {
     router.get("/api/v1/policies/*", &handleGet);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -77,8 +74,7 @@ class PolicyController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -99,8 +95,7 @@ class PolicyController : SAPController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // import std.string : lastIndexOf;

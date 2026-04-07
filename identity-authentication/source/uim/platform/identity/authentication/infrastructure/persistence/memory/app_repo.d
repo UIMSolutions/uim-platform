@@ -17,15 +17,13 @@ mixin(ShowModule!());
 class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 
-  Application findById(ApplicationId id)
-  {
+  Application findById(ApplicationId id) {
     if (auto p = id in store)
       return *p;
     return Application.init;
   }
 
-  Application findByClientId(string clientId)
-  {
+  Application findByClientId(string clientId) {
     foreach (a; store.byValue())
     {
       if (a.clientId == clientId)
@@ -34,8 +32,7 @@ class MemoryApplicationRepository : ApplicationRepository {
     return Application.init;
   }
 
-  Application[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Application[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     Application[] result;
     uint idx;
     foreach (a; store.byValue())
@@ -50,18 +47,15 @@ class MemoryApplicationRepository : ApplicationRepository {
     return result;
   }
 
-  void save(Application app)
-  {
+  void save(Application app) {
     store[app.id] = app;
   }
 
-  void update(Application app)
-  {
+  void update(Application app) {
     store[app.id] = app;
   }
 
-  void remove(ApplicationId id)
-  {
+  void remove(ApplicationId id) {
     store.remove(id);
   }
 }

@@ -15,8 +15,7 @@ mixin(ShowModule!());
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
-  static foreach (i, field; T.tupleof)
-  {
+  static foreach (i, field; T.tupleof) {
     {
       enum name = __traits(identifier, T.tupleof[i]);
       alias FT = typeof(field);
@@ -54,8 +53,7 @@ Json toJsonArray(T)(T[] items) {
 
 /// Read a string field from JSON, or return default.
 string jsonStr(Json j, string key) {
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).isString)
       return (*val).get!string;
@@ -66,8 +64,7 @@ string jsonStr(Json j, string key) {
 /// Read a string array from JSON.
 string[] jsonStrArray(Json j, string key) {
   string[] result;
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).type == Json.Type.array)
     {

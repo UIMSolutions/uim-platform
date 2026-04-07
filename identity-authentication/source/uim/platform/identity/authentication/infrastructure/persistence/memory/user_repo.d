@@ -17,20 +17,17 @@ mixin(ShowModule!());
 class MemoryUserRepository : UserRepository {
   private User[UserId] store;
 
-  bool existsById(UserId id)
-  {
+  bool existsById(UserId id) {
     return (id in store) ? true : false;
   }
 
-  User findById(UserId id)
-  {
+  User findById(UserId id) {
     if (existsById(id))
       return store[id];
     return User.init;
   }
 
-  User findByEmail(TenantId tenantId, string email)
-  {
+  User findByEmail(TenantId tenantId, string email) {
     foreach (u; store.byValue())
     {
       if (u.tenantId == tenantId && u.email == email)
@@ -39,8 +36,7 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User findByUserName(TenantId tenantId, string userName)
-  {
+  User findByUserName(TenantId tenantId, string userName) {
     foreach (u; store.byValue())
     {
       if (u.tenantId == tenantId && u.userName == userName)
@@ -49,8 +45,7 @@ class MemoryUserRepository : UserRepository {
     return User.init;
   }
 
-  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  User[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100) {
     User[] result;
     uint idx;
     foreach (u; store.byValue())
@@ -65,28 +60,23 @@ class MemoryUserRepository : UserRepository {
     return result;
   }
 
-  User[] findByGroupId(GroupId groupId)
-  {
+  User[] findByGroupId(GroupId groupId) {
     return store.byValue().filter!(u => u.groupIds.canFind(groupId)).array;
   }
 
-  void save(User user)
-  {
+  void save(User user) {
     store[user.id] = user;
   }
 
-  void update(User user)
-  {
+  void update(User user) {
     store[user.id] = user;
   }
 
-  void remove(UserId id)
-  {
+  void remove(UserId id) {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId)
-  {
+  ulong countByTenant(TenantId tenantId) {
     return store.byValue().count!(u => u.tenantId == tenantId);
   }
 }

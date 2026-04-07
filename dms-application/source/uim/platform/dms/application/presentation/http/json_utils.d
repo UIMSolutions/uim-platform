@@ -53,8 +53,7 @@ string extractIdFromPath(string uri) {
 // --- Enum parsers ---
 
 ContentCategory parseContentCategory(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "file":
     return ContentCategory.file;
   case "link":
@@ -67,8 +66,7 @@ ContentCategory parseContentCategory(string s) {
 }
 
 ShareType parseShareType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "internal":
     return ShareType.internal;
   case "external":
@@ -81,8 +79,7 @@ ShareType parseShareType(string s) {
 }
 
 PermissionLevel parsePermissionLevel(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "read":
     return PermissionLevel.read;
   case "write":
@@ -97,8 +94,7 @@ PermissionLevel parsePermissionLevel(string s) {
 }
 
 ResourceType parseResourceType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "document":
     return ResourceType.document;
   case "folder":
