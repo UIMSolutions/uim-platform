@@ -14,7 +14,7 @@ import uim.platform.content_agent.application.usecases.monitor_activities;
 import uim.platform.content_agent.domain.entities.content_activity;
 import uim.platform.content_agent.domain.types;
 
-class ActivityController {
+class ActivityController : SAPController {
   private MonitorActivitiesUseCase uc;
 
   this(MonitorActivitiesUseCase uc) {
@@ -22,6 +22,8 @@ class ActivityController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.get("/api/v1/activities", &handleList);
     router.get("/api/v1/activities/summary", &handleSummary);
   }

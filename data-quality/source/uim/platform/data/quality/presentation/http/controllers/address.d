@@ -15,7 +15,7 @@ import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.address_record;
 
-class AddressController {
+class AddressController : SAPController {
   private CleanseAddressesUseCase uc;
 
   this(CleanseAddressesUseCase uc) {
@@ -23,6 +23,8 @@ class AddressController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/addresses/cleanse", &handleCleanse);
     router.post("/api/v1/addresses/cleanse/batch", &handleCleanseBatch);
     router.get("/api/v1/addresses", &handleList);

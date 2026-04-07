@@ -20,6 +20,7 @@ class ConnectionController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/datasphere/connections", &handleList);
     router.get("/api/v1/datasphere/connections/*", &handleGet);
     router.post("/api/v1/datasphere/connections", &handleCreate);

@@ -23,6 +23,7 @@ class EncryptionController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/encryption/generate", &handleGenerate);
     router.post("/api/v1/encryption/encrypt", &handleEncrypt);
     router.post("/api/v1/encryption/decrypt", &handleDecrypt);

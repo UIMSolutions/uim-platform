@@ -14,7 +14,7 @@ import uim.platform.connectivity.application.usecases.manage.connectors;
 import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.cloud_connector;
 
-class ConnectorController {
+class ConnectorController : SAPController {
   private ManageConnectorsUseCase uc;
 
   this(ManageConnectorsUseCase uc) {

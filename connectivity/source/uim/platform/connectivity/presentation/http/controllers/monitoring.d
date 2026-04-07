@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class MonitoringController {
+class MonitoringController : SAPController {
   private MonitorConnectivityUseCase uc;
 
   this(MonitorConnectivityUseCase uc) {

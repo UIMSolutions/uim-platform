@@ -24,6 +24,7 @@ class BindingController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/bindings", &handleCreate);
     router.get("/api/v1/bindings", &handleList);
     router.get("/api/v1/bindings/*", &handleGet);

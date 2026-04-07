@@ -20,6 +20,7 @@ class DomainDashboardController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/dashboard", &handleGet);
         router.post("/api/v1/custom-domain/dashboard/refresh", &handleRefresh);
     }

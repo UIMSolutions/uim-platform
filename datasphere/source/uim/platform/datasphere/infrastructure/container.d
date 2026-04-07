@@ -112,7 +112,7 @@ Container buildContainer(AppConfig config) {
   c.taskChainController = new TaskChainController(c.manageTaskChains);
   c.dataAccessControlController = new DataAccessControlController(c.manageDataAccessControls);
   c.catalogAssetController = new CatalogAssetController(c.manageCatalogAssets);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("datasphere");
 
   return c;
 }

@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.export_job;
 import uim.platform.content_agent.domain.types;
 
-class ExportController {
+class ExportController : SAPController {
   private ExportContentUseCase uc;
 
   this(ExportContentUseCase uc) {
@@ -23,6 +23,8 @@ class ExportController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/exports", &handleStartExport);
     router.get("/api/v1/exports", &handleList);
     router.get("/api/v1/exports/*", &handleGetById);

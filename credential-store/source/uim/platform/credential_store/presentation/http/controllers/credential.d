@@ -23,6 +23,7 @@ class CredentialController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     // Separate endpoints per credential type (SAP pattern)
     router.post("/api/v1/passwords", &handleCreatePassword);
     router.get("/api/v1/passwords", &handleListPasswords);

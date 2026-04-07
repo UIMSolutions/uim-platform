@@ -14,7 +14,7 @@ import uim.platform.connectivity.application.usecases.manage.destinations;
 import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.destination;
 
-class DestinationController {
+class DestinationController : SAPController {
   private ManageDestinationsUseCase uc;
 
   this(ManageDestinationsUseCase uc) {

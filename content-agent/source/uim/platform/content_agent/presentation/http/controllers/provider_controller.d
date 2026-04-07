@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
-class ProviderController {
+class ProviderController : SAPController {
   private ManageContentProvidersUseCase uc;
 
   this(ManageContentProvidersUseCase uc) {
@@ -23,6 +23,8 @@ class ProviderController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/providers", &handleRegister);
     router.get("/api/v1/providers", &handleList);
     router.get("/api/v1/providers/*", &handleGetById);

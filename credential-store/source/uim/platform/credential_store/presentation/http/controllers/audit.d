@@ -25,6 +25,7 @@ class AuditController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/audit-logs", &handleList);
     router.get("/api/v1/audit-logs/*", &handleGetById);
   }

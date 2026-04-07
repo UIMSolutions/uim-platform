@@ -16,7 +16,7 @@ import uim.platform.content_agent.domain.entities.transport_request;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.presentation.http.json_utils;
 
-class TransportController {
+class TransportController : SAPController {
   private ManageTransportRequestsUseCase uc;
 
   this(ManageTransportRequestsUseCase uc) {
@@ -24,6 +24,8 @@ class TransportController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
     router.get("/api/v1/transports/*", &handleGetById);

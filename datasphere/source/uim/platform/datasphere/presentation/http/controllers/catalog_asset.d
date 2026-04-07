@@ -20,6 +20,7 @@ class CatalogAssetController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/datasphere/catalog", &handleList);
     router.get("/api/v1/datasphere/catalog/search", &handleSearch);
     router.get("/api/v1/datasphere/catalog/*", &handleGet);

@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
 
-class QueueController {
+class QueueController : SAPController {
   private ManageTransportQueuesUseCase uc;
 
   this(ManageTransportQueuesUseCase uc) {
@@ -23,6 +23,8 @@ class QueueController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/queues", &handleCreate);
     router.get("/api/v1/queues", &handleList);
     router.get("/api/v1/queues/*", &handleGetById);

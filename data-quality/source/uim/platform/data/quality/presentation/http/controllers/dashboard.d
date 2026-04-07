@@ -15,7 +15,7 @@ import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.quality_dashboard;
 
-class DashboardController {
+class DashboardController : SAPController {
   private ComputeDashboardUseCase uc;
 
   this(ComputeDashboardUseCase uc) {
@@ -23,6 +23,8 @@ class DashboardController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/dashboard", &handleCompute);
   }
 

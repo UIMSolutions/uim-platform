@@ -15,7 +15,7 @@ import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.validation_result;
 
-class ValidateController {
+class ValidateController : SAPController {
   private ValidateDataUseCase uc;
 
   this(ValidateDataUseCase uc) {
@@ -23,6 +23,8 @@ class ValidateController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/validate", &handleValidate);
     router.post("/api/v1/validate/batch", &handleValidateBatch);
     router.get("/api/v1/validate/results/*", &handleGetResult);

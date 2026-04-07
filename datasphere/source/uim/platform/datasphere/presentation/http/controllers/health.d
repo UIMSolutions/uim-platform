@@ -4,19 +4,3 @@
 * Authors: Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.datasphere.presentation.http.controllers.health;
-
-import uim.platform.datasphere;
-
-class HealthController : SAPController {
-  override void registerRoutes(URLRouter router) {
-    super.registerRoutes(router);
-    router.get("/api/v1/health", &handleHealth);
-  }
-
-  private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto j = Json.emptyObject;
-    j["status"] = Json("UP");
-    j["service"] = Json("Datasphere Service");
-    res.writeJsonBody(j, 200);
-  }
-}

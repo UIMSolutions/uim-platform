@@ -20,6 +20,7 @@ class DomainMappingController : SAPController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/custom-domain/mappings", &handleList);
         router.get("/api/v1/custom-domain/mappings/*", &handleGet);
         router.post("/api/v1/custom-domain/mappings", &handleCreate);

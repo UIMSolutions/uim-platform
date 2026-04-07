@@ -16,7 +16,7 @@ import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.match_group;
 import uim.platform.data.quality.domain.services.duplicate_detector : RecordEntry;
 
-class DuplicateController {
+class DuplicateController : SAPController {
   private DetectDuplicatesUseCase uc;
 
   this(DetectDuplicatesUseCase uc) {
@@ -24,6 +24,8 @@ class DuplicateController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/duplicates/detect", &handleDetect);
     router.post("/api/v1/duplicates/resolve", &handleResolve);
     router.get("/api/v1/duplicates", &handleList);

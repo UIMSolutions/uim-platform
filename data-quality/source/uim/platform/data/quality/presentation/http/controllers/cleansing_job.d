@@ -15,7 +15,7 @@ import uim.platform.data.quality.application.dto;
 import uim.platform.data.quality.domain.types;
 import uim.platform.data.quality.domain.entities.cleansing_job;
 
-class CleansingJobController {
+class CleansingJobController : SAPController {
   private ManageCleansingJobsUseCase uc;
 
   this(ManageCleansingJobsUseCase uc) {
@@ -23,6 +23,8 @@ class CleansingJobController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/cleansing-jobs", &handleCreate);
     router.get("/api/v1/cleansing-jobs", &handleList);
     router.get("/api/v1/cleansing-jobs/*", &handleGetById);

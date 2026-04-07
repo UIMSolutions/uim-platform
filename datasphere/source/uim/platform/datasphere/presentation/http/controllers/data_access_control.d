@@ -20,6 +20,7 @@ class DataAccessControlController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/datasphere/dataAccessControls", &handleList);
     router.get("/api/v1/datasphere/dataAccessControls/*", &handleGet);
     router.post("/api/v1/datasphere/dataAccessControls", &handleCreate);

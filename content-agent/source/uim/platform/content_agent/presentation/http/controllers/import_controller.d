@@ -17,7 +17,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 
-class ImportController {
+class ImportController : SAPController {
   private ImportContentUseCase uc;
 
   this(ImportContentUseCase uc) {
@@ -25,6 +25,8 @@ class ImportController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/imports", &handleStartImport);
     router.get("/api/v1/imports", &handleList);
     router.get("/api/v1/imports/*", &handleGetById);
