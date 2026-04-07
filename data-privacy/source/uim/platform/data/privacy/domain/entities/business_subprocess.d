@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.business_subprocess;
 
-import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// A business subprocess — a subset of a business process.
 struct BusinessSubprocess {
   BusinessSubprocessId id;

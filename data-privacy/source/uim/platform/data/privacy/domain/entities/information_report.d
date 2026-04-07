@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.information_report;
 
-import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// An information report — generated report about a data subject's personal data.
 struct InformationReport {
   InformationReportId id;

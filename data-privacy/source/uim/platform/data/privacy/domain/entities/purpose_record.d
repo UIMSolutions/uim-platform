@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.purpose_record;
 
-import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// A purpose record — tracks a specific purpose with retention/residence and expiration.
 struct PurposeRecord {
   PurposeRecordId id;

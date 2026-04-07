@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.data_controller;
 
-import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// A data controller — the legal entity responsible for data protection compliance.
 struct DataController {
   DataControllerId id;

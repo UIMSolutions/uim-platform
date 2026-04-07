@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.domain.entities.correction_request;
 
-import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.types;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// A request to correct personal data for a data subject (GDPR Art. 16).
 struct CorrectionRequest {
   CorrectionRequestId id;

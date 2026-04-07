@@ -9,14 +9,18 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.data.privacy.infrastructure.config;
-import uim.platform.data.privacy.infrastructure.container;
+// import uim.platform.data.privacy.infrastructure.config;
+// import uim.platform.data.privacy.infrastructure.container;
 
 // import std.stdio : writefln;
+import uim.platform.data.privacy;
+
+mixin(ShowModule!());
+
 @safe:
 
 version (unittest) {
-} ) {
+} else {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);

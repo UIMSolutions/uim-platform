@@ -6,5 +6,8 @@
 module uim.platform.data.privacy.presentation;
 
 public {
-    
+    import uim.platform.data.privacy.presentation.entities;
+    import uim.platform.data.privacy.presentation.ports;
+    import uim.platform.data.privacy.presentation.services;
+    import uim.platform.data.privacy.presentation.types;
 }
