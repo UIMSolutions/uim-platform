@@ -40,7 +40,7 @@ class MemoryAuditConfigRepository : AuditConfigRepository {
   }
 
   bool existsById(AuditConfigId id) {
-    return (id in store);
+    return (id in store) ? true : false;
   }
 
   AuditConfig findById(AuditConfigId id) {

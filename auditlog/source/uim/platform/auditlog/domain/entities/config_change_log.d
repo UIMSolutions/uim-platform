@@ -22,4 +22,17 @@ struct ConfigChangeLog {
   AuditAttribute[] changes; // old/new value pairs
   string reason; // change justification
   long timestamp;
+
+  Json toJson() const {
+    return Json([
+      "auditLogId": auditLogId,
+      "tenantId": tenantId,
+      "changedBy": changedBy,
+      "configType": configType,
+      "configObjectId": configObjectId,
+      "changes": changes.map!(c => c.toJson()).array,
+      "reason": reason,
+      "timestamp": timestamp
+    ]);
+  }
 }

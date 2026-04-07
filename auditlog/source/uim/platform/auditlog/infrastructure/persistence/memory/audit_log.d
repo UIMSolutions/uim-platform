@@ -98,7 +98,7 @@ class MemoryAuditLogRepository : AuditLogRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store.findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .map!(e => e.id)
       .each(id => store.remove(id));
   }

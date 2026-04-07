@@ -23,4 +23,19 @@ struct RetentionPolicy {
   bool isDefault;
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return Json([
+      "id": id,
+      "tenantId": tenantId,
+      "name": name,
+      "description": description,
+      "retentionDays": retentionDays,
+      "categories": categories,
+      "status": status.to!string,
+      "isDefault": isDefault,
+      "createdAt": createdAt,
+      "updatedAt": updatedAt
+    ]);
+  }
 }

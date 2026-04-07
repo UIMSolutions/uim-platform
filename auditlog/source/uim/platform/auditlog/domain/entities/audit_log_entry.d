@@ -33,6 +33,35 @@ struct AuditLogEntry {
   string originApp; // originating application
   long timestamp; // stdTime
   string formatVersion = "1.0";
+
+  Json toJson() const {
+    return Json([
+      "id": id,
+      "tenantId": tenantId,
+      "userId": userId,
+      "userName": userName,
+      "serviceId": serviceId,
+      "serviceName": serviceName,
+      "category": category.to!string,
+      "severity": severity.to!string,
+      "action": action.to!string,
+      "outcome": outcome.to!string,
+      "objectType": objectType,
+      "objectId": objectId,
+      "message": message,
+      "attributes": attributes.map!(a => Json([
+        "name": a.name,
+        "oldValue": a.oldValue,
+        "newValue": a.newValue
+      ])).array,
+      "ipAddress": ipAddress,
+      "userAgent": userAgent,
+      "correlationId": correlationId,
+      "originApp": originApp,
+      "timestamp": timestamp,
+      "formatVersion": formatVersion
+    ]);
+  }
 }
 
 /// Key/value pair describing a changed or accessed attribute.
@@ -41,4 +70,12 @@ struct AuditAttribute {
   string name;
   string oldValue;
   string newValue;
+
+  Json toJson() const {
+    return Json([
+      "name": name,
+      "oldValue": oldValue,
+      "newValue": newValue
+    ]);
+  }
 }

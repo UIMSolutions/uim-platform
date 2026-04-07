@@ -21,7 +21,7 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
   private DataAccessLog[] store;
 
   bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
-    return store.findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
+    return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
   DataAccessLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
@@ -53,6 +53,6 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
+    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).each!(e => store.remove(e));
   }
 }

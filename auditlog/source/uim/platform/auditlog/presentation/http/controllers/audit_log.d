@@ -64,13 +64,10 @@ class AuditLogController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -100,10 +97,9 @@ class AuditLogController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) entries.length);
+      resp["totalCount"] = Json(cast(long)entries.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -118,34 +114,33 @@ class AuditLogController : SAPController {
       }
 
       auto entry = retrieveUC.getById(id, tenantId);
-      res.writeJsonBody(serializeEntry(*entry), 200);
-    }
-    catch (Exception e) {
+      res.writeJsonBody(serializeEntry(entry), 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeEntry(ref const AuditLogEntry e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["userId"] = Json(e.userId);
-    j["userName"] = Json(e.userName);
-    j["serviceId"] = Json(e.serviceId);
-    j["serviceName"] = Json(e.serviceName);
-    j["category"] = Json(categoryToString(e.category));
-    j["severity"] = Json(e.severity.to!string);
-    j["action"] = Json(e.action.to!string);
-    j["outcome"] = Json(e.outcome.to!string);
-    j["objectType"] = Json(e.objectType);
-    j["objectId"] = Json(e.objectId);
-    j["message"] = Json(e.message);
-    j["ipAddress"] = Json(e.ipAddress);
-    j["userAgent"] = Json(e.userAgent);
-    j["correlationId"] = Json(e.correlationId);
-    j["originApp"] = Json(e.originApp);
-    j["timestamp"] = Json(e.timestamp);
-    j["formatVersion"] = Json(e.formatVersion);
+    auto j = Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("userId", e.userId)
+      .set("userName", e.userName)
+      .set("serviceId", e.serviceId)
+      .set("serviceName", e.serviceName)
+      .set("category", categoryToString(e.category))
+      .set("severity", e.severity.to!string)
+      .set("action", e.action.to!string)
+      .set("outcome", e.outcome.to!string)
+      .set("objectType", e.objectType)
+      .set("objectId", e.objectId)
+      .set("message", e.message)
+      .set("ipAddress", e.ipAddress)
+      .set("userAgent", e.userAgent)
+      .set("correlationId", e.correlationId)
+      .set("originApp", e.originApp)
+      .set("timestamp", e.timestamp)
+      .set("formatVersion", e.formatVersion);
 
     if (e.attributes.length > 0) {
       auto attrs = Json.emptyArray;
@@ -167,6 +162,7 @@ class AuditLogController : SAPController {
     if (j.hasKey("attributes")) {
       if (j.isNull)
         return null;
+        
       if (j.type != Json.Type.array)
         return result;
     }
@@ -174,7 +170,7 @@ class AuditLogController : SAPController {
     foreach (item; j["attributes"].toArray) {
       if (item.isObject) {
         result ~= AuditAttribute(item.getString("name"),
-            item.getString("oldValue"), item.getString("newValue"));
+          item.getString("oldValue"), item.getString("newValue"));
       }
     }
     return result;

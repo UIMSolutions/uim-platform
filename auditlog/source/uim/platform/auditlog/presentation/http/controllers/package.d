@@ -6,6 +6,7 @@
 module uim.platform.auditlog.presentation.http.controllers;
 
 public {
+  import uim.platform.auditlog.presentation.http.controllers.audit_config;
   import uim.platform.auditlog.presentation.http.controllers.audit_log;
   import uim.platform.auditlog.presentation.http.controllers.config_change;
   import uim.platform.auditlog.presentation.http.controllers.data_access;

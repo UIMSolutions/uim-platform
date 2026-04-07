@@ -27,4 +27,23 @@ struct SecurityEvent {
   string failureReason;
   string riskLevel; // low, medium, high
   long timestamp;
+
+  Json toJson() const {
+    return Json([
+      "auditLogId": auditLogId,
+      "tenantId": tenantId,
+      "userId": userId,
+      "userName": userName,
+      "eventType": eventType,
+      "ipAddress": ipAddress,
+      "userAgent": userAgent,
+      "clientId": clientId,
+      "identityProvider": identityProvider,
+      "authMethod": authMethod,
+      "outcome": outcome.to!string,
+      "failureReason": failureReason,
+      "riskLevel": riskLevel,
+      "timestamp": timestamp
+    ]);
+  }
 }

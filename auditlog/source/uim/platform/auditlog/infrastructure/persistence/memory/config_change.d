@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.memory.config_change;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.config_change_log;
-import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.config_change_log;
+// import uim.platform.auditlog.domain.ports.repositories.config_change_logs;
 
 // import std.algorithm : filter;
 // import std.array : array;
+
+import uim.platform.auditlog;
+
+mixin(ShowModule!());
 
 @safe:
 class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {

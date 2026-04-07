@@ -24,4 +24,19 @@ struct DataAccessLog {
   string purpose; // business justification
   string channel; // API, UI, batch, etc.
   long timestamp;
+
+  Json toJson() const {
+    return Json([
+      "auditLogId": auditLogId,
+      "tenantId": tenantId,
+      "accessedBy": accessedBy,
+      "dataSubject": dataSubject,
+      "dataObjectType": dataObjectType,
+      "dataObjectId": dataObjectId,
+      "accessedFields": accessedFields,
+      "purpose": purpose,
+      "channel": channel,
+      "timestamp": timestamp
+    ]);
+  }
 }

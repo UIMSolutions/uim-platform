@@ -27,4 +27,22 @@ struct ExportJob {
   long createdAt;
   long completedAt;
   string errorMessage;
+
+  Json toJson() const {
+    return Json([
+      "id": id,
+      "tenantId": tenantId,
+      "requestedBy": requestedBy,
+      "format": format_,
+      "status": status,
+      "categories": categories,
+      "timeFrom": timeFrom,
+      "timeTo": timeTo,
+      "downloadUrl": downloadUrl,
+      "totalRecords": totalRecords,
+      "createdAt": createdAt,
+      "completedAt": completedAt,
+      "errorMessage": errorMessage
+    ]);
+  }
 }

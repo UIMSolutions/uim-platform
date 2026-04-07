@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.domain.entities.audit_config;
 
-import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.types;
+import uim.platform.auditlog;
 
+mixin(ShowModule!());
+
+@safe:
 /// Tenant-level audit logging configuration.
 @safe:
 struct AuditConfig {
@@ -25,4 +29,23 @@ struct AuditConfig {
   int rateLimitPerSecond = 8; // per-tenant rate limit
   long createdAt;
   long updatedAt;
+
+  Json toJson() const {
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("name", name)
+      .set("status", status.to!string)
+      .set("logDataAccess", logDataAccess)
+      .set("logDataModification", logDataModification)
+      .set("logSecurityEvents", logSecurityEvents)
+      .set("logConfigurationChanges", logConfigurationChanges)
+      .set("enableDataMasking", enableDataMasking)
+      .set("maskedFields", maskedFields)
+      .set("excludedServices", excludedServices)
+      .set("minimumSeverity", minimumSeverity.to!string)
+      .set("rateLimitPerSecond", rateLimitPerSecond)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }
