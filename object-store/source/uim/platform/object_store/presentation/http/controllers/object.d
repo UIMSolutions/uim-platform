@@ -24,13 +24,11 @@ mixin(ShowModule!());
 class ObjectController : SAPController {
   private ManageObjectsUseCase uc;
 
-  this(ManageObjectsUseCase uc)
-  {
+  this(ManageObjectsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/objects", &handleCreate);
@@ -42,8 +40,7 @@ class ObjectController : SAPController {
     router.get("/api/v1/objects/*/versions", &handleListVersions);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -75,8 +72,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // Extract bucket ID from: /api/v1/buckets/{bucketId}/objects
@@ -105,8 +101,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -128,8 +123,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdateMetadata(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -157,8 +151,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -180,8 +173,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCopy(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -211,8 +203,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // /api/v1/objects/{objectId}/versions
@@ -236,8 +227,7 @@ class ObjectController : SAPController {
     }
   }
 
-  private static Json serializeObject(StorageObject o)
-  {
+  private static Json serializeObject(StorageObject o) {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);
@@ -256,8 +246,7 @@ class ObjectController : SAPController {
     return j;
   }
 
-  private static Json serializeVersion(ObjectVersion v)
-  {
+  private static Json serializeVersion(ObjectVersion v) {
     auto j = Json.emptyObject;
     j["id"] = Json(v.id);
     j["objectId"] = Json(v.objectId);
@@ -273,8 +262,7 @@ class ObjectController : SAPController {
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects
-  private static string extractBucketIdFromPath(string uri)
-  {
+  private static string extractBucketIdFromPath(string uri) {
     // import std.string : indexOf;
 
     // Remove query string
@@ -294,8 +282,7 @@ class ObjectController : SAPController {
   }
 
   /// Extract object ID from /api/v1/objects/{id}/versions
-  private static string extractObjectIdFromVersionsPath(string uri)
-  {
+  private static string extractObjectIdFromVersionsPath(string uri) {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');

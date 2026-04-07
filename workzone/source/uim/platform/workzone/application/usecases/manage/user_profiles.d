@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageUserProfilesUseCase : UIMUseCase {
   private UserProfileRepository repo;
 
-  this(UserProfileRepository repo)
-  {
+  this(UserProfileRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createUserProfile(CreateUserProfileRequest req)
-  {
+  CommandResult createUserProfile(CreateUserProfileRequest req) {
     if (req.displayName.length == 0)
       return CommandResult("", "Display name is required");
 
@@ -47,23 +45,19 @@ class ManageUserProfilesUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  UserProfile* getUserProfile(UserProfileId id, TenantId tenantId)
-  {
+  UserProfile* getUserProfile(UserProfileId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  UserProfile* getUserProfileByUserId(UserId userId, TenantId tenantId)
-  {
+  UserProfile* getUserProfileByUserId(UserId userId, TenantId tenantId) {
     return repo.findByUserId(userId, tenantId);
   }
 
-  UserProfile[] listProfiles(TenantId tenantId)
-  {
+  UserProfile[] listProfiles(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateUserProfile(UpdateUserProfileRequest req)
-  {
+  CommandResult updateUserProfile(UpdateUserProfileRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
       return CommandResult("", "User profile not found");
@@ -82,8 +76,7 @@ class ManageUserProfilesUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deleteUserProfile(UserProfileId id, TenantId tenantId)
-  {
+  CommandResult deleteUserProfile(UserProfileId id, TenantId tenantId) {
     auto p = repo.findById(id, tenantId);
     if (p is null)
       return CommandResult("", "User profile not found");

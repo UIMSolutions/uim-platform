@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageWorkspacesUseCase : UIMUseCase {
   private WorkspaceRepository repo;
 
-  this(WorkspaceRepository repo)
-  {
+  this(WorkspaceRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createWorkspace(CreateWorkspaceRequest req)
-  {
+  CommandResult createWorkspace(CreateWorkspaceRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Workspace name is required");
 
@@ -50,23 +48,19 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  Workspace* getWorkspace(WorkspaceId id, TenantId tenantId)
-  {
+  Workspace* getWorkspace(WorkspaceId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Workspace[] listWorkspaces(TenantId tenantId)
-  {
+  Workspace[] listWorkspaces(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Workspace[] listByMember(UserId userId, TenantId tenantId)
-  {
+  Workspace[] listByMember(UserId userId, TenantId tenantId) {
     return repo.findByMember(userId, tenantId);
   }
 
-  CommandResult updateWorkspace(UpdateWorkspaceRequest req)
-  {
+  CommandResult updateWorkspace(UpdateWorkspaceRequest req) {
     auto ws = repo.findById(req.id, req.tenantId);
     if (ws is null)
       return CommandResult("", "Workspace not found");
@@ -84,8 +78,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  CommandResult addMember(AddMemberRequest req)
-  {
+  CommandResult addMember(AddMemberRequest req) {
     auto ws = repo.findById(req.workspaceId, req.tenantId);
     if (ws is null)
       return CommandResult("", "Workspace not found");
@@ -101,8 +94,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  CommandResult removeMember(WorkspaceId wsId, TenantId tenantId, UserId userId)
-  {
+  CommandResult removeMember(WorkspaceId wsId, TenantId tenantId, UserId userId) {
     auto ws = repo.findById(wsId, tenantId);
     if (ws is null)
       return CommandResult("", "Workspace not found");
@@ -124,8 +116,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  CommandResult archiveWorkspace(WorkspaceId id, TenantId tenantId)
-  {
+  CommandResult archiveWorkspace(WorkspaceId id, TenantId tenantId) {
     auto ws = repo.findById(id, tenantId);
     if (ws is null)
       return CommandResult("", "Workspace not found");
@@ -135,8 +126,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
     return CommandResult(ws.id, "");
   }
 
-  void deleteWorkspace(WorkspaceId id, TenantId tenantId)
-  {
+  void deleteWorkspace(WorkspaceId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

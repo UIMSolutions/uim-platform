@@ -14,13 +14,11 @@ import uim.platform.master_data_integration.domain.types;
 class ManageDataModelsUseCase : UIMUseCase {
   private DataModelRepository repo;
 
-  this(DataModelRepository repo)
-  {
+  this(DataModelRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDataModelRequest req)
-  {
+  CommandResult create(CreateDataModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Data model name is required");
     if (req.namespace.length == 0)
@@ -49,8 +47,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateModel(DataModelId id, UpdateDataModelRequest req)
-  {
+  CommandResult updateModel(DataModelId id, UpdateDataModelRequest req) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Data model not found");
@@ -71,28 +68,23 @@ class ManageDataModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  DataModel getModel(DataModelId id)
-  {
+  DataModel getModel(DataModelId id) {
     return repo.findById(id);
   }
 
-  DataModel[] listByTenant(TenantId tenantId)
-  {
+  DataModel[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DataModel[] listByCategory(TenantId tenantId, string category)
-  {
+  DataModel[] listByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  DataModel findByName(TenantId tenantId, string name)
-  {
+  DataModel findByName(TenantId tenantId, string name) {
     return repo.findByName(tenantId, name);
   }
 
-  CommandResult deleteModel(DataModelId id)
-  {
+  CommandResult deleteModel(DataModelId id) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Data model not found");
@@ -100,8 +92,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos)
-  {
+  private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {
     FieldDefinition[] result;
     foreach (ref dto; dtos)
     {
@@ -120,8 +111,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     return result;
   }
 
-  private FieldType parseFieldType(string s)
-  {
+  private FieldType parseFieldType(string s) {
     switch (s)
     {
     case "string":
@@ -147,8 +137,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory parseCategory(string s)
-  {
+  private MasterDataCategory parseCategory(string s) {
     switch (s)
     {
     case "businessPartner":

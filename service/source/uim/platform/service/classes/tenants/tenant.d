@@ -13,8 +13,7 @@ mixin(ShowModule!());
 class UIMTenant : UIMEntity, IUIMTenant {
   mixin(UIMEntityTemplate!UIMTenant);
 
-  override bool initialize(Json[string] initData = null)
-  {
+  override bool initialize(Json[string] initData = null) {
     if (!super.initialize(initData))
     {
       return false;
@@ -24,78 +23,64 @@ class UIMTenant : UIMEntity, IUIMTenant {
   }
 
   UUID _id; // Unique identifier for the tenant
-  UUID id()
-  {
+  UUID id() {
     return _id;
   }
 
-  void id(UUID value)
-  {
+  void id(UUID value) {
     _id = value;
   }
 
   string _name; // Name of the tenant  
-  string name()
-  {
+  string name() {
     return _name;
   }
 
-  void name(string value)
-  {
+  void name(string value) {
     _name = value;
   }
 
   string _description; // Optional description of the tenant
-  string description()
-  {
+  string description() {
     return _description;
   }
 
-  void description(string value)
-  {
+  void description(string value) {
     _description = value;
   }
 
   string _domain; // Custom domain associated with the tenant
-  string domain()
-  {
+  string domain() {
     return _domain;
   }
 
-  void domain(string value)
-  {
+  void domain(string value) {
     _domain = value;
   }
 
   string _owner; // Owner of the tenant
-  string owner()
-  {
+  string owner() {
     return _owner;
   }
 
-  void owner(string value)
-  {
+  void owner(string value) {
     _owner = value;
   }
 
   Json _settings; // Tenant-specific settings in JSON format
-  Json settings()
-  {
+  Json settings() {
     return _settings;
   }
 
-  void settings(Json value)
-  {
+  void settings(Json value) {
     _settings = value;
   }
 
-  bool isValid()
-  {
+  bool isValid() {
     return validate();
   }
 
-  bool validate()
-  {
+  bool validate() {
     // Basic validation logic for tenant properties
     // if (id == null || name == "" || domain == "" || owner == "") {
     //   return false;
@@ -105,22 +90,19 @@ class UIMTenant : UIMEntity, IUIMTenant {
   }
 
   // Method to update tenant settings
-  void update(Json settings)
-  {
+  void update(Json settings) {
     // settings = newSettings;
     // updatedAt = SysTime.nowUTC();
   }
 
-  override Json toJson()
-  {
+  override Json toJson() {
     return super.toJson().set("id", id.toString()).set("name", name)
       .set("description", description).set("domain", domain).set("owner", owner)
       .set("created_at", createdAt.toISOExtString()).set("updated_at",
         updatedAt.toISOExtString()).set("settings", settings);
   }
 
-  override string toString()
-  {
+  override string toString() {
     return "SAPTenant(id: " ~ id.toString() ~ ", name: " ~ name ~ ", domain: " ~ domain ~ ", owner: " ~ owner
       ~ ", createdAt: " ~ createdAt.toString() ~ ", updatedAt: " ~ updatedAt.toString() ~ ")";
   }

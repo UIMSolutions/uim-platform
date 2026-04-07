@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageChannelsUseCase : UIMUseCase {
   private ChannelRepository repo;
 
-  this(ChannelRepository repo)
-  {
+  this(ChannelRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createChannel(CreateChannelRequest req)
-  {
+  CommandResult createChannel(CreateChannelRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Channel name is required");
 
@@ -42,18 +40,15 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(ch.id, "");
   }
 
-  Channel* getChannel(ChannelId id, TenantId tenantId)
-  {
+  Channel* getChannel(ChannelId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Channel[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Channel[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  CommandResult updateChannel(UpdateChannelRequest req)
-  {
+  CommandResult updateChannel(UpdateChannelRequest req) {
     auto ch = repo.findById(req.id, req.tenantId);
     if (ch is null)
       return CommandResult("", "Channel not found");
@@ -70,8 +65,7 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(ch.id, "");
   }
 
-  void deleteChannel(ChannelId id, TenantId tenantId)
-  {
+  void deleteChannel(ChannelId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

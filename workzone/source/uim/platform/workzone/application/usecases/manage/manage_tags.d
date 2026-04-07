@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageTagsUseCase : UIMUseCase {
   private TagRepository repo;
 
-  this(TagRepository repo)
-  {
+  this(TagRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createTag(CreateTagRequest req)
-  {
+  CommandResult createTag(CreateTagRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Tag name is required");
 
@@ -44,18 +42,15 @@ class ManageTagsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Tag* getTag(TagId id, TenantId tenantId)
-  {
+  Tag* getTag(TagId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Tag[] listTags(TenantId tenantId)
-  {
+  Tag[] listTags(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTag(UpdateTagRequest req)
-  {
+  CommandResult updateTag(UpdateTagRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
       return CommandResult("", "Tag not found");
@@ -71,8 +66,7 @@ class ManageTagsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteTag(TagId id, TenantId tenantId)
-  {
+  CommandResult deleteTag(TagId id, TenantId tenantId) {
     auto t = repo.findById(id, tenantId);
     if (t is null)
       return CommandResult("", "Tag not found");

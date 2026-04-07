@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageThemesUseCase : UIMUseCase {
   private ThemeRepository repo;
 
-  this(ThemeRepository repo)
-  {
+  this(ThemeRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createTheme(CreateThemeRequest req)
-  {
+  CommandResult createTheme(CreateThemeRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Theme name is required");
 
@@ -45,18 +43,15 @@ class ManageThemesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Theme* getTheme(ThemeId id, TenantId tenantId)
-  {
+  Theme* getTheme(ThemeId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Theme[] listThemes(TenantId tenantId)
-  {
+  Theme[] listThemes(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateTheme(UpdateThemeRequest req)
-  {
+  CommandResult updateTheme(UpdateThemeRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
       return CommandResult("", "Theme not found");
@@ -75,8 +70,7 @@ class ManageThemesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteTheme(ThemeId id, TenantId tenantId)
-  {
+  CommandResult deleteTheme(ThemeId id, TenantId tenantId) {
     auto t = repo.findById(id, tenantId);
     if (t is null)
       return CommandResult("", "Theme not found");

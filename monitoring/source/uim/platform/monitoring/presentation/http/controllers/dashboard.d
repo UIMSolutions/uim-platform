@@ -16,18 +16,15 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class DashboardController {
   private GetDashboardUseCase uc;
 
-  this(GetDashboardUseCase uc)
-  {
+  this(GetDashboardUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/dashboard", &handleDashboard);
   }
 
-  private void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDashboard(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");

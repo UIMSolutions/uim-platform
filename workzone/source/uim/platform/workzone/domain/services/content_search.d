@@ -15,8 +15,7 @@ import uim.platform.workzone.domain.entities.content_item;
 /// Domain service — simple in-memory content search.
 struct ContentSearchService {
   /// Search content items by keyword in title, body, summary, or tags.
-  static ContentItem[] search(ContentItem[] items, string query)
-  {
+  static ContentItem[] search(ContentItem[] items, string query) {
     if (query.length == 0)
       return items;
 

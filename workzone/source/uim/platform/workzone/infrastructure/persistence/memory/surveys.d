@@ -15,41 +15,34 @@ import uim.platform.workzone.domain.ports.repositories.surveys;
 class MemorySurveyRepository : SurveyRepository {
   private Survey[SurveyId] store;
 
-  Survey[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Survey[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId && s.workspaceId == workspaceId).array;
   }
 
-  Survey* findById(SurveyId id, TenantId tenantId)
-  {
+  Survey* findById(SurveyId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Survey[] findByStatus(SurveyStatus status, TenantId tenantId)
-  {
+  Survey[] findByStatus(SurveyStatus status, TenantId tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId && s.status == status).array;
   }
 
-  Survey[] findByTenant(TenantId tenantId)
-  {
+  Survey[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId).array;
   }
 
-  void save(Survey survey)
-  {
+  void save(Survey survey) {
     store[survey.id] = survey;
   }
 
-  void update(Survey survey)
-  {
+  void update(Survey survey) {
     store[survey.id] = survey;
   }
 
-  void remove(SurveyId id, TenantId tenantId)
-  {
+  void remove(SurveyId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

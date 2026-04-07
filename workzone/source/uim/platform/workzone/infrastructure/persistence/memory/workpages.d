@@ -15,32 +15,27 @@ import uim.platform.workzone.domain.ports.repositories.workpages;
 class MemoryWorkpageRepository : WorkpageRepository {
   private Workpage[WorkpageId] store;
 
-  Workpage[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Workpage[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId && p.workspaceId == workspaceId)
       .array;
   }
 
-  Workpage* findById(WorkpageId id, TenantId tenantId)
-  {
+  Workpage* findById(WorkpageId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  void save(Workpage page)
-  {
+  void save(Workpage page) {
     store[page.id] = page;
   }
 
-  void update(Workpage page)
-  {
+  void update(Workpage page) {
     store[page.id] = page;
   }
 
-  void remove(WorkpageId id, TenantId tenantId)
-  {
+  void remove(WorkpageId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

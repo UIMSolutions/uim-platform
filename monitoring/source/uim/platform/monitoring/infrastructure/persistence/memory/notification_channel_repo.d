@@ -15,42 +15,35 @@ import uim.platform.monitoring.domain.ports.repositories.notification_channels;
 class MemoryNotificationChannelRepository : NotificationChannelRepository {
   private NotificationChannel[NotificationChannelId] store;
 
-  NotificationChannel findById(NotificationChannelId id)
-  {
+  NotificationChannel findById(NotificationChannelId id) {
     if (auto p = id in store)
       return *p;
     return NotificationChannel.init;
   }
 
-  NotificationChannel[] findByTenant(TenantId tenantId)
-  {
+  NotificationChannel[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType)
-  {
+  NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.channelType == channelType)
       .array;
   }
 
-  NotificationChannel[] findActive(TenantId tenantId)
-  {
+  NotificationChannel[] findActive(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.state == ChannelState.active).array;
   }
 
-  void save(NotificationChannel channel)
-  {
+  void save(NotificationChannel channel) {
     store[channel.id] = channel;
   }
 
-  void update(NotificationChannel channel)
-  {
+  void update(NotificationChannel channel) {
     store[channel.id] = channel;
   }
 
-  void remove(NotificationChannelId id)
-  {
+  void remove(NotificationChannelId id) {
     store.remove(id);
   }
 }

@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
   private KnowledgeBaseArticleRepository repo;
 
-  this(KnowledgeBaseArticleRepository repo)
-  {
+  this(KnowledgeBaseArticleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createArticle(CreateKBArticleRequest req)
-  {
+  CommandResult createArticle(CreateKBArticleRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Article title is required");
 
@@ -48,23 +46,19 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  KnowledgeBaseArticle* getArticle(KBArticleId id, TenantId tenantId)
-  {
+  KnowledgeBaseArticle* getArticle(KBArticleId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  KnowledgeBaseArticle[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  KnowledgeBaseArticle[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  KnowledgeBaseArticle[] listByCategory(string category, TenantId tenantId)
-  {
+  KnowledgeBaseArticle[] listByCategory(string category, TenantId tenantId) {
     return repo.findByCategory(category, tenantId);
   }
 
-  CommandResult updateArticle(UpdateKBArticleRequest req)
-  {
+  CommandResult updateArticle(UpdateKBArticleRequest req) {
     auto a = repo.findById(req.id, req.tenantId);
     if (a is null)
       return CommandResult("", "Article not found");
@@ -85,8 +79,7 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  CommandResult deleteArticle(KBArticleId id, TenantId tenantId)
-  {
+  CommandResult deleteArticle(KBArticleId id, TenantId tenantId) {
     auto a = repo.findById(id, tenantId);
     if (a is null)
       return CommandResult("", "Article not found");

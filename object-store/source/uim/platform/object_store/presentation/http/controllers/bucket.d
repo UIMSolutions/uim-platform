@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class BucketController : SAPController {
   private ManageBucketsUseCase uc;
 
-  this(ManageBucketsUseCase uc)
-  {
+  this(ManageBucketsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/buckets", &handleCreate);
@@ -39,8 +37,7 @@ class BucketController : SAPController {
     router.delete_("/api/v1/buckets/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class BucketController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -95,8 +91,7 @@ class BucketController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -121,8 +116,7 @@ class BucketController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -152,8 +146,7 @@ class BucketController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -176,8 +169,7 @@ class BucketController : SAPController {
     }
   }
 
-  private static Json serializeBucket(Bucket b)
-  {
+  private static Json serializeBucket(Bucket b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["tenantId"] = Json(b.tenantId);

@@ -11,13 +11,11 @@ mixin(ShowModule!());
 
 @safe:
 class UIMValidationException : UIMException {
-  this(string message)
-  {
+  this(string message) {
     super("Validation error: " ~ message);
   }
 
-  this(string message, string file = __FILE__, size_t line = __LINE__, Throwable next = null)
-  {
+  this(string message, string file = __FILE__, size_t line = __LINE__, Throwable next = null) {
     super("Validation error: " ~ message, file, line, next);
   }
 }

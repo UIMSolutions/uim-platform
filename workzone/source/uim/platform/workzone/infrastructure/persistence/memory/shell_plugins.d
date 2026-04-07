@@ -15,21 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.shell_plugins;
 class MemoryShellPluginRepository : ShellPluginRepository {
   private ShellPlugin[ShellPluginId] store;
 
-  ShellPlugin[] findByTenant(TenantId tenantId)
-  {
+  ShellPlugin[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  ShellPlugin* findById(ShellPluginId id, TenantId tenantId)
-  {
+  ShellPlugin* findById(ShellPluginId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ShellPlugin[] findBySite(SiteId siteId, TenantId tenantId)
-  {
+  ShellPlugin[] findBySite(SiteId siteId, TenantId tenantId) {
     ShellPlugin[] result;
     foreach (ref p; store.byValue())
     {
@@ -45,23 +42,19 @@ class MemoryShellPluginRepository : ShellPluginRepository {
     return result;
   }
 
-  ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId)
-  {
+  ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId && p.status == status).array;
   }
 
-  void save(ShellPlugin plugin)
-  {
+  void save(ShellPlugin plugin) {
     store[plugin.id] = plugin;
   }
 
-  void update(ShellPlugin plugin)
-  {
+  void update(ShellPlugin plugin) {
     store[plugin.id] = plugin;
   }
 
-  void remove(ShellPluginId id, TenantId tenantId)
-  {
+  void remove(ShellPluginId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

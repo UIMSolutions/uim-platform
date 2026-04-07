@@ -24,15 +24,13 @@ class ManageObjectsUseCase : UIMUseCase {
   private ObjectVersionRepository versionRepo;
 
   this(StorageObjectRepository objectRepo, BucketRepository bucketRepo,
-      ObjectVersionRepository versionRepo)
-  {
+      ObjectVersionRepository versionRepo) {
     this.objectRepo = objectRepo;
     this.bucketRepo = bucketRepo;
     this.versionRepo = versionRepo;
   }
 
-  CommandResult createObject(CreateObjectRequest req)
-  {
+  CommandResult createObject(CreateObjectRequest req) {
     if (req.bucketId.length == 0)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.key.length == 0)
@@ -98,8 +96,7 @@ class ManageObjectsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req)
-  {
+  CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
     auto obj = objectRepo.findById(id);
     if (obj is null || obj.id.length == 0)
       return CommandResult(false, "", "Object not found");
@@ -116,33 +113,27 @@ class ManageObjectsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  StorageObject getObject(ObjectId id)
-  {
+  StorageObject getObject(ObjectId id) {
     return objectRepo.findById(id);
   }
 
-  StorageObject getObjectByKey(BucketId bucketId, string key)
-  {
+  StorageObject getObjectByKey(BucketId bucketId, string key) {
     return objectRepo.findByKey(bucketId, key);
   }
 
-  StorageObject[] listObjects(BucketId bucketId)
-  {
+  StorageObject[] listObjects(BucketId bucketId) {
     return objectRepo.findByBucket(bucketId);
   }
 
-  StorageObject[] listObjectsByPrefix(BucketId bucketId, string prefix)
-  {
+  StorageObject[] listObjectsByPrefix(BucketId bucketId, string prefix) {
     return objectRepo.findByPrefix(bucketId, prefix);
   }
 
-  ObjectVersion[] listVersions(ObjectId objectId)
-  {
+  ObjectVersion[] listVersions(ObjectId objectId) {
     return versionRepo.findByObject(objectId);
   }
 
-  CommandResult deleteObject(ObjectId id)
-  {
+  CommandResult deleteObject(ObjectId id) {
     auto obj = objectRepo.findById(id);
     if (obj is null || obj.id.length == 0)
       return CommandResult(false, "", "Object not found");
@@ -198,8 +189,7 @@ class ManageObjectsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult copyObject(CopyObjectRequest req)
-  {
+  CommandResult copyObject(CopyObjectRequest req) {
     auto sourceObj = objectRepo.findByKey(req.sourceBucketId, req.sourceKey);
     if (sourceObj is null || sourceObj.id.length == 0)
       return CommandResult(false, "", "Source object not found");
@@ -242,8 +232,7 @@ class ManageObjectsUseCase : UIMUseCase {
 }
 
 private StorageClass parseStorageClass(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "nearline":
     return StorageClass.nearline;
   case "coldline":

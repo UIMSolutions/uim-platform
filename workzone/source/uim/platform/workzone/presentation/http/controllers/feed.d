@@ -17,21 +17,18 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class FeedController {
   private ManageFeedsUseCase useCase;
 
-  this(ManageFeedsUseCase useCase)
-  {
+  this(ManageFeedsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/feeds", &handleCreate);
     router.get("/api/v1/feeds", &handleList);
     router.get("/api/v1/feeds/*", &handleGet);
     router.delete_("/api/v1/feeds/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class FeedController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -85,8 +81,7 @@ class FeedController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -105,8 +100,7 @@ class FeedController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);

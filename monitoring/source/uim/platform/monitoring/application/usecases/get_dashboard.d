@@ -28,8 +28,7 @@ class GetDashboardUseCase : UIMUseCase {
 
   this(MonitoredResourceRepository resourceRepo, AlertRepository alertRepo,
       HealthCheckRepository checkRepo, HealthCheckResultRepository checkResultRepo,
-      MetricDefinitionRepository metricDefRepo, NotificationChannelRepository channelRepo)
-  {
+      MetricDefinitionRepository metricDefRepo, NotificationChannelRepository channelRepo) {
     this.resourceRepo = resourceRepo;
     this.alertRepo = alertRepo;
     this.checkRepo = checkRepo;
@@ -38,8 +37,7 @@ class GetDashboardUseCase : UIMUseCase {
     this.channelRepo = channelRepo;
   }
 
-  DashboardSummary getSummary(TenantId tenantId)
-  {
+  DashboardSummary getSummary(TenantId tenantId) {
     DashboardSummary summary;
 
     // Resources

@@ -15,44 +15,37 @@ import uim.platform.workzone.domain.ports.repositories.page_templates;
 class MemoryPageTemplateRepository : PageTemplateRepository {
   private PageTemplate[PageTemplateId] store;
 
-  PageTemplate[] findByTenant(TenantId tenantId)
-  {
+  PageTemplate[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  PageTemplate* findById(PageTemplateId id, TenantId tenantId)
-  {
+  PageTemplate* findById(PageTemplateId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  PageTemplate* findDefault(TenantId tenantId)
-  {
+  PageTemplate* findDefault(TenantId tenantId) {
     foreach (ref t; store.byValue())
       if (t.tenantId == tenantId && t.isDefault)
         return &t;
     return null;
   }
 
-  PageTemplate[] findPublic()
-  {
+  PageTemplate[] findPublic() {
     return store.byValue().filter!(t => t.isPublic).array;
   }
 
-  void save(PageTemplate template_)
-  {
+  void save(PageTemplate template_) {
     store[template_.id] = template_;
   }
 
-  void update(PageTemplate template_)
-  {
+  void update(PageTemplate template_) {
     store[template_.id] = template_;
   }
 
-  void remove(PageTemplateId id, TenantId tenantId)
-  {
+  void remove(PageTemplateId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

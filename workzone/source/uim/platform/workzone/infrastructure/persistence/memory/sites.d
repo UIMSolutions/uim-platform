@@ -15,39 +15,33 @@ import uim.platform.workzone.domain.ports.repositories.sites;
 class MemorySiteRepository : SiteRepository {
   private Site[SiteId] store;
 
-  Site[] findByTenant(TenantId tenantId)
-  {
+  Site[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId).array;
   }
 
-  Site* findById(SiteId id, TenantId tenantId)
-  {
+  Site* findById(SiteId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Site* findByAlias(string alias_, TenantId tenantId)
-  {
+  Site* findByAlias(string alias_, TenantId tenantId) {
     foreach (ref s; store.byValue())
       if (s.tenantId == tenantId && s.alias_ == alias_)
         return &s;
     return null;
   }
 
-  void save(Site site)
-  {
+  void save(Site site) {
     store[site.id] = site;
   }
 
-  void update(Site site)
-  {
+  void update(Site site) {
     store[site.id] = site;
   }
 
-  void remove(SiteId id, TenantId tenantId)
-  {
+  void remove(SiteId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

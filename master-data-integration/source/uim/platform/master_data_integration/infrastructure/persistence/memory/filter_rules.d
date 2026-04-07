@@ -15,40 +15,33 @@ import uim.platform.master_data_integration.domain.ports.repositories.filter_rul
 class MemoryFilterRuleRepository : FilterRuleRepository {
   private FilterRule[FilterRuleId] store;
 
-  FilterRule findById(FilterRuleId id)
-  {
+  FilterRule findById(FilterRuleId id) {
     if (auto p = id in store)
       return *p;
     return FilterRule.init;
   }
 
-  FilterRule[] findByTenant(TenantId tenantId)
-  {
+  FilterRule[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category)
-  {
+  FilterRule[] findByCategory(TenantId tenantId, MasterDataCategory category) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
-  FilterRule[] findActive(TenantId tenantId)
-  {
+  FilterRule[] findActive(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.isActive).array;
   }
 
-  void save(FilterRule rule)
-  {
+  void save(FilterRule rule) {
     store[rule.id] = rule;
   }
 
-  void update(FilterRule rule)
-  {
+  void update(FilterRule rule) {
     store[rule.id] = rule;
   }
 
-  void remove(FilterRuleId id)
-  {
+  void remove(FilterRuleId id) {
     store.remove(id);
   }
 }

@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class ShellPluginController {
   private ManageShellPluginsUseCase useCase;
 
-  this(ManageShellPluginsUseCase useCase)
-  {
+  this(ManageShellPluginsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/shell-plugins", &handleCreate);
     router.get("/api/v1/shell-plugins", &handleList);
     router.get("/api/v1/shell-plugins/*", &handleGet);
@@ -31,8 +29,7 @@ class ShellPluginController {
     router.delete_("/api/v1/shell-plugins/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class ShellPluginController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -84,8 +80,7 @@ class ShellPluginController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -104,8 +99,7 @@ class ShellPluginController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -129,8 +123,7 @@ class ShellPluginController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);

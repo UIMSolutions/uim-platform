@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageForumTopicsUseCase : UIMUseCase {
   private ForumTopicRepository repo;
 
-  this(ForumTopicRepository repo)
-  {
+  this(ForumTopicRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createForumTopic(CreateForumTopicRequest req)
-  {
+  CommandResult createForumTopic(CreateForumTopicRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Forum topic title is required");
 
@@ -44,18 +42,15 @@ class ManageForumTopicsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  ForumTopic* getForumTopic(ForumTopicId id, TenantId tenantId)
-  {
+  ForumTopic* getForumTopic(ForumTopicId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ForumTopic[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  ForumTopic[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  CommandResult updateForumTopic(UpdateForumTopicRequest req)
-  {
+  CommandResult updateForumTopic(UpdateForumTopicRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
       return CommandResult("", "Forum topic not found");
@@ -73,8 +68,7 @@ class ManageForumTopicsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteForumTopic(ForumTopicId id, TenantId tenantId)
-  {
+  CommandResult deleteForumTopic(ForumTopicId id, TenantId tenantId) {
     auto t = repo.findById(id, tenantId);
     if (t is null)
       return CommandResult("", "Forum topic not found");

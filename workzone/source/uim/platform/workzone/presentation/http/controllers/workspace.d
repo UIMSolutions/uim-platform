@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class WorkspaceController {
   private ManageWorkspacesUseCase useCase;
 
-  this(ManageWorkspacesUseCase useCase)
-  {
+  this(ManageWorkspacesUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/workspaces", &handleCreate);
     router.get("/api/v1/workspaces", &handleList);
     router.get("/api/v1/workspaces/*", &handleGet);
@@ -32,8 +30,7 @@ class WorkspaceController {
     router.post("/api/v1/workspaces/members", &handleAddMember);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class WorkspaceController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -96,8 +92,7 @@ class WorkspaceController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -123,8 +118,7 @@ class WorkspaceController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -154,8 +148,7 @@ class WorkspaceController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -169,8 +162,7 @@ class WorkspaceController {
     }
   }
 
-  private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAddMember(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -212,8 +204,7 @@ class WorkspaceController {
 private WorkspaceSettings parseWorkspaceSettings(Json j) {
   WorkspaceSettings s;
   auto sv = "settings" in j;
-  if (sv !is null && (*sv).type == Json.Type.object)
-  {
+  if (sv !is null && (*sv).type == Json.Type.object) {
     auto sj = *sv;
     s.allowExternalMembers = jsonBool(sj, "allowExternalMembers");
     s.enableNotifications = jsonBool(sj, "enableNotifications", true);
@@ -244,8 +235,7 @@ private Json serializeWorkspace(ref Workspace w) {
 
   // Members
   auto members = Json.emptyArray;
-  foreach (ref m; w.members)
-  {
+  foreach (ref m; w.members) {
     auto mj = Json.emptyObject;
     mj["userId"] = Json(m.userId);
     mj["displayName"] = Json(m.displayName);

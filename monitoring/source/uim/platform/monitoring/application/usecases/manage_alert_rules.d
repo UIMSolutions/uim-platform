@@ -16,13 +16,11 @@ import uim.platform.monitoring.domain.types;
 class ManageAlertRulesUseCase : UIMUseCase {
   private AlertRuleRepository repo;
 
-  this(AlertRuleRepository repo)
-  {
+  this(AlertRuleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRule(CreateAlertRuleRequest req)
-  {
+  CommandResult createRule(CreateAlertRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Rule name is required");
 
@@ -57,8 +55,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req)
-  {
+  CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "Alert rule not found");
@@ -84,28 +81,23 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  AlertRule getRule(AlertRuleId id)
-  {
+  AlertRule getRule(AlertRuleId id) {
     return repo.findById(id);
   }
 
-  AlertRule[] listRules(TenantId tenantId)
-  {
+  AlertRule[] listRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return repo.findByResource(tenantId, resourceId);
   }
 
-  AlertRule[] listEnabled(TenantId tenantId)
-  {
+  AlertRule[] listEnabled(TenantId tenantId) {
     return repo.findEnabled(tenantId);
   }
 
-  CommandResult deleteRule(AlertRuleId id)
-  {
+  CommandResult deleteRule(AlertRuleId id) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "Alert rule not found");
@@ -114,14 +106,12 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static ThresholdOperator parseOperator(string s)
-  {
+  private static ThresholdOperator parseOperator(string s) {
     switch (s)
     {
     case "greaterOrEqual":
@@ -139,8 +129,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     }
   }
 
-  private static AlertSeverity parseSeverity(string s)
-  {
+  private static AlertSeverity parseSeverity(string s) {
     switch (s)
     {
     case "info":

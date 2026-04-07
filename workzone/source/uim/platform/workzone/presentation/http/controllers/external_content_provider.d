@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class ExternalContentProviderController {
   private ManageExternalContentProvidersUseCase useCase;
 
-  this(ManageExternalContentProvidersUseCase useCase)
-  {
+  this(ManageExternalContentProvidersUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/external-providers", &handleCreate);
     router.get("/api/v1/external-providers", &handleList);
     router.get("/api/v1/external-providers/*", &handleGet);
@@ -31,8 +29,7 @@ class ExternalContentProviderController {
     router.delete_("/api/v1/external-providers/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -63,8 +60,7 @@ class ExternalContentProviderController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -83,8 +79,7 @@ class ExternalContentProviderController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -103,8 +98,7 @@ class ExternalContentProviderController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -128,8 +122,7 @@ class ExternalContentProviderController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);

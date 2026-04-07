@@ -16,8 +16,7 @@ UUID requiredUUID(Json request, string key) {
   requiredStringType(request, key);
 
   auto value = request[key].getString;
-  if (value.length == 0 || !value.isUUID)
-  {
+  if (value.length == 0 || !value.isUUID) {
     throw new UIMValidationException(key ~ " must be a valid UUID");
   }
 
@@ -33,8 +32,7 @@ string requiredString(Json data, string key) {
   requiredStringType(data, key);
 
   auto value = data[key].getString;
-  if (value.length == 0)
-  {
+  if (value.length == 0) {
     throw new UIMValidationException(key ~ " cannot be empty");
   }
 
@@ -42,36 +40,31 @@ string requiredString(Json data, string key) {
 }
 
 void requiredBooleanType(Json data, string key) {
-  if (!data[key].isBoolean)
-  {
+  if (!data[key].isBoolean) {
     throw new UIMValidationException(key ~ " must be a boolean");
   }
 }
 
 void requiredStringType(Json data, string key) {
-  if (!data[key].isString)
-  {
+  if (!data[key].isString) {
     throw new UIMValidationException(key ~ " must be string");
   }
 }
 
 void requiredArrayType(Json data, string key) {
-  if (!data[key].isArray)
-  {
+  if (!data[key].isArray) {
     throw new UIMValidationException(key ~ " must be array");
   }
 }
 
 void requiredObjectType(Json data, string key) {
-  if (!data[key].isObject)
-  {
+  if (!data[key].isObject) {
     throw new UIMValidationException(key ~ " must be object");
   }
 }
 
 void requiredKey(Json data, string key) {
-  if (!(key in data))
-  {
+  if (!(key in data)) {
     throw new UIMValidationException(key ~ " is required");
   }
 }

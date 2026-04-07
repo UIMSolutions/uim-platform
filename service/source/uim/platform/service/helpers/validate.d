@@ -12,8 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 bool validateTenant(string tenantId) {
-  if (tenantId.length == 0)
-  {
+  if (tenantId.length == 0) {
     throw new UIMValidationException("Tenant ID cannot be empty");
   }
 
@@ -25,16 +24,14 @@ bool validateTenant(UUID tenantId) {
 }
 
 bool validateId(string value, string fieldName) {
-  if (value.length == 0)
-  {
+  if (value.length == 0) {
     throw new UIMValidationException(fieldName ~ " cannot be empty");
   }
   return true;
 }
 
 bool validateId(UUID value, string fieldName) {
-  if (value == NULLUUID)
-  {
+  if (value == NULLUUID) {
     throw new UIMValidationException(fieldName ~ " should be a valid UUID");
   }
   return true;
@@ -45,19 +42,16 @@ bool validateId(UUID value, string fieldName) {
   * Throws UIMAuthorizationException if validation fails.
   */
 bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
-  if (!cfg.requireAuthToken)
-  {
+  if (!cfg.requireAuthToken) {
     return true; // No auth required, allow all requests
   }
 
-  if (!("Authorization" in req.headers))
-  { // Missing header
+  if (!("Authorization" in req.headers)) { // Missing header
     throw new UIMAuthorizationException("Missing Authorization header");
   }
 
   auto expected = "Bearer " ~ cfg.authToken;
-  if (req.headers["Authorization"] != expected)
-  { // Invalid token
+  if (req.headers["Authorization"] != expected) { // Invalid token
     throw new UIMAuthorizationException("Invalid Authorization token");
   }
 
@@ -86,8 +80,7 @@ string[] segments(string path) {
 }
 
 bool validateString(string value, string fieldName) {
-  if (value.length == 0)
-  {
+  if (value.length == 0) {
     throw new UIMValidationException(fieldName ~ " cannot be empty");
   }
   return true;

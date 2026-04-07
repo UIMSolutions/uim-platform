@@ -20,13 +20,11 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class CheckController : SAPController {
   private ManageHealthChecksUseCase uc;
 
-  this(ManageHealthChecksUseCase uc)
-  {
+  this(ManageHealthChecksUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/checks", &handleCreate);
@@ -38,8 +36,7 @@ class CheckController : SAPController {
     router.post("/api/v1/checks/results", &handleRecordResult);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -79,8 +76,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -101,8 +97,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -120,8 +115,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -154,8 +148,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -177,8 +170,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRecordResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -210,8 +202,7 @@ class CheckController : SAPController {
     }
   }
 
-  private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -233,8 +224,7 @@ class CheckController : SAPController {
     }
   }
 
-  private static Json serializeCheck(const ref HealthCheck c)
-  {
+  private static Json serializeCheck(const ref HealthCheck c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);
@@ -258,8 +248,7 @@ class CheckController : SAPController {
     return j;
   }
 
-  private static Json serializeResult(const ref HealthCheckResult r)
-  {
+  private static Json serializeResult(const ref HealthCheckResult r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

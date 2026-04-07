@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageEventsUseCase : UIMUseCase {
   private EventRepository repo;
 
-  this(EventRepository repo)
-  {
+  this(EventRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createEvent(CreateEventRequest req)
-  {
+  CommandResult createEvent(CreateEventRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Event title is required");
 
@@ -51,18 +49,15 @@ class ManageEventsUseCase : UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  Event* getEvent(EventId id, TenantId tenantId)
-  {
+  Event* getEvent(EventId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Event[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Event[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  CommandResult updateEvent(UpdateEventRequest req)
-  {
+  CommandResult updateEvent(UpdateEventRequest req) {
     auto e = repo.findById(req.id, req.tenantId);
     if (e is null)
       return CommandResult("", "Event not found");
@@ -82,8 +77,7 @@ class ManageEventsUseCase : UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  CommandResult deleteEvent(EventId id, TenantId tenantId)
-  {
+  CommandResult deleteEvent(EventId id, TenantId tenantId) {
     auto e = repo.findById(id, tenantId);
     if (e is null)
       return CommandResult("", "Event not found");

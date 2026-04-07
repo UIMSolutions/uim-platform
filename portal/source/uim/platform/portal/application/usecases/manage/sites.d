@@ -17,13 +17,11 @@ import uim.platform.portal.application.dto;
 class ManageSitesUseCase : UIMUseCase {
   private SiteRepository siteRepo;
 
-  this(SiteRepository siteRepo)
-  {
+  this(SiteRepository siteRepo) {
     this.siteRepo = siteRepo;
   }
 
-  SiteResponse createSite(CreateSiteRequest req)
-  {
+  SiteResponse createSite(CreateSiteRequest req) {
     if (req.name.length == 0)
       return SiteResponse("", "Site name is required");
 
@@ -46,23 +44,19 @@ class ManageSitesUseCase : UIMUseCase {
     return SiteResponse(id, "");
   }
 
-  Site getSite(SiteId id)
-  {
+  Site getSite(SiteId id) {
     return siteRepo.findById(id);
   }
 
-  Site[] listSites(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Site[] listSites(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return siteRepo.findByTenant(tenantId, offset, limit);
   }
 
-  Site[] listSitesByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100)
-  {
+  Site[] listSitesByStatus(TenantId tenantId, SiteStatus status, uint offset = 0, uint limit = 100) {
     return siteRepo.findByStatus(tenantId, status, offset, limit);
   }
 
-  string updateSite(UpdateSiteRequest req)
-  {
+  string updateSite(UpdateSiteRequest req) {
     auto site = siteRepo.findById(req.siteId);
     if (site == Site.init)
       return "Site not found";
@@ -77,8 +71,7 @@ class ManageSitesUseCase : UIMUseCase {
     return "";
   }
 
-  string publishSite(SiteId id)
-  {
+  string publishSite(SiteId id) {
     auto site = siteRepo.findById(id);
     if (site == Site.init)
       return "Site not found";
@@ -97,8 +90,7 @@ class ManageSitesUseCase : UIMUseCase {
     return "";
   }
 
-  string unpublishSite(SiteId id)
-  {
+  string unpublishSite(SiteId id) {
     auto site = siteRepo.findById(id);
     if (site == Site.init)
       return "Site not found";
@@ -109,8 +101,7 @@ class ManageSitesUseCase : UIMUseCase {
     return "";
   }
 
-  string archiveSite(SiteId id)
-  {
+  string archiveSite(SiteId id) {
     auto site = siteRepo.findById(id);
     if (site == Site.init)
       return "Site not found";
@@ -121,8 +112,7 @@ class ManageSitesUseCase : UIMUseCase {
     return "";
   }
 
-  string deleteSite(SiteId id)
-  {
+  string deleteSite(SiteId id) {
     auto site = siteRepo.findById(id);
     if (site == Site.init)
       return "Site not found";

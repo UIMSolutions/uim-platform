@@ -16,14 +16,12 @@ class ManageCorsRulesUseCase : UIMUseCase {
   private CorsRuleRepository corsRepo;
   private BucketRepository bucketRepo;
 
-  this(CorsRuleRepository corsRepo, BucketRepository bucketRepo)
-  {
+  this(CorsRuleRepository corsRepo, BucketRepository bucketRepo) {
     this.corsRepo = corsRepo;
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createRule(CreateCorsRuleRequest req)
-  {
+  CommandResult createRule(CreateCorsRuleRequest req) {
     if (req.bucketId.length == 0)
       return CommandResult(false, "", "Bucket ID is required");
 
@@ -52,8 +50,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req)
-  {
+  CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
     auto rule = corsRepo.findById(id);
     if (rule is null || rule.id.length == 0)
       return CommandResult(false, "", "CORS rule not found");
@@ -74,18 +71,15 @@ class ManageCorsRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CorsRule getRule(CorsRuleId id)
-  {
+  CorsRule getRule(CorsRuleId id) {
     return corsRepo.findById(id);
   }
 
-  CorsRule[] listRules(BucketId bucketId)
-  {
+  CorsRule[] listRules(BucketId bucketId) {
     return corsRepo.findByBucket(bucketId);
   }
 
-  CommandResult deleteRule(CorsRuleId id)
-  {
+  CommandResult deleteRule(CorsRuleId id) {
     auto rule = corsRepo.findById(id);
     if (rule is null || rule.id.length == 0)
       return CommandResult(false, "", "CORS rule not found");

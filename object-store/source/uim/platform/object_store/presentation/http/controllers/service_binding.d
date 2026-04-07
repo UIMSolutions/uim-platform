@@ -18,13 +18,11 @@ import uim.platform.object_store.presentation.http.json_utils;
 class ServiceBindingController {
   private ManageServiceBindingsUseCase uc;
 
-  this(ManageServiceBindingsUseCase uc)
-  {
+  this(ManageServiceBindingsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/buckets/*/service-bindings", &handleListByBucket);
     router.get("/api/v1/service-bindings/*", &handleGetById);
@@ -32,8 +30,7 @@ class ServiceBindingController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -63,8 +60,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto bucketId = extractBucketIdFromBindingsPath(req.requestURI);
@@ -85,8 +81,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       // /api/v1/service-bindings/{id}/revoke
@@ -143,8 +137,7 @@ class ServiceBindingController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -166,8 +159,7 @@ class ServiceBindingController {
     }
   }
 
-  private static Json serializeBinding(ServiceBinding b)
-  {
+  private static Json serializeBinding(ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["tenantId"] = Json(b.tenantId);
@@ -183,8 +175,7 @@ class ServiceBindingController {
     return j;
   }
 
-  private static string extractBucketIdFromBindingsPath(string uri)
-  {
+  private static string extractBucketIdFromBindingsPath(string uri) {
     // import std.string : indexOf;
     auto qpos = uri.indexOf('?');
     string path = qpos >= 0 ? uri[0 .. qpos] : uri;

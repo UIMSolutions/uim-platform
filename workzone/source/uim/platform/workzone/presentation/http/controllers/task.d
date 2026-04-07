@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class TaskController {
   private ManageTasksUseCase useCase;
 
-  this(ManageTasksUseCase useCase)
-  {
+  this(ManageTasksUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/tasks", &handleCreate);
     router.get("/api/v1/tasks", &handleList);
     router.get("/api/v1/tasks/*", &handleGet);
@@ -32,8 +30,7 @@ class TaskController {
     router.delete_("/api/v1/tasks/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -80,8 +77,7 @@ class TaskController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -101,8 +97,7 @@ class TaskController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -121,8 +116,7 @@ class TaskController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -171,8 +165,7 @@ class TaskController {
     }
   }
 
-  private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -195,8 +188,7 @@ class TaskController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);

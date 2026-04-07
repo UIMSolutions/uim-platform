@@ -25,31 +25,26 @@ mixin(ShowModule!());
 
   */
 class UIMServer {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json initData)
-  {
+  this(Json initData) {
     if (initData.isObject)
     {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  this(IUIMService service)
-  {
+  this(IUIMService service) {
     _service = service;
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     // Initialization logic for the store
     return true;
   }
@@ -62,8 +57,7 @@ class UIMServer {
     return _host;
   }
 
-  void host(string value)
-  {
+  void host(string value) {
     _host = value;
   }
 
@@ -75,8 +69,7 @@ class UIMServer {
     return _port;
   }
 
-  void port(ushort value)
-  {
+  void port(ushort value) {
     _port = value;
   }
 
@@ -88,8 +81,7 @@ class UIMServer {
     return _basePath;
   }
 
-  void basePath(string value)
-  {
+  void basePath(string value) {
     _basePath = value;
   }
 
@@ -101,8 +93,7 @@ class UIMServer {
     return _subPath;
   }
 
-  void subPath(string value)
-  {
+  void subPath(string value) {
     _subPath = value;
   }
 
@@ -114,8 +105,7 @@ class UIMServer {
     return _requireAuthToken;
   }
 
-  void requireAuthToken(bool value)
-  {
+  void requireAuthToken(bool value) {
     _requireAuthToken = value;
   }
 
@@ -127,25 +117,21 @@ class UIMServer {
     return _authToken;
   }
 
-  void authToken(string value)
-  {
+  void authToken(string value) {
     _authToken = value;
   }
 
   // -- customHeaders --
   protected string[string] _customHeaders;
-  string[string] customHeaders()
-  {
+  string[string] customHeaders() {
     return _customHeaders;
   }
 
-  void customHeaders(string[string] value)
-  {
+  void customHeaders(string[string] value) {
     _customHeaders = value;
   }
 
-  void run()
-  {
+  void run() {
     auto settings = new HTTPServerSettings;
     settings.port = _service.config.port;
     settings.bindAddresses = [_service.config.host];
@@ -153,8 +139,7 @@ class UIMServer {
     runApplication();
   }
 
-  void handleRequest(HTTPServerRequest req, HTTPServerResponse res)
-  {
+  void handleRequest(HTTPServerRequest req, HTTPServerResponse res) {
     foreach (key, value; _service.config.customHeaders)
       res.headers[key] = value;
 
@@ -187,8 +172,7 @@ class UIMServer {
     }
   }
 
-  Json toJson()
-  {
+  Json toJson() {
     return Json.emptyObject;
   }
 }

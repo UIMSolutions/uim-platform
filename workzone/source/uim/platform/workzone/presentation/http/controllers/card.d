@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class CardController {
   private ManageCardsUseCase useCase;
 
-  this(ManageCardsUseCase useCase)
-  {
+  this(ManageCardsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/cards", &handleCreate);
     router.get("/api/v1/cards", &handleList);
     router.get("/api/v1/cards/*", &handleGet);
@@ -31,8 +29,7 @@ class CardController {
     router.delete_("/api/v1/cards/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -64,8 +61,7 @@ class CardController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -84,8 +80,7 @@ class CardController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -104,8 +99,7 @@ class CardController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -138,8 +132,7 @@ class CardController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -155,8 +148,7 @@ class CardController {
 }
 
 private CardType parseCardType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "adaptive":
     return CardType.adaptive;
   case "analytical":
@@ -181,8 +173,7 @@ private CardType parseCardType(string s) {
 private CardDataSource parseDataSource(Json j) {
   CardDataSource ds;
   auto v = "dataSource" in j;
-  if (v !is null && (*v).type == Json.Type.object)
-  {
+  if (v !is null && (*v).type == Json.Type.object) {
     auto d = *v;
     ds.url = d.getString("url");
     ds.method = d.getString("method");
@@ -197,8 +188,7 @@ private CardDataSource parseDataSource(Json j) {
 private CardManifest parseManifest(Json j) {
   CardManifest m;
   auto v = "manifest" in j;
-  if (v !is null && (*v).type == Json.Type.object)
-  {
+  if (v !is null && (*v).type == Json.Type.object) {
     auto d = *v;
     m.type = d.getString("type");
     m.version_ = d.getString("version");

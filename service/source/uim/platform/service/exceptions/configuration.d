@@ -12,13 +12,11 @@ mixin(ShowModule!());
 @safe:
 
 class UIMConfigurationException : UIMException {
-  this(string message)
-  {
+  this(string message) {
     super("Configuration error: " ~ message);
   }
 
-  this(string message, string file = __FILE__, size_t line = __LINE__, Throwable next = null)
-  {
+  this(string message, string file = __FILE__, size_t line = __LINE__, Throwable next = null) {
     super("Configuration error: " ~ message, file, line, next);
   }
 }

@@ -20,14 +20,12 @@ class ManageHealthChecksUseCase : UIMUseCase {
   private HealthCheckRepository checkRepo;
   private HealthCheckResultRepository resultRepo;
 
-  this(HealthCheckRepository checkRepo, HealthCheckResultRepository resultRepo)
-  {
+  this(HealthCheckRepository checkRepo, HealthCheckResultRepository resultRepo) {
     this.checkRepo = checkRepo;
     this.resultRepo = resultRepo;
   }
 
-  CommandResult createCheck(CreateHealthCheckRequest req)
-  {
+  CommandResult createCheck(CreateHealthCheckRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Check name is required");
 
@@ -73,8 +71,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req)
-  {
+  CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
     auto c = checkRepo.findById(id);
     if (c.id.length == 0)
       return CommandResult(false, "", "Health check not found");
@@ -100,8 +97,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult recordResult(RecordCheckResultRequest req)
-  {
+  CommandResult recordResult(RecordCheckResultRequest req) {
     // import std.uuid : randomUUID;
     auto id = randomUUID().toString();
 
@@ -121,38 +117,31 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  HealthCheck getCheck(HealthCheckId id)
-  {
+  HealthCheck getCheck(HealthCheckId id) {
     return checkRepo.findById(id);
   }
 
-  HealthCheck[] listChecks(TenantId tenantId)
-  {
+  HealthCheck[] listChecks(TenantId tenantId) {
     return checkRepo.findByTenant(tenantId);
   }
 
-  HealthCheck[] listByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  HealthCheck[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return checkRepo.findByResource(tenantId, resourceId);
   }
 
-  HealthCheck[] listByType(TenantId tenantId, string typeStr)
-  {
+  HealthCheck[] listByType(TenantId tenantId, string typeStr) {
     return checkRepo.findByType(tenantId, parseCheckType(typeStr));
   }
 
-  HealthCheckResult[] getResults(TenantId tenantId, HealthCheckId checkId)
-  {
+  HealthCheckResult[] getResults(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findByCheck(tenantId, checkId);
   }
 
-  HealthCheckResult getLatestResult(TenantId tenantId, HealthCheckId checkId)
-  {
+  HealthCheckResult getLatestResult(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findLatestByCheck(tenantId, checkId);
   }
 
-  CommandResult deleteCheck(HealthCheckId id)
-  {
+  CommandResult deleteCheck(HealthCheckId id) {
     auto c = checkRepo.findById(id);
     if (c.id.length == 0)
       return CommandResult(false, "", "Health check not found");
@@ -161,14 +150,12 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static CheckType parseCheckType(string s)
-  {
+  private static CheckType parseCheckType(string s) {
     switch (s)
     {
     case "jmx":
@@ -186,8 +173,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     }
   }
 
-  private static CheckStatus parseCheckStatus(string s)
-  {
+  private static CheckStatus parseCheckStatus(string s) {
     switch (s)
     {
     case "ok":
@@ -203,8 +189,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     }
   }
 
-  private static ThresholdOperator parseThresholdOperator(string s)
-  {
+  private static ThresholdOperator parseThresholdOperator(string s) {
     switch (s)
     {
     case "greaterOrEqual":

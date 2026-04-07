@@ -15,41 +15,34 @@ import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 class MemoryKnowledgeBaseArticleRepository : KnowledgeBaseArticleRepository {
   private KnowledgeBaseArticle[KBArticleId] store;
 
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId && a.workspaceId == workspaceId).array;
   }
 
-  KnowledgeBaseArticle* findById(KBArticleId id, TenantId tenantId)
-  {
+  KnowledgeBaseArticle* findById(KBArticleId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId)
-  {
+  KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId && a.category == category).array;
   }
 
-  KnowledgeBaseArticle[] findByTenant(TenantId tenantId)
-  {
+  KnowledgeBaseArticle[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId).array;
   }
 
-  void save(KnowledgeBaseArticle article)
-  {
+  void save(KnowledgeBaseArticle article) {
     store[article.id] = article;
   }
 
-  void update(KnowledgeBaseArticle article)
-  {
+  void update(KnowledgeBaseArticle article) {
     store[article.id] = article;
   }
 
-  void remove(KBArticleId id, TenantId tenantId)
-  {
+  void remove(KBArticleId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

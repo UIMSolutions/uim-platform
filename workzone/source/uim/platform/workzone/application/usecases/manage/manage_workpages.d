@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageWorkpagesUseCase : UIMUseCase {
   private WorkpageRepository repo;
 
-  this(WorkpageRepository repo)
-  {
+  this(WorkpageRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createWorkpage(CreateWorkpageRequest req)
-  {
+  CommandResult createWorkpage(CreateWorkpageRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Page title is required");
 
@@ -42,18 +40,15 @@ class ManageWorkpagesUseCase : UIMUseCase {
     return CommandResult(page.id, "");
   }
 
-  Workpage* getWorkpage(WorkpageId id, TenantId tenantId)
-  {
+  Workpage* getWorkpage(WorkpageId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Workpage[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Workpage[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  CommandResult updateWorkpage(UpdateWorkpageRequest req)
-  {
+  CommandResult updateWorkpage(UpdateWorkpageRequest req) {
     auto page = repo.findById(req.id, req.tenantId);
     if (page is null)
       return CommandResult("", "Page not found");
@@ -70,8 +65,7 @@ class ManageWorkpagesUseCase : UIMUseCase {
     return CommandResult(page.id, "");
   }
 
-  void deleteWorkpage(WorkpageId id, TenantId tenantId)
-  {
+  void deleteWorkpage(WorkpageId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

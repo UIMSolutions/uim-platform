@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class NotificationController {
   private ManageNotificationsUseCase useCase;
 
-  this(ManageNotificationsUseCase useCase)
-  {
+  this(ManageNotificationsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/notifications", &handleCreate);
     router.get("/api/v1/notifications", &handleList);
     router.get("/api/v1/notifications/*", &handleGet);
@@ -32,8 +30,7 @@ class NotificationController {
     router.delete_("/api/v1/notifications/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -76,8 +73,7 @@ class NotificationController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -104,8 +100,7 @@ class NotificationController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -124,8 +119,7 @@ class NotificationController {
     }
   }
 
-  private void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -148,8 +142,7 @@ class NotificationController {
     }
   }
 
-  private void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -172,8 +165,7 @@ class NotificationController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);

@@ -19,21 +19,18 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class MetricController {
   private ManageMetricsUseCase uc;
 
-  this(ManageMetricsUseCase uc)
-  {
+  this(ManageMetricsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/metrics", &handlePush);
     router.post("/api/v1/metrics/batch", &handleBatchPush);
     router.get("/api/v1/metrics", &handleQuery);
     router.get("/api/v1/metrics/summary", &handleSummary);
   }
 
-  private void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handlePush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -63,8 +60,7 @@ class MetricController {
     }
   }
 
-  private void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -102,8 +98,7 @@ class MetricController {
     }
   }
 
-  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -132,8 +127,7 @@ class MetricController {
     }
   }
 
-  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -164,8 +158,7 @@ class MetricController {
     }
   }
 
-  private static Json serializeMetric(const ref Metric m)
-  {
+  private static Json serializeMetric(const ref Metric m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["tenantId"] = Json(m.tenantId);

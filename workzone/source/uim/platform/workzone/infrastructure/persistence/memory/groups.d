@@ -15,21 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.groups;
 class MemoryGroupRepository : GroupRepository {
   private Group[GroupId] store;
 
-  Group[] findByTenant(TenantId tenantId)
-  {
+  Group[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(g => g.tenantId == tenantId).array;
   }
 
-  Group* findById(GroupId id, TenantId tenantId)
-  {
+  Group* findById(GroupId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Group[] findByMember(UserId userId, TenantId tenantId)
-  {
+  Group[] findByMember(UserId userId, TenantId tenantId) {
     Group[] result;
     foreach (ref g; store.byValue())
     {
@@ -45,18 +42,15 @@ class MemoryGroupRepository : GroupRepository {
     return result;
   }
 
-  void save(Group group)
-  {
+  void save(Group group) {
     store[group.id] = group;
   }
 
-  void update(Group group)
-  {
+  void update(Group group) {
     store[group.id] = group;
   }
 
-  void remove(GroupId id, TenantId tenantId)
-  {
+  void remove(GroupId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

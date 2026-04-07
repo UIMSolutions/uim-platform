@@ -13,26 +13,22 @@ mixin(ShowModule!());
 @safe:
 
 class UIMEntity {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json initData)
-  {
+  this(Json initData) {
     if (initData.isObject)
     {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     createdAt = Clock.currTime();
     if (initData.hasKey("created_at"))
     {
@@ -50,13 +46,11 @@ class UIMEntity {
 
   // #region createdAt
   protected SysTime _createdAt;
-  SysTime createdAt()
-  {
+  SysTime createdAt() {
     return _createdAt;
   }
 
-  void createdAt(SysTime time)
-  {
+  void createdAt(SysTime time) {
     _createdAt = time;
   }
   /// 
@@ -72,13 +66,11 @@ class UIMEntity {
 
   // #region updatedAt
   protected SysTime _updatedAt;
-  SysTime updatedAt()
-  {
+  SysTime updatedAt() {
     return _updatedAt;
   }
 
-  void updatedAt(SysTime time)
-  {
+  void updatedAt(SysTime time) {
     _updatedAt = time;
   }
   /// 
@@ -91,8 +83,7 @@ class UIMEntity {
   }
   // #endregion updatedAt
 
-  Json toJson()
-  {
+  Json toJson() {
     Json info = Json.emptyObject;
     // Add tenant-specific fields to the JSON object
     info["created_at"] = createdAt.toISOExtString();

@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageNavigationItemsUseCase : UIMUseCase {
   private NavigationItemRepository repo;
 
-  this(NavigationItemRepository repo)
-  {
+  this(NavigationItemRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createNavigationItem(CreateNavigationItemRequest req)
-  {
+  CommandResult createNavigationItem(CreateNavigationItemRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Navigation item title is required");
 
@@ -48,18 +46,15 @@ class ManageNavigationItemsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  NavigationItem* getNavigationItem(NavigationItemId id, TenantId tenantId)
-  {
+  NavigationItem* getNavigationItem(NavigationItemId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  NavigationItem[] listBySite(SiteId siteId, TenantId tenantId)
-  {
+  NavigationItem[] listBySite(SiteId siteId, TenantId tenantId) {
     return repo.findBySite(siteId, tenantId);
   }
 
-  CommandResult updateNavigationItem(UpdateNavigationItemRequest req)
-  {
+  CommandResult updateNavigationItem(UpdateNavigationItemRequest req) {
     auto n = repo.findById(req.id, req.tenantId);
     if (n is null)
       return CommandResult("", "Navigation item not found");
@@ -77,8 +72,7 @@ class ManageNavigationItemsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  CommandResult deleteNavigationItem(NavigationItemId id, TenantId tenantId)
-  {
+  CommandResult deleteNavigationItem(NavigationItemId id, TenantId tenantId) {
     auto n = repo.findById(id, tenantId);
     if (n is null)
       return CommandResult("", "Navigation item not found");

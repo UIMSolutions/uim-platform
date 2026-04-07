@@ -14,13 +14,11 @@ import uim.platform.master_data_integration.domain.types;
 class ManageFilterRulesUseCase : UIMUseCase {
   private FilterRuleRepository repo;
 
-  this(FilterRuleRepository repo)
-  {
+  this(FilterRuleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateFilterRuleRequest req)
-  {
+  CommandResult create(CreateFilterRuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Filter rule name is required");
 
@@ -46,8 +44,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateRule(FilterRuleId id, UpdateFilterRuleRequest req)
-  {
+  CommandResult updateRule(FilterRuleId id, UpdateFilterRuleRequest req) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "Filter rule not found");
@@ -67,28 +64,23 @@ class ManageFilterRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  FilterRule getRule(FilterRuleId id)
-  {
+  FilterRule getRule(FilterRuleId id) {
     return repo.findById(id);
   }
 
-  FilterRule[] listByTenant(TenantId tenantId)
-  {
+  FilterRule[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  FilterRule[] listByCategory(TenantId tenantId, string category)
-  {
+  FilterRule[] listByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  FilterRule[] listActive(TenantId tenantId)
-  {
+  FilterRule[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deleteRule(FilterRuleId id)
-  {
+  CommandResult deleteRule(FilterRuleId id) {
     auto rule = repo.findById(id);
     if (rule.id.length == 0)
       return CommandResult(false, "", "Filter rule not found");
@@ -96,8 +88,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private FilterCondition[] toConditions(FilterConditionDto[] dtos)
-  {
+  private FilterCondition[] toConditions(FilterConditionDto[] dtos) {
     FilterCondition[] result;
     foreach (ref dto; dtos)
     {
@@ -113,8 +104,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
     return result;
   }
 
-  private FilterOperator parseOperator(string s)
-  {
+  private FilterOperator parseOperator(string s) {
     switch (s)
     {
     case "equals":
@@ -146,8 +136,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory parseCategory(string s)
-  {
+  private MasterDataCategory parseCategory(string s) {
     switch (s)
     {
     case "businessPartner":

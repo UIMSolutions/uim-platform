@@ -21,14 +21,12 @@ class ManageMenuItemsUseCase : UIMUseCase {
   private MenuItemRepository menuRepo;
   private SiteRepository siteRepo;
 
-  this(MenuItemRepository menuRepo, SiteRepository siteRepo)
-  {
+  this(MenuItemRepository menuRepo, SiteRepository siteRepo) {
     this.menuRepo = menuRepo;
     this.siteRepo = siteRepo;
   }
 
-  MenuItemResponse createMenuItem(CreateMenuItemRequest req)
-  {
+  MenuItemResponse createMenuItem(CreateMenuItemRequest req) {
     if (req.title.length == 0)
       return MenuItemResponse("", "Menu item title is required");
 
@@ -50,23 +48,19 @@ class ManageMenuItemsUseCase : UIMUseCase {
     return MenuItemResponse(id, "");
   }
 
-  MenuItem getMenuItem(MenuItemId id)
-  {
+  MenuItem getMenuItem(MenuItemId id) {
     return menuRepo.findById(id);
   }
 
-  MenuItem[] listMenuItems(SiteId siteId)
-  {
+  MenuItem[] listMenuItems(SiteId siteId) {
     return menuRepo.findBySite(siteId);
   }
 
-  MenuItem[] getChildren(MenuItemId parentId)
-  {
+  MenuItem[] getChildren(MenuItemId parentId) {
     return menuRepo.findChildren(parentId);
   }
 
-  string updateMenuItem(UpdateMenuItemRequest req)
-  {
+  string updateMenuItem(UpdateMenuItemRequest req) {
     auto item = menuRepo.findById(req.menuItemId);
     if (item == MenuItem.init)
       return "Menu item not found";
@@ -85,8 +79,7 @@ class ManageMenuItemsUseCase : UIMUseCase {
     return "";
   }
 
-  string deleteMenuItem(MenuItemId menuItemId, SiteId siteId)
-  {
+  string deleteMenuItem(MenuItemId menuItemId, SiteId siteId) {
     auto item = menuRepo.findById(menuItemId);
     if (item == MenuItem.init)
       return "Menu item not found";

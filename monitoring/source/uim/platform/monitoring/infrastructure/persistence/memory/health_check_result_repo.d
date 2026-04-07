@@ -15,26 +15,22 @@ import uim.platform.monitoring.domain.ports.repositories.health_check_results;
 class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   private HealthCheckResult[] store;
 
-  HealthCheckResult findById(HealthCheckResultId id)
-  {
+  HealthCheckResult findById(HealthCheckResultId id) {
     foreach (ref r; store)
       if (r.id == id)
         return r;
     return HealthCheckResult.init;
   }
 
-  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId)
-  {
+  HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
     return store.filter!(r => r.tenantId == tenantId && r.checkId == checkId).array;
   }
 
-  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return store.filter!(r => r.tenantId == tenantId && r.resourceId == resourceId).array;
   }
 
-  HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId)
-  {
+  HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
     foreach (ref r; store)
     {
@@ -48,19 +44,16 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   }
 
   HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
-      long startTime, long endTime)
-  {
+      long startTime, long endTime) {
     return store.filter!(r => r.tenantId == tenantId && r.checkId == checkId
         && r.executedAt >= startTime && r.executedAt <= endTime).array;
   }
 
-  void save(HealthCheckResult result)
-  {
+  void save(HealthCheckResult result) {
     store ~= result;
   }
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp)
-  {
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     store = store.filter!(r => !(r.tenantId == tenantId && r.executedAt < beforeTimestamp)).array;
   }
 }

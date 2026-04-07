@@ -11,8 +11,7 @@ import uim.platform.master_data_integration.domain.types;
 /// Domain service: resolves cross-system key mappings.
 class KeyMappingResolver {
   /// Find the local key for a specific client within a key mapping.
-  string resolveLocalKey(KeyMapping mapping, ClientId clientId)
-  {
+  string resolveLocalKey(KeyMapping mapping, ClientId clientId) {
     foreach (ref entry; mapping.entries)
     {
       if (entry.clientId == clientId)
@@ -22,8 +21,7 @@ class KeyMappingResolver {
   }
 
   /// Find the primary key entry within a mapping.
-  KeyMappingEntry findPrimaryEntry(KeyMapping mapping)
-  {
+  KeyMappingEntry findPrimaryEntry(KeyMapping mapping) {
     foreach (ref entry; mapping.entries)
     {
       if (entry.isPrimary)
@@ -33,8 +31,7 @@ class KeyMappingResolver {
   }
 
   /// Check if a mapping contains a given client.
-  bool hasClientMapping(KeyMapping mapping, ClientId clientId)
-  {
+  bool hasClientMapping(KeyMapping mapping, ClientId clientId) {
     foreach (ref entry; mapping.entries)
     {
       if (entry.clientId == clientId)
@@ -44,8 +41,7 @@ class KeyMappingResolver {
   }
 
   /// Validate that a key mapping has at least one primary entry.
-  bool isValid(KeyMapping mapping)
-  {
+  bool isValid(KeyMapping mapping) {
     if (mapping.entries.length == 0)
       return false;
 

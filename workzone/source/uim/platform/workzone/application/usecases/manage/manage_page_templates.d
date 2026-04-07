@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManagePageTemplatesUseCase : UIMUseCase {
   private PageTemplateRepository repo;
 
-  this(PageTemplateRepository repo)
-  {
+  this(PageTemplateRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createPageTemplate(CreatePageTemplateRequest req)
-  {
+  CommandResult createPageTemplate(CreatePageTemplateRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Page template name is required");
 
@@ -43,18 +41,15 @@ class ManagePageTemplatesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  PageTemplate* getPageTemplate(PageTemplateId id, TenantId tenantId)
-  {
+  PageTemplate* getPageTemplate(PageTemplateId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  PageTemplate[] listPageTemplates(TenantId tenantId)
-  {
+  PageTemplate[] listPageTemplates(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updatePageTemplate(UpdatePageTemplateRequest req)
-  {
+  CommandResult updatePageTemplate(UpdatePageTemplateRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
       return CommandResult("", "Page template not found");
@@ -72,8 +67,7 @@ class ManagePageTemplatesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deletePageTemplate(PageTemplateId id, TenantId tenantId)
-  {
+  CommandResult deletePageTemplate(PageTemplateId id, TenantId tenantId) {
     auto t = repo.findById(id, tenantId);
     if (t is null)
       return CommandResult("", "Page template not found");

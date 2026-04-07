@@ -18,14 +18,12 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository bindingRepo;
   private BucketRepository bucketRepo;
 
-  this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo)
-  {
+  this(ServiceBindingRepository bindingRepo, BucketRepository bucketRepo) {
     this.bindingRepo = bindingRepo;
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createBinding(CreateServiceBindingRequest req)
-  {
+  CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Binding name is required");
     if (req.bucketId.length == 0)
@@ -59,18 +57,15 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ServiceBinding getBinding(ServiceBindingId id)
-  {
+  ServiceBinding getBinding(ServiceBindingId id) {
     return bindingRepo.findById(id);
   }
 
-  ServiceBinding[] listBindings(BucketId bucketId)
-  {
+  ServiceBinding[] listBindings(BucketId bucketId) {
     return bindingRepo.findByBucket(bucketId);
   }
 
-  CommandResult revokeBinding(ServiceBindingId id)
-  {
+  CommandResult revokeBinding(ServiceBindingId id) {
     auto binding = bindingRepo.findById(id);
     if (binding is null || binding.id.length == 0)
       return CommandResult(false, "", "Binding not found");
@@ -80,8 +75,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult deleteBinding(ServiceBindingId id)
-  {
+  CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = bindingRepo.findById(id);
     if (binding is null || binding.id.length == 0)
       return CommandResult(false, "", "Binding not found");
@@ -92,8 +86,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 }
 
 private BindingPermission parsePermission(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "readWrite":
     return BindingPermission.readWrite;
   case "admin":

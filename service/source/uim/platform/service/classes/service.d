@@ -13,51 +13,43 @@ mixin(ShowModule!());
 @safe:
 
 class UIMService : IUIMService {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json initData)
-  {
+  this(Json initData) {
     if (initData.isObject)
     {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  this(IUIMConfig config)
-  {
+  this(IUIMConfig config) {
     config.validate();
     _config = config;
     this.initialize();
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     // Initialization logic for the store
 
     return true;
   }
 
   protected IUIMConfig _config;
-  IUIMConfig config()
-  {
+  IUIMConfig config() {
     return _config;
   }
 
-  void config(IUIMConfig cfg)
-  {
+  void config(IUIMConfig cfg) {
     _config = cfg;
   }
 
-  Json health()
-  {
+  Json health() {
     Json healthInfo = Json.emptyObject;
     healthInfo["ok"] = true;
     healthInfo["status"] = "UP";
@@ -66,8 +58,7 @@ class UIMService : IUIMService {
     return healthInfo;
   }
 
-  Json ready()
-  {
+  Json ready() {
     Json readyInfo = Json.emptyObject;
     readyInfo["ready"] = true;
     readyInfo["status"] = "READY";

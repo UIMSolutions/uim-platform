@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageExternalContentProvidersUseCase : UIMUseCase {
   private ExternalContentProviderRepository repo;
 
-  this(ExternalContentProviderRepository repo)
-  {
+  this(ExternalContentProviderRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createProvider(CreateExternalContentProviderRequest req)
-  {
+  CommandResult createProvider(CreateExternalContentProviderRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Provider name is required");
 
@@ -46,18 +44,15 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ExternalContentProvider* getProvider(ExternalContentProviderId id, TenantId tenantId)
-  {
+  ExternalContentProvider* getProvider(ExternalContentProviderId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ExternalContentProvider[] listProviders(TenantId tenantId)
-  {
+  ExternalContentProvider[] listProviders(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateProvider(UpdateExternalContentProviderRequest req)
-  {
+  CommandResult updateProvider(UpdateExternalContentProviderRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
       return CommandResult("", "Provider not found");
@@ -75,8 +70,7 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deleteProvider(ExternalContentProviderId id, TenantId tenantId)
-  {
+  CommandResult deleteProvider(ExternalContentProviderId id, TenantId tenantId) {
     auto p = repo.findById(id, tenantId);
     if (p is null)
       return CommandResult("", "Provider not found");

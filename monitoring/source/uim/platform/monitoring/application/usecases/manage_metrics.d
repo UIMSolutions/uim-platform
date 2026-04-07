@@ -19,16 +19,14 @@ class ManageMetricsUseCase : UIMUseCase {
   private MetricRepository metricRepo;
   private MetricDefinitionRepository definitionRepo;
 
-  this(MetricRepository metricRepo, MetricDefinitionRepository definitionRepo)
-  {
+  this(MetricRepository metricRepo, MetricDefinitionRepository definitionRepo) {
     this.metricRepo = metricRepo;
     this.definitionRepo = definitionRepo;
   }
 
   // --- Metric Definitions ---
 
-  CommandResult createDefinition(CreateMetricDefinitionRequest req)
-  {
+  CommandResult createDefinition(CreateMetricDefinitionRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
@@ -57,8 +55,7 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req)
-  {
+  CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
     auto def = definitionRepo.findById(id);
     if (def.id.length == 0)
       return CommandResult(false, "", "Metric definition not found");
@@ -75,18 +72,15 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  MetricDefinition getDefinition(MetricDefinitionId id)
-  {
+  MetricDefinition getDefinition(MetricDefinitionId id) {
     return definitionRepo.findById(id);
   }
 
-  MetricDefinition[] listDefinitions(TenantId tenantId)
-  {
+  MetricDefinition[] listDefinitions(TenantId tenantId) {
     return definitionRepo.findByTenant(tenantId);
   }
 
-  CommandResult removeDefinition(MetricDefinitionId id)
-  {
+  CommandResult removeDefinition(MetricDefinitionId id) {
     auto def = definitionRepo.findById(id);
     if (def.id.length == 0)
       return CommandResult(false, "", "Metric definition not found");
@@ -97,8 +91,7 @@ class ManageMetricsUseCase : UIMUseCase {
 
   // --- Metric Data Points ---
 
-  CommandResult pushMetric(PushMetricRequest req)
-  {
+  CommandResult pushMetric(PushMetricRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
@@ -123,8 +116,7 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult pushMetricBatch(PushMetricBatchRequest req)
-  {
+  CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
     foreach (ref r; req.metrics)
     {
@@ -146,13 +138,11 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, "", "");
   }
 
-  Metric[] getMetrics(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  Metric[] getMetrics(TenantId tenantId, MonitoredResourceId resourceId) {
     return metricRepo.findByResource(tenantId, resourceId);
   }
 
-  Metric[] queryMetrics(QueryMetricsRequest req)
-  {
+  Metric[] queryMetrics(QueryMetricsRequest req) {
     if (req.startTime > 0 && req.endTime > 0)
       return metricRepo.findInTimeRange(req.tenantId, req.resourceId,
           req.metricName, req.startTime, req.endTime);
@@ -164,8 +154,7 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   MetricSummary computeSummary(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName, long startTime, long endTime)
-  {
+      string metricName, long startTime, long endTime) {
     auto metrics = metricRepo.findInTimeRange(tenantId, resourceId,
         metricName, startTime, endTime);
     MetricSummary s;
@@ -194,14 +183,12 @@ class ManageMetricsUseCase : UIMUseCase {
     return s;
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static MetricCategory parseCategory(string s)
-  {
+  private static MetricCategory parseCategory(string s) {
     switch (s)
     {
     case "cpu":
@@ -229,8 +216,7 @@ class ManageMetricsUseCase : UIMUseCase {
     }
   }
 
-  private static MetricUnit parseUnit(string s)
-  {
+  private static MetricUnit parseUnit(string s) {
     switch (s)
     {
     case "percent":
@@ -258,8 +244,7 @@ class ManageMetricsUseCase : UIMUseCase {
     }
   }
 
-  private static AggregationMethod parseAggregation(string s)
-  {
+  private static AggregationMethod parseAggregation(string s) {
     switch (s)
     {
     case "sum":

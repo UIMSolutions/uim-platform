@@ -21,16 +21,14 @@ class EvaluateMetricsUseCase : UIMUseCase {
   private MetricRepository metricRepo;
   private ManageAlertsUseCase alertsUseCase;
 
-  this(AlertRuleRepository ruleRepo, MetricRepository metricRepo, ManageAlertsUseCase alertsUseCase)
-  {
+  this(AlertRuleRepository ruleRepo, MetricRepository metricRepo, ManageAlertsUseCase alertsUseCase) {
     this.ruleRepo = ruleRepo;
     this.metricRepo = metricRepo;
     this.alertsUseCase = alertsUseCase;
   }
 
   /// Evaluate all enabled alert rules for a tenant. Returns number of alerts triggered.
-  int evaluateAll(TenantId tenantId)
-  {
+  int evaluateAll(TenantId tenantId) {
     auto rules = ruleRepo.findEnabled(tenantId);
     int triggered = 0;
 
@@ -61,8 +59,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
   }
 
   /// Evaluate a single rule by ID. Returns whether an alert was triggered.
-  bool evaluateRule(TenantId tenantId, AlertRuleId ruleId)
-  {
+  bool evaluateRule(TenantId tenantId, AlertRuleId ruleId) {
     auto rule = ruleRepo.findById(ruleId);
     if (rule.id.length == 0 || !rule.isEnabled)
       return false;
@@ -90,8 +87,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
     return false;
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }

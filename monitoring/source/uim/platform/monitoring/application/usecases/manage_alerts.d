@@ -16,38 +16,31 @@ import uim.platform.monitoring.domain.types;
 class ManageAlertsUseCase : UIMUseCase {
   private AlertRepository repo;
 
-  this(AlertRepository repo)
-  {
+  this(AlertRepository repo) {
     this.repo = repo;
   }
 
-  Alert getAlert(AlertId id)
-  {
+  Alert getAlert(AlertId id) {
     return repo.findById(id);
   }
 
-  Alert[] listAlerts(TenantId tenantId)
-  {
+  Alert[] listAlerts(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Alert[] listByState(TenantId tenantId, string stateStr)
-  {
+  Alert[] listByState(TenantId tenantId, string stateStr) {
     return repo.findByState(tenantId, parseAlertState(stateStr));
   }
 
-  Alert[] listBySeverity(TenantId tenantId, string severityStr)
-  {
+  Alert[] listBySeverity(TenantId tenantId, string severityStr) {
     return repo.findBySeverity(tenantId, parseSeverity(severityStr));
   }
 
-  Alert[] listByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  Alert[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return repo.findByResource(tenantId, resourceId);
   }
 
-  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req)
-  {
+  CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
     auto alert = repo.findById(req.alertId);
     if (alert.id.length == 0)
       return CommandResult(false, "", "Alert not found");
@@ -63,8 +56,7 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, req.alertId, "");
   }
 
-  CommandResult resolveAlert(ResolveAlertRequest req)
-  {
+  CommandResult resolveAlert(ResolveAlertRequest req) {
     auto alert = repo.findById(req.alertId);
     if (alert.id.length == 0)
       return CommandResult(false, "", "Alert not found");
@@ -80,8 +72,7 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, req.alertId, "");
   }
 
-  CommandResult deleteAlert(AlertId id)
-  {
+  CommandResult deleteAlert(AlertId id) {
     auto alert = repo.findById(id);
     if (alert.id.length == 0)
       return CommandResult(false, "", "Alert not found");
@@ -94,8 +85,7 @@ class ManageAlertsUseCase : UIMUseCase {
   CommandResult triggerAlert(TenantId tenantId, AlertRuleId ruleId,
       MonitoredResourceId resourceId, string ruleName, string metricName,
       double currentValue, double thresholdValue, ThresholdOperator op,
-      AlertSeverity severity, string message)
-  {
+      AlertSeverity severity, string message) {
     // import std.uuid : randomUUID;
     auto id = randomUUID().toString();
 
@@ -118,14 +108,12 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static AlertState parseAlertState(string s)
-  {
+  private static AlertState parseAlertState(string s) {
     switch (s)
     {
     case "acknowledged":
@@ -139,8 +127,7 @@ class ManageAlertsUseCase : UIMUseCase {
     }
   }
 
-  private static AlertSeverity parseSeverity(string s)
-  {
+  private static AlertSeverity parseSeverity(string s) {
     switch (s)
     {
     case "info":

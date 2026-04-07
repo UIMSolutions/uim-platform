@@ -17,14 +17,12 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
   private MasterDataObjectRepository repo;
   private ChangeLogRepository changeLogRepo;
 
-  this(MasterDataObjectRepository repo, ChangeLogRepository changeLogRepo)
-  {
+  this(MasterDataObjectRepository repo, ChangeLogRepository changeLogRepo) {
     this.repo = repo;
     this.changeLogRepo = changeLogRepo;
   }
 
-  CommandResult create(CreateMasterDataObjectRequest req)
-  {
+  CommandResult create(CreateMasterDataObjectRequest req) {
     if (req.objectType.length == 0)
       return CommandResult(false, "", "Object type is required");
     if (req.displayName.length == 0)
@@ -61,8 +59,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req)
-  {
+  CommandResult updateObject(MasterDataObjectId id, UpdateMasterDataObjectRequest req) {
     auto obj = repo.findById(id);
     if (obj.id.length == 0)
       return CommandResult(false, "", "Master data object not found");
@@ -111,33 +108,27 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  MasterDataObject getObject(MasterDataObjectId id)
-  {
+  MasterDataObject getObject(MasterDataObjectId id) {
     return repo.findById(id);
   }
 
-  MasterDataObject[] listByTenant(TenantId tenantId)
-  {
+  MasterDataObject[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  MasterDataObject[] listByCategory(TenantId tenantId, string category)
-  {
+  MasterDataObject[] listByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  MasterDataObject[] listByDataModel(TenantId tenantId, DataModelId modelId)
-  {
+  MasterDataObject[] listByDataModel(TenantId tenantId, DataModelId modelId) {
     return repo.findByDataModel(tenantId, modelId);
   }
 
-  MasterDataObject findByGlobalId(TenantId tenantId, string globalId)
-  {
+  MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
     return repo.findByGlobalId(tenantId, globalId);
   }
 
-  CommandResult deleteObject(MasterDataObjectId id)
-  {
+  CommandResult deleteObject(MasterDataObjectId id) {
     auto obj = repo.findById(id);
     if (obj.id.length == 0)
       return CommandResult(false, "", "Master data object not found");
@@ -153,8 +144,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
   private void logChange(TenantId tenantId, MasterDataObjectId objectId,
       DataModelId dataModelId, MasterDataCategory category,
       ChangeType changeType, string objectType, string[] changedFields, string[string] oldValues, string[string] newValues,
-      string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion)
-  {
+      string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
     // import std.uuid : randomUUID;
     ChangeLogEntry entry;
     entry.id = randomUUID().toString();
@@ -177,8 +167,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     changeLogRepo.save(entry);
   }
 
-  private MasterDataCategory parseCategory(string s)
-  {
+  private MasterDataCategory parseCategory(string s) {
     switch (s)
     {
     case "businessPartner":
@@ -210,8 +199,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     }
   }
 
-  private RecordStatus parseStatus(string s)
-  {
+  private RecordStatus parseStatus(string s) {
     switch (s)
     {
     case "active":

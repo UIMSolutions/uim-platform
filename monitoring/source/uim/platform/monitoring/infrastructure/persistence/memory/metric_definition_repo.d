@@ -15,43 +15,36 @@ import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   private MetricDefinition[MetricDefinitionId] store;
 
-  MetricDefinition findById(MetricDefinitionId id)
-  {
+  MetricDefinition findById(MetricDefinitionId id) {
     if (auto p = id in store)
       return *p;
     return MetricDefinition.init;
   }
 
-  MetricDefinition[] findByTenant(TenantId tenantId)
-  {
+  MetricDefinition[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category)
-  {
+  MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
-  MetricDefinition findByName(TenantId tenantId, string name)
-  {
+  MetricDefinition findByName(TenantId tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return MetricDefinition.init;
   }
 
-  void save(MetricDefinition def)
-  {
+  void save(MetricDefinition def) {
     store[def.id] = def;
   }
 
-  void update(MetricDefinition def)
-  {
+  void update(MetricDefinition def) {
     store[def.id] = def;
   }
 
-  void remove(MetricDefinitionId id)
-  {
+  void remove(MetricDefinitionId id) {
     store.remove(id);
   }
 }

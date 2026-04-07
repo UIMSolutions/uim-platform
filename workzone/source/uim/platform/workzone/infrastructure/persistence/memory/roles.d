@@ -15,21 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.roles;
 class MemoryRoleRepository : RoleRepository {
   private Role[RoleId] store;
 
-  Role[] findByTenant(TenantId tenantId)
-  {
+  Role[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(r => r.tenantId == tenantId).array;
   }
 
-  Role* findById(RoleId id, TenantId tenantId)
-  {
+  Role* findById(RoleId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Role[] findByUser(UserId userId, TenantId tenantId)
-  {
+  Role[] findByUser(UserId userId, TenantId tenantId) {
     Role[] result;
     foreach (ref r; store.byValue())
     {
@@ -45,18 +42,15 @@ class MemoryRoleRepository : RoleRepository {
     return result;
   }
 
-  void save(Role role)
-  {
+  void save(Role role) {
     store[role.id] = role;
   }
 
-  void update(Role role)
-  {
+  void update(Role role) {
     store[role.id] = role;
   }
 
-  void remove(RoleId id, TenantId tenantId)
-  {
+  void remove(RoleId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

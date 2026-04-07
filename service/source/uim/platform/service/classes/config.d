@@ -30,18 +30,15 @@ mixin(ShowModule!());
   * }
   */
 class UIMConfig : IUIMConfig {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     if (initData.hasKey("serviceName") && initData.isString("serviceName"))
     {
       serviceName(initData.getString("serviceName"));
@@ -85,8 +82,7 @@ class UIMConfig : IUIMConfig {
     return _serviceName;
   }
 
-  void serviceName(string name)
-  {
+  void serviceName(string name) {
     _serviceName = name;
   }
 
@@ -96,8 +92,7 @@ class UIMConfig : IUIMConfig {
     return _serviceVersion;
   }
 
-  void serviceVersion(string version_)
-  {
+  void serviceVersion(string version_) {
     _serviceVersion = version_;
   }
 
@@ -107,8 +102,7 @@ class UIMConfig : IUIMConfig {
     return _host;
   }
 
-  void host(string host_)
-  {
+  void host(string host_) {
     _host = host_;
   }
 
@@ -118,8 +112,7 @@ class UIMConfig : IUIMConfig {
     return _port;
   }
 
-  void port(ushort port_)
-  {
+  void port(ushort port_) {
     _port = port_;
   }
 
@@ -129,8 +122,7 @@ class UIMConfig : IUIMConfig {
     return _basePath;
   }
 
-  void basePath(string path)
-  {
+  void basePath(string path) {
     _basePath = path;
   }
 
@@ -141,8 +133,7 @@ class UIMConfig : IUIMConfig {
     return _requireAuthToken;
   }
 
-  void requireAuthToken(bool required)
-  {
+  void requireAuthToken(bool required) {
     _requireAuthToken = required;
   }
   // #endregion requireAuthToken 
@@ -164,8 +155,7 @@ class UIMConfig : IUIMConfig {
     return _authToken;
   }
 
-  void authToken(string token)
-  {
+  void authToken(string token) {
     _authToken = token;
   }
   // #endregion authToken
@@ -182,13 +172,11 @@ class UIMConfig : IUIMConfig {
   * The configuration class does not enforce any specific headers, allowing flexibility for different services.
   */
   protected string[string] _customHeaders;
-  string[string] customHeaders()
-  {
+  string[string] customHeaders() {
     return _customHeaders.dup;
   }
 
-  void customHeaders(string[string] value)
-  {
+  void customHeaders(string[string] value) {
     _customHeaders = value;
   }
 
@@ -197,8 +185,7 @@ class UIMConfig : IUIMConfig {
     return _customHeaders[key];
   }
 
-  void customHeader(string key, string value)
-  {
+  void customHeader(string key, string value) {
     _customHeaders[key] = value;
   }
   // #endregion customHeaders
@@ -208,8 +195,7 @@ class UIMConfig : IUIMConfig {
   * Should be overridden by derived classes to add specific validation logic.
   * Throws an exception if validation fails.
   */
-  void validate()
-  {
+  void validate() {
     if (serviceName.length == 0)
     {
       throw new Exception("Service name cannot be empty");

@@ -19,13 +19,11 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class AlertController {
   private ManageAlertsUseCase uc;
 
-  this(ManageAlertsUseCase uc)
-  {
+  this(ManageAlertsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.get("/api/v1/alerts", &handleList);
     router.get("/api/v1/alerts/*", &handleGetById);
     router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);
@@ -33,8 +31,7 @@ class AlertController {
     router.delete_("/api/v1/alerts/*", &handleDelete);
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -64,8 +61,7 @@ class AlertController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -83,8 +79,7 @@ class AlertController {
     }
   }
 
-  private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAcknowledge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -112,8 +107,7 @@ class AlertController {
     }
   }
 
-  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleResolve(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -141,8 +135,7 @@ class AlertController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class AlertController {
     }
   }
 
-  private static Json serializeAlert(const ref Alert a)
-  {
+  private static Json serializeAlert(const ref Alert a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);

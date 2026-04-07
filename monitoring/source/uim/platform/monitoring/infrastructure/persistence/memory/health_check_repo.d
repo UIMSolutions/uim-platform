@@ -15,40 +15,33 @@ import uim.platform.monitoring.domain.ports.repositories.health_checks;
 class MemoryHealthCheckRepository : HealthCheckRepository {
   private HealthCheck[HealthCheckId] store;
 
-  HealthCheck findById(HealthCheckId id)
-  {
+  HealthCheck findById(HealthCheckId id) {
     if (auto p = id in store)
       return *p;
     return HealthCheck.init;
   }
 
-  HealthCheck[] findByTenant(TenantId tenantId)
-  {
+  HealthCheck[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.resourceId == resourceId).array;
   }
 
-  HealthCheck[] findByType(TenantId tenantId, CheckType checkType)
-  {
+  HealthCheck[] findByType(TenantId tenantId, CheckType checkType) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.checkType == checkType).array;
   }
 
-  void save(HealthCheck check)
-  {
+  void save(HealthCheck check) {
     store[check.id] = check;
   }
 
-  void update(HealthCheck check)
-  {
+  void update(HealthCheck check) {
     store[check.id] = check;
   }
 
-  void remove(HealthCheckId id)
-  {
+  void remove(HealthCheckId id) {
     store.remove(id);
   }
 }

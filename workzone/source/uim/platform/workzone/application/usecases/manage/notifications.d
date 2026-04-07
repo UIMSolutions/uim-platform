@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageNotificationsUseCase : UIMUseCase {
   private NotificationRepository repo;
 
-  this(NotificationRepository repo)
-  {
+  this(NotificationRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createNotification(CreateNotificationRequest req)
-  {
+  CommandResult createNotification(CreateNotificationRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Notification title is required");
 
@@ -45,23 +43,19 @@ class ManageNotificationsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  Notification* getNotification(NotificationId id, TenantId tenantId)
-  {
+  Notification* getNotification(NotificationId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Notification[] listByRecipient(UserId recipientId, TenantId tenantId)
-  {
+  Notification[] listByRecipient(UserId recipientId, TenantId tenantId) {
     return repo.findByRecipient(recipientId, tenantId);
   }
 
-  Notification[] listUnread(UserId recipientId, TenantId tenantId)
-  {
+  Notification[] listUnread(UserId recipientId, TenantId tenantId) {
     return repo.findUnread(recipientId, tenantId);
   }
 
-  CommandResult markAsRead(NotificationId id, TenantId tenantId)
-  {
+  CommandResult markAsRead(NotificationId id, TenantId tenantId) {
     auto n = repo.findById(id, tenantId);
     if (n is null)
       return CommandResult("", "Notification not found");
@@ -72,8 +66,7 @@ class ManageNotificationsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  CommandResult dismiss(NotificationId id, TenantId tenantId)
-  {
+  CommandResult dismiss(NotificationId id, TenantId tenantId) {
     auto n = repo.findById(id, tenantId);
     if (n is null)
       return CommandResult("", "Notification not found");
@@ -83,8 +76,7 @@ class ManageNotificationsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  void deleteNotification(NotificationId id, TenantId tenantId)
-  {
+  void deleteNotification(NotificationId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

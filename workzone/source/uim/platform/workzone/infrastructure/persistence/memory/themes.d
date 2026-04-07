@@ -15,39 +15,33 @@ import uim.platform.workzone.domain.ports.repositories.themes;
 class MemoryThemeRepository : ThemeRepository {
   private Theme[ThemeId] store;
 
-  Theme[] findByTenant(TenantId tenantId)
-  {
+  Theme[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  Theme* findById(ThemeId id, TenantId tenantId)
-  {
+  Theme* findById(ThemeId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Theme* findDefault(TenantId tenantId)
-  {
+  Theme* findDefault(TenantId tenantId) {
     foreach (ref t; store.byValue())
       if (t.tenantId == tenantId && t.isDefault)
         return &t;
     return null;
   }
 
-  void save(Theme theme)
-  {
+  void save(Theme theme) {
     store[theme.id] = theme;
   }
 
-  void update(Theme theme)
-  {
+  void update(Theme theme) {
     store[theme.id] = theme;
   }
 
-  void remove(ThemeId id, TenantId tenantId)
-  {
+  void remove(ThemeId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

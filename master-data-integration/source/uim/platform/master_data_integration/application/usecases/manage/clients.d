@@ -14,13 +14,11 @@ import uim.platform.master_data_integration.domain.types;
 class ManageClientsUseCase : UIMUseCase {
   private ClientRepository repo;
 
-  this(ClientRepository repo)
-  {
+  this(ClientRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateClientRequest req)
-  {
+  CommandResult create(CreateClientRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Client name is required");
 
@@ -52,8 +50,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateClient(ClientId id, UpdateClientRequest req)
-  {
+  CommandResult updateClient(ClientId id, UpdateClientRequest req) {
     auto client = repo.findById(id);
     if (client.id.length == 0)
       return CommandResult(false, "", "Client not found");
@@ -84,8 +81,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult connect(ClientId id)
-  {
+  CommandResult connect(ClientId id) {
     auto client = repo.findById(id);
     if (client.id.length == 0)
       return CommandResult(false, "", "Client not found");
@@ -96,8 +92,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult disconnect(ClientId id)
-  {
+  CommandResult disconnect(ClientId id) {
     auto client = repo.findById(id);
     if (client.id.length == 0)
       return CommandResult(false, "", "Client not found");
@@ -107,28 +102,23 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Client getClient(ClientId id)
-  {
+  Client getClient(ClientId id) {
     return repo.findById(id);
   }
 
-  Client[] listByTenant(TenantId tenantId)
-  {
+  Client[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Client[] listByStatus(TenantId tenantId, string status)
-  {
+  Client[] listByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseClientStatus(status));
   }
 
-  Client[] listByType(TenantId tenantId, string type)
-  {
+  Client[] listByType(TenantId tenantId, string type) {
     return repo.findByType(tenantId, parseClientType(type));
   }
 
-  CommandResult deleteClient(ClientId id)
-  {
+  CommandResult deleteClient(ClientId id) {
     auto client = repo.findById(id);
     if (client.id.length == 0)
       return CommandResult(false, "", "Client not found");
@@ -136,8 +126,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private ClientType parseClientType(string s)
-  {
+  private ClientType parseClientType(string s) {
     switch (s)
     {
     case "sapS4Hana":
@@ -161,8 +150,7 @@ class ManageClientsUseCase : UIMUseCase {
     }
   }
 
-  private ClientStatus parseClientStatus(string s)
-  {
+  private ClientStatus parseClientStatus(string s) {
     switch (s)
     {
     case "connected":
@@ -178,8 +166,7 @@ class ManageClientsUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory[] parseCategories(string[] cats)
-  {
+  private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
     foreach (s; cats)
     {

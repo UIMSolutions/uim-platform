@@ -17,13 +17,11 @@ import uim.platform.identity_authentication.presentation.http.json_utils;
 class ChannelController {
   private ManageChannelsUseCase useCase;
 
-  this(ManageChannelsUseCase useCase)
-  {
+  this(ManageChannelsUseCase useCase) {
     this.useCase = useCase;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/channels", &handleCreate);
     router.get("/api/v1/channels", &handleList);
     router.get("/api/v1/channels/*", &handleGet);
@@ -31,8 +29,7 @@ class ChannelController {
     router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -72,8 +69,7 @@ class ChannelController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -93,8 +89,7 @@ class ChannelController {
     }
   }
 
-  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class ChannelController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -144,8 +138,7 @@ class ChannelController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -165,8 +158,7 @@ private ChannelConfig parseChannelConfig(Json j) {
 
   ChannelConfig cfg;
   auto v = "config" in j;
-  if (v !is null && (*v).type == Json.Type.object)
-  {
+  if (v !is null && (*v).type == Json.Type.object) {
     auto c = *v;
     cfg.sourceUrl = c.getString("sourceUrl");
     cfg.pollIntervalSec = jsonInt(c, "pollIntervalSec");

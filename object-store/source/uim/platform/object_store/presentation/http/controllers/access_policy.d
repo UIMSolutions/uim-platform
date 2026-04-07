@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class AccessPolicyController : SAPController {
   private ManageAccessPoliciesUseCase uc;
 
-  this(ManageAccessPoliciesUseCase uc)
-  {
+  this(ManageAccessPoliciesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/access-policies", &handleCreate);
@@ -39,8 +37,7 @@ class AccessPolicyController : SAPController {
     router.delete_("/api/v1/access-policies/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -72,8 +69,7 @@ class AccessPolicyController : SAPController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto bucketId = extractBucketIdFromPoliciesPath(req.requestURI);
@@ -94,8 +90,7 @@ class AccessPolicyController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class AccessPolicyController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -144,8 +138,7 @@ class AccessPolicyController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -167,8 +160,7 @@ class AccessPolicyController : SAPController {
     }
   }
 
-  private static Json serializePolicy(AccessPolicy p)
-  {
+  private static Json serializePolicy(AccessPolicy p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);
@@ -185,8 +177,7 @@ class AccessPolicyController : SAPController {
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/access-policies
-  private static string extractBucketIdFromPoliciesPath(string uri)
-  {
+  private static string extractBucketIdFromPoliciesPath(string uri) {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');

@@ -12,32 +12,27 @@ mixin(ShowModule!());
 @safe:
 
 class SAPController {
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json initData)
-  {
+  this(Json initData) {
     if (initData.isObject)
     {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     // Initialization logic for the controller
     return true;
   }
 
-  void registerRoutes(URLRouter router)
-  {
+  void registerRoutes(URLRouter router) {
     // Register HTTP routes and handlers here
   }
 }

@@ -16,14 +16,12 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
   private LifecycleRuleRepository ruleRepo;
   private BucketRepository bucketRepo;
 
-  this(LifecycleRuleRepository ruleRepo, BucketRepository bucketRepo)
-  {
+  this(LifecycleRuleRepository ruleRepo, BucketRepository bucketRepo) {
     this.ruleRepo = ruleRepo;
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createRule(CreateLifecycleRuleRequest req)
-  {
+  CommandResult createRule(CreateLifecycleRuleRequest req) {
     if (req.bucketId.length == 0)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.name.length == 0)
@@ -57,8 +55,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req)
-  {
+  CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(id);
     if (rule is null || rule.id.length == 0)
       return CommandResult(false, "", "Rule not found");
@@ -83,18 +80,15 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  LifecycleRule getRule(LifecycleRuleId id)
-  {
+  LifecycleRule getRule(LifecycleRuleId id) {
     return ruleRepo.findById(id);
   }
 
-  LifecycleRule[] listRules(BucketId bucketId)
-  {
+  LifecycleRule[] listRules(BucketId bucketId) {
     return ruleRepo.findByBucket(bucketId);
   }
 
-  CommandResult deleteRule(LifecycleRuleId id)
-  {
+  CommandResult deleteRule(LifecycleRuleId id) {
     auto rule = ruleRepo.findById(id);
     if (rule is null || rule.id.length == 0)
       return CommandResult(false, "", "Rule not found");
@@ -105,8 +99,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
 }
 
 private RuleStatus parseRuleStatus(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "disabled":
     return RuleStatus.disabled;
   default:
@@ -115,8 +108,7 @@ private RuleStatus parseRuleStatus(string s) {
 }
 
 private StorageClass parseStorageClass(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "nearline":
     return StorageClass.nearline;
   case "coldline":

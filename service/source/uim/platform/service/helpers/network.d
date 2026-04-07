@@ -33,16 +33,13 @@ void respondError(HTTPServerResponse res, string message, int statusCode) {
   */
 string[] normalizedSegments(string subPath) {
   auto clean = subPath;
-  if (clean.length > 0 && clean[0] == '/')
-  {
+  if (clean.length > 0 && clean[0] == '/') {
     clean = clean[1 .. $];
   }
-  if (clean.length > 0 && clean[$ - 1] == '/')
-  {
+  if (clean.length > 0 && clean[$ - 1] == '/') {
     clean = clean[0 .. $ - 1];
   }
-  if (clean.length == 0)
-  {
+  if (clean.length == 0) {
     return null;
   }
   return clean.split("/");
@@ -68,8 +65,7 @@ Json parseBody(HTTPServerRequest req) {
   {
     return req.json();
   }
-  catch (Exception)
-  {
+  catch (Exception) {
     return Json.emptyObject;
   }
 }

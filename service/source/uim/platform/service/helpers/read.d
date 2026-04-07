@@ -16,8 +16,7 @@ SysTime parseTime(string value) {
   {
     return SysTime.fromISOExtString(value);
   }
-  catch (Exception)
-  {
+  catch (Exception) {
     return SysTime.fromISOExtString("1970-01-01T00:00:00Z");
   }
 }
@@ -34,8 +33,7 @@ string[] readStringArray(Json data, string key) {
 
   requiredArrayType(data, key);
 
-  foreach (item; data[key].toArray)
-  {
+  foreach (item; data[key].toArray) {
     if (!item.isString)
       throw new UIMValidationException(key ~ " must contain strings");
 
@@ -47,8 +45,7 @@ string[] readStringArray(Json data, string key) {
 unittest {
   // import std.stdio : writeln;
 
-  void testReadStringArray()
-  {
+  void testReadStringArray() {
     Json data = Json.parse(`{"names": ["Alice", "Bob", "Charlie"]}`);
     string[] names = readStringArray(data, "names");
     assert(names.length == 3);
@@ -57,8 +54,7 @@ unittest {
     assert(names[2] == "Charlie");
   }
 
-  void testReadTime()
-  {
+  void testReadTime() {
     Json data = Json.parse(`{"timestamp": "2024-01-01T12:00:00Z"}`);
     SysTime time = readTime(data, "timestamp");
     assert(time.toISOExtString == "2024-01-01T12:00:00Z");
@@ -66,8 +62,7 @@ unittest {
 }
 
 Json readObject(Json data, string key, Json fallback = Json.emptyObject) {
-  if (!(key in data) || data[key].isNull)
-  {
+  if (!(key in data) || data[key].isNull) {
     return fallback;
   }
 

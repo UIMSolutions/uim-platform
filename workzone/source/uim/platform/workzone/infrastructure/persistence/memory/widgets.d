@@ -15,31 +15,26 @@ import uim.platform.workzone.domain.ports.repositories.widgets;
 class MemoryWidgetRepository : WidgetRepository {
   private Widget[WidgetId] store;
 
-  Widget[] findByPage(WorkpageId pageId, TenantId tenantId)
-  {
+  Widget[] findByPage(WorkpageId pageId, TenantId tenantId) {
     return store.byValue().filter!(w => w.tenantId == tenantId && w.pageId == pageId).array;
   }
 
-  Widget* findById(WidgetId id, TenantId tenantId)
-  {
+  Widget* findById(WidgetId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  void save(Widget widget)
-  {
+  void save(Widget widget) {
     store[widget.id] = widget;
   }
 
-  void update(Widget widget)
-  {
+  void update(Widget widget) {
     store[widget.id] = widget;
   }
 
-  void remove(WidgetId id, TenantId tenantId)
-  {
+  void remove(WidgetId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

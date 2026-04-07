@@ -16,26 +16,22 @@ class UIMStore {
 
   protected Mutex _lock;
 
-  this()
-  {
+  this() {
     initialize();
   }
 
-  this(Json initData)
-  {
+  this(Json initData) {
     if (initData.isObject)
     {
       initialize(initData.toMap);
     }
   }
 
-  this(Json[string] initData)
-  {
+  this(Json[string] initData) {
     initialize(initData);
   }
 
-  bool initialize(Json[string] initData = null)
-  {
+  bool initialize(Json[string] initData = null) {
     _lock = new Mutex;
     // Initialization logic for the store
     return true;

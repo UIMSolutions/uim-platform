@@ -19,13 +19,11 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class ResourceController {
   private ManageMonitoredResourcesUseCase uc;
 
-  this(ManageMonitoredResourcesUseCase uc)
-  {
+  this(ManageMonitoredResourcesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/resources", &handleCreate);
     router.get("/api/v1/resources", &handleList);
     router.get("/api/v1/resources/*", &handleGetById);
@@ -33,8 +31,7 @@ class ResourceController {
     router.delete_("/api/v1/resources/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -69,8 +66,7 @@ class ResourceController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -91,8 +87,7 @@ class ResourceController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class ResourceController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class ResourceController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -165,8 +158,7 @@ class ResourceController {
     }
   }
 
-  private static Json serializeResource(const ref MonitoredResource r)
-  {
+  private static Json serializeResource(const ref MonitoredResource r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

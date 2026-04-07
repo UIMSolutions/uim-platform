@@ -19,13 +19,11 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class ChannelController : SAPController {
   private ManageNotificationChannelsUseCase uc;
 
-  this(ManageNotificationChannelsUseCase uc)
-  {
+  this(ManageNotificationChannelsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/channels", &handleCreate);
@@ -35,8 +33,7 @@ class ChannelController : SAPController {
     router.delete_("/api/v1/channels/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class ChannelController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -95,8 +91,7 @@ class ChannelController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -114,8 +109,7 @@ class ChannelController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -149,8 +143,7 @@ class ChannelController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -172,8 +165,7 @@ class ChannelController : SAPController {
     }
   }
 
-  private static Json serializeChannel(const ref NotificationChannel ch)
-  {
+  private static Json serializeChannel(const ref NotificationChannel ch) {
     auto j = Json.emptyObject;
     j["id"] = Json(ch.id);
     j["tenantId"] = Json(ch.tenantId);

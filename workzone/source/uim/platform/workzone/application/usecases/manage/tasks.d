@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageTasksUseCase : UIMUseCase {
   private TaskRepository repo;
 
-  this(TaskRepository repo)
-  {
+  this(TaskRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createTask(CreateTaskRequest req)
-  {
+  CommandResult createTask(CreateTaskRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Task title is required");
 
@@ -51,23 +49,19 @@ class ManageTasksUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Task* getTask(TaskId id, TenantId tenantId)
-  {
+  Task* getTask(TaskId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Task[] listByAssignee(UserId assigneeId, TenantId tenantId)
-  {
+  Task[] listByAssignee(UserId assigneeId, TenantId tenantId) {
     return repo.findByAssignee(assigneeId, tenantId);
   }
 
-  Task[] listByStatus(TaskStatus status, UserId assigneeId, TenantId tenantId)
-  {
+  Task[] listByStatus(TaskStatus status, UserId assigneeId, TenantId tenantId) {
     return repo.findByStatus(status, assigneeId, tenantId);
   }
 
-  CommandResult updateTask(UpdateTaskRequest req)
-  {
+  CommandResult updateTask(UpdateTaskRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
       return CommandResult("", "Task not found");
@@ -89,8 +83,7 @@ class ManageTasksUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult completeTask(TaskId id, TenantId tenantId)
-  {
+  CommandResult completeTask(TaskId id, TenantId tenantId) {
     auto t = repo.findById(id, tenantId);
     if (t is null)
       return CommandResult("", "Task not found");
@@ -102,8 +95,7 @@ class ManageTasksUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  void deleteTask(TaskId id, TenantId tenantId)
-  {
+  void deleteTask(TaskId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

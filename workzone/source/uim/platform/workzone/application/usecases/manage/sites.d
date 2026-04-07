@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageSitesUseCase : UIMUseCase {
   private SiteRepository repo;
 
-  this(SiteRepository repo)
-  {
+  this(SiteRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createSite(CreateSiteRequest req)
-  {
+  CommandResult createSite(CreateSiteRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Site name is required");
 
@@ -44,18 +42,15 @@ class ManageSitesUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Site* getSite(SiteId id, TenantId tenantId)
-  {
+  Site* getSite(SiteId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Site[] listSites(TenantId tenantId)
-  {
+  Site[] listSites(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateSite(UpdateSiteRequest req)
-  {
+  CommandResult updateSite(UpdateSiteRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
     if (s is null)
       return CommandResult("", "Site not found");
@@ -73,8 +68,7 @@ class ManageSitesUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  CommandResult deleteSite(SiteId id, TenantId tenantId)
-  {
+  CommandResult deleteSite(SiteId id, TenantId tenantId) {
     auto s = repo.findById(id, tenantId);
     if (s is null)
       return CommandResult("", "Site not found");

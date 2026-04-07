@@ -15,36 +15,30 @@ import uim.platform.workzone.domain.ports.repositories.external_content_provider
 class MemoryExternalContentProviderRepository : ExternalContentProviderRepository {
   private ExternalContentProvider[ExternalContentProviderId] store;
 
-  ExternalContentProvider[] findByTenant(TenantId tenantId)
-  {
+  ExternalContentProvider[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  ExternalContentProvider* findById(ExternalContentProviderId id, TenantId tenantId)
-  {
+  ExternalContentProvider* findById(ExternalContentProviderId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ExternalContentProvider[] findByStatus(ProviderStatus status, TenantId tenantId)
-  {
+  ExternalContentProvider[] findByStatus(ProviderStatus status, TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId && p.status == status).array;
   }
 
-  void save(ExternalContentProvider provider)
-  {
+  void save(ExternalContentProvider provider) {
     store[provider.id] = provider;
   }
 
-  void update(ExternalContentProvider provider)
-  {
+  void update(ExternalContentProvider provider) {
     store[provider.id] = provider;
   }
 
-  void remove(ExternalContentProviderId id, TenantId tenantId)
-  {
+  void remove(ExternalContentProviderId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

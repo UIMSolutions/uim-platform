@@ -16,14 +16,12 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
   private AccessPolicyRepository policyRepo;
   private BucketRepository bucketRepo;
 
-  this(AccessPolicyRepository policyRepo, BucketRepository bucketRepo)
-  {
+  this(AccessPolicyRepository policyRepo, BucketRepository bucketRepo) {
     this.policyRepo = policyRepo;
     this.bucketRepo = bucketRepo;
   }
 
-  CommandResult createPolicy(CreateAccessPolicyRequest req)
-  {
+  CommandResult createPolicy(CreateAccessPolicyRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Policy name is required");
     if (req.bucketId.length == 0)
@@ -55,8 +53,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req)
-  {
+  CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
     auto policy = policyRepo.findById(id);
     if (policy is null || policy.id.length == 0)
       return CommandResult(false, "", "Policy not found");
@@ -77,18 +74,15 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  AccessPolicy getPolicy(AccessPolicyId id)
-  {
+  AccessPolicy getPolicy(AccessPolicyId id) {
     return policyRepo.findById(id);
   }
 
-  AccessPolicy[] listPolicies(BucketId bucketId)
-  {
+  AccessPolicy[] listPolicies(BucketId bucketId) {
     return policyRepo.findByBucket(bucketId);
   }
 
-  CommandResult deletePolicy(AccessPolicyId id)
-  {
+  CommandResult deletePolicy(AccessPolicyId id) {
     auto policy = policyRepo.findById(id);
     if (policy is null || policy.id.length == 0)
       return CommandResult(false, "", "Policy not found");
@@ -99,8 +93,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
 }
 
 private PolicyEffect parseEffect(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "deny":
     return PolicyEffect.deny;
   default:

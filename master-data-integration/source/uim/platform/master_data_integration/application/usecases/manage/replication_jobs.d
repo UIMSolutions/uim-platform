@@ -14,13 +14,11 @@ import uim.platform.master_data_integration.domain.types;
 class ManageReplicationJobsUseCase : UIMUseCase {
   private ReplicationJobRepository repo;
 
-  this(ReplicationJobRepository repo)
-  {
+  this(ReplicationJobRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateReplicationJobRequest req)
-  {
+  CommandResult create(CreateReplicationJobRequest req) {
     if (req.distributionModelId.length == 0)
       return CommandResult(false, "", "Distribution model ID is required");
     if (req.sourceClientId.length == 0)
@@ -48,8 +46,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult startJob(ReplicationJobId id)
-  {
+  CommandResult startJob(ReplicationJobId id) {
     auto job = repo.findById(id);
     if (job.id.length == 0)
       return CommandResult(false, "", "Replication job not found");
@@ -63,8 +60,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult completeJob(ReplicationJobId id, long successRecords,
-      long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken)
-  {
+      long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(id);
     if (job.id.length == 0)
       return CommandResult(false, "", "Replication job not found");
@@ -82,8 +78,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult cancelJob(ReplicationJobId id)
-  {
+  CommandResult cancelJob(ReplicationJobId id) {
     auto job = repo.findById(id);
     if (job.id.length == 0)
       return CommandResult(false, "", "Replication job not found");
@@ -93,8 +88,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult pauseJob(ReplicationJobId id)
-  {
+  CommandResult pauseJob(ReplicationJobId id) {
     auto job = repo.findById(id);
     if (job.id.length == 0)
       return CommandResult(false, "", "Replication job not found");
@@ -105,28 +99,23 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  ReplicationJob getJob(ReplicationJobId id)
-  {
+  ReplicationJob getJob(ReplicationJobId id) {
     return repo.findById(id);
   }
 
-  ReplicationJob[] listByTenant(TenantId tenantId)
-  {
+  ReplicationJob[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  ReplicationJob[] listByStatus(TenantId tenantId, string status)
-  {
+  ReplicationJob[] listByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseJobStatus(status));
   }
 
-  ReplicationJob[] listByDistributionModel(TenantId tenantId, DistributionModelId modelId)
-  {
+  ReplicationJob[] listByDistributionModel(TenantId tenantId, DistributionModelId modelId) {
     return repo.findByDistributionModel(tenantId, modelId);
   }
 
-  CommandResult deleteJob(ReplicationJobId id)
-  {
+  CommandResult deleteJob(ReplicationJobId id) {
     auto job = repo.findById(id);
     if (job.id.length == 0)
       return CommandResult(false, "", "Replication job not found");
@@ -134,8 +123,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private ReplicationTrigger parseTrigger(string s)
-  {
+  private ReplicationTrigger parseTrigger(string s) {
     switch (s)
     {
     case "manual":
@@ -151,8 +139,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     }
   }
 
-  private ReplicationJobStatus parseJobStatus(string s)
-  {
+  private ReplicationJobStatus parseJobStatus(string s) {
     switch (s)
     {
     case "pending":
@@ -172,8 +159,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory[] parseCategories(string[] cats)
-  {
+  private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
     foreach (s; cats)
     {

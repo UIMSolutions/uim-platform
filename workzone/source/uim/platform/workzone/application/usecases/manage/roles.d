@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageRolesUseCase : UIMUseCase {
   private RoleRepository repo;
 
-  this(RoleRepository repo)
-  {
+  this(RoleRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createRole(CreateRoleRequest req)
-  {
+  CommandResult createRole(CreateRoleRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Role name is required");
 
@@ -41,18 +39,15 @@ class ManageRolesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  Role* getRole(RoleId id, TenantId tenantId)
-  {
+  Role* getRole(RoleId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Role[] listRoles(TenantId tenantId)
-  {
+  Role[] listRoles(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateRole(UpdateRoleRequest req)
-  {
+  CommandResult updateRole(UpdateRoleRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
     if (r is null)
       return CommandResult("", "Role not found");
@@ -68,8 +63,7 @@ class ManageRolesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  CommandResult deleteRole(RoleId id, TenantId tenantId)
-  {
+  CommandResult deleteRole(RoleId id, TenantId tenantId) {
     auto r = repo.findById(id, tenantId);
     if (r is null)
       return CommandResult("", "Role not found");

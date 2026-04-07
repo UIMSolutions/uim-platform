@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageFeedsUseCase : UIMUseCase {
   private FeedRepository repo;
 
-  this(FeedRepository repo)
-  {
+  this(FeedRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createEntry(CreateFeedEntryRequest req)
-  {
+  CommandResult createEntry(CreateFeedEntryRequest req) {
     auto entry = FeedEntry();
     entry.id = randomUUID().toString();
     entry.workspaceId = req.workspaceId;
@@ -40,18 +38,15 @@ class ManageFeedsUseCase : UIMUseCase {
     return CommandResult(entry.id, "");
   }
 
-  FeedEntry* getEntry(FeedEntryId id, TenantId tenantId)
-  {
+  FeedEntry* getEntry(FeedEntryId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  FeedEntry[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  FeedEntry[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  void deleteEntry(FeedEntryId id, TenantId tenantId)
-  {
+  void deleteEntry(FeedEntryId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

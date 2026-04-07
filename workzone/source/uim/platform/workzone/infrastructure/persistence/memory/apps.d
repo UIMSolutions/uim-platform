@@ -15,36 +15,30 @@ import uim.platform.workzone.domain.ports.repositories.apps;
 class MemoryAppRepository : AppRepository {
   private AppRegistration[AppId] store;
 
-  AppRegistration[] findByTenant(TenantId tenantId)
-  {
+  AppRegistration[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId).array;
   }
 
-  AppRegistration* findById(AppId id, TenantId tenantId)
-  {
+  AppRegistration* findById(AppId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  AppRegistration[] findByStatus(AppStatus status, TenantId tenantId)
-  {
+  AppRegistration[] findByStatus(AppStatus status, TenantId tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId && a.status == status).array;
   }
 
-  void save(AppRegistration app)
-  {
+  void save(AppRegistration app) {
     store[app.id] = app;
   }
 
-  void update(AppRegistration app)
-  {
+  void update(AppRegistration app) {
     store[app.id] = app;
   }
 
-  void remove(AppId id, TenantId tenantId)
-  {
+  void remove(AppId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

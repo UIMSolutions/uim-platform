@@ -21,8 +21,7 @@ struct EvaluationResult {
 /// Domain service: evaluates metric values against alert rule thresholds.
 struct ThresholdEvaluator {
   /// Evaluate a single metric value against an alert rule.
-  static EvaluationResult evaluate(double value_, const ref AlertRule rule)
-  {
+  static EvaluationResult evaluate(double value_, const ref AlertRule rule) {
     EvaluationResult result;
     result.currentValue = value_;
 
@@ -55,8 +54,7 @@ struct ThresholdEvaluator {
   }
 
   /// Compute average of recent metrics for evaluation.
-  static double computeAverage(const Metric[] metrics)
-  {
+  static double computeAverage(const Metric[] metrics) {
     if (metrics.length == 0)
       return 0;
 
@@ -66,8 +64,7 @@ struct ThresholdEvaluator {
     return sum / cast(double) metrics.length;
   }
 
-  private static bool breaches(double value_, double threshold, ThresholdOperator op)
-  {
+  private static bool breaches(double value_, double threshold, ThresholdOperator op) {
     final switch (op)
     {
     case ThresholdOperator.greaterThan:
@@ -85,8 +82,7 @@ struct ThresholdEvaluator {
     }
   }
 
-  private static string operatorStr(ThresholdOperator op)
-  {
+  private static string operatorStr(ThresholdOperator op) {
     final switch (op)
     {
     case ThresholdOperator.greaterThan:
@@ -104,8 +100,7 @@ struct ThresholdEvaluator {
     }
   }
 
-  private static string formatDouble(double v)
-  {
+  private static string formatDouble(double v) {
     // import std.format : format;
     return format("%.2f", v);
   }

@@ -16,37 +16,31 @@ import uim.platform.master_data_integration.domain.ports.repositories.master_dat
 class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
   private MasterDataObject[MasterDataObjectId] store;
 
-  MasterDataObject findById(MasterDataObjectId id)
-  {
+  MasterDataObject findById(MasterDataObjectId id) {
     if (auto p = id in store)
       return *p;
     return MasterDataObject.init;
   }
 
-  MasterDataObject[] findByTenant(TenantId tenantId)
-  {
+  MasterDataObject[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category)
-  {
+  MasterDataObject[] findByCategory(TenantId tenantId, MasterDataCategory category) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
-  MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId)
-  {
+  MasterDataObject[] findByDataModel(TenantId tenantId, DataModelId dataModelId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.dataModelId == dataModelId)
       .array;
   }
 
-  MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem)
-  {
+  MasterDataObject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.sourceSystem == sourceSystem).array;
   }
 
-  MasterDataObject findByGlobalId(TenantId tenantId, string globalId)
-  {
+  MasterDataObject findByGlobalId(TenantId tenantId, string globalId) {
     foreach (ref obj; store.byValue())
     {
       if (obj.tenantId == tenantId && obj.globalId == globalId)
@@ -55,18 +49,15 @@ class MemoryMasterDataObjectRepository : MasterDataObjectRepository {
     return MasterDataObject.init;
   }
 
-  void save(MasterDataObject obj)
-  {
+  void save(MasterDataObject obj) {
     store[obj.id] = obj;
   }
 
-  void update(MasterDataObject obj)
-  {
+  void update(MasterDataObject obj) {
     store[obj.id] = obj;
   }
 
-  void remove(MasterDataObjectId id)
-  {
+  void remove(MasterDataObjectId id) {
     store.remove(id);
   }
 }

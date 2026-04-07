@@ -15,44 +15,37 @@ import uim.platform.workzone.domain.ports.repositories.tags;
 class MemoryTagRepository : TagRepository {
   private Tag[TagId] store;
 
-  Tag[] findByTenant(TenantId tenantId)
-  {
+  Tag[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  Tag* findById(TagId id, TenantId tenantId)
-  {
+  Tag* findById(TagId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Tag* findByName(string name, TenantId tenantId)
-  {
+  Tag* findByName(string name, TenantId tenantId) {
     foreach (ref t; store.byValue())
       if (t.tenantId == tenantId && t.name == name)
         return &t;
     return null;
   }
 
-  Tag[] findByParent(TagId parentTagId, TenantId tenantId)
-  {
+  Tag[] findByParent(TagId parentTagId, TenantId tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId && t.parentTagId == parentTagId).array;
   }
 
-  void save(Tag tag)
-  {
+  void save(Tag tag) {
     store[tag.id] = tag;
   }
 
-  void update(Tag tag)
-  {
+  void update(Tag tag) {
     store[tag.id] = tag;
   }
 
-  void remove(TagId id, TenantId tenantId)
-  {
+  void remove(TagId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

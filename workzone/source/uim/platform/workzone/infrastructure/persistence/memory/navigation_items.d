@@ -15,41 +15,34 @@ import uim.platform.workzone.domain.ports.repositories.navigation_items;
 class MemoryNavigationItemRepository : NavigationItemRepository {
   private NavigationItem[NavigationItemId] store;
 
-  NavigationItem[] findBySite(SiteId siteId, TenantId tenantId)
-  {
+  NavigationItem[] findBySite(SiteId siteId, TenantId tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId && n.siteId == siteId).array;
   }
 
-  NavigationItem* findById(NavigationItemId id, TenantId tenantId)
-  {
+  NavigationItem* findById(NavigationItemId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  NavigationItem[] findByParent(NavigationItemId parentId, TenantId tenantId)
-  {
+  NavigationItem[] findByParent(NavigationItemId parentId, TenantId tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId && n.parentId == parentId).array;
   }
 
-  NavigationItem[] findByTenant(TenantId tenantId)
-  {
+  NavigationItem[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId).array;
   }
 
-  void save(NavigationItem item)
-  {
+  void save(NavigationItem item) {
     store[item.id] = item;
   }
 
-  void update(NavigationItem item)
-  {
+  void update(NavigationItem item) {
     store[item.id] = item;
   }
 
-  void remove(NavigationItemId id, TenantId tenantId)
-  {
+  void remove(NavigationItemId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

@@ -17,8 +17,7 @@ struct ValidationResult {
 /// Domain service: validates health check configurations.
 struct HealthChecker {
   /// Validate a health check configuration for correctness.
-  static ValidationResult validate(const ref HealthCheck check)
-  {
+  static ValidationResult validate(const ref HealthCheck check) {
     string[] errors;
 
     if (check.name.length == 0)

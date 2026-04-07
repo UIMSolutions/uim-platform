@@ -28,8 +28,7 @@ string optionalString(Json data, string key, string fallback) {
 }
 
 Json optionalObject(Json data, string key, Json fallback = Json.emptyObject) {
-  if (!(key in data) || data[key].isNull)
-  {
+  if (!(key in data) || data[key].isNull) {
     return fallback;
   }
 

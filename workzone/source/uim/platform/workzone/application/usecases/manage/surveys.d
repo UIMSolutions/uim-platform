@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageSurveysUseCase : UIMUseCase {
   private SurveyRepository repo;
 
-  this(SurveyRepository repo)
-  {
+  this(SurveyRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createSurvey(CreateSurveyRequest req)
-  {
+  CommandResult createSurvey(CreateSurveyRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Survey title is required");
 
@@ -48,18 +46,15 @@ class ManageSurveysUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Survey* getSurvey(SurveyId id, TenantId tenantId)
-  {
+  Survey* getSurvey(SurveyId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Survey[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  Survey[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  CommandResult updateSurvey(UpdateSurveyRequest req)
-  {
+  CommandResult updateSurvey(UpdateSurveyRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
     if (s is null)
       return CommandResult("", "Survey not found");
@@ -75,8 +70,7 @@ class ManageSurveysUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  CommandResult deleteSurvey(SurveyId id, TenantId tenantId)
-  {
+  CommandResult deleteSurvey(SurveyId id, TenantId tenantId) {
     auto s = repo.findById(id, tenantId);
     if (s is null)
       return CommandResult("", "Survey not found");

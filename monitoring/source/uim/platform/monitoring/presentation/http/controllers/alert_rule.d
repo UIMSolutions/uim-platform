@@ -19,13 +19,11 @@ import uim.platform.monitoring.presentation.http.json_utils;
 class AlertRuleController {
   private ManageAlertRulesUseCase uc;
 
-  this(ManageAlertRulesUseCase uc)
-  {
+  this(ManageAlertRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/alert-rules", &handleCreate);
     router.get("/api/v1/alert-rules", &handleList);
     router.get("/api/v1/alert-rules/*", &handleGetById);
@@ -33,8 +31,7 @@ class AlertRuleController {
     router.delete_("/api/v1/alert-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -72,8 +69,7 @@ class AlertRuleController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -94,8 +90,7 @@ class AlertRuleController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -113,8 +108,7 @@ class AlertRuleController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -147,8 +141,7 @@ class AlertRuleController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -170,8 +163,7 @@ class AlertRuleController {
     }
   }
 
-  private static Json serializeRule(const ref AlertRule r)
-  {
+  private static Json serializeRule(const ref AlertRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

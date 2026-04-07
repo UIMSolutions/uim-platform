@@ -17,13 +17,11 @@ import uim.platform.object_store.domain.types;
 class ManageBucketsUseCase : UIMUseCase {
   private BucketRepository repo;
 
-  this(BucketRepository repo)
-  {
+  this(BucketRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createBucket(CreateBucketRequest req)
-  {
+  CommandResult createBucket(CreateBucketRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Bucket name is required");
     if (req.region.length == 0)
@@ -59,8 +57,7 @@ class ManageBucketsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateBucket(BucketId id, UpdateBucketRequest req)
-  {
+  CommandResult updateBucket(BucketId id, UpdateBucketRequest req) {
     auto bucket = repo.findById(id);
     if (bucket is null || bucket.id.length == 0)
       return CommandResult(false, "", "Bucket not found");
@@ -84,18 +81,15 @@ class ManageBucketsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Bucket getBucket(BucketId id)
-  {
+  Bucket getBucket(BucketId id) {
     return repo.findById(id);
   }
 
-  Bucket[] listBuckets(TenantId tenantId)
-  {
+  Bucket[] listBuckets(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult deleteBucket(BucketId id)
-  {
+  CommandResult deleteBucket(BucketId id) {
     auto bucket = repo.findById(id);
     if (bucket is null || bucket.id.length == 0)
       return CommandResult(false, "", "Bucket not found");
@@ -109,8 +103,7 @@ class ManageBucketsUseCase : UIMUseCase {
 }
 
 private StorageClass parseStorageClass(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "nearline":
     return StorageClass.nearline;
   case "coldline":
@@ -123,8 +116,7 @@ private StorageClass parseStorageClass(string s) {
 }
 
 private EncryptionType parseEncryptionType(string s) {
-  switch (s)
-  {
+  switch (s) {
   case "sse_s3":
     return EncryptionType.sse_s3;
   case "sse_kms":

@@ -16,13 +16,11 @@ import uim.platform.monitoring.domain.types;
 class ManageMonitoredResourcesUseCase : UIMUseCase {
   private MonitoredResourceRepository repo;
 
-  this(MonitoredResourceRepository repo)
-  {
+  this(MonitoredResourceRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult register(RegisterResourceRequest req)
-  {
+  CommandResult register(RegisterResourceRequest req) {
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Resource with name '" ~ req.name ~ "' already exists");
@@ -54,8 +52,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req)
-  {
+  CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
     auto r = repo.findById(id);
     if (r.id.length == 0)
       return CommandResult(false, "", "Resource not found");
@@ -78,23 +75,19 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  MonitoredResource getResource(MonitoredResourceId id)
-  {
+  MonitoredResource getResource(MonitoredResourceId id) {
     return repo.findById(id);
   }
 
-  MonitoredResource[] listResources(TenantId tenantId)
-  {
+  MonitoredResource[] listResources(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  MonitoredResource[] listByType(TenantId tenantId, string typeStr)
-  {
+  MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
     return repo.findByType(tenantId, parseResourceType(typeStr));
   }
 
-  CommandResult removeResource(MonitoredResourceId id)
-  {
+  CommandResult removeResource(MonitoredResourceId id) {
     auto r = repo.findById(id);
     if (r.id.length == 0)
       return CommandResult(false, "", "Resource not found");
@@ -103,14 +96,12 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static ResourceType parseResourceType(string s)
-  {
+  private static ResourceType parseResourceType(string s) {
     switch (s)
     {
     case "html5Application":
@@ -130,8 +121,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     }
   }
 
-  private static ResourceState parseResourceState(string s)
-  {
+  private static ResourceState parseResourceState(string s) {
     switch (s)
     {
     case "started":

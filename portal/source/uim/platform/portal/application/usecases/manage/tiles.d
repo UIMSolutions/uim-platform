@@ -16,13 +16,11 @@ import uim.platform.portal.application.dto;
 class ManageTilesUseCase : UIMUseCase {
   private TileRepository tileRepo;
 
-  this(TileRepository tileRepo)
-  {
+  this(TileRepository tileRepo) {
     this.tileRepo = tileRepo;
   }
 
-  TileResponse createTile(CreateTileRequest req)
-  {
+  TileResponse createTile(CreateTileRequest req) {
     if (req.title.length == 0)
       return TileResponse("", "Tile title is required");
 
@@ -38,28 +36,23 @@ class ManageTilesUseCase : UIMUseCase {
     return TileResponse(id, "");
   }
 
-  Tile getTile(TileId id)
-  {
+  Tile getTile(TileId id) {
     return tileRepo.findById(id);
   }
 
-  Tile[] listTiles(TenantId tenantId, uint offset = 0, uint limit = 100)
-  {
+  Tile[] listTiles(TenantId tenantId, uint offset = 0, uint limit = 100) {
     return tileRepo.findByTenant(tenantId, offset, limit);
   }
 
-  Tile[] listByCatalog(CatalogId catalogId)
-  {
+  Tile[] listByCatalog(CatalogId catalogId) {
     return tileRepo.findByCatalog(catalogId);
   }
 
-  Tile[] searchTiles(TenantId tenantId, string query, uint offset = 0, uint limit = 100)
-  {
+  Tile[] searchTiles(TenantId tenantId, string query, uint offset = 0, uint limit = 100) {
     return tileRepo.search(tenantId, query, offset, limit);
   }
 
-  string updateTile(UpdateTileRequest req)
-  {
+  string updateTile(UpdateTileRequest req) {
     auto tile = tileRepo.findById(req.tileId);
     if (tile == Tile.init)
       return "Tile not found";
@@ -82,8 +75,7 @@ class ManageTilesUseCase : UIMUseCase {
     return "";
   }
 
-  string deleteTile(TileId id)
-  {
+  string deleteTile(TileId id) {
     auto tile = tileRepo.findById(id);
     if (tile == Tile.init)
       return "Tile not found";

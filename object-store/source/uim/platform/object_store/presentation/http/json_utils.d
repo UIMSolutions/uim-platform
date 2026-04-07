@@ -54,8 +54,7 @@ string queryParam(scope HTTPServerRequest req, string key) {
     return "";
 
   auto qs = uri[qpos + 1 .. $];
-  foreach (pair; splitBy(qs, '&'))
-  {
+  foreach (pair; splitBy(qs, '&')) {
     auto epos = pair.indexOf('=');
     if (epos > 0 && pair[0 .. epos] == key)
       return pair[epos + 1 .. $];
@@ -73,8 +72,7 @@ private long lastIndexOfChar(string s, char c) {
 private string[] splitBy(string s, char delim) {
   string[] result;
   size_t start = 0;
-  foreach (i, ch; s)
-  {
+  foreach (i, ch; s) {
     if (ch == delim)
     {
       result ~= s[start .. i];

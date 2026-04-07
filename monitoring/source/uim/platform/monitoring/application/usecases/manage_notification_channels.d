@@ -16,13 +16,11 @@ import uim.platform.monitoring.domain.types;
 class ManageNotificationChannelsUseCase : UIMUseCase {
   private NotificationChannelRepository repo;
 
-  this(NotificationChannelRepository repo)
-  {
+  this(NotificationChannelRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createChannel(CreateNotificationChannelRequest req)
-  {
+  CommandResult createChannel(CreateNotificationChannelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Channel name is required");
 
@@ -59,8 +57,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest req)
-  {
+  CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest req) {
     auto ch = repo.findById(id);
     if (ch.id.length == 0)
       return CommandResult(false, "", "Notification channel not found");
@@ -87,28 +84,23 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  NotificationChannel getChannel(NotificationChannelId id)
-  {
+  NotificationChannel getChannel(NotificationChannelId id) {
     return repo.findById(id);
   }
 
-  NotificationChannel[] listChannels(TenantId tenantId)
-  {
+  NotificationChannel[] listChannels(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  NotificationChannel[] listByType(TenantId tenantId, string typeStr)
-  {
+  NotificationChannel[] listByType(TenantId tenantId, string typeStr) {
     return repo.findByType(tenantId, parseChannelType(typeStr));
   }
 
-  NotificationChannel[] listActive(TenantId tenantId)
-  {
+  NotificationChannel[] listActive(TenantId tenantId) {
     return repo.findActive(tenantId);
   }
 
-  CommandResult deleteChannel(NotificationChannelId id)
-  {
+  CommandResult deleteChannel(NotificationChannelId id) {
     auto ch = repo.findById(id);
     if (ch.id.length == 0)
       return CommandResult(false, "", "Notification channel not found");
@@ -117,14 +109,12 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private static long clockSeconds()
-  {
+  private static long clockSeconds() {
     // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 
-  private static ChannelType parseChannelType(string s)
-  {
+  private static ChannelType parseChannelType(string s) {
     switch (s)
     {
     case "webhook":
@@ -136,8 +126,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     }
   }
 
-  private static ChannelState parseChannelState(string s)
-  {
+  private static ChannelState parseChannelState(string s) {
     switch (s)
     {
     case "inactive":

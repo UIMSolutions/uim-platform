@@ -19,8 +19,7 @@ import uim.platform.master_data_integration.infrastructure.container;
 version (unittest) {
 }
 else {
-  void main()
-  {
+  void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
 

@@ -14,13 +14,11 @@ import uim.platform.master_data_integration.domain.types;
 class ManageDistributionModelsUseCase : UIMUseCase {
   private DistributionModelRepository repo;
 
-  this(DistributionModelRepository repo)
-  {
+  this(DistributionModelRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult create(CreateDistributionModelRequest req)
-  {
+  CommandResult create(CreateDistributionModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Distribution model name is required");
     if (req.sourceClientId.length == 0)
@@ -51,8 +49,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateModel(DistributionModelId id, UpdateDistributionModelRequest req)
-  {
+  CommandResult updateModel(DistributionModelId id, UpdateDistributionModelRequest req) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Distribution model not found");
@@ -80,8 +77,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult activate(DistributionModelId id)
-  {
+  CommandResult activate(DistributionModelId id) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Distribution model not found");
@@ -91,8 +87,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult deactivate(DistributionModelId id)
-  {
+  CommandResult deactivate(DistributionModelId id) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Distribution model not found");
@@ -102,23 +97,19 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  DistributionModel getModel(DistributionModelId id)
-  {
+  DistributionModel getModel(DistributionModelId id) {
     return repo.findById(id);
   }
 
-  DistributionModel[] listByTenant(TenantId tenantId)
-  {
+  DistributionModel[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  DistributionModel[] listByStatus(TenantId tenantId, string status)
-  {
+  DistributionModel[] listByStatus(TenantId tenantId, string status) {
     return repo.findByStatus(tenantId, parseStatus(status));
   }
 
-  CommandResult deleteModel(DistributionModelId id)
-  {
+  CommandResult deleteModel(DistributionModelId id) {
     auto model = repo.findById(id);
     if (model.id.length == 0)
       return CommandResult(false, "", "Distribution model not found");
@@ -126,8 +117,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private DistributionDirection parseDirection(string s)
-  {
+  private DistributionDirection parseDirection(string s) {
     switch (s)
     {
     case "outbound":
@@ -141,8 +131,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     }
   }
 
-  private DistributionModelStatus parseStatus(string s)
-  {
+  private DistributionModelStatus parseStatus(string s) {
     switch (s)
     {
     case "active":
@@ -156,8 +145,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory[] parseCategories(string[] cats)
-  {
+  private MasterDataCategory[] parseCategories(string[] cats) {
     MasterDataCategory[] result;
     foreach (s; cats)
     {

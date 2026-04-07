@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class LifecycleRuleController : SAPController {
   private ManageLifecycleRulesUseCase uc;
 
-  this(ManageLifecycleRulesUseCase uc)
-  {
+  this(ManageLifecycleRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/lifecycle-rules", &handleCreate);
@@ -39,8 +37,7 @@ class LifecycleRuleController : SAPController {
     router.delete_("/api/v1/lifecycle-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -74,8 +71,7 @@ class LifecycleRuleController : SAPController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto bucketId = extractBucketIdFromRulesPath(req.requestURI);
@@ -96,8 +92,7 @@ class LifecycleRuleController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -115,8 +110,7 @@ class LifecycleRuleController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -148,8 +142,7 @@ class LifecycleRuleController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -171,8 +164,7 @@ class LifecycleRuleController : SAPController {
     }
   }
 
-  private static Json serializeRule(LifecycleRule r)
-  {
+  private static Json serializeRule(LifecycleRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -190,8 +182,7 @@ class LifecycleRuleController : SAPController {
     return j;
   }
 
-  private static string extractBucketIdFromRulesPath(string uri)
-  {
+  private static string extractBucketIdFromRulesPath(string uri) {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');

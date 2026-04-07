@@ -16,14 +16,12 @@ class ManageKeyMappingsUseCase : UIMUseCase {
   private KeyMappingRepository repo;
   private KeyMappingResolver resolver;
 
-  this(KeyMappingRepository repo, KeyMappingResolver resolver)
-  {
+  this(KeyMappingRepository repo, KeyMappingResolver resolver) {
     this.repo = repo;
     this.resolver = resolver;
   }
 
-  CommandResult create(CreateKeyMappingRequest req)
-  {
+  CommandResult create(CreateKeyMappingRequest req) {
     if (req.masterDataObjectId.length == 0)
       return CommandResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
@@ -50,8 +48,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req)
-  {
+  CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req) {
     auto mapping = repo.findById(id);
     if (mapping.id.length == 0)
       return CommandResult(false, "", "Key mapping not found");
@@ -68,36 +65,30 @@ class ManageKeyMappingsUseCase : UIMUseCase {
   }
 
   /// Lookup: given a source client+key, find the target client's key.
-  string lookupKey(LookupKeyRequest req)
-  {
+  string lookupKey(LookupKeyRequest req) {
     auto mapping = repo.findByClientKey(req.tenantId, req.sourceClientId, req.sourceLocalKey);
     if (mapping.id.length == 0)
       return "";
     return resolver.resolveLocalKey(mapping, req.targetClientId);
   }
 
-  KeyMapping getMapping(KeyMappingId id)
-  {
+  KeyMapping getMapping(KeyMappingId id) {
     return repo.findById(id);
   }
 
-  KeyMapping[] listByTenant(TenantId tenantId)
-  {
+  KeyMapping[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  KeyMapping[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId)
-  {
+  KeyMapping[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
     return repo.findByObjectId(tenantId, objectId);
   }
 
-  KeyMapping[] listByCategory(TenantId tenantId, string category)
-  {
+  KeyMapping[] listByCategory(TenantId tenantId, string category) {
     return repo.findByCategory(tenantId, parseCategory(category));
   }
 
-  CommandResult deleteMapping(KeyMappingId id)
-  {
+  CommandResult deleteMapping(KeyMappingId id) {
     auto mapping = repo.findById(id);
     if (mapping.id.length == 0)
       return CommandResult(false, "", "Key mapping not found");
@@ -105,8 +96,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos)
-  {
+  private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {
     KeyMappingEntry[] result;
     foreach (ref dto; dtos)
     {
@@ -121,8 +111,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     return result;
   }
 
-  private KeyMappingSourceType parseSourceType(string s)
-  {
+  private KeyMappingSourceType parseSourceType(string s) {
     switch (s)
     {
     case "local":
@@ -136,8 +125,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     }
   }
 
-  private MasterDataCategory parseCategory(string s)
-  {
+  private MasterDataCategory parseCategory(string s) {
     switch (s)
     {
     case "businessPartner":

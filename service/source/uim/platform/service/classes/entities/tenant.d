@@ -14,20 +14,17 @@ mixin(ShowModule!());
 class UIMTenantEntity : UIMEntity {
   mixin(UIMEntityTemplate!UIMTenantEntity);
 
-  this(UUID tenantId)
-  {
+  this(UUID tenantId) {
     super();
     this.tenantId(tenantId);
   }
 
-  this(UUID tenantId, Json[string] initData)
-  {
+  this(UUID tenantId, Json[string] initData) {
     super(initData);
     this.tenantId(tenantId);
   }
 
-  override bool initialize(Json[string] initData = null)
-  {
+  override bool initialize(Json[string] initData = null) {
     if (!super.initialize(initData))
     {
       return false;
@@ -41,8 +38,7 @@ class UIMTenantEntity : UIMEntity {
     return true;
   }
 
-  override Json toJson()
-  {
+  override Json toJson() {
     return super.toJson().set("tenantId", _tenantId.toString());
   }
   ///
@@ -61,8 +57,7 @@ class UIMTenantEntity : UIMEntity {
     return _tenantId;
   }
 
-  void tenantId(UUID id)
-  {
+  void tenantId(UUID id) {
     _tenantId = id;
   }
   ///

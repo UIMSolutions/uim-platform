@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageWidgetsUseCase : UIMUseCase {
   private WidgetRepository repo;
 
-  this(WidgetRepository repo)
-  {
+  this(WidgetRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createWidget(CreateWidgetRequest req)
-  {
+  CommandResult createWidget(CreateWidgetRequest req) {
     auto now = Clock.currStdTime();
     auto w = Widget();
     w.id = randomUUID().toString();
@@ -43,18 +41,15 @@ class ManageWidgetsUseCase : UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  Widget* getWidget(WidgetId id, TenantId tenantId)
-  {
+  Widget* getWidget(WidgetId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Widget[] listByPage(WorkpageId pageId, TenantId tenantId)
-  {
+  Widget[] listByPage(WorkpageId pageId, TenantId tenantId) {
     return repo.findByPage(pageId, tenantId);
   }
 
-  CommandResult updateWidget(UpdateWidgetRequest req)
-  {
+  CommandResult updateWidget(UpdateWidgetRequest req) {
     auto w = repo.findById(req.id, req.tenantId);
     if (w is null)
       return CommandResult("", "Widget not found");
@@ -73,8 +68,7 @@ class ManageWidgetsUseCase : UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  void deleteWidget(WidgetId id, TenantId tenantId)
-  {
+  void deleteWidget(WidgetId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

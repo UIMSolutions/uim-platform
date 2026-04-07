@@ -15,13 +15,11 @@ class SAPRepository(T) {
   // Placeholder for repository methods
   // This class can be extended to implement specific data access logic for the service
 
-  void save(T item)
-  {
+  void save(T item) {
     // 
   }
 
-  void update(T item)
-  {
+  void update(T item) {
     // 
   }
 }

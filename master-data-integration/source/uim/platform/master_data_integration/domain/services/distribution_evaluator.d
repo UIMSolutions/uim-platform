@@ -14,8 +14,7 @@ import uim.platform.master_data_integration.domain.types;
 /// model criteria and filter rules.
 class DistributionEvaluator {
   /// Check if an object's category is covered by the distribution model.
-  bool matchesDistribution(DistributionModel model, MasterDataObject obj)
-  {
+  bool matchesDistribution(DistributionModel model, MasterDataObject obj) {
     // Check if the object's category is in the model's scope
     foreach (cat; model.categories)
     {
@@ -26,8 +25,7 @@ class DistributionEvaluator {
   }
 
   /// Evaluate a single filter condition against an object.
-  bool evaluateCondition(FilterCondition cond, MasterDataObject obj)
-  {
+  bool evaluateCondition(FilterCondition cond, MasterDataObject obj) {
     auto fieldName = cond.fieldName;
     string value;
 
@@ -62,8 +60,7 @@ class DistributionEvaluator {
   }
 
   /// Evaluate a complete filter rule against an object.
-  bool matchesFilter(FilterRule rule, MasterDataObject obj)
-  {
+  bool matchesFilter(FilterRule rule, MasterDataObject obj) {
     if (!rule.isActive)
       return true; // Inactive rules pass everything
 
@@ -84,8 +81,7 @@ class DistributionEvaluator {
     return isAnd; // AND: all passed; OR: none matched
   }
 
-  private bool evaluateOperator(FilterOperator op, string value, string expected, string[] list)
-  {
+  private bool evaluateOperator(FilterOperator op, string value, string expected, string[] list) {
     // import std.algorithm : canFind;
     // import std.string : indexOf;
 

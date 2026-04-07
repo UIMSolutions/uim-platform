@@ -15,29 +15,25 @@ import uim.platform.workzone.domain.ports.repositories.workspaces;
 class MemoryWorkspaceRepository : WorkspaceRepository {
   private Workspace[WorkspaceId] store;
 
-  Workspace[] findByTenant(TenantId tenantId)
-  {
+  Workspace[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(w => w.tenantId == tenantId).array;
   }
 
-  Workspace* findById(WorkspaceId id, TenantId tenantId)
-  {
+  Workspace* findById(WorkspaceId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Workspace* findByAlias(string alias_, TenantId tenantId)
-  {
+  Workspace* findByAlias(string alias_, TenantId tenantId) {
     foreach (ref w; store.byValue())
       if (w.tenantId == tenantId && w.alias_ == alias_)
         return &w;
     return null;
   }
 
-  Workspace[] findByMember(UserId userId, TenantId tenantId)
-  {
+  Workspace[] findByMember(UserId userId, TenantId tenantId) {
     Workspace[] result;
     foreach (ref w; store.byValue())
     {
@@ -53,18 +49,15 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
     return result;
   }
 
-  void save(Workspace workspace)
-  {
+  void save(Workspace workspace) {
     store[workspace.id] = workspace;
   }
 
-  void update(Workspace workspace)
-  {
+  void update(Workspace workspace) {
     store[workspace.id] = workspace;
   }
 
-  void remove(WorkspaceId id, TenantId tenantId)
-  {
+  void remove(WorkspaceId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

@@ -14,18 +14,15 @@ import uim.platform.master_data_integration.domain.types;
 class QueryChangeLogUseCase : UIMUseCase {
   private ChangeLogRepository repo;
 
-  this(ChangeLogRepository repo)
-  {
+  this(ChangeLogRepository repo) {
     this.repo = repo;
   }
 
-  ChangeLogEntry getEntry(ChangeLogEntryId id)
-  {
+  ChangeLogEntry getEntry(ChangeLogEntryId id) {
     return repo.findById(id);
   }
 
-  ChangeLogEntry[] query(ChangeLogQueryRequest req)
-  {
+  ChangeLogEntry[] query(ChangeLogQueryRequest req) {
     if (req.objectId.length > 0)
       return repo.findByObjectId(req.tenantId, req.objectId);
     if (req.deltaToken.length > 0)
@@ -37,23 +34,19 @@ class QueryChangeLogUseCase : UIMUseCase {
     return repo.findByTenant(req.tenantId);
   }
 
-  ChangeLogEntry[] listByTenant(TenantId tenantId)
-  {
+  ChangeLogEntry[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  ChangeLogEntry[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId)
-  {
+  ChangeLogEntry[] listByObjectId(TenantId tenantId, MasterDataObjectId objectId) {
     return repo.findByObjectId(tenantId, objectId);
   }
 
-  ChangeLogEntry[] listSinceDeltaToken(TenantId tenantId, string deltaToken)
-  {
+  ChangeLogEntry[] listSinceDeltaToken(TenantId tenantId, string deltaToken) {
     return repo.findSinceDeltaToken(tenantId, deltaToken);
   }
 
-  private MasterDataCategory parseCategory(string s)
-  {
+  private MasterDataCategory parseCategory(string s) {
     switch (s)
     {
     case "businessPartner":

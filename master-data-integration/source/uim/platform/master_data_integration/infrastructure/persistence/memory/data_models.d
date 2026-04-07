@@ -15,25 +15,21 @@ import uim.platform.master_data_integration.domain.ports.repositories.data_model
 class MemoryDataModelRepository : DataModelRepository {
   private DataModel[DataModelId] store;
 
-  DataModel findById(DataModelId id)
-  {
+  DataModel findById(DataModelId id) {
     if (auto p = id in store)
       return *p;
     return DataModel.init;
   }
 
-  DataModel[] findByTenant(TenantId tenantId)
-  {
+  DataModel[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category)
-  {
+  DataModel[] findByCategory(TenantId tenantId, MasterDataCategory category) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
   }
 
-  DataModel findByName(TenantId tenantId, string name)
-  {
+  DataModel findByName(TenantId tenantId, string name) {
     foreach (ref m; store.byValue())
     {
       if (m.tenantId == tenantId && m.name == name)
@@ -42,18 +38,15 @@ class MemoryDataModelRepository : DataModelRepository {
     return DataModel.init;
   }
 
-  void save(DataModel model)
-  {
+  void save(DataModel model) {
     store[model.id] = model;
   }
 
-  void update(DataModel model)
-  {
+  void update(DataModel model) {
     store[model.id] = model;
   }
 
-  void remove(DataModelId id)
-  {
+  void remove(DataModelId id) {
     store.remove(id);
   }
 }

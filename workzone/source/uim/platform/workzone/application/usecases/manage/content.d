@@ -17,13 +17,11 @@ import uim.platform.workzone.application.dto;
 class ManageContentUseCase : UIMUseCase {
   private ContentRepository repo;
 
-  this(ContentRepository repo)
-  {
+  this(ContentRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createContent(CreateContentRequest req)
-  {
+  CommandResult createContent(CreateContentRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Content title is required");
 
@@ -48,24 +46,20 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  ContentItem* getContent(ContentId id, TenantId tenantId)
-  {
+  ContentItem* getContent(ContentId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ContentItem[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId)
-  {
+  ContentItem[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
     return repo.findByWorkspace(workspaceId, tenantId);
   }
 
-  ContentItem[] searchContent(WorkspaceId workspaceId, TenantId tenantId, string query)
-  {
+  ContentItem[] searchContent(WorkspaceId workspaceId, TenantId tenantId, string query) {
     auto items = repo.findByWorkspace(workspaceId, tenantId);
     return ContentSearchService.search(items, query);
   }
 
-  CommandResult updateContent(UpdateContentRequest req)
-  {
+  CommandResult updateContent(UpdateContentRequest req) {
     auto item = repo.findById(req.id, req.tenantId);
     if (item is null)
       return CommandResult("", "Content not found");
@@ -88,8 +82,7 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  CommandResult publishContent(ContentId id, TenantId tenantId)
-  {
+  CommandResult publishContent(ContentId id, TenantId tenantId) {
     auto item = repo.findById(id, tenantId);
     if (item is null)
       return CommandResult("", "Content not found");
@@ -101,8 +94,7 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  void deleteContent(ContentId id, TenantId tenantId)
-  {
+  void deleteContent(ContentId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

@@ -21,14 +21,12 @@ class ManagePagesUseCase : UIMUseCase {
   private PageRepository pageRepo;
   private SiteRepository siteRepo;
 
-  this(PageRepository pageRepo, SiteRepository siteRepo)
-  {
+  this(PageRepository pageRepo, SiteRepository siteRepo) {
     this.pageRepo = pageRepo;
     this.siteRepo = siteRepo;
   }
 
-  PageResponse createPage(CreatePageRequest req)
-  {
+  PageResponse createPage(CreatePageRequest req) {
     if (req.title.length == 0)
       return PageResponse("", "Page title is required");
 
@@ -51,18 +49,15 @@ class ManagePagesUseCase : UIMUseCase {
     return PageResponse(id, "");
   }
 
-  Page getPage(PageId id)
-  {
+  Page getPage(PageId id) {
     return pageRepo.findById(id);
   }
 
-  Page[] listPages(SiteId siteId, uint offset = 0, uint limit = 100)
-  {
+  Page[] listPages(SiteId siteId, uint offset = 0, uint limit = 100) {
     return pageRepo.findBySite(siteId, offset, limit);
   }
 
-  string updatePage(UpdatePageRequest req)
-  {
+  string updatePage(UpdatePageRequest req) {
     auto page = pageRepo.findById(req.pageId);
     if (page == Page.init)
       return "Page not found";
@@ -79,8 +74,7 @@ class ManagePagesUseCase : UIMUseCase {
     return "";
   }
 
-  string deletePage(PageId pageId, SiteId siteId)
-  {
+  string deletePage(PageId pageId, SiteId siteId) {
     auto page = pageRepo.findById(pageId);
     if (page == Page.init)
       return "Page not found";

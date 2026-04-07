@@ -18,13 +18,11 @@ import uim.platform.object_store.presentation.http.json_utils;
 class CorsRuleController : SAPController {
   private ManageCorsRulesUseCase uc;
 
-  this(ManageCorsRulesUseCase uc)
-  {
+  this(ManageCorsRulesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/cors-rules", &handleCreate);
@@ -34,8 +32,7 @@ class CorsRuleController : SAPController {
     router.delete_("/api/v1/cors-rules/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -66,8 +63,7 @@ class CorsRuleController : SAPController {
     }
   }
 
-  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleListByBucket(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto bucketId = extractBucketIdFromCorsPath(req.requestURI);
@@ -86,8 +82,7 @@ class CorsRuleController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -105,8 +100,7 @@ class CorsRuleController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -136,8 +130,7 @@ class CorsRuleController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -159,8 +152,7 @@ class CorsRuleController : SAPController {
     }
   }
 
-  private static Json serializeRule(CorsRule r)
-  {
+  private static Json serializeRule(CorsRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -175,8 +167,7 @@ class CorsRuleController : SAPController {
     return j;
   }
 
-  private static string extractBucketIdFromCorsPath(string uri)
-  {
+  private static string extractBucketIdFromCorsPath(string uri) {
     // import std.string : indexOf;
 
     auto qpos = uri.indexOf('?');

@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageShellPluginsUseCase : UIMUseCase {
   private ShellPluginRepository repo;
 
-  this(ShellPluginRepository repo)
-  {
+  this(ShellPluginRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createPlugin(CreateShellPluginRequest req)
-  {
+  CommandResult createPlugin(CreateShellPluginRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Plugin name is required");
 
@@ -45,18 +43,15 @@ class ManageShellPluginsUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ShellPlugin* getPlugin(ShellPluginId id, TenantId tenantId)
-  {
+  ShellPlugin* getPlugin(ShellPluginId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  ShellPlugin[] listPlugins(TenantId tenantId)
-  {
+  ShellPlugin[] listPlugins(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updatePlugin(UpdateShellPluginRequest req)
-  {
+  CommandResult updatePlugin(UpdateShellPluginRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
       return CommandResult("", "Plugin not found");
@@ -74,8 +69,7 @@ class ManageShellPluginsUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deletePlugin(ShellPluginId id, TenantId tenantId)
-  {
+  CommandResult deletePlugin(ShellPluginId id, TenantId tenantId) {
     auto p = repo.findById(id, tenantId);
     if (p is null)
       return CommandResult("", "Plugin not found");

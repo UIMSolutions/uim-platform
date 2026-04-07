@@ -15,29 +15,25 @@ import uim.platform.workzone.domain.ports.repositories.user_profiles;
 class MemoryUserProfileRepository : UserProfileRepository {
   private UserProfile[UserProfileId] store;
 
-  UserProfile[] findByTenant(TenantId tenantId)
-  {
+  UserProfile[] findByTenant(TenantId tenantId) {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  UserProfile* findById(UserProfileId id, TenantId tenantId)
-  {
+  UserProfile* findById(UserProfileId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  UserProfile* findByUserId(UserId userId, TenantId tenantId)
-  {
+  UserProfile* findByUserId(UserId userId, TenantId tenantId) {
     foreach (ref p; store.byValue())
       if (p.tenantId == tenantId && p.userId == userId)
         return &p;
     return null;
   }
 
-  UserProfile[] findByGroup(GroupId groupId, TenantId tenantId)
-  {
+  UserProfile[] findByGroup(GroupId groupId, TenantId tenantId) {
     UserProfile[] result;
     foreach (ref p; store.byValue())
     {
@@ -53,18 +49,15 @@ class MemoryUserProfileRepository : UserProfileRepository {
     return result;
   }
 
-  void save(UserProfile profile)
-  {
+  void save(UserProfile profile) {
     store[profile.id] = profile;
   }
 
-  void update(UserProfile profile)
-  {
+  void update(UserProfile profile) {
     store[profile.id] = profile;
   }
 
-  void remove(UserProfileId id, TenantId tenantId)
-  {
+  void remove(UserProfileId id, TenantId tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

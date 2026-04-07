@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageCardsUseCase : UIMUseCase {
   private CardRepository repo;
 
-  this(CardRepository repo)
-  {
+  this(CardRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createCard(CreateCardRequest req)
-  {
+  CommandResult createCard(CreateCardRequest req) {
     if (req.title.length == 0)
       return CommandResult("", "Card title is required");
 
@@ -44,23 +42,19 @@ class ManageCardsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  Card* getCard(CardId id, TenantId tenantId)
-  {
+  Card* getCard(CardId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Card[] listCards(TenantId tenantId)
-  {
+  Card[] listCards(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Card[] listByType(CardType cardType, TenantId tenantId)
-  {
+  Card[] listByType(CardType cardType, TenantId tenantId) {
     return repo.findByType(cardType, tenantId);
   }
 
-  CommandResult updateCard(UpdateCardRequest req)
-  {
+  CommandResult updateCard(UpdateCardRequest req) {
     auto c = repo.findById(req.id, req.tenantId);
     if (c is null)
       return CommandResult("", "Card not found");
@@ -82,8 +76,7 @@ class ManageCardsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  void deleteCard(CardId id, TenantId tenantId)
-  {
+  void deleteCard(CardId id, TenantId tenantId) {
     repo.remove(id, tenantId);
   }
 }

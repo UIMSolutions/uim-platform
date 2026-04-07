@@ -15,51 +15,43 @@ import uim.platform.monitoring.domain.ports.repositories.metrics;
 class MemoryMetricRepository : MetricRepository {
   private Metric[] store;
 
-  Metric findById(MetricId id)
-  {
+  Metric findById(MetricId id) {
     foreach (ref m; store)
       if (m.id == id)
         return m;
     return Metric.init;
   }
 
-  Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId)
-  {
+  Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return store.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId).array;
   }
 
-  Metric[] findByName(TenantId tenantId, string metricName)
-  {
+  Metric[] findByName(TenantId tenantId, string metricName) {
     return store.filter!(m => m.tenantId == tenantId && m.name == metricName).array;
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName)
-  {
+      string metricName) {
     return store.filter!(m => m.tenantId == tenantId
         && m.resourceId == resourceId && m.name == metricName).array;
   }
 
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName, long startTime, long endTime)
-  {
+      string metricName, long startTime, long endTime) {
     return store.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId
         && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
 
-  void save(Metric m)
-  {
+  void save(Metric m) {
     store ~= m;
   }
 
-  void saveAll(Metric[] metrics)
-  {
+  void saveAll(Metric[] metrics) {
     foreach (ref m; metrics)
       store ~= m;
   }
 
-  void removeOlderThan(TenantId tenantId, long beforeTimestamp)
-  {
+  void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     store = store.filter!(m => !(m.tenantId == tenantId && m.timestamp < beforeTimestamp)).array;
   }
 }

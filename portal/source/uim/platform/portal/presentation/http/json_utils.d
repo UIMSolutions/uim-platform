@@ -12,8 +12,7 @@ module uim.platform.identity_authentication.presentation.http.json_utils;
 /// Serialize a struct to JSON.
 Json toJsonValue(T)(T val) {
   auto j = Json.emptyObject;
-  static foreach (i, field; T.tupleof)
-  {
+  static foreach (i, field; T.tupleof) {
     {
       enum name = __traits(identifier, T.tupleof[i]);
       alias FT = typeof(field);
@@ -64,8 +63,7 @@ Json toJsonArray(T)(T[] items) {
 
 /// Read a string field from JSON, or return default.
 string jsonStr(Json j, string key) {
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).isString)
       return (*val).get!string;
@@ -75,8 +73,7 @@ string jsonStr(Json j, string key) {
 
 /// Read a boolean field from JSON.
 bool jsonBool(Json j, string key, bool default_ = false) {
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null)
     {
@@ -89,8 +86,7 @@ bool jsonBool(Json j, string key, bool default_ = false) {
 
 /// Read an integer field from JSON.
 long jsonLong(Json j, string key, long default_ = 0) {
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).isInteger)
       return (*val).get!long;
@@ -108,8 +104,7 @@ uint jsonUint(Json j, string key, uint default_ = 0) {
 /// Read a string array from JSON.
 string[] jsonStrArray(Json j, string key) {
   string[] result;
-  if (j.type == Json.Type.object)
-  {
+  if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).type == Json.Type.array)
     {

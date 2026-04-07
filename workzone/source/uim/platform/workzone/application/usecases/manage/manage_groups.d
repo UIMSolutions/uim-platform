@@ -16,13 +16,11 @@ import uim.platform.workzone.application.dto;
 class ManageGroupsUseCase : UIMUseCase {
   private GroupRepository repo;
 
-  this(GroupRepository repo)
-  {
+  this(GroupRepository repo) {
     this.repo = repo;
   }
 
-  CommandResult createGroup(CreateGroupRequest req)
-  {
+  CommandResult createGroup(CreateGroupRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Group name is required");
 
@@ -41,18 +39,15 @@ class ManageGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  Group* getGroup(GroupId id, TenantId tenantId)
-  {
+  Group* getGroup(GroupId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }
 
-  Group[] listGroups(TenantId tenantId)
-  {
+  Group[] listGroups(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  CommandResult updateGroup(UpdateGroupRequest req)
-  {
+  CommandResult updateGroup(UpdateGroupRequest req) {
     auto g = repo.findById(req.id, req.tenantId);
     if (g is null)
       return CommandResult("", "Group not found");
@@ -68,8 +63,7 @@ class ManageGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  CommandResult deleteGroup(GroupId id, TenantId tenantId)
-  {
+  CommandResult deleteGroup(GroupId id, TenantId tenantId) {
     auto g = repo.findById(id, tenantId);
     if (g is null)
       return CommandResult("", "Group not found");
