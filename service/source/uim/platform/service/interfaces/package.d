@@ -11,5 +11,6 @@ public {
   import uim.platform.service.interfaces.service;
   import uim.platform.service.interfaces.store;
   import uim.platform.service.interfaces.entity;
+  import uim.platform.service.interfaces.repository;
   import uim.platform.service.interfaces.tenant;
 }

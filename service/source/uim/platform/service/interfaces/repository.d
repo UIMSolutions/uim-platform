@@ -8,11 +8,12 @@ mixin(ShowModule!());
 
 interface IBaseRepository(TEntity, TId) {
   bool existsTenant(TenantId tenantId);
-  TEntity findById(TId id);
-
-  bool existsId(TId id);
-  TEntity findById(TId id);
+  TEntity[] findByTenant(TenantId tenantId);
+ 
+  bool existsId(TId id, TenantId tenantId);
+  TEntity findById(TId id, TenantId tenantId);
 
   void save(TEntity entity);
   void update(TEntity entity);
+  void remove(TId id, TenantId tenantId);
 }

@@ -23,3 +23,53 @@ class SAPRepository(T) {
     // 
   }
 }
+
+class MemoryRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
+  private TEntity[TId][TenantId] store;
+
+  bool existsTenant(TenantId tenantId) {
+    return tenantId in store;
+  }
+
+  TEntity[] findByTenant(TenantId tenantId) {
+    if (!existsTenant(tenantId))
+      return null;
+
+    return store[tenantId].byValue.array;
+  }
+
+  bool existsId(TId id, TenantId tenantId) {
+    return (existsTenant(tenantId) && (id in store[tenantId]));
+  }
+
+  TEntity findById(TId id, TenantId tenantId) {
+    if (!existsId(id, tenantId))
+      return null;
+
+    return store[tenantId][id];
+  }
+
+  void save(TEntity entity) {
+    if (!existsTenant(entity.tenantId)) {
+      TEntity[TId] entities;
+      store[entity.tenantId] = entities;
+    }
+    store[entity.tenantId][entity.id] = entity;
+  }
+
+  void update(TEntity entity) {
+    if (existsId(entity.id, entity.tenantId)) {
+      store[entity.tenantId][entity.id] = entity;
+    }
+  }
+
+  void remove(TId id, TenantId tenantId) {
+    if (!existsId(id, tenantId))
+      return;
+
+    store[tenantId].remove(id);
+    if (store[tenantId].empty) {
+      store.remove(tenantId);
+    }
+  }
+}

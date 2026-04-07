@@ -7,9 +7,12 @@ module uim.platform.analytics.infrastructure.web.handlers.dashboard;
 
 // import vibe.http.server;
 // import vibe.data.json;
-import uim.platform.analytics.app.usecases.dashboards;
-import uim.platform.analytics.app.dto.dashboard;
+// import uim.platform.analytics.app.usecases.dashboards;
+// import uim.platform.analytics.app.dto.dashboard;
 
+import uim.platform.analytics;
+
+mixin(ShowModule!());
 @safe:
 
 class DashboardHandler {
@@ -44,7 +47,7 @@ class DashboardHandler {
       auto cmd = CreateDashboardRequest(json["name"].get!string,
           json["description"].get!string, json["ownerId"].get!string,);
       auto result = useCases.create(cmd);
-      res.writeJsonBody(toJsonValue(result), HTTPStatus.created);
+      res.writeJsonBody(result.toJson, HTTPStatus.created);
     }
     catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
@@ -56,7 +59,7 @@ class DashboardHandler {
     try {
       auto json = req.json;
       auto result = useCases.addPage(id, json["title"].get!string);
-      res.writeJsonBody(toJsonValue(result));
+      res.writeJsonBody(result.toJson);
     }
     catch (Exception e) {
       res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
@@ -70,7 +73,7 @@ class DashboardHandler {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }
-    res.writeJsonBody(toJsonValue(result));
+    res.writeJsonBody(result.toJson);
   }
 
   void remove(scope HTTPServerRequest req, scope HTTPServerResponse res) {

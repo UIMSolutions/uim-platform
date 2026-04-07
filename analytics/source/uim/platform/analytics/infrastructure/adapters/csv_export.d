@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.adapters.csv_export;
 
-import uim.platform.analytics.app.ports.export_port;
+// import uim.platform.analytics.app.ports.export_port;
 
 /// Adapter: simple CSV export implementation.
+import uim.platform.analytics;
+
+mixin(ShowModule!());
+@safe:
 class CsvExportAdapter : ExportPort {
 
   ubyte[] exportPdf(string artifactId, string artifactType) {

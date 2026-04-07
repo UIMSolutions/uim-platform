@@ -28,8 +28,7 @@ import uim.platform.analytics;
 @safe:
 
 version (unittest) {
-}
-) {
+} else {
   void main() {
     auto cfg = ServiceConfig.load();
 
@@ -73,7 +72,7 @@ version (unittest) {
     // 5. HTTP Router — register all routes
     auto router = new URLRouter();
     registerRoutes(router, dashboardH, storyH, datasetH, widgetH, planningH,
-        predictionH, dataSourceH, healthH);
+      predictionH, dataSourceH, healthH);
 
     // 6. HTTP Server
     auto settings = new HTTPServerSettings;

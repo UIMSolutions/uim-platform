@@ -11,8 +11,8 @@ module uim.platform.analytics.infrastructure.web.handlers.prediction;
 // import uim.platform.analytics.app.dto.prediction;
 import uim.platform.analytics;
 
+mixin(ShowModule!());
 @safe:
-
 class PredictionHandler {
   private PredictionUseCases useCases;
 

@@ -7,9 +7,12 @@ module uim.platform.analytics.infrastructure.web.handlers.datasource;
 
 // import vibe.http.server;
 // import vibe.data.json;
-import uim.platform.analytics.app.usecases.datasources;
-import uim.platform.analytics.app.dto.datasource;
+// import uim.platform.analytics.app.usecases.datasources;
+// import uim.platform.analytics.app.dto.datasource;
 
+import uim.platform.analytics;
+
+mixin(ShowModule!());
 @safe:
 
 class DataSourceHandler {

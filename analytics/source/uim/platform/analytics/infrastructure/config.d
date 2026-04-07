@@ -5,8 +5,10 @@
 *****************************************************************************************************************/
 module uim.platform.analytics.infrastructure.config;
 
+import std.process : environment;
 import uim.platform.analytics;
 
+mixin(ShowModule!());
 @safe:
 /// Service configuration (read from environment or defaults).
 struct ServiceConfig {

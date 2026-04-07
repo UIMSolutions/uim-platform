@@ -7,9 +7,12 @@ module uim.platform.analytics.infrastructure.web.handlers.dataset;
 
 // import vibe.http.server;
 // import vibe.data.json;
-import uim.platform.analytics.app.usecases.datasets;
-import uim.platform.analytics.app.dto.dataset;
+// import uim.platform.analytics.app.usecases.datasets;
+// import uim.platform.analytics.app.dto.dataset;
 
+import uim.platform.analytics;
+
+mixin(ShowModule!());
 @safe:
 
 class DatasetHandler {
@@ -46,7 +49,7 @@ class DatasetHandler {
       res.writeJsonBody(toJsonValue(useCases.create(cmd)), HTTPStatus.created);
     }
     catch (Exception e) {
-      res.writeJsonBody(errorJson("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
+      res.writeJsonBody(toJsonValue(result)("Invalid request: " ~ e.msg), HTTPStatus.badRequest);
     }
   }
 
