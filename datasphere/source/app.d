@@ -15,7 +15,7 @@ import vibe.http.server : listenHTTP;
 import vibe.core.core : runApplication;
 
 version (unittest) {
-} ) {
+} else {
     void main() {
         auto config = loadConfig();
         auto container = buildContainer(config);

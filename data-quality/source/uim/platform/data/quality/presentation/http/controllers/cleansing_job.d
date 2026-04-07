@@ -24,7 +24,7 @@ class CleansingJobController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/cleansing-jobs", &handleCreate);
     router.get("/api/v1/cleansing-jobs", &handleList);
     router.get("/api/v1/cleansing-jobs/*", &handleGetById);
@@ -45,7 +45,7 @@ class CleansingJobController : SAPController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("pending");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

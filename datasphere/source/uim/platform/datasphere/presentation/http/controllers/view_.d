@@ -46,7 +46,7 @@ class ViewController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("View created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -133,7 +133,7 @@ class ViewController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("View updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -150,7 +150,7 @@ class ViewController : SAPController {
       auto result = uc.remove(id, spaceId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

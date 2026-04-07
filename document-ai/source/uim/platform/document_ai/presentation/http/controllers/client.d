@@ -43,7 +43,7 @@ class ClientController : SAPController {
         resp["clientId"] = Json(result.id);
         resp["message"] = Json("Client created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -108,7 +108,7 @@ class ClientController : SAPController {
         resp["clientId"] = Json(result.id);
         resp["message"] = Json("Client updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -126,7 +126,7 @@ class ClientController : SAPController {
       auto result = uc.remove(id, tenantId);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

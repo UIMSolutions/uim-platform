@@ -42,7 +42,7 @@ class PromptCollectionController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Prompt collection created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -107,7 +107,7 @@ class PromptCollectionController : SAPController {
         auto resp = Json.emptyObject;
         resp["message"] = Json("Prompt collection updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

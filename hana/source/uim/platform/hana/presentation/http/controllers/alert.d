@@ -54,7 +54,7 @@ class AlertController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Alert created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -140,7 +140,7 @@ class AlertController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Alert updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -174,7 +174,7 @@ class AlertController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Alert acknowledged");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -190,7 +190,7 @@ class AlertController : SAPController {
       auto result = uc.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

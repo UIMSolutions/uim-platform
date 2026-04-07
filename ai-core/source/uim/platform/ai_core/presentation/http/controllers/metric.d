@@ -41,7 +41,7 @@ class MetricController : SAPController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Metrics stored");
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

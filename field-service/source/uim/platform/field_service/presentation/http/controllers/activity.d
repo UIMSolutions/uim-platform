@@ -79,7 +79,7 @@ class ActivityController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Activity created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -110,7 +110,7 @@ class ActivityController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Activity updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -128,7 +128,7 @@ class ActivityController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Activity deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

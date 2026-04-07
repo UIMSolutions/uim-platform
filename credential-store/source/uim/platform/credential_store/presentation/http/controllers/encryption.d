@@ -45,7 +45,7 @@ class EncryptionController : SAPController {
         resp["keyringId"] = Json(result.keyringId);
         resp["keyringVersion"] = Json(result.keyringVersion);
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -69,7 +69,7 @@ class EncryptionController : SAPController {
         resp["keyringId"] = Json(result.keyringId);
         resp["keyringVersion"] = Json(result.keyringVersion);
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -92,7 +92,7 @@ class EncryptionController : SAPController {
         auto resp = Json.emptyObject;
         resp["dek"] = Json(result.dek);
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

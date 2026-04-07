@@ -47,7 +47,7 @@ class CustomDomainController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Custom domain created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -146,7 +146,7 @@ class CustomDomainController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Custom domain updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -170,7 +170,7 @@ class CustomDomainController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Custom domain activated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -192,7 +192,7 @@ class CustomDomainController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Custom domain deactivated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -211,7 +211,7 @@ class CustomDomainController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Custom domain deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

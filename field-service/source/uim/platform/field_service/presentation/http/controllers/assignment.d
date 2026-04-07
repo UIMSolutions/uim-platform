@@ -74,7 +74,7 @@ class AssignmentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Assignment created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -102,7 +102,7 @@ class AssignmentController : SAPController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Assignment updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -120,7 +120,7 @@ class AssignmentController : SAPController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Assignment deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
