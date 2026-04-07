@@ -134,7 +134,7 @@ class ExportController : SAPController {
     .set("errorMessage", Json(j.errorMessage));
 
     if (j.categories.length > 0) {
-      auto cats = j.categories.toArray.map!(c => Json(categoryToString(c))).array.toJson;
+      auto cats = j.categories.map!(c => Json(categoryToString(c))).array.toJson;
       o["categories"] = cats;
     }
     return o;

@@ -58,7 +58,7 @@ class ManageExportsUseCase : UIMUseCase {
     return CommandResult(job.id, "");
   }
 
-  bool existsExport(ExportJobId id, TenantId tenantId) {
+  bool hasExport(ExportJobId id, TenantId tenantId) {
     return jobRepo.existsById(id, tenantId);
   }
 
