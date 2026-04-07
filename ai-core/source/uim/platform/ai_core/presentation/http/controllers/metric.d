@@ -19,6 +19,7 @@ class MetricController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.patch_("/api/v2/lm/metrics", &handlePatch);
     router.get("/api/v2/lm/metrics", &handleGet);
   }

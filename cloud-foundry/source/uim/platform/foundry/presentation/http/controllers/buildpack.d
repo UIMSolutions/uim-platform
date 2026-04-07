@@ -23,6 +23,8 @@ class BuildpackController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/buildpacks", &handleCreate);
     router.get("/api/v1/buildpacks", &handleList);
     router.get("/api/v1/buildpacks/*", &handleGetById);

@@ -16,7 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
 
-class ServiceController {
+class ServiceController : SAPController {
   private ManageServicesUseCase useCase;
 
   this(ManageServicesUseCase useCase) {
@@ -24,6 +24,8 @@ class ServiceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     // Service instances
     router.post("/api/v1/service-instances", &handleCreateInstance);
     router.get("/api/v1/service-instances", &handleListInstances);

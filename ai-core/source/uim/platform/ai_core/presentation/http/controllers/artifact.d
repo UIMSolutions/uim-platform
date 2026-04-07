@@ -19,6 +19,7 @@ class ArtifactController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v2/lm/artifacts", &handleCreate);
     router.get("/api/v2/lm/artifacts", &handleList);
     router.get("/api/v2/lm/artifacts/*", &handleGet);

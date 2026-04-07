@@ -15,7 +15,7 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.space;
 
-class SpaceController {
+class SpaceController : SAPController {
   private ManageSpacesUseCase useCase;
 
   this(ManageSpacesUseCase useCase) {
@@ -23,6 +23,8 @@ class SpaceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/spaces", &handleCreate);
     router.get("/api/v1/spaces", &handleList);
     router.get("/api/v1/spaces/*", &handleGetById);

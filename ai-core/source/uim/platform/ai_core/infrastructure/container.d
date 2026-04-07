@@ -106,7 +106,7 @@ Container buildContainer(AppConfig config) {
   c.resourceGroupController = new ResourceGroupController(c.manageResourceGroups);
   c.metricController = new MetricController(c.getMetrics);
   c.metaController = new MetaController();
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("ai-core");
 
   return c;
 }

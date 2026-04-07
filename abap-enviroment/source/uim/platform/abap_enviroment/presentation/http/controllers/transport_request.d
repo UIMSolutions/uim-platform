@@ -15,7 +15,7 @@ import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
 
-class TransportRequestController {
+class TransportRequestController : SAPController {
   private ManageTransportRequestsUseCase uc;
 
   this(ManageTransportRequestsUseCase uc) {
@@ -23,6 +23,8 @@ class TransportRequestController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
     router.get("/api/v1/transports/*", &handleGetById);

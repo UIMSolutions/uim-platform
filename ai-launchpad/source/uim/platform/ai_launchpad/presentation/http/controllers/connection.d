@@ -19,6 +19,7 @@ class ConnectionController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/connections", &handleCreate);
     router.get("/api/v1/connections", &handleList);
     router.get("/api/v1/connections/*", &handleGet);

@@ -19,6 +19,7 @@ class ResourceGroupController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v2/admin/resourceGroups", &handleCreate);
     router.get("/api/v2/admin/resourceGroups", &handleList);
     router.get("/api/v2/admin/resourceGroups/*", &handleGet);

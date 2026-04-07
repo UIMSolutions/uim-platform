@@ -16,7 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.route;
 import uim.platform.foundry.domain.entities.cf_domain;
 
-class RouteController {
+class RouteController : SAPController {
   private ManageRoutesUseCase useCase;
 
   this(ManageRoutesUseCase useCase) {
@@ -24,6 +24,8 @@ class RouteController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     // Routes
     router.post("/api/v1/routes", &handleCreateRoute);
     router.get("/api/v1/routes", &handleListRoutes);

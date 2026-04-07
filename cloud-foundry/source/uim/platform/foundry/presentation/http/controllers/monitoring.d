@@ -21,6 +21,8 @@ class MonitoringController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/monitoring/apps", &handleListAppHealth);
     router.get("/api/v1/monitoring/spaces/*", &handleSpaceUsage);
     router.get("/api/v1/monitoring/apps/*", &handleAppHealth);

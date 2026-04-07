@@ -23,6 +23,8 @@ class AppController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     // Action routes (more specific — registered before wildcard)

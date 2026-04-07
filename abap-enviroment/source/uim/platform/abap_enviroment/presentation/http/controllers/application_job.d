@@ -20,7 +20,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class ApplicationJobController {
+class ApplicationJobController : SAPController {
   private ManageApplicationJobsUseCase uc;
 
   this(ManageApplicationJobsUseCase uc) {
@@ -28,6 +28,8 @@ class ApplicationJobController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/application-jobs", &handleCreate);
     router.get("/api/v1/application-jobs", &handleList);
     router.get("/api/v1/application-jobs/*", &handleGetById);

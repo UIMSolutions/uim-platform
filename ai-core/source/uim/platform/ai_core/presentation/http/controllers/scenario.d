@@ -19,6 +19,7 @@ class ScenarioController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v2/lm/scenarios", &handleList);
     router.get("/api/v2/lm/scenarios/*", &handleGet);
     router.post("/api/v2/lm/scenarios", &handleCreate);

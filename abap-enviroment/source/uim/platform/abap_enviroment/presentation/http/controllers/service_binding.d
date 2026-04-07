@@ -28,6 +28,8 @@ class ServiceBindingController : SAPController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
     router.get("/api/v1/service-bindings/*", &handleGetById);

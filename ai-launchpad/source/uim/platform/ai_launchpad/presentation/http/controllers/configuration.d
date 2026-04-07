@@ -19,6 +19,7 @@ class ConfigurationController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/configurations", &handleCreate);
     router.get("/api/v1/configurations", &handleList);
     router.get("/api/v1/configurations/*", &handleGet);

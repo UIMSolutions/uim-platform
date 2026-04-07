@@ -15,7 +15,7 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.organization;
 
-class OrgController {
+class OrgController : SAPController {
   private ManageOrgsUseCase useCase;
 
   this(ManageOrgsUseCase useCase) {
@@ -23,6 +23,8 @@ class OrgController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/orgs", &handleCreate);
     router.get("/api/v1/orgs", &handleList);
     router.post("/api/v1/orgs/suspend/*", &handleSuspend);

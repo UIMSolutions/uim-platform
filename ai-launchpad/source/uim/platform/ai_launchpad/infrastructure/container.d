@@ -157,7 +157,7 @@ Container buildContainer(AppConfig config) {
   c.resourceGroupController = new ResourceGroupController(c.manageResourceGroups);
   c.statisticsController = new StatisticsController(c.getUsageStatistics);
   c.capabilitiesController = new CapabilitiesController(c.getCapabilities);
-  c.healthController = new HealthController();
+  c.healthController = new HealthController("ai-launchpad");
 
   return c;
 }

@@ -19,6 +19,7 @@ class DeploymentController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v2/lm/deployments", &handleCreate);
     router.get("/api/v2/lm/deployments", &handleList);
     router.get("/api/v2/lm/deployments/*", &handleGet);

@@ -10,6 +10,7 @@ import uim.platform.ai_core;
 class MetaController : SAPController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v2/lm/meta", &handleMeta);
   }
 

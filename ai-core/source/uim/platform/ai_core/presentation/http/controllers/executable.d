@@ -19,6 +19,7 @@ class ExecutableController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v2/lm/executables", &handleList);
     router.get("/api/v2/lm/executables/*", &handleGet);
     router.post("/api/v2/lm/executables", &handleCreate);
