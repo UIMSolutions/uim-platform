@@ -24,7 +24,7 @@ class SAPRepository(T) {
   }
 }
 
-class MemoryRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
+class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
   private TEntity[TId][TenantId] store;
 
   bool existsTenant(TenantId tenantId) {

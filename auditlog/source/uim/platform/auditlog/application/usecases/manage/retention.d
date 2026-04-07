@@ -8,13 +8,16 @@ module uim.platform.auditlog.application.usecases.manage.retention;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.retention_policy;
-import uim.platform.auditlog.domain.ports.repositories.retention_policys;
-import uim.platform.auditlog.application.dto;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.retention_policy;
+// import uim.platform.auditlog.domain.ports.repositories.retention_policys;
+// import uim.platform.auditlog.application.dto;
 
-@safe:
-class ManageRetentionUseCase : UIMUseCase {
+import uim.platform.auditlog; 
+
+mixin(ShowModule!());
+
+@safe:class ManageRetentionUseCase : UIMUseCase {
   private RetentionPolicyRepository policyRepo;
 
   this(RetentionPolicyRepository policyRepo) {
