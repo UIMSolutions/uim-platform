@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.presentation.http.controllers.rule_set;
 
-import uim.platform.data.privacy.application.usecases.manage.rule_sets;
-import uim.platform.data.privacy.application.dto;
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.rule_set;
+// import uim.platform.data.privacy.application.usecases.manage.rule_sets;
+// import uim.platform.data.privacy.application.dto;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.rule_set;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class RuleSetController {
   private ManageRuleSetsUseCase uc;
 

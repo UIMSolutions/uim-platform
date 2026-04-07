@@ -5,78 +5,82 @@
 *****************************************************************************************************************/
 module uim.platform.data.privacy.infrastructure.container;
 
-import uim.platform.data.privacy.infrastructure.config;
+// import uim.platform.data.privacy.infrastructure.config;
 
-// Repositories
-import uim.platform.data.privacy.infrastructure.persistence.memory.data_subject_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.personal_data_model_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.blocking_request_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.legal_ground_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.retention_rule_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.consent_record_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.data_retrieval_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_group_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.business_context_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.business_process_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.business_subprocess_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.correction_request_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.archive_request_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.destruction_request_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.purpose_record_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.consent_purpose_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.rule_set_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.information_report_repo;
-import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_config_repo;
+// // Repositories
+// import uim.platform.data.privacy.infrastructure.persistence.memory.data_subject_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.personal_data_model_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.blocking_request_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.legal_ground_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.retention_rule_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.consent_record_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.data_retrieval_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_group_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.business_context_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.business_process_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.business_subprocess_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.correction_request_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.archive_request_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.destruction_request_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.purpose_record_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.consent_purpose_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.rule_set_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.information_report_repo;
+// import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_config_repo;
 
-// Use Cases
-import uim.platform.data.privacy.application.usecases.manage.data_subjects;
-import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
-import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
-import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
-import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
-import uim.platform.data.privacy.application.usecases.manage.retention_rules;
-import uim.platform.data.privacy.application.usecases.manage.consent_records;
-import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
-import uim.platform.data.privacy.application.usecases.manage.data_controllers;
-import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
-import uim.platform.data.privacy.application.usecases.manage.business_contexts;
-import uim.platform.data.privacy.application.usecases.manage.business_processes;
-import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
-import uim.platform.data.privacy.application.usecases.manage.correction_requests;
-import uim.platform.data.privacy.application.usecases.manage.archive_requests;
-import uim.platform.data.privacy.application.usecases.manage.destruction_requests;
-import uim.platform.data.privacy.application.usecases.manage.purpose_records;
-import uim.platform.data.privacy.application.usecases.manage.consent_purposes;
-import uim.platform.data.privacy.application.usecases.manage.rule_sets;
-import uim.platform.data.privacy.application.usecases.manage.information_reports;
-import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
+// // Use Cases
+// import uim.platform.data.privacy.application.usecases.manage.data_subjects;
+// import uim.platform.data.privacy.application.usecases.manage.personal_data_models;
+// import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
+// import uim.platform.data.privacy.application.usecases.manage.blocking_requests;
+// import uim.platform.data.privacy.application.usecases.manage.legal_grounds;
+// import uim.platform.data.privacy.application.usecases.manage.retention_rules;
+// import uim.platform.data.privacy.application.usecases.manage.consent_records;
+// import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
+// import uim.platform.data.privacy.application.usecases.manage.data_controllers;
+// import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
+// import uim.platform.data.privacy.application.usecases.manage.business_contexts;
+// import uim.platform.data.privacy.application.usecases.manage.business_processes;
+// import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
+// import uim.platform.data.privacy.application.usecases.manage.correction_requests;
+// import uim.platform.data.privacy.application.usecases.manage.archive_requests;
+// import uim.platform.data.privacy.application.usecases.manage.destruction_requests;
+// import uim.platform.data.privacy.application.usecases.manage.purpose_records;
+// import uim.platform.data.privacy.application.usecases.manage.consent_purposes;
+// import uim.platform.data.privacy.application.usecases.manage.rule_sets;
+// import uim.platform.data.privacy.application.usecases.manage.information_reports;
+// import uim.platform.data.privacy.application.usecases.manage.anonymization_configs;
 
-// Controllers
-import uim.platform.data.privacy.presentation.http.data_subject;
-import uim.platform.data.privacy.presentation.http.personal_data_model;
-import uim.platform.data.privacy.presentation.http.deletion;
-import uim.platform.data.privacy.presentation.http.blocking;
-import uim.platform.data.privacy.presentation.http.legal_ground;
-import uim.platform.data.privacy.presentation.http.retention_rule;
-import uim.platform.data.privacy.presentation.http.consent;
-import uim.platform.data.privacy.presentation.http.data_retrieval;
-import uim.platform.data.privacy.presentation.http.health;
-import uim.platform.data.privacy.presentation.http.data_controller;
-import uim.platform.data.privacy.presentation.http.data_controller_group;
-import uim.platform.data.privacy.presentation.http.business_context;
-import uim.platform.data.privacy.presentation.http.business_process;
-import uim.platform.data.privacy.presentation.http.business_subprocess;
-import uim.platform.data.privacy.presentation.http.correction_request;
-import uim.platform.data.privacy.presentation.http.archive_request;
-import uim.platform.data.privacy.presentation.http.destruction_request;
-import uim.platform.data.privacy.presentation.http.purpose_record;
-import uim.platform.data.privacy.presentation.http.consent_purpose;
-import uim.platform.data.privacy.presentation.http.rule_set;
-import uim.platform.data.privacy.presentation.http.information_report;
-import uim.platform.data.privacy.presentation.http.anonymization_config;
+// // Controllers
+// import uim.platform.data.privacy.presentation.http.data_subject;
+// import uim.platform.data.privacy.presentation.http.personal_data_model;
+// import uim.platform.data.privacy.presentation.http.deletion;
+// import uim.platform.data.privacy.presentation.http.blocking;
+// import uim.platform.data.privacy.presentation.http.legal_ground;
+// import uim.platform.data.privacy.presentation.http.retention_rule;
+// import uim.platform.data.privacy.presentation.http.consent;
+// import uim.platform.data.privacy.presentation.http.data_retrieval;
+// import uim.platform.data.privacy.presentation.http.health;
+// import uim.platform.data.privacy.presentation.http.data_controller;
+// import uim.platform.data.privacy.presentation.http.data_controller_group;
+// import uim.platform.data.privacy.presentation.http.business_context;
+// import uim.platform.data.privacy.presentation.http.business_process;
+// import uim.platform.data.privacy.presentation.http.business_subprocess;
+// import uim.platform.data.privacy.presentation.http.correction_request;
+// import uim.platform.data.privacy.presentation.http.archive_request;
+// import uim.platform.data.privacy.presentation.http.destruction_request;
+// import uim.platform.data.privacy.presentation.http.purpose_record;
+// import uim.platform.data.privacy.presentation.http.consent_purpose;
+// import uim.platform.data.privacy.presentation.http.rule_set;
+// import uim.platform.data.privacy.presentation.http.information_report;
+// import uim.platform.data.privacy.presentation.http.anonymization_config;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container — wires all layers together.
 struct Container {
   // Repositories (driven adapters)

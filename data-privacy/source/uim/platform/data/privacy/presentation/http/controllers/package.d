@@ -6,5 +6,25 @@
 module uim.platform.data.privacy.presentation.http.controllers;
 
 public {
-    
+        import uim.platform.data.privacy.presentation.http.controllers.anonymization_request;
+    import uim.platform.data.privacy.presentation.http.controllers.archive_request;
+    import uim.platform.data.privacy.presentation.http.controllers.blocking_request;
+    import uim.platform.data.privacy.presentation.http.controllers.business_context;
+    import uim.platform.data.privacy.presentation.http.controllers.business_process;
+    import uim.platform.data.privacy.presentation.http.controllers.business_subprocess;
+    import uim.platform.data.privacy.presentation.http.controllers.consent_purpose;
+    import uim.platform.data.privacy.presentation.http.controllers.consent_record;
+    import uim.platform.data.privacy.presentation.http.controllers.correction_request;
+    import uim.platform.data.privacy.presentation.http.controllers.data_controller;
+    import uim.platform.data.privacy.presentation.http.controllers.data_controller_group;
+    import uim.platform.data.privacy.presentation.http.controllers.data_retrieval_request;
+    import uim.platform.data.privacy.presentation.http.controllers.data_subject;
+    import uim.platform.data.privacy.presentation.http.controllers.deletion;
+    import uim.platform.data.privacy.presentation.http.controllers.destruction_request;
+    import uim.platform.data.privacy.presentation.http.controllers.information_report;
+    import uim.platform.data.privacy.presentation.http.controllers.legal_ground;
+    import uim.platform.data.privacy.presentation.http.controllers.personal_data_model;
+    import uim.platform.data.privacy.presentation.http.controllers.purpose_record;
+    import uim.platform.data.privacy.presentation.http.controllers.retention_rule;
+    import uim.platform.data.privacy.presentation.http.controllers.rule_set;
 }

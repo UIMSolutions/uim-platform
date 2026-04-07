@@ -3,8 +3,8 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.presentation;
+module uim.platform.data.privacy.infrastructure.persistence.files;
 
 public {
-    import uim.platform.data.privacy.presentation;
+    
 }
