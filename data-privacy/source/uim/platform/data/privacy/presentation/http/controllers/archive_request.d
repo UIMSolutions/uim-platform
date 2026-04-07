@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ArchiveRequestController {
+class ArchiveRequestController : SAPController {
   private ManageArchiveRequestsUseCase uc;
 
   this(ManageArchiveRequestsUseCase uc) {
@@ -22,6 +22,8 @@ class ArchiveRequestController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/archive-requests", &handleCreate);
     router.get("/api/v1/archive-requests", &handleList);
     router.get("/api/v1/archive-requests/*", &handleGetById);

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RuleSetController {
+class RuleSetController : SAPController {
   private ManageRuleSetsUseCase uc;
 
   this(ManageRuleSetsUseCase uc) {
@@ -22,6 +22,8 @@ class RuleSetController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/rule-sets", &handleCreate);
     router.get("/api/v1/rule-sets", &handleList);
     router.get("/api/v1/rule-sets/*", &handleGetById);

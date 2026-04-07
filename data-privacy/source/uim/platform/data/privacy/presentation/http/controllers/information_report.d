@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class InformationReportController {
+class InformationReportController : SAPController {
   private ManageInformationReportsUseCase uc;
 
   this(ManageInformationReportsUseCase uc) {
@@ -22,6 +22,8 @@ class InformationReportController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/information-reports", &handleCreate);
     router.get("/api/v1/information-reports", &handleList);
     router.get("/api/v1/information-reports/*", &handleGetById);

@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BlockingController {
+class BlockingController : SAPController {
   private ManageBlockingRequestsUseCase uc;
 
   this(ManageBlockingRequestsUseCase uc) {
@@ -27,6 +27,8 @@ class BlockingController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/blocking-requests", &handleCreate);
     router.get("/api/v1/blocking-requests", &handleList);
     router.get("/api/v1/blocking-requests/*", &handleGetById);

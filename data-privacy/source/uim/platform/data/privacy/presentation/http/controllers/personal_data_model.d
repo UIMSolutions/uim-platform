@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PersonalDataModelController {
+class PersonalDataModelController : SAPController {
   private ManagePersonalDataModelsUseCase uc;
 
   this(ManagePersonalDataModelsUseCase uc) {
@@ -27,6 +27,8 @@ class PersonalDataModelController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/personal-data-models", &handleCreate);
     router.get("/api/v1/personal-data-models", &handleList);
     router.get("/api/v1/personal-data-models/special", &handleListSpecial);

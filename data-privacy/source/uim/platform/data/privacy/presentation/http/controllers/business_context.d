@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessContextController {
+class BusinessContextController : SAPController {
   private ManageBusinessContextsUseCase uc;
 
   this(ManageBusinessContextsUseCase uc) {
@@ -22,6 +22,8 @@ class BusinessContextController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/business-contexts", &handleCreate);
     router.get("/api/v1/business-contexts", &handleList);
     router.get("/api/v1/business-contexts/*", &handleGetById);

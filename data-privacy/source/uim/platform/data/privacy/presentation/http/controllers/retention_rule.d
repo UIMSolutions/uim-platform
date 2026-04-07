@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RetentionRuleController {
+class RetentionRuleController : SAPController {
   private ManageRetentionRulesUseCase uc;
 
   this(ManageRetentionRulesUseCase uc) {
@@ -27,6 +27,8 @@ class RetentionRuleController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/retention-rules", &handleCreate);
     router.get("/api/v1/retention-rules", &handleList);
     router.get("/api/v1/retention-rules/*", &handleGetById);

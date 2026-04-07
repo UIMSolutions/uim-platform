@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class LegalGroundController {
+class LegalGroundController : SAPController {
   private ManageLegalGroundsUseCase uc;
 
   this(ManageLegalGroundsUseCase uc) {
@@ -27,6 +27,8 @@ class LegalGroundController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/legal-grounds", &handleCreate);
     router.get("/api/v1/legal-grounds", &handleList);
     router.get("/api/v1/legal-grounds/*", &handleGetById);

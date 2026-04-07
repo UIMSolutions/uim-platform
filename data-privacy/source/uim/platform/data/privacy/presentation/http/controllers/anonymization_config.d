@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class AnonymizationConfigController {
+class AnonymizationConfigController : SAPController {
   private ManageAnonymizationConfigsUseCase uc;
 
   this(ManageAnonymizationConfigsUseCase uc) {
@@ -22,6 +22,8 @@ class AnonymizationConfigController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/anonymization-configs", &handleCreate);
     router.get("/api/v1/anonymization-configs", &handleList);
     router.get("/api/v1/anonymization-configs/*", &handleGetById);

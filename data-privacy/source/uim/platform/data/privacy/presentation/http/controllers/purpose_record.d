@@ -15,7 +15,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PurposeRecordController {
+class PurposeRecordController : SAPController {
   private ManagePurposeRecordsUseCase uc;
 
   this(ManagePurposeRecordsUseCase uc) {
@@ -23,6 +23,8 @@ class PurposeRecordController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/purpose-records", &handleCreate);
     router.get("/api/v1/purpose-records", &handleList);
     router.get("/api/v1/purpose-records/*", &handleGetById);

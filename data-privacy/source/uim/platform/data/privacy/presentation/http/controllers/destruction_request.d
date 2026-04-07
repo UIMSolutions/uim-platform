@@ -15,7 +15,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DestructionRequestController {
+class DestructionRequestController : SAPController {
   private ManageDestructionRequestsUseCase uc;
 
   this(ManageDestructionRequestsUseCase uc) {
@@ -23,6 +23,8 @@ class DestructionRequestController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/destruction-requests", &handleCreate);
     router.get("/api/v1/destruction-requests", &handleList);
     router.get("/api/v1/destruction-requests/*", &handleGetById);

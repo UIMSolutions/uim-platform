@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class CorrectionRequestController {
+class CorrectionRequestController : SAPController {
   private ManageCorrectionRequestsUseCase uc;
 
   this(ManageCorrectionRequestsUseCase uc) {
@@ -22,6 +22,8 @@ class CorrectionRequestController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/correction-requests", &handleCreate);
     router.get("/api/v1/correction-requests", &handleList);
     router.get("/api/v1/correction-requests/*", &handleGetById);

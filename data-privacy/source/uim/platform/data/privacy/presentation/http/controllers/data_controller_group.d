@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerGroupController {
+class DataControllerGroupController : SAPController {
   private ManageDataControllerGroupsUseCase uc;
 
   this(ManageDataControllerGroupsUseCase uc) {
@@ -22,6 +22,8 @@ class DataControllerGroupController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/controller-groups", &handleCreate);
     router.get("/api/v1/controller-groups", &handleList);
     router.get("/api/v1/controller-groups/*", &handleGetById);

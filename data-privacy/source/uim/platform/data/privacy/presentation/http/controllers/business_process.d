@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessProcessController {
+class BusinessProcessController : SAPController {
   private ManageBusinessProcessesUseCase uc;
 
   this(ManageBusinessProcessesUseCase uc) {
@@ -22,6 +22,8 @@ class BusinessProcessController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/business-processes", &handleCreate);
     router.get("/api/v1/business-processes", &handleList);
     router.get("/api/v1/business-processes/*", &handleGetById);

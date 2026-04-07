@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.presentation.http.controllers.data_retrieval;
+module uim.platform.data.privacy.presentation.http.controllers.data_retrieval_request;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataRetrievalController {
+class DataRetrievalController : SAPController {
   private ManageDataRetrievalsUseCase uc;
 
   this(ManageDataRetrievalsUseCase uc) {
@@ -27,6 +27,8 @@ class DataRetrievalController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/data-retrievals", &handleCreate);
     router.get("/api/v1/data-retrievals", &handleList);
     router.get("/api/v1/data-retrievals/*", &handleGetById);

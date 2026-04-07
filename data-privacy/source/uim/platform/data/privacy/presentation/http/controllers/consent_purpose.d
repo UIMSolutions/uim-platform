@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ConsentPurposeController {
+class ConsentPurposeController : SAPController {
   private ManageConsentPurposesUseCase uc;
 
   this(ManageConsentPurposesUseCase uc) {
@@ -22,6 +22,8 @@ class ConsentPurposeController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/consent-purposes", &handleCreate);
     router.get("/api/v1/consent-purposes", &handleList);
     router.get("/api/v1/consent-purposes/*", &handleGetById);

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerController {
+class DataControllerController : SAPController {
   private ManageDataControllersUseCase uc;
 
   this(ManageDataControllersUseCase uc) {
@@ -22,6 +22,8 @@ class DataControllerController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/data-controllers", &handleCreate);
     router.get("/api/v1/data-controllers", &handleList);
     router.get("/api/v1/data-controllers/*", &handleGetById);
