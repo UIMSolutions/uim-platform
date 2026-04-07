@@ -12,7 +12,6 @@ mixin(ShowModule!());
 
 @safe:
 /// Tenant-level audit logging configuration.
-@safe:
 struct AuditConfig {
   AuditConfigId id;
   TenantId tenantId;
@@ -41,8 +40,8 @@ struct AuditConfig {
       .set("logSecurityEvents", logSecurityEvents)
       .set("logConfigurationChanges", logConfigurationChanges)
       .set("enableDataMasking", enableDataMasking)
-      .set("maskedFields", maskedFields)
-      .set("excludedServices", excludedServices)
+      .set("maskedFields", maskedFields.toJson)
+      .set("excludedServices", excludedServices.toJson)
       .set("minimumSeverity", minimumSeverity.to!string)
       .set("rateLimitPerSecond", rateLimitPerSecond)
       .set("createdAt", createdAt)

@@ -76,12 +76,10 @@ class ExportController : SAPController {
     try {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       auto jobs = useCase.listExports(tenantId);
-      auto arr = Json.emptyArray;
-      foreach (ref j; jobs)
-        arr ~= serializeJob(j);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) jobs.length);
+      auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(cast(long) jobs.length));
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -93,11 +91,12 @@ class ExportController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      auto job = useCase.getExport(id, tenantId);
-      if (job is null) {
+      if (!useCase.hasExport(id, tenantId)) {
         writeError(res, 404, "Export job not found");
         return;
       }
+
+      auto job = useCase.getExport(id, tenantId);
       res.writeJsonBody(serializeJob(job), 200);
     }
     catch (Exception e) {
@@ -110,8 +109,8 @@ class ExportController : SAPController {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteExport(id, tenantId);
-      auto resp = Json.emptyObject;
-      resp["status"] = Json("deleted");
+      auto resp = Json.emptyObject
+        .set("status", "deleted");
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -120,24 +119,22 @@ class ExportController : SAPController {
   }
 
   private static Json serializeJob(ref const ExportJob j) {
-    auto o = Json.emptyObject;
-    o["id"] = Json(j.id);
-    o["tenantId"] = Json(j.tenantId);
-    o["requestedBy"] = Json(j.requestedBy);
-    o["format"] = Json(j.format_.to!string);
-    o["status"] = Json(j.status.to!string);
-    o["totalRecords"] = Json(j.totalRecords);
-    o["downloadUrl"] = Json(j.downloadUrl);
-    o["timeFrom"] = Json(j.timeFrom);
-    o["timeTo"] = Json(j.timeTo);
-    o["createdAt"] = Json(j.createdAt);
-    o["completedAt"] = Json(j.completedAt);
-    o["errorMessage"] = Json(j.errorMessage);
+    auto o = Json.emptyObject
+    .set("id", Json(j.id))
+    .set("tenantId", Json(j.tenantId))
+    .set("requestedBy", Json(j.requestedBy))
+    .set("format", Json(j.format_.to!string))
+    .set("status", Json(j.status.to!string))
+    .set("totalRecords", Json(j.totalRecords))
+    .set("downloadUrl", Json(j.downloadUrl))
+    .set("timeFrom", Json(j.timeFrom))
+    .set("timeTo", Json(j.timeTo))
+    .set("createdAt", Json(j.createdAt))
+    .set("completedAt", Json(j.completedAt))
+    .set("errorMessage", Json(j.errorMessage));
 
     if (j.categories.length > 0) {
-      auto cats = Json.emptyArray;
-      foreach (ref c; j.categories)
-        cats ~= Json(categoryToString(c));
+      auto cats = j.categories.toArray.map!(c => Json(categoryToString(c))).array.toJson;
       o["categories"] = cats;
     }
     return o;

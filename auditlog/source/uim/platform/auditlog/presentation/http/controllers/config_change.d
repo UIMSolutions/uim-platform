@@ -61,13 +61,16 @@ class ConfigChangeController : SAPController {
 
   private static AuditAttribute[] parseChanges(Json j) {
     AuditAttribute[] result;
-    auto v = "changes" in j;
-    if (v is null || (*v).type != Json.Type.array)
+    
+    if (!("changes" in j) || !j["changes"].isArray)
       return result;
-    foreach (item; *v) {
-      if (item.type == Json.Type.object) {
-        result ~= AuditAttribute(item.getString("name"),
-            item.getString("oldValue"), item.getString("newValue"));
+
+    foreach (item; j["changes"].toArray) {
+      if (item.isObject) {
+        result ~= AuditAttribute(
+          item.getString("name"),
+          item.getString("oldValue"), 
+          item.getString("newValue"));
       }
     }
     return result;

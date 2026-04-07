@@ -29,21 +29,20 @@ struct SecurityEvent {
   long timestamp;
 
   Json toJson() const {
-    return Json([
-      "auditLogId": auditLogId,
-      "tenantId": tenantId,
-      "userId": userId,
-      "userName": userName,
-      "eventType": eventType,
-      "ipAddress": ipAddress,
-      "userAgent": userAgent,
-      "clientId": clientId,
-      "identityProvider": identityProvider,
-      "authMethod": authMethod,
-      "outcome": outcome.to!string,
-      "failureReason": failureReason,
-      "riskLevel": riskLevel,
-      "timestamp": timestamp
-    ]);
+    return Json.emptyObject
+      .set("auditLogId", auditLogId)
+      .set("tenantId", tenantId)
+      .set("userId", userId)
+      .set("userName", userName)
+      .set("eventType", eventType)
+      .set("ipAddress", ipAddress)
+      .set("userAgent", userAgent)
+      .set("clientId", clientId)
+      .set("identityProvider", identityProvider)
+      .set("authMethod", authMethod)
+      .set("outcome", outcome.to!string)
+      .set("failureReason", failureReason)
+      .set("riskLevel", riskLevel)
+      .set("timestamp", timestamp);
   }
 }

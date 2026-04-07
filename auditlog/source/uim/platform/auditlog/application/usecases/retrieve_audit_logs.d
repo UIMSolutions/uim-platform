@@ -27,6 +27,10 @@ class RetrieveAuditLogsUseCase : UIMUseCase {
         req.limit, req.offset);
   }
 
+  bool hasById(AuditLogId id, TenantId tenantId) {
+    return repo.existsById(id, tenantId);
+  }
+
   AuditLogEntry getById(AuditLogId id, TenantId tenantId) {
     return repo.findById(id, tenantId);
   }

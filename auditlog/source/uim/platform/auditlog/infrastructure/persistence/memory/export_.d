@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.infrastructure.persistence.memory.export_;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.export_job;
-import uim.platform.auditlog.domain.ports.repositories.export_jobs;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.export_job;
+// import uim.platform.auditlog.domain.ports.repositories.export_jobs;
 
 // import std.algorithm : filter;
 // import std.array : array;
+
+import uim.platform.auditlog;
+
+mixin(ShowModule!());
 
 @safe:
 class MemoryExportJobRepository : ExportJobRepository {

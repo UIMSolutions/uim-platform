@@ -95,9 +95,9 @@ class AuditLogController : SAPController {
       auto entries = retrieveUC.query(queryReq);
       auto arr = entries.map!(e => serializeEntry(e)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)entries.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(cast(long)entries.length));
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

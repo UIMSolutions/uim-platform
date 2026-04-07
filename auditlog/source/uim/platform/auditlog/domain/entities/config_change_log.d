@@ -30,7 +30,7 @@ struct ConfigChangeLog {
       .set("changedBy", changedBy)
       .set("configType", configType)
       .set("configObjectId", configObjectId)
-      .set("changes", changes.map!(c => c.toJson()).array)
+      .set("changes", changes.map!(c => c.toJson()).array.toJson)
       .set("reason", reason)
       .set("timestamp", timestamp);
   }

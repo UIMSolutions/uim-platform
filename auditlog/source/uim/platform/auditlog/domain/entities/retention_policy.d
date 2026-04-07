@@ -25,13 +25,13 @@ struct RetentionPolicy {
   long updatedAt;
 
   Json toJson() const {
-    return json.emptyObject
+    return Json.emptyObject
       .set("id", id)
       .set("tenantId", tenantId)
       .set("name", name)
       .set("description", description)
       .set("retentionDays", retentionDays)
-      .set("categories", categories.map!(c => Json(c)).array.toJson)
+      .set("categories", categories.map!(c => c.toJson()).array.toJson)
       .set("status", status.to!string)
       .set("isDefault", isDefault)
       .set("createdAt", createdAt)

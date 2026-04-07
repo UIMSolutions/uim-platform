@@ -33,7 +33,7 @@ struct DataAccessLog {
       .set("dataSubject", dataSubject)
       .set("dataObjectType", dataObjectType)
       .set("dataObjectId", dataObjectId)
-      .set("accessedFields", accessedFields)
+      .set("accessedFields", accessedFields.toJson)
       .set("purpose", purpose)
       .set("channel", channel)
       .set("timestamp", timestamp);
