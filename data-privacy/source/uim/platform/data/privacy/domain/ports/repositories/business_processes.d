@@ -10,9 +10,14 @@ import uim.platform.data.privacy.domain.entities.business_process;
 
 /// Port for persisting and querying business processes.
 interface BusinessProcessRepository {
+  bool existsTenant(TenantId tenantId);
   BusinessProcess[] findByTenant(TenantId tenantId);
-  BusinessProcess* findById(BusinessProcessId id, TenantId tenantId);
+ 
+  bool existsId(BusinessProcessId id, TenantId tenantId);
+  BusinessProcess findById(BusinessProcessId id, TenantId tenantId);
+  
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId);
+
   void save(BusinessProcess process);
   void update(BusinessProcess process);
   void remove(BusinessProcessId id, TenantId tenantId);

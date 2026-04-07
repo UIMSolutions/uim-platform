@@ -14,48 +14,51 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
-  private AnonymizationConfig[] store;
+  private AnonymizationConfig[AnonymizationConfigId][TenantId] store;
 
-  AnonymizationConfig[] findByTenant(TenantId tenantId) {
-    AnonymizationConfig[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  bool existsTenant(TenantId tenantId) {
+    return tenantId in store;
   }
 
-  AnonymizationConfig* findById(AnonymizationConfigId id, TenantId tenantId) {
-    foreach (ref s; store)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  AnonymizationConfig[] findByTenant(TenantId tenantId) {
+    return store.byValue.filter!(s => s.tenantId == tenantId).array;
+  }
+
+  bool existsId(AnonymizationConfigId id, TenantId tenantId) {
+    return (existsTenant(tenantId) && (id in store[tenantId]));
+  }
+
+  AnonymizationConfig findById(AnonymizationConfigId id, TenantId tenantId) {
+    if (!existsId(id, tenantId))
+      return AnonymizationConfig.init;
+
+    return store[tenantId][id];
   }
 
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status) {
-    AnonymizationConfig[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.status == status)
-        result ~= s;
-    return result;
+    return findByTenant(tenantId).filter!(config => config.status == status).array;
   }
 
   void save(AnonymizationConfig entity) {
-    store ~= entity;
+    if (!existsTenant(entity.tenantId)) {
+      AnonymizationConfig[AnonymizationConfigId] configs;
+      store[entity.tenantId] = configs;
+    }
+    store[entity.tenantId][entity.id] = entity;
   }
 
   void update(AnonymizationConfig entity) {
-    foreach (ref s; store)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
+    if (existsId(entity.id, entity.tenantId)) {
+      store[entity.tenantId][entity.id] = entity;
+    }
   }
 
   void remove(AnonymizationConfigId id, TenantId tenantId) {
-    AnonymizationConfig[] kept;
-    foreach (ref s; store)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
+    if (existsId(id, tenantId)) {
+      store[tenantId].remove(id);
+      if (store[tenantId].empty) {
+        store.remove(tenantId);
+      }
+    }
   }
 }

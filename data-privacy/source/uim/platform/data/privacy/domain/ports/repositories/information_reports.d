@@ -10,10 +10,15 @@ import uim.platform.data.privacy.domain.entities.information_report;
 
 /// Port for persisting and querying information reports.
 interface InformationReportRepository {
+  bool existsTenant(TenantId tenantId);
   InformationReport[] findByTenant(TenantId tenantId);
-  InformationReport* findById(InformationReportId id, TenantId tenantId);
+ 
+  bool existsId(InformationReportId id, TenantId tenantId);
+  InformationReport findById(InformationReportId id, TenantId tenantId);
+
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status);
+
   void save(InformationReport report);
   void update(InformationReport report);
   void remove(InformationReportId id, TenantId tenantId);

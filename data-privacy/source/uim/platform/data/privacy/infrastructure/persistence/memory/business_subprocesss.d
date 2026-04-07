@@ -14,41 +14,47 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
-  private BusinessSubprocess[] store;
+  private BusinessSubprocess[BusinessSubprocessId][TenantId] store;
 
   BusinessSubprocess[] findByTenant(TenantId tenantId) {
-    BusinessSubprocess[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+    if (!(tenantId in store))
+      return null;
+
+    return store[tenantId].byValue.filter!(s => s.tenantId == tenantId).array;
   }
 
-  BusinessSubprocess* findById(BusinessSubprocessId id, TenantId tenantId) {
-    foreach (ref s; store)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  bool existsId(BusinessSubprocessId id, TenantId tenantId) {
+    return (existsTenant(tenantId) && (id in store[tenantId]));
+  }
+
+  BusinessSubprocess findById(BusinessSubprocessId id, TenantId tenantId) {
+    if (!(tenantId in store) || !(id in store[tenantId]))
+      return BusinessSubprocess.init;
+
+    return store[tenantId][id];
   }
 
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId) {
-    BusinessSubprocess[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.parentProcessId == parentId)
-        result ~= s;
-    return result;
+    if (!existsTenant(tenantId))
+      return null;
+
+    return store[tenantId].byValue.filter!(s => s.parentProcessId == parentId).array;
   }
 
   void save(BusinessSubprocess entity) {
-    store ~= entity;
+    if (!existsTenant(entity.tenantId)) {
+      BusinessSubprocess[BusinessSubprocessId] subprocesses;
+      store[entity.tenantId] = subprocesses;
+    }
+    store[entity.tenantId][entity.id] = entity;
   }
 
   void update(BusinessSubprocess entity) {
-    foreach (ref s; store)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
+    if (!existsId(entity.id, entity.tenantId)) {
+      return;
+    }
+
+    store[entity.tenantId][entity.id] = entity;
   }
 
   void remove(BusinessSubprocessId id, TenantId tenantId) {

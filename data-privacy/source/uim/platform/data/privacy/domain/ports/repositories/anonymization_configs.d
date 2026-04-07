@@ -10,9 +10,14 @@ import uim.platform.data.privacy.domain.entities.anonymization_config;
 
 /// Port for persisting and querying anonymization configurations.
 interface AnonymizationConfigRepository {
+  bool existsTenant(TenantId tenantId);
   AnonymizationConfig[] findByTenant(TenantId tenantId);
-  AnonymizationConfig* findById(AnonymizationConfigId id, TenantId tenantId);
+ 
+  bool existsId(AnonymizationConfigId id, TenantId tenantId);
+  AnonymizationConfig findById(AnonymizationConfigId id, TenantId tenantId);
+
   AnonymizationConfig[] findByStatus(TenantId tenantId, AnonymizationConfigStatus status);
+  
   void save(AnonymizationConfig config);
   void update(AnonymizationConfig config);
   void remove(AnonymizationConfigId id, TenantId tenantId);

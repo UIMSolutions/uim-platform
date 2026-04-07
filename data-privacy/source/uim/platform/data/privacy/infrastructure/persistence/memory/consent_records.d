@@ -14,73 +14,92 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryConsentRecordRepository : ConsentRecordRepository {
-  private ConsentRecord[] store;
+  private ConsentRecord[ConsentRecordId][TenantId] store;
+
+  bool existsTenant(TenantId tenantId) {
+    return tenantId in store;
+  }
 
   ConsentRecord[] findByTenant(TenantId tenantId) {
-    ConsentRecord[] result;
-    foreach (ref c; store)
-      if (c.tenantId == tenantId)
-        result ~= c;
-    return result;
+    if (!existsTenant(tenantId))
+      return null;
+
+    return store[tenantId].byValue.array;
   }
 
   ConsentRecord* findById(ConsentRecordId id, TenantId tenantId) {
-    foreach (ref c; store)
-      if (c.id == id && c.tenantId == tenantId)
-        return &c;
-    return null;
+    if (!existsId(id, tenantId))
+      return null;
+
+    return &store[tenantId][id];
   }
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentRecord[] result;
-    foreach (ref c; store)
-      if (c.tenantId == tenantId && c.dataSubjectId == dataSubjectId)
+    foreach (ref c; store[tenantId].byValue)
+      if (c.dataSubjectId == dataSubjectId)
         result ~= c;
     return result;
   }
 
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentRecord[] result;
-    foreach (ref c; store)
-      if (c.tenantId == tenantId && c.purpose == purpose)
+    foreach (ref c; store[tenantId].byValue)
+      if (c.purpose == purpose)
         result ~= c;
     return result;
   }
 
   ConsentRecord[] findByStatus(TenantId tenantId, ConsentStatus status) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentRecord[] result;
-    foreach (ref c; store)
-      if (c.tenantId == tenantId && c.status == status)
+    foreach (ref c; store[tenantId].byValue)
+      if (c.status == status)
         result ~= c;
     return result;
   }
 
   ConsentRecord[] findActiveConsents(TenantId tenantId, DataSubjectId dataSubjectId) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentRecord[] result;
-    foreach (ref c; store)
-      if (c.tenantId == tenantId && c.dataSubjectId == dataSubjectId
-          && c.status == ConsentStatus.granted)
+    foreach (ref c; store[tenantId].byValue)
+      if (c.dataSubjectId == dataSubjectId && c.status == ConsentStatus.granted)
         result ~= c;
     return result;
   }
 
   void save(ConsentRecord record) {
-    store ~= record;
+    if (!existsTenant(record.tenantId)) {
+      ConsentRecord[ConsentRecordId] records;
+      store[record.tenantId] = records;
+    }
+    store[record.tenantId][record.id] = record;
   }
 
   void update(ConsentRecord record) {
-    foreach (ref c; store)
-      if (c.id == record.id && c.tenantId == record.tenantId) {
-        c = record;
-        return;
-      }
+    if (!existsId(record.id, record.tenantId))
+      return;
+
+    store[record.tenantId][record.id] = record;
   }
 
   void remove(ConsentRecordId id, TenantId tenantId) {
-    ConsentRecord[] kept;
-    foreach (ref c; store)
-      if (!(c.id == id && c.tenantId == tenantId))
-        kept ~= c;
-    store = kept;
+    if (!existsId(id, tenantId))
+      return;
+
+    store[tenantId].remove(id);
+    if (store[tenantId].empty) {
+      store.remove(tenantId);
+    }
   }
 }

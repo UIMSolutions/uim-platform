@@ -14,56 +14,71 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryConsentPurposeRepository : ConsentPurposeRepository {
-  private ConsentPurpose[] store;
+  private ConsentPurpose[ConsentPurposeId][TenantId] store;
 
-  ConsentPurpose[] findByTenant(TenantId tenantId) {
-    ConsentPurpose[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId)
-        result ~= s;
-    return result;
+  bool existsTenant(TenantId tenantId) {
+    return tenantId in store;
   }
 
-  ConsentPurpose* findById(ConsentPurposeId id, TenantId tenantId) {
-    foreach (ref s; store)
-      if (s.id == id && s.tenantId == tenantId)
-        return &s;
-    return null;
+  ConsentPurpose[] findByTenant(TenantId tenantId) {
+    if (!existsTenant(tenantId))
+      return null;
+
+    return store[tenantId].byValue.array;
+  }
+
+  bool existsId(ConsentPurposeId id, TenantId tenantId) {
+    return (existsTenant(tenantId) && (id in store[tenantId]));
+  }
+
+  ConsentPurpose findById(ConsentPurposeId id, TenantId tenantId) {
+    return existsId(id, tenantId) ? store[tenantId][id] : ConsentPurpose.init;
   }
 
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentPurpose[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.controllerId == controllerId)
+    foreach (ref s; store[tenantId].byValue)
+      if (s.controllerId == controllerId)
         result ~= s;
     return result;
   }
 
   ConsentPurpose[] findByStatus(TenantId tenantId, ConsentPurposeStatus status) {
+    if (!existsTenant(tenantId))
+      return null;
+
     ConsentPurpose[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (ref s; store[tenantId].byValue)
+      if (s.status == status)
         result ~= s;
     return result;
   }
 
   void save(ConsentPurpose entity) {
-    store ~= entity;
+    if (!existsTenant(entity.tenantId)) {
+      ConsentPurpose[ConsentPurposeId] purposes;
+      store[entity.tenantId] = purposes;
+    }
+    store[entity.tenantId][entity.id] = entity;
   }
 
   void update(ConsentPurpose entity) {
-    foreach (ref s; store)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
-        s = entity;
-        return;
-      }
+    if (!existsId(entity.id, entity.tenantId))
+      return;
+
+    store[entity.tenantId][entity.id] = entity;
   }
 
   void remove(ConsentPurposeId id, TenantId tenantId) {
-    ConsentPurpose[] kept;
-    foreach (ref s; store)
-      if (!(s.id == id && s.tenantId == tenantId))
-        kept ~= s;
-    store = kept;
+    if (!existsId(id, tenantId))
+      return;
+
+    store[tenantId].remove(id);
+    if (store[tenantId].empty) {
+      store.remove(tenantId);
+    }
   }
 }
