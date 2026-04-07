@@ -7,7 +7,6 @@ module uim.platform.situation_automation.presentation.http.controllers.notificat
 
 // import uim.platform.situation_automation.application.usecases.manage.notifications;
 // import uim.platform.situation_automation.application.dto;
-// import uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
 
