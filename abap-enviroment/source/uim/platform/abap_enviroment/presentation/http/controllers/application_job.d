@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class ApplicationJobController {
   private ManageApplicationJobsUseCase uc;
 
-  this(ManageApplicationJobsUseCase uc)
-  {
+  this(ManageApplicationJobsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/application-jobs", &handleCreate);
     router.get("/api/v1/application-jobs", &handleList);
     router.get("/api/v1/application-jobs/*", &handleGetById);
@@ -38,8 +36,7 @@ class ApplicationJobController {
     router.delete_("/api/v1/application-jobs/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class ApplicationJobController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.headers.get("X-System-Id", "");
@@ -91,8 +87,7 @@ class ApplicationJobController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class ApplicationJobController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -141,8 +135,7 @@ class ApplicationJobController {
     }
   }
 
-  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class ApplicationJobController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -187,8 +179,7 @@ class ApplicationJobController {
     }
   }
 
-  private static Json serializeJob(ref const ApplicationJob job)
-  {
+  private static Json serializeJob(ref const ApplicationJob job) {
     auto j = Json.emptyObject;
     j["id"] = Json(job.id);
     j["tenantId"] = Json(job.tenantId);

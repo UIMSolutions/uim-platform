@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class BusinessUserController : SAPController {
   private ManageBusinessUsersUseCase uc;
 
-  this(ManageBusinessUsersUseCase uc)
-  {
+  this(ManageBusinessUsersUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/business-users", &handleCreate);
@@ -39,8 +37,7 @@ class BusinessUserController : SAPController {
     router.delete_("/api/v1/business-users/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -71,8 +68,7 @@ class BusinessUserController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.headers.get("X-System-Id", "");
@@ -91,8 +87,7 @@ class BusinessUserController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -110,8 +105,7 @@ class BusinessUserController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -141,8 +135,7 @@ class BusinessUserController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -164,8 +157,7 @@ class BusinessUserController : SAPController {
     }
   }
 
-  private static Json serializeUser(ref const BusinessUser u)
-  {
+  private static Json serializeUser(ref const BusinessUser u) {
     auto j = Json.emptyObject;
     j["id"] = Json(u.id);
     j["tenantId"] = Json(u.tenantId);

@@ -17,8 +17,7 @@ struct TransportValidation {
 /// Domain service: validates transport request release preconditions.
 struct TransportReleaseValidator {
   /// Validate that a transport request can be released.
-  static TransportValidation validateRelease(ref const TransportRequest request)
-  {
+  static TransportValidation validateRelease(ref const TransportRequest request) {
     string[] errors;
 
     if (request.status != TransportStatus.modifiable)
@@ -43,8 +42,7 @@ struct TransportReleaseValidator {
   }
 
   /// Validate that a transport task can be released.
-  static TransportValidation validateTaskRelease(ref const TransportTask task)
-  {
+  static TransportValidation validateTaskRelease(ref const TransportTask task) {
     string[] errors;
 
     if (task.status != TransportStatus.modifiable)

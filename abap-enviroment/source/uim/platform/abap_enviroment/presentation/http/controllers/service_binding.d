@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class ServiceBindingController : SAPController {
   private ManageServiceBindingsUseCase uc;
 
-  this(ManageServiceBindingsUseCase uc)
-  {
+  this(ManageServiceBindingsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
     router.get("/api/v1/service-bindings/*", &handleGetById);
@@ -37,8 +35,7 @@ class ServiceBindingController : SAPController {
     router.delete_("/api/v1/service-bindings/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -68,8 +65,7 @@ class ServiceBindingController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.headers.get("X-System-Id", "");
@@ -88,8 +84,7 @@ class ServiceBindingController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -107,8 +102,7 @@ class ServiceBindingController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -135,8 +129,7 @@ class ServiceBindingController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -158,8 +151,7 @@ class ServiceBindingController : SAPController {
     }
   }
 
-  private static Json serializeBinding(ref const ServiceBinding b)
-  {
+  private static Json serializeBinding(ref const ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["tenantId"] = Json(b.tenantId);

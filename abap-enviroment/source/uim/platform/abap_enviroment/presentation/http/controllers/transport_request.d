@@ -18,13 +18,11 @@ import uim.platform.abap_enviroment.domain.types;
 class TransportRequestController {
   private ManageTransportRequestsUseCase uc;
 
-  this(ManageTransportRequestsUseCase uc)
-  {
+  this(ManageTransportRequestsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     router.post("/api/v1/transports", &handleCreate);
     router.get("/api/v1/transports", &handleList);
     router.get("/api/v1/transports/*", &handleGetById);
@@ -34,8 +32,7 @@ class TransportRequestController {
     router.delete_("/api/v1/transports/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -65,8 +62,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.headers.get("X-System-Id", "");
@@ -85,8 +81,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -104,8 +99,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleAddTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto requestId = extractIdFromPath(req.requestURI);
@@ -133,8 +127,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -156,8 +149,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleReleaseTask(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -182,8 +174,7 @@ class TransportRequestController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -205,8 +196,7 @@ class TransportRequestController {
     }
   }
 
-  private static Json serializeRequest(ref const TransportRequest tr)
-  {
+  private static Json serializeRequest(ref const TransportRequest tr) {
     auto j = Json.emptyObject;
     j["id"] = Json(tr.id);
     j["tenantId"] = Json(tr.tenantId);

@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class SoftwareComponentController : SAPController {
   private ManageSoftwareComponentsUseCase uc;
 
-  this(ManageSoftwareComponentsUseCase uc)
-  {
+  this(ManageSoftwareComponentsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/software-components", &handleCreate);
@@ -39,8 +37,7 @@ class SoftwareComponentController : SAPController {
     router.delete_("/api/v1/software-components/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -73,8 +70,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.json.getString("systemInstanceId");
@@ -95,8 +91,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -114,8 +109,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleClone(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -142,8 +136,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handlePull(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -169,8 +162,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -192,8 +184,7 @@ class SoftwareComponentController : SAPController {
     }
   }
 
-  private static Json serializeComponent(ref const SoftwareComponent comp)
-  {
+  private static Json serializeComponent(ref const SoftwareComponent comp) {
     auto j = Json.emptyObject;
     j["id"] = Json(comp.id);
     j["tenantId"] = Json(comp.tenantId);

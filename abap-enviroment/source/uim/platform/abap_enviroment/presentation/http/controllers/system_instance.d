@@ -22,13 +22,11 @@ mixin(ShowModule!());
 class SystemInstanceController : SAPController {
   private ManageSystemInstancesUseCase uc;
 
-  this(ManageSystemInstancesUseCase uc)
-  {
+  this(ManageSystemInstancesUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/systems", &handleCreate);
@@ -38,8 +36,7 @@ class SystemInstanceController : SAPController {
     router.delete_("/api/v1/systems/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -75,8 +72,7 @@ class SystemInstanceController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto tenantId = req.headers.get("X-Tenant-Id", "");
@@ -95,8 +91,7 @@ class SystemInstanceController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -114,8 +109,7 @@ class SystemInstanceController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -145,8 +139,7 @@ class SystemInstanceController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -168,8 +161,7 @@ class SystemInstanceController : SAPController {
     }
   }
 
-  private static Json serializeInstance(ref const SystemInstance inst)
-  {
+  private static Json serializeInstance(ref const SystemInstance inst) {
     auto j = Json.emptyObject;
     j["id"] = Json(inst.id);
     j["tenantId"] = Json(inst.tenantId);

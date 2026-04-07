@@ -16,8 +16,7 @@ struct LifecycleValidation {
 /// Domain service: validates system instance state transitions.
 struct SystemLifecycleValidator {
   /// Check whether a status transition is permitted.
-  static LifecycleValidation validateTransition(SystemStatus from, SystemStatus target)
-  {
+  static LifecycleValidation validateTransition(SystemStatus from, SystemStatus target) {
     // Allowed transitions:
     //   provisioning -> active | error
     //   active       -> updating | suspended | deleting
@@ -67,8 +66,7 @@ struct SystemLifecycleValidator {
   }
 
   /// Validate that a system SID is exactly 3 uppercase characters.
-  static LifecycleValidation validateSid(string sid)
-  {
+  static LifecycleValidation validateSid(string sid) {
     if (sid.length != 3)
       return LifecycleValidation(false, "SAP System ID must be exactly 3 characters");
 

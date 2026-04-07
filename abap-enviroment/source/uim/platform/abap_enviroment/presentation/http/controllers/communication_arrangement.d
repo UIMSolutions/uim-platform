@@ -23,13 +23,11 @@ mixin(ShowModule!());
 class CommunicationArrangementController : SAPController {
   private ManageCommunicationArrangementsUseCase uc;
 
-  this(ManageCommunicationArrangementsUseCase uc)
-  {
+  this(ManageCommunicationArrangementsUseCase uc) {
     this.uc = uc;
   }
 
-  override void registerRoutes(URLRouter router)
-  {
+  override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
 
     router.post("/api/v1/communication-arrangements", &handleCreate);
@@ -39,8 +37,7 @@ class CommunicationArrangementController : SAPController {
     router.delete_("/api/v1/communication-arrangements/*", &handleDelete);
   }
 
-  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto j = req.json;
@@ -77,8 +74,7 @@ class CommunicationArrangementController : SAPController {
     }
   }
 
-  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto systemId = req.headers.get("X-System-Id", "");
@@ -97,8 +93,7 @@ class CommunicationArrangementController : SAPController {
     }
   }
 
-  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -116,8 +111,7 @@ class CommunicationArrangementController : SAPController {
     }
   }
 
-  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -150,8 +144,7 @@ class CommunicationArrangementController : SAPController {
     }
   }
 
-  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res)
-  {
+  private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try
     {
       auto id = extractIdFromPath(req.requestURI);
@@ -173,8 +166,7 @@ class CommunicationArrangementController : SAPController {
     }
   }
 
-  private static Json serializeArrangement(ref const CommunicationArrangement a)
-  {
+  private static Json serializeArrangement(ref const CommunicationArrangement a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);
