@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.presentation.http.controllers;
 
 public {
-        import uim.platform.data.privacy.presentation.http.controllers.anonymization_request;
+    import uim.platform.data.privacy.presentation.http.controllers.anonymization_config;
     import uim.platform.data.privacy.presentation.http.controllers.archive_request;
     import uim.platform.data.privacy.presentation.http.controllers.blocking_request;
     import uim.platform.data.privacy.presentation.http.controllers.business_context;

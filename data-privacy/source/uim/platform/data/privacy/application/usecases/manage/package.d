@@ -17,7 +17,7 @@ public {
   import uim.platform.data.privacy.application.usecases.manage.correction_requests;
   import uim.platform.data.privacy.application.usecases.manage.data_controller_groups;
   import uim.platform.data.privacy.application.usecases.manage.data_controllers;
-  import uim.platform.data.privacy.application.usecases.manage.data_retrieval_requests;
+  import uim.platform.data.privacy.application.usecases.manage.data_retrievals;
   import uim.platform.data.privacy.application.usecases.manage.data_subjects;
   import uim.platform.data.privacy.application.usecases.manage.deletion_requests;
   import uim.platform.data.privacy.application.usecases.manage.destruction_requests;

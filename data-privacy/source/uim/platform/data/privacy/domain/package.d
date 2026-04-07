@@ -3,11 +3,11 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.presentation;
+module uim.platform.data.privacy.domain;
 
 public {
-    import uim.platform.data.privacy.presentation.entities;
-    import uim.platform.data.privacy.presentation.ports;
-    import uim.platform.data.privacy.presentation.services;
-    import uim.platform.data.privacy.presentation.types;
+    import uim.platform.data.privacy.domain.entities;
+    import uim.platform.data.privacy.domain.ports;
+    import uim.platform.data.privacy.domain.services;
+    import uim.platform.data.privacy.domain.types;
 }

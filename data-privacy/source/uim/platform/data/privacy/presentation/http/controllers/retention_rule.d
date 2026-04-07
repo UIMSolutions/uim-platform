@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.presentation.http.retention_rule;
+module uim.platform.data.privacy.presentation.http.controllers.retention_rule;
 
 // import vibe.http.server;
 // import vibe.http.router;

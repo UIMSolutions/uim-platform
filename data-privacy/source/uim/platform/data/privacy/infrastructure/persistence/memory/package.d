@@ -6,7 +6,7 @@
 module uim.platform.data.privacy.infrastructure.persistence.memory;
 
 public {
-    import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_requests;
+    import uim.platform.data.privacy.infrastructure.persistence.memory.anonymization_configs;
     import uim.platform.data.privacy.infrastructure.persistence.memory.archive_requests;
     import uim.platform.data.privacy.infrastructure.persistence.memory.blocking_requests;
     import uim.platform.data.privacy.infrastructure.persistence.memory.business_contexts;

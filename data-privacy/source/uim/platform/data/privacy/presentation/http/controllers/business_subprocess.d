@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.presentation.http.business_subprocess;
+module uim.platform.data.privacy.presentation.http.controllers.business_subprocess;
 
 // import uim.platform.data.privacy.application.usecases.manage.business_subprocesses;
 // import uim.platform.data.privacy.application.dto;

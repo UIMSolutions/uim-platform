@@ -6,6 +6,6 @@
 module uim.platform.data.privacy.presentation;
 
 public {
-    import uim.platform.data.privacy.presentation.services.legal_ground_service;
-    import uim.platform.data.privacy.presentation.services.personal_data_model_service;
+    import uim.platform.data.privacy.domain.services.legal_basis_evaluator;
+    import uim.platform.data.privacy.domain.services.retention_evaluator;
 }
