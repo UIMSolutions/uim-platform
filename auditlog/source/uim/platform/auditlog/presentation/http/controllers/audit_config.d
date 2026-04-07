@@ -67,13 +67,10 @@ class AuditConfigController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -81,15 +78,13 @@ class AuditConfigController : SAPController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto configs = useCase.listConfigs();
-      auto arr = Json.emptyArray;
-      foreach (ref c; configs)
-        arr ~= serializeConfig(c);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = configs.length;
+      auto arr = configs.map!(c => serializeConfig(c)).array.toJson;
+
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", configs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -103,8 +98,7 @@ class AuditConfigController : SAPController {
       }
       auto cfg = useCase.getConfig(tenantId);
       res.writeJsonBody(serializeConfig(cfg), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -146,13 +140,10 @@ class AuditConfigController : SAPController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -162,43 +153,36 @@ class AuditConfigController : SAPController {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
       useCase.deleteConfig(id, tenantId);
-      auto resp = Json.emptyObject;
-      resp["status"] = Json("deleted");
+      auto resp = Json.emptyObject
+        .set("status", "deleted");
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeConfig(ref const AuditConfig c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["name"] = Json(c.name);
-    j["status"] = Json(c.status.to!string);
-    j["logDataAccess"] = Json(c.logDataAccess);
-    j["logDataModification"] = Json(c.logDataModification);
-    j["logSecurityEvents"] = Json(c.logSecurityEvents);
-    j["logConfigurationChanges"] = Json(c.logConfigurationChanges);
-    j["enableDataMasking"] = Json(c.enableDataMasking);
-    j["minimumSeverity"] = Json(c.minimumSeverity.to!string);
-    j["rateLimitPerSecond"] = Json(cast(long) c.rateLimitPerSecond);
-    j["createdAt"] = Json(c.createdAt);
-    j["updatedAt"] = Json(c.updatedAt);
+    auto json = Json.emptyObject
+    .set("id", c.id.toJson)
+    .set("tenantId", c.tenantId.toJson)
+    .set("name", c.name.toJson)
+    .set("status", c.status.to!string.toJson)
+    .set("logDataAccess", c.logDataAccess.toJson)
+    .set("logDataModification", c.logDataModification.toJson)
+    .set("logSecurityEvents", c.logSecurityEvents.toJson)
+    .set("logConfigurationChanges", c.logConfigurationChanges.toJson)
+    .set("enableDataMasking", c.enableDataMasking.toJson)
+    .set("minimumSeverity", c.minimumSeverity.to!string.toJson)
+    .set("rateLimitPerSecond", cast(long)c.rateLimitPerSecond.toJson)
+    .set("createdAt", c.createdAt.toJson)
+    .set("updatedAt", c.updatedAt.toJson);
 
     if (c.maskedFields.length > 0) {
-      auto mf = Json.emptyArray;
-      foreach (ref f; c.maskedFields)
-        mf ~= Json(f);
-      j["maskedFields"] = mf;
+      json["maskedFields"] = c.maskedFields.map!(f => Json(f)).array.toJson;
     }
     if (c.excludedServices.length > 0) {
-      auto es = Json.emptyArray;
-      foreach (ref s; c.excludedServices)
-        es ~= Json(s);
-      j["excludedServices"] = es;
+      json["excludedServices"] = c.excludedServices.map!(s => Json(s)).array.toJson;
     }
-    return j;
+    return json;
   }
 }

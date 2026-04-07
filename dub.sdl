@@ -11,7 +11,7 @@ targetType "library"
 targetName "uim-platform"
 
 // External dependencies
-dependency "uim-framework" version="~>26.3.5"
+dependency "uim-framework" version="~>26.4.1"
 
 // Internal Dependencies
 dependency ":service" version="*"

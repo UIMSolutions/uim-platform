@@ -35,32 +35,33 @@ struct AuditLogEntry {
   string formatVersion = "1.0";
 
   Json toJson() const {
-    return Json([
-      "id": id,
-      "tenantId": tenantId,
-      "userId": userId,
-      "userName": userName,
-      "serviceId": serviceId,
-      "serviceName": serviceName,
-      "category": category.to!string,
-      "severity": severity.to!string,
-      "action": action.to!string,
-      "outcome": outcome.to!string,
-      "objectType": objectType,
-      "objectId": objectId,
-      "message": message,
-      "attributes": attributes.map!(a => Json([
-        "name": a.name,
-        "oldValue": a.oldValue,
-        "newValue": a.newValue
-      ])).array,
-      "ipAddress": ipAddress,
-      "userAgent": userAgent,
-      "correlationId": correlationId,
-      "originApp": originApp,
-      "timestamp": timestamp,
-      "formatVersion": formatVersion
-    ]);
+    auto attrs = attributes.map!(a => Json.emptyObject
+        .set("name", a.name)
+        .set("oldValue", a.oldValue)
+        .set("newValue", a.newValue)
+    ).array.toJson;
+
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("userId", userId)
+      .set("userName", userName)
+      .set("serviceId", serviceId)
+      .set("serviceName", serviceName)
+      .set("category", category.to!string)
+      .set("severity", severity.to!string)
+      .set("action", action.to!string)
+      .set("outcome", outcome.to!string)
+      .set("objectType", objectType)
+      .set("objectId", objectId)
+      .set("message", message)
+      .set("attributes", attrs)
+      .set("ipAddress", ipAddress)
+      .set("userAgent", userAgent)
+      .set("correlationId", correlationId)
+      .set("originApp", originApp)
+      .set("timestamp", timestamp)
+      .set("formatVersion", formatVersion);
   }
 }
 
@@ -72,10 +73,9 @@ struct AuditAttribute {
   string newValue;
 
   Json toJson() const {
-    return Json([
-      "name": name,
-      "oldValue": oldValue,
-      "newValue": newValue
-    ]);
+    return Json.emptyObject
+      .set("name", name)
+      .set("oldValue", oldValue)
+      .set("newValue", newValue);
   }
 }

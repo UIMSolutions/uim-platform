@@ -37,11 +37,11 @@ class UIMTenantEntity : UIMEntity {
   }
 
   override Json toJson() {
-    return super.toJson().set("tenantId", _tenantId.toString());
+    return super.toJson()
+      .set("tenantId", _tenantId.toString());
   }
   ///
-  unittest
-  {
+  unittest {
     UUID id = randomUUID();
     UIMTenantEntity obj = new UIMTenantEntity(id);
     Json json = obj.toJson();
@@ -50,8 +50,7 @@ class UIMTenantEntity : UIMEntity {
 
   // #region tenantId
   protected UUID _tenantId;
-  UUID tenantId() const
-  {
+  UUID tenantId() const {
     return _tenantId;
   }
 
@@ -59,8 +58,7 @@ class UIMTenantEntity : UIMEntity {
     _tenantId = id;
   }
   ///
-  unittest
-  {
+  unittest {
     UUID id = randomUUID();
     UIMTenantEntity obj = new UIMTenantEntity(id);
     assert(obj.tenantId == id);

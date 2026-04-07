@@ -29,20 +29,20 @@ struct ExportJob {
   string errorMessage;
 
   Json toJson() const {
-    return Json([
-      "id": id,
-      "tenantId": tenantId,
-      "requestedBy": requestedBy,
-      "format": format_,
-      "status": status,
-      "categories": categories,
-      "timeFrom": timeFrom,
-      "timeTo": timeTo,
-      "downloadUrl": downloadUrl,
-      "totalRecords": totalRecords,
-      "createdAt": createdAt,
-      "completedAt": completedAt,
-      "errorMessage": errorMessage
-    ]);
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("requestedBy", requestedBy)
+      .set("format", format_)
+      .set("status", status)
+      .set("categories", categories)
+      .set("categories", categories.map!(c => Json(c)).array.toJson)
+      .set("timeFrom", timeFrom)
+      .set("timeTo", timeTo)
+      .set("downloadUrl", downloadUrl)
+      .set("totalRecords", totalRecords)
+      .set("createdAt", createdAt)
+      .set("completedAt", completedAt)
+      .set("errorMessage", errorMessage);
   }
 }

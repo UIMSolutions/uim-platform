@@ -583,7 +583,7 @@ inactive → active (schema reactivated)
 |----------|------|---------|---------|
 | D Language (LDC) | Compiler/Runtime | 1.40.1 | Primary language |
 | vibe-d | HTTP Framework | 0.10.x | HTTP server, routing, JSON |
-| uim-framework | Library | 26.3.5 | Platform base classes |
+| uim-framework | Library | 26.4.1 | Platform base classes |
 | uim-platform:service | Library | internal | SAPController, UIMUseCase base |
 
 ### 10.2 Infrastructure Resources
@@ -761,7 +761,7 @@ Stage 2: Runtime (ubuntu:24.04)
 | Subpackage | document-ai |
 | Language | D (dlang) |
 | HTTP Framework | vibe-d 0.10.x |
-| Base Framework | uim-framework 26.3.5 |
+| Base Framework | uim-framework 26.4.1 |
 | Architecture Style | Hexagonal (Ports and Adapters) + Clean Architecture |
 | Deployment | Docker / Podman / Kubernetes |
 | Default Port | 8096 |

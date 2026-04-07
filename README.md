@@ -120,7 +120,7 @@ tenant identifier via the `X-Tenant-Id` HTTP header on every request.
 
 ## Dependencies
 
-- [uim-framework ~>26.3.5](https://github.com/AnotherCoder/uim-framework) — Core utilities, OOP extensions, JSON helpers
+- [uim-framework ~>26.4.1](https://github.com/AnotherCoder/uim-framework) — Core utilities, OOP extensions, JSON helpers
 - [vibe.d 0.10.x](https://vibed.org/) — HTTP server framework
 
 ## License

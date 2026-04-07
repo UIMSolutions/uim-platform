@@ -26,17 +26,16 @@ struct DataAccessLog {
   long timestamp;
 
   Json toJson() const {
-    return Json([
-      "auditLogId": auditLogId,
-      "tenantId": tenantId,
-      "accessedBy": accessedBy,
-      "dataSubject": dataSubject,
-      "dataObjectType": dataObjectType,
-      "dataObjectId": dataObjectId,
-      "accessedFields": accessedFields,
-      "purpose": purpose,
-      "channel": channel,
-      "timestamp": timestamp
-    ]);
+    return Json.emptyObject
+      .set("auditLogId", auditLogId)
+      .set("tenantId", tenantId)
+      .set("accessedBy", accessedBy)
+      .set("dataSubject", dataSubject)
+      .set("dataObjectType", dataObjectType)
+      .set("dataObjectId", dataObjectId)
+      .set("accessedFields", accessedFields)
+      .set("purpose", purpose)
+      .set("channel", channel)
+      .set("timestamp", timestamp);
   }
 }

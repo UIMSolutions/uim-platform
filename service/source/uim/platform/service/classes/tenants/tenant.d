@@ -95,10 +95,15 @@ class UIMTenant : UIMEntity, IUIMTenant {
   }
 
   override Json toJson() {
-    return super.toJson().set("id", id.toString()).set("name", name)
-      .set("description", description).set("domain", domain).set("owner", owner)
-      .set("created_at", createdAt.toISOExtString()).set("updated_at",
-        updatedAt.toISOExtString()).set("settings", settings);
+    return super.toJson()
+      .set("id", id.toString())
+      .set("name", name)
+      .set("description", description)
+      .set("domain", domain)
+      .set("owner", owner)
+      .set("created_at", createdAt.toISOExtString())
+      .set("updated_at", updatedAt.toISOExtString())
+      .set("settings", settings);
   }
 
   override string toString() {

@@ -24,15 +24,14 @@ struct ConfigChangeLog {
   long timestamp;
 
   Json toJson() const {
-    return Json([
-      "auditLogId": auditLogId,
-      "tenantId": tenantId,
-      "changedBy": changedBy,
-      "configType": configType,
-      "configObjectId": configObjectId,
-      "changes": changes.map!(c => c.toJson()).array,
-      "reason": reason,
-      "timestamp": timestamp
-    ]);
+    return Json.emptyObject
+      .set("auditLogId", auditLogId)
+      .set("tenantId", tenantId)
+      .set("changedBy", changedBy)
+      .set("configType", configType)
+      .set("configObjectId", configObjectId)
+      .set("changes", changes.map!(c => c.toJson()).array)
+      .set("reason", reason)
+      .set("timestamp", timestamp);
   }
 }

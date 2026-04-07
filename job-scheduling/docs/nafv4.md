@@ -400,7 +400,7 @@ F-JS-04: Configuration Management
 |----------|------|---------|---------|
 | D Language (DMD/LDC) | Runtime | LDC 1.40.1 | Primary language |
 | vibe-d | Framework | 0.10.3 | HTTP server, routing, JSON |
-| uim-framework | Library | 26.3.5 | Platform base classes |
+| uim-framework | Library | 26.4.1 | Platform base classes |
 | uim-platform:service | Library | internal | Shared service base (SAPController, UIMUseCase) |
 
 ### 10.2 Infrastructure Resources
@@ -536,6 +536,6 @@ Stage 2: Runtime (ubuntu:24.04)
 | Repository | UIMSolutions/uim-platform |
 | Subpackage | job-scheduling |
 | Language | D (dlang) |
-| Framework | vibe-d 0.10.3 + uim-framework 26.3.5 |
+| Framework | vibe-d 0.10.3 + uim-framework 26.4.1 |
 | Architecture Style | Hexagonal (Ports and Adapters) + Clean Architecture |
 | Deployment | Docker / Podman / Kubernetes |

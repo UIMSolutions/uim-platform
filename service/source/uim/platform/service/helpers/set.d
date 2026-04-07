@@ -19,29 +19,29 @@ Json set(Json data, string key, Json value) {
   return data;
 }
 
-Json set(Json data, string key, string value) {
-  if (!data.isObject)
-    return data;
+// Json set(Json data, string key, string value) {
+//   if (!data.isObject)
+//     return data;
 
-  data[key] = value;
-  return data;
-}
+//   data[key] = value;
+//   return data;
+// }
 
-Json set(Json data, string key, bool value) {
-  if (!data.isObject)
-    return data;
+// Json set(Json data, string key, bool value) {
+//   if (!data.isObject)
+//     return data;
 
-  data[key] = value;
-  return data;
-}
+//   data[key] = value;
+//   return data;
+// }
 
-Json set(Json data, string key, int value) {
-  if (!data.isObject)
-    return data;
+// Json set(Json data, string key, int value) {
+//   if (!data.isObject)
+//     return data;
 
-  data[key] = value;
-  return data;
-}
+//   data[key] = value;
+//   return data;
+// }
 
 Json set(Json data, string key, long value) {
   if (!data.isObject)
