@@ -3,12 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_group_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.data_controller_groups;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.data_controller_group;
-import uim.platform.data.privacy.domain.ports.data_controller_group_repository;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.data_controller_group;
+// import uim.platform.data.privacy.domain.ports.data_controller_group_repository;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDataControllerGroupRepository : DataControllerGroupRepository {
   private DataControllerGroup[] store;
 
@@ -41,8 +45,8 @@ class MemoryDataControllerGroupRepository : DataControllerGroupRepository {
 
   void remove(DataControllerGroupId id, TenantId tenantId) {
     DataControllerGroup[] kept;
-    foreach (ref s; store)
-      if (!(s.id == id && s.tenantId == tenantId))
+    foreach (ref s; findByTenant(tenantId))
+      if (!(s.id == id))
         kept ~= s;
     store = kept;
   }

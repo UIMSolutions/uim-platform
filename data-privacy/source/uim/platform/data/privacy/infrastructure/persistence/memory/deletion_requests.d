@@ -3,12 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.deletion_request_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.deletion_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.deletion_request;
-import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.deletion_request;
+// import uim.platform.data.privacy.domain.ports.repositories.deletion_requests;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDeletionRequestRepository : DeletionRequestRepository {
   private DeletionRequest[] store;
 
@@ -57,8 +61,8 @@ class MemoryDeletionRequestRepository : DeletionRequestRepository {
 
   void remove(DeletionRequestId id, TenantId tenantId) {
     DeletionRequest[] kept;
-    foreach (ref r; store)
-      if (!(r.id == id && r.tenantId == tenantId))
+    foreach (ref r; findByTenant(tenantId))
+      if (!(r.id == id))
         kept ~= r;
     store = kept;
   }

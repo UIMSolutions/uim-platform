@@ -6,5 +6,5 @@
 module uim.platform.data.privacy.presentation.http;
 
 public {
-impport uim.platform.data.privacy.presentation.http.controllers;
+    import uim.platform.data.privacy.presentation.http.controllers;
 }

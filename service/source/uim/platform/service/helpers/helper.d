@@ -96,7 +96,7 @@ double attributeSimilarity(const string[string] a, const string[string] b) {
       total++;
       if (*bv == v)
         matches++;
-    } ) {
+    } else {
       total++;
     }
   }

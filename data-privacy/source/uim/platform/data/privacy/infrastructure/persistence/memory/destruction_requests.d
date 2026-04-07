@@ -3,12 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.destruction_request_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.destruction_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.destruction_request;
-import uim.platform.data.privacy.domain.ports.destruction_request_repository;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.destruction_request;
+// import uim.platform.data.privacy.domain.ports.repositories.destruction_requests;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryDestructionRequestRepository : DestructionRequestRepository {
   private DestructionRequest[] store;
 

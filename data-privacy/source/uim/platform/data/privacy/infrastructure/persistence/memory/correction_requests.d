@@ -3,12 +3,16 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data.privacy.infrastructure.persistence.memory.correction_request_repo;
+module uim.platform.data.privacy.infrastructure.persistence.memory.correction_requests;
 
-import uim.platform.data.privacy.domain.types;
-import uim.platform.data.privacy.domain.entities.correction_request;
-import uim.platform.data.privacy.domain.ports.correction_request_repository;
+// import uim.platform.data.privacy.domain.types;
+// import uim.platform.data.privacy.domain.entities.correction_request;
+// import uim.platform.data.privacy.domain.ports.correction_request_repository;
+import uim.platform.data.privacy;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
   private CorrectionRequest[] store;
 
@@ -21,24 +25,24 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
   }
 
   CorrectionRequest* findById(CorrectionRequestId id, TenantId tenantId) {
-    foreach (ref s; store)
-      if (s.id == id && s.tenantId == tenantId)
+    foreach (ref s; findByTenant(tenantId))
+      if (s.id == id)
         return &s;
     return null;
   }
 
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     CorrectionRequest[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
+    foreach (ref s; findByTenant(tenantId))
+      if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
   }
 
   CorrectionRequest[] findByStatus(TenantId tenantId, CorrectionStatus status) {
     CorrectionRequest[] result;
-    foreach (ref s; store)
-      if (s.tenantId == tenantId && s.status == status)
+    foreach (ref s; findByTenant(tenantId))
+      if (s.status == status)
         result ~= s;
     return result;
   }
@@ -48,8 +52,8 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
   }
 
   void update(CorrectionRequest entity) {
-    foreach (ref s; store)
-      if (s.id == entity.id && s.tenantId == entity.tenantId) {
+    foreach (ref s; findByTenant(entity.tenantId))
+      if (s.id == entity.id) {
         s = entity;
         return;
       }
@@ -57,8 +61,8 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   void remove(CorrectionRequestId id, TenantId tenantId) {
     CorrectionRequest[] kept;
-    foreach (ref s; store)
-      if (!(s.id == id && s.tenantId == tenantId))
+    foreach (ref s; findByTenant(tenantId))
+      if (!(s.id == id))
         kept ~= s;
     store = kept;
   }
