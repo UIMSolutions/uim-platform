@@ -17,8 +17,8 @@ mixin(ShowModule!());
 interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
   // AuditLogEntry[] findByTenant(TenantId tenantId);
 // 
-  // bool existsById(AuditLogId id, TenantId tenantId);
-  // AuditLogEntry findById(AuditLogId id, TenantId tenantId);
+  // bool existsById(TenantId tenantId, AuditLogId auditLogId);
+  // AuditLogEntry findById(TenantId tenantId, AuditLogId auditLogId);
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);

@@ -20,11 +20,11 @@ mixin(ShowModule!());
 class MemorySecurityEventRepository : SecurityEventRepository {
   private SecurityEvent[] store;
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
-  SecurityEvent findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  SecurityEvent findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     foreach (e; findByTenant(tenantId))
       if (e.auditLogId == auditLogId)
         return e;

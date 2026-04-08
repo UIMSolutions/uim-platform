@@ -20,11 +20,11 @@ mixin(ShowModule!());
 class MemoryDataAccessLogRepository : DataAccessLogRepository {
   private DataAccessLog[] store;
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     return findByTenant(tenantId).any!(e => e.auditLogId == auditLogId);
   }
 
-  DataAccessLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
+  DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
     foreach (ref e; store)
       if (e.auditLogId == auditLogId && e.tenantId == tenantId)
         return e;

@@ -20,13 +20,13 @@ mixin(ShowModule!());
 class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
   private RetentionPolicy[RetentionPolicyId] store;
 
-  bool existsById(RetentionPolicyId id, TenantId tenantId) {
-    return id in store && store[id].tenantId == tenantId;
+  bool existsById(TenantId tenantId, RetentionPolicyId policyId) {
+    return policyId in store && store[policyId].tenantId == tenantId;
   }
 
-  RetentionPolicy findById(RetentionPolicyId id, TenantId tenantId) {
-    if (existsById(id, tenantId))
-      return store[id];
+  RetentionPolicy findById(TenantId tenantId, RetentionPolicyId policyId) {
+    if (existsById(tenantId, policyId))
+      return store[policyId];
     return RetentionPolicy.init;
   }
 
@@ -46,15 +46,15 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
   }
 
   void save(RetentionPolicy policy) {
-    store[policy.id] = policy;
+    store[policy.policyId] = policy;
   }
 
   void update(RetentionPolicy policy) {
-    store[policy.id] = policy;
+    store[policy.policyId] = policy;
   }
 
-  void remove(RetentionPolicyId id, TenantId tenantId) {
-    if (existsById(id, tenantId))
-      store.remove(id);
+  void remove(TenantId tenantId, RetentionPolicyId policyId) {
+    if (existsById(tenantId, policyId))
+      store.remove(policyId);
   }
 }

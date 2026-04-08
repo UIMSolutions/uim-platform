@@ -36,8 +36,8 @@ class ManageRetentionUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto policy = RetentionPolicy();
-    policy.id = randomUUID();
     policy.tenantId = req.tenantId;
+    policy.policyId = RetentionPolicyId(randomUUID().toString);
     policy.name = req.name;
     policy.description = req.description;
     policy.retentionDays = req.retentionDays;
@@ -48,15 +48,15 @@ class ManageRetentionUseCase : UIMUseCase {
     policy.updatedAt = now;
 
     policyRepo.save(policy);
-    return CommandResult(policy.id.toString, "");
+    return CommandResult(policy.policyId.toString, "");
   }
 
-  bool existsPolicy(RetentionPolicyId id, TenantId tenantId) {
-    return policyRepo.existsById(id, tenantId);
+  bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
+    return policyRepo.existsById(tenantId, policyId);
   }
 
-  RetentionPolicy getPolicy(RetentionPolicyId id, TenantId tenantId) {
-    return policyRepo.findById(id, tenantId);
+  RetentionPolicy getPolicy(TenantId tenantId, RetentionPolicyId policyId) {
+    return policyRepo.findById(tenantId, policyId);
   }
 
   RetentionPolicy[] listPolicies(TenantId tenantId) {
@@ -64,10 +64,10 @@ class ManageRetentionUseCase : UIMUseCase {
   }
 
   CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
-    if (!policyRepo.existsById(req.id, req.tenantId))
+    if (!policyRepo.existsById(req.tenantId, req.id))
       return CommandResult("", "Retention policy not found");
 
-    auto policy = policyRepo.findById(req.id, req.tenantId);
+    auto policy = policyRepo.findById(req.tenantId, req.id);
     if (req.name.length > 0)
       policy.name = req.name;
     if (req.description.length > 0)
@@ -80,10 +80,10 @@ class ManageRetentionUseCase : UIMUseCase {
     policy.updatedAt = Clock.currStdTime();
 
     policyRepo.update(policy);
-    return CommandResult(policy.id.toString, "");
+    return CommandResult(policy.policyId.toString, "");
   }
 
-  void deletePolicy(RetentionPolicyId id, TenantId tenantId) {
-    policyRepo.remove(id, tenantId);
+  void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {
+    policyRepo.remove(tenantId, policyId);
   }
 }

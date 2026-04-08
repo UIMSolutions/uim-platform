@@ -13,7 +13,7 @@ mixin(ShowModule!());
 /// Retention policy — how long audit data is kept.
 @safe:
 struct RetentionPolicy {
-  RetentionPolicyId id;
+  RetentionPolicyId policyId;
   TenantId tenantId;
   string name;
   string description;
@@ -26,7 +26,7 @@ struct RetentionPolicy {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("id", id.toString)
+      .set("id", policyId.toString)
       .set("tenantId", tenantId)
       .set("name", name)
       .set("description", description)

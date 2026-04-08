@@ -20,19 +20,23 @@ mixin(ShowModule!());
 class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
   private ConfigChangeLog[] store;
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
-    return store.any!(e => e.auditLogId == auditLogId && e.tenantId == tenantId);
-  }
-
-  ConfigChangeLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId) {
-    foreach (e; store)
-      if (e.auditLogId == auditLogId && e.tenantId == tenantId)
-        return e;
-    return ConfigChangeLog.init;
+  bool existsByTenant(TenantId tenantId) {
+    return store.any!(e => e.tenantId == tenantId);
   }
 
   ConfigChangeLog[] findByTenant(TenantId tenantId) {
     return store.filter!(e => e.tenantId == tenantId).array;
+  }
+
+  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    return store.any!(e => e.auditLogId == auditLogId && e.tenantId == tenantId);
+  }
+
+  ConfigChangeLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
+    foreach (e; store)
+      if (e.auditLogId == auditLogId && e.tenantId == tenantId)
+        return e;
+    return ConfigChangeLog.init;
   }
 
   ConfigChangeLog[] findByUser(TenantId tenantId, UserId changedBy) {

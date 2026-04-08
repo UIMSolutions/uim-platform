@@ -17,10 +17,10 @@ mixin(ShowModule!());
 interface ExportJobRepository {
   ExportJob[] findByTenant(TenantId tenantId);
 
-  bool existsById(ExportJobId id, TenantId tenantId);
-  ExportJob findById(ExportJobId id, TenantId tenantId);
+  bool existsById(TenantId tenantId, ExportJobId id);
+  ExportJob findById(TenantId tenantId, ExportJobId id);
 
   void save(ExportJob job);
   void update(ExportJob job);
-  void remove(ExportJobId id, TenantId tenantId);
+  void remove(TenantId tenantId, ExportJobId id);
 }

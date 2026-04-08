@@ -39,16 +39,16 @@ class RetentionController : SAPController {
 
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
-      auto r = CreateRetentionPolicyRequest();
-      r.tenantId = req.getTenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.retentionDays = j.getInteger("retentionDays");
-      r.isDefault = j.getBoolean("isDefault");
-      r.categories = parseCategoryArray(j);
+      auto json = req.json;
+      auto policyRequest = CreateRetentionPolicyRequest();
+      policyRequest.tenantId = req.getTenantId;
+      policyRequest.name = json.getString("name");
+      policyRequest.description = json.getString("description");
+      policyRequest.retentionDays = json.getInteger("retentionDays");
+      policyRequest.isDefault = json.getBoolean("isDefault");
+      policyRequest.categories = parseCategoryArray(json);
 
-      auto result = useCase.createPolicy(r);
+      auto result = useCase.createPolicy(policyRequest);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("id", Json(result.id));
@@ -79,13 +79,13 @@ class RetentionController : SAPController {
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      RetentionPolicyId policyId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      if (!useCase.existsPolicy(tenantId, id)) {
+      if (!useCase.existsPolicy(tenantId, policyId)) {
         writeError(res, 404, "Retention policy not found");
         return;
       }
-      auto policy = useCase.getPolicy(tenantId, id);
+      auto policy = useCase.getPolicy(tenantId, policyId);
       res.writeJsonBody(serializePolicy(policy), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -94,27 +94,27 @@ class RetentionController : SAPController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto j = req.json;
-      auto r = UpdateRetentionPolicyRequest();
-      r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.getTenantId;
-      r.name = j.getString("name");
-      r.description = j.getString("description");
-      r.retentionDays = j.getInteger("retentionDays");
-      r.categories = parseCategoryArray(j);
+      auto json = req.json;
+      auto policyRequest = UpdateRetentionPolicyRequest();
+      policyRequest.id = extractIdFromPath(req.requestURI);
+      policyRequest.tenantId = req.getTenantId;
+      policyRequest.name = json.getString("name");
+      policyRequest.description = json.getString("description");
+      policyRequest.retentionDays = json.getInteger("retentionDays");
+      policyRequest.categories = parseCategoryArray(json);
 
-      auto statusStr = j.getString("status");
+      auto statusStr = json.getString("status");
       if (statusStr == "inactive")
-        r.status = RetentionStatus.inactive;
+        policyRequest.status = RetentionStatus.inactive;
       else if (statusStr == "expired")
-        r.status = RetentionStatus.expired;
+        policyRequest.status = RetentionStatus.expired;
       else
-        r.status = RetentionStatus.active;
+        policyRequest.status = RetentionStatus.active;
 
-      auto result = useCase.updatePolicy(r);
+      auto result = useCase.updatePolicy(policyRequest);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
-          .set("status", Json("updated"));
+          .set("status", "updated");
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -126,44 +126,41 @@ class RetentionController : SAPController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      RetentionPolicyId policyId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deletePolicy(tenantId, id);
+      useCase.deletePolicy(tenantId, policyId);
       auto resp = Json.emptyObject
-        .set("status", Json("deleted"));
+        .set("status", "deleted");
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializePolicy(ref const RetentionPolicy p) {
+  private static Json serializePolicy(ref const RetentionPolicy policy) {
     auto j = Json.emptyObject
-      .set("id", Json(p.id))
-      .set("tenantId", Json(p.tenantId))
-      .set("name", Json(p.name))
-      .set("description", Json(p.description))
-      .set("retentionDays", Json(cast(long)p.retentionDays))
-      .set("status", Json(p.status.to!string))
-      .set("isDefault", Json(p.isDefault))
-      .set("createdAt", Json(p.createdAt))
-      .set("updatedAt", Json(p.updatedAt));
+      .set("id", policy.policyId)
+      .set("tenantId", policy.tenantId)
+      .set("name", policy.name)
+      .set("description", policy.description)
+      .set("retentionDays", cast(long)policy.retentionDays)
+      .set("status", policy.status.to!string)
+      .set("isDefault", policy.isDefault)
+      .set("createdAt", policy.createdAt)
+      .set("updatedAt", policy.updatedAt);
 
-    if (p.categories.length > 0) {
+    if (policy.categories.length > 0) {
       auto cats = Json.emptyArray;
-      foreach (ref c; p.categories)
-        cats ~= Json(categoryToString(c));
+      foreach (c; policy.categories)
+        cats ~= categoryToString(c);
       j["categories"] = cats;
     }
     return j;
   }
 
   private static AuditCategory[] parseCategoryArray(Json j) {
-    AuditCategory[] result;
     auto cats = jsonStrArray(j, "categories");
-    foreach (c; cats)
-      result ~= parseCategory(c);
-    return result;
+    return cats.map!(c => parseCategory(c)).array;
   }
 
   private static AuditCategory parseCategory(string s) {

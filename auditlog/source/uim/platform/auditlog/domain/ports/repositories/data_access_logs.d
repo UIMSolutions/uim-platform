@@ -17,8 +17,8 @@ mixin(ShowModule!());
 interface DataAccessLogRepository {
   DataAccessLog[] findByTenant(TenantId tenantId);
 
-  bool existsByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
-  DataAccessLog findByAuditLogId(AuditLogId auditLogId, TenantId tenantId);
+  bool existsByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
+  DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId);
 
   DataAccessLog[] findByAccessor(TenantId tenantId, UserId accessedBy);
   DataAccessLog[] findByDataSubject(TenantId tenantId, string dataSubject);

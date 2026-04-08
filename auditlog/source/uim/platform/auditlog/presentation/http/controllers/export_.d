@@ -39,35 +39,32 @@ class ExportController : SAPController {
   private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto r = CreateExportJobRequest();
-      r.tenantId = req.getTenantId;
-      r.requestedBy = j.getString("requestedBy");
-      r.timeFrom = jsonLong(j, "timeFrom");
-      r.timeTo = jsonLong(j, "timeTo");
+      CreateExportJobRequest jobRequest = CreateExportJobRequest();
+      jobRequest.tenantId = req.getTenantId;
+      jobRequest.requestedBy = j.getString("requestedBy");
+      jobRequest.timeFrom = jsonLong(j, "timeFrom");
+      jobRequest.timeTo = jsonLong(j, "timeTo");
 
       auto fmtStr = j.getString("format");
       if (fmtStr == "csv")
-        r.format_ = ExportFormat.csv;
+        jobRequest.format_ = ExportFormat.csv;
       else
-        r.format_ = ExportFormat.json;
+        jobRequest.format_ = ExportFormat.json;
 
       // Parse category filter
       auto cats = jsonStrArray(j, "categories");
       foreach (c; cats)
-        r.categories ~= parseCategory(c);
+        jobRequest.categories ~= parseCategory(c);
 
-      auto result = useCase.createExport(r);
+      auto result = useCase.createExport(jobRequest);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -79,65 +76,62 @@ class ExportController : SAPController {
       auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(cast(long) jobs.length));
+        .set("totalCount", Json(cast(long)jobs.length));
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      if (!useCase.hasExport(tenantId, ExportJobId(id))) {
+      if (!useCase.hasExport(tenantId, jobId)) {
         writeError(res, 404, "Export job not found");
         return;
       }
 
-      auto job = useCase.getExport(tenantId, ExportJobId(id));
+      auto job = useCase.getExport(tenantId, jobId);
       res.writeJsonBody(serializeJob(job), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      ExportJobId jobId = ExportJobId(extractIdFromPath(req.requestURI));
       TenantId tenantId = req.getTenantId;
-      useCase.deleteExport(tenantId, ExportJobId(id));
+      useCase.deleteExport(tenantId, jobId);
       auto resp = Json.emptyObject
         .set("status", "deleted");
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeJob(ref const ExportJob j) {
-    auto o = Json.emptyObject
-    .set("id", Json(j.id))
-    .set("tenantId", Json(j.tenantId))
-    .set("requestedBy", Json(j.requestedBy))
-    .set("format", Json(j.format_.to!string))
-    .set("status", Json(j.status.to!string))
-    .set("totalRecords", Json(j.totalRecords))
-    .set("downloadUrl", Json(j.downloadUrl))
-    .set("timeFrom", Json(j.timeFrom))
-    .set("timeTo", Json(j.timeTo))
-    .set("createdAt", Json(j.createdAt))
-    .set("completedAt", Json(j.completedAt))
-    .set("errorMessage", Json(j.errorMessage));
+  private static Json serializeJob(ref const ExportJob exportJob) {
+    auto json = Json.emptyObject
+      .set("id", exportJob.id)
+      .set("tenantId", exportJob.tenantId)
+      .set("requestedBy", exportJob.requestedBy)
+      .set("format", exportJob.format_.to!string)
+      .set("status", exportJob.status.to!string)
+      .set("totalRecords", exportJob.totalRecords)
+      .set("downloadUrl", exportJob.downloadUrl)
+      .set("timeFrom", exportJob.timeFrom)
+      .set("timeTo", exportJob.timeTo)
+      .set("createdAt", exportJob.createdAt)
+      .set("completedAt", exportJob.completedAt)
+      .set("errorMessage", exportJob.errorMessage);
 
-    if (j.categories.length > 0) {
-      auto cats = j.categories.map!(c => Json(categoryToString(c))).array.toJson;
-      o["categories"] = cats;
+    if (exportJob.categories.length > 0) {
+      auto cats = exportJob.categories.map!(c => Json(categoryToString(c))).array.toJson;
+      json["categories"] = cats;
     }
-    return o;
+    return json;
   }
 
   private static AuditCategory parseCategory(string s) {

@@ -20,12 +20,12 @@ mixin(ShowModule!());
 class MemoryExportJobRepository : ExportJobRepository {
   private ExportJob[ExportJobId] store;
 
-  bool existsById(ExportJobId id, TenantId tenantId) {
+  bool existsById(TenantId tenantId, ExportJobId id) {
     return (id in store && store[id].tenantId == tenantId);
   }
 
-  ExportJob findById(ExportJobId id, TenantId tenantId) {
-    if (existsById(id, tenantId))
+  ExportJob findById(TenantId tenantId, ExportJobId id) {
+    if (existsById(tenantId, id))
       return store[id];
     return ExportJob.init;
   }
@@ -42,8 +42,8 @@ class MemoryExportJobRepository : ExportJobRepository {
     store[job.id] = job;
   }
 
-  void remove(ExportJobId id, TenantId tenantId) {
-    if (existsById(id, tenantId))
+  void remove(TenantId tenantId, ExportJobId id) {
+    if (existsById(tenantId, id))
       store.remove(id);
   }
 }

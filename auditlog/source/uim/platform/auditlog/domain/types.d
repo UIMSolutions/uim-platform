@@ -70,3 +70,4 @@ struct ServiceId {
 
   mixin DomainId;
 }
+
