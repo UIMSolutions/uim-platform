@@ -7,7 +7,7 @@ module uim.platform.data.quality.domain.ports.repositories.validation_results;
 
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.validation_result;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

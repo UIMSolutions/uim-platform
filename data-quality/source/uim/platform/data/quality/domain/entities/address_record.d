@@ -6,7 +6,7 @@
 module uim.platform.data.quality.domain.entities.address_record;
 
 // import uim.platform.data.quality.domain.types;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

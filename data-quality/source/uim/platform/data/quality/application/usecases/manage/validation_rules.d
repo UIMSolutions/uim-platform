@@ -12,7 +12,7 @@ module uim.platform.data.quality.application.usecases.manage.validation_rules;
 // import uim.platform.data.quality.domain.entities.validation_rule;
 // import uim.platform.data.quality.domain.ports.repositories.validation_rules;
 // import uim.platform.data.quality.application.dto;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

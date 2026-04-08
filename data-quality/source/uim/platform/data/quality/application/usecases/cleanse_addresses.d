@@ -12,7 +12,7 @@ module uim.platform.data.quality.application.usecases.cleanse_addresses;
 // import uim.platform.data.quality.domain.ports.repositories.addresses;
 // import uim.platform.data.quality.domain.services.address_cleanser;
 // import uim.platform.data.quality.application.dto;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

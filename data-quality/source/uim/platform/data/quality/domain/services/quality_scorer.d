@@ -11,7 +11,7 @@ module uim.platform.data.quality.domain.services.quality_scorer;
 // import uim.platform.data.quality.domain.entities.data_profile;
 
 // import std.datetime.systime : Clock;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

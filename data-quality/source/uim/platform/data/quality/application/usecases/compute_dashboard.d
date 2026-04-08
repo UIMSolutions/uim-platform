@@ -13,7 +13,7 @@ module uim.platform.data.quality.application.usecases.compute_dashboard;
 // import uim.platform.data.quality.domain.ports.repositories.data_profiles;
 // import uim.platform.data.quality.domain.services.quality_scorer;
 // import uim.platform.data.quality.application.dto;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

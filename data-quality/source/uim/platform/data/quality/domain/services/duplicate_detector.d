@@ -13,7 +13,7 @@ module uim.platform.data.quality.domain.services.duplicate_detector;
 // import std.conv : to;
 // import std.datetime.systime : Clock;
 // import std.uuid;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

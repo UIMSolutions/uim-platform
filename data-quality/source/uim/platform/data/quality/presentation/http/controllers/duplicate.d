@@ -15,7 +15,7 @@ module uim.platform.data.quality.presentation.http.controllers.duplicate;
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.match_group;
 // import uim.platform.data.quality.domain.services.duplicate_detector : RecordEntry;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

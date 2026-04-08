@@ -10,7 +10,7 @@ module uim.platform.data.quality.application.usecases.detect_duplicates;
 // import uim.platform.data.quality.domain.ports.repositories.match_groups;
 // import uim.platform.data.quality.domain.services.duplicate_detector;
 // import uim.platform.data.quality.application.dto;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 

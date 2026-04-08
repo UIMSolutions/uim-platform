@@ -14,7 +14,7 @@ module uim.platform.data.quality.presentation.http.cleansing_job;
 // import uim.platform.data.quality.application.dto;
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.cleansing_job;
-import uim.platform.data;
+import uim.platform.data.quality;
 
 mixin(ShowModule!());
 
