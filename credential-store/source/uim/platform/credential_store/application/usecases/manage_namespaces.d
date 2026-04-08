@@ -44,7 +44,7 @@ class ManageNamespacesUseCase : UIMUseCase {
 
   CommandResult update(NamespaceId id, UpdateNamespaceRequest r) {
     auto ns = repo.findById(id);
-    if (ns.id.length == 0)
+    if (ns.id.isEmpty)
       return CommandResult(false, "", "Namespace not found");
 
     ns.description = r.description;

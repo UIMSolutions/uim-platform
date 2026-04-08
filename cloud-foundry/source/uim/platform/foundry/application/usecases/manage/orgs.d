@@ -64,7 +64,7 @@ class ManageOrgsUseCase : UIMUseCase {
   }
 
   CommandResult updateOrg(UpdateOrgRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Organization ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

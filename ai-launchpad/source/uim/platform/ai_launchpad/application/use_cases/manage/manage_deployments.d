@@ -48,7 +48,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult patch(PatchDeploymentRequest r) {
     auto d = repo.findById(r.deploymentId, r.connectionId);
-    if (d.id.length == 0) return CommandResult(false, "", "Deployment not found");
+    if (d.id.isEmpty) return CommandResult(false, "", "Deployment not found");
     d.targetStatus = r.targetStatus;
     if (r.targetStatus == "stopped") d.status = DeploymentStatus.stopped;
     else if (r.targetStatus == "deleted") d.status = DeploymentStatus.dead;
@@ -73,7 +73,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult remove(DeploymentId id, ConnectionId connectionId) {
     auto d = repo.findById(id, connectionId);
-    if (d.id.length == 0) return CommandResult(false, "", "Deployment not found");
+    if (d.id.isEmpty) return CommandResult(false, "", "Deployment not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id, "");
   }

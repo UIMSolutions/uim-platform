@@ -34,7 +34,7 @@ struct AuthFlowResolver {
       break;
 
     case AuthenticationType.oauth2ClientCredentials:
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 Client Credentials requires 'clientId'";
       if (dest.clientSecret.length == 0)
         errors ~= "OAuth2 Client Credentials requires 'clientSecret'";
@@ -45,12 +45,12 @@ struct AuthFlowResolver {
     case AuthenticationType.oauth2SAMLBearerAssertion:
       if (dest.tokenServiceUrl.length == 0)
         errors ~= "OAuth2 SAML Bearer requires 'tokenServiceUrl'";
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 SAML Bearer requires 'clientId'";
       break;
 
     case AuthenticationType.oauth2UserTokenExchange:
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 User Token Exchange requires 'clientId'";
       if (dest.clientSecret.length == 0)
         errors ~= "OAuth2 User Token Exchange requires 'clientSecret'";
@@ -59,14 +59,14 @@ struct AuthFlowResolver {
       break;
 
     case AuthenticationType.oauth2JWTBearer:
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 JWT Bearer requires 'clientId'";
       if (dest.tokenServiceUrl.length == 0)
         errors ~= "OAuth2 JWT Bearer requires 'tokenServiceUrl'";
       break;
 
     case AuthenticationType.oauth2Password:
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 Password requires 'clientId'";
       if (dest.user.length == 0)
         errors ~= "OAuth2 Password requires 'user'";
@@ -77,7 +77,7 @@ struct AuthFlowResolver {
       break;
 
     case AuthenticationType.oauth2AuthorizationCode:
-      if (dest.clientId.length == 0)
+      if (dest.clientid.isEmpty)
         errors ~= "OAuth2 Authorization Code requires 'clientId'";
       if (dest.clientSecret.length == 0)
         errors ~= "OAuth2 Authorization Code requires 'clientSecret'";
@@ -86,7 +86,7 @@ struct AuthFlowResolver {
       break;
 
     case AuthenticationType.clientCertificateAuthentication:
-      if (dest.certificateId.length == 0)
+      if (dest.certificateid.isEmpty)
         errors ~= "Client Certificate authentication requires 'certificateId'";
       break;
 
@@ -103,7 +103,7 @@ struct AuthFlowResolver {
     }
 
     // On-premise destinations require cloud connector location
-    if (dest.proxyType == ProxyType.onPremise && dest.cloudConnectorLocationId.length == 0)
+    if (dest.proxyType == ProxyType.onPremise && dest.cloudConnectorLocationid.isEmpty)
       errors ~= "On-premise destinations require 'cloudConnectorLocationId'";
 
     return AuthFlowResult(errors.length == 0, errors, "");

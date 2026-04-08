@@ -78,7 +78,7 @@ class WorkspaceController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto w = uc.get_(id);
-      if (w.id.length == 0) {
+      if (w.id.isEmpty) {
         writeError(res, 404, "Workspace not found");
         return;
       }

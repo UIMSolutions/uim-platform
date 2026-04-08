@@ -83,7 +83,7 @@ class ConnectorController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto cc = uc.getConnector(id);
-      if (cc.id.length == 0) {
+      if (cc.id.isEmpty) {
         writeError(res, 404, "Connector not found");
         return;
       }

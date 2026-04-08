@@ -65,7 +65,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
 
   CommandResult updateSubscription(EventSubscriptionId id, UpdateEventSubscriptionRequest req) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
 
     if (req.description.length > 0)
@@ -91,48 +91,49 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  CommandResult pauseSubscription(EventSubscriptionId id) {
-    auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+  CommandResult pauseSubscription(EventSubscriptionId subscriptionId) {
+    auto sub = repo.findById(subscriptionId);
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
     sub.status = SubscriptionStatus.paused;
     sub.modifiedAt = clockSeconds();
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, subscriptionId, "");
   }
 
-  CommandResult resumeSubscription(EventSubscriptionId id) {
-    auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+  CommandResult resumeSubscription(EventSubscriptionId subscriptionId) {
+    auto sub = repo.findById(subscriptionId);
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
     sub.status = SubscriptionStatus.active;
     sub.modifiedAt = clockSeconds();
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, subscriptionId, "");
   }
 
-  EventSubscription getSubscription(EventSubscriptionId id) {
-    return repo.findById(id);
+  EventSubscription getSubscription(EventSubscriptionId subscriptionId) {
+    return repo.findById(subscriptionId);
   }
 
-  EventSubscription[] listByNamespace(NamespaceId nsId) {
-    return repo.findByNamespace(nsId);
+  EventSubscription[] listByNamespace(NamespaceId namespaceId) {
+    return repo.findByNamespace(namespaceId);
   }
 
-  EventSubscription[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+  EventSubscription[] listByEnvironment(KymaEnvironmentId environmentId) {
+    return repo.findByEnvironment(environmentId);
   }
 
   EventSubscription[] listBySource(string source) {
     return repo.findBySource(source);
   }
 
-  CommandResult deleteSubscription(EventSubscriptionId id) {
-    auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+  CommandResult deleteSubscription(EventSubscriptionId subscriptionId) {
+    auto sub = repo.findById(subscriptionId);
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+    
+    repo.remove(subscriptionId);
+    return CommandResult(true, subscriptionId, "");
   }
 
   private EventTypeEncoding parseTypeEncoding(string s) {

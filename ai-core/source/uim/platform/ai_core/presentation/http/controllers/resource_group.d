@@ -90,7 +90,7 @@ class ResourceGroupController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto rg = uc.get_(id);
-      if (rg.id.length == 0) {
+      if (rg.id.isEmpty) {
         writeError(res, 404, "Resource group not found");
         return;
       }

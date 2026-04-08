@@ -23,11 +23,11 @@ class ManageConfigurationsUseCase : UIMUseCase {
   CommandResult create(CreateConfigurationRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Configuration name is required");
-    if (r.scenarioId.length == 0)
+    if (r.scenarioid.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
-    if (r.executableId.length == 0)
+    if (r.executableid.isEmpty)
       return CommandResult(false, "", "Executable ID is required");
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     Configuration c;
@@ -83,7 +83,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
 
   CommandResult remove(ConfigurationId id, ResourceGroupId rgId) {
     auto existing = repo.findById(id, rgId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Configuration not found");
 
     repo.remove(id, rgId);

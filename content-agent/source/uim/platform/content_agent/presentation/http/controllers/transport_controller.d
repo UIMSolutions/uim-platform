@@ -85,7 +85,7 @@ class TransportController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto tr = uc.getTransportRequest(id);
-      if (tr.id.length == 0) {
+      if (tr.id.isEmpty) {
         writeError(res, 404, "Transport request not found");
         return;
       }

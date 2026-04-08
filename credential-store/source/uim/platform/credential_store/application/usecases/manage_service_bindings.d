@@ -52,7 +52,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
   CommandResult update(ServiceBindingId id, UpdateServiceBindingRequest r) {
     auto binding = repo.findById(id);
-    if (binding.id.length == 0)
+    if (binding.id.isEmpty)
       return CommandResult(false, "", "Service binding not found");
 
     if (r.description.length > 0)

@@ -86,7 +86,7 @@ class PackageController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto pkg = uc.getPackage(id);
-      if (pkg.id.length == 0) {
+      if (pkg.id.isEmpty) {
         writeError(res, 404, "Package not found");
         return;
       }

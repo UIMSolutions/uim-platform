@@ -78,7 +78,7 @@ class DeploymentController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto d = uc.get_(id, rgId);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;
       }

@@ -28,7 +28,7 @@ class ManageAccessRulesUseCase : UIMUseCase {
   CommandResult createRule(CreateAccessRuleRequest req) {
     // Validate connector exists
     auto cc = connectorRepo.findById(req.connectorId);
-    if (cc.id.length == 0)
+    if (cc.id.isEmpty)
       return CommandResult(false, "", "Connector not found");
 
     if (req.virtualHost.length == 0)
@@ -56,7 +56,7 @@ class ManageAccessRulesUseCase : UIMUseCase {
 
   CommandResult updateRule(RuleId id, UpdateAccessRuleRequest req) {
     auto rule = ruleRepo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Access rule not found");
 
     if (req.description.length > 0)
@@ -85,7 +85,7 @@ class ManageAccessRulesUseCase : UIMUseCase {
 
   CommandResult deleteRule(RuleId id) {
     auto rule = ruleRepo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Access rule not found");
 
     ruleRepo.remove(id);

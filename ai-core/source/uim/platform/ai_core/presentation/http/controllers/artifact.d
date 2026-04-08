@@ -86,7 +86,7 @@ class ArtifactController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto a = uc.get_(id, rgId);
-      if (a.id.length == 0) {
+      if (a.id.isEmpty) {
         writeError(res, 404, "Artifact not found");
         return;
       }

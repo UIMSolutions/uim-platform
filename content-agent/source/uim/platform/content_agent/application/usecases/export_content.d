@@ -31,7 +31,7 @@ class ExportContentUseCase : UIMUseCase {
 
   CommandResult startExport(StartExportRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
-    if (pkg.id.length == 0)
+    if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
     if (pkg.status != PackageStatus.assembled)

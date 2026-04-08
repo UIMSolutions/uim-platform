@@ -50,7 +50,7 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
 
   CommandResult patch(PatchPromptCollectionRequest r) {
     auto pc = repo.findById(r.collectionId);
-    if (pc.id.length == 0) return CommandResult(false, "", "Prompt collection not found");
+    if (pc.id.isEmpty) return CommandResult(false, "", "Prompt collection not found");
     if (r.name.length > 0) pc.name = r.name;
     if (r.description.length > 0) pc.description = r.description;
     pc.modifiedAt = "now";
@@ -60,7 +60,7 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
 
   CommandResult remove(PromptCollectionId id) {
     auto pc = repo.findById(id);
-    if (pc.id.length == 0) return CommandResult(false, "", "Prompt collection not found");
+    if (pc.id.isEmpty) return CommandResult(false, "", "Prompt collection not found");
     repo.remove(id);
     return CommandResult(true, id, "");
   }

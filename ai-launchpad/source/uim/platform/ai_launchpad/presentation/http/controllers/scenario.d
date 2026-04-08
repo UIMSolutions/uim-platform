@@ -82,7 +82,7 @@ class ScenarioController : SAPController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto s = uc.get_(id, connectionId);
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Scenario not found");
         return;
       }

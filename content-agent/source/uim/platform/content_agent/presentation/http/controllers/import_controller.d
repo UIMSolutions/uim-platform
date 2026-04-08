@@ -82,7 +82,7 @@ class ImportController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getImportJob(id);
-      if (job.id.length == 0) {
+      if (job.id.isEmpty) {
         writeError(res, 404, "Import job not found");
         return;
       }

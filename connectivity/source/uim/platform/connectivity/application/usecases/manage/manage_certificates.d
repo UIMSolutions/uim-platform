@@ -55,7 +55,7 @@ class ManageCertificatesUseCase : UIMUseCase {
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
     auto cert = repo.findById(id);
-    if (cert.id.length == 0)
+    if (cert.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
 
     if (req.description.length > 0)
@@ -80,7 +80,7 @@ class ManageCertificatesUseCase : UIMUseCase {
 
   CommandResult deleteCertificate(CertificateId id) {
     auto cert = repo.findById(id);
-    if (cert.id.length == 0)
+    if (cert.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
 
     repo.remove(id);

@@ -33,7 +33,7 @@ class ManageChannelsUseCase : UIMUseCase {
   CommandResult createChannel(CreateChannelRequest req) {
     // Validate connector exists
     auto cc = connectorRepo.findById(req.connectorId);
-    if (cc.id.length == 0)
+    if (cc.id.isEmpty)
       return CommandResult(false, "", "Connector not found");
 
     if (req.name.length == 0)
@@ -65,12 +65,12 @@ class ManageChannelsUseCase : UIMUseCase {
 
   CommandResult openChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
-    if (ch.id.length == 0)
+    if (ch.id.isEmpty)
       return CommandResult(false, "", "Channel not found");
 
     // Verify connector is connected
     auto cc = connectorRepo.findById(ch.connectorId);
-    if (cc.id.length == 0)
+    if (cc.id.isEmpty)
       return CommandResult(false, "", "Associated connector not found");
     if (cc.status != ConnectorStatus.connected)
       return CommandResult(false, "", "Connector is not connected");
@@ -86,7 +86,7 @@ class ManageChannelsUseCase : UIMUseCase {
 
   CommandResult closeChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
-    if (ch.id.length == 0)
+    if (ch.id.isEmpty)
       return CommandResult(false, "", "Channel not found");
 
     ch.status = ChannelStatus.closed;
@@ -112,7 +112,7 @@ class ManageChannelsUseCase : UIMUseCase {
 
   CommandResult deleteChannel(ChannelId id) {
     auto ch = channelRepo.findById(id);
-    if (ch.id.length == 0)
+    if (ch.id.isEmpty)
       return CommandResult(false, "", "Channel not found");
 
     channelRepo.remove(id);

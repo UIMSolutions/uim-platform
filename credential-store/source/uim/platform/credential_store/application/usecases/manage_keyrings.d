@@ -70,7 +70,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
   CommandResult rotate(RotateKeyringRequest r) {
     auto cred = credRepo.findById(r.keyringId);
-    if (cred.id.length == 0)
+    if (cred.id.isEmpty)
       return CommandResult(false, "", "Keyring not found");
     if (cred.type != CredentialType.keyring)
       return CommandResult(false, "", "Credential is not a keyring");
@@ -121,7 +121,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
   CommandResult disable(CredentialId id) {
     auto cred = credRepo.findById(id);
-    if (cred.id.length == 0)
+    if (cred.id.isEmpty)
       return CommandResult(false, "", "Keyring not found");
 
     cred.status = CredentialStatus.disabled;
@@ -132,7 +132,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
   CommandResult remove(CredentialId id) {
     auto cred = credRepo.findById(id);
-    if (cred.id.length == 0)
+    if (cred.id.isEmpty)
       return CommandResult(false, "", "Keyring not found");
 
     // Protection: must be disabled for 7+ days

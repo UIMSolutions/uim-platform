@@ -97,7 +97,7 @@ class ExecutableController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto e = uc.get_(id, rgId);
-      if (e.id.length == 0) {
+      if (e.id.isEmpty) {
         writeError(res, 404, "Executable not found");
         return;
       }

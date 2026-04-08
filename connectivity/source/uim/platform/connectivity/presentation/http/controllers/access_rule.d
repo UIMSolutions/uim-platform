@@ -88,7 +88,7 @@ class AccessRuleController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule.id.length == 0) {
+      if (rule.id.isEmpty) {
         writeError(res, 404, "Access rule not found");
         return;
       }

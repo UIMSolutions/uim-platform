@@ -25,13 +25,13 @@ class ManageExecutionsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateExecutionRequest r) {
-    if (r.configurationId.length == 0)
+    if (r.configurationid.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);
-    if (conf.id.length == 0)
+    if (conf.id.isEmpty)
       return CommandResult(false, "", "Configuration not found");
 
     Execution e;
@@ -55,7 +55,7 @@ class ManageExecutionsUseCase : UIMUseCase {
 
   CommandResult patch(PatchExecutionRequest r) {
     auto e = execRepo.findById(r.executionId, r.resourceGroupId);
-    if (e.id.length == 0)
+    if (e.id.isEmpty)
       return CommandResult(false, "", "Execution not found");
 
     TargetStatus target;
@@ -101,7 +101,7 @@ class ManageExecutionsUseCase : UIMUseCase {
 
   CommandResult remove(ExecutionId id, ResourceGroupId rgId) {
     auto existing = execRepo.findById(id, rgId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Execution not found");
 
     execRepo.remove(id, rgId);

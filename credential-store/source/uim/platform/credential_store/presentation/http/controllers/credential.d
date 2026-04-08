@@ -142,7 +142,7 @@ class CredentialController : SAPController {
       auto ifNoneMatch = req.headers.get("If-None-Match", "");
 
       auto c = uc.get_(id);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Credential not found");
         return;
       }

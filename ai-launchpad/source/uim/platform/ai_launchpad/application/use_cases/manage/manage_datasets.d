@@ -53,7 +53,7 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult patch(PatchDatasetRequest r) {
     auto d = repo.findById(r.datasetId, r.connectionId);
-    if (d.id.length == 0) return CommandResult(false, "", "Dataset not found");
+    if (d.id.isEmpty) return CommandResult(false, "", "Dataset not found");
     if (r.description.length > 0) d.description = r.description;
     if (r.status == "archived") d.status = DatasetStatus.archived;
     d.modifiedAt = "now";
@@ -63,7 +63,7 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult remove(DatasetId id, ConnectionId connectionId) {
     auto d = repo.findById(id, connectionId);
-    if (d.id.length == 0) return CommandResult(false, "", "Dataset not found");
+    if (d.id.isEmpty) return CommandResult(false, "", "Dataset not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id, "");
   }

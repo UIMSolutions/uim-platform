@@ -84,7 +84,7 @@ class ExecutionController : SAPController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto ex = uc.get_(id, connectionId);
-      if (ex.id.length == 0) {
+      if (ex.id.isEmpty) {
         writeError(res, 404, "Execution not found");
         return;
       }

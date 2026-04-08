@@ -88,7 +88,7 @@ class ModelController : SAPController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto m = uc.get_(id, connectionId);
-      if (m.id.length == 0) {
+      if (m.id.isEmpty) {
         writeError(res, 404, "Model not found");
         return;
       }

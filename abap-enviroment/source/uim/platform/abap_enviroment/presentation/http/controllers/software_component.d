@@ -70,7 +70,7 @@ class SoftwareComponentController : SAPController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto systemId = req.json.getString("systemInstanceId");
-      if (systemId.length == 0)
+      if (systemid.isEmpty)
         systemId = req.headers.get("X-System-Id", "");
       auto components = uc.listComponents(systemId);
       auto arr = Json.emptyArray;

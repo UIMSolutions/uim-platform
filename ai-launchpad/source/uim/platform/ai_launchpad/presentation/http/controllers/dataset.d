@@ -87,7 +87,7 @@ class DatasetController : SAPController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto d = uc.get_(id, connectionId);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Dataset not found");
         return;
       }

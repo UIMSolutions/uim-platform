@@ -76,7 +76,7 @@ class AuditController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto e = uc.getById(id);
 
-      if (e.id.length == 0) {
+      if (e.id.isEmpty) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }

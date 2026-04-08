@@ -50,7 +50,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
 
   CommandResult patch(PatchWorkspaceRequest r) {
     auto w = repo.findById(r.workspaceId);
-    if (w.id.length == 0) return CommandResult(false, "", "Workspace not found");
+    if (w.id.isEmpty) return CommandResult(false, "", "Workspace not found");
     if (r.name.length > 0) w.name = r.name;
     if (r.description.length > 0) w.description = r.description;
     w.modifiedAt = "now";
@@ -60,7 +60,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
 
   CommandResult remove(WorkspaceId id) {
     auto w = repo.findById(id);
-    if (w.id.length == 0) return CommandResult(false, "", "Workspace not found");
+    if (w.id.isEmpty) return CommandResult(false, "", "Workspace not found");
     repo.remove(id);
     return CommandResult(true, id, "");
   }

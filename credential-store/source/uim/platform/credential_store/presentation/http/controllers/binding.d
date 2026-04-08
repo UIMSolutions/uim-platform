@@ -94,7 +94,7 @@ class BindingController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto b = uc.get_(id);
 
-      if (b.id.length == 0) {
+      if (b.id.isEmpty) {
         writeError(res, 404, "Service binding not found");
         return;
       }

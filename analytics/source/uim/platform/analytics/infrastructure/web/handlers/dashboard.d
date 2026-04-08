@@ -29,12 +29,12 @@ class DashboardHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
-    if (id.length == 0) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing dashboard id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0) {
+    if (item.id.isEmpty) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -69,7 +69,7 @@ class DashboardHandler {
   void publish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractId(req);
     auto result = useCases.publish(id);
-    if (result.id.length == 0) {
+    if (result.id.isEmpty) {
       res.writeJsonBody(errorJson("Dashboard not found", 404), HTTPStatus.notFound);
       return;
     }

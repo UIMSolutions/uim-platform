@@ -84,7 +84,7 @@ class NamespaceController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto ns = uc.get_(id);
 
-      if (ns.id.length == 0) {
+      if (ns.id.isEmpty) {
         writeError(res, 404, "Namespace not found");
         return;
       }

@@ -18,7 +18,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateResourceGroupRequest r) {
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
@@ -54,7 +54,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
 
   CommandResult patch(PatchResourceGroupRequest r) {
     auto rg = repo.findById(r.resourceGroupId);
-    if (rg.id.length == 0)
+    if (rg.id.isEmpty)
       return CommandResult(false, "", "Resource group not found");
 
     ResourceGroupLabel[] labels;
@@ -82,7 +82,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
 
   CommandResult remove(ResourceGroupId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Resource group not found");
 
     repo.remove(id);

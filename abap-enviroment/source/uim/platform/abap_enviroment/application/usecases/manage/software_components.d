@@ -27,7 +27,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   CommandResult createComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Component name is required");
-    if (req.systemInstanceId.length == 0)
+    if (req.systemInstanceid.isEmpty)
       return CommandResult("", "System instance ID is required");
 
     auto system = systemRepo.findById(req.systemInstanceId);

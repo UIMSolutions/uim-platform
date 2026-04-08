@@ -84,7 +84,7 @@ class ChannelController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto ch = uc.getChannel(id);
-      if (ch.id.length == 0) {
+      if (ch.id.isEmpty) {
         writeError(res, 404, "Channel not found");
         return;
       }

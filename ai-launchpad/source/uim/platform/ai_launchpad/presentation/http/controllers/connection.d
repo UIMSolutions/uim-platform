@@ -85,7 +85,7 @@ class ConnectionController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto c = uc.get_(id);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;
       }

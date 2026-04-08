@@ -31,7 +31,7 @@ class ImportContentUseCase : UIMUseCase {
 
   CommandResult startImport(StartImportRequest req) {
     auto pkg = packageRepo.findById(req.packageId);
-    if (pkg.id.length == 0)
+    if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
     // import std.uuid : randomUUID;

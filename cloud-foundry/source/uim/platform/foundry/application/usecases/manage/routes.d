@@ -34,9 +34,9 @@ class ManageRoutesUseCase : UIMUseCase {
   CommandResult createRoute(CreateRouteRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.spaceId.length == 0)
+    if (req.spaceid.isEmpty)
       return CommandResult("", "Space ID is required");
-    if (req.domainId.length == 0)
+    if (req.domainid.isEmpty)
       return CommandResult("", "Domain ID is required");
     if (req.host.length == 0)
       return CommandResult("", "Host is required");
@@ -91,9 +91,9 @@ class ManageRoutesUseCase : UIMUseCase {
 
   /// Map an application to a route.
   CommandResult mapRoute(MapRouteRequest req) {
-    if (req.routeId.length == 0)
+    if (req.routeid.isEmpty)
       return CommandResult("", "Route ID is required");
-    if (req.appId.length == 0)
+    if (req.appid.isEmpty)
       return CommandResult("", "Application ID is required");
 
     if (!resolver.mapApp(req.routeId, req.tenantId, req.appId))
@@ -104,9 +104,9 @@ class ManageRoutesUseCase : UIMUseCase {
 
   /// Unmap an application from a route.
   CommandResult unmapRoute(MapRouteRequest req) {
-    if (req.routeId.length == 0)
+    if (req.routeid.isEmpty)
       return CommandResult("", "Route ID is required");
-    if (req.appId.length == 0)
+    if (req.appid.isEmpty)
       return CommandResult("", "Application ID is required");
 
     if (!resolver.unmapApp(req.routeId, req.tenantId, req.appId))

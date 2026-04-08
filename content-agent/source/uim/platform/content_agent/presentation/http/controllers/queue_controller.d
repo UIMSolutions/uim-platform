@@ -84,7 +84,7 @@ class QueueController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto queue = uc.getQueue(id);
-      if (queue.id.length == 0) {
+      if (queue.id.isEmpty) {
         writeError(res, 404, "Queue not found");
         return;
       }

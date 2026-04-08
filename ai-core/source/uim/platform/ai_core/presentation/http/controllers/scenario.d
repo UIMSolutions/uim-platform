@@ -85,7 +85,7 @@ class ScenarioController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto s = uc.get_(id, rgId);
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Scenario not found");
         return;
       }

@@ -42,7 +42,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     ContentPackage[] packages;
     foreach (pid; req.packageIds) {
       auto pkg = packageRepo.findById(pid);
-      if (pkg.id.length == 0)
+      if (pkg.id.isEmpty)
         return CommandResult(false, "", "Package not found: " ~ pid);
       packages ~= pkg;
     }
@@ -92,7 +92,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult releaseTransport(ReleaseTransportRequest req) {
     auto tr = requestRepo.findById(req.requestId);
-    if (tr.id.length == 0)
+    if (tr.id.isEmpty)
       return CommandResult(false, "", "Transport request not found");
 
     if (tr.status != TransportStatus.created && tr.status != TransportStatus.readyForExport)
@@ -111,7 +111,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult cancelTransport(TransportRequestId id) {
     auto tr = requestRepo.findById(id);
-    if (tr.id.length == 0)
+    if (tr.id.isEmpty)
       return CommandResult(false, "", "Transport request not found");
 
     tr.status = TransportStatus.cancelled;

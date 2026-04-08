@@ -80,7 +80,7 @@ class ExportController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getExportJob(id);
-      if (job.id.length == 0) {
+      if (job.id.isEmpty) {
         writeError(res, 404, "Export job not found");
         return;
       }

@@ -27,7 +27,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
       return CommandResult("", "Transport request description is required");
     if (req.owner.length == 0)
       return CommandResult("", "Owner is required");
-    if (req.sourceSystemId.length == 0)
+    if (req.sourceSystemid.isEmpty)
       return CommandResult("", "Source system ID is required");
 
     auto id = randomUUID().toString();

@@ -64,7 +64,7 @@ class ManageBuildpacksUseCase : UIMUseCase {
   }
 
   CommandResult updateBuildpack(UpdateBuildpackRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Buildpack ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

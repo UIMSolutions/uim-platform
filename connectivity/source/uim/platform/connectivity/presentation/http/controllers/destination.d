@@ -93,7 +93,7 @@ class DestinationController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto dest = uc.getDestination(id);
-      if (dest.id.length == 0) {
+      if (dest.id.isEmpty) {
         writeError(res, 404, "Destination not found");
         return;
       }

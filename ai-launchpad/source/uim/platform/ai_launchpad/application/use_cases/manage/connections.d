@@ -63,7 +63,7 @@ class ManageConnectionsUseCase : UIMUseCase {
 
   CommandResult patch(PatchConnectionRequest r) {
     auto c = repo.findById(r.connectionId);
-    if (c.id.length == 0) return CommandResult(false, "", "Connection not found");
+    if (c.id.isEmpty) return CommandResult(false, "", "Connection not found");
     if (r.name.length > 0) c.name = r.name;
     if (r.description.length > 0) c.description = r.description;
     if (r.defaultResourceGroupId.length > 0) c.defaultResourceGroupId = r.defaultResourceGroupId;
@@ -74,7 +74,7 @@ class ManageConnectionsUseCase : UIMUseCase {
 
   CommandResult remove(ConnectionId id) {
     auto c = repo.findById(id);
-    if (c.id.length == 0) return CommandResult(false, "", "Connection not found");
+    if (c.id.isEmpty) return CommandResult(false, "", "Connection not found");
     repo.remove(id);
     return CommandResult(true, id, "");
   }

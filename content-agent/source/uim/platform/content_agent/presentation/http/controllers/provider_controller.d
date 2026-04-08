@@ -83,7 +83,7 @@ class ProviderController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto provider = uc.getProvider(id);
-      if (provider.id.length == 0) {
+      if (provider.id.isEmpty) {
         writeError(res, 404, "Provider not found");
         return;
       }

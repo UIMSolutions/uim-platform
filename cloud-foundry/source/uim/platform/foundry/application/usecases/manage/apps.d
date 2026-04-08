@@ -28,7 +28,7 @@ class ManageAppsUseCase : UIMUseCase {
   CommandResult createApp(CreateAppRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.spaceId.length == 0)
+    if (req.spaceid.isEmpty)
       return CommandResult("", "Space ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Application name is required");
@@ -77,7 +77,7 @@ class ManageAppsUseCase : UIMUseCase {
   }
 
   CommandResult updateApp(UpdateAppRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Application ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
@@ -144,7 +144,7 @@ class ManageAppsUseCase : UIMUseCase {
   }
 
   CommandResult scaleApp(ScaleAppRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Application ID is required");
 
     if (!lifecycle.scaleApp(req.id, req.tenantId, req.instances, req.memoryMb, req.diskMb))

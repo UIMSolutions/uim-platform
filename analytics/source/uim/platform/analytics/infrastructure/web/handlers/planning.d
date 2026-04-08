@@ -27,12 +27,12 @@ class PlanningHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
-    if (id.length == 0) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0) {
+    if (item.id.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -55,7 +55,7 @@ class PlanningHandler {
   void lockModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.lock(id);
-    if (result.id.length == 0) {
+    if (result.id.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -65,7 +65,7 @@ class PlanningHandler {
   void approveModel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "planning");
     auto result = useCases.approve(id);
-    if (result.id.length == 0) {
+    if (result.id.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

@@ -54,7 +54,7 @@ class MetricController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
       auto execId = req.params.get("executionId", "");
 
-      if (execId.length == 0) {
+      if (execid.isEmpty) {
         writeError(res, 400, "executionId query parameter is required");
         return;
       }

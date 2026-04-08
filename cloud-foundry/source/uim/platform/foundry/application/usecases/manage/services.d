@@ -31,7 +31,7 @@ class ManageServicesUseCase : UIMUseCase {
   CommandResult createInstance(CreateServiceInstanceRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.spaceId.length == 0)
+    if (req.spaceid.isEmpty)
       return CommandResult("", "Space ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Service instance name is required");
@@ -76,7 +76,7 @@ class ManageServicesUseCase : UIMUseCase {
   }
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Service instance ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
@@ -117,9 +117,9 @@ class ManageServicesUseCase : UIMUseCase {
   CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.appId.length == 0)
+    if (req.appid.isEmpty)
       return CommandResult("", "Application ID is required");
-    if (req.serviceInstanceId.length == 0)
+    if (req.serviceInstanceid.isEmpty)
       return CommandResult("", "Service instance ID is required");
 
     // Verify instance exists

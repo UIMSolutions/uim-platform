@@ -25,7 +25,7 @@ class ManageScenariosUseCase : UIMUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     auto existing = repo.findById(r.id, r.resourceGroupId);
@@ -59,7 +59,7 @@ class ManageScenariosUseCase : UIMUseCase {
 
   CommandResult remove(ScenarioId id, ResourceGroupId rgId) {
     auto existing = repo.findById(id, rgId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Scenario not found");
 
     repo.remove(id, rgId);

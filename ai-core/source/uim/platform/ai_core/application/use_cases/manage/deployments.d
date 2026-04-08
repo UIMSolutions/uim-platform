@@ -25,13 +25,13 @@ class ManageDeploymentsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDeploymentRequest r) {
-    if (r.configurationId.length == 0)
+    if (r.configurationid.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);
-    if (conf.id.length == 0)
+    if (conf.id.isEmpty)
       return CommandResult(false, "", "Configuration not found");
 
     Deployment d;
@@ -56,7 +56,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult patch(PatchDeploymentRequest r) {
     auto d = deplRepo.findById(r.deploymentId, r.resourceGroupId);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Deployment not found");
 
     if (r.targetStatus.length > 0) {
@@ -114,7 +114,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult remove(DeploymentId id, ResourceGroupId rgId) {
     auto existing = deplRepo.findById(id, rgId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Deployment not found");
 
     deplRepo.remove(id, rgId);

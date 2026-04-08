@@ -72,7 +72,7 @@ class ManageCredentialsUseCase : UIMUseCase {
   // Update with conditional support via ifMatch header
   CommandResult update(CredentialId id, UpdateCredentialRequest r) {
     auto cred = repo.findById(id);
-    if (cred.id.length == 0)
+    if (cred.id.isEmpty)
       return CommandResult(false, "", "Credential not found");
 
     // If-Match: <id> means conditional update (only if version matches)

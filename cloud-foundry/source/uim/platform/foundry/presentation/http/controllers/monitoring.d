@@ -52,7 +52,7 @@ class MonitoringController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(id, tenantId);
-      if (h.appId.length == 0) {
+      if (h.appid.isEmpty) {
         writeError(res, 404, "Application not found");
         return;
       }

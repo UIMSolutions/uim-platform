@@ -25,9 +25,9 @@ class ManageArtifactsUseCase : UIMUseCase {
       return CommandResult(false, "", "Artifact name is required");
     if (r.kind.length == 0)
       return CommandResult(false, "", "Artifact kind is required");
-    if (r.scenarioId.length == 0)
+    if (r.scenarioid.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
-    if (r.resourceGroupId.length == 0)
+    if (r.resourceGroupid.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     Artifact a;
@@ -97,7 +97,7 @@ class ManageArtifactsUseCase : UIMUseCase {
 
   CommandResult remove(ArtifactId id, ResourceGroupId rgId) {
     auto existing = repo.findById(id, rgId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Artifact not found");
 
     repo.remove(id, rgId);

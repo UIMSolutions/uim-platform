@@ -90,7 +90,7 @@ class CertificateController :SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto cert = uc.getCertificate(id);
-      if (cert.id.length == 0) {
+      if (cert.id.isEmpty) {
         writeError(res, 404, "Certificate not found");
         return;
       }

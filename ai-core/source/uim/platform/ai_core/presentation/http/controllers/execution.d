@@ -77,7 +77,7 @@ class ExecutionController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto ex = uc.get_(id, rgId);
-      if (ex.id.length == 0) {
+      if (ex.id.isEmpty) {
         writeError(res, 404, "Execution not found");
         return;
       }

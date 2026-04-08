@@ -60,7 +60,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
 
   CommandResult remove(ConfigurationId id, ConnectionId connectionId) {
     auto c = repo.findById(id, connectionId);
-    if (c.id.length == 0) return CommandResult(false, "", "Configuration not found");
+    if (c.id.isEmpty) return CommandResult(false, "", "Configuration not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id, "");
   }

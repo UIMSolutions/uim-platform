@@ -81,7 +81,7 @@ class ResourceGroupController : SAPController {
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
       auto g = uc.get_(id, connectionId);
-      if (g.id.length == 0) {
+      if (g.id.isEmpty) {
         writeError(res, 404, "Resource group not found");
         return;
       }

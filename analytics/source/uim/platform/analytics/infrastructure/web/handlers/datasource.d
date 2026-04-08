@@ -28,12 +28,12 @@ class DataSourceHandler {
 
   void getOne(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
-    if (id.length == 0) {
+    if (id.isEmpty) {
       res.writeJsonBody(errorJson("Missing id"), HTTPStatus.badRequest);
       return;
     }
     auto item = useCases.getById(id);
-    if (item.id.length == 0) {
+    if (item.id.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }
@@ -57,7 +57,7 @@ class DataSourceHandler {
   void testConn(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     auto id = extractIdFromPath(req.requestURI, "datasources");
     auto result = useCases.testConnection(id);
-    if (result.id.length == 0) {
+    if (result.id.isEmpty) {
       res.writeJsonBody(errorJson("Not found", 404), HTTPStatus.notFound);
       return;
     }

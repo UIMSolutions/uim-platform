@@ -25,13 +25,13 @@ class EncryptDekUseCase : UIMUseCase {
   // Generate a new DEK and return it both plaintext and encrypted
   GenerateDekResponse generate(GenerateDekRequest r) {
     auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
-    if (keyring.id.length == 0)
+    if (keyring.id.isEmpty)
       return GenerateDekResponse(false, "", "", "", 0, "Keyring not found");
     if (keyring.status != CredentialStatus.active)
       return GenerateDekResponse(false, "", "", "", 0, "Keyring is not active");
 
     auto activeVersion = versionRepo.findActiveVersion(keyring.id);
-    if (activeVersion.id.length == 0)
+    if (activeVersion.id.isEmpty)
       return GenerateDekResponse(false, "", "", "", 0, "No active keyring version");
 
     auto dek = EncryptionService.generateDek();
@@ -43,13 +43,13 @@ class EncryptDekUseCase : UIMUseCase {
   // Encrypt a provided DEK with the active keyring version
   EncryptDekResponse encrypt(EncryptDekRequest r) {
     auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
-    if (keyring.id.length == 0)
+    if (keyring.id.isEmpty)
       return EncryptDekResponse(false, "", "", 0, "Keyring not found");
     if (keyring.status != CredentialStatus.active)
       return EncryptDekResponse(false, "", "", 0, "Keyring is not active");
 
     auto activeVersion = versionRepo.findActiveVersion(keyring.id);
-    if (activeVersion.id.length == 0)
+    if (activeVersion.id.isEmpty)
       return EncryptDekResponse(false, "", "", 0, "No active keyring version");
 
     auto encryptedDek = EncryptionService.encryptDek(r.dek, activeVersion.keyMaterial);
@@ -60,11 +60,11 @@ class EncryptDekUseCase : UIMUseCase {
   // Decrypt an encrypted DEK using the specified keyring version
   DecryptDekResponse decrypt(DecryptDekRequest r) {
     auto keyring = credRepo.findByName(r.namespaceId, r.keyringName, CredentialType.keyring);
-    if (keyring.id.length == 0)
+    if (keyring.id.isEmpty)
       return DecryptDekResponse(false, "", "Keyring not found");
 
     auto ver = versionRepo.findByVersion(keyring.id, r.keyringVersion);
-    if (ver.id.length == 0)
+    if (ver.id.isEmpty)
       return DecryptDekResponse(false, "", "Keyring version not found");
 
     auto dek = EncryptionService.decryptDek(r.encryptedDek, ver.keyMaterial);

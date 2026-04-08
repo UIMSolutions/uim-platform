@@ -112,7 +112,7 @@ class ConfigurationController : SAPController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
 
       auto c = uc.get_(id, rgId);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Configuration not found");
         return;
       }

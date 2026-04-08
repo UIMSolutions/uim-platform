@@ -57,7 +57,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
 
   CommandResult updateQueue(TransportQueueId id, UpdateQueueRequest req) {
     auto queue = queueRepo.findById(id);
-    if (queue.id.length == 0)
+    if (queue.id.isEmpty)
       return CommandResult(false, "", "Queue not found");
 
     if (req.description.length > 0)
@@ -75,7 +75,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
 
   CommandResult deleteQueue(TransportQueueId id) {
     auto queue = queueRepo.findById(id);
-    if (queue.id.length == 0)
+    if (queue.id.isEmpty)
       return CommandResult(false, "", "Queue not found");
 
     queueRepo.remove(id);
