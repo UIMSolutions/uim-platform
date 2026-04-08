@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation_repo;
+module uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation;
 
 import uim.platform.identity.provisioning.domain.types;
 import uim.platform.identity.provisioning.domain.entities.transformation;

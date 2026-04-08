@@ -9,15 +9,15 @@ import uim.platform.master_data_integration.infrastructure.config;
 
 // Repositories
 import uim.platform.master_data_integration.infrastructure.persistence.memory
-  .master_data_object_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.data_model_repo;
+  .master_data_object;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.data_model;
 import uim.platform.master_data_integration.infrastructure.persistence.memory
-  .distribution_model_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.key_mapping_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.change_log_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.client_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.replication_job_repo;
-import uim.platform.master_data_integration.infrastructure.persistence.memory.filter_rule_repo;
+  .distribution_model;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.key_mapping;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.change_log;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.client;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.replication_job;
+import uim.platform.master_data_integration.infrastructure.persistence.memory.filter_rule;
 
 // Domain services
 import uim.platform.master_data_integration.domain.services.key_mapping_resolver;

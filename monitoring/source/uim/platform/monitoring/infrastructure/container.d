@@ -8,14 +8,14 @@ module uim.platform.monitoring.infrastructure.container;
 import uim.platform.monitoring.infrastructure.config;
 
 // Repositories
-import uim.platform.monitoring.infrastructure.persistence.memory.monitored_resource_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.metric_definition_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.metric_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.health_check_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.health_check_result_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.alert_rule_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.alert_repo;
-import uim.platform.monitoring.infrastructure.persistence.memory.notification_channel_repo;
+import uim.platform.monitoring.infrastructure.persistence.memory.monitored_resource;
+import uim.platform.monitoring.infrastructure.persistence.memory.metric_definition;
+import uim.platform.monitoring.infrastructure.persistence.memory.metric;
+import uim.platform.monitoring.infrastructure.persistence.memory.health_check;
+import uim.platform.monitoring.infrastructure.persistence.memory.health_check_result;
+import uim.platform.monitoring.infrastructure.persistence.memory.alert_rule;
+import uim.platform.monitoring.infrastructure.persistence.memory.alert;
+import uim.platform.monitoring.infrastructure.persistence.memory.notification_channel;
 
 // Use Cases
 import uim.platform.monitoring.application.usecases.manage.monitored_resources;

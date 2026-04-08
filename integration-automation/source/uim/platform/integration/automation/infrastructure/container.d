@@ -8,12 +8,12 @@ module uim.platform.integration.automation.infrastructure.container;
 import uim.platform.integration.automation.infrastructure.config;
 
 // Repositories
-import uim.platform.integration.automation.infrastructure.persistence.memory.scenario_repo;
-import uim.platform.integration.automation.infrastructure.persistence.memory.workflow_repo;
-import uim.platform.integration.automation.infrastructure.persistence.memory.step_repo;
-import uim.platform.integration.automation.infrastructure.persistence.memory.system_repo;
-import uim.platform.integration.automation.infrastructure.persistence.memory.destination_repo;
-import uim.platform.integration.automation.infrastructure.persistence.memory.execution_log_repo;
+import uim.platform.integration.automation.infrastructure.persistence.memory.scenario;
+import uim.platform.integration.automation.infrastructure.persistence.memory.workflow;
+import uim.platform.integration.automation.infrastructure.persistence.memory.step;
+import uim.platform.integration.automation.infrastructure.persistence.memory.system;
+import uim.platform.integration.automation.infrastructure.persistence.memory.destination;
+import uim.platform.integration.automation.infrastructure.persistence.memory.execution_log;
 
 // Domain Services
 import uim.platform.integration.automation.domain.services.workflow_engine;

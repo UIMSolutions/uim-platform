@@ -8,10 +8,10 @@ module uim.platform.job_scheduling.infrastructure.container;
 import uim.platform.job_scheduling.infrastructure.config;
 
 // Repositories
-import uim.platform.job_scheduling.infrastructure.persistence.memory.job_repo;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.schedule_repo;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.run_log_repo;
-import uim.platform.job_scheduling.infrastructure.persistence.memory.configuration_repo;
+import uim.platform.job_scheduling.infrastructure.persistence.memory.job;
+import uim.platform.job_scheduling.infrastructure.persistence.memory.schedule;
+import uim.platform.job_scheduling.infrastructure.persistence.memory.run_log;
+import uim.platform.job_scheduling.infrastructure.persistence.memory.configuration;
 
 // Use Cases
 import uim.platform.job_scheduling.application.usecases.manage.jobs;

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.integration.automation.infrastructure.persistence.memory.workflow_repo;
+module uim.platform.integration.automation.infrastructure.persistence.memory.workflow;
 
 import uim.platform.integration.automation.domain.types;
 import uim.platform.integration.automation.domain.entities.workflow;

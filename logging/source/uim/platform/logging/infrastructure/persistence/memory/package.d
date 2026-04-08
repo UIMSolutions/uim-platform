@@ -6,14 +6,14 @@
 module uim.platform.logging.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.logging.infrastructure.persistence.memory.log_entry_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.log_stream_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.span_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.dashboard_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.retention_policy_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.alert_rule_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.alert_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.notification_channel_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.pipeline_repo;
-  import uim.platform.logging.infrastructure.persistence.memory.ingestion_token_repo;
+  import uim.platform.logging.infrastructure.persistence.memory.log_entry;
+  import uim.platform.logging.infrastructure.persistence.memory.log_stream;
+  import uim.platform.logging.infrastructure.persistence.memory.span;
+  import uim.platform.logging.infrastructure.persistence.memory.dashboard;
+  import uim.platform.logging.infrastructure.persistence.memory.retention_policy;
+  import uim.platform.logging.infrastructure.persistence.memory.alert_rule;
+  import uim.platform.logging.infrastructure.persistence.memory.alert;
+  import uim.platform.logging.infrastructure.persistence.memory.notification_channel;
+  import uim.platform.logging.infrastructure.persistence.memory.pipeline;
+  import uim.platform.logging.infrastructure.persistence.memory.ingestion_token;
 }

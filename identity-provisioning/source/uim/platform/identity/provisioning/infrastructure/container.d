@@ -8,13 +8,13 @@ module uim.platform.identity.provisioning.infrastructure.container;
 import uim.platform.identity.provisioning.infrastructure.config;
 
 // Repositories
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.source_system_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.target_system_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log_repo;
-import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entity_repo;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.source_system;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.target_system;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.proxy_system;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.transformation;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_job;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioning_log;
+import uim.platform.identity.provisioning.infrastructure.persistence.memory.provisioned_entity;
 
 // Domain services
 import uim.platform.identity.provisioning.domain.services.provisioning_engine;

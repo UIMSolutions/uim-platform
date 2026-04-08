@@ -8,15 +8,15 @@ module uim.platform.management.infrastructure.container;
 // import uim.platform.management.infrastructure.config;
 
 // // Repositories
-// import uim.platform.management.infrastructure.persistence.memory.global_account_repo;
-// import uim.platform.management.infrastructure.persistence.memory.directory_repo;
-// import uim.platform.management.infrastructure.persistence.memory.subaccount_repo;
-// import uim.platform.management.infrastructure.persistence.memory.entitlement_repo;
-// import uim.platform.management.infrastructure.persistence.memory.environment_instance_repo;
-// import uim.platform.management.infrastructure.persistence.memory.subscription_repo;
-// import uim.platform.management.infrastructure.persistence.memory.service_plan_repo;
-// import uim.platform.management.infrastructure.persistence.memory.platform_event_repo;
-// import uim.platform.management.infrastructure.persistence.memory.label_repo;
+// import uim.platform.management.infrastructure.persistence.memory.global_account;
+// import uim.platform.management.infrastructure.persistence.memory.directory;
+// import uim.platform.management.infrastructure.persistence.memory.subaccount;
+// import uim.platform.management.infrastructure.persistence.memory.entitlement;
+// import uim.platform.management.infrastructure.persistence.memory.environment_instance;
+// import uim.platform.management.infrastructure.persistence.memory.subscription;
+// import uim.platform.management.infrastructure.persistence.memory.service_plan;
+// import uim.platform.management.infrastructure.persistence.memory.platform_event;
+// import uim.platform.management.infrastructure.persistence.memory.label;
 
 // // Domain Services
 // import uim.platform.management.domain.services.entitlement_evaluator;

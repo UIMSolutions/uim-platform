@@ -8,16 +8,16 @@ module uim.platform.workzone.infrastructure.container;
 import uim.platform.workzone.infrastructure.config;
 
 // Repositories
-import uim.platform.workzone.infrastructure.persistence.memory.workspace_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.workpage_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.card_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.content_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.feed_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.notification_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.task_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.channel_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.app_repo;
-import uim.platform.workzone.infrastructure.persistence.memory.widget_repo;
+import uim.platform.workzone.infrastructure.persistence.memory.workspace;
+import uim.platform.workzone.infrastructure.persistence.memory.workpage;
+import uim.platform.workzone.infrastructure.persistence.memory.card;
+import uim.platform.workzone.infrastructure.persistence.memory.content;
+import uim.platform.workzone.infrastructure.persistence.memory.feed;
+import uim.platform.workzone.infrastructure.persistence.memory.notification;
+import uim.platform.workzone.infrastructure.persistence.memory.task;
+import uim.platform.workzone.infrastructure.persistence.memory.channel;
+import uim.platform.workzone.infrastructure.persistence.memory.app;
+import uim.platform.workzone.infrastructure.persistence.memory.widget;
 
 // Use Cases
 import uim.platform.workzone.application.usecases.manage.workspaces;

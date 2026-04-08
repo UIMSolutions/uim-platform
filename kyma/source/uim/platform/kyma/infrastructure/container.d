@@ -8,15 +8,15 @@ module uim.platform.kyma.infrastructure.container;
 import uim.platform.kyma.infrastructure.config;
 
 // Repositories
-import uim.platform.kyma.infrastructure.persistence.memory.environment_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.namespace_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.function_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.api_rule_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.service_instance_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.service_binding_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.event_subscription_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.module_repo;
-import uim.platform.kyma.infrastructure.persistence.memory.application_repo;
+import uim.platform.kyma.infrastructure.persistence.memory.environment;
+import uim.platform.kyma.infrastructure.persistence.memory.namespace;
+import uim.platform.kyma.infrastructure.persistence.memory.function;
+import uim.platform.kyma.infrastructure.persistence.memory.api_rule;
+import uim.platform.kyma.infrastructure.persistence.memory.service_instance;
+import uim.platform.kyma.infrastructure.persistence.memory.service_binding;
+import uim.platform.kyma.infrastructure.persistence.memory.event_subscription;
+import uim.platform.kyma.infrastructure.persistence.memory.module;
+import uim.platform.kyma.infrastructure.persistence.memory.application;
 
 // Domain services
 import uim.platform.kyma.domain.services.module_dependency_resolver;

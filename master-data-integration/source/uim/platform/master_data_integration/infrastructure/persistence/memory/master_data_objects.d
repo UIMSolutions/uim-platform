@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.master_data_integration.infrastructure.persistence.memory
-  .master_data_object_repo;
+  .master_data_object;
 
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.domain.entities.master_data_object;
