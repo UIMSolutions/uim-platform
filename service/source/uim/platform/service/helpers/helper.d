@@ -216,3 +216,9 @@ size_t indexOfSeparator(string key) {
   }
   return 0;
 }
+
+long clockSeconds() {
+  import core.time : MonoTime;
+
+  return MonoTime.currTime.ticks / 10_000_000;
+}

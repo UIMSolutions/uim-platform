@@ -40,7 +40,7 @@ class ManageModulesUseCase : UIMUseCase {
     auto id = existing.id.length > 0 ? existing.id : randomUUID().toString();
 
     KymaModule mod;
-    mod.id = id;
+    mod.moduleId = id;
     mod.environmentId = request.environmentId;
     mod.tenantId = request.tenantId;
     mod.name = request.name;
@@ -92,14 +92,14 @@ class ManageModulesUseCase : UIMUseCase {
     mod.status = ModuleStatus.uninstalling;
     mod.modifiedAt = clockSeconds();
     moduleRepository.update(mod);
-    return CommandResult(true, moduleId, "");
+    return CommandResult(true, moduleId.toString, "");
   }
 
   CommandResult updateModule(ModuleId moduleId, UpdateModuleRequest request) {
-    auto mod = moduleRepository.findById(moduleId);
-    if (mod.id.isEmpty)
+    if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
 
+    auto mod = moduleRepository.findById(moduleId);
     if (request.version_.length > 0)
       mod.version_ = request.version_;
     if (request.channel.length > 0)
@@ -118,20 +118,20 @@ class ManageModulesUseCase : UIMUseCase {
     return moduleRepository.findById(moduleId);
   }
 
-  KymaModule[] listByEnvironment(KymaEnvironmentId envId) {
-    return moduleRepository.findByEnvironment(envId);
+  KymaModule[] listByEnvironment(KymaEnvironmentId environmentId) {
+    return moduleRepository.findByEnvironment(environmentId);
   }
 
   CommandResult deleteModule(ModuleId moduleId) {
-    auto mod = moduleRepository.findById(moduleId);
-    if (mod.id.isEmpty)
+    if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
-    moduleRepository.remove(id);
-    return CommandResult(true, id, "");
+
+    moduleRepository.remove(moduleId);
+    return CommandResult(true, moduleId.toString, "");
   }
 
-  private ModuleType parseModuleType(string s) {
-    switch (s) {
+  private ModuleType parseModuleType(string typeName) {
+    switch (typeName) {
     case "istio":
       return ModuleType.istio;
     case "api-gateway":
@@ -155,8 +155,8 @@ class ManageModulesUseCase : UIMUseCase {
     }
   }
 
-  private string[] getKnownDependencies(ModuleType t) {
-    switch (t) {
+  private string[] getKnownDependencies(ModuleType type) {
+    switch (type) {
     case ModuleType.apiGateway:
       return ["istio"];
     case ModuleType.serverless:
@@ -173,8 +173,4 @@ class ManageModulesUseCase : UIMUseCase {
   }
 }
 
-private long clockSeconds() {
-  import core.time : MonoTime;
 
-  return MonoTime.currTime.ticks / 10_000_000;
-}

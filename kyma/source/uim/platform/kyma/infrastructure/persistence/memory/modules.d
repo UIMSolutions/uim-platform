@@ -15,40 +15,46 @@ import uim.platform.kyma.domain.ports.repositories.modules;
 class MemoryModuleRepository : ModuleRepository {
   private KymaModule[ModuleId] store;
 
-  KymaModule findById(ModuleId id) {
-    if (auto p = id in store)
-      return *p;
+  bool existsById(ModuleId moduleId) {
+    return (moduleId in store) ? true : false;
+  }
+
+  KymaModule findById(ModuleId moduleId) {
+    return existsById(moduleId) ? store[moduleId] : KymaModule.init;
+  }
+
+  bool existsByName(KymaEnvironmentId environmentId, string name) {
+    return store.byValue().any!(e => e.environmentId == environmentId && e.name == name);
+  }
+
+  KymaModule findByName(KymaEnvironmentId environmentId, string name) {
+    foreach (enviroment; store.byValue())
+      if (enviroment.environmentId == environmentId && enviroment.name == name)
+        return enviroment;
     return KymaModule.init;
   }
 
-  KymaModule findByName(KymaEnvironmentId envId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.environmentId == envId && e.name == name)
-        return e;
-    return KymaModule.init;
-  }
-
-  KymaModule[] findByEnvironment(KymaEnvironmentId envId) {
-    return store.byValue().filter!(e => e.environmentId == envId).array;
+  KymaModule[] findByEnvironment(KymaEnvironmentId environmentId) {
+    return store.byValue().filter!(enviroment => enviroment.environmentId == environmentId).array;
   }
 
   KymaModule[] findByStatus(ModuleStatus status) {
-    return store.byValue().filter!(e => e.status == status).array;
+    return store.byValue().filter!(enviroment => enviroment.status == status).array;
   }
 
   KymaModule[] findByType(ModuleType moduleType) {
-    return store.byValue().filter!(e => e.moduleType == moduleType).array;
+    return store.byValue().filter!(enviroment => enviroment.moduleType == moduleType).array;
   }
 
   void save(KymaModule mod) {
-    store[mod.id] = mod;
+    store[mod.moduleId] = mod;
   }
 
   void update(KymaModule mod) {
-    store[mod.id] = mod;
+    store[mod.moduleId] = mod;
   }
 
-  void remove(ModuleId id) {
-    store.remove(id);
+  void remove(ModuleId moduleId) {
+    store.remove(moduleId);
   }
 }

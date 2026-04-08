@@ -202,9 +202,9 @@ class CertificateController : SAPController {
 
   private static Json serializeCertificate(const ref Certificate c) {
     auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["subaccountId"] = Json(c.subaccountId);
+    j["id"] = c.id.toJson();
+    j["tenantId"] = c.tenantId.toJson();
+    j["subaccountId"] = c.subaccountId.toJson();
     j["name"] = Json(c.name);
     j["description"] = Json(c.description);
     j["type"] = Json(c.certificateType.to!string);

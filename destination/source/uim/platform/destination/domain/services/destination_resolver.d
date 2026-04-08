@@ -67,7 +67,7 @@ struct DestinationResolver {
     case AuthenticationType.basicAuthentication:
       auto creds = cast(ubyte[])(dest.user ~ ":" ~ dest.password).dup;
       token.type_ = "Basic";
-      token.value_ = (() @trusted => Base64.encode(creds))();
+      token.value_ = (() @trusted => Base64.encode(creds).idup)();
       token.status = TokenStatus.valid;
       token.expiresAt = 0; // non-expiring
       break;

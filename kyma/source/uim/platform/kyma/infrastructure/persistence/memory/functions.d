@@ -19,29 +19,29 @@ mixin(ShowModule!());
 class MemoryFunctionRepository : FunctionRepository {
   private ServerlessFunction[FunctionId] store;
 
-  bool exists(FunctionId id) {
-    return (id in store) ? true : false;
+  bool existsById(FunctionId functionId) {
+    return (functionId in store) ? true : false;
   }
 
-  ServerlessFunction findById(FunctionId id) {
-    if (auto p = id in store)
+  ServerlessFunction findById(FunctionId functionId) {
+    if (auto p = functionId in store)
       return *p;
     return ServerlessFunction.init;
   }
 
-  ServerlessFunction findByName(NamespaceId nsId, string name) {
+  ServerlessFunction findByName(NamespaceId namespaceId, string name) {
     foreach (ref e; store.byValue())
-      if (e.namespaceId == nsId && e.name == name)
+      if (e.namespaceId == namespaceId && e.name == name)
         return e;
     return ServerlessFunction.init;
   }
 
-  ServerlessFunction[] findByNamespace(NamespaceId nsId) {
-    return store.byValue().filter!(e => e.namespaceId == nsId).array;
+  ServerlessFunction[] findByNamespace(NamespaceId namespaceId) {
+    return store.byValue().filter!(e => e.namespaceId == namespaceId).array;
   }
 
-  ServerlessFunction[] findByEnvironment(KymaEnvironmentId envId) {
-    return store.byValue().filter!(e => e.environmentId == envId).array;
+  ServerlessFunction[] findByEnvironment(KymaEnvironmentId environmentId) {
+    return store.byValue().filter!(e => e.environmentId == environmentId).array;
   }
 
   ServerlessFunction[] findByStatus(FunctionStatus status) {
@@ -53,10 +53,10 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   void update(ServerlessFunction fn) {
-    store[fn.id] = fn;
+    store[fn.functionId] = fn;
   }
 
-  void remove(FunctionId id) {
-    store.remove(id);
+  void remove(FunctionId functionId) {
+    store.remove(functionId);
   }
 }

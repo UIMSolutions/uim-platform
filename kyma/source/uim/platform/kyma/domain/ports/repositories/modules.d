@@ -14,12 +14,17 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — Kyma module persistence.
 interface ModuleRepository {
-  KymaModule findById(ModuleId id);
-  KymaModule findByName(KymaEnvironmentId envId, string name);
-  KymaModule[] findByEnvironment(KymaEnvironmentId envId);
+  bool existsById(ModuleId moduleId);
+  KymaModule findById(ModuleId moduleId);
+
+  bool existsByName(KymaEnvironmentId environmentId, string name);
+  KymaModule findByName(KymaEnvironmentId environmentId, string name);
+
+  KymaModule[] findByEnvironment(KymaEnvironmentId environmentId);
   KymaModule[] findByStatus(ModuleStatus status);
   KymaModule[] findByType(ModuleType moduleType);
+
   void save(KymaModule mod);
   void update(KymaModule mod);
-  void remove(ModuleId id);
+  void remove(ModuleId moduleId);
 }

@@ -198,10 +198,10 @@ class DestinationController : SAPController {
 
   private static Json serializeDestination(const ref Destination d) {
     auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["subaccountId"] = Json(d.subaccountId);
-    j["serviceInstanceId"] = Json(d.serviceInstanceId);
+    j["id"] = d.id.toJson();
+    j["tenantId"] = d.tenantId.toJson();
+    j["subaccountId"] = d.subaccountId.toJson();
+    j["serviceInstanceId"] = d.serviceInstanceId.toJson();
     j["name"] = Json(d.name);
     j["description"] = Json(d.description);
     j["type"] = Json(d.destinationType.to!string);
@@ -211,8 +211,17 @@ class DestinationController : SAPController {
     j["level"] = Json(d.level.to!string);
     j["status"] = Json(d.status.to!string);
     j["locationId"] = Json(d.locationId);
-    j["properties"] = toJsonObject(d.properties);
-    j["fragmentIds"] = toJsonArray(d.fragmentIds);
+
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; d.properties)
+      propsJson[k] = Json(v);
+    j["properties"] = propsJson;
+
+    auto fragArr = Json.emptyArray;
+    foreach (ref fid; d.fragmentIds)
+      fragArr ~= fid.toJson();
+    j["fragmentIds"] = fragArr;
+
     j["createdBy"] = Json(d.createdBy);
     j["createdAt"] = Json(d.createdAt);
     j["modifiedAt"] = Json(d.modifiedAt);

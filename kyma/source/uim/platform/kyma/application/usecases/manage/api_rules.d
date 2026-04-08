@@ -130,7 +130,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     rule.modifiedAt = clockSeconds();
 
     ruleRepository.update(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ApiRule getApiRule(ApiRuleId id) {
@@ -146,15 +146,16 @@ class ManageApiRulesUseCase : UIMUseCase {
   }
 
   CommandResult deleteApiRule(ApiRuleId id) {
-    auto rule = ruleRepository.findById(id);
-    if (rule.ruleId.isEmpty)
+    if (!ruleRepository.existsById(id))
       return CommandResult(false, "", "API rule not found");
+
+    auto rule = ruleRepository.findById(id);
     ruleRepository.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
-  private AccessStrategy parseAccessStrategy(string s) {
-    switch (s) {
+  private AccessStrategy parseAccessStrategy(string strategyName) {
+    switch (strategyName.toLower()) {
     case "noAuth":
       return AccessStrategy.noAuth;
     case "oauth2_introspection":
@@ -190,8 +191,4 @@ class ManageApiRulesUseCase : UIMUseCase {
   }
 }
 
-private long clockSeconds() {
-  import core.time : MonoTime;
 
-  return MonoTime.currTime.ticks / 10_000_000;
-}

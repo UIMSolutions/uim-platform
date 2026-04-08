@@ -165,9 +165,9 @@ class FragmentController : SAPController {
 
   private static Json serializeFragment(const ref DestinationFragment f) {
     auto j = Json.emptyObject;
-    j["id"] = Json(f.id);
-    j["tenantId"] = Json(f.tenantId);
-    j["subaccountId"] = Json(f.subaccountId);
+    j["id"] = f.id.toJson();
+    j["tenantId"] = f.tenantId.toJson();
+    j["subaccountId"] = f.subaccountId.toJson();
     j["name"] = Json(f.name);
     j["description"] = Json(f.description);
     j["level"] = Json(f.level.to!string);
@@ -175,7 +175,12 @@ class FragmentController : SAPController {
     j["authentication"] = Json(f.authenticationType);
     j["proxyType"] = Json(f.proxyType);
     j["locationId"] = Json(f.locationId);
-    j["properties"] = toJsonObject(f.properties);
+
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; f.properties)
+      propsJson[k] = Json(v);
+    j["properties"] = propsJson;
+
     j["createdBy"] = Json(f.createdBy);
     j["createdAt"] = Json(f.createdAt);
     j["modifiedAt"] = Json(f.modifiedAt);

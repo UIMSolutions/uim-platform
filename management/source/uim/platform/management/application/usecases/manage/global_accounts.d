@@ -181,11 +181,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   }
 }
 
-private long clockSeconds() {
-  import core.time : MonoTime;
 
-  return MonoTime.currTime.ticks / 10_000_000;
-}
 
 private LicenseType parseLicenseType(string s) {
   switch (s) {

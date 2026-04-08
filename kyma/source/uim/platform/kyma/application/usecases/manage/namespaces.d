@@ -25,18 +25,15 @@ class ManageNamespacesUseCase : UIMUseCase {
   CommandResult create(CreateNamespaceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Namespace name is required");
-    if (req.environmentid.isEmpty)
+
+    if (req.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
-    auto existing = repo.findByName(req.environmentId, req.name);
-    if (existing.id.length > 0)
+    if (repo.existsByName(req.environmentId, req.name))
       return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
-
     Namespace ns;
-    ns.id = id;
+    ns.namespaceId = randomUUID();
     ns.environmentId = req.environmentId;
     ns.tenantId = req.tenantId;
     ns.name = req.name;
@@ -56,14 +53,14 @@ class ManageNamespacesUseCase : UIMUseCase {
     ns.modifiedAt = ns.createdAt;
 
     repo.save(ns);
-    return CommandResult(true, id, "");
+    return CommandResult(true, ns.namespaceId, "");
   }
 
   CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
-    auto ns = repo.findById(id);
-    if (ns.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Namespace not found");
 
+    auto ns = repo.findById(id);
     if (req.description.length > 0)
       ns.description = req.description;
     if (req.cpuLimit.length > 0)
@@ -89,20 +86,20 @@ class ManageNamespacesUseCase : UIMUseCase {
     return CommandResult(true, id, "");
   }
 
-  Namespace getNamespace(NamespaceId id) {
-    return repo.findById(id);
+  Namespace getNamespace(NamespaceId namespaceId) {
+    return repo.findById(namespaceId);
   }
 
   Namespace[] listByEnvironment(KymaEnvironmentId envId) {
     return repo.findByEnvironment(envId);
   }
 
-  CommandResult deleteNamespace(NamespaceId id) {
-    auto ns = repo.findById(id);
-    if (ns.id.isEmpty)
+  CommandResult deleteNamespace(NamespaceId namespaceId) {
+    if (!repo.existsById(namespaceId))
       return CommandResult(false, "", "Namespace not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+
+    repo.remove(namespaceId);
+    return CommandResult(true, namespaceId.toString, "");
   }
 
   private QuotaEnforcement parseQuotaEnforcement(string s) {
@@ -117,10 +114,4 @@ class ManageNamespacesUseCase : UIMUseCase {
       return QuotaEnforcement.enforce;
     }
   }
-}
-
-private long clockSeconds() {
-  import core.time : MonoTime;
-
-  return MonoTime.currTime.ticks / 10_000_000;
 }

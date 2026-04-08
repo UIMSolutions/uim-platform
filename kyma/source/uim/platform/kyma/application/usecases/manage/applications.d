@@ -79,10 +79,10 @@ class ManageApplicationsUseCase : UIMUseCase {
   }
 
   CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req) {
-    auto app = appRepository.findById(id);
-    if (app.id.isEmpty)
+    if (!appRepository.existsById(id))
       return CommandResult(false, "", "Application not found");
 
+    auto app = appRepository.findById(id);
     if (req.description.length > 0)
       app.description = req.description;
     if (req.connectorUrl.length > 0)
@@ -120,27 +120,29 @@ class ManageApplicationsUseCase : UIMUseCase {
 
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   CommandResult connectApplication(ApplicationId id) {
-    auto app = appRepository.findById(id);
-    if (app.id.isEmpty)
+    if (!appRepository.existsById(id))
       return CommandResult(false, "", "Application not found");
+
+    auto app = appRepository.findById(id);
     app.status = AppConnectivityStatus.connected;
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   CommandResult disconnectApplication(ApplicationId id) {
-    auto app = appRepository.findById(id);
-    if (app.id.isEmpty)
+    if (!appRepository.existsById(id))
       return CommandResult(false, "", "Application not found");
+
+    auto app = appRepository.findById(id);
     app.status = AppConnectivityStatus.disconnected;
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   Application getApplication(ApplicationId id) {
@@ -156,11 +158,12 @@ class ManageApplicationsUseCase : UIMUseCase {
   }
 
   CommandResult deleteApplication(ApplicationId id) {
-    auto app = appRepository.findById(id);
-    if (app.id.isEmpty)
+    if (!appRepository.existsById(id))
       return CommandResult(false, "", "Application not found");
+
+    auto app = appRepository.findById(id);
     appRepository.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   private AppRegistrationType parseRegistrationType(string type) {
@@ -177,8 +180,4 @@ class ManageApplicationsUseCase : UIMUseCase {
   }
 }
 
-private long clockSeconds() {
-  import core.time : MonoTime;
 
-  return MonoTime.currTime.ticks / 10_000_000;
-}

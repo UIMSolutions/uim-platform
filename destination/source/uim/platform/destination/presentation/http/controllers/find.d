@@ -50,8 +50,15 @@ class FindController : SAPController {
       j["authentication"] = Json(result.authenticationType);
       j["proxyType"] = Json(result.proxyType);
       j["type"] = Json(result.destinationType);
-      j["properties"] = toJsonObject(result.properties);
-      j["appliedFragments"] = toJsonArray(result.appliedFragments);
+      auto propsJson = Json.emptyObject;
+      foreach (k, v; result.properties)
+        propsJson[k] = Json(v);
+      j["properties"] = propsJson;
+
+      auto fragArr = Json.emptyArray;
+      foreach (ref s; result.appliedFragments)
+        fragArr ~= Json(s);
+      j["appliedFragments"] = fragArr;
 
       // Auth tokens
       auto tokenArr = Json.emptyArray;
