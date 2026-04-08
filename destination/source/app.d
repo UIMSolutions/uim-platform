@@ -18,7 +18,6 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-@safe:
 
 version (unittest) {
 }

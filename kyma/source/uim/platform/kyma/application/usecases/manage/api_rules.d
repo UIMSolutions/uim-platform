@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.api_rules;
 
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.api_rule;
-import uim.platform.kyma.domain.ports.repositories.api_rules;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.api_rule;
+// import uim.platform.kyma.domain.ports.repositories.api_rules;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for API rule management.
 class ManageApiRulesUseCase : UIMUseCase {
   private ApiRuleRepository repo;

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.service_bindings;
 
-import uim.platform.kyma.application.dto;
+/* import uim.platform.kyma.application.dto;
 import uim.platform.kyma.domain.entities.service_binding;
 import uim.platform.kyma.domain.ports.repositories.service_bindings;
-import uim.platform.kyma.domain.types;
+import uim.platform.kyma.domain.types; */
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for service binding management.
 class ManageServiceBindingsUseCase : UIMUseCase {
   private ServiceBindingRepository repo;

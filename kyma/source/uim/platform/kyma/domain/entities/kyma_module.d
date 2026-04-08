@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.kyma_module;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// A Kyma module — an optional component that can be enabled/disabled.
 struct KymaModule {
+  TenantId tenantId;
   ModuleId id;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   ModuleType moduleType = ModuleType.custom;

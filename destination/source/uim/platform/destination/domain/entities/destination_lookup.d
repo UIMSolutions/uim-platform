@@ -23,5 +23,3 @@ struct DestinationLookup {
   bool found;
   string error;
 }
-
-import uim.platform.destination.domain.entities.destination_fragment;

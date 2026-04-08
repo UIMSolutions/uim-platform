@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.environments;
 
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.kyma_environment;
-import uim.platform.kyma.domain.ports.repositories.environments;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.kyma_environment;
+// import uim.platform.kyma.domain.ports.repositories.environments;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for Kyma environment lifecycle management.
 class ManageEnvironmentsUseCase : UIMUseCase {
   private EnvironmentRepository repo;

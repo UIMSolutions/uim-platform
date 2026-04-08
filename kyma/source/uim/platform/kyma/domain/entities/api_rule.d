@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.api_rule;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// An API rule — exposes a service or function via the API Gateway.
 struct ApiRule {
-  ApiRuleId id;
+  TenantId tenantId;
+  ApiRuleId ruleId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   ApiRuleStatus status = ApiRuleStatus.notReady;

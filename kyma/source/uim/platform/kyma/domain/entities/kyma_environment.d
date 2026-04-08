@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.kyma_environment;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// A Kyma environment — a managed Kubernetes cluster with Kyma modules.
 struct KymaEnvironment {
-  KymaEnvironmentId id;
   TenantId tenantId;
+  KymaEnvironmentId id;
   SubaccountId subaccountId;
   ClusterId clusterId;
   string name;

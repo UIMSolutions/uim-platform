@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.event_subscription;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// An event subscription — subscribes to events from a source.
 struct EventSubscription {
+  TenantId tenantId;
   EventSubscriptionId id;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   SubscriptionStatus status = SubscriptionStatus.pending;

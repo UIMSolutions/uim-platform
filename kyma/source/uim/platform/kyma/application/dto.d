@@ -4,9 +4,13 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.application.dto;
+/* 
+import uim.platform.kyma.domain.types; */
+import uim.platform.kyma;
 
-import uim.platform.kyma.domain.types;
+mixin(ShowModule!());
 
+@safe:
 /// --- Command result ---
 
 struct CommandResult {

@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.application;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// An external application connected to the Kyma environment.
 struct Application {
+  TenantId tenantId;
   ApplicationId id;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   AppConnectivityStatus status = AppConnectivityStatus.disconnected;

@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.application.usecases.manage.event_subscriptions;
 
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.event_subscription;
-import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.event_subscription;
+// import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for event subscription management.
 class ManageEventSubscriptionsUseCase : UIMUseCase {
   private EventSubscriptionRepository repo;
