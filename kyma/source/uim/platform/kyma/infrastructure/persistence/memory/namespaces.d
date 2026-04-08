@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.namespace;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.namespace;
-import uim.platform.kyma.domain.ports.repositories.namespaces;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.namespace;
+// import uim.platform.kyma.domain.ports.repositories.namespaces;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryNamespaceRepository : NamespaceRepository {
   private Namespace[NamespaceId] store;
 

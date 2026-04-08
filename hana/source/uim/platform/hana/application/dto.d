@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.hana.application.dto;
 
-import uim.platform.hana.domain.types;
+import uim.platform.hana;
 
 // --- Database Instance ---
 

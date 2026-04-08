@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.infrastructure.persistence.memory.application;
+module uim.platform.kyma.infrastructure.persistence.memory.applications;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.application;
-import uim.platform.kyma.domain.ports.repositories.applications;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.application;
+// import uim.platform.kyma.domain.ports.repositories.applications;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 

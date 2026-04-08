@@ -16,7 +16,7 @@ alias HDIContainerId = string;
 alias ReplicationTaskId = string;
 alias ConfigurationId = string;
 alias DatabaseConnectionId = string;
-alias TenantId = string;
+// TenantId is provided by uim.platform.service
 
 // Database instance type
 enum InstanceType {

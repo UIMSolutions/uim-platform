@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.service_binding;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.service_binding;
-import uim.platform.kyma.domain.ports.repositories.service_bindings;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.service_binding;
+// import uim.platform.kyma.domain.ports.repositories.service_bindings;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
