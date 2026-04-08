@@ -38,7 +38,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ServiceInstance inst;
-    inst.id = id;
+    inst.id = randomUUID();
     inst.namespaceId = req.namespaceId;
     inst.environmentId = req.environmentId;
     inst.tenantId = req.tenantId;

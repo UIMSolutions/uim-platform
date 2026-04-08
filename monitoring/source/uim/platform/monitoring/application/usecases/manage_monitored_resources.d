@@ -32,7 +32,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     MonitoredResource r;
-    r.id = id;
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.subaccountId = req.subaccountId;
     r.name = req.name;

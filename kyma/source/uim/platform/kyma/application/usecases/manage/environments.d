@@ -34,7 +34,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     KymaEnvironment env;
-    env.id = id;
+    env.id = randomUUID();
     env.tenantId = req.tenantId;
     env.subaccountId = req.subaccountId;
     env.clusterId = "cluster-" ~ id[0 .. 8];

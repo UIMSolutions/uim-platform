@@ -38,7 +38,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     EventSubscription sub;
-    sub.id = id;
+    sub.id = randomUUID();
     sub.namespaceId = req.namespaceId;
     sub.environmentId = req.environmentId;
     sub.tenantId = req.tenantId;

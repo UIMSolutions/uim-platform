@@ -31,7 +31,7 @@ class ManageLabelsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Label lbl;
-    lbl.id = id;
+    lbl.id = randomUUID();
     lbl.resourceType = parseResourceType(req.resourceType);
     lbl.resourceId = req.resourceId;
     lbl.key = req.key;

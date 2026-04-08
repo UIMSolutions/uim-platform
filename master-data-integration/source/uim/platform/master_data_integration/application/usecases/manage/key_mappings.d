@@ -31,7 +31,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     KeyMapping mapping;
-    mapping.id = id;
+    mapping.id = randomUUID();
     mapping.tenantId = req.tenantId;
     mapping.masterDataObjectId = req.masterDataObjectId;
     mapping.category = parseCategory(req.category);

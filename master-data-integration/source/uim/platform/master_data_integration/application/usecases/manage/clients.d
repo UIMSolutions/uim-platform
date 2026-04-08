@@ -26,7 +26,7 @@ class ManageClientsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Client client;
-    client.id = id;
+    client.id = randomUUID();
     client.tenantId = req.tenantId;
     client.name = req.name;
     client.description = req.description;

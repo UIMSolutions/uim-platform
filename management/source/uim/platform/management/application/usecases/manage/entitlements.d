@@ -40,7 +40,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Entitlement ent;
-    ent.id = id;
+    ent.id = randomUUID();
     ent.globalAccountId = req.globalAccountId;
     ent.directoryId = req.directoryId;
     ent.subaccountId = req.subaccountId;

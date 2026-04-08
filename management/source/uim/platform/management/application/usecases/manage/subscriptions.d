@@ -40,7 +40,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Subscription sub;
-    sub.id = id;
+    sub.id = randomUUID();
     sub.subaccountId = req.subaccountId;
     sub.globalAccountId = req.globalAccountId;
     sub.appName = req.appName;

@@ -49,7 +49,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     EnvironmentInstance inst;
-    inst.id = id;
+    inst.id = randomUUID();
     inst.subaccountId = req.subaccountId;
     inst.globalAccountId = req.globalAccountId;
     inst.name = req.name;

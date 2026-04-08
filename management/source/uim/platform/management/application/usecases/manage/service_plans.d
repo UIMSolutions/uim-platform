@@ -29,7 +29,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ServicePlan plan;
-    plan.id = id;
+    plan.id = randomUUID();
     plan.serviceName = req.serviceName;
     plan.serviceDisplayName = req.serviceDisplayName;
     plan.planName = req.planName;

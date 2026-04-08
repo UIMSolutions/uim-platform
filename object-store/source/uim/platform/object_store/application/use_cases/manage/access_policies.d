@@ -37,7 +37,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto policy = new AccessPolicy();
-    policy.id = id;
+    policy.id = randomUUID();
     policy.tenantId = req.tenantId;
     policy.bucketId = req.bucketId;
     policy.name = req.name;

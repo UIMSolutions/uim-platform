@@ -52,7 +52,7 @@ class ManageObjectsUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto obj = new StorageObject();
-    obj.id = id;
+    obj.id = randomUUID();
     obj.tenantId = req.tenantId;
     obj.bucketId = req.bucketId;
     obj.key = req.key;
@@ -203,7 +203,7 @@ class ManageObjectsUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto copy = new StorageObject();
-    copy.id = id;
+    copy.id = randomUUID();
     copy.tenantId = req.tenantId;
     copy.bucketId = req.destBucketId;
     copy.key = req.destKey;

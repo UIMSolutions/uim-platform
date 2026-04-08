@@ -28,7 +28,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     DistributionModel model;
-    model.id = id;
+    model.id = randomUUID();
     model.tenantId = req.tenantId;
     model.name = req.name;
     model.description = req.description;

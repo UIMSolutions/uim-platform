@@ -28,7 +28,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     DataModel model;
-    model.id = id;
+    model.id = randomUUID();
     model.tenantId = req.tenantId;
     model.name = req.name;
     model.namespace = req.namespace;

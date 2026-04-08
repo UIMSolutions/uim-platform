@@ -42,7 +42,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Subaccount sub;
-    sub.id = id;
+    sub.id = randomUUID();
     sub.globalAccountId = req.globalAccountId;
     sub.parentDirectoryId = req.parentDirectoryId;
     sub.displayName = req.displayName;

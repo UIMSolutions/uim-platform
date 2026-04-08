@@ -28,7 +28,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ReplicationJob job;
-    job.id = id;
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.distributionModelId = req.distributionModelId;
     job.name = req.name.length > 0 ? req.name : "Replication-" ~ id[0 .. 8];

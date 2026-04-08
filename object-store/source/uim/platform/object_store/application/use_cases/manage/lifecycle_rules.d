@@ -37,7 +37,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto rule = new LifecycleRule();
-    rule.id = id;
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.bucketId = req.bucketId;
     rule.name = req.name;

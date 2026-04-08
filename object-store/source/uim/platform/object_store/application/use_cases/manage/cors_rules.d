@@ -35,7 +35,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto rule = new CorsRule();
-    rule.id = id;
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.bucketId = req.bucketId;
     rule.allowedOrigins = req.allowedOrigins;

@@ -35,7 +35,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Directory d;
-    d.id = id;
+    d.id = randomUUID();
     d.globalAccountId = req.globalAccountId;
     d.parentDirectoryId = req.parentDirectoryId;
     d.displayName = req.displayName;

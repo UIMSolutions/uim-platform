@@ -26,7 +26,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     FilterRule rule;
-    rule.id = id;
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.name = req.name;
     rule.description = req.description;

@@ -36,7 +36,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ServiceBinding binding;
-    binding.id = id;
+    binding.id = randomUUID();
     binding.serviceInstanceId = req.serviceInstanceId;
     binding.namespaceId = req.namespaceId;
     binding.environmentId = req.environmentId;

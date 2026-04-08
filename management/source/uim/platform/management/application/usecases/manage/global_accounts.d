@@ -33,7 +33,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     GlobalAccount ga;
-    ga.id = id;
+    ga.id = randomUUID();
     ga.displayName = req.displayName;
     ga.description = req.description;
     ga.contractNumber = req.contractNumber;

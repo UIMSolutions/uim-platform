@@ -32,7 +32,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     MasterDataObject obj;
-    obj.id = id;
+    obj.id = randomUUID();
     obj.tenantId = req.tenantId;
     obj.dataModelId = req.dataModelId;
     obj.category = parseCategory(req.category);

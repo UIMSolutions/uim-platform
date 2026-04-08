@@ -38,7 +38,7 @@ class ManageMetricsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     MetricDefinition def;
-    def.id = id;
+    def.id = randomUUID();
     def.tenantId = req.tenantId;
     def.name = req.name;
     def.displayName = req.displayName.length > 0 ? req.displayName : req.name;
@@ -102,7 +102,7 @@ class ManageMetricsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Metric m;
-    m.id = id;
+    m.id = randomUUID();
     m.tenantId = req.tenantId;
     m.resourceId = req.resourceId;
     m.name = req.name;

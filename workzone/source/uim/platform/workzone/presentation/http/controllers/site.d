@@ -91,10 +91,9 @@ class SiteController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateSiteRequest();
-      r.id = id;
+      r.id = extractIdFromPath(req.requestURI);
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");

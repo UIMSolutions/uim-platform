@@ -28,7 +28,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     NotificationChannel ch;
-    ch.id = id;
+    ch.id = randomUUID();
     ch.tenantId = req.tenantId;
     ch.name = req.name;
     ch.description = req.description;

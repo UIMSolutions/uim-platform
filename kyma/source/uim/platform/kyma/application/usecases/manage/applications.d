@@ -36,7 +36,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Application app;
-    app.id = id;
+    app.id = randomUUID();
     app.environmentId = req.environmentId;
     app.tenantId = req.tenantId;
     app.name = req.name;

@@ -41,7 +41,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     auto ts = currentTimestamp();
 
     auto binding = new ServiceBinding();
-    binding.id = id;
+    binding.id = randomUUID();
     binding.tenantId = req.tenantId;
     binding.name = req.name;
     binding.bucketId = req.bucketId;

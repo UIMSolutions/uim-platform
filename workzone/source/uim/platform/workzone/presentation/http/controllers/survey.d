@@ -96,10 +96,9 @@ class SurveyController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateSurveyRequest();
-      r.id = id;
+      r.id = extractIdFromPath(req.requestURI);;
       r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");

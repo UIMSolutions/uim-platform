@@ -36,7 +36,7 @@ class ManageBucketsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     auto bucket = new Bucket();
-    bucket.id = id;
+    bucket.id = randomUUID();
     bucket.tenantId = req.tenantId;
     bucket.name = req.name;
     bucket.region = req.region;
