@@ -23,42 +23,42 @@ module uim.platform.destination.presentation.http.json_utils;
 
 
 /// Extract a string[string] map from a Json object.
-string[string] jsonStrMap(Json j, string key) {
-  if (!j.isObject)
-    return (string[string]).init;
-  auto v = key in j;
-  if (v is null || (*v).type != Json.Type.object)
-    return (string[string]).init;
+// string[string] jsonStrMap(Json j, string key) {
+//   if (!j.isObject)
+//     return (string[string]).init;
+//   auto v = key in j;
+//   if (v is null || (*v).type != Json.Type.object)
+//     return (string[string]).init;
 
-  string[string] result;
-  foreach (string k, val; *v) {
-    if (val.isString)
-      result[k] = val.get!string;
-  }
-  return result;
-}
+//   string[string] result;
+//   foreach (string k, val; *v) {
+//     if (val.isString)
+//       result[k] = val.get!string;
+//   }
+//   return result;
+// }
 
 /// Convert a string array to a Json array.
 
 
 /// Convert a string[string] map to a Json object.
-Json toJsonObject(const(string[string]) map) {
-  auto jobj = Json.emptyObject;
-  foreach (k, v; map)
-    jobj[k] = Json(v);
-  return jobj;
-}
+// Json toJsonObject(const(string[string]) map) {
+//   auto jobj = Json.emptyObject;
+//   foreach (k, v; map)
+//     jobj[k] = Json(v);
+//   return jobj;
+// }
 
-/// Write a JSON error response.
+// /// Write a JSON error response.
 
 
-/// Extract ID from the last segment of a request URI path.
-string extractIdFromPath(string uri) {
-  // import std.string : lastIndexOf;
-  auto qpos = lastIndexOf(uri, '?');
-  auto path = qpos >= 0 ? uri[0 .. qpos] : uri;
-  auto pos = lastIndexOf(path, '/');
-  if (pos >= 0 && pos + 1 < path.length)
-    return path[pos + 1 .. $];
-  return "";
-}
+// /// Extract ID from the last segment of a request URI path.
+// string extractIdFromPath(string uri) {
+//   // import std.string : lastIndexOf;
+//   auto qpos = lastIndexOf(uri, '?');
+//   auto path = qpos >= 0 ? uri[0 .. qpos] : uri;
+//   auto pos = lastIndexOf(path, '/');
+//   if (pos >= 0 && pos + 1 < path.length)
+//     return path[pos + 1 .. $];
+//   return "";
+// }

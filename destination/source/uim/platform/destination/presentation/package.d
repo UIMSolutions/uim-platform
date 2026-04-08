@@ -7,6 +7,4 @@ module uim.platform.destination.presentation;
 
 public {
   import uim.platform.destination.presentation.http;
-  import uim.platform.destination.presentation.api;
-  import uim.platform.destination.presentation.cli;
 }

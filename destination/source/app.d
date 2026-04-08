@@ -9,11 +9,15 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.destination.infrastructure.config;
-import uim.platform.destination.infrastructure.container;
+// import uim.platform.destination.infrastructure.config;
+// import uim.platform.destination.infrastructure.container;
 
 // import std.stdio : writefln;
+import uim.platform.destination;
 
+mixin(ShowModule!());
+
+@safe:
 @safe:
 
 version (unittest) {

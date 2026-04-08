@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.destination.domain.types;
+import uim.platform.destination;
 
+mixin(ShowModule!());
+
+@safe:
 /// Unique identifier type aliases for type safety.
 struct DestinationId {
   string value;

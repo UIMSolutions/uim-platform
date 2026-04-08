@@ -10,12 +10,16 @@ module uim.platform.destination.presentation.http.controllers.certificate;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.destination.application.usecases.manage.certificates;
-import uim.platform.destination.application.dto;
-import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.types;
-import uim.platform.destination.presentation.http.json_utils;
+// import uim.platform.destination.application.usecases.manage.certificates;
+// import uim.platform.destination.application.dto;
+// import uim.platform.destination.domain.entities.certificate;
+// import uim.platform.destination.domain.types;
+// import uim.platform.destination.presentation.http.json_utils;
+import uim.platform.destination;
 
+mixin(ShowModule!());
+
+@safe:
 class CertificateController {
   private ManageCertificatesUseCase uc;
 
