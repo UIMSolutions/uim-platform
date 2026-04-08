@@ -13,10 +13,10 @@ mixin(ShowModule!());
 @safe:
 /// A serverless function deployed in a Kyma namespace.
 struct ServerlessFunction {
-  FunctionId id;
+  TenantId tenantId;
+  FunctionId functionId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   FunctionRuntime runtime = FunctionRuntime.nodejs20;

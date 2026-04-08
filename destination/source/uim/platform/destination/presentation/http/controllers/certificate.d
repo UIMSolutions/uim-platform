@@ -20,7 +20,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class CertificateController {
+class CertificateController : SAPController {
   private ManageCertificatesUseCase uc;
 
   this(ManageCertificatesUseCase uc) {
@@ -75,7 +75,7 @@ class CertificateController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto typeFilter = req.params.get("type");
 
       Certificate[] certs;
@@ -124,7 +124,7 @@ class CertificateController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto c = uc.getCertificate(id);
       if (c.id.isEmpty) {
         writeError(res, 404, "Certificate not found");
@@ -139,7 +139,7 @@ class CertificateController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateCertificateRequest r;
       r.description = j.getString("description");
@@ -166,7 +166,7 @@ class CertificateController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = uc.removeCertificate(id);
       if (result.success) {
         auto resp = Json.emptyObject;
@@ -185,7 +185,7 @@ class CertificateController {
 
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = CertificateId(extractIdFromPath(req.requestURI));
       auto result = uc.validateCertificate(id);
 
       auto resp = Json.emptyObject;

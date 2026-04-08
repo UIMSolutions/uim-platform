@@ -17,39 +17,40 @@ mixin(ShowModule!());
 @safe:
 /// Application service for Kyma module management.
 class ManageModulesUseCase : UIMUseCase {
-  private ModuleRepository repo;
+  private ModuleRepository moduleRepository;
   private ModuleDependencyResolver depResolver;
 
-  this(ModuleRepository repo, ModuleDependencyResolver depResolver) {
-    this.repo = repo;
+  this(ModuleRepository moduleRepository, ModuleDependencyResolver depResolver) {
+    this.moduleRepository = moduleRepository;
     this.depResolver = depResolver;
   }
 
-  CommandResult enableModule(EnableModuleRequest req) {
-    if (req.name.length == 0)
+  CommandResult enableModule(EnableModuleRequest request) {
+    if (request.name.length == 0)
       return CommandResult(false, "", "Module name is required");
-    if (req.environmentid.isEmpty)
+
+    if (request.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
-    auto existing = repo.findByName(req.environmentId, req.name);
+    auto existing = moduleRepository.findByName(request.environmentId, request.name);
     if (existing.id.length > 0 && existing.status == ModuleStatus.enabled)
-      return CommandResult(false, "", "Module '" ~ req.name ~ "' is already enabled");
+      return CommandResult(false, "", "Module '" ~ request.name ~ "' is already enabled");
 
     // import std.uuid : randomUUID;
     auto id = existing.id.length > 0 ? existing.id : randomUUID().toString();
 
     KymaModule mod;
     mod.id = id;
-    mod.environmentId = req.environmentId;
-    mod.tenantId = req.tenantId;
-    mod.name = req.name;
-    mod.moduleType = parseModuleType(req.moduleType);
-    mod.version_ = req.version_;
-    mod.channel = req.channel.length > 0 ? req.channel : "regular";
-    mod.customResourcePolicy = req.customResourcePolicy;
-    mod.configurationJson = req.configurationJson;
+    mod.environmentId = request.environmentId;
+    mod.tenantId = request.tenantId;
+    mod.name = request.name;
+    mod.moduleType = parseModuleType(request.moduleType);
+    mod.version_ = request.version_;
+    mod.channel = request.channel.length > 0 ? request.channel : "regular";
+    mod.customResourcePolicy = request.customResourcePolicy;
+    mod.configurationJson = request.configurationJson;
     mod.status = ModuleStatus.installing;
-    mod.enabledBy = req.enabledBy;
+    mod.enabledBy = request.enabledBy;
     mod.enabledAt = clockSeconds();
     mod.modifiedAt = mod.enabledAt;
 
@@ -57,29 +58,30 @@ class ManageModulesUseCase : UIMUseCase {
     mod.requiredModules = getKnownDependencies(mod.moduleType);
 
     // Check dependencies
-    auto allModules = repo.findByEnvironment(req.environmentId);
+    auto allModules = moduleRepository.findByEnvironment(request.environmentId);
     if (!depResolver.canEnable(mod, allModules)) {
       auto missing = depResolver.getUnsatisfiedDependencies(mod, allModules);
       // import std.array : join;
       return CommandResult(false, "", "Missing required modules: " ~ missing.join(", "));
     }
 
-    if (existing.id.length > 0)
-      repo.update(mod);
+    if (!existing.id.isEmpty)
+      moduleRepository.update(mod);
     else
-      repo.save(mod);
+      moduleRepository.save(mod);
     return CommandResult(true, id, "");
   }
 
-  CommandResult disableModule(ModuleId id) {
-    auto mod = repo.findById(id);
-    if (mod.id.isEmpty)
+  CommandResult disableModule(ModuleId moduleId) {
+    if (!moduleRepository.existsById(moduleId))
       return CommandResult(false, "", "Module not found");
+
+    auto mod = moduleRepository.findById(moduleId);
     if (mod.status == ModuleStatus.disabled)
       return CommandResult(false, "", "Module is already disabled");
 
     // Check for dependents
-    auto allModules = repo.findByEnvironment(mod.environmentId);
+    auto allModules = moduleRepository.findByEnvironment(mod.environmentId);
     auto dependents = depResolver.findDependents(mod.name, allModules);
     if (dependents.length > 0) {
       // import std.array : join;
@@ -89,42 +91,42 @@ class ManageModulesUseCase : UIMUseCase {
 
     mod.status = ModuleStatus.uninstalling;
     mod.modifiedAt = clockSeconds();
-    repo.update(mod);
-    return CommandResult(true, id, "");
+    moduleRepository.update(mod);
+    return CommandResult(true, moduleId, "");
   }
 
-  CommandResult updateModule(ModuleId id, UpdateModuleRequest req) {
-    auto mod = repo.findById(id);
+  CommandResult updateModule(ModuleId moduleId, UpdateModuleRequest request) {
+    auto mod = moduleRepository.findById(moduleId);
     if (mod.id.isEmpty)
       return CommandResult(false, "", "Module not found");
 
-    if (req.version_.length > 0)
-      mod.version_ = req.version_;
-    if (req.channel.length > 0)
-      mod.channel = req.channel;
-    if (req.customResourcePolicy.length > 0)
-      mod.customResourcePolicy = req.customResourcePolicy;
-    if (req.configurationJson.length > 0)
-      mod.configurationJson = req.configurationJson;
+    if (request.version_.length > 0)
+      mod.version_ = request.version_;
+    if (request.channel.length > 0)
+      mod.channel = request.channel;
+    if (request.customResourcePolicy.length > 0)
+      mod.customResourcePolicy = request.customResourcePolicy;
+    if (request.configurationJson.length > 0)
+      mod.configurationJson = request.configurationJson;
     mod.modifiedAt = clockSeconds();
 
-    repo.update(mod);
-    return CommandResult(true, id, "");
+    moduleRepository.update(mod);
+    return CommandResult(true, moduleId, "");
   }
 
-  KymaModule getModule(ModuleId id) {
-    return repo.findById(id);
+  KymaModule getModule(ModuleId moduleId) {
+    return moduleRepository.findById(moduleId);
   }
 
   KymaModule[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+    return moduleRepository.findByEnvironment(envId);
   }
 
-  CommandResult deleteModule(ModuleId id) {
-    auto mod = repo.findById(id);
+  CommandResult deleteModule(ModuleId moduleId) {
+    auto mod = moduleRepository.findById(moduleId);
     if (mod.id.isEmpty)
       return CommandResult(false, "", "Module not found");
-    repo.remove(id);
+    moduleRepository.remove(id);
     return CommandResult(true, id, "");
   }
 

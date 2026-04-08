@@ -5,10 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.destination.domain.services.certificate_validator;
 
-import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.types;
+import uim.platform.destination;
+import std.format : format;
 
-// import std.datetime.systime : Clock;
+mixin(ShowModule!());
+
+@safe:
 
 /// Result of certificate validation.
 struct ValidationResult {
@@ -73,7 +75,6 @@ struct CertificateValidator {
   }
 
   private static string formatLong(long v) {
-    // import std.format : format;
     return format("%d", v);
   }
 }

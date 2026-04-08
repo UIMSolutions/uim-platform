@@ -63,7 +63,7 @@ class FindDestinationUseCase : UIMUseCase {
     string[] fragmentNames;
     foreach (fid; dest.fragmentIds) {
       auto frag = fragRepo.findById(fid);
-      if (frag.id.length > 0) {
+      if (!frag.id.isEmpty) {
         fragments ~= frag;
         fragmentNames ~= frag.name;
       }
@@ -77,14 +77,14 @@ class FindDestinationUseCase : UIMUseCase {
 
     // Collect referenced certificates
     Certificate[] certs;
-    if (resolved.keystoreId.length > 0) {
+    if (!resolved.keystoreId.isEmpty) {
       auto ks = certRepo.findById(resolved.keystoreId);
-      if (ks.id.length > 0)
+      if (!ks.id.isEmpty)
         certs ~= ks;
     }
-    if (resolved.truststoreId.length > 0) {
+    if (!resolved.truststoreId.isEmpty) {
       auto ts = certRepo.findById(resolved.truststoreId);
-      if (ts.id.length > 0)
+      if (!ts.id.isEmpty)
         certs ~= ts;
     }
 

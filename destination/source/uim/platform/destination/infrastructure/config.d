@@ -5,6 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.config;
 import uim.platform.destination;
+import std.process : environment;
 
 mixin(ShowModule!());
 

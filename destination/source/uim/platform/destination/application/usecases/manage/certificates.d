@@ -33,7 +33,7 @@ class ManageCertificatesUseCase : UIMUseCase {
       return CommandResult(false, "", "Certificate content is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (existing.id.length > 0)
+    if (!existing.id.isEmpty)
       return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
@@ -87,7 +87,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     c.status = validation.status;
 
     repo.update(c);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   Certificate getCertificate(CertificateId id) {
@@ -118,11 +118,10 @@ class ManageCertificatesUseCase : UIMUseCase {
     if (c.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 

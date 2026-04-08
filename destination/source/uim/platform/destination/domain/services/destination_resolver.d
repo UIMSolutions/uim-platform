@@ -5,13 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.destination.domain.services.destination_resolver;
 
-import uim.platform.destination.domain.entities.destination;
-import uim.platform.destination.domain.entities.destination_fragment;
-import uim.platform.destination.domain.entities.auth_token;
-import uim.platform.destination.domain.entities.destination_lookup;
-import uim.platform.destination.domain.types;
+import uim.platform.destination;
+import std.base64 : Base64;
 
-// import std.datetime.systime : Clock;
+mixin(ShowModule!());
+
+@safe:
 
 /// Domain service: resolves a destination by merging fragments and generating auth tokens.
 struct DestinationResolver {
@@ -39,9 +38,9 @@ struct DestinationResolver {
         result.tokenServiceUrl = frag.tokenServiceUrl;
       if (frag.locationId.length > 0)
         result.locationId = frag.locationId;
-      if (frag.keystoreId.length > 0)
+      if (!frag.keystoreId.isEmpty)
         result.keystoreId = frag.keystoreId;
-      if (frag.truststoreId.length > 0)
+      if (!frag.truststoreId.isEmpty)
         result.truststoreId = frag.truststoreId;
 
       // Merge custom properties
@@ -66,10 +65,9 @@ struct DestinationResolver {
       break;
 
     case AuthenticationType.basicAuthentication:
-      // import std.base64 : Base64;
-      auto creds = cast(ubyte[])(dest.user ~ ":" ~ dest.password);
+      auto creds = cast(ubyte[])(dest.user ~ ":" ~ dest.password).dup;
       token.type_ = "Basic";
-      token.value_ = Base64.encode(creds);
+      token.value_ = (() @trusted => Base64.encode(creds))();
       token.status = TokenStatus.valid;
       token.expiresAt = 0; // non-expiring
       break;
@@ -90,7 +88,7 @@ struct DestinationResolver {
 
     case AuthenticationType.clientCertificateAuthentication:
       token.type_ = "ClientCertificate";
-      token.value_ = dest.keystoreId;
+      token.value_ = dest.keystoreId.value;
       token.httpHeaderSuggestion = "";
       token.status = TokenStatus.valid;
       break;

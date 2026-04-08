@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for event subscription management.
 class ManageEventSubscriptionsUseCase : UIMUseCase {
-  private EventSubscriptionRepository repo;
+  private EventSubscriptionRepository subscriptionRepository;
 
-  this(EventSubscriptionRepository repo) {
-    this.repo = repo;
+  this(EventSubscriptionRepository subscriptionRepository) {
+    this.subscriptionRepository = subscriptionRepository;
   }
 
   CommandResult create(CreateEventSubscriptionRequest req) {
@@ -30,7 +30,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     if (req.eventTypes.length == 0)
       return CommandResult(false, "", "At least one event type is required");
 
-    auto existing = repo.findByName(req.namespaceId, req.name);
+    auto existing = subscriptionRepository.findByName(req.namespaceId, req.name);
     if (existing.id.length > 0)
       return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
@@ -59,81 +59,82 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     sub.createdAt = clockSeconds();
     sub.modifiedAt = sub.createdAt;
 
-    repo.save(sub);
+    subscriptionRepository.save(sub);
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateSubscription(EventSubscriptionId id, UpdateEventSubscriptionRequest req) {
-    auto sub = repo.findById(id);
-    if (sub.id.isEmpty)
+  CommandResult updateSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
+    if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
-
-    if (req.description.length > 0)
-      sub.description = req.description;
-    if (req.eventTypes.length > 0)
-      sub.eventTypes = req.eventTypes;
-    if (req.sinkUrl.length > 0)
-      sub.sinkUrl = req.sinkUrl;
-    if (req.sinkServiceName.length > 0)
-      sub.sinkServiceName = req.sinkServiceName;
-    if (req.sinkServicePort > 0)
-      sub.sinkServicePort = req.sinkServicePort;
-    if (req.maxInFlightMessages > 0)
-      sub.maxInFlightMessages = req.maxInFlightMessages;
-    sub.exactTypeMatching = req.exactTypeMatching;
-    if (req.filterAttributes !is null)
-      sub.filterAttributes = req.filterAttributes;
-    if (req.labels !is null)
-      sub.labels = req.labels;
+    
+    auto sub = subscriptionRepository.findById(subscriptionId);
+    if (request.description.length > 0)
+      sub.description = request.description;
+    if (request.eventTypes.length > 0)
+      sub.eventTypes = request.eventTypes;
+    if (request.sinkUrl.length > 0)
+      sub.sinkUrl = request.sinkUrl;
+    if (request.sinkServiceName.length > 0)
+      sub.sinkServiceName = request.sinkServiceName;
+    if (request.sinkServicePort > 0)
+      sub.sinkServicePort = request.sinkServicePort;
+    if (request.maxInFlightMessages > 0)
+      sub.maxInFlightMessages = request.maxInFlightMessages;
+    sub.exactTypeMatching = request.exactTypeMatching;
+    if (request.filterAttributes !is null)
+      sub.filterAttributes = request.filterAttributes;
+    if (request.labels !is null)
+      sub.labels = request.labels;
     sub.modifiedAt = clockSeconds();
 
-    repo.update(sub);
-    return CommandResult(true, id, "");
+    subscriptionRepository.update(sub);
+    return CommandResult(true, subscriptionId.toString(), "");
   }
 
   CommandResult pauseSubscription(EventSubscriptionId subscriptionId) {
-    auto sub = repo.findById(subscriptionId);
-    if (sub.id.isEmpty)
+    if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
+    
+    auto sub = subscriptionRepository.findById(subscriptionId);
     sub.status = SubscriptionStatus.paused;
     sub.modifiedAt = clockSeconds();
-    repo.update(sub);
-    return CommandResult(true, subscriptionId, "");
+    subscriptionRepository.update(sub);
+    return CommandResult(true, subscriptionId.toString(), "");
   }
 
   CommandResult resumeSubscription(EventSubscriptionId subscriptionId) {
-    auto sub = repo.findById(subscriptionId);
-    if (sub.id.isEmpty)
+    if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
+    
+    auto sub = subscriptionRepository.findById(subscriptionId);
     sub.status = SubscriptionStatus.active;
     sub.modifiedAt = clockSeconds();
-    repo.update(sub);
-    return CommandResult(true, subscriptionId, "");
+    subscriptionRepository.update(sub);
+    return CommandResult(true, subscriptionId.toString(), "");
   }
 
   EventSubscription getSubscription(EventSubscriptionId subscriptionId) {
-    return repo.findById(subscriptionId);
+    return subscriptionRepository.findById(subscriptionId);
   }
 
   EventSubscription[] listByNamespace(NamespaceId namespaceId) {
-    return repo.findByNamespace(namespaceId);
+    return subscriptionRepository.findByNamespace(namespaceId);
   }
 
   EventSubscription[] listByEnvironment(KymaEnvironmentId environmentId) {
-    return repo.findByEnvironment(environmentId);
+    return subscriptionRepository.findByEnvironment(environmentId);
   }
 
   EventSubscription[] listBySource(string source) {
-    return repo.findBySource(source);
+    return subscriptionRepository.findBySource(source);
   }
 
   CommandResult deleteSubscription(EventSubscriptionId subscriptionId) {
-    auto sub = repo.findById(subscriptionId);
-    if (sub.id.isEmpty)
+    if (!subscriptionRepository.existsById(subscriptionId))
       return CommandResult(false, "", "Subscription not found");
-    
-    repo.remove(subscriptionId);
-    return CommandResult(true, subscriptionId, "");
+
+    subscriptionRepository.remove(subscriptionId);
+    return CommandResult(true, subscriptionId.toString(), "");
   }
 
   private EventTypeEncoding parseTypeEncoding(string s) {

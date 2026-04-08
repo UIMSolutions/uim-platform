@@ -20,7 +20,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FragmentController {
+class FragmentController : SAPController {
   private ManageFragmentsUseCase uc;
 
   this(ManageFragmentsUseCase uc) {
@@ -77,7 +77,7 @@ class FragmentController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto fragments = uc.listBySubaccount(tenantId, subaccountId);
 
       auto arr = Json.emptyArray;
@@ -96,7 +96,7 @@ class FragmentController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto f = uc.getFragment(id);
       if (f.id.isEmpty) {
         writeError(res, 404, "Fragment not found");
@@ -111,7 +111,7 @@ class FragmentController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateFragmentRequest r;
       r.description = j.getString("description");
@@ -146,7 +146,7 @@ class FragmentController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = FragmentId(extractIdFromPath(req.requestURI));
       auto result = uc.removeFragment(id);
       if (result.success) {
         auto resp = Json.emptyObject;

@@ -17,67 +17,67 @@ mixin(ShowModule!());
 @safe:
 /// Application service for serverless function lifecycle management.
 class ManageFunctionsUseCase : UIMUseCase {
-  private FunctionRepository repo;
+  private FunctionRepository functionRepository;
   private FunctionValidator validator;
 
-  this(FunctionRepository repo, FunctionValidator validator) {
-    this.repo = repo;
+  this(FunctionRepository functionRepository, FunctionValidator validator) {
+    this.functionRepository = functionRepository;
     this.validator = validator;
   }
 
-  CommandResult create(CreateFunctionRequest req) {
-    if (req.name.length == 0)
+  CommandResult create(CreateFunctionRequest request) {
+    if (request.name.length == 0)
       return CommandResult(false, "", "Function name is required");
-    if (req.namespaceid.isEmpty)
+    if (request.namespaceId.isEmpty)
       return CommandResult(false, "", "Namespace ID is required");
 
-    auto existing = repo.findByName(req.namespaceId, req.name);
-    if (existing.id.length > 0)
+    auto existing = functionRepository.findByName(request.namespaceId, request.name);
+    if (!existing.namespaceId.isEmpty)
       return CommandResult(false, "",
-          "Function '" ~ req.name ~ "' already exists in this namespace");
+          "Function '" ~ request.name ~ "' already exists in this namespace");
 
     // import std.uuid : randomUUID;
     auto id = randomUUID().toString();
 
-    ServerlessFunction fn;
-    fn.id = id;
-    fn.namespaceId = req.namespaceId;
-    fn.environmentId = req.environmentId;
-    fn.tenantId = req.tenantId;
-    fn.name = req.name;
-    fn.description = req.description;
-    fn.runtime = parseRuntime(req.runtime);
-    fn.sourceCode = req.sourceCode;
-    fn.handler = req.handler;
-    fn.dependencies = req.dependencies;
-    fn.scalingType = parseScalingType(req.scalingType);
-    fn.minReplicas = req.minReplicas > 0 ? req.minReplicas : 1;
-    fn.maxReplicas = req.maxReplicas > 0 ? req.maxReplicas : 5;
-    fn.cpuRequest = req.cpuRequest;
-    fn.cpuLimit = req.cpuLimit;
-    fn.memoryRequest = req.memoryRequest;
-    fn.memoryLimit = req.memoryLimit;
-    fn.envVars = req.envVars;
-    fn.labels = req.labels;
-    fn.timeoutSeconds = req.timeoutSeconds > 0 ? req.timeoutSeconds : 180;
-    fn.status = FunctionStatus.building;
-    fn.createdBy = req.createdBy;
-    fn.createdAt = clockSeconds();
-    fn.modifiedAt = fn.createdAt;
+    ServerlessFunction serverlessFunction;
+    serverlessFunction.functionId = id;
+    serverlessFunction.namespaceId = request.namespaceId;
+    serverlessFunction.environmentId = request.environmentId;
+    serverlessFunction.tenantId = request.tenantId;
+    serverlessFunction.name = request.name;
+    serverlessFunction.description = request.description;
+    serverlessFunction.runtime = parseRuntime(request.runtime);
+    serverlessFunction.sourceCode = request.sourceCode;
+    serverlessFunction.handler = request.handler;
+    serverlessFunction.dependencies = request.dependencies;
+    serverlessFunction.scalingType = parseScalingType(request.scalingType);
+    serverlessFunction.minReplicas = request.minReplicas > 0 ? request.minReplicas : 1;
+    serverlessFunction.maxReplicas = request.maxReplicas > 0 ? request.maxReplicas : 5;
+    serverlessFunction.cpuRequest = request.cpuRequest;
+    serverlessFunction.cpuLimit = request.cpuLimit;
+    serverlessFunction.memoryRequest = request.memoryRequest;
+    serverlessFunction.memoryLimit = request.memoryLimit;
+    serverlessFunction.envVars = request.envVars;
+    serverlessFunction.labels = request.labels;
+    serverlessFunction.timeoutSeconds = request.timeoutSeconds > 0 ? request.timeoutSeconds : 180;
+    serverlessFunction.status = FunctionStatus.building;
+    serverlessFunction.createdBy = request.createdBy;
+    serverlessFunction.createdAt = clockSeconds();
+    serverlessFunction.modifiedAt = serverlessFunction.createdAt;     
 
-    auto validationErr = validator.validate(fn);
+    auto validationErr = validator.validate(serverlessFunction);
     if (validationErr.length > 0)
       return CommandResult(false, "", validationErr);
 
-    repo.save(fn);
+    functionRepository.save(serverlessFunction);
     return CommandResult(true, id, "");
   }
 
-  CommandResult updateFunction(FunctionId id, UpdateFunctionRequest req) {
-    auto fn = repo.findById(id);
-    if (fn.id.isEmpty)
+  CommandResult updateFunction(FunctionId functionId, UpdateFunctionRequest req) {
+    if (!functionRepository.existsById(functionId))
       return CommandResult(false, "", "Function not found");
 
+    auto fn = functionRepository.findById(functionId);
     if (req.description.length > 0)
       fn.description = req.description;
     if (req.sourceCode.length > 0)
@@ -113,32 +113,33 @@ class ManageFunctionsUseCase : UIMUseCase {
     if (validationErr.length > 0)
       return CommandResult(false, "", validationErr);
 
-    repo.update(fn);
-    return CommandResult(true, id, "");
+    functionRepository.update(fn);
+    return CommandResult(true, functionId.toString(), "");
   }
 
-  ServerlessFunction getFunction(FunctionId id) {
-    return repo.findById(id);
+  ServerlessFunction getFunction(FunctionId functionId) {
+    return functionRepository.findById(functionId);
   }
 
   ServerlessFunction[] listByNamespace(NamespaceId nsId) {
-    return repo.findByNamespace(nsId);
+    return functionRepository.findByNamespace(nsId);
   }
 
-  ServerlessFunction[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+  ServerlessFunction[] listByEnvironment(KymaEnvironmentId environmentId) {
+    return functionRepository.findByEnvironment(environmentId);
   }
 
-  CommandResult deleteFunction(FunctionId id) {
-    auto fn = repo.findById(id);
-    if (fn.id.isEmpty)
+  CommandResult deleteFunction(FunctionId functionId) {
+    if (!functionRepository.existsById(functionId))
       return CommandResult(false, "", "Function not found");
-    repo.remove(id);
-    return CommandResult(true, id, "");
+
+    auto fn = functionRepository.findById(functionId);
+    functionRepository.remove(functionId);
+    return CommandResult(true, functionId.toString(), "");
   }
 
-  private FunctionRuntime parseRuntime(string s) {
-    switch (s) {
+  private FunctionRuntime parseRuntime(string runtimeName) {
+    switch (runtimeName) {
     case "nodejs18":
       return FunctionRuntime.nodejs18;
     case "nodejs20":
@@ -152,8 +153,8 @@ class ManageFunctionsUseCase : UIMUseCase {
     }
   }
 
-  private ScalingType parseScalingType(string s) {
-    switch (s) {
+  private ScalingType parseScalingType(string scalingTypeName) {
+    switch (scalingTypeName) {
     case "fixed":
       return ScalingType.fixed;
     case "auto":

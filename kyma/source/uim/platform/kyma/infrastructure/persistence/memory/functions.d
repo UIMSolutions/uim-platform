@@ -19,6 +19,10 @@ mixin(ShowModule!());
 class MemoryFunctionRepository : FunctionRepository {
   private ServerlessFunction[FunctionId] store;
 
+  bool exists(FunctionId id) {
+    return (id in store) ? true : false;
+  }
+
   ServerlessFunction findById(FunctionId id) {
     if (auto p = id in store)
       return *p;
@@ -45,7 +49,7 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   void save(ServerlessFunction fn) {
-    store[fn.id] = fn;
+    store[fn.functionId] = fn;
   }
 
   void update(ServerlessFunction fn) {

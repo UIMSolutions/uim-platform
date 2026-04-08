@@ -29,7 +29,7 @@ class ManageFragmentsUseCase : UIMUseCase {
       return CommandResult(false, "", "Fragment name is required");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (existing.id.length > 0)
+    if (!existing.id.isEmpty)
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
@@ -96,7 +96,7 @@ class ManageFragmentsUseCase : UIMUseCase {
     f.modifiedAt = clockSeconds();
 
     repo.update(f);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   DestinationFragment getFragment(FragmentId id) {
@@ -112,11 +112,10 @@ class ManageFragmentsUseCase : UIMUseCase {
     if (f.id.isEmpty)
       return CommandResult(false, "", "Fragment not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 

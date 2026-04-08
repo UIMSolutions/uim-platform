@@ -33,7 +33,7 @@ class ManageDestinationsUseCase : UIMUseCase {
       return CommandResult(false, "", "URL is required for non-RFC destinations");
 
     auto existing = repo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (existing.id.length > 0)
+    if (!existing.id.isEmpty)
       return CommandResult(false, "",
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
@@ -79,7 +79,8 @@ class ManageDestinationsUseCase : UIMUseCase {
     d.sccVirtualPort = cast(ushort) req.sccVirtualPort;
 
     d.properties = req.properties;
-    d.fragmentIds = req.fragmentIds;
+    foreach (s; req.fragmentIds)
+      d.fragmentIds ~= FragmentId(s);
     d.createdBy = req.createdBy;
     d.createdAt = clockSeconds();
     d.modifiedAt = d.createdAt;
@@ -133,12 +134,15 @@ class ManageDestinationsUseCase : UIMUseCase {
       d.status = parseDestStatus(req.status);
     if (req.properties.length > 0)
       d.properties = req.properties;
-    if (req.fragmentIds.length > 0)
-      d.fragmentIds = req.fragmentIds;
+    if (req.fragmentIds.length > 0) {
+      d.fragmentIds = null;
+      foreach (s; req.fragmentIds)
+        d.fragmentIds ~= FragmentId(s);
+    }
     d.modifiedAt = clockSeconds();
 
     repo.update(d);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   Destination getDestination(DestinationId id) {
@@ -162,11 +166,10 @@ class ManageDestinationsUseCase : UIMUseCase {
     if (d.id.isEmpty)
       return CommandResult(false, "", "Destination not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.value, "");
   }
 
   private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
     return Clock.currTime().toUnixTime();
   }
 

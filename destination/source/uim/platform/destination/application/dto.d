@@ -5,7 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.destination.application.dto;
 
-import uim.platform.destination.domain.types;
+import uim.platform.destination;
 
 
 /// --- Destination DTOs ---

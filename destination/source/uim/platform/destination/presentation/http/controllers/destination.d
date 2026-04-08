@@ -96,12 +96,12 @@ class DestinationController : SAPController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto subaccountId = req.headers.get("X-Subaccount-Id", "");
+      auto subaccountId = SubaccountId(req.headers.get("X-Subaccount-Id", ""));
       auto instanceId = req.params.get("serviceInstanceId");
 
       Destination[] destinations;
       if (instanceId.length > 0)
-        destinations = uc.listByServiceInstance(tenantId, instanceId);
+        destinations = uc.listByServiceInstance(tenantId, ServiceInstanceId(instanceId));
       else
         destinations = uc.listBySubaccount(tenantId, subaccountId);
 
@@ -121,7 +121,7 @@ class DestinationController : SAPController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto d = uc.getDestination(id);
       if (d.id.isEmpty) {
         writeError(res, 404, "Destination not found");
@@ -136,7 +136,7 @@ class DestinationController : SAPController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto j = req.json;
       UpdateDestinationRequest r;
       r.description = j.getString("description");
@@ -179,7 +179,7 @@ class DestinationController : SAPController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      auto id = DestinationId(extractIdFromPath(req.requestURI));
       auto result = uc.removeDestination(id);
       if (result.success) {
         auto resp = Json.emptyObject;
