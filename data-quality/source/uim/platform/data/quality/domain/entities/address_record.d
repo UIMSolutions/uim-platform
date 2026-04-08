@@ -9,8 +9,8 @@ import uim.platform.data.quality.domain.types;
 
 /// An address record for cleansing and geocoding.
 struct AddressRecord {
-  AddressId id;
   TenantId tenantId;
+  AddressId addressId;
   RecordId sourceRecordId; // link to originating record
 
   // Input fields

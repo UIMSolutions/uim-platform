@@ -9,7 +9,7 @@ import uim.platform.data.quality.domain.types;
 
 /// An asynchronous data cleansing job.
 struct CleansingJob {
-  CleansingJobId id;
+  CleansingJobId jobId;
   TenantId tenantId;
   DatasetId datasetId;
   UserId requestedBy;

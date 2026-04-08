@@ -146,7 +146,7 @@ unittest {
   entry1.timestamp = Clock.currStdTime();
 
   AuditLogEntry entry2 = AuditLogEntry.init;
-  entry2.tenantId = TenantId("tenant1");
+  entry2.tenantId = TenantId("tenant2");
   entry2.userId = UserId("user2");
   entry2.userName = "User Two";
   entry2.serviceId = ServiceId("service2");
@@ -168,7 +168,7 @@ unittest {
   repo.save(entry2);
 
   assert(repo.existsByTenant(TenantId("tenant1")));
-  assert(repo.findByTenant(TenantId("tenant1")).length == 2);
+  assert(repo.findByTenant(TenantId("tenant1")).length == 1);
   assert(repo.existsById(TenantId("tenant1"), entry1.id));
   assert(repo.findById(TenantId("tenant1"), entry1.id) == entry1);
   assert(repo.findByCategory(TenantId("tenant1"), AuditCategory.dataAccess).length == 1);

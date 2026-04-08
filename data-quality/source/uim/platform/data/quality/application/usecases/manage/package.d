@@ -6,5 +6,7 @@
 module uim.platform.data_quality.application.usecases.manage;
 
 public {
-    
+    import uim.platform.data_quality.application.usecases.manage.cleansing_jobs;
+    import uim.platform.data_quality.application.usecases.manage.cleansing_rules;
+    import uim.platform.data_quality.application.usecases.manage.validation_rules;
 }

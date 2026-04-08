@@ -6,5 +6,12 @@
 module uim.platform.data_quality.domain;
 
 public {
-    
+    import uim.platform.data_quality.domain.enumerations;    
+    import uim.platform.data_quality.domain.types;
+}
+
+public {
+    import uim.platform.data_quality.domain.entities;
+    import uim.platform.data_quality.domain.ports;
+    import uim.platform.data_quality.domain.services;
 }

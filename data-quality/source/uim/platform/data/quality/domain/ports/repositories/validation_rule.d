@@ -5,14 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.validation_rules;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_rule;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_rule;
+
+import uim.platform.data;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Port for persisting validation rules.
 interface ValidationRuleRepository {
   ValidationRule[] findAll();
   ValidationRule[] findByTenant(TenantId tenantId);
-  ValidationRule* findById(RuleId id);
+  ValidationRule findById(RuleId id);
   ValidationRule[] findByDataset(TenantId tenantId, string datasetPattern);
   ValidationRule[] findByField(TenantId tenantId, string fieldName);
   ValidationRule[] findActive(TenantId tenantId);

@@ -9,8 +9,8 @@ import uim.platform.data.quality.domain.types;
 
 /// Result of running validation rules against a single record.
 struct ValidationResult {
-  RecordId recordId;
   TenantId tenantId;
+  RecordId recordId;
   DatasetId datasetId;
   RuleViolation[] violations;
   int totalRulesChecked;

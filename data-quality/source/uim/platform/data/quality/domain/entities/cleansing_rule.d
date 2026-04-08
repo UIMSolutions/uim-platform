@@ -9,7 +9,7 @@ import uim.platform.data.quality.domain.types;
 
 /// A data cleansing / transformation rule.
 struct CleansingRule {
-  RuleId id;
+  RuleId ruleId;
   TenantId tenantId;
   string name;
   string description;

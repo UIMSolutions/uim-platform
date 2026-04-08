@@ -9,7 +9,7 @@ import uim.platform.data.quality.domain.types;
 
 /// Profile analysis result for a dataset.
 struct DataProfile {
-  ProfileId id;
+  ProfileId profileId;
   TenantId tenantId;
   DatasetId datasetId;
   string datasetName;

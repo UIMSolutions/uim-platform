@@ -9,7 +9,7 @@ import uim.platform.data.quality.domain.types;
 
 /// A group of records identified as potential duplicates.
 struct MatchGroup {
-  MatchGroupId id;
+  MatchGroupId groupId;
   TenantId tenantId;
   DatasetId datasetId;
   MatchStrategy strategy;
