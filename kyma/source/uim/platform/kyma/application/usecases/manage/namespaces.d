@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for Kubernetes namespace management.
 class ManageNamespacesUseCase : UIMUseCase {
-  private NamespaceRepository repo;
+  private NamespaceRepository namespaceRepository;
 
-  this(NamespaceRepository repo) {
-    this.repo = repo;
+  this(NamespaceRepository namespaceRepository) {
+    this.namespaceRepository = namespaceRepository;
   }
 
   CommandResult create(CreateNamespaceRequest req) {
@@ -29,7 +29,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     if (req.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
-    if (repo.existsByName(req.environmentId, req.name))
+    if (namespaceRepository.existsByName(req.environmentId, req.name))
       return CommandResult(false, "", "Namespace '" ~ req.name ~ "' already exists");
 
     Namespace ns;
@@ -52,15 +52,15 @@ class ManageNamespacesUseCase : UIMUseCase {
     ns.createdAt = clockSeconds();
     ns.modifiedAt = ns.createdAt;
 
-    repo.save(ns);
+    namespaceRepository.save(ns);
     return CommandResult(true, ns.namespaceId, "");
   }
 
   CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
-    if (!repo.existsById(id))
+    if (!namespaceRepository.existsById(id))
       return CommandResult(false, "", "Namespace not found");
 
-    auto ns = repo.findById(id);
+    auto ns = namespaceRepository.findById(id);
     if (req.description.length > 0)
       ns.description = req.description;
     if (req.cpuLimit.length > 0)
@@ -82,23 +82,23 @@ class ManageNamespacesUseCase : UIMUseCase {
       ns.annotations = req.annotations;
     ns.modifiedAt = clockSeconds();
 
-    repo.update(ns);
+    namespaceRepository.update(ns);
     return CommandResult(true, id, "");
   }
 
   Namespace getNamespace(NamespaceId namespaceId) {
-    return repo.findById(namespaceId);
+    return namespaceRepository.findById(namespaceId);
   }
 
   Namespace[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+    return namespaceRepository.findByEnvironment(envId);
   }
 
   CommandResult deleteNamespace(NamespaceId namespaceId) {
-    if (!repo.existsById(namespaceId))
+    if (!namespaceRepository.existsById(namespaceId))
       return CommandResult(false, "", "Namespace not found");
 
-    repo.remove(namespaceId);
+    namespaceRepository.remove(namespaceId);
     return CommandResult(true, namespaceId.toString, "");
   }
 

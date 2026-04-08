@@ -48,7 +48,7 @@ class ManageChannelsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ServiceChannel ch;
-    ch.id = id;
+    ch.id = randomUUID();
     ch.connectorId = req.connectorId;
     ch.tenantId = req.tenantId;
     ch.name = req.name;

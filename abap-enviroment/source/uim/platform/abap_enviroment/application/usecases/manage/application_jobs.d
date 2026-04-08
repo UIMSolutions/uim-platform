@@ -26,12 +26,13 @@ class ManageApplicationJobsUseCase : UIMUseCase {
       return CommandResult("", "Job name is required");
     if (req.jobTemplateName.length == 0)
       return CommandResult("", "Job template name is required");
+
     if (req.systemInstanceid.isEmpty)
       return CommandResult("", "System instance ID is required");
 
     auto id = randomUUID().toString();
     ApplicationJob job;
-    job.id = id;
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.systemInstanceId = req.systemInstanceId;
     job.name = req.name;

@@ -32,7 +32,7 @@ class ManageRemoteTablesUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     RemoteTable rt;
-    rt.id = id;
+    rt.id = randomUUID();
     rt.tenantId = r.tenantId;
     rt.spaceId = r.spaceId;
     rt.connectionId = r.connectionId;

@@ -36,7 +36,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     TransportQueue queue;
-    queue.id = id;
+    queue.id = randomUUID();
     queue.tenantId = req.tenantId;
     queue.name = req.name;
     queue.description = req.description;

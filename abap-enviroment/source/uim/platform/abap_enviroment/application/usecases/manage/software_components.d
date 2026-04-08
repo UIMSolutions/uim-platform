@@ -42,7 +42,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     SoftwareComponent comp;
-    comp.id = id;
+    comp.id = randomUUID();
     comp.tenantId = req.tenantId;
     comp.systemInstanceId = req.systemInstanceId;
     comp.name = req.name;

@@ -30,7 +30,7 @@ class ManageConnectionsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     Connection c;
-    c.id = id;
+    c.id = randomUUID();
     c.tenantId = r.tenantId;
     c.spaceId = r.spaceId;
     c.name = r.name;

@@ -41,7 +41,7 @@ class ExportContentUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ExportJob job;
-    job.id = id;
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.packageId = req.packageId;
     job.transportRequestId = req.transportRequestId;

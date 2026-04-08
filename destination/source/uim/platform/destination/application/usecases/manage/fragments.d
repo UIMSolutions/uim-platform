@@ -36,7 +36,7 @@ class ManageFragmentsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     DestinationFragment f;
-    f.id = id;
+    f.id = randomUUID();
     f.tenantId = req.tenantId;
     f.subaccountId = req.subaccountId;
     f.name = req.name;

@@ -39,7 +39,7 @@ class ManageAccessRulesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     AccessRule rule;
-    rule.id = id;
+    rule.id = randomUUID();
     rule.connectorId = req.connectorId;
     rule.tenantId = req.tenantId;
     rule.description = req.description;

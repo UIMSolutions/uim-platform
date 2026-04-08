@@ -32,7 +32,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     TransportRequest tr;
-    tr.id = id;
+    tr.id = randomUUID();
     tr.tenantId = req.tenantId;
     tr.sourceSystemId = req.sourceSystemId;
     tr.targetSystemId = req.targetSystemId;

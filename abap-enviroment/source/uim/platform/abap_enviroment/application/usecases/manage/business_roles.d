@@ -33,7 +33,7 @@ class ManageBusinessRolesUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     BusinessRole role;
-    role.id = id;
+    role.id = randomUUID();
     role.tenantId = req.tenantId;
     role.systemInstanceId = req.systemInstanceId;
     role.name = req.name;

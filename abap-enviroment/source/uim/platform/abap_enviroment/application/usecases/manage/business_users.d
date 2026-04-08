@@ -42,7 +42,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     BusinessUser user;
-    user.id = id;
+    user.id = randomUUID();
     user.tenantId = req.tenantId;
     user.systemInstanceId = req.systemInstanceId;
     user.username = req.username;

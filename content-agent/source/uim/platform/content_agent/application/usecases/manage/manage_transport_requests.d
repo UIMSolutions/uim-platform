@@ -58,7 +58,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     TransportRequest tr;
-    tr.id = id;
+    tr.id = randomUUID();
     tr.tenantId = req.tenantId;
     tr.sourceSubaccount = req.sourceSubaccount;
     tr.targetSubaccount = req.targetSubaccount;

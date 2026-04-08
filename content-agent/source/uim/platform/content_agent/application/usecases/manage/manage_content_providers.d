@@ -38,7 +38,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ContentProvider provider;
-    provider.id = id;
+    provider.id = randomUUID();
     provider.tenantId = req.tenantId;
     provider.name = req.name;
     provider.description = req.description;

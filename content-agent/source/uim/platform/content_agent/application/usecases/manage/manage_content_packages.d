@@ -42,7 +42,7 @@ class ManageContentPackagesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ContentPackage pkg;
-    pkg.id = id;
+    pkg.id = randomUUID();
     pkg.tenantId = req.tenantId;
     pkg.subaccountId = req.subaccountId;
     pkg.name = req.name;

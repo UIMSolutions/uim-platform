@@ -33,7 +33,7 @@ class ManageTasksUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     Task t;
-    t.id = id;
+    t.id = randomUUID();
     t.tenantId = r.tenantId;
     t.spaceId = r.spaceId;
     t.name = r.name;

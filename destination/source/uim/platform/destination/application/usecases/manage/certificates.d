@@ -40,7 +40,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Certificate c;
-    c.id = id;
+    c.id = randomUUID();
     c.tenantId = req.tenantId;
     c.subaccountId = req.subaccountId;
     c.name = req.name;

@@ -44,7 +44,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Destination dest;
-    dest.id = id;
+    dest.id = randomUUID();
     dest.tenantId = req.tenantId;
     dest.name = req.name;
     dest.description = req.description;

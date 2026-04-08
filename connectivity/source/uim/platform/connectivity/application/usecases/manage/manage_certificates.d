@@ -36,7 +36,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     Certificate cert;
-    cert.id = id;
+    cert.id = randomUUID();
     cert.tenantId = req.tenantId;
     cert.name = req.name;
     cert.description = req.description;

@@ -30,7 +30,7 @@ class ManageTaskChainsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     TaskChain tc;
-    tc.id = id;
+    tc.id = randomUUID();
     tc.tenantId = r.tenantId;
     tc.spaceId = r.spaceId;
     tc.name = r.name;

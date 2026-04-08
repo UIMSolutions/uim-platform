@@ -38,7 +38,7 @@ class ManageConnectorsUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     CloudConnector cc;
-    cc.id = id;
+    cc.id = randomUUID();
     cc.subaccountId = req.subaccountId;
     cc.tenantId = req.tenantId;
     cc.locationId = req.locationId;

@@ -30,7 +30,7 @@ class ManageViewsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     View v;
-    v.id = id;
+    v.id = randomUUID();
     v.tenantId = r.tenantId;
     v.spaceId = r.spaceId;
     v.name = r.name;

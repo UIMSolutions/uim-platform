@@ -31,7 +31,7 @@ class ManageDataFlowsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     DataFlow df;
-    df.id = id;
+    df.id = randomUUID();
     df.tenantId = r.tenantId;
     df.spaceId = r.spaceId;
     df.name = r.name;

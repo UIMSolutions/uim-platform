@@ -30,7 +30,7 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     DataAccessControl dac;
-    dac.id = id;
+    dac.id = randomUUID();
     dac.tenantId = r.tenantId;
     dac.spaceId = r.spaceId;
     dac.name = r.name;

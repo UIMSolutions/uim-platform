@@ -44,7 +44,7 @@ class ManageSystemInstancesUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     SystemInstance inst;
-    inst.id = id;
+    inst.id = randomUUID();
     inst.tenantId = req.tenantId;
     inst.subaccountId = req.subaccountId;
     inst.name = req.name;

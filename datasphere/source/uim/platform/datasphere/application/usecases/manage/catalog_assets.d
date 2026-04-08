@@ -30,7 +30,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
     auto id = randomUUID().to!string;
 
     CatalogAsset ca;
-    ca.id = id;
+    ca.id = randomUUID();
     ca.tenantId = r.tenantId;
     ca.spaceId = r.spaceId;
     ca.name = r.name;

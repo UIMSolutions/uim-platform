@@ -144,7 +144,7 @@ class DocumentController : SAPController {
       auto id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto r = UpdateDocumentRequest();
-      r.id = id;
+      r.id = randomUUID();
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");

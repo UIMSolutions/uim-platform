@@ -38,7 +38,7 @@ class ImportContentUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ImportJob job;
-    job.id = id;
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.packageId = req.packageId;
     job.transportRequestId = req.transportRequestId;

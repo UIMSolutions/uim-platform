@@ -31,7 +31,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
 
     auto id = randomUUID().toString();
     CommunicationArrangement arr;
-    arr.id = id;
+    arr.id = randomUUID();
     arr.tenantId = req.tenantId;
     arr.systemInstanceId = req.systemInstanceId;
     arr.scenarioId = req.scenarioId;
