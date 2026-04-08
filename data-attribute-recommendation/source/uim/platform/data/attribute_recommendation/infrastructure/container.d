@@ -8,18 +8,18 @@ module uim.platform.data.attribute_recommendation.infrastructure.container;
 import uim.platform.data.attribute_recommendation.infrastructure.config;
 
 // Repositories
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset_repo;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.dataset;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.data_record_repo;
+  .memory.data_record;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.model_config_repo;
+  .memory.model_config;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.training_job_repo;
-import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment_repo;
+  .memory.training_job;
+import uim.platform.data.attribute_recommendation.infrastructure.persistence.memory.deployment;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.inference_request_repo;
+  .memory.inference_request;
 import uim.platform.data.attribute_recommendation.infrastructure.persistence
-  .memory.inference_result_repo;
+  .memory.inference_result;
 
 // Domain services
 import uim.platform.data.attribute_recommendation.domain.services.model_trainer;

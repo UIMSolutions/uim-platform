@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.document_ai.infrastructure.persistence.memory.extraction_result_repo;
+module uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
 
 import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.extraction_result;

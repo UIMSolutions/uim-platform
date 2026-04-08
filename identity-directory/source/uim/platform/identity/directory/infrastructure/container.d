@@ -8,12 +8,12 @@ module uim.platform.identity.directory.infrastructure.container;
 import uim.platform.identity.directory.infrastructure.config;
 
 // Repositories
-import uim.platform.identity.directory.infrastructure.persistence.memory.user_repo;
-import uim.platform.identity.directory.infrastructure.persistence.memory.group_repo;
-import uim.platform.identity.directory.infrastructure.persistence.memory.schema_repo;
-import uim.platform.identity.directory.infrastructure.persistence.memory.password_policy_repo;
-import uim.platform.identity.directory.infrastructure.persistence.memory.api_client_repo;
-import uim.platform.identity.directory.infrastructure.persistence.memory.audit_repo;
+import uim.platform.identity.directory.infrastructure.persistence.memory.user;
+import uim.platform.identity.directory.infrastructure.persistence.memory.group;
+import uim.platform.identity.directory.infrastructure.persistence.memory.schema;
+import uim.platform.identity.directory.infrastructure.persistence.memory.password_policy;
+import uim.platform.identity.directory.infrastructure.persistence.memory.api_client;
+import uim.platform.identity.directory.infrastructure.persistence.memory.audit;
 
 // Services
 import uim.platform.identity.directory.infrastructure.security.sha256_password_service;

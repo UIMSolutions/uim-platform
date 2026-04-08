@@ -4,7 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.abap_enviroment.infrastructure.persistence.memory
-  .communication_arrangement_repo;
+  .communication_arrangement;
 
 import uim.platform.abap_enviroment.domain.types;
 import uim.platform.abap_enviroment.domain.entities.communication_arrangement;

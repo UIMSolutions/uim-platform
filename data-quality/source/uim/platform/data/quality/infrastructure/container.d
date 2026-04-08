@@ -8,13 +8,13 @@ module uim.platform.data.quality.infrastructure.container;
 // import uim.platform.data.quality.infrastructure.config;
 
 // // Repositories
-// import uim.platform.data.quality.infrastructure.persistence.memory.validation_rule_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.validation_result_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.address_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.match_group_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.data_profile_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rule_repo;
-// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_job_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.validation_rule;
+// import uim.platform.data.quality.infrastructure.persistence.memory.validation_result;
+// import uim.platform.data.quality.infrastructure.persistence.memory.address;
+// import uim.platform.data.quality.infrastructure.persistence.memory.match_group;
+// import uim.platform.data.quality.infrastructure.persistence.memory.data_profile;
+// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rule;
+// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_job;
 
 // // Domain services
 // import uim.platform.data.quality.domain.services.validation_engine;

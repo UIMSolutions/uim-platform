@@ -6,11 +6,11 @@
 module uim.platform.dms.application.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.dms.application.infrastructure.persistence.memory.document_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.document_version_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.favorite_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.folder_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.permission_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.repository_repo;
-  import uim.platform.dms.application.infrastructure.persistence.memory.share_repo;
+  import uim.platform.dms.application.infrastructure.persistence.memory.document;
+  import uim.platform.dms.application.infrastructure.persistence.memory.document_version;
+  import uim.platform.dms.application.infrastructure.persistence.memory.favorite;
+  import uim.platform.dms.application.infrastructure.persistence.memory.folder;
+  import uim.platform.dms.application.infrastructure.persistence.memory.permission;
+  import uim.platform.dms.application.infrastructure.persistence.memory.repository;
+  import uim.platform.dms.application.infrastructure.persistence.memory.share;
 }

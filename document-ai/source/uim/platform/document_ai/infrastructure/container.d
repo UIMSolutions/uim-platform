@@ -8,14 +8,14 @@ module uim.platform.document_ai.infrastructure.container;
 import uim.platform.document_ai.infrastructure.config;
 
 // Repositories
-import uim.platform.document_ai.infrastructure.persistence.memory.document_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.schema_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.template_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.document_type_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.training_job_repo;
-import uim.platform.document_ai.infrastructure.persistence.memory.client_repo;
+import uim.platform.document_ai.infrastructure.persistence.memory.document;
+import uim.platform.document_ai.infrastructure.persistence.memory.extraction_result;
+import uim.platform.document_ai.infrastructure.persistence.memory.schema;
+import uim.platform.document_ai.infrastructure.persistence.memory.template;
+import uim.platform.document_ai.infrastructure.persistence.memory.document_type;
+import uim.platform.document_ai.infrastructure.persistence.memory.enrichment_data;
+import uim.platform.document_ai.infrastructure.persistence.memory.training_job;
+import uim.platform.document_ai.infrastructure.persistence.memory.client;
 
 // Use Cases
 import uim.platform.document_ai.application.usecases.process_documents;
