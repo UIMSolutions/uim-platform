@@ -40,7 +40,7 @@ class InferenceController : SAPController {
     try {
       auto j = req.json;
       auto r = SubmitInferenceRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.deploymentId = j.getString("deploymentId");
       r.inputData = j.getString("inputData");
 
@@ -62,7 +62,7 @@ class InferenceController : SAPController {
   private void handleGetRequest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       // Try as inference request
       auto requests = uc.listByDeployment(id, tenantId);
@@ -88,7 +88,7 @@ class InferenceController : SAPController {
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.getResult(id, tenantId);
       if (result is null) {
         // Try by request id
@@ -107,7 +107,7 @@ class InferenceController : SAPController {
 
   private void handleListRequests(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;

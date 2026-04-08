@@ -41,7 +41,7 @@ class ConsentController : SAPController {
     try {
       auto j = req.json;
       CreateConsentRecordRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.purpose = parsePurpose(j.getString("purpose"));
       r.channel = j.getString("channel");
@@ -63,7 +63,7 @@ class ConsentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
@@ -89,7 +89,7 @@ class ConsentController : SAPController {
 
   private void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       ConsentRecord[] items;
@@ -113,7 +113,7 @@ class ConsentController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getConsent(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Consent record not found");
@@ -129,7 +129,7 @@ class ConsentController : SAPController {
       auto j = req.json;
       RevokeConsentRequest r;
       r.id = j.getString("id");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
 
       auto result = uc.revokeConsent(r);
       if (result.isSuccess()) {
@@ -145,7 +145,7 @@ class ConsentController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteConsent(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

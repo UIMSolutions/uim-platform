@@ -30,7 +30,7 @@ class RemoteTableController : SAPController {
     try {
       auto j = req.json;
       CreateRemoteTableRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.spaceId = req.headers.get("X-Space-Id", "");
       r.connectionId = j.getString("connectionId");
       r.name = j.getString("name");

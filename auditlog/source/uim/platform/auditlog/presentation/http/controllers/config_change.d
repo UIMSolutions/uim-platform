@@ -36,7 +36,7 @@ class ConfigChangeController : SAPController {
     try {
       auto j = req.json;
       auto r = WriteConfigChangeLogRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.changedBy = j.getString("changedBy");
       r.configType = j.getString("configType");
       r.configObjectId = j.getString("configObjectId");

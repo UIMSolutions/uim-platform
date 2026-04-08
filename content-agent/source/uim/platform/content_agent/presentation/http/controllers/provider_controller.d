@@ -37,7 +37,7 @@ class ProviderController : SAPController {
     try {
       auto j = req.json;
       auto r = RegisterProviderRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpoint = j.getString("endpoint");
@@ -62,7 +62,7 @@ class ProviderController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto providers = uc.listProviders(tenantId);
 
       auto arr = Json.emptyArray;

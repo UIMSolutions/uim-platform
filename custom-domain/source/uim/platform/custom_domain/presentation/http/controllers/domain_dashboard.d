@@ -27,7 +27,7 @@ class DomainDashboardController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto d = uc.get_(tenantId);
 
             auto resp = Json.emptyObject;
@@ -49,7 +49,7 @@ class DomainDashboardController : SAPController {
     private void handleRefresh(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             RefreshDashboardRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
 
             auto result = uc.refresh(r);
             if (result.success) {

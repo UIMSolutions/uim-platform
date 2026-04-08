@@ -35,7 +35,7 @@ class BusinessProcessController : SAPController {
     try {
       auto j = req.json;
       CreateBusinessProcessRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
@@ -56,7 +56,7 @@ class BusinessProcessController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listProcesses(tenantId);
 
       auto arr = Json.emptyArray;
@@ -74,7 +74,7 @@ class BusinessProcessController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getProcess(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Business process not found");
@@ -90,7 +90,7 @@ class BusinessProcessController : SAPController {
       auto j = req.json;
       UpdateBusinessProcessRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purposes = jsonStrArray(j, "purposes");
@@ -111,7 +111,7 @@ class BusinessProcessController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteProcess(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

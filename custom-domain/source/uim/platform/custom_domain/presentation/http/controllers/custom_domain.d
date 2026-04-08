@@ -33,7 +33,7 @@ class CustomDomainController : SAPController {
         try {
             auto j = req.json;
             CreateCustomDomainRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.domainName = j.getString("domainName");
             r.organizationId = j.getString("organizationId");
@@ -57,7 +57,7 @@ class CustomDomainController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto domains = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -131,7 +131,7 @@ class CustomDomainController : SAPController {
 
             auto j = req.json;
             UpdateCustomDomainRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.activeCertificateId = j.getString("activeCertificateId");
             r.tlsConfigurationId = j.getString("tlsConfigurationId");

@@ -36,7 +36,7 @@ class ValidationRuleController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateValidationRuleRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -71,7 +71,7 @@ class ValidationRuleController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref r; rules)
@@ -107,7 +107,7 @@ class ValidationRuleController : SAPController {
       auto j = req.json;
       auto r = UpdateValidationRuleRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.datasetPattern = j.getString("datasetPattern");
@@ -144,7 +144,7 @@ class ValidationRuleController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.remove(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

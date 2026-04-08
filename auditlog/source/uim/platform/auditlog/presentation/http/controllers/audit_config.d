@@ -40,7 +40,7 @@ class AuditConfigController : SAPController {
     try {
       auto j = req.json;
       auto request = CreateAuditConfigRequest();
-      request.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      request.tenantId = req.getTenantId;
       request.name = j.getString("name");
       request.logDataAccess = j.getBoolean("logDataAccess", true);
       request.logDataModification = j.getBoolean("logDataModification", true);
@@ -91,7 +91,7 @@ class AuditConfigController : SAPController {
 
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       if (!useCase.existsConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
@@ -108,7 +108,7 @@ class AuditConfigController : SAPController {
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.logDataAccess = j.getBoolean("logDataAccess", true);
       r.logDataModification = j.getBoolean("logDataModification", true);
@@ -150,8 +150,8 @@ class AuditConfigController : SAPController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto id = AuditConfigId(extractIdFromPath(req.requestURI));
+      auto tenantId = req.getTenantId;
       useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted");

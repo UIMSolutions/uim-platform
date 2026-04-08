@@ -40,7 +40,7 @@ class BlockingController : SAPController {
     try {
       auto j = req.json;
       CreateBlockingRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = jsonStrArray(j, "targetSystems");
@@ -61,7 +61,7 @@ class BlockingController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
 
       BlockingRequest[] items;
@@ -86,7 +86,7 @@ class BlockingController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getRequest(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Blocking request not found");
@@ -103,7 +103,7 @@ class BlockingController : SAPController {
       auto j = req.json;
       UpdateBlockingStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.status = parseBlockingStatus(j.getString("status"));
 
       auto result = uc.updateStatus(r);
@@ -122,7 +122,7 @@ class BlockingController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteRequest(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

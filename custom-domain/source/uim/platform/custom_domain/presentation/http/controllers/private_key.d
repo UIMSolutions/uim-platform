@@ -30,7 +30,7 @@ class PrivateKeyController : SAPController {
         try {
             auto j = req.json;
             CreatePrivateKeyRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.subject = j.getString("subject");
             r.domains = jsonStrArray(j, "domains");
@@ -54,7 +54,7 @@ class PrivateKeyController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto keys = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;

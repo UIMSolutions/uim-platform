@@ -34,7 +34,7 @@ class ValidateController : SAPController {
     try {
       auto j = req.json;
       auto r = ValidateRecordRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.recordId = j.getString("recordId");
       r.fieldValues = jsonStrMap(j, "fieldValues");
@@ -51,7 +51,7 @@ class ValidateController : SAPController {
     try {
       auto j = req.json;
       auto r = ValidateBatchRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
 
       auto recordsJson = "records" in j;
@@ -86,7 +86,7 @@ class ValidateController : SAPController {
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.getResultByRecord(recordId, tenantId);
       if (result is null) {
         writeError(res, 404, "Validation result not found");

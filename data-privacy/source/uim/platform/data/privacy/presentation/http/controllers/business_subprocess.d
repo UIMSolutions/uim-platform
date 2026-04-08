@@ -35,7 +35,7 @@ class BusinessSubprocessController : SAPController {
     try {
       auto j = req.json;
       CreateBusinessSubprocessRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.parentProcessId = j.getString("parentProcessId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -56,7 +56,7 @@ class BusinessSubprocessController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listSubprocesses(tenantId);
 
       auto arr = Json.emptyArray;
@@ -74,7 +74,7 @@ class BusinessSubprocessController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getSubprocess(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Business subprocess not found");
@@ -90,7 +90,7 @@ class BusinessSubprocessController : SAPController {
       auto j = req.json;
       UpdateBusinessSubprocessRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.purposes = jsonStrArray(j, "purposes");
@@ -111,7 +111,7 @@ class BusinessSubprocessController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteSubprocess(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -36,7 +36,7 @@ class ConnectorController : SAPController {
       auto j = req.json;
       auto r = RegisterConnectorRequest();
       r.subaccountId = j.getString("subaccountId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.locationId = j.getString("locationId");
       r.description = j.getString("description");
       r.connectorVersion = j.getString("connectorVersion");
@@ -62,7 +62,7 @@ class ConnectorController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto conns = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;

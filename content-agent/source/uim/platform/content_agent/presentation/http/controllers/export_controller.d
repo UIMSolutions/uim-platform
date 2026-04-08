@@ -34,7 +34,7 @@ class ExportController : SAPController {
     try {
       auto j = req.json;
       auto r = StartExportRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.packageId = j.getString("packageId");
       r.transportRequestId = j.getString("transportRequestId");
       r.queueId = j.getString("queueId");
@@ -59,7 +59,7 @@ class ExportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto jobs = uc.listExportJobs(tenantId);
 
       auto arr = Json.emptyArray;

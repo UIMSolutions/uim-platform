@@ -28,7 +28,7 @@ class OverviewController : SAPController {
 
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject;

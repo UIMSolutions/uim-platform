@@ -35,7 +35,7 @@ class InformationReportController : SAPController {
     try {
       auto j = req.json;
       CreateInformationReportRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.format = j.getString("format");
@@ -56,7 +56,7 @@ class InformationReportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listReports(tenantId);
 
       auto arr = Json.emptyArray;
@@ -74,7 +74,7 @@ class InformationReportController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getReport(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Information report not found");
@@ -90,7 +90,7 @@ class InformationReportController : SAPController {
       auto j = req.json;
       UpdateInformationReportStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.status = parseReportStatus(j.getString("status"));
       r.downloadUrl = j.getString("downloadUrl");
       r.totalRecords = jsonLong(j, "totalRecords");
@@ -109,7 +109,7 @@ class InformationReportController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteReport(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

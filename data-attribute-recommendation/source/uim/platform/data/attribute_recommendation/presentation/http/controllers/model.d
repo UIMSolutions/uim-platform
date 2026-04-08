@@ -41,7 +41,7 @@ class ModelController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateModelConfigRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -67,7 +67,7 @@ class ModelController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listModelConfigs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -87,7 +87,7 @@ class ModelController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto config = uc.getModelConfig(id, tenantId);
       if (config is null) {
         writeError(res, 404, "Model configuration not found");
@@ -106,7 +106,7 @@ class ModelController : SAPController {
       auto j = req.json;
       auto r = UpdateModelConfigRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.modelType = parseModelType(j.getString("modelType"));
@@ -134,7 +134,7 @@ class ModelController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.activateConfig(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -158,7 +158,7 @@ class ModelController : SAPController {
       auto id = extractIdFromPath(req.requestURI);
       auto r = StartTrainingRequest();
       r.modelConfigId = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.createdBy = req.headers.get("X-User-Id", "system");
 
       auto result = uc.startTraining(r);
@@ -179,7 +179,7 @@ class ModelController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteModelConfig(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

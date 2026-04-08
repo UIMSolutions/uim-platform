@@ -58,19 +58,19 @@ class ManageExportsUseCase : UIMUseCase {
     return CommandResult(job.id.toString(), "");
   }
 
-  bool hasExport(ExportJobId id, TenantId tenantId) {
-    return jobRepo.existsById(id, tenantId);
+  bool hasExport(TenantId tenantId, ExportJobId id) {
+    return jobRepo.existsById(tenantId, id);
   }
 
-  ExportJob getExport(ExportJobId id, TenantId tenantId) {
-    return jobRepo.findById(id, tenantId);
+  ExportJob getExport(TenantId tenantId, ExportJobId id) {
+    return jobRepo.findById(tenantId, id);
   }
 
   ExportJob[] listExports(TenantId tenantId) {
     return jobRepo.findByTenant(tenantId);
   }
 
-  void deleteExport(ExportJobId id, TenantId tenantId) {
-    jobRepo.remove(id, tenantId);
+  void deleteExport(TenantId tenantId, ExportJobId id) {
+    jobRepo.remove(tenantId, id);
   }
 }

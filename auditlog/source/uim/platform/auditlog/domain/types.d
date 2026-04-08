@@ -38,8 +38,8 @@ struct AuditConfigId {
     this.value = value;
   }
 
-    mixin DomainId;
-  }
+  mixin DomainId;
+}
 
 struct ExportJobId {
   string value;

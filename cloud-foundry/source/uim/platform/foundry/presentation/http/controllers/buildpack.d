@@ -36,7 +36,7 @@ class BuildpackController {
     try {
       auto j = req.json;
       auto r = CreateBuildpackRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.type_ = parseBuildpackType(j.getString("type"));
       r.position = j.getInteger("position");
@@ -60,7 +60,7 @@ class BuildpackController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto items = useCase.listBuildpacks(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class BuildpackController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto bp = useCase.getBuildpack(id, tenantId);
       if (bp is null) {
         writeError(res, 404, "Buildpack not found");
@@ -99,7 +99,7 @@ class BuildpackController {
       auto j = req.json;
       auto r = UpdateBuildpackRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.position = j.getInteger("position");
       r.stack = j.getString("stack");
@@ -124,7 +124,7 @@ class BuildpackController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteBuildpack(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

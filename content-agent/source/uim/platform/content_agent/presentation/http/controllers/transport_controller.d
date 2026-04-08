@@ -37,7 +37,7 @@ class TransportController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateTransportRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceSubaccount = j.getString("sourceSubaccount");
       r.targetSubaccount = j.getString("targetSubaccount");
       r.description = j.getString("description");
@@ -64,7 +64,7 @@ class TransportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto transports = uc.listTransportRequests(tenantId);
 
       auto arr = Json.emptyArray;
@@ -101,7 +101,7 @@ class TransportController : SAPController {
       auto j = req.json;
       auto r = ReleaseTransportRequest();
       r.requestId = j.getString("requestId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.releasedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.releaseTransport(r);

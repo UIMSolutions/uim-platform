@@ -40,7 +40,7 @@ class LegalGroundController : SAPController {
     try {
       auto j = req.json;
       CreateLegalGroundRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.basis = parseLegalBasis(j.getString("basis"));
       r.purpose = parsePurpose(j.getString("purpose"));
@@ -64,7 +64,7 @@ class LegalGroundController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto basisParam = req.headers.get("X-Basis-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
@@ -95,7 +95,7 @@ class LegalGroundController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getGround(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Legal ground not found");
@@ -112,7 +112,7 @@ class LegalGroundController : SAPController {
       auto j = req.json;
       UpdateLegalGroundRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.description = j.getString("description");
       r.legalReference = j.getString("legalReference");
       r.isActive = j.getBoolean("isActive", true);
@@ -134,7 +134,7 @@ class LegalGroundController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteGround(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

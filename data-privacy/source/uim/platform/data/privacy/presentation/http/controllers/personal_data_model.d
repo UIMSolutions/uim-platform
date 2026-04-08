@@ -41,7 +41,7 @@ class PersonalDataModelController : SAPController {
     try {
       auto j = req.json;
       CreatePersonalDataModelRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
       r.category = parseCategory(j.getString("category"));
@@ -67,7 +67,7 @@ class PersonalDataModelController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto catParam = req.headers.get("X-Category-Filter", "");
 
       PersonalDataModel[] items;
@@ -91,7 +91,7 @@ class PersonalDataModelController : SAPController {
 
   private void handleListSpecial(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listSpecialCategories(tenantId);
 
       auto arr = Json.emptyArray;
@@ -110,7 +110,7 @@ class PersonalDataModelController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getModel(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Personal data model not found");
@@ -127,7 +127,7 @@ class PersonalDataModelController : SAPController {
       auto j = req.json;
       UpdatePersonalDataModelRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.fieldName = j.getString("fieldName");
       r.fieldDescription = j.getString("fieldDescription");
       r.category = parseCategory(j.getString("category"));
@@ -153,7 +153,7 @@ class PersonalDataModelController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteModel(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

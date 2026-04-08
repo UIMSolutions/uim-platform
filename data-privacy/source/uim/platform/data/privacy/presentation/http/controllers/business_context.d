@@ -36,7 +36,7 @@ class BusinessContextController : SAPController {
     try {
       auto j = req.json;
       CreateBusinessContextRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
@@ -58,7 +58,7 @@ class BusinessContextController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listContexts(tenantId);
 
       auto arr = Json.emptyArray;
@@ -76,7 +76,7 @@ class BusinessContextController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getContext(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Business context not found");
@@ -92,7 +92,7 @@ class BusinessContextController : SAPController {
       auto j = req.json;
       UpdateBusinessContextRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataCategories = jsonStrArray(j, "dataCategories");
@@ -115,7 +115,7 @@ class BusinessContextController : SAPController {
     try {
       ActivateBusinessContextRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
 
       auto result = uc.activateContext(r);
       if (result.isSuccess()) {
@@ -131,7 +131,7 @@ class BusinessContextController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteContext(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

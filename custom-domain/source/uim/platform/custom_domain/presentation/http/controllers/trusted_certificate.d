@@ -30,7 +30,7 @@ class TrustedCertificateController : SAPController {
         try {
             auto j = req.json;
             CreateTrustedCertificateRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.customDomainId = j.getString("customDomainId");
             r.certificatePem = j.getString("certificatePem");
@@ -53,7 +53,7 @@ class TrustedCertificateController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto certs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;

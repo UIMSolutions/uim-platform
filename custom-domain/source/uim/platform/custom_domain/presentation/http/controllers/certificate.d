@@ -33,7 +33,7 @@ class CertificateController : SAPController {
         try {
             auto j = req.json;
             CreateCertificateRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.keyId = j.getString("keyId");
             r.certificateType = j.getString("certificateType");
@@ -55,7 +55,7 @@ class CertificateController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto certs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -143,7 +143,7 @@ class CertificateController : SAPController {
 
             auto j = req.json;
             UploadCertificateChainRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.certificatePem = j.getString("certificatePem");
 
@@ -171,7 +171,7 @@ class CertificateController : SAPController {
 
             auto j = req.json;
             ActivateCertificateRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.domains = jsonStrArray(j, "domains");
 

@@ -35,7 +35,7 @@ class ConsentPurposeController : SAPController {
     try {
       auto j = req.json;
       CreateConsentPurposeRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.controllerId = j.getString("controllerId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -60,7 +60,7 @@ class ConsentPurposeController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listPurposes(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class ConsentPurposeController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getPurpose(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Consent purpose not found");
@@ -94,7 +94,7 @@ class ConsentPurposeController : SAPController {
       auto j = req.json;
       UpdateConsentPurposeRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.consentFormTemplate = j.getString("consentFormTemplate");
@@ -115,7 +115,7 @@ class ConsentPurposeController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deletePurpose(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

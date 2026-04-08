@@ -30,7 +30,7 @@ class ExecutableController : SAPController {
     try {
       auto j = req.json;
       CreateExecutableRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.scenarioId = j.getString("scenarioId");
       r.id = j.getString("id");

@@ -36,7 +36,7 @@ class PurposeRecordController : SAPController {
     try {
       auto j = req.json;
       CreatePurposeRecordRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.businessContextId = j.getString("businessContextId");
       r.purpose = j.getString("purpose");
@@ -59,7 +59,7 @@ class PurposeRecordController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listRecords(tenantId);
 
       auto arr = Json.emptyArray;
@@ -77,7 +77,7 @@ class PurposeRecordController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getRecord(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Purpose record not found");
@@ -92,7 +92,7 @@ class PurposeRecordController : SAPController {
     try {
       DeactivatePurposeRecordRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
 
       auto result = uc.deactivateRecord(r);
       if (result.isSuccess()) {
@@ -108,7 +108,7 @@ class PurposeRecordController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteRecord(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

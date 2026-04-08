@@ -30,7 +30,7 @@ class ScenarioController : SAPController {
     try {
       auto j = req.json;
       CreateScenarioRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.id = j.getString("id");
       r.name = j.getString("name");

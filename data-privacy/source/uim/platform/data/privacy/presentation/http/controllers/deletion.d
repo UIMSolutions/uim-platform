@@ -40,7 +40,7 @@ class DeletionController : SAPController {
     try {
       auto j = req.json;
       CreateDeletionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = jsonStrArray(j, "targetSystems");
@@ -61,7 +61,7 @@ class DeletionController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
@@ -89,7 +89,7 @@ class DeletionController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getRequest(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Deletion request not found");
@@ -106,7 +106,7 @@ class DeletionController : SAPController {
       auto j = req.json;
       UpdateDeletionStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.status = parseDeletionStatus(j.getString("status"));
       r.blockerReason = j.getString("blockerReason");
 
@@ -126,7 +126,7 @@ class DeletionController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteRequest(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

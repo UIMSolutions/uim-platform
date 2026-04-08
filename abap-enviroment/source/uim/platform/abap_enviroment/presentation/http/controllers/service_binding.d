@@ -41,7 +41,7 @@ class ServiceBindingController : SAPController {
     try {
       auto j = req.json;
       CreateServiceBindingRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.serviceDefinitionId = j.getString("serviceDefinitionId");
       r.name = j.getString("name");

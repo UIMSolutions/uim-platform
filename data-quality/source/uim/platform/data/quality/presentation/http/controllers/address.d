@@ -34,7 +34,7 @@ class AddressController : SAPController {
     try {
       auto j = req.json;
       auto r = CleanseAddressRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceRecordId = j.getString("sourceRecordId");
       r.line1 = j.getString("line1");
       r.line2 = j.getString("line2");
@@ -55,7 +55,7 @@ class AddressController : SAPController {
     try {
       auto j = req.json;
       auto batchReq = CleanseBatchAddressRequest();
-      batchReq.tenantId = req.headers.get("X-Tenant-Id", "");
+      batchReq.tenantId = req.getTenantId;
 
       auto addrJson = "addresses" in j;
       if (addrJson !is null && (*addrJson).type == Json.Type.array) {
@@ -94,7 +94,7 @@ class AddressController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto records = uc.getByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref r; records)

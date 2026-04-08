@@ -31,7 +31,7 @@ class ExecutionController : SAPController {
     try {
       auto j = req.json;
       CreateExecutionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.configurationId = j.getString("configurationId");
 
@@ -95,7 +95,7 @@ class ExecutionController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       PatchExecutionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.executionId = id;
       r.targetStatus = j.getString("targetStatus");

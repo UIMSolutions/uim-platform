@@ -36,7 +36,7 @@ class AnonymizationConfigController : SAPController {
     try {
       auto j = req.json;
       CreateAnonymizationConfigRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
@@ -55,7 +55,7 @@ class AnonymizationConfigController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listConfigs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -73,7 +73,7 @@ class AnonymizationConfigController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getConfig(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Anonymization config not found");
@@ -89,7 +89,7 @@ class AnonymizationConfigController : SAPController {
       auto j = req.json;
       UpdateAnonymizationConfigRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
@@ -109,7 +109,7 @@ class AnonymizationConfigController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       auto result = uc.activateConfig(id, tenantId);
       if (result.isSuccess()) {
@@ -125,7 +125,7 @@ class AnonymizationConfigController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       uc.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

@@ -41,7 +41,7 @@ class DatasetController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateDatasetRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataType = parseDataType(j.getString("dataType"));
@@ -64,7 +64,7 @@ class DatasetController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listDatasets(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class DatasetController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto ds = uc.getDataset(id, tenantId);
       if (ds is null) {
         writeError(res, 404, "Dataset not found");
@@ -103,7 +103,7 @@ class DatasetController : SAPController {
       auto j = req.json;
       auto r = UpdateDatasetRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.columnDefinitions = j.getString("columnDefinitions");
@@ -128,7 +128,7 @@ class DatasetController : SAPController {
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.validateDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -150,7 +150,7 @@ class DatasetController : SAPController {
   private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.processDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -172,7 +172,7 @@ class DatasetController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

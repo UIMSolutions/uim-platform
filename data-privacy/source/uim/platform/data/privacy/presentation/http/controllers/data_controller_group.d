@@ -35,7 +35,7 @@ class DataControllerGroupController : SAPController {
     try {
       auto j = req.json;
       CreateDataControllerGroupRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerIds = jsonStrArray(j, "controllerIds");
@@ -53,7 +53,7 @@ class DataControllerGroupController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listGroups(tenantId);
 
       auto arr = Json.emptyArray;
@@ -71,7 +71,7 @@ class DataControllerGroupController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getGroup(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Controller group not found");
@@ -87,7 +87,7 @@ class DataControllerGroupController : SAPController {
       auto j = req.json;
       UpdateDataControllerGroupRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerIds = jsonStrArray(j, "controllerIds");
@@ -106,7 +106,7 @@ class DataControllerGroupController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteGroup(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

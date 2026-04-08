@@ -31,7 +31,7 @@ class ViewController : SAPController {
     try {
       auto j = req.json;
       CreateViewRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.spaceId = req.headers.get("X-Space-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -117,7 +117,7 @@ class ViewController : SAPController {
       auto j = req.json;
 
       UpdateViewRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.spaceId = req.headers.get("X-Space-Id", "");
       r.viewId = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");

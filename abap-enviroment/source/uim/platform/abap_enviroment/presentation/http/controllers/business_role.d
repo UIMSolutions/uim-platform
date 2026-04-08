@@ -41,7 +41,7 @@ class BusinessRoleController : SAPController {
     try {
       auto j = req.json;
       CreateBusinessRoleRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.name = j.getString("name");
       r.description = j.getString("description");

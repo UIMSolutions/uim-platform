@@ -41,7 +41,7 @@ class CommunicationArrangementController : SAPController {
     try {
       auto j = req.json;
       CreateCommunicationArrangementRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");

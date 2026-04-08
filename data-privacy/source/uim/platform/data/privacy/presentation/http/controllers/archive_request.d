@@ -35,7 +35,7 @@ class ArchiveRequestController : SAPController {
     try {
       auto j = req.json;
       CreateArchiveRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.targetSystems = jsonStrArray(j, "targetSystems");
@@ -58,7 +58,7 @@ class ArchiveRequestController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
@@ -76,7 +76,7 @@ class ArchiveRequestController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getRequest(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Archive request not found");
@@ -92,7 +92,7 @@ class ArchiveRequestController : SAPController {
       auto j = req.json;
       UpdateArchiveStatusRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.status = parseArchiveStatus(j.getString("status"));
 
       auto result = uc.updateStatus(r);
@@ -109,7 +109,7 @@ class ArchiveRequestController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteRequest(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

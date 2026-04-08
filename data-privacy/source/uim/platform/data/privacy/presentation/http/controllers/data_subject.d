@@ -40,7 +40,7 @@ class DataSubjectController : SAPController {
     try {
       auto j = req.json;
       CreateDataSubjectRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.externalId = j.getString("externalId");
@@ -63,7 +63,7 @@ class DataSubjectController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto typeParam = req.headers.get("X-Subject-Type", "");
 
       DataSubject[] items;
@@ -88,7 +88,7 @@ class DataSubjectController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getSubject(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Data subject not found");
@@ -105,7 +105,7 @@ class DataSubjectController : SAPController {
       auto j = req.json;
       UpdateDataSubjectRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.sourceSystem = j.getString("sourceSystem");
@@ -129,7 +129,7 @@ class DataSubjectController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteSubject(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

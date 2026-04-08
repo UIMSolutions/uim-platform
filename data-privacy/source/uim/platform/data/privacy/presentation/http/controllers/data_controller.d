@@ -35,7 +35,7 @@ class DataControllerController : SAPController {
     try {
       auto j = req.json;
       CreateDataControllerRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -59,7 +59,7 @@ class DataControllerController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listControllers(tenantId);
 
       auto arr = Json.emptyArray;
@@ -77,7 +77,7 @@ class DataControllerController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getController(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Data controller not found");
@@ -93,7 +93,7 @@ class DataControllerController : SAPController {
       auto j = req.json;
       UpdateDataControllerRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.legalEntityName = j.getString("legalEntityName");
@@ -118,7 +118,7 @@ class DataControllerController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteController(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

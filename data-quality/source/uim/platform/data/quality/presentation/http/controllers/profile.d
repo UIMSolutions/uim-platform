@@ -34,7 +34,7 @@ class ProfileController : SAPController {
     try {
       auto j = req.json;
       auto r = ProfileDatasetRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.datasetName = j.getString("datasetName");
 
@@ -62,7 +62,7 @@ class ProfileController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto profiles = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; profiles)
@@ -81,7 +81,7 @@ class ProfileController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto profile = uc.getById(id, tenantId);
       if (profile is null) {
         writeError(res, 404, "Data profile not found");

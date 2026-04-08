@@ -36,7 +36,7 @@ class DuplicateController : SAPController {
     try {
       auto j = req.json;
       auto r = DetectDuplicatesRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.matchFields = jsonStrArrayArray(j, "matchFields");
       r.strategy = parseStrategy(j.getString("strategy"));
@@ -75,7 +75,7 @@ class DuplicateController : SAPController {
     try {
       auto j = req.json;
       auto r = ResolveDuplicateRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.groupId = j.getString("groupId");
       r.survivorRecordId = j.getString("survivorRecordId");
 
@@ -98,7 +98,7 @@ class DuplicateController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto groups = uc.getUnresolved(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref g; groups)
@@ -117,7 +117,7 @@ class DuplicateController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto group = uc.getById(id, tenantId);
       if (group is null) {
         writeError(res, 404, "Match group not found");

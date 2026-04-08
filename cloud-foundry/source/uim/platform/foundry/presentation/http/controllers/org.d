@@ -38,7 +38,7 @@ class OrgController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateOrgRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
@@ -63,7 +63,7 @@ class OrgController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto orgs = useCase.listOrgs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -83,7 +83,7 @@ class OrgController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto org = useCase.getOrg(id, tenantId);
       if (org is null) {
         writeError(res, 404, "Organization not found");
@@ -102,7 +102,7 @@ class OrgController : SAPController {
       auto j = req.json;
       auto r = UpdateOrgRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.memoryQuotaMb = j.getInteger("memoryQuotaMb", 0);
       r.instanceMemoryLimitMb = j.getInteger("instanceMemoryLimitMb", 0);
@@ -127,7 +127,7 @@ class OrgController : SAPController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto result = useCase.suspendOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -145,7 +145,7 @@ class OrgController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto result = useCase.activateOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -163,7 +163,7 @@ class OrgController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

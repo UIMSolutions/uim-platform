@@ -36,7 +36,7 @@ class RuleSetController : SAPController {
     try {
       auto j = req.json;
       CreateRuleSetRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.businessContextId = j.getString("businessContextId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -55,7 +55,7 @@ class RuleSetController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listRuleSets(tenantId);
 
       auto arr = Json.emptyArray;
@@ -73,7 +73,7 @@ class RuleSetController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = uc.getRuleSet(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Rule set not found");
@@ -89,7 +89,7 @@ class RuleSetController : SAPController {
       auto j = req.json;
       UpdateRuleSetRequest r;
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.priority = cast(int) jsonLong(j, "priority");
@@ -108,7 +108,7 @@ class RuleSetController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       auto result = uc.activateRuleSet(id, tenantId);
       if (result.isSuccess()) {
@@ -124,7 +124,7 @@ class RuleSetController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       uc.deleteRuleSet(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

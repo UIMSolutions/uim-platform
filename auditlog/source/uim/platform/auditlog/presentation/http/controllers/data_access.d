@@ -35,7 +35,7 @@ class DataAccessController : SAPController {
     try {
       auto j = req.json;
       auto r = WriteDataAccessLogRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.accessedBy = j.getString("accessedBy");
       r.dataSubject = j.getString("dataSubject");
       r.dataObjectType = j.getString("dataObjectType");

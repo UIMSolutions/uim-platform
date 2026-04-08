@@ -38,7 +38,7 @@ class TransportRequestController : SAPController {
     try {
       auto j = req.json;
       CreateTransportRequestRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
       r.description = j.getString("description");

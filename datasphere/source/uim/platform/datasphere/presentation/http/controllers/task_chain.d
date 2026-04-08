@@ -30,7 +30,7 @@ class TaskChainController : SAPController {
     try {
       auto j = req.json;
       CreateTaskChainRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.spaceId = req.headers.get("X-Space-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");

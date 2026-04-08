@@ -40,7 +40,7 @@ class AccessRuleController : SAPController {
       auto j = req.json;
       auto r = CreateAccessRuleRequest();
       r.connectorId = j.getString("connectorId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.description = j.getString("description");
       r.protocol = j.getString("protocol");
       r.virtualHost = j.getString("virtualHost");
@@ -67,7 +67,7 @@ class AccessRuleController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;

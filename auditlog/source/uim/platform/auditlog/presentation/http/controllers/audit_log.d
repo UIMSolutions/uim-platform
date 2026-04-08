@@ -21,12 +21,12 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 @safe:
 class AuditLogController : SAPController {
-  private WriteAuditLogUseCase writeUC;
-  private RetrieveAuditLogsUseCase retrieveUC;
+  private WriteAuditLogUseCase writeUsecase;
+  private RetrieveAuditLogsUseCase retrieveUsecase;
 
-  this(WriteAuditLogUseCase writeUC, RetrieveAuditLogsUseCase retrieveUC) {
-    this.writeUC = writeUC;
-    this.retrieveUC = retrieveUC;
+  this(WriteAuditLogUseCase writeUsecase, RetrieveAuditLogsUseCase retrieveUsecase) {
+    this.writeUsecase = writeUsecase;
+    this.retrieveUsecase = retrieveUsecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -41,7 +41,7 @@ class AuditLogController : SAPController {
     try {
       auto j = req.json;
       auto r = WriteAuditLogRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = j.getString("userId");
       r.userName = j.getString("userName");
       r.serviceId = j.getString("serviceId");
@@ -59,7 +59,7 @@ class AuditLogController : SAPController {
       r.correlationId = j.getString("correlationId");
       r.originApp = j.getString("originApp");
 
-      auto result = writeUC.writeLog(r);
+      auto result = writeUsecase.writeLog(r);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -74,7 +74,7 @@ class AuditLogController : SAPController {
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto queryReq = AuditLogQueryRequest();
       queryReq.tenantId = tenantId;
 
@@ -92,7 +92,7 @@ class AuditLogController : SAPController {
       queryReq.limit = 500;
       queryReq.offset = 0;
 
-      auto entries = retrieveUC.query(queryReq);
+      auto entries = retrieveUsecase.query(queryReq);
       auto arr = entries.map!(e => serializeEntry(e)).array.toJson;
 
       auto resp = Json.emptyObject
@@ -107,13 +107,13 @@ class AuditLogController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
-      if (!retrieveUC.existsById(id, tenantId)) {
+      auto tenantId = req.getTenantId;
+      if (!retrieveUsecase.existsById(tenantId, AuditLogId(id))) {
         writeError(res, 404, "Audit log entry not found");
         return;
       }
 
-      auto entry = retrieveUC.getById(id, tenantId);
+      auto entry = retrieveUsecase.getById(tenantId, AuditLogId(id));
       res.writeJsonBody(serializeEntry(entry), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

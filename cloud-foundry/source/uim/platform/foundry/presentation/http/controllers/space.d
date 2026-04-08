@@ -36,7 +36,7 @@ class SpaceController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateSpaceRequest();
-      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      r.tenantId = req.getTenantId;
       r.orgId = j.getString("orgId");
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
@@ -58,7 +58,7 @@ class SpaceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto spaces = useCase.listSpaces(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class SpaceController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto space = useCase.getSpace(id, tenantId);
       if (space is null) {
         writeError(res, 404, "Space not found");
@@ -97,7 +97,7 @@ class SpaceController : SAPController {
       auto j = req.json;
       auto r = UpdateSpaceRequest();
       r.id = id;
-      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.allowSsh = j.getBoolean("allowSsh", true);
 
@@ -118,7 +118,7 @@ class SpaceController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

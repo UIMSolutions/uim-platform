@@ -31,7 +31,7 @@ class DeploymentController : SAPController {
     try {
       auto j = req.json;
       CreateDeploymentRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.configurationId = j.getString("configurationId");
       r.ttl = jsonInt(j, "ttl");
@@ -96,7 +96,7 @@ class DeploymentController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       PatchDeploymentRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.deploymentId = id;
       r.targetStatus = j.getString("targetStatus");

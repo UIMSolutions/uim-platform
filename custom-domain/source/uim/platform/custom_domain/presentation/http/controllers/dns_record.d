@@ -31,7 +31,7 @@ class DnsRecordController : SAPController {
         try {
             auto j = req.json;
             CreateDnsRecordRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.customDomainId = j.getString("customDomainId");
             r.recordType = j.getString("recordType");
@@ -56,7 +56,7 @@ class DnsRecordController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto records = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -118,7 +118,7 @@ class DnsRecordController : SAPController {
 
             auto j = req.json;
             UpdateDnsRecordRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.value = j.getString("value");
             r.ttl = jsonInt(j, "ttl");

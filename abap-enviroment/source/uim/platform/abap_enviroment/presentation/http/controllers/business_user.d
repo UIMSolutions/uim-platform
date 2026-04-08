@@ -41,7 +41,7 @@ class BusinessUserController : SAPController {
     try {
       auto j = req.json;
       CreateBusinessUserRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.systemInstanceId = j.getString("systemInstanceId");
       r.username = j.getString("username");
       r.firstName = j.getString("firstName");

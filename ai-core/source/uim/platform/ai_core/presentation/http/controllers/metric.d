@@ -28,7 +28,7 @@ class MetricController : SAPController {
     try {
       auto j = req.json;
       PatchMetricsRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.executionId = j.getString("executionId");
       r.metrics = jsonKeyValuePairs(j, "metrics");

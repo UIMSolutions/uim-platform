@@ -40,7 +40,7 @@ class SystemInstanceController : SAPController {
     try {
       auto j = req.json;
       CreateSystemInstanceRequest request;
-      request.tenantId = req.headers.get("X-Tenant-Id", "");
+      request.tenantId = req.getTenantId;
       request.subaccountId = j.getString("subaccountId");
       request.name = j.getString("name");
       request.description = j.getString("description");
@@ -71,7 +71,7 @@ class SystemInstanceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto instances = uc.listInstances(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref inst; instances)

@@ -35,7 +35,7 @@ class SecurityEventController : SAPController {
     try {
       auto j = req.json;
       auto r = WriteSecurityEventRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = j.getString("userId");
       r.userName = j.getString("userName");
       r.eventType = j.getString("eventType");

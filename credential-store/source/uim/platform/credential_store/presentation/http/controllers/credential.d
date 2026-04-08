@@ -78,7 +78,7 @@ class CredentialController : SAPController {
     try {
       auto j = req.json;
       CreateCredentialRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.namespaceId = req.headers.get("X-Namespace-Id", j.getString("namespaceId"));
       r.name = j.getString("name");
       r.type = type;

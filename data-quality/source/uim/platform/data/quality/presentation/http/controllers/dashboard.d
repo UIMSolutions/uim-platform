@@ -32,7 +32,7 @@ class DashboardController : SAPController {
     try {
       auto j = req.json;
       auto r = ComputeDashboardRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.datasetName = j.getString("datasetName");
 

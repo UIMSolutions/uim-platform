@@ -31,7 +31,7 @@ class ResourceGroupController : SAPController {
     try {
       auto j = req.json;
       CreateResourceGroupRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = j.getString("resourceGroupId");
       r.labels = jsonKeyValuePairs(j, "labels");
 
@@ -51,7 +51,7 @@ class ResourceGroupController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      auto tenantId = req.getTenantId;
       auto groups = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -113,7 +113,7 @@ class ResourceGroupController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       PatchResourceGroupRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceGroupId = id;
       r.labels = jsonKeyValuePairs(j, "labels");
 

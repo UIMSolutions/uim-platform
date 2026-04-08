@@ -41,7 +41,7 @@ class SoftwareComponentController : SAPController {
     try {
       auto j = req.json;
       CreateSoftwareComponentRequest request;
-      request.tenantId = req.headers.get("X-Tenant-Id", "");
+      request.tenantId = req.getTenantId;
       request.systemInstanceId = j.getString("systemInstanceId");
       request.name = j.getString("name");
       request.description = j.getString("description");
