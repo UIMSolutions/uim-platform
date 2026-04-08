@@ -9,9 +9,13 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.kyma.infrastructure.config;
-import uim.platform.kyma.infrastructure.container;
+// import uim.platform.kyma.infrastructure.config;
+// import uim.platform.kyma.infrastructure.container;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.stdio : writefln;
 @safe:
 
@@ -66,3 +70,4 @@ else {
 
     runApplication();
   }
+}

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.functions;
 
-import uim.platform.kyma.domain.entities.serverless_function;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.serverless_function;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — serverless function persistence.
 interface FunctionRepository {
   ServerlessFunction findById(FunctionId id);

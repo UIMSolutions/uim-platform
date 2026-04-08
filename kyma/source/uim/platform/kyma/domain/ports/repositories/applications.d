@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.applications;
 
-import uim.platform.kyma.domain.entities.application;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.application;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — external application connectivity persistence.
 interface ApplicationRepository {
   Application findById(ApplicationId id);

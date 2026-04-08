@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.modules;
 
-import uim.platform.kyma.domain.entities.kyma_module;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.kyma_module;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — Kyma module persistence.
 interface ModuleRepository {
   KymaModule findById(ModuleId id);

@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.namespaces;
 
-import uim.platform.kyma.domain.entities.namespace;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.namespace;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — namespace persistence.
 interface NamespaceRepository {
   Namespace findById(NamespaceId id);

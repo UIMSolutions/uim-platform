@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.service_instance;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// A service instance provisioned from the BTP service catalog.
 struct ServiceInstance {
   ServiceInstanceId id;

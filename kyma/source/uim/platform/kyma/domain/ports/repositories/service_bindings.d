@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.ports.repositories.service_binding;
 
-import uim.platform.kyma.domain.entities.service_binding;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.service_binding;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — service binding persistence.
 interface ServiceBindingRepository {
   ServiceBinding findById(ServiceBindingId id);

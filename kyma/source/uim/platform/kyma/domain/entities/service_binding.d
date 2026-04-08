@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.entities.service_binding;
 
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// A service binding — connects a service instance to an application/function.
 struct ServiceBinding {
   ServiceBindingId id;
