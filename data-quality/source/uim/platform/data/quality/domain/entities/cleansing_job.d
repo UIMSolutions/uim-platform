@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.cleansing_job;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// An asynchronous data cleansing job.
 struct CleansingJob {
   CleansingJobId jobId;

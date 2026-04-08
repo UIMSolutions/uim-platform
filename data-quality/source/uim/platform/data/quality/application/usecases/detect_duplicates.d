@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.usecases.detect_duplicates;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.match_group;
-import uim.platform.data.quality.domain.ports.repositories.match_groups;
-import uim.platform.data.quality.domain.services.duplicate_detector;
-import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.match_group;
+// import uim.platform.data.quality.domain.ports.repositories.match_groups;
+// import uim.platform.data.quality.domain.services.duplicate_detector;
+// import uim.platform.data.quality.application.dto;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 // import std.datetime.systime : Clock;
 
 class DetectDuplicatesUseCase : UIMUseCase {
@@ -27,10 +31,10 @@ class DetectDuplicatesUseCase : UIMUseCase {
     // Convert DTO records to domain RecordEntry
     RecordEntry[] entries;
     foreach (ref r; req.records) {
-      RecordEntry e;
-      e.recordId = r.recordId;
-      e.fields = r.fieldValues;
-      entries ~= e;
+      RecordEntry entry;
+      entry.recordId = r.recordId;
+      entry.fields = r.fieldValues;
+      entries ~= entry;
     }
 
     auto groups = detector.detect(req.tenantId, req.datasetId, req.matchFields,

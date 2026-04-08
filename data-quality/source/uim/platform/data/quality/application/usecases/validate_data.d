@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.usecases.validate_data;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_rule;
-import uim.platform.data.quality.domain.entities.validation_result;
-import uim.platform.data.quality.domain.ports.repositories.validation_rules;
-import uim.platform.data.quality.domain.ports.repositories.validation_results;
-import uim.platform.data.quality.domain.services.validation_engine;
-import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_rule;
+// import uim.platform.data.quality.domain.entities.validation_result;
+// import uim.platform.data.quality.domain.ports.repositories.validation_rules;
+// import uim.platform.data.quality.domain.ports.repositories.validation_results;
+// import uim.platform.data.quality.domain.services.validation_engine;
+// import uim.platform.data.quality.application.dto;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class ValidateDataUseCase : UIMUseCase {
   private ValidationRuleRepository ruleRepo;
   private ValidationResultRepository resultRepo;

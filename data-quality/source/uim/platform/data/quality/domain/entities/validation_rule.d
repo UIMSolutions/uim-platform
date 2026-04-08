@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.validation_rule;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// A configurable data quality validation rule.
 struct ValidationRule {
-  RuleId id;
+  RuleId ruleId;
   TenantId tenantId;
   string name;
   string description;

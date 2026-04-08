@@ -6,5 +6,8 @@
 module uim.platform.data_quality.domain.services;
 
 public {
-    
+    import uim.platform.data_quality.domain.services.address_cleanser;
+    import uim.platform.data_quality.domain.services.duplicate_detector;
+    import uim.platform.data_quality.domain.services.quality_scorer;
+    import uim.platform.data_quality.domain.services.validation_engine;
 }

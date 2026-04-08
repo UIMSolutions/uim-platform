@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.data_profile;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Profile analysis result for a dataset.
 struct DataProfile {
   ProfileId profileId;

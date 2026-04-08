@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.cleansing_jobs;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.cleansing_job;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.cleansing_job;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting cleansing job records.
 interface CleansingJobRepository {
   CleansingJob[] findByTenant(TenantId tenantId);

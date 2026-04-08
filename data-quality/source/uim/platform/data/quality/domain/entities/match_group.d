@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.match_group;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// A group of records identified as potential duplicates.
 struct MatchGroup {
   MatchGroupId groupId;

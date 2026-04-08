@@ -7,12 +7,16 @@ module uim.platform.data.quality.application.usecases.cleanse_addresses;
 
 // import std.uuid;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.address_record;
-import uim.platform.data.quality.domain.ports.repositories.addresses;
-import uim.platform.data.quality.domain.services.address_cleanser;
-import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.address_record;
+// import uim.platform.data.quality.domain.ports.repositories.addresses;
+// import uim.platform.data.quality.domain.services.address_cleanser;
+// import uim.platform.data.quality.application.dto;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class CleanseAddressesUseCase : UIMUseCase {
   private AddressRepository repo;
   private AddressCleanser cleanser;

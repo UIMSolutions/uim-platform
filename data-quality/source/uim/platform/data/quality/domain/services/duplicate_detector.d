@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.services.duplicate_detector;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.match_group;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.match_group;
 
 // import std.math : abs;
 // import std.uni : toLower;
 // import std.conv : to;
 // import std.datetime.systime : Clock;
 // import std.uuid;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service - detects duplicate records using configurable strategies.
 class DuplicateDetector {
   /// Detect duplicates among a set of records.

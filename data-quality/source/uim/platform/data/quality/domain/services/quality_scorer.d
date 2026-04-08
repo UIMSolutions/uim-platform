@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.services.quality_scorer;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.quality_dashboard;
-import uim.platform.data.quality.domain.entities.validation_result;
-import uim.platform.data.quality.domain.entities.data_profile;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.quality_dashboard;
+// import uim.platform.data.quality.domain.entities.validation_result;
+// import uim.platform.data.quality.domain.entities.data_profile;
 
 // import std.datetime.systime : Clock;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service - computes quality scores and dashboard metrics.
 class QualityScorer {
   /// Compute a quality dashboard from validation results and profile data.

@@ -3,18 +3,22 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.data - quality.presentation.http.controllers.validate;
+module uim.platform.data.quality.presentation.http.controllers.validate;
 
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.quality.application.usecases.validate_data;
-import uim.platform.data.quality.application.dto;
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_result;
+// import uim.platform.data.quality.application.usecases.validate_data;
+// import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_result;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class ValidateController : SAPController {
   private ValidateDataUseCase uc;
 

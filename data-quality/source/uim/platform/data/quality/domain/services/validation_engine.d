@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.services.validation_engine;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_rule;
-import uim.platform.data.quality.domain.entities.validation_result;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_rule;
+// import uim.platform.data.quality.domain.entities.validation_result;
 
 // import std.regex;
 // import std.conv : to;
 // import std.uni : toLower;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service - evaluates validation rules against record field values.
 class ValidationEngine {
   /// Validate a set of field values against applicable rules.

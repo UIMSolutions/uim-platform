@@ -8,11 +8,15 @@ module uim.platform.data.quality.application.usecases.manage.validation_rules;
 // import std.uuid;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_rule;
-import uim.platform.data.quality.domain.ports.repositories.validation_rules;
-import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_rule;
+// import uim.platform.data.quality.domain.ports.repositories.validation_rules;
+// import uim.platform.data.quality.application.dto;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageValidationRulesUseCase : UIMUseCase {
   private ValidationRuleRepository repo;
 

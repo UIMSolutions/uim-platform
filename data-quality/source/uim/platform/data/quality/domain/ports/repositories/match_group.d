@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.match_groups;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.match_group;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.match_group;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting duplicate match groups.
 interface MatchGroupRepository {
   MatchGroup[] findByTenant(TenantId tenantId);

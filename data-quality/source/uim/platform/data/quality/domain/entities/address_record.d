@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.address_record;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// An address record for cleansing and geocoding.
 struct AddressRecord {
   TenantId tenantId;

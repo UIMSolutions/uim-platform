@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.entities.quality_dashboard;
 
-import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.types;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 /// Aggregated data quality metrics for a tenant / dataset.
 struct QualityDashboard {
   TenantId tenantId;

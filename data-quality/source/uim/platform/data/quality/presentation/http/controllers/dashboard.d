@@ -10,11 +10,15 @@ module uim.platform.data.quality.presentation.http.dashboard;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.quality.application.usecases.compute_dashboard;
-import uim.platform.data.quality.application.dto;
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.quality_dashboard;
+// import uim.platform.data.quality.application.usecases.compute_dashboard;
+// import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.quality_dashboard;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class DashboardController : SAPController {
   private ComputeDashboardUseCase uc;
 

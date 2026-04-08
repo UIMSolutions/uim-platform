@@ -10,11 +10,15 @@ module uim.platform.data_quality.presentation.http.controllers.address;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.data.quality.application.usecases.cleanse_addresses;
-import uim.platform.data.quality.application.dto;
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.address_record;
+// import uim.platform.data.quality.application.usecases.cleanse_addresses;
+// import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.address_record;
+import uim.platform.data;
 
+mixin(ShowModule!());
+
+@safe:
 class AddressController : SAPController {
   private CleanseAddressesUseCase uc;
 

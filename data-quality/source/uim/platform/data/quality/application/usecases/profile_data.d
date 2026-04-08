@@ -37,11 +37,11 @@ class ProfileDataUseCase : UIMUseCase {
     }
 
     auto profile = DataProfile();
-    profile.id = randomUUID().toString();
+    profile.id = randomUUID();
     profile.tenantId = req.tenantId;
     profile.datasetId = req.datasetId;
     profile.datasetName = req.datasetName;
-    profile.totalRecords = cast(long) req.records.length;
+    profile.totalRecords = cast(long)req.records.length;
     profile.profiledRecords = profile.totalRecords;
     profile.columns = columns;
 
@@ -51,9 +51,7 @@ class ProfileDataUseCase : UIMUseCase {
       foreach (ref c; columns)
         totalComp += c.completeness;
       profile.overallQualityScore = totalComp / columns.length;
-    }
-    else
-    {
+    } else {
       profile.overallQualityScore = 100.0;
     }
 
@@ -83,7 +81,7 @@ class ProfileDataUseCase : UIMUseCase {
   private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records) {
     ColumnProfile cp;
     cp.fieldName = fieldName;
-    cp.totalValues = cast(long) records.length;
+    cp.totalValues = cast(long)records.length;
 
     long nullCount = 0;
     long emptyCount = 0;
@@ -108,7 +106,7 @@ class ProfileDataUseCase : UIMUseCase {
       values ~= val;
       freqMap[val] = freqMap.get(val, 0) + 1;
 
-      auto len = cast(long) val.length;
+      auto len = cast(long)val.length;
       if (len < minLen)
         minLen = len;
       if (len > maxLen)
@@ -118,19 +116,18 @@ class ProfileDataUseCase : UIMUseCase {
 
     cp.nullCount = nullCount;
     cp.emptyCount = emptyCount;
-    cp.uniqueCount = cast(long) freqMap.length;
-    cp.duplicateCount = cast(long) values.length - cp.uniqueCount;
+    cp.uniqueCount = cast(long)freqMap.length;
+    cp.duplicateCount = cast(long)values.length - cp.uniqueCount;
 
     auto nonNull = cp.totalValues - nullCount;
-    cp.completeness = cp.totalValues > 0 ? (cast(double) nonNull / cp.totalValues) * 100.0 : 100.0;
-    cp.uniqueness = values.length > 0 ? (cast(double) cp.uniqueCount / values.length) * 100.0
-      : 100.0;
+    cp.completeness = cp.totalValues > 0 ? (cast(double)nonNull / cp.totalValues) * 100.0 : 100.0;
+    cp.uniqueness = values.length > 0 ? (cast(double)cp.uniqueCount / values.length) * 100.0 : 100.0;
     cp.validity = 100.0; // would need rules to compute
 
     if (values.length > 0) {
       cp.minLength = minLen;
       cp.maxLength = maxLen;
-      cp.avgLength = cast(double) totalLen / values.length;
+      cp.avgLength = cast(double)totalLen / values.length;
     }
 
     // Detect data type from values
@@ -158,7 +155,7 @@ class ProfileDataUseCase : UIMUseCase {
         ++emailCount;
     }
 
-    auto total = cast(int) values.length;
+    auto total = cast(int)values.length;
     if (intCount > total * 8 / 10)
       return ProfiledDataType.integer;
     if (floatCount > total * 8 / 10)
@@ -194,8 +191,7 @@ class ProfileDataUseCase : UIMUseCase {
         if (hasDot)
           return false;
         hasDot = true;
-      }
-      else if (c < '0' || c > '9')
+      } else if (c < '0' || c > '9')
         return false;
     }
     return hasDot;
@@ -205,15 +201,14 @@ class ProfileDataUseCase : UIMUseCase {
     // import std.string : indexOf;
 
     auto at = s.indexOf('@');
-    return at > 0 && at < cast(long) s.length - 1 && s.indexOf('.', at) > at;
+    return at > 0 && at < cast(long)s.length - 1 && s.indexOf('.', at) > at;
   }
 
   private static string[] topN(int[string] freqMap, int n) {
     // import std.algorithm : sort;
     // import std.array : array;
 
-    struct Pair
-    {
+    struct Pair {
       string key;
       int count;
     }

@@ -16,8 +16,7 @@ import uim.platform.data.quality.infrastructure.container;
 @safe:
 
 version (unittest) {
-}
-else {
+} else {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
@@ -63,3 +62,4 @@ else {
 
     runApplication();
   }
+}
