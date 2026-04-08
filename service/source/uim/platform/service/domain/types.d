@@ -6,4 +6,20 @@ mixin(ShowModule!());
 
 @safe:
 
-alias TenantId = string;
+// alias TenantId = string;
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+
+  bool isEmpty() const {
+    return value.length == 0;
+  }
+}

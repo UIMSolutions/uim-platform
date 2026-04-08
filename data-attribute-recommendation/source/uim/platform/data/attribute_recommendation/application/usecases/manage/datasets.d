@@ -24,7 +24,7 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   CommandResult createDataset(CreateDatasetRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Dataset name is required");
@@ -61,7 +61,7 @@ class ManageDatasetsUseCase : UIMUseCase {
   CommandResult updateDataset(UpdateDatasetRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Dataset ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

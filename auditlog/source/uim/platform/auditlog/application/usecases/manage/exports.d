@@ -28,7 +28,7 @@ class ManageExportsUseCase : UIMUseCase {
   }
 
   CommandResult createExport(CreateExportJobRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     if (req.requestedBy.length == 0)

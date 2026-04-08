@@ -66,7 +66,7 @@ class IngestLogsUseCase : UIMUseCase {
   CommandResult ingestBatch(IngestLogBatchRequest req) {
     int count = 0;
     foreach (ref entryReq; req.entries) {
-      if (entryReq.tenantId.length == 0)
+      if (entryReq.tenantId.isEmpty)
         entryReq.tenantId = req.tenantId;
       auto result = ingest(entryReq);
       if (result.success)

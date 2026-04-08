@@ -26,7 +26,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   }
 
   CommandResult createDestination(CreateDestinationRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Destination name is required");
@@ -91,7 +91,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   CommandResult updateDestination(UpdateDestinationRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Destination ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

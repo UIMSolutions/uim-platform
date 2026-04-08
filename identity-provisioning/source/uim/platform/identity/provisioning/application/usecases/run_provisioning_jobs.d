@@ -35,7 +35,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
   }
 
   CommandResult createJob(CreateProvisioningJobRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.sourceSystemId.length == 0)
       return CommandResult("", "Source system ID is required");

@@ -30,7 +30,7 @@ class ManageDomainDashboardsUseCase : UIMUseCase {
     }
 
     CommandResult refresh(RefreshDashboardRequest r) {
-        if (r.tenantId.length == 0)
+        if (r.tenantId.isEmpty)
             return CommandResult(false, "", "Tenant ID is required");
 
         auto domains = domainRepo.findByTenant(r.tenantId);

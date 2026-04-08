@@ -37,7 +37,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
 
   /// Create a new workflow instance from a scenario template.
   CommandResult createWorkflow(CreateWorkflowRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.scenarioId.length == 0)
       return CommandResult("", "Scenario ID is required");

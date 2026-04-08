@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 bool validateTenant(string tenantId) {
-  if (tenantId.length == 0) {
+  if (tenantId.isEmpty) {
     throw new UIMValidationException("Tenant ID cannot be empty");
   }
 

@@ -23,7 +23,7 @@ class ManageSystemsUseCase : UIMUseCase {
   }
 
   CommandResult createSystem(CreateSystemRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "System name is required");
@@ -70,7 +70,7 @@ class ManageSystemsUseCase : UIMUseCase {
   CommandResult updateSystem(UpdateSystemRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "System ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

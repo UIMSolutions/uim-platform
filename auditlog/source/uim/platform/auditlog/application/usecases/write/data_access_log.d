@@ -30,7 +30,7 @@ class WriteDataAccessLogUseCase : UIMUseCase {
   }
 
   CommandResult writeLog(WriteDataAccessLogRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     if (req.dataSubject.length == 0)

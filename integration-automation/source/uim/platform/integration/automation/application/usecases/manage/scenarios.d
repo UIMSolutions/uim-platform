@@ -23,7 +23,7 @@ class ManageScenariosUseCase : UIMUseCase {
   }
 
   CommandResult createScenario(CreateScenarioRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Scenario name is required");
@@ -67,7 +67,7 @@ class ManageScenariosUseCase : UIMUseCase {
   CommandResult updateScenario(UpdateScenarioRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Scenario ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

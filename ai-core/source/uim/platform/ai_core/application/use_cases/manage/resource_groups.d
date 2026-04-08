@@ -20,7 +20,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
   CommandResult create(CreateResourceGroupRequest r) {
     if (r.resourceGroupId.length == 0)
       return CommandResult(false, "", "Resource group ID is required");
-    if (r.tenantId.length == 0)
+    if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(r.resourceGroupId);

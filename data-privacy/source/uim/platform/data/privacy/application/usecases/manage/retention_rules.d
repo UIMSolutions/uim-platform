@@ -25,7 +25,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
   }
 
   CommandResult createRule(CreateRetentionRuleRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Rule name is required");

@@ -21,7 +21,7 @@ class ManageClientsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateClientRequest r) {
-    if (r.tenantId.length == 0)
+    if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
 
     Client c;

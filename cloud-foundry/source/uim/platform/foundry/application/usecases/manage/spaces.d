@@ -26,7 +26,7 @@ class ManageSpacesUseCase : UIMUseCase {
   }
 
   CommandResult createSpace(CreateSpaceRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.orgId.length == 0)
       return CommandResult("", "Organization ID is required");
@@ -76,7 +76,7 @@ class ManageSpacesUseCase : UIMUseCase {
   CommandResult updateSpace(UpdateSpaceRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Space ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

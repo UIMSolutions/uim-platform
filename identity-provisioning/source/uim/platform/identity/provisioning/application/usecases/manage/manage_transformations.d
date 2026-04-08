@@ -24,7 +24,7 @@ class ManageTransformationsUseCase : UIMUseCase {
   }
 
   CommandResult createTransformation(CreateTransformationRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.systemId.length == 0)
       return CommandResult("", "System ID is required");
@@ -68,7 +68,7 @@ class ManageTransformationsUseCase : UIMUseCase {
   CommandResult updateTransformation(UpdateTransformationRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Transformation ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

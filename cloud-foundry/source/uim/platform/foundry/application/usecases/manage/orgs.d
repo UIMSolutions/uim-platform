@@ -26,7 +26,7 @@ class ManageOrgsUseCase : UIMUseCase {
   }
 
   CommandResult createOrg(CreateOrgRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Organization name is required");
@@ -66,7 +66,7 @@ class ManageOrgsUseCase : UIMUseCase {
   CommandResult updateOrg(UpdateOrgRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Organization ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

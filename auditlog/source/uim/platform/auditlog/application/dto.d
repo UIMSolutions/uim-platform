@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog.domain.types;
-import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
+// import uim.platform.auditlog.domain.types;
+// import uim.platform.auditlog.domain.entities.audit_log_entry : AuditAttribute;
+import uim.platform.auditlog;
 
+mixin(ShowModule!());
+
+@safe:
 // ──────────────── Audit Log Entry DTOs ────────────────
 
 @safe:

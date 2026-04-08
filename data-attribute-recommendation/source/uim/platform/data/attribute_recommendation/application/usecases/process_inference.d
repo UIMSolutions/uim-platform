@@ -30,7 +30,7 @@ class ProcessInferenceUseCase : UIMUseCase {
 
   /// Submit an inference request and get immediate prediction.
   CommandResult submitInference(SubmitInferenceRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.deploymentId.length == 0)
       return CommandResult("", "Deployment ID is required");

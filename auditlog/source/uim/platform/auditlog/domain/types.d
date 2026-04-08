@@ -11,13 +11,76 @@ mixin(ShowModule!());
 @safe:
 
 /// Unique identifier type aliases for type safety.
-alias AuditLogId = string;
-alias RetentionPolicyId = string;
-alias AuditConfigId = string;
-alias ExportJobId = string;
-alias TenantId = string;
-alias UserId = string;
-alias ServiceId = string;
+struct AuditLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
+
+struct RetentionPolicyId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
+
+struct AuditConfigId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
+
+struct ExportJobId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
+
+struct ServiceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  string toString() const {
+    return value;
+  }
+}
 
 /// Predefined SAP audit event categories.
 enum AuditCategory {

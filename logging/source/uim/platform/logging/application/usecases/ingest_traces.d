@@ -62,7 +62,7 @@ class IngestTracesUseCase : UIMUseCase {
   CommandResult ingestSpanBatch(IngestSpanBatchRequest req) {
     int count = 0;
     foreach (ref spanReq; req.spans) {
-      if (spanReq.tenantId.length == 0)
+      if (spanReq.tenantId.isEmpty)
         spanReq.tenantId = req.tenantId;
       auto result = ingestSpan(spanReq);
       if (result.success)

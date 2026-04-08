@@ -26,7 +26,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
   CommandResult createRepository(CreateRepositoryRequest r) {
     if (r.name.length == 0)
       return CommandResult("", "Repository name is required");
-    if (r.tenantId.length == 0)
+    if (r.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findByName(r.name, r.tenantId);

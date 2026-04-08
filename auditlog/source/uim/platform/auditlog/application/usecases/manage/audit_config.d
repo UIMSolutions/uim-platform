@@ -25,7 +25,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
   }
 
   CommandResult createConfig(CreateAuditConfigRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     // Only one config per tenant
@@ -34,7 +34,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto cfg = AuditConfig();
-    cfg.id = randomUUID().toString();
+    cfg.id = AuditConfigId(randomUUID().toString());
     cfg.tenantId = req.tenantId;
     cfg.name = req.name.length > 0 ? req.name : "Default";
     cfg.status = ConfigStatus.enabled;

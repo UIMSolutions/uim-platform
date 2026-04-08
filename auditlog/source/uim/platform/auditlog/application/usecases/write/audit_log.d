@@ -29,7 +29,7 @@ class WriteAuditLogUseCase : UIMUseCase {
   }
 
   CommandResult writeLog(WriteAuditLogRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     if (req.message.length == 0)

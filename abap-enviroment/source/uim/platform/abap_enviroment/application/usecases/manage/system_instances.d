@@ -25,7 +25,7 @@ class ManageSystemInstancesUseCase : UIMUseCase {
   CommandResult createInstance(CreateSystemInstanceRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "System instance name is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.adminEmail.length == 0)
       return CommandResult("", "Admin email is required");

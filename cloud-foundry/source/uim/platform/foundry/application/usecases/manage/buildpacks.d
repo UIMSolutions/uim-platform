@@ -23,7 +23,7 @@ class ManageBuildpacksUseCase : UIMUseCase {
   }
 
   CommandResult createBuildpack(CreateBuildpackRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Buildpack name is required");
@@ -66,7 +66,7 @@ class ManageBuildpacksUseCase : UIMUseCase {
   CommandResult updateBuildpack(UpdateBuildpackRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Buildpack ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);

@@ -32,7 +32,7 @@ class ManageRoutesUseCase : UIMUseCase {
   // --- Routes ---
 
   CommandResult createRoute(CreateRouteRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.spaceId.length == 0)
       return CommandResult("", "Space ID is required");
@@ -118,7 +118,7 @@ class ManageRoutesUseCase : UIMUseCase {
   // --- Domains ---
 
   CommandResult createDomain(CreateDomainRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Domain name is required");

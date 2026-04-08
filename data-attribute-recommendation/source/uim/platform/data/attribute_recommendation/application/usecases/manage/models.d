@@ -28,7 +28,7 @@ class ManageModelsUseCase : UIMUseCase {
   }
 
   CommandResult createModelConfig(CreateModelConfigRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.datasetId.length == 0)
       return CommandResult("", "Dataset ID is required");
@@ -75,7 +75,7 @@ class ManageModelsUseCase : UIMUseCase {
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
     if (req.id.length == 0)
       return CommandResult("", "Model configuration ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
@@ -125,7 +125,7 @@ class ManageModelsUseCase : UIMUseCase {
   CommandResult startTraining(StartTrainingRequest req) {
     if (req.modelConfigId.length == 0)
       return CommandResult("", "Model configuration ID is required");
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
 
     auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);

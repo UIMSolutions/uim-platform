@@ -29,7 +29,7 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
   }
 
   CommandResult createRequest(CreateDeletionRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.dataSubjectId.length == 0)
       return CommandResult("", "Data subject ID is required");

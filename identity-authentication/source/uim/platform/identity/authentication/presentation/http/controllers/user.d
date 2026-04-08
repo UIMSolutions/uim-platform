@@ -65,7 +65,7 @@ class UserController : SAPController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto tenantId = req.params.get("tenantId", "");
-      if (tenantId.length == 0)
+      if (tenantId.isEmpty)
         tenantId = req.headers.get("X-Tenant-Id", "");
 
       auto users = useCase.listUsers(tenantId);

@@ -22,7 +22,7 @@ struct LogParser {
   static ParseResult validate(const ref LogEntry entry) {
     string[] errors;
 
-    if (entry.tenantId.length == 0)
+    if (entry.tenantId.isEmpty)
       errors ~= "Tenant ID is required";
     if (entry.message.length == 0)
       errors ~= "Log message is required";

@@ -30,7 +30,7 @@ class WriteConfigChangeUseCase : UIMUseCase {
   }
 
   CommandResult writeChange(WriteConfigChangeLogRequest req) {
-    if (req.tenantId.length == 0)
+    if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
     if (req.configType.length == 0)
       return CommandResult("", "Config type is required");
