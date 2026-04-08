@@ -13,7 +13,7 @@ interface RuleSetRepository {
   bool existsByTenant(TenantId tenantId);
   RuleSet[] findByTenant(TenantId tenantId);
  
-  bool existsId(RuleSetId id, TenantId tenantId);
+  bool existsById(RuleSetId id, TenantId tenantId);
   RuleSet findById(RuleSetId id, TenantId tenantId);
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);

@@ -13,7 +13,7 @@ interface PurposeRecordRepository {
   bool existsByTenant(TenantId tenantId);
   PurposeRecord[] findByTenant(TenantId tenantId);
  
-  bool existsId(PurposeRecordId id, TenantId tenantId);
+  bool existsById(PurposeRecordId id, TenantId tenantId);
   PurposeRecord findById(PurposeRecordId id, TenantId tenantId);
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

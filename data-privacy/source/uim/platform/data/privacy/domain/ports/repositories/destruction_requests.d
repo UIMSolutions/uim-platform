@@ -13,7 +13,7 @@ interface DestructionRequestRepository {
   bool existsByTenant(TenantId tenantId);
   DestructionRequest[] findByTenant(TenantId tenantId);
  
-  bool existsId(DestructionRequestId id, TenantId tenantId);
+  bool existsById(DestructionRequestId id, TenantId tenantId);
   DestructionRequest findById(DestructionRequestId id, TenantId tenantId);
 
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

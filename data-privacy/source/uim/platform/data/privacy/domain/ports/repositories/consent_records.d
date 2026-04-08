@@ -13,7 +13,7 @@ interface ConsentRecordRepository {
   bool existsByTenant(TenantId tenantId);
   ConsentRecord[] findByTenant(TenantId tenantId);
  
-  bool existsId(ConsentRecordId id, TenantId tenantId);
+  bool existsById(ConsentRecordId id, TenantId tenantId);
   ConsentRecord findById(ConsentRecordId id, TenantId tenantId);
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

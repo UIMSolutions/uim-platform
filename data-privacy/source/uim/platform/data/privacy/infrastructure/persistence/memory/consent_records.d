@@ -28,7 +28,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   ConsentRecord* findById(ConsentRecordId id, TenantId tenantId) {
-    if (!existsId(id, tenantId))
+    if (!existsById(id, tenantId))
       return null;
 
     return &store[tenantId][id];
@@ -87,14 +87,14 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
   }
 
   void update(ConsentRecord record) {
-    if (!existsId(record.id, record.tenantId))
+    if (!existsById(record.id, record.tenantId))
       return;
 
     store[record.tenantId][record.id] = record;
   }
 
   void remove(ConsentRecordId id, TenantId tenantId) {
-    if (!existsId(id, tenantId))
+    if (!existsById(id, tenantId))
       return;
 
     store[tenantId].remove(id);

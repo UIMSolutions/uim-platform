@@ -13,7 +13,7 @@ interface BlockingRequestRepository {
   bool existsByTenant(TenantId tenantId);
   BlockingRequest[] findByTenant(TenantId tenantId);
  
-  bool existsId(BlockingRequestId id, TenantId tenantId);
+  bool existsById(BlockingRequestId id, TenantId tenantId);
   BlockingRequest findById(BlockingRequestId id, TenantId tenantId);
 
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

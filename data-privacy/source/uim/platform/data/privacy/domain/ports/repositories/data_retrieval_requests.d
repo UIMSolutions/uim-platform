@@ -13,7 +13,7 @@ interface DataRetrievalRequestRepository {
   bool existsByTenant(TenantId tenantId);
   DataRetrievalRequest[] findByTenant(TenantId tenantId);
  
-  bool existsId(DataRetrievalRequestId id, TenantId tenantId);
+  bool existsById(DataRetrievalRequestId id, TenantId tenantId);
   DataRetrievalRequest findById(DataRetrievalRequestId id, TenantId tenantId);
 
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

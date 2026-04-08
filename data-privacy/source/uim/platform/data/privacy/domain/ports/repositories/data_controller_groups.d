@@ -13,7 +13,7 @@ interface DataControllerGroupRepository {
   bool existsByTenant(TenantId tenantId);
   DataControllerGroup[] findByTenant(TenantId tenantId);
  
-  bool existsId(DataControllerGroupId id, TenantId tenantId);
+  bool existsById(DataControllerGroupId id, TenantId tenantId);
   DataControllerGroup findById(DataControllerGroupId id, TenantId tenantId);
 
   void save(DataControllerGroup group);

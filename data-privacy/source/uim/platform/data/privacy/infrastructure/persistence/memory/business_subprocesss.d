@@ -23,7 +23,7 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
     return store[tenantId].byValue.filter!(s => s.tenantId == tenantId).array;
   }
 
-  bool existsId(BusinessSubprocessId id, TenantId tenantId) {
+  bool existsById(BusinessSubprocessId id, TenantId tenantId) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
@@ -50,7 +50,7 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
   }
 
   void update(BusinessSubprocess entity) {
-    if (!existsId(entity.id, entity.tenantId)) {
+    if (!existsById(entity.id, entity.tenantId)) {
       return;
     }
 

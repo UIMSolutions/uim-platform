@@ -13,7 +13,7 @@ interface ArchiveRequestRepository {
   bool existsByTenant(TenantId tenantId);
   ArchiveRequest[] findByTenant(TenantId tenantId);
 
-  bool existsId(ArchiveRequestId id, TenantId tenantId);
+  bool existsById(ArchiveRequestId id, TenantId tenantId);
   ArchiveRequest findById(ArchiveRequestId id, TenantId tenantId);
 
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

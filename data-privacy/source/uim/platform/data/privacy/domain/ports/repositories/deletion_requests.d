@@ -13,7 +13,7 @@ interface DeletionRequestRepository {
   bool existsByTenant(TenantId tenantId);
   DeletionRequest[] findByTenant(TenantId tenantId);
 
-  bool existsId(DeletionRequestId id, TenantId tenantId);
+  bool existsById(DeletionRequestId id, TenantId tenantId);
   DeletionRequest findById(DeletionRequestId id, TenantId tenantId);
 
   DeletionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

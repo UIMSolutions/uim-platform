@@ -19,12 +19,12 @@ mixin(ShowModule!());
 class MemorySoftwareComponentRepository : SoftwareComponentRepository {
   private SoftwareComponent[SoftwareComponentId] store;
 
-  bool existsId(SoftwareComponentId id) {
+  bool existsById(SoftwareComponentId id) {
     return (id in store) ? true : false;
   }
 
   SoftwareComponent findById(SoftwareComponentId id) {
-    return existsId(id) ? store[id] : SoftwareComponent.init;
+    return existsById(id) ? store[id] : SoftwareComponent.init;
   }
 
   SoftwareComponent[] findBySystem(SystemInstanceId systemId) {

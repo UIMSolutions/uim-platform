@@ -13,7 +13,7 @@ interface LegalGroundRepository {
   bool existsByTenant(TenantId tenantId);
   LegalGround[] findByTenant(TenantId tenantId);
  
-  bool existsId(LegalGroundId id, TenantId tenantId);
+  bool existsById(LegalGroundId id, TenantId tenantId);
   LegalGround findById(LegalGroundId id, TenantId tenantId);
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

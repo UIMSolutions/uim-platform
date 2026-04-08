@@ -13,7 +13,7 @@ interface BusinessProcessRepository {
   bool existsByTenant(TenantId tenantId);
   BusinessProcess[] findByTenant(TenantId tenantId);
  
-  bool existsId(BusinessProcessId id, TenantId tenantId);
+  bool existsById(BusinessProcessId id, TenantId tenantId);
   BusinessProcess findById(BusinessProcessId id, TenantId tenantId);
   
   BusinessProcess[] findByController(TenantId tenantId, DataControllerId controllerId);

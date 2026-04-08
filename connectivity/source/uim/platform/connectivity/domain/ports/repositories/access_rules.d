@@ -10,7 +10,7 @@ import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - access rule persistence.
 interface AccessRuleRepository {
-  bool existsId(RuleId id);
+  bool existsById(RuleId id);
   AccessRule findById(RuleId id);
   AccessRule[] findByConnector(ConnectorId connectorId);
   AccessRule[] findByTenant(TenantId tenantId);

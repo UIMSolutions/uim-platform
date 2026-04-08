@@ -38,13 +38,13 @@ class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId
     return store[tenantId].byValue.array;
   }
 
-  bool existsId(TenantId tenantId, TId id) {
+  bool existsById(TenantId tenantId, TId id) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   TEntity findById(TenantId tenantId, TId id) {
-    if (!existsId(tenantId, id))
-      return null;
+    if (!existsById(tenantId, id))
+      return TEntity.init;
 
     return store[tenantId][id];
   }
@@ -63,13 +63,13 @@ class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId
   }
 
   void update(TEntity entity) {
-    if (existsId(entity.tenantId, entity.id)) {
+    if (existsById(entity.tenantId, entity.id)) {
       store[entity.tenantId][entity.id] = entity;
     }
   }
 
   void remove(TenantId tenantId, TId id) {
-    if (!existsId(tenantId, id))
+    if (!existsById(tenantId, id))
       return;
 
     store[tenantId].remove(id);

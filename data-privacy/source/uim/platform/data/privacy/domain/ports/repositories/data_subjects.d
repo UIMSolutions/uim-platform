@@ -13,7 +13,7 @@ interface DataSubjectRepository {
   bool existsByTenant(TenantId tenantId);
   DataSubject[] findByTenant(TenantId tenantId);
  
-  bool existsId(DataSubjectId id, TenantId tenantId);
+  bool existsById(DataSubjectId id, TenantId tenantId);
   DataSubject findById(DataSubjectId id, TenantId tenantId);
 
   bool existsByExternalId(string externalId, TenantId tenantId);

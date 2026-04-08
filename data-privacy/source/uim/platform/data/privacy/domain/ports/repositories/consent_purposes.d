@@ -13,7 +13,7 @@ interface ConsentPurposeRepository {
   bool existsByTenant(TenantId tenantId);
   ConsentPurpose[] findByTenant(TenantId tenantId);
  
-  bool existsId(ConsentPurposeId id, TenantId tenantId);
+  bool existsById(ConsentPurposeId id, TenantId tenantId);
   ConsentPurpose findById(ConsentPurposeId id, TenantId tenantId);
   
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId);

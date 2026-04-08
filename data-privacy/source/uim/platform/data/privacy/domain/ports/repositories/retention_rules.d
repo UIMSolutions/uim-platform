@@ -13,7 +13,7 @@ interface RetentionRuleRepository {
   bool existsByTenant(TenantId tenantId);
   RetentionRule[] findByTenant(TenantId tenantId);
  
-  bool existsId(RetentionRuleId id, TenantId tenantId);
+  bool existsById(RetentionRuleId id, TenantId tenantId);
   RetentionRule findById(RetentionRuleId id, TenantId tenantId);
 
   RetentionRule findDefault(TenantId tenantId);

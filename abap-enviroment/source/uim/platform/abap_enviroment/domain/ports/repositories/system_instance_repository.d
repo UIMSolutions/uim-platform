@@ -11,7 +11,7 @@ import uim.platform.abap_enviroment.domain.types;
 /// Port: outgoing - system instance persistence.
 interface SystemInstanceRepository {
 
-  bool existsId(SystemInstanceId id);
+  bool existsById(SystemInstanceId id);
   SystemInstance findById(SystemInstanceId id);
   
   bool existsName(TenantId tenantId, string name);

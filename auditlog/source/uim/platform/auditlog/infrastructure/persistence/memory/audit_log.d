@@ -96,16 +96,16 @@ class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLog
   }
 
   // void save(TenantId tenantId, AuditLogEntry entry) {
-    // entry.tenantId = tenantId;
-    // save(entry);
+  // entry.tenantId = tenantId;
+  // save(entry);
   // }
-// 
+  // 
   // void save(AuditLogEntry entry) {
-    // if (!existsByTenant(entry.tenantId)) {
-      // AuditLogEntry[AuditLogId] tenantStore;
-      // store[entry.tenantId] = tenantStore;
-    // }
-    // store[entry.tenantId][entry.id] = entry;
+  // if (!existsByTenant(entry.tenantId)) {
+  // AuditLogEntry[AuditLogId] tenantStore;
+  // store[entry.tenantId] = tenantStore;
+  // }
+  // store[entry.tenantId][entry.id] = entry;
   // }
 
   // void update(AuditLogEntry entry) {
@@ -121,4 +121,29 @@ class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLog
       .map!(e => e.id)
       .each!(id => store[tenantId].remove(id));
   }
+}
+///
+unittest {
+  auto repo = new MemoryAuditLogRepository();
+
+  auto tenantId = TenantId("tenant1");
+  auto entry1 = AuditLogEntry(AuditLogId("log1"), tenantId, "user1", "service1",
+    AuditCategory("category1"), "action1", "details1", "corr1", Clock.currTime());
+  auto entry2 = AuditLogEntry(AuditLogId("log2"), tenantId, "user2", "service2",
+    AuditCategory("category2"), "action2", "details2", "corr2", Clock.currTime());
+
+  repo.save(entry1);
+  repo.save(entry2);
+
+  assert(repo.existsByTenant(tenantId));
+  assert(repo.findByTenant(tenantId).length == 2);
+  assert(repo.existsById(tenantId, entry1.id));
+  assert(repo.findById(tenantId, entry1.id) == entry1);
+  assert(repo.findByCategory(tenantId, AuditCategory("category1")).length == 1);
+  assert(repo.findByUser(tenantId, UserId("user1")).length == 1);
+  assert(repo.findByService(tenantId, ServiceId("service1")).length == 1);
+  assert(repo.findByCorrelation(tenantId, "corr1").length == 1);
+
+  repo.removeOlderThan(tenantId, Clock.currTime() + 1000); // remove all
+  assert(repo.countByTenant(tenantId) == 0);
 }

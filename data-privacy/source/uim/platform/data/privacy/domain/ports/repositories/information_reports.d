@@ -13,7 +13,7 @@ interface InformationReportRepository {
   bool existsByTenant(TenantId tenantId);
   InformationReport[] findByTenant(TenantId tenantId);
  
-  bool existsId(InformationReportId id, TenantId tenantId);
+  bool existsById(InformationReportId id, TenantId tenantId);
   InformationReport findById(InformationReportId id, TenantId tenantId);
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

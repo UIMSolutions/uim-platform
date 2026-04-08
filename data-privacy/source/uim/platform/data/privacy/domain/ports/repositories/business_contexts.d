@@ -13,7 +13,7 @@ interface BusinessContextRepository {
   bool existsByTenant(TenantId tenantId);
   BusinessContext[] findByTenant(TenantId tenantId);
   
-  bool existsId(BusinessContextId id, TenantId tenantId);
+  bool existsById(BusinessContextId id, TenantId tenantId);
   BusinessContext findById(BusinessContextId id, TenantId tenantId);
   
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status);

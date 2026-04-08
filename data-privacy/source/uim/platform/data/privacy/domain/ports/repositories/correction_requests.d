@@ -13,7 +13,7 @@ interface CorrectionRequestRepository {
   bool existsByTenant(TenantId tenantId);
   CorrectionRequest[] findByTenant(TenantId tenantId);
  
-  bool existsId(CorrectionRequestId id, TenantId tenantId);
+  bool existsById(CorrectionRequestId id, TenantId tenantId);
   CorrectionRequest findById(CorrectionRequestId id, TenantId tenantId);
   
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);

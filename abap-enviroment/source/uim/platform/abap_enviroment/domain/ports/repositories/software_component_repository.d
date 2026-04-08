@@ -11,7 +11,7 @@ import uim.platform.abap_enviroment.domain.types;
 /// Port: outgoing - software component persistence.
 interface SoftwareComponentRepository {
 
-  bool existsId(SoftwareComponentId id);
+  bool existsById(SoftwareComponentId id);
   SoftwareComponent findById(SoftwareComponentId id);
 
   bool existsName(SystemInstanceId systemId, string name);

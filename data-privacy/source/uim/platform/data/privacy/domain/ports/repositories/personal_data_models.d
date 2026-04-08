@@ -13,7 +13,7 @@ interface PersonalDataModelRepository {
   bool existsByTenant(TenantId tenantId);
   PersonalDataModel[] findByTenant(TenantId tenantId);
  
-  bool existsId(PersonalDataModelId id, TenantId tenantId);
+  bool existsById(PersonalDataModelId id, TenantId tenantId);
   PersonalDataModel findById(PersonalDataModelId id, TenantId tenantId);
 
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);

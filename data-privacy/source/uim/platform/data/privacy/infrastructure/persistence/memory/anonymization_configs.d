@@ -24,12 +24,12 @@ class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
     return store.byValue.filter!(s => s.tenantId == tenantId).array;
   }
 
-  bool existsId(AnonymizationConfigId id, TenantId tenantId) {
+  bool existsById(AnonymizationConfigId id, TenantId tenantId) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
   AnonymizationConfig findById(AnonymizationConfigId id, TenantId tenantId) {
-    if (!existsId(id, tenantId))
+    if (!existsById(id, tenantId))
       return AnonymizationConfig.init;
 
     return store[tenantId][id];
@@ -48,13 +48,13 @@ class MemoryAnonymizationConfigRepository : AnonymizationConfigRepository {
   }
 
   void update(AnonymizationConfig entity) {
-    if (existsId(entity.id, entity.tenantId)) {
+    if (existsById(entity.id, entity.tenantId)) {
       store[entity.tenantId][entity.id] = entity;
     }
   }
 
   void remove(AnonymizationConfigId id, TenantId tenantId) {
-    if (existsId(id, tenantId)) {
+    if (existsById(id, tenantId)) {
       store[tenantId].remove(id);
       if (store[tenantId].empty) {
         store.remove(tenantId);
