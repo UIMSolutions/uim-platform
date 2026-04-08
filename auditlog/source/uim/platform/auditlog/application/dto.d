@@ -160,13 +160,4 @@ struct WriteConfigChangeLogRequest {
 
 // ──────────────── Generic result ────────────────
 
-@safe:
-struct CommandResult {
-  string id;
-  string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
-  }
-}

@@ -51,7 +51,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.updatedAt = now;
 
     configRepo.save(cfg);
-    return CommandResult(cfg.id, "");
+    return CommandResult(cfg.id.value, "");
   }
 
   bool hasConfig(TenantId tenantId) {
@@ -87,7 +87,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.updatedAt = Clock.currStdTime();
 
     configRepo.update(cfg);
-    return CommandResult(cfg.id, "");
+    return CommandResult(cfg.id.value, "");
   }
 
   void deleteConfig(AuditConfigId id, TenantId tenantId) {

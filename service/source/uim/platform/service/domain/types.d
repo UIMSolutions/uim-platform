@@ -22,4 +22,8 @@ struct TenantId {
   bool isEmpty() const {
     return value.length == 0;
   }
+
+  bool isNull() const {
+    return value.length == 0;
+  }
 }
