@@ -36,7 +36,7 @@ class MonitoringController : SAPController {
 
   private void handleListLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = uc.listLogs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -55,7 +55,7 @@ class MonitoringController : SAPController {
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject;

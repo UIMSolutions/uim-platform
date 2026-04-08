@@ -63,7 +63,7 @@ class RetentionController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; policies)
@@ -80,7 +80,7 @@ class RetentionController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (!useCase.existsPolicy(tenantId, id)) {
         writeError(res, 404, "Retention policy not found");
         return;
@@ -127,7 +127,7 @@ class RetentionController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deletePolicy(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", Json("deleted"));

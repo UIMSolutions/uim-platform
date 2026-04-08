@@ -59,7 +59,7 @@ class PurposeRecordController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listRecords(tenantId);
 
       auto arr = Json.emptyArray;
@@ -77,7 +77,7 @@ class PurposeRecordController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getRecord(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Purpose record not found");
@@ -108,7 +108,7 @@ class PurposeRecordController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteRecord(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

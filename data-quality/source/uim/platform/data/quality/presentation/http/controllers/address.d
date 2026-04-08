@@ -94,7 +94,7 @@ class AddressController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto records = uc.getByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref r; records)

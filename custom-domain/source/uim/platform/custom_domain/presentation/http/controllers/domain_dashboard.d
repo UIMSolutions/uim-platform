@@ -27,7 +27,7 @@ class DomainDashboardController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto d = uc.get_(tenantId);
 
             auto resp = Json.emptyObject;

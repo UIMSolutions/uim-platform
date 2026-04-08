@@ -55,7 +55,7 @@ class RuleSetController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listRuleSets(tenantId);
 
       auto arr = Json.emptyArray;
@@ -73,7 +73,7 @@ class RuleSetController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getRuleSet(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Rule set not found");
@@ -108,7 +108,7 @@ class RuleSetController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       auto result = uc.activateRuleSet(id, tenantId);
       if (result.isSuccess()) {
@@ -124,7 +124,7 @@ class RuleSetController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteRuleSet(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

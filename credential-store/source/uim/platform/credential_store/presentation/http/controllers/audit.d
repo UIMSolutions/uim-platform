@@ -34,7 +34,7 @@ class AuditController : SAPController {
     try {
       import std.conv : to;
 
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto namespaceId = req.params.get("namespaceId", "");
       auto resourceType = req.params.get("resourceType", "");
 

@@ -56,7 +56,7 @@ class InformationReportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listReports(tenantId);
 
       auto arr = Json.emptyArray;
@@ -74,7 +74,7 @@ class InformationReportController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getReport(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Information report not found");
@@ -109,7 +109,7 @@ class InformationReportController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteReport(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

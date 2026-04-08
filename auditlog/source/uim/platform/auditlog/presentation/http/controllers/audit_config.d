@@ -91,7 +91,7 @@ class AuditConfigController : SAPController {
 
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (!useCase.existsConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
@@ -151,7 +151,7 @@ class AuditConfigController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = AuditConfigId(extractIdFromPath(req.requestURI));
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted");

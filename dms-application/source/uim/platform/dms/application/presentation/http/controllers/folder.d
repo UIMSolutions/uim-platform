@@ -67,7 +67,7 @@ class FolderController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listFolders(tenantId);
 
       auto arr = Json.emptyArray;
@@ -87,7 +87,7 @@ class FolderController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto f = uc.getFolder(id, tenantId);
       if (f is null) {
         writeError(res, 404, "Folder not found");
@@ -156,7 +156,7 @@ class FolderController : SAPController {
   private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listChildren(parentId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -176,7 +176,7 @@ class FolderController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteFolder(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

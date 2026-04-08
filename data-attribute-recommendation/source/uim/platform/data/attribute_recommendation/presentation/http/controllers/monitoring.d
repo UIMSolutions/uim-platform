@@ -36,7 +36,7 @@ class MonitoringController : SAPController {
 
   private void handleListJobs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto jobs = uc.listTrainingJobs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -56,7 +56,7 @@ class MonitoringController : SAPController {
   private void handleGetJob(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto job = uc.getTrainingJob(id, tenantId);
       if (job.jobId.length == 0) {
         writeError(res, 404, "Training job not found");
@@ -71,7 +71,7 @@ class MonitoringController : SAPController {
 
   private void handleListDeployments(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto deps = uc.listDeploymentSummaries(tenantId);
 
       auto arr = Json.emptyArray;
@@ -90,7 +90,7 @@ class MonitoringController : SAPController {
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject;

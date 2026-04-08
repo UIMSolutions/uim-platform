@@ -63,7 +63,7 @@ class RetentionRuleController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
       RetentionRule[] items;
@@ -88,7 +88,7 @@ class RetentionRuleController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getRule(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Retention rule not found");
@@ -128,7 +128,7 @@ class RetentionRuleController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteRule(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

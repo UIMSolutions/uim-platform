@@ -70,7 +70,7 @@ class CertificateController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto subaccountId = req.headers.get("X-Subaccount-Id", "");
       auto typeFilter = req.params.get("type");
 
@@ -96,7 +96,7 @@ class CertificateController {
 
   private void handleListExpiring(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       // import std.datetime.systime : Clock;
 
       auto now = Clock.currTime().toUnixTime();

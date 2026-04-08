@@ -64,7 +64,7 @@ class DatasetController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listDatasets(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class DatasetController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto ds = uc.getDataset(id, tenantId);
       if (ds is null) {
         writeError(res, 404, "Dataset not found");
@@ -128,7 +128,7 @@ class DatasetController : SAPController {
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.validateDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -150,7 +150,7 @@ class DatasetController : SAPController {
   private void handleProcess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.processDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -172,7 +172,7 @@ class DatasetController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteDataset(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

@@ -82,7 +82,7 @@ class TenantController : SAPController {
 
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
-      auto tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
+      TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto tenant = useCase.getTenant(tenantId);
       if (tenant == Tenant.init) {
@@ -107,7 +107,7 @@ class TenantController : SAPController {
 
       auto path = req.requestURI;
       auto idx = path.lastIndexOf('/');
-      auto tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
+      TenantId tenantId = idx >= 0 ? path[idx + 1 .. $] : "";
 
       auto j = req.json;
       auto updateReq = UpdateTenantRequest(tenantId, j.getString("name"), []);

@@ -43,7 +43,7 @@ class BrowseController : SAPController {
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto contents = uc.browseFolderContents(folderId, tenantId);
 
       auto fArr = Json.emptyArray;
@@ -69,7 +69,7 @@ class BrowseController : SAPController {
   private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getRepositorySummary(repoId, tenantId);
 
       if (summary.repositoryId.length == 0) {
@@ -115,7 +115,7 @@ class BrowseController : SAPController {
 
   private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
       auto items = uc.getFavorites(userId, tenantId);
 
@@ -136,7 +136,7 @@ class BrowseController : SAPController {
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.removeFavorite(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

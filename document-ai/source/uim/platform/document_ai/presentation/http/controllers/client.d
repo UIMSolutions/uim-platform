@@ -53,7 +53,7 @@ class ClientController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto clients = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -75,7 +75,7 @@ class ClientController : SAPController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       auto c = uc.get_(id, tenantId);
       if (c.clientId.length == 0) {
@@ -121,7 +121,7 @@ class ClientController : SAPController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       auto result = uc.remove(id, tenantId);
       if (result.success) {

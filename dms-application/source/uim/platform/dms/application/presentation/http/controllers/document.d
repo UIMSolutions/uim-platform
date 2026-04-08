@@ -72,7 +72,7 @@ class DocumentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listDocuments(tenantId);
 
       auto arr = Json.emptyArray;
@@ -91,7 +91,7 @@ class DocumentController : SAPController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");
       if (query.length == 0) {
         // Try query param
@@ -126,7 +126,7 @@ class DocumentController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto doc = uc.getDocument(id, tenantId);
       if (doc is null) {
         writeError(res, 404, "Document not found");
@@ -197,7 +197,7 @@ class DocumentController : SAPController {
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.archiveDocument(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -216,7 +216,7 @@ class DocumentController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteDocument(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

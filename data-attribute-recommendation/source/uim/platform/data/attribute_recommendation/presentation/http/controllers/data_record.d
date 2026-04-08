@@ -65,7 +65,7 @@ class DataRecordController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto record = uc.getRecord(id, tenantId);
       if (record is null) {
         writeError(res, 404, "Record not found");
@@ -81,7 +81,7 @@ class DataRecordController : SAPController {
   private void handleListByDataset(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto datasetId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listByDataset(datasetId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -101,7 +101,7 @@ class DataRecordController : SAPController {
   private void handleValidate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.validateRecord(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -120,7 +120,7 @@ class DataRecordController : SAPController {
   private void handleReject(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.rejectRecord(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -139,7 +139,7 @@ class DataRecordController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteRecord(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

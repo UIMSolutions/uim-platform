@@ -59,7 +59,7 @@ class ExportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto jobs = uc.listExportJobs(tenantId);
 
       auto arr = Json.emptyArray;

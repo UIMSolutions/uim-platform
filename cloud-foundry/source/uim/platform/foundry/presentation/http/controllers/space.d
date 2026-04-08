@@ -58,7 +58,7 @@ class SpaceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto spaces = useCase.listSpaces(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class SpaceController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto space = useCase.getSpace(id, tenantId);
       if (space is null) {
         writeError(res, 404, "Space not found");
@@ -118,7 +118,7 @@ class SpaceController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSpace(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

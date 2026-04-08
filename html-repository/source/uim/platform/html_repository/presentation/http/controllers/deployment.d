@@ -54,7 +54,7 @@ class DeploymentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = getHistory.getByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -79,7 +79,7 @@ class DeploymentController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Deployment not found");
         return;

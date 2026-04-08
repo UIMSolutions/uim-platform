@@ -58,7 +58,7 @@ class ArchiveRequestController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
@@ -76,7 +76,7 @@ class ArchiveRequestController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Archive request not found");
@@ -109,7 +109,7 @@ class ArchiveRequestController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteRequest(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

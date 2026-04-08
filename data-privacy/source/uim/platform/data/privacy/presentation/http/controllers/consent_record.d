@@ -63,7 +63,7 @@ class ConsentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
       auto purposeParam = req.headers.get("X-Purpose-Filter", "");
 
@@ -89,7 +89,7 @@ class ConsentController : SAPController {
 
   private void handleListActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
       ConsentRecord[] items;
@@ -113,7 +113,7 @@ class ConsentController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getConsent(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Consent record not found");
@@ -145,7 +145,7 @@ class ConsentController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteConsent(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

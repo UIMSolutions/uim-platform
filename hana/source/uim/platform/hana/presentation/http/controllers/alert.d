@@ -64,7 +64,7 @@ class AlertController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto alerts = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;

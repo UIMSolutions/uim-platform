@@ -74,7 +74,7 @@ class ExportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto jobs = useCase.listExports(tenantId);
       auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
       auto resp = Json.emptyObject
@@ -90,7 +90,7 @@ class ExportController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (!useCase.hasExport(tenantId, ExportJobId(id))) {
         writeError(res, 404, "Export job not found");
         return;
@@ -107,7 +107,7 @@ class ExportController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteExport(tenantId, ExportJobId(id));
       auto resp = Json.emptyObject
         .set("status", "deleted");

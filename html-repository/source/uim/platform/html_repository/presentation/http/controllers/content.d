@@ -31,7 +31,7 @@ class ContentController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto path = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (path.length == 0) {
         writeError(res, 404, "Content not found");
         return;

@@ -55,7 +55,7 @@ class CertificateController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto certs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;

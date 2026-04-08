@@ -64,7 +64,7 @@ class TransportController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto transports = uc.listTransportRequests(tenantId);
 
       auto arr = Json.emptyArray;

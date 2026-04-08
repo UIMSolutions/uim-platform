@@ -55,7 +55,7 @@ class CleansingJobController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto jobs = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref j_; jobs)
@@ -73,7 +73,7 @@ class CleansingJobController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto job = uc.getById(id, tenantId);
       if (job is null) {
         writeError(res, 404, "Cleansing job not found");

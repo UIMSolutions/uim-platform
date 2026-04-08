@@ -53,7 +53,7 @@ class DataControllerGroupController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listGroups(tenantId);
 
       auto arr = Json.emptyArray;
@@ -71,7 +71,7 @@ class DataControllerGroupController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getGroup(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Controller group not found");
@@ -106,7 +106,7 @@ class DataControllerGroupController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteGroup(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

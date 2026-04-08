@@ -98,7 +98,7 @@ class DuplicateController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto groups = uc.getUnresolved(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref g; groups)
@@ -117,7 +117,7 @@ class DuplicateController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto group = uc.getById(id, tenantId);
       if (group is null) {
         writeError(res, 404, "Match group not found");

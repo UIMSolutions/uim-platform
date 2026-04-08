@@ -91,7 +91,7 @@ class DestinationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto subaccountId = req.headers.get("X-Subaccount-Id", "");
       auto instanceId = req.params.get("serviceInstanceId");
 

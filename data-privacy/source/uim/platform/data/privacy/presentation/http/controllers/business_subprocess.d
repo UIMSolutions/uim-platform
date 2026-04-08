@@ -56,7 +56,7 @@ class BusinessSubprocessController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listSubprocesses(tenantId);
 
       auto arr = Json.emptyArray;
@@ -74,7 +74,7 @@ class BusinessSubprocessController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getSubprocess(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Business subprocess not found");
@@ -111,7 +111,7 @@ class BusinessSubprocessController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteSubprocess(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

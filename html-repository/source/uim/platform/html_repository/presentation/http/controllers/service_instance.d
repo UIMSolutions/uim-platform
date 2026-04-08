@@ -53,7 +53,7 @@ class ServiceInstanceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class ServiceInstanceController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -109,7 +109,7 @@ class ServiceInstanceController : SAPController {
     try {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -134,7 +134,7 @@ class ServiceInstanceController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Service instance not found");
         return;

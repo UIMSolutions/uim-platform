@@ -60,7 +60,7 @@ class GroupController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;

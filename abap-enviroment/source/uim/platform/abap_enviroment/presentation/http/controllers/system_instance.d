@@ -71,7 +71,7 @@ class SystemInstanceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto instances = uc.listInstances(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref inst; instances)

@@ -70,7 +70,7 @@ class RouteController : SAPController {
 
   private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = useCase.listRoutes(tenantId);
 
       auto arr = Json.emptyArray;
@@ -90,7 +90,7 @@ class RouteController : SAPController {
   private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto r = useCase.getRoute(id, tenantId);
       if (r is null) {
         writeError(res, 404, "Route not found");
@@ -106,7 +106,7 @@ class RouteController : SAPController {
   private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteRoute(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -196,7 +196,7 @@ class RouteController : SAPController {
 
   private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = useCase.listDomains(tenantId);
 
       auto arr = Json.emptyArray;
@@ -216,7 +216,7 @@ class RouteController : SAPController {
   private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteDomain(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

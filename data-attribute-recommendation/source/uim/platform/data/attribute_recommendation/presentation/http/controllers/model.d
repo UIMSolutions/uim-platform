@@ -67,7 +67,7 @@ class ModelController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listModelConfigs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -87,7 +87,7 @@ class ModelController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto config = uc.getModelConfig(id, tenantId);
       if (config is null) {
         writeError(res, 404, "Model configuration not found");
@@ -134,7 +134,7 @@ class ModelController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.activateConfig(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -179,7 +179,7 @@ class ModelController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteModelConfig(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

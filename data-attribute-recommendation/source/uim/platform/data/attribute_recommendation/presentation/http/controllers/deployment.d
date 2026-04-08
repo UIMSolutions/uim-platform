@@ -63,7 +63,7 @@ class DeploymentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listDeployments(tenantId);
 
       auto arr = Json.emptyArray;
@@ -83,7 +83,7 @@ class DeploymentController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto dep = uc.getDeployment(id, tenantId);
       if (dep is null) {
         writeError(res, 404, "Deployment not found");
@@ -99,7 +99,7 @@ class DeploymentController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.activateDeployment(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -121,7 +121,7 @@ class DeploymentController : SAPController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deactivateDeployment(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -143,7 +143,7 @@ class DeploymentController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteDeployment(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

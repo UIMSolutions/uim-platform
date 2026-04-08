@@ -55,7 +55,7 @@ class AnonymizationConfigController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listConfigs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -73,7 +73,7 @@ class AnonymizationConfigController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getConfig(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Anonymization config not found");
@@ -109,7 +109,7 @@ class AnonymizationConfigController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       auto result = uc.activateConfig(id, tenantId);
       if (result.isSuccess()) {
@@ -125,7 +125,7 @@ class AnonymizationConfigController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

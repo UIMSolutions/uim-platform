@@ -59,7 +59,7 @@ class DataControllerController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listControllers(tenantId);
 
       auto arr = Json.emptyArray;
@@ -77,7 +77,7 @@ class DataControllerController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getController(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Data controller not found");
@@ -118,7 +118,7 @@ class DataControllerController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteController(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

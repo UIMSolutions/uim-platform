@@ -86,7 +86,7 @@ class ValidateController : SAPController {
   private void handleGetResult(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.getResultByRecord(recordId, tenantId);
       if (result is null) {
         writeError(res, 404, "Validation result not found");

@@ -66,7 +66,7 @@ class ShareController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listShares(tenantId);
 
       auto arr = Json.emptyArray;
@@ -86,7 +86,7 @@ class ShareController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto share = uc.getShare(id, tenantId);
       if (share is null) {
         writeError(res, 404, "Share not found");
@@ -102,7 +102,7 @@ class ShareController : SAPController {
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.revokeShare(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -121,7 +121,7 @@ class ShareController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteShare(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

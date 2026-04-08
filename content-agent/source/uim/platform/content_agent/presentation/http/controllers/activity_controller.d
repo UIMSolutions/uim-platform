@@ -30,7 +30,7 @@ class ActivityController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto activities = uc.listActivities(tenantId);
 
       auto arr = Json.emptyArray;
@@ -49,7 +49,7 @@ class ActivityController : SAPController {
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject;

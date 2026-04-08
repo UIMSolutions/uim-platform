@@ -61,7 +61,7 @@ class DataRetrievalController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto statusParam = req.headers.get("X-Status-Filter", "");
       auto subjectParam = req.headers.get("X-Subject-Filter", "");
 
@@ -87,7 +87,7 @@ class DataRetrievalController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getRequest(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Data retrieval request not found");
@@ -125,7 +125,7 @@ class DataRetrievalController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteRequest(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     }

@@ -62,7 +62,7 @@ class ConnectorController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto conns = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;

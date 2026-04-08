@@ -74,7 +74,7 @@ class AppController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
 
       auto arr = Json.emptyArray;
@@ -93,7 +93,7 @@ class AppController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto app = useCase.getApp(id, tenantId);
       if (app is null) {
         writeError(res, 404, "Application not found");
@@ -140,7 +140,7 @@ class AppController : SAPController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.startApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -156,7 +156,7 @@ class AppController : SAPController {
   private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.stopApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -172,7 +172,7 @@ class AppController : SAPController {
   private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.restartApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -211,7 +211,7 @@ class AppController : SAPController {
   private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto env = useCase.getEnvironment(id, tenantId);
 
       auto resp = Json.emptyObject;
@@ -226,7 +226,7 @@ class AppController : SAPController {
   private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
@@ -245,7 +245,7 @@ class AppController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

@@ -58,7 +58,7 @@ class ApiClientController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto clients = useCase.listClients(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long) clients.length);

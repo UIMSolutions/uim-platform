@@ -66,7 +66,7 @@ class PermissionController : SAPController {
   private void handleListByResource(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto resourceId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto resourceTypeStr = req.headers.get("X-Resource-Type", "document");
       auto resourceType = parseResourceType(resourceTypeStr);
 
@@ -89,7 +89,7 @@ class PermissionController : SAPController {
   private void handleListByUser(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto userId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listByUser(userId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -109,7 +109,7 @@ class PermissionController : SAPController {
   private void handleCheckAccess(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto resourceId = j.getString("resourceId");
       auto resourceType = parseResourceType(j.getString("resourceType"));
       auto userId = j.getString("userId");
@@ -155,7 +155,7 @@ class PermissionController : SAPController {
   private void handleRevoke(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.revokePermission(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

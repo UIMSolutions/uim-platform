@@ -67,7 +67,7 @@ class RepositoryController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listRepositories(tenantId);
 
       auto arr = Json.emptyArray;
@@ -87,7 +87,7 @@ class RepositoryController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto repo = uc.getRepository(id, tenantId);
       if (repo is null) {
         writeError(res, 404, "Repository not found");
@@ -132,7 +132,7 @@ class RepositoryController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.activateRepository(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -151,7 +151,7 @@ class RepositoryController : SAPController {
   private void handleArchive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.archiveRepository(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -170,7 +170,7 @@ class RepositoryController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteRepository(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

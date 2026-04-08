@@ -67,7 +67,7 @@ class ServiceController : SAPController {
 
   private void handleListInstances(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = useCase.listInstances(tenantId);
 
       auto arr = Json.emptyArray;
@@ -86,7 +86,7 @@ class ServiceController : SAPController {
   private void handleGetInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto si = useCase.getInstance(id, tenantId);
       if (si is null) {
         writeError(res, 404, "Service instance not found");
@@ -124,7 +124,7 @@ class ServiceController : SAPController {
   private void handleDeleteInstance(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteInstance(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -164,7 +164,7 @@ class ServiceController : SAPController {
 
   private void handleListBindings(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = useCase.listBindings(tenantId);
 
       auto arr = Json.emptyArray;
@@ -183,7 +183,7 @@ class ServiceController : SAPController {
   private void handleDeleteBinding(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteBinding(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

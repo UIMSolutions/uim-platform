@@ -58,7 +58,7 @@ class BusinessContextController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listContexts(tenantId);
 
       auto arr = Json.emptyArray;
@@ -76,7 +76,7 @@ class BusinessContextController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getContext(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Business context not found");
@@ -131,7 +131,7 @@ class BusinessContextController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deleteContext(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)

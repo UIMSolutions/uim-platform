@@ -60,7 +60,7 @@ class ConsentPurposeController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listPurposes(tenantId);
 
       auto arr = Json.emptyArray;
@@ -78,7 +78,7 @@ class ConsentPurposeController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto entry = uc.getPurpose(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Consent purpose not found");
@@ -115,7 +115,7 @@ class ConsentPurposeController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       uc.deletePurpose(id, tenantId);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
