@@ -9,11 +9,6 @@ import uim.platform.document_ai.domain.types;
 
 
 
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 // --- Document ---
 

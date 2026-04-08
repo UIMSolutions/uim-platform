@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.application;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.applications;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.application;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.applications;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.application;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class ApplicationController {
+mixin(ShowModule!());
+
+@safe:
+class ApplicationController : SAPController {
   private ManageApplicationsUseCase uc;
 
   this(ManageApplicationsUseCase uc) {
@@ -24,6 +28,8 @@ class ApplicationController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/applications", &handleRegister);
     router.get("/api/v1/applications", &handleList);
     router.get("/api/v1/applications/*", &handleGetById);

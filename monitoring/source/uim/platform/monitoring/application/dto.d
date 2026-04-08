@@ -7,13 +7,7 @@ module uim.platform.monitoring.application.dto;
 
 import uim.platform.monitoring.domain.types;
 
-/// --- Command result ---
 
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 /// --- Monitored Resource DTOs ---
 

@@ -7,14 +7,6 @@ module uim.platform.object_store.application.dto;
 
 import uim.platform.object_store.domain.types;
 
-/// --- Command result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 /// --- Bucket DTOs ---
 
 struct CreateBucketRequest {

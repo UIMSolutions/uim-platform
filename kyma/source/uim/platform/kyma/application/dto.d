@@ -215,9 +215,9 @@ struct UpdateServiceBindingRequest {
 /// --- Event Subscription DTOs ---
 
 struct CreateEventSubscriptionRequest {
+  TenantId tenantId;
   NamespaceId namespaceId;
   KymaEnvironmentId environmentId;
-  TenantId tenantId;
   string name;
   string description;
   string source;

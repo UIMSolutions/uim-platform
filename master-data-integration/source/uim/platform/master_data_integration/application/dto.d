@@ -7,13 +7,7 @@ module uim.platform.master_data_integration.application.dto;
 
 import uim.platform.master_data_integration.domain.types;
 
-/// --- Command result ---
 
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 /// --- Master Data Object DTOs ---
 

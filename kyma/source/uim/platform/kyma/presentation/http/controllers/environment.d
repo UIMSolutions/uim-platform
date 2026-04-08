@@ -10,12 +10,16 @@ module uim.platform.kyma.presentation.http.controllers.environment;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.environments;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.kyma_environment;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.environments;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.kyma_environment;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class EnvironmentController {
   private ManageEnvironmentsUseCase uc;
 

@@ -5,12 +5,7 @@
 *****************************************************************************************************************/
 module uim.platform.mobile.application.dto;
 
-// Generic command result
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
+
 
 // MobileApp DTOs
 struct CreateMobileAppRequest {

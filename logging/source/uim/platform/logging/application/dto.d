@@ -8,13 +8,6 @@ module uim.platform.logging.application.dto;
 import uim.platform.logging.domain.types;
 
 
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // --- Log Ingestion ---
 
 struct IngestLogRequest {

@@ -4,20 +4,131 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Unique identifier type aliases for type safety.
-alias KymaEnvironmentId = string;
-alias NamespaceId = string;
-alias FunctionId = string;
-alias ApiRuleId = string;
-alias ServiceInstanceId = string;
-alias ServiceBindingId = string;
-alias EventSubscriptionId = string;
-alias ModuleId = string;
-alias ApplicationId = string;
-alias TenantId = string;
-alias SubaccountId = string;
-alias ClusterId = string;
+struct KymaEnvironmentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct NamespaceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct FunctionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ApiRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ServiceInstanceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ServiceBindingId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct EventSubscriptionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ModuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ApplicationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+// struct TenantId {
+//   string value;
+
+//   this(string value) {
+//     this.value = value;
+//   }
+
+//   mixin DomainId;
+// }
+
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ClusterId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Status of a Kyma environment/cluster.
 enum EnvironmentStatus {

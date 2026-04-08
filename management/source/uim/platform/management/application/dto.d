@@ -12,13 +12,6 @@ import uim.platform.management;
 mixin(ShowModule!());
 
 @safe:
-/// --- Command result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 /// --- Global Account DTOs ---
 
