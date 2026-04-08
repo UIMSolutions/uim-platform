@@ -18,7 +18,7 @@ import uim.platform.destination.infrastructure.container;
 
 version (unittest) {
 }
-) {
+else {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);

@@ -53,6 +53,6 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp).array.each!(e => store.remove(e));
+    store = findByTenant(tenantId).filter!(e => e.timestamp >= beforeTimestamp).array;
   }
 }

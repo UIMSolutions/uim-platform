@@ -85,7 +85,7 @@ class RetentionController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto tenantId = req.headers.get("X-Tenant-Id", "");
-      if (!useCase.hasPolicy(id, tenantId)) {
+      if (!useCase.existsPolicy(id, tenantId)) {
         writeError(res, 404, "Retention policy not found");
         return;
       }

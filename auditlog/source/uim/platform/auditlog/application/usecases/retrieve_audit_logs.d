@@ -16,38 +16,38 @@ mixin(ShowModule!());
 
 @safe:
 class RetrieveAuditLogsUseCase : UIMUseCase {
-  private AuditLogRepository repo;
+  private AuditLogRepository repository;
 
-  this(AuditLogRepository repo) {
-    this.repo = repo;
+  this(AuditLogRepository repository) {
+    this.repository = repository;
   }
 
   AuditLogEntry[] query(AuditLogQueryRequest req) {
-    return repo.search(req.tenantId, req.categories, req.timeFrom, req.timeTo,
+    return repository.search(req.tenantId, req.categories, req.timeFrom, req.timeTo,
         req.limit, req.offset);
   }
 
-  bool hasById(AuditLogId id, TenantId tenantId) {
-    return repo.existsById(id, tenantId);
+  bool existsById(AuditLogId id, TenantId tenantId) {
+    return repository.existsById(id, tenantId);
   }
 
   AuditLogEntry getById(AuditLogId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+    return repository.findById(id, tenantId);
   }
 
   AuditLogEntry[] getByCategory(TenantId tenantId, AuditCategory category) {
-    return repo.findByCategory(tenantId, category);
+    return repository.findByCategory(tenantId, category);
   }
 
   AuditLogEntry[] getByUser(TenantId tenantId, UserId userId) {
-    return repo.findByUser(tenantId, userId);
+    return repository.findByUser(tenantId, userId);
   }
 
   AuditLogEntry[] getByCorrelation(string correlationId) {
-    return repo.findByCorrelation(correlationId);
+    return repository.findByCorrelation(correlationId);
   }
 
   long count(TenantId tenantId) {
-    return repo.countByTenant(tenantId);
+    return repository.countByTenant(tenantId);
   }
 }

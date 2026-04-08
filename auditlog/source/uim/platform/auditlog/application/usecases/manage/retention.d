@@ -13,11 +13,13 @@ module uim.platform.auditlog.application.usecases.manage.retention;
 // import uim.platform.auditlog.domain.ports.repositories.retention_policys;
 // import uim.platform.auditlog.application.dto;
 
-import uim.platform.auditlog; 
+import uim.platform.auditlog;
 
 mixin(ShowModule!());
 
-@safe:class ManageRetentionUseCase : UIMUseCase {
+@safe:
+
+class ManageRetentionUseCase : UIMUseCase {
   private RetentionPolicyRepository policyRepo;
 
   this(RetentionPolicyRepository policyRepo) {
@@ -47,6 +49,10 @@ mixin(ShowModule!());
 
     policyRepo.save(policy);
     return CommandResult(policy.id, "");
+  }
+
+  bool existsPolicy(RetentionPolicyId id, TenantId tenantId) {
+    return policyRepo.existsById(id, tenantId);
   }
 
   RetentionPolicy getPolicy(RetentionPolicyId id, TenantId tenantId) {

@@ -31,7 +31,7 @@ struct RetentionPolicy {
       .set("name", name)
       .set("description", description)
       .set("retentionDays", retentionDays)
-      .set("categories", categories.map!(c => c.toJson()).array.toJson)
+      .set("categories", categories.map!(c => c.to!string).array.toJson)
       .set("status", status.to!string)
       .set("isDefault", isDefault)
       .set("createdAt", createdAt)

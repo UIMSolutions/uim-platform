@@ -17,7 +17,7 @@ import uim.platform.integration.automation.infrastructure.container;
 
 version (unittest) {
 }
-) {
+else {
   void main() {
     auto config = loadConfig();
     auto container = buildContainer(config);
