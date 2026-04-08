@@ -6,12 +6,60 @@
 module uim.platform.destination.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias DestinationId = string;
-alias CertificateId = string;
-alias FragmentId = string;
-alias TenantId = string;
-alias SubaccountId = string;
-alias ServiceInstanceId = string;
+struct DestinationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct CertificateId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct FragmentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+// struct TenantId {
+//   string value;
+
+//   this(string value) {
+//     this.value = value;
+//   }
+
+//   mixin DomainId;
+// }
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ServiceInstanceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Type of destination connection.
 enum DestinationType {

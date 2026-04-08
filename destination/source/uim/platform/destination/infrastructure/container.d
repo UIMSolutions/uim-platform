@@ -5,25 +5,31 @@
 *****************************************************************************************************************/
 module uim.platform.destination.infrastructure.container;
 
-import uim.platform.destination.infrastructure.config;
+// import uim.platform.destination.infrastructure.config;
 
-// Repositories
-import uim.platform.destination.infrastructure.persistence.memory.destination;
-import uim.platform.destination.infrastructure.persistence.memory.certificate;
-import uim.platform.destination.infrastructure.persistence.memory.fragment;
+// // Repositories
+// import uim.platform.destination.infrastructure.persistence.memory.destination;
+// import uim.platform.destination.infrastructure.persistence.memory.certificate;
+// import uim.platform.destination.infrastructure.persistence.memory.fragment;
 
-// Use Cases
-import uim.platform.destination.application.usecases.manage.destinations;
-import uim.platform.destination.application.usecases.manage.certificates;
-import uim.platform.destination.application.usecases.manage.fragments;
-import uim.platform.destination.application.usecases.find_destination;
+// // Use Cases
+// import uim.platform.destination.application.usecases.manage.destinations;
+// import uim.platform.destination.application.usecases.manage.certificates;
+// import uim.platform.destination.application.usecases.manage.fragments;
+// import uim.platform.destination.application.usecases.find_destination;
 
-// Controllers
-import uim.platform.destination.presentation.http.destination;
-import uim.platform.destination.presentation.http.certificate;
-import uim.platform.destination.presentation.http.fragment;
-import uim.platform.destination.presentation.http.find;
-import uim.platform.destination.presentation.http.health;
+// // Controllers
+// import uim.platform.destination.presentation.http.destination;
+// import uim.platform.destination.presentation.http.certificate;
+// import uim.platform.destination.presentation.http.fragment;
+// import uim.platform.destination.presentation.http.find;
+// import uim.platform.destination.presentation.http.health;
+
+import uim.platform.destination;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Dependency injection container - wires all layers together.
 struct Container {

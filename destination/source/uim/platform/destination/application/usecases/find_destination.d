@@ -5,19 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.destination.application.usecases.find_destination;
 
-import uim.platform.destination.application.dto;
-import uim.platform.destination.domain.entities.destination;
-import uim.platform.destination.domain.entities.destination_fragment;
-import uim.platform.destination.domain.entities.auth_token;
-import uim.platform.destination.domain.entities.certificate;
-import uim.platform.destination.domain.ports.repositories.destinations;
-import uim.platform.destination.domain.ports.repositories.fragments;
-import uim.platform.destination.domain.ports.repositories.certificates;
-import uim.platform.destination.domain.services.destination_resolver;
-import uim.platform.destination.domain.types;
+// import uim.platform.destination.application.dto;
+// import uim.platform.destination.domain.entities.destination;
+// import uim.platform.destination.domain.entities.destination_fragment;
+// import uim.platform.destination.domain.entities.auth_token;
+// import uim.platform.destination.domain.entities.certificate;
+// import uim.platform.destination.domain.ports.repositories.destinations;
+// import uim.platform.destination.domain.ports.repositories.fragments;
+// import uim.platform.destination.domain.ports.repositories.certificates;
+// import uim.platform.destination.domain.services.destination_resolver;
+// import uim.platform.destination.domain.types;
 
 // import std.conv : to;
+import uim.platform.destination;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for the "Find Destination" API — resolves a destination
 /// by name, merges fragments, resolves auth tokens, and collects certificates.
 class FindDestinationUseCase : UIMUseCase {
