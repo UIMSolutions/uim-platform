@@ -6,5 +6,5 @@
 module uim.platform.data.quality.domain.ports;
 
 public {
-    
+    import uim.platform.data.quality.domain.ports.repositories;
 }

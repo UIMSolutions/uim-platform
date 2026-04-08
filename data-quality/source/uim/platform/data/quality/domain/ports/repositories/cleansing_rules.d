@@ -4,7 +4,6 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.cleansing_rules;
-
 // import uim.platform.data.quality.domain.types;
 // import uim.platform.data.quality.domain.entities.cleansing_rule;
 import uim.platform.data.quality;

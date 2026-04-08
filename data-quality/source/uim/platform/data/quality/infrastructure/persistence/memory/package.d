@@ -6,5 +6,11 @@
 module uim.platform.data.quality.infrastructure.persistence.memory;
 
 public {
-    
+    import uim.platform.data.quality.infrastructure.persistence.memory.addresses;
+    import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_jobs;
+    import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rules;
+    import uim.platform.data.quality.infrastructure.persistence.memory.data_profiles;
+    import uim.platform.data.quality.infrastructure.persistence.memory.match_groups;
+    import uim.platform.data.quality.infrastructure.persistence.memory.validation_results;
+    import uim.platform.data.quality.infrastructure.persistence.memory.validation_rules;
 }

@@ -5,44 +5,48 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.infrastructure.container;
 
-import uim.platform.data.quality.infrastructure.config;
+// import uim.platform.data.quality.infrastructure.config;
 
-// Repositories
-import uim.platform.data.quality.infrastructure.persistence.memory.validation_rule_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.validation_result_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.address_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.match_group_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.data_profile_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rule_repo;
-import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_job_repo;
+// // Repositories
+// import uim.platform.data.quality.infrastructure.persistence.memory.validation_rule_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.validation_result_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.address_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.match_group_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.data_profile_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_rule_repo;
+// import uim.platform.data.quality.infrastructure.persistence.memory.cleansing_job_repo;
 
-// Domain services
-import uim.platform.data.quality.domain.services.validation_engine;
-import uim.platform.data.quality.domain.services.address_cleanser;
-import uim.platform.data.quality.domain.services.duplicate_detector;
-import uim.platform.data.quality.domain.services.quality_scorer;
+// // Domain services
+// import uim.platform.data.quality.domain.services.validation_engine;
+// import uim.platform.data.quality.domain.services.address_cleanser;
+// import uim.platform.data.quality.domain.services.duplicate_detector;
+// import uim.platform.data.quality.domain.services.quality_scorer;
 
-// Use cases
-import uim.platform.data.quality.application.usecases.manage.validation_rules;
-import uim.platform.data.quality.application.usecases.validate_data;
-import uim.platform.data.quality.application.usecases.cleanse_addresses;
-import uim.platform.data.quality.application.usecases.detect_duplicates;
-import uim.platform.data.quality.application.usecases.profile_data;
-import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
-import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
-import uim.platform.data.quality.application.usecases.compute_dashboard;
+// // Use cases
+// import uim.platform.data.quality.application.usecases.manage.validation_rules;
+// import uim.platform.data.quality.application.usecases.validate_data;
+// import uim.platform.data.quality.application.usecases.cleanse_addresses;
+// import uim.platform.data.quality.application.usecases.detect_duplicates;
+// import uim.platform.data.quality.application.usecases.profile_data;
+// import uim.platform.data.quality.application.usecases.manage.cleansing_rules;
+// import uim.platform.data.quality.application.usecases.manage.cleansing_jobs;
+// import uim.platform.data.quality.application.usecases.compute_dashboard;
 
-// Controllers
-import uim.platform.data.quality.presentation.http.validation_rule;
-import uim.platform.data.quality.presentation.http.validate;
-import uim.platform.data.quality.presentation.http.address;
-import uim.platform.data.quality.presentation.http.duplicate;
-import uim.platform.data.quality.presentation.http.profile;
-import uim.platform.data.quality.presentation.http.cleansing_rule;
-import uim.platform.data.quality.presentation.http.cleansing_job;
-import uim.platform.data.quality.presentation.http.dashboard;
-import uim.platform.data.quality.presentation.http.health;
+// // Controllers
+// import uim.platform.data.quality.presentation.http.validation_rule;
+// import uim.platform.data.quality.presentation.http.validate;
+// import uim.platform.data.quality.presentation.http.address;
+// import uim.platform.data.quality.presentation.http.duplicate;
+// import uim.platform.data.quality.presentation.http.profile;
+// import uim.platform.data.quality.presentation.http.cleansing_rule;
+// import uim.platform.data.quality.presentation.http.cleansing_job;
+// import uim.platform.data.quality.presentation.http.dashboard;
+// import uim.platform.data.quality.presentation.http.health;
+import uim.platform.data.quality;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)
