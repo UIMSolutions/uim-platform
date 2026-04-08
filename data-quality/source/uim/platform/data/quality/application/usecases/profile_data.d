@@ -9,11 +9,15 @@ module uim.platform.data.quality.application.usecases.profile_data;
 // import std.conv : to;
 // import std.datetime.systime : Clock;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.data_profile;
-import uim.platform.data.quality.domain.ports.repositories.data_profiles;
-import uim.platform.data.quality.application.dto;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.data_profile;
+// import uim.platform.data.quality.domain.ports.repositories.data_profiles;
+// import uim.platform.data.quality.application.dto;
+import uim.platform.data.quality;
 
+mixin(ShowModule!());
+
+@safe:
 class ProfileDataUseCase : UIMUseCase {
   private DataProfileRepository repo;
 

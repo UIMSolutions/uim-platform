@@ -27,7 +27,7 @@ class ManageCleansingJobsUseCase : UIMUseCase {
   CommandResult create(CreateCleansingJobRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.datasetId.length == 0)
+    if (req.datasetId.isEmpty)
       return CommandResult("", "Dataset ID is required");
 
     auto job = CleansingJob();
@@ -40,11 +40,11 @@ class ManageCleansingJobsUseCase : UIMUseCase {
     job.createdAt = Clock.currStdTime();
 
     repo.save(job);
-    return CommandResult(job.id, "");
+    return CommandResult(job.id.toString, "");
   }
 
-  CleansingJob* getById(CleansingJobId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  CleansingJob getById(TenantId tenantId, CleansingJobId jobId) {
+    return repo.findById(tenantId, jobId);
   }
 
   CleansingJob[] listByTenant(TenantId tenantId) {

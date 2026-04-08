@@ -9,8 +9,9 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.data.quality.infrastructure.config;
-import uim.platform.data.quality.infrastructure.container;
+// import uim.platform.data.quality.infrastructure.config;
+// import uim.platform.data.quality.infrastructure.container;
+import uim.platform.data.quality;
 
 // import std.stdio : writefln;
 @safe:

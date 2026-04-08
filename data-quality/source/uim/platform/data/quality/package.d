@@ -10,6 +10,7 @@ public {
 
     import uim.platform.data.quality.application;
     import uim.platform.data.quality.domain;
+    import uim.platform.data.quality.helpers;
     import uim.platform.data.quality.infrastructure;
     import uim.platform.data.quality.presentation;
 }

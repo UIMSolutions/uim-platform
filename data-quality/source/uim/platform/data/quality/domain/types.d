@@ -4,6 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.types;
+import uim.platform.data.quality;
 
 /// Unique identifier type aliases for type safety.
 struct RecordId {
@@ -86,15 +87,15 @@ struct ProfileJobId {
   mixin DomainId;
 }
 
-struct TenantId {
-  string value;
+// struct TenantId {
+//   string value;
 
-  this(string value) {
-    this.value = value;
-  }
+//   this(string value) {
+//     this.value = value;
+//   }
 
-  mixin DomainId;
-}
+//   mixin DomainId;
+// }
 
 struct UserId {
   string value;

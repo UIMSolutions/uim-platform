@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.application.dto;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.validation_result : RuleViolation;
-import uim.platform.data.quality.domain.entities.match_group : MatchCandidate, FieldMatch;
-import uim.platform.data.quality.domain.entities.data_profile : ColumnProfile;
-import uim.platform.data.quality.domain.entities.quality_dashboard : RuleSeverityCount,
-  QualityTrendPoint;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.validation_result : RuleViolation;
+// import uim.platform.data.quality.domain.entities.match_group : MatchCandidate, FieldMatch;
+// import uim.platform.data.quality.domain.entities.data_profile : ColumnProfile;
+// import uim.platform.data.quality.domain.entities.quality_dashboard : RuleSeverityCount,
+//   QualityTrendPoint;
+import uim.platform.data.quality;
 
+mixin(ShowModule!());
+
+@safe:
 // ──────────────── Validation Rule DTOs ────────────────
 
 struct CreateValidationRuleRequest {

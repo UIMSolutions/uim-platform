@@ -93,7 +93,7 @@ class ManageCleansingRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  CommandResult remove(RuleId id, TenantId tenantId) {
+  CommandResult remove(TenantId tenantId, RuleId id) {
     auto existing = repo.findById(id);
     if (existing is null)
       return CommandResult("", "Cleansing rule not found");
@@ -104,7 +104,7 @@ class ManageCleansingRulesUseCase : UIMUseCase {
     return CommandResult(id, "");
   }
 
-  CleansingRule* getById(RuleId id) {
+  CleansingRule getById(RuleId id) {
     return repo.findById(id);
   }
 

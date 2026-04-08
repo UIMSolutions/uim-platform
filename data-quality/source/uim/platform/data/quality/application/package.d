@@ -6,5 +6,6 @@
 module uim.platform.data.quality.application;
 
 public {
-    
+    import uim.platform.data.quality.application.usecases;
+    import uim.platform.data.quality.application.dto;
 }

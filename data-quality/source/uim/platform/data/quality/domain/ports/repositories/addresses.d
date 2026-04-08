@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.data.quality.domain.ports.repositories.addresses;
 
-import uim.platform.data.quality.domain.types;
-import uim.platform.data.quality.domain.entities.address_record;
+// import uim.platform.data.quality.domain.types;
+// import uim.platform.data.quality.domain.entities.address_record;
+import uim.platform.data.quality;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port for persisting address records.
 interface AddressRepository {
   AddressRecord[] findByTenant(TenantId tenantId);
   AddressRecord* findById(TenantId tenantId, AddressId addressId);
-  AddressRecord[] findBySourceRecord(RecordId sourceRecordId, TenantId tenantId);
+  AddressRecord[] findBySourceRecord(TenantId tenantId, RecordId sourceRecordId);
   AddressRecord[] findByQuality(TenantId tenantId, AddressQuality quality);
   void save(AddressRecord record);
   void update(AddressRecord record);
