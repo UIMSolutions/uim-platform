@@ -83,7 +83,7 @@ class SchemaController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto s = uc.get_(id, clientId);
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Schema not found");
         return;
       }

@@ -25,7 +25,7 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateAlertRequest r) {
-    if (r.id.length == 0 || r.name.length == 0)
+    if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Alert ID and name are required");
 
     auto existing = repo.findById(r.id);
@@ -68,7 +68,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult acknowledge(AcknowledgeAlertRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Alert not found");
 
     existing.status = AlertStatus.acknowledged;
@@ -83,7 +83,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult update(UpdateAlertRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Alert not found");
 
     existing.name = r.name;
@@ -97,7 +97,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult remove(AlertId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Alert not found");
 
     repo.remove(id);

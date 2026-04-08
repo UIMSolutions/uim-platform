@@ -87,7 +87,7 @@ class DocumentController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto d = uc.get_(id, clientId);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Document not found");
         return;
       }
@@ -151,7 +151,7 @@ class DocumentController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto result = uc.getExtractionResult(docId, clientId);
-      if (result.id.length == 0) {
+      if (result.id.isEmpty) {
         writeError(res, 404, "Extraction result not found");
         return;
       }

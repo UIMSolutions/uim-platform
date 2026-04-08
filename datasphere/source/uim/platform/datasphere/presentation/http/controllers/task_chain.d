@@ -84,7 +84,7 @@ class TaskChainController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto tc = uc.get_(id, spaceId);
-      if (tc.id.length == 0) {
+      if (tc.id.isEmpty) {
         writeError(res, 404, "Task chain not found");
         return;
       }

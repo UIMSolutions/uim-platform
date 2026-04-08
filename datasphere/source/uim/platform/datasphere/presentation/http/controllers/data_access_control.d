@@ -85,7 +85,7 @@ class DataAccessControlController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto dac = uc.get_(id, spaceId);
-      if (dac.id.length == 0) {
+      if (dac.id.isEmpty) {
         writeError(res, 404, "Data access control not found");
         return;
       }

@@ -25,7 +25,7 @@ class ManageDataLakesUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDataLakeRequest r) {
-    if (r.id.length == 0 || r.name.length == 0)
+    if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Data lake ID and name are required");
 
     auto existing = repo.findById(r.id);
@@ -60,7 +60,7 @@ class ManageDataLakesUseCase : UIMUseCase {
 
   CommandResult update(UpdateDataLakeRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data lake not found");
 
     existing.name = r.name;
@@ -76,7 +76,7 @@ class ManageDataLakesUseCase : UIMUseCase {
 
   CommandResult remove(DataLakeId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data lake not found");
 
     repo.remove(id);

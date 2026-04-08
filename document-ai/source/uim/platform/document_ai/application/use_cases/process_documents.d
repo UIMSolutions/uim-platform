@@ -28,7 +28,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
   CommandResult upload(UploadDocumentRequest r) {
     if (r.fileName.length == 0)
       return CommandResult(false, "", "File name is required");
-    if (r.clientId.length == 0)
+    if (r.clientid.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     auto validation = validateFileType(r.fileName);
@@ -77,11 +77,11 @@ class ProcessDocumentsUseCase : UIMUseCase {
   }
 
   CommandResult confirm(ConfirmDocumentRequest r) {
-    if (r.documentId.length == 0)
+    if (r.documentid.isEmpty)
       return CommandResult(false, "", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.clientId);
-    if (doc.id.length == 0)
+    if (doc.id.isEmpty)
       return CommandResult(false, "", "Document not found");
     if (doc.status != DocumentStatus.completed)
       return CommandResult(false, "", "Document must be in completed status to confirm");
@@ -113,7 +113,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
 
   CommandResult remove(DocumentId id, ClientId clientId) {
     auto existing = docRepo.findById(id, clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Document not found");
 
     docRepo.remove(id, clientId);

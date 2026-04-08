@@ -81,7 +81,7 @@ class TrainingJobController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto tj = uc.get_(id, clientId);
-      if (tj.id.length == 0) {
+      if (tj.id.isEmpty) {
         writeError(res, 404, "Training job not found");
         return;
       }

@@ -82,7 +82,7 @@ class DocumentTypeController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto dt = uc.get_(id, clientId);
-      if (dt.id.length == 0) {
+      if (dt.id.isEmpty) {
         writeError(res, 404, "Document type not found");
         return;
       }

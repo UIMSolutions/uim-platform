@@ -23,7 +23,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
   CommandResult create(CreateEnrichmentDataRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Enrichment data name is required");
-    if (r.clientId.length == 0)
+    if (r.clientid.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     EnrichmentData ed;
@@ -56,11 +56,11 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateEnrichmentDataRequest r) {
-    if (r.enrichmentDataId.length == 0)
+    if (r.enrichmentDataid.isEmpty)
       return CommandResult(false, "", "Enrichment data ID is required");
 
     auto existing = repo.findById(r.enrichmentDataId, r.clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Enrichment data not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -104,7 +104,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
 
   CommandResult remove(EnrichmentDataId id, ClientId clientId) {
     auto existing = repo.findById(id, clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Enrichment data not found");
 
     repo.remove(id, clientId);

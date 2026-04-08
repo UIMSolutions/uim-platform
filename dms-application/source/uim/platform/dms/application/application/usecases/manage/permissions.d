@@ -28,9 +28,9 @@ class ManagePermissionsUseCase : UIMUseCase {
   }
 
   CommandResult grantPermission(CreatePermissionRequest r) {
-    if (r.resourceId.length == 0)
+    if (r.resourceid.isEmpty)
       return CommandResult("", "Resource ID is required");
-    if (r.userId.length == 0)
+    if (r.userid.isEmpty)
       return CommandResult("", "User ID is required");
 
     // Check if permission already exists for this user+resource

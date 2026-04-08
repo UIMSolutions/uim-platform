@@ -57,7 +57,7 @@ class ManageSpacesUseCase : UIMUseCase {
 
   CommandResult update(UpdateSpaceRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Space not found");
 
     existing.name = r.name;
@@ -74,7 +74,7 @@ class ManageSpacesUseCase : UIMUseCase {
 
   CommandResult remove(SpaceId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Space not found");
 
     repo.remove(id);

@@ -88,7 +88,7 @@ class TaskController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto t = uc.get_(id, spaceId);
-      if (t.id.length == 0) {
+      if (t.id.isEmpty) {
         writeError(res, 404, "Task not found");
         return;
       }

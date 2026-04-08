@@ -118,7 +118,7 @@ class CatalogAssetController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto ca = uc.get_(id, spaceId);
-      if (ca.id.length == 0) {
+      if (ca.id.isEmpty) {
         writeError(res, 404, "Catalog asset not found");
         return;
       }

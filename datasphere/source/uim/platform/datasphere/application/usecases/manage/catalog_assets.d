@@ -23,7 +23,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
   CommandResult create(CreateCatalogAssetRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Catalog asset name is required");
-    if (r.spaceId.length == 0)
+    if (r.spaceid.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
@@ -64,7 +64,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
 
   CommandResult update(UpdateCatalogAssetRequest r) {
     auto existing = repo.findById(r.assetId, r.spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Catalog asset not found");
 
     existing.name = r.name;
@@ -82,7 +82,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
 
   CommandResult remove(CatalogAssetId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Catalog asset not found");
 
     repo.remove(id, spaceId);

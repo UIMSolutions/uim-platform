@@ -82,7 +82,7 @@ class EnrichmentDataController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto ed = uc.get_(id, clientId);
-      if (ed.id.length == 0) {
+      if (ed.id.isEmpty) {
         writeError(res, 404, "Enrichment data not found");
         return;
       }

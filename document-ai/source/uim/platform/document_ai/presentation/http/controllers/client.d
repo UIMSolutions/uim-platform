@@ -78,7 +78,7 @@ class ClientController : SAPController {
       TenantId tenantId = req.getTenantId;
 
       auto c = uc.get_(id, tenantId);
-      if (c.clientId.length == 0) {
+      if (c.clientid.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
       }

@@ -24,9 +24,9 @@ class ManageTrainingJobsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateTrainingJobRequest r) {
-    if (r.clientId.length == 0)
+    if (r.clientid.isEmpty)
       return CommandResult(false, "", "Client ID is required");
-    if (r.documentTypeId.length == 0)
+    if (r.documentTypeid.isEmpty)
       return CommandResult(false, "", "Document type ID is required");
 
     // Count confirmed documents available for training
@@ -59,11 +59,11 @@ class ManageTrainingJobsUseCase : UIMUseCase {
   }
 
   CommandResult patch(PatchTrainingJobRequest r) {
-    if (r.trainingJobId.length == 0)
+    if (r.trainingJobid.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
     auto existing = jobRepo.findById(r.trainingJobId, r.clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Training job not found");
 
     if (r.targetStatus.length > 0) {
@@ -110,7 +110,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
 
   CommandResult remove(TrainingJobId id, ClientId clientId) {
     auto existing = jobRepo.findById(id, clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Training job not found");
     if (existing.status == TrainingJobStatus.running)
       return CommandResult(false, "", "Cannot delete running training job");

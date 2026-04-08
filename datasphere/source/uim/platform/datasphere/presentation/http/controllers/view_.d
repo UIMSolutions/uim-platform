@@ -89,7 +89,7 @@ class ViewController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto v = uc.get_(id, spaceId);
-      if (v.id.length == 0) {
+      if (v.id.isEmpty) {
         writeError(res, 404, "View not found");
         return;
       }

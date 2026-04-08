@@ -28,7 +28,7 @@ class ManageSharesUseCase : UIMUseCase {
   }
 
   CommandResult createShare(CreateShareRequest r) {
-    if (r.documentId.length == 0)
+    if (r.documentid.isEmpty)
       return CommandResult("", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.tenantId);

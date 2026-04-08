@@ -35,7 +35,7 @@ class ManageDocumentsUseCase : UIMUseCase {
   CommandResult createDocument(CreateDocumentRequest r) {
     if (r.name.length == 0)
       return CommandResult("", "Document name is required");
-    if (r.repositoryId.length == 0)
+    if (r.repositoryid.isEmpty)
       return CommandResult("", "Repository ID is required");
 
     // Validate folder exists if provided

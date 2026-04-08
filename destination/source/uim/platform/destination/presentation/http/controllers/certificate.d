@@ -126,7 +126,7 @@ class CertificateController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto c = uc.getCertificate(id);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Certificate not found");
         return;
       }

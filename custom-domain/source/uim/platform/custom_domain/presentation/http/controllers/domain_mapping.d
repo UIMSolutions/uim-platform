@@ -91,7 +91,7 @@ class DomainMappingController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto m = uc.get_(id);
-            if (m.id.length == 0) {
+            if (m.id.isEmpty) {
                 writeError(res, 404, "Domain mapping not found");
                 return;
             }

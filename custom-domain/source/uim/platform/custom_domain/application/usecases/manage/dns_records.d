@@ -19,7 +19,7 @@ class ManageDnsRecordsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateDnsRecordRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.hostname.length == 0)
             return CommandResult(false, "", "Hostname is required");
@@ -63,7 +63,7 @@ class ManageDnsRecordsUseCase : UIMUseCase {
 
     CommandResult update(UpdateDnsRecordRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "DNS record not found");
 
         if (r.value.length > 0)
@@ -80,7 +80,7 @@ class ManageDnsRecordsUseCase : UIMUseCase {
 
     CommandResult remove(DnsRecordId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "DNS record not found");
 
         repo.remove(id);

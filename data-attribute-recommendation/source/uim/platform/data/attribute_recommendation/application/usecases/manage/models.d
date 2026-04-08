@@ -30,7 +30,7 @@ class ManageModelsUseCase : UIMUseCase {
   CommandResult createModelConfig(CreateModelConfigRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.datasetId.length == 0)
+    if (req.datasetid.isEmpty)
       return CommandResult("", "Dataset ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Model name is required");
@@ -73,7 +73,7 @@ class ManageModelsUseCase : UIMUseCase {
   }
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
@@ -123,7 +123,7 @@ class ManageModelsUseCase : UIMUseCase {
 
   /// Start training on a model configuration.
   CommandResult startTraining(StartTrainingRequest req) {
-    if (req.modelConfigId.length == 0)
+    if (req.modelConfigid.isEmpty)
       return CommandResult("", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

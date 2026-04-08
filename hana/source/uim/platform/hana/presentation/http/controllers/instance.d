@@ -106,7 +106,7 @@ class InstanceController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto i = uc.get_(id);
-      if (i.id.length == 0) {
+      if (i.id.isEmpty) {
         writeError(res, 404, "Instance not found");
         return;
       }

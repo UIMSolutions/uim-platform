@@ -25,7 +25,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDatabaseUserRequest r) {
-    if (r.id.length == 0 || r.userName.length == 0)
+    if (r.id.isEmpty || r.userName.length == 0)
       return CommandResult(false, "", "User ID and username are required");
 
     auto existing = repo.findById(r.id);
@@ -61,7 +61,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
 
   CommandResult update(UpdateDatabaseUserRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Database user not found");
 
     existing.defaultSchema = r.defaultSchema;
@@ -77,7 +77,7 @@ class ManageDatabaseUsersUseCase : UIMUseCase {
 
   CommandResult remove(DatabaseUserId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Database user not found");
 
     repo.remove(id);

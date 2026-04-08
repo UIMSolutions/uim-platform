@@ -30,7 +30,7 @@ class ManageConsentRecordsUseCase : UIMUseCase {
   CommandResult grantConsent(CreateConsentRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.dataSubjectId.length == 0)
+    if (req.dataSubjectid.isEmpty)
       return CommandResult("", "Data subject ID is required");
     if (req.consentText.length == 0)
       return CommandResult("", "Consent text is required");

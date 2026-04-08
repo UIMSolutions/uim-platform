@@ -72,7 +72,7 @@ class BrowseController : SAPController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getRepositorySummary(repoId, tenantId);
 
-      if (summary.repositoryId.length == 0) {
+      if (summary.repositoryid.isEmpty) {
         writeError(res, 404, "Repository not found");
         return;
       }

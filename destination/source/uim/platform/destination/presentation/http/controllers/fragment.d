@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.destination.presentation.http.fragment;
+module uim.platform.destination.presentation.http.controllers.fragment;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -98,7 +98,7 @@ class FragmentController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto f = uc.getFragment(id);
-      if (f.id.length == 0) {
+      if (f.id.isEmpty) {
         writeError(res, 404, "Fragment not found");
         return;
       }

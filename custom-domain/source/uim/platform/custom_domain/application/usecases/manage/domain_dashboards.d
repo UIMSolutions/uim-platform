@@ -56,7 +56,7 @@ class ManageDomainDashboardsUseCase : UIMUseCase {
         }
 
         auto dashboard = dashboardRepo.findByTenant(r.tenantId);
-        bool isNew = dashboard.id.length == 0;
+        bool isNew = dashboard.id.isEmpty;
         if (isNew)
             dashboard.id = r.tenantId ~ "-dashboard";
 

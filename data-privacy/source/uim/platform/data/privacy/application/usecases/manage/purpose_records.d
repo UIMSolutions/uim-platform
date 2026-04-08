@@ -20,7 +20,7 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
   CommandResult createRecord(CreatePurposeRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.dataSubjectId.length == 0)
+    if (req.dataSubjectid.isEmpty)
       return CommandResult("", "Data subject ID is required");
 
     auto now = Clock.currStdTime();

@@ -23,7 +23,7 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
   CommandResult create(CreateDataAccessControlRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Data access control name is required");
-    if (r.spaceId.length == 0)
+    if (r.spaceid.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
@@ -58,7 +58,7 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
 
   CommandResult update(UpdateDataAccessControlRequest r) {
     auto existing = repo.findById(r.controlId, r.spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data access control not found");
 
     existing.name = r.name;
@@ -76,7 +76,7 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
 
   CommandResult remove(DataAccessControlId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Data access control not found");
 
     repo.remove(id, spaceId);

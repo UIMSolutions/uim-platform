@@ -54,11 +54,11 @@ class ManageClientsUseCase : UIMUseCase {
   }
 
   CommandResult patch(PatchClientRequest r) {
-    if (r.clientId.length == 0)
+    if (r.clientid.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     auto existing = repo.findById(r.clientId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Client not found");
 
     if (r.name.length > 0) existing.name = r.name;
@@ -96,7 +96,7 @@ class ManageClientsUseCase : UIMUseCase {
 
   CommandResult remove(ClientId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Client not found");
 
     repo.remove(id);

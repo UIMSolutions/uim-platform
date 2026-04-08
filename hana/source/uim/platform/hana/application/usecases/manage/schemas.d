@@ -25,7 +25,7 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateSchemaRequest r) {
-    if (r.id.length == 0 || r.name.length == 0)
+    if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Schema ID and name are required");
 
     auto existing = repo.findById(r.id);
@@ -58,7 +58,7 @@ class ManageSchemasUseCase : UIMUseCase {
 
   CommandResult update(UpdateSchemaRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Schema not found");
 
     existing.owner = r.owner;
@@ -72,7 +72,7 @@ class ManageSchemasUseCase : UIMUseCase {
 
   CommandResult remove(SchemaId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Schema not found");
 
     repo.remove(id);

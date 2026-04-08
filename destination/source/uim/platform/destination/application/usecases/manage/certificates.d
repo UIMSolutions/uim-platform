@@ -68,7 +68,7 @@ class ManageCertificatesUseCase : UIMUseCase {
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
     auto c = repo.findById(id);
-    if (c.id.length == 0)
+    if (c.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
 
     if (req.description.length > 0)
@@ -108,14 +108,14 @@ class ManageCertificatesUseCase : UIMUseCase {
 
   ValidationResult validateCertificate(CertificateId id) {
     auto c = repo.findById(id);
-    if (c.id.length == 0)
+    if (c.id.isEmpty)
       return ValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
     return CertificateValidator.validate(c);
   }
 
   CommandResult removeCertificate(CertificateId id) {
     auto c = repo.findById(id);
-    if (c.id.length == 0)
+    if (c.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -19,11 +19,11 @@ class ManageTrustedCertificatesUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateTrustedCertificateRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
         if (r.certificatePem.length == 0)
             return CommandResult(false, "", "Certificate PEM is required");
-        if (r.customDomainId.length == 0)
+        if (r.customDomainid.isEmpty)
             return CommandResult(false, "", "Custom domain ID is required");
 
         auto existing = repo.findById(r.id);
@@ -59,7 +59,7 @@ class ManageTrustedCertificatesUseCase : UIMUseCase {
 
     CommandResult remove(TrustedCertificateId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Trusted certificate not found");
 
         repo.remove(id);

@@ -25,7 +25,7 @@ class ManageBackupsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateBackupRequest r) {
-    if (r.id.length == 0 || r.name.length == 0)
+    if (r.id.isEmpty || r.name.length == 0)
       return CommandResult(false, "", "Backup ID and name are required");
 
     auto existing = repo.findById(r.id);
@@ -62,7 +62,7 @@ class ManageBackupsUseCase : UIMUseCase {
 
   CommandResult update(UpdateBackupRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Backup not found");
 
     existing.name = r.name;
@@ -76,7 +76,7 @@ class ManageBackupsUseCase : UIMUseCase {
 
   CommandResult remove(BackupId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Backup not found");
 
     repo.remove(id);

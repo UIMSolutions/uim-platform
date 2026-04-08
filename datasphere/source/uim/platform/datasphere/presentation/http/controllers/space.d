@@ -84,7 +84,7 @@ class SpaceController : SAPController {
       import std.conv : to;
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto s = uc.get_(id);
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Space not found");
         return;
       }

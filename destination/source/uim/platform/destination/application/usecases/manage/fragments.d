@@ -64,7 +64,7 @@ class ManageFragmentsUseCase : UIMUseCase {
 
   CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {
     auto f = repo.findById(id);
-    if (f.id.length == 0)
+    if (f.id.isEmpty)
       return CommandResult(false, "", "Fragment not found");
 
     if (req.description.length > 0)
@@ -109,7 +109,7 @@ class ManageFragmentsUseCase : UIMUseCase {
 
   CommandResult removeFragment(FragmentId id) {
     auto f = repo.findById(id);
-    if (f.id.length == 0)
+    if (f.id.isEmpty)
       return CommandResult(false, "", "Fragment not found");
     repo.remove(id);
     return CommandResult(true, id, "");

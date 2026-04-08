@@ -89,7 +89,7 @@ class ConnectionController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto c = uc.get_(id, spaceId);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Connection not found");
         return;
       }

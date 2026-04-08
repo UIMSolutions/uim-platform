@@ -91,7 +91,7 @@ class DataLakeController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto d = uc.get_(id);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Data lake not found");
         return;
       }

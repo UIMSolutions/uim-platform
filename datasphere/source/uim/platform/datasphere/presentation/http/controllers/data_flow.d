@@ -85,7 +85,7 @@ class DataFlowController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto df = uc.get_(id, spaceId);
-      if (df.id.length == 0) {
+      if (df.id.isEmpty) {
         writeError(res, 404, "Data flow not found");
         return;
       }

@@ -90,7 +90,7 @@ class ManageDestinationsUseCase : UIMUseCase {
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
     auto d = repo.findById(id);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Destination not found");
 
     if (req.description.length > 0)
@@ -159,7 +159,7 @@ class ManageDestinationsUseCase : UIMUseCase {
 
   CommandResult removeDestination(DestinationId id) {
     auto d = repo.findById(id);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Destination not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -23,7 +23,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
         if (err.length > 0)
             return CommandResult(false, "", err);
 
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
 
         auto existing = repo.findById(r.id);
@@ -62,7 +62,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
 
     CommandResult update(UpdateCustomDomainRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Custom domain not found");
 
         existing.activeCertificateId = r.activeCertificateId;
@@ -81,7 +81,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
 
     CommandResult activate(CustomDomainId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Custom domain not found");
         existing.status = DomainStatus.active;
 
@@ -94,7 +94,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
 
     CommandResult deactivate(CustomDomainId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Custom domain not found");
         existing.status = DomainStatus.deactivated;
 
@@ -107,7 +107,7 @@ class ManageCustomDomainsUseCase : UIMUseCase {
 
     CommandResult remove(CustomDomainId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Custom domain not found");
 
         repo.remove(id);

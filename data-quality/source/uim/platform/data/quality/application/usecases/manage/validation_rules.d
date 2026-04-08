@@ -59,7 +59,7 @@ class ManageValidationRulesUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateValidationRuleRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Rule ID is required");
 
     auto existing = repo.findById(req.id);

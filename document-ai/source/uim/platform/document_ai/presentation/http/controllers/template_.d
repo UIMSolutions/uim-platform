@@ -82,7 +82,7 @@ class TemplateController : SAPController {
       auto clientId = req.headers.get("X-Client-Id", "");
 
       auto t = uc.get_(id, clientId);
-      if (t.id.length == 0) {
+      if (t.id.isEmpty) {
         writeError(res, 404, "Template not found");
         return;
       }

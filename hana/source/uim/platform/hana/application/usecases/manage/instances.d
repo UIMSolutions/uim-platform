@@ -72,7 +72,7 @@ class ManageInstancesUseCase : UIMUseCase {
 
   CommandResult update(UpdateInstanceRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Instance not found");
 
     existing.name = r.name;
@@ -94,7 +94,7 @@ class ManageInstancesUseCase : UIMUseCase {
 
   CommandResult performAction(InstanceActionRequest r) {
     auto existing = repo.findById(r.id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Instance not found");
 
     switch (r.action) {
@@ -120,7 +120,7 @@ class ManageInstancesUseCase : UIMUseCase {
 
   CommandResult remove(InstanceId id) {
     auto existing = repo.findById(id);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Instance not found");
 
     repo.remove(id);

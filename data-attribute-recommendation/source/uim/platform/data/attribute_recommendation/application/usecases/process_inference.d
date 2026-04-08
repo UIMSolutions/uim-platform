@@ -32,7 +32,7 @@ class ProcessInferenceUseCase : UIMUseCase {
   CommandResult submitInference(SubmitInferenceRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.deploymentId.length == 0)
+    if (req.deploymentid.isEmpty)
       return CommandResult("", "Deployment ID is required");
     if (req.inputData.length == 0)
       return CommandResult("", "Input data is required");

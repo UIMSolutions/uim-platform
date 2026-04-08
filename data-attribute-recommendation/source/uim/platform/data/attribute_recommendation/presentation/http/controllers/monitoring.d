@@ -58,7 +58,7 @@ class MonitoringController : SAPController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto job = uc.getTrainingJob(id, tenantId);
-      if (job.jobId.length == 0) {
+      if (job.jobid.isEmpty) {
         writeError(res, 404, "Training job not found");
         return;
       }

@@ -92,7 +92,7 @@ class DatabaseUserController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto u = uc.get_(id);
-      if (u.id.length == 0) {
+      if (u.id.isEmpty) {
         writeError(res, 404, "Database user not found");
         return;
       }

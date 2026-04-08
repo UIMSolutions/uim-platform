@@ -89,7 +89,7 @@ class RemoteTableController : SAPController {
       auto spaceId = req.headers.get("X-Space-Id", "");
 
       auto rt = uc.get_(id, spaceId);
-      if (rt.id.length == 0) {
+      if (rt.id.isEmpty) {
         writeError(res, 404, "Remote table not found");
         return;
       }

@@ -23,7 +23,7 @@ class ManageConnectionsUseCase : UIMUseCase {
   CommandResult create(CreateConnectionRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Connection name is required");
-    if (r.spaceId.length == 0)
+    if (r.spaceid.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
@@ -60,7 +60,7 @@ class ManageConnectionsUseCase : UIMUseCase {
 
   CommandResult update(UpdateConnectionRequest r) {
     auto existing = repo.findById(r.connectionId, r.spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
     existing.name = r.name;
@@ -79,7 +79,7 @@ class ManageConnectionsUseCase : UIMUseCase {
 
   CommandResult remove(ConnectionId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Connection not found");
 
     repo.remove(id, spaceId);

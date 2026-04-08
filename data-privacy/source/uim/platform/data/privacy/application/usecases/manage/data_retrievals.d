@@ -34,7 +34,7 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
   CommandResult createRequest(CreateDataRetrievalRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.dataSubjectId.length == 0)
+    if (req.dataSubjectid.isEmpty)
       return CommandResult("", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);

@@ -57,7 +57,7 @@ class ManageTlsConfigurationsUseCase : UIMUseCase {
 
     CommandResult update(UpdateTlsConfigurationRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "TLS configuration not found");
 
         existing.name = r.name;
@@ -77,7 +77,7 @@ class ManageTlsConfigurationsUseCase : UIMUseCase {
 
     CommandResult remove(TlsConfigurationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "TLS configuration not found");
 
         repo.remove(id);

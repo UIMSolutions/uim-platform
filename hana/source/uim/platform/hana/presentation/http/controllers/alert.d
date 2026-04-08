@@ -95,7 +95,7 @@ class AlertController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto a = uc.get_(id);
-      if (a.id.length == 0) {
+      if (a.id.isEmpty) {
         writeError(res, 404, "Alert not found");
         return;
       }

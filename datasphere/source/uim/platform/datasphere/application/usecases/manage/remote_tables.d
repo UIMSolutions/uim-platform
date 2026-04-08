@@ -23,9 +23,9 @@ class ManageRemoteTablesUseCase : UIMUseCase {
   CommandResult create(CreateRemoteTableRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Remote table name is required");
-    if (r.spaceId.length == 0)
+    if (r.spaceid.isEmpty)
       return CommandResult(false, "", "Space ID is required");
-    if (r.connectionId.length == 0)
+    if (r.connectionid.isEmpty)
       return CommandResult(false, "", "Connection ID is required");
 
     import std.uuid : randomUUID;
@@ -61,7 +61,7 @@ class ManageRemoteTablesUseCase : UIMUseCase {
 
   CommandResult remove(RemoteTableId id, SpaceId spaceId) {
     auto existing = repo.findById(id, spaceId);
-    if (existing.id.length == 0)
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Remote table not found");
 
     repo.remove(id, spaceId);

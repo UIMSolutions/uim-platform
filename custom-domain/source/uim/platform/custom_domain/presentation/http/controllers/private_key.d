@@ -85,7 +85,7 @@ class PrivateKeyController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto k = uc.get_(id);
-            if (k.id.length == 0) {
+            if (k.id.isEmpty) {
                 writeError(res, 404, "Private key not found");
                 return;
             }

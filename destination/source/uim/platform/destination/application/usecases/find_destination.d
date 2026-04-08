@@ -46,7 +46,7 @@ class FindDestinationUseCase : UIMUseCase {
 
     // Look up the destination by name
     auto dest = destRepo.findByName(req.tenantId, req.subaccountId, req.name);
-    if (dest.id.length == 0) {
+    if (dest.id.isEmpty) {
       resp.found = false;
       resp.error = "Destination '" ~ req.name ~ "' not found";
       return resp;
