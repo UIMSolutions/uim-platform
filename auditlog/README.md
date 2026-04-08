@@ -55,9 +55,9 @@ auditlog/
 │   │   └── usecases/                              #     Application services
 │   │       ├── write_audit_log.d                   #       Write audit entry with config checks
 │   │       ├── retrieve_audit_logs.d               #       Query, getById, getByCategory/User/Correlation
-│   │       ├── manage_retention.d                  #       Retention policy CRUD
-│   │       ├── manage_audit_config.d               #       Audit config CRUD (one per tenant)
-│   │       ├── manage_exports.d                    #       Export job create/list/get/delete
+│   │       ├── manage.retention.d                  #       Retention policy CRUD
+│   │       ├── manage.audit_config.d               #       Audit config CRUD (one per tenant)
+│   │       ├── manage.exports.d                    #       Export job create/list/get/delete
 │   │       ├── write_security_event.d              #       Write enriched security event + parent log
 │   │       ├── write_data_access_log.d             #       Write data access record + parent log
 │   │       └── write_config_change.d               #       Write config change record + parent log

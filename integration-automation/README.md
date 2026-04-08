@@ -49,11 +49,11 @@ integration-automation/
 │   ├── application/                           #   Application layer (use cases)
 │   │   ├── dto.d                              #     Request / Response DTOs & CommandResult
 │   │   └── usecases/                         #     Application services
-│   │       ├── manage_scenarios.d
-│   │       ├── manage_workflows.d
-│   │       ├── manage_steps.d
-│   │       ├── manage_systems.d
-│   │       ├── manage_destinations.d
+│   │       ├── manage.scenarios.d
+│   │       ├── manage.workflows.d
+│   │       ├── manage.steps.d
+│   │       ├── manage.systems.d
+│   │       ├── manage.destinations.d
 │   │       └── monitor_executions.d
 │   ├── infrastructure/                        #   Technical adapters
 │   │   ├── config.d                           #     Environment-based configuration

@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.workzone.application.usecases.manage.manage_navigation_items;
+module uim.platform.workzone.application.usecases.manage.manage.navigation_items;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;

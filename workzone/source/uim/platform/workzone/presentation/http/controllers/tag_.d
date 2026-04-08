@@ -8,7 +8,7 @@ module uim.platform.workzone.presentation.http.controllers.tag_;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.manage_tags;
+import uim.platform.workzone.application.usecases.manage.manage.tags;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.tag;

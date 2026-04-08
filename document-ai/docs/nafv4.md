@@ -636,12 +636,12 @@ document-ai/
         │   ├── dto.d                        # Request/Result DTOs + CapabilitiesResponse
         │   └── use_cases/                   # 8 use case classes
         │       ├── process_documents.d      # Upload, list, get, delete, confirm, results
-        │       ├── manage_schemas.d
-        │       ├── manage_templates.d
-        │       ├── manage_document_types.d
-        │       ├── manage_enrichment_data.d
-        │       ├── manage_training_jobs.d
-        │       ├── manage_clients.d
+        │       ├── manage.schemas.d
+        │       ├── manage.templates.d
+        │       ├── manage.document_types.d
+        │       ├── manage.enrichment_data.d
+        │       ├── manage.training_jobs.d
+        │       ├── manage.clients.d
         │       └── get_capabilities.d       # Static capabilities response
         ├── presentation/                    # DRIVING ADAPTERS
         │   └── http/

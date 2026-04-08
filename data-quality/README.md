@@ -54,13 +54,13 @@ data-quality/
 │   ├── application/                   #   Use case orchestration
 │   │   ├── dto.d                      #   Request/response DTOs
 │   │   └── usecases/
-│   │       ├── manage_validation_rules.d
+│   │       ├── manage.validation_rules.d
 │   │       ├── validate_data.d
 │   │       ├── cleanse_addresses.d
 │   │       ├── detect_duplicates.d
 │   │       ├── profile_data.d
-│   │       ├── manage_cleansing_rules.d
-│   │       ├── manage_cleansing_jobs.d
+│   │       ├── manage.cleansing_rules.d
+│   │       ├── manage.cleansing_jobs.d
 │   │       └── compute_dashboard.d
 │   ├── infrastructure/                #   Technical adapters
 │   │   ├── config.d                   #   Environment-based configuration

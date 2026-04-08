@@ -8,7 +8,7 @@ module uim.platform.workzone.presentation.http.controllers.shell_plugin;
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
-import uim.platform.workzone.application.usecases.manage.manage_shell_plugins;
+import uim.platform.workzone.application.usecases.manage.manage.shell_plugins;
 import uim.platform.workzone.application.dto;
 import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.shell_plugin;

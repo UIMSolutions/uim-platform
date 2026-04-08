@@ -60,16 +60,16 @@ portal/
 │   ├── application/                       #   Use case orchestration
 │   │   ├── dto.d                          #   Request/response DTOs
 │   │   └── usecases/
-│   │       ├── manage_sites.d
-│   │       ├── manage_pages.d
-│   │       ├── manage_sections.d
-│   │       ├── manage_tiles.d
-│   │       ├── manage_catalogs.d
-│   │       ├── manage_providers.d
-│   │       ├── manage_roles.d
-│   │       ├── manage_themes.d
-│   │       ├── manage_menu_items.d
-│   │       └── manage_translations.d
+│   │       ├── manage.sites.d
+│   │       ├── manage.pages.d
+│   │       ├── manage.sections.d
+│   │       ├── manage.tiles.d
+│   │       ├── manage.catalogs.d
+│   │       ├── manage.providers.d
+│   │       ├── manage.roles.d
+│   │       ├── manage.themes.d
+│   │       ├── manage.menu_items.d
+│   │       └── manage.translations.d
 │   ├── infrastructure/                    #   Technical adapters
 │   │   ├── config.d                       #   Environment-based configuration
 │   │   ├── container.d                    #   Manual dependency injection

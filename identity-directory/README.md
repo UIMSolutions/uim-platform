@@ -52,11 +52,11 @@ identity-directory/
 │   ├── application/                                #   Application layer (use cases)
 │   │   ├── dto.d                                   #     Request / Response DTOs & SCIM list response
 │   │   └── usecases/                              #     Application services
-│   │       ├── manage_users.d
-│   │       ├── manage_groups.d
-│   │       ├── manage_schemas.d
-│   │       ├── manage_password_policies.d
-│   │       ├── manage_api_clients.d
+│   │       ├── manage.users.d
+│   │       ├── manage.groups.d
+│   │       ├── manage.schemas.d
+│   │       ├── manage.password_policies.d
+│   │       ├── manage.api_clients.d
 │   │       └── query_audit_log.d
 │   ├── infrastructure/                             #   Technical adapters
 │   │   ├── config.d                                #     Environment-based configuration

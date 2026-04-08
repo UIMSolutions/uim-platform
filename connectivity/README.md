@@ -50,11 +50,11 @@ connectivity/
 │   ├── application/                                #   Application layer (use cases)
 │   │   ├── dto.d                                   #     Request DTOs & CommandResult
 │   │   └── usecases/                              #     Application services
-│   │       ├── manage_destinations.d               #       Destination CRUD with auth validation
-│   │       ├── manage_connectors.d                 #       Connector register/heartbeat/disconnect
-│   │       ├── manage_channels.d                   #       Channel create/open/close with connector checks
-│   │       ├── manage_access_rules.d               #       Access rule CRUD with connector validation
-│   │       ├── manage_certificates.d               #       Certificate CRUD with expiry queries
+│   │       ├── manage.destinations.d               #       Destination CRUD with auth validation
+│   │       ├── manage.connectors.d                 #       Connector register/heartbeat/disconnect
+│   │       ├── manage.channels.d                   #       Channel create/open/close with connector checks
+│   │       ├── manage.access_rules.d               #       Access rule CRUD with connector validation
+│   │       ├── manage.certificates.d               #       Certificate CRUD with expiry queries
 │   │       └── monitor_connectivity.d              #       Log queries and summary aggregation
 │   ├── infrastructure/                             #   Technical adapters
 │   │   ├── config.d                                #     Environment-based configuration
