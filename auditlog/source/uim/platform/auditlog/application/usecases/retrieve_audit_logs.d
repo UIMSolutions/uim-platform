@@ -27,12 +27,12 @@ class RetrieveAuditLogsUseCase : UIMUseCase {
         req.limit, req.offset);
   }
 
-  bool existsById(AuditLogId id, TenantId tenantId) {
-    return repository.existsById(id, tenantId);
+  bool existsById(TenantId tenantId, AuditLogId id) {
+    return repository.existsById(tenantId, id);
   }
 
-  AuditLogEntry getById(AuditLogId id, TenantId tenantId) {
-    return repository.findById(id, tenantId);
+  AuditLogEntry getById(TenantId tenantId, AuditLogId id) {
+    return repository.findById(tenantId, id);
   }
 
   AuditLogEntry[] getByCategory(TenantId tenantId, AuditCategory category) {
@@ -43,8 +43,8 @@ class RetrieveAuditLogsUseCase : UIMUseCase {
     return repository.findByUser(tenantId, userId);
   }
 
-  AuditLogEntry[] getByCorrelation(string correlationId) {
-    return repository.findByCorrelation(correlationId);
+  AuditLogEntry[] getByCorrelation(TenantId tenantId, string correlationId) {
+    return repository.findByCorrelation(tenantId, correlationId);
   }
 
   long count(TenantId tenantId) {

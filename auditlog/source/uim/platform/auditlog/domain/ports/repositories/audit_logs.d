@@ -14,21 +14,23 @@ mixin(ShowModule!());
 
 /// Port for persisting and querying audit log entries.
 @safe:
-interface AuditLogRepository {
-  AuditLogEntry[] findByTenant(TenantId tenantId);
-
-  bool existsById(AuditLogId id, TenantId tenantId);
-  AuditLogEntry findById(AuditLogId id, TenantId tenantId);
+interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
+  // AuditLogEntry[] findByTenant(TenantId tenantId);
+// 
+  // bool existsById(AuditLogId id, TenantId tenantId);
+  // AuditLogEntry findById(AuditLogId id, TenantId tenantId);
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
   AuditLogEntry[] findByUser(TenantId tenantId, UserId userId);
   AuditLogEntry[] findByService(TenantId tenantId, ServiceId serviceId);
-  AuditLogEntry[] findByCorrelation(string correlationId);
+  AuditLogEntry[] findByCorrelation(TenantId tenantId, string correlationId);
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
       long timeFrom, long timeTo, int limit, int offset);
 
   long countByTenant(TenantId tenantId);
-  void save(AuditLogEntry entry);
+  // void save(TenantId tenantId, AuditLogEntry entry);
+  // void save(AuditLogEntry entry);
+  // void update(AuditLogEntry entry);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
 }

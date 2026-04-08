@@ -24,11 +24,11 @@ class SAPRepository(T) {
   }
 }
 
-class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
+class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId) {
   private TEntity[TId][TenantId] store;
 
   bool existsByTenant(TenantId tenantId) {
-    return tenantId in store;
+    return (tenantId in store) && !store[tenantId].empty;
   }
 
   TEntity[] findByTenant(TenantId tenantId) {
@@ -38,12 +38,12 @@ class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
     return store[tenantId].byValue.array;
   }
 
-  bool existsId(TId id, TenantId tenantId) {
+  bool existsId(TenantId tenantId, TId id) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
-  TEntity findById(TId id, TenantId tenantId) {
-    if (!existsId(id, tenantId))
+  TEntity findById(TenantId tenantId, TId id) {
+    if (!existsId(tenantId, id))
       return null;
 
     return store[tenantId][id];
@@ -57,14 +57,19 @@ class MemoryTenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
     store[entity.tenantId][entity.id] = entity;
   }
 
+  void save(TenantId tenantId, TEntity entity) {
+    entity.tenantId = tenantId;
+    save(entity);
+  }
+
   void update(TEntity entity) {
-    if (existsId(entity.id, entity.tenantId)) {
+    if (existsId(entity.tenantId, entity.id)) {
       store[entity.tenantId][entity.id] = entity;
     }
   }
 
-  void remove(TId id, TenantId tenantId) {
-    if (!existsId(id, tenantId))
+  void remove(TenantId tenantId, TId id) {
+    if (!existsId(tenantId, id))
       return;
 
     store[tenantId].remove(id);

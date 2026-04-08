@@ -29,8 +29,8 @@ class AuditFilterService {
   }
 
   /// Find all entries linked by a correlation id.
-  AuditLogEntry[] findCorrelated(string correlationId) {
-    return repo.findByCorrelation(correlationId);
+  AuditLogEntry[] findCorrelated(TenantId tenantId, string correlationId) {
+    return repo.findByCorrelation(tenantId, correlationId);
   }
 
   /// Count total entries for a tenant.

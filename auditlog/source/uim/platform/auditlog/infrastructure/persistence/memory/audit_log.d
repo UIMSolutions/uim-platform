@@ -17,20 +17,24 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAuditLogRepository : AuditLogRepository {
-  private AuditLogEntry[AuditLogId] store;
+class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLogId), AuditLogRepository {
+  private AuditLogEntry[AuditLogId][TenantId] store;
 
-  bool existsById(AuditLogId id, TenantId tenantId) {
-    return (id in store && store[id].tenantId == tenantId);
-  }
+  // bool existsByTenant(TenantId tenantId) {
+  //   return (tenantId in store) && !store[tenantId].empty;
+  // }
 
-  AuditLogEntry findById(AuditLogId id, TenantId tenantId) {
-    return existsById(id, tenantId) ? store[id] : AuditLogEntry.init;
-  }
+  // AuditLogEntry[] findByTenant(TenantId tenantId) {
+  //   return existsByTenant(tenantId) ? store[tenantId].byValue().array : null;
+  // }
 
-  AuditLogEntry[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
-  }
+  // bool existsById(TenantId tenantId, AuditLogId id) {
+  //   return existsByTenant(tenantId) && (id in store[tenantId]) ? true : false;
+  // }
+
+  // AuditLogEntry findById(TenantId tenantId, AuditLogId id) {
+  //   return existsById(tenantId, id) ? store[tenantId][id] : AuditLogEntry.init;
+  // }
 
   AuditLogEntry[] findByCategory(TenantId tenantId, AuditCategory category) {
     return findByTenant(tenantId).filter!(e => e.category == category).array;
@@ -49,24 +53,22 @@ class MemoryAuditLogRepository : AuditLogRepository {
     return findByTenant(tenantId).filter!(e => e.serviceId == serviceId).array;
   }
 
-  AuditLogEntry[] findByCorrelation(string correlationId) {
-    return store.byValue().filter!(e => e.correlationId == correlationId).array;
+  AuditLogEntry[] findByCorrelation(TenantId tenantId, string correlationId) {
+    return findByTenant(tenantId).filter!(e => e.correlationId == correlationId).array;
   }
 
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
-      long timeFrom, long timeTo, int limit, int offset) {
-    auto filtered = store.byValue().filter!(e => e.tenantId == tenantId)
+    long timeFrom, long timeTo, int limit, int offset) {
+    auto filtered = findByTenant(tenantId)
       .filter!((e) {
         if (timeFrom > 0 && e.timestamp < timeFrom)
           return false;
         if (timeTo > 0 && e.timestamp > timeTo)
           return false;
-        if (categories.length > 0)
-        {
+        if (categories.length > 0) {
           bool found = false;
           foreach (c; categories)
-            if (e.category == c)
-            {
+            if (e.category == c) {
               found = true;
               break;
             }
@@ -85,7 +87,7 @@ class MemoryAuditLogRepository : AuditLogRepository {
       return [];
     auto end = offset + limit;
     if (end > filtered.length)
-      end = cast(int) filtered.length;
+      end = cast(int)filtered.length;
     return filtered[offset .. end];
   }
 
@@ -93,13 +95,30 @@ class MemoryAuditLogRepository : AuditLogRepository {
     return findByTenant(tenantId).length;
   }
 
-  void save(AuditLogEntry entry) {
-    store[entry.id] = entry;
-  }
+  // void save(TenantId tenantId, AuditLogEntry entry) {
+    // entry.tenantId = tenantId;
+    // save(entry);
+  // }
+// 
+  // void save(AuditLogEntry entry) {
+    // if (!existsByTenant(entry.tenantId)) {
+      // AuditLogEntry[AuditLogId] tenantStore;
+      // store[entry.tenantId] = tenantStore;
+    // }
+    // store[entry.tenantId][entry.id] = entry;
+  // }
+
+  // void update(AuditLogEntry entry) {
+
+  //   if (!existsById(entry.tenantId, entry.id))
+  //     return; // or throw an exception  
+
+  //   store[entry.tenantId][entry.id] = entry;
+  // }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
     findByTenant(tenantId).filter!(e => e.timestamp < beforeTimestamp)
       .map!(e => e.id)
-      .each!(id => store.remove(id));
+      .each!(id => store[tenantId].remove(id));
   }
 }
