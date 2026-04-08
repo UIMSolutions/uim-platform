@@ -36,7 +36,7 @@ class DestinationController {
     try {
       auto j = req.json;
       auto r = CreateDestinationRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemId = j.getString("systemId");
@@ -70,7 +70,7 @@ class DestinationController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto destinations = useCase.listDestinations(tenantId);
 
       auto arr = Json.emptyArray;
@@ -90,7 +90,7 @@ class DestinationController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto dest = useCase.getDestination(id, tenantId);
       if (dest is null) {
         writeError(res, 404, "Destination not found");
@@ -109,7 +109,7 @@ class DestinationController {
       auto j = req.json;
       auto r = UpdateDestinationRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemId = j.getString("systemId");
@@ -144,7 +144,7 @@ class DestinationController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteDestination(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

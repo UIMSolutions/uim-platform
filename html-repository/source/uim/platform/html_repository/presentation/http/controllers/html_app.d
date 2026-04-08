@@ -33,7 +33,7 @@ class HtmlAppController : SAPController {
     try {
       auto j = req.json;
       CreateHtmlAppRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.namespace_ = j.getString("namespace");
       r.description = j.getString("description");
@@ -55,7 +55,7 @@ class HtmlAppController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class HtmlAppController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "App not found");
         return;
@@ -112,7 +112,7 @@ class HtmlAppController : SAPController {
     try {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "App not found");
         return;
@@ -138,7 +138,7 @@ class HtmlAppController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "App not found");
         return;

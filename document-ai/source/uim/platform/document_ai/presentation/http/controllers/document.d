@@ -34,7 +34,7 @@ class DocumentController : SAPController {
     try {
       auto j = req.json;
       UploadDocumentRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.fileName = j.getString("fileName");
       r.mimeType = j.getString("mimeType");
@@ -123,7 +123,7 @@ class DocumentController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       ConfirmDocumentRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.documentId = id;
       r.correctedFields = jsonKeyValuePairs(j, "correctedFields");

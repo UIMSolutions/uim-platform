@@ -34,7 +34,7 @@ class DeploymentController : SAPController {
     try {
       auto j = req.json;
       DeployApplicationRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.appId = j.getString("appId");
       r.versionId = j.getString("versionId");
       r.serviceInstanceId = j.getString("serviceInstanceId");
@@ -54,7 +54,7 @@ class DeploymentController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = getHistory.getByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -79,7 +79,7 @@ class DeploymentController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Deployment not found");
         return;

@@ -36,7 +36,7 @@ class TransformationController {
     try {
       auto j = req.json;
       auto r = CreateTransformationRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.systemId = j.getString("systemId");
       r.systemRole = parseSystemRole(j.getString("systemRole"));
       r.name = j.getString("name");
@@ -60,7 +60,7 @@ class TransformationController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listTransformations(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class TransformationController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto t = uc.getTransformation(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Transformation not found");
@@ -99,7 +99,7 @@ class TransformationController {
       auto j = req.json;
       auto r = UpdateTransformationRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.mappingRules = j.getString("mappingRules");
       r.conditions = j.getString("conditions");
@@ -124,7 +124,7 @@ class TransformationController {
   private void handleTest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto systemId = j.getString("systemId");
       auto inputAttributes = j.getString("inputAttributes");
 
@@ -146,7 +146,7 @@ class TransformationController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteTransformation(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

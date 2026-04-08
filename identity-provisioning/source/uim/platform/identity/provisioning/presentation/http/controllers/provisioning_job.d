@@ -37,7 +37,7 @@ class ProvisioningJobController {
     try {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(j.getString("jobType"));
@@ -61,7 +61,7 @@ class ProvisioningJobController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listJobs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -81,7 +81,7 @@ class ProvisioningJobController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto job = uc.getJob(id, tenantId);
       if (job is null) {
         writeError(res, 404, "Provisioning job not found");
@@ -97,7 +97,7 @@ class ProvisioningJobController {
   private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.runJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -117,7 +117,7 @@ class ProvisioningJobController {
     try {
       auto j = req.json;
       auto r = CreateProvisioningJobRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceSystemId = j.getString("sourceSystemId");
       r.targetSystemId = j.getString("targetSystemId");
       r.jobType = parseJobType(j.getString("jobType"));
@@ -142,7 +142,7 @@ class ProvisioningJobController {
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.cancelJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class ProvisioningJobController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

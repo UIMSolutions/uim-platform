@@ -59,7 +59,7 @@ class CustomerController : SAPController {
             auto j = req.json;
             CustomerDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.name = j.getString("name");
             dto.description = j.getString("description");
             dto.customerType = j.getString("customerType");

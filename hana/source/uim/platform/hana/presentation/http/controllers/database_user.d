@@ -35,7 +35,7 @@ class DatabaseUserController : SAPController {
     try {
       auto j = req.json;
       CreateDatabaseUserRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.userName = j.getString("userName");
@@ -62,7 +62,7 @@ class DatabaseUserController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto users = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -120,7 +120,7 @@ class DatabaseUserController : SAPController {
 
       auto j = req.json;
       UpdateDatabaseUserRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.password = j.getString("password");
       r.defaultSchema = j.getString("defaultSchema");

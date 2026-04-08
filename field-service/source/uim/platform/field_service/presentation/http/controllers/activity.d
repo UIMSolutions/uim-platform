@@ -59,7 +59,7 @@ class ActivityController : SAPController {
             auto j = req.json;
             ActivityDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.serviceCallId = j.getString("serviceCallId");
             dto.technicianId = j.getString("technicianId");
             dto.subject = j.getString("subject");

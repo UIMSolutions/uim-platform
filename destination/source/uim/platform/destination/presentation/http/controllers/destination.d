@@ -35,7 +35,7 @@ class DestinationController : SAPController {
     try {
       auto j = req.json;
       CreateDestinationRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.serviceInstanceId = j.getString("serviceInstanceId");
       r.name = j.getString("name");
@@ -91,7 +91,7 @@ class DestinationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto subaccountId = req.headers.get("X-Subaccount-Id", "");
       auto instanceId = req.params.get("serviceInstanceId");
 

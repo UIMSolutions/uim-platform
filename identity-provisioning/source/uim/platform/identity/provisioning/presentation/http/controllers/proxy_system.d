@@ -37,7 +37,7 @@ class ProxySystemController {
     try {
       auto j = req.json;
       auto r = CreateProxySystemRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
@@ -62,7 +62,7 @@ class ProxySystemController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listProxySystems(tenantId);
 
       auto arr = Json.emptyArray;
@@ -82,7 +82,7 @@ class ProxySystemController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto sys = uc.getProxySystem(id, tenantId);
       if (sys is null) {
         writeError(res, 404, "Proxy system not found");
@@ -101,7 +101,7 @@ class ProxySystemController {
       auto j = req.json;
       auto r = UpdateProxySystemRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
@@ -126,7 +126,7 @@ class ProxySystemController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.activateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -148,7 +148,7 @@ class ProxySystemController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deactivateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -167,7 +167,7 @@ class ProxySystemController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteProxySystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

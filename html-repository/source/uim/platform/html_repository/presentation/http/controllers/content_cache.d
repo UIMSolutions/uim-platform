@@ -33,7 +33,7 @@ class ContentCacheController : SAPController {
     try {
       auto j = req.json;
       CreateContentCacheRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.fileId = j.getString("fileId");
       r.filePath = j.getString("filePath");
       r.contentType = j.getString("contentType");
@@ -54,7 +54,7 @@ class ContentCacheController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
@@ -79,7 +79,7 @@ class ContentCacheController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -109,7 +109,7 @@ class ContentCacheController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       if (id.length == 0) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -125,7 +125,7 @@ class ContentCacheController : SAPController {
 
   private void handlePurge(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.purgeExpired(tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

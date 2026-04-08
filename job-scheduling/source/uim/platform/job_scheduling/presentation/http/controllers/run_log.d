@@ -34,7 +34,7 @@ class RunLogController : SAPController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto ids = extractIds(path);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto logs = uc.listBySchedule(ids[1], ids[0], tenantId);
 
@@ -58,7 +58,7 @@ class RunLogController : SAPController {
             import std.string : split;
             auto path = req.requestURI.to!string;
             auto jobId = extractJobId(path);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto logs = uc.listByJob(jobId, tenantId);
 
@@ -85,7 +85,7 @@ class RunLogController : SAPController {
 
             UpdateRunLogRequest r;
             r.runLogId = runLogId;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.status = j.getString("status");
             r.statusMessage = j.getString("statusMessage");
             r.httpStatus = jsonInt(j, "httpStatus");

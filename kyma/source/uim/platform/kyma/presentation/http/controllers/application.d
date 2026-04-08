@@ -38,7 +38,7 @@ class ApplicationController {
       auto j = req.json;
       RegisterApplicationRequest r;
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.registrationType = j.getString("registrationType");
@@ -68,7 +68,7 @@ class ApplicationController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto envId = req.params.get("environmentId");
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       Application[] items;
       if (envId.length > 0)

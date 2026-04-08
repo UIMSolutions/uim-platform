@@ -34,7 +34,7 @@ class DatabaseConnectionController : SAPController {
     try {
       auto j = req.json;
       CreateDatabaseConnectionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -66,7 +66,7 @@ class DatabaseConnectionController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto conns = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -129,7 +129,7 @@ class DatabaseConnectionController : SAPController {
 
       auto j = req.json;
       UpdateDatabaseConnectionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");

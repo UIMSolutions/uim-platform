@@ -32,7 +32,7 @@ class SearchController : SAPController {
       import std.conv : to;
 
       SearchLogsRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.query = req.params.get("q", "");
       r.level = req.params.get("level", "");
       r.streamId = req.params.get("streamId", "");

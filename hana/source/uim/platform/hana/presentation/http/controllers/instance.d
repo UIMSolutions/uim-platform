@@ -36,7 +36,7 @@ class InstanceController : SAPController {
     try {
       auto j = req.json;
       CreateInstanceRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -71,7 +71,7 @@ class InstanceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto instances = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -142,7 +142,7 @@ class InstanceController : SAPController {
 
       auto j = req.json;
       UpdateInstanceRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -185,7 +185,7 @@ class InstanceController : SAPController {
 
       auto j = req.json;
       InstanceActionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = id;
       r.action = j.getString("action");
 

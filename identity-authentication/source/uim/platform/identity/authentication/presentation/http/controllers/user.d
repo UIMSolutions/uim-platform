@@ -66,7 +66,7 @@ class UserController : SAPController {
     try {
       auto tenantId = req.params.get("tenantId", "");
       if (tenantId.isEmpty)
-        tenantId = req.headers.get("X-Tenant-Id", "");
+        tenantId = req.getTenantId;
 
       auto users = useCase.listUsers(tenantId);
       auto response = Json.emptyObject;

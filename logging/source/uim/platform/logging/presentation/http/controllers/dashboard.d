@@ -33,7 +33,7 @@ class DashboardController : SAPController {
     try {
       auto j = req.json;
       CreateDashboardRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = jsonBool(j, "isDefault");
@@ -70,7 +70,7 @@ class DashboardController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto dashboards = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;

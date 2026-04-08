@@ -44,7 +44,7 @@ class FolderController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateFolderRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.repositoryId = j.getString("repositoryId");
       r.parentFolderId = j.getString("parentFolderId");
       r.name = j.getString("name");
@@ -67,7 +67,7 @@ class FolderController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listFolders(tenantId);
 
       auto arr = Json.emptyArray;
@@ -87,7 +87,7 @@ class FolderController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto f = uc.getFolder(id, tenantId);
       if (f is null) {
         writeError(res, 404, "Folder not found");
@@ -106,7 +106,7 @@ class FolderController : SAPController {
       auto j = req.json;
       auto r = UpdateFolderRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -133,7 +133,7 @@ class FolderController : SAPController {
       auto j = req.json;
       auto r = MoveFolderRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.newParentFolderId = j.getString("newParentFolderId");
 
       auto result = uc.moveFolder(r);
@@ -156,7 +156,7 @@ class FolderController : SAPController {
   private void handleListChildren(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto parentId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listChildren(parentId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -176,7 +176,7 @@ class FolderController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteFolder(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

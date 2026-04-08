@@ -33,7 +33,7 @@ class SchemaController : SAPController {
     try {
       auto j = req.json;
       CreateSchemaRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.documentTypeId = j.getString("documentTypeId");
       r.name = j.getString("name");
@@ -102,7 +102,7 @@ class SchemaController : SAPController {
       auto j = req.json;
 
       UpdateSchemaRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.schemaId = id;
       r.name = j.getString("name");

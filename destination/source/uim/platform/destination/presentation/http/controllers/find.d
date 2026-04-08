@@ -28,7 +28,7 @@ class FindController {
   private void handleFind(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       FindDestinationRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.name = req.params.get("name");
       r.headerProvider = req.params.get("headerProvider");

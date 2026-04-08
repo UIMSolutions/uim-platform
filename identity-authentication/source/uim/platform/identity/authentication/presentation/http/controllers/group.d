@@ -62,7 +62,7 @@ class GroupController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = groups.length.toJson;

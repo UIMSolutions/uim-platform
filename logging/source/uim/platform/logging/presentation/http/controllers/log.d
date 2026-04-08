@@ -28,7 +28,7 @@ class LogController : SAPController {
     try {
       auto j = req.json;
       IngestLogRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.streamId = j.getString("streamId");
       r.level = j.getString("level");
       r.source = j.getString("source");
@@ -61,7 +61,7 @@ class LogController : SAPController {
   private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;

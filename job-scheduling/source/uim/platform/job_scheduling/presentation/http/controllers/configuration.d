@@ -26,7 +26,7 @@ class ConfigurationController : SAPController {
 
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto config = uc.get_(tenantId);
 
             auto resp = Json.emptyObject;
@@ -46,7 +46,7 @@ class ConfigurationController : SAPController {
             auto j = req.json;
 
             UpdateConfigurationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.defaultRetries = jsonInt(j, "defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);

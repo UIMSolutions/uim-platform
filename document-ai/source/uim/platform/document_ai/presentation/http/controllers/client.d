@@ -33,7 +33,7 @@ class ClientController : SAPController {
     try {
       auto j = req.json;
       CreateClientRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
 
@@ -53,7 +53,7 @@ class ClientController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto clients = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -75,7 +75,7 @@ class ClientController : SAPController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       auto c = uc.get_(id, tenantId);
       if (c.clientId.length == 0) {
@@ -97,7 +97,7 @@ class ClientController : SAPController {
       auto j = req.json;
 
       PatchClientRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = id;
       r.clientName = j.getString("clientName");
       r.description = j.getString("description");
@@ -121,7 +121,7 @@ class ClientController : SAPController {
       import std.conv : to;
 
       auto id = extractIdFromPath(req.requestURI.to!string);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       auto result = uc.remove(id, tenantId);
       if (result.success) {

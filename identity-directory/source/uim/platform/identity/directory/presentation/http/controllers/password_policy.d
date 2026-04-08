@@ -62,7 +62,7 @@ class PasswordPolicyController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long) policies.length);
@@ -78,7 +78,7 @@ class PasswordPolicyController {
 
   private void handleGetActive(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto policy = useCase.getActivePolicy(tenantId);
       if (policy == PasswordPolicy.init) {
         auto errRes = Json.emptyObject;

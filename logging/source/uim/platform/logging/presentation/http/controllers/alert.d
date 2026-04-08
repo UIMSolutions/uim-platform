@@ -31,7 +31,7 @@ class AlertController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto alerts = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -89,7 +89,7 @@ class AlertController : SAPController {
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = j.getString("alertId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.acknowledgedBy = j.getString("acknowledgedBy");
 
       auto result = uc.acknowledge(r);
@@ -110,7 +110,7 @@ class AlertController : SAPController {
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = j.getString("alertId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resolvedBy = j.getString("resolvedBy");
 
       auto result = uc.resolve(r);

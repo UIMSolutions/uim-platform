@@ -31,7 +31,7 @@ class PipelineController : SAPController {
     try {
       auto j = req.json;
       CreatePipelineRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
@@ -66,7 +66,7 @@ class PipelineController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto pipelines = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;

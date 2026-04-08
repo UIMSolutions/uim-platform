@@ -34,7 +34,7 @@ class HDIContainerController : SAPController {
     try {
       auto j = req.json;
       CreateHDIContainerRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -58,7 +58,7 @@ class HDIContainerController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto containers = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -119,7 +119,7 @@ class HDIContainerController : SAPController {
 
       auto j = req.json;
       UpdateHDIContainerRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");

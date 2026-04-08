@@ -33,7 +33,7 @@ class DocumentTypeController : SAPController {
     try {
       auto j = req.json;
       CreateDocumentTypeRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -101,7 +101,7 @@ class DocumentTypeController : SAPController {
       auto j = req.json;
 
       UpdateDocumentTypeRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.clientId = req.headers.get("X-Client-Id", "");
       r.documentTypeId = id;
       r.name = j.getString("name");

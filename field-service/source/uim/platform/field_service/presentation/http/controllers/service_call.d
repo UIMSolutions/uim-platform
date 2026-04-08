@@ -59,7 +59,7 @@ class ServiceCallController : SAPController {
             auto j = req.json;
             ServiceCallDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.customerId = j.getString("customerId");
             dto.equipmentId = j.getString("equipmentId");
             dto.subject = j.getString("subject");

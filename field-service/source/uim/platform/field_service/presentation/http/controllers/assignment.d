@@ -59,7 +59,7 @@ class AssignmentController : SAPController {
             auto j = req.json;
             AssignmentDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.activityId = j.getString("activityId");
             dto.technicianId = j.getString("technicianId");
             dto.assignedDate = j.getString("assignedDate");

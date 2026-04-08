@@ -59,7 +59,7 @@ class SmartformController : SAPController {
             auto j = req.json;
             SmartformDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.serviceCallId = j.getString("serviceCallId");
             dto.activityId = j.getString("activityId");
             dto.name = j.getString("name");

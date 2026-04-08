@@ -72,7 +72,7 @@ class PolicyController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long) policies.length);

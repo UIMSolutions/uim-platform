@@ -37,7 +37,7 @@ class SourceSystemController {
     try {
       auto j = req.json;
       auto r = CreateSourceSystemRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
@@ -60,7 +60,7 @@ class SourceSystemController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto items = uc.listSourceSystems(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class SourceSystemController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto sys = uc.getSourceSystem(id, tenantId);
       if (sys is null) {
         writeError(res, 404, "Source system not found");
@@ -99,7 +99,7 @@ class SourceSystemController {
       auto j = req.json;
       auto r = UpdateSourceSystemRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.connectionConfig = j.getString("connectionConfig");
@@ -124,7 +124,7 @@ class SourceSystemController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.activateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -146,7 +146,7 @@ class SourceSystemController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deactivateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -165,7 +165,7 @@ class SourceSystemController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.deleteSourceSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

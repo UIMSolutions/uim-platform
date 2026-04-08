@@ -59,7 +59,7 @@ class SkillController : SAPController {
             auto j = req.json;
             SkillDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.technicianId = j.getString("technicianId");
             dto.name = j.getString("name");
             dto.description = j.getString("description");

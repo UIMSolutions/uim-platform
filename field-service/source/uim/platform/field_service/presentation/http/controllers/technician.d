@@ -59,7 +59,7 @@ class TechnicianController : SAPController {
             auto j = req.json;
             TechnicianDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.firstName = j.getString("firstName");
             dto.lastName = j.getString("lastName");
             dto.email = j.getString("email");

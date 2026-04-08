@@ -43,7 +43,7 @@ class BrowseController : SAPController {
   private void handleBrowseFolder(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto folderId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto contents = uc.browseFolderContents(folderId, tenantId);
 
       auto fArr = Json.emptyArray;
@@ -69,7 +69,7 @@ class BrowseController : SAPController {
   private void handleRepositorySummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto repoId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto summary = uc.getRepositorySummary(repoId, tenantId);
 
       if (summary.repositoryId.length == 0) {
@@ -94,7 +94,7 @@ class BrowseController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateFavoriteRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = req.headers.get("X-User-Id", "system");
       r.resourceId = j.getString("resourceId");
       r.resourceType = parseResourceType(j.getString("resourceType"));
@@ -115,7 +115,7 @@ class BrowseController : SAPController {
 
   private void handleListFavorites(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
       auto items = uc.getFavorites(userId, tenantId);
 
@@ -136,7 +136,7 @@ class BrowseController : SAPController {
   private void handleRemoveFavorite(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = uc.removeFavorite(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

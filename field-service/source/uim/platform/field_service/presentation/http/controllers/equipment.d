@@ -59,7 +59,7 @@ class EquipmentController : SAPController {
             auto j = req.json;
             EquipmentDTO dto;
             dto.id = j.getString("id");
-            dto.tenantId = req.headers.get("X-Tenant-Id", "");
+            dto.tenantId = req.getTenantId;
             dto.customerId = j.getString("customerId");
             dto.serialNumber = j.getString("serialNumber");
             dto.name = j.getString("name");

@@ -41,7 +41,7 @@ class VersionController : SAPController {
   private void handleCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
 
       auto result = uc.checkOut(docId, tenantId, userId);
@@ -64,7 +64,7 @@ class VersionController : SAPController {
       auto j = req.json;
       auto r = CheckInRequest();
       r.documentId = j.getString("documentId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = req.headers.get("X-User-Id", "system");
       r.isMajor = j.getBoolean("isMajor", true);
       r.comment = j.getString("comment");
@@ -92,7 +92,7 @@ class VersionController : SAPController {
   private void handleCancelCheckOut(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       auto result = uc.cancelCheckOut(docId, tenantId);
       if (result.isSuccess) {
@@ -112,7 +112,7 @@ class VersionController : SAPController {
   private void handleGetAllVersions(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto versions = uc.getAllVersions(docId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -132,7 +132,7 @@ class VersionController : SAPController {
   private void handleGetCurrentVersion(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto docId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto ver = uc.getCurrentVersion(docId, tenantId);
       if (ver is null) {
         writeError(res, 404, "No current version found");

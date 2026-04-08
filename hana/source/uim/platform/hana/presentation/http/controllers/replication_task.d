@@ -35,7 +35,7 @@ class ReplicationTaskController : SAPController {
     try {
       auto j = req.json;
       CreateReplicationTaskRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.name = j.getString("name");
@@ -62,7 +62,7 @@ class ReplicationTaskController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto tasks = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -126,7 +126,7 @@ class ReplicationTaskController : SAPController {
 
       auto j = req.json;
       UpdateReplicationTaskRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");

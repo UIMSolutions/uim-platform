@@ -36,7 +36,7 @@ class JobController : SAPController {
         try {
             auto j = req.json;
             CreateJobRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.actionUrl = j.getString("action");
@@ -85,7 +85,7 @@ class JobController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto jobs = jobUc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -106,7 +106,7 @@ class JobController : SAPController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto job = jobUc.get_(id, tenantId);
             if (job.id.length == 0) {
@@ -128,7 +128,7 @@ class JobController : SAPController {
             auto j = req.json;
 
             UpdateJobRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.jobId = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -156,7 +156,7 @@ class JobController : SAPController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             // Delete all schedules first
             scheduleUc.removeAllByJob(id, tenantId);
@@ -174,7 +174,7 @@ class JobController : SAPController {
 
     private void handleCount(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto resp = Json.emptyObject;
             resp["total"] = Json(jobUc.count(tenantId));
@@ -189,7 +189,7 @@ class JobController : SAPController {
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
             auto jobs = jobUc.search(query, tenantId);

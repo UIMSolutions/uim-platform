@@ -35,7 +35,7 @@ class EnvironmentController {
     try {
       auto j = req.json;
       CreateEnvironmentRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.subaccountId = req.headers.get("X-Subaccount-Id", "");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -68,7 +68,7 @@ class EnvironmentController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto subaccountId = req.headers.get("X-Subaccount-Id", "");
 
       KymaEnvironment[] envs;

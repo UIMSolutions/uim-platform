@@ -35,7 +35,7 @@ class ConfigurationController : SAPController {
     try {
       auto j = req.json;
       CreateConfigurationRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.instanceId = j.getString("instanceId");
       r.id = j.getString("id");
       r.section = j.getString("section");
@@ -61,7 +61,7 @@ class ConfigurationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto configs = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
@@ -121,7 +121,7 @@ class ConfigurationController : SAPController {
 
       auto j = req.json;
       UpdateConfigurationRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.value = j.getString("value");
 

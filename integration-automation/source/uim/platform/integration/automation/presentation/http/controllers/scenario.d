@@ -35,7 +35,7 @@ class ScenarioController {
     try {
       auto j = req.json;
       auto r = CreateScenarioRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.category = parseScenarioCategory(j.getString("category"));
@@ -64,7 +64,7 @@ class ScenarioController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto scenarios = useCase.listScenarios(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class ScenarioController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto scenario = useCase.getScenario(id, tenantId);
       if (scenario is null) {
         writeError(res, 404, "Scenario not found");
@@ -103,7 +103,7 @@ class ScenarioController {
       auto j = req.json;
       auto r = UpdateScenarioRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.category = parseScenarioCategory(j.getString("category"));
@@ -133,7 +133,7 @@ class ScenarioController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteScenario(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

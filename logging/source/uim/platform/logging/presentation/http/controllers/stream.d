@@ -33,7 +33,7 @@ class StreamController : SAPController {
     try {
       auto j = req.json;
       CreateLogStreamRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.sourceType = j.getString("sourceType");
@@ -55,7 +55,7 @@ class StreamController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto streams = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;

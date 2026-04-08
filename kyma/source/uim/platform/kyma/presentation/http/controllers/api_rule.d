@@ -37,7 +37,7 @@ class ApiRuleController {
       CreateApiRuleRequest r;
       r.namespaceId = j.getString("namespaceId");
       r.environmentId = j.getString("environmentId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.serviceName = j.getString("serviceName");

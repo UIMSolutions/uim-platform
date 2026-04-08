@@ -39,7 +39,7 @@ class ScheduleController : SAPController {
             auto j = req.json;
 
             CreateScheduleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.jobId = jobId;
             r.description = j.getString("description");
             r.type = j.getString("type");
@@ -73,7 +73,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto schedules = uc.list(jobId, tenantId);
 
@@ -96,7 +96,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto s = uc.get_(ids[1], ids[0], tenantId);
             if (s.id.length == 0) {
@@ -118,7 +118,7 @@ class ScheduleController : SAPController {
             auto j = req.json;
 
             UpdateScheduleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.jobId = ids[0];
             r.scheduleId = ids[1];
             r.description = j.getString("description");
@@ -150,7 +150,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.remove(ids[1], ids[0], tenantId);
             if (result.success) {
@@ -171,7 +171,7 @@ class ScheduleController : SAPController {
             auto j = req.json;
 
             ActivateAllSchedulesRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.jobId = jobId;
             r.active = jsonBool(j, "active", true);
 
@@ -190,7 +190,7 @@ class ScheduleController : SAPController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
             auto schedules = uc.search(query, tenantId);
