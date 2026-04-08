@@ -7,18 +7,10 @@ module uim.platform.job_scheduling.application.dto;
 
 import uim.platform.job_scheduling.domain.types;
 
-// --- Generic result ---
-
-struct CommandResult {
-    bool success;
-    string id;
-    string error;
-}
-
 // --- Job ---
 
 struct CreateJobRequest {
-    string tenantId;
+    TenantId tenantId;
     string name;
     string description;
     string actionUrl;
@@ -32,8 +24,8 @@ struct CreateJobRequest {
 }
 
 struct UpdateJobRequest {
-    string tenantId;
-    string jobId;
+    TenantId tenantId;
+    JobId jobId;
     string name;
     string description;
     string actionUrl;
@@ -46,8 +38,8 @@ struct UpdateJobRequest {
 // --- Schedule ---
 
 struct CreateScheduleRequest {
-    string tenantId;
-    string jobId;
+    TenantId tenantId;
+    JobId jobId;
     string description;
     string type;
     string format;
@@ -62,9 +54,9 @@ struct CreateScheduleRequest {
 }
 
 struct UpdateScheduleRequest {
-    string tenantId;
-    string jobId;
-    string scheduleId;
+    TenantId tenantId;
+    JobId jobId;
+    ScheduleId scheduleId;
     string description;
     bool active;
     string cronExpression;
@@ -80,7 +72,7 @@ struct UpdateScheduleRequest {
 
 struct UpdateRunLogRequest {
     string runLogId;
-    string tenantId;
+    TenantId tenantId;
     string status;
     string statusMessage;
     int httpStatus;
@@ -91,7 +83,7 @@ struct UpdateRunLogRequest {
 // --- Configuration ---
 
 struct UpdateConfigurationRequest {
-    string tenantId;
+    TenantId tenantId;
     int defaultRetries;
     long defaultRetryDelayMs;
     long maxRunDurationMs;
@@ -102,7 +94,7 @@ struct UpdateConfigurationRequest {
 // --- Bulk operations ---
 
 struct ActivateAllSchedulesRequest {
-    string tenantId;
-    string jobId;
+    TenantId tenantId;
+    JobId jobId;
     bool active;
 }

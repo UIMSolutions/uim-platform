@@ -18,7 +18,7 @@ struct CommandResult {
 // --- Scenario ---
 
 struct CreateScenarioRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string id;
   string name;
@@ -29,7 +29,7 @@ struct CreateScenarioRequest {
 // --- Executable ---
 
 struct CreateExecutableRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string scenarioId;
   string id;
@@ -43,7 +43,7 @@ struct CreateExecutableRequest {
 // --- Configuration ---
 
 struct CreateConfigurationRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string scenarioId;
   string executableId;
@@ -55,20 +55,20 @@ struct CreateConfigurationRequest {
 // --- Execution ---
 
 struct CreateExecutionRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string configurationId;
 }
 
 struct PatchExecutionRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string executionId;
   string targetStatus;
 }
 
 struct BulkPatchExecutionRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string[] executionIds;
   string targetStatus;
@@ -77,14 +77,14 @@ struct BulkPatchExecutionRequest {
 // --- Deployment ---
 
 struct CreateDeploymentRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string configurationId;
   int ttl;
 }
 
 struct PatchDeploymentRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string deploymentId;
   string targetStatus;
@@ -93,7 +93,7 @@ struct PatchDeploymentRequest {
 }
 
 struct BulkPatchDeploymentRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string[] deploymentIds;
   string targetStatus;
@@ -102,7 +102,7 @@ struct BulkPatchDeploymentRequest {
 // --- Artifact ---
 
 struct CreateArtifactRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string scenarioId;
   string name;
@@ -115,13 +115,13 @@ struct CreateArtifactRequest {
 // --- Resource Group ---
 
 struct CreateResourceGroupRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string[][] labels;
 }
 
 struct PatchResourceGroupRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string[][] labels;
 }
@@ -129,7 +129,7 @@ struct PatchResourceGroupRequest {
 // --- Docker Registry Secret ---
 
 struct CreateDockerRegistrySecretRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string name;
   string server;
@@ -140,7 +140,7 @@ struct CreateDockerRegistrySecretRequest {
 // --- Object Store Secret ---
 
 struct CreateObjectStoreSecretRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string name;
   string type;
@@ -155,7 +155,7 @@ struct CreateObjectStoreSecretRequest {
 // --- Metrics ---
 
 struct PatchMetricsRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string executionId;
   string[][] metrics;
@@ -167,7 +167,7 @@ struct PatchMetricsRequest {
 // --- Execution Schedule ---
 
 struct CreateExecutionScheduleRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
   string configurationId;
   string name;
@@ -177,9 +177,9 @@ struct CreateExecutionScheduleRequest {
 }
 
 struct PatchExecutionScheduleRequest {
-  string tenantId;
+  TenantId tenantId;
   string resourceGroupId;
-  string scheduleId;
+  ScheduleId scheduleId;
   string status;
   string cron;
   long start;

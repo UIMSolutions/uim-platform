@@ -5,16 +5,9 @@
 *****************************************************************************************************************/
 module uim.platform.html_repository.application.dto;
 
-// Generic command result
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // HtmlApp DTOs
 struct CreateHtmlAppRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string namespace_;
@@ -33,7 +26,7 @@ struct UpdateHtmlAppRequest {
 
 // AppVersion DTOs
 struct CreateAppVersionRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string versionCode;
   string description;
@@ -47,7 +40,7 @@ struct UpdateAppVersionRequest {
 
 // AppFile DTOs
 struct UploadAppFileRequest {
-  string tenantId;
+  TenantId tenantId;
   string versionId;
   string filePath;       // relative path within app e.g. "index.html"
   string contentType;    // MIME type
@@ -64,7 +57,7 @@ struct UpdateAppFileRequest {
 
 // ServiceInstance DTOs
 struct CreateServiceInstanceRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string plan;           // "appHost", "appRuntime"
@@ -81,7 +74,7 @@ struct UpdateServiceInstanceRequest {
 
 // DeploymentRecord DTOs
 struct CreateDeploymentRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string versionId;
   string serviceInstanceId;
@@ -91,7 +84,7 @@ struct CreateDeploymentRequest {
 
 // AppRoute DTOs
 struct CreateAppRouteRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string pathPrefix;
   string targetUrl;
@@ -108,7 +101,7 @@ struct UpdateAppRouteRequest {
 
 // ContentCache DTOs
 struct CacheContentRequest {
-  string tenantId;
+  TenantId tenantId;
   string fileId;
   string filePath;
   string contentType;

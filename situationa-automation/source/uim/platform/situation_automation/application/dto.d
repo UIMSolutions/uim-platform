@@ -18,7 +18,7 @@ struct CommandResult {
 // --- Situation Template ---
 
 struct CreateSituationTemplateRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -34,7 +34,7 @@ struct CreateSituationTemplateRequest {
 }
 
 struct UpdateSituationTemplateRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -50,7 +50,7 @@ struct UpdateSituationTemplateRequest {
 // --- Situation Instance ---
 
 struct CreateSituationInstanceRequest {
-    string tenantId;
+    TenantId tenantId;
     string templateId;
     string id;
     string description;
@@ -65,7 +65,7 @@ struct CreateSituationInstanceRequest {
 }
 
 struct UpdateSituationInstanceRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string status;
     string severity;
@@ -73,7 +73,7 @@ struct UpdateSituationInstanceRequest {
 }
 
 struct ResolveSituationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string resolutionType;
     string resolvedBy;
@@ -85,7 +85,7 @@ struct ResolveSituationRequest {
 // --- Situation Action ---
 
 struct CreateSituationActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -102,7 +102,7 @@ struct CreateSituationActionRequest {
 }
 
 struct UpdateSituationActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -118,7 +118,7 @@ struct UpdateSituationActionRequest {
 // --- Automation Rule ---
 
 struct CreateAutomationRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string templateId;
     string id;
     string name;
@@ -129,7 +129,7 @@ struct CreateAutomationRuleRequest {
 }
 
 struct UpdateAutomationRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -142,7 +142,7 @@ struct UpdateAutomationRuleRequest {
 // --- Entity Type ---
 
 struct CreateEntityTypeRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -152,7 +152,7 @@ struct CreateEntityTypeRequest {
 }
 
 struct UpdateEntityTypeRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -163,7 +163,7 @@ struct UpdateEntityTypeRequest {
 // --- Data Context ---
 
 struct CreateDataContextRequest {
-    string tenantId;
+    TenantId tenantId;
     string instanceId;
     string id;
     string entityId;
@@ -175,14 +175,14 @@ struct CreateDataContextRequest {
 }
 
 struct DeleteDataContextRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
 }
 
 // --- Notification ---
 
 struct CreateNotificationRequest {
-    string tenantId;
+    TenantId tenantId;
     string instanceId;
     string id;
     string recipientId;
@@ -194,7 +194,7 @@ struct CreateNotificationRequest {
 }
 
 struct UpdateNotificationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string status;
 }
@@ -202,7 +202,7 @@ struct UpdateNotificationRequest {
 // --- Dashboard ---
 
 struct CreateDashboardRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -212,7 +212,7 @@ struct CreateDashboardRequest {
 }
 
 struct UpdateDashboardRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;

@@ -25,7 +25,7 @@ struct Subscription {
   string providerSubaccountId; // SaaS provider's subaccount
   SubscriptionStatus status = SubscriptionStatus.subscribing;
   string appUrl; // URL to the subscribed application
-  string tenantId; // consumer tenant created for subscription
+  TenantId tenantId; // consumer tenant created for subscription
   bool isSubscriptionDone = false;
   string errorDescription;
   string[] dependentServices; // services required by this subscription

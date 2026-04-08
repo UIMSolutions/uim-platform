@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 struct ServiceCallDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string customerId;
     string equipmentId;
     string subject;
@@ -41,7 +41,7 @@ struct ServiceCallDTO {
 
 struct ActivityDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string serviceCallId;
     string technicianId;
     string subject;
@@ -67,7 +67,7 @@ struct ActivityDTO {
 
 struct AssignmentDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string activityId;
     string technicianId;
     string status;
@@ -87,7 +87,7 @@ struct AssignmentDTO {
 
 struct EquipmentDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string customerId;
     string serialNumber;
     string name;
@@ -112,7 +112,7 @@ struct EquipmentDTO {
 
 struct TechnicianDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string firstName;
     string lastName;
     string email;
@@ -135,7 +135,7 @@ struct TechnicianDTO {
 
 struct CustomerDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string name;
     string description;
     string customerType;
@@ -157,7 +157,7 @@ struct CustomerDTO {
 
 struct SkillDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string technicianId;
     string name;
     string description;
@@ -175,7 +175,7 @@ struct SkillDTO {
 
 struct SmartformDTO {
     string id;
-    string tenantId;
+    TenantId tenantId;
     string serviceCallId;
     string activityId;
     string name;

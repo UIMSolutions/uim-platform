@@ -4,9 +4,9 @@ module uim.platform.service.application.dto;
 struct CommandResult {
   string id;
   string error;
+  // bool success;
 
-  bool isSuccess() const
-  {
+  bool isSuccess() const {
     return error.length == 0;
   }
 }

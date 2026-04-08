@@ -18,7 +18,7 @@ struct CommandResult {
 // --- Process (Workflow Definition) ---
 
 struct CreateProcessRequest {
-    string tenantId;
+    TenantId tenantId;
     string projectId;
     string id;
     string name;
@@ -29,7 +29,7 @@ struct CreateProcessRequest {
 }
 
 struct UpdateProcessRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -39,7 +39,7 @@ struct UpdateProcessRequest {
 }
 
 struct DeployProcessRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string action;
 }
@@ -47,7 +47,7 @@ struct DeployProcessRequest {
 // --- Process Instance ---
 
 struct StartProcessInstanceRequest {
-    string tenantId;
+    TenantId tenantId;
     string processId;
     string id;
     string startedBy;
@@ -57,14 +57,14 @@ struct StartProcessInstanceRequest {
 }
 
 struct UpdateProcessInstanceRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string status;
     string currentStepId;
 }
 
 struct ProcessInstanceActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string action;
 }
@@ -72,7 +72,7 @@ struct ProcessInstanceActionRequest {
 // --- Task ---
 
 struct CreateTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string processInstanceId;
     string id;
     string name;
@@ -87,7 +87,7 @@ struct CreateTaskRequest {
 }
 
 struct UpdateTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -97,7 +97,7 @@ struct UpdateTaskRequest {
 }
 
 struct CompleteTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string completedBy;
     string outcome;
@@ -105,7 +105,7 @@ struct CompleteTaskRequest {
 }
 
 struct ClaimTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string userId;
 }
@@ -113,7 +113,7 @@ struct ClaimTaskRequest {
 // --- Decision ---
 
 struct CreateDecisionRequest {
-    string tenantId;
+    TenantId tenantId;
     string projectId;
     string id;
     string name;
@@ -125,7 +125,7 @@ struct CreateDecisionRequest {
 }
 
 struct UpdateDecisionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -137,7 +137,7 @@ struct UpdateDecisionRequest {
 // --- Form ---
 
 struct CreateFormRequest {
-    string tenantId;
+    TenantId tenantId;
     string projectId;
     string id;
     string name;
@@ -147,7 +147,7 @@ struct CreateFormRequest {
 }
 
 struct UpdateFormRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -158,7 +158,7 @@ struct UpdateFormRequest {
 // --- Automation (RPA Bot) ---
 
 struct CreateAutomationRequest {
-    string tenantId;
+    TenantId tenantId;
     string projectId;
     string id;
     string name;
@@ -170,7 +170,7 @@ struct CreateAutomationRequest {
 }
 
 struct UpdateAutomationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -181,7 +181,7 @@ struct UpdateAutomationRequest {
 }
 
 struct RunAutomationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string triggeredBy;
     string inputData;
@@ -190,7 +190,7 @@ struct RunAutomationRequest {
 // --- Trigger ---
 
 struct CreateTriggerRequest {
-    string tenantId;
+    TenantId tenantId;
     string processId;
     string id;
     string name;
@@ -204,7 +204,7 @@ struct CreateTriggerRequest {
 }
 
 struct UpdateTriggerRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -216,7 +216,7 @@ struct UpdateTriggerRequest {
 // --- Action (Integration) ---
 
 struct CreateActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string projectId;
     string id;
     string name;
@@ -232,7 +232,7 @@ struct CreateActionRequest {
 }
 
 struct UpdateActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -247,7 +247,7 @@ struct UpdateActionRequest {
 // --- Visibility (Process Monitoring) ---
 
 struct CreateVisibilityRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -258,7 +258,7 @@ struct CreateVisibilityRequest {
 }
 
 struct UpdateVisibilityRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -289,6 +289,6 @@ struct UpdateArtifactRequest {
 }
 
 struct InstallArtifactRequest {
-    string tenantId;
+    TenantId tenantId;
     string artifactId;
 }

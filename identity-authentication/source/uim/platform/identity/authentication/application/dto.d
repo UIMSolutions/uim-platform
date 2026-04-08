@@ -128,7 +128,7 @@ struct UpdateTenantRequest {
 }
 
 struct TenantResponse {
-  string tenantId;
+  TenantId tenantId;
   string error;
 
   bool isSuccess() const

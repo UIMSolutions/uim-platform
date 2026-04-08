@@ -18,7 +18,7 @@ struct CommandResult {
 // --- Custom Domain ---
 
 struct CreateCustomDomainRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string domainName;
     string organizationId;
@@ -28,7 +28,7 @@ struct CreateCustomDomainRequest {
 }
 
 struct UpdateCustomDomainRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string status;
     string activeCertificateId;
@@ -42,7 +42,7 @@ struct UpdateCustomDomainRequest {
 // --- Private Key ---
 
 struct CreatePrivateKeyRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string subject;
     string[] domains;
@@ -54,7 +54,7 @@ struct CreatePrivateKeyRequest {
 // --- Certificate ---
 
 struct CreateCertificateRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string keyId;
     string certificateType;
@@ -62,13 +62,13 @@ struct CreateCertificateRequest {
 }
 
 struct UploadCertificateChainRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string certificatePem;
 }
 
 struct ActivateCertificateRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string[] domains;
 }
@@ -76,7 +76,7 @@ struct ActivateCertificateRequest {
 // --- TLS Configuration ---
 
 struct CreateTlsConfigurationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -90,7 +90,7 @@ struct CreateTlsConfigurationRequest {
 }
 
 struct UpdateTlsConfigurationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -106,7 +106,7 @@ struct UpdateTlsConfigurationRequest {
 // --- Domain Mapping ---
 
 struct CreateDomainMappingRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string customDomainId;
     string standardRoute;
@@ -121,7 +121,7 @@ struct CreateDomainMappingRequest {
 // --- Trusted Certificate ---
 
 struct CreateTrustedCertificateRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string customDomainId;
     string certificatePem;
@@ -132,7 +132,7 @@ struct CreateTrustedCertificateRequest {
 // --- DNS Record ---
 
 struct CreateDnsRecordRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string customDomainId;
     string recordType;
@@ -143,7 +143,7 @@ struct CreateDnsRecordRequest {
 }
 
 struct UpdateDnsRecordRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string value;
     int ttl;
@@ -153,5 +153,5 @@ struct UpdateDnsRecordRequest {
 // --- Dashboard ---
 
 struct RefreshDashboardRequest {
-    string tenantId;
+    TenantId tenantId;
 }

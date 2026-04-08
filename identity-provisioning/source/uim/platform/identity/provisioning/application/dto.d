@@ -96,15 +96,3 @@ struct CreateProvisioningJobRequest {
   string schedule; // cron expression or empty for on-demand
   UserId createdBy;
 }
-
-// --- Command Result ---
-
-struct CommandResult {
-  string id;
-  string error;
-
-  bool isSuccess() const
-  {
-    return error.length == 0;
-  }
-}

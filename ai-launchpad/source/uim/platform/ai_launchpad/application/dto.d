@@ -34,14 +34,14 @@ struct PatchConnectionRequest {
 
 // --- Workspace ---
 struct CreateWorkspaceRequest {
-  string tenantId;
+  TenantId tenantId;
   string name;
   string description;
 }
 
 struct PatchWorkspaceRequest {
   string workspaceId;
-  string tenantId;
+  TenantId tenantId;
   string name;
   string description;
 }

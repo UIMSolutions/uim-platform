@@ -18,7 +18,7 @@ struct CommandResult {
 // --- Document ---
 
 struct UploadDocumentRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string fileName;
   string mimeType;
@@ -31,7 +31,7 @@ struct UploadDocumentRequest {
 }
 
 struct ConfirmDocumentRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string documentId;
   string[][] correctedFields;
@@ -40,7 +40,7 @@ struct ConfirmDocumentRequest {
 // --- Schema ---
 
 struct CreateSchemaRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string documentTypeId;
   string name;
@@ -51,7 +51,7 @@ struct CreateSchemaRequest {
 }
 
 struct UpdateSchemaRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string schemaId;
   string name;
@@ -64,7 +64,7 @@ struct UpdateSchemaRequest {
 // --- Template ---
 
 struct CreateTemplateRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string schemaId;
   string documentTypeId;
@@ -74,7 +74,7 @@ struct CreateTemplateRequest {
 }
 
 struct UpdateTemplateRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string templateId;
   string name;
@@ -86,7 +86,7 @@ struct UpdateTemplateRequest {
 // --- Document Type ---
 
 struct CreateDocumentTypeRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string name;
   string description;
@@ -96,7 +96,7 @@ struct CreateDocumentTypeRequest {
 }
 
 struct UpdateDocumentTypeRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string documentTypeId;
   string name;
@@ -108,7 +108,7 @@ struct UpdateDocumentTypeRequest {
 // --- Enrichment Data ---
 
 struct CreateEnrichmentDataRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string documentTypeId;
   string name;
@@ -118,7 +118,7 @@ struct CreateEnrichmentDataRequest {
 }
 
 struct UpdateEnrichmentDataRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string enrichmentDataId;
   string name;
@@ -129,7 +129,7 @@ struct UpdateEnrichmentDataRequest {
 // --- Training Job ---
 
 struct CreateTrainingJobRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string documentTypeId;
   string schemaId;
@@ -138,7 +138,7 @@ struct CreateTrainingJobRequest {
 }
 
 struct PatchTrainingJobRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string trainingJobId;
   string targetStatus;
@@ -147,7 +147,7 @@ struct PatchTrainingJobRequest {
 // --- Client ---
 
 struct CreateClientRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string name;
   string description;
@@ -156,7 +156,7 @@ struct CreateClientRequest {
 }
 
 struct PatchClientRequest {
-  string tenantId;
+  TenantId tenantId;
   string clientId;
   string name;
   string description;

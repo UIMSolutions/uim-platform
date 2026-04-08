@@ -19,7 +19,7 @@ struct CommandResult {
 
 // --- Data Subject ---
 struct CreateDataSubjectRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string subjectType;
     string firstName;
@@ -35,7 +35,7 @@ struct CreateDataSubjectRequest {
 }
 
 struct UpdateDataSubjectRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string firstName;
     string lastName;
@@ -47,7 +47,7 @@ struct UpdateDataSubjectRequest {
 
 // --- Data Subject Request ---
 struct CreateDataSubjectRequestRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string dataSubjectId;
     string requestType;
@@ -61,7 +61,7 @@ struct CreateDataSubjectRequestRequest {
 }
 
 struct UpdateDataSubjectRequestRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string status;
     string assignedTo;
@@ -73,7 +73,7 @@ struct UpdateDataSubjectRequestRequest {
 
 // --- Personal Data Record ---
 struct CreatePersonalDataRecordRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string dataSubjectId;
     string applicationId;
@@ -90,7 +90,7 @@ struct CreatePersonalDataRecordRequest {
 
 // --- Registered Application ---
 struct CreateRegisteredApplicationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -104,7 +104,7 @@ struct CreateRegisteredApplicationRequest {
 }
 
 struct UpdateRegisteredApplicationRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -117,7 +117,7 @@ struct UpdateRegisteredApplicationRequest {
 
 // --- Processing Purpose ---
 struct CreateProcessingPurposeRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -131,7 +131,7 @@ struct CreateProcessingPurposeRequest {
 }
 
 struct UpdateProcessingPurposeRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -144,7 +144,7 @@ struct UpdateProcessingPurposeRequest {
 
 // --- Consent Record ---
 struct CreateConsentRecordRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string dataSubjectId;
     string purposeId;
@@ -158,14 +158,14 @@ struct CreateConsentRecordRequest {
 }
 
 struct WithdrawConsentRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string withdrawnBy;
 }
 
 // --- Retention Rule ---
 struct CreateRetentionRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -181,7 +181,7 @@ struct CreateRetentionRuleRequest {
 }
 
 struct UpdateRetentionRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -195,7 +195,7 @@ struct UpdateRetentionRuleRequest {
 
 // --- Data Processing Log ---
 struct CreateDataProcessingLogRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string entryType;
     string severity;
@@ -211,7 +211,7 @@ struct CreateDataProcessingLogRequest {
 
 // --- Data Export ---
 struct ExportPersonalDataRequest {
-    string tenantId;
+    TenantId tenantId;
     string dataSubjectId;
     string format;
 }

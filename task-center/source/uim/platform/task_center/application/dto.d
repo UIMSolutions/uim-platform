@@ -20,7 +20,7 @@ struct CommandResult {
 // --- Task DTOs ---
 
 struct CreateTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string taskDefinitionId;
     string providerId;
@@ -37,7 +37,7 @@ struct CreateTaskRequest {
 }
 
 struct UpdateTaskRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string title;
     string description;
@@ -50,7 +50,7 @@ struct UpdateTaskRequest {
 // --- Task Definition DTOs ---
 
 struct CreateTaskDefinitionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string providerId;
     string name;
@@ -62,7 +62,7 @@ struct CreateTaskDefinitionRequest {
 }
 
 struct UpdateTaskDefinitionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -75,7 +75,7 @@ struct UpdateTaskDefinitionRequest {
 // --- Task Comment DTOs ---
 
 struct CreateTaskCommentRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string taskId;
     string author;
@@ -83,7 +83,7 @@ struct CreateTaskCommentRequest {
 }
 
 struct UpdateTaskCommentRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string content;
 }
@@ -91,7 +91,7 @@ struct UpdateTaskCommentRequest {
 // --- Task Attachment DTOs ---
 
 struct CreateTaskAttachmentRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string taskId;
     string fileName;
@@ -103,7 +103,7 @@ struct CreateTaskAttachmentRequest {
 // --- Task Provider DTOs ---
 
 struct CreateTaskProviderRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -116,7 +116,7 @@ struct CreateTaskProviderRequest {
 }
 
 struct UpdateTaskProviderRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;
@@ -129,7 +129,7 @@ struct UpdateTaskProviderRequest {
 // --- Substitution Rule DTOs ---
 
 struct CreateSubstitutionRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string userId;
     string substituteId;
@@ -141,7 +141,7 @@ struct CreateSubstitutionRuleRequest {
 }
 
 struct UpdateSubstitutionRuleRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string substituteId;
     string taskDefinitionId;
@@ -154,7 +154,7 @@ struct UpdateSubstitutionRuleRequest {
 // --- Task Action DTOs ---
 
 struct PerformTaskActionRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string taskId;
     string actionType;
@@ -166,7 +166,7 @@ struct PerformTaskActionRequest {
 // --- User Task Filter DTOs ---
 
 struct CreateUserTaskFilterRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string userId;
     string name;
@@ -175,7 +175,7 @@ struct CreateUserTaskFilterRequest {
 }
 
 struct UpdateUserTaskFilterRequest {
-    string tenantId;
+    TenantId tenantId;
     string id;
     string name;
     string description;

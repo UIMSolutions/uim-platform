@@ -7,13 +7,6 @@ module uim.platform.destination.application.dto;
 
 import uim.platform.destination.domain.types;
 
-/// --- Command result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 /// --- Destination DTOs ---
 

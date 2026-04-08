@@ -14,7 +14,7 @@ struct CommandResult {
 
 // MobileApp DTOs
 struct CreateMobileAppRequest {
-  string tenantId;
+  TenantId tenantId;
   string name;
   string description;
   string bundleId;
@@ -40,7 +40,7 @@ struct UpdateMobileAppRequest {
 
 // DeviceRegistration DTOs
 struct RegisterDeviceRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string deviceModel;
   string osVersion;
@@ -59,7 +59,7 @@ struct UpdateDeviceRequest {
 
 // PushNotification DTOs
 struct SendPushNotificationRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string title;
   string body_;
@@ -75,7 +75,7 @@ struct SendPushNotificationRequest {
 
 // PushRegistration DTOs
 struct CreatePushRegistrationRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string deviceId;
   string provider;
@@ -91,7 +91,7 @@ struct UpdatePushRegistrationRequest {
 
 // AppConfiguration DTOs
 struct CreateAppConfigRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string key;
   string value;
@@ -109,7 +109,7 @@ struct UpdateAppConfigRequest {
 
 // FeatureRestriction DTOs
 struct CreateFeatureRestrictionRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string featureKey;
   string description;
@@ -132,7 +132,7 @@ struct UpdateFeatureRestrictionRequest {
 
 // ClientResource DTOs
 struct CreateClientResourceRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string name;
   string description;
@@ -150,7 +150,7 @@ struct UpdateClientResourceRequest {
 
 // AppVersion DTOs
 struct CreateAppVersionRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string versionCode;
   int buildNumber;
@@ -169,7 +169,7 @@ struct UpdateAppVersionRequest {
 
 // UsageReport DTOs
 struct ReportUsageRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string deviceId;
   string userId;
@@ -184,7 +184,7 @@ struct ReportUsageRequest {
 
 // OfflineStore DTOs
 struct CreateOfflineStoreRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string name;
   string serviceUrl;
@@ -201,7 +201,7 @@ struct UpdateOfflineStoreRequest {
 
 // UserSession DTOs
 struct CreateUserSessionRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string deviceId;
   string userId;
@@ -213,7 +213,7 @@ struct CreateUserSessionRequest {
 
 // ClientLog DTOs
 struct UploadClientLogRequest {
-  string tenantId;
+  TenantId tenantId;
   string appId;
   string deviceId;
   string userId;

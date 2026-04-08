@@ -14,7 +14,7 @@ struct CommandResult {
 
 // Namespace DTOs
 struct CreateNamespaceRequest {
-  string tenantId;
+  TenantId tenantId;
   string name;
   string description;
   string createdBy;
@@ -26,7 +26,7 @@ struct UpdateNamespaceRequest {
 
 // Credential DTOs
 struct CreateCredentialRequest {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string name;
   string type;       // "password", "key", "keyring"
@@ -63,7 +63,7 @@ struct CredentialResponse {
 
 // Keyring DTOs
 struct CreateKeyringRequest {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string name;
   string metadata;
@@ -74,12 +74,12 @@ struct CreateKeyringRequest {
 
 struct RotateKeyringRequest {
   string keyringId;
-  string tenantId;
+  TenantId tenantId;
 }
 
 // DEK Encryption DTOs
 struct GenerateDekRequest {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string keyringName;
 }
@@ -94,7 +94,7 @@ struct GenerateDekResponse {
 }
 
 struct EncryptDekRequest {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string keyringName;
   string dek;           // plaintext DEK to encrypt
@@ -109,7 +109,7 @@ struct EncryptDekResponse {
 }
 
 struct DecryptDekRequest {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string keyringName;
   string encryptedDek;   // encrypted DEK to decrypt
@@ -124,7 +124,7 @@ struct DecryptDekResponse {
 
 // Service Binding DTOs
 struct CreateServiceBindingRequest {
-  string tenantId;
+  TenantId tenantId;
   string name;
   string description;
   string permission;       // "readOnly", "readWrite", "admin"
@@ -154,7 +154,7 @@ struct ServiceBindingResponse {
 
 // Audit DTOs
 struct AuditLogFilter {
-  string tenantId;
+  TenantId tenantId;
   string namespaceId;
   string resourceType;
   long startTime;

@@ -7,18 +7,10 @@ module uim.platform.hana.application.dto;
 
 import uim.platform.hana.domain.types;
 
-// --- Generic result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // --- Database Instance ---
 
 struct CreateInstanceRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -39,7 +31,7 @@ struct CreateInstanceRequest {
 }
 
 struct UpdateInstanceRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -54,7 +46,7 @@ struct UpdateInstanceRequest {
 }
 
 struct InstanceActionRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string action;
 }
@@ -62,7 +54,7 @@ struct InstanceActionRequest {
 // --- Data Lake ---
 
 struct CreateDataLakeRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -72,7 +64,7 @@ struct CreateDataLakeRequest {
 }
 
 struct UpdateDataLakeRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -82,7 +74,7 @@ struct UpdateDataLakeRequest {
 // --- Schema ---
 
 struct CreateSchemaRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -91,7 +83,7 @@ struct CreateSchemaRequest {
 }
 
 struct UpdateSchemaRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string owner;
 }
@@ -99,7 +91,7 @@ struct UpdateSchemaRequest {
 // --- Database User ---
 
 struct CreateDatabaseUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string userName;
@@ -112,7 +104,7 @@ struct CreateDatabaseUserRequest {
 }
 
 struct UpdateDatabaseUserRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string password;
   string defaultSchema;
@@ -124,7 +116,7 @@ struct UpdateDatabaseUserRequest {
 // --- Backup ---
 
 struct CreateBackupRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -136,7 +128,7 @@ struct CreateBackupRequest {
 }
 
 struct UpdateBackupRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string destination;
@@ -147,7 +139,7 @@ struct UpdateBackupRequest {
 // --- Alert ---
 
 struct CreateAlertRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -161,7 +153,7 @@ struct CreateAlertRequest {
 }
 
 struct UpdateAlertRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -171,7 +163,7 @@ struct UpdateAlertRequest {
 }
 
 struct AcknowledgeAlertRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string acknowledgedBy;
 }
@@ -179,7 +171,7 @@ struct AcknowledgeAlertRequest {
 // --- HDI Container ---
 
 struct CreateHDIContainerRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -189,7 +181,7 @@ struct CreateHDIContainerRequest {
 }
 
 struct UpdateHDIContainerRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -199,7 +191,7 @@ struct UpdateHDIContainerRequest {
 // --- Replication Task ---
 
 struct CreateReplicationTaskRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -212,7 +204,7 @@ struct CreateReplicationTaskRequest {
 }
 
 struct UpdateReplicationTaskRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -223,7 +215,7 @@ struct UpdateReplicationTaskRequest {
 // --- Configuration ---
 
 struct CreateConfigurationRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string section;
@@ -235,7 +227,7 @@ struct CreateConfigurationRequest {
 }
 
 struct UpdateConfigurationRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string value;
 }
@@ -243,7 +235,7 @@ struct UpdateConfigurationRequest {
 // --- Database Connection ---
 
 struct CreateDatabaseConnectionRequest {
-  string tenantId;
+  TenantId tenantId;
   string instanceId;
   string id;
   string name;
@@ -261,7 +253,7 @@ struct CreateDatabaseConnectionRequest {
 }
 
 struct UpdateDatabaseConnectionRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;

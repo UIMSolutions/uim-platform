@@ -7,18 +7,10 @@ module uim.platform.datasphere.application.dto;
 
 import uim.platform.datasphere.domain.types;
 
-// --- Generic result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // --- Space ---
 
 struct CreateSpaceRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -29,7 +21,7 @@ struct CreateSpaceRequest {
 }
 
 struct UpdateSpaceRequest {
-  string tenantId;
+  TenantId tenantId;
   string id;
   string name;
   string description;
@@ -40,7 +32,7 @@ struct UpdateSpaceRequest {
 // --- Connection ---
 
 struct CreateConnectionRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -54,7 +46,7 @@ struct CreateConnectionRequest {
 }
 
 struct UpdateConnectionRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string connectionId;
   string name;
@@ -69,7 +61,7 @@ struct UpdateConnectionRequest {
 // --- Remote Table ---
 
 struct CreateRemoteTableRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string connectionId;
   string name;
@@ -81,7 +73,7 @@ struct CreateRemoteTableRequest {
 }
 
 struct UpdateRemoteTableRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string remoteTableId;
   string replicationMode;
@@ -91,7 +83,7 @@ struct UpdateRemoteTableRequest {
 // --- Data Flow ---
 
 struct CreateDataFlowRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -100,7 +92,7 @@ struct CreateDataFlowRequest {
 }
 
 struct PatchDataFlowRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string dataFlowId;
   string targetStatus;
@@ -109,7 +101,7 @@ struct PatchDataFlowRequest {
 // --- View ---
 
 struct CreateViewRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -120,7 +112,7 @@ struct CreateViewRequest {
 }
 
 struct UpdateViewRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string viewId;
   string name;
@@ -134,7 +126,7 @@ struct UpdateViewRequest {
 // --- Task ---
 
 struct CreateTaskRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -146,7 +138,7 @@ struct CreateTaskRequest {
 }
 
 struct PatchTaskRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string taskId;
   string targetStatus;
@@ -155,7 +147,7 @@ struct PatchTaskRequest {
 // --- Task Chain ---
 
 struct CreateTaskChainRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -165,7 +157,7 @@ struct CreateTaskChainRequest {
 }
 
 struct PatchTaskChainRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string taskChainId;
   string targetStatus;
@@ -174,7 +166,7 @@ struct PatchTaskChainRequest {
 // --- Data Access Control ---
 
 struct CreateDataAccessControlRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -184,7 +176,7 @@ struct CreateDataAccessControlRequest {
 }
 
 struct UpdateDataAccessControlRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string controlId;
   string name;
@@ -197,7 +189,7 @@ struct UpdateDataAccessControlRequest {
 // --- Catalog Asset ---
 
 struct CreateCatalogAssetRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string name;
   string description;
@@ -210,7 +202,7 @@ struct CreateCatalogAssetRequest {
 }
 
 struct UpdateCatalogAssetRequest {
-  string tenantId;
+  TenantId tenantId;
   string spaceId;
   string assetId;
   string name;
