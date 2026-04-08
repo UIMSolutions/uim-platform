@@ -88,7 +88,7 @@ class TaskProviderController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto p = uc.get_(tenantId, id);
-            if (p.id.length == 0) {
+            if (p.id.isEmpty) {
                 writeError(res, 404, "Provider not found");
                 return;
             }

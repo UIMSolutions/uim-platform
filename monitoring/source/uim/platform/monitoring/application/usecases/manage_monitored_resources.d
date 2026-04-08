@@ -54,7 +54,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
 
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
     auto r = repo.findById(id);
-    if (r.id.length == 0)
+    if (r.id.isEmpty)
       return CommandResult(false, "", "Resource not found");
 
     if (req.description.length > 0)
@@ -89,7 +89,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
 
   CommandResult removeResource(MonitoredResourceId id) {
     auto r = repo.findById(id);
-    if (r.id.length == 0)
+    if (r.id.isEmpty)
       return CommandResult(false, "", "Resource not found");
 
     repo.remove(id);

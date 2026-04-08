@@ -18,7 +18,7 @@ class ManageVisibilitiesUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateVisibilityRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "Visibility ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Visibility name is required");
@@ -56,7 +56,7 @@ class ManageVisibilitiesUseCase : UIMUseCase {
 
     CommandResult update(UpdateVisibilityRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Visibility dashboard not found");
 
         existing.name = r.name;
@@ -73,7 +73,7 @@ class ManageVisibilitiesUseCase : UIMUseCase {
 
     CommandResult remove(VisibilityId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Visibility dashboard not found");
 
         repo.remove(id);

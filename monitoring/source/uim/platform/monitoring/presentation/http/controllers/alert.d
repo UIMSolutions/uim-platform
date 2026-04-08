@@ -63,7 +63,7 @@ class AlertController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto a = uc.getAlert(id);
-      if (a.id.length == 0) {
+      if (a.id.isEmpty) {
         writeError(res, 404, "Alert not found");
         return;
       }

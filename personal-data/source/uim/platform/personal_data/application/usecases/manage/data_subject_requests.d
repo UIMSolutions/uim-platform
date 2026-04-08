@@ -19,8 +19,8 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateDataSubjectRequestRequest r) {
-        if (r.id.length == 0) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectId.length == 0) return CommandResult(false, "", "Data subject ID is required");
+        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
+        if (r.dataSubjectid.isEmpty) return CommandResult(false, "", "Data subject ID is required");
         if (r.requestType.length == 0) return CommandResult(false, "", "Request type is required");
 
         import std.conv : to;
@@ -62,7 +62,7 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
 
     CommandResult update(UpdateDataSubjectRequestRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Request not found");
 
         import std.conv : to;
@@ -92,7 +92,7 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
 
     CommandResult remove(DataSubjectRequestId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Request not found");
         repo.remove(id);
         return CommandResult(true, id, "");

@@ -86,7 +86,7 @@ class RegisteredApplicationController : SAPController {
 
             auto id = extractIdFromPath(path);
             auto a = uc.get_(id);
-            if (a.id.length == 0) {
+            if (a.id.isEmpty) {
                 writeError(res, 404, "Application not found");
                 return;
             }

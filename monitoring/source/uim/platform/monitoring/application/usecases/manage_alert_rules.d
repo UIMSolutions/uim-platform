@@ -57,7 +57,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
 
   CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
     auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Alert rule not found");
 
     if (req.description.length > 0)
@@ -99,7 +99,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
 
   CommandResult deleteRule(AlertRuleId id) {
     auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Alert rule not found");
 
     repo.remove(id);

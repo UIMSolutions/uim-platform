@@ -88,7 +88,7 @@ class EntityTypeController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto et = uc.get_(id);
-            if (et.id.length == 0) {
+            if (et.id.isEmpty) {
                 writeError(res, 404, "Entity type not found");
                 return;
             }

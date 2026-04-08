@@ -120,7 +120,7 @@ class DataSubjectController : SAPController {
 
             auto id = extractIdFromPath(path);
             auto s = uc.get_(id);
-            if (s.id.length == 0) {
+            if (s.id.isEmpty) {
                 writeError(res, 404, "Data subject not found");
                 return;
             }

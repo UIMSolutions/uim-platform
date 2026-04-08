@@ -89,7 +89,7 @@ class AlertRuleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto r = uc.getRule(id);
-      if (r.id.length == 0) {
+      if (r.id.isEmpty) {
         writeError(res, 404, "Alert rule not found");
         return;
       }

@@ -19,8 +19,8 @@ class ManagePersonalDataRecordsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreatePersonalDataRecordRequest r) {
-        if (r.id.length == 0) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectId.length == 0) return CommandResult(false, "", "Data subject ID is required");
+        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
+        if (r.dataSubjectid.isEmpty) return CommandResult(false, "", "Data subject ID is required");
 
         import std.conv : to;
 
@@ -66,7 +66,7 @@ class ManagePersonalDataRecordsUseCase : UIMUseCase {
 
     CommandResult remove(PersonalDataRecordId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Personal data record not found");
         repo.remove(id);
         return CommandResult(true, id, "");

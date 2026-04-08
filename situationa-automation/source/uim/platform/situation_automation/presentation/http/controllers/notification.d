@@ -93,7 +93,7 @@ class NotificationController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto n = uc.get_(id);
-            if (n.id.length == 0) {
+            if (n.id.isEmpty) {
                 writeError(res, 404, "Notification not found");
                 return;
             }

@@ -83,7 +83,7 @@ class MetricDefinitionController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto d = uc.getDefinition(id);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Metric definition not found");
         return;
       }

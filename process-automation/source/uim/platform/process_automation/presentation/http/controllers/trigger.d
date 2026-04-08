@@ -91,7 +91,7 @@ class TriggerController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto t = uc.get_(id);
-            if (t.id.length == 0) {
+            if (t.id.isEmpty) {
                 writeError(res, 404, "Trigger not found");
                 return;
             }

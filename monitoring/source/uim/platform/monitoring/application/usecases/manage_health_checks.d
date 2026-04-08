@@ -71,7 +71,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
     auto c = checkRepo.findById(id);
-    if (c.id.length == 0)
+    if (c.id.isEmpty)
       return CommandResult(false, "", "Health check not found");
 
     if (req.description.length > 0)
@@ -141,7 +141,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
 
   CommandResult deleteCheck(HealthCheckId id) {
     auto c = checkRepo.findById(id);
-    if (c.id.length == 0)
+    if (c.id.isEmpty)
       return CommandResult(false, "", "Health check not found");
 
     checkRepo.remove(id);

@@ -96,7 +96,7 @@ class CheckController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto c = uc.getCheck(id);
-      if (c.id.length == 0) {
+      if (c.id.isEmpty) {
         writeError(res, 404, "Health check not found");
         return;
       }

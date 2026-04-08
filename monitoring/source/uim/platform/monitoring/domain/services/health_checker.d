@@ -23,7 +23,7 @@ struct HealthChecker {
     if (check.name.length == 0)
       errors ~= "Check name is required";
 
-    if (check.resourceId.length == 0)
+    if (check.resourceid.isEmpty)
       errors ~= "Resource ID is required";
 
     if (check.intervalSeconds < 10)

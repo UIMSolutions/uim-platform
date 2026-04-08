@@ -53,7 +53,7 @@ class ManageEntityTypesUseCase : UIMUseCase {
 
     CommandResult update(UpdateEntityTypeRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Entity type not found");
 
         existing.name = r.name;
@@ -69,7 +69,7 @@ class ManageEntityTypesUseCase : UIMUseCase {
 
     CommandResult remove(EntityTypeId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Entity type not found");
 
         repo.remove(id);

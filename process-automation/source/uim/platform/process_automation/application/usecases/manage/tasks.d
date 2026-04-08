@@ -60,7 +60,7 @@ class ManageTasksUseCase : UIMUseCase {
 
     CommandResult claim(ClaimTaskRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Task not found");
 
         if (existing.status != TaskStatus.ready)
@@ -75,7 +75,7 @@ class ManageTasksUseCase : UIMUseCase {
 
     CommandResult complete(CompleteTaskRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Task not found");
 
         existing.status = TaskStatus.completed;
@@ -92,7 +92,7 @@ class ManageTasksUseCase : UIMUseCase {
 
     CommandResult update(UpdateTaskRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Task not found");
 
         existing.name = r.name;
@@ -106,7 +106,7 @@ class ManageTasksUseCase : UIMUseCase {
 
     CommandResult remove(TaskId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Task not found");
 
         repo.remove(id);

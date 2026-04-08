@@ -79,7 +79,7 @@ class ProcessingPurposeController : SAPController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto p = uc.get_(id);
-            if (p.id.length == 0) {
+            if (p.id.isEmpty) {
                 writeError(res, 404, "Processing purpose not found");
                 return;
             }

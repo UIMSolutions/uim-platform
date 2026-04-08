@@ -85,7 +85,7 @@ class TaskAttachmentController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.get_(tenantId, id);
-            if (a.id.length == 0) {
+            if (a.id.isEmpty) {
                 writeError(res, 404, "Attachment not found");
                 return;
             }

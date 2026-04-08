@@ -95,7 +95,7 @@ class BucketController : SAPController {
       }
 
       auto bucket = uc.getBucket(id);
-      if (bucket.id.length == 0) {
+      if (bucket.id.isEmpty) {
         writeError(res, 404, "Bucket not valid");
         return;
       }

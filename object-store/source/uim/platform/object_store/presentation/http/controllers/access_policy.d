@@ -89,7 +89,7 @@ class AccessPolicyController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto policy = uc.getPolicy(id);
-      if (policy is null || policy.id.length == 0) {
+      if (policy is null || policy.id.isEmpty) {
         writeError(res, 404, "Access policy not found");
         return;
       }

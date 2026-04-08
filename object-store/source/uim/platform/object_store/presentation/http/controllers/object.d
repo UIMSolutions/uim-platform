@@ -104,7 +104,7 @@ class ObjectController : SAPController {
         return;
 
       auto obj = uc.getObject(id);
-      if (obj is null || obj.id.length == 0) {
+      if (obj is null || obj.id.isEmpty) {
         writeError(res, 404, "Object not found");
         return;
       }

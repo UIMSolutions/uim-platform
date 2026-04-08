@@ -18,7 +18,7 @@ class ManageDecisionsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateDecisionRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "Decision ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Decision name is required");
@@ -56,7 +56,7 @@ class ManageDecisionsUseCase : UIMUseCase {
 
     CommandResult update(UpdateDecisionRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Decision not found");
 
         existing.name = r.name;
@@ -73,7 +73,7 @@ class ManageDecisionsUseCase : UIMUseCase {
 
     CommandResult remove(DecisionId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Decision not found");
 
         repo.remove(id);

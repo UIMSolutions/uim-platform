@@ -18,7 +18,7 @@ class ManageAutomationsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateAutomationRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "Automation ID is required");
         if (r.name.length == 0)
             return CommandResult(false, "", "Automation name is required");
@@ -57,7 +57,7 @@ class ManageAutomationsUseCase : UIMUseCase {
 
     CommandResult update(UpdateAutomationRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Automation not found");
 
         existing.name = r.name;
@@ -75,7 +75,7 @@ class ManageAutomationsUseCase : UIMUseCase {
 
     CommandResult remove(AutomationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Automation not found");
 
         repo.remove(id);

@@ -87,7 +87,7 @@ class VisibilityController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto v = uc.get_(id);
-            if (v.id.length == 0) {
+            if (v.id.isEmpty) {
                 writeError(res, 404, "Visibility dashboard not found");
                 return;
             }

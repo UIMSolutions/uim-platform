@@ -63,7 +63,7 @@ class ManageSituationTemplatesUseCase : UIMUseCase {
 
     CommandResult update(UpdateSituationTemplateRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Situation template not found");
 
         existing.name = r.name;
@@ -83,7 +83,7 @@ class ManageSituationTemplatesUseCase : UIMUseCase {
 
     CommandResult remove(SituationTemplateId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Situation template not found");
 
         repo.remove(id);

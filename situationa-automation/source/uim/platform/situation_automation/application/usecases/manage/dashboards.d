@@ -53,7 +53,7 @@ class ManageDashboardsUseCase : UIMUseCase {
 
     CommandResult update(UpdateDashboardRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Dashboard not found");
 
         existing.name = r.name;
@@ -70,7 +70,7 @@ class ManageDashboardsUseCase : UIMUseCase {
 
     CommandResult remove(DashboardId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Dashboard not found");
 
         repo.remove(id);

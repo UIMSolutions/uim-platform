@@ -93,7 +93,7 @@ class TaskDefinitionController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto d = uc.get_(tenantId, id);
-            if (d.id.length == 0) {
+            if (d.id.isEmpty) {
                 writeError(res, 404, "Task definition not found");
                 return;
             }

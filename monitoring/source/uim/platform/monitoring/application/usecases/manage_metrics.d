@@ -57,7 +57,7 @@ class ManageMetricsUseCase : UIMUseCase {
 
   CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
     auto def = definitionRepo.findById(id);
-    if (def.id.length == 0)
+    if (def.id.isEmpty)
       return CommandResult(false, "", "Metric definition not found");
 
     if (req.displayName.length > 0)
@@ -82,7 +82,7 @@ class ManageMetricsUseCase : UIMUseCase {
 
   CommandResult removeDefinition(MetricDefinitionId id) {
     auto def = definitionRepo.findById(id);
-    if (def.id.length == 0)
+    if (def.id.isEmpty)
       return CommandResult(false, "", "Metric definition not found");
 
     definitionRepo.remove(id);
@@ -95,7 +95,7 @@ class ManageMetricsUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    if (req.resourceId.length == 0)
+    if (req.resourceid.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
 
     // import std.uuid : randomUUID;

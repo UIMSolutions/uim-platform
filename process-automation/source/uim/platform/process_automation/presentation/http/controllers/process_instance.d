@@ -87,7 +87,7 @@ class ProcessInstanceController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto i = uc.get_(id);
-            if (i.id.length == 0) {
+            if (i.id.isEmpty) {
                 writeError(res, 404, "Process instance not found");
                 return;
             }

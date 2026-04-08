@@ -108,7 +108,7 @@ class TaskController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto t = uc.get_(tenantId, id);
-            if (t.id.length == 0) {
+            if (t.id.isEmpty) {
                 writeError(res, 404, "Task not found");
                 return;
             }

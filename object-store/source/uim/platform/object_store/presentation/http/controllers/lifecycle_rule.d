@@ -91,7 +91,7 @@ class LifecycleRuleController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getRule(id);
-      if (rule is null || rule.id.length == 0) {
+      if (rule is null || rule.id.isEmpty) {
         writeError(res, 404, "Lifecycle rule not found");
         return;
       }

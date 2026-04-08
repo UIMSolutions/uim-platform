@@ -91,7 +91,7 @@ class DataProcessingLogController : SAPController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto l = uc.get_(id);
-            if (l.id.length == 0) {
+            if (l.id.isEmpty) {
                 writeError(res, 404, "Processing log entry not found");
                 return;
             }

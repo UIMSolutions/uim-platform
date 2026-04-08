@@ -26,11 +26,11 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Binding name is required");
-    if (req.bucketId.length == 0)
+    if (req.bucketid.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.length == 0)
+    if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -67,7 +67,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
   CommandResult revokeBinding(ServiceBindingId id) {
     auto binding = bindingRepo.findById(id);
-    if (binding is null || binding.id.length == 0)
+    if (binding is null || binding.id.isEmpty)
       return CommandResult(false, "", "Binding not found");
 
     binding.status = BindingStatus.revoked;
@@ -77,7 +77,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
   CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = bindingRepo.findById(id);
-    if (binding is null || binding.id.length == 0)
+    if (binding is null || binding.id.isEmpty)
       return CommandResult(false, "", "Binding not found");
 
     bindingRepo.remove(id);

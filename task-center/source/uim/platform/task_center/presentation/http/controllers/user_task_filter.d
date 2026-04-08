@@ -89,7 +89,7 @@ class UserTaskFilterController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto f = uc.get_(tenantId, id);
-            if (f.id.length == 0) {
+            if (f.id.isEmpty) {
                 writeError(res, 404, "Filter not found");
                 return;
             }

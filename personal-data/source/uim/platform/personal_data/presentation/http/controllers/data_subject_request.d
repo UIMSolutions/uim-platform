@@ -96,7 +96,7 @@ class DataSubjectRequestController : SAPController {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.get_(id);
-            if (r.id.length == 0) {
+            if (r.id.isEmpty) {
                 writeError(res, 404, "Data subject request not found");
                 return;
             }

@@ -93,7 +93,7 @@ class SubstitutionRuleController : SAPController {
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto r = uc.get_(tenantId, id);
-            if (r.id.length == 0) {
+            if (r.id.isEmpty) {
                 writeError(res, 404, "Substitution rule not found");
                 return;
             }

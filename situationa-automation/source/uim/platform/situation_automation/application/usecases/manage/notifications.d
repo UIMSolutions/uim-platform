@@ -18,9 +18,9 @@ class ManageNotificationsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateNotificationRequest r) {
-        if (r.id.length == 0)
+        if (r.id.isEmpty)
             return CommandResult(false, "", "Notification ID is required");
-        if (r.recipientId.length == 0)
+        if (r.recipientid.isEmpty)
             return CommandResult(false, "", "Recipient ID is required");
 
         auto existing = repo.findById(r.id);
@@ -62,7 +62,7 @@ class ManageNotificationsUseCase : UIMUseCase {
 
     CommandResult update(UpdateNotificationRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Notification not found");
 
         import core.time : MonoTime;
@@ -84,7 +84,7 @@ class ManageNotificationsUseCase : UIMUseCase {
 
     CommandResult remove(NotificationId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Notification not found");
 
         repo.remove(id);

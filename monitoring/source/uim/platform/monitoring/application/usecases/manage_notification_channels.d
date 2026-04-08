@@ -59,7 +59,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
 
   CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest req) {
     auto ch = repo.findById(id);
-    if (ch.id.length == 0)
+    if (ch.id.isEmpty)
       return CommandResult(false, "", "Notification channel not found");
 
     if (req.description.length > 0)
@@ -102,7 +102,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
 
   CommandResult deleteChannel(NotificationChannelId id) {
     auto ch = repo.findById(id);
-    if (ch.id.length == 0)
+    if (ch.id.isEmpty)
       return CommandResult(false, "", "Notification channel not found");
 
     repo.remove(id);

@@ -31,13 +31,13 @@ class ManageObjectsUseCase : UIMUseCase {
   }
 
   CommandResult createObject(CreateObjectRequest req) {
-    if (req.bucketId.length == 0)
+    if (req.bucketid.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.key.length == 0)
       return CommandResult(false, "", "Object key is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.length == 0)
+    if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
     if (bucket.status != BucketStatus.active)
       return CommandResult(false, "", "Bucket is not active");
@@ -97,7 +97,7 @@ class ManageObjectsUseCase : UIMUseCase {
 
   CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
     auto obj = objectRepo.findById(id);
-    if (obj is null || obj.id.length == 0)
+    if (obj is null || obj.id.isEmpty)
       return CommandResult(false, "", "Object not found");
 
     if (req.contentType.length > 0)
@@ -134,7 +134,7 @@ class ManageObjectsUseCase : UIMUseCase {
 
   CommandResult deleteObject(ObjectId id) {
     auto obj = objectRepo.findById(id);
-    if (obj is null || obj.id.length == 0)
+    if (obj is null || obj.id.isEmpty)
       return CommandResult(false, "", "Object not found");
 
     auto bucket = bucketRepo.findById(obj.bucketId);
@@ -187,11 +187,11 @@ class ManageObjectsUseCase : UIMUseCase {
 
   CommandResult copyObject(CopyObjectRequest req) {
     auto sourceObj = objectRepo.findByKey(req.sourceBucketId, req.sourceKey);
-    if (sourceObj is null || sourceObj.id.length == 0)
+    if (sourceObj is null || sourceObj.id.isEmpty)
       return CommandResult(false, "", "Source object not found");
 
     auto destBucket = bucketRepo.findById(req.destBucketId);
-    if (destBucket is null || destBucket.id.length == 0)
+    if (destBucket is null || destBucket.id.isEmpty)
       return CommandResult(false, "", "Destination bucket not found");
 
     auto quotaResult = QuotaValidator.validate(destBucket, sourceObj.size);

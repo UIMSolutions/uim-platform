@@ -19,7 +19,7 @@ class ManageDataProcessingLogsUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateDataProcessingLogRequest r) {
-        if (r.id.length == 0) return CommandResult(false, "", "ID is required");
+        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
 
         import std.conv : to;
 
@@ -60,7 +60,7 @@ class ManageDataProcessingLogsUseCase : UIMUseCase {
 
     CommandResult remove(DataProcessingLogId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Log entry not found");
         repo.remove(id);
         return CommandResult(true, id, "");

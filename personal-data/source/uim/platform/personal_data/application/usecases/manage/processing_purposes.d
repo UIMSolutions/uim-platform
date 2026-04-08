@@ -19,7 +19,7 @@ class ManageProcessingPurposesUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateProcessingPurposeRequest r) {
-        if (r.id.length == 0) return CommandResult(false, "", "ID is required");
+        if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
         if (r.name.length == 0) return CommandResult(false, "", "Purpose name is required");
         if (r.legalBasis.length == 0) return CommandResult(false, "", "Legal basis is required");
 
@@ -54,7 +54,7 @@ class ManageProcessingPurposesUseCase : UIMUseCase {
 
     CommandResult update(UpdateProcessingPurposeRequest r) {
         auto existing = repo.findById(r.id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Processing purpose not found");
 
         import std.conv : to;
@@ -74,7 +74,7 @@ class ManageProcessingPurposesUseCase : UIMUseCase {
 
     CommandResult remove(ProcessingPurposeId id) {
         auto existing = repo.findById(id);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Processing purpose not found");
         repo.remove(id);
         return CommandResult(true, id, "");

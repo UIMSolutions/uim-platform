@@ -22,11 +22,11 @@ class ManageCorsRulesUseCase : UIMUseCase {
   }
 
   CommandResult createRule(CreateCorsRuleRequest req) {
-    if (req.bucketId.length == 0)
+    if (req.bucketid.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.length == 0)
+    if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -52,7 +52,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
 
   CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
     auto rule = corsRepo.findById(id);
-    if (rule is null || rule.id.length == 0)
+    if (rule is null || rule.id.isEmpty)
       return CommandResult(false, "", "CORS rule not found");
 
     if (req.allowedOrigins.length > 0)
@@ -81,7 +81,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
 
   CommandResult deleteRule(CorsRuleId id) {
     auto rule = corsRepo.findById(id);
-    if (rule is null || rule.id.length == 0)
+    if (rule is null || rule.id.isEmpty)
       return CommandResult(false, "", "CORS rule not found");
 
     corsRepo.remove(id);

@@ -86,7 +86,7 @@ class ResourceController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto r = uc.getResource(id);
-      if (r.id.length == 0) {
+      if (r.id.isEmpty) {
         writeError(res, 404, "Resource not found");
         return;
       }

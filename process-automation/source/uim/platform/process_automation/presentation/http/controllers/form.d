@@ -86,7 +86,7 @@ class FormController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto f = uc.get_(id);
-            if (f.id.length == 0) {
+            if (f.id.isEmpty) {
                 writeError(res, 404, "Form not found");
                 return;
             }

@@ -22,13 +22,13 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
   }
 
   CommandResult createRule(CreateLifecycleRuleRequest req) {
-    if (req.bucketId.length == 0)
+    if (req.bucketid.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Rule name is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.length == 0)
+    if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -57,7 +57,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {
     auto rule = ruleRepo.findById(id);
-    if (rule is null || rule.id.length == 0)
+    if (rule is null || rule.id.isEmpty)
       return CommandResult(false, "", "Rule not found");
 
     if (req.name.length > 0)
@@ -90,7 +90,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
 
   CommandResult deleteRule(LifecycleRuleId id) {
     auto rule = ruleRepo.findById(id);
-    if (rule is null || rule.id.length == 0)
+    if (rule is null || rule.id.isEmpty)
       return CommandResult(false, "", "Rule not found");
 
     ruleRepo.remove(id);

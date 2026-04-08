@@ -94,7 +94,7 @@ class AutomationRuleController : SAPController {
 
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto r = uc.get_(id);
-            if (r.id.length == 0) {
+            if (r.id.isEmpty) {
                 writeError(res, 404, "Automation rule not found");
                 return;
             }

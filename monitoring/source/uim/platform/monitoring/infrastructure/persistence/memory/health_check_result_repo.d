@@ -34,7 +34,7 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
     HealthCheckResult latest;
     foreach (ref r; store) {
       if (r.tenantId == tenantId && r.checkId == checkId) {
-        if (latest.id.length == 0 || r.executedAt > latest.executedAt)
+        if (latest.id.isEmpty || r.executedAt > latest.executedAt)
           latest = r;
       }
     }

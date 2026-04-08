@@ -24,11 +24,11 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
   CommandResult createPolicy(CreateAccessPolicyRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Policy name is required");
-    if (req.bucketId.length == 0)
+    if (req.bucketid.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);
-    if (bucket is null || bucket.id.length == 0)
+    if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
 
     // import std.uuid : randomUUID;
@@ -55,7 +55,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
 
   CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
     auto policy = policyRepo.findById(id);
-    if (policy is null || policy.id.length == 0)
+    if (policy is null || policy.id.isEmpty)
       return CommandResult(false, "", "Policy not found");
 
     if (req.name.length > 0)
@@ -84,7 +84,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
 
   CommandResult deletePolicy(AccessPolicyId id) {
     auto policy = policyRepo.findById(id);
-    if (policy is null || policy.id.length == 0)
+    if (policy is null || policy.id.isEmpty)
       return CommandResult(false, "", "Policy not found");
 
     policyRepo.remove(id);
