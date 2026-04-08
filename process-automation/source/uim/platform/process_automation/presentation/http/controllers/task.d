@@ -33,7 +33,7 @@ class TaskController : SAPController {
         try {
             auto j = req.json;
             CreateTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.processInstanceId = j.getString("processInstanceId");
             r.id = j.getString("id");
             r.name = j.getString("name");
@@ -62,7 +62,7 @@ class TaskController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto tasks = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -130,7 +130,7 @@ class TaskController : SAPController {
 
             auto j = req.json;
             UpdateTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -168,7 +168,7 @@ class TaskController : SAPController {
 
             auto j = req.json;
             ClaimTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.userId = j.getString("userId");
 
@@ -202,7 +202,7 @@ class TaskController : SAPController {
 
             auto j = req.json;
             CompleteTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.completedBy = j.getString("completedBy");
             r.outcome = j.getString("outcome");

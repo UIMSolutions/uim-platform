@@ -34,7 +34,7 @@ class WidgetController {
       auto j = req.json;
       auto r = CreateWidgetRequest();
       r.pageId = j.getString("pageId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.cardId = j.getString("cardId");
       r.appId = j.getString("appId");
@@ -72,7 +72,7 @@ class WidgetController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(pageId, tenantId);
       auto arr = Json.emptyArray;
@@ -91,7 +91,7 @@ class WidgetController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto w = useCase.getWidget(id, tenantId);
       if (w is null) {
         writeError(res, 404, "Widget not found");
@@ -109,7 +109,7 @@ class WidgetController {
       auto j = req.json;
       auto r = UpdateWidgetRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.row = j.getInteger("row");
       r.col = j.getInteger("col");
@@ -146,7 +146,7 @@ class WidgetController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteWidget(id, tenantId);
       res.writeBody("", 204);
     }

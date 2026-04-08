@@ -33,7 +33,7 @@ class GroupController {
     try {
       auto j = req.json;
       auto r = CreateGroupRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
 
@@ -55,7 +55,7 @@ class GroupController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref g; groups)
@@ -73,7 +73,7 @@ class GroupController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto g = useCase.getGroup(id, tenantId);
       if (g is null) {
         writeError(res, 404, "Group not found");
@@ -92,7 +92,7 @@ class GroupController {
       auto j = req.json;
       auto r = UpdateGroupRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.active = jsonBool(j, "active", true);
@@ -111,7 +111,7 @@ class GroupController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteGroup(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

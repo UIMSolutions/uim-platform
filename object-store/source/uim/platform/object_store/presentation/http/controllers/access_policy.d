@@ -41,7 +41,7 @@ class AccessPolicyController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateAccessPolicyRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.bucketId = j.getString("bucketId");
       r.name = j.getString("name");
       r.effect = j.getString("effect");

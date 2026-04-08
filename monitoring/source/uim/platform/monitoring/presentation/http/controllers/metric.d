@@ -34,7 +34,7 @@ class MetricController {
     try {
       auto j = req.json;
       PushMetricRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceId = j.getString("resourceId");
       r.name = j.getString("name");
       r.value_ = jsonDouble(j, "value");
@@ -60,7 +60,7 @@ class MetricController {
   private void handleBatchPush(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
 
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
@@ -94,7 +94,7 @@ class MetricController {
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto resourceId = req.params.get("resourceId", "");
       auto metricName = req.params.get("name", "");
 
@@ -121,7 +121,7 @@ class MetricController {
 
   private void handleSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto resourceId = req.params.get("resourceId", "");
       auto metricName = req.params.get("name", "");
 

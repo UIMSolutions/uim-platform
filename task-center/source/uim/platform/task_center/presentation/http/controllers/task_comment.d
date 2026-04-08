@@ -31,7 +31,7 @@ class TaskCommentController : SAPController {
         try {
             auto j = req.json;
             CreateTaskCommentRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.taskId = j.getString("taskId");
             r.author = j.getString("author");
@@ -53,7 +53,7 @@ class TaskCommentController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto taskId = params.get("taskId", "");
 
@@ -81,7 +81,7 @@ class TaskCommentController : SAPController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto c = uc.get_(tenantId, id);
             if (c.id.length == 0) {
@@ -100,7 +100,7 @@ class TaskCommentController : SAPController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskCommentRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.content = j.getString("content");
 
@@ -121,7 +121,7 @@ class TaskCommentController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

@@ -34,7 +34,7 @@ class AutomationRuleController : SAPController {
         try {
             auto j = req.json;
             CreateAutomationRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.templateId = j.getString("templateId");
             r.id = j.getString("id");
             r.name = j.getString("name");
@@ -59,7 +59,7 @@ class AutomationRuleController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto rules = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -128,7 +128,7 @@ class AutomationRuleController : SAPController {
 
             auto j = req.json;
             UpdateAutomationRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

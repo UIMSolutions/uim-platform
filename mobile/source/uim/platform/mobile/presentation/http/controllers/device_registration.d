@@ -33,7 +33,7 @@ class DeviceRegistrationController : SAPController {
     try {
       auto j = req.json;
       RegisterDeviceRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.appId = j.getString("appId");
       r.deviceModel = j.getString("deviceModel");
       r.osVersion = j.getString("osVersion");
@@ -56,7 +56,7 @@ class DeviceRegistrationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;

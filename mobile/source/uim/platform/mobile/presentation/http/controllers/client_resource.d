@@ -33,7 +33,7 @@ class ClientResourceController : SAPController {
     try {
       auto j = req.json;
       CreateClientResourceRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.appId = j.getString("appId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -56,7 +56,7 @@ class ClientResourceController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;

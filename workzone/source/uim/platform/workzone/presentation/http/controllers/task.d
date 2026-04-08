@@ -34,7 +34,7 @@ class TaskController {
     try {
       auto j = req.json;
       auto r = CreateTaskRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.assigneeId = j.getString("assigneeId");
       r.assigneeName = j.getString("assigneeName");
       r.creatorId = j.getString("creatorId");
@@ -76,7 +76,7 @@ class TaskController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto assigneeId = req.params.get("assigneeId", "");
       auto tasks = useCase.listByAssignee(assigneeId, tenantId);
       auto arr = Json.emptyArray;
@@ -95,7 +95,7 @@ class TaskController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto t = useCase.getTask(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Task not found");
@@ -113,7 +113,7 @@ class TaskController {
       auto j = req.json;
       auto r = UpdateTaskRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.dueDate = jsonLong(j, "dueDate");
@@ -157,7 +157,7 @@ class TaskController {
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.completeTask(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -177,7 +177,7 @@ class TaskController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteTask(id, tenantId);
       res.writeBody("", 204);
     }

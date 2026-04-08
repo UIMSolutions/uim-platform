@@ -39,7 +39,7 @@ class DistributionController : SAPController {
     try {
       auto j = req.json;
       CreateDistributionModelRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.direction = j.getString("direction");
@@ -66,7 +66,7 @@ class DistributionController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
 
       DistributionModel[] models;

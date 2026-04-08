@@ -36,7 +36,7 @@ class CorsRuleController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateCorsRuleRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.bucketId = j.getString("bucketId");
       r.allowedOrigins = j.getString("allowedOrigins");
       r.allowedMethods = j.getString("allowedMethods");

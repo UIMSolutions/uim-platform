@@ -32,7 +32,7 @@ class ProcessController : SAPController {
         try {
             auto j = req.json;
             CreateProcessRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.projectId = j.getString("projectId");
             r.id = j.getString("id");
             r.name = j.getString("name");
@@ -57,7 +57,7 @@ class ProcessController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto processes = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -119,7 +119,7 @@ class ProcessController : SAPController {
 
             auto j = req.json;
             UpdateProcessRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -157,7 +157,7 @@ class ProcessController : SAPController {
 
             auto j = req.json;
             DeployProcessRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.action = j.getString("action");
 

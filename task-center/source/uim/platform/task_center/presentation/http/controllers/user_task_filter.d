@@ -32,7 +32,7 @@ class UserTaskFilterController : SAPController {
         try {
             auto j = req.json;
             CreateUserTaskFilterRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.userId = j.getString("userId");
             r.name = j.getString("name");
@@ -54,7 +54,7 @@ class UserTaskFilterController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -86,7 +86,7 @@ class UserTaskFilterController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/default")) return;
 
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto f = uc.get_(tenantId, id);
             if (f.id.length == 0) {
@@ -105,7 +105,7 @@ class UserTaskFilterController : SAPController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateUserTaskFilterRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -130,7 +130,7 @@ class UserTaskFilterController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.setDefault(tenantId, id);
             if (result.success) {
@@ -149,7 +149,7 @@ class UserTaskFilterController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

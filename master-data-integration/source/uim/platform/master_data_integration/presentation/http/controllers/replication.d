@@ -39,7 +39,7 @@ class ReplicationController : SAPController {
     try {
       auto j = req.json;
       CreateReplicationJobRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.distributionModelId = j.getString("distributionModelId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -64,7 +64,7 @@ class ReplicationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
       auto modelId = req.params.get("distributionModelId", "");
 

@@ -34,7 +34,7 @@ class TaskProviderController : SAPController {
         try {
             auto j = req.json;
             CreateTaskProviderRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -61,7 +61,7 @@ class TaskProviderController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto providers = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -85,7 +85,7 @@ class TaskProviderController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate") || path.endsWith("/sync")) return;
 
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto p = uc.get_(tenantId, id);
             if (p.id.length == 0) {
@@ -104,7 +104,7 @@ class TaskProviderController : SAPController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskProviderRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -133,7 +133,7 @@ class TaskProviderController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
@@ -155,7 +155,7 @@ class TaskProviderController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
@@ -177,7 +177,7 @@ class TaskProviderController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 5]; // remove "/sync"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.sync(tenantId, id);
             if (result.success) {
@@ -196,7 +196,7 @@ class TaskProviderController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

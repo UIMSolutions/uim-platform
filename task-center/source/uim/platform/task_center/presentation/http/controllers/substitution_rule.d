@@ -33,7 +33,7 @@ class SubstitutionRuleController : SAPController {
         try {
             auto j = req.json;
             CreateSubstitutionRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.userId = j.getString("userId");
             r.substituteId = j.getString("substituteId");
@@ -58,7 +58,7 @@ class SubstitutionRuleController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -90,7 +90,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto r = uc.get_(tenantId, id);
             if (r.id.length == 0) {
@@ -109,7 +109,7 @@ class SubstitutionRuleController : SAPController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateSubstitutionRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.substituteId = j.getString("substituteId");
             r.taskDefinitionId = j.getString("taskDefinitionId");
@@ -137,7 +137,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
@@ -159,7 +159,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
@@ -178,7 +178,7 @@ class SubstitutionRuleController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

@@ -41,7 +41,7 @@ class LifecycleRuleController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateLifecycleRuleRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.bucketId = j.getString("bucketId");
       r.name = j.getString("name");
       r.prefix = j.getString("prefix");

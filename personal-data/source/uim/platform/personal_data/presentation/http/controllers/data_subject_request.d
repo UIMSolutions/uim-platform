@@ -31,7 +31,7 @@ class DataSubjectRequestController : SAPController {
         try {
             auto j = req.json;
             CreateDataSubjectRequestRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.requestType = j.getString("requestType");
@@ -57,7 +57,7 @@ class DataSubjectRequestController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto statusFilter = params.get("status", "");
@@ -112,7 +112,7 @@ class DataSubjectRequestController : SAPController {
 
             auto j = req.json;
             UpdateDataSubjectRequestRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
             r.priority = j.getString("priority");

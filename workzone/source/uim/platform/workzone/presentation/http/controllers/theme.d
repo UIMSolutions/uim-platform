@@ -33,7 +33,7 @@ class ThemeController {
     try {
       auto j = req.json;
       auto r = CreateThemeRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.baseTheme = j.getString("baseTheme");
@@ -60,7 +60,7 @@ class ThemeController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref t; themes)
@@ -78,7 +78,7 @@ class ThemeController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto t = useCase.getTheme(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Theme not found");
@@ -97,7 +97,7 @@ class ThemeController {
       auto j = req.json;
       auto r = UpdateThemeRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.customCss = j.getString("customCss");
@@ -117,7 +117,7 @@ class ThemeController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteTheme(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -37,7 +37,7 @@ class DataModelController : SAPController {
     try {
       auto j = req.json;
       CreateDataModelRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.namespace = j.getString("namespace");
       r.version_ = j.getString("version");
@@ -79,7 +79,7 @@ class DataModelController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
 
       DataModel[] models;

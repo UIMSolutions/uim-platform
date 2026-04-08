@@ -35,7 +35,7 @@ class ContentController {
       auto j = req.json;
       auto r = CreateContentRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
@@ -76,7 +76,7 @@ class ContentController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto query = req.params.get("q", "");
       ContentItem[] items;
@@ -101,7 +101,7 @@ class ContentController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto item = useCase.getContent(id, tenantId);
       if (item is null) {
         writeError(res, 404, "Content not found");
@@ -119,7 +119,7 @@ class ContentController {
       auto j = req.json;
       auto r = UpdateContentRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
@@ -153,7 +153,7 @@ class ContentController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteContent(id, tenantId);
       res.writeBody("", 204);
     }
@@ -165,7 +165,7 @@ class ContentController {
   private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.publishContent(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

@@ -34,7 +34,7 @@ class WorkspaceController {
     try {
       auto j = req.json;
       auto r = CreateWorkspaceRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.alias_ = j.getString("alias");
@@ -72,7 +72,7 @@ class WorkspaceController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref w; workspaces)
@@ -96,7 +96,7 @@ class WorkspaceController {
         return;
       }
 
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto ws = useCase.getWorkspace(id, tenantId);
       if (ws is null) {
         writeError(res, 404, "Workspace not found");
@@ -114,7 +114,7 @@ class WorkspaceController {
       auto j = req.json;
       auto r = UpdateWorkspaceRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.imageUrl = j.getString("imageUrl");
@@ -139,7 +139,7 @@ class WorkspaceController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteWorkspace(id, tenantId);
       res.writeBody("", 204);
     }
@@ -153,7 +153,7 @@ class WorkspaceController {
       auto j = req.json;
       auto r = AddMemberRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = j.getString("userId");
       r.displayName = j.getString("displayName");
 

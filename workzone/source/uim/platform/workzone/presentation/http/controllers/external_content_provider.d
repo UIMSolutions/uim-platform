@@ -33,7 +33,7 @@ class ExternalContentProviderController {
     try {
       auto j = req.json;
       auto r = CreateExternalContentProviderRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpointUrl = j.getString("endpointUrl");
@@ -59,7 +59,7 @@ class ExternalContentProviderController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; providers)
@@ -77,7 +77,7 @@ class ExternalContentProviderController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto p = useCase.getProvider(id, tenantId);
       if (p is null) {
         writeError(res, 404, "Provider not found");
@@ -96,7 +96,7 @@ class ExternalContentProviderController {
       auto j = req.json;
       auto r = UpdateExternalContentProviderRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.endpointUrl = j.getString("endpointUrl");
@@ -115,7 +115,7 @@ class ExternalContentProviderController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteProvider(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -40,7 +40,7 @@ class CheckController : SAPController {
     try {
       auto j = req.json;
       CreateHealthCheckRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceId = j.getString("resourceId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -75,7 +75,7 @@ class CheckController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto checks = uc.listChecks(tenantId);
 
       auto arr = Json.emptyArray;
@@ -160,7 +160,7 @@ class CheckController : SAPController {
     try {
       auto j = req.json;
       RecordCheckResultRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.checkId = j.getString("checkId");
       r.resourceId = j.getString("resourceId");
       r.status = j.getString("status");
@@ -187,7 +187,7 @@ class CheckController : SAPController {
 
   private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto checkId = extractIdFromPath(req.requestURI);
       auto results = uc.getResults(tenantId, checkId);
 

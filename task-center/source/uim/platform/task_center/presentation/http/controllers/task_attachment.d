@@ -30,7 +30,7 @@ class TaskAttachmentController : SAPController {
         try {
             auto j = req.json;
             CreateTaskAttachmentRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.taskId = j.getString("taskId");
             r.fileName = j.getString("fileName");
@@ -54,7 +54,7 @@ class TaskAttachmentController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto taskId = params.get("taskId", "");
 
@@ -82,7 +82,7 @@ class TaskAttachmentController : SAPController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.get_(tenantId, id);
             if (a.id.length == 0) {
@@ -98,7 +98,7 @@ class TaskAttachmentController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

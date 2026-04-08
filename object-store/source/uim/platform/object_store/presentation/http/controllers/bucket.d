@@ -41,7 +41,7 @@ class BucketController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateBucketRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.region = j.getString("region");
       r.storageClass = j.getString("storageClass");
@@ -69,7 +69,7 @@ class BucketController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto buckets = uc.listBuckets(tenantId);
 
       auto arr = Json.emptyArray;

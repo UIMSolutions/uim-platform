@@ -33,7 +33,7 @@ class CardController {
     try {
       auto j = req.json;
       auto r = CreateCardRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.subtitle = j.getString("subtitle");
       r.description = j.getString("description");
@@ -60,7 +60,7 @@ class CardController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto cards = useCase.listCards(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref c; cards)
@@ -78,7 +78,7 @@ class CardController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto c = useCase.getCard(id, tenantId);
       if (c is null) {
         writeError(res, 404, "Card not found");
@@ -96,7 +96,7 @@ class CardController {
       auto j = req.json;
       auto r = UpdateCardRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.subtitle = j.getString("subtitle");
       r.description = j.getString("description");
@@ -124,7 +124,7 @@ class CardController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteCard(id, tenantId);
       res.writeBody("", 204);
     }

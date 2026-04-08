@@ -35,7 +35,7 @@ class AlertRuleController {
     try {
       auto j = req.json;
       CreateAlertRuleRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resourceId = j.getString("resourceId");
       r.name = j.getString("name");
       r.description = j.getString("description");
@@ -68,7 +68,7 @@ class AlertRuleController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto rules = uc.listRules(tenantId);
 
       auto arr = Json.emptyArray;

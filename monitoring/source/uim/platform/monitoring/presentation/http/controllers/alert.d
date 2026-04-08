@@ -33,7 +33,7 @@ class AlertController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto state = req.params.get("state", "");
       auto severity = req.params.get("severity", "");
 
@@ -79,7 +79,7 @@ class AlertController {
       auto j = req.json;
       AcknowledgeAlertRequest r;
       r.alertId = j.getString("alertId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.acknowledgedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.acknowledgeAlert(r);
@@ -104,7 +104,7 @@ class AlertController {
       auto j = req.json;
       ResolveAlertRequest r;
       r.alertId = j.getString("alertId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.resolvedBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.resolveAlert(r);

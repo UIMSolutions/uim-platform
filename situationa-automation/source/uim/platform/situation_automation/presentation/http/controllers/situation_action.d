@@ -34,7 +34,7 @@ class SituationActionController : SAPController {
         try {
             auto j = req.json;
             CreateSituationActionRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -65,7 +65,7 @@ class SituationActionController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto actions = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -136,7 +136,7 @@ class SituationActionController : SAPController {
 
             auto j = req.json;
             UpdateSituationActionRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

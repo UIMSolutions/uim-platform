@@ -33,7 +33,7 @@ class RegisteredApplicationController : SAPController {
         try {
             auto j = req.json;
             CreateRegisteredApplicationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -59,7 +59,7 @@ class RegisteredApplicationController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto apps = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -102,7 +102,7 @@ class RegisteredApplicationController : SAPController {
 
             auto j = req.json;
             UpdateRegisteredApplicationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

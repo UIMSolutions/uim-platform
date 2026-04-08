@@ -34,7 +34,7 @@ class NotificationController : SAPController {
         try {
             auto j = req.json;
             CreateNotificationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.instanceId = j.getString("instanceId");
             r.id = j.getString("id");
             r.recipientId = j.getString("recipientId");
@@ -60,7 +60,7 @@ class NotificationController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto notifications = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -123,7 +123,7 @@ class NotificationController : SAPController {
 
             auto j = req.json;
             UpdateNotificationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
 

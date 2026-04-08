@@ -34,7 +34,7 @@ class EntityTypeController : SAPController {
         try {
             auto j = req.json;
             CreateEntityTypeRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -58,7 +58,7 @@ class EntityTypeController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto types = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -116,7 +116,7 @@ class EntityTypeController : SAPController {
 
             auto j = req.json;
             UpdateEntityTypeRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

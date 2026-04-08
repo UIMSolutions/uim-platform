@@ -31,7 +31,7 @@ class RetentionRuleController : SAPController {
         try {
             auto j = req.json;
             CreateRetentionRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.name = j.getString("name");
             r.description = j.getString("description");
@@ -58,7 +58,7 @@ class RetentionRuleController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto rules = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -96,7 +96,7 @@ class RetentionRuleController : SAPController {
 
             auto j = req.json;
             UpdateRetentionRuleRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");

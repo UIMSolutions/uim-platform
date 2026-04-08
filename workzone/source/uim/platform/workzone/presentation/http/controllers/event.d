@@ -33,7 +33,7 @@ class EventController {
     try {
       auto j = req.json;
       auto r = CreateEventRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.workspaceId = j.getString("workspaceId");
       r.title = j.getString("title");
       r.description = j.getString("description");
@@ -65,7 +65,7 @@ class EventController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto events = useCase.listByWorkspace(workspaceId, tenantId);
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class EventController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto ev = useCase.getEvent(id, tenantId);
       if (ev is null) {
         writeError(res, 404, "Event not found");
@@ -103,7 +103,7 @@ class EventController {
       auto j = req.json;
       auto r = UpdateEventRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.location = j.getString("location");
@@ -125,7 +125,7 @@ class EventController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteEvent(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

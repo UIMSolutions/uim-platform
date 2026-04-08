@@ -35,7 +35,7 @@ class SituationInstanceController : SAPController {
         try {
             auto j = req.json;
             CreateSituationInstanceRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.templateId = j.getString("templateId");
             r.id = j.getString("id");
             r.description = j.getString("description");
@@ -64,7 +64,7 @@ class SituationInstanceController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto instances = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -140,7 +140,7 @@ class SituationInstanceController : SAPController {
 
             auto j = req.json;
             UpdateSituationInstanceRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.status = j.getString("status");
             r.severity = j.getString("severity");
@@ -176,7 +176,7 @@ class SituationInstanceController : SAPController {
 
             auto j = req.json;
             ResolveSituationRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.resolutionType = j.getString("resolutionType");
             r.resolvedBy = j.getString("resolvedBy");

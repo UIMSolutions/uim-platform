@@ -30,7 +30,7 @@ class DataProcessingLogController : SAPController {
         try {
             auto j = req.json;
             CreateDataProcessingLogRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.requestId = j.getString("requestId");
@@ -58,7 +58,7 @@ class DataProcessingLogController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto requestId = params.get("requestId", "");

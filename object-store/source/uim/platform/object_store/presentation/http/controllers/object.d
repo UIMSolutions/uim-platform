@@ -44,7 +44,7 @@ class ObjectController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateObjectRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.bucketId = j.getString("bucketId");
       r.key = j.getString("key");
       r.contentType = j.getString("contentType");
@@ -163,7 +163,7 @@ class ObjectController : SAPController {
     try {
       auto j = req.json;
       auto r = CopyObjectRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceBucketId = j.getString("sourceBucketId");
       r.sourceKey = j.getString("sourceKey");
       r.destBucketId = j.getString("destBucketId");

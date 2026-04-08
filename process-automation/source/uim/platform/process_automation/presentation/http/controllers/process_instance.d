@@ -31,7 +31,7 @@ class ProcessInstanceController : SAPController {
         try {
             auto j = req.json;
             StartProcessInstanceRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.processId = j.getString("processId");
             r.id = j.getString("id");
             r.startedBy = j.getString("startedBy");
@@ -55,7 +55,7 @@ class ProcessInstanceController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto instances = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -127,7 +127,7 @@ class ProcessInstanceController : SAPController {
 
             auto j = req.json;
             ProcessInstanceActionRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.action = j.getString("action");
 

@@ -33,7 +33,7 @@ class UserProfileController {
     try {
       auto j = req.json;
       auto r = CreateUserProfileRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.userId = j.getString("userId");
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
@@ -62,7 +62,7 @@ class UserProfileController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; profiles)
@@ -80,7 +80,7 @@ class UserProfileController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto p = useCase.getUserProfile(id, tenantId);
       if (p is null) {
         writeError(res, 404, "User profile not found");
@@ -99,7 +99,7 @@ class UserProfileController {
       auto j = req.json;
       auto r = UpdateUserProfileRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.displayName = j.getString("displayName");
       r.email = j.getString("email");
       r.jobTitle = j.getString("jobTitle");
@@ -119,7 +119,7 @@ class UserProfileController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deleteUserProfile(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -34,7 +34,7 @@ class NotificationController {
     try {
       auto j = req.json;
       auto r = CreateNotificationRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.recipientId = j.getString("recipientId");
       r.title = j.getString("title");
       r.body_ = j.getString("body");
@@ -72,7 +72,7 @@ class NotificationController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto recipientId = req.params.get("recipientId", "");
       auto unreadOnly = req.params.get("unread", "") == "true";
 
@@ -98,7 +98,7 @@ class NotificationController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto n = useCase.getNotification(id, tenantId);
       if (n is null) {
         writeError(res, 404, "Notification not found");
@@ -114,7 +114,7 @@ class NotificationController {
   private void handleMarkRead(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.markAsRead(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -134,7 +134,7 @@ class NotificationController {
   private void handleDismiss(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.dismiss(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -154,7 +154,7 @@ class NotificationController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteNotification(id, tenantId);
       res.writeBody("", 204);
     }

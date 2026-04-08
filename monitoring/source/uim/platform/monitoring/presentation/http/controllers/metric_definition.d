@@ -35,7 +35,7 @@ class MetricDefinitionController {
     try {
       auto j = req.json;
       CreateMetricDefinitionRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.displayName = j.getString("displayName");
       r.description = j.getString("description");
@@ -62,7 +62,7 @@ class MetricDefinitionController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto defs = uc.listDefinitions(tenantId);
 
       auto arr = Json.emptyArray;

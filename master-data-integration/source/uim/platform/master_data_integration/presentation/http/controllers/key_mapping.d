@@ -38,7 +38,7 @@ class KeyMappingController : SAPController {
     try {
       auto j = req.json;
       CreateKeyMappingRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.masterDataObjectId = j.getString("masterDataObjectId");
       r.category = j.getString("category");
       r.objectType = j.getString("objectType");
@@ -58,7 +58,7 @@ class KeyMappingController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto objectId = req.params.get("objectId", "");
       auto category = req.params.get("category", "");
 
@@ -86,7 +86,7 @@ class KeyMappingController : SAPController {
   private void handleLookup(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       LookupKeyRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.sourceClientId = req.params.get("sourceClientId", "");
       r.sourceLocalKey = req.params.get("sourceLocalKey", "");
       r.targetClientId = req.params.get("targetClientId", "");

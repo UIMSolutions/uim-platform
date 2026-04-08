@@ -33,7 +33,7 @@ class ChangeLogController : SAPController {
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       ChangeLogQueryRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.objectId = req.params.get("objectId", "");
       r.category = req.params.get("category", "");
       r.deltaToken = req.params.get("deltaToken", "");

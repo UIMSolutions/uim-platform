@@ -33,7 +33,7 @@ class PageTemplateController {
     try {
       auto j = req.json;
       auto r = CreatePageTemplateRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.thumbnailUrl = j.getString("thumbnailUrl");
@@ -58,7 +58,7 @@ class PageTemplateController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto templates = useCase.listPageTemplates(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref t; templates)
@@ -76,7 +76,7 @@ class PageTemplateController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto t = useCase.getPageTemplate(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Page template not found");
@@ -95,7 +95,7 @@ class PageTemplateController {
       auto j = req.json;
       auto r = UpdatePageTemplateRequest();
       r.id = id;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isDefault = jsonBool(j, "isDefault");
@@ -115,7 +115,7 @@ class PageTemplateController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto result = useCase.deletePageTemplate(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

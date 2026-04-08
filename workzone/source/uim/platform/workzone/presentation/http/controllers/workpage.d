@@ -34,7 +34,7 @@ class WorkpageController {
       auto j = req.json;
       auto r = CreateWorkpageRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
@@ -58,7 +58,7 @@ class WorkpageController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(workspaceId, tenantId);
       auto arr = Json.emptyArray;
@@ -77,7 +77,7 @@ class WorkpageController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto page = useCase.getWorkpage(id, tenantId);
       if (page is null) {
         writeError(res, 404, "Page not found");
@@ -95,7 +95,7 @@ class WorkpageController {
       auto j = req.json;
       auto r = UpdateWorkpageRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.description = j.getString("description");
       r.sortOrder = j.getInteger("sortOrder");
@@ -120,7 +120,7 @@ class WorkpageController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteWorkpage(id, tenantId);
       res.writeBody("", 204);
     }

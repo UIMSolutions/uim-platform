@@ -30,7 +30,7 @@ class PersonalDataRecordController : SAPController {
         try {
             auto j = req.json;
             CreatePersonalDataRecordRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.dataSubjectId = j.getString("dataSubjectId");
             r.applicationId = j.getString("applicationId");
@@ -59,7 +59,7 @@ class PersonalDataRecordController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto dataSubjectId = params.get("dataSubjectId", "");
             auto applicationId = params.get("applicationId", "");

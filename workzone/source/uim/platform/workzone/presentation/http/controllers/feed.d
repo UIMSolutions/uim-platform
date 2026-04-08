@@ -33,7 +33,7 @@ class FeedController {
       auto j = req.json;
       auto r = CreateFeedEntryRequest();
       r.workspaceId = j.getString("workspaceId");
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.actorId = j.getString("actorId");
       r.actorName = j.getString("actorName");
       r.action = j.getString("action");
@@ -60,7 +60,7 @@ class FeedController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto entries = useCase.listByWorkspace(workspaceId, tenantId);
       auto arr = Json.emptyArray;
@@ -79,7 +79,7 @@ class FeedController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto entry = useCase.getEntry(id, tenantId);
       if (entry is null) {
         writeError(res, 404, "Feed entry not found");
@@ -95,7 +95,7 @@ class FeedController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       useCase.deleteEntry(id, tenantId);
       res.writeBody("", 204);
     }

@@ -36,7 +36,7 @@ class TaskController : SAPController {
         try {
             auto j = req.json;
             CreateTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = j.getString("id");
             r.taskDefinitionId = j.getString("taskDefinitionId");
             r.providerId = j.getString("providerId");
@@ -68,7 +68,7 @@ class TaskController : SAPController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto assignee = params.get("assignee", "");
             auto status = params.get("status", "");
@@ -105,7 +105,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             if (pathEndsWithAction(path)) return;
 
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto t = uc.get_(tenantId, id);
             if (t.id.length == 0) {
@@ -124,7 +124,7 @@ class TaskController : SAPController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskRequest r;
-            r.tenantId = req.headers.get("X-Tenant-Id", "");
+            r.tenantId = req.getTenantId;
             r.id = id;
             r.title = j.getString("title");
             r.description = j.getString("description");
@@ -153,7 +153,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             auto userId = j.getString("userId");
 
@@ -177,7 +177,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.release(tenantId, id);
             if (result.success) {
@@ -199,7 +199,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto j = req.json;
             auto toUser = j.getString("toUser");
             auto comment = j.getString("comment");
@@ -224,7 +224,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.complete(tenantId, id);
             if (result.success) {
@@ -246,7 +246,7 @@ class TaskController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
 
             auto result = uc.cancel(tenantId, id);
             if (result.success) {
@@ -266,7 +266,7 @@ class TaskController : SAPController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto tenantId = req.headers.get("X-Tenant-Id", "");
+            auto tenantId = req.getTenantId;
             auto result = uc.remove(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject;

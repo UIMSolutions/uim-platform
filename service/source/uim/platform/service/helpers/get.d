@@ -40,3 +40,11 @@ size_t getSize(Json json, size_t defaultValue = 0) {
   return json.isInteger ? json.get!size_t : defaultValue;
 }
 // #endregion getSize
+
+TenantId getTenantId(Json json, string key) {
+  return TenantId(key in json && json[key].isString ? json[key].get!string : "");
+}
+
+TenantId getTenantId(HTTPServerRequest req) {
+  return req.getTenantId
+}

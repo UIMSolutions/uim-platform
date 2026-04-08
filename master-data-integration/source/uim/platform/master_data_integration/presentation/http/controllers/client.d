@@ -39,7 +39,7 @@ class ClientController : SAPController {
     try {
       auto j = req.json;
       CreateClientRequest r;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.clientType = j.getString("clientType");
@@ -69,7 +69,7 @@ class ClientController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
       auto type = req.params.get("type", "");
 
