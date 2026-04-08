@@ -23,7 +23,7 @@ struct AuthorizationPolicy {
   long updatedAt;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
+    return Json.emptyObject.set("id", id.toString).set("tenantId", tenantId).set("name",
         name).set("description", description).set("rules",
         rules.map!(r => r.toJson).array).set("applicationIds", applicationIds)
       .set("active", active).set("createdAt", createdAt).set("updatedAt", updatedAt);

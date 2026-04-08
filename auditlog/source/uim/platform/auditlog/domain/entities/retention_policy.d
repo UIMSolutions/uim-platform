@@ -26,7 +26,7 @@ struct RetentionPolicy {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("id", id)
+      .set("id", id.toString)
       .set("tenantId", tenantId)
       .set("name", name)
       .set("description", description)

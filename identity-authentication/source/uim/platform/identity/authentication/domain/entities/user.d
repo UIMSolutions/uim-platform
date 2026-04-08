@@ -45,7 +45,7 @@ struct User {
   }
 
   Json toJson() {
-    return Json.emptyObject.set("id", id).set("tenantId", tenantId)
+    return Json.emptyObject.set("id", id.toString).set("tenantId", tenantId)
       .set("userName", userName).set("email", email).set("firstName",
         firstName).set("lastName", lastName) // Note: Exclude passwordHash and mfaSecret from JSON for security reasons
       .set("status", to!string(status))

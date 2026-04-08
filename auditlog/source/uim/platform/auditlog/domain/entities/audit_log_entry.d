@@ -42,7 +42,7 @@ struct AuditLogEntry {
     ).array.toJson;
 
     return Json.emptyObject
-      .set("id", id)
+      .set("id", id.toString)
       .set("tenantId", tenantId)
       .set("userId", userId)
       .set("userName", userName)

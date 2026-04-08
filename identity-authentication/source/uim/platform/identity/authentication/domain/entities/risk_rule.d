@@ -21,7 +21,7 @@ struct RiskRule {
   bool active = true;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id).set("tenantId", tenantId).set("name",
+    return Json.emptyObject.set("id", id.toString).set("tenantId", tenantId).set("name",
         name).set("conditions", conditions.map!(c => c.toJson).array)
       .set("resultLevel", to!string(resultLevel)).set("requiredMfa",
         to!string(requiredMfa)).set("active", active);

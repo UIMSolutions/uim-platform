@@ -23,7 +23,7 @@ struct Tenant {
   long updatedAt;
 
   Json toJson() {
-    return Json.emptyObject.set("id", id).set("name", name).set("subdomain",
+    return Json.emptyObject.set("id", id.toString).set("name", name).set("subdomain",
         subdomain).set("defaultSsoProtocol", to!string(defaultSsoProtocol))
       .set("allowedAuthMethods", allowedAuthMethods.map!(m => to!string(m)).array).set("mfaEnforced", mfaEnforced)
       .set("trustedIdpIds", trustedIdpIds).set("createdAt", createdAt).set("updatedAt", updatedAt);
