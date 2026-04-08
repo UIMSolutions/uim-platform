@@ -43,10 +43,10 @@ struct AuditLogEntry {
 
     return Json.emptyObject
       .set("id", id.toString)
-      .set("tenantId", tenantId)
-      .set("userId", userId)
+      .set("tenantId", tenantId.toString)
+      .set("userId", userId.toString)
       .set("userName", userName)
-      .set("serviceId", serviceId)
+      .set("serviceId", serviceId.toString)
       .set("serviceName", serviceName)
       .set("category", category.to!string)
       .set("severity", severity.to!string)

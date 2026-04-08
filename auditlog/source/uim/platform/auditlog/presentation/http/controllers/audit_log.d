@@ -74,7 +74,7 @@ class AuditLogController : SAPController {
 
   private void handleQuery(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto queryReq = AuditLogQueryRequest();
       queryReq.tenantId = tenantId;
 
@@ -107,7 +107,7 @@ class AuditLogController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       if (!retrieveUC.existsById(id, tenantId)) {
         writeError(res, 404, "Audit log entry not found");
         return;

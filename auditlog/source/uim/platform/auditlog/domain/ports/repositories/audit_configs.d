@@ -24,5 +24,5 @@ interface AuditConfigRepository {
 
   void save(AuditConfig config);
   void update(AuditConfig config);
-  void remove(AuditConfigId id, TenantId tenantId);
+  void remove(TenantId tenantId, AuditConfigId id);
 }

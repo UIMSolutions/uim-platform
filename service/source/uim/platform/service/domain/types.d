@@ -15,15 +15,5 @@ struct TenantId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
-
-  bool isEmpty() const {
-    return value.length == 0;
-  }
-
-  bool isNull() const {
-    return value.length == 0;
-  }
+  mixin DomainId;
 }

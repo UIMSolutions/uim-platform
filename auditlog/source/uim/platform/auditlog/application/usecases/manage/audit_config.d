@@ -51,10 +51,10 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.updatedAt = now;
 
     configRepo.save(cfg);
-    return CommandResult(cfg.id.value, "");
+    return CommandResult(cfg.id.toString, "");
   }
 
-  bool hasConfig(TenantId tenantId) {
+  bool existsConfig(TenantId tenantId) {
     return configRepo.existsByTenant(tenantId);
   }
 
@@ -90,7 +90,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     return CommandResult(cfg.id.value, "");
   }
 
-  void deleteConfig(AuditConfigId id, TenantId tenantId) {
-    configRepo.remove(id, tenantId);
+  void deleteConfig(TenantId tenantId, AuditConfigId id) {
+    configRepo.remove(tenantId, id);
   }
 }

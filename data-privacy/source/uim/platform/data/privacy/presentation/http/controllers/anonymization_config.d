@@ -23,7 +23,7 @@ class AnonymizationConfigController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/anonymization-configs", &handleCreate);
     router.get("/api/v1/anonymization-configs", &handleList);
     router.get("/api/v1/anonymization-configs/*", &handleGetById);
@@ -64,7 +64,7 @@ class AnonymizationConfigController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -125,26 +125,27 @@ class AnonymizationConfigController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
-      uc.deleteConfig(id, tenantId);
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      uc.deleteConfig(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private static Json serialize(ref const AnonymizationConfig e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["status"] = Json(e.status.to!string);
-    j["isReversible"] = Json(e.isReversible);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
+    auto j = Json.emptyObject
+      .set("id", Json(e.id))
+      .set("tenantId", Json(e.tenantId))
+      .set("name", Json(e.name))
+      .set("description", Json(e.description))
+      .set("status", Json(e.status.to!string))
+      .set("isReversible", Json(e.isReversible))
+      .set("createdAt", Json(e.createdAt))
+      .set("updatedAt", Json(e.updatedAt));
 
     auto systems = Json.emptyArray;
-    foreach (ref s; e.targetSystems) systems ~= Json(s);
+    foreach (ref s; e.targetSystems)
+      systems ~= Json(s);
     j["targetSystems"] = systems;
 
     return j;

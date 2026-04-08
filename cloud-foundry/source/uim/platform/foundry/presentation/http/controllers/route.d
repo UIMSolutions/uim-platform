@@ -70,7 +70,7 @@ class RouteController : SAPController {
 
   private void handleListRoutes(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto items = useCase.listRoutes(tenantId);
 
       auto arr = Json.emptyArray;
@@ -90,7 +90,7 @@ class RouteController : SAPController {
   private void handleGetRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto r = useCase.getRoute(id, tenantId);
       if (r is null) {
         writeError(res, 404, "Route not found");
@@ -106,7 +106,7 @@ class RouteController : SAPController {
   private void handleDeleteRoute(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.deleteRoute(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -127,7 +127,7 @@ class RouteController : SAPController {
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = routeId;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       r.appId = j.getString("appId");
 
       auto result = useCase.mapRoute(r);
@@ -150,7 +150,7 @@ class RouteController : SAPController {
       auto j = req.json;
       auto r = MapRouteRequest();
       r.routeId = routeId;
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       r.appId = j.getString("appId");
 
       auto result = useCase.unmapRoute(r);
@@ -173,7 +173,7 @@ class RouteController : SAPController {
     try {
       auto j = req.json;
       auto r = CreateDomainRequest();
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       r.ownerOrgId = j.getString("ownerOrgId");
       r.name = j.getString("name");
       r.scope_ = parseDomainScope(j.getString("scope"));
@@ -196,7 +196,7 @@ class RouteController : SAPController {
 
   private void handleListDomains(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto items = useCase.listDomains(tenantId);
 
       auto arr = Json.emptyArray;
@@ -216,7 +216,7 @@ class RouteController : SAPController {
   private void handleDeleteDomain(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.deleteDomain(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

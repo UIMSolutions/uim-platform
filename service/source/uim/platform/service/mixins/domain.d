@@ -14,9 +14,6 @@ mixin template DomainId() {
         this.value = newValue;
     }
 
-    string toString() const {
-        return value;
-    }
 
     bool isNull() const {
         return value is null;
@@ -24,5 +21,13 @@ mixin template DomainId() {
 
     bool isEmpty() const {
         return value.length == 0;
+    }
+
+    string toString() const {
+        return value;
+    }
+
+    Json toJson() const {
+        return Json(value);
     }
 }

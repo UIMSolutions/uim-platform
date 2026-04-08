@@ -25,9 +25,9 @@ struct ConfigChangeLog {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("auditLogId", auditLogId)
-      .set("tenantId", tenantId)
-      .set("changedBy", changedBy)
+      .set("auditLogId", auditLogId.toString)
+      .set("tenantId", tenantId.toString)
+      .set("changedBy", changedBy.toString)
       .set("configType", configType)
       .set("configObjectId", configObjectId)
       .set("changes", changes.map!(c => c.toJson()).array.toJson)

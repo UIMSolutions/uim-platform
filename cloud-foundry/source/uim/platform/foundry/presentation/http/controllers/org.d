@@ -63,7 +63,7 @@ class OrgController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto orgs = useCase.listOrgs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -83,7 +83,7 @@ class OrgController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto org = useCase.getOrg(id, tenantId);
       if (org is null) {
         writeError(res, 404, "Organization not found");
@@ -127,7 +127,7 @@ class OrgController : SAPController {
   private void handleSuspend(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.suspendOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -145,7 +145,7 @@ class OrgController : SAPController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.activateOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -163,7 +163,7 @@ class OrgController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.deleteOrg(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

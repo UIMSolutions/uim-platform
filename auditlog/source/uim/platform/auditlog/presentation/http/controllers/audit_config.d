@@ -40,7 +40,7 @@ class AuditConfigController : SAPController {
     try {
       auto j = req.json;
       auto request = CreateAuditConfigRequest();
-      request.tenantId = req.headers.get("X-Tenant-Id", "");
+      request.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       request.name = j.getString("name");
       request.logDataAccess = j.getBoolean("logDataAccess", true);
       request.logDataModification = j.getBoolean("logDataModification", true);
@@ -64,8 +64,8 @@ class AuditConfigController : SAPController {
 
       auto result = useCase.createConfig(request);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", Json(result.id));
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -81,8 +81,8 @@ class AuditConfigController : SAPController {
       auto arr = configs.map!(c => serializeConfig(c)).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", configs.length);
+        .set("items", arr)
+        .set("totalCount", configs.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -91,8 +91,8 @@ class AuditConfigController : SAPController {
 
   private void handleGetByTenant(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
-      if (!useCase.hasConfig(tenantId)) {
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      if (!useCase.existsConfig(tenantId)) {
         writeError(res, 404, "Audit config not found");
         return;
       }
@@ -108,7 +108,7 @@ class AuditConfigController : SAPController {
       auto j = req.json;
       auto r = UpdateAuditConfigRequest();
       r.id = extractIdFromPath(req.requestURI);
-      r.tenantId = req.headers.get("X-Tenant-Id", "");
+      r.tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       r.name = j.getString("name");
       r.logDataAccess = j.getBoolean("logDataAccess", true);
       r.logDataModification = j.getBoolean("logDataModification", true);
@@ -151,8 +151,8 @@ class AuditConfigController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
-      useCase.deleteConfig(id, tenantId);
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
+      useCase.deleteConfig(tenantId, id);
       auto resp = Json.emptyObject
         .set("status", "deleted");
       res.writeJsonBody(resp, 200);
@@ -163,19 +163,19 @@ class AuditConfigController : SAPController {
 
   private static Json serializeConfig(ref const AuditConfig c) {
     auto json = Json.emptyObject
-    .set("id", c.id.toJson)
-    .set("tenantId", c.tenantId.toJson)
-    .set("name", c.name.toJson)
-    .set("status", c.status.to!string.toJson)
-    .set("logDataAccess", c.logDataAccess.toJson)
-    .set("logDataModification", c.logDataModification.toJson)
-    .set("logSecurityEvents", c.logSecurityEvents.toJson)
-    .set("logConfigurationChanges", c.logConfigurationChanges.toJson)
-    .set("enableDataMasking", c.enableDataMasking.toJson)
-    .set("minimumSeverity", c.minimumSeverity.to!string.toJson)
-    .set("rateLimitPerSecond", cast(long)c.rateLimitPerSecond.toJson)
-    .set("createdAt", c.createdAt.toJson)
-    .set("updatedAt", c.updatedAt.toJson);
+      .set("id", c.id.toJson)
+      .set("tenantId", c.tenantId.toJson)
+      .set("name", c.name.toJson)
+      .set("status", c.status.to!string.toJson)
+      .set("logDataAccess", c.logDataAccess.toJson)
+      .set("logDataModification", c.logDataModification.toJson)
+      .set("logSecurityEvents", c.logSecurityEvents.toJson)
+      .set("logConfigurationChanges", c.logConfigurationChanges.toJson)
+      .set("enableDataMasking", c.enableDataMasking.toJson)
+      .set("minimumSeverity", c.minimumSeverity.to!string.toJson)
+      .set("rateLimitPerSecond", cast(long)c.rateLimitPerSecond.toJson)
+      .set("createdAt", c.createdAt.toJson)
+      .set("updatedAt", c.updatedAt.toJson);
 
     if (c.maskedFields.length > 0) {
       json["maskedFields"] = c.maskedFields.map!(f => Json(f)).array.toJson;

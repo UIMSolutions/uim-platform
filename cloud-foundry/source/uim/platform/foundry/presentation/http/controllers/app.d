@@ -24,7 +24,7 @@ class AppController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/apps", &handleCreate);
     router.get("/api/v1/apps", &handleList);
     // Action routes (more specific — registered before wildcard)
@@ -65,18 +65,16 @@ class AppController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto apps = useCase.listApps(tenantId);
 
       auto arr = Json.emptyArray;
@@ -85,10 +83,9 @@ class AppController : SAPController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) apps.length);
+      resp["totalCount"] = Json(cast(long)apps.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -96,15 +93,14 @@ class AppController : SAPController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto app = useCase.getApp(id, tenantId);
       if (app is null) {
         writeError(res, 404, "Application not found");
         return;
       }
       res.writeJsonBody(serializeApp(*app), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -134,11 +130,9 @@ class AppController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -146,17 +140,15 @@ class AppController : SAPController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.startApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -164,17 +156,15 @@ class AppController : SAPController {
   private void handleStop(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.stopApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -182,17 +172,15 @@ class AppController : SAPController {
   private void handleRestart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.restartApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -213,11 +201,9 @@ class AppController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -225,15 +211,14 @@ class AppController : SAPController {
   private void handleGetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto env = useCase.getEnvironment(id, tenantId);
 
       auto resp = Json.emptyObject;
       resp["appId"] = Json(id);
       resp["environmentVariables"] = Json(env);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -241,7 +226,7 @@ class AppController : SAPController {
   private void handleSetEnv(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
@@ -250,11 +235,9 @@ class AppController : SAPController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -262,46 +245,43 @@ class AppController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.headers.get("X-Tenant-Id", "");
+      auto tenantId = TenantId(req.headers.get("X-Tenant-Id", ""));
       auto result = useCase.deleteApp(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeApp(ref const Application a) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(a.id);
-    j["spaceId"] = Json(a.spaceId);
-    j["tenantId"] = Json(a.tenantId);
-    j["name"] = Json(a.name);
-    j["state"] = Json(a.state.to!string);
-    j["instances"] = Json(a.instances);
-    j["memoryMb"] = Json(a.memoryMb);
-    j["diskMb"] = Json(a.diskMb);
-    j["buildpackId"] = Json(a.buildpackId);
-    j["detectedBuildpack"] = Json(a.detectedBuildpack);
-    j["stack"] = Json(a.stack);
-    j["command"] = Json(a.command);
-    j["healthCheckType"] = Json(a.healthCheckType.to!string);
-    j["healthCheckEndpoint"] = Json(a.healthCheckEndpoint);
-    j["healthCheckTimeoutSec"] = Json(a.healthCheckTimeoutSec);
-    j["environmentVariables"] = Json(a.environmentVariables);
-    j["dockerImage"] = Json(a.dockerImage);
-    j["dockerCredentials"] = Json(a.dockerCredentials);
-    j["runningInstances"] = Json(a.runningInstances);
-    j["createdBy"] = Json(a.createdBy);
-    j["createdAt"] = Json(a.createdAt);
-    j["updatedAt"] = Json(a.updatedAt);
-    j["stagedAt"] = Json(a.stagedAt);
-    return j;
+  private static Json serializeApp(const Application a) {
+    return Json.emptyObject
+      .set("id", a.id)
+      .set("spaceId", a.spaceId)
+      .set("tenantId", a.tenantId)
+      .set("name", a.name)
+      .set("state", a.state.to!string)
+      .set("instances", a.instances)
+      .set("memoryMb", a.memoryMb)
+      .set("diskMb", a.diskMb)
+      .set("buildpackId", a.buildpackId)
+      .set("detectedBuildpack", a.detectedBuildpack)
+      .set("stack", a.stack)
+      .set("command", a.command)
+      .set("healthCheckType", a.healthCheckType.to!string)
+      .set("healthCheckEndpoint", a.healthCheckEndpoint)
+      .set("healthCheckTimeoutSec", a.healthCheckTimeoutSec)
+      .set("environmentVariables", a.environmentVariables)
+      .set("dockerImage", a.dockerImage)
+      .set("dockerCredentials", a.dockerCredentials)
+      .set("runningInstances", a.runningInstances)
+      .set("createdBy", a.createdBy)
+      .set("createdAt", a.createdAt)
+      .set("updatedAt", a.updatedAt)
+      .set("stagedAt", a.stagedAt);
   }
 }

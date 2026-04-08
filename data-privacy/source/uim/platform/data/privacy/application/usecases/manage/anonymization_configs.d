@@ -39,8 +39,8 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  AnonymizationConfig* getConfig(AnonymizationConfigId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  AnonymizationConfig* getConfig(TenantId tenantId, AnonymizationConfigId id) {
+    return repo.findById(tenantId, id);
   }
 
   AnonymizationConfig[] listConfigs(TenantId tenantId) {
@@ -48,7 +48,7 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
   }
 
   CommandResult updateConfig(UpdateAnonymizationConfigRequest req) {
-    auto c = repo.findById(req.id, req.tenantId);
+    auto c = repo.findById(req.tenantId, req.id);
     if (c is null)
       return CommandResult("", "Anonymization config not found");
 
@@ -62,8 +62,8 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  CommandResult activateConfig(AnonymizationConfigId id, TenantId tenantId) {
-    auto c = repo.findById(id, tenantId);
+  CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId id) {
+    auto c = repo.findById(tenantId, id);
     if (c is null)
       return CommandResult("", "Anonymization config not found");
 
@@ -74,7 +74,7 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  void deleteConfig(AnonymizationConfigId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteConfig(TenantId tenantId, AnonymizationConfigId id) {
+    repo.remove(tenantId, id);
   }
 }

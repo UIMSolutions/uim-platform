@@ -55,7 +55,7 @@ class MemoryAuditConfigRepository : AuditConfigRepository {
     store[config.id] = config;
   }
 
-  void remove(AuditConfigId id, TenantId tenantId) {
+  void remove(TenantId tenantId, AuditConfigId id) {
     if (existsById(id) && store[id].tenantId == tenantId)
       store.remove(id);
   }
