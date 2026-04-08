@@ -64,7 +64,7 @@ class ReplicationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto status = req.params.get("status", "");
       auto modelId = req.params.get("distributionModelId", "");
 

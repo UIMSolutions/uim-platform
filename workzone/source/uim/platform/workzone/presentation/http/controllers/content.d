@@ -76,7 +76,7 @@ class ContentController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
       auto query = req.params.get("q", "");
       ContentItem[] items;
@@ -101,7 +101,7 @@ class ContentController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto item = useCase.getContent(id, tenantId);
       if (item is null) {
         writeError(res, 404, "Content not found");
@@ -153,7 +153,7 @@ class ContentController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteContent(id, tenantId);
       res.writeBody("", 204);
     }
@@ -165,7 +165,7 @@ class ContentController {
   private void handlePublish(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.publishContent(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

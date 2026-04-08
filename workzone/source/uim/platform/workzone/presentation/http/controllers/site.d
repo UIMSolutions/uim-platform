@@ -58,7 +58,7 @@ class SiteController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref s; sites)
@@ -76,7 +76,7 @@ class SiteController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto s = useCase.getSite(id, tenantId);
       if (s is null) {
         writeError(res, 404, "Site not found");
@@ -114,7 +114,7 @@ class SiteController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSite(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

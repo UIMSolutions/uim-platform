@@ -61,7 +61,7 @@ class AppController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto apps = useCase.listApps(tenantId);
       auto arr = apps.map!(a => serializeApp(a)).array.toJson;
       auto response = Json.emptyObject;
@@ -76,7 +76,7 @@ class AppController : SAPController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto app = useCase.getApp(id, tenantId);
       if (app is null) {
         writeError(res, 404, "App not found");
@@ -124,7 +124,7 @@ class AppController : SAPController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteApp(id, tenantId);
       res.writeBody("", 204);
     } catch (Exception e) {

@@ -54,7 +54,7 @@ class UserTaskFilterController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -86,7 +86,7 @@ class UserTaskFilterController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/default")) return;
 
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto f = uc.get_(tenantId, id);
             if (f.id.length == 0) {
@@ -130,7 +130,7 @@ class UserTaskFilterController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.setDefault(tenantId, id);
             if (result.success) {
@@ -149,7 +149,7 @@ class UserTaskFilterController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

@@ -58,7 +58,7 @@ class KeyMappingController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto objectId = req.params.get("objectId", "");
       auto category = req.params.get("category", "");
 

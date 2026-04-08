@@ -73,7 +73,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto schedules = uc.list(jobId, tenantId);
 
@@ -96,7 +96,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto s = uc.get_(ids[1], ids[0], tenantId);
             if (s.id.length == 0) {
@@ -150,7 +150,7 @@ class ScheduleController : SAPController {
             import std.conv : to;
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.remove(ids[1], ids[0], tenantId);
             if (result.success) {
@@ -190,7 +190,7 @@ class ScheduleController : SAPController {
 
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
             auto schedules = uc.search(query, tenantId);

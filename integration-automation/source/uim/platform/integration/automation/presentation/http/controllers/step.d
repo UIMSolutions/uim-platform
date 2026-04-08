@@ -36,7 +36,7 @@ class StepController {
 
   private void handleListByWorkflow(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto workflowId = req.headers.get("X-Workflow-Id", "");
       auto steps = useCase.listSteps(workflowId, tenantId);
 
@@ -57,7 +57,7 @@ class StepController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto step = useCase.getStep(id, tenantId);
       if (step is null) {
         writeError(res, 404, "Step not found");
@@ -72,7 +72,7 @@ class StepController {
 
   private void handleMyTasks(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "");
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
@@ -93,7 +93,7 @@ class StepController {
   private void handleStart(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "");
 
       auto result = useCase.startStep(id, tenantId, userId);

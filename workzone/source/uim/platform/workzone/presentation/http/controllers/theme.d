@@ -60,7 +60,7 @@ class ThemeController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref t; themes)
@@ -78,7 +78,7 @@ class ThemeController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto t = useCase.getTheme(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Theme not found");
@@ -117,7 +117,7 @@ class ThemeController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteTheme(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

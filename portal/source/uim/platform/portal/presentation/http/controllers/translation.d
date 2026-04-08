@@ -57,7 +57,7 @@ class TranslationController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto language = req.headers.get("X-Language", "");
       auto resourceType = req.headers.get("X-Resource-Type", "");
       auto resourceId = req.headers.get("X-Resource-Id", "");

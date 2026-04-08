@@ -57,7 +57,7 @@ class TagController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto tags = useCase.listTags(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref t; tags)
@@ -75,7 +75,7 @@ class TagController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto t = useCase.getTag(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Tag not found");
@@ -113,7 +113,7 @@ class TagController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteTag(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

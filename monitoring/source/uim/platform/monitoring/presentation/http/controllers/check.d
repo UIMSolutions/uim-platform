@@ -75,7 +75,7 @@ class CheckController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto checks = uc.listChecks(tenantId);
 
       auto arr = Json.emptyArray;
@@ -187,7 +187,7 @@ class CheckController : SAPController {
 
   private void handleGetResults(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto checkId = extractIdFromPath(req.requestURI);
       auto results = uc.getResults(tenantId, checkId);
 

@@ -62,7 +62,7 @@ class UserProfileController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; profiles)
@@ -80,7 +80,7 @@ class UserProfileController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto p = useCase.getUserProfile(id, tenantId);
       if (p is null) {
         writeError(res, 404, "User profile not found");
@@ -119,7 +119,7 @@ class UserProfileController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteUserProfile(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

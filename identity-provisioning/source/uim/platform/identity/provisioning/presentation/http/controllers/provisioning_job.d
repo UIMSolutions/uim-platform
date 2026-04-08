@@ -61,7 +61,7 @@ class ProvisioningJobController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listJobs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -81,7 +81,7 @@ class ProvisioningJobController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto job = uc.getJob(id, tenantId);
       if (job is null) {
         writeError(res, 404, "Provisioning job not found");
@@ -97,7 +97,7 @@ class ProvisioningJobController {
   private void handleRun(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.runJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -142,7 +142,7 @@ class ProvisioningJobController {
   private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.cancelJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class ProvisioningJobController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteJob(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

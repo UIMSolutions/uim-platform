@@ -63,7 +63,7 @@ class TileController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto tiles = useCase.listTiles(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long)tiles.length);
@@ -76,7 +76,7 @@ class TileController : SAPController {
 
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto query = req.headers.get("X-Search-Query", "");
       auto tiles = useCase.searchTiles(tenantId, query);
       auto response = Json.emptyObject;

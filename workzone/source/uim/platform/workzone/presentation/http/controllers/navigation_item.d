@@ -62,7 +62,7 @@ class NavigationItemController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(siteId, tenantId);
       auto arr = Json.emptyArray;
@@ -81,7 +81,7 @@ class NavigationItemController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto n = useCase.getNavigationItem(id, tenantId);
       if (n is null) {
         writeError(res, 404, "Navigation item not found");
@@ -121,7 +121,7 @@ class NavigationItemController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteNavigationItem(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

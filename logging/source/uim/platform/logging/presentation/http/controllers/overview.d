@@ -25,7 +25,7 @@ class OverviewController : SAPController {
 
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject;

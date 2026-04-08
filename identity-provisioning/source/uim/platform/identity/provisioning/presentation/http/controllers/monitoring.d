@@ -33,7 +33,7 @@ class MonitoringController {
 
   private void handleListJobSummaries(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listJobSummaries(tenantId);
 
       auto arr = Json.emptyArray;
@@ -53,7 +53,7 @@ class MonitoringController {
   private void handleGetJobSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getJobSummary(id, tenantId);
       if (summary.jobId.length == 0) {
         writeError(res, 404, "Job not found");
@@ -69,7 +69,7 @@ class MonitoringController {
   private void handleGetJobLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = uc.getJobLogs(jobId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -88,7 +88,7 @@ class MonitoringController {
 
   private void handleListEntities(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listProvisionedEntities(tenantId);
 
       auto arr = Json.emptyArray;
@@ -107,7 +107,7 @@ class MonitoringController {
 
   private void handlePipeline(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = uc.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject;

@@ -61,7 +61,7 @@ class LogController : SAPController {
   private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       IngestLogBatchRequest batchReq;
       batchReq.tenantId = tenantId;

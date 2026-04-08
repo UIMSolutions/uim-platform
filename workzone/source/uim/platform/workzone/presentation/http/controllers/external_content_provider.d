@@ -59,7 +59,7 @@ class ExternalContentProviderController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; providers)
@@ -77,7 +77,7 @@ class ExternalContentProviderController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto p = useCase.getProvider(id, tenantId);
       if (p is null) {
         writeError(res, 404, "Provider not found");
@@ -115,7 +115,7 @@ class ExternalContentProviderController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteProvider(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

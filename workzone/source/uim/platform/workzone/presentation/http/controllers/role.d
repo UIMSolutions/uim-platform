@@ -57,7 +57,7 @@ class RoleController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref r; roles)
@@ -75,7 +75,7 @@ class RoleController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto r = useCase.getRole(id, tenantId);
       if (r is null) {
         writeError(res, 404, "Role not found");
@@ -113,7 +113,7 @@ class RoleController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteRole(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

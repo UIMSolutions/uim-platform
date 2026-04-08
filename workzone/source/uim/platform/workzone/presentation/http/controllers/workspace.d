@@ -72,7 +72,7 @@ class WorkspaceController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref w; workspaces)
@@ -96,7 +96,7 @@ class WorkspaceController {
         return;
       }
 
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto ws = useCase.getWorkspace(id, tenantId);
       if (ws is null) {
         writeError(res, 404, "Workspace not found");
@@ -139,7 +139,7 @@ class WorkspaceController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteWorkspace(id, tenantId);
       res.writeBody("", 204);
     }

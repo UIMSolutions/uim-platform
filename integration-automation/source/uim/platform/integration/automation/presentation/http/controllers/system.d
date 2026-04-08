@@ -69,7 +69,7 @@ class SystemController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto systems = useCase.listSystems(tenantId);
 
       auto arr = Json.emptyArray;
@@ -89,7 +89,7 @@ class SystemController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto sys = useCase.getSystem(id, tenantId);
       if (sys is null) {
         writeError(res, 404, "System not found");
@@ -141,7 +141,7 @@ class SystemController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteSystem(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class SystemController {
   private void handleTestConnection(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.testConnection(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

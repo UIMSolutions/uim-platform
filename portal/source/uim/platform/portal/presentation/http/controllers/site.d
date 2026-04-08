@@ -60,7 +60,7 @@ class SiteController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long)sites.length);

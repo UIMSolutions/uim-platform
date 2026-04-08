@@ -7,11 +7,51 @@ module uim.platform.job_scheduling.domain.types;
 
 // --- ID aliases ---
 
-alias JobId = string;
-alias ScheduleId = string;
-alias RunLogId = string;
-alias TenantId = string;
-alias ConfigId = string;
+struct JobId {
+    string value;
+    
+    this(string value) {
+        this.value = value;
+    }
+    
+    mixin DomainId;
+}
+struct ScheduleId {
+    string value;
+    
+    this(string value) {
+        this.value = value;
+    }
+    
+    mixin DomainId;
+}
+struct RunLogId {
+    string value;
+    
+    this(string value) {
+        this.value = value;
+    }
+    
+    mixin DomainId;
+}
+struct TenantId {
+    string value;
+    
+    this(string value) {
+        this.value = value;
+    }
+    
+    mixin DomainId;
+}
+struct ConfigId {
+    string value;
+    
+    this(string value) {
+        this.value = value;
+    }
+    
+    mixin DomainId;
+}
 
 // --- Enums ---
 

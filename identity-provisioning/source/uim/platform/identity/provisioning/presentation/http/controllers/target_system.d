@@ -60,7 +60,7 @@ class TargetSystemController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto items = uc.listTargetSystems(tenantId);
 
       auto arr = Json.emptyArray;
@@ -80,7 +80,7 @@ class TargetSystemController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto sys = uc.getTargetSystem(id, tenantId);
       if (sys is null) {
         writeError(res, 404, "Target system not found");
@@ -124,7 +124,7 @@ class TargetSystemController {
   private void handleActivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.activateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -146,7 +146,7 @@ class TargetSystemController {
   private void handleDeactivate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deactivateSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
@@ -165,7 +165,7 @@ class TargetSystemController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = uc.deleteTargetSystem(id, tenantId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;

@@ -59,7 +59,7 @@ class TraceController : SAPController {
   private void handleBatchIngest(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       IngestSpanBatchRequest batchReq;
       batchReq.tenantId = tenantId;
@@ -97,7 +97,7 @@ class TraceController : SAPController {
     try {
       import std.conv : to;
 
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto traceId = extractIdFromPath(req.requestURI.to!string);
 
       auto spans = uc.getTrace(tenantId, traceId);

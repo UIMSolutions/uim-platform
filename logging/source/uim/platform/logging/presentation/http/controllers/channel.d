@@ -59,7 +59,7 @@ class ChannelController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto channels = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;

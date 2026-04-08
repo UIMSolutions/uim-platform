@@ -76,7 +76,7 @@ class TaskController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto assigneeId = req.params.get("assigneeId", "");
       auto tasks = useCase.listByAssignee(assigneeId, tenantId);
       auto arr = Json.emptyArray;
@@ -95,7 +95,7 @@ class TaskController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto t = useCase.getTask(id, tenantId);
       if (t is null) {
         writeError(res, 404, "Task not found");
@@ -157,7 +157,7 @@ class TaskController {
   private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.completeTask(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
@@ -177,7 +177,7 @@ class TaskController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteTask(id, tenantId);
       res.writeBody("", 204);
     }

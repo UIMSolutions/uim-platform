@@ -32,7 +32,7 @@ class MonitoringController {
 
   private void handleGetLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = useCase.getAllLogs(tenantId);
 
       auto arr = Json.emptyArray;
@@ -52,7 +52,7 @@ class MonitoringController {
   private void handleGetWorkflowLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = useCase.getWorkflowLogs(workflowId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -72,7 +72,7 @@ class MonitoringController {
   private void handleGetStepLogs(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto stepId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = useCase.getStepLogs(stepId, tenantId);
 
       auto arr = Json.emptyArray;
@@ -91,7 +91,7 @@ class MonitoringController {
 
   private void handleGetFailures(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto logs = useCase.getFailures(tenantId);
 
       auto arr = Json.emptyArray;
@@ -111,7 +111,7 @@ class MonitoringController {
   private void handleGetSummary(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto summary = useCase.getWorkflowSummary(workflowId, tenantId);
 
       auto j = Json.emptyObject;

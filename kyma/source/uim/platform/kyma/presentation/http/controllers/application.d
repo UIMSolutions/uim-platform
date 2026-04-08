@@ -68,7 +68,7 @@ class ApplicationController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto envId = req.params.get("environmentId");
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
 
       Application[] items;
       if (envId.length > 0)

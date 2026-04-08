@@ -65,7 +65,7 @@ class MasterDataController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto category = req.params.get("category", "");
 
       MasterDataObject[] objs;
@@ -89,7 +89,7 @@ class MasterDataController : SAPController {
 
   private void handleLookupByGlobalId(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto globalId = req.params.get("globalId", "");
       if (globalId.length == 0) {
         writeError(res, 400, "globalId query parameter is required");

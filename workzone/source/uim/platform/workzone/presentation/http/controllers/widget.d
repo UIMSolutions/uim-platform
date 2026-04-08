@@ -72,7 +72,7 @@ class WidgetController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(pageId, tenantId);
       auto arr = Json.emptyArray;
@@ -91,7 +91,7 @@ class WidgetController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto w = useCase.getWidget(id, tenantId);
       if (w is null) {
         writeError(res, 404, "Widget not found");
@@ -146,7 +146,7 @@ class WidgetController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       useCase.deleteWidget(id, tenantId);
       res.writeBody("", 204);
     }

@@ -55,7 +55,7 @@ class OfflineStoreController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto results = uc.list(tenantId);
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;

@@ -58,7 +58,7 @@ class SubstitutionRuleController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto userId = params.get("userId", "");
 
@@ -90,7 +90,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto r = uc.get_(tenantId, id);
             if (r.id.length == 0) {
@@ -137,7 +137,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
@@ -159,7 +159,7 @@ class SubstitutionRuleController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
@@ -178,7 +178,7 @@ class SubstitutionRuleController : SAPController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
             if (result.success) {

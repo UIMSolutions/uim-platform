@@ -59,7 +59,7 @@ class ThemeController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long)themes.length);
@@ -72,7 +72,7 @@ class ThemeController : SAPController {
 
   private void handleGetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto theme = useCase.getDefaultTheme(tenantId);
       if (theme == Theme.init) {
         writeApiError(res, 404, "No default theme found");

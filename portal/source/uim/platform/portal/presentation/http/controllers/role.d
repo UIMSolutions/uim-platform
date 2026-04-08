@@ -58,7 +58,7 @@ class RoleController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long)roles.length);

@@ -64,7 +64,7 @@ class ScenarioController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto scenarios = useCase.listScenarios(tenantId);
 
       auto arr = Json.emptyArray;
@@ -84,7 +84,7 @@ class ScenarioController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto scenario = useCase.getScenario(id, tenantId);
       if (scenario is null) {
         writeError(res, 404, "Scenario not found");
@@ -133,7 +133,7 @@ class ScenarioController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteScenario(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

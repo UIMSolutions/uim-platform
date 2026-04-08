@@ -60,7 +60,7 @@ class ShellPluginController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto plugins = useCase.listPlugins(tenantId);
       auto arr = Json.emptyArray;
       foreach (ref p; plugins)
@@ -78,7 +78,7 @@ class ShellPluginController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto p = useCase.getPlugin(id, tenantId);
       if (p is null) {
         writeError(res, 404, "Plugin not found");
@@ -116,7 +116,7 @@ class ShellPluginController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deletePlugin(id, tenantId);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);

@@ -58,7 +58,7 @@ class TaskDefinitionController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto providerId = params.get("providerId", "");
 
@@ -90,7 +90,7 @@ class TaskDefinitionController : SAPController {
             auto path = req.requestURI.to!string;
             if (path.endsWith("/activate") || path.endsWith("/deactivate")) return;
 
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
             auto d = uc.get_(tenantId, id);
             if (d.id.length == 0) {
@@ -137,7 +137,7 @@ class TaskDefinitionController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/activate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.activate(tenantId, id);
             if (result.success) {
@@ -159,7 +159,7 @@ class TaskDefinitionController : SAPController {
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 11]; // remove "/deactivate"
             auto id = extractIdFromPath(stripped);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
 
             auto result = uc.deactivate(tenantId, id);
             if (result.success) {
@@ -179,7 +179,7 @@ class TaskDefinitionController : SAPController {
         try {
             import std.conv : to;
             auto id = extractIdFromPath(req.requestURI.to!string);
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto result = uc.remove(tenantId, id);
             if (result.success) {
                 auto resp = Json.emptyObject;

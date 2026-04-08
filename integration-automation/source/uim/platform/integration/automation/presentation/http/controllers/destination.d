@@ -70,7 +70,7 @@ class DestinationController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto destinations = useCase.listDestinations(tenantId);
 
       auto arr = Json.emptyArray;
@@ -90,7 +90,7 @@ class DestinationController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto dest = useCase.getDestination(id, tenantId);
       if (dest is null) {
         writeError(res, 404, "Destination not found");
@@ -144,7 +144,7 @@ class DestinationController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto result = useCase.deleteDestination(id, tenantId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;

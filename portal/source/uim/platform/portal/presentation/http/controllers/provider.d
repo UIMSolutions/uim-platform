@@ -58,7 +58,7 @@ class ProviderController : SAPController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto tenantId = req.getTenantId;
+      TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto response = Json.emptyObject;
       response["totalResults"] = Json(cast(long)providers.length);

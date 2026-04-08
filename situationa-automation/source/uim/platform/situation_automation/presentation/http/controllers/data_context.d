@@ -60,7 +60,7 @@ class DataContextController : SAPController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto contexts = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
@@ -133,7 +133,7 @@ class DataContextController : SAPController {
 
     private void handleDeletePersonalData(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto tenantId = req.getTenantId;
+            TenantId tenantId = req.getTenantId;
             auto result = uc.removePersonalData(tenantId);
             if (result.success) {
                 auto resp = Json.emptyObject;
