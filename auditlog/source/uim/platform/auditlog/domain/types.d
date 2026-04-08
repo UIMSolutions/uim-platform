@@ -18,9 +18,7 @@ struct AuditLogId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
+  mixin DomainId;
 }
 
 struct RetentionPolicyId {
@@ -30,9 +28,7 @@ struct RetentionPolicyId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
+  mixin DomainId;
 }
 
 struct AuditConfigId {
@@ -42,10 +38,8 @@ struct AuditConfigId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
+    mixin DomainId;
   }
-}
 
 struct ExportJobId {
   string value;
@@ -54,10 +48,9 @@ struct ExportJobId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
+  mixin DomainId;
 }
+
 struct UserId {
   string value;
 
@@ -65,9 +58,7 @@ struct UserId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
+  mixin DomainId;
 }
 
 struct ServiceId {
@@ -77,81 +68,5 @@ struct ServiceId {
     this.value = value;
   }
 
-  string toString() const {
-    return value;
-  }
-}
-
-/// Predefined SAP audit event categories.
-enum AuditCategory {
-  securityEvents, // audit.security-events
-  configuration, // audit.configuration
-  dataAccess, // audit.data-access
-  dataModification, // audit.data-modification
-}
-
-/// Severity / log level of an audit event.
-enum AuditSeverity {
-  info,
-  warning,
-  error,
-  critical,
-}
-
-/// Concrete action that triggered the audit entry.
-enum AuditAction {
-  create,
-  read_,
-  update,
-  delete_,
-  login,
-  logout,
-  loginFailed,
-  passwordChange,
-  roleAssign,
-  roleRevoke,
-  policyChange,
-  configChange,
-  export_,
-  dataAccess,
-  consentChange,
-  tokenIssue,
-  tokenRevoke,
-  mfaEnroll,
-  mfaVerify,
-}
-
-/// Outcome of the audited operation.
-enum AuditOutcome {
-  success,
-  failure,
-  denied,
-  error,
-}
-
-/// Retention policy status.
-enum RetentionStatus {
-  active,
-  inactive,
-  expired,
-}
-
-/// Export job status.
-enum ExportStatus {
-  pending,
-  inProgress,
-  completed,
-  failed,
-}
-
-/// Export output format.
-enum ExportFormat {
-  json,
-  csv,
-}
-
-/// Audit log configuration status.
-enum ConfigStatus {
-  enabled,
-  disabled,
+  mixin DomainId;
 }

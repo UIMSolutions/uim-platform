@@ -28,15 +28,15 @@ class ManageExportsUseCase : UIMUseCase {
   }
 
   CommandResult createExport(CreateExportJobRequest req) {
-    if (req.tenantId.isEmpty)
+    if (req.tenantId.isNull)
       return CommandResult("", "Tenant ID is required");
 
-    if (req.requestedBy.length == 0)
+    if (req.requestedBy.isNull)
       return CommandResult("", "Requester is required");
 
     auto now = Clock.currStdTime();
     auto job = ExportJob();
-    job.id = randomUUID().toString();
+    job.id.value = randomUUID().toString();
     job.tenantId = req.tenantId;
     job.requestedBy = req.requestedBy;
     job.format_ = req.format_;
@@ -52,10 +52,10 @@ class ManageExportsUseCase : UIMUseCase {
     job.totalRecords = cast(long) logs.length;
     job.status = ExportStatus.completed;
     job.completedAt = Clock.currStdTime();
-    job.downloadUrl = "/api/v1/exports/" ~ job.id ~ "/download";
+    job.downloadUrl = "/api/v1/exports/" ~ job.id.toString() ~ "/download";
 
     jobRepo.save(job);
-    return CommandResult(job.id, "");
+    return CommandResult(job.id.toString(), "");
   }
 
   bool hasExport(ExportJobId id, TenantId tenantId) {

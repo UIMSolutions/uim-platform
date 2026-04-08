@@ -10,4 +10,5 @@ public {
   import uim.platform.auditlog.domain.ports;
   import uim.platform.auditlog.domain.services;
   import uim.platform.auditlog.domain.types;
+  import uim.platform.auditlog.domain.enumerations;
 }

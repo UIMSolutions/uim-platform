@@ -31,8 +31,8 @@ struct AuditConfig {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
+      .set("id", id.toString)
+      .set("tenantId", tenantId.toString)
       .set("name", name)
       .set("status", status.to!string)
       .set("logDataAccess", logDataAccess)

@@ -30,9 +30,9 @@ struct ExportJob {
 
   Json toJson() const {
     return Json.emptyObject
-      .set("id", id)
-      .set("tenantId", tenantId)
-      .set("requestedBy", requestedBy)
+      .set("id", id.toString)
+      .set("tenantId", tenantId.toString)
+      .set("requestedBy", requestedBy.toString)
       .set("format", format_.to!string)
       .set("status", status.to!string)
       .set("categories", categories.map!(c => to!string(c)).array.toJson)

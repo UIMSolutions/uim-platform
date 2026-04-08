@@ -49,8 +49,7 @@ class WriteConfigChangeUseCase : UIMUseCase {
     entry.outcome = AuditOutcome.success;
     entry.objectType = req.configType;
     entry.objectId = req.configObjectId;
-    entry.message = "Configuration change: " ~ req.configType ~ " / "
-      ~ req.configObjectId ~ " by " ~ req.changedBy;
+    entry.message = "Configuration change: %s / %s by %s".format(req.configType, req.configObjectId, req.changedBy);
     entry.attributes = req.changes;
     entry.timestamp = now;
     auditRepo.save(entry);
