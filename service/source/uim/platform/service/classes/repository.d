@@ -68,6 +68,16 @@ class MemoryTenantRepository(TEntity, TId) { // }: IBaseRepository!(TEntity, TId
     }
   }
 
+  void remove(TenantId tenantId, bool onlyIfEmpty = true) {
+    if (!existsByTenant(tenantId))
+      return;
+
+    if (onlyIfEmpty && !store[tenantId].empty)
+      return;
+
+    store.remove(tenantId);
+  }
+  
   void remove(TenantId tenantId, TId id) {
     if (!existsById(tenantId, id))
       return;
