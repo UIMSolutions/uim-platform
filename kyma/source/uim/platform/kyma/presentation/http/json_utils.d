@@ -23,7 +23,7 @@ module uim.platform.kyma.presentation.http.json_utils;
 
 
 /// Extract a string-to-string map from a Json object.
-string[string] jsonStrMap(Json j, string key) {
+/* string[string] jsonStrMap(Json j, string key) {
   if (!j.isObject)
     return (string[string]).init;
   auto v = key in j;
@@ -37,38 +37,38 @@ string[string] jsonStrMap(Json j, string key) {
   }
   return result;
 }
-
+ */
 /// Write an error response as JSON.
-void writeError(scope HTTPServerResponse res, int code, string msg) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(msg);
-  j["code"] = Json(cast(long) code);
-  res.writeJsonBody(j, cast(ushort) code);
-}
+// void writeError(scope HTTPServerResponse res, int code, string msg) {
+//   auto j = Json.emptyObject;
+//   j["error"] = Json(msg);
+//   j["code"] = Json(cast(long) code);
+//   res.writeJsonBody(j, cast(ushort) code);
+// }
 
-/// Extract an ID from the end of a URI path.
-string extractIdFromPath(string uri) {
-  // import std.string : lastIndexOf;
-  auto idx = uri.lastIndexOf('/');
-  if (idx < 0 || idx + 1 >= uri.length)
-    return "";
-  auto rest = uri[idx + 1 .. $];
-  auto qidx = rest.lastIndexOf('?');
-  return qidx > 0 ? rest[0 .. qidx] : rest;
-}
+// /// Extract an ID from the end of a URI path.
+// string extractIdFromPath(string uri) {
+//   // import std.string : lastIndexOf;
+//   auto idx = uri.lastIndexOf('/');
+//   if (idx < 0 || idx + 1 >= uri.length)
+//     return "";
+//   auto rest = uri[idx + 1 .. $];
+//   auto qidx = rest.lastIndexOf('?');
+//   return qidx > 0 ? rest[0 .. qidx] : rest;
+// }
 
-/// Serialize a string array to Json array.
-Json serializeStrArray(string[] arr) {
-  auto result = Json.emptyArray;
-  foreach (s; arr)
-    result ~= Json(s);
-  return result;
-}
+// /// Serialize a string array to Json array.
+// Json serializeStrArray(string[] arr) {
+//   auto result = Json.emptyArray;
+//   foreach (s; arr)
+//     result ~= Json(s);
+//   return result;
+// }
 
-/// Serialize a string[string] map to Json object.
-Json serializeStrMap(string[string] map) {
-  auto result = Json.emptyObject;
-  foreach (k, v; map)
-    result[k] = Json(v);
-  return result;
-}
+// /// Serialize a string[string] map to Json object.
+// Json serializeStrMap(string[string] map) {
+//   auto result = Json.emptyObject;
+//   foreach (k, v; map)
+//     result[k] = Json(v);
+//   return result;
+// }

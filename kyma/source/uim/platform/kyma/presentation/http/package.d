@@ -1,3 +1,6 @@
 module uim.platform.kyma.presentation.http;
 
-kage.datetime
+public {
+  import uim.platform.kyma.presentation.http.controllers;
+  import uim.platform.kyma.presentation.http.json_utils;
+}

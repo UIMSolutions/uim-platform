@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.kyma.infrastructure.persistence.memory.function;
+module uim.platform.kyma.infrastructure.persistence.memory.functions;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.serverless_function;
-import uim.platform.kyma.domain.ports.repositories.functions;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.serverless_function;
+// import uim.platform.kyma.domain.ports.repositories.functions;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryFunctionRepository : FunctionRepository {
   private ServerlessFunction[FunctionId] store;
 

@@ -5,6 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.config;
 
+import std.process : environment;
+import uim.platform.kyma;
+
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct AppConfig {
   string host = "0.0.0.0";

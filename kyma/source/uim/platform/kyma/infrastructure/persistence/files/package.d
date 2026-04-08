@@ -1,3 +1,2 @@
-module uim.platform.kyma.infrastructure.persistence.file;
+module uim.platform.kyma.infrastructure.persistence.files;
 
-kage.datetime

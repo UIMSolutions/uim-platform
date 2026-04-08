@@ -5,47 +5,51 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.container;
 
-import uim.platform.kyma.infrastructure.config;
+// import uim.platform.kyma.infrastructure.config;
 
-// Repositories
-import uim.platform.kyma.infrastructure.persistence.memory.environment;
-import uim.platform.kyma.infrastructure.persistence.memory.namespace;
-import uim.platform.kyma.infrastructure.persistence.memory.function;
-import uim.platform.kyma.infrastructure.persistence.memory.api_rule;
-import uim.platform.kyma.infrastructure.persistence.memory.service_instance;
-import uim.platform.kyma.infrastructure.persistence.memory.service_binding;
-import uim.platform.kyma.infrastructure.persistence.memory.event_subscription;
-import uim.platform.kyma.infrastructure.persistence.memory.module;
-import uim.platform.kyma.infrastructure.persistence.memory.application;
+// // Repositories
+// import uim.platform.kyma.infrastructure.persistence.memory.environment;
+// import uim.platform.kyma.infrastructure.persistence.memory.namespace;
+// import uim.platform.kyma.infrastructure.persistence.memory.function;
+// import uim.platform.kyma.infrastructure.persistence.memory.api_rule;
+// import uim.platform.kyma.infrastructure.persistence.memory.service_instance;
+// import uim.platform.kyma.infrastructure.persistence.memory.service_binding;
+// import uim.platform.kyma.infrastructure.persistence.memory.event_subscription;
+// import uim.platform.kyma.infrastructure.persistence.memory.module;
+// import uim.platform.kyma.infrastructure.persistence.memory.application;
 
-// Domain services
-import uim.platform.kyma.domain.services.module_dependency_resolver;
-import uim.platform.kyma.domain.services.function_validator;
+// // Domain services
+// import uim.platform.kyma.domain.services.module_dependency_resolver;
+// import uim.platform.kyma.domain.services.function_validator;
 
-// Use Cases
-import uim.platform.kyma.application.usecases.manage.environments;
-import uim.platform.kyma.application.usecases.manage.namespaces;
-import uim.platform.kyma.application.usecases.manage.functions;
-import uim.platform.kyma.application.usecases.manage.api_rules;
-import uim.platform.kyma.application.usecases.manage.service_instances;
-import uim.platform.kyma.application.usecases.manage.service_bindings;
-import uim.platform.kyma.application.usecases.manage.event_subscriptions;
-import uim.platform.kyma.application.usecases.manage.modules;
-import uim.platform.kyma.application.usecases.manage.applications;
+// // Use Cases
+// import uim.platform.kyma.application.usecases.manage.environments;
+// import uim.platform.kyma.application.usecases.manage.namespaces;
+// import uim.platform.kyma.application.usecases.manage.functions;
+// import uim.platform.kyma.application.usecases.manage.api_rules;
+// import uim.platform.kyma.application.usecases.manage.service_instances;
+// import uim.platform.kyma.application.usecases.manage.service_bindings;
+// import uim.platform.kyma.application.usecases.manage.event_subscriptions;
+// import uim.platform.kyma.application.usecases.manage.modules;
+// import uim.platform.kyma.application.usecases.manage.applications;
 
-// Controllers
-import uim.platform.kyma.presentation.http.environment;
-import uim.platform.kyma.presentation.http.namespace;
-import uim.platform.kyma.presentation.http.function;
-import uim.platform.kyma.presentation.http.api_rule;
-import uim.platform.kyma.presentation.http.service_instance;
-import uim.platform.kyma.presentation.http.service_binding;
-import uim.platform.kyma.presentation.http.event_subscription;
-import uim.platform.kyma.presentation.http.module ;
-import uim.platform.kyma.presentation.http.application;
-import uim.platform.kyma.presentation.http.health;
+// // Controllers
+// import uim.platform.kyma.presentation.http.environment;
+// import uim.platform.kyma.presentation.http.namespace;
+// import uim.platform.kyma.presentation.http.function;
+// import uim.platform.kyma.presentation.http.api_rule;
+// import uim.platform.kyma.presentation.http.service_instance;
+// import uim.platform.kyma.presentation.http.service_binding;
+// import uim.platform.kyma.presentation.http.event_subscription;
+// import uim.platform.kyma.presentation.http.module ;
+// import uim.platform.kyma.presentation.http.application;
+// import uim.platform.kyma.presentation.http.health;
 
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 
 /// Dependency injection container — wires all layers together.
 struct Container {
