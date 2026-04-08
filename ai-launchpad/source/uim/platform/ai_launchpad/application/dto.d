@@ -5,13 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.application.dto;
 
-// Generic command result
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // --- Connection ---
 struct CreateConnectionRequest {
   string workspaceId;

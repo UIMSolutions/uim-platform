@@ -12,17 +12,6 @@ import uim.platform.abap_enviroment.domain.entities.business_user : RoleAssignme
 import uim.platform.abap_enviroment.domain.entities.business_role : CatalogAssignment;
 import uim.platform.abap_enviroment.domain.entities.transport_request : TransportTask;
 
-/// --- Command result ---
-
-struct CommandResult {
-  string id;
-  string error;
-
-  bool isSuccess() const
-  {
-    return error.length == 0;
-  }
-}
 
 // ─── System Instance DTOs ───
 

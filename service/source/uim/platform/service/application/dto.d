@@ -10,3 +10,10 @@ struct CommandResult {
     return error.length == 0;
   }
 }
+
+
+// struct CommandResult {
+//   bool success;
+//   string id;
+//   string error;
+// }

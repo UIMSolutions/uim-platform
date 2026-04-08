@@ -7,13 +7,6 @@ module uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core.domain.types;
 
-// --- Generic result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 // --- Scenario ---
 

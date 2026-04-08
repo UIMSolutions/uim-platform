@@ -7,13 +7,9 @@ module uim.platform.custom_domain.application.dto;
 
 import uim.platform.custom_domain.domain.types;
 
-// --- Generic result ---
 
-struct CommandResult {
-    bool success;
-    string id;
-    string error;
-}
+
+
 
 // --- Custom Domain ---
 

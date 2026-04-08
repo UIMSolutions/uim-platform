@@ -7,13 +7,9 @@ module uim.platform.process_automation.application.dto;
 
 import uim.platform.process_automation.domain.types;
 
-// --- Generic result ---
 
-struct CommandResult {
-    bool success;
-    string id;
-    string error;
-}
+
+
 
 // --- Process (Workflow Definition) ---
 

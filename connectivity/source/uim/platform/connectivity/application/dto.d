@@ -8,13 +8,7 @@ module uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.types;
 import uim.platform.connectivity.domain.entities.destination : DestinationProperty;
 
-/// --- Command result ---
 
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
 
 /// --- Destination DTOs ---
 

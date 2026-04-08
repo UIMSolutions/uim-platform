@@ -7,13 +7,9 @@ module uim.platform.situation_automation.application.dto;
 
 import uim.platform.situation_automation.domain.types;
 
-// --- Generic result ---
 
-struct CommandResult {
-    bool success;
-    string id;
-    string error;
-}
+
+
 
 // --- Situation Template ---
 

@@ -8,14 +8,6 @@ module uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.types;
 import uim.platform.content_agent.domain.entities.content_package : ContentItem;
 
-/// --- Command result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 /// --- Content Package DTOs ---
 
 struct CreatePackageRequest {

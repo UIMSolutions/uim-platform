@@ -11,11 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-struct CommandResult {
-    bool success;
-    string id;
-    string error;
-}
+
 
 // --- Data Subject ---
 struct CreateDataSubjectRequest {

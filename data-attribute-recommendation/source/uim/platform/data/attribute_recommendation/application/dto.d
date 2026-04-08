@@ -96,12 +96,4 @@ struct SubmitInferenceRequest {
 
 // --- Command Result ---
 
-struct CommandResult {
-  string id;
-  string error;
 
-  bool isSuccess() const
-  {
-    return error.length == 0;
-  }
-}

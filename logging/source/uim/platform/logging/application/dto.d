@@ -7,7 +7,7 @@ module uim.platform.logging.application.dto;
 
 import uim.platform.logging.domain.types;
 
-// --- Generic Result ---
+
 
 struct CommandResult {
   bool success;

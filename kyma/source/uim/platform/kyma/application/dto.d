@@ -11,14 +11,6 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-/// --- Command result ---
-
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 /// --- Environment DTOs ---
 
 struct CreateEnvironmentRequest {

@@ -5,13 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.credential_store.application.dto;
 
-// Generic command result
-struct CommandResult {
-  bool success;
-  string id;
-  string error;
-}
-
 // Namespace DTOs
 struct CreateNamespaceRequest {
   TenantId tenantId;
