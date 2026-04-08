@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.service_binding;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.service_bindings;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.service_binding;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.service_bindings;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.service_binding;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class ServiceBindingController {
+mixin(ShowModule!());
+
+@safe:
+class ServiceBindingController : SAPController {
   private ManageServiceBindingsUseCase uc;
 
   this(ManageServiceBindingsUseCase uc) {
@@ -24,6 +28,8 @@ class ServiceBindingController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
     router.get("/api/v1/service-bindings/*", &handleGetById);
@@ -92,7 +98,7 @@ class ServiceBindingController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto b = uc.getBinding(id);
-      if (b.id.length == 0) {
+      if (b.id.isEmpty) {
         writeError(res, 404, "Service binding not found");
         return;
       }

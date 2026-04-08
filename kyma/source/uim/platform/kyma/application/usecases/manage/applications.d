@@ -16,20 +16,20 @@ mixin(ShowModule!());
 @safe:
 /// Application service for external application connectivity.
 class ManageApplicationsUseCase : UIMUseCase {
-  private ApplicationRepository repo;
+  private ApplicationRepository appRepository;
 
-  this(ApplicationRepository repo) {
-    this.repo = repo;
+  this(ApplicationRepository appRepository) {
+    this.appRepository = appRepository;
   }
 
   CommandResult register(RegisterApplicationRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Application name is required");
-    if (req.environmentId.length == 0)
+    if (req.environmentId.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
-    auto existing = repo.findByName(req.environmentId, req.name);
-    if (existing.id.length > 0)
+    auto existing = appRepository.findByName(req.environmentId, req.name);
+    if (existing.id.isEmpty)
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     // import std.uuid : randomUUID;
@@ -74,13 +74,13 @@ class ManageApplicationsUseCase : UIMUseCase {
     }
     app.events = events;
 
-    repo.save(app);
+    appRepository.save(app);
     return CommandResult(true, id, "");
   }
 
   CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req) {
-    auto app = repo.findById(id);
-    if (app.id.length == 0)
+    auto app = appRepository.findById(id);
+    if (app.id.isEmpty)
       return CommandResult(false, "", "Application not found");
 
     if (req.description.length > 0)
@@ -119,52 +119,52 @@ class ManageApplicationsUseCase : UIMUseCase {
     }
 
     app.modifiedAt = clockSeconds();
-    repo.update(app);
+    appRepository.update(app);
     return CommandResult(true, id, "");
   }
 
   CommandResult connectApplication(ApplicationId id) {
-    auto app = repo.findById(id);
-    if (app.id.length == 0)
+    auto app = appRepository.findById(id);
+    if (app.id.isEmpty)
       return CommandResult(false, "", "Application not found");
     app.status = AppConnectivityStatus.connected;
     app.modifiedAt = clockSeconds();
-    repo.update(app);
+    appRepository.update(app);
     return CommandResult(true, id, "");
   }
 
   CommandResult disconnectApplication(ApplicationId id) {
-    auto app = repo.findById(id);
-    if (app.id.length == 0)
+    auto app = appRepository.findById(id);
+    if (app.id.isEmpty)
       return CommandResult(false, "", "Application not found");
     app.status = AppConnectivityStatus.disconnected;
     app.modifiedAt = clockSeconds();
-    repo.update(app);
+    appRepository.update(app);
     return CommandResult(true, id, "");
   }
 
   Application getApplication(ApplicationId id) {
-    return repo.findById(id);
+    return appRepository.findById(id);
   }
 
   Application[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+    return appRepository.findByEnvironment(envId);
   }
 
   Application[] listByTenant(TenantId tenantId) {
-    return repo.findByTenant(tenantId);
+    return appRepository.findByTenant(tenantId);
   }
 
   CommandResult deleteApplication(ApplicationId id) {
-    auto app = repo.findById(id);
-    if (app.id.length == 0)
+    auto app = appRepository.findById(id);
+    if (app.id.isEmpty)
       return CommandResult(false, "", "Application not found");
-    repo.remove(id);
+    appRepository.remove(id);
     return CommandResult(true, id, "");
   }
 
-  private AppRegistrationType parseRegistrationType(string s) {
-    switch (s) {
+  private AppRegistrationType parseRegistrationType(string type) {
+    switch (type) {
     case "api":
       return AppRegistrationType.api;
     case "events":

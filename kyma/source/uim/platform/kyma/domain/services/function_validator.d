@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.services.function_validator;
 
-import uim.platform.kyma.domain.entities.serverless_function;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.serverless_function;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service: validates serverless function configurations.
 class FunctionValidator {
   /// Validate function configuration before deployment.

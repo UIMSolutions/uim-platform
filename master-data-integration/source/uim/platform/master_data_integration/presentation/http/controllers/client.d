@@ -98,7 +98,7 @@ class ClientController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto client = uc.getClient(id);
-      if (client.id.length == 0) {
+      if (client.id.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
       }

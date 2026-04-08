@@ -25,7 +25,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDirectoryRequest req) {
-    if (req.globalAccountId.length == 0)
+    if (req.globalAccountid.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
@@ -55,7 +55,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
 
   CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
     auto d = repo.findById(id);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
 
     if (req.displayName.length > 0)
@@ -86,7 +86,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
 
   CommandResult remove(DirectoryId id) {
     auto d = repo.findById(id);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
     if (d.subaccounts.length > 0 || d.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");

@@ -68,7 +68,7 @@ class ManageSystemsUseCase : UIMUseCase {
   }
 
   CommandResult updateSystem(UpdateSystemRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "System ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

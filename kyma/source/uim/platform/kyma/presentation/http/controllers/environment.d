@@ -15,12 +15,12 @@ module uim.platform.kyma.presentation.http.controllers.environment;
 // import uim.platform.kyma.domain.entities.kyma_environment;
 // import uim.platform.kyma.domain.types;
 // import uim.platform.kyma.presentation.http.json_utils;
-// import uim.platform.kyma;
+import uim.platform.kyma;
 
 mixin(ShowModule!());
 
 @safe:
-class EnvironmentController {
+class EnvironmentController : SAPController{
   private ManageEnvironmentsUseCase uc;
 
   this(ManageEnvironmentsUseCase uc) {
@@ -28,6 +28,8 @@ class EnvironmentController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/environments", &handleCreate);
     router.get("/api/v1/environments", &handleList);
     router.get("/api/v1/environments/*", &handleGetById);
@@ -99,7 +101,7 @@ class EnvironmentController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto env = uc.getEnvironment(id);
-      if (env.id.length == 0) {
+      if (env.id.isEmpty) {
         writeError(res, 404, "Environment not found");
         return;
       }

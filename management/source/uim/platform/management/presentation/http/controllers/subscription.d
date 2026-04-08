@@ -85,7 +85,7 @@ class SubscriptionController : SAPController {
     try {
       auto id = extractId(req.requestURI);
       auto s = uc.getById(id);
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Subscription not found");
         return;
       }

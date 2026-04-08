@@ -49,7 +49,7 @@ class ManageDeviceRegistrationsUseCase : UIMUseCase {
 
     CommandResult updateStatus(DeviceRegistrationId id, string status) {
         auto reg = repo.findById(id);
-        if (reg.id.length == 0)
+        if (reg.id.isEmpty)
             return CommandResult(false, "", "Device not found");
         switch (status) {
             case "locked": reg.status = DeviceStatus.locked; break;

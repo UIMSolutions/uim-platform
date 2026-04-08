@@ -86,7 +86,7 @@ class ChannelController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto ch = uc.get_(id);
-      if (ch.id.length == 0) {
+      if (ch.id.isEmpty) {
         writeError(res, 404, "Notification channel not found");
         return;
       }

@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.service_instance;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.service_instances;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.service_instance;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.service_instances;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.service_instance;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class ServiceInstanceController {
+mixin(ShowModule!());
+
+@safe:
+class ServiceInstanceController : SAPController {
   private ManageServiceInstancesUseCase uc;
 
   this(ManageServiceInstancesUseCase uc) {
@@ -24,6 +28,8 @@ class ServiceInstanceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/service-instances", &handleCreate);
     router.get("/api/v1/service-instances", &handleList);
     router.get("/api/v1/service-instances/*", &handleGetById);
@@ -93,7 +99,7 @@ class ServiceInstanceController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto inst = uc.getServiceInstance(id);
-      if (inst.id.length == 0) {
+      if (inst.id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }

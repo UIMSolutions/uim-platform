@@ -39,7 +39,7 @@ class ManageUserSessionsUseCase : UIMUseCase {
 
     CommandResult terminate(UserSessionId id) {
         auto session = repo.findById(id);
-        if (session.id.length == 0)
+        if (session.id.isEmpty)
             return CommandResult(false, "", "Session not found");
         session.status = SessionStatus.terminated;
         session.endedAt = currentTimestamp();

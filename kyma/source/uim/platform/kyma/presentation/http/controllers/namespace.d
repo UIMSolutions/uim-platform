@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.namespace;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.namespaces;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.namespace;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.namespaces;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.namespace;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class NamespaceController {
+mixin(ShowModule!());
+
+@safe:
+class NamespaceController : SAPController {
   private ManageNamespacesUseCase uc;
 
   this(ManageNamespacesUseCase uc) {
@@ -24,6 +28,8 @@ class NamespaceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/namespaces", &handleCreate);
     router.get("/api/v1/namespaces", &handleList);
     router.get("/api/v1/namespaces/*", &handleGetById);
@@ -88,7 +94,7 @@ class NamespaceController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto ns = uc.getNamespace(id);
-      if (ns.id.length == 0) {
+      if (ns.id.isEmpty) {
         writeError(res, 404, "Namespace not found");
         return;
       }

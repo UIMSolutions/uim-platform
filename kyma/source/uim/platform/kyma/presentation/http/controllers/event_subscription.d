@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.event_subscription;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.event_subscriptions;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.event_subscription;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.event_subscriptions;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.event_subscription;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class EventSubscriptionController {
+mixin(ShowModule!());
+
+@safe:
+class EventSubscriptionController : SAPController {
   private ManageEventSubscriptionsUseCase uc;
 
   this(ManageEventSubscriptionsUseCase uc) {
@@ -24,6 +28,8 @@ class EventSubscriptionController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/event-subscriptions", &handleCreate);
     router.get("/api/v1/event-subscriptions", &handleList);
     router.get("/api/v1/event-subscriptions/*", &handleGetById);
@@ -102,7 +108,7 @@ class EventSubscriptionController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto sub = uc.getSubscription(id);
-      if (sub.id.length == 0) {
+      if (sub.id.isEmpty) {
         writeError(res, 404, "Subscription not found");
         return;
       }

@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ApiRuleController {
+class ApiRuleController : SAPController {
   private ManageApiRulesUseCase uc;
 
   this(ManageApiRulesUseCase uc) {
@@ -28,6 +28,8 @@ class ApiRuleController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/api-rules", &handleCreate);
     router.get("/api/v1/api-rules", &handleList);
     router.get("/api/v1/api-rules/*", &handleGetById);
@@ -105,7 +107,7 @@ class ApiRuleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto rule = uc.getApiRule(id);
-      if (rule.id.length == 0) {
+      if (rule.id.isEmpty) {
         writeError(res, 404, "API rule not found");
         return;
       }

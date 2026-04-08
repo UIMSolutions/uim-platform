@@ -62,7 +62,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
 
   CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req) {
     auto env = repo.findById(id);
-    if (env.id.length == 0)
+    if (env.id.isEmpty)
       return CommandResult(false, "", "Environment not found");
 
     if (req.description.length > 0)
@@ -101,7 +101,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
 
   CommandResult deleteEnvironment(KymaEnvironmentId id) {
     auto env = repo.findById(id);
-    if (env.id.length == 0)
+    if (env.id.isEmpty)
       return CommandResult(false, "", "Environment not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -91,7 +91,7 @@ class GlobalAccountController : SAPController {
     try {
       auto id = extractId(req.requestURI);
       auto ga = uc.getById(id);
-      if (ga.id.length == 0) {
+      if (ga.id.isEmpty) {
         writeError(res, 404, "Global account not found");
         return;
       }

@@ -55,7 +55,7 @@ class MonitoringController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getJobSummary(id, tenantId);
-      if (summary.jobId.length == 0) {
+      if (summary.jobid.isEmpty) {
         writeError(res, 404, "Job not found");
         return;
       }

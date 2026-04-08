@@ -46,7 +46,7 @@ class ManageAppRoutesUseCase : UIMUseCase {
 
     CommandResult update(AppRouteId id, UpdateAppRouteRequest r) {
         auto route = repo.findById(id);
-        if (route.id.length == 0)
+        if (route.id.isEmpty)
             return CommandResult(false, "", "Route not found");
 
         if (r.pathPrefix.length > 0) route.pathPrefix = r.pathPrefix;

@@ -25,7 +25,7 @@ class ManageNamespacesUseCase : UIMUseCase {
   CommandResult create(CreateNamespaceRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Namespace name is required");
-    if (req.environmentId.length == 0)
+    if (req.environmentid.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
     auto existing = repo.findByName(req.environmentId, req.name);
@@ -61,7 +61,7 @@ class ManageNamespacesUseCase : UIMUseCase {
 
   CommandResult updateNamespace(NamespaceId id, UpdateNamespaceRequest req) {
     auto ns = repo.findById(id);
-    if (ns.id.length == 0)
+    if (ns.id.isEmpty)
       return CommandResult(false, "", "Namespace not found");
 
     if (req.description.length > 0)
@@ -99,7 +99,7 @@ class ManageNamespacesUseCase : UIMUseCase {
 
   CommandResult deleteNamespace(NamespaceId id) {
     auto ns = repo.findById(id);
-    if (ns.id.length == 0)
+    if (ns.id.isEmpty)
       return CommandResult(false, "", "Namespace not found");
     repo.remove(id);
     return CommandResult(true, id, "");

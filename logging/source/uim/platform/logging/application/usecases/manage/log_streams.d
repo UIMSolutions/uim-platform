@@ -46,7 +46,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
 
   CommandResult update(LogStreamId id, UpdateLogStreamRequest req) {
     auto stream = repo.findById(id);
-    if (stream.id.length == 0)
+    if (stream.id.isEmpty)
       return CommandResult(false, "", "Log stream not found");
 
     if (req.description.length > 0)

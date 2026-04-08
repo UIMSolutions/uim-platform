@@ -79,7 +79,7 @@ class ServiceInstanceController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -110,7 +110,7 @@ class ServiceInstanceController : SAPController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }
@@ -135,7 +135,7 @@ class ServiceInstanceController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Service instance not found");
         return;
       }

@@ -109,7 +109,7 @@ class JobController : SAPController {
             TenantId tenantId = req.getTenantId;
 
             auto job = jobUc.get_(id, tenantId);
-            if (job.id.length == 0) {
+            if (job.id.isEmpty) {
                 writeError(res, 404, "Job not found");
                 return;
             }

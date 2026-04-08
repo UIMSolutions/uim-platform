@@ -27,13 +27,13 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateEnvironmentInstanceRequest req) {
-    if (req.subaccountId.length == 0)
+    if (req.subaccountid.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Environment name is required");
 
     auto subaccount = subaccountRepo.findById(req.subaccountId);
-    if (subaccount.id.length == 0)
+    if (subaccount.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
 
     auto envType = parseEnvironmentType(req.environmentType);
@@ -80,7 +80,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
 
   CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
     auto inst = repo.findById(id);
-    if (inst.id.length == 0)
+    if (inst.id.isEmpty)
       return CommandResult(false, "", "Environment instance not found");
 
     if (req.description.length > 0)
@@ -103,7 +103,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
 
   CommandResult deprovision(EnvironmentInstanceId id) {
     auto inst = repo.findById(id);
-    if (inst.id.length == 0)
+    if (inst.id.isEmpty)
       return CommandResult(false, "", "Environment instance not found");
     if (!provisioner.canDelete(inst))
       return CommandResult(false, "", "Environment cannot be deleted in current status");

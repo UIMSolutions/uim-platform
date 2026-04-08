@@ -23,7 +23,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
   }
 
   CommandResult subscribe(CreateSubscriptionRequest req) {
-    if (req.subaccountId.length == 0)
+    if (req.subaccountid.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.appName.length == 0)
       return CommandResult(false, "", "Application name is required");
@@ -69,7 +69,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
 
   CommandResult unsubscribe(SubscriptionId id) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
     if (sub.status != SubscriptionStatus.subscribed)
       return CommandResult(false, "", "Subscription must be in subscribed status");
@@ -90,7 +90,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
 
     if (req.planName.length > 0)

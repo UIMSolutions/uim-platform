@@ -19,9 +19,9 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateReplicationJobRequest req) {
-    if (req.distributionModelId.length == 0)
+    if (req.distributionModelid.isEmpty)
       return CommandResult(false, "", "Distribution model ID is required");
-    if (req.sourceClientId.length == 0)
+    if (req.sourceClientid.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
     // import std.uuid : randomUUID;
@@ -48,7 +48,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
 
   CommandResult startJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.length == 0)
+    if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.pending && job.status != ReplicationJobStatus.paused)
       return CommandResult(false, "", "Job can only be started from pending or paused state");
@@ -62,7 +62,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   CommandResult completeJob(ReplicationJobId id, long successRecords,
       long errorRecords, long skippedRecords, string[] errorMessages, string deltaToken) {
     auto job = repo.findById(id);
-    if (job.id.length == 0)
+    if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
 
     job.status = errorRecords > 0 ? ReplicationJobStatus.failed : ReplicationJobStatus.completed;
@@ -80,7 +80,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
 
   CommandResult cancelJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.length == 0)
+    if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
@@ -90,7 +90,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
 
   CommandResult pauseJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.length == 0)
+    if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
     if (job.status != ReplicationJobStatus.running)
       return CommandResult(false, "", "Job can only be paused when running");
@@ -117,7 +117,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
 
   CommandResult deleteJob(ReplicationJobId id) {
     auto job = repo.findById(id);
-    if (job.id.length == 0)
+    if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
     repo.remove(id);
     return CommandResult(true, id, "");

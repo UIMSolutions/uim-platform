@@ -46,7 +46,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
 
   CommandResult updateRule(FilterRuleId id, UpdateFilterRuleRequest req) {
     auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Filter rule not found");
 
     if (req.name.length > 0)
@@ -82,7 +82,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
 
   CommandResult deleteRule(FilterRuleId id) {
     auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Filter rule not found");
     repo.remove(id);
     return CommandResult(true, id, "");

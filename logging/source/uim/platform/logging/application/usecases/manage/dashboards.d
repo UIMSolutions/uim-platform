@@ -57,7 +57,7 @@ class ManageDashboardsUseCase : UIMUseCase {
 
   CommandResult update(DashboardId id, UpdateDashboardRequest req) {
     auto d = repo.findById(id);
-    if (d.id.length == 0)
+    if (d.id.isEmpty)
       return CommandResult(false, "", "Dashboard not found");
 
     if (req.name.length > 0)

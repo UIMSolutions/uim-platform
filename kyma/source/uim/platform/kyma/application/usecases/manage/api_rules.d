@@ -16,10 +16,10 @@ mixin(ShowModule!());
 @safe:
 /// Application service for API rule management.
 class ManageApiRulesUseCase : UIMUseCase {
-  private ApiRuleRepository repo;
+  private ApiRuleRepository ruleRepository;
 
-  this(ApiRuleRepository repo) {
-    this.repo = repo;
+  this(ApiRuleRepository ruleRepository) {
+    this.ruleRepository = ruleRepository;
   }
 
   CommandResult create(CreateApiRuleRequest req) {
@@ -30,8 +30,8 @@ class ManageApiRulesUseCase : UIMUseCase {
     if (req.host.length == 0)
       return CommandResult(false, "", "Host is required");
 
-    auto existing = repo.findByName(req.namespaceId, req.name);
-    if (existing.id.length > 0)
+    auto existing = ruleRepository.findByName(req.namespaceId, req.name);
+    if (existing.ruleId.isEmpty)
       return CommandResult(false, "", "API rule '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
@@ -39,7 +39,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     auto id = randomUUID().toString();
 
     ApiRule rule;
-    rule.id = id;
+    rule.ruleId = id;
     rule.namespaceId = req.namespaceId;
     rule.environmentId = req.environmentId;
     rule.tenantId = req.tenantId;
@@ -80,13 +80,13 @@ class ManageApiRulesUseCase : UIMUseCase {
     }
     rule.rules = entries;
 
-    repo.save(rule);
+    ruleRepository.save(rule);
     return CommandResult(true, id, "");
   }
 
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
-    auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    auto rule = ruleRepository.findById(id);
+    if (rule.ruleId.isEmpty)
       return CommandResult(false, "", "API rule not found");
 
     if (req.description.length > 0)
@@ -129,27 +129,27 @@ class ManageApiRulesUseCase : UIMUseCase {
     }
     rule.modifiedAt = clockSeconds();
 
-    repo.update(rule);
+    ruleRepository.update(rule);
     return CommandResult(true, id, "");
   }
 
   ApiRule getApiRule(ApiRuleId id) {
-    return repo.findById(id);
+    return ruleRepository.findById(id);
   }
 
   ApiRule[] listByNamespace(NamespaceId nsId) {
-    return repo.findByNamespace(nsId);
+    return ruleRepository.findByNamespace(nsId);
   }
 
   ApiRule[] listByEnvironment(KymaEnvironmentId envId) {
-    return repo.findByEnvironment(envId);
+    return ruleRepository.findByEnvironment(envId);
   }
 
   CommandResult deleteApiRule(ApiRuleId id) {
-    auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    auto rule = ruleRepository.findById(id);
+    if (rule.ruleId.isEmpty)
       return CommandResult(false, "", "API rule not found");
-    repo.remove(id);
+    ruleRepository.remove(id);
     return CommandResult(true, id, "");
   }
 
@@ -168,8 +168,8 @@ class ManageApiRulesUseCase : UIMUseCase {
     }
   }
 
-  private ApiHttpMethod parseHttpMethod(string s) {
-    switch (s) {
+  private ApiHttpMethod parseHttpMethod(string method) {
+    switch (method.toUpper()) {
     case "GET":
       return ApiHttpMethod.get_;
     case "POST":

@@ -22,9 +22,9 @@ class ManageEntitlementsUseCase : UIMUseCase {
   }
 
   CommandResult assign(AssignEntitlementRequest req) {
-    if (req.globalAccountId.length == 0)
+    if (req.globalAccountid.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
-    if (req.servicePlanId.length == 0)
+    if (req.servicePlanid.isEmpty)
       return CommandResult(false, "", "Service plan ID is required");
     if (req.serviceName.length == 0)
       return CommandResult(false, "", "Service name is required");
@@ -62,7 +62,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
 
   CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
     auto ent = repo.findById(id);
-    if (ent.id.length == 0)
+    if (ent.id.isEmpty)
       return CommandResult(false, "", "Entitlement not found");
 
     ent.quotaAssigned = req.quotaAssigned;
@@ -75,7 +75,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
 
   CommandResult revoke(EntitlementId id) {
     auto ent = repo.findById(id);
-    if (ent.id.length == 0)
+    if (ent.id.isEmpty)
       return CommandResult(false, "", "Entitlement not found");
 
     ent.status = EntitlementStatus.revoked;
@@ -102,7 +102,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
 
   CommandResult remove(EntitlementId id) {
     auto ent = repo.findById(id);
-    if (ent.id.length == 0)
+    if (ent.id.isEmpty)
       return CommandResult(false, "", "Entitlement not found");
     repo.remove(id);
     return CommandResult(true, id, "");

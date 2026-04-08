@@ -93,7 +93,7 @@ class EntitlementController {
     try {
       auto id = extractId(req.requestURI);
       auto ent = uc.getById(id);
-      if (ent.id.length == 0) {
+      if (ent.id.isEmpty) {
         writeError(res, 404, "Entitlement not found");
         return;
       }

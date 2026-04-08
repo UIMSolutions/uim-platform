@@ -92,7 +92,7 @@ class DistributionController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto model = uc.getModel(id);
-      if (model.id.length == 0) {
+      if (model.id.isEmpty) {
         writeError(res, 404, "Distribution model not found");
         return;
       }

@@ -26,7 +26,7 @@ class ManageTransformationsUseCase : UIMUseCase {
   CommandResult createTransformation(CreateTransformationRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.systemId.length == 0)
+    if (req.systemid.isEmpty)
       return CommandResult("", "System ID is required");
     if (req.name.length == 0)
       return CommandResult("", "Transformation name is required");
@@ -66,7 +66,7 @@ class ManageTransformationsUseCase : UIMUseCase {
   }
 
   CommandResult updateTransformation(UpdateTransformationRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Transformation ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

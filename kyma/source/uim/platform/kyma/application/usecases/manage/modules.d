@@ -28,7 +28,7 @@ class ManageModulesUseCase : UIMUseCase {
   CommandResult enableModule(EnableModuleRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Module name is required");
-    if (req.environmentId.length == 0)
+    if (req.environmentid.isEmpty)
       return CommandResult(false, "", "Environment ID is required");
 
     auto existing = repo.findByName(req.environmentId, req.name);
@@ -73,7 +73,7 @@ class ManageModulesUseCase : UIMUseCase {
 
   CommandResult disableModule(ModuleId id) {
     auto mod = repo.findById(id);
-    if (mod.id.length == 0)
+    if (mod.id.isEmpty)
       return CommandResult(false, "", "Module not found");
     if (mod.status == ModuleStatus.disabled)
       return CommandResult(false, "", "Module is already disabled");
@@ -95,7 +95,7 @@ class ManageModulesUseCase : UIMUseCase {
 
   CommandResult updateModule(ModuleId id, UpdateModuleRequest req) {
     auto mod = repo.findById(id);
-    if (mod.id.length == 0)
+    if (mod.id.isEmpty)
       return CommandResult(false, "", "Module not found");
 
     if (req.version_.length > 0)
@@ -122,7 +122,7 @@ class ManageModulesUseCase : UIMUseCase {
 
   CommandResult deleteModule(ModuleId id) {
     auto mod = repo.findById(id);
-    if (mod.id.length == 0)
+    if (mod.id.isEmpty)
       return CommandResult(false, "", "Module not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -80,7 +80,7 @@ class ContentCacheController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
       }
@@ -110,7 +110,7 @@ class ContentCacheController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Cache entry not found");
         return;
       }

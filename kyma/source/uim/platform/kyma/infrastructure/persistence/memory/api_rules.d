@@ -20,13 +20,13 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   private ApiRule[ApiRuleId] store;
 
   ApiRule findById(ApiRuleId id) {
-    if (auto p = id in store)
-      return *p;
+    if (id in store)
+      return store[id];
     return ApiRule.init;
   }
 
   ApiRule findByName(NamespaceId nsId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; findByNamespace)
       if (e.namespaceId == nsId && e.name == name)
         return e;
     return ApiRule.init;
@@ -45,14 +45,16 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   void save(ApiRule rule) {
-    store[rule.id] = rule;
+    store[rule.ruleId] = rule;
   }
 
   void update(ApiRule rule) {
-    store[rule.id] = rule;
+    if (ruleId in store)
+      store[rule.ruleId] = rule;
   }
 
-  void remove(ApiRuleId id) {
-    store.remove(id);
+  void remove(ApiRuleId ruleId) {
+    if (ruleId in store)
+      store.remove(ruleId);
   }
 }

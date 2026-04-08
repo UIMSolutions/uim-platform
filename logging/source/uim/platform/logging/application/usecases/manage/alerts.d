@@ -41,7 +41,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult acknowledge(AcknowledgeAlertRequest req) {
     auto a = repo.findById(req.alertId);
-    if (a.id.length == 0)
+    if (a.id.isEmpty)
       return CommandResult(false, "", "Alert not found");
 
     a.state = AlertState.acknowledged;
@@ -54,7 +54,7 @@ class ManageAlertsUseCase : UIMUseCase {
 
   CommandResult resolve(ResolveAlertRequest req) {
     auto a = repo.findById(req.alertId);
-    if (a.id.length == 0)
+    if (a.id.isEmpty)
       return CommandResult(false, "", "Alert not found");
 
     a.state = AlertState.resolved;

@@ -24,7 +24,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
 
     Configuration get_(TenantId tenantId) {
         auto config = repo.findByTenant(tenantId);
-        if (config.id.length == 0) {
+        if (config.id.isEmpty) {
             // Return default configuration
             Configuration c;
             c.tenantId = tenantId;
@@ -44,7 +44,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
 
-        if (existing.id.length == 0) {
+        if (existing.id.isEmpty) {
             // Create new configuration
             import std.uuid : randomUUID;
             Configuration c;

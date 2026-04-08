@@ -93,7 +93,7 @@ class ReplicationController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto job = uc.getJob(id);
-      if (job.id.length == 0) {
+      if (job.id.isEmpty) {
         writeError(res, 404, "Replication job not found");
         return;
       }

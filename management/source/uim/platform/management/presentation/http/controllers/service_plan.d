@@ -101,7 +101,7 @@ class ServicePlanController : SAPController {
     try {
       auto id = extractId(req.requestURI);
       auto p = uc.getById(id);
-      if (p.id.length == 0) {
+      if (p.id.isEmpty) {
         writeError(res, 404, "Service plan not found");
         return;
       }

@@ -63,7 +63,7 @@ class EventController {
     try {
       auto id = extractId(req.requestURI);
       auto ev = uc.getById(id);
-      if (ev.id.length == 0) {
+      if (ev.id.isEmpty) {
         writeError(res, 404, "Event not found");
         return;
       }

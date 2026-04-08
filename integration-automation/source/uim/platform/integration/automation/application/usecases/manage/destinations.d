@@ -89,7 +89,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   }
 
   CommandResult updateDestination(UpdateDestinationRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Destination ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

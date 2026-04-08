@@ -29,7 +29,7 @@ class ApplicationController : SAPController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/applications", &handleRegister);
     router.get("/api/v1/applications", &handleList);
     router.get("/api/v1/applications/*", &handleGetById);
@@ -100,7 +100,7 @@ class ApplicationController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto app = uc.getApplication(id);
-      if (app.id.length == 0) {
+      if (app.id.isEmpty) {
         writeError(res, 404, "Application not found");
         return;
       }

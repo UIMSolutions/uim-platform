@@ -19,7 +19,7 @@ class ManageLabelsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateLabelRequest req) {
-    if (req.resourceId.length == 0)
+    if (req.resourceid.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
     if (req.key.length == 0)
       return CommandResult(false, "", "Label key is required");
@@ -46,7 +46,7 @@ class ManageLabelsUseCase : UIMUseCase {
 
   CommandResult update(LabelId id, UpdateLabelRequest req) {
     auto lbl = repo.findById(id);
-    if (lbl.id.length == 0)
+    if (lbl.id.isEmpty)
       return CommandResult(false, "", "Label not found");
 
     lbl.values = req.values;
@@ -69,7 +69,7 @@ class ManageLabelsUseCase : UIMUseCase {
 
   CommandResult remove(LabelId id) {
     auto lbl = repo.findById(id);
-    if (lbl.id.length == 0)
+    if (lbl.id.isEmpty)
       return CommandResult(false, "", "Label not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -23,7 +23,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateSubaccountRequest req) {
-    if (req.globalAccountId.length == 0)
+    if (req.globalAccountid.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
@@ -73,7 +73,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
   CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
 
     if (req.displayName.length > 0)
@@ -96,7 +96,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
   CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     if (sub.status != SubaccountStatus.active)
       return CommandResult(false, "", "Subaccount must be active to move");
@@ -114,7 +114,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
   CommandResult suspend(SubaccountId id) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     if (sub.status != SubaccountStatus.active)
       return CommandResult(false, "", "Only active subaccounts can be suspended");
@@ -127,7 +127,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
   CommandResult reactivate(SubaccountId id) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     if (sub.status != SubaccountStatus.suspended)
       return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
@@ -156,7 +156,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
   CommandResult remove(SubaccountId id) {
     auto sub = repo.findById(id);
-    if (sub.id.length == 0)
+    if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     repo.remove(id);
     emitEvent(sub.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,

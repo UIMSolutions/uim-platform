@@ -91,8 +91,8 @@ class KeyMappingController : SAPController {
       r.sourceLocalKey = req.params.get("sourceLocalKey", "");
       r.targetClientId = req.params.get("targetClientId", "");
 
-      if (r.sourceClientId.length == 0 || r.sourceLocalKey.length == 0
-        || r.targetClientId.length == 0) {
+      if (r.sourceClientid.isEmpty || r.sourceLocalKey.length == 0
+        || r.targetClientid.isEmpty) {
         writeError(res, 400, "sourceClientId, sourceLocalKey, and targetClientId are required");
         return;
       }
@@ -118,7 +118,7 @@ class KeyMappingController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto mapping = uc.getMapping(id);
-      if (mapping.id.length == 0) {
+      if (mapping.id.isEmpty) {
         writeError(res, 404, "Key mapping not found");
         return;
       }

@@ -24,7 +24,7 @@ class ManageSchedulesUseCase : UIMUseCase {
     }
 
     CommandResult create(CreateScheduleRequest r) {
-        if (r.jobId.length == 0)
+        if (r.jobid.isEmpty)
             return CommandResult(false, "", "Job ID is required");
 
         // Validate cron if provided
@@ -74,7 +74,7 @@ class ManageSchedulesUseCase : UIMUseCase {
 
     CommandResult update(UpdateScheduleRequest r) {
         auto existing = repo.findById(r.scheduleId, r.jobId, r.tenantId);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
         if (r.cronExpression.length > 0 && !ScheduleValidator.isValidCron(r.cronExpression))
@@ -106,7 +106,7 @@ class ManageSchedulesUseCase : UIMUseCase {
 
     CommandResult remove(ScheduleId id, JobId jobId, TenantId tenantId) {
         auto existing = repo.findById(id, jobId, tenantId);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
         repo.remove(id, jobId, tenantId);

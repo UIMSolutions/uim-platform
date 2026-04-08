@@ -105,7 +105,7 @@ class DataModelController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto model = uc.getModel(id);
-      if (model.id.length == 0) {
+      if (model.id.isEmpty) {
         writeError(res, 404, "Data model not found");
         return;
       }

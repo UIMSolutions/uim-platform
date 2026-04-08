@@ -78,7 +78,7 @@ class AppRouteController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
@@ -108,7 +108,7 @@ class AppRouteController : SAPController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }
@@ -134,7 +134,7 @@ class AppRouteController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Route not found");
         return;
       }

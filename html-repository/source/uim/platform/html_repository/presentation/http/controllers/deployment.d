@@ -80,7 +80,7 @@ class DeploymentController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "Deployment not found");
         return;
       }

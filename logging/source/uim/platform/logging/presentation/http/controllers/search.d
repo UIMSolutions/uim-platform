@@ -88,7 +88,7 @@ class SearchController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto entry = uc.getById(id);
 
-      if (entry.id.length == 0) {
+      if (entry.id.isEmpty) {
         writeError(res, 404, "Log entry not found");
         return;
       }

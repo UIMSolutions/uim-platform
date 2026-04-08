@@ -71,7 +71,7 @@ class ChangeLogController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto entry = uc.getEntry(id);
-      if (entry.id.length == 0) {
+      if (entry.id.isEmpty) {
         writeError(res, 404, "Change log entry not found");
         return;
       }

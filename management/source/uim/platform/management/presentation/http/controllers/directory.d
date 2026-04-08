@@ -91,7 +91,7 @@ class DirectoryController : SAPController {
     try {
       auto id = extractId(req.requestURI);
       auto d = uc.getById(id);
-      if (d.id.length == 0) {
+      if (d.id.isEmpty) {
         writeError(res, 404, "Directory not found");
         return;
       }

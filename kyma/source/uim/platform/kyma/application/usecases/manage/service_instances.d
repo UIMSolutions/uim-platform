@@ -61,7 +61,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
 
   CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
     auto inst = repo.findById(id);
-    if (inst.id.length == 0)
+    if (inst.id.isEmpty)
       return CommandResult(false, "", "Service instance not found");
 
     if (req.description.length > 0)
@@ -95,7 +95,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
 
   CommandResult deleteServiceInstance(ServiceInstanceId id) {
     auto inst = repo.findById(id);
-    if (inst.id.length == 0)
+    if (inst.id.isEmpty)
       return CommandResult(false, "", "Service instance not found");
     repo.remove(id);
     return CommandResult(true, id, "");

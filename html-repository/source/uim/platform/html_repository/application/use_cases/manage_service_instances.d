@@ -45,7 +45,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
 
     CommandResult update(ServiceInstanceId id, UpdateServiceInstanceRequest r) {
         auto inst = repo.findById(id);
-        if (inst.id.length == 0)
+        if (inst.id.isEmpty)
             return CommandResult(false, "", "Service instance not found");
 
         if (r.name.length > 0) inst.name = r.name;

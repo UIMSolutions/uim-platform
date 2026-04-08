@@ -56,7 +56,7 @@ class ManageStepsUseCase : UIMUseCase {
 
   /// Complete a step and advance the workflow.
   CommandResult completeStep(CompleteStepRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Step ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

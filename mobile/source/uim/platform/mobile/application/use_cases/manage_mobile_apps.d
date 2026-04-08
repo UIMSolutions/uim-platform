@@ -46,7 +46,7 @@ class ManageMobileAppsUseCase : UIMUseCase {
 
     CommandResult update(MobileAppId id, UpdateMobileAppRequest r) {
         auto app = repo.findById(id);
-        if (app.id.length == 0)
+        if (app.id.isEmpty)
             return CommandResult(false, "", "App not found");
         if (r.description.length > 0) app.description = r.description;
         if (r.securityConfig.length > 0) app.securityConfig = r.securityConfig;

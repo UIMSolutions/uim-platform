@@ -91,13 +91,13 @@ class MasterDataController : SAPController {
     try {
       TenantId tenantId = req.getTenantId;
       auto globalId = req.params.get("globalId", "");
-      if (globalId.length == 0) {
+      if (globalid.isEmpty) {
         writeError(res, 400, "globalId query parameter is required");
         return;
       }
 
       auto obj = uc.findByGlobalId(tenantId, globalId);
-      if (obj.id.length == 0) {
+      if (obj.id.isEmpty) {
         writeError(res, 404, "Master data object not found");
         return;
       }
@@ -111,7 +111,7 @@ class MasterDataController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto obj = uc.getObject(id);
-      if (obj.id.length == 0) {
+      if (obj.id.isEmpty) {
         writeError(res, 404, "Master data object not found");
         return;
       }

@@ -50,7 +50,7 @@ class IngestTracesUseCase : UIMUseCase {
       s.events ~= se;
     }
 
-    if (req.traceId.length == 0)
+    if (req.traceid.isEmpty)
       return CommandResult(false, "", "Trace ID is required");
     if (req.operationName.length == 0)
       return CommandResult(false, "", "Operation name is required");

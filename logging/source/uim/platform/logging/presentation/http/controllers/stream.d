@@ -84,7 +84,7 @@ class StreamController : SAPController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto s = uc.get_(id);
 
-      if (s.id.length == 0) {
+      if (s.id.isEmpty) {
         writeError(res, 404, "Log stream not found");
         return;
       }

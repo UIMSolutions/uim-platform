@@ -40,7 +40,7 @@ class ManageClientResourcesUseCase : UIMUseCase {
 
     CommandResult update(ClientResourceId id, UpdateClientResourceRequest r) {
         auto resource = repo.findById(id);
-        if (resource.id.length == 0)
+        if (resource.id.isEmpty)
             return CommandResult(false, "", "Client resource not found");
         if (r.description.length > 0) resource.description = r.description;
         if (r.url.length > 0) resource.url = r.url;

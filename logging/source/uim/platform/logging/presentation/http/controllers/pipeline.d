@@ -94,7 +94,7 @@ class PipelineController : SAPController {
 
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto p = uc.get_(id);
-      if (p.id.length == 0) {
+      if (p.id.isEmpty) {
         writeError(res, 404, "Pipeline not found");
         return;
       }

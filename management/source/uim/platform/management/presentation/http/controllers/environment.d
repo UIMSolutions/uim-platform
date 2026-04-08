@@ -92,7 +92,7 @@ class EnvironmentController : SAPController {
     try {
       auto id = extractId(req.requestURI);
       auto inst = uc.getById(id);
-      if (inst.id.length == 0) {
+      if (inst.id.isEmpty) {
         writeError(res, 404, "Environment instance not found");
         return;
       }

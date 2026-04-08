@@ -81,7 +81,7 @@ class HtmlAppController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -113,7 +113,7 @@ class HtmlAppController : SAPController {
       auto j = req.json;
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }
@@ -139,7 +139,7 @@ class HtmlAppController : SAPController {
     try {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
-      if (id.length == 0) {
+      if (id.isEmpty) {
         writeError(res, 404, "App not found");
         return;
       }

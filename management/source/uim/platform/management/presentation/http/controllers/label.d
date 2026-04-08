@@ -85,7 +85,7 @@ class LabelController {
     try {
       auto id = extractId(req.requestURI);
       auto l = uc.getById(id);
-      if (l.id.length == 0) {
+      if (l.id.isEmpty) {
         writeError(res, 404, "Label not found");
         return;
       }

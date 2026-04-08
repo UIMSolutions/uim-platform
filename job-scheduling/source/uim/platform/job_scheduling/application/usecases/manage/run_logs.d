@@ -57,7 +57,7 @@ class ManageRunLogsUseCase : UIMUseCase {
 
     CommandResult updateStatus(UpdateRunLogRequest req) {
         auto existing = repo.findById(req.runLogId);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Run log not found");
 
         auto targetStatus = parseRunStatus(req.status);

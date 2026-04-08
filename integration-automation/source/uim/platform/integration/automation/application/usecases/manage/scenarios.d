@@ -65,7 +65,7 @@ class ManageScenariosUseCase : UIMUseCase {
   }
 
   CommandResult updateScenario(UpdateScenarioRequest req) {
-    if (req.id.length == 0)
+    if (req.id.isEmpty)
       return CommandResult("", "Scenario ID is required");
     if (req.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");

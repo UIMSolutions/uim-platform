@@ -10,13 +10,17 @@ module uim.platform.kyma.presentation.http.controllers.function_;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.functions;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.serverless_function;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.functions;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.serverless_function;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
+import uim.platform.kyma;
 
-class FunctionController {
+mixin(ShowModule!());
+
+@safe:
+class FunctionController : SAPController {
   private ManageFunctionsUseCase uc;
 
   this(ManageFunctionsUseCase uc) {
@@ -24,6 +28,8 @@ class FunctionController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/functions", &handleCreate);
     router.get("/api/v1/functions", &handleList);
     router.get("/api/v1/functions/*", &handleGetById);
@@ -101,7 +107,7 @@ class FunctionController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto fn = uc.getFunction(id);
-      if (fn.id.length == 0) {
+      if (fn.id.isEmpty) {
         writeError(res, 404, "Function not found");
         return;
       }

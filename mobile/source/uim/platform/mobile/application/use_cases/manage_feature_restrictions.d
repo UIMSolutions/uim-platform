@@ -43,7 +43,7 @@ class ManageFeatureRestrictionsUseCase : UIMUseCase {
 
     CommandResult update(FeatureRestrictionId id, UpdateFeatureRestrictionRequest r) {
         auto restriction = repo.findById(id);
-        if (restriction.id.length == 0)
+        if (restriction.id.isEmpty)
             return CommandResult(false, "", "Feature restriction not found");
         if (r.description.length > 0) restriction.description = r.description;
         restriction.enabled = r.enabled;
@@ -61,7 +61,7 @@ class ManageFeatureRestrictionsUseCase : UIMUseCase {
 
     bool evaluate(FeatureRestrictionId featureId, string userId, string deviceId) {
         auto restriction = repo.findById(featureId);
-        if (restriction.id.length == 0)
+        if (restriction.id.isEmpty)
             return false;
         return FeatureEvaluationService.evaluate(restriction, userId, deviceId);
     }

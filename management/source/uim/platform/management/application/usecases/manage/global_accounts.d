@@ -58,7 +58,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     auto ga = repo.findById(id);
-    if (ga.id.length == 0)
+    if (ga.id.isEmpty)
       return CommandResult(false, "", "Global account not found");
 
     if (req.displayName.length > 0)
@@ -79,7 +79,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
   CommandResult suspend(GlobalAccountId id) {
     auto ga = repo.findById(id);
-    if (ga.id.length == 0)
+    if (ga.id.isEmpty)
       return CommandResult(false, "", "Global account not found");
     if (ga.status != GlobalAccountStatus.active)
       return CommandResult(false, "", "Only active accounts can be suspended");
@@ -95,7 +95,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
   CommandResult reactivate(GlobalAccountId id) {
     auto ga = repo.findById(id);
-    if (ga.id.length == 0)
+    if (ga.id.isEmpty)
       return CommandResult(false, "", "Global account not found");
     if (ga.status != GlobalAccountStatus.suspended)
       return CommandResult(false, "", "Only suspended accounts can be reactivated");
@@ -120,7 +120,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
   CommandResult remove(GlobalAccountId id) {
     auto ga = repo.findById(id);
-    if (ga.id.length == 0)
+    if (ga.id.isEmpty)
       return CommandResult(false, "", "Global account not found");
     repo.remove(id);
     return CommandResult(true, id, "");

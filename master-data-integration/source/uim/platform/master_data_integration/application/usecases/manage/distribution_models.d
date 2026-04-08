@@ -21,7 +21,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
   CommandResult create(CreateDistributionModelRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Distribution model name is required");
-    if (req.sourceClientId.length == 0)
+    if (req.sourceClientid.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
     // import std.uuid : randomUUID;
@@ -51,7 +51,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
 
   CommandResult updateModel(DistributionModelId id, UpdateDistributionModelRequest req) {
     auto model = repo.findById(id);
-    if (model.id.length == 0)
+    if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
 
     if (req.name.length > 0)
@@ -79,7 +79,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
 
   CommandResult activate(DistributionModelId id) {
     auto model = repo.findById(id);
-    if (model.id.length == 0)
+    if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.active;
     model.modifiedAt = clockSeconds();
@@ -89,7 +89,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
 
   CommandResult deactivate(DistributionModelId id) {
     auto model = repo.findById(id);
-    if (model.id.length == 0)
+    if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     model.status = DistributionModelStatus.inactive;
     model.modifiedAt = clockSeconds();
@@ -111,7 +111,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
 
   CommandResult deleteModel(DistributionModelId id) {
     auto model = repo.findById(id);
-    if (model.id.length == 0)
+    if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     repo.remove(id);
     return CommandResult(true, id, "");

@@ -28,7 +28,7 @@ class ManageFunctionsUseCase : UIMUseCase {
   CommandResult create(CreateFunctionRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Function name is required");
-    if (req.namespaceId.length == 0)
+    if (req.namespaceid.isEmpty)
       return CommandResult(false, "", "Namespace ID is required");
 
     auto existing = repo.findByName(req.namespaceId, req.name);
@@ -75,7 +75,7 @@ class ManageFunctionsUseCase : UIMUseCase {
 
   CommandResult updateFunction(FunctionId id, UpdateFunctionRequest req) {
     auto fn = repo.findById(id);
-    if (fn.id.length == 0)
+    if (fn.id.isEmpty)
       return CommandResult(false, "", "Function not found");
 
     if (req.description.length > 0)
@@ -131,7 +131,7 @@ class ManageFunctionsUseCase : UIMUseCase {
 
   CommandResult deleteFunction(FunctionId id) {
     auto fn = repo.findById(id);
-    if (fn.id.length == 0)
+    if (fn.id.isEmpty)
       return CommandResult(false, "", "Function not found");
     repo.remove(id);
     return CommandResult(true, id, "");

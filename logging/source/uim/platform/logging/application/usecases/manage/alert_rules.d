@@ -54,7 +54,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
 
   CommandResult update(AlertRuleId id, UpdateAlertRuleRequest req) {
     auto rule = repo.findById(id);
-    if (rule.id.length == 0)
+    if (rule.id.isEmpty)
       return CommandResult(false, "", "Alert rule not found");
 
     if (req.description.length > 0)

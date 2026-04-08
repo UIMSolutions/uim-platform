@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.domain.services.module_dependency_resolver;
 
-import uim.platform.kyma.domain.entities.kyma_module;
-import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.kyma_module;
+// import uim.platform.kyma.domain.types;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service: resolves module dependencies and validates enable/disable operations.
 class ModuleDependencyResolver {
   /// Check whether all required dependencies are satisfied for enabling a module.

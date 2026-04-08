@@ -10,13 +10,18 @@ module uim.platform.kyma.presentation.http.controllers.module_;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.kyma.application.usecases.manage.modules;
-import uim.platform.kyma.application.dto;
-import uim.platform.kyma.domain.entities.kyma_module;
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.presentation.http.json_utils;
+// import uim.platform.kyma.application.usecases.manage.modules;
+// import uim.platform.kyma.application.dto;
+// import uim.platform.kyma.domain.entities.kyma_module;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.presentation.http.json_utils;
 
-class ModuleController {
+import uim.platform.kyma;
+
+mixin(ShowModule!());
+
+@safe:
+class ModuleController : SAPController {
   private ManageModulesUseCase uc;
 
   this(ManageModulesUseCase uc) {
@@ -24,6 +29,8 @@ class ModuleController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/modules", &handleEnable);
     router.get("/api/v1/modules", &handleList);
     router.get("/api/v1/modules/*", &handleGetById);
@@ -84,7 +91,7 @@ class ModuleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       auto m = uc.getModule(id);
-      if (m.id.length == 0) {
+      if (m.id.isEmpty) {
         writeError(res, 404, "Module not found");
         return;
       }

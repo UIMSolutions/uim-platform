@@ -71,7 +71,7 @@ class ManageJobsUseCase : UIMUseCase {
 
     CommandResult update(UpdateJobRequest r) {
         auto existing = repo.findById(r.jobId, r.tenantId);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Job not found");
 
         if (r.name.length > 0)
@@ -96,7 +96,7 @@ class ManageJobsUseCase : UIMUseCase {
 
     CommandResult remove(JobId id, TenantId tenantId) {
         auto existing = repo.findById(id, tenantId);
-        if (existing.id.length == 0)
+        if (existing.id.isEmpty)
             return CommandResult(false, "", "Job not found");
 
         repo.remove(id, tenantId);

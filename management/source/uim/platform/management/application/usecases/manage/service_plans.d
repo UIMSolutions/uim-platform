@@ -54,7 +54,7 @@ class ManageServicePlansUseCase : UIMUseCase {
 
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
     auto plan = repo.findById(id);
-    if (plan.id.length == 0)
+    if (plan.id.isEmpty)
       return CommandResult(false, "", "Service plan not found");
 
     if (req.planDisplayName.length > 0)
@@ -97,7 +97,7 @@ class ManageServicePlansUseCase : UIMUseCase {
 
   CommandResult remove(ServicePlanId id) {
     auto plan = repo.findById(id);
-    if (plan.id.length == 0)
+    if (plan.id.isEmpty)
       return CommandResult(false, "", "Service plan not found");
     repo.remove(id);
     return CommandResult(true, id, "");
