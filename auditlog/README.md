@@ -296,7 +296,7 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
 
   @safe: class RetrieveAuditLogsUseCase << (U,#FF7043) >> {
     + query(req) : AuditLogEntry[]
-    + getById(id, tenantId) : AuditLogEntry*
+    + getById(tenantId, id) : AuditLogEntry*
     + getByCategory(tenantId, cat) : AuditLogEntry[]
     + getByUser(tenantId, userId) : AuditLogEntry[]
     + getByCorrelation(corrId) : AuditLogEntry[]
@@ -305,10 +305,10 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
 
   @safe: class ManageRetentionUseCase << (U,#FF7043) >> {
     + createPolicy(req) : CommandResult
-    + getPolicy(id, tenantId) : RetentionPolicy*
+    + getPolicy(tenantId, id) : RetentionPolicy*
     + listPolicies(tenantId) : RetentionPolicy[]
     + updatePolicy(req) : CommandResult
-    + deletePolicy(id, tenantId) : void
+    + deletePolicy(tenantId, id) : void
   }
 
   @safe: class ManageAuditConfigUseCase << (U,#FF7043) >> {
@@ -316,14 +316,14 @@ package "Application Layer  «use cases»" as APP <<Rectangle>> {
     + getConfig(tenantId) : AuditConfig*
     + listConfigs() : AuditConfig[]
     + updateConfig(req) : CommandResult
-    + deleteConfig(id, tenantId) : void
+    + deleteConfig(tenantId, id) : void
   }
 
   @safe: class ManageExportsUseCase << (U,#FF7043) >> {
     + createExport(req) : CommandResult
-    + getExport(id, tenantId) : ExportJob*
+    + getExport(tenantId, id) : ExportJob*
     + listExports(tenantId) : ExportJob[]
-    + deleteExport(id, tenantId) : void
+    + deleteExport(tenantId, id) : void
   }
 
   @safe: class WriteSecurityEventUseCase << (U,#FF7043) >> {
@@ -427,7 +427,7 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
   package "Ports  «interfaces»" as PORTS {
     @safe: interface  AuditLogRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : AuditLogEntry[]
-      + findById(id, tenantId) : AuditLogEntry*
+      + findById(tenantId, id) : AuditLogEntry*
       + search(tenantId, categories, from, to, limit, offset) : AuditLogEntry[]
       + countByTenant(tenantId) : long
       + save(entry) : void
@@ -440,24 +440,24 @@ package "Domain Layer  «core business logic»" as DOM <<Rectangle>> {
       + findById(id) : AuditConfig*
       + save(config) : void
       + update(config) : void
-      + remove(id, tenantId) : void
+      + remove(tenantId, id) : void
     }
 
     @safe: interface  RetentionPolicyRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : RetentionPolicy[]
-      + findById(id, tenantId) : RetentionPolicy*
+      + findById(tenantId, id) : RetentionPolicy*
       + findDefault(tenantId) : RetentionPolicy*
       + save(policy) : void
       + update(policy) : void
-      + remove(id, tenantId) : void
+      + remove(tenantId, id) : void
     }
 
     @safe: interface  ExportJobRepository << (P,#42A5F5) >> {
       + findByTenant(tenantId) : ExportJob[]
-      + findById(id, tenantId) : ExportJob*
+      + findById(tenantId, id) : ExportJob*
       + save(job) : void
       + update(job) : void
-      + remove(id, tenantId) : void
+      + remove(tenantId, id) : void
     }
 
     @safe: interface  SecurityEventRepository << (P,#42A5F5) >> {

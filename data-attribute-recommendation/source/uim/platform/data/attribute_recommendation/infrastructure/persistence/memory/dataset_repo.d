@@ -20,13 +20,13 @@ class MemoryDatasetRepository : DatasetRepository {
     store[entity.id] = entity;
   }
 
-  void remove(DatasetId id, TenantId tenantId) {
+  void remove(DatasetId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  Dataset* findById(DatasetId id, TenantId tenantId) {
+  Dataset* findById(DatasetId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

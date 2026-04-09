@@ -13,13 +13,13 @@ interface RuleSetRepository {
   bool existsByTenant(TenantId tenantId);
   RuleSet[] findByTenant(TenantId tenantId);
  
-  bool existsById(RuleSetId id, TenantId tenantId);
-  RuleSet findById(RuleSetId id, TenantId tenantId);
+  bool existsById(RuleSetId tenantId, id tenantId);
+  RuleSet findById(RuleSetId tenantId, id tenantId);
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId);
   RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status);
 
   void save(RuleSet ruleSet);
   void update(RuleSet ruleSet);
-  void remove(RuleSetId id, TenantId tenantId);
+  void remove(RuleSetId tenantId, id tenantId);
 }

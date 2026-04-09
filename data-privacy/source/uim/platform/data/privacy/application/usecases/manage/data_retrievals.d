@@ -83,8 +83,8 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DataRetrievalRequest* getRequest(DataRetrievalRequestId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DataRetrievalRequest* getRequest(DataRetrievalRequestId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   DataRetrievalRequest[] listRequests(TenantId tenantId) {
@@ -112,7 +112,7 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  void deleteRequest(DataRetrievalRequestId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRequest(DataRetrievalRequestId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

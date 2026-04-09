@@ -43,8 +43,8 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
     return CommandResult(sp.id, "");
   }
 
-  BusinessSubprocess* getSubprocess(BusinessSubprocessId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  BusinessSubprocess* getSubprocess(BusinessSubprocessId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   BusinessSubprocess[] listSubprocesses(TenantId tenantId) {
@@ -71,7 +71,7 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
     return CommandResult(sp.id, "");
   }
 
-  void deleteSubprocess(BusinessSubprocessId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteSubprocess(BusinessSubprocessId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

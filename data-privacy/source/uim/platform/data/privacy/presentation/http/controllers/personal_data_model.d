@@ -111,7 +111,7 @@ class PersonalDataModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getModel(id, tenantId);
+      auto entry = uc.getModel(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Personal data model not found");
         return;
@@ -154,7 +154,7 @@ class PersonalDataModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteModel(id, tenantId);
+      uc.deleteModel(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

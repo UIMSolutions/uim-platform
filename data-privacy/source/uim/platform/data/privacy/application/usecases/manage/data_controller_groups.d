@@ -38,8 +38,8 @@ class ManageDataControllerGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  DataControllerGroup* getGroup(DataControllerGroupId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DataControllerGroup* getGroup(DataControllerGroupId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   DataControllerGroup[] listGroups(TenantId tenantId) {
@@ -60,7 +60,7 @@ class ManageDataControllerGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  void deleteGroup(DataControllerGroupId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteGroup(DataControllerGroupId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

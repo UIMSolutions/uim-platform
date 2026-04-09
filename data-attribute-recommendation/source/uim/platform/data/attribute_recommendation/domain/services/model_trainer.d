@@ -35,29 +35,29 @@ class ModelTrainer {
   }
 
   /// Validate that a model configuration can be trained.
-  bool canTrain(ModelConfigId configId, TenantId tenantId) {
-    auto config = configRepo.findById(configId, tenantId);
+  bool canTrain(ModelConfigId configtenantId, id tenantId) {
+    auto config = configRepo.findById(configtenantId, id);
     if (config is null)
       return false;
     if (config.status != ModelConfigStatus.ready && config.status != ModelConfigStatus.trained)
       return false;
 
-    auto ds = datasetRepo.findById(config.datasetId, tenantId);
+    auto ds = datasetRepo.findById(config.datasettenantId, id);
     if (ds is null)
       return false;
     if (ds.status != DatasetStatus.completed)
       return false;
 
-    auto recordCount = recordRepo.countByDataset(ds.id, tenantId);
+    auto recordCount = recordRepo.countByDataset(ds.tenantId, id);
     return recordCount > 0;
   }
 
   /// Start a training job for the given model configuration.
-  TrainingJob* startTraining(ModelConfigId configId, TenantId tenantId, UserId userId) {
-    if (!canTrain(configId, tenantId))
+  TrainingJob* startTraining(ModelConfigId configtenantId, id tenantId, UserId userId) {
+    if (!canTrain(configtenantId, id))
       return null;
 
-    auto config = configRepo.findById(configId, tenantId);
+    auto config = configRepo.findById(configtenantId, id);
     auto now = Clock.currStdTime();
 
     // Update config status to training
@@ -79,14 +79,14 @@ class ModelTrainer {
     jobRepo.save(job);
 
     // Simulate immediate training completion with metrics
-    completeTraining(job.id, tenantId);
+    completeTraining(job.tenantId, id);
 
-    return jobRepo.findById(job.id, tenantId);
+    return jobRepo.findById(job.tenantId, id);
   }
 
   /// Simulate training completion with generated quality metrics.
-  void completeTraining(TrainingJobId jobId, TenantId tenantId) {
-    auto job = jobRepo.findById(jobId, tenantId);
+  void completeTraining(TrainingJobId jobtenantId, id tenantId) {
+    auto job = jobRepo.findById(jobtenantId, id);
     if (job is null)
       return;
 
@@ -99,7 +99,7 @@ class ModelTrainer {
     jobRepo.update(*job);
 
     // Update model config to trained
-    auto config = configRepo.findById(job.modelConfigId, tenantId);
+    auto config = configRepo.findById(job.modelConfigtenantId, id);
     if (config !is null) {
       config.status = ModelConfigStatus.trained;
       config.updatedAt = now;
@@ -108,8 +108,8 @@ class ModelTrainer {
   }
 
   /// Cancel a running training job.
-  bool cancelTraining(TrainingJobId jobId, TenantId tenantId) {
-    auto job = jobRepo.findById(jobId, tenantId);
+  bool cancelTraining(TrainingJobId jobtenantId, id tenantId) {
+    auto job = jobRepo.findById(jobtenantId, id);
     if (job is null || job.status != JobStatus.running)
       return false;
 
@@ -119,7 +119,7 @@ class ModelTrainer {
     jobRepo.update(*job);
 
     // Revert config status
-    auto config = configRepo.findById(job.modelConfigId, tenantId);
+    auto config = configRepo.findById(job.modelConfigtenantId, id);
     if (config !is null) {
       config.status = ModelConfigStatus.ready;
       config.updatedAt = now;

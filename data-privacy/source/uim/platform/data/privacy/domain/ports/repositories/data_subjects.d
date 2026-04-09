@@ -13,16 +13,16 @@ interface DataSubjectRepository {
   bool existsByTenant(TenantId tenantId);
   DataSubject[] findByTenant(TenantId tenantId);
  
-  bool existsById(DataSubjectId id, TenantId tenantId);
-  DataSubject findById(DataSubjectId id, TenantId tenantId);
+  bool existsById(DataSubjectId tenantId, id tenantId);
+  DataSubject findById(DataSubjectId tenantId, id tenantId);
 
-  bool existsByExternalId(string externalId, TenantId tenantId);
-  DataSubject findByExternalId(string externalId, TenantId tenantId);
+  bool existsByExternalId(string externaltenantId, id tenantId);
+  DataSubject findByExternalId(string externaltenantId, id tenantId);
   
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType);
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem);
   
   void save(DataSubject subject);
   void update(DataSubject subject);
-  void remove(DataSubjectId id, TenantId tenantId);
+  void remove(DataSubjectId tenantId, id tenantId);
 }

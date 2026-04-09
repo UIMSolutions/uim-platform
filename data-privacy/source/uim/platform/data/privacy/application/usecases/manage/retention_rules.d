@@ -51,8 +51,8 @@ class ManageRetentionRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  RetentionRule* getRule(RetentionRuleId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  RetentionRule* getRule(RetentionRuleId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   RetentionRule[] listRules(TenantId tenantId) {
@@ -85,7 +85,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  void deleteRule(RetentionRuleId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRule(RetentionRuleId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

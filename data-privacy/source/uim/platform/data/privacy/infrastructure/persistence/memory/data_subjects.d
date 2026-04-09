@@ -24,14 +24,14 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
     return result;
   }
 
-  DataSubject* findById(DataSubjectId id, TenantId tenantId) {
+  DataSubject* findById(DataSubjectId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
   }
 
-  DataSubject* findByExternalId(string externalId, TenantId tenantId) {
+  DataSubject* findByExternalId(string externaltenantId, id tenantId) {
     foreach (ref s; store)
       if (s.externalId == externalId && s.tenantId == tenantId)
         return &s;
@@ -66,7 +66,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
       }
   }
 
-  void remove(DataSubjectId id, TenantId tenantId) {
+  void remove(DataSubjectId tenantId, id tenantId) {
     DataSubject[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

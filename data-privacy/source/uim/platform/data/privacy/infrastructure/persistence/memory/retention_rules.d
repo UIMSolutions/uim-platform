@@ -24,7 +24,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
     return result;
   }
 
-  RetentionRule* findById(RetentionRuleId id, TenantId tenantId) {
+  RetentionRule* findById(RetentionRuleId tenantId, id tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
@@ -58,7 +58,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
       }
   }
 
-  void remove(RetentionRuleId id, TenantId tenantId) {
+  void remove(RetentionRuleId tenantId, id tenantId) {
     RetentionRule[] kept;
     foreach (ref r; store)
       if (!(r.id == id && r.tenantId == tenantId))

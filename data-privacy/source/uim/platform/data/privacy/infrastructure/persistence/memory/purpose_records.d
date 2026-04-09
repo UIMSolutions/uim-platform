@@ -24,7 +24,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
     return result;
   }
 
-  PurposeRecord* findById(PurposeRecordId id, TenantId tenantId) {
+  PurposeRecord* findById(PurposeRecordId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -67,7 +67,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
       }
   }
 
-  void remove(PurposeRecordId id, TenantId tenantId) {
+  void remove(PurposeRecordId tenantId, id tenantId) {
     PurposeRecord[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

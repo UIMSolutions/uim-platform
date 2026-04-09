@@ -89,7 +89,7 @@ class DataSubjectController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getSubject(id, tenantId);
+      auto entry = uc.getSubject(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Data subject not found");
         return;
@@ -130,7 +130,7 @@ class DataSubjectController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteSubject(id, tenantId);
+      uc.deleteSubject(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

@@ -21,20 +21,20 @@ class MemoryInferenceResultRepository : InferenceResultRepository {
     store[entity.id] = entity;
   }
 
-  void remove(InferenceResultId id, TenantId tenantId) {
+  void remove(InferenceResultId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  InferenceResult* findById(InferenceResultId id, TenantId tenantId) {
+  InferenceResult* findById(InferenceResultId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  InferenceResult* findByRequest(InferenceRequestId requestId, TenantId tenantId) {
+  InferenceResult* findByRequest(InferenceRequestId requesttenantId, id tenantId) {
     foreach (ref e; store)
       if (e.requestId == requestId && e.tenantId == tenantId)
         return &e;

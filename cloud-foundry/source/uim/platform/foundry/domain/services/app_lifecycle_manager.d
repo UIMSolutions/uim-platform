@@ -30,8 +30,8 @@ class AppLifecycleManager {
   }
 
   /// Stage an application (simulate buildpack detection and compilation).
-  bool stageApp(AppId appId, TenantId tenantId) {
-    auto app = appRepo.findById(appId, tenantId);
+  bool stageApp(AppId apptenantId, id tenantId) {
+    auto app = appRepo.findById(apptenantId, id);
     if (app is null)
       return false;
     if (app.state != AppState.stopped && app.state != AppState.crashed)
@@ -45,8 +45,8 @@ class AppLifecycleManager {
   }
 
   /// Start an application (transition from staging/stopped to started).
-  bool startApp(AppId appId, TenantId tenantId) {
-    auto app = appRepo.findById(appId, tenantId);
+  bool startApp(AppId apptenantId, id tenantId) {
+    auto app = appRepo.findById(apptenantId, id);
     if (app is null)
       return false;
 
@@ -58,8 +58,8 @@ class AppLifecycleManager {
   }
 
   /// Stop a running application.
-  bool stopApp(AppId appId, TenantId tenantId) {
-    auto app = appRepo.findById(appId, tenantId);
+  bool stopApp(AppId apptenantId, id tenantId) {
+    auto app = appRepo.findById(apptenantId, id);
     if (app is null)
       return false;
     if (app.state == AppState.stopped)
@@ -73,8 +73,8 @@ class AppLifecycleManager {
   }
 
   /// Restart an application (stop then start).
-  bool restartApp(AppId appId, TenantId tenantId) {
-    auto app = appRepo.findById(appId, tenantId);
+  bool restartApp(AppId apptenantId, id tenantId) {
+    auto app = appRepo.findById(apptenantId, id);
     if (app is null)
       return false;
     if (app.state != AppState.started && app.state != AppState.crashed)
@@ -88,15 +88,15 @@ class AppLifecycleManager {
   }
 
   /// Scale an application — validate against org quota before applying.
-  bool scaleApp(AppId appId, TenantId tenantId, int instances, int memoryMb, int diskMb) {
-    auto app = appRepo.findById(appId, tenantId);
+  bool scaleApp(AppId apptenantId, id tenantId, int instances, int memoryMb, int diskMb) {
+    auto app = appRepo.findById(apptenantId, id);
     if (app is null)
       return false;
 
     // Validate instance memory against org quota
-    auto space = spaceRepo.findById(app.spaceId, tenantId);
+    auto space = spaceRepo.findById(app.spacetenantId, id);
     if (space !is null) {
-      auto org = orgRepo.findById(space.orgId, tenantId);
+      auto org = orgRepo.findById(space.orgtenantId, id);
       if (org !is null) {
         int effMemory = memoryMb > 0 ? memoryMb : app.memoryMb;
         if (org.instanceMemoryLimitMb > 0 && effMemory > org.instanceMemoryLimitMb)
@@ -121,15 +121,15 @@ class AppLifecycleManager {
   }
 
   /// Check if org memory quota would be exceeded by adding the given memory.
-  bool isQuotaExceeded(OrgId orgId, TenantId tenantId, int additionalMemoryMb) {
-    auto org = orgRepo.findById(orgId, tenantId);
+  bool isQuotaExceeded(OrgId orgtenantId, id tenantId, int additionalMemoryMb) {
+    auto org = orgRepo.findById(orgtenantId, id);
     if (org is null)
       return true;
 
-    auto spaces = spaceRepo.findByOrg(orgId, tenantId);
+    auto spaces = spaceRepo.findByOrg(orgtenantId, id);
     long totalUsed = 0;
     foreach (ref s; spaces) {
-      auto apps = appRepo.findBySpace(s.id, tenantId);
+      auto apps = appRepo.findBySpace(s.tenantId, id);
       foreach (ref a; apps)
         totalUsed += a.instances * a.memoryMb;
     }

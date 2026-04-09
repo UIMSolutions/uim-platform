@@ -15,18 +15,18 @@ import uim.platform.foundry.domain.ports.repositories.space;
 class MemorySpaceRepository : SpaceRepository {
   private Space[SpaceId] store;
 
-  Space[] findByOrg(OrgId orgId, TenantId tenantId) {
+  Space[] findByOrg(OrgId orgtenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.orgId == orgId).array;
   }
 
-  Space* findById(SpaceId id, TenantId tenantId) {
+  Space* findById(SpaceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Space* findByName(OrgId orgId, TenantId tenantId, string name) {
+  Space* findByName(OrgId orgtenantId, id tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.orgId == orgId && e.name == name)
         return &e;
@@ -37,7 +37,7 @@ class MemorySpaceRepository : SpaceRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void removeByOrg(OrgId orgId, TenantId tenantId) {
+  void removeByOrg(OrgId orgtenantId, id tenantId) {
     SpaceId[] toRemove;
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.orgId == orgId)
@@ -54,7 +54,7 @@ class MemorySpaceRepository : SpaceRepository {
     store[space.id] = space;
   }
 
-  void remove(SpaceId id, TenantId tenantId) {
+  void remove(SpaceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

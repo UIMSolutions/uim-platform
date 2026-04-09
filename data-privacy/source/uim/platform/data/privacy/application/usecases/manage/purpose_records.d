@@ -43,8 +43,8 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  PurposeRecord* getRecord(PurposeRecordId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  PurposeRecord* getRecord(PurposeRecordId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   PurposeRecord[] listRecords(TenantId tenantId) {
@@ -74,7 +74,7 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  void deleteRecord(PurposeRecordId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRecord(PurposeRecordId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

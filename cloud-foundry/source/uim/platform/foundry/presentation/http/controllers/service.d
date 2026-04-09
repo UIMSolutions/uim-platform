@@ -87,7 +87,7 @@ class ServiceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto si = useCase.getInstance(id, tenantId);
+      auto si = useCase.getInstance(tenantId, id);
       if (si is null) {
         writeError(res, 404, "Service instance not found");
         return;
@@ -125,7 +125,7 @@ class ServiceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteInstance(id, tenantId);
+      auto result = useCase.deleteInstance(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -184,7 +184,7 @@ class ServiceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteBinding(id, tenantId);
+      auto result = useCase.deleteBinding(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

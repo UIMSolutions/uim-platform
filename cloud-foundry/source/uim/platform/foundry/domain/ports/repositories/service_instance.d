@@ -10,12 +10,12 @@ import uim.platform.foundry.domain.entities.service_instance;
 
 /// Port for persisting and querying service instances.
 interface IServiceInstanceRepository {
-  ServiceInstance[] findBySpace(SpaceId spaceId, TenantId tenantId);
-  ServiceInstance* findById(ServiceInstanceId id, TenantId tenantId);
-  ServiceInstance* findByName(SpaceId spaceId, TenantId tenantId, string name);
-  ServiceInstance[] findByServiceName(SpaceId spaceId, TenantId tenantId, string serviceName);
+  ServiceInstance[] findBySpace(SpaceId spacetenantId, id tenantId);
+  ServiceInstance* findById(ServiceInstanceId tenantId, id tenantId);
+  ServiceInstance* findByName(SpaceId spacetenantId, id tenantId, string name);
+  ServiceInstance[] findByServiceName(SpaceId spacetenantId, id tenantId, string serviceName);
   ServiceInstance[] findByTenant(TenantId tenantId);
   void save(ServiceInstance instance);
   void update(ServiceInstance instance);
-  void remove(ServiceInstanceId id, TenantId tenantId);
+  void remove(ServiceInstanceId tenantId, id tenantId);
 }

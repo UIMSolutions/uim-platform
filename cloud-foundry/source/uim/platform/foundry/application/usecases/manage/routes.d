@@ -68,24 +68,24 @@ class ManageRoutesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  Route* getRoute(RouteId id, TenantId tenantId) {
-    return routeRepo.findById(id, tenantId);
+  Route* getRoute(RouteId tenantId, id tenantId) {
+    return routeRepo.findById(tenantId, id);
   }
 
   Route[] listRoutes(TenantId tenantId) {
     return routeRepo.findByTenant(tenantId);
   }
 
-  Route[] listBySpace(SpaceId spaceId, TenantId tenantId) {
-    return routeRepo.findBySpace(spaceId, tenantId);
+  Route[] listBySpace(SpaceId spacetenantId, id tenantId) {
+    return routeRepo.findBySpace(spacetenantId, id);
   }
 
-  CommandResult deleteRoute(RouteId id, TenantId tenantId) {
-    auto existing = routeRepo.findById(id, tenantId);
+  CommandResult deleteRoute(RouteId tenantId, id tenantId) {
+    auto existing = routeRepo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Route not found");
 
-    routeRepo.remove(id, tenantId);
+    routeRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
@@ -147,17 +147,17 @@ class ManageRoutesUseCase : UIMUseCase {
     return domainRepo.findByTenant(tenantId);
   }
 
-  CommandResult deleteDomain(DomainId id, TenantId tenantId) {
-    auto existing = domainRepo.findById(id, tenantId);
+  CommandResult deleteDomain(DomainId tenantId, id tenantId) {
+    auto existing = domainRepo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Domain not found");
 
     // Remove all routes on this domain
-    auto routes = routeRepo.findByDomain(id, tenantId);
+    auto routes = routeRepo.findByDomain(tenantId, id);
     foreach (r; routes)
-      routeRepo.remove(r.id, tenantId);
+      routeRepo.remove(r.tenantId, id);
 
-    domainRepo.remove(id, tenantId);
+    domainRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

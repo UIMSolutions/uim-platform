@@ -89,7 +89,7 @@ class RetentionRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRule(id, tenantId);
+      auto entry = uc.getRule(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Retention rule not found");
         return;
@@ -129,7 +129,7 @@ class RetentionRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRule(id, tenantId);
+      uc.deleteRule(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

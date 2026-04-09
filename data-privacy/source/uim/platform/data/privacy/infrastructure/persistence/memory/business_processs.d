@@ -24,7 +24,7 @@ class MemoryBusinessProcessRepository : BusinessProcessRepository {
     return result;
   }
 
-  BusinessProcess* findById(BusinessProcessId id, TenantId tenantId) {
+  BusinessProcess* findById(BusinessProcessId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -51,7 +51,7 @@ class MemoryBusinessProcessRepository : BusinessProcessRepository {
       }
   }
 
-  void remove(BusinessProcessId id, TenantId tenantId) {
+  void remove(BusinessProcessId tenantId, id tenantId) {
     BusinessProcess[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

@@ -39,8 +39,8 @@ class ManageRuleSetsUseCase : UIMUseCase {
     return CommandResult(rs.id, "");
   }
 
-  RuleSet* getRuleSet(RuleSetId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  RuleSet* getRuleSet(RuleSetId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   RuleSet[] listRuleSets(TenantId tenantId) {
@@ -65,8 +65,8 @@ class ManageRuleSetsUseCase : UIMUseCase {
     return CommandResult(rs.id, "");
   }
 
-  CommandResult activateRuleSet(RuleSetId id, TenantId tenantId) {
-    auto rs = repo.findById(id, tenantId);
+  CommandResult activateRuleSet(RuleSetId tenantId, id tenantId) {
+    auto rs = repo.findById(tenantId, id);
     if (rs is null)
       return CommandResult("", "Rule set not found");
 
@@ -78,7 +78,7 @@ class ManageRuleSetsUseCase : UIMUseCase {
     return CommandResult(rs.id, "");
   }
 
-  void deleteRuleSet(RuleSetId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRuleSet(RuleSetId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

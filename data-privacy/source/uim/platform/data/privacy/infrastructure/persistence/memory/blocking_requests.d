@@ -24,7 +24,7 @@ class MemoryBlockingRequestRepository : BlockingRequestRepository {
     return result;
   }
 
-  BlockingRequest* findById(BlockingRequestId id, TenantId tenantId) {
+  BlockingRequest* findById(BlockingRequestId tenantId, id tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
@@ -59,7 +59,7 @@ class MemoryBlockingRequestRepository : BlockingRequestRepository {
       }
   }
 
-  void remove(BlockingRequestId id, TenantId tenantId) {
+  void remove(BlockingRequestId tenantId, id tenantId) {
     BlockingRequest[] kept;
     foreach (ref r; store)
       if (!(r.id == id && r.tenantId == tenantId))

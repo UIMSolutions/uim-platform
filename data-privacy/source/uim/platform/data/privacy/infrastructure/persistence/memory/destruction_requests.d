@@ -24,7 +24,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
     return result;
   }
 
-  DestructionRequest* findById(DestructionRequestId id, TenantId tenantId) {
+  DestructionRequest* findById(DestructionRequestId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -59,7 +59,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
       }
   }
 
-  void remove(DestructionRequestId id, TenantId tenantId) {
+  void remove(DestructionRequestId tenantId, id tenantId) {
     DestructionRequest[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

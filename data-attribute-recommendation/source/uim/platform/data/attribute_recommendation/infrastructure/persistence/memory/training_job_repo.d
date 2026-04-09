@@ -20,13 +20,13 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
     store[entity.id] = entity;
   }
 
-  void remove(TrainingJobId id, TenantId tenantId) {
+  void remove(TrainingJobId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  TrainingJob* findById(TrainingJobId id, TenantId tenantId) {
+  TrainingJob* findById(TrainingJobId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
     return result;
   }
 
-  TrainingJob[] findByModelConfig(ModelConfigId configId, TenantId tenantId) {
+  TrainingJob[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
     TrainingJob[] result;
     foreach (ref e; store)
       if (e.modelConfigId == configId && e.tenantId == tenantId)

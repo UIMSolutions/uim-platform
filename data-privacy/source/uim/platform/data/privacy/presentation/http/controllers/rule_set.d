@@ -74,7 +74,7 @@ class RuleSetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRuleSet(id, tenantId);
+      auto entry = uc.getRuleSet(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Rule set not found");
         return;
@@ -110,7 +110,7 @@ class RuleSetController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.activateRuleSet(id, tenantId);
+      auto result = uc.activateRuleSet(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -125,7 +125,7 @@ class RuleSetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRuleSet(id, tenantId);
+      uc.deleteRuleSet(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

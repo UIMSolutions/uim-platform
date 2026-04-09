@@ -50,8 +50,8 @@ class ManageDatasetsUseCase : UIMUseCase {
     return CommandResult(ds.id, "");
   }
 
-  Dataset* getDataset(DatasetId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Dataset* getDataset(DatasetId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Dataset[] listDatasets(TenantId tenantId) {
@@ -85,8 +85,8 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   /// Validate a dataset and transition it to 'ready' status.
-  CommandResult validateDataset(DatasetId id, TenantId tenantId) {
-    auto ds = repo.findById(id, tenantId);
+  CommandResult validateDataset(DatasetId tenantId, id tenantId) {
+    auto ds = repo.findById(tenantId, id);
     if (ds is null)
       return CommandResult("", "Dataset not found");
 
@@ -97,7 +97,7 @@ class ManageDatasetsUseCase : UIMUseCase {
       return CommandResult("", "Column definitions are required before validation");
 
     auto now = Clock.currStdTime();
-    ds.rowCount = recordRepo.countByDataset(id, tenantId);
+    ds.rowCount = recordRepo.countByDataset(tenantId, id);
     ds.status = DatasetStatus.ready;
     ds.validationMessage = "Validation successful";
     ds.updatedAt = now;
@@ -107,8 +107,8 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   /// Process a dataset (simulate data preparation).
-  CommandResult processDataset(DatasetId id, TenantId tenantId) {
-    auto ds = repo.findById(id, tenantId);
+  CommandResult processDataset(DatasetId tenantId, id tenantId) {
+    auto ds = repo.findById(tenantId, id);
     if (ds is null)
       return CommandResult("", "Dataset not found");
 
@@ -123,14 +123,14 @@ class ManageDatasetsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteDataset(DatasetId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteDataset(DatasetId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Dataset not found");
 
     // Cascade delete records
-    recordRepo.removeByDataset(id, tenantId);
-    repo.remove(id, tenantId);
+    recordRepo.removeByDataset(tenantId, id);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

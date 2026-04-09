@@ -24,7 +24,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
     return result;
   }
 
-  DataRetrievalRequest* findById(DataRetrievalRequestId id, TenantId tenantId) {
+  DataRetrievalRequest* findById(DataRetrievalRequestId tenantId, id tenantId) {
     foreach (ref r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
@@ -59,7 +59,7 @@ class MemoryDataRetrievalRequestRepository : DataRetrievalRequestRepository {
       }
   }
 
-  void remove(DataRetrievalRequestId id, TenantId tenantId) {
+  void remove(DataRetrievalRequestId tenantId, id tenantId) {
     DataRetrievalRequest[] kept;
     foreach (ref r; findByTenant(tenantId))
       if (!(r.id == id))

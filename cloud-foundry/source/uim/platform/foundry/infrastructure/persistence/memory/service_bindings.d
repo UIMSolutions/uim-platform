@@ -15,18 +15,18 @@ import uim.platform.foundry.domain.ports.repositories.service_binding;
 class MemoryServiceBindingRepository : ServiceBindingRepository {
   private ServiceBinding[ServiceBindingId] store;
 
-  ServiceBinding[] findByApp(AppId appId, TenantId tenantId) {
+  ServiceBinding[] findByApp(AppId apptenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.appId == appId).array;
   }
 
-  ServiceBinding* findById(ServiceBindingId id, TenantId tenantId) {
+  ServiceBinding* findById(ServiceBindingId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId, TenantId tenantId) {
+  ServiceBinding[] findByServiceInstance(ServiceInstanceId instancetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.serviceInstanceId == instanceId).array;
   }
@@ -35,7 +35,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  void removeByApp(AppId appId, TenantId tenantId) {
+  void removeByApp(AppId apptenantId, id tenantId) {
     ServiceBindingId[] toRemove;
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.appId == appId)
@@ -52,7 +52,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
     store[binding.id] = binding;
   }
 
-  void remove(ServiceBindingId id, TenantId tenantId) {
+  void remove(ServiceBindingId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

@@ -23,11 +23,11 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
     return store[tenantId].byValue.filter!(s => s.tenantId == tenantId).array;
   }
 
-  bool existsById(BusinessSubprocessId id, TenantId tenantId) {
+  bool existsById(BusinessSubprocessId tenantId, id tenantId) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
-  BusinessSubprocess findById(BusinessSubprocessId id, TenantId tenantId) {
+  BusinessSubprocess findById(BusinessSubprocessId tenantId, id tenantId) {
     if (!(tenantId in store) || !(id in store[tenantId]))
       return BusinessSubprocess.init;
 
@@ -57,7 +57,7 @@ class MemoryBusinessSubprocessRepository : BusinessSubprocessRepository {
     store[entity.tenantId][entity.id] = entity;
   }
 
-  void remove(BusinessSubprocessId id, TenantId tenantId) {
+  void remove(BusinessSubprocessId tenantId, id tenantId) {
     BusinessSubprocess[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

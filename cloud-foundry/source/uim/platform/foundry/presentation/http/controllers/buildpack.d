@@ -81,7 +81,7 @@ class BuildpackController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto bp = useCase.getBuildpack(id, tenantId);
+      auto bp = useCase.getBuildpack(tenantId, id);
       if (bp is null) {
         writeError(res, 404, "Buildpack not found");
         return;
@@ -125,7 +125,7 @@ class BuildpackController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteBuildpack(id, tenantId);
+      auto result = useCase.deleteBuildpack(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

@@ -10,11 +10,11 @@ import uim.platform.data.attribute_recommendation.domain.entities.dataset;
 
 interface DatasetRepository {
   Dataset[] findByTenant(TenantId tenantId);
-  Dataset* findById(DatasetId id, TenantId tenantId);
+  Dataset* findById(DatasetId tenantId, id tenantId);
   Dataset* findByName(TenantId tenantId, string name);
   Dataset[] findByStatus(TenantId tenantId, DatasetStatus status);
   Dataset[] findByDataType(TenantId tenantId, DataType dataType);
   void save(Dataset dataset);
   void update(Dataset dataset);
-  void remove(DatasetId id, TenantId tenantId);
+  void remove(DatasetId tenantId, id tenantId);
 }

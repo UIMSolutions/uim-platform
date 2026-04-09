@@ -114,7 +114,7 @@ class ConsentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getConsent(id, tenantId);
+      auto entry = uc.getConsent(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Consent record not found");
         return;
@@ -146,7 +146,7 @@ class ConsentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteConsent(id, tenantId);
+      uc.deleteConsent(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

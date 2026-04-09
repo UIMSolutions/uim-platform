@@ -13,8 +13,8 @@ interface ConsentRecordRepository {
   bool existsByTenant(TenantId tenantId);
   ConsentRecord[] findByTenant(TenantId tenantId);
  
-  bool existsById(ConsentRecordId id, TenantId tenantId);
-  ConsentRecord findById(ConsentRecordId id, TenantId tenantId);
+  bool existsById(ConsentRecordId tenantId, id tenantId);
+  ConsentRecord findById(ConsentRecordId tenantId, id tenantId);
 
   ConsentRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ConsentRecord[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
@@ -23,5 +23,5 @@ interface ConsentRecordRepository {
 
   void save(ConsentRecord record);
   void update(ConsentRecord record);
-  void remove(ConsentRecordId id, TenantId tenantId);
+  void remove(ConsentRecordId tenantId, id tenantId);
 }

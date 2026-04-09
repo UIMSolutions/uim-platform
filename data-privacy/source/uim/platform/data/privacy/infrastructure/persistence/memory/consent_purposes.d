@@ -27,12 +27,12 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
     return store[tenantId].byValue.array;
   }
 
-  bool existsById(ConsentPurposeId id, TenantId tenantId) {
+  bool existsById(ConsentPurposeId tenantId, id tenantId) {
     return (existsByTenant(tenantId) && (id in store[tenantId]));
   }
 
-  ConsentPurpose findById(ConsentPurposeId id, TenantId tenantId) {
-    return existsById(id, tenantId) ? store[tenantId][id] : ConsentPurpose.init;
+  ConsentPurpose findById(ConsentPurposeId tenantId, id tenantId) {
+    return existsById(tenantId, id) ? store[tenantId][id] : ConsentPurpose.init;
   }
 
   ConsentPurpose[] findByController(TenantId tenantId, DataControllerId controllerId) {
@@ -72,8 +72,8 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
     store[entity.tenantId][entity.id] = entity;
   }
 
-  void remove(ConsentPurposeId id, TenantId tenantId) {
-    if (!existsById(id, tenantId))
+  void remove(ConsentPurposeId tenantId, id tenantId) {
+    if (!existsById(tenantId, id))
       return;
 
     store[tenantId].remove(id);

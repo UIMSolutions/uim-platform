@@ -20,13 +20,13 @@ class MemoryModelConfigRepository : ModelConfigRepository {
     store[entity.id] = entity;
   }
 
-  void remove(ModelConfigId id, TenantId tenantId) {
+  void remove(ModelConfigId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ModelConfiguration* findById(ModelConfigId id, TenantId tenantId) {
+  ModelConfiguration* findById(ModelConfigId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -48,7 +48,7 @@ class MemoryModelConfigRepository : ModelConfigRepository {
     return result;
   }
 
-  ModelConfiguration[] findByDataset(DatasetId datasetId, TenantId tenantId) {
+  ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId) {
     ModelConfiguration[] result;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)

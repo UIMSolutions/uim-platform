@@ -47,8 +47,8 @@ class ManageInformationReportsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  InformationReport* getReport(InformationReportId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  InformationReport* getReport(InformationReportId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   InformationReport[] listReports(TenantId tenantId) {
@@ -76,8 +76,8 @@ class ManageInformationReportsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  void deleteReport(InformationReportId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteReport(InformationReportId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 
   private ExportFormat parseExportFormat(string s) {

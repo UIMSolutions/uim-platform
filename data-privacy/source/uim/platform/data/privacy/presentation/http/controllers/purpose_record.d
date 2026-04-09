@@ -78,7 +78,7 @@ class PurposeRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getRecord(id, tenantId);
+      auto entry = uc.getRecord(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Purpose record not found");
         return;
@@ -109,7 +109,7 @@ class PurposeRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteRecord(id, tenantId);
+      uc.deleteRecord(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

@@ -94,7 +94,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto app = useCase.getApp(id, tenantId);
+      auto app = useCase.getApp(tenantId, id);
       if (app is null) {
         writeError(res, 404, "Application not found");
         return;
@@ -141,7 +141,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.startApp(id, tenantId);
+      auto result = useCase.startApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -157,7 +157,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.stopApp(id, tenantId);
+      auto result = useCase.stopApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -173,7 +173,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.restartApp(id, tenantId);
+      auto result = useCase.restartApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -212,7 +212,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto env = useCase.getEnvironment(id, tenantId);
+      auto env = useCase.getEnvironment(tenantId, id);
 
       auto resp = Json.emptyObject;
       resp["appId"] = Json(id);
@@ -230,7 +230,7 @@ class AppController : PlatformController {
       auto j = req.json;
       auto envJson = j.getString("environmentVariables");
 
-      auto result = useCase.setEnvironment(id, tenantId, envJson);
+      auto result = useCase.setEnvironment(tenantId, id, envJson);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -246,7 +246,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteApp(id, tenantId);
+      auto result = useCase.deleteApp(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

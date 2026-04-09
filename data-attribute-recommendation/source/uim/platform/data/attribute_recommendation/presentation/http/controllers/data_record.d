@@ -66,7 +66,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto record = uc.getRecord(id, tenantId);
+      auto record = uc.getRecord(tenantId, id);
       if (record is null) {
         writeError(res, 404, "Record not found");
         return;
@@ -82,7 +82,7 @@ class DataRecordController : PlatformController {
     try {
       auto datasetId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByDataset(datasetId, tenantId);
+      auto items = uc.listByDataset(datasettenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref r; items)
@@ -102,7 +102,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.validateRecord(id, tenantId);
+      auto result = uc.validateRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -121,7 +121,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.rejectRecord(id, tenantId);
+      auto result = uc.rejectRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -140,7 +140,7 @@ class DataRecordController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteRecord(id, tenantId);
+      auto result = uc.deleteRecord(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

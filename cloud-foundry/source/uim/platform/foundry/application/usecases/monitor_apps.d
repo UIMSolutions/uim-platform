@@ -60,18 +60,18 @@ class MonitorAppsUseCase : UIMUseCase {
   }
 
   /// Get health summary for a single application.
-  AppHealthSummary getAppHealth(AppId id, TenantId tenantId) {
-    auto app = appRepo.findById(id, tenantId);
+  AppHealthSummary getAppHealth(AppId tenantId, id tenantId) {
+    auto app = appRepo.findById(tenantId, id);
     if (app is null)
       return AppHealthSummary.init;
     return buildHealthSummary(*app);
   }
 
   /// Get resource usage summary for a space.
-  SpaceUsageSummary getSpaceUsage(SpaceId spaceId, TenantId tenantId) {
-    auto apps = appRepo.findBySpace(spaceId, tenantId);
-    auto instances = siRepo.findBySpace(spaceId, tenantId);
-    auto routes = routeRepo.findBySpace(spaceId, tenantId);
+  SpaceUsageSummary getSpaceUsage(SpaceId spacetenantId, id tenantId) {
+    auto apps = appRepo.findBySpace(spacetenantId, id);
+    auto instances = siRepo.findBySpace(spacetenantId, id);
+    auto routes = routeRepo.findBySpace(spacetenantId, id);
 
     SpaceUsageSummary s;
     s.spaceId = spaceId;

@@ -79,7 +79,7 @@ class SpaceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto space = useCase.getSpace(id, tenantId);
+      auto space = useCase.getSpace(tenantId, id);
       if (space is null) {
         writeError(res, 404, "Space not found");
         return;
@@ -119,7 +119,7 @@ class SpaceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteSpace(id, tenantId);
+      auto result = useCase.deleteSpace(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

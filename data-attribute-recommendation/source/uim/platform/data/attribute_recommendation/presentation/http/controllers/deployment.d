@@ -84,7 +84,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto dep = uc.getDeployment(id, tenantId);
+      auto dep = uc.getDeployment(tenantId, id);
       if (dep is null) {
         writeError(res, 404, "Deployment not found");
         return;
@@ -100,7 +100,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateDeployment(id, tenantId);
+      auto result = uc.activateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -122,7 +122,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateDeployment(id, tenantId);
+      auto result = uc.deactivateDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -144,7 +144,7 @@ class DeploymentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDeployment(id, tenantId);
+      auto result = uc.deleteDeployment(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

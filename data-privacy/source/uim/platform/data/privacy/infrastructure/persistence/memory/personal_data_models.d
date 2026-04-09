@@ -24,7 +24,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
     return result;
   }
 
-  PersonalDataModel* findById(PersonalDataModelId id, TenantId tenantId) {
+  PersonalDataModel* findById(PersonalDataModelId tenantId, id tenantId) {
     foreach (ref m; store)
       if (m.id == id && m.tenantId == tenantId)
         return &m;
@@ -75,7 +75,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
       }
   }
 
-  void remove(PersonalDataModelId id, TenantId tenantId) {
+  void remove(PersonalDataModelId tenantId, id tenantId) {
     PersonalDataModel[] kept;
     foreach (ref m; store)
       if (!(m.id == id && m.tenantId == tenantId))

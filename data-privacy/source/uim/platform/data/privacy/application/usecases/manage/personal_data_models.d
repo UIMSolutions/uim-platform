@@ -52,8 +52,8 @@ class ManagePersonalDataModelsUseCase : UIMUseCase {
     return CommandResult(model.id, "");
   }
 
-  PersonalDataModel* getModel(PersonalDataModelId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  PersonalDataModel* getModel(PersonalDataModelId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   PersonalDataModel[] listModels(TenantId tenantId) {
@@ -92,7 +92,7 @@ class ManagePersonalDataModelsUseCase : UIMUseCase {
     return CommandResult(model.id, "");
   }
 
-  void deleteModel(PersonalDataModelId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteModel(PersonalDataModelId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

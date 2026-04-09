@@ -14,5 +14,5 @@ interface AnonymizationConfigRepository : IBaseRepository!(AnonymizationConfig, 
 
   void save(AnonymizationConfig config);
   void update(AnonymizationConfig config);
-  void remove(AnonymizationConfigId id, TenantId tenantId);
+  void remove(AnonymizationConfigId tenantId, id tenantId);
 }

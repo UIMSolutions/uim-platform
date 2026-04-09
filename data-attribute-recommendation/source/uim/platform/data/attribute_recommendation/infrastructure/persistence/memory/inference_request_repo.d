@@ -20,13 +20,13 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
     store[entity.id] = entity;
   }
 
-  void remove(InferenceRequestId id, TenantId tenantId) {
+  void remove(InferenceRequestId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  InferenceRequest* findById(InferenceRequestId id, TenantId tenantId) {
+  InferenceRequest* findById(InferenceRequestId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryInferenceRequestRepository : InferenceRequestRepository {
     return result;
   }
 
-  InferenceRequest[] findByDeployment(DeploymentId deploymentId, TenantId tenantId) {
+  InferenceRequest[] findByDeployment(DeploymentId deploymenttenantId, id tenantId) {
     InferenceRequest[] result;
     foreach (ref e; store)
       if (e.deploymentId == deploymentId && e.tenantId == tenantId)

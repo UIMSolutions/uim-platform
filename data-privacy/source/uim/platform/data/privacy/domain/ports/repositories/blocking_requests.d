@@ -13,13 +13,13 @@ interface BlockingRequestRepository {
   bool existsByTenant(TenantId tenantId);
   BlockingRequest[] findByTenant(TenantId tenantId);
  
-  bool existsById(BlockingRequestId id, TenantId tenantId);
-  BlockingRequest findById(BlockingRequestId id, TenantId tenantId);
+  bool existsById(BlockingRequestId tenantId, id tenantId);
+  BlockingRequest findById(BlockingRequestId tenantId, id tenantId);
 
   BlockingRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   BlockingRequest[] findByStatus(TenantId tenantId, BlockingStatus status);
 
   void save(BlockingRequest request);
   void update(BlockingRequest request);
-  void remove(BlockingRequestId id, TenantId tenantId);
+  void remove(BlockingRequestId tenantId, id tenantId);
 }

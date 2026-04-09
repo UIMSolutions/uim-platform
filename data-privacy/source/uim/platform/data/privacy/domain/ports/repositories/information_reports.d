@@ -13,13 +13,13 @@ interface InformationReportRepository {
   bool existsByTenant(TenantId tenantId);
   InformationReport[] findByTenant(TenantId tenantId);
  
-  bool existsById(InformationReportId id, TenantId tenantId);
-  InformationReport findById(InformationReportId id, TenantId tenantId);
+  bool existsById(InformationReportId tenantId, id tenantId);
+  InformationReport findById(InformationReportId tenantId, id tenantId);
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status);
 
   void save(InformationReport report);
   void update(InformationReport report);
-  void remove(InformationReportId id, TenantId tenantId);
+  void remove(InformationReportId tenantId, id tenantId);
 }

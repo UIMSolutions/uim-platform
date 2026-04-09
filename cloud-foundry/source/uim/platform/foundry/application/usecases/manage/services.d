@@ -63,16 +63,16 @@ class ManageServicesUseCase : UIMUseCase {
     return CommandResult(si.id, "");
   }
 
-  ServiceInstance* getInstance(ServiceInstanceId id, TenantId tenantId) {
-    return instanceRepo.findById(id, tenantId);
+  ServiceInstance* getInstance(ServiceInstanceId tenantId, id tenantId) {
+    return instanceRepo.findById(tenantId, id);
   }
 
   ServiceInstance[] listInstances(TenantId tenantId) {
     return instanceRepo.findByTenant(tenantId);
   }
 
-  ServiceInstance[] listBySpace(SpaceId spaceId, TenantId tenantId) {
-    return instanceRepo.findBySpace(spaceId, tenantId);
+  ServiceInstance[] listBySpace(SpaceId spacetenantId, id tenantId) {
+    return instanceRepo.findBySpace(spacetenantId, id);
   }
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
@@ -98,17 +98,17 @@ class ManageServicesUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteInstance(ServiceInstanceId id, TenantId tenantId) {
-    auto existing = instanceRepo.findById(id, tenantId);
+  CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
+    auto existing = instanceRepo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Service instance not found");
 
     // Remove all bindings for this instance
-    auto bindings = bindingRepo.findByServiceInstance(id, tenantId);
+    auto bindings = bindingRepo.findByServiceInstance(tenantId, id);
     foreach (b; bindings)
-      bindingRepo.remove(b.id, tenantId);
+      bindingRepo.remove(b.tenantId, id);
 
-    instanceRepo.remove(id, tenantId);
+    instanceRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
@@ -147,16 +147,16 @@ class ManageServicesUseCase : UIMUseCase {
     return bindingRepo.findByTenant(tenantId);
   }
 
-  ServiceBinding[] listBindingsByApp(AppId appId, TenantId tenantId) {
-    return bindingRepo.findByApp(appId, tenantId);
+  ServiceBinding[] listBindingsByApp(AppId apptenantId, id tenantId) {
+    return bindingRepo.findByApp(apptenantId, id);
   }
 
-  CommandResult deleteBinding(ServiceBindingId id, TenantId tenantId) {
-    auto existing = bindingRepo.findById(id, tenantId);
+  CommandResult deleteBinding(ServiceBindingId tenantId, id tenantId) {
+    auto existing = bindingRepo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Service binding not found");
 
-    bindingRepo.remove(id, tenantId);
+    bindingRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

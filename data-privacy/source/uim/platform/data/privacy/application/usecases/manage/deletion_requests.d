@@ -60,8 +60,8 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  DeletionRequest* getRequest(DeletionRequestId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DeletionRequest* getRequest(DeletionRequestId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   DeletionRequest[] listRequests(TenantId tenantId) {
@@ -91,7 +91,7 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  void deleteRequest(DeletionRequestId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRequest(DeletionRequestId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

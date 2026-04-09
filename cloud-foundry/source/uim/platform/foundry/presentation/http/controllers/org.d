@@ -84,7 +84,7 @@ class OrgController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto org = useCase.getOrg(id, tenantId);
+      auto org = useCase.getOrg(tenantId, id);
       if (org is null) {
         writeError(res, 404, "Organization not found");
         return;
@@ -128,7 +128,7 @@ class OrgController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.suspendOrg(id, tenantId);
+      auto result = useCase.suspendOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -146,7 +146,7 @@ class OrgController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.activateOrg(id, tenantId);
+      auto result = useCase.activateOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -164,7 +164,7 @@ class OrgController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteOrg(id, tenantId);
+      auto result = useCase.deleteOrg(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

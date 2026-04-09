@@ -79,7 +79,7 @@ class ConsentPurposeController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getPurpose(id, tenantId);
+      auto entry = uc.getPurpose(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Consent purpose not found");
         return;
@@ -116,7 +116,7 @@ class ConsentPurposeController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deletePurpose(id, tenantId);
+      uc.deletePurpose(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

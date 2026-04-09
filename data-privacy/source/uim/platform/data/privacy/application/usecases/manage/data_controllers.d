@@ -44,8 +44,8 @@ class ManageDataControllersUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  DataController* getController(DataControllerId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DataController* getController(DataControllerId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   DataController[] listControllers(TenantId tenantId) {
@@ -72,7 +72,7 @@ class ManageDataControllersUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  void deleteController(DataControllerId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteController(DataControllerId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

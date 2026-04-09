@@ -96,7 +96,7 @@ class LegalGroundController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getGround(id, tenantId);
+      auto entry = uc.getGround(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Legal ground not found");
         return;
@@ -135,7 +135,7 @@ class LegalGroundController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteGround(id, tenantId);
+      uc.deleteGround(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     }
     catch (Exception e)

@@ -54,8 +54,8 @@ class ManageBlockingRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  BlockingRequest* getRequest(BlockingRequestId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  BlockingRequest* getRequest(BlockingRequestId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   BlockingRequest[] listRequests(TenantId tenantId) {
@@ -81,7 +81,7 @@ class ManageBlockingRequestsUseCase : UIMUseCase {
     return CommandResult(request.id, "");
   }
 
-  void deleteRequest(BlockingRequestId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRequest(BlockingRequestId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

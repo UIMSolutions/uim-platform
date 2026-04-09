@@ -24,7 +24,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
     return result;
   }
 
-  InformationReport* findById(InformationReportId id, TenantId tenantId) {
+  InformationReport* findById(InformationReportId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -59,7 +59,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
       }
   }
 
-  void remove(InformationReportId id, TenantId tenantId) {
+  void remove(InformationReportId tenantId, id tenantId) {
     InformationReport[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

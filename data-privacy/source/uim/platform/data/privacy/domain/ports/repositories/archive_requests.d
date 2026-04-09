@@ -13,13 +13,13 @@ interface ArchiveRequestRepository {
   bool existsByTenant(TenantId tenantId);
   ArchiveRequest[] findByTenant(TenantId tenantId);
 
-  bool existsById(ArchiveRequestId id, TenantId tenantId);
-  ArchiveRequest findById(ArchiveRequestId id, TenantId tenantId);
+  bool existsById(ArchiveRequestId tenantId, id tenantId);
+  ArchiveRequest findById(ArchiveRequestId tenantId, id tenantId);
 
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   ArchiveRequest[] findByStatus(TenantId tenantId, ArchiveStatus status);
   
   void save(ArchiveRequest request);
   void update(ArchiveRequest request);
-  void remove(ArchiveRequestId id, TenantId tenantId);
+  void remove(ArchiveRequestId tenantId, id tenantId);
 }

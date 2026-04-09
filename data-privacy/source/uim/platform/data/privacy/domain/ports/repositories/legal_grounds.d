@@ -13,8 +13,8 @@ interface LegalGroundRepository {
   bool existsByTenant(TenantId tenantId);
   LegalGround[] findByTenant(TenantId tenantId);
  
-  bool existsById(LegalGroundId id, TenantId tenantId);
-  LegalGround findById(LegalGroundId id, TenantId tenantId);
+  bool existsById(LegalGroundId tenantId, id tenantId);
+  LegalGround findById(LegalGroundId tenantId, id tenantId);
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis);
@@ -23,5 +23,5 @@ interface LegalGroundRepository {
 
   void save(LegalGround ground);
   void update(LegalGround ground);
-  void remove(LegalGroundId id, TenantId tenantId);
+  void remove(LegalGroundId tenantId, id tenantId);
 }

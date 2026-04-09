@@ -45,8 +45,8 @@ class ManageConsentPurposesUseCase : UIMUseCase {
     return CommandResult(cp.id, "");
   }
 
-  ConsentPurpose* getPurpose(ConsentPurposeId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ConsentPurpose* getPurpose(ConsentPurposeId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ConsentPurpose[] listPurposes(TenantId tenantId) {
@@ -73,7 +73,7 @@ class ManageConsentPurposesUseCase : UIMUseCase {
     return CommandResult(cp.id, "");
   }
 
-  void deletePurpose(ConsentPurposeId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deletePurpose(ConsentPurposeId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

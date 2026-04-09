@@ -53,16 +53,16 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  DataRecord* getRecord(DataRecordId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DataRecord* getRecord(DataRecordId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  DataRecord[] listByDataset(DatasetId datasetId, TenantId tenantId) {
-    return repo.findByDataset(datasetId, tenantId);
+  DataRecord[] listByDataset(DatasetId datasettenantId, id tenantId) {
+    return repo.findByDataset(datasettenantId, id);
   }
 
-  CommandResult validateRecord(DataRecordId id, TenantId tenantId) {
-    auto record = repo.findById(id, tenantId);
+  CommandResult validateRecord(DataRecordId tenantId, id tenantId) {
+    auto record = repo.findById(tenantId, id);
     if (record is null)
       return CommandResult("", "Record not found");
 
@@ -71,8 +71,8 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult rejectRecord(DataRecordId id, TenantId tenantId) {
-    auto record = repo.findById(id, tenantId);
+  CommandResult rejectRecord(DataRecordId tenantId, id tenantId) {
+    auto record = repo.findById(tenantId, id);
     if (record is null)
       return CommandResult("", "Record not found");
 
@@ -81,12 +81,12 @@ class ManageDataRecordsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteRecord(DataRecordId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteRecord(DataRecordId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Record not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

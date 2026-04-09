@@ -15,25 +15,25 @@ import uim.platform.foundry.domain.ports.repositories.service_instance;
 class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 
-  ServiceInstance[] findBySpace(SpaceId spaceId, TenantId tenantId) {
+  ServiceInstance[] findBySpace(SpaceId spacetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
-  ServiceInstance* findById(ServiceInstanceId id, TenantId tenantId) {
+  ServiceInstance* findById(ServiceInstanceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ServiceInstance* findByName(SpaceId spaceId, TenantId tenantId, string name) {
+  ServiceInstance* findByName(SpaceId spacetenantId, id tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
         return &e;
     return null;
   }
 
-  ServiceInstance[] findByServiceName(SpaceId spaceId, TenantId tenantId, string serviceName) {
+  ServiceInstance[] findByServiceName(SpaceId spacetenantId, id tenantId, string serviceName) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.spaceId == spaceId && e.serviceName == serviceName).array;
   }
@@ -50,7 +50,7 @@ class MemoryServiceInstanceRepository : ServiceInstanceRepository {
     store[instance.id] = instance;
   }
 
-  void remove(ServiceInstanceId id, TenantId tenantId) {
+  void remove(ServiceInstanceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

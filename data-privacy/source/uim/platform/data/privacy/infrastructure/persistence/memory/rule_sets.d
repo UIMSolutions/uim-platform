@@ -24,7 +24,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
     return result;
   }
 
-  RuleSet* findById(RuleSetId id, TenantId tenantId) {
+  RuleSet* findById(RuleSetId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -59,7 +59,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
       }
   }
 
-  void remove(RuleSetId id, TenantId tenantId) {
+  void remove(RuleSetId tenantId, id tenantId) {
     RuleSet[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

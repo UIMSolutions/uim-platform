@@ -10,12 +10,12 @@ import uim.platform.foundry.domain.entities.service_binding;
 
 /// Port for persisting and querying service bindings.
 interface IServiceBindingRepository {
-  ServiceBinding[] findByApp(AppId appId, TenantId tenantId);
-  ServiceBinding* findById(ServiceBindingId id, TenantId tenantId);
-  ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId, TenantId tenantId);
+  ServiceBinding[] findByApp(AppId apptenantId, id tenantId);
+  ServiceBinding* findById(ServiceBindingId tenantId, id tenantId);
+  ServiceBinding[] findByServiceInstance(ServiceInstanceId instancetenantId, id tenantId);
   ServiceBinding[] findByTenant(TenantId tenantId);
   void save(ServiceBinding binding);
   void update(ServiceBinding binding);
-  void remove(ServiceBindingId id, TenantId tenantId);
-  void removeByApp(AppId appId, TenantId tenantId);
+  void remove(ServiceBindingId tenantId, id tenantId);
+  void removeByApp(AppId apptenantId, id tenantId);
 }

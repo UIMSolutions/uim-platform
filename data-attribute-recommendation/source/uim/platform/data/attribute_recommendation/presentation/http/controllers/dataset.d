@@ -85,7 +85,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ds = uc.getDataset(id, tenantId);
+      auto ds = uc.getDataset(tenantId, id);
       if (ds is null) {
         writeError(res, 404, "Dataset not found");
         return;
@@ -129,7 +129,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.validateDataset(id, tenantId);
+      auto result = uc.validateDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -151,7 +151,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.processDataset(id, tenantId);
+      auto result = uc.processDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -173,7 +173,7 @@ class DatasetController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDataset(id, tenantId);
+      auto result = uc.deleteDataset(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

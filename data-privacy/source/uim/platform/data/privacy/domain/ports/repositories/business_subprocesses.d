@@ -13,11 +13,11 @@ interface BusinessSubprocessRepository {
   bool existsByTenant(TenantId tenantId);
   BusinessSubprocess[] findByTenant(TenantId tenantId);
 
-  bool existsById(BusinessSubprocessId id, TenantId tenantId);
-  BusinessSubprocess findById(BusinessSubprocessId id, TenantId tenantId);
+  bool existsById(BusinessSubprocessId tenantId, id tenantId);
+  BusinessSubprocess findById(BusinessSubprocessId tenantId, id tenantId);
   BusinessSubprocess[] findByParentProcess(TenantId tenantId, BusinessProcessId parentId);
   
   void save(BusinessSubprocess subprocess);
   void update(BusinessSubprocess subprocess);
-  void remove(BusinessSubprocessId id, TenantId tenantId);
+  void remove(BusinessSubprocessId tenantId, id tenantId);
 }

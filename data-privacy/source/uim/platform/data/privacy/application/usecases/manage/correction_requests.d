@@ -50,8 +50,8 @@ class ManageCorrectionRequestsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  CorrectionRequest* getRequest(CorrectionRequestId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  CorrectionRequest* getRequest(CorrectionRequestId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   CorrectionRequest[] listRequests(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageCorrectionRequestsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  void deleteRequest(CorrectionRequestId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRequest(CorrectionRequestId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

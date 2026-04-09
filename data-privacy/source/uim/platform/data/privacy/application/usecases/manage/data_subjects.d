@@ -55,8 +55,8 @@ class ManageDataSubjectsUseCase : UIMUseCase {
     return CommandResult(subject.id, "");
   }
 
-  DataSubject* getSubject(DataSubjectId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  DataSubject* getSubject(DataSubjectId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   DataSubject[] listSubjects(TenantId tenantId) {
@@ -88,7 +88,7 @@ class ManageDataSubjectsUseCase : UIMUseCase {
     return CommandResult(subject.id, "");
   }
 
-  void deleteSubject(DataSubjectId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteSubject(DataSubjectId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

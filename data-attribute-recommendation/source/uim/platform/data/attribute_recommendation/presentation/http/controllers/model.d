@@ -88,7 +88,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto config = uc.getModelConfig(id, tenantId);
+      auto config = uc.getModelConfig(tenantId, id);
       if (config is null) {
         writeError(res, 404, "Model configuration not found");
         return;
@@ -135,7 +135,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateConfig(id, tenantId);
+      auto result = uc.activateConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -180,7 +180,7 @@ class ModelController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteModelConfig(id, tenantId);
+      auto result = uc.deleteModelConfig(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

@@ -10,13 +10,13 @@ import uim.platform.foundry.domain.entities.route;
 
 /// Port for persisting and querying routes.
 interface IRouteRepository {
-  Route[] findBySpace(SpaceId spaceId, TenantId tenantId);
-  Route* findById(RouteId id, TenantId tenantId);
+  Route[] findBySpace(SpaceId spacetenantId, id tenantId);
+  Route* findById(RouteId tenantId, id tenantId);
   Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId);
-  Route[] findByDomain(DomainId domainId, TenantId tenantId);
-  Route[] findByApp(AppId appId, TenantId tenantId);
+  Route[] findByDomain(DomainId domaintenantId, id tenantId);
+  Route[] findByApp(AppId apptenantId, id tenantId);
   Route[] findByTenant(TenantId tenantId);
   void save(Route route);
   void update(Route route);
-  void remove(RouteId id, TenantId tenantId);
+  void remove(RouteId tenantId, id tenantId);
 }

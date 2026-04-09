@@ -75,7 +75,7 @@ class BusinessProcessController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getProcess(id, tenantId);
+      auto entry = uc.getProcess(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Business process not found");
         return;
@@ -112,7 +112,7 @@ class BusinessProcessController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteProcess(id, tenantId);
+      uc.deleteProcess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

@@ -13,12 +13,12 @@ interface DataControllerRepository {
   bool existsByTenant(TenantId tenantId);
   DataController[] findByTenant(TenantId tenantId);
  
-  bool existsById(DataControllerId id, TenantId tenantId);
-  DataController findById(DataControllerId id, TenantId tenantId);
+  bool existsById(DataControllerId tenantId, id tenantId);
+  DataController findById(DataControllerId tenantId, id tenantId);
 
   DataController[] findByCountry(TenantId tenantId, string country);
 
   void save(DataController controller);
   void update(DataController controller);
-  void remove(DataControllerId id, TenantId tenantId);
+  void remove(DataControllerId tenantId, id tenantId);
 }

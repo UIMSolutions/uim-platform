@@ -9,12 +9,12 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.data_record;
 
 interface DataRecordRepository {
-  DataRecord[] findByDataset(DatasetId datasetId, TenantId tenantId);
-  DataRecord* findById(DataRecordId id, TenantId tenantId);
-  DataRecord[] findByStatus(DatasetId datasetId, TenantId tenantId, RecordStatus status);
-  long countByDataset(DatasetId datasetId, TenantId tenantId);
+  DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId);
+  DataRecord* findById(DataRecordId tenantId, id tenantId);
+  DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status);
+  long countByDataset(DatasetId datasettenantId, id tenantId);
   void save(DataRecord record);
   void update(DataRecord record);
-  void remove(DataRecordId id, TenantId tenantId);
-  void removeByDataset(DatasetId datasetId, TenantId tenantId);
+  void remove(DataRecordId tenantId, id tenantId);
+  void removeByDataset(DatasetId datasettenantId, id tenantId);
 }

@@ -15,11 +15,11 @@ import uim.platform.foundry.domain.ports.repositories.domain;
 class MemoryDomainRepository : DomainRepository {
   private CfDomain[DomainId] store;
 
-  CfDomain[] findByOrg(OrgId orgId, TenantId tenantId) {
+  CfDomain[] findByOrg(OrgId orgtenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.ownerOrgId == orgId).array;
   }
 
-  CfDomain* findById(DomainId id, TenantId tenantId) {
+  CfDomain* findById(DomainId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -50,7 +50,7 @@ class MemoryDomainRepository : DomainRepository {
     store[d.id] = d;
   }
 
-  void remove(DomainId id, TenantId tenantId) {
+  void remove(DomainId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

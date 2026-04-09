@@ -13,13 +13,13 @@ interface DataRetrievalRequestRepository {
   bool existsByTenant(TenantId tenantId);
   DataRetrievalRequest[] findByTenant(TenantId tenantId);
  
-  bool existsById(DataRetrievalRequestId id, TenantId tenantId);
-  DataRetrievalRequest findById(DataRetrievalRequestId id, TenantId tenantId);
+  bool existsById(DataRetrievalRequestId tenantId, id tenantId);
+  DataRetrievalRequest findById(DataRetrievalRequestId tenantId, id tenantId);
 
   DataRetrievalRequest[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   DataRetrievalRequest[] findByStatus(TenantId tenantId, RetrievalStatus status);
 
   void save(DataRetrievalRequest request);
   void update(DataRetrievalRequest request);
-  void remove(DataRetrievalRequestId id, TenantId tenantId);
+  void remove(DataRetrievalRequestId tenantId, id tenantId);
 }

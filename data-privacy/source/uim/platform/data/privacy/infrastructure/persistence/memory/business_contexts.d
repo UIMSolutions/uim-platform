@@ -24,7 +24,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
     return result;
   }
 
-  BusinessContext* findById(BusinessContextId id, TenantId tenantId) {
+  BusinessContext* findById(BusinessContextId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -59,7 +59,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
       }
   }
 
-  void remove(BusinessContextId id, TenantId tenantId) {
+  void remove(BusinessContextId tenantId, id tenantId) {
     BusinessContext[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

@@ -9,9 +9,9 @@ import uim.platform.data.attribute_recommendation.domain.types;
 import uim.platform.data.attribute_recommendation.domain.entities.inference_result;
 
 interface InferenceResultRepository {
-  InferenceResult* findById(InferenceResultId id, TenantId tenantId);
-  InferenceResult* findByRequest(InferenceRequestId requestId, TenantId tenantId);
+  InferenceResult* findById(InferenceResultId tenantId, id tenantId);
+  InferenceResult* findByRequest(InferenceRequestId requesttenantId, id tenantId);
   InferenceResult[] findByTenant(TenantId tenantId);
   void save(InferenceResult result);
-  void remove(InferenceResultId id, TenantId tenantId);
+  void remove(InferenceResultId tenantId, id tenantId);
 }

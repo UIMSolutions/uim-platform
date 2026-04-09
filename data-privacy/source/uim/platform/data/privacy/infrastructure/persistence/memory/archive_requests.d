@@ -29,7 +29,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
     return result;
   }
 
-  ArchiveRequest* findById(ArchiveRequestId id, TenantId tenantId) {
+  ArchiveRequest* findById(ArchiveRequestId tenantId, id tenantId) {
     if (!existsByTenant(tenantId))
       return null;
 
@@ -67,7 +67,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
       }
   }
 
-  void remove(ArchiveRequestId id, TenantId tenantId) {
+  void remove(ArchiveRequestId tenantId, id tenantId) {
     ArchiveRequest[] kept;
     foreach (ref s; store)
       if (!(s.id == id && s.tenantId == tenantId))

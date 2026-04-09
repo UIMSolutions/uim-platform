@@ -69,8 +69,8 @@ class MonitorTrainingUseCase : UIMUseCase {
     return result;
   }
 
-  TrainingJobSummary getTrainingJob(TrainingJobId id, TenantId tenantId) {
-    auto job = jobRepo.findById(id, tenantId);
+  TrainingJobSummary getTrainingJob(TrainingJobId tenantId, id tenantId) {
+    auto job = jobRepo.findById(tenantId, id);
     if (job is null)
       return TrainingJobSummary.init;
     return buildJobSummary(*job, tenantId);
@@ -124,7 +124,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     s.startedAt = job.startedAt;
     s.completedAt = job.completedAt;
 
-    auto config = configRepo.findById(job.modelConfigId, tenantId);
+    auto config = configRepo.findById(job.modelConfigtenantId, id);
     if (config !is null)
       s.modelName = config.name;
 
@@ -139,11 +139,11 @@ class MonitorTrainingUseCase : UIMUseCase {
     s.version_ = dep.version_;
     s.replicas = dep.replicas;
 
-    auto config = configRepo.findById(dep.modelConfigId, tenantId);
+    auto config = configRepo.findById(dep.modelConfigtenantId, id);
     if (config !is null)
       s.modelName = config.name;
 
-    auto reqs = inferenceRepo.findByDeployment(dep.id, tenantId);
+    auto reqs = inferenceRepo.findByDeployment(dep.tenantId, id);
     s.inferenceCount = cast(long) reqs.length;
 
     return s;

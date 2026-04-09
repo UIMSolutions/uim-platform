@@ -19,7 +19,7 @@ class MemoryBuildpackRepository : BuildpackRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Buildpack* findById(BuildpackId id, TenantId tenantId) {
+  Buildpack* findById(BuildpackId tenantId, id tenantId) {
     if (auto p = id in store && p.tenantId == tenantId)
       return p;
     return null;
@@ -48,7 +48,7 @@ class MemoryBuildpackRepository : BuildpackRepository {
     store[bp.id] = bp;
   }
 
-  void remove(BuildpackId id, TenantId tenantId) {
+  void remove(BuildpackId tenantId, id tenantId) {
     if (auto p = id in store && p.tenantId == tenantId)
       store.remove(id);
   }

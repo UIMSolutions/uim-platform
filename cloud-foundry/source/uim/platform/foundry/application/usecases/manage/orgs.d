@@ -55,8 +55,8 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(org.id, "");
   }
 
-  Organization* getOrg(OrgId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Organization* getOrg(OrgId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Organization[] listOrgs(TenantId tenantId) {
@@ -92,8 +92,8 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult suspendOrg(OrgId id, TenantId tenantId) {
-    auto org = repo.findById(id, tenantId);
+  CommandResult suspendOrg(OrgId tenantId, id tenantId) {
+    auto org = repo.findById(tenantId, id);
     if (org is null)
       return CommandResult("", "Organization not found");
     if (org.status == OrgStatus.suspended)
@@ -105,8 +105,8 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult activateOrg(OrgId id, TenantId tenantId) {
-    auto org = repo.findById(id, tenantId);
+  CommandResult activateOrg(OrgId tenantId, id tenantId) {
+    auto org = repo.findById(tenantId, id);
     if (org is null)
       return CommandResult("", "Organization not found");
     if (org.status == OrgStatus.active)
@@ -118,14 +118,14 @@ class ManageOrgsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteOrg(OrgId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteOrg(OrgId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Organization not found");
 
     // Cascade: remove all spaces in this org
-    spaceRepo.removeByOrg(id, tenantId);
-    repo.remove(id, tenantId);
+    spaceRepo.removeByOrg(tenantId, id);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

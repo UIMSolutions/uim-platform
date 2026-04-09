@@ -78,7 +78,7 @@ class DataControllerController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getController(id, tenantId);
+      auto entry = uc.getController(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Data controller not found");
         return;
@@ -119,7 +119,7 @@ class DataControllerController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteController(id, tenantId);
+      uc.deleteController(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

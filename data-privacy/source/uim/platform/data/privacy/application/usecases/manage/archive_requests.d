@@ -47,8 +47,8 @@ class ManageArchiveRequestsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  ArchiveRequest* getRequest(ArchiveRequestId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ArchiveRequest* getRequest(ArchiveRequestId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ArchiveRequest[] listRequests(TenantId tenantId) {
@@ -75,7 +75,7 @@ class ManageArchiveRequestsUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  void deleteRequest(ArchiveRequestId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteRequest(ArchiveRequestId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

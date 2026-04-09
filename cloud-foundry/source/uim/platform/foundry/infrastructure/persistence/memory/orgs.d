@@ -19,7 +19,7 @@ class MemoryOrgRepository : OrgRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Organization* findById(OrgId id, TenantId tenantId) {
+  Organization* findById(OrgId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryOrgRepository : OrgRepository {
     store[org.id] = org;
   }
 
-  void remove(OrgId id, TenantId tenantId) {
+  void remove(OrgId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

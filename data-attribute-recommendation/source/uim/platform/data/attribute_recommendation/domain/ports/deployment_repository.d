@@ -10,11 +10,11 @@ import uim.platform.data.attribute_recommendation.domain.entities.model_deployme
 
 interface DeploymentRepository {
   ModelDeployment[] findByTenant(TenantId tenantId);
-  ModelDeployment* findById(DeploymentId id, TenantId tenantId);
-  ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId);
+  ModelDeployment* findById(DeploymentId tenantId, id tenantId);
+  ModelDeployment[] findByModelConfig(ModelConfigId configtenantId, id tenantId);
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status);
-  ModelDeployment* findByTrainingJob(TrainingJobId jobId, TenantId tenantId);
+  ModelDeployment* findByTrainingJob(TrainingJobId jobtenantId, id tenantId);
   void save(ModelDeployment deployment);
   void update(ModelDeployment deployment);
-  void remove(DeploymentId id, TenantId tenantId);
+  void remove(DeploymentId tenantId, id tenantId);
 }

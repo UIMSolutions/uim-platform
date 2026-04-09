@@ -24,7 +24,7 @@ class MemoryDataControllerRepository : DataControllerRepository {
     return result;
   }
 
-  DataController* findById(DataControllerId id, TenantId tenantId) {
+  DataController* findById(DataControllerId tenantId, id tenantId) {
     foreach (ref s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
@@ -51,7 +51,7 @@ class MemoryDataControllerRepository : DataControllerRepository {
       }
   }
 
-  void remove(DataControllerId id, TenantId tenantId) {
+  void remove(DataControllerId tenantId, id tenantId) {
     DataController[] kept;
     foreach (ref s; findByTenant(tenantId))
       if (!(s.id == id))

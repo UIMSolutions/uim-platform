@@ -59,19 +59,19 @@ class ProcessInferenceUseCase : UIMUseCase {
     return CommandResult(result.id, "");
   }
 
-  InferenceResult* getResult(InferenceResultId id, TenantId tenantId) {
-    return resultRepo.findById(id, tenantId);
+  InferenceResult* getResult(InferenceResultId tenantId, id tenantId) {
+    return resultRepo.findById(tenantId, id);
   }
 
-  InferenceResult* getResultByRequest(InferenceRequestId requestId, TenantId tenantId) {
-    return resultRepo.findByRequest(requestId, tenantId);
+  InferenceResult* getResultByRequest(InferenceRequestId requesttenantId, id tenantId) {
+    return resultRepo.findByRequest(requesttenantId, id);
   }
 
   InferenceRequest[] listRequests(TenantId tenantId) {
     return requestRepo.findByTenant(tenantId);
   }
 
-  InferenceRequest[] listByDeployment(DeploymentId deploymentId, TenantId tenantId) {
-    return requestRepo.findByDeployment(deploymentId, tenantId);
+  InferenceRequest[] listByDeployment(DeploymentId deploymenttenantId, id tenantId) {
+    return requestRepo.findByDeployment(deploymenttenantId, id);
   }
 }

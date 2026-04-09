@@ -24,7 +24,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
     return result;
   }
 
-  CorrectionRequest* findById(CorrectionRequestId id, TenantId tenantId) {
+  CorrectionRequest* findById(CorrectionRequestId tenantId, id tenantId) {
     foreach (ref s; findByTenant(tenantId))
       if (s.id == id)
         return &s;
@@ -59,7 +59,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
       }
   }
 
-  void remove(CorrectionRequestId id, TenantId tenantId) {
+  void remove(CorrectionRequestId tenantId, id tenantId) {
     CorrectionRequest[] kept;
     foreach (ref s; findByTenant(tenantId))
       if (!(s.id == id))

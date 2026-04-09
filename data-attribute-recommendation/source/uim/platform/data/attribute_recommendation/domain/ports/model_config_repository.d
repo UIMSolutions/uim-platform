@@ -10,11 +10,11 @@ import uim.platform.data.attribute_recommendation.domain.entities.model_configur
 
 interface ModelConfigRepository {
   ModelConfiguration[] findByTenant(TenantId tenantId);
-  ModelConfiguration* findById(ModelConfigId id, TenantId tenantId);
+  ModelConfiguration* findById(ModelConfigId tenantId, id tenantId);
   ModelConfiguration* findByName(TenantId tenantId, string name);
-  ModelConfiguration[] findByDataset(DatasetId datasetId, TenantId tenantId);
+  ModelConfiguration[] findByDataset(DatasetId datasettenantId, id tenantId);
   ModelConfiguration[] findByStatus(TenantId tenantId, ModelConfigStatus status);
   void save(ModelConfiguration config);
   void update(ModelConfiguration config);
-  void remove(ModelConfigId id, TenantId tenantId);
+  void remove(ModelConfigId tenantId, id tenantId);
 }

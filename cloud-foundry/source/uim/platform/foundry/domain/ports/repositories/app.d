@@ -10,13 +10,13 @@ import uim.platform.foundry.domain.entities.application;
 
 /// Port for persisting and querying applications.
 interface IAppRepository {
-  Application[] findBySpace(SpaceId spaceId, TenantId tenantId);
-  Application* findById(AppId id, TenantId tenantId);
-  Application* findByName(SpaceId spaceId, TenantId tenantId, string name);
-  Application[] findByState(SpaceId spaceId, TenantId tenantId, AppState state);
+  Application[] findBySpace(SpaceId spacetenantId, id tenantId);
+  Application* findById(AppId tenantId, id tenantId);
+  Application* findByName(SpaceId spacetenantId, id tenantId, string name);
+  Application[] findByState(SpaceId spacetenantId, id tenantId, AppState state);
   Application[] findByTenant(TenantId tenantId);
-  long countBySpace(SpaceId spaceId, TenantId tenantId);
+  long countBySpace(SpaceId spacetenantId, id tenantId);
   void save(Application app);
   void update(Application app);
-  void remove(AppId id, TenantId tenantId);
+  void remove(AppId tenantId, id tenantId);
 }

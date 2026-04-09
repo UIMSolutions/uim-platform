@@ -59,8 +59,8 @@ class ManageConsentRecordsUseCase : UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  ConsentRecord* getConsent(ConsentRecordId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ConsentRecord* getConsent(ConsentRecordId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ConsentRecord[] listConsents(TenantId tenantId) {
@@ -93,7 +93,7 @@ class ManageConsentRecordsUseCase : UIMUseCase {
     return CommandResult(record.id, "");
   }
 
-  void deleteConsent(ConsentRecordId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteConsent(ConsentRecordId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

@@ -75,7 +75,7 @@ class InformationReportController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getReport(id, tenantId);
+      auto entry = uc.getReport(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Information report not found");
         return;
@@ -110,7 +110,7 @@ class InformationReportController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteReport(id, tenantId);
+      uc.deleteReport(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

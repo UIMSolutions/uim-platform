@@ -20,13 +20,13 @@ class MemoryDataRecordRepository : DataRecordRepository {
     store[entity.id] = entity;
   }
 
-  void remove(DataRecordId id, TenantId tenantId) {
+  void remove(DataRecordId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  void removeByDataset(DatasetId datasetId, TenantId tenantId) {
+  void removeByDataset(DatasetId datasettenantId, id tenantId) {
     string[] toRemove;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
@@ -35,14 +35,14 @@ class MemoryDataRecordRepository : DataRecordRepository {
       store.remove(id);
   }
 
-  DataRecord* findById(DataRecordId id, TenantId tenantId) {
+  DataRecord* findById(DataRecordId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  DataRecord[] findByDataset(DatasetId datasetId, TenantId tenantId) {
+  DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId) {
     DataRecord[] result;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
@@ -50,7 +50,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
     return result;
   }
 
-  DataRecord[] findByStatus(DatasetId datasetId, TenantId tenantId, RecordStatus status) {
+  DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status) {
     DataRecord[] result;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId && e.status == status)
@@ -58,7 +58,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
     return result;
   }
 
-  long countByDataset(DatasetId datasetId, TenantId tenantId) {
+  long countByDataset(DatasetId datasettenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)

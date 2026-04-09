@@ -20,13 +20,13 @@ class MemoryDeploymentRepository : DeploymentRepository {
     store[entity.id] = entity;
   }
 
-  void remove(DeploymentId id, TenantId tenantId) {
+  void remove(DeploymentId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ModelDeployment* findById(DeploymentId id, TenantId tenantId) {
+  ModelDeployment* findById(DeploymentId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return result;
   }
 
-  ModelDeployment[] findByModelConfig(ModelConfigId configId, TenantId tenantId) {
+  ModelDeployment[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
     ModelDeployment[] result;
     foreach (ref e; store)
       if (e.modelConfigId == configId && e.tenantId == tenantId)
@@ -57,7 +57,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
     return result;
   }
 
-  ModelDeployment* findByTrainingJob(TrainingJobId jobId, TenantId tenantId) {
+  ModelDeployment* findByTrainingJob(TrainingJobId jobtenantId, id tenantId) {
     foreach (ref e; store)
       if (e.trainingJobId == jobId && e.tenantId == tenantId)
         return &e;

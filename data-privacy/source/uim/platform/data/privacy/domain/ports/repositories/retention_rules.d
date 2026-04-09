@@ -13,13 +13,13 @@ interface RetentionRuleRepository {
   bool existsByTenant(TenantId tenantId);
   RetentionRule[] findByTenant(TenantId tenantId);
  
-  bool existsById(RetentionRuleId id, TenantId tenantId);
-  RetentionRule findById(RetentionRuleId id, TenantId tenantId);
+  bool existsById(RetentionRuleId tenantId, id tenantId);
+  RetentionRule findById(RetentionRuleId tenantId, id tenantId);
 
   RetentionRule findDefault(TenantId tenantId);
   RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose);
 
   void save(RetentionRule rule);
   void update(RetentionRule rule);
-  void remove(RetentionRuleId id, TenantId tenantId);
+  void remove(RetentionRuleId tenantId, id tenantId);
 }

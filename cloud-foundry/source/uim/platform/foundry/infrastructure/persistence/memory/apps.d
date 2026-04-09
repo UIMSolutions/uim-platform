@@ -15,25 +15,25 @@ import uim.platform.foundry.domain.ports.repositories.app;
 class MemoryAppRepository : AppRepository {
   private Application[AppId] store;
 
-  Application[] findBySpace(SpaceId spaceId, TenantId tenantId) {
+  Application[] findBySpace(SpaceId spacetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
-  Application* findById(AppId id, TenantId tenantId) {
+  Application* findById(AppId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Application* findByName(SpaceId spaceId, TenantId tenantId, string name) {
+  Application* findByName(SpaceId spacetenantId, id tenantId, string name) {
     foreach (ref e; store.byValue())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
         return &e;
     return null;
   }
 
-  Application[] findByState(SpaceId spaceId, TenantId tenantId, AppState state) {
+  Application[] findByState(SpaceId spacetenantId, id tenantId, AppState state) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.spaceId == spaceId && e.state == state).array;
   }
@@ -42,8 +42,8 @@ class MemoryAppRepository : AppRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  long countBySpace(SpaceId spaceId, TenantId tenantId) {
-    return cast(long) findBySpace(spaceId, tenantId).length;
+  long countBySpace(SpaceId spacetenantId, id tenantId) {
+    return cast(long) findBySpace(spacetenantId, id).length;
   }
 
   void save(Application app) {
@@ -54,7 +54,7 @@ class MemoryAppRepository : AppRepository {
     store[app.id] = app;
   }
 
-  void remove(AppId id, TenantId tenantId) {
+  void remove(AppId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

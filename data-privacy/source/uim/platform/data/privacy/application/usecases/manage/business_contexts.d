@@ -43,8 +43,8 @@ class ManageBusinessContextsUseCase : UIMUseCase {
     return CommandResult(ctx.id, "");
   }
 
-  BusinessContext* getContext(BusinessContextId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  BusinessContext* getContext(BusinessContextId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   BusinessContext[] listContexts(TenantId tenantId) {
@@ -87,7 +87,7 @@ class ManageBusinessContextsUseCase : UIMUseCase {
     return CommandResult(ctx.id, "");
   }
 
-  void deleteContext(BusinessContextId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteContext(BusinessContextId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

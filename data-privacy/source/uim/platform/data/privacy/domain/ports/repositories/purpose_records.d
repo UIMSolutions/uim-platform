@@ -13,8 +13,8 @@ interface PurposeRecordRepository {
   bool existsByTenant(TenantId tenantId);
   PurposeRecord[] findByTenant(TenantId tenantId);
  
-  bool existsById(PurposeRecordId id, TenantId tenantId);
-  PurposeRecord findById(PurposeRecordId id, TenantId tenantId);
+  bool existsById(PurposeRecordId tenantId, id tenantId);
+  PurposeRecord findById(PurposeRecordId tenantId, id tenantId);
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId);
   PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status);
@@ -22,5 +22,5 @@ interface PurposeRecordRepository {
 
   void save(PurposeRecord record);
   void update(PurposeRecord record);
-  void remove(PurposeRecordId id, TenantId tenantId);
+  void remove(PurposeRecordId tenantId, id tenantId);
 }

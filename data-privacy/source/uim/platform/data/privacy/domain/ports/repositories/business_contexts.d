@@ -13,13 +13,13 @@ interface BusinessContextRepository {
   bool existsByTenant(TenantId tenantId);
   BusinessContext[] findByTenant(TenantId tenantId);
   
-  bool existsById(BusinessContextId id, TenantId tenantId);
-  BusinessContext findById(BusinessContextId id, TenantId tenantId);
+  bool existsById(BusinessContextId tenantId, id tenantId);
+  BusinessContext findById(BusinessContextId tenantId, id tenantId);
   
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status);
   BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId);
   
   void save(BusinessContext context);
   void update(BusinessContext context);
-  void remove(BusinessContextId id, TenantId tenantId);
+  void remove(BusinessContextId tenantId, id tenantId);
 }

@@ -77,7 +77,7 @@ class BusinessContextController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getContext(id, tenantId);
+      auto entry = uc.getContext(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Business context not found");
         return;
@@ -132,7 +132,7 @@ class BusinessContextController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteContext(id, tenantId);
+      uc.deleteContext(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

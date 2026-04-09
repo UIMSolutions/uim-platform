@@ -91,7 +91,7 @@ class RouteController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto r = useCase.getRoute(id, tenantId);
+      auto r = useCase.getRoute(tenantId, id);
       if (r is null) {
         writeError(res, 404, "Route not found");
         return;
@@ -107,7 +107,7 @@ class RouteController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteRoute(id, tenantId);
+      auto result = useCase.deleteRoute(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -217,7 +217,7 @@ class RouteController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteDomain(id, tenantId);
+      auto result = useCase.deleteDomain(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

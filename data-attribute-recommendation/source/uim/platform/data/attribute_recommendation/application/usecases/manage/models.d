@@ -64,8 +64,8 @@ class ManageModelsUseCase : UIMUseCase {
     return CommandResult(config.id, "");
   }
 
-  ModelConfiguration* getModelConfig(ModelConfigId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ModelConfiguration* getModelConfig(ModelConfigId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ModelConfiguration[] listModelConfigs(TenantId tenantId) {
@@ -104,8 +104,8 @@ class ManageModelsUseCase : UIMUseCase {
   }
 
   /// Mark a model configuration as ready for training.
-  CommandResult activateConfig(ModelConfigId id, TenantId tenantId) {
-    auto config = repo.findById(id, tenantId);
+  CommandResult activateConfig(ModelConfigId tenantId, id tenantId) {
+    auto config = repo.findById(tenantId, id);
     if (config is null)
       return CommandResult("", "Model configuration not found");
 
@@ -136,15 +136,15 @@ class ManageModelsUseCase : UIMUseCase {
     return CommandResult(job.id, "");
   }
 
-  CommandResult deleteModelConfig(ModelConfigId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteModelConfig(ModelConfigId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Model configuration not found");
 
     if (existing.status == ModelConfigStatus.training)
       return CommandResult("", "Cannot delete a configuration that is currently training");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

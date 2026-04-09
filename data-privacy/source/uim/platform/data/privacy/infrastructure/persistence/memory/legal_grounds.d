@@ -24,7 +24,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
     return result;
   }
 
-  LegalGround* findById(LegalGroundId id, TenantId tenantId) {
+  LegalGround* findById(LegalGroundId tenantId, id tenantId) {
     foreach (ref g; store)
       if (g.id == id && g.tenantId == tenantId)
         return &g;
@@ -75,7 +75,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
       }
   }
 
-  void remove(LegalGroundId id, TenantId tenantId) {
+  void remove(LegalGroundId tenantId, id tenantId) {
     LegalGround[] kept;
     foreach (ref g; store)
       if (!(g.id == id && g.tenantId == tenantId))

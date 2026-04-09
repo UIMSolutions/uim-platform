@@ -61,16 +61,16 @@ class ManageSpacesUseCase : UIMUseCase {
     return CommandResult(space.id, "");
   }
 
-  Space* getSpace(SpaceId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Space* getSpace(SpaceId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Space[] listSpaces(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Space[] listByOrg(OrgId orgId, TenantId tenantId) {
-    return repo.findByOrg(orgId, tenantId);
+  Space[] listByOrg(OrgId orgtenantId, id tenantId) {
+    return repo.findByOrg(orgtenantId, id);
   }
 
   CommandResult updateSpace(UpdateSpaceRequest req) {
@@ -94,12 +94,12 @@ class ManageSpacesUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSpace(SpaceId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteSpace(SpaceId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Space not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

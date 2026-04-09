@@ -51,7 +51,7 @@ class MonitoringController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto h = useCase.getAppHealth(id, tenantId);
+      auto h = useCase.getAppHealth(tenantId, id);
       if (h.appid.isEmpty) {
         writeError(res, 404, "Application not found");
         return;
@@ -67,7 +67,7 @@ class MonitoringController {
     try {
       auto spaceId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto u = useCase.getSpaceUsage(spaceId, tenantId);
+      auto u = useCase.getSpaceUsage(spacetenantId, id);
 
       auto j = Json.emptyObject;
       j["spaceId"] = Json(u.spaceId);

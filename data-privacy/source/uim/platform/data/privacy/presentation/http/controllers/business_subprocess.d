@@ -75,7 +75,7 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getSubprocess(id, tenantId);
+      auto entry = uc.getSubprocess(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Business subprocess not found");
         return;
@@ -112,7 +112,7 @@ class BusinessSubprocessController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteSubprocess(id, tenantId);
+      uc.deleteSubprocess(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

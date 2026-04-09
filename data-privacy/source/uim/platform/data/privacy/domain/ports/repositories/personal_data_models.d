@@ -13,8 +13,8 @@ interface PersonalDataModelRepository {
   bool existsByTenant(TenantId tenantId);
   PersonalDataModel[] findByTenant(TenantId tenantId);
  
-  bool existsById(PersonalDataModelId id, TenantId tenantId);
-  PersonalDataModel findById(PersonalDataModelId id, TenantId tenantId);
+  bool existsById(PersonalDataModelId tenantId, id tenantId);
+  PersonalDataModel findById(PersonalDataModelId tenantId, id tenantId);
 
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category);
   PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem);
@@ -23,5 +23,5 @@ interface PersonalDataModelRepository {
 
   void save(PersonalDataModel model);
   void update(PersonalDataModel model);
-  void remove(PersonalDataModelId id, TenantId tenantId);
+  void remove(PersonalDataModelId tenantId, id tenantId);
 }

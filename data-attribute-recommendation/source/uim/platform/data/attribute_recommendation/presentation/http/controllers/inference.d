@@ -65,7 +65,7 @@ class InferenceController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       // Try as inference request
-      auto requests = uc.listByDeployment(id, tenantId);
+      auto requests = uc.listByDeployment(tenantId, id);
       if (requests.length > 0) {
         auto arr = Json.emptyArray;
         foreach (ref r; requests)
@@ -89,10 +89,10 @@ class InferenceController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.getResult(id, tenantId);
+      auto result = uc.getResult(tenantId, id);
       if (result is null) {
         // Try by request id
-        result = uc.getResultByRequest(id, tenantId);
+        result = uc.getResultByRequest(tenantId, id);
       }
       if (result is null) {
         writeError(res, 404, "Inference result not found");

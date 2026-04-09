@@ -74,7 +74,7 @@ class AnonymizationConfigController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getConfig(id, tenantId);
+      auto entry = uc.getConfig(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Anonymization config not found");
         return;
@@ -111,7 +111,7 @@ class AnonymizationConfigController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.activateConfig(id, tenantId);
+      auto result = uc.activateConfig(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

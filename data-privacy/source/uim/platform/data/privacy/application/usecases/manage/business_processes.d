@@ -41,8 +41,8 @@ class ManageBusinessProcessesUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  BusinessProcess* getProcess(BusinessProcessId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  BusinessProcess* getProcess(BusinessProcessId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   BusinessProcess[] listProcesses(TenantId tenantId) {
@@ -65,7 +65,7 @@ class ManageBusinessProcessesUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  void deleteProcess(BusinessProcessId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteProcess(BusinessProcessId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

@@ -72,7 +72,7 @@ class DataControllerGroupController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = uc.getGroup(id, tenantId);
+      auto entry = uc.getGroup(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Controller group not found");
         return;
@@ -107,7 +107,7 @@ class DataControllerGroupController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      uc.deleteGroup(id, tenantId);
+      uc.deleteGroup(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

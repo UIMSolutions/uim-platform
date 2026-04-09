@@ -52,8 +52,8 @@ class ManageLegalGroundsUseCase : UIMUseCase {
     return CommandResult(ground.id, "");
   }
 
-  LegalGround* getGround(LegalGroundId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  LegalGround* getGround(LegalGroundId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   LegalGround[] listGrounds(TenantId tenantId) {
@@ -91,7 +91,7 @@ class ManageLegalGroundsUseCase : UIMUseCase {
     return CommandResult(ground.id, "");
   }
 
-  void deleteGround(LegalGroundId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteGround(LegalGroundId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

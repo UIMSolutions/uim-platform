@@ -15,11 +15,11 @@ import uim.platform.foundry.domain.ports.repositories.route;
 class MemoryRouteRepository : RouteRepository {
   private Route[RouteId] store;
 
-  Route[] findBySpace(SpaceId spaceId, TenantId tenantId) {
+  Route[] findBySpace(SpaceId spacetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.spaceId == spaceId).array;
   }
 
-  Route* findById(RouteId id, TenantId tenantId) {
+  Route* findById(RouteId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -33,11 +33,11 @@ class MemoryRouteRepository : RouteRepository {
     return null;
   }
 
-  Route[] findByDomain(DomainId domainId, TenantId tenantId) {
+  Route[] findByDomain(DomainId domaintenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.domainId == domainId).array;
   }
 
-  Route[] findByApp(AppId appId, TenantId tenantId) {
+  Route[] findByApp(AppId apptenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId
         && e.mappedAppIds.canFind(appId)).array;
   }
@@ -54,7 +54,7 @@ class MemoryRouteRepository : RouteRepository {
     store[route.id] = route;
   }
 
-  void remove(RouteId id, TenantId tenantId) {
+  void remove(RouteId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
