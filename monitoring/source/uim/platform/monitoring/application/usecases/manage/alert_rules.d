@@ -31,11 +31,8 @@ class ManageAlertRulesUseCase : UIMUseCase {
     if (req.metricName.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     AlertRule rule;
-    rule.id = id;
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.resourceId = req.resourceId;
     rule.name = req.name;
@@ -56,14 +53,14 @@ class ManageAlertRulesUseCase : UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, rule.id.toString(), "");
   }
 
   CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
-    auto rule = repo.findById(id);
-    if (rule.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Alert rule not found");
 
+    auto rule = repo.findById(id);
     if (req.description.length > 0)
       rule.description = req.description;
     if (req.warningThreshold != 0)
@@ -82,7 +79,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, rule.id.toString(), "");
   }
 
   AlertRule getRule(AlertRuleId id) {

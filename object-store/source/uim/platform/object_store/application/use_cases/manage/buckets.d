@@ -31,10 +31,6 @@ class ManageBucketsUseCase : UIMUseCase {
     if (existing !is null && existing.id.length > 0)
       return CommandResult(false, "", "Bucket with name '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     auto bucket = new Bucket();
     bucket.id = randomUUID();
     bucket.tenantId = req.tenantId;

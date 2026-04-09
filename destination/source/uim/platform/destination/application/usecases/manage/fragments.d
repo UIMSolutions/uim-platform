@@ -32,9 +32,6 @@ class ManageFragmentsUseCase : UIMUseCase {
     if (!existing.id.isEmpty)
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     DestinationFragment f;
     f.id = randomUUID();
     f.tenantId = req.tenantId;

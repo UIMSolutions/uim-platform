@@ -44,10 +44,6 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     if (!validation.valid)
       return CommandResult(false, "", validation.reason);
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     EnvironmentInstance inst;
     inst.id = randomUUID();
     inst.subaccountId = req.subaccountId;

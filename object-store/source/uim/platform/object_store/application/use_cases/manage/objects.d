@@ -24,7 +24,7 @@ class ManageObjectsUseCase : UIMUseCase {
   private ObjectVersionRepository versionRepo;
 
   this(StorageObjectRepository objectRepo, BucketRepository bucketRepo,
-      ObjectVersionRepository versionRepo) {
+    ObjectVersionRepository versionRepo) {
     this.objectRepo = objectRepo;
     this.bucketRepo = bucketRepo;
     this.versionRepo = versionRepo;
@@ -47,10 +47,6 @@ class ManageObjectsUseCase : UIMUseCase {
     if (!quotaResult.valid)
       return CommandResult(false, "", quotaResult.error);
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-    auto ts = currentTimestamp();
-
     auto obj = new StorageObject();
     obj.id = randomUUID();
     obj.tenantId = req.tenantId;
@@ -62,8 +58,9 @@ class ManageObjectsUseCase : UIMUseCase {
     obj.metadata = req.metadata;
     obj.storageClass = parseStorageClass(req.storageClass);
     obj.createdBy = req.createdBy;
-    obj.createdAt = ts;
-    obj.updatedAt = ts;
+    obj.createdAt = currentTimestamp();
+    ;
+    obj.updatedAt = obj.createdAt;
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
@@ -79,7 +76,7 @@ class ManageObjectsUseCase : UIMUseCase {
       ver.isLatest = true;
       ver.isDeleteMarker = false;
       ver.createdBy = req.createdBy;
-      ver.createdAt = ts;
+      ver.createdAt = obj.createdAt;
       obj.currentVersionId = versionId;
       versionRepo.save(ver);
     }
@@ -89,7 +86,7 @@ class ManageObjectsUseCase : UIMUseCase {
     // Update bucket counters
     bucket.objectCount = bucket.objectCount + 1;
     bucket.usedBytes = bucket.usedBytes + req.size;
-    bucket.updatedAt = ts;
+    bucket.updatedAt = obj.createdAt;
     bucketRepo.update(bucket);
 
     return CommandResult(true, id.toString, "");
@@ -160,15 +157,13 @@ class ManageObjectsUseCase : UIMUseCase {
       marker.isLatest = true;
       marker.isDeleteMarker = true;
       marker.createdBy = "";
-      marker.createdAt = ts;
+      marker.createdAt = obj.createdAt;
       versionRepo.save(marker);
 
       obj.status = ObjectStatus.deleted;
-      obj.updatedAt = ts;
+      obj.updatedAt = obj.createdAt;
       objectRepo.update(obj);
-    }
-    else
-    {
+    } else {
       // Hard delete
       versionRepo.removeByObject(id);
       objectRepo.remove(id);
@@ -198,10 +193,6 @@ class ManageObjectsUseCase : UIMUseCase {
     if (!quotaResult.valid)
       return CommandResult(false, "", quotaResult.error);
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-    auto ts = currentTimestamp();
-
     auto copy = new StorageObject();
     copy.id = randomUUID();
     copy.tenantId = req.tenantId;
@@ -213,22 +204,22 @@ class ManageObjectsUseCase : UIMUseCase {
     copy.metadata = sourceObj.metadata;
     copy.storageClass = sourceObj.storageClass;
     copy.createdBy = req.createdBy;
-    copy.createdAt = ts;
-    copy.updatedAt = ts;
+    copy.createdAt = currentTimestamp();
+    copy.updatedAt = copy.createdAt;
 
     objectRepo.save(copy);
 
     destBucket.objectCount = destBucket.objectCount + 1;
     destBucket.usedBytes = destBucket.usedBytes + sourceObj.size;
-    destBucket.updatedAt = ts;
+    destBucket.updatedAt = copy.createdAt;
     bucketRepo.update(destBucket);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, copy.id.toString, "");
   }
 }
 
-private StorageClass parseStorageClass(string s) {
-  switch (s) {
+private StorageClass parseStorageClass(string storage) {
+  switch (storage) {
   case "nearline":
     return StorageClass.nearline;
   case "coldline":

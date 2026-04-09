@@ -33,8 +33,7 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID();
-    auto ts = currentTimestamp();
+    auto ts = 
 
     auto rule = new LifecycleRule();
     rule.id = randomUUID();
@@ -48,11 +47,11 @@ class ManageLifecycleRulesUseCase : UIMUseCase {
     rule.transitionStorageClass = parseStorageClass(req.transitionStorageClass);
     rule.abortIncompleteUploadDays = req.abortIncompleteUploadDays;
     rule.createdBy = req.createdBy;
-    rule.createdAt = ts;
-    rule.updatedAt = ts;
+    rule.createdAt = currentTimestamp();
+    rule.updatedAt = rule.createdAt;
 
     ruleRepo.save(rule);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, rule.id.toString, "");
   }
 
   CommandResult updateRule(LifecycleRuleId id, UpdateLifecycleRuleRequest req) {

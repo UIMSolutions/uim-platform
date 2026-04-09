@@ -32,9 +32,6 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Resource name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     MonitoredResource resource;
     resource.id = randomUUID();
     resource.tenantId = req.tenantId;

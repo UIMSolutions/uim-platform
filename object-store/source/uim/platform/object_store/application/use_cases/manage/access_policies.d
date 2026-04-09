@@ -33,8 +33,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID();
-    auto ts = currentTimestamp();
+    auto ts = ;
 
     auto policy = new AccessPolicy();
     policy.id = randomUUID();
@@ -46,18 +45,18 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     policy.actions = req.actions;
     policy.resources = req.resources;
     policy.createdBy = req.createdBy;
-    policy.createdAt = ts;
-    policy.updatedAt = ts;
+    policy.createdAt = currentTimestamp();
+    policy.updatedAt = policy.createdAt;
 
     policyRepo.save(policy);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
-    auto policy = policyRepo.findById(id);
-    if (policy is null || policy.id.isEmpty)
+    if (!policyRepo.existsById(id))
       return CommandResult(false, "", "Policy not found");
 
+    auto policy = policyRepo.findById(id);
     if (req.name.length > 0)
       policy.name = req.name;
     if (req.effect.length > 0)

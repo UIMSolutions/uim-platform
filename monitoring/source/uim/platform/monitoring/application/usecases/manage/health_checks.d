@@ -33,32 +33,29 @@ class ManageHealthChecksUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Check name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
+    HealthCheck check;
+    check.id = randomUUID();
+    check.tenantId = req.tenantId;
+    check.resourceId = req.resourceId;
+    check.name = req.name;
+    check.description = req.description;
+    check.checkType = parseCheckType(req.checkType);
+    check.isEnabled = true;
+    check.intervalSeconds = req.intervalSeconds > 0 ? req.intervalSeconds : 60;
+    check.url = req.url;
+    check.expectedStatus = req.expectedStatus;
+    check.mbeanName = req.mbeanName;
+    check.mbeanAttribute = req.mbeanAttribute;
+    check.customUrl = req.customUrl;
+    check.expectedResponseContains = req.expectedResponseContains;
+    check.warningThreshold = req.warningThreshold;
+    check.criticalThreshold = req.criticalThreshold;
+    check.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
+    check.createdBy = req.createdBy;
+    check.createdAt = clockSeconds();
+    check.updatedAt = check.createdAt;
 
-    HealthCheck c;
-    c.id = id;
-    c.tenantId = req.tenantId;
-    c.resourceId = req.resourceId;
-    c.name = req.name;
-    c.description = req.description;
-    c.checkType = parseCheckType(req.checkType);
-    c.isEnabled = true;
-    c.intervalSeconds = req.intervalSeconds > 0 ? req.intervalSeconds : 60;
-    c.url = req.url;
-    c.expectedStatus = req.expectedStatus;
-    c.mbeanName = req.mbeanName;
-    c.mbeanAttribute = req.mbeanAttribute;
-    c.customUrl = req.customUrl;
-    c.expectedResponseContains = req.expectedResponseContains;
-    c.warningThreshold = req.warningThreshold;
-    c.criticalThreshold = req.criticalThreshold;
-    c.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
-    c.createdBy = req.createdBy;
-    c.createdAt = clockSeconds();
-    c.updatedAt = c.createdAt;
-
-    auto validation = HealthChecker.validate(c);
+    auto validation = HealthChecker.validate(check);
     if (!validation.valid) {
       string msg = "Validation failed: ";
       foreach (i, e; validation.errors) {
@@ -69,33 +66,33 @@ class ManageHealthChecksUseCase : UIMUseCase {
       return CommandResult(false, "", msg);
     }
 
-    checkRepo.save(c);
-    return CommandResult(true, id.toString, "");
+    checkRepo.save(check);
+    return CommandResult(true, check.id.toString, "");
   }
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
-    auto c = checkRepo.findById(id);
-    if (c.id.isEmpty)
+    auto check = checkRepo.findById(id);
+    if (check.id.isEmpty)
       return CommandResult(false, "", "Health check not found");
 
     if (req.description.length > 0)
-      c.description = req.description;
-    c.isEnabled = req.isEnabled;
+      check.description = req.description;
+    check.isEnabled = req.isEnabled;
     if (req.intervalSeconds > 0)
-      c.intervalSeconds = req.intervalSeconds;
+      check.intervalSeconds = req.intervalSeconds;
     if (req.url.length > 0)
-      c.url = req.url;
+      check.url = req.url;
     if (req.expectedStatus.length > 0)
-      c.expectedStatus = req.expectedStatus;
+      check.expectedStatus = req.expectedStatus;
     if (req.warningThreshold != 0)
-      c.warningThreshold = req.warningThreshold;
+      check.warningThreshold = req.warningThreshold;
     if (req.criticalThreshold != 0)
-      c.criticalThreshold = req.criticalThreshold;
+      check.criticalThreshold = req.criticalThreshold;
     if (req.thresholdOperator.length > 0)
-      c.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
-    c.updatedAt = clockSeconds();
+      check.thresholdOperator = parseThresholdOperator(req.thresholdOperator);
+    check.updatedAt = clockSeconds();
 
-    checkRepo.update(c);
+    checkRepo.update(check);
     return CommandResult(true, id.toString, "");
   }
 
@@ -144,15 +141,12 @@ class ManageHealthChecksUseCase : UIMUseCase {
   }
 
   CommandResult deleteCheck(HealthCheckId id) {
-    auto c = checkRepo.findById(id);
-    if (c.id.isEmpty)
+    if (!checkRepo.existsById(id))
       return CommandResult(false, "", "Health check not found");
 
     checkRepo.remove(id);
     return CommandResult(true, id.toString, "");
   }
-
-  
 
   private static CheckType parseCheckType(string s) {
     switch (s) {
