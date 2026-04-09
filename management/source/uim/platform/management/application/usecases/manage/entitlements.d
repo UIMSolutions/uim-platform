@@ -107,10 +107,4 @@ class ManageEntitlementsUseCase : UIMUseCase {
     repo.remove(id);
     return CommandResult(true, id, "");
   }
-
-  private long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / 10_000_000;
-  }
 }

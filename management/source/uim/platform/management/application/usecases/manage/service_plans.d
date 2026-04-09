@@ -132,10 +132,4 @@ class ManageServicePlansUseCase : UIMUseCase {
       return PricingModel.free;
     }
   }
-
-  private long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / 10_000_000;
-  }
 }

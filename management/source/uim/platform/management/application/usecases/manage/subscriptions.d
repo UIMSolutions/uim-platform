@@ -128,10 +128,4 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     ev.timestamp = clockSeconds();
     eventRepo.save(ev);
   }
-
-  private long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / 10_000_000;
-  }
 }

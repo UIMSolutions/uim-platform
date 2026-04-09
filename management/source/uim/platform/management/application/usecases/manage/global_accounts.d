@@ -144,11 +144,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     eventRepo.save(ev);
   }
 
-  private long clockSeconds() {
-    import core.time : MonoTime;
 
-    return MonoTime.currTime.ticks / 10_000_000;
-  }
 
   private GlobalAccountStatus parseGlobalAccountStatus(string s) {
     switch (s) {

@@ -26,6 +26,8 @@ class GlobalAccountController : PlatformController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/accounts", &handleCreate);
     router.get("/api/v1/accounts", &handleList);
     router.get("/api/v1/accounts/*", &handleGet);

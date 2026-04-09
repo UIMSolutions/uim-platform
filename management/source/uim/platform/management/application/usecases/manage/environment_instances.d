@@ -143,10 +143,4 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
       return EnvironmentType.cloudFoundry;
     }
   }
-
-  private long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / 10_000_000;
-  }
 }
