@@ -70,7 +70,7 @@ class ManageAlertsUseCase : UIMUseCase {
     import std.uuid : randomUUID;
 
     Alert a;
-    a.id = randomUUID().to!string;
+    a.id = randomUUID();
     a.tenantId = tenantId;
     a.ruleId = ruleId;
     a.ruleName = ruleName;

@@ -27,7 +27,7 @@ class GetMetricsUseCase : UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     Metric m;
-    m.id = randomUUID().to!string;
+    m.id = randomUUID();
     m.tenantId = r.tenantId;
     m.resourceGroupId = r.resourceGroupId;
     m.executionId = r.executionId;

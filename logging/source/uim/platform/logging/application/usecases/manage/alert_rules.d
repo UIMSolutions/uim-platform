@@ -31,7 +31,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
       return CommandResult(false, "", "Alert rule name is required");
 
     AlertRule rule;
-    rule.id = randomUUID().to!string;
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.name = req.name;
     rule.description = req.description;

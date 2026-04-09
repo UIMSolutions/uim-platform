@@ -27,7 +27,7 @@ class ManageDocumentTypesUseCase : UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     DocumentType dt;
-    dt.id = randomUUID().to!string;
+    dt.id = randomUUID();
     dt.tenantId = r.tenantId;
     dt.clientId = r.clientId;
     dt.name = r.name;

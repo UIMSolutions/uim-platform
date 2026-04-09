@@ -21,7 +21,7 @@ class ManageClientLogsUseCase : UIMUseCase {
 
     CommandResult upload(UploadClientLogRequest r) {
         ClientLogEntry entry;
-        entry.id = randomUUID().to!string;
+        entry.id = randomUUID();
         entry.tenantId = r.tenantId;
         entry.appId = r.appId;
         entry.deviceId = r.deviceId;

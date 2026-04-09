@@ -32,7 +32,7 @@ class ManageSchedulesUseCase : UIMUseCase {
             return CommandResult(false, "", "Invalid cron expression");
 
         import std.uuid : randomUUID;
-        auto id = randomUUID().to!string;
+        auto id = randomUUID();
 
         Schedule s;
         s.id = id;

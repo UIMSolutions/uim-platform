@@ -29,7 +29,7 @@ class ManagePushRegistrationsUseCase : UIMUseCase {
             return CommandResult(true, existing.id, "");
         }
         PushRegistration reg;
-        reg.id = randomUUID().to!string;
+        reg.id = randomUUID();
         reg.tenantId = r.tenantId;
         reg.appId = r.appId;
         reg.deviceId = r.deviceId;

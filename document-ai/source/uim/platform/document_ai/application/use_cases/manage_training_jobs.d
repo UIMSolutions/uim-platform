@@ -38,7 +38,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
     }
 
     TrainingJob tj;
-    tj.id = randomUUID().to!string;
+    tj.id = randomUUID();
     tj.tenantId = r.tenantId;
     tj.clientId = r.clientId;
     tj.documentTypeId = r.documentTypeId;

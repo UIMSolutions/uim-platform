@@ -29,7 +29,7 @@ class ManageJobsUseCase : UIMUseCase {
             return CommandResult(false, "", "Action URL is required for HTTP jobs");
 
         import std.uuid : randomUUID;
-        auto id = randomUUID().to!string;
+        auto id = randomUUID();
 
         Job j;
         j.id = id;

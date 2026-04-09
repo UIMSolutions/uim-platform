@@ -28,7 +28,7 @@ class IngestTracesUseCase : UIMUseCase {
     import std.uuid : randomUUID;
 
     Span s;
-    s.id = randomUUID().to!string;
+    s.id = randomUUID();
     s.tenantId = req.tenantId;
     s.traceId = req.traceId;
     s.parentSpanId = req.parentSpanId;

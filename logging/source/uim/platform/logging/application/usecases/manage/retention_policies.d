@@ -28,7 +28,7 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
     import std.uuid : randomUUID;
 
     RetentionPolicy p;
-    p.id = randomUUID().to!string;
+    p.id = randomUUID();
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;

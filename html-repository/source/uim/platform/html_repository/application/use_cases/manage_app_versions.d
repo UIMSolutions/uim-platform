@@ -26,7 +26,7 @@ class ManageAppVersionsUseCase : UIMUseCase {
             return CommandResult(false, "", "Invalid version code");
 
         AppVersion ver;
-        ver.id = randomUUID().to!string;
+        ver.id = randomUUID();
         ver.tenantId = r.tenantId;
         ver.appId = r.appId;
         ver.versionCode = r.versionCode;

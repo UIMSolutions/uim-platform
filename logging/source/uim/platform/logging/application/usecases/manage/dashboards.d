@@ -30,7 +30,7 @@ class ManageDashboardsUseCase : UIMUseCase {
       return CommandResult(false, "", "Dashboard name is required");
 
     Dashboard d;
-    d.id = randomUUID().to!string;
+    d.id = randomUUID();
     d.tenantId = req.tenantId;
     d.name = req.name;
     d.description = req.description;

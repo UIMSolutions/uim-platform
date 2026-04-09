@@ -24,7 +24,7 @@ class ManageAppConfigurationsUseCase : UIMUseCase {
         if (existing.id.length > 0)
             return CommandResult(false, "", "Configuration with this key already exists");
         AppConfiguration config;
-        config.id = randomUUID().to!string;
+        config.id = randomUUID();
         config.tenantId = r.tenantId;
         config.appId = r.appId;
         config.key = r.key;

@@ -21,7 +21,7 @@ class ManageClientResourcesUseCase : UIMUseCase {
 
     CommandResult create(CreateClientResourceRequest r) {
         ClientResource resource;
-        resource.id = randomUUID().to!string;
+        resource.id = randomUUID();
         resource.tenantId = r.tenantId;
         resource.appId = r.appId;
         resource.name = r.name;

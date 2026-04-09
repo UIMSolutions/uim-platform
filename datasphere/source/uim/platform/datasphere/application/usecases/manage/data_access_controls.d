@@ -26,9 +26,6 @@ class ManageDataAccessControlsUseCase : UIMUseCase {
     if (r.spaceid.isEmpty)
       return CommandResult(false, "", "Space ID is required");
 
-    import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
-
     DataAccessControl dac;
     dac.id = randomUUID();
     dac.tenantId = r.tenantId;

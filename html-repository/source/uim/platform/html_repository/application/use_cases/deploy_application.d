@@ -39,7 +39,7 @@ class DeployApplicationUseCase : UIMUseCase {
             return CommandResult(false, "", "Version not found");
 
         DeploymentRecord record;
-        record.id = randomUUID().to!string;
+        record.id = randomUUID();
         record.tenantId = r.tenantId;
         record.appId = r.appId;
         record.versionId = r.versionId;

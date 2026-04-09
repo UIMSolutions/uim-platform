@@ -26,7 +26,7 @@ class ManageAppRoutesUseCase : UIMUseCase {
             return CommandResult(false, "", "Invalid path prefix");
 
         AppRoute route;
-        route.id = randomUUID().to!string;
+        route.id = randomUUID();
         route.tenantId = r.tenantId;
         route.appId = r.appId;
         route.versionId = r.versionId;

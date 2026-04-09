@@ -28,7 +28,7 @@ class ManageDataFlowsUseCase : UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
+    auto id = randomUUID();
 
     DataFlow df;
     df.id = randomUUID();

@@ -24,7 +24,7 @@ class ManageMobileAppsUseCase : UIMUseCase {
         if (existing.id.length > 0)
             return CommandResult(false, "", "App with this bundle ID already exists");
         MobileApp app;
-        app.id = randomUUID().to!string;
+        app.id = randomUUID();
         app.tenantId = r.tenantId;
         app.name = r.name;
         app.description = r.description;

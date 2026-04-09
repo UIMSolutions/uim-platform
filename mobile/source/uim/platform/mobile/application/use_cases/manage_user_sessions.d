@@ -21,7 +21,7 @@ class ManageUserSessionsUseCase : UIMUseCase {
 
     CommandResult create(CreateUserSessionRequest r) {
         UserSession session;
-        session.id = randomUUID().to!string;
+        session.id = randomUUID();
         session.tenantId = r.tenantId;
         session.appId = r.appId;
         session.userId = r.userId;

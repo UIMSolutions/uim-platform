@@ -29,7 +29,7 @@ class ManageTemplatesUseCase : UIMUseCase {
       return CommandResult(false, "", "Schema ID is required");
 
     Template t;
-    t.id = randomUUID().to!string;
+    t.id = randomUUID();
     t.tenantId = r.tenantId;
     t.clientId = r.clientId;
     t.schemaId = r.schemaId;

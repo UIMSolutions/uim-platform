@@ -23,7 +23,7 @@ class ManageContentCacheUseCase : UIMUseCase {
 
     CommandResult cache(CacheContentRequest r) {
         ContentCache entry;
-        entry.id = randomUUID().to!string;
+        entry.id = randomUUID();
         entry.tenantId = r.tenantId;
         entry.appId = r.appId;
         entry.fileId = r.fileId;

@@ -37,7 +37,7 @@ class ManageRunLogsUseCase : UIMUseCase {
 
     CommandResult createRunLog(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
         import std.uuid : randomUUID;
-        auto id = randomUUID().to!string;
+        auto id = randomUUID();
 
         RunLog r;
         r.id = id;

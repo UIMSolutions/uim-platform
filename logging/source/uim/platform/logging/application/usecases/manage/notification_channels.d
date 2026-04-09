@@ -30,7 +30,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
       return CommandResult(false, "", "Channel name is required");
 
     NotificationChannel ch;
-    ch.id = randomUUID().to!string;
+    ch.id = randomUUID();
     ch.tenantId = req.tenantId;
     ch.name = req.name;
     ch.description = req.description;

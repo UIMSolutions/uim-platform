@@ -27,7 +27,7 @@ class ManageSchemasUseCase : UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     Schema s;
-    s.id = randomUUID().to!string;
+    s.id = randomUUID();
     s.tenantId = r.tenantId;
     s.clientId = r.clientId;
     s.documentTypeId = r.documentTypeId;

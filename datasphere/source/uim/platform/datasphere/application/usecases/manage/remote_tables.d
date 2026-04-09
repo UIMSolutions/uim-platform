@@ -29,7 +29,7 @@ class ManageRemoteTablesUseCase : UIMUseCase {
       return CommandResult(false, "", "Connection ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
+    auto id = randomUUID();
 
     RemoteTable rt;
     rt.id = randomUUID();

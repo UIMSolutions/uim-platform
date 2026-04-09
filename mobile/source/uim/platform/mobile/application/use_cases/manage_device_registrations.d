@@ -30,7 +30,7 @@ class ManageDeviceRegistrationsUseCase : UIMUseCase {
             return CommandResult(true, existing.id, "");
         }
         DeviceRegistration reg;
-        reg.id = randomUUID().to!string;
+        reg.id = randomUUID();
         reg.tenantId = r.tenantId;
         reg.appId = r.appId;
         reg.deviceModel = r.deviceModel;

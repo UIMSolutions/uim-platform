@@ -27,7 +27,7 @@ class ManageAppFilesUseCase : UIMUseCase {
             return CommandResult(false, "", "Invalid file path");
 
         AppFile file;
-        file.id = randomUUID().to!string;
+        file.id = randomUUID();
         file.tenantId = r.tenantId;
         file.appId = r.appId;
         file.versionId = r.versionId;

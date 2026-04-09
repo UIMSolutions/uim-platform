@@ -27,7 +27,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
       return CommandResult(false, "", "Client ID is required");
 
     EnrichmentData ed;
-    ed.id = randomUUID().to!string;
+    ed.id = randomUUID();
     ed.tenantId = r.tenantId;
     ed.clientId = r.clientId;
     ed.documentTypeId = r.documentTypeId;

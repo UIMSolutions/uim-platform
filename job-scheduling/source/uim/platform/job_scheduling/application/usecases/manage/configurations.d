@@ -48,7 +48,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
             // Create new configuration
             import std.uuid : randomUUID;
             Configuration c;
-            c.id = randomUUID().to!string;
+            c.id = randomUUID();
             c.tenantId = r.tenantId;
             c.defaultRetries = r.defaultRetries;
             c.defaultRetryDelayMs = r.defaultRetryDelayMs;

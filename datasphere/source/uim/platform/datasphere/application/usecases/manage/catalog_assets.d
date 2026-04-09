@@ -27,7 +27,7 @@ class ManageCatalogAssetsUseCase : UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
+    auto id = randomUUID();
 
     CatalogAsset ca;
     ca.id = randomUUID();

@@ -21,7 +21,7 @@ class ManageUsageReportsUseCase : UIMUseCase {
 
     CommandResult report(ReportUsageRequest r) {
         UsageReport usage;
-        usage.id = randomUUID().to!string;
+        usage.id = randomUUID();
         usage.tenantId = r.tenantId;
         usage.appId = r.appId;
         usage.deviceId = r.deviceId;

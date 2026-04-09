@@ -32,7 +32,7 @@ class IngestLogsUseCase : UIMUseCase {
     import std.uuid : randomUUID;
 
     LogEntry entry;
-    entry.id = randomUUID().to!string;
+    entry.id = randomUUID();
     entry.tenantId = req.tenantId;
     entry.streamId = req.streamId;
     entry.timestamp = clockSeconds();

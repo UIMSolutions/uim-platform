@@ -22,7 +22,7 @@ class ManageFeatureRestrictionsUseCase : UIMUseCase {
 
     CommandResult create(CreateFeatureRestrictionRequest r) {
         FeatureRestriction restriction;
-        restriction.id = randomUUID().to!string;
+        restriction.id = randomUUID();
         restriction.tenantId = r.tenantId;
         restriction.appId = r.appId;
         restriction.featureName = r.featureName;

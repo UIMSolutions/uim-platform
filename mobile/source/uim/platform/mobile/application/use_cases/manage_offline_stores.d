@@ -24,7 +24,7 @@ class ManageOfflineStoresUseCase : UIMUseCase {
         if (!OfflineSyncService.validateStoreName(r.name))
             return CommandResult(false, "", "Invalid store name");
         OfflineStore store;
-        store.id = randomUUID().to!string;
+        store.id = randomUUID();
         store.tenantId = r.tenantId;
         store.appId = r.appId;
         store.name = r.name;

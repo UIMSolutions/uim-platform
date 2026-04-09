@@ -27,7 +27,7 @@ class ManageConnectionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
+    auto id = randomUUID();
 
     Connection c;
     c.id = randomUUID();

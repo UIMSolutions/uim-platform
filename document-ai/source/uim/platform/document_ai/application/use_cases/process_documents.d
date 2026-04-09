@@ -36,7 +36,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
       return CommandResult(false, "", validation.error);
 
     Document doc;
-    doc.id = randomUUID().to!string;
+    doc.id = randomUUID();
     doc.tenantId = r.tenantId;
     doc.clientId = r.clientId;
     doc.fileName = r.fileName;
@@ -132,7 +132,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
     import core.time : MonoTime;
 
     ExtractionResult result;
-    result.id = randomUUID().to!string;
+    result.id = randomUUID();
     result.tenantId = doc.tenantId;
     result.clientId = doc.clientId;
     result.documentId = doc.id;

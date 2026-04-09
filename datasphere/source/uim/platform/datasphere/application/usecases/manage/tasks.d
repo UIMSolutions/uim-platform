@@ -30,7 +30,7 @@ class ManageTasksUseCase : UIMUseCase {
       return CommandResult(false, "", "Space ID is required");
 
     import std.uuid : randomUUID;
-    auto id = randomUUID().to!string;
+    auto id = randomUUID();
 
     Task t;
     t.id = randomUUID();

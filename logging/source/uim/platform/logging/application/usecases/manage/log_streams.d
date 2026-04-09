@@ -30,7 +30,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
       return CommandResult(false, "", "Stream name is required");
 
     LogStream stream;
-    stream.id = randomUUID().to!string;
+    stream.id = randomUUID();
     stream.tenantId = req.tenantId;
     stream.name = req.name;
     stream.description = req.description;

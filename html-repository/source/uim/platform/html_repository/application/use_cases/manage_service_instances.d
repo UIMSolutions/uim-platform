@@ -26,7 +26,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
             return CommandResult(false, "", "Invalid service instance name");
 
         ServiceInstance inst;
-        inst.id = randomUUID().to!string;
+        inst.id = randomUUID();
         inst.tenantId = r.tenantId;
         inst.spaceId = r.spaceId;
         inst.name = r.name;

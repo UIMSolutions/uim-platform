@@ -30,7 +30,7 @@ class ManageHtmlAppsUseCase : UIMUseCase {
             return CommandResult(false, "", "Application with this name already exists");
 
         HtmlApp app;
-        app.id = randomUUID().to!string;
+        app.id = randomUUID();
         app.tenantId = r.tenantId;
         app.spaceId = r.spaceId;
         app.serviceInstanceId = r.serviceInstanceId;

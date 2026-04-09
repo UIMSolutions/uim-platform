@@ -30,7 +30,7 @@ class ManagePipelinesUseCase : UIMUseCase {
       return CommandResult(false, "", "Pipeline name is required");
 
     Pipeline p;
-    p.id = randomUUID().to!string;
+    p.id = randomUUID();
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;
