@@ -48,26 +48,26 @@ struct Container {
 }
 
 Container buildContainer(AppConfig config) {
-    Container c;
+    Container container;
 
     // Infrastructure adapters
-    c.jobRepo = new MemoryJobRepository();
-    c.scheduleRepo = new MemoryScheduleRepository();
-    c.runLogRepo = new MemoryRunLogRepository();
-    c.configRepo = new MemoryConfigurationRepository();
+    container.jobRepo = new MemoryJobRepository();
+    container.scheduleRepo = new MemoryScheduleRepository();
+    container.runLogRepo = new MemoryRunLogRepository();
+    container.configRepo = new MemoryConfigurationRepository();
 
     // Application use cases
-    c.manageJobs = new ManageJobsUseCase(c.jobRepo);
-    c.manageSchedules = new ManageSchedulesUseCase(c.scheduleRepo);
-    c.manageRunLogs = new ManageRunLogsUseCase(c.runLogRepo);
-    c.manageConfigurations = new ManageConfigurationsUseCase(c.configRepo);
+    container.manageJobs = new ManageJobsUseCase(container.jobRepo);
+    container.manageSchedules = new ManageSchedulesUseCase(container.scheduleRepo);
+    container.manageRunLogs = new ManageRunLogsUseCase(container.runLogRepo);
+    container.manageConfigurations = new ManageConfigurationsUseCase(container.configRepo);
 
     // Presentation controllers
-    c.jobController = new JobController(c.manageJobs, c.manageSchedules);
-    c.scheduleController = new ScheduleController(c.manageSchedules);
-    c.runLogController = new RunLogController(c.manageRunLogs);
-    c.configurationController = new ConfigurationController(c.manageConfigurations);
-    c.healthController = new HealthController();
+    container.jobController = new JobController(container.manageJobs, container.manageSchedules);
+    container.scheduleController = new ScheduleController(container.manageSchedules);
+    container.runLogController = new RunLogController(container.manageRunLogs);
+    container.configurationController = new ConfigurationController(container.manageConfigurations);
+    container.healthController = new HealthController("job-scheduling");
 
-    return c;
+    return container;
 }

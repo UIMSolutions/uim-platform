@@ -12,10 +12,12 @@ import uim.platform.job_scheduling.domain.ports.repositories.configurations;
 class MemoryConfigurationRepository : ConfigurationRepository {
     private Configuration[string] store; // keyed by tenantId
 
+    bool existsByTenant(TenantId tenantId) {
+        return (tenantId in store) ? true : false;
+    }
+
     Configuration findByTenant(TenantId tenantId) {
-        if (auto c = tenantId in store)
-            return *c;
-        return Configuration.init;
+        return existsByTenant(tenantId) ? store[tenantId] : Configuration.init;
     }
 
     void save(Configuration c) {
@@ -23,6 +25,8 @@ class MemoryConfigurationRepository : ConfigurationRepository {
     }
 
     void update(Configuration c) {
-        store[c.tenantId] = c;
+        if (existsByTenant(c.tenantId)) {
+            store[c.tenantId] = c;
+        }
     }
 }

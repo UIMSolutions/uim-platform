@@ -8,8 +8,8 @@ module uim.platform.job_scheduling.domain.entities.configuration;
 import uim.platform.job_scheduling.domain.types;
 
 struct Configuration {
-    ConfigId id;
     TenantId tenantId;
+    ConfigId id;
     int defaultRetries;
     long defaultRetryDelayMs;
     long maxRunDurationMs;

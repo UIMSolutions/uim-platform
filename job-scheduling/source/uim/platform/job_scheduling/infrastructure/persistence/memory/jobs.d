@@ -14,46 +14,57 @@ import std.array : array;
 import std.uni : toLower;
 
 class MemoryJobRepository : JobRepository {
-    private Job[][string] store; // keyed by tenantId
+    private Job[][TenantId] store; // keyed by tenantId
 
-    Job findById(JobId tenantId, id tenantId) {
-        if (auto t = tenantId in store) {
-            foreach (ref j; *t) {
-                if (j.id == id)
-                    return j;
-            }
+    bool existsByTenant(TenantId tenantId) {
+        return (tenantId in store) ? true : false;
+    }
+
+    Job[] findByTenant(TenantId tenantId) {
+        if (!existsByTenant(tenantId)) {
+            return null;
+        }
+        return store[tenantId];
+    }
+
+    Job findById(TenantId tenantId, JobId jobId) {
+        if (!existsByTenant(tenantId)) {
+            return Job.init;
+        }
+
+        foreach (job; findByTenant(tenantId)) {
+            if (job.id == jobId)
+                return job;
         }
         return Job.init;
     }
 
     Job findByName(string name, TenantId tenantId) {
-        if (auto t = tenantId in store) {
-            foreach (ref j; *t) {
-                if (j.name == name)
-                    return j;
-            }
+        if (!existsByTenant(tenantId)) {
+            return Job.init;
+        }
+
+        foreach (job; findByTenant(tenantId)) {
+            if (job.name == name)
+                return job;
         }
         return Job.init;
     }
 
-    Job[] findByTenant(TenantId tenantId) {
-        if (auto t = tenantId in store)
-            return *t;
-        return [];
-    }
-
     Job[] findByStatus(JobStatus status, TenantId tenantId) {
-        if (auto t = tenantId in store)
-            return (*t).filter!(j => j.status == status).array;
-        return [];
+        if (!existsByTenant(tenantId)) {
+            return null;
+        }
+        return findByTenant(tenantId).filter!(j => j.status == status).array;
     }
 
     Job[] search(string query, TenantId tenantId) {
-        if (auto t = tenantId in store) {
-            auto q = query.toLower;
-            return (*t).filter!(j => j.name.toLower.canFind(q) || j.description.toLower.canFind(q)).array;
+        if (!existsByTenant(tenantId)) {
+            return null;
         }
-        return [];
+        auto q = query.toLower;
+        return findByTenant(tenantId).filter!(j => j.name.toLower.canFind(q) || j.description.toLower.canFind(q))
+            .array;
     }
 
     void save(Job j) {
@@ -71,7 +82,7 @@ class MemoryJobRepository : JobRepository {
         }
     }
 
-    void remove(JobId tenantId, id tenantId) {
+    void remove(JobId id, TenantId tenantId) {
         if (auto t = tenantId in store) {
             *t = (*t).filter!(j => j.id != id).array;
         }

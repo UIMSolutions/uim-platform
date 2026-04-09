@@ -62,11 +62,7 @@ class RunLogController : PlatformController {
 
             auto logs = uc.listByJob(jobtenantId, id);
 
-            auto jarr = Json.emptyArray;
-            foreach (ref l; logs) {
-                jarr ~= runLogToJson(l);
-            }
-
+            auto jarr = logs.map!(log => runLogToJson(log)).array.toJson;
             auto resp = Json.emptyObject;
             resp["total"] = Json(cast(long) logs.length);
             resp["results"] = jarr;

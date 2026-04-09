@@ -8,15 +8,15 @@ module uim.platform.job_scheduling.domain.ports.repositories.jobs;
 import uim.platform.job_scheduling.domain.types;
 import uim.platform.job_scheduling.domain.entities.job;
 
-interface JobRepository {
-    Job findById(JobId tenantId, id tenantId);
-    Job findByName(string name, TenantId tenantId);
-    Job[] findByTenant(TenantId tenantId);
-    Job[] findByStatus(JobStatus status, TenantId tenantId);
-    Job[] search(string query, TenantId tenantId);
-    void save(Job j);
-    void update(Job j);
-    void remove(JobId tenantId, id tenantId);
+interface JobRepository : ITenantRepository!(Job, JobId) {
+    // Job[] findByTenant(TenantId tenantId);
+
+    // void save(Job j);
+    // void update(Job j);
+    // void remove(TenantId tenantId, JobId id);
+    Job findByName(TenantId tenantId, string name);
+    Job[] findByStatus(TenantId tenantId, JobStatus status);
+    Job[] search(TenantId tenantId, string query);
     long countByTenant(TenantId tenantId);
     long countActiveByTenant(TenantId tenantId);
     long countInactiveByTenant(TenantId tenantId);

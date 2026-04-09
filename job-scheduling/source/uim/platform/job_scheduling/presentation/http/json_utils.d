@@ -7,112 +7,112 @@ module uim.platform.job_scheduling.presentation.http.json_utils;
 
 import uim.platform.job_scheduling;
 
-string jsonStr(Json j, string key) {
-    if (!j.isObject)
-        return "";
-    auto v = key in j;
-    if (v is null)
-        return "";
-    if ((*v).isString)
-        return (*v).get!string;
-    return "";
-}
+// string jsonStr(Json j, string key) {
+//     if (!j.isObject)
+//         return "";
+//     auto v = key in j;
+//     if (v is null)
+//         return "";
+//     if ((*v).isString)
+//         return (*v).get!string;
+//     return "";
+// }
 
-bool jsonBool(Json j, string key, bool default_ = false) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isBoolean)
-        return (*v).get!bool;
-    return default_;
-}
+// bool jsonBool(Json j, string key, bool default_ = false) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isBoolean)
+//         return (*v).get!bool;
+//     return default_;
+// }
 
-int jsonInt(Json j, string key, int default_ = 0) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isInteger)
-        return cast(int)(*v).get!long;
-    return default_;
-}
+// int jsonInt(Json j, string key, int default_ = 0) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isInteger)
+//         return cast(int)(*v).get!long;
+//     return default_;
+// }
 
-long jsonLong(Json j, string key, long default_ = 0) {
-    if (!j.isObject)
-        return default_;
-    auto v = key in j;
-    if (v is null)
-        return default_;
-    if ((*v).isInteger)
-        return (*v).get!long;
-    return default_;
-}
+// long jsonLong(Json j, string key, long default_ = 0) {
+//     if (!j.isObject)
+//         return default_;
+//     auto v = key in j;
+//     if (v is null)
+//         return default_;
+//     if ((*v).isInteger)
+//         return (*v).get!long;
+//     return default_;
+// }
 
-string[] jsonStrArray(Json j, string key) {
-    if (!j.isObject)
-        return [];
-    auto v = key in j;
-    if (v is null)
-        return [];
-    if ((*v).type != Json.Type.array)
-        return [];
-    string[] result;
-    foreach (item; *v) {
-        if (item.isString)
-            result ~= item.get!string;
-    }
-    return result;
-}
+// string[] jsonStrArray(Json j, string key) {
+//     if (!j.isObject)
+//         return [];
+//     auto v = key in j;
+//     if (v is null)
+//         return [];
+//     if ((*v).type != Json.Type.array)
+//         return [];
+//     string[] result;
+//     foreach (item; *v) {
+//         if (item.isString)
+//             result ~= item.get!string;
+//     }
+//     return result;
+// }
 
-string[][] jsonKeyValuePairs(Json j, string key) {
-    if (!j.isObject)
-        return [];
-    auto v = key in j;
-    if (v is null)
-        return [];
-    if ((*v).type != Json.Type.array)
-        return [];
-    string[][] result;
-    foreach (item; *v) {
-        if (item.isObject) {
-            auto k = item.getString("key");
-            auto val = item.getString("value");
-            if (k.length > 0)
-                result ~= [k, val];
-        }
-    }
-    return result;
-}
+// string[][] jsonKeyValuePairs(Json j, string key) {
+//     if (!j.isObject)
+//         return [];
+//     auto v = key in j;
+//     if (v is null)
+//         return [];
+//     if ((*v).type != Json.Type.array)
+//         return [];
+//     string[][] result;
+//     foreach (item; *v) {
+//         if (item.isObject) {
+//             auto k = item.getString("key");
+//             auto val = item.getString("value");
+//             if (k.length > 0)
+//                 result ~= [k, val];
+//         }
+//     }
+//     return result;
+// }
 
-Json stringsToJsonArray(string[] arr) {
-    auto jarr = Json.emptyArray;
-    foreach (s; arr)
-        jarr ~= Json(s);
-    return jarr;
-}
+// Json stringsToJsonArray(string[] arr) {
+//     auto jarr = Json.emptyArray;
+//     foreach (s; arr)
+//         jarr ~= Json(s);
+//     return jarr;
+// }
 
-string extractIdFromPath(string path) {
-    import std.string : lastIndexOf;
+// string extractIdFromPath(string path) {
+//     import std.string : lastIndexOf;
 
-    auto idx = lastIndexOf(path, '/');
-    if (idx >= 0 && idx + 1 < path.length)
-        return path[idx + 1 .. $];
-    return "";
-}
+//     auto idx = lastIndexOf(path, '/');
+//     if (idx >= 0 && idx + 1 < path.length)
+//         return path[idx + 1 .. $];
+//     return "";
+// }
 
-string extractSegmentFromPath(string path, int segmentIndex) {
-    import std.string : split;
-    auto parts = path.split("/");
-    // Filter empty segments
-    string[] segments;
-    foreach (p; parts) {
-        if (p.length > 0)
-            segments ~= p;
-    }
-    if (segmentIndex < segments.length)
-        return segments[segmentIndex];
-    return "";
-}
+// string extractSegmentFromPath(string path, int segmentIndex) {
+//     import std.string : split;
+//     auto parts = path.split("/");
+//     // Filter empty segments
+//     string[] segments;
+//     foreach (p; parts) {
+//         if (p.length > 0)
+//             segments ~= p;
+//     }
+//     if (segmentIndex < segments.length)
+//         return segments[segmentIndex];
+//     return "";
+// }

@@ -8,8 +8,8 @@ module uim.platform.job_scheduling.domain.entities.job;
 import uim.platform.job_scheduling.domain.types;
 
 struct Job {
-    JobId id;
     TenantId tenantId;
+    JobId id;
     string name;
     string description;
     string actionUrl;

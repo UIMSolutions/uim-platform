@@ -20,6 +20,7 @@ class ConfigurationController : PlatformController {
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+        
         router.get("/api/v1/scheduler/configuration", &handleGet);
         router.put("/api/v1/scheduler/configuration", &handleUpdate);
     }
