@@ -9,7 +9,7 @@ import uim.platform.mobile.presentation.http.json_utils;
 
 import uim.platform.mobile;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
   private string serviceName;
 
   this(string serviceName = "mobile-services") {

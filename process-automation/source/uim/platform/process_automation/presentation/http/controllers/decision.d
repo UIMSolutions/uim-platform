@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class DecisionController : SAPController {
+class DecisionController : PlatformController {
     private ManageDecisionsUseCase uc;
 
     this(ManageDecisionsUseCase uc) {

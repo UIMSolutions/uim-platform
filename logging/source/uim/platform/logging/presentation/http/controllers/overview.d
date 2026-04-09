@@ -11,7 +11,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class OverviewController : SAPController {
+class OverviewController : PlatformController {
   private GetOverviewUseCase uc;
 
   this(GetOverviewUseCase uc) {

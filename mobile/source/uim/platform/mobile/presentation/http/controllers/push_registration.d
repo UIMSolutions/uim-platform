@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class PushRegistrationController : SAPController {
+class PushRegistrationController : PlatformController {
   private ManagePushRegistrationsUseCase uc;
 
   this(ManagePushRegistrationsUseCase uc) {

@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class VisibilityController : SAPController {
+class VisibilityController : PlatformController {
     private ManageVisibilitiesUseCase uc;
 
     this(ManageVisibilitiesUseCase uc) {

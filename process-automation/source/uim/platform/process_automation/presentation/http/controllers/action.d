@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class ActionController : SAPController {
+class ActionController : PlatformController {
     private ManageActionsUseCase uc;
 
     this(ManageActionsUseCase uc) {

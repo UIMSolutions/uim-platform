@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class OverviewController : SAPController {
+class OverviewController : PlatformController {
   private GetOverviewUseCase uc;
 
   this(GetOverviewUseCase uc) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ConsentRecordController : SAPController {
+class ConsentRecordController : PlatformController {
     private ManageConsentRecordsUseCase uc;
 
     this(ManageConsentRecordsUseCase uc) {

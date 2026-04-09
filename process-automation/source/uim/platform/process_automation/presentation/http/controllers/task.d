@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class TaskController : SAPController {
+class TaskController : PlatformController {
     private ManageTasksUseCase uc;
 
     this(ManageTasksUseCase uc) {

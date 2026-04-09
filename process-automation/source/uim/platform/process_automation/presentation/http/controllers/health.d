@@ -7,7 +7,7 @@ module uim.platform.process_automation.presentation.http.controllers.health;
 
 import uim.platform.process_automation;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
         router.get("/api/v1/health", &handleHealth);

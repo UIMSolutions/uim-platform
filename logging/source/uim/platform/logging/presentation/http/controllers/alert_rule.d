@@ -11,7 +11,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class AlertRuleController : SAPController {
+class AlertRuleController : PlatformController {
   private ManageAlertRulesUseCase uc;
 
   this(ManageAlertRulesUseCase uc) {

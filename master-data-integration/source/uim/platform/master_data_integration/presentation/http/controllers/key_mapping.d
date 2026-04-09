@@ -16,7 +16,7 @@ import uim.platform.master_data_integration.domain.entities.key_mapping;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class KeyMappingController : SAPController {
+class KeyMappingController : PlatformController {
   private ManageKeyMappingsUseCase uc;
 
   this(ManageKeyMappingsUseCase uc) {

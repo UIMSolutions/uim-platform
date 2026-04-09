@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class TriggerController : SAPController {
+class TriggerController : PlatformController {
     private ManageTriggersUseCase uc;
 
     this(ManageTriggersUseCase uc) {

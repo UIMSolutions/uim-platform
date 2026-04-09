@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class ServicePlanController : SAPController {
+class ServicePlanController : PlatformController {
   private ManageServicePlansUseCase uc;
 
   this(ManageServicePlansUseCase uc) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PersonalDataRecordController : SAPController {
+class PersonalDataRecordController : PlatformController {
     private ManagePersonalDataRecordsUseCase uc;
 
     this(ManagePersonalDataRecordsUseCase uc) {

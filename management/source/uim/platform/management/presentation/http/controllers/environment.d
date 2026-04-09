@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EnvironmentController : SAPController {
+class EnvironmentController : PlatformController {
   private ManageEnvironmentInstancesUseCase uc;
 
   this(ManageEnvironmentInstancesUseCase uc) {

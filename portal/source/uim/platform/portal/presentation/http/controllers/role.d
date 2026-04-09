@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class RoleController : SAPController {
+class RoleController : PlatformController {
   private ManageRolesUseCase useCase;
 
   this(ManageRolesUseCase useCase) {

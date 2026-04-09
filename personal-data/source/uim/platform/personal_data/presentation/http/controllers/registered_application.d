@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class RegisteredApplicationController : SAPController {
+class RegisteredApplicationController : PlatformController {
     private ManageRegisteredApplicationsUseCase uc;
 
     this(ManageRegisteredApplicationsUseCase uc) {

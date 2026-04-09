@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataSubjectRequestController : SAPController {
+class DataSubjectRequestController : PlatformController {
     private ManageDataSubjectRequestsUseCase uc;
 
     this(ManageDataSubjectRequestsUseCase uc) {

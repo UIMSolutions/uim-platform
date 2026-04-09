@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskAttachmentController : SAPController {
+class TaskAttachmentController : PlatformController {
     private ManageTaskAttachmentsUseCase uc;
 
     this(ManageTaskAttachmentsUseCase uc) {

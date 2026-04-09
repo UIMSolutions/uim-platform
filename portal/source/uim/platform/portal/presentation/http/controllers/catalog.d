@@ -19,7 +19,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class CatalogController : SAPController {
+class CatalogController : PlatformController {
   private ManageCatalogsUseCase useCase;
 
   this(ManageCatalogsUseCase useCase) {

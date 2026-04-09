@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SubstitutionRuleController : SAPController {
+class SubstitutionRuleController : PlatformController {
     private ManageSubstitutionRulesUseCase uc;
 
     this(ManageSubstitutionRulesUseCase uc) {

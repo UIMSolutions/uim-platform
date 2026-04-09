@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EntityTypeController : SAPController {
+class EntityTypeController : PlatformController {
     private ManageEntityTypesUseCase uc;
 
     this(ManageEntityTypesUseCase uc) {

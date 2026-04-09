@@ -11,7 +11,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class RetentionController : SAPController {
+class RetentionController : PlatformController {
   private ManageRetentionPoliciesUseCase uc;
 
   this(ManageRetentionPoliciesUseCase uc) {

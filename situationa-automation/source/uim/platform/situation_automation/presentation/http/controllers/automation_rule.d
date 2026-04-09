@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AutomationRuleController : SAPController {
+class AutomationRuleController : PlatformController {
     private ManageAutomationRulesUseCase uc;
 
     this(ManageAutomationRulesUseCase uc) {

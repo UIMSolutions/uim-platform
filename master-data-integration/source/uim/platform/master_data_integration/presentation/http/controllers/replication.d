@@ -16,7 +16,7 @@ import uim.platform.master_data_integration.domain.entities.replication_job;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class ReplicationController : SAPController {
+class ReplicationController : PlatformController {
   private ManageReplicationJobsUseCase uc;
 
   this(ManageReplicationJobsUseCase uc) {

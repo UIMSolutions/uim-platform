@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class ClientResourceController : SAPController {
+class ClientResourceController : PlatformController {
   private ManageClientResourcesUseCase uc;
 
   this(ManageClientResourcesUseCase uc) {

@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class OfflineStoreController : SAPController {
+class OfflineStoreController : PlatformController {
   private ManageOfflineStoresUseCase uc;
 
   this(ManageOfflineStoresUseCase uc) {

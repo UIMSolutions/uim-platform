@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TileController : SAPController {
+class TileController : PlatformController {
   private ManageTilesUseCase useCase;
 
   this(ManageTilesUseCase useCase) {

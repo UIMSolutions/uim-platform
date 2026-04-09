@@ -16,7 +16,7 @@ import uim.platform.master_data_integration.domain.entities.data_model;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class DataModelController : SAPController {
+class DataModelController : PlatformController {
   private ManageDataModelsUseCase uc;
 
   this(ManageDataModelsUseCase uc) {

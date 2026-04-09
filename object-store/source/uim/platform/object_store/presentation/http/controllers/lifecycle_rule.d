@@ -20,7 +20,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class LifecycleRuleController : SAPController {
+class LifecycleRuleController : PlatformController {
   private ManageLifecycleRulesUseCase uc;
 
   this(ManageLifecycleRulesUseCase uc) {

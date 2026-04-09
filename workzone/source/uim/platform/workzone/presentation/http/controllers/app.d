@@ -14,7 +14,7 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.app_registration;
 import uim.platform.identity_authentication.presentation.http.json_utils;
 
-class AppController : SAPController {
+class AppController : PlatformController {
   private ManageAppsUseCase useCase;
 
   this(ManageAppsUseCase useCase) {

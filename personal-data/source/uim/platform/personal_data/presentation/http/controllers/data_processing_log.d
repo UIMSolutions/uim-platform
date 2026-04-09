@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataProcessingLogController : SAPController {
+class DataProcessingLogController : PlatformController {
     private ManageDataProcessingLogsUseCase uc;
 
     this(ManageDataProcessingLogsUseCase uc) {

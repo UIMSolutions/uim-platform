@@ -12,7 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /*
-class UIMTenantController : SAPController {
+class UIMTenantController : PlatformController {
   this(MultitenancyService multitenancyService) {
   this.multitenancyService = multitenancyService;
   }

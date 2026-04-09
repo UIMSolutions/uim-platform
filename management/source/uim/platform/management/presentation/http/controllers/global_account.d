@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class GlobalAccountController : SAPController {
+class GlobalAccountController : PlatformController {
   private ManageGlobalAccountsUseCase uc;
 
   this(ManageGlobalAccountsUseCase uc) {

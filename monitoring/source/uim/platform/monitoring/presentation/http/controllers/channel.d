@@ -20,7 +20,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class ChannelController : SAPController {
+class ChannelController : PlatformController {
   private ManageNotificationChannelsUseCase uc;
 
   this(ManageNotificationChannelsUseCase uc) {

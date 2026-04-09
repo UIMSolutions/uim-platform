@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SituationActionController : SAPController {
+class SituationActionController : PlatformController {
     private ManageSituationActionsUseCase uc;
 
     this(ManageSituationActionsUseCase uc) {

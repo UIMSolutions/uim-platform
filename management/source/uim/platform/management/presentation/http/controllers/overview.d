@@ -16,7 +16,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class OverviewController : SAPController {
+class OverviewController : PlatformController {
   private GetAccountOverviewUseCase uc;
 
   this(GetAccountOverviewUseCase uc) {

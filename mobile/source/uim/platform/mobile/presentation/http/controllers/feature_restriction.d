@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class FeatureRestrictionController : SAPController {
+class FeatureRestrictionController : PlatformController {
   private ManageFeatureRestrictionsUseCase uc;
 
   this(ManageFeatureRestrictionsUseCase uc) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskDefinitionController : SAPController {
+class TaskDefinitionController : PlatformController {
     private ManageTaskDefinitionsUseCase uc;
 
     this(ManageTaskDefinitionsUseCase uc) {

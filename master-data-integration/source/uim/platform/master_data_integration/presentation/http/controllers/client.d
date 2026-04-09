@@ -16,7 +16,7 @@ import uim.platform.master_data_integration.domain.entities.client;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class ClientController : SAPController {
+class ClientController : PlatformController {
   private ManageClientsUseCase uc;
 
   this(ManageClientsUseCase uc) {

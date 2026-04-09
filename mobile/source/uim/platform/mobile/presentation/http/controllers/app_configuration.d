@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class AppConfigurationController : SAPController {
+class AppConfigurationController : PlatformController {
   private ManageAppConfigurationsUseCase uc;
 
   this(ManageAppConfigurationsUseCase uc) {

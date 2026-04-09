@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskProviderController : SAPController {
+class TaskProviderController : PlatformController {
     private ManageTaskProvidersUseCase uc;
 
     this(ManageTaskProvidersUseCase uc) {

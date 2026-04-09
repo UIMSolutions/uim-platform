@@ -11,7 +11,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class PipelineController : SAPController {
+class PipelineController : PlatformController {
   private ManagePipelinesUseCase uc;
 
   this(ManagePipelinesUseCase uc) {

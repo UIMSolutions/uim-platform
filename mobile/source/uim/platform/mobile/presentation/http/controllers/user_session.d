@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class UserSessionController : SAPController {
+class UserSessionController : PlatformController {
   private ManageUserSessionsUseCase uc;
 
   this(ManageUserSessionsUseCase uc) {

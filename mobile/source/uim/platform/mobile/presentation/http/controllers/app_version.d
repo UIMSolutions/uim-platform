@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class AppVersionController : SAPController {
+class AppVersionController : PlatformController {
   private ManageAppVersionsUseCase uc;
 
   this(ManageAppVersionsUseCase uc) {

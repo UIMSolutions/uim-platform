@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class PushNotificationController : SAPController {
+class PushNotificationController : PlatformController {
   private ManagePushNotificationsUseCase uc;
 
   this(ManagePushNotificationsUseCase uc) {

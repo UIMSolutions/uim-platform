@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class ThemeController : SAPController {
+class ThemeController : PlatformController {
   private ManageThemesUseCase useCase;
 
   this(ManageThemesUseCase useCase) {

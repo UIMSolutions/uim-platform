@@ -13,7 +13,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class DashboardController : SAPController {
+class DashboardController : PlatformController {
   private ManageDashboardsUseCase uc;
 
   this(ManageDashboardsUseCase uc) {

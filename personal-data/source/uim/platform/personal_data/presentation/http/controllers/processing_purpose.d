@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ProcessingPurposeController : SAPController {
+class ProcessingPurposeController : PlatformController {
     private ManageProcessingPurposesUseCase uc;
 
     this(ManageProcessingPurposesUseCase uc) {

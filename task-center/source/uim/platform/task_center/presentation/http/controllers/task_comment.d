@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TaskCommentController : SAPController {
+class TaskCommentController : PlatformController {
     private ManageTaskCommentsUseCase uc;
 
     this(ManageTaskCommentsUseCase uc) {

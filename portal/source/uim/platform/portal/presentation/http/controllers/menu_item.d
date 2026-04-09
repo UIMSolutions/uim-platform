@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class MenuItemController : SAPController {
+class MenuItemController : PlatformController {
   private ManageMenuItemsUseCase useCase;
 
   this(ManageMenuItemsUseCase useCase) {

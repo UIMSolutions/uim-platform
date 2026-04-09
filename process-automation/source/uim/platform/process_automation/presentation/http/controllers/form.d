@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class FormController : SAPController {
+class FormController : PlatformController {
     private ManageFormsUseCase uc;
 
     this(ManageFormsUseCase uc) {

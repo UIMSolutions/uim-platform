@@ -7,7 +7,7 @@ module uim.platform.logging.presentation.http.controllers.health;
 
 import uim.platform.logging;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
   this() {
     super();
   }

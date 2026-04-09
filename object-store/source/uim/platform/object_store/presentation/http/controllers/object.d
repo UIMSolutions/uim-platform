@@ -21,7 +21,7 @@ import uim.platform.object_store;
 mixin(ShowModule!());
 
 @safe:
-class ObjectController : SAPController {
+class ObjectController : PlatformController {
   private ManageObjectsUseCase uc;
 
   this(ManageObjectsUseCase uc) {

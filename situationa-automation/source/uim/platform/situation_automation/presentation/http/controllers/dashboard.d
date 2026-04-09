@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DashboardController : SAPController {
+class DashboardController : PlatformController {
     private ManageDashboardsUseCase uc;
 
     this(ManageDashboardsUseCase uc) {

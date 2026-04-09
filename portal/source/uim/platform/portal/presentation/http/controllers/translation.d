@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class TranslationController : SAPController {
+class TranslationController : PlatformController {
   private ManageTranslationsUseCase useCase;
 
   this(ManageTranslationsUseCase useCase) {

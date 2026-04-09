@@ -21,7 +21,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class CheckController : SAPController {
+class CheckController : PlatformController {
   private ManageHealthChecksUseCase uc;
 
   this(ManageHealthChecksUseCase uc) {

@@ -13,7 +13,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class StreamController : SAPController {
+class StreamController : PlatformController {
   private ManageLogStreamsUseCase uc;
 
   this(ManageLogStreamsUseCase uc) {

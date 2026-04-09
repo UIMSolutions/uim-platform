@@ -19,7 +19,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class SubscriptionController : SAPController {
+class SubscriptionController : PlatformController {
   private ManageSubscriptionsUseCase uc;
 
   this(ManageSubscriptionsUseCase uc) {

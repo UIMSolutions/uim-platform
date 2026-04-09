@@ -18,7 +18,7 @@ import uim.platform.portal;
 mixin(ShowModule!());
 
 @safe:
-class SiteController : SAPController {
+class SiteController : PlatformController {
   private ManageSitesUseCase useCase;
 
   this(ManageSitesUseCase useCase) {

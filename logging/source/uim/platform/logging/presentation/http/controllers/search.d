@@ -14,7 +14,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class SearchController : SAPController {
+class SearchController : PlatformController {
   private SearchLogsUseCase uc;
 
   this(SearchLogsUseCase uc) {

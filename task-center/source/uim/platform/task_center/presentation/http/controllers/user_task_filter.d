@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class UserTaskFilterController : SAPController {
+class UserTaskFilterController : PlatformController {
     private ManageUserTaskFiltersUseCase uc;
 
     this(ManageUserTaskFiltersUseCase uc) {

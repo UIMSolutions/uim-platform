@@ -15,7 +15,7 @@ import uim.platform.object_store.application.dto;
 import uim.platform.object_store.domain.entities.cors_rule;
 import uim.platform.object_store.presentation.http.json_utils;
 
-class CorsRuleController : SAPController {
+class CorsRuleController : PlatformController {
   private ManageCorsRulesUseCase uc;
 
   this(ManageCorsRulesUseCase uc) {

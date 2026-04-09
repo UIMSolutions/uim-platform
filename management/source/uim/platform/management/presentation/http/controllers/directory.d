@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class DirectoryController : SAPController {
+class DirectoryController : PlatformController {
   private ManageDirectoriesUseCase uc;
 
   this(ManageDirectoriesUseCase uc) {

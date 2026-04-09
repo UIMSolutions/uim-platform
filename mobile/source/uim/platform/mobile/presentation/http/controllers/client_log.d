@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class ClientLogController : SAPController {
+class ClientLogController : PlatformController {
   private ManageClientLogsUseCase uc;
 
   this(ManageClientLogsUseCase uc) {

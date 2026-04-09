@@ -13,7 +13,7 @@ import uim.platform.mobile;
 
 import std.conv : to;
 
-class UsageReportController : SAPController {
+class UsageReportController : PlatformController {
   private ManageUsageReportsUseCase uc;
 
   this(ManageUsageReportsUseCase uc) {

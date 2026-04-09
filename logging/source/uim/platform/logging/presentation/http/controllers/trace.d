@@ -13,7 +13,7 @@ import uim.platform.logging.presentation.http.json_utils;
 
 import uim.platform.logging;
 
-class TraceController : SAPController {
+class TraceController : PlatformController {
   private IngestTracesUseCase uc;
 
   this(IngestTracesUseCase uc) {

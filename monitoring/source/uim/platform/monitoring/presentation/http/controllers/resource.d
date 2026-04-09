@@ -10,13 +10,17 @@ module uim.platform.monitoring.presentation.http.resource;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage.monitored_resources;
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.presentation.http.json_utils;
+// import uim.platform.monitoring.application.usecases.manage.monitored_resources;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.monitored_resource;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.presentation.http.json_utils;
+import uim.platform.monitoring;
 
-class ResourceController {
+mixin(ShowModule!());
+
+@safe:
+class ResourceController : PlatformController {
   private ManageMonitoredResourcesUseCase uc;
 
   this(ManageMonitoredResourcesUseCase uc) {
@@ -24,6 +28,8 @@ class ResourceController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/resources", &handleCreate);
     router.get("/api/v1/resources", &handleList);
     router.get("/api/v1/resources/*", &handleGetById);

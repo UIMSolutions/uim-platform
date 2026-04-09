@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataContextController : SAPController {
+class DataContextController : PlatformController {
     private ManageDataContextsUseCase uc;
 
     this(ManageDataContextsUseCase uc) {

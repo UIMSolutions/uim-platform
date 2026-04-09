@@ -11,7 +11,7 @@ import uim.platform.process_automation.presentation.http.json_utils;
 
 import uim.platform.process_automation;
 
-class ArtifactController : SAPController {
+class ArtifactController : PlatformController {
     private ManageArtifactsUseCase uc;
 
     this(ManageArtifactsUseCase uc) {

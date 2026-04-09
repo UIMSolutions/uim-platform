@@ -16,7 +16,7 @@ import uim.platform.master_data_integration.domain.entities.change_log_entry;
 import uim.platform.master_data_integration.domain.types;
 import uim.platform.master_data_integration.presentation.http.json_utils;
 
-class ChangeLogController : SAPController {
+class ChangeLogController : PlatformController {
   private QueryChangeLogUseCase uc;
 
   this(QueryChangeLogUseCase uc) {
