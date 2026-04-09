@@ -34,7 +34,7 @@ class ManagePersonalDataModelsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto model = PersonalDataModel();
-    model.id = randomUUID().toString();
+    model.id = randomUUID();
     model.tenantId = req.tenantId;
     model.fieldName = req.fieldName;
     model.fieldDescription = req.fieldDescription;

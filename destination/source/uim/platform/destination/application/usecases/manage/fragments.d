@@ -33,7 +33,7 @@ class ManageFragmentsUseCase : UIMUseCase {
       return CommandResult(false, "", "Fragment '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     DestinationFragment f;
     f.id = randomUUID();

@@ -52,7 +52,7 @@ class ManageRoutesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = Route();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.spaceId = req.spaceId;
     r.domainId = req.domainId;
     r.tenantId = req.tenantId;
@@ -129,7 +129,7 @@ class ManageRoutesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto d = CfDomain();
-    d.id = randomUUID().toString();
+    d.id = randomUUID();
     d.ownerOrgId = req.ownerOrgId;
     d.tenantId = req.tenantId;
     d.name = req.name;

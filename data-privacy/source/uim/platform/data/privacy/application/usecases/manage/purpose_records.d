@@ -25,7 +25,7 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = PurposeRecord();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.dataSubjectId = req.dataSubjectId;
     r.businessContextId = req.businessContextId;

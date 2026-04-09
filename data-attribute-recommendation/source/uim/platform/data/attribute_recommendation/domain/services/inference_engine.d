@@ -58,7 +58,7 @@ class InferenceEngine {
 
     // Simulate prediction
     auto result = InferenceResult();
-    result.id = randomUUID().toString();
+    result.id = randomUUID();
     result.tenantId = tenantId;
     result.requestId = requestId;
     result.predictions = `{"category":"Electronics","subcategory":"Smartphones","brand":"Generic"}`;

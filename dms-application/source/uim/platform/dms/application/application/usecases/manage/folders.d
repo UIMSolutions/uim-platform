@@ -48,7 +48,7 @@ class ManageFoldersUseCase : UIMUseCase {
     }
 
     auto entity = new Folder();
-    entity.id = randomUUID().toString();
+    entity.id = randomUUID();
     entity.tenantId = r.tenantId;
     entity.repositoryId = r.repositoryId;
     entity.parentFolderId = r.parentFolderId;

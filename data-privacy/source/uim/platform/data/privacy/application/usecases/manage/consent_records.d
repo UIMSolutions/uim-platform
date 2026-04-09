@@ -41,7 +41,7 @@ class ManageConsentRecordsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto record = ConsentRecord();
-    record.id = randomUUID().toString();
+    record.id = randomUUID();
     record.tenantId = req.tenantId;
     record.dataSubjectId = req.dataSubjectId;
     record.purpose = req.purpose;

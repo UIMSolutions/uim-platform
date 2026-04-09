@@ -29,7 +29,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
     if (req.systemInstanceid.isEmpty)
       return CommandResult("", "System instance ID is required");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     CommunicationArrangement arr;
     arr.id = randomUUID();
     arr.tenantId = req.tenantId;

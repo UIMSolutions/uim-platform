@@ -31,7 +31,7 @@ class ManageArchiveRequestsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = ArchiveRequest();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.dataSubjectId = req.dataSubjectId;
     r.requestedBy = req.requestedBy;

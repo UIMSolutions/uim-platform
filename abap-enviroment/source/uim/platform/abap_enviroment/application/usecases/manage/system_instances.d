@@ -42,7 +42,7 @@ class ManageSystemInstancesUseCase : UIMUseCase {
     if (existing !is null)
       return CommandResult("", "System instance '" ~ req.name ~ "' already exists");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     SystemInstance inst;
     inst.id = randomUUID();
     inst.tenantId = req.tenantId;

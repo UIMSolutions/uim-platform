@@ -67,7 +67,7 @@ class ModelTrainer {
 
     // Create training job
     auto job = TrainingJob();
-    job.id = randomUUID().toString();
+    job.id = randomUUID();
     job.tenantId = tenantId;
     job.modelConfigId = configId;
     job.status = JobStatus.running;

@@ -38,7 +38,7 @@ class ManageOrgsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto org = Organization();
-    org.id = randomUUID().toString();
+    org.id = randomUUID();
     org.tenantId = req.tenantId;
     org.name = req.name;
     org.status = OrgStatus.active;

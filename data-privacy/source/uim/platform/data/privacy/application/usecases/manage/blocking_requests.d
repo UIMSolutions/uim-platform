@@ -40,7 +40,7 @@ class ManageBlockingRequestsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto request = BlockingRequest();
-    request.id = randomUUID().toString();
+    request.id = randomUUID();
     request.tenantId = req.tenantId;
     request.dataSubjectId = req.dataSubjectId;
     request.requestedBy = req.requestedBy;

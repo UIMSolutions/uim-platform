@@ -29,7 +29,7 @@ class CleanseAddressesUseCase : UIMUseCase {
   /// Cleanse a single address.
   AddressRecord cleanse(CleanseAddressRequest req) {
     auto record = AddressRecord();
-    record.id = randomUUID().toString();
+    record.id = randomUUID();
     record.tenantId = req.tenantId;
     record.sourceRecordId = req.sourceRecordId;
     record.inputLine1 = req.line1;

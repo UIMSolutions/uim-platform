@@ -46,7 +46,7 @@ class ManageModelsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto config = ModelConfiguration();
-    config.id = randomUUID().toString();
+    config.id = randomUUID();
     config.tenantId = req.tenantId;
     config.datasetId = req.datasetId;
     config.name = req.name;

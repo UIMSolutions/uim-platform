@@ -27,7 +27,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     if (req.systemInstanceid.isEmpty)
       return CommandResult("", "System instance ID is required");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     ServiceBinding binding;
     binding.id = randomUUID();
     binding.tenantId = req.tenantId;

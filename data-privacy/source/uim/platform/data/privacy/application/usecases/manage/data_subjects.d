@@ -39,7 +39,7 @@ class ManageDataSubjectsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto subject = DataSubject();
-    subject.id = randomUUID().toString();
+    subject.id = randomUUID();
     subject.tenantId = req.tenantId;
     subject.subjectType = req.subjectType;
     subject.externalId = req.externalId;

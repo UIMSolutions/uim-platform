@@ -35,7 +35,7 @@ class ManageDatasetsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ds = Dataset();
-    ds.id = randomUUID().toString();
+    ds.id = randomUUID();
     ds.tenantId = req.tenantId;
     ds.name = req.name;
     ds.description = req.description;

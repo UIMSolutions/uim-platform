@@ -30,7 +30,7 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     if (req.systemInstanceid.isEmpty)
       return CommandResult("", "System instance ID is required");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     ApplicationJob job;
     job.id = randomUUID();
     job.tenantId = req.tenantId;

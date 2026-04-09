@@ -35,7 +35,7 @@ class ImportContentUseCase : UIMUseCase {
       return CommandResult(false, "", "Package not found");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ImportJob job;
     job.id = randomUUID();
@@ -93,7 +93,7 @@ class ImportContentUseCase : UIMUseCase {
       string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
-    activity.id = randomUUID().toString();
+    activity.id = randomUUID();
     activity.tenantId = tenantId;
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;

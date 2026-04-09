@@ -25,7 +25,7 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto c = AnonymizationConfig();
-    c.id = randomUUID().toString();
+    c.id = randomUUID();
     c.tenantId = req.tenantId;
     c.name = req.name;
     c.description = req.description;

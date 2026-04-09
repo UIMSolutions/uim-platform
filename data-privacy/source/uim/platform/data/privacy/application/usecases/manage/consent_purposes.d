@@ -25,7 +25,7 @@ class ManageConsentPurposesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto cp = ConsentPurpose();
-    cp.id = randomUUID().toString();
+    cp.id = randomUUID();
     cp.tenantId = req.tenantId;
     cp.controllerId = req.controllerId;
     cp.name = req.name;

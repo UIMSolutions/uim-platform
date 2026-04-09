@@ -48,7 +48,7 @@ class ManageDocumentsUseCase : UIMUseCase {
     auto now = Clock.currStdTime();
 
     auto doc = new Document();
-    doc.id = randomUUID().toString();
+    doc.id = randomUUID();
     doc.tenantId = r.tenantId;
     doc.repositoryId = r.repositoryId;
     doc.folderId = r.folderId;
@@ -66,7 +66,7 @@ class ManageDocumentsUseCase : UIMUseCase {
 
     // Create initial version (v1)
     auto ver = new DocumentVersion();
-    ver.id = randomUUID().toString();
+    ver.id = randomUUID();
     ver.tenantId = r.tenantId;
     ver.documentId = doc.id;
     ver.versionNumber = 1;

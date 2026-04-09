@@ -47,7 +47,7 @@ class ManageSpacesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto space = Space();
-    space.id = randomUUID().toString();
+    space.id = randomUUID();
     space.orgId = req.orgId;
     space.tenantId = req.tenantId;
     space.name = req.name;

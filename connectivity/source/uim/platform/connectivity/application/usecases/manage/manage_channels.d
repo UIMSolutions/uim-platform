@@ -45,7 +45,7 @@ class ManageChannelsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ServiceChannel ch;
     ch.id = randomUUID();
@@ -124,7 +124,7 @@ class ManageChannelsUseCase : UIMUseCase {
     // import std.uuid : randomUUID;
 
     ConnectivityLog entry;
-    entry.id = randomUUID().toString();
+    entry.id = randomUUID();
     entry.tenantId = tenantId;
     entry.eventType = evtType;
     entry.severity = LogSeverity.info;

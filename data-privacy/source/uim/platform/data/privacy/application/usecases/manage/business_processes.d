@@ -25,7 +25,7 @@ class ManageBusinessProcessesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto p = BusinessProcess();
-    p.id = randomUUID().toString();
+    p.id = randomUUID();
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;

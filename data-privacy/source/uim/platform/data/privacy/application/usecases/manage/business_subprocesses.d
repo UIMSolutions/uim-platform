@@ -27,7 +27,7 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto sp = BusinessSubprocess();
-    sp.id = randomUUID().toString();
+    sp.id = randomUUID();
     sp.tenantId = req.tenantId;
     sp.parentProcessId = req.parentProcessId;
     sp.name = req.name;

@@ -36,7 +36,7 @@ class ManageSharesUseCase : UIMUseCase {
       return CommandResult("", "Document not found");
 
     auto entity = new Share();
-    entity.id = randomUUID().toString();
+    entity.id = randomUUID();
     entity.tenantId = r.tenantId;
     entity.documentId = r.documentId;
     entity.shareType = r.shareType;

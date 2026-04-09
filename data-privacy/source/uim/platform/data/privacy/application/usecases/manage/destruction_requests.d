@@ -31,7 +31,7 @@ class ManageDestructionRequestsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = DestructionRequest();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.dataSubjectId = req.dataSubjectId;
     r.requestedBy = req.requestedBy;

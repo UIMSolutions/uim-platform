@@ -53,7 +53,7 @@ class DuplicateDetector {
 
       if (candidates.length > 1) {
         MatchGroup g;
-        g.id = randomUUID().toString();
+        g.id = randomUUID();
         g.tenantId = tenantId;
         g.datasetId = datasetId;
         g.strategy = strategy;

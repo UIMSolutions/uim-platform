@@ -48,7 +48,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto dep = ModelDeployment();
-    dep.id = randomUUID().toString();
+    dep.id = randomUUID();
     dep.tenantId = req.tenantId;
     dep.trainingJobId = req.trainingJobId;
     dep.modelConfigId = job.modelConfigId;

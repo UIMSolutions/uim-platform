@@ -34,7 +34,7 @@ class ManageBuildpacksUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto bp = Buildpack();
-    bp.id = randomUUID().toString();
+    bp.id = randomUUID();
     bp.tenantId = req.tenantId;
     bp.name = req.name;
     bp.type_ = req.type_;

@@ -46,7 +46,7 @@ class ManageServicesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto si = ServiceInstance();
-    si.id = randomUUID().toString();
+    si.id = randomUUID();
     si.spaceId = req.spaceId;
     si.tenantId = req.tenantId;
     si.name = req.name;
@@ -128,7 +128,7 @@ class ManageServicesUseCase : UIMUseCase {
       return CommandResult("", "Service instance not found");
 
     auto binding = ServiceBinding();
-    binding.id = randomUUID().toString();
+    binding.id = randomUUID();
     binding.appId = req.appId;
     binding.serviceInstanceId = req.serviceInstanceId;
     binding.tenantId = req.tenantId;

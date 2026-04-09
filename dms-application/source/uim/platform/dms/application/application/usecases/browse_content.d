@@ -82,7 +82,7 @@ class BrowseContentUseCase : UIMUseCase {
       return CommandResult(existing.id, "");
 
     auto fav = new Favorite();
-    fav.id = randomUUID().toString();
+    fav.id = randomUUID();
     fav.tenantId = r.tenantId;
     fav.userId = r.userId;
     fav.resourceId = r.resourceId;

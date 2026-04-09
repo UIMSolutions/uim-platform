@@ -35,7 +35,7 @@ class ManageLegalGroundsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ground = LegalGround();
-    ground.id = randomUUID().toString();
+    ground.id = randomUUID();
     ground.tenantId = req.tenantId;
     ground.dataSubjectId = req.dataSubjectId;
     ground.basis = req.basis;

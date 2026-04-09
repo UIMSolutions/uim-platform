@@ -31,7 +31,7 @@ class ManageCleansingJobsUseCase : UIMUseCase {
       return CommandResult("", "Dataset ID is required");
 
     auto job = CleansingJob();
-    job.id = randomUUID().toString();
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.datasetId = req.datasetId;
     job.requestedBy = req.requestedBy;

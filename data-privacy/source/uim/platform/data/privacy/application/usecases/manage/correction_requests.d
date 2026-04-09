@@ -33,7 +33,7 @@ class ManageCorrectionRequestsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = CorrectionRequest();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.dataSubjectId = req.dataSubjectId;
     r.requestedBy = req.requestedBy;

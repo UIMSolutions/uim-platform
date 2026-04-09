@@ -25,7 +25,7 @@ class ManageRuleSetsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto rs = RuleSet();
-    rs.id = randomUUID().toString();
+    rs.id = randomUUID();
     rs.tenantId = req.tenantId;
     rs.businessContextId = req.businessContextId;
     rs.name = req.name;

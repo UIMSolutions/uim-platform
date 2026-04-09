@@ -40,7 +40,7 @@ class ManageAppsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto app = Application();
-    app.id = randomUUID().toString();
+    app.id = randomUUID();
     app.spaceId = req.spaceId;
     app.tenantId = req.tenantId;
     app.name = req.name;

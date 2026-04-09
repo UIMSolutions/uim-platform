@@ -33,7 +33,7 @@ class ManageCleansingRulesUseCase : UIMUseCase {
       return CommandResult("", "Field name is required");
 
     auto rule = CleansingRule();
-    rule.id = randomUUID().toString();
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.name = req.name;
     rule.description = req.description;

@@ -33,7 +33,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
       return CommandResult(false, "", "Queue name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     TransportQueue queue;
     queue.id = randomUUID();
@@ -98,7 +98,7 @@ class ManageTransportQueuesUseCase : UIMUseCase {
       string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
-    activity.id = randomUUID().toString();
+    activity.id = randomUUID();
     activity.tenantId = tenantId;
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;

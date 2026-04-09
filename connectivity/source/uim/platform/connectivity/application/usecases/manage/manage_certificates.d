@@ -33,7 +33,7 @@ class ManageCertificatesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Certificate cert;
     cert.id = randomUUID();

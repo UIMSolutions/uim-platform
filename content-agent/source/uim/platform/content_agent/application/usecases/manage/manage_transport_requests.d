@@ -55,7 +55,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
       queue = queueRepo.findDefault(req.tenantId);
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     TransportRequest tr;
     tr.id = randomUUID();
@@ -138,7 +138,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
       string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
-    activity.id = randomUUID().toString();
+    activity.id = randomUUID();
     activity.tenantId = tenantId;
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;

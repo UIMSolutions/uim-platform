@@ -66,7 +66,7 @@ class VersioningService {
 
     // Create new version
     auto ver = new DocumentVersion();
-    ver.id = randomUUID().toString();
+    ver.id = randomUUID();
     ver.tenantId = tenantId;
     ver.documentId = docId;
     ver.versionNumber = nextVersion;

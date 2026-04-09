@@ -41,7 +41,7 @@ class ManageDestinationsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Destination dest;
     dest.id = randomUUID();

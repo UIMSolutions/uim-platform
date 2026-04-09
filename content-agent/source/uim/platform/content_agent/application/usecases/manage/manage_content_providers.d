@@ -35,7 +35,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
       return CommandResult(false, "", "Provider endpoint is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ContentProvider provider;
     provider.id = randomUUID();
@@ -117,7 +117,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
       string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
-    activity.id = randomUUID().toString();
+    activity.id = randomUUID();
     activity.tenantId = tenantId;
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;

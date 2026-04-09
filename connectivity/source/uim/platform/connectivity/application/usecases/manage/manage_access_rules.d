@@ -36,7 +36,7 @@ class ManageAccessRulesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     AccessRule rule;
     rule.id = randomUUID();

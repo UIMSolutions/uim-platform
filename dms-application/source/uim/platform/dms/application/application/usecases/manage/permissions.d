@@ -44,7 +44,7 @@ class ManagePermissionsUseCase : UIMUseCase {
     }
 
     auto entity = new Permission();
-    entity.id = randomUUID().toString();
+    entity.id = randomUUID();
     entity.tenantId = r.tenantId;
     entity.resourceId = r.resourceId;
     entity.resourceType = r.resourceType;

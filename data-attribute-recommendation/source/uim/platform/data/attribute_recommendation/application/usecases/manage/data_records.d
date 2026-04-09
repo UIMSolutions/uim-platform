@@ -40,7 +40,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
       return CommandResult("", "Cannot add records to a processed or completed dataset");
 
     auto record = DataRecord();
-    record.id = randomUUID().toString();
+    record.id = randomUUID();
     record.datasetId = req.datasetId;
     record.tenantId = req.tenantId;
     record.attributes = req.attributes;

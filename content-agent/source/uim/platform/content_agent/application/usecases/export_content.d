@@ -38,7 +38,7 @@ class ExportContentUseCase : UIMUseCase {
       return CommandResult(false, "", "Package must be assembled before export");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ExportJob job;
     job.id = randomUUID();
@@ -89,7 +89,7 @@ class ExportContentUseCase : UIMUseCase {
       string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
-    activity.id = randomUUID().toString();
+    activity.id = randomUUID();
     activity.tenantId = tenantId;
     activity.activityType = actType;
     activity.severity = ActivitySeverity.info;

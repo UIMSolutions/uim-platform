@@ -44,7 +44,7 @@ class ManageDeletionRequestsUseCase : UIMUseCase {
     long deadline = now + (30L * 24 * 60 * 60 * 10_000_000L);
 
     auto request = DeletionRequest();
-    request.id = randomUUID().toString();
+    request.id = randomUUID();
     request.tenantId = req.tenantId;
     request.dataSubjectId = req.dataSubjectId;
     request.requestedBy = req.requestedBy;

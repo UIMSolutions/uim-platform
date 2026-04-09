@@ -33,7 +33,7 @@ class ManageValidationRulesUseCase : UIMUseCase {
       return CommandResult("", "Field name is required");
 
     auto rule = ValidationRule();
-    rule.id = randomUUID().toString();
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.name = req.name;
     rule.description = req.description;

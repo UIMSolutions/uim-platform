@@ -40,7 +40,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
     if (emailCheck !is null)
       return CommandResult("", "Email '" ~ req.email ~ "' already in use");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     BusinessUser user;
     user.id = randomUUID();
     user.tenantId = req.tenantId;

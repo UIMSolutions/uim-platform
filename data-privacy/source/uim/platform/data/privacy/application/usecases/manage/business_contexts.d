@@ -25,7 +25,7 @@ class ManageBusinessContextsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ctx = BusinessContext();
-    ctx.id = randomUUID().toString();
+    ctx.id = randomUUID();
     ctx.tenantId = req.tenantId;
     ctx.name = req.name;
     ctx.description = req.description;

@@ -42,7 +42,7 @@ class ProcessInferenceUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto request = InferenceRequest();
-    request.id = randomUUID().toString();
+    request.id = randomUUID();
     request.tenantId = req.tenantId;
     request.deploymentId = req.deploymentId;
     request.inputData = req.inputData;

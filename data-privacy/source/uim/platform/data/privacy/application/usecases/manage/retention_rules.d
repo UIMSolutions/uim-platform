@@ -34,7 +34,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto rule = RetentionRule();
-    rule.id = randomUUID().toString();
+    rule.id = randomUUID();
     rule.tenantId = req.tenantId;
     rule.name = req.name;
     rule.description = req.description;

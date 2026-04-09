@@ -31,7 +31,7 @@ class ManageInformationReportsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = InformationReport();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.dataSubjectId = req.dataSubjectId;
     r.subjectRole = subject.subjectType;

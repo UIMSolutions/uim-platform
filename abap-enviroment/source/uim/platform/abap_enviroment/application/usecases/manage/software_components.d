@@ -40,7 +40,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     if (existing !is null)
       return CommandResult("", "Software component '" ~ req.name ~ "' already exists in this system");
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     SoftwareComponent comp;
     comp.id = randomUUID();
     comp.tenantId = req.tenantId;

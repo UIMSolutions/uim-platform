@@ -34,7 +34,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
       return CommandResult("", "Repository with this name already exists");
 
     auto entity = new Repository();
-    entity.id = randomUUID().toString();
+    entity.id = randomUUID();
     entity.tenantId = r.tenantId;
     entity.name = r.name;
     entity.description = r.description;
