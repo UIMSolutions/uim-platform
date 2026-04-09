@@ -99,14 +99,13 @@ class ManageServicesUseCase : UIMUseCase {
   }
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
-    auto existing = instanceRepo.findById(tenantId, id);
-    if (existing is null)
+    if (!instanceRepo.existsById(tenantId, id))
       return CommandResult("", "Service instance not found");
 
     // Remove all bindings for this instance
     auto bindings = bindingRepo.findByServiceInstance(tenantId, id);
     foreach (b; bindings)
-      bindingRepo.remove(b.tenantId, id);
+      bindingRepo.remove(tenantId, b.id);
 
     instanceRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
@@ -114,29 +113,29 @@ class ManageServicesUseCase : UIMUseCase {
 
   // --- Service Bindings ---
 
-  CommandResult createBinding(CreateServiceBindingRequest req) {
-    if (req.tenantId.isEmpty)
+  CommandResult createBinding(CreateServiceBindingRequest request) {
+    if (request.tenantId.isEmpty)
       return CommandResult("", "Tenant ID is required");
-    if (req.appid.isEmpty)
+    if (request.appId.isEmpty)
       return CommandResult("", "Application ID is required");
-    if (req.serviceInstanceid.isEmpty)
+    if (request.serviceInstanceId.isEmpty)
       return CommandResult("", "Service instance ID is required");
 
     // Verify instance exists
-    auto instance = instanceRepo.findById(req.serviceInstanceId, req.tenantId);
+    auto instance = instanceRepo.findById(request.serviceInstanceId, request.tenantId);
     if (instance is null)
       return CommandResult("", "Service instance not found");
 
     auto binding = ServiceBinding();
     binding.id = randomUUID();
-    binding.appId = req.appId;
-    binding.serviceInstanceId = req.serviceInstanceId;
-    binding.tenantId = req.tenantId;
-    binding.name = req.name.length > 0 ? req.name : instance.serviceName ~ "-binding";
+    binding.appId = request.appId;
+    binding.serviceInstanceId = request.serviceInstanceId;
+    binding.tenantId = request.tenantId;
+    binding.name = request.name.length > 0 ? request.name : instance.serviceName ~ "-binding";
     binding.status = BindingStatus.active;
     binding.credentials = `{"uri":"` ~ instance.serviceName ~ `://localhost","username":"admin"}`;
-    binding.bindingOptions = req.bindingOptions;
-    binding.createdBy = req.createdBy;
+    binding.bindingOptions = request.bindingOptions;
+    binding.createdBy = request.createdBy;
     binding.createdAt = Clock.currStdTime();
 
     bindingRepo.save(binding);
@@ -147,16 +146,16 @@ class ManageServicesUseCase : UIMUseCase {
     return bindingRepo.findByTenant(tenantId);
   }
 
-  ServiceBinding[] listBindingsByApp(AppId apptenantId, id tenantId) {
-    return bindingRepo.findByApp(apptenantId, id);
+  ServiceBinding[] listBindingsByApp(AppId appId, TenantId tenantId) {
+    return bindingRepo.findByApp(appId, tenantId);
   }
 
-  CommandResult deleteBinding(ServiceBindingId tenantId, id tenantId) {
-    auto existing = bindingRepo.findById(tenantId, id);
+  CommandResult deleteBinding(ServiceBindingId bindingId, TenantId tenantId) {
+    auto existing = bindingRepo.findById(bindingId, tenantId);
     if (existing is null)
       return CommandResult("", "Service binding not found");
 
-    bindingRepo.remove(tenantId, id);
-    return CommandResult(true, id.toString, "");
+    bindingRepo.remove(bindingId, tenantId);
+    return CommandResult(true, bindingId.toString, "");
   }
 }
