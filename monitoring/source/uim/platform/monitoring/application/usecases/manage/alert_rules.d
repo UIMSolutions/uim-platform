@@ -56,7 +56,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     rule.updatedAt = rule.createdAt;
 
     repo.save(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
@@ -82,7 +82,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     rule.updatedAt = clockSeconds();
 
     repo.update(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   AlertRule getRule(AlertRuleId id) {
@@ -107,7 +107,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
       return CommandResult(false, "", "Alert rule not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   private static long clockSeconds() {

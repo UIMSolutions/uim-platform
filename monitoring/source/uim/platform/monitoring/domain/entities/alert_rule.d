@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An alert rule that defines thresholds for triggering alerts.
 struct AlertRule {
-  AlertRuleId id;
   TenantId tenantId;
+  AlertRuleId id;
   MonitoredResourceId resourceId;
   string name;
   string description;

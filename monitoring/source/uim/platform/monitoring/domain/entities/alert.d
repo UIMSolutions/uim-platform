@@ -13,8 +13,8 @@ mixin(ShowModule!());
 @safe:
 /// An active or resolved alert triggered by a rule breach.
 struct Alert {
-  AlertId id;
   TenantId tenantId;
+  AlertId id;
   AlertRuleId ruleId;
   MonitoredResourceId resourceId;
   string ruleName;

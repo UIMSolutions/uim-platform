@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.entities.health_check_result;
 
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Result of executing a health check.
 struct HealthCheckResult {
-  HealthCheckResultId id;
   TenantId tenantId;
+  HealthCheckResultId id;
   HealthCheckId checkId;
   MonitoredResourceId resourceId;
   CheckStatus status = CheckStatus.unknown;

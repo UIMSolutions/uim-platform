@@ -70,7 +70,7 @@ class GetDashboardUseCase : UIMUseCase {
     foreach (ref c; checks) {
       if (c.isEnabled) {
         auto latest = checkResultRepo.findLatestByCheck(tenantId, c.id);
-        if (latest.id.length > 0 && (latest.status == CheckStatus.critical
+        if (!latest.id.isEmpty && (latest.status == CheckStatus.critical
             || latest.status == CheckStatus.warning))
           summary.failingChecks++;
       }

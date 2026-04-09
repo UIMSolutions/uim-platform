@@ -5,10 +5,14 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.services.threshold_evaluator;
 
-import uim.platform.monitoring.domain.entities.alert_rule;
-import uim.platform.monitoring.domain.entities.metric;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.alert_rule;
+// import uim.platform.monitoring.domain.entities.metric;
+// import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Result of evaluating a metric against an alert rule.
 struct EvaluationResult {
   bool breached;

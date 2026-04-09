@@ -73,7 +73,7 @@ class ManageMetricsUseCase : UIMUseCase {
     def.isEnabled = req.isEnabled;
 
     definitionRepo.update(def);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   MetricDefinition getDefinition(MetricDefinitionId id) {
@@ -90,7 +90,7 @@ class ManageMetricsUseCase : UIMUseCase {
       return CommandResult(false, "", "Metric definition not found");
 
     definitionRepo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString(), "");
   }
 
   // --- Metric Data Points ---
@@ -101,9 +101,6 @@ class ManageMetricsUseCase : UIMUseCase {
 
     if (req.resourceid.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
-
-    // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
 
     Metric m;
     m.id = randomUUID();
@@ -117,7 +114,7 @@ class ManageMetricsUseCase : UIMUseCase {
     m.timestamp = clockSeconds();
 
     metricRepo.save(m);
-    return CommandResult(true, id, "");
+    return CommandResult(true, m.id.toString(), "");
   }
 
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {

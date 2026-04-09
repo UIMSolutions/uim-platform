@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 
-import uim.platform.monitoring.domain.entities.metric_definition;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.metric_definition;
+// import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - metric definition persistence.
 interface MetricDefinitionRepository {
   MetricDefinition findById(MetricDefinitionId id);
