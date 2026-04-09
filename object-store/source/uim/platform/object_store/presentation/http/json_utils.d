@@ -17,14 +17,6 @@ module uim.platform.object_store.presentation.http.json_utils;
 
 /// Extract an int field from a Json object.
 
-/// Write a JSON error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  j["status"] = Json(cast(long) status);
-  res.writeJsonBody(j, status);
-}
-
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
   // import std.string : indexOf;

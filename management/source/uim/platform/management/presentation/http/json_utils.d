@@ -39,14 +39,6 @@ string[string] jsonStrMap(Json j, string key) {
   return result;
 }
 
-/// Write an error response.
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  j["status"] = Json(cast(long) status);
-  res.writeJsonBody(j, status);
-}
-
 /// Extract the last path segment as ID from a URI.
 string extractId(string uri) {
   // import std.string : lastIndexOf;

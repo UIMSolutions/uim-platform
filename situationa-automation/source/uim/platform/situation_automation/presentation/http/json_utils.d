@@ -81,13 +81,6 @@ string[] jsonStrArray(Json j, string key) {
 }
 
 
-void writeError(scope HTTPServerResponse res, int statusCode, string message) {
-    auto j = Json.emptyObject;
-    j["error"] = Json(message);
-    j["status"] = Json(cast(long) statusCode);
-    res.writeJsonBody(j, statusCode);
-}
-
 string extractIdFromPath(string path) {
     import std.string : lastIndexOf;
 

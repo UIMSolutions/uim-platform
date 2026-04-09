@@ -38,13 +38,6 @@ module uim.platform.kyma.presentation.http.json_utils;
   return result;
 }
  */
-/// Write an error response as JSON.
-// void writeError(scope HTTPServerResponse res, int code, string msg) {
-//   auto j = Json.emptyObject;
-//   j["error"] = Json(msg);
-//   j["code"] = Json(cast(long) code);
-//   res.writeJsonBody(j, cast(ushort) code);
-// }
 
 // /// Extract an ID from the end of a URI path.
 // string extractIdFromPath(string uri) {

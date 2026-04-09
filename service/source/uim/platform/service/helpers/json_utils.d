@@ -195,8 +195,17 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   auto error = Json.emptyObject;
   error["error"] = Json(message);
   error["status"] = Json(status);
+  // j["code"] = Json(cast(long)code);
   res.writeJsonBody(error, status);
 }
+
+/* void writeError(scope HTTPServerResponse res, int status, string message) {
+  auto j = Json.emptyObject;
+  j["error"] = Json.emptyObject;
+  j["error"]["message"] = Json(message);
+  j["error"]["code"] = Json(cast(long) status);
+  res.writeJsonBody(j, status);
+} */
 
 string extractIdFromPath2(string path) {
   import std.string : lastIndexOf;

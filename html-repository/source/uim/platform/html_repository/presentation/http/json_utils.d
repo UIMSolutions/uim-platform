@@ -65,12 +65,6 @@ Json toJsonArray(string[] arr) {
   return jarr;
 }
 
-void writeError(scope HTTPServerResponse res, int status, string message) {
-  auto j = Json.emptyObject;
-  j["error"] = Json(message);
-  res.writeJsonBody(j, status);
-}
-
 string extractIdFromPath(string path) {
   import std.string : lastIndexOf;
 
