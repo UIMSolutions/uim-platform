@@ -75,7 +75,7 @@ class ManageApplicationsUseCase : UIMUseCase {
     app.events = events;
 
     appRepository.save(app);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req) {

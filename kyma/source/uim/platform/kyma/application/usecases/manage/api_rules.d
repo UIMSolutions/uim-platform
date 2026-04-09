@@ -81,7 +81,7 @@ class ManageApiRulesUseCase : UIMUseCase {
     rule.rules = entries;
 
     ruleRepository.save(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {

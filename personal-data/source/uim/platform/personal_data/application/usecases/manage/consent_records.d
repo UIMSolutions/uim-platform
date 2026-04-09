@@ -73,6 +73,6 @@ class ManageConsentRecordsUseCase : UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Consent record not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

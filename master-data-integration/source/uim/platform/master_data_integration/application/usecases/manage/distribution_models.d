@@ -46,7 +46,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     model.modifiedAt = model.createdAt;
 
     repo.save(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateModel(DistributionModelId id, UpdateDistributionModelRequest req) {
@@ -74,7 +74,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     model.modifiedAt = clockSeconds();
 
     repo.update(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult activate(DistributionModelId id) {
@@ -84,7 +84,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     model.status = DistributionModelStatus.active;
     model.modifiedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deactivate(DistributionModelId id) {
@@ -94,7 +94,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     model.status = DistributionModelStatus.inactive;
     model.modifiedAt = clockSeconds();
     repo.update(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   DistributionModel getModel(DistributionModelId id) {
@@ -114,7 +114,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     if (model.id.isEmpty)
       return CommandResult(false, "", "Distribution model not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private DistributionDirection parseDirection(string s) {

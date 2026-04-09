@@ -85,6 +85,6 @@ class ManageActionsUseCase : UIMUseCase {
             return CommandResult(false, "", "Action not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

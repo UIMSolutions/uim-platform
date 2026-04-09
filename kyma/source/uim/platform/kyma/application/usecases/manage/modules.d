@@ -69,7 +69,7 @@ class ManageModulesUseCase : UIMUseCase {
       moduleRepository.update(mod);
     else
       moduleRepository.save(mod);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult disableModule(ModuleId moduleId) {

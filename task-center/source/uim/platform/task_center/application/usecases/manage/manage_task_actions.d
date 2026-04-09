@@ -44,6 +44,6 @@ class ManageTaskActionsUseCase : UIMUseCase {
 
     CommandResult remove(string tenantId, string id) {
         repo.remove(tenantId, id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

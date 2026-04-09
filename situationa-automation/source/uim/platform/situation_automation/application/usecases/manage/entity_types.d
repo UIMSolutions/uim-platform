@@ -73,6 +73,6 @@ class ManageEntityTypesUseCase : UIMUseCase {
             return CommandResult(false, "", "Entity type not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

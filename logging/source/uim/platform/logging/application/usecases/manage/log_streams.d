@@ -57,7 +57,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
     stream.updatedAt = clockSeconds();
 
     repo.update(stream);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   LogStream get_(LogStreamId id) {
@@ -70,7 +70,7 @@ class ManageLogStreamsUseCase : UIMUseCase {
 
   CommandResult remove(LogStreamId id) {
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static LogSourceType parseSourceType(string s) {

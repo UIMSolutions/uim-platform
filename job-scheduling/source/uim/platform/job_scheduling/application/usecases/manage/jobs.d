@@ -100,7 +100,7 @@ class ManageJobsUseCase : UIMUseCase {
             return CommandResult(false, "", "Job not found");
 
         repo.remove(id, tenantId);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     long count(TenantId tenantId) {

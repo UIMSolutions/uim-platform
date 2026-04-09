@@ -75,7 +75,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     inst.technicalKey = "env-" ~ id[0 .. 8];
     repo.update(inst);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
@@ -98,7 +98,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     inst.modifiedAt = clockSeconds();
 
     repo.update(inst);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deprovision(EnvironmentInstanceId id) {
@@ -114,7 +114,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
 
     // Complete deletion
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   EnvironmentInstance getById(EnvironmentInstanceId id) {

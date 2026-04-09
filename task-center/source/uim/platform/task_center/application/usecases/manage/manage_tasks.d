@@ -88,7 +88,7 @@ class ManageTasksUseCase : UIMUseCase {
         t.status = TaskStatus.inProgress;
         t.processor = userId;
         repo.update(tenantId, t);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult release(string tenantId, string id) {
@@ -100,7 +100,7 @@ class ManageTasksUseCase : UIMUseCase {
         t.status = TaskStatus.open;
         t.processor = "";
         repo.update(tenantId, t);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult forward(string tenantId, string id, string toUser, string comment) {
@@ -110,7 +110,7 @@ class ManageTasksUseCase : UIMUseCase {
         t.assignee = toUser;
         t.status = TaskStatus.forwarded;
         repo.update(tenantId, t);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult complete(string tenantId, string id) {
@@ -119,7 +119,7 @@ class ManageTasksUseCase : UIMUseCase {
             return CommandResult(false, "", "Task not found");
         t.status = TaskStatus.completed;
         repo.update(tenantId, t);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult cancel(string tenantId, string id) {
@@ -128,11 +128,11 @@ class ManageTasksUseCase : UIMUseCase {
             return CommandResult(false, "", "Task not found");
         t.status = TaskStatus.cancelled;
         repo.update(tenantId, t);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult remove(string tenantId, string id) {
         repo.remove(tenantId, id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

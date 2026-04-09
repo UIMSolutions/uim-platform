@@ -50,7 +50,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     d.customProperties = req.customProperties;
 
     repo.save(d);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
@@ -69,7 +69,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     d.modifiedAt = clockSeconds();
 
     repo.update(d);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Directory getById(DirectoryId id) {
@@ -91,7 +91,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
     if (d.subaccounts.length > 0 || d.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {

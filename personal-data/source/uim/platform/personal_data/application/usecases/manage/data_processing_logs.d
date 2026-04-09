@@ -63,6 +63,6 @@ class ManageDataProcessingLogsUseCase : UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Log entry not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

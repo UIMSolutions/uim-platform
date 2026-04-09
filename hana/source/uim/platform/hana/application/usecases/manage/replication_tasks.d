@@ -82,7 +82,7 @@ class ManageReplicationTasksUseCase : UIMUseCase {
       return CommandResult(false, "", "Replication task not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(TenantId tenantId) {

@@ -57,7 +57,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     ent.assignedBy = req.assignedBy;
 
     repo.save(ent);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
@@ -70,7 +70,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     ent.quotaRemaining = evaluator.calculateRemaining(req.quotaAssigned, ent.quotaUsed);
     ent.modifiedAt = clockSeconds();
     repo.update(ent);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult revoke(EntitlementId id) {
@@ -81,7 +81,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     ent.status = EntitlementStatus.revoked;
     ent.modifiedAt = clockSeconds();
     repo.update(ent);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Entitlement getById(EntitlementId id) {
@@ -105,6 +105,6 @@ class ManageEntitlementsUseCase : UIMUseCase {
     if (ent.id.isEmpty)
       return CommandResult(false, "", "Entitlement not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

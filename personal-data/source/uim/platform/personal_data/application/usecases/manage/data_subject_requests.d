@@ -95,6 +95,6 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Request not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

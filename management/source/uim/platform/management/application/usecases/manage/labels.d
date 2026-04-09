@@ -41,7 +41,7 @@ class ManageLabelsUseCase : UIMUseCase {
     lbl.modifiedAt = lbl.createdAt;
 
     repo.save(lbl);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult update(LabelId id, UpdateLabelRequest req) {
@@ -52,7 +52,7 @@ class ManageLabelsUseCase : UIMUseCase {
     lbl.values = req.values;
     lbl.modifiedAt = clockSeconds();
     repo.update(lbl);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Label getById(LabelId id) {
@@ -72,7 +72,7 @@ class ManageLabelsUseCase : UIMUseCase {
     if (lbl.id.isEmpty)
       return CommandResult(false, "", "Label not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult removeByResource(string resourceType, string resourceId) {

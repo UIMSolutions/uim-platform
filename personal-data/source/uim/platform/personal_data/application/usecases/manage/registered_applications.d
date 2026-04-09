@@ -92,6 +92,6 @@ class ManageRegisteredApplicationsUseCase : UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Application not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

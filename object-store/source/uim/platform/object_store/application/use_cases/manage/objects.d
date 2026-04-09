@@ -92,7 +92,7 @@ class ManageObjectsUseCase : UIMUseCase {
     bucket.updatedAt = ts;
     bucketRepo.update(bucket);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateObjectMetadata(ObjectId id, UpdateObjectMetadataRequest req) {
@@ -109,7 +109,7 @@ class ManageObjectsUseCase : UIMUseCase {
     obj.updatedAt = currentTimestamp();
 
     objectRepo.update(obj);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   StorageObject getObject(ObjectId id) {
@@ -182,7 +182,7 @@ class ManageObjectsUseCase : UIMUseCase {
       bucketRepo.update(bucket);
     }
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult copyObject(CopyObjectRequest req) {
@@ -223,7 +223,7 @@ class ManageObjectsUseCase : UIMUseCase {
     destBucket.updatedAt = ts;
     bucketRepo.update(destBucket);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

@@ -79,6 +79,6 @@ class ManageAutomationsUseCase : UIMUseCase {
             return CommandResult(false, "", "Automation not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

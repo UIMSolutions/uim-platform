@@ -63,7 +63,7 @@ class ManageDataContextsUseCase : UIMUseCase {
             return CommandResult(false, "", "Data context not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult removePersonalData(TenantId tenantId) {

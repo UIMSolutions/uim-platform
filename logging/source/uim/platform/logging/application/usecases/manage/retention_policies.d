@@ -68,7 +68,7 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
     p.updatedAt = clockSeconds();
 
     repo.update(p);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   RetentionPolicy get_(RetentionPolicyId id) {
@@ -81,7 +81,7 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
 
   CommandResult remove(RetentionPolicyId id) {
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static DataType parseDataType(string s) {

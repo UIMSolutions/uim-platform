@@ -45,7 +45,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
           "Key mapping must have exactly one primary entry and all entries must have local keys");
 
     repo.save(mapping);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateMapping(KeyMappingId id, UpdateKeyMappingRequest req) {
@@ -61,7 +61,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
       return CommandResult(false, "", "Invalid key mapping: must have exactly one primary entry");
 
     repo.update(mapping);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Lookup: given a source client+key, find the target client's key.
@@ -93,7 +93,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
     if (mapping.id.isEmpty)
       return CommandResult(false, "", "Key mapping not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {

@@ -53,7 +53,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     r.lastSeenAt = r.registeredAt;
 
     repo.save(r);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
@@ -76,7 +76,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     r.lastSeenAt = clockSeconds();
 
     repo.update(r);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   MonitoredResource getResource(MonitoredResourceId id) {
@@ -97,7 +97,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
       return CommandResult(false, "", "Resource not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long clockSeconds() {

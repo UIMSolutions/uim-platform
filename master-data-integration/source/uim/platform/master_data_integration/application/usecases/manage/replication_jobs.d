@@ -43,7 +43,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     job.createdBy = req.createdBy;
 
     repo.save(job);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult startJob(ReplicationJobId id) {
@@ -56,7 +56,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     job.status = ReplicationJobStatus.running;
     job.startedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult completeJob(ReplicationJobId id, long successRecords,
@@ -75,7 +75,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     job.lastDeltaToken = deltaToken;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult cancelJob(ReplicationJobId id) {
@@ -85,7 +85,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     job.status = ReplicationJobStatus.cancelled;
     job.completedAt = clockSeconds();
     repo.update(job);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult pauseJob(ReplicationJobId id) {
@@ -96,7 +96,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
       return CommandResult(false, "", "Job can only be paused when running");
     job.status = ReplicationJobStatus.paused;
     repo.update(job);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ReplicationJob getJob(ReplicationJobId id) {
@@ -120,7 +120,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     if (job.id.isEmpty)
       return CommandResult(false, "", "Replication job not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private ReplicationTrigger parseTrigger(string s) {

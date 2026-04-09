@@ -44,7 +44,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     model.modifiedAt = model.createdAt;
 
     repo.save(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateModel(DataModelId id, UpdateDataModelRequest req) {
@@ -65,7 +65,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     model.modifiedAt = clockSeconds();
 
     repo.update(model);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   DataModel getModel(DataModelId id) {
@@ -89,7 +89,7 @@ class ManageDataModelsUseCase : UIMUseCase {
     if (model.id.isEmpty)
       return CommandResult(false, "", "Data model not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {

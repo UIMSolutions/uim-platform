@@ -101,7 +101,7 @@ class ManageAlertsUseCase : UIMUseCase {
       return CommandResult(false, "", "Alert not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(TenantId tenantId) {

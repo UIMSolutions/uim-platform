@@ -57,7 +57,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     env.modifiedAt = env.createdAt;
 
     repo.save(env);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateEnvironment(KymaEnvironmentId id, UpdateEnvironmentRequest req) {
@@ -84,7 +84,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     env.modifiedAt = clockSeconds();
 
     repo.update(env);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   KymaEnvironment getEnvironment(KymaEnvironmentId id) {
@@ -104,7 +104,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     if (env.id.isEmpty)
       return CommandResult(false, "", "Environment not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private KymaPlan parsePlan(string s) {

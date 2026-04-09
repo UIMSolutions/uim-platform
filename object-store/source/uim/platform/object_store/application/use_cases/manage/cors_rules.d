@@ -47,7 +47,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
     rule.updatedAt = ts;
 
     corsRepo.save(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateRule(CorsRuleId id, UpdateCorsRuleRequest req) {
@@ -68,7 +68,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
     rule.updatedAt = currentTimestamp();
 
     corsRepo.update(rule);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CorsRule getRule(CorsRuleId id) {
@@ -85,7 +85,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
       return CommandResult(false, "", "CORS rule not found");
 
     corsRepo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

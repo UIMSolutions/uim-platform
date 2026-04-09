@@ -56,7 +56,7 @@ class ManageMetricsUseCase : UIMUseCase {
     def.createdAt = clockSeconds();
 
     definitionRepo.save(def);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {

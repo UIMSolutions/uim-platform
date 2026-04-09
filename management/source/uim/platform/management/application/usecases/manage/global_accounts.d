@@ -53,7 +53,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     emitEvent(id, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
@@ -74,7 +74,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     ga.modifiedAt = clockSeconds();
 
     repo.update(ga);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult suspend(GlobalAccountId id) {
@@ -90,7 +90,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
     emitEvent(id, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.suspended", "Global account suspended", "system");
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult reactivate(GlobalAccountId id) {
@@ -103,7 +103,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     ga.status = GlobalAccountStatus.active;
     ga.modifiedAt = clockSeconds();
     repo.update(ga);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   GlobalAccount getById(GlobalAccountId id) {
@@ -123,7 +123,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     if (ga.id.isEmpty)
       return CommandResult(false, "", "Global account not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,

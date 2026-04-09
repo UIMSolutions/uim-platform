@@ -67,7 +67,7 @@ class ManageTaskDefinitionsUseCase : UIMUseCase {
             return CommandResult(false, "", "Task definition not found");
         d.isActive = true;
         repo.update(tenantId, d);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult deactivate(string tenantId, string id) {
@@ -76,11 +76,11 @@ class ManageTaskDefinitionsUseCase : UIMUseCase {
             return CommandResult(false, "", "Task definition not found");
         d.isActive = false;
         repo.update(tenantId, d);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult remove(string tenantId, string id) {
         repo.remove(tenantId, id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

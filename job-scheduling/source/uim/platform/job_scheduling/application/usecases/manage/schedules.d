@@ -110,7 +110,7 @@ class ManageSchedulesUseCase : UIMUseCase {
             return CommandResult(false, "", "Schedule not found");
 
         repo.remove(id, jobId, tenantId);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 
     CommandResult removeAllByJob(JobId jobId, TenantId tenantId) {

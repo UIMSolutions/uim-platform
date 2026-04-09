@@ -68,7 +68,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     emitEvent(req.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
@@ -91,7 +91,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     sub.modifiedAt = clockSeconds();
 
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
@@ -109,7 +109,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     // Complete move
     sub.status = SubaccountStatus.active;
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult suspend(SubaccountId id) {
@@ -122,7 +122,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     sub.status = SubaccountStatus.suspended;
     sub.modifiedAt = clockSeconds();
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult reactivate(SubaccountId id) {
@@ -135,7 +135,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     sub.status = SubaccountStatus.active;
     sub.modifiedAt = clockSeconds();
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Subaccount getById(SubaccountId id) {
@@ -161,7 +161,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     repo.remove(id);
     emitEvent(sub.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ sub.displayName, "system");
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,

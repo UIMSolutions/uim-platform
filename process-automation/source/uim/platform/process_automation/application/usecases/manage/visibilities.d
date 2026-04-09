@@ -77,6 +77,6 @@ class ManageVisibilitiesUseCase : UIMUseCase {
             return CommandResult(false, "", "Visibility dashboard not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

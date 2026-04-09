@@ -54,7 +54,7 @@ class ManageBucketsUseCase : UIMUseCase {
       return CommandResult(false, "", encResult.error);
 
     repo.save(bucket);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateBucket(BucketId id, UpdateBucketRequest req) {
@@ -78,7 +78,7 @@ class ManageBucketsUseCase : UIMUseCase {
       return CommandResult(false, "", encResult.error);
 
     repo.update(bucket);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Bucket getBucket(BucketId id) {
@@ -98,7 +98,7 @@ class ManageBucketsUseCase : UIMUseCase {
       return CommandResult(false, "", "Bucket is not empty");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

@@ -111,6 +111,6 @@ class ManageDataSubjectsUseCase : UIMUseCase {
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Data subject not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

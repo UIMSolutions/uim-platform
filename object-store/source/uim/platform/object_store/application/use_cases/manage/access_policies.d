@@ -50,7 +50,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     policy.updatedAt = ts;
 
     policyRepo.save(policy);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updatePolicy(AccessPolicyId id, UpdateAccessPolicyRequest req) {
@@ -71,7 +71,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
     policy.updatedAt = currentTimestamp();
 
     policyRepo.update(policy);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   AccessPolicy getPolicy(AccessPolicyId id) {
@@ -88,7 +88,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
       return CommandResult(false, "", "Policy not found");
 
     policyRepo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

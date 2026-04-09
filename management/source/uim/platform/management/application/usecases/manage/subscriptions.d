@@ -64,7 +64,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     emitEvent(req.globalAccountId, req.subaccountId, PlatformEventCategory.subscriptionLifecycle,
         "subscription.created", "Subscribed to " ~ req.appName, req.subscribedBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult unsubscribe(SubscriptionId id) {
@@ -85,7 +85,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     emitEvent(sub.globalAccountId, sub.subaccountId, PlatformEventCategory.subscriptionLifecycle,
         "subscription.deleted", "Unsubscribed from " ~ sub.appName, "system");
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
@@ -100,7 +100,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     sub.modifiedAt = clockSeconds();
 
     repo.update(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Subscription getById(SubscriptionId id) {

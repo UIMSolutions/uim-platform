@@ -74,7 +74,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     ch.updatedAt = clockSeconds();
 
     repo.update(ch);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   NotificationChannel get_(NotificationChannelId id) {
@@ -87,7 +87,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
 
   CommandResult remove(NotificationChannelId id) {
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static ChannelType parseChannelType(string s) {

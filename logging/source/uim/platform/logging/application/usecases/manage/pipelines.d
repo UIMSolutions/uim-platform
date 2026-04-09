@@ -81,7 +81,7 @@ class ManagePipelinesUseCase : UIMUseCase {
     }
 
     repo.update(p);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Pipeline get_(PipelineId id) {
@@ -98,7 +98,7 @@ class ManagePipelinesUseCase : UIMUseCase {
 
   CommandResult remove(PipelineId id) {
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static PipelineSourceType parseSourceType(string s) {

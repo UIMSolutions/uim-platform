@@ -86,7 +86,7 @@ class ManageDashboardsUseCase : UIMUseCase {
     }
 
     repo.update(d);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Dashboard get_(DashboardId id) {
@@ -103,7 +103,7 @@ class ManageDashboardsUseCase : UIMUseCase {
 
   CommandResult remove(DashboardId id) {
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static PanelType parsePanelType(string s) {

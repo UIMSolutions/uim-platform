@@ -47,7 +47,7 @@ class ManageClientsUseCase : UIMUseCase {
     client.modifiedAt = client.createdAt;
 
     repo.save(client);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateClient(ClientId id, UpdateClientRequest req) {
@@ -78,7 +78,7 @@ class ManageClientsUseCase : UIMUseCase {
     client.modifiedAt = clockSeconds();
 
     repo.update(client);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult connect(ClientId id) {
@@ -89,7 +89,7 @@ class ManageClientsUseCase : UIMUseCase {
     client.lastSyncAt = clockSeconds();
     client.modifiedAt = client.lastSyncAt;
     repo.update(client);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult disconnect(ClientId id) {
@@ -99,7 +99,7 @@ class ManageClientsUseCase : UIMUseCase {
     client.status = ClientStatus.disconnected;
     client.modifiedAt = clockSeconds();
     repo.update(client);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Client getClient(ClientId id) {
@@ -123,7 +123,7 @@ class ManageClientsUseCase : UIMUseCase {
     if (client.id.isEmpty)
       return CommandResult(false, "", "Client not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private ClientType parseClientType(string s) {

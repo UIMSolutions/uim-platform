@@ -70,7 +70,7 @@ class ManageFunctionsUseCase : UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.save(serverlessFunction);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateFunction(FunctionId functionId, UpdateFunctionRequest req) {

@@ -56,7 +56,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     inst.modifiedAt = inst.createdAt;
 
     repo.save(inst);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
@@ -78,7 +78,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     inst.modifiedAt = clockSeconds();
 
     repo.update(inst);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ServiceInstance getServiceInstance(ServiceInstanceId id) {
@@ -98,7 +98,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     if (inst.id.isEmpty)
       return CommandResult(false, "", "Service instance not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

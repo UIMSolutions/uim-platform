@@ -60,7 +60,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     sub.modifiedAt = sub.createdAt;
 
     subscriptionRepository.save(sub);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {

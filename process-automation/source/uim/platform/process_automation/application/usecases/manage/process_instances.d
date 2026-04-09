@@ -88,6 +88,6 @@ class ManageProcessInstancesUseCase : UIMUseCase {
             return CommandResult(false, "", "Process instance not found");
 
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

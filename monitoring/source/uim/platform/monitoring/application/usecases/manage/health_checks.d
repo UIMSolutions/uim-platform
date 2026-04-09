@@ -70,7 +70,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     }
 
     checkRepo.save(c);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
@@ -96,7 +96,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     c.updatedAt = clockSeconds();
 
     checkRepo.update(c);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult recordResult(RecordCheckResultRequest req) {
@@ -116,7 +116,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     r.executedAt = clockSeconds();
 
     resultRepo.save(r);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   HealthCheck getCheck(HealthCheckId id) {
@@ -149,7 +149,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
       return CommandResult(false, "", "Health check not found");
 
     checkRepo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long clockSeconds() {

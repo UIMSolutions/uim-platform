@@ -83,7 +83,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     ns.modifiedAt = clockSeconds();
 
     namespaceRepository.update(ns);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Namespace getNamespace(NamespaceId namespaceId) {

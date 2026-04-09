@@ -82,7 +82,7 @@ class ManageAlertsUseCase : UIMUseCase {
       return CommandResult(false, "", "Alert not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Create an alert (used by the evaluate_metrics use case).
@@ -109,7 +109,7 @@ class ManageAlertsUseCase : UIMUseCase {
     a.triggeredAt = clockSeconds();
 
     repo.save(a);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long clockSeconds() {
