@@ -23,7 +23,7 @@ class ExportContentUseCase : UIMUseCase {
   private ContentActivityRepository activityRepo;
 
   this(ExportJobRepository exportRepo, ContentPackageRepository packageRepo,
-      ContentActivityRepository activityRepo) {
+    ContentActivityRepository activityRepo) {
     this.exportRepo = exportRepo;
     this.packageRepo = packageRepo;
     this.activityRepo = activityRepo;
@@ -68,7 +68,7 @@ class ExportContentUseCase : UIMUseCase {
     packageRepo.update(pkg);
 
     recordActivity(req.tenantId, ActivityType.exportCompleted, id, pkg.name,
-        "Export completed for package: " ~ pkg.name, req.startedBy);
+      "Export completed for package: " ~ pkg.name, req.startedBy);
 
     return CommandResult(true, id.toString, "");
   }
@@ -86,7 +86,7 @@ class ExportContentUseCase : UIMUseCase {
   }
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
-      string entityId, string entityName, string desc, string by) {
+    string entityId, string entityName, string desc, string by) {
     // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID();
@@ -101,5 +101,4 @@ class ExportContentUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  
 }

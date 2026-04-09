@@ -38,32 +38,29 @@ class ManageMetricsUseCase : UIMUseCase {
     if (existing.id.length > 0)
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
+    MetricDefinition definition;
+    definition.id = randomUUID();
+    definition.tenantId = req.tenantId;
+    definition.name = req.name;
+    definition.displayName = req.displayName.length > 0 ? req.displayName : req.name;
+    definition.description = req.description;
+    definition.category = parseCategory(req.category);
+    definition.unit = parseUnit(req.unit);
+    definition.aggregation = parseAggregation(req.aggregation);
+    definition.isCustom = true;
+    definition.isEnabled = true;
+    definition.createdBy = req.createdBy;
+    definition.createdAt = clockSeconds();
 
-    MetricDefinition def;
-    def.id = randomUUID();
-    def.tenantId = req.tenantId;
-    def.name = req.name;
-    def.displayName = req.displayName.length > 0 ? req.displayName : req.name;
-    def.description = req.description;
-    def.category = parseCategory(req.category);
-    def.unit = parseUnit(req.unit);
-    def.aggregation = parseAggregation(req.aggregation);
-    def.isCustom = true;
-    def.isEnabled = true;
-    def.createdBy = req.createdBy;
-    def.createdAt = clockSeconds();
-
-    definitionRepo.save(def);
-    return CommandResult(true, id.toString, "");
+    definitionRepo.save(definition);
+    return CommandResult(true, definition.id.toString, "");
   }
 
   CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
-    auto def = definitionRepo.findById(id);
-    if (def.id.isEmpty)
+    if (!definitionRepo.existsById(id))
       return CommandResult(false, "", "Metric definition not found");
 
+    auto def = definitionRepo.findById(id);
     if (req.displayName.length > 0)
       def.displayName = req.displayName;
     if (req.description.length > 0)
@@ -85,8 +82,7 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   CommandResult removeDefinition(MetricDefinitionId id) {
-    auto def = definitionRepo.findById(id);
-    if (def.id.isEmpty)
+    if (!definitionRepo.existsById(id))
       return CommandResult(false, "", "Metric definition not found");
 
     definitionRepo.remove(id);
@@ -99,7 +95,7 @@ class ManageMetricsUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    if (req.resourceid.isEmpty)
+    if (req.resourceId.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
 
     Metric m;
@@ -145,7 +141,7 @@ class ManageMetricsUseCase : UIMUseCase {
   Metric[] queryMetrics(QueryMetricsRequest req) {
     if (req.startTime > 0 && req.endTime > 0)
       return metricRepo.findInTimeRange(req.tenantId, req.resourceId,
-          req.metricName, req.startTime, req.endTime);
+        req.metricName, req.startTime, req.endTime);
     if (req.metricName.length > 0 && req.resourceId.length > 0)
       return metricRepo.findByResourceAndName(req.tenantId, req.resourceId, req.metricName);
     if (req.metricName.length > 0)
@@ -154,15 +150,15 @@ class ManageMetricsUseCase : UIMUseCase {
   }
 
   MetricSummary computeSummary(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName, long startTime, long endTime) {
+    string metricName, long startTime, long endTime) {
     auto metrics = metricRepo.findInTimeRange(tenantId, resourceId,
-        metricName, startTime, endTime);
+      metricName, startTime, endTime);
     MetricSummary s;
     s.name = metricName;
     s.resourceId = resourceId;
     s.windowStartTime = startTime;
     s.windowEndTime = endTime;
-    s.dataPointCount = cast(long) metrics.length;
+    s.dataPointCount = cast(long)metrics.length;
 
     if (metrics.length == 0)
       return s;
@@ -178,11 +174,9 @@ class ManageMetricsUseCase : UIMUseCase {
       sum += m.value_;
     }
     s.sumValue = sum;
-    s.avgValue = sum / cast(double) metrics.length;
+    s.avgValue = sum / cast(double)metrics.length;
     return s;
   }
-
-  
 
   private static MetricCategory parseCategory(string s) {
     switch (s) {

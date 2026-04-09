@@ -45,10 +45,10 @@ class ManageAlertsUseCase : UIMUseCase {
   }
 
   CommandResult acknowledgeAlert(AcknowledgeAlertRequest req) {
-    auto alert = repo.findById(req.alertId);
-    if (alert.id.isEmpty)
+    if (!repo.existsById(req.alertId))
       return CommandResult(false, "", "Alert not found");
 
+    auto alert = repo.findById(req.alertId);
     if (alert.state != AlertState.open)
       return CommandResult(false, "", "Alert is not in open state");
 
@@ -57,14 +57,14 @@ class ManageAlertsUseCase : UIMUseCase {
     alert.acknowledgedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, req.alertId, "");
+    return CommandResult(true, req.alertId.toString, "");
   }
 
   CommandResult resolveAlert(ResolveAlertRequest req) {
-    auto alert = repo.findById(req.alertId);
-    if (alert.id.isEmpty)
+    if (!repo.existsById(req.alertId))
       return CommandResult(false, "", "Alert not found");
 
+    auto alert = repo.findById(req.alertId); 
     if (alert.state == AlertState.resolved)
       return CommandResult(false, "", "Alert is already resolved");
 
@@ -73,12 +73,11 @@ class ManageAlertsUseCase : UIMUseCase {
     alert.resolvedAt = clockSeconds();
 
     repo.update(alert);
-    return CommandResult(true, req.alertId, "");
+    return CommandResult(true, req.alertId.toString, "");
   }
 
   CommandResult deleteAlert(AlertId id) {
-    auto alert = repo.findById(id);
-    if (alert.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Alert not found");
 
     repo.remove(id);
