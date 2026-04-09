@@ -8,10 +8,10 @@ module uim.platform.job_scheduling.domain.entities.run_log;
 import uim.platform.job_scheduling.domain.types;
 
 struct RunLog {
+    TenantId tenantId;
     RunLogId id;
     ScheduleId scheduleId;
     JobId jobId;
-    TenantId tenantId;
     RunStatus status;
     string statusMessage;
     int httpStatus;

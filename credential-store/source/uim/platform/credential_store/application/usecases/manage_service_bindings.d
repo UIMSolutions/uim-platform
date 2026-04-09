@@ -22,11 +22,11 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
   ServiceBindingResponse create(CreateServiceBindingRequest r) {
     ServiceBinding binding;
-    binding.id = randomUUID().to!string;
+    binding.id = randomUUID();
     binding.tenantId = r.tenantId;
     binding.name = r.name;
     binding.description = r.description;
-    binding.clientId = randomUUID().to!string;
+    binding.clientId = randomUUID();
     binding.clientSecret = randomUUID().to!string ~ randomUUID().to!string;
     binding.permission = parsePermission(r.permission);
     binding.status = BindingStatus.active;

@@ -25,7 +25,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
       return CommandResult(false, "", "Workspace name is required");
 
     Workspace w;
-    w.id = randomUUID().to!string;
+    w.id = randomUUID();
     w.name = r.name;
     w.description = r.description;
     w.tenantId = r.tenantId;

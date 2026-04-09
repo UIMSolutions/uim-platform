@@ -25,7 +25,7 @@ class ManageConnectionsUseCase : UIMUseCase {
 
   CommandResult create(CreateConnectionRequest r) {
     Connection c;
-    c.id = randomUUID().to!string;
+    c.id = randomUUID();
     c.name = r.name;
     c.url = r.url;
     c.authUrl = r.authUrl;

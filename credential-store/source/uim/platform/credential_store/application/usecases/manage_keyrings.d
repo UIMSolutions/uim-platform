@@ -37,7 +37,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
     // Create keyring credential entry
     Credential cred;
-    cred.id = randomUUID().to!string;
+    cred.id = randomUUID();
     cred.namespaceId = r.namespaceId;
     cred.tenantId = r.tenantId;
     cred.name = r.name;
@@ -55,7 +55,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
     // Create initial version with generated key material
     KeyringVersion ver;
-    ver.id = randomUUID().to!string;
+    ver.id = randomUUID();
     ver.keyringId = cred.id;
     ver.tenantId = r.tenantId;
     ver.versionNumber = 1;
@@ -86,7 +86,7 @@ class ManageKeyringsUseCase : UIMUseCase {
     auto versionCount = versionRepo.countByKeyring(cred.id);
 
     KeyringVersion ver;
-    ver.id = randomUUID().to!string;
+    ver.id = randomUUID();
     ver.keyringId = cred.id;
     ver.tenantId = r.tenantId;
     ver.versionNumber = versionCount + 1;

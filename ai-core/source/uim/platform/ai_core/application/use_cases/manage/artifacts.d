@@ -31,7 +31,7 @@ class ManageArtifactsUseCase : UIMUseCase {
       return CommandResult(false, "", "Resource group ID is required");
 
     Artifact a;
-    a.id = randomUUID().to!string;
+    a.id = randomUUID();
     a.tenantId = r.tenantId;
     a.resourceGroupId = r.resourceGroupId;
     a.scenarioId = r.scenarioId;

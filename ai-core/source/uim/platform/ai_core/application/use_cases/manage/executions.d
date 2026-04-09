@@ -35,7 +35,7 @@ class ManageExecutionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Configuration not found");
 
     Execution e;
-    e.id = randomUUID().to!string;
+    e.id = randomUUID();
     e.tenantId = r.tenantId;
     e.resourceGroupId = r.resourceGroupId;
     e.configurationId = r.configurationId;

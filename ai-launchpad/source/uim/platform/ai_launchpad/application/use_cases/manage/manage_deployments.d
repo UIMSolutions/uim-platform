@@ -22,7 +22,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult create(CreateDeploymentRequest r) {
     Deployment d;
-    d.id = randomUUID().to!string;
+    d.id = randomUUID();
     d.connectionId = r.connectionId;
     d.configurationId = r.configurationId;
     d.resourceGroupId = r.resourceGroupId;

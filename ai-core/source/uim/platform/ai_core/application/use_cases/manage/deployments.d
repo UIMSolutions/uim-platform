@@ -35,7 +35,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
       return CommandResult(false, "", "Configuration not found");
 
     Deployment d;
-    d.id = randomUUID().to!string;
+    d.id = randomUUID();
     d.tenantId = r.tenantId;
     d.resourceGroupId = r.resourceGroupId;
     d.configurationId = r.configurationId;

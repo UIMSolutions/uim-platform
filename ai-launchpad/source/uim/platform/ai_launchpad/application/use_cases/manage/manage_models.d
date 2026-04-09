@@ -24,7 +24,7 @@ class ManageModelsUseCase : UIMUseCase {
     if (r.name.length == 0) return CommandResult(false, "", "Model name is required");
 
     Model m;
-    m.id = randomUUID().to!string;
+    m.id = randomUUID();
     m.connectionId = r.connectionId;
     m.name = r.name;
     m.version_ = r.version_;

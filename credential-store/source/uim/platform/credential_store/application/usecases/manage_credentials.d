@@ -49,7 +49,7 @@ class ManageCredentialsUseCase : UIMUseCase {
     }
 
     Credential cred;
-    cred.id = randomUUID().to!string;
+    cred.id = randomUUID();
     cred.namespaceId = r.namespaceId;
     cred.tenantId = r.tenantId;
     cred.name = r.name;

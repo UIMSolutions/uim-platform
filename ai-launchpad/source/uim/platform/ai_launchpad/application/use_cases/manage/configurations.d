@@ -25,7 +25,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Configuration name is required");
 
     Configuration c;
-    c.id = randomUUID().to!string;
+    c.id = randomUUID();
     c.connectionId = r.connectionId;
     c.scenarioId = r.scenarioId;
     c.executableId = r.executableId;

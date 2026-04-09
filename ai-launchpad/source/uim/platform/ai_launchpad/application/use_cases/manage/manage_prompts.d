@@ -30,7 +30,7 @@ class ManagePromptsUseCase : UIMUseCase {
       return CommandResult(false, "", "Model name is required");
 
     Prompt p;
-    p.id = randomUUID().to!string;
+    p.id = randomUUID();
     p.collectionId = r.collectionId;
     p.name = r.name;
     p.modelName = r.modelName;

@@ -25,7 +25,7 @@ class ManageDatasetsUseCase : UIMUseCase {
       return CommandResult(false, "", "Dataset name is required");
 
     Dataset d;
-    d.id = randomUUID().to!string;
+    d.id = randomUUID();
     d.connectionId = r.connectionId;
     d.name = r.name;
     d.description = r.description;

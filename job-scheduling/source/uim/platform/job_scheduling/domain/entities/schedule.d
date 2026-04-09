@@ -8,9 +8,9 @@ module uim.platform.job_scheduling.domain.entities.schedule;
 import uim.platform.job_scheduling.domain.types;
 
 struct Schedule {
+    TenantId tenantId;
     ScheduleId id;
     JobId jobId;
-    TenantId tenantId;
     string description;
     ScheduleType type;
     ScheduleFormat format;

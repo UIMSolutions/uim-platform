@@ -30,7 +30,7 @@ class ManageNamespacesUseCase : UIMUseCase {
       return CommandResult(false, "", "Namespace already exists");
 
     Namespace ns;
-    ns.id = randomUUID().to!string;
+    ns.id = randomUUID();
     ns.tenantId = r.tenantId;
     ns.name = r.name;
     ns.description = r.description;

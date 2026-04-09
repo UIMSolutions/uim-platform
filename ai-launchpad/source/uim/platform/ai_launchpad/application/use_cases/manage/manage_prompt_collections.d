@@ -25,7 +25,7 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Collection name is required");
 
     PromptCollection pc;
-    pc.id = randomUUID().to!string;
+    pc.id = randomUUID();
     pc.name = r.name;
     pc.description = r.description;
     pc.scenarioId = r.scenarioId;

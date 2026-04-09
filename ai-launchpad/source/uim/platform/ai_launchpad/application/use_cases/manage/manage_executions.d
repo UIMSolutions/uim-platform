@@ -22,7 +22,7 @@ class ManageExecutionsUseCase : UIMUseCase {
 
   CommandResult create(CreateExecutionRequest r) {
     Execution e;
-    e.id = randomUUID().to!string;
+    e.id = randomUUID();
     e.connectionId = r.connectionId;
     e.configurationId = r.configurationId;
     e.resourceGroupId = r.resourceGroupId;
