@@ -14,5 +14,5 @@ interface VisibilityRepository {
     void save(Visibility v);
     void update(Visibility v);
     void remove(VisibilityId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

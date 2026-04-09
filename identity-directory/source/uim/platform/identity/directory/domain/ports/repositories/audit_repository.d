@@ -18,5 +18,5 @@ interface AuditRepository {
       uint offset = 0, uint limit = 100);
   AuditEvent[] findByTimeRange(TenantId tenantId, long from, long to,
       uint offset = 0, uint limit = 100);
-  ulong countByTenant(TenantId tenantId);
+  usize_t countByTenant(TenantId tenantId);
 }

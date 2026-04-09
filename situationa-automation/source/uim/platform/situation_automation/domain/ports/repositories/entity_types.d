@@ -21,5 +21,5 @@ interface EntityTypeRepository {
     void save(EntityType e);
     void update(EntityType e);
     void remove(EntityTypeId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

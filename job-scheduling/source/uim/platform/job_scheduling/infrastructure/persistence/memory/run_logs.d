@@ -50,7 +50,7 @@ class MemoryRunLogRepository : RunLogRepository {
         }
     }
 
-    long countBySchedule(ScheduleId scheduleId) {
+    size_t countBySchedule(ScheduleId scheduleId) {
         return cast(long) store.filter!(r => r.scheduleId == scheduleId).array.length;
     }
 }

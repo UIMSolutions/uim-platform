@@ -17,5 +17,5 @@ interface ClientResourceRepository {
   void save(ClientResource resource);
   void update(ClientResource resource);
   void remove(ClientResourceId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

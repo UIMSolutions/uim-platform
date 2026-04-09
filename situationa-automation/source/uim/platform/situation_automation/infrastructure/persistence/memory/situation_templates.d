@@ -50,7 +50,7 @@ class MemorySituationTemplateRepository : SituationTemplateRepository {
         store = store.filter!(t => t.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(t => t.tenantId == tenantId).array.length;
     }
 }

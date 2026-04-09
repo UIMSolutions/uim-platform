@@ -18,5 +18,5 @@ interface ScheduleRepository {
     void update(Schedule s);
     void remove(ScheduleId id, JobId jobtenantId, id tenantId);
     void removeAllByJob(JobId jobtenantId, id tenantId);
-    long countByJob(JobId jobtenantId, id tenantId);
+    size_t countByJob(JobId jobtenantId, id tenantId);
 }

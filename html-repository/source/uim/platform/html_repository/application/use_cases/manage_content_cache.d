@@ -65,7 +65,7 @@ class ManageContentCacheUseCase : UIMUseCase {
         return repo.findByTenant(tenantId);
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 

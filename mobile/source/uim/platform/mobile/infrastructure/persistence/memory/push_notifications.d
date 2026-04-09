@@ -45,11 +45,11 @@ class MemoryPushNotificationRepository : PushNotificationRepository {
     store.remove(id);
   }
 
-  long countByApp(MobileAppId appId) {
+  size_t countByApp(MobileAppId appId) {
     return cast(long) store.values.filter!(n => n.appId == appId).array.length;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.values.filter!(n => n.tenantId == tenantId).array.length;
   }
 }

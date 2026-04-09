@@ -18,6 +18,6 @@ interface HtmlAppRepository {
   void save(HtmlApp app);
   void update(HtmlApp app);
   void remove(HtmlAppId id);
-  long countByTenant(TenantId tenantId);
-  long countByServiceInstance(ServiceInstanceId instanceId);
+  size_t countByTenant(TenantId tenantId);
+  size_t countByServiceInstance(ServiceInstanceId instanceId);
 }

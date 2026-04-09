@@ -17,6 +17,6 @@ interface UsageReportRepository {
   UsageReport[] findByTenant(TenantId tenantId);
   void save(UsageReport report);
   void remove(UsageReportId id);
-  long countByApp(MobileAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(MobileAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

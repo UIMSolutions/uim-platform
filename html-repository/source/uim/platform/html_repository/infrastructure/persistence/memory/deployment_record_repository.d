@@ -72,8 +72,8 @@ class DeploymentRecordMemoryRepository : DeploymentRecordRepository {
     store = result;
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count = 0;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.tenantId == tenantId) count++;
     }

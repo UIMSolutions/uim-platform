@@ -40,11 +40,11 @@ class MemoryWorkflowRepository : WorkflowRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.createdBy == createdBy).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) findByTenant(tenantId).length;
   }
 
-  long countActiveByTenant(TenantId tenantId) {
+  size_t countActiveByTenant(TenantId tenantId) {
     return cast(long) store.byValue().filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))

@@ -15,8 +15,8 @@ interface WorkflowRepository {
   Workflow[] findByScenario(TenantId tenantId, ScenarioId scenarioId);
   Workflow[] findByStatus(TenantId tenantId, WorkflowStatus status);
   Workflow[] findByCreator(TenantId tenantId, UserId createdBy);
-  long countByTenant(TenantId tenantId);
-  long countActiveByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
+  size_t countActiveByTenant(TenantId tenantId);
   void save(Workflow workflow);
   void update(Workflow workflow);
   void remove(WorkflowId tenantId, id tenantId);

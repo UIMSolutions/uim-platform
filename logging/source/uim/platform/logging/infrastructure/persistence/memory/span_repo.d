@@ -51,7 +51,7 @@ class MemorySpanRepository : SpanRepository {
     store = store.filter!(s => !(s.tenantId == tenantId && s.startTime < beforeTimestamp)).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.filter!(s => s.tenantId == tenantId).array.length;
   }
 }

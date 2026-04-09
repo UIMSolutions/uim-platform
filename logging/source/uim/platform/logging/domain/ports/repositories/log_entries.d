@@ -24,5 +24,5 @@ interface LogEntryRepository {
   void save(LogEntry entry);
   void saveAll(LogEntry[] entries);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

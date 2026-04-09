@@ -72,7 +72,7 @@ class MemoryUserRepository : UserRepository {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId) {
+  usize_t countByTenant(TenantId tenantId) {
     return store.byValue().count!(u => u.tenantId == tenantId);
   }
 }

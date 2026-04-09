@@ -23,5 +23,5 @@ interface DataContextRepository {
     void update(DataContext d);
     void remove(DataContextId id);
     void removeByInstance(SituationInstanceId instanceId);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

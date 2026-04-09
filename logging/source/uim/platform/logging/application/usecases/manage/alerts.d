@@ -90,11 +90,11 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  long countOpen(TenantId tenantId) {
+  size_t countOpen(TenantId tenantId) {
     return repo.countByState(tenantId, AlertState.open);
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 

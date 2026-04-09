@@ -16,5 +16,5 @@ interface OfflineStoreRepository {
   void save(OfflineStore store);
   void update(OfflineStore store);
   void remove(OfflineStoreId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

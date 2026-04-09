@@ -61,8 +61,8 @@ class MemoryGroupRepository : GroupRepository {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId) {
-    ulong count;
+  usize_t countByTenant(TenantId tenantId) {
+    usize_t count;
     foreach (g; store.byValue()) {
       if (g.tenantId == tenantId)
         count++;

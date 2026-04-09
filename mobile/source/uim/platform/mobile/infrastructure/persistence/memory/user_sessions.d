@@ -53,11 +53,11 @@ class MemoryUserSessionRepository : UserSessionRepository {
     store.remove(id);
   }
 
-  long countActive(MobileAppId appId) {
+  size_t countActive(MobileAppId appId) {
     return cast(long) store.values.filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.values.filter!(s => s.tenantId == tenantId).array.length;
   }
 }

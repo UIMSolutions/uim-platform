@@ -53,7 +53,7 @@ class ManageUsageReportsUseCase : UIMUseCase {
         repo.remove(id);
     }
 
-    long countByApp(MobileAppId appId) {
+    size_t countByApp(MobileAppId appId) {
         return repo.countByApp(appId);
     }
 

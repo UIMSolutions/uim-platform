@@ -18,7 +18,7 @@ interface AppFileRepository {
   void update(AppFile file);
   void remove(AppFileId id);
   void removeByVersion(AppVersionId versionId);
-  long countByVersion(AppVersionId versionId);
+  size_t countByVersion(AppVersionId versionId);
   long totalSizeByVersion(AppVersionId versionId);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

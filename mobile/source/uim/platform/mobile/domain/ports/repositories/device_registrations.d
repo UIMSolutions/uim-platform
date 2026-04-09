@@ -17,6 +17,6 @@ interface DeviceRegistrationRepository {
   void save(DeviceRegistration reg);
   void update(DeviceRegistration reg);
   void remove(DeviceRegistrationId id);
-  long countByApp(MobileAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(MobileAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

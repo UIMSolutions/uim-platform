@@ -18,6 +18,6 @@ interface UserSessionRepository {
   void save(UserSession session);
   void update(UserSession session);
   void remove(UserSessionId id);
-  long countActive(MobileAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countActive(MobileAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

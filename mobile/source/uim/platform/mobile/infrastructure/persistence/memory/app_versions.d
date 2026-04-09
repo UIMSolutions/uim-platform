@@ -59,7 +59,7 @@ class MemoryAppVersionRepository : AppVersionRepository {
     store.remove(id);
   }
 
-  long countByApp(MobileAppId appId) {
+  size_t countByApp(MobileAppId appId) {
     return cast(long) store.values.filter!(v => v.appId == appId).array.length;
   }
 }

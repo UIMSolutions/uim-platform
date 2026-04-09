@@ -79,16 +79,16 @@ class HtmlAppMemoryRepository : HtmlAppRepository {
     store = result;
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count = 0;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.tenantId == tenantId) count++;
     }
     return count;
   }
 
-  long countByServiceInstance(ServiceInstanceId instanceId) {
-    long count = 0;
+  size_t countByServiceInstance(ServiceInstanceId instanceId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.serviceInstanceId == instanceId) count++;
     }

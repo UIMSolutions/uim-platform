@@ -66,16 +66,16 @@ class MemoryAlertRepository : AlertRepository {
     store.remove(id);
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count;
     foreach (ref a; store)
       if (a.tenantId == tenantId)
         count++;
     return count;
   }
 
-  long countByState(TenantId tenantId, AlertState state) {
-    long count;
+  size_t countByState(TenantId tenantId, AlertState state) {
+    size_t count;
     foreach (ref a; store)
       if (a.tenantId == tenantId && a.state == state)
         count++;

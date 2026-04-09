@@ -17,5 +17,5 @@ interface FeatureRestrictionRepository {
   void save(FeatureRestriction restriction);
   void update(FeatureRestriction restriction);
   void remove(FeatureRestrictionId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

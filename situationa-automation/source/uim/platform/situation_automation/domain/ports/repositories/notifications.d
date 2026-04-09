@@ -23,5 +23,5 @@ interface NotificationRepository {
     void save(Notification n);
     void update(Notification n);
     void remove(NotificationId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

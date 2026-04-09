@@ -50,7 +50,7 @@ class MemoryArtifactRepository : ArtifactRepository {
         store = store.filter!(a => a.id != id).array;
     }
 
-    long countAll() {
+    size_t countAll() {
         return cast(long) store.length;
     }
 }

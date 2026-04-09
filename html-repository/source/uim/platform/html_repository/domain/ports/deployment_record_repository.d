@@ -17,5 +17,5 @@ interface DeploymentRecordRepository {
   void save(DeploymentRecord record);
   void update(DeploymentRecord record);
   void remove(DeploymentRecordId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

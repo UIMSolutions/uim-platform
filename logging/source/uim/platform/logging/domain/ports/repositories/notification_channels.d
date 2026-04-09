@@ -19,5 +19,5 @@ interface NotificationChannelRepository {
   void save(NotificationChannel ch);
   void update(NotificationChannel ch);
   void remove(NotificationChannelId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -49,7 +49,7 @@ class MemoryOfflineStoreRepository : OfflineStoreRepository {
     store.remove(id);
   }
 
-  long countByApp(MobileAppId appId) {
+  size_t countByApp(MobileAppId appId) {
     return cast(long) store.values.filter!(s => s.appId == appId).array.length;
   }
 }

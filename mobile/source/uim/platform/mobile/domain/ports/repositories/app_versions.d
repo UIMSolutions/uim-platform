@@ -17,5 +17,5 @@ interface AppVersionRepository {
   void save(AppVersion ver);
   void update(AppVersion ver);
   void remove(AppVersionId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

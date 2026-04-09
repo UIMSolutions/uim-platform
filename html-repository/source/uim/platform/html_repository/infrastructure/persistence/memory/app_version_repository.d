@@ -78,16 +78,16 @@ class AppVersionMemoryRepository : AppVersionRepository {
     store = result;
   }
 
-  long countByApp(HtmlAppId appId) {
-    long count = 0;
+  size_t countByApp(HtmlAppId appId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.appId == appId) count++;
     }
     return count;
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count = 0;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.tenantId == tenantId) count++;
     }

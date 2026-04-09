@@ -49,11 +49,11 @@ class MemoryUsageReportRepository : UsageReportRepository {
     store.remove(id);
   }
 
-  long countByApp(MobileAppId appId) {
+  size_t countByApp(MobileAppId appId) {
     return cast(long) store.values.filter!(r => r.appId == appId).array.length;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.values.filter!(r => r.tenantId == tenantId).array.length;
   }
 }

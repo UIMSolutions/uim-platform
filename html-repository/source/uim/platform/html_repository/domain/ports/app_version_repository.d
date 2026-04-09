@@ -17,6 +17,6 @@ interface AppVersionRepository {
   void save(AppVersion ver);
   void update(AppVersion ver);
   void remove(AppVersionId id);
-  long countByApp(HtmlAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(HtmlAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -19,5 +19,5 @@ interface DashboardRepository {
   void save(Dashboard d);
   void update(Dashboard d);
   void remove(DashboardId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -16,6 +16,6 @@ interface PushNotificationRepository {
   void save(PushNotification notif);
   void update(PushNotification notif);
   void remove(PushNotificationId id);
-  long countByApp(MobileAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(MobileAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

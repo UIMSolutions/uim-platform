@@ -21,6 +21,6 @@ interface AlertRepository {
   void save(Alert a);
   void update(Alert a);
   void remove(AlertId id);
-  long countByTenant(TenantId tenantId);
-  long countByState(TenantId tenantId, AlertState state);
+  size_t countByTenant(TenantId tenantId);
+  size_t countByState(TenantId tenantId, AlertState state);
 }

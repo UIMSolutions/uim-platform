@@ -46,7 +46,7 @@ class MemoryDashboardRepository : DashboardRepository {
         store = store.filter!(d => d.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(d => d.tenantId == tenantId).array.length;
     }
 }

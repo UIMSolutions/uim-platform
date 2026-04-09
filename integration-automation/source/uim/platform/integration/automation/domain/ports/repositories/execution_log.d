@@ -15,7 +15,7 @@ interface ExecutionLogRepository {
   ExecutionLog[] findByTenant(TenantId tenantId);
   ExecutionLog[] findByOutcome(TenantId tenantId, ExecutionOutcome outcome);
   ExecutionLog[] findByTimeRange(TenantId tenantId, long timeFrom, long timeTo);
-  long countByWorkflow(WorkflowId workflowtenantId, id tenantId);
+  size_t countByWorkflow(WorkflowId workflowtenantId, id tenantId);
   void save(ExecutionLog log);
   void removeByWorkflow(WorkflowId workflowtenantId, id tenantId);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);

@@ -88,19 +88,19 @@ class MemoryJobRepository : JobRepository {
         }
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
             return cast(long)(*t).length;
         return 0;
     }
 
-    long countActiveByTenant(TenantId tenantId) {
+    size_t countActiveByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
             return cast(long)(*t).filter!(j => j.active).array.length;
         return 0;
     }
 
-    long countInactiveByTenant(TenantId tenantId) {
+    size_t countInactiveByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
             return cast(long)(*t).filter!(j => !j.active).array.length;
         return 0;

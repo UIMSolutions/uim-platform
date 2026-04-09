@@ -69,8 +69,8 @@ class MemorySiteRepository : SiteRepository {
     store.remove(id);
   }
 
-  ulong countByTenant(TenantId tenantId) {
-    ulong count;
+  usize_t countByTenant(TenantId tenantId) {
+    usize_t count;
     foreach (s; store.byValue()) {
       if (s.tenantId == tenantId)
         count++;

@@ -15,5 +15,5 @@ interface DecisionRepository {
     void save(Decision d);
     void update(Decision d);
     void remove(DecisionId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

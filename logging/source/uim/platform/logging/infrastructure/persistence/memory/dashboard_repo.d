@@ -49,8 +49,8 @@ class MemoryDashboardRepository : DashboardRepository {
     store.remove(id);
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count;
     foreach (ref d; store)
       if (d.tenantId == tenantId)
         count++;

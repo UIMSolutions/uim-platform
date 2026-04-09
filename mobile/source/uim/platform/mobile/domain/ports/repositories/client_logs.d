@@ -16,6 +16,6 @@ interface ClientLogRepository {
   ClientLogEntry[] findByTenant(TenantId tenantId);
   void save(ClientLogEntry entry);
   void remove(ClientLogEntryId id);
-  long countByApp(MobileAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(MobileAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

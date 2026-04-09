@@ -17,7 +17,7 @@ interface JobRepository : ITenantRepository!(Job, JobId) {
     Job findByName(TenantId tenantId, string name);
     Job[] findByStatus(TenantId tenantId, JobStatus status);
     Job[] search(TenantId tenantId, string query);
-    long countByTenant(TenantId tenantId);
-    long countActiveByTenant(TenantId tenantId);
-    long countInactiveByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
+    size_t countActiveByTenant(TenantId tenantId);
+    size_t countInactiveByTenant(TenantId tenantId);
 }

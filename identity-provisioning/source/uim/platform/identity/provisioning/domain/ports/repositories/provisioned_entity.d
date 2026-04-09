@@ -16,7 +16,7 @@ interface ProvisionedEntityRepository {
   ProvisionedEntity[] findByTarget(TargetSystemId targettenantId, id tenantId);
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status);
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType);
-  long countByTarget(TargetSystemId targettenantId, id tenantId);
+  size_t countByTarget(TargetSystemId targettenantId, id tenantId);
   void save(ProvisionedEntity entity);
   void update(ProvisionedEntity entity);
   void remove(ProvisionedEntityId tenantId, id tenantId);

@@ -16,5 +16,5 @@ interface ProcessInstanceRepository {
     void save(ProcessInstance i);
     void update(ProcessInstance i);
     void remove(ProcessInstanceId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

@@ -17,5 +17,5 @@ interface ServiceInstanceRepository {
   void save(ServiceInstance instance);
   void update(ServiceInstance instance);
   void remove(ServiceInstanceId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

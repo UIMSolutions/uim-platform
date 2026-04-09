@@ -21,5 +21,5 @@ interface SiteRepository {
   void save(Site site);
   void update(Site site);
   void remove(SiteId id);
-  ulong countByTenant(TenantId tenantId);
+  usize_t countByTenant(TenantId tenantId);
 }

@@ -17,5 +17,5 @@ interface PushRegistrationRepository {
   void save(PushRegistration reg);
   void update(PushRegistration reg);
   void remove(PushRegistrationId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

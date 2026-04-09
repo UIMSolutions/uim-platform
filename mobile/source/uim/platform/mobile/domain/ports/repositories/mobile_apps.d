@@ -16,5 +16,5 @@ interface MobileAppRepository {
   void save(MobileApp app);
   void update(MobileApp app);
   void remove(MobileAppId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

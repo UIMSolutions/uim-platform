@@ -54,7 +54,7 @@ class MemoryNotificationRepository : NotificationRepository {
         store = store.filter!(n => n.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(n => n.tenantId == tenantId).array.length;
     }
 }

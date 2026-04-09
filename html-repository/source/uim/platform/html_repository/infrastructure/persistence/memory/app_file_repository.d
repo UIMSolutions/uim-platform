@@ -79,8 +79,8 @@ class AppFileMemoryRepository : AppFileRepository {
     store = result;
   }
 
-  long countByVersion(AppVersionId versionId) {
-    long count = 0;
+  size_t countByVersion(AppVersionId versionId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.versionId == versionId) count++;
     }
@@ -95,8 +95,8 @@ class AppFileMemoryRepository : AppFileRepository {
     return total;
   }
 
-  long countByTenant(TenantId tenantId) {
-    long count = 0;
+  size_t countByTenant(TenantId tenantId) {
+    size_t count = 0;
     foreach (e; store) {
       if (e.tenantId == tenantId) count++;
     }

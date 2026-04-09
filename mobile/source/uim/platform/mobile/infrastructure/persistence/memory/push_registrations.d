@@ -58,7 +58,7 @@ class MemoryPushRegistrationRepository : PushRegistrationRepository {
     store.remove(id);
   }
 
-  long countByApp(MobileAppId appId) {
+  size_t countByApp(MobileAppId appId) {
     return cast(long) store.values.filter!(r => r.appId == appId).array.length;
   }
 }

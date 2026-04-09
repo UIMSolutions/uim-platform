@@ -21,5 +21,5 @@ interface SpanRepository {
   void save(Span s);
   void saveAll(Span[] spans);
   void removeOlderThan(TenantId tenantId, long beforeTimestamp);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

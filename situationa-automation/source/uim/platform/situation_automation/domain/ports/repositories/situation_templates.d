@@ -22,5 +22,5 @@ interface SituationTemplateRepository {
     void save(SituationTemplate t);
     void update(SituationTemplate t);
     void remove(SituationTemplateId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

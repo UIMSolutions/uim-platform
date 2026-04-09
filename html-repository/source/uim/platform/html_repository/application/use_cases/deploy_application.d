@@ -78,7 +78,7 @@ class DeployApplicationUseCase : UIMUseCase {
         return deploymentRepo.findByTenant(tenantId);
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return deploymentRepo.countByTenant(tenantId);
     }
 

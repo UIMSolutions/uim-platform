@@ -18,6 +18,6 @@ interface ContentCacheRepository {
   void update(ContentCache cache);
   void remove(ContentCacheId id);
   void removeExpired(long currentTime);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
   long totalSizeByTenant(TenantId tenantId);
 }

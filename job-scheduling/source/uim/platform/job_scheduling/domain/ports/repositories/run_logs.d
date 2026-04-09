@@ -15,5 +15,5 @@ interface RunLogRepository {
     RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId);
     void save(RunLog r);
     void update(RunLog r);
-    long countBySchedule(ScheduleId scheduleId);
+    size_t countBySchedule(ScheduleId scheduleId);
 }

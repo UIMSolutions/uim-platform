@@ -45,7 +45,7 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
     }).array;
   }
 
-  long countByWorkflow(WorkflowId workflowtenantId, id tenantId) {
+  size_t countByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     return cast(long) findByWorkflow(workflowtenantId, id).length;
   }
 

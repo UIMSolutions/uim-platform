@@ -46,7 +46,7 @@ class MemoryEntityTypeRepository : EntityTypeRepository {
         store = store.filter!(e => e.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(e => e.tenantId == tenantId).array.length;
     }
 }

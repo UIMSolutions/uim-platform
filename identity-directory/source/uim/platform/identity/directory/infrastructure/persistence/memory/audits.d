@@ -41,8 +41,8 @@ class MemoryAuditRepository : AuditRepository {
         && e.timestamp >= from && e.timestamp <= to, offset, limit);
   }
 
-  ulong countByTenant(TenantId tenantId) {
-    ulong count;
+  usize_t countByTenant(TenantId tenantId) {
+    usize_t count;
     foreach (e; store) {
       if (e.tenantId == tenantId)
         count++;

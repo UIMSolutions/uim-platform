@@ -15,5 +15,5 @@ interface TriggerRepository {
     void save(Trigger t);
     void update(Trigger t);
     void remove(TriggerId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

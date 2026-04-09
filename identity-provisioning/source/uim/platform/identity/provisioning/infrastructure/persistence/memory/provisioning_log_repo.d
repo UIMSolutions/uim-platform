@@ -70,16 +70,16 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  long countByJob(ProvisioningJobId jobtenantId, id tenantId) {
-    long count;
+  size_t countByJob(ProvisioningJobId jobtenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
         count++;
     return count;
   }
 
-  long countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status) {
-    long count;
+  size_t countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status) {
+    size_t count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId && e.status == status)
         count++;

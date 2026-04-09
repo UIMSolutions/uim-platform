@@ -15,5 +15,5 @@ interface FormRepository {
     void save(Form f);
     void update(Form f);
     void remove(FormId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

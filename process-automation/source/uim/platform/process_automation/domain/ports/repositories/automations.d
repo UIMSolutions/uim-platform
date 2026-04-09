@@ -15,5 +15,5 @@ interface AutomationRepository {
     void save(Automation a);
     void update(Automation a);
     void remove(AutomationId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

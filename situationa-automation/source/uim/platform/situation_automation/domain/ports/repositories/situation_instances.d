@@ -23,6 +23,6 @@ interface SituationInstanceRepository {
     void save(SituationInstance i);
     void update(SituationInstance i);
     void remove(SituationInstanceId id);
-    long countByTenant(TenantId tenantId);
-    long countByStatus(TenantId tenantId, InstanceStatus status);
+    size_t countByTenant(TenantId tenantId);
+    size_t countByStatus(TenantId tenantId, InstanceStatus status);
 }

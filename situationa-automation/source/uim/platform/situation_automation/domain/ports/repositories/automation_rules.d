@@ -22,5 +22,5 @@ interface AutomationRuleRepository {
     void save(AutomationRule r);
     void update(AutomationRule r);
     void remove(AutomationRuleId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

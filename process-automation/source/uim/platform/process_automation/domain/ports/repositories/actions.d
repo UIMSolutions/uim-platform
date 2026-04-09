@@ -15,5 +15,5 @@ interface ActionRepository {
     void save(Action a);
     void update(Action a);
     void remove(ActionId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

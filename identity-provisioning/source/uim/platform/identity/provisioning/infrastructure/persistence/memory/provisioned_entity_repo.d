@@ -80,8 +80,8 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
     return result;
   }
 
-  long countByTarget(TargetSystemId targettenantId, id tenantId) {
-    long count;
+  size_t countByTarget(TargetSystemId targettenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
         count++;

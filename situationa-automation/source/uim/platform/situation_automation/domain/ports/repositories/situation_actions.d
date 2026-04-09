@@ -21,5 +21,5 @@ interface SituationActionRepository {
     void save(SituationAction a);
     void update(SituationAction a);
     void remove(SituationActionId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

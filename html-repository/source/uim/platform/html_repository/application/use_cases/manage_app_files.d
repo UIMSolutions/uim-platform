@@ -81,7 +81,7 @@ class ManageAppFilesUseCase : UIMUseCase {
         repo.remove(id);
     }
 
-    long countByVersion(AppVersionId versionId) {
+    size_t countByVersion(AppVersionId versionId) {
         return repo.countByVersion(versionId);
     }
 

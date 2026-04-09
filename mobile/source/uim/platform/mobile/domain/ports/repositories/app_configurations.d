@@ -17,5 +17,5 @@ interface AppConfigurationRepository {
   void save(AppConfiguration config);
   void update(AppConfiguration config);
   void remove(AppConfigurationId id);
-  long countByApp(MobileAppId appId);
+  size_t countByApp(MobileAppId appId);
 }

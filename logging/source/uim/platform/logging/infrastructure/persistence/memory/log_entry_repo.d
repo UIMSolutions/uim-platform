@@ -67,7 +67,7 @@ class MemoryLogEntryRepository : LogEntryRepository {
     store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.filter!(e => e.tenantId == tenantId).array.length;
   }
 }

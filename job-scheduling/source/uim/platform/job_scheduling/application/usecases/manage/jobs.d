@@ -103,15 +103,15 @@ class ManageJobsUseCase : UIMUseCase {
         return CommandResult(true, id.toString, "");
     }
 
-    long count(TenantId tenantId) {
+    size_t count(TenantId tenantId) {
         return repo.countByTenant(tenantId);
     }
 
-    long countActive(TenantId tenantId) {
+    size_t countActive(TenantId tenantId) {
         return repo.countActiveByTenant(tenantId);
     }
 
-    long countInactive(TenantId tenantId) {
+    size_t countInactive(TenantId tenantId) {
         return repo.countInactiveByTenant(tenantId);
     }
 

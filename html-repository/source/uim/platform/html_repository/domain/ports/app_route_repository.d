@@ -16,6 +16,6 @@ interface AppRouteRepository {
   void save(AppRoute route);
   void update(AppRoute route);
   void remove(AppRouteId id);
-  long countByApp(HtmlAppId appId);
-  long countByTenant(TenantId tenantId);
+  size_t countByApp(HtmlAppId appId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -17,5 +17,5 @@ interface TaskRepository {
     void save(Task t);
     void update(Task t);
     void remove(TaskId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }
