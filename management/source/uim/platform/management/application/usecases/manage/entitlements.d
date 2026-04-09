@@ -35,10 +35,6 @@ class ManageEntitlementsUseCase : UIMUseCase {
     foreach (ref e; existing)
       currentlyAssigned += e.quotaAssigned;
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     Entitlement ent;
     ent.id = randomUUID();
     ent.globalAccountId = req.globalAccountId;

@@ -22,9 +22,6 @@ class ManageClientsUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Client name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     Client client;
     client.id = randomUUID();
     client.tenantId = req.tenantId;

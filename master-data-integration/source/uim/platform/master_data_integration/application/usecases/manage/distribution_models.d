@@ -24,9 +24,6 @@ class ManageDistributionModelsUseCase : UIMUseCase {
     if (req.sourceClientid.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     DistributionModel model;
     model.id = randomUUID();
     model.tenantId = req.tenantId;

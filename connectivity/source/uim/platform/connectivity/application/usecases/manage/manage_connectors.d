@@ -35,8 +35,6 @@ class ManageConnectorsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID();
-
     CloudConnector cc;
     cc.id = randomUUID();
     cc.subaccountId = req.subaccountId;

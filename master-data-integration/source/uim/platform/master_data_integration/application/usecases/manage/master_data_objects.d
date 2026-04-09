@@ -28,9 +28,6 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     MasterDataObject obj;
     obj.id = randomUUID();
     obj.tenantId = req.tenantId;

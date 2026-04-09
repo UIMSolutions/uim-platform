@@ -38,9 +38,6 @@ class ImportContentUseCase : UIMUseCase {
     if (pkg.id.isEmpty)
       return CommandResult(false, "", "Package not found");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     ImportJob job;
     job.id = randomUUID();
     job.tenantId = req.tenantId;

@@ -75,8 +75,7 @@ class ManagePagesUseCase : UIMUseCase {
   }
 
   string deletePage(PageId pageId, SiteId siteId) {
-    auto page = pageRepo.findById(pageId);
-    if (page == Page.init)
+    if (!pageRepo.exitsById(pageId))
       return "Page not found";
 
     pageRepo.remove(pageId);

@@ -27,7 +27,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   CommandResult createComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Component name is required");
-    if (req.systemInstanceid.isEmpty)
+    if (req.systemInstanceId.isEmpty)
       return CommandResult("", "System instance ID is required");
 
     auto system = systemRepo.findById(req.systemInstanceId);
@@ -40,7 +40,6 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     if (existing !is null)
       return CommandResult("", "Software component '" ~ req.name ~ "' already exists in this system");
 
-    auto id = randomUUID();
     SoftwareComponent comp;
     comp.id = randomUUID();
     comp.tenantId = req.tenantId;

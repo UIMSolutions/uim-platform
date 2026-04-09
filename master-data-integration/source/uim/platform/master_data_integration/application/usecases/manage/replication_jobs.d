@@ -24,9 +24,6 @@ class ManageReplicationJobsUseCase : UIMUseCase {
     if (req.sourceClientid.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     ReplicationJob job;
     job.id = randomUUID();
     job.tenantId = req.tenantId;

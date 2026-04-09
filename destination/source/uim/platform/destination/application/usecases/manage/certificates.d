@@ -36,9 +36,6 @@ class ManageCertificatesUseCase : UIMUseCase {
     if (!existing.id.isEmpty)
       return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     Certificate c;
     c.id = randomUUID();
     c.tenantId = req.tenantId;

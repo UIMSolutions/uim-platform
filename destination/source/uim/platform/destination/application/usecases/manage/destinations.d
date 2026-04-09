@@ -37,9 +37,6 @@ class ManageDestinationsUseCase : UIMUseCase {
       return CommandResult(false, "",
           "Destination '" ~ req.name ~ "' already exists in this subaccount");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     Destination d;
     d.id = randomUUID();
     d.tenantId = req.tenantId;

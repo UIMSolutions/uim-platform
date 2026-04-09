@@ -24,10 +24,6 @@ class ManageServicePlansUseCase : UIMUseCase {
     if (req.planName.length == 0)
       return CommandResult(false, "", "Plan name is required");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     ServicePlan plan;
     plan.id = randomUUID();
     plan.serviceName = req.serviceName;

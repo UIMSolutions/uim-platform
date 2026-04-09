@@ -26,10 +26,6 @@ class ManageLabelsUseCase : UIMUseCase {
     if (req.values.length == 0)
       return CommandResult(false, "", "At least one label value is required");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     Label lbl;
     lbl.id = randomUUID();
     lbl.resourceType = parseResourceType(req.resourceType);

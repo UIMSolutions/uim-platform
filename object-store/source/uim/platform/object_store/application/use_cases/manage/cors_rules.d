@@ -29,11 +29,6 @@ class ManageCorsRulesUseCase : UIMUseCase {
     if (bucket is null || bucket.id.isEmpty)
       return CommandResult(false, "", "Bucket not found");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-    auto ts = currentTimestamp();
-
     auto rule = new CorsRule();
     rule.id = randomUUID();
     rule.tenantId = req.tenantId;
@@ -43,8 +38,8 @@ class ManageCorsRulesUseCase : UIMUseCase {
     rule.allowedHeaders = req.allowedHeaders;
     rule.exposedHeaders = req.exposedHeaders;
     rule.maxAgeSeconds = req.maxAgeSeconds > 0 ? req.maxAgeSeconds : 3600;
-    rule.createdAt = ts;
-    rule.updatedAt = ts;
+    rule.createdAt = currentTimestamp();
+    rule.updatedAt = rule.createdAt;
 
     corsRepo.save(rule);
     return CommandResult(true, id.toString, "");

@@ -37,10 +37,6 @@ class ManageSubaccountsUseCase : UIMUseCase {
     if (existing.id.length > 0)
       return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     Subaccount sub;
     sub.id = randomUUID();
     sub.globalAccountId = req.globalAccountId;

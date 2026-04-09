@@ -35,10 +35,6 @@ class ManageSubscriptionsUseCase : UIMUseCase {
         return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
     }
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     Subscription sub;
     sub.id = randomUUID();
     sub.subaccountId = req.subaccountId;
