@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.application.usecases.manage.notification_channels;
+module uim.platform.monitoring.application.usecases.manage.manage_notification_channels;
 
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.notification_channel;
-import uim.platform.monitoring.domain.ports.repositories.notification_channels;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.notification_channel;
+// import uim.platform.monitoring.domain.ports.repositories.notification_channels;
+// import uim.platform.monitoring.domain.types;
 
-// import std.conv : to;
+// // import std.conv : to;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for notification channel CRUD (email, webhook, on-premise).
 class ManageNotificationChannelsUseCase : UIMUseCase {
   private NotificationChannelRepository repo;

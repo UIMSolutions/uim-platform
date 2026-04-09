@@ -4,18 +4,102 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.monitoring.domain.types;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Unique identifier type aliases for type safety.
-alias MetricId = string;
-alias MetricDefinitionId = string;
-alias HealthCheckId = string;
-alias HealthCheckResultId = string;
-alias AlertRuleId = string;
-alias AlertId = string;
-alias NotificationChannelId = string;
-alias MonitoredResourceId = string;
+struct MetricId {
+  string value;
 
-alias SubaccountId = string;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+///
+unittest {
+  auto id1 = MetricId("metric-123");
+  auto id2 = MetricId("metric-123");
+  auto id3 = MetricId("metric-456");
+
+  assert(id1 == id2);
+  assert(id1 != id3);
+} 
+struct MetricDefinitionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct HealthCheckId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct HealthCheckResultId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct AlertRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct AlertId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct NotificationChannelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct MonitoredResourceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Type of monitored resource.
 enum ResourceType {

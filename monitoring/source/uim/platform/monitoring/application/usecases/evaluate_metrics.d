@@ -6,15 +6,19 @@
 module uim.platform.monitoring.application.usecases.evaluate_metrics;
 
 import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.alert_rule;
-import uim.platform.monitoring.domain.entities.metric;
-import uim.platform.monitoring.domain.ports.repositories.alert_rules;
-import uim.platform.monitoring.domain.ports.repositories.metrics;
-import uim.platform.monitoring.domain.services.threshold_evaluator;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.alert_rule;
+// import uim.platform.monitoring.domain.entities.metric;
+// import uim.platform.monitoring.domain.ports.repositories.alert_rules;
+// import uim.platform.monitoring.domain.ports.repositories.metrics;
+// import uim.platform.monitoring.domain.services.threshold_evaluator;
+// import uim.platform.monitoring.domain.types;
 
-import uim.platform.monitoring.application.usecases.manage.alerts;
+// import uim.platform.monitoring.application.usecases.manage.alerts;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service: evaluates metrics against alert rules and triggers alerts.
 class EvaluateMetricsUseCase : UIMUseCase {
   private AlertRuleRepository ruleRepo;

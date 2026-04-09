@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.application.usecases.manage.monitored_resources;
+module uim.platform.monitoring.application.usecases.manage.manage_monitored_resources;
 
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.monitored_resource;
+// import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
+// import uim.platform.monitoring.domain.types;
 
-// import std.conv : to;
+// // import std.conv : to;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for monitored resource CRUD operations.
 class ManageMonitoredResourcesUseCase : UIMUseCase {
   private MonitoredResourceRepository repo;

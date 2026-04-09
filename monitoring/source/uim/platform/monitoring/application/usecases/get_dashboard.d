@@ -5,18 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.application.usecases.get_dashboard;
 
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.alert;
-import uim.platform.monitoring.domain.entities.health_check_result;
-import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.ports.repositories.alerts;
-import uim.platform.monitoring.domain.ports.repositories.health_checks;
-import uim.platform.monitoring.domain.ports.repositories.health_check_results;
-import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
-import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
-import uim.platform.monitoring.domain.ports.repositories.notification_channels;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.alert;
+// import uim.platform.monitoring.domain.entities.health_check_result;
+// import uim.platform.monitoring.domain.entities.monitored_resource;
+// import uim.platform.monitoring.domain.ports.repositories.alerts;
+// import uim.platform.monitoring.domain.ports.repositories.health_checks;
+// import uim.platform.monitoring.domain.ports.repositories.health_check_results;
+// import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
+// import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
+// import uim.platform.monitoring.domain.ports.repositories.notification_channels;
+// import uim.platform.monitoring.domain.types;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service: aggregates monitoring data for dashboard overview.
 class GetDashboardUseCase : UIMUseCase {
   private MonitoredResourceRepository resourceRepo;

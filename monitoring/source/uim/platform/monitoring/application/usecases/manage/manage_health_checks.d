@@ -3,18 +3,22 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.application.usecases.manage.health_checks;
+module uim.platform.monitoring.application.usecases.manage.manage_health_checks;
 
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.health_check;
-import uim.platform.monitoring.domain.entities.health_check_result;
-import uim.platform.monitoring.domain.ports.repositories.health_checks;
-import uim.platform.monitoring.domain.ports.repositories.health_check_results;
-import uim.platform.monitoring.domain.services.health_checker;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.health_check;
+// import uim.platform.monitoring.domain.entities.health_check_result;
+// import uim.platform.monitoring.domain.ports.repositories.health_checks;
+// import uim.platform.monitoring.domain.ports.repositories.health_check_results;
+// import uim.platform.monitoring.domain.services.health_checker;
+// import uim.platform.monitoring.domain.types;
 
-// import std.conv : to;
+// // import std.conv : to;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for health check CRUD and result recording.
 class ManageHealthChecksUseCase : UIMUseCase {
   private HealthCheckRepository checkRepo;

@@ -3,17 +3,21 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.application.usecases.manage.metrics;
+module uim.platform.monitoring.application.usecases.manage.manage_metrics;
 
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.metric;
-import uim.platform.monitoring.domain.entities.metric_definition;
-import uim.platform.monitoring.domain.ports.repositories.metrics;
-import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
-import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.metric;
+// import uim.platform.monitoring.domain.entities.metric_definition;
+// import uim.platform.monitoring.domain.ports.repositories.metrics;
+// import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
+// import uim.platform.monitoring.domain.types;
 
-// import std.conv : to;
+// // import std.conv : to;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 /// Application service for metric retrieval, push, and custom metric definitions.
 class ManageMetricsUseCase : UIMUseCase {
   private MetricRepository metricRepo;
