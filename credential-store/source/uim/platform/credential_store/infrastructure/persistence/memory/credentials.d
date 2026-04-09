@@ -53,11 +53,11 @@ class MemoryCredentialRepository : CredentialRepository {
     store.remove(id);
   }
 
-  long countByNamespace(NamespaceId namespaceId) {
+  size_t countByNamespace(NamespaceId namespaceId) {
     return cast(long) store.values.filter!(c => c.namespaceId == namespaceId).array.length;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.values.filter!(c => c.tenantId == tenantId).array.length;
   }
 }

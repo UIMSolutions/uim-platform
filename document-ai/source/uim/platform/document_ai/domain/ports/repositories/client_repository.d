@@ -14,5 +14,5 @@ interface ClientRepository {
   void save(Client c);
   void update(Client c);
   void remove(ClientId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

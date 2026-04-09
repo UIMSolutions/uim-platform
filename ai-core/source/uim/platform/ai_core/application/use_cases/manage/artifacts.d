@@ -104,7 +104,7 @@ class ManageArtifactsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  long count(ResourceGroupId rgId) {
+  size_t count(ResourceGroupId rgId) {
     return repo.countByResourceGroup(rgId);
   }
 }

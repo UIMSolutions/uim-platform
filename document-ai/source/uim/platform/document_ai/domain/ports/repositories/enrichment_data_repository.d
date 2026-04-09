@@ -16,5 +16,5 @@ interface EnrichmentDataRepository {
   void save(EnrichmentData ed);
   void update(EnrichmentData ed);
   void remove(EnrichmentDataId id, ClientId clientId);
-  long countByClient(ClientId clientId);
+  size_t countByClient(ClientId clientId);
 }

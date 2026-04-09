@@ -14,5 +14,5 @@ interface MetricRepository {
   Metric[] findByResourceGroup(ResourceGroupId rgId);
   void save(Metric m);
   void remove(MetricId id, ResourceGroupId rgId);
-  long countByExecution(ExecutionId execId, ResourceGroupId rgId);
+  size_t countByExecution(ExecutionId execId, ResourceGroupId rgId);
 }

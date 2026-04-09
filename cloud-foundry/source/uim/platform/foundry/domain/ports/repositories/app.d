@@ -15,7 +15,7 @@ interface IAppRepository {
   Application* findByName(SpaceId spacetenantId, id tenantId, string name);
   Application[] findByState(SpaceId spacetenantId, id tenantId, AppState state);
   Application[] findByTenant(TenantId tenantId);
-  long countBySpace(SpaceId spacetenantId, id tenantId);
+  size_t countBySpace(SpaceId spacetenantId, id tenantId);
   void save(Application app);
   void update(Application app);
   void remove(AppId tenantId, id tenantId);

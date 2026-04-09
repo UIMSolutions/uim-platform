@@ -15,5 +15,5 @@ interface ConfigurationRepository {
   Configuration[] findByResourceGroup(ResourceGroupId rgId);
   void save(Configuration c);
   void remove(ConfigurationId id, ResourceGroupId rgId);
-  long countByResourceGroup(ResourceGroupId rgId);
+  size_t countByResourceGroup(ResourceGroupId rgId);
 }

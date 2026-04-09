@@ -18,5 +18,5 @@ interface InstanceRepository {
   void save(DatabaseInstance i);
   void update(DatabaseInstance i);
   void remove(InstanceId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

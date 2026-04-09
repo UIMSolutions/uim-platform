@@ -19,5 +19,5 @@ interface HDIContainerRepository {
   void save(HDIContainer c);
   void update(HDIContainer c);
   void remove(HDIContainerId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

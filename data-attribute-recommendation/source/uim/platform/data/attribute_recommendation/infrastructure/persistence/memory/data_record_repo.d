@@ -58,8 +58,8 @@ class MemoryDataRecordRepository : DataRecordRepository {
     return result;
   }
 
-  long countByDataset(DatasetId datasettenantId, id tenantId) {
-    long count;
+  size_t countByDataset(DatasetId datasettenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         count++;

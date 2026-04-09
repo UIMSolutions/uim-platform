@@ -19,5 +19,5 @@ interface ReplicationTaskRepository {
   void save(ReplicationTask t);
   void update(ReplicationTask t);
   void remove(ReplicationTaskId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -15,5 +15,5 @@ interface ScenarioRepository {
   void save(Scenario s);
   void update(Scenario s);
   void remove(ScenarioId id, ResourceGroupId rgId);
-  long countByResourceGroup(ResourceGroupId rgId);
+  size_t countByResourceGroup(ResourceGroupId rgId);
 }

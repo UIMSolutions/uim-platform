@@ -19,5 +19,5 @@ interface DomainMappingRepository {
     void save(DomainMapping m);
     void update(DomainMapping m);
     void remove(DomainMappingId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

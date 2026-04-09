@@ -59,7 +59,7 @@ class MemoryKeyringVersionRepository : KeyringVersionRepository {
     store = store.filter!(v => v.keyringId != keyringId).array;
   }
 
-  long countByKeyring(CredentialId keyringId) {
+  size_t countByKeyring(CredentialId keyringId) {
     return cast(long) store.filter!(v => v.keyringId == keyringId).array.length;
   }
 }

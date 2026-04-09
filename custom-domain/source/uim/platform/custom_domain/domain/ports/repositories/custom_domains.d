@@ -19,5 +19,5 @@ interface CustomDomainRepository {
     void save(CustomDomain d);
     void update(CustomDomain d);
     void remove(CustomDomainId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

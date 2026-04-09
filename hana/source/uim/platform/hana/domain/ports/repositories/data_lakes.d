@@ -19,5 +19,5 @@ interface DataLakeRepository {
   void save(DataLake d);
   void update(DataLake d);
   void remove(DataLakeId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

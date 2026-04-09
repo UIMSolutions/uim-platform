@@ -18,5 +18,5 @@ interface TrustedCertificateRepository {
     void save(TrustedCertificate c);
     void update(TrustedCertificate c);
     void remove(TrustedCertificateId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

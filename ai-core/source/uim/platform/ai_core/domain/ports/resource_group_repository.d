@@ -14,5 +14,5 @@ interface ResourceGroupRepository {
   void save(ResourceGroup rg);
   void update(ResourceGroup rg);
   void remove(ResourceGroupId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

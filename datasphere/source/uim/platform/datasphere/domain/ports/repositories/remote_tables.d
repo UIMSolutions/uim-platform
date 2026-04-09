@@ -15,5 +15,5 @@ interface RemoteTableRepository {
   void save(RemoteTable rt);
   void update(RemoteTable rt);
   void remove(RemoteTableId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

@@ -118,11 +118,11 @@ class ManageCredentialsUseCase : UIMUseCase {
     repo.remove(id);
   }
 
-  long countByNamespace(NamespaceId namespaceId) {
+  size_t countByNamespace(NamespaceId namespaceId) {
     return repo.countByNamespace(namespaceId);
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 

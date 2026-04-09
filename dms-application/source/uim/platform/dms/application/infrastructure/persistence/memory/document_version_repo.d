@@ -47,8 +47,8 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
     return null;
   }
 
-  long countByDocument(DocumentId documenttenantId, id tenantId) {
-    long count;
+  size_t countByDocument(DocumentId documenttenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
         ++count;

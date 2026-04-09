@@ -47,7 +47,7 @@ class RetrieveAuditLogsUseCase : UIMUseCase {
     return repository.findByCorrelation(tenantId, correlationId);
   }
 
-  long count(TenantId tenantId) {
+  size_t count(TenantId tenantId) {
     return repository.countByTenant(tenantId);
   }
 }

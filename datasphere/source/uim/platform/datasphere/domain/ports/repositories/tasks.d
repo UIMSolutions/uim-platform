@@ -16,5 +16,5 @@ interface TaskRepository {
   void save(Task t);
   void update(Task t);
   void remove(TaskId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

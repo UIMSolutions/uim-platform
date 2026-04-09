@@ -17,5 +17,5 @@ interface TemplateRepository {
   void save(Template t);
   void update(Template t);
   void remove(TemplateId id, ClientId clientId);
-  long countByClient(ClientId clientId);
+  size_t countByClient(ClientId clientId);
 }

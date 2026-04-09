@@ -19,5 +19,5 @@ interface SchemaRepository {
   void save(Schema s);
   void update(Schema s);
   void remove(SchemaId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -64,13 +64,13 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
     }
   }
 
-  long countByClient(ClientId clientId) {
+  size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
       return cast(long)(*cl).length;
     return 0;
   }
 
-  long countByStatus(TrainingJobStatus status, ClientId clientId) {
+  size_t countByStatus(TrainingJobStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
       return cast(long)(*cl).filter!(tj => tj.status == status).array.length;
     return 0;

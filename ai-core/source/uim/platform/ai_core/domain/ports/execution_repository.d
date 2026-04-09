@@ -17,6 +17,6 @@ interface ExecutionRepository {
   void save(Execution e);
   void update(Execution e);
   void remove(ExecutionId id, ResourceGroupId rgId);
-  long countByResourceGroup(ResourceGroupId rgId);
-  long countByStatus(ExecutionStatus status, ResourceGroupId rgId);
+  size_t countByResourceGroup(ResourceGroupId rgId);
+  size_t countByStatus(ExecutionStatus status, ResourceGroupId rgId);
 }

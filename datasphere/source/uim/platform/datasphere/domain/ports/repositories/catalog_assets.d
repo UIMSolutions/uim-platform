@@ -16,5 +16,5 @@ interface CatalogAssetRepository {
   void save(CatalogAsset ca);
   void update(CatalogAsset ca);
   void remove(CatalogAssetId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

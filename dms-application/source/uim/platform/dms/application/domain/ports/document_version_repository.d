@@ -16,7 +16,7 @@ interface IDocumentVersionRepository {
   DocumentVersion findById(DocumentVersionId tenantId, id tenantId);
   DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId);
   DocumentVersion findLatest(DocumentId documenttenantId, id tenantId);
-  long countByDocument(DocumentId documenttenantId, id tenantId);
+  size_t countByDocument(DocumentId documenttenantId, id tenantId);
   void save(DocumentVersion ver);
   void update(DocumentVersion ver);
   void remove(DocumentVersionId tenantId, id tenantId);

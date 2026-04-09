@@ -19,5 +19,5 @@ interface DatabaseUserRepository {
   void save(DatabaseUser u);
   void update(DatabaseUser u);
   void remove(DatabaseUserId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

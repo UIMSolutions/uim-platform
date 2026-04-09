@@ -15,5 +15,5 @@ interface ConnectionRepository {
   void save(Connection c);
   void update(Connection c);
   void remove(ConnectionId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

@@ -51,7 +51,7 @@ class MemoryCertificateRepository : CertificateRepository {
         store = store.filter!(c => c.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(c => c.tenantId == tenantId).array.length;
     }
 }

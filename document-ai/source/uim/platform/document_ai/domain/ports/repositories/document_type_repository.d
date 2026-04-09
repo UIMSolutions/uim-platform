@@ -15,5 +15,5 @@ interface DocumentTypeRepository {
   void save(DocumentType dt);
   void update(DocumentType dt);
   void remove(DocumentTypeId id, ClientId clientId);
-  long countByClient(ClientId clientId);
+  size_t countByClient(ClientId clientId);
 }

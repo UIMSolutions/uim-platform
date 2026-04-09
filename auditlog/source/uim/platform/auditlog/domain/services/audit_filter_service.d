@@ -34,7 +34,7 @@ class AuditFilterService {
   }
 
   /// Count total entries for a tenant.
-  long countForTenant(TenantId tenantId) {
+  size_t countForTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

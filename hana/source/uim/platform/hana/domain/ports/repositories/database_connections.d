@@ -19,5 +19,5 @@ interface DatabaseConnectionRepository {
   void save(DatabaseConnection c);
   void update(DatabaseConnection c);
   void remove(DatabaseConnectionId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -16,5 +16,5 @@ interface ExtractionResultRepository {
   void save(ExtractionResult r);
   void update(ExtractionResult r);
   void remove(ExtractionResultId id, ClientId clientId);
-  long countByClient(ClientId clientId);
+  size_t countByClient(ClientId clientId);
 }

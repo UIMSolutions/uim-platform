@@ -70,7 +70,7 @@ class MemoryTemplateRepository : TemplateRepository {
     }
   }
 
-  long countByClient(ClientId clientId) {
+  size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
       return cast(long)(*cl).length;
     return 0;

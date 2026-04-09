@@ -15,5 +15,5 @@ interface ExecutableRepository {
   void save(Executable e);
   void update(Executable e);
   void remove(ExecutableId id, ResourceGroupId rgId);
-  long countByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
+  size_t countByScenario(ScenarioId scenarioId, ResourceGroupId rgId);
 }

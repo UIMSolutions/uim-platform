@@ -85,7 +85,7 @@ class ManageReplicationTasksUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  long count(TenantId tenantId) {
+  size_t count(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

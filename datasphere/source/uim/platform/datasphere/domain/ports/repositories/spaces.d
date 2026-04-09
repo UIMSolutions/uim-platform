@@ -14,5 +14,5 @@ interface SpaceRepository {
   void save(Space s);
   void update(Space s);
   void remove(SpaceId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

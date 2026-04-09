@@ -37,7 +37,7 @@ class MemoryResourceGroupRepository : ResourceGroupRepository {
     store.remove(id);
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.values.filter!(rg => rg.tenantId == tenantId).array.length;
   }
 }

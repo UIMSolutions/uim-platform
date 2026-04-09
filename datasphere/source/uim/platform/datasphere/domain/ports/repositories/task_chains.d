@@ -15,5 +15,5 @@ interface TaskChainRepository {
   void save(TaskChain tc);
   void update(TaskChain tc);
   void remove(TaskChainId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

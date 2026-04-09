@@ -17,5 +17,5 @@ interface TlsConfigurationRepository {
     void save(TlsConfiguration c);
     void update(TlsConfiguration c);
     void remove(TlsConfigurationId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

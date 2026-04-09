@@ -18,8 +18,8 @@ interface IDocumentRepository {
   Document[] findByFolder(FolderId foldertenantId, id tenantId);
   Document[] findByStatus(DocumentStatus status, TenantId tenantId);
   Document[] findByName(string name, TenantId tenantId);
-  long countByRepository(RepositoryId repositorytenantId, id tenantId);
-  long countByFolder(FolderId foldertenantId, id tenantId);
+  size_t countByRepository(RepositoryId repositorytenantId, id tenantId);
+  size_t countByFolder(FolderId foldertenantId, id tenantId);
   void save(Document doc);
   void update(Document doc);
   void remove(DocumentId tenantId, id tenantId);

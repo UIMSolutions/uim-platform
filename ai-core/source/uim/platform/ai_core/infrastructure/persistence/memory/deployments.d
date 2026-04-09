@@ -70,13 +70,13 @@ class MemoryDeploymentRepository : DeploymentRepository {
     }
   }
 
-  long countByResourceGroup(ResourceGroupId rgId) {
+  size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return cast(long)(*rg).length;
     return 0;
   }
 
-  long countByStatus(DeploymentStatus status, ResourceGroupId rgId) {
+  size_t countByStatus(DeploymentStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return cast(long)(*rg).filter!(d => d.status == status).array.length;
     return 0;

@@ -18,5 +18,5 @@ interface DnsRecordRepository {
     void save(DnsRecord r);
     void update(DnsRecord r);
     void remove(DnsRecordId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

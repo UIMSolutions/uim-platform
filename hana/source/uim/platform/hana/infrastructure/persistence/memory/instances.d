@@ -48,7 +48,7 @@ class MemoryInstanceRepository : InstanceRepository {
     store = store.filter!(i => i.id != id).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.filter!(i => i.tenantId == tenantId).array.length;
   }
 }

@@ -17,5 +17,5 @@ interface ArtifactRepository {
   void save(Artifact a);
   void update(Artifact a);
   void remove(ArtifactId id, ResourceGroupId rgId);
-  long countByResourceGroup(ResourceGroupId rgId);
+  size_t countByResourceGroup(ResourceGroupId rgId);
 }

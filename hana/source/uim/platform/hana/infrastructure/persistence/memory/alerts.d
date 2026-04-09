@@ -56,7 +56,7 @@ class MemoryAlertRepository : AlertRepository {
     store = store.filter!(a => a.id != id).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.filter!(a => a.tenantId == tenantId).array.length;
   }
 }

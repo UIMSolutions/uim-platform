@@ -71,7 +71,7 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
     }
   }
 
-  long countBySpace(SpaceId spaceId) {
+  size_t countBySpace(SpaceId spaceId) {
     if (auto sp = spaceId in store)
       return cast(long)(*sp).length;
     return 0;

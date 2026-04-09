@@ -69,7 +69,7 @@ class ManageNamespacesUseCase : UIMUseCase {
     repo.remove(id);
   }
 
-  long count(TenantId tenantId) {
+  size_t count(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 

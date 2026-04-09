@@ -17,5 +17,5 @@ interface KeyringVersionRepository {
   void deactivateAll(CredentialId keyringId);
   void remove(KeyringVersionId id);
   void removeByKeyring(CredentialId keyringId);
-  long countByKeyring(CredentialId keyringId);
+  size_t countByKeyring(CredentialId keyringId);
 }

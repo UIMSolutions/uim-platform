@@ -17,6 +17,6 @@ interface DeploymentRepository {
   void save(Deployment d);
   void update(Deployment d);
   void remove(DeploymentId id, ResourceGroupId rgId);
-  long countByResourceGroup(ResourceGroupId rgId);
-  long countByStatus(DeploymentStatus status, ResourceGroupId rgId);
+  size_t countByResourceGroup(ResourceGroupId rgId);
+  size_t countByStatus(DeploymentStatus status, ResourceGroupId rgId);
 }

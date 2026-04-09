@@ -15,5 +15,5 @@ interface DataFlowRepository {
   void save(DataFlow df);
   void update(DataFlow df);
   void remove(DataFlowId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

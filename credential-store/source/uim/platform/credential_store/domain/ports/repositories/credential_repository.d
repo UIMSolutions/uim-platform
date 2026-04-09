@@ -17,6 +17,6 @@ interface CredentialRepository {
   void save(Credential cred);
   void update(Credential cred);
   void remove(CredentialId id);
-  long countByNamespace(NamespaceId namespaceId);
-  long countByTenant(TenantId tenantId);
+  size_t countByNamespace(NamespaceId namespaceId);
+  size_t countByTenant(TenantId tenantId);
 }

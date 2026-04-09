@@ -70,13 +70,13 @@ class MemoryExecutionRepository : ExecutionRepository {
     }
   }
 
-  long countByResourceGroup(ResourceGroupId rgId) {
+  size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return cast(long)(*rg).length;
     return 0;
   }
 
-  long countByStatus(ExecutionStatus status, ResourceGroupId rgId) {
+  size_t countByStatus(ExecutionStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
       return cast(long)(*rg).filter!(e => e.status == status).array.length;
     return 0;

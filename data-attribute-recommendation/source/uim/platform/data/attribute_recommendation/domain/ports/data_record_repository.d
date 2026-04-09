@@ -12,7 +12,7 @@ interface DataRecordRepository {
   DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId);
   DataRecord* findById(DataRecordId tenantId, id tenantId);
   DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status);
-  long countByDataset(DatasetId datasettenantId, id tenantId);
+  size_t countByDataset(DatasetId datasettenantId, id tenantId);
   void save(DataRecord record);
   void update(DataRecord record);
   void remove(DataRecordId tenantId, id tenantId);

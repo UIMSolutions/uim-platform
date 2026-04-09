@@ -52,7 +52,7 @@ class MemorySchemaRepository : SchemaRepository {
     store = store.filter!(s => s.id != id).array;
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return cast(long) store.filter!(s => s.tenantId == tenantId).array.length;
   }
 }

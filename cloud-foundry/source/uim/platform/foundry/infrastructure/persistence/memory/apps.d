@@ -42,7 +42,7 @@ class MemoryAppRepository : AppRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  long countBySpace(SpaceId spacetenantId, id tenantId) {
+  size_t countBySpace(SpaceId spacetenantId, id tenantId) {
     return cast(long) findBySpace(spacetenantId, id).length;
   }
 

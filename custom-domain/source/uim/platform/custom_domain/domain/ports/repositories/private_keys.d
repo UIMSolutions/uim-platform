@@ -17,5 +17,5 @@ interface PrivateKeyRepository {
     void save(PrivateKey k);
     void update(PrivateKey k);
     void remove(PrivateKeyId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }

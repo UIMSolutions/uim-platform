@@ -20,5 +20,5 @@ interface ConfigurationRepository {
   void save(Configuration c);
   void update(Configuration c);
   void remove(ConfigurationId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

@@ -16,6 +16,6 @@ interface TrainingJobRepository {
   void save(TrainingJob tj);
   void update(TrainingJob tj);
   void remove(TrainingJobId id, ClientId clientId);
-  long countByClient(ClientId clientId);
-  long countByStatus(TrainingJobStatus status, ClientId clientId);
+  size_t countByClient(ClientId clientId);
+  size_t countByStatus(TrainingJobStatus status, ClientId clientId);
 }

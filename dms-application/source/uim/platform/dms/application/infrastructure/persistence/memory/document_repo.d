@@ -68,16 +68,16 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  long countByRepository(RepositoryId repositorytenantId, id tenantId) {
-    long count;
+  size_t countByRepository(RepositoryId repositorytenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
         ++count;
     return count;
   }
 
-  long countByFolder(FolderId foldertenantId, id tenantId) {
-    long count;
+  size_t countByFolder(FolderId foldertenantId, id tenantId) {
+    size_t count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
         ++count;

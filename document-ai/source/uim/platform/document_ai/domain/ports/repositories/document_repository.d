@@ -17,6 +17,6 @@ interface DocumentRepository {
   void save(Document d);
   void update(Document d);
   void remove(DocumentId id, ClientId clientId);
-  long countByClient(ClientId clientId);
-  long countByStatus(DocumentStatus status, ClientId clientId);
+  size_t countByClient(ClientId clientId);
+  size_t countByStatus(DocumentStatus status, ClientId clientId);
 }

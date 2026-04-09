@@ -17,5 +17,5 @@ interface ServiceBindingRepository {
   void save(ServiceBinding binding);
   void update(ServiceBinding binding);
   void remove(ServiceBindingId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

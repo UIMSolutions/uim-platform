@@ -19,5 +19,5 @@ interface BackupRepository {
   void save(Backup b);
   void update(Backup b);
   void remove(BackupId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

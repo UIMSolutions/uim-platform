@@ -16,5 +16,5 @@ interface ViewRepository {
   void save(View v);
   void update(View v);
   void remove(ViewId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

@@ -39,7 +39,7 @@ class MemoryMetricRepository : MetricRepository {
     store = store.filter!(m => !(m.id == id && m.resourceGroupId == rgId)).array;
   }
 
-  long countByExecution(ExecutionId execId, ResourceGroupId rgId) {
+  size_t countByExecution(ExecutionId execId, ResourceGroupId rgId) {
     return cast(long) store.filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
   }
 }

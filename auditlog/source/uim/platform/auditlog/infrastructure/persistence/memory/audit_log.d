@@ -91,7 +91,7 @@ class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLog
     return filtered[offset .. end];
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return findByTenant(tenantId).length;
   }
 

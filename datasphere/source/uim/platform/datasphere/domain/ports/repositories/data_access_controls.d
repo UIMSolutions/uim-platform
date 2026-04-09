@@ -15,5 +15,5 @@ interface DataAccessControlRepository {
   void save(DataAccessControl dac);
   void update(DataAccessControl dac);
   void remove(DataAccessControlId id, SpaceId spaceId);
-  long countBySpace(SpaceId spaceId);
+  size_t countBySpace(SpaceId spaceId);
 }

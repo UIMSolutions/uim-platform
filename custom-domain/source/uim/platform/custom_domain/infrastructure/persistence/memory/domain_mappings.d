@@ -55,7 +55,7 @@ class MemoryDomainMappingRepository : DomainMappingRepository {
         store = store.filter!(m => m.id != id).array;
     }
 
-    long countByTenant(TenantId tenantId) {
+    size_t countByTenant(TenantId tenantId) {
         return cast(long) store.filter!(m => m.tenantId == tenantId).array.length;
     }
 }

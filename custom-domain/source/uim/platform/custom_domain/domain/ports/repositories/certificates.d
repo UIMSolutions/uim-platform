@@ -19,5 +19,5 @@ interface CertificateRepository {
     void save(Certificate c);
     void update(Certificate c);
     void remove(CertificateId id);
-    long countByTenant(TenantId tenantId);
+    size_t countByTenant(TenantId tenantId);
 }
