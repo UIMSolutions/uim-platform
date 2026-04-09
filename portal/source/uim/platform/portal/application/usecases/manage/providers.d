@@ -25,7 +25,7 @@ class ManageProvidersUseCase : UIMUseCase {
       return ProviderResponse("", "Provider name is required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto provider = ContentProvider(id, req.tenantId, req.name, req.description,
       req.providerType, req.contentEndpointUrl, req.authToken, true, // active
       [], // catalogIds

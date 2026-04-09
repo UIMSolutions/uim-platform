@@ -32,7 +32,7 @@ class ManageSitesUseCase : UIMUseCase {
     }
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto site = Site(id, req.tenantId, req.name, req.description, req.alias_,
         SiteStatus.draft, req.themeId, [], // pageIds
         [], // menuItemIds

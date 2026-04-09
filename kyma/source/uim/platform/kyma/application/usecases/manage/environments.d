@@ -31,7 +31,7 @@ class ManageEnvironmentsUseCase : UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     KymaEnvironment env;
     env.id = randomUUID();

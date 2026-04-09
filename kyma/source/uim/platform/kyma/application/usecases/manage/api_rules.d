@@ -36,7 +36,7 @@ class ManageApiRulesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ApiRule rule;
     rule.ruleId = id;

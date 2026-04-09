@@ -25,7 +25,7 @@ class ManageNotificationsUseCase : UIMUseCase {
       return CommandResult("", "Notification title is required");
 
     auto n = Notification();
-    n.id = randomUUID().toString();
+    n.id = randomUUID();
     n.tenantId = req.tenantId;
     n.recipientId = req.recipientId;
     n.title = req.title;

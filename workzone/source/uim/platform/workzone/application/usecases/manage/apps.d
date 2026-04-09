@@ -26,7 +26,7 @@ class ManageAppsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto app = AppRegistration();
-    app.id = randomUUID().toString();
+    app.id = randomUUID();
     app.tenantId = req.tenantId;
     app.name = req.name;
     app.description = req.description;

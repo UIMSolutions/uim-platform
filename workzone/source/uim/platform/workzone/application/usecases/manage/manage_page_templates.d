@@ -26,7 +26,7 @@ class ManagePageTemplatesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto t = PageTemplate();
-    t.id = randomUUID().toString();
+    t.id = randomUUID();
     t.tenantId = req.tenantId;
     t.name = req.name;
     t.description = req.description;

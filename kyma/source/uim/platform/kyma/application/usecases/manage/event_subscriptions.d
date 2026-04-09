@@ -35,7 +35,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     EventSubscription sub;
     sub.id = randomUUID();

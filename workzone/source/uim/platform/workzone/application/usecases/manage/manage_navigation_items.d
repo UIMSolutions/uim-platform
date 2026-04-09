@@ -26,7 +26,7 @@ class ManageNavigationItemsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto n = NavigationItem();
-    n.id = randomUUID().toString();
+    n.id = randomUUID();
     n.siteId = req.siteId;
     n.tenantId = req.tenantId;
     n.title = req.title;

@@ -28,7 +28,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
       return CommandResult(false, "", "At least one key mapping entry is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     KeyMapping mapping;
     mapping.id = randomUUID();

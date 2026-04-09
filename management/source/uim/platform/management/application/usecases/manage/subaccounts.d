@@ -39,7 +39,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Subaccount sub;
     sub.id = randomUUID();
@@ -169,7 +169,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     // import std.uuid : randomUUID;
 
     PlatformEvent ev;
-    ev.id = randomUUID().toString();
+    ev.id = randomUUID();
     ev.globalAccountId = gaId;
     ev.subaccountId = subId;
     ev.category = cat;

@@ -38,7 +38,7 @@ class ManageGroupsUseCase : UIMUseCase {
       return GroupResponse("", "Group with this displayName already exists");
 
     auto now = Clock.currStdTime();
-    auto groupId = randomUUID().toString();
+    auto groupId = randomUUID();
     auto group = Group(groupId, req.tenantId, req.externalId, req.displayName, req.description,
         GroupType.standard, req.members,
         ["urn:ietf:params:scim:schemas:core:2.0:Group"], now, now,);

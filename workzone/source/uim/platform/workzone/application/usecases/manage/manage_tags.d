@@ -30,7 +30,7 @@ class ManageTagsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto t = Tag();
-    t.id = randomUUID().toString();
+    t.id = randomUUID();
     t.tenantId = req.tenantId;
     t.name = req.name;
     t.description = req.description;

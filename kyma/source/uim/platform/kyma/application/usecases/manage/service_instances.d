@@ -35,7 +35,7 @@ class ManageServiceInstancesUseCase : UIMUseCase {
       return CommandResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ServiceInstance inst;
     inst.id = randomUUID();

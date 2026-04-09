@@ -26,7 +26,7 @@ class ManageGroupsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto g = Group();
-    g.id = randomUUID().toString();
+    g.id = randomUUID();
     g.tenantId = req.tenantId;
     g.name = req.name;
     g.description = req.description;

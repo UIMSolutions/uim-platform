@@ -26,7 +26,7 @@ class ManageForumTopicsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto t = ForumTopic();
-    t.id = randomUUID().toString();
+    t.id = randomUUID();
     t.workspaceId = req.workspaceId;
     t.tenantId = req.tenantId;
     t.title = req.title;

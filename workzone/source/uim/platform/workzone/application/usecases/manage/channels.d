@@ -26,7 +26,7 @@ class ManageChannelsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ch = Channel();
-    ch.id = randomUUID().toString();
+    ch.id = randomUUID();
     ch.workspaceId = req.workspaceId;
     ch.tenantId = req.tenantId;
     ch.name = req.name;

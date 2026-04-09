@@ -25,7 +25,7 @@ class ManageCatalogsUseCase : UIMUseCase {
       return CatalogResponse("", "Catalog title is required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto catalog = Catalog(id, req.tenantId, req.title, req.description,
       req.providerId, [], // tileIds
       req.allowedRoleIds, req.active, now, now,);

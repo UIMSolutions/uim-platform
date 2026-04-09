@@ -28,7 +28,7 @@ class ManageLabelsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Label lbl;
     lbl.id = randomUUID();

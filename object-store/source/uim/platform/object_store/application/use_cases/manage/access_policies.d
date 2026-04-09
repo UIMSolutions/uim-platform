@@ -33,7 +33,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto ts = currentTimestamp();
 
     auto policy = new AccessPolicy();

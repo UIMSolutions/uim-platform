@@ -25,7 +25,7 @@ class ManageReplicationJobsUseCase : UIMUseCase {
       return CommandResult(false, "", "Source client ID is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ReplicationJob job;
     job.id = randomUUID();

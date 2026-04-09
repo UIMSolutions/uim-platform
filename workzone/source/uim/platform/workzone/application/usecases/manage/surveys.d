@@ -26,7 +26,7 @@ class ManageSurveysUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto s = Survey();
-    s.id = randomUUID().toString();
+    s.id = randomUUID();
     s.workspaceId = req.workspaceId;
     s.tenantId = req.tenantId;
     s.title = req.title;

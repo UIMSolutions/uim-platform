@@ -27,7 +27,7 @@ class ManageContentUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto item = ContentItem();
-    item.id = randomUUID().toString();
+    item.id = randomUUID();
     item.workspaceId = req.workspaceId;
     item.tenantId = req.tenantId;
     item.title = req.title;

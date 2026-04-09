@@ -28,8 +28,8 @@ class ManageApiClientsUseCase : UIMUseCase {
   /// Create a new API client.
   ApiClientResponse createClient(CreateApiClientRequest req) {
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
-    auto clientId = randomUUID().toString();
+    auto id = randomUUID();
+    auto clientId = randomUUID();
     auto clientSecret = randomUUID().toString() ~ "-" ~ randomUUID().toString();
 
     auto client = ApiClient(id, req.tenantId, req.name, req.description,

@@ -26,7 +26,7 @@ class ManageUserProfilesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto p = UserProfile();
-    p.id = randomUUID().toString();
+    p.id = randomUUID();
     p.userId = req.userId;
     p.tenantId = req.tenantId;
     p.displayName = req.displayName;

@@ -26,7 +26,7 @@ class ManageEventsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto e = Event();
-    e.id = randomUUID().toString();
+    e.id = randomUUID();
     e.workspaceId = req.workspaceId;
     e.tenantId = req.tenantId;
     e.title = req.title;

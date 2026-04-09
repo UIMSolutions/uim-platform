@@ -52,7 +52,7 @@ class ManageUsersUseCase : UIMUseCase {
     }
 
     auto now = Clock.currStdTime();
-    auto userId = randomUUID().toString();
+    auto userId = randomUUID();
     auto user = User(userId, req.tenantId, req.externalId, req.userName,
         req.name, req.displayName, "", // nickName
         "", // profileUrl

@@ -38,7 +38,7 @@ class ManageTransformationsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto t = Transformation();
-    t.id = randomUUID().toString();
+    t.id = randomUUID();
     t.tenantId = req.tenantId;
     t.systemId = req.systemId;
     t.systemRole = req.systemRole;

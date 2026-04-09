@@ -26,7 +26,7 @@ class ManageWorkpagesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto page = Workpage();
-    page.id = randomUUID().toString();
+    page.id = randomUUID();
     page.workspaceId = req.workspaceId;
     page.tenantId = req.tenantId;
     page.title = req.title;

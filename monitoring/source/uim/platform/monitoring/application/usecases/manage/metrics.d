@@ -39,7 +39,7 @@ class ManageMetricsUseCase : UIMUseCase {
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     MetricDefinition def;
     def.id = randomUUID();
@@ -122,7 +122,7 @@ class ManageMetricsUseCase : UIMUseCase {
     foreach (ref r; req.metrics) {
       // import std.uuid : randomUUID;
       Metric m;
-      m.id = randomUUID().toString();
+      m.id = randomUUID();
       m.tenantId = req.tenantId;
       m.resourceId = r.resourceId;
       m.name = r.name;

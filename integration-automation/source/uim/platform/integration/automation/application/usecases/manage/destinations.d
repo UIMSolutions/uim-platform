@@ -48,7 +48,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     auto now = Clock.currStdTime();
 
     auto dest = Destination();
-    dest.id = randomUUID().toString();
+    dest.id = randomUUID();
     dest.tenantId = req.tenantId;
     dest.name = req.name;
     dest.description = req.description;

@@ -26,7 +26,7 @@ class ManageCardsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto c = Card();
-    c.id = randomUUID().toString();
+    c.id = randomUUID();
     c.tenantId = req.tenantId;
     c.title = req.title;
     c.subtitle = req.subtitle;

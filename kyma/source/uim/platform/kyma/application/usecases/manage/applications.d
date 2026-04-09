@@ -33,7 +33,7 @@ class ManageApplicationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Application app;
     app.id = randomUUID();

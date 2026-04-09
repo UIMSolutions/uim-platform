@@ -26,7 +26,7 @@ class ManageTasksUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto t = Task();
-    t.id = randomUUID().toString();
+    t.id = randomUUID();
     t.tenantId = req.tenantId;
     t.assigneeId = req.assigneeId;
     t.assigneeName = req.assigneeName;

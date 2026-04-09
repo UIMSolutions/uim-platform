@@ -28,7 +28,7 @@ class ManagePasswordPoliciesUseCase : UIMUseCase {
   /// Create a new password policy.
   PasswordPolicyResponse createPolicy(CreatePasswordPolicyRequest req) {
     auto now = Clock.currStdTime();
-    auto policyId = randomUUID().toString();
+    auto policyId = randomUUID();
     auto policy = PasswordPolicy(policyId, req.tenantId, req.name, req.description,
         PasswordStrength.standard, req.minLength > 0 ? req.minLength : 8,
         req.maxLength > 0 ? req.maxLength : 128, req.requireUppercase, req.requireLowercase,

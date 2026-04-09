@@ -51,7 +51,7 @@ class ManageProxySystemsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto sys = ProxySystem();
-    sys.id = randomUUID().toString();
+    sys.id = randomUUID();
     sys.tenantId = req.tenantId;
     sys.name = req.name;
     sys.description = req.description;

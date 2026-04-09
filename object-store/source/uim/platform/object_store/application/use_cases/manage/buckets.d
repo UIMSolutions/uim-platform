@@ -33,7 +33,7 @@ class ManageBucketsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     auto bucket = new Bucket();
     bucket.id = randomUUID();

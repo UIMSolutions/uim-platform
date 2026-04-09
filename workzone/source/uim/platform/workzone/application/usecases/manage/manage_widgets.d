@@ -23,7 +23,7 @@ class ManageWidgetsUseCase : UIMUseCase {
   CommandResult createWidget(CreateWidgetRequest req) {
     auto now = Clock.currStdTime();
     auto w = Widget();
-    w.id = randomUUID().toString();
+    w.id = randomUUID();
     w.pageId = req.pageId;
     w.tenantId = req.tenantId;
     w.title = req.title;

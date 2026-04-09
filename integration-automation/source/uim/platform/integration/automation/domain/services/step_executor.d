@@ -101,7 +101,7 @@ class StepExecutor {
   private void recordLog(WorkflowId workflowId, StepId stepId, TenantId tenantId, string action,
       ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
     auto log = ExecutionLog();
-    log.id = randomUUID().toString();
+    log.id = randomUUID();
     log.workflowId = workflowId;
     log.stepId = stepId;
     log.tenantId = tenantId;

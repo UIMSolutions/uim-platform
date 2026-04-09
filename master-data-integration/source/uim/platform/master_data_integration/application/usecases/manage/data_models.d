@@ -25,7 +25,7 @@ class ManageDataModelsUseCase : UIMUseCase {
       return CommandResult(false, "", "Namespace is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     DataModel model;
     model.id = randomUUID();

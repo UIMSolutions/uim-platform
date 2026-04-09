@@ -29,7 +29,7 @@ class ManageScenariosUseCase : UIMUseCase {
       return CommandResult("", "Scenario name is required");
 
     auto scenario = IntegrationScenario();
-    scenario.id = randomUUID().toString();
+    scenario.id = randomUUID();
     scenario.tenantId = req.tenantId;
     scenario.name = req.name;
     scenario.description = req.description;

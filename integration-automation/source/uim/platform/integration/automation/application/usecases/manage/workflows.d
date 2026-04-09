@@ -56,7 +56,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     auto now = Clock.currStdTime();
 
     auto wf = Workflow();
-    wf.id = randomUUID().toString();
+    wf.id = randomUUID();
     wf.tenantId = req.tenantId;
     wf.scenarioId = req.scenarioId;
     wf.name = req.name.length > 0 ? req.name : scenario.name;
@@ -76,7 +76,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     // Instantiate workflow steps from scenario templates
     foreach (ref tmpl; scenario.stepTemplates) {
       auto step = WorkflowStep();
-      step.id = randomUUID().toString();
+      step.id = randomUUID();
       step.workflowId = wf.id;
       step.tenantId = req.tenantId;
       step.name = tmpl.name;

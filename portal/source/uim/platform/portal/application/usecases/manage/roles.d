@@ -31,7 +31,7 @@ class ManageRolesUseCase : UIMUseCase {
       return RoleResponse("", "Role with this name already exists");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto role = Role(id, req.tenantId, req.name, req.description, req.scope_, [], // userIds
       [], // groupIds
       now, now,);

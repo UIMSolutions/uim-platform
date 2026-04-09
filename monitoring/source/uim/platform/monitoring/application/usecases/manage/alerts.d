@@ -91,7 +91,7 @@ class ManageAlertsUseCase : UIMUseCase {
       double currentValue, double thresholdValue, ThresholdOperator op,
       AlertSeverity severity, string message) {
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Alert a;
     a.id = id;

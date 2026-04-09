@@ -33,7 +33,7 @@ class ManageSystemsUseCase : UIMUseCase {
     auto now = Clock.currStdTime();
 
     auto sys = SystemConnection();
-    sys.id = randomUUID().toString();
+    sys.id = randomUUID();
     sys.tenantId = req.tenantId;
     sys.name = req.name;
     sys.description = req.description;

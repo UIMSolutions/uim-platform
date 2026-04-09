@@ -26,7 +26,7 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto p = ExternalContentProvider();
-    p.id = randomUUID().toString();
+    p.id = randomUUID();
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;

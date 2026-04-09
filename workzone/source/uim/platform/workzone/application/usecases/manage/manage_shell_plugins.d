@@ -26,7 +26,7 @@ class ManageShellPluginsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto p = ShellPlugin();
-    p.id = randomUUID().toString();
+    p.id = randomUUID();
     p.tenantId = req.tenantId;
     p.name = req.name;
     p.description = req.description;

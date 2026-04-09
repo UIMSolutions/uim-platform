@@ -25,7 +25,7 @@ class ManageThemesUseCase : UIMUseCase {
       return ThemeResponse("", "Theme name is required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto theme = Theme(id, req.tenantId, req.name, req.description, req.mode,
       req.baseTheme, req.colors, req.fonts, req.customCss, req.isDefault, now, now,);
 

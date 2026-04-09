@@ -29,7 +29,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
       return CommandResult(false, "", "Channel name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     NotificationChannel ch;
     ch.id = randomUUID();

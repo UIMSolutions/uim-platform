@@ -26,7 +26,7 @@ class ManageSitesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto s = Site();
-    s.id = randomUUID().toString();
+    s.id = randomUUID();
     s.tenantId = req.tenantId;
     s.name = req.name;
     s.description = req.description;

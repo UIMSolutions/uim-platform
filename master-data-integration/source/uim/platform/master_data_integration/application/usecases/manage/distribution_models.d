@@ -25,7 +25,7 @@ class ManageDistributionModelsUseCase : UIMUseCase {
       return CommandResult(false, "", "Source client ID is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     DistributionModel model;
     model.id = randomUUID();

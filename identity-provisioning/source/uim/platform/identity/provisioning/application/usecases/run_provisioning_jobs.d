@@ -52,7 +52,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto job = ProvisioningJob();
-    job.id = randomUUID().toString();
+    job.id = randomUUID();
     job.tenantId = req.tenantId;
     job.sourceSystemId = req.sourceSystemId;
     job.targetSystemId = req.targetSystemId;

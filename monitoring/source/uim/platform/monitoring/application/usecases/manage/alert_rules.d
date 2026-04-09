@@ -32,7 +32,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
       return CommandResult(false, "", "Metric name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     AlertRule rule;
     rule.id = id;

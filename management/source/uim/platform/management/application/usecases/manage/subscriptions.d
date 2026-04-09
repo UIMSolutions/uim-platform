@@ -37,7 +37,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Subscription sub;
     sub.id = randomUUID();
@@ -116,7 +116,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     // import std.uuid : randomUUID;
 
     PlatformEvent ev;
-    ev.id = randomUUID().toString();
+    ev.id = randomUUID();
     ev.globalAccountId = gaId;
     ev.subaccountId = subId;
     ev.category = cat;

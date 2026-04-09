@@ -25,7 +25,7 @@ class ManageTranslationsUseCase : UIMUseCase {
       return TranslationResponse("", "Field name and language are required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto translation = Translation(id, req.tenantId, req.resourceType,
       req.resourceId, req.fieldName, req.language, req.value, now, now,);
     translationRepo.save(translation);

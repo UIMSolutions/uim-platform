@@ -32,7 +32,7 @@ class ManageSectionsUseCase : UIMUseCase{
       return SectionResponse("", "Page not found");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto section = Section(id, req.pageId, req.tenantId, req.title, [], // tileIds
       req.sortOrder, req.visible, req.columns > 0 ? req.columns : 3, now, now,);
     sectionRepo.save(section);

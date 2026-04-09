@@ -46,7 +46,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     EnvironmentInstance inst;
     inst.id = randomUUID();

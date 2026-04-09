@@ -31,7 +31,7 @@ class ManageCorsRulesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto ts = currentTimestamp();
 
     auto rule = new CorsRule();

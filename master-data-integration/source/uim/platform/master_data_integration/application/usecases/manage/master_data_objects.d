@@ -29,7 +29,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
       return CommandResult(false, "", "Display name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     MasterDataObject obj;
     obj.id = randomUUID();
@@ -45,7 +45,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     obj.attributes = req.attributes;
     obj.sourceSystem = req.sourceSystem;
     obj.sourceClient = req.sourceClient;
-    obj.currentVersion = randomUUID().toString();
+    obj.currentVersion = randomUUID();
     obj.versionNumber = 1;
     obj.createdBy = req.createdBy;
     obj.createdAt = clockSeconds();
@@ -93,7 +93,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
     obj.versionNumber++;
 
     // import std.uuid : randomUUID;
-    obj.currentVersion = randomUUID().toString();
+    obj.currentVersion = randomUUID();
     obj.modifiedAt = clockSeconds();
     obj.modifiedBy = req.modifiedBy;
 
@@ -143,7 +143,7 @@ class ManageMasterDataObjectsUseCase : UIMUseCase {
       string sourceSystem, string sourceClient, string changedBy, long fromVersion, long toVersion) {
     // import std.uuid : randomUUID;
     ChangeLogEntry entry;
-    entry.id = randomUUID().toString();
+    entry.id = randomUUID();
     entry.tenantId = tenantId;
     entry.objectId = objectId;
     entry.dataModelId = dataModelId;

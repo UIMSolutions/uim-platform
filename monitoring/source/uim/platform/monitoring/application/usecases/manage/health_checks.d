@@ -34,7 +34,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
       return CommandResult(false, "", "Check name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     HealthCheck c;
     c.id = id;
@@ -101,7 +101,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
 
   CommandResult recordResult(RecordCheckResultRequest req) {
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     HealthCheckResult r;
     r.id = id;

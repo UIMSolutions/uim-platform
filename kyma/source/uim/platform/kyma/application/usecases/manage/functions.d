@@ -37,7 +37,7 @@ class ManageFunctionsUseCase : UIMUseCase {
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ServerlessFunction serverlessFunction;
     serverlessFunction.functionId = id;

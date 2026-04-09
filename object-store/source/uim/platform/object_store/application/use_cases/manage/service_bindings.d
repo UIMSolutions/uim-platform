@@ -35,9 +35,9 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
-    auto accessKeyId = randomUUID().toString();
-    auto secretKey = randomUUID().toString();
+    auto id = randomUUID();
+    auto accessKeyId = randomUUID();
+    auto secretKey = randomUUID();
     auto ts = currentTimestamp();
 
     auto binding = new ServiceBinding();

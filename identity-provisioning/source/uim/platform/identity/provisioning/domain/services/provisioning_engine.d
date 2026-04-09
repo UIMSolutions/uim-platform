@@ -119,7 +119,7 @@ class ProvisioningEngine {
     foreach (i; 0 .. count) {
       // Create provisioned entity
       auto entity = ProvisionedEntity();
-      entity.id = randomUUID().toString();
+      entity.id = randomUUID();
       entity.tenantId = tenantId;
       entity.externalId = eType == EntityType.user ? "user-" ~ randomUUID()
         .toString()[0 .. 8] : "group-" ~ randomUUID().toString()[0 .. 8];
@@ -137,7 +137,7 @@ class ProvisioningEngine {
 
       // Create log entry
       auto log = ProvisioningLog();
-      log.id = randomUUID().toString();
+      log.id = randomUUID();
       log.tenantId = tenantId;
       log.jobId = job.id;
       log.entityType = eType;

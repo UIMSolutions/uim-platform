@@ -48,7 +48,7 @@ class ManageObjectsUseCase : UIMUseCase {
       return CommandResult(false, "", quotaResult.error);
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto ts = currentTimestamp();
 
     auto obj = new StorageObject();
@@ -67,7 +67,7 @@ class ManageObjectsUseCase : UIMUseCase {
 
     // Create initial version if versioning is enabled
     if (bucket.versioningEnabled) {
-      auto versionId = randomUUID().toString();
+      auto versionId = randomUUID();
       auto ver = new ObjectVersion();
       ver.id = versionId;
       ver.tenantId = req.tenantId;
@@ -142,7 +142,7 @@ class ManageObjectsUseCase : UIMUseCase {
     // If versioning enabled, add a delete marker instead of removing
     if (bucket !is null && bucket.versioningEnabled) {
       // import std.uuid : randomUUID;
-      auto versionId = randomUUID().toString();
+      auto versionId = randomUUID();
       auto ts = currentTimestamp();
 
       // Mark current latest as not latest
@@ -199,7 +199,7 @@ class ManageObjectsUseCase : UIMUseCase {
       return CommandResult(false, "", quotaResult.error);
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto ts = currentTimestamp();
 
     auto copy = new StorageObject();

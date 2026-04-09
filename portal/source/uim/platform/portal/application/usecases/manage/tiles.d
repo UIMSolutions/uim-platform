@@ -25,7 +25,7 @@ class ManageTilesUseCase : UIMUseCase {
       return TileResponse("", "Tile title is required");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto tile = Tile(id, req.tenantId, req.catalogId, req.title, req.subtitle,
         req.description, req.icon, req.info, req.tileType, req.appType,
         req.url, req.appId, req.navigationTarget, req.keywords,

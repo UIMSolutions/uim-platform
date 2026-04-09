@@ -23,7 +23,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
       return CommandResult(false, "", "Filter rule name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     FilterRule rule;
     rule.id = randomUUID();

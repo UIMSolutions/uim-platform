@@ -26,7 +26,7 @@ class ManageServicePlansUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     ServicePlan plan;
     plan.id = randomUUID();

@@ -35,7 +35,7 @@ class ManagePagesUseCase : UIMUseCase {
       return PageResponse("", "Site not found");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto page = Page(id, req.siteId, req.tenantId, req.title, req.description,
         req.alias_, req.layout, [], // sectionIds
         req.allowedRoleIds, req.sortOrder, req.visible, now, now,);

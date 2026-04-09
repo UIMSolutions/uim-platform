@@ -26,7 +26,7 @@ class ManageRolesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto r = Role();
-    r.id = randomUUID().toString();
+    r.id = randomUUID();
     r.tenantId = req.tenantId;
     r.name = req.name;
     r.description = req.description;

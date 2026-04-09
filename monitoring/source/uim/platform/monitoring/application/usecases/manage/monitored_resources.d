@@ -33,7 +33,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
       return CommandResult(false, "", "Resource name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     MonitoredResource resource;
     resource.id = randomUUID();

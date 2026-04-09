@@ -26,7 +26,7 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto a = KnowledgeBaseArticle();
-    a.id = randomUUID().toString();
+    a.id = randomUUID();
     a.workspaceId = req.workspaceId;
     a.tenantId = req.tenantId;
     a.title = req.title;

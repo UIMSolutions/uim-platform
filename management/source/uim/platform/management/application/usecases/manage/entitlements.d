@@ -37,7 +37,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Entitlement ent;
     ent.id = randomUUID();

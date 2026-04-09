@@ -22,7 +22,7 @@ class ManageFeedsUseCase : UIMUseCase {
 
   CommandResult createEntry(CreateFeedEntryRequest req) {
     auto entry = FeedEntry();
-    entry.id = randomUUID().toString();
+    entry.id = randomUUID();
     entry.workspaceId = req.workspaceId;
     entry.tenantId = req.tenantId;
     entry.actorId = req.actorId;

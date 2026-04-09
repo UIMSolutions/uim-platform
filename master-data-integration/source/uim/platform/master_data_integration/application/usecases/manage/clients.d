@@ -23,7 +23,7 @@ class ManageClientsUseCase : UIMUseCase {
       return CommandResult(false, "", "Client name is required");
 
     // import std.uuid : randomUUID;
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Client client;
     client.id = randomUUID();

@@ -26,7 +26,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto ws = Workspace();
-    ws.id = randomUUID().toString();
+    ws.id = randomUUID();
     ws.tenantId = req.tenantId;
     ws.name = req.name;
     ws.description = req.description;

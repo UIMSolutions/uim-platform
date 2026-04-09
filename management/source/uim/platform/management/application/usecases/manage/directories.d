@@ -32,7 +32,7 @@ class ManageDirectoriesUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
 
     Directory d;
     d.id = randomUUID();

@@ -35,7 +35,7 @@ class ManageMenuItemsUseCase : UIMUseCase {
       return MenuItemResponse("", "Site not found");
 
     auto now = Clock.currStdTime();
-    auto id = randomUUID().toString();
+    auto id = randomUUID();
     auto item = MenuItem(id, req.siteId, req.tenantId, req.title, req.icon,
         req.parentId, req.targetPageId, req.targetUrl, req.navigationTarget,
         req.allowedRoleIds, req.sortOrder, req.visible, now, now,);
