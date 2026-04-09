@@ -30,17 +30,14 @@ class WriteSecurityEventUseCase : UIMUseCase {
 
   CommandResult writeEvent(WriteSecurityEventRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     if (req.eventType.length == 0)
-      return CommandResult("", "Event type is required");
-
-    auto now = Clock.currStdTime();
-    auto auditId = randomUUID().toString();
+      return CommandResult(false, "", "Event type is required");
 
     // Create parent audit log entry
     auto entry = AuditLogEntry();
-    entry.id = auditId;
+    entry.id = randomUUID();
     entry.tenantId = req.tenantId;
     entry.userId = req.userId;
     entry.userName = req.userName;
@@ -52,12 +49,12 @@ class WriteSecurityEventUseCase : UIMUseCase {
     entry.message = buildSecurityMessage(req);
     entry.ipAddress = req.ipAddress;
     entry.userAgent = req.userAgent;
-    entry.timestamp = now;
+    entry.timestamp = Clock.currStdTime();
     auditRepo.save(entry);
 
     // Create enriched security event
     auto secEvent = SecurityEvent();
-    secEvent.auditLogId = auditId;
+    secEvent.auditLogId = entry.id;
     secEvent.tenantId = req.tenantId;
     secEvent.userId = req.userId;
     secEvent.userName = req.userName;
@@ -70,10 +67,10 @@ class WriteSecurityEventUseCase : UIMUseCase {
     secEvent.outcome = req.outcome;
     secEvent.failureReason = req.failureReason;
     secEvent.riskLevel = req.riskLevel;
-    secEvent.timestamp = now;
+    secEvent.timestamp = entry.timestamp;
     secRepo.save(secEvent);
 
-    return CommandResult(auditId, "");
+    return CommandResult(true, entry.id.toString(), "");
   }
 
   private AuditAction mapEventTypeToAction(string eventType) {

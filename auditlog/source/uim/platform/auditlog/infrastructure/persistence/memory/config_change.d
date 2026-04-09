@@ -60,3 +60,19 @@ class MemoryConfigChangeLogRepository : ConfigChangeLogRepository {
     store = store.filter!(e => !(e.tenantId == tenantId && e.timestamp < beforeTimestamp)).array;
   }
 }
+///
+unittest {  
+  auto repository = new MemoryConfigChangeLogRepository();
+  auto log = ConfigChangeLog();
+  log.auditLogId = "log1";
+  log.tenantId = "tenant1";
+  log.changedBy = "user1";
+  log.configType = "type1";
+  log.timestamp = 1234567890;
+  repository.save(log);
+
+  assert(repository.existsByTenant(TenantId("tenant1")));
+  assert(repository.findByTenant(TenantId("tenant1")).length == 1);
+  assert(repository.existsByAuditLogId(TenantId("tenant1"), AuditLogId("log1")));
+  assert(repository.findByAuditLogId(TenantId("tenant1"), AuditLogId("log1")).changedBy == UserId("user1"));
+}

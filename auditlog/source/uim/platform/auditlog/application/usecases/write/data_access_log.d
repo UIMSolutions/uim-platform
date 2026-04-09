@@ -31,17 +31,14 @@ class WriteDataAccessLogUseCase : UIMUseCase {
 
   CommandResult writeLog(WriteDataAccessLogRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     if (req.dataSubject.length == 0)
-      return CommandResult("", "Data subject is required");
+      return CommandResult(false, "", "Data subject is required");
 
-    auto now = Clock.currStdTime();
-    auto auditId = randomUUID().toString();
-
-    // Create parent audit log entry
+      // Create parent audit log entry
     auto entry = AuditLogEntry();
-    entry.id = auditId;
+    entry.id = randomUUID();
     entry.tenantId = req.tenantId;
     entry.userId = req.accessedBy;
     entry.category = AuditCategory.dataAccess;
@@ -51,12 +48,12 @@ class WriteDataAccessLogUseCase : UIMUseCase {
     entry.objectType = req.dataObjectType;
     entry.objectId = req.dataObjectId;
     entry.message = "Data access: %s / %s by %s purpose=%s".format(req.dataObjectType, req.dataObjectId, req.accessedBy, req.purpose);
-    entry.timestamp = now;
+    entry.timestamp = Clock.currStdTime();
     auditRepo.save(entry);
 
     // Create data access record
     auto dal = DataAccessLog();
-    dal.auditLogId = auditId;
+    dal.auditLogId = entry.id;
     dal.tenantId = req.tenantId;
     dal.accessedBy = req.accessedBy;
     dal.dataSubject = req.dataSubject;
@@ -65,9 +62,9 @@ class WriteDataAccessLogUseCase : UIMUseCase {
     dal.accessedFields = req.accessedFields;
     dal.purpose = req.purpose;
     dal.channel = req.channel;
-    dal.timestamp = now;
+    dal.timestamp = entry.timestamp;
     dalRepo.save(dal);
 
-    return CommandResult(auditId, "");
+    return CommandResult(true, entry.id.toString(), "");
   }
 }

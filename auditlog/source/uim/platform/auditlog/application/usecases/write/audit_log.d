@@ -30,32 +30,32 @@ class WriteAuditLogUseCase : UIMUseCase {
 
   CommandResult writeLog(WriteAuditLogRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     if (req.message.length == 0)
-      return CommandResult("", "Message is required");
+      return CommandResult(false, "", "Message is required");
 
     // Check if logging is enabled for this tenant/category
     if (configRepo.existsByTenant(req.tenantId)) {
       auto cfg = configRepo.findByTenant(req.tenantId);
       if (cfg.status == ConfigStatus.disabled)
-        return CommandResult("", "Audit logging is disabled for this tenant");
+        return CommandResult(false, "", "Audit logging is disabled for this tenant");
 
       if (req.category == AuditCategory.dataAccess && !cfg.logDataAccess)
-        return CommandResult("", "Data access logging is disabled");
+        return CommandResult(false, "", "Data access logging is disabled");
 
       if (req.category == AuditCategory.dataModification && !cfg.logDataModification)
-        return CommandResult("", "Data modification logging is disabled");
+        return CommandResult(false, "", "Data modification logging is disabled");
 
       if (req.category == AuditCategory.securityEvents && !cfg.logSecurityEvents)
-        return CommandResult("", "Security event logging is disabled");
+        return CommandResult(false, "", "Security event logging is disabled");
 
       if (req.category == AuditCategory.configuration && !cfg.logConfigurationChanges)
-        return CommandResult("", "Configuration change logging is disabled");
+        return CommandResult(false, "", "Configuration change logging is disabled");
     }
 
     auto entry = AuditLogEntry();
-    entry.id = randomUUID().toString();
+    entry.id = randomUUID();
     entry.tenantId = req.tenantId;
     entry.userId = req.userId;
     entry.userName = req.userName;
@@ -76,6 +76,6 @@ class WriteAuditLogUseCase : UIMUseCase {
     entry.timestamp = Clock.currStdTime();
 
     logRepo.save(entry);
-    return CommandResult(entry.id.toString, "");
+    return CommandResult(true, entry.id.toString(), "");
   }
 }

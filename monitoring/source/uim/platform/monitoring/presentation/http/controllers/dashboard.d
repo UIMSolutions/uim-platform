@@ -9,10 +9,15 @@ module uim.platform.monitoring.presentation.http.dashboard;
 // import vibe.http.router;
 // import vibe.data.json;
 
-import uim.platform.monitoring.application.usecases.get_dashboard;
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.presentation.http.json_utils;
+// import uim.platform.monitoring.application.usecases.get_dashboard;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.presentation.http.json_utils;
 
+import uim.platform.monitoring;
+
+mixin(ShowModule!());
+
+@safe:
 class DashboardController {
   private GetDashboardUseCase uc;
 

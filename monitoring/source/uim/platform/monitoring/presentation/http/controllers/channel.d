@@ -10,12 +10,16 @@ module uim.platform.monitoring.presentation.http.channel;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.monitoring.application.usecases.manage.notification_channels;
-import uim.platform.monitoring.application.dto;
-import uim.platform.monitoring.domain.entities.notification_channel;
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.presentation.http.json_utils;
+// import uim.platform.monitoring.application.usecases.manage.notification_channels;
+// import uim.platform.monitoring.application.dto;
+// import uim.platform.monitoring.domain.entities.notification_channel;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.presentation.http.json_utils;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 class ChannelController : SAPController {
   private ManageNotificationChannelsUseCase uc;
 

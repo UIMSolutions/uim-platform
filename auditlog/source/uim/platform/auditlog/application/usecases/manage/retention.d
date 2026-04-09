@@ -28,11 +28,11 @@ class ManageRetentionUseCase : UIMUseCase {
 
   CommandResult createPolicy(CreateRetentionPolicyRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Policy name is required");
+      return CommandResult(false, "", "Policy name is required");
     if (req.retentionDays <= 0)
-      return CommandResult("", "Retention days must be positive");
+      return CommandResult(false, "", "Retention days must be positive");
 
     auto now = Clock.currStdTime();
     auto policy = RetentionPolicy();
@@ -48,7 +48,7 @@ class ManageRetentionUseCase : UIMUseCase {
     policy.updatedAt = now;
 
     policyRepo.save(policy);
-    return CommandResult(policy.policyId.toString, "");
+    return CommandResult(true, policy.policyId.toString(), "");
   }
 
   bool existsPolicy(TenantId tenantId, RetentionPolicyId policyId) {
@@ -65,7 +65,7 @@ class ManageRetentionUseCase : UIMUseCase {
 
   CommandResult updatePolicy(UpdateRetentionPolicyRequest req) {
     if (!policyRepo.existsById(req.tenantId, req.id))
-      return CommandResult("", "Retention policy not found");
+      return CommandResult(false, "", "Retention policy not found");
 
     auto policy = policyRepo.findById(req.tenantId, req.id);
     if (req.name.length > 0)
@@ -80,7 +80,7 @@ class ManageRetentionUseCase : UIMUseCase {
     policy.updatedAt = Clock.currStdTime();
 
     policyRepo.update(policy);
-    return CommandResult(policy.policyId.toString, "");
+    return CommandResult(true, policy.policyId.toString(), "");
   }
 
   void deletePolicy(TenantId tenantId, RetentionPolicyId policyId) {

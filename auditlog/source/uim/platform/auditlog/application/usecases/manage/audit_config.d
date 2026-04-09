@@ -26,11 +26,11 @@ class ManageAuditConfigUseCase : UIMUseCase {
 
   CommandResult createConfig(CreateAuditConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     // Only one config per tenant
     if (configRepo.existsByTenant(req.tenantId))
-      return CommandResult("", "Audit configuration already exists for this tenant");
+      return CommandResult(false, "", "Audit configuration already exists for this tenant");
 
     auto now = Clock.currStdTime();
     auto cfg = AuditConfig();
@@ -51,7 +51,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.updatedAt = now;
 
     configRepo.save(cfg);
-    return CommandResult(cfg.id.toString, "");
+    return CommandResult(true, cfg.id.toString, "");
   }
 
   bool existsConfig(TenantId tenantId) {
@@ -68,7 +68,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
 
   CommandResult updateConfig(UpdateAuditConfigRequest req) {
     if (!configRepo.existsById(req.id))
-      return CommandResult("", "Audit config not found");
+      return CommandResult(false, "", "Audit config not found");
 
     auto cfg = configRepo.findById(req.id);
     if (req.name.length > 0)
@@ -87,7 +87,7 @@ class ManageAuditConfigUseCase : UIMUseCase {
     cfg.updatedAt = Clock.currStdTime();
 
     configRepo.update(cfg);
-    return CommandResult(cfg.id.value, "");
+    return CommandResult(true, cfg.id.toString, "");
   }
 
   void deleteConfig(TenantId tenantId, AuditConfigId id) {

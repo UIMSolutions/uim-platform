@@ -24,7 +24,8 @@ class ManageBusinessRolesUseCase : UIMUseCase {
   CommandResult createRole(CreateBusinessRoleRequest req) {
     if (req.name.length == 0)
       return CommandResult("", "Role name is required");
-    if (req.systemInstanceid.isEmpty)
+
+    if (req.systemInstanceId.isEmpty())
       return CommandResult("", "System instance ID is required");
 
     auto existing = repo.findByName(req.systemInstanceId, req.name);

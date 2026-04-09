@@ -60,3 +60,24 @@ class MemoryAuditConfigRepository : AuditConfigRepository {
       store.remove(id);
   }
 }
+///
+unittest {
+  auto repository = new MemoryAuditConfigRepository();
+  auto cfg = AuditConfig();
+  cfg.id = "cfg1";
+  cfg.tenantId = "tenant1";
+  cfg.name = "Test Config";
+  repository.save(cfg);
+
+  assert(repository.existsByTenant(TenantId("tenant1")));
+  assert(repository.findByTenant(TenantId("tenant1")).id.toString == "cfg1");
+  assert(repository.existsById(AuditConfigId("cfg1")));
+  assert(repository.findById(AuditConfigId("cfg1")).name == "Test Config");
+
+  cfg.name = "Updated Config";
+  repository.update(cfg);
+  assert(repository.findById(AuditConfigId("cfg1")).name == "Updated Config");
+
+  repository.remove(TenantId("tenant1"), AuditConfigId("cfg1"));
+  assert(!repository.existsById(AuditConfigId("cfg1")));
+} 
