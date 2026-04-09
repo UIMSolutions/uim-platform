@@ -91,14 +91,14 @@ class ManageValidationRulesUseCase : UIMUseCase {
     return CommandResult(rule.id, "");
   }
 
-  CommandResult remove(RuleId id, TenantId tenantId) {
+  CommandResult remove(RuleId tenantId, id tenantId) {
     auto existing = repo.findById(id);
     if (existing is null)
       return CommandResult("", "Validation rule not found");
     if (existing.tenantId != tenantId)
       return CommandResult("", "Tenant mismatch");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 

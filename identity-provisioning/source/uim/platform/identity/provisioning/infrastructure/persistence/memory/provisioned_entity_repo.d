@@ -20,20 +20,20 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
     store[entity.id] = entity;
   }
 
-  void remove(ProvisionedEntityId id, TenantId tenantId) {
+  void remove(ProvisionedEntityId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ProvisionedEntity* findById(ProvisionedEntityId id, TenantId tenantId) {
+  ProvisionedEntity* findById(ProvisionedEntityId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targetId, TenantId tenantId) {
+  ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId) {
     foreach (ref e; store)
       if (e.externalId == externalId && e.targetSystemId == targetId && e.tenantId == tenantId)
         return &e;
@@ -48,7 +48,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
     return result;
   }
 
-  ProvisionedEntity[] findBySource(SourceSystemId sourceId, TenantId tenantId) {
+  ProvisionedEntity[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProvisionedEntity[] result;
     foreach (ref e; store)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
@@ -56,7 +56,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
     return result;
   }
 
-  ProvisionedEntity[] findByTarget(TargetSystemId targetId, TenantId tenantId) {
+  ProvisionedEntity[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProvisionedEntity[] result;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
@@ -80,7 +80,7 @@ class MemoryProvisionedEntityRepository : ProvisionedEntityRepository {
     return result;
   }
 
-  long countByTarget(TargetSystemId targetId, TenantId tenantId) {
+  long countByTarget(TargetSystemId targettenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)

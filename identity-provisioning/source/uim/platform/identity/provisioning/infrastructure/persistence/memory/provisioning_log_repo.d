@@ -16,13 +16,13 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     store[entity.id] = entity;
   }
 
-  void remove(ProvisioningLogId id, TenantId tenantId) {
+  void remove(ProvisioningLogId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  void removeByJob(ProvisioningJobId jobId, TenantId tenantId) {
+  void removeByJob(ProvisioningJobId jobtenantId, id tenantId) {
     string[] toRemove;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -31,7 +31,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
       store.remove(id);
   }
 
-  ProvisioningLog* findById(ProvisioningLogId id, TenantId tenantId) {
+  ProvisioningLog* findById(ProvisioningLogId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -46,7 +46,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  ProvisioningLog[] findByJob(ProvisioningJobId jobId, TenantId tenantId) {
+  ProvisioningLog[] findByJob(ProvisioningJobId jobtenantId, id tenantId) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -54,7 +54,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  ProvisioningLog[] findByEntity(string entityId, TenantId tenantId) {
+  ProvisioningLog[] findByEntity(string entitytenantId, id tenantId) {
     ProvisioningLog[] result;
     foreach (ref e; store)
       if (e.entityId == entityId && e.tenantId == tenantId)
@@ -70,7 +70,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return result;
   }
 
-  long countByJob(ProvisioningJobId jobId, TenantId tenantId) {
+  long countByJob(ProvisioningJobId jobtenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId)
@@ -78,7 +78,7 @@ class MemoryProvisioningLogRepository : ProvisioningLogRepository {
     return count;
   }
 
-  long countByJobAndStatus(ProvisioningJobId jobId, TenantId tenantId, LogStatus status) {
+  long countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status) {
     long count;
     foreach (ref e; store)
       if (e.jobId == jobId && e.tenantId == tenantId && e.status == status)

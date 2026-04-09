@@ -67,23 +67,23 @@ class MonitorProvisioningUseCase : UIMUseCase {
     return result;
   }
 
-  JobSummary getJobSummary(ProvisioningJobId id, TenantId tenantId) {
-    auto job = jobRepo.findById(id, tenantId);
+  JobSummary getJobSummary(ProvisioningJobId tenantId, id tenantId) {
+    auto job = jobRepo.findById(tenantId, id);
     if (job is null)
       return JobSummary.init;
     return buildJobSummary(*job, tenantId);
   }
 
-  ProvisioningLog[] getJobLogs(ProvisioningJobId jobId, TenantId tenantId) {
-    return logRepo.findByJob(jobId, tenantId);
+  ProvisioningLog[] getJobLogs(ProvisioningJobId jobtenantId, id tenantId) {
+    return logRepo.findByJob(jobtenantId, id);
   }
 
   ProvisionedEntity[] listProvisionedEntities(TenantId tenantId) {
     return entityRepo.findByTenant(tenantId);
   }
 
-  ProvisionedEntity[] listByTarget(TargetSystemId targetId, TenantId tenantId) {
-    return entityRepo.findByTarget(targetId, tenantId);
+  ProvisionedEntity[] listByTarget(TargetSystemId targettenantId, id tenantId) {
+    return entityRepo.findByTarget(targettenantId, id);
   }
 
   ProvisioningSummary getPipelineSummary(TenantId tenantId) {
@@ -129,11 +129,11 @@ class MonitorProvisioningUseCase : UIMUseCase {
     s.startedAt = job.startedAt;
     s.completedAt = job.completedAt;
 
-    auto src = sourceRepo.findById(job.sourceSystemId, tenantId);
+    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
     if (src !is null)
       s.sourceName = src.name;
 
-    auto tgt = targetRepo.findById(job.targetSystemId, tenantId);
+    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
     if (tgt !is null)
       s.targetName = tgt.name;
 

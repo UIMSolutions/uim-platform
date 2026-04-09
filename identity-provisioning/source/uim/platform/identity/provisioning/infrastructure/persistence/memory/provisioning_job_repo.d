@@ -20,13 +20,13 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     store[entity.id] = entity;
   }
 
-  void remove(ProvisioningJobId id, TenantId tenantId) {
+  void remove(ProvisioningJobId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ProvisioningJob* findById(ProvisioningJobId id, TenantId tenantId) {
+  ProvisioningJob* findById(ProvisioningJobId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     return result;
   }
 
-  ProvisioningJob[] findBySource(SourceSystemId sourceId, TenantId tenantId) {
+  ProvisioningJob[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
@@ -49,7 +49,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
     return result;
   }
 
-  ProvisioningJob[] findByTarget(TargetSystemId targetId, TenantId tenantId) {
+  ProvisioningJob[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProvisioningJob[] result;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)

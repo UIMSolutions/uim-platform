@@ -23,7 +23,7 @@ class MemoryAddressRepository : MemoryTenantRepository!(AddressRecord, AddressId
   //   return store.byValue().filter!(r => r.tenantId == tenantId).array;
   // }
 
-  // AddressRecord findById(AddressId id, TenantId tenantId) {
+  // AddressRecord findById(AddressId tenantId, id tenantId) {
   //   if (auto p = tenantId in store)
   //     if (auto r = id in p)
   //       return r;

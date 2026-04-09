@@ -296,7 +296,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
 
     interface ScenarioRepository << (P,#42A5F5) >> {
       findByTenant(tenantId)
-      findById(id, tenantId)
+      findById(tenantId, id)
       findByCategory(tenantId, category)
       findByStatus(tenantId, status)
       findBySystemType(tenantId, systemType)
@@ -305,7 +305,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
 
     interface WorkflowRepository << (P,#42A5F5) >> {
       findByTenant(tenantId)
-      findById(id, tenantId)
+      findById(tenantId, id)
       findByScenario(tenantId, scenarioId)
       findByStatus(tenantId, status)
       findByCreator(tenantId, createdBy)
@@ -314,19 +314,19 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     interface StepRepository << (P,#42A5F5) >> {
-      findByWorkflow(workflowId, tenantId)
-      findById(id, tenantId)
+      findByWorkflow(workflowtenantId, id)
+      findById(tenantId, id)
       findByAssignee(tenantId, assignedTo)
       findByRole(tenantId, assignedRole)
-      findByStatus(workflowId, tenantId, status)
-      findBySequence(workflowId, tenantId, seq)
+      findByStatus(workflowtenantId, id, status)
+      findBySequence(workflowtenantId, id, seq)
       save() / update() / remove()
-      removeByWorkflow(workflowId, tenantId)
+      removeByWorkflow(workflowtenantId, id)
     }
 
     interface SystemRepository << (P,#42A5F5) >> {
       findByTenant(tenantId)
-      findById(id, tenantId)
+      findById(tenantId, id)
       findByType(tenantId, systemType)
       findByStatus(tenantId, status)
       save() / update() / remove()
@@ -334,7 +334,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
 
     interface DestinationRepository << (P,#42A5F5) >> {
       findByTenant(tenantId)
-      findById(id, tenantId)
+      findById(tenantId, id)
       findBySystem(tenantId, systemId)
       findByName(tenantId, name)
       findEnabled(tenantId)
@@ -342,12 +342,12 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     interface ExecutionLogRepository << (P,#42A5F5) >> {
-      findByWorkflow(workflowId, tenantId)
-      findByStep(stepId, tenantId)
+      findByWorkflow(workflowtenantId, id)
+      findByStep(steptenantId, id)
       findByTenant(tenantId)
       findByOutcome(tenantId, outcome)
       findByTimeRange(tenantId, from, to)
-      countByWorkflow(workflowId, tenantId)
+      countByWorkflow(workflowtenantId, id)
       save() / removeByWorkflow()
       removeOlderThan(tenantId, before)
     }
@@ -358,7 +358,7 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
 
     class WorkflowEngine << (S,#FFB74D) >> {
       + areDependenciesMet(step, tenantId) : bool
-      + advanceWorkflow(workflowId, tenantId) : bool
+      + advanceWorkflow(workflowtenantId, id) : bool
       + isWorkflowLimitReached(tenantId) : bool
       --
       Max 15 concurrent workflows per tenant
@@ -366,10 +366,10 @@ package "Domain Layer  «business logic»" as DOMAIN <<Rectangle>> {
     }
 
     class StepExecutor << (S,#FFB74D) >> {
-      + startStep(stepId, tenantId, userId) : bool
-      + completeStep(stepId, tenantId, userId, result) : bool
-      + failStep(stepId, tenantId, userId, errorMsg) : bool
-      + skipStep(stepId, tenantId, userId, reason) : bool
+      + startStep(steptenantId, id, userId) : bool
+      + completeStep(steptenantId, id, userId, result) : bool
+      + failStep(steptenantId, id, userId, errorMsg) : bool
+      + skipStep(steptenantId, id, userId, reason) : bool
       --
       Automatically records ExecutionLog entries
       Tracks durationMs for completed steps

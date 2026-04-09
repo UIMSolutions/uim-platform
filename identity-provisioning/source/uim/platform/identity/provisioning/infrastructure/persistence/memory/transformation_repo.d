@@ -20,13 +20,13 @@ class MemoryTransformationRepository : TransformationRepository {
     store[entity.id] = entity;
   }
 
-  void remove(TransformationId id, TenantId tenantId) {
+  void remove(TransformationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  Transformation* findById(TransformationId id, TenantId tenantId) {
+  Transformation* findById(TransformationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryTransformationRepository : TransformationRepository {
     return result;
   }
 
-  Transformation[] findBySystem(string systemId, TenantId tenantId) {
+  Transformation[] findBySystem(string systemtenantId, id tenantId) {
     Transformation[] result;
     foreach (ref e; store)
       if (e.systemId == systemId && e.tenantId == tenantId)

@@ -317,7 +317,7 @@ NSOV-1  Identity Directory Services
 │  ┌──────────────────────────┐       ┌──────────────────────┐   │
 │  │  PasswordPolicy           │       │  ApiClient            │   │
 │  ├──────────────────────────┤       ├──────────────────────┤   │
-│  │ id, tenantId              │       │ id : ApiClientId      │   │
+│  │ tenantId, id              │       │ id : ApiClientId      │   │
 │  │ name, description         │       │ tenantId : TenantId   │   │
 │  │ strength : PasswordStrength       │ name, description     │   │
 │  │ minLength, maxLength      │       │ clientId, clientSecret│   │
@@ -335,7 +335,7 @@ NSOV-1  Identity Directory Services
 │  ┌──────────────────────────────────────────┐                    │
 │  │  AuditEvent (immutable)                   │                    │
 │  ├──────────────────────────────────────────┤                    │
-│  │ id, tenantId                              │                    │
+│  │ tenantId, id                              │                    │
 │  │ eventType : AuditEventType (21 values)    │                    │
 │  │ actorId, actorType                        │                    │
 │  │ targetId, targetType                      │                    │

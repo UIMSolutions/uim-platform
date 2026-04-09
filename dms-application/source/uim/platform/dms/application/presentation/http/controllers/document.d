@@ -127,7 +127,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto doc = uc.getDocument(id, tenantId);
+      auto doc = uc.getDocument(tenantId, id);
       if (doc is null) {
         writeError(res, 404, "Document not found");
         return;
@@ -198,7 +198,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.archiveDocument(id, tenantId);
+      auto result = uc.archiveDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -217,7 +217,7 @@ class DocumentController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteDocument(id, tenantId);
+      auto result = uc.deleteDocument(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

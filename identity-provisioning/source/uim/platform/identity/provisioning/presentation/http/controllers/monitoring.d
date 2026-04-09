@@ -54,7 +54,7 @@ class MonitoringController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getJobSummary(id, tenantId);
+      auto summary = uc.getJobSummary(tenantId, id);
       if (summary.jobid.isEmpty) {
         writeError(res, 404, "Job not found");
         return;
@@ -70,7 +70,7 @@ class MonitoringController {
     try {
       auto jobId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = uc.getJobLogs(jobId, tenantId);
+      auto logs = uc.getJobLogs(jobtenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref l; logs)

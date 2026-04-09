@@ -78,7 +78,7 @@ class CleansingJobController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto job = uc.getById(id, tenantId);
+      auto job = uc.getById(tenantId, id);
       if (job is null) {
         writeError(res, 404, "Cleansing job not found");
         return;

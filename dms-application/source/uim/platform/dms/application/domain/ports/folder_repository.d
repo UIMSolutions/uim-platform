@@ -13,12 +13,12 @@ mixin(ShowModule!());
 @safe:
 interface IFolderRepository {
   Folder[] findByTenant(TenantId tenantId);
-  Folder findById(FolderId id, TenantId tenantId);
-  Folder[] findByRepository(RepositoryId repositoryId, TenantId tenantId);
-  Folder[] findByParent(FolderId parentFolderId, TenantId tenantId);
-  Folder findByPath(string path, RepositoryId repositoryId, TenantId tenantId);
+  Folder findById(FolderId tenantId, id tenantId);
+  Folder[] findByRepository(RepositoryId repositorytenantId, id tenantId);
+  Folder[] findByParent(FolderId parentFoldertenantId, id tenantId);
+  Folder findByPath(string path, RepositoryId repositorytenantId, id tenantId);
   void save(Folder folder);
   void update(Folder folder);
-  void remove(FolderId id, TenantId tenantId);
-  void removeByRepository(RepositoryId repositoryId, TenantId tenantId);
+  void remove(FolderId tenantId, id tenantId);
+  void removeByRepository(RepositoryId repositorytenantId, id tenantId);
 }

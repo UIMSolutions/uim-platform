@@ -30,8 +30,8 @@ class VersioningService {
   }
 
   /// Check out a document (lock it for editing).
-  bool checkOut(DocumentId docId, TenantId tenantId, UserId userId) {
-    auto doc = docRepo.findById(docId, tenantId);
+  bool checkOut(DocumentId doctenantId, id tenantId, UserId userId) {
+    auto doc = docRepo.findById(doctenantId, id);
     if (doc is null)
       return false;
     if (doc.status == DocumentStatus.locked)
@@ -44,16 +44,16 @@ class VersioningService {
   }
 
   /// Check in a document, creating a new version.
-  DocumentVersion checkIn(DocumentId docId, TenantId tenantId, UserId userId, bool isMajor,
+  DocumentVersion checkIn(DocumentId doctenantId, id tenantId, UserId userId, bool isMajor,
       string comment, string fileName, string mimeType, long fileSize, string checksum) {
-    auto doc = docRepo.findById(docId, tenantId);
+    auto doc = docRepo.findById(doctenantId, id);
     if (doc is null)
       return null;
     if (doc.status != DocumentStatus.locked)
       return null; // must be checked out first
 
     // Determine version number
-    auto existingVersions = versionRepo.findByDocument(docId, tenantId);
+    auto existingVersions = versionRepo.findByDocument(doctenantId, id);
     int nextVersion = cast(int) existingVersions.length + 1;
 
     // Mark existing current version as superseded
@@ -93,8 +93,8 @@ class VersioningService {
   }
 
   /// Cancel a checkout (unlock without creating a version).
-  bool cancelCheckOut(DocumentId docId, TenantId tenantId) {
-    auto doc = docRepo.findById(docId, tenantId);
+  bool cancelCheckOut(DocumentId doctenantId, id tenantId) {
+    auto doc = docRepo.findById(doctenantId, id);
     if (doc is null)
       return false;
     if (doc.status != DocumentStatus.locked)
@@ -107,12 +107,12 @@ class VersioningService {
   }
 
   /// Get all versions of a document.
-  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId) {
-    return versionRepo.findByDocument(docId, tenantId);
+  DocumentVersion[] getAllVersions(DocumentId doctenantId, id tenantId) {
+    return versionRepo.findByDocument(doctenantId, id);
   }
 
   /// Get the current (latest) version.
-  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId) {
-    return versionRepo.findLatest(docId, tenantId);
+  DocumentVersion getCurrentVersion(DocumentId doctenantId, id tenantId) {
+    return versionRepo.findLatest(doctenantId, id);
   }
 }

@@ -82,7 +82,7 @@ class ProvisioningJobController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto job = uc.getJob(id, tenantId);
+      auto job = uc.getJob(tenantId, id);
       if (job is null) {
         writeError(res, 404, "Provisioning job not found");
         return;
@@ -98,7 +98,7 @@ class ProvisioningJobController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.runJob(id, tenantId);
+      auto result = uc.runJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -143,7 +143,7 @@ class ProvisioningJobController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.cancelJob(id, tenantId);
+      auto result = uc.cancelJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -162,7 +162,7 @@ class ProvisioningJobController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteJob(id, tenantId);
+      auto result = uc.deleteJob(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

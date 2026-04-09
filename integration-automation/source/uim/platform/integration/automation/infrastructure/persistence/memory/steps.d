@@ -17,14 +17,14 @@ import uim.platform.integration.automation.domain.ports;
 class MemoryStepRepository : StepRepository {
   private WorkflowStep[StepId] store;
 
-  WorkflowStep[] findByWorkflow(WorkflowId workflowId, TenantId tenantId) {
+  WorkflowStep[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     auto result = store.byValue().filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId).array;
     result.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
     return result;
   }
 
-  WorkflowStep* findById(StepId id, TenantId tenantId) {
+  WorkflowStep* findById(StepId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -40,12 +40,12 @@ class MemoryStepRepository : StepRepository {
         && e.assignedRole == assignedRole).array;
   }
 
-  WorkflowStep[] findByStatus(WorkflowId workflowId, TenantId tenantId, StepStatus status) {
+  WorkflowStep[] findByStatus(WorkflowId workflowtenantId, id tenantId, StepStatus status) {
     return store.byValue().filter!(e => e.workflowId == workflowId
         && e.tenantId == tenantId && e.status == status).array;
   }
 
-  WorkflowStep* findBySequence(WorkflowId workflowId, TenantId tenantId, int sequenceNumber) {
+  WorkflowStep* findBySequence(WorkflowId workflowtenantId, id tenantId, int sequenceNumber) {
     foreach (ref s; store.byValue())
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
@@ -60,13 +60,13 @@ class MemoryStepRepository : StepRepository {
     store[step.id] = step;
   }
 
-  void remove(StepId id, TenantId tenantId) {
+  void remove(StepId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  void removeByWorkflow(WorkflowId workflowId, TenantId tenantId) {
+  void removeByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     StepId[] toRemove;
     foreach (ref kv; store.byKeyValue())
       if (kv.value.workflowId == workflowId && kv.value.tenantId == tenantId)

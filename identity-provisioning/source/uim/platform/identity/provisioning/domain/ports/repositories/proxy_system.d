@@ -10,11 +10,11 @@ import uim.platform.identity.provisioning.domain.entities.proxy_system;
 
 interface ProxySystemRepository {
   ProxySystem[] findByTenant(TenantId tenantId);
-  ProxySystem* findById(ProxySystemId id, TenantId tenantId);
+  ProxySystem* findById(ProxySystemId tenantId, id tenantId);
   ProxySystem* findByName(TenantId tenantId, string name);
-  ProxySystem[] findBySource(SourceSystemId sourceId, TenantId tenantId);
-  ProxySystem[] findByTarget(TargetSystemId targetId, TenantId tenantId);
+  ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId);
+  ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId);
   void save(ProxySystem entity);
   void update(ProxySystem entity);
-  void remove(ProxySystemId id, TenantId tenantId);
+  void remove(ProxySystemId tenantId, id tenantId);
 }

@@ -28,8 +28,8 @@ class StepExecutor {
   }
 
   /// Mark a manual step as started.
-  bool startStep(StepId stepId, TenantId tenantId, UserId executedBy) {
-    auto step = stepRepo.findById(stepId, tenantId);
+  bool startStep(StepId steptenantId, id tenantId, UserId executedBy) {
+    auto step = stepRepo.findById(steptenantId, id);
     if (step is null)
       return false;
     if (step.status != StepStatus.pending)
@@ -39,14 +39,14 @@ class StepExecutor {
     step.startedAt = Clock.currStdTime();
     stepRepo.update(*step);
 
-    recordLog(step.workflowId, stepId, tenantId, "step.started",
+    recordLog(step.workflowId, steptenantId, id, "step.started",
         ExecutionOutcome.success, "Step started", executedBy);
     return true;
   }
 
   /// Complete a manual step with a result.
-  bool completeStep(StepId stepId, TenantId tenantId, UserId executedBy, string result) {
-    auto step = stepRepo.findById(stepId, tenantId);
+  bool completeStep(StepId steptenantId, id tenantId, UserId executedBy, string result) {
+    auto step = stepRepo.findById(steptenantId, id);
     if (step is null)
       return false;
     if (step.status != StepStatus.inProgress)
@@ -61,14 +61,14 @@ class StepExecutor {
     stepRepo.update(*step);
 
     long durationMs = (endTime - startTime) / 10_000; // hnsecs to ms
-    recordLog(step.workflowId, stepId, tenantId, "step.completed",
+    recordLog(step.workflowId, steptenantId, id, "step.completed",
         ExecutionOutcome.success, result, executedBy, durationMs);
     return true;
   }
 
   /// Mark a step as failed.
-  bool failStep(StepId stepId, TenantId tenantId, UserId executedBy, string errorMessage) {
-    auto step = stepRepo.findById(stepId, tenantId);
+  bool failStep(StepId steptenantId, id tenantId, UserId executedBy, string errorMessage) {
+    auto step = stepRepo.findById(steptenantId, id);
     if (step is null)
       return false;
 
@@ -77,14 +77,14 @@ class StepExecutor {
     step.completedAt = Clock.currStdTime();
     stepRepo.update(*step);
 
-    recordLog(step.workflowId, stepId, tenantId, "step.failed",
+    recordLog(step.workflowId, steptenantId, id, "step.failed",
         ExecutionOutcome.failure, errorMessage, executedBy);
     return true;
   }
 
   /// Skip a step.
-  bool skipStep(StepId stepId, TenantId tenantId, UserId executedBy, string reason) {
-    auto step = stepRepo.findById(stepId, tenantId);
+  bool skipStep(StepId steptenantId, id tenantId, UserId executedBy, string reason) {
+    auto step = stepRepo.findById(steptenantId, id);
     if (step is null)
       return false;
 
@@ -93,12 +93,12 @@ class StepExecutor {
     step.completedAt = Clock.currStdTime();
     stepRepo.update(*step);
 
-    recordLog(step.workflowId, stepId, tenantId, "step.skipped",
+    recordLog(step.workflowId, steptenantId, id, "step.skipped",
         ExecutionOutcome.skipped, reason, executedBy);
     return true;
   }
 
-  private void recordLog(WorkflowId workflowId, StepId stepId, TenantId tenantId, string action,
+  private void recordLog(WorkflowId workflowId, StepId steptenantId, id tenantId, string action,
       ExecutionOutcome outcome, string message, string executedBy, long durationMs = 0) {
     auto log = ExecutionLog();
     log.id = randomUUID();

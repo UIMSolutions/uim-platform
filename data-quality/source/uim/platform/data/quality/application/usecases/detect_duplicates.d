@@ -77,7 +77,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
   }
 
   /// Get a single match group by ID.
-  MatchGroup* getById(MatchGroupId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  MatchGroup* getById(MatchGroupId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 }

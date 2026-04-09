@@ -82,7 +82,7 @@ class AppRouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto entry = uc.get_(id, tenantId);
+      auto entry = uc.get_(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Route not found");
         return;
@@ -138,7 +138,7 @@ class AppRouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto result = uc.remove(id, tenantId);
+      auto result = uc.remove(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

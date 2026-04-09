@@ -17,11 +17,11 @@ import uim.platform.integration.automation.domain.ports;
 class MemoryExecutionLogRepository : ExecutionLogRepository {
   private ExecutionLog[] store;
 
-  ExecutionLog[] findByWorkflow(WorkflowId workflowId, TenantId tenantId) {
+  ExecutionLog[] findByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     return store.filter!(e => e.workflowId == workflowId && e.tenantId == tenantId).array;
   }
 
-  ExecutionLog[] findByStep(StepId stepId, TenantId tenantId) {
+  ExecutionLog[] findByStep(StepId steptenantId, id tenantId) {
     return store.filter!(e => e.stepId == stepId && e.tenantId == tenantId).array;
   }
 
@@ -45,15 +45,15 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
     }).array;
   }
 
-  long countByWorkflow(WorkflowId workflowId, TenantId tenantId) {
-    return cast(long) findByWorkflow(workflowId, tenantId).length;
+  long countByWorkflow(WorkflowId workflowtenantId, id tenantId) {
+    return cast(long) findByWorkflow(workflowtenantId, id).length;
   }
 
   void save(ExecutionLog log) {
     store ~= log;
   }
 
-  void removeByWorkflow(WorkflowId workflowId, TenantId tenantId) {
+  void removeByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     store = store.filter!(e => !(e.workflowId == workflowId && e.tenantId == tenantId)).array;
   }
 

@@ -48,8 +48,8 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(scenario.id, "");
   }
 
-  IntegrationScenario* getScenario(ScenarioId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  IntegrationScenario* getScenario(ScenarioId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   IntegrationScenario[] listScenarios(TenantId tenantId) {
@@ -95,12 +95,12 @@ class ManageScenariosUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteScenario(ScenarioId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteScenario(ScenarioId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Scenario not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

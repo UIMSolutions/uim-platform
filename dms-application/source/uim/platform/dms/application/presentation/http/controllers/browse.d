@@ -44,7 +44,7 @@ class BrowseController : PlatformController {
     try {
       auto folderId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto contents = uc.browseFolderContents(folderId, tenantId);
+      auto contents = uc.browseFolderContents(foldertenantId, id);
 
       auto fArr = Json.emptyArray;
       foreach (ref f; contents.subfolders)
@@ -70,7 +70,7 @@ class BrowseController : PlatformController {
     try {
       auto repoId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getRepositorySummary(repoId, tenantId);
+      auto summary = uc.getRepositorySummary(repotenantId, id);
 
       if (summary.repositoryid.isEmpty) {
         writeError(res, 404, "Repository not found");
@@ -117,7 +117,7 @@ class BrowseController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
-      auto items = uc.getFavorites(userId, tenantId);
+      auto items = uc.getFavorites(usertenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref f; items)
@@ -137,7 +137,7 @@ class BrowseController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.removeFavorite(id, tenantId);
+      auto result = uc.removeFavorite(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

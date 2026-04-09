@@ -72,8 +72,8 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(dest.id, "");
   }
 
-  Destination* getDestination(DestinationId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Destination* getDestination(DestinationId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Destination[] listDestinations(TenantId tenantId) {
@@ -129,12 +129,12 @@ class ManageDestinationsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteDestination(DestinationId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteDestination(DestinationId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Destination not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

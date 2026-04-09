@@ -67,12 +67,12 @@ class RunProvisioningJobsUseCase : UIMUseCase {
   }
 
   /// Run a previously created job.
-  CommandResult runJob(ProvisioningJobId id, TenantId tenantId) {
-    if (!engine.canRun(id, tenantId))
+  CommandResult runJob(ProvisioningJobId tenantId, id tenantId) {
+    if (!engine.canRun(tenantId, id))
       return CommandResult("",
           "Job cannot be started - verify systems are active and job is scheduled");
 
-    auto result = engine.runJob(id, tenantId);
+    auto result = engine.runJob(tenantId, id);
     if (result is null)
       return CommandResult("", "Failed to execute provisioning job");
 
@@ -88,15 +88,15 @@ class RunProvisioningJobsUseCase : UIMUseCase {
     return runJob(createResult.id, req.tenantId);
   }
 
-  CommandResult cancelJob(ProvisioningJobId id, TenantId tenantId) {
-    if (!engine.cancelJob(id, tenantId))
+  CommandResult cancelJob(ProvisioningJobId tenantId, id tenantId) {
+    if (!engine.cancelJob(tenantId, id))
       return CommandResult("", "Job cannot be cancelled");
 
     return CommandResult(true, id.toString, "");
   }
 
-  ProvisioningJob* getJob(ProvisioningJobId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ProvisioningJob* getJob(ProvisioningJobId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ProvisioningJob[] listJobs(TenantId tenantId) {
@@ -107,8 +107,8 @@ class RunProvisioningJobsUseCase : UIMUseCase {
     return repo.findByStatus(tenantId, status);
   }
 
-  CommandResult deleteJob(ProvisioningJobId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteJob(ProvisioningJobId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Provisioning job not found");
 
@@ -116,8 +116,8 @@ class RunProvisioningJobsUseCase : UIMUseCase {
       return CommandResult("", "Cannot delete a running job");
 
     // Cascade delete logs
-    logRepo.removeByJob(id, tenantId);
-    repo.remove(id, tenantId);
+    logRepo.removeByJob(tenantId, id);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -24,14 +24,14 @@ class MemoryShareRepository : IShareRepository {
     return result;
   }
 
-  Share findById(ShareId id, TenantId tenantId) {
+  Share findById(ShareId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Share[] findByDocument(DocumentId documentId, TenantId tenantId) {
+  Share[] findByDocument(DocumentId documenttenantId, id tenantId) {
     Share[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
@@ -63,11 +63,11 @@ class MemoryShareRepository : IShareRepository {
     store[share.id] = share;
   }
 
-  void remove(ShareId id, TenantId tenantId) {
+  void remove(ShareId tenantId, id tenantId) {
     store.remove(id);
   }
 
-  void removeByDocument(DocumentId documentId, TenantId tenantId) {
+  void removeByDocument(DocumentId documenttenantId, id tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)

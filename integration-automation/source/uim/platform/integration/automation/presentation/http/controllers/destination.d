@@ -91,7 +91,7 @@ class DestinationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto dest = useCase.getDestination(id, tenantId);
+      auto dest = useCase.getDestination(tenantId, id);
       if (dest is null) {
         writeError(res, 404, "Destination not found");
         return;
@@ -145,7 +145,7 @@ class DestinationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteDestination(id, tenantId);
+      auto result = useCase.deleteDestination(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

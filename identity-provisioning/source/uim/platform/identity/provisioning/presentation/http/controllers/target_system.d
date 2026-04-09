@@ -81,7 +81,7 @@ class TargetSystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto sys = uc.getTargetSystem(id, tenantId);
+      auto sys = uc.getTargetSystem(tenantId, id);
       if (sys is null) {
         writeError(res, 404, "Target system not found");
         return;
@@ -125,7 +125,7 @@ class TargetSystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateSystem(id, tenantId);
+      auto result = uc.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -147,7 +147,7 @@ class TargetSystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateSystem(id, tenantId);
+      auto result = uc.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -166,7 +166,7 @@ class TargetSystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteTargetSystem(id, tenantId);
+      auto result = uc.deleteTargetSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

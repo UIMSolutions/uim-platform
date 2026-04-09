@@ -24,7 +24,7 @@ class AccessControlService {
   /// Check if a user has at least the required permission level on a resource.
   bool hasPermission(string resourceId, ResourceType resourceType, UserId userId,
       PermissionLevel required, TenantId tenantId) {
-    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, userId, tenantId);
+    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, usertenantId, id);
     if (perm is null)
       return false;
     return permissionRank(perm.level) >= permissionRank(required);
@@ -32,8 +32,8 @@ class AccessControlService {
 
   /// Get effective permission level for a user on a resource.
   PermissionLevel getEffectivePermission(string resourceId,
-      ResourceType resourceType, UserId userId, TenantId tenantId) {
-    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, userId, tenantId);
+      ResourceType resourceType, UserId usertenantId, id tenantId) {
+    auto perm = permRepo.findByResourceAndUser(resourceId, resourceType, usertenantId, id);
     if (perm is null)
       return PermissionLevel.read; // default minimum
     return perm.level;

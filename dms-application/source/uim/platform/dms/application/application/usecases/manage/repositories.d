@@ -53,8 +53,8 @@ class ManageRepositoriesUseCase : UIMUseCase {
     return repo.findByTenant(tenantId);
   }
 
-  Repository getRepository(RepositoryId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Repository getRepository(RepositoryId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   CommandResult updateRepository(UpdateRepositoryRequest r) {
@@ -76,8 +76,8 @@ class ManageRepositoriesUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult archiveRepository(RepositoryId id, TenantId tenantId) {
-    auto entity = repo.findById(id, tenantId);
+  CommandResult archiveRepository(RepositoryId tenantId, id tenantId) {
+    auto entity = repo.findById(tenantId, id);
     if (entity is null)
       return CommandResult("", "Repository not found");
 
@@ -87,8 +87,8 @@ class ManageRepositoriesUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult activateRepository(RepositoryId id, TenantId tenantId) {
-    auto entity = repo.findById(id, tenantId);
+  CommandResult activateRepository(RepositoryId tenantId, id tenantId) {
+    auto entity = repo.findById(tenantId, id);
     if (entity is null)
       return CommandResult("", "Repository not found");
 
@@ -98,12 +98,12 @@ class ManageRepositoriesUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteRepository(RepositoryId id, TenantId tenantId) {
-    auto entity = repo.findById(id, tenantId);
+  CommandResult deleteRepository(RepositoryId tenantId, id tenantId) {
+    auto entity = repo.findById(tenantId, id);
     if (entity is null)
       return CommandResult("", "Repository not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

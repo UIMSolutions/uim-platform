@@ -91,7 +91,7 @@ class ValidateController : PlatformController {
     try {
       auto recordId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.getResultByRecord(recordId, tenantId);
+      auto result = uc.getResultByRecord(recordtenantId, id);
       if (result is null) {
         writeError(res, 404, "Validation result not found");
         return;

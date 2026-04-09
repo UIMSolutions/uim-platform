@@ -19,7 +19,7 @@ class MemoryValidationResultRepository : ValidationResultRepository {
     return store.byValue().filter!(r => r.tenantId == tenantId).array;
   }
 
-  ValidationResult* findByRecord(RecordId recordId, TenantId tenantId) {
+  ValidationResult* findByRecord(RecordId recordtenantId, id tenantId) {
     if (auto p = recordId in store)
       if (p.tenantId == tenantId)
         return p;

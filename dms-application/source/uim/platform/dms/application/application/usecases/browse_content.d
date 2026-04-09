@@ -52,24 +52,24 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Browse folder contents (subfolders + documents).
-  FolderContents browseFolderContents(FolderId folderId, TenantId tenantId) {
+  FolderContents browseFolderContents(FolderId foldertenantId, id tenantId) {
     FolderContents result;
-    result.subfolders = folderRepo.findByParent(folderId, tenantId);
-    result.documents = docRepo.findByFolder(folderId, tenantId);
+    result.subfolders = folderRepo.findByParent(foldertenantId, id);
+    result.documents = docRepo.findByFolder(foldertenantId, id);
     return result;
   }
 
   /// Get repository summary.
-  RepositorySummary getRepositorySummary(string repositoryId, TenantId tenantId) {
+  RepositorySummary getRepositorySummary(string repositorytenantId, id tenantId) {
     RepositorySummary summary;
-    auto repo = repoRepo.findById(repositoryId, tenantId);
+    auto repo = repoRepo.findById(repositorytenantId, id);
     if (repo is null)
       return summary;
 
     summary.repositoryId = repositoryId;
     summary.name = repo.name;
-    summary.totalDocuments = docRepo.countByRepository(repositoryId, tenantId);
-    summary.totalFolders = cast(long) folderRepo.findByRepository(repositoryId, tenantId).length;
+    summary.totalDocuments = docRepo.countByRepository(repositorytenantId, id);
+    summary.totalFolders = cast(long) folderRepo.findByRepository(repositorytenantId, id).length;
     summary.status = repo.status;
     return summary;
   }
@@ -94,17 +94,17 @@ class BrowseContentUseCase : UIMUseCase {
   }
 
   /// Get user favorites.
-  Favorite[] getFavorites(UserId userId, TenantId tenantId) {
-    return favRepo.findByUser(userId, tenantId);
+  Favorite[] getFavorites(UserId usertenantId, id tenantId) {
+    return favRepo.findByUser(usertenantId, id);
   }
 
   /// Remove a favorite.
-  CommandResult removeFavorite(FavoriteId id, TenantId tenantId) {
-    auto fav = favRepo.findById(id, tenantId);
+  CommandResult removeFavorite(FavoriteId tenantId, id tenantId) {
+    auto fav = favRepo.findById(tenantId, id);
     if (fav is null)
       return CommandResult("", "Favorite not found");
 
-    favRepo.remove(id, tenantId);
+    favRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

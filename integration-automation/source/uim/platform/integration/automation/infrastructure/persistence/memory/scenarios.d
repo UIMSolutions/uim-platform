@@ -21,7 +21,7 @@ class MemoryScenarioRepository : ScenarioRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  IntegrationScenario* findById(ScenarioId id, TenantId tenantId) {
+  IntegrationScenario* findById(ScenarioId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -49,7 +49,7 @@ class MemoryScenarioRepository : ScenarioRepository {
     store[scenario.id] = scenario;
   }
 
-  void remove(ScenarioId id, TenantId tenantId) {
+  void remove(ScenarioId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

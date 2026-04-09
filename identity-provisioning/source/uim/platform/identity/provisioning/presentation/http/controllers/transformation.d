@@ -81,7 +81,7 @@ class TransformationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = uc.getTransformation(id, tenantId);
+      auto t = uc.getTransformation(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Transformation not found");
         return;
@@ -133,7 +133,7 @@ class TransformationController {
         return;
       }
 
-      auto output = uc.testTransformation(inputAttributes, systemId, tenantId);
+      auto output = uc.testTransformation(inputAttributes, systemtenantId, id);
       auto resp = Json.emptyObject;
       resp["output"] = Json(output);
       res.writeJsonBody(resp, 200);
@@ -147,7 +147,7 @@ class TransformationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteTransformation(id, tenantId);
+      auto result = uc.deleteTransformation(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

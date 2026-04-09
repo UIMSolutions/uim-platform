@@ -24,14 +24,14 @@ class MemoryFolderRepository : IFolderRepository {
     return result;
   }
 
-  Folder findById(FolderId id, TenantId tenantId) {
+  Folder findById(FolderId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Folder[] findByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  Folder[] findByRepository(RepositoryId repositorytenantId, id tenantId) {
     Folder[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -39,7 +39,7 @@ class MemoryFolderRepository : IFolderRepository {
     return result;
   }
 
-  Folder[] findByParent(FolderId parentFolderId, TenantId tenantId) {
+  Folder[] findByParent(FolderId parentFoldertenantId, id tenantId) {
     Folder[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.parentFolderId == parentFolderId)
@@ -47,7 +47,7 @@ class MemoryFolderRepository : IFolderRepository {
     return result;
   }
 
-  Folder findByPath(string path, RepositoryId repositoryId, TenantId tenantId) {
+  Folder findByPath(string path, RepositoryId repositorytenantId, id tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId && e.path == path)
         return e;
@@ -62,11 +62,11 @@ class MemoryFolderRepository : IFolderRepository {
     store[folder.id] = folder;
   }
 
-  void remove(FolderId id, TenantId tenantId) {
+  void remove(FolderId tenantId, id tenantId) {
     store.remove(id);
   }
 
-  void removeByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  void removeByRepository(RepositoryId repositorytenantId, id tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)

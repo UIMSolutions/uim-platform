@@ -429,7 +429,7 @@ NSOV-1  Integration Automation Services
 | Flow ID | Source | Target | Data | Format | Trigger |
 |---|---|---|---|---|---|
 | IF-1 | Client | ScenarioController | Scenario definitions, step templates, tags, category | JSON | User action |
-| IF-2 | Client | WorkflowController | Workflow creation (scenarioId, tenantId), lifecycle commands | JSON | User action |
+| IF-2 | Client | WorkflowController | Workflow creation (scenariotenantId, id), lifecycle commands | JSON | User action |
 | IF-3 | Client | StepController | Step creation, completion notes, failure reasons, skip reasons | JSON | Task action |
 | IF-4 | Client | SystemController | System registration (type, host, port), connection test requests | JSON | Admin action |
 | IF-5 | Client | DestinationController | Destination config (URL, auth, proxy, linked system) | JSON | Admin action |

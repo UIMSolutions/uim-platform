@@ -92,16 +92,16 @@ class ManageDocumentsUseCase : UIMUseCase {
     return docRepo.findByTenant(tenantId);
   }
 
-  Document[] listByFolder(FolderId folderId, TenantId tenantId) {
-    return docRepo.findByFolder(folderId, tenantId);
+  Document[] listByFolder(FolderId foldertenantId, id tenantId) {
+    return docRepo.findByFolder(foldertenantId, id);
   }
 
-  Document[] listByRepository(string repositoryId, TenantId tenantId) {
-    return docRepo.findByRepository(repositoryId, tenantId);
+  Document[] listByRepository(string repositorytenantId, id tenantId) {
+    return docRepo.findByRepository(repositorytenantId, id);
   }
 
-  Document getDocument(DocumentId id, TenantId tenantId) {
-    return docRepo.findById(id, tenantId);
+  Document getDocument(DocumentId tenantId, id tenantId) {
+    return docRepo.findById(tenantId, id);
   }
 
   Document[] searchByName(string name, TenantId tenantId) {
@@ -144,8 +144,8 @@ class ManageDocumentsUseCase : UIMUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult archiveDocument(DocumentId id, TenantId tenantId) {
-    auto doc = docRepo.findById(id, tenantId);
+  CommandResult archiveDocument(DocumentId tenantId, id tenantId) {
+    auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
       return CommandResult("", "Document not found");
 
@@ -155,14 +155,14 @@ class ManageDocumentsUseCase : UIMUseCase {
     return CommandResult(doc.id, "");
   }
 
-  CommandResult deleteDocument(DocumentId id, TenantId tenantId) {
-    auto doc = docRepo.findById(id, tenantId);
+  CommandResult deleteDocument(DocumentId tenantId, id tenantId) {
+    auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
       return CommandResult("", "Document not found");
 
     // Cascade delete versions
-    versionRepo.removeByDocument(id, tenantId);
-    docRepo.remove(id, tenantId);
+    versionRepo.removeByDocument(tenantId, id);
+    docRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

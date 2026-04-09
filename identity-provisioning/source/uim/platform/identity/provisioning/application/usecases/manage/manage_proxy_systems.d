@@ -68,8 +68,8 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  ProxySystem* getProxySystem(ProxySystemId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ProxySystem* getProxySystem(ProxySystemId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ProxySystem[] listProxySystems(TenantId tenantId) {
@@ -99,8 +99,8 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult activateSystem(ProxySystemId id, TenantId tenantId) {
-    auto sys = repo.findById(id, tenantId);
+  CommandResult activateSystem(ProxySystemId tenantId, id tenantId) {
+    auto sys = repo.findById(tenantId, id);
     if (sys is null)
       return CommandResult("", "Proxy system not found");
 
@@ -113,8 +113,8 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deactivateSystem(ProxySystemId id, TenantId tenantId) {
-    auto sys = repo.findById(id, tenantId);
+  CommandResult deactivateSystem(ProxySystemId tenantId, id tenantId) {
+    auto sys = repo.findById(tenantId, id);
     if (sys is null)
       return CommandResult("", "Proxy system not found");
 
@@ -124,12 +124,12 @@ class ManageProxySystemsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteProxySystem(ProxySystemId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteProxySystem(ProxySystemId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Proxy system not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

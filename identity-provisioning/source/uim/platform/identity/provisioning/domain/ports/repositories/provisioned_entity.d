@@ -10,14 +10,14 @@ import uim.platform.identity.provisioning.domain.entities.provisioned_entity;
 
 interface ProvisionedEntityRepository {
   ProvisionedEntity[] findByTenant(TenantId tenantId);
-  ProvisionedEntity* findById(ProvisionedEntityId id, TenantId tenantId);
-  ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targetId, TenantId tenantId);
-  ProvisionedEntity[] findBySource(SourceSystemId sourceId, TenantId tenantId);
-  ProvisionedEntity[] findByTarget(TargetSystemId targetId, TenantId tenantId);
+  ProvisionedEntity* findById(ProvisionedEntityId tenantId, id tenantId);
+  ProvisionedEntity* findByExternalId(string externalId, TargetSystemId targettenantId, id tenantId);
+  ProvisionedEntity[] findBySource(SourceSystemId sourcetenantId, id tenantId);
+  ProvisionedEntity[] findByTarget(TargetSystemId targettenantId, id tenantId);
   ProvisionedEntity[] findByStatus(TenantId tenantId, EntityStatus status);
   ProvisionedEntity[] findByType(TenantId tenantId, EntityType entityType);
-  long countByTarget(TargetSystemId targetId, TenantId tenantId);
+  long countByTarget(TargetSystemId targettenantId, id tenantId);
   void save(ProvisionedEntity entity);
   void update(ProvisionedEntity entity);
-  void remove(ProvisionedEntityId id, TenantId tenantId);
+  void remove(ProvisionedEntityId tenantId, id tenantId);
 }

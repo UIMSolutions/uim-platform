@@ -47,8 +47,8 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SourceSystem* getSourceSystem(SourceSystemId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  SourceSystem* getSourceSystem(SourceSystemId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   SourceSystem[] listSourceSystems(TenantId tenantId) {
@@ -79,8 +79,8 @@ class ManageSourceSystemsUseCase : UIMUseCase {
   }
 
   /// Activate a source system for provisioning.
-  CommandResult activateSystem(SourceSystemId id, TenantId tenantId) {
-    auto sys = repo.findById(id, tenantId);
+  CommandResult activateSystem(SourceSystemId tenantId, id tenantId) {
+    auto sys = repo.findById(tenantId, id);
     if (sys is null)
       return CommandResult("", "Source system not found");
 
@@ -94,8 +94,8 @@ class ManageSourceSystemsUseCase : UIMUseCase {
   }
 
   /// Deactivate a source system.
-  CommandResult deactivateSystem(SourceSystemId id, TenantId tenantId) {
-    auto sys = repo.findById(id, tenantId);
+  CommandResult deactivateSystem(SourceSystemId tenantId, id tenantId) {
+    auto sys = repo.findById(tenantId, id);
     if (sys is null)
       return CommandResult("", "Source system not found");
 
@@ -105,12 +105,12 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult deleteSourceSystem(SourceSystemId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteSourceSystem(SourceSystemId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Source system not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

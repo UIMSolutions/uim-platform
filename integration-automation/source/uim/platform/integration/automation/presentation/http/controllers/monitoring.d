@@ -53,7 +53,7 @@ class MonitoringController {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getWorkflowLogs(workflowId, tenantId);
+      auto logs = useCase.getWorkflowLogs(workflowtenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref l; logs)
@@ -73,7 +73,7 @@ class MonitoringController {
     try {
       auto stepId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto logs = useCase.getStepLogs(stepId, tenantId);
+      auto logs = useCase.getStepLogs(steptenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref l; logs)
@@ -112,7 +112,7 @@ class MonitoringController {
     try {
       auto workflowId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = useCase.getWorkflowSummary(workflowId, tenantId);
+      auto summary = useCase.getWorkflowSummary(workflowtenantId, id);
 
       auto j = Json.emptyObject;
       j["workflowId"] = Json(summary.workflowId);

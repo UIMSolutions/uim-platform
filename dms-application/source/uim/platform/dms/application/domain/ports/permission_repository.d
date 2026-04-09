@@ -13,13 +13,13 @@ mixin(ShowModule!());
 @safe:
 interface IPermissionRepository {
   Permission[] findByTenant(TenantId tenantId);
-  Permission findById(PermissionId id, TenantId tenantId);
+  Permission findById(PermissionId tenantId, id tenantId);
   Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId);
-  Permission[] findByUser(UserId userId, TenantId tenantId);
+  Permission[] findByUser(UserId usertenantId, id tenantId);
   Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
-      UserId userId, TenantId tenantId);
+      UserId usertenantId, id tenantId);
   void save(Permission perm);
   void update(Permission perm);
-  void remove(PermissionId id, TenantId tenantId);
+  void remove(PermissionId tenantId, id tenantId);
   void removeByResource(string resourceId, ResourceType resourceType, TenantId tenantId);
 }

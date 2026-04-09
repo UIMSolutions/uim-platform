@@ -61,8 +61,8 @@ class ManagePermissionsUseCase : UIMUseCase {
     return permRepo.findByResource(resourceId, resourceType, tenantId);
   }
 
-  Permission[] listByUser(UserId userId, TenantId tenantId) {
-    return permRepo.findByUser(userId, tenantId);
+  Permission[] listByUser(UserId usertenantId, id tenantId) {
+    return permRepo.findByUser(usertenantId, id);
   }
 
   bool checkAccess(string resourceId, ResourceType resourceType, UserId userId,
@@ -80,12 +80,12 @@ class ManagePermissionsUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult revokePermission(PermissionId id, TenantId tenantId) {
-    auto entity = permRepo.findById(id, tenantId);
+  CommandResult revokePermission(PermissionId tenantId, id tenantId) {
+    auto entity = permRepo.findById(tenantId, id);
     if (entity is null)
       return CommandResult("", "Permission not found");
 
-    permRepo.remove(id, tenantId);
+    permRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

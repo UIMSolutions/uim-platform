@@ -67,16 +67,16 @@ class ManageFoldersUseCase : UIMUseCase {
     return folderRepo.findByTenant(tenantId);
   }
 
-  Folder[] listByRepository(RepositoryId repositoryId, TenantId tenantId) {
-    return folderRepo.findByRepository(repositoryId, tenantId);
+  Folder[] listByRepository(RepositoryId repositorytenantId, id tenantId) {
+    return folderRepo.findByRepository(repositorytenantId, id);
   }
 
-  Folder[] listChildren(FolderId parentId, TenantId tenantId) {
-    return folderRepo.findByParent(parentId, tenantId);
+  Folder[] listChildren(FolderId parenttenantId, id tenantId) {
+    return folderRepo.findByParent(parenttenantId, id);
   }
 
-  Folder getFolder(FolderId id, TenantId tenantId) {
-    return folderRepo.findById(id, tenantId);
+  Folder getFolder(FolderId tenantId, id tenantId) {
+    return folderRepo.findById(tenantId, id);
   }
 
   CommandResult updateFolder(UpdateFolderRequest r) {
@@ -124,12 +124,12 @@ class ManageFoldersUseCase : UIMUseCase {
     return CommandResult(entity.id, "");
   }
 
-  CommandResult deleteFolder(FolderId id, TenantId tenantId) {
-    auto entity = folderRepo.findById(id, tenantId);
+  CommandResult deleteFolder(FolderId tenantId, id tenantId) {
+    auto entity = folderRepo.findById(tenantId, id);
     if (entity is null)
       return CommandResult("", "Folder not found");
 
-    folderRepo.remove(id, tenantId);
+    folderRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 

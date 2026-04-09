@@ -86,7 +86,7 @@ class ProfileController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto profile = uc.getById(id, tenantId);
+      auto profile = uc.getById(tenantId, id);
       if (profile is null) {
         writeError(res, 404, "Data profile not found");
         return;

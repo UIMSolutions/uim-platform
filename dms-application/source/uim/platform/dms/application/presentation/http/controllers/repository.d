@@ -88,7 +88,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto repo = uc.getRepository(id, tenantId);
+      auto repo = uc.getRepository(tenantId, id);
       if (repo is null) {
         writeError(res, 404, "Repository not found");
         return;
@@ -133,7 +133,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateRepository(id, tenantId);
+      auto result = uc.activateRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -152,7 +152,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.archiveRepository(id, tenantId);
+      auto result = uc.archiveRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -171,7 +171,7 @@ class RepositoryController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteRepository(id, tenantId);
+      auto result = uc.deleteRepository(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

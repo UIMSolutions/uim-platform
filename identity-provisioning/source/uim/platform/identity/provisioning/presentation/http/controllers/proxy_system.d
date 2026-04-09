@@ -83,7 +83,7 @@ class ProxySystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto sys = uc.getProxySystem(id, tenantId);
+      auto sys = uc.getProxySystem(tenantId, id);
       if (sys is null) {
         writeError(res, 404, "Proxy system not found");
         return;
@@ -127,7 +127,7 @@ class ProxySystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.activateSystem(id, tenantId);
+      auto result = uc.activateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -149,7 +149,7 @@ class ProxySystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deactivateSystem(id, tenantId);
+      auto result = uc.deactivateSystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -168,7 +168,7 @@ class ProxySystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteProxySystem(id, tenantId);
+      auto result = uc.deleteProxySystem(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

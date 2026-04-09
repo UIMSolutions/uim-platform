@@ -24,5 +24,5 @@ interface ValidationRuleRepository {
   ValidationRule[] findActive(TenantId tenantId);
   void save(ValidationRule rule);
   void update(ValidationRule rule);
-  void remove(RuleId id, TenantId tenantId);
+  void remove(RuleId tenantId, id tenantId);
 }

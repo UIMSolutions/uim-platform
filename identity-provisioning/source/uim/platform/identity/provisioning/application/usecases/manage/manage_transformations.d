@@ -53,16 +53,16 @@ class ManageTransformationsUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Transformation* getTransformation(TransformationId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Transformation* getTransformation(TransformationId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Transformation[] listTransformations(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
-  Transformation[] listBySystem(string systemId, TenantId tenantId) {
-    return repo.findBySystem(systemId, tenantId);
+  Transformation[] listBySystem(string systemtenantId, id tenantId) {
+    return repo.findBySystem(systemtenantId, id);
   }
 
   CommandResult updateTransformation(UpdateTransformationRequest req) {
@@ -92,16 +92,16 @@ class ManageTransformationsUseCase : UIMUseCase {
   }
 
   /// Test a transformation with sample input.
-  string testTransformation(string inputAttributes, string systemId, TenantId tenantId) {
-    return engine.applyTransformations(inputAttributes, systemId, tenantId);
+  string testTransformation(string inputAttributes, string systemtenantId, id tenantId) {
+    return engine.applyTransformations(inputAttributes, systemtenantId, id);
   }
 
-  CommandResult deleteTransformation(TransformationId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteTransformation(TransformationId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "Transformation not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

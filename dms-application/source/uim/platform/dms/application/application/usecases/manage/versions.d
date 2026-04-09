@@ -21,8 +21,8 @@ class ManageVersionsUseCase : UIMUseCase {
     this.versioningService = versioningService;
   }
 
-  CommandResult checkOut(DocumentId docId, TenantId tenantId, UserId userId) {
-    auto ok = versioningService.checkOut(docId, tenantId, userId);
+  CommandResult checkOut(DocumentId doctenantId, id tenantId, UserId userId) {
+    auto ok = versioningService.checkOut(doctenantId, id, userId);
     if (!ok)
       return CommandResult("", "Cannot check out document (not found or already locked)");
     return CommandResult(docId, "");
@@ -37,18 +37,18 @@ class ManageVersionsUseCase : UIMUseCase {
     return CommandResult(ver.id, "");
   }
 
-  CommandResult cancelCheckOut(DocumentId docId, TenantId tenantId) {
-    auto ok = versioningService.cancelCheckOut(docId, tenantId);
+  CommandResult cancelCheckOut(DocumentId doctenantId, id tenantId) {
+    auto ok = versioningService.cancelCheckOut(doctenantId, id);
     if (!ok)
       return CommandResult("", "Cannot cancel checkout (not found or not locked)");
     return CommandResult(docId, "");
   }
 
-  DocumentVersion[] getAllVersions(DocumentId docId, TenantId tenantId) {
-    return versioningService.getAllVersions(docId, tenantId);
+  DocumentVersion[] getAllVersions(DocumentId doctenantId, id tenantId) {
+    return versioningService.getAllVersions(doctenantId, id);
   }
 
-  DocumentVersion getCurrentVersion(DocumentId docId, TenantId tenantId) {
-    return versioningService.getCurrentVersion(docId, tenantId);
+  DocumentVersion getCurrentVersion(DocumentId doctenantId, id tenantId) {
+    return versioningService.getCurrentVersion(doctenantId, id);
   }
 }

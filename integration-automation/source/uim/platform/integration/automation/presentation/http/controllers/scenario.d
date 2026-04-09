@@ -85,7 +85,7 @@ class ScenarioController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto scenario = useCase.getScenario(id, tenantId);
+      auto scenario = useCase.getScenario(tenantId, id);
       if (scenario is null) {
         writeError(res, 404, "Scenario not found");
         return;
@@ -134,7 +134,7 @@ class ScenarioController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteScenario(id, tenantId);
+      auto result = useCase.deleteScenario(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

@@ -11,10 +11,10 @@ import uim.platform.integration.automation.domain.entities.system_connection;
 /// Port for persisting and querying system connections.
 interface SystemRepository {
   SystemConnection[] findByTenant(TenantId tenantId);
-  SystemConnection* findById(SystemId id, TenantId tenantId);
+  SystemConnection* findById(SystemId tenantId, id tenantId);
   SystemConnection[] findByType(TenantId tenantId, SystemType systemType);
   SystemConnection[] findByStatus(TenantId tenantId, ConnectionStatus status);
   void save(SystemConnection system);
   void update(SystemConnection system);
-  void remove(SystemId id, TenantId tenantId);
+  void remove(SystemId tenantId, id tenantId);
 }

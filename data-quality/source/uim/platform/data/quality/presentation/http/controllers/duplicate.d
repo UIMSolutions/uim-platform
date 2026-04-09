@@ -122,7 +122,7 @@ class DuplicateController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto group = uc.getById(id, tenantId);
+      auto group = uc.getById(tenantId, id);
       if (group is null) {
         writeError(res, 404, "Match group not found");
         return;

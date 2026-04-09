@@ -21,7 +21,7 @@ class MemoryWorkflowRepository : WorkflowRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Workflow* findById(WorkflowId id, TenantId tenantId) {
+  Workflow* findById(WorkflowId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -59,7 +59,7 @@ class MemoryWorkflowRepository : WorkflowRepository {
     store[workflow.id] = workflow;
   }
 
-  void remove(WorkflowId id, TenantId tenantId) {
+  void remove(WorkflowId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

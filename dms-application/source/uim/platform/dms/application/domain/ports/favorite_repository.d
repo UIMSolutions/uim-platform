@@ -13,10 +13,10 @@ mixin(ShowModule!());
 @safe:
 interface IFavoriteRepository {
   Favorite[] findByTenant(TenantId tenantId);
-  Favorite findById(FavoriteId id, TenantId tenantId);
-  Favorite[] findByUser(UserId userId, TenantId tenantId);
-  Favorite findByUserAndResource(UserId userId, string resourceId, TenantId tenantId);
+  Favorite findById(FavoriteId tenantId, id tenantId);
+  Favorite[] findByUser(UserId usertenantId, id tenantId);
+  Favorite findByUserAndResource(UserId userId, string resourcetenantId, id tenantId);
   void save(Favorite fav);
-  void remove(FavoriteId id, TenantId tenantId);
-  void removeByResource(string resourceId, TenantId tenantId);
+  void remove(FavoriteId tenantId, id tenantId);
+  void removeByResource(string resourcetenantId, id tenantId);
 }

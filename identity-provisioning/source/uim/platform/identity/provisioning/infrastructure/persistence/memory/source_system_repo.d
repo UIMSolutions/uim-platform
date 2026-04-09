@@ -20,13 +20,13 @@ class MemorySourceSystemRepository : SourceSystemRepository {
     store[entity.id] = entity;
   }
 
-  void remove(SourceSystemId id, TenantId tenantId) {
+  void remove(SourceSystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  SourceSystem* findById(SourceSystemId id, TenantId tenantId) {
+  SourceSystem* findById(SourceSystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

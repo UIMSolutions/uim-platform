@@ -84,7 +84,7 @@ class ContentCacheController : PlatformController {
         writeError(res, 404, "Cache entry not found");
         return;
       }
-      auto entry = uc.get_(id, tenantId);
+      auto entry = uc.get_(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Cache entry not found");
         return;
@@ -114,7 +114,7 @@ class ContentCacheController : PlatformController {
         writeError(res, 404, "Cache entry not found");
         return;
       }
-      auto result = uc.invalidate(id, tenantId);
+      auto result = uc.invalidate(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

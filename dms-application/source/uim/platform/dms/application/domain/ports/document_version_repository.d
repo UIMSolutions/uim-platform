@@ -13,12 +13,12 @@ mixin(ShowModule!());
 @safe:
 interface IDocumentVersionRepository {
   DocumentVersion[] findByTenant(TenantId tenantId);
-  DocumentVersion findById(DocumentVersionId id, TenantId tenantId);
-  DocumentVersion[] findByDocument(DocumentId documentId, TenantId tenantId);
-  DocumentVersion findLatest(DocumentId documentId, TenantId tenantId);
-  long countByDocument(DocumentId documentId, TenantId tenantId);
+  DocumentVersion findById(DocumentVersionId tenantId, id tenantId);
+  DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId);
+  DocumentVersion findLatest(DocumentId documenttenantId, id tenantId);
+  long countByDocument(DocumentId documenttenantId, id tenantId);
   void save(DocumentVersion ver);
   void update(DocumentVersion ver);
-  void remove(DocumentVersionId id, TenantId tenantId);
-  void removeByDocument(DocumentId documentId, TenantId tenantId);
+  void remove(DocumentVersionId tenantId, id tenantId);
+  void removeByDocument(DocumentId documenttenantId, id tenantId);
 }

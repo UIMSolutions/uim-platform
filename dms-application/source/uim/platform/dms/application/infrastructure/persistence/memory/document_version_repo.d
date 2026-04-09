@@ -25,14 +25,14 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
     return result;
   }
 
-  DocumentVersion findById(DocumentVersionId id, TenantId tenantId) {
+  DocumentVersion findById(DocumentVersionId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  DocumentVersion[] findByDocument(DocumentId documentId, TenantId tenantId) {
+  DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId) {
     DocumentVersion[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
@@ -40,14 +40,14 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
     return result;
   }
 
-  DocumentVersion findLatest(DocumentId documentId, TenantId tenantId) {
+  DocumentVersion findLatest(DocumentId documenttenantId, id tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId && e.status == VersionStatus.current)
         return e;
     return null;
   }
 
-  long countByDocument(DocumentId documentId, TenantId tenantId) {
+  long countByDocument(DocumentId documenttenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
@@ -63,11 +63,11 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
     store[ver.id] = ver;
   }
 
-  void remove(DocumentVersionId id, TenantId tenantId) {
+  void remove(DocumentVersionId tenantId, id tenantId) {
     store.remove(id);
   }
 
-  void removeByDocument(DocumentId documentId, TenantId tenantId) {
+  void removeByDocument(DocumentId documenttenantId, id tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)

@@ -100,7 +100,7 @@ class ManageCleansingRulesUseCase : UIMUseCase {
     if (existing.tenantId != tenantId)
       return CommandResult("", "Tenant mismatch");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 

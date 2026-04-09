@@ -88,7 +88,7 @@ class FolderController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto f = uc.getFolder(id, tenantId);
+      auto f = uc.getFolder(tenantId, id);
       if (f is null) {
         writeError(res, 404, "Folder not found");
         return;
@@ -157,7 +157,7 @@ class FolderController : PlatformController {
     try {
       auto parentId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listChildren(parentId, tenantId);
+      auto items = uc.listChildren(parenttenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref f; items)
@@ -177,7 +177,7 @@ class FolderController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.deleteFolder(id, tenantId);
+      auto result = uc.deleteFolder(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

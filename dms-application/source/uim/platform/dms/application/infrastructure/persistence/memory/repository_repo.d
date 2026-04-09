@@ -24,7 +24,7 @@ class MemoryRepositoryRepository : IRepositoryRepository {
     return result;
   }
 
-  Repository findById(RepositoryId id, TenantId tenantId) {
+  Repository findById(RepositoryId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
@@ -54,7 +54,7 @@ class MemoryRepositoryRepository : IRepositoryRepository {
     store[repo.id] = repo;
   }
 
-  void remove(RepositoryId id, TenantId tenantId) {
+  void remove(RepositoryId tenantId, id tenantId) {
     store.remove(id);
   }
 }

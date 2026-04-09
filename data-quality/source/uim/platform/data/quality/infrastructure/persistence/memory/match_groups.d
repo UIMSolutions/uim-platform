@@ -19,7 +19,7 @@ class MemoryMatchGroupRepository : MatchGroupRepository {
     return store.byValue().filter!(g => g.tenantId == tenantId).array;
   }
 
-  MatchGroup* findById(MatchGroupId id, TenantId tenantId) {
+  MatchGroup* findById(MatchGroupId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -42,7 +42,7 @@ class MemoryMatchGroupRepository : MatchGroupRepository {
     store[group.id] = group;
   }
 
-  void remove(MatchGroupId id, TenantId tenantId) {
+  void remove(MatchGroupId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

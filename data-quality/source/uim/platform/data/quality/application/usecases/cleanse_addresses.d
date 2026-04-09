@@ -59,8 +59,8 @@ class CleanseAddressesUseCase : UIMUseCase {
   }
 
   /// Retrieve by source record.
-  AddressRecord[] getBySourceRecord(RecordId sourceRecordId, TenantId tenantId) {
-    return repo.findBySourceRecord(sourceRecordId, tenantId);
+  AddressRecord[] getBySourceRecord(RecordId sourceRecordtenantId, id tenantId) {
+    return repo.findBySourceRecord(sourceRecordtenantId, id);
   }
 
   /// Retrieve by quality level.

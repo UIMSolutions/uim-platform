@@ -25,14 +25,14 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document findById(DocumentId id, TenantId tenantId) {
+  Document findById(DocumentId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Document[] findByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  Document[] findByRepository(RepositoryId repositorytenantId, id tenantId) {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -40,7 +40,7 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  Document[] findByFolder(FolderId folderId, TenantId tenantId) {
+  Document[] findByFolder(FolderId foldertenantId, id tenantId) {
     Document[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
@@ -68,7 +68,7 @@ class MemoryDocumentRepository : IDocumentRepository {
     return result;
   }
 
-  long countByRepository(RepositoryId repositoryId, TenantId tenantId) {
+  long countByRepository(RepositoryId repositorytenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
@@ -76,7 +76,7 @@ class MemoryDocumentRepository : IDocumentRepository {
     return count;
   }
 
-  long countByFolder(FolderId folderId, TenantId tenantId) {
+  long countByFolder(FolderId foldertenantId, id tenantId) {
     long count;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
@@ -92,11 +92,11 @@ class MemoryDocumentRepository : IDocumentRepository {
     store[doc.id] = doc;
   }
 
-  void remove(DocumentId id, TenantId tenantId) {
+  void remove(DocumentId tenantId, id tenantId) {
     store.remove(id);
   }
 
-  void removeByFolder(FolderId folderId, TenantId tenantId) {
+  void removeByFolder(FolderId foldertenantId, id tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)

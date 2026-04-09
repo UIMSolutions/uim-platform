@@ -20,5 +20,5 @@ interface CleansingRuleRepository {
   CleansingRule[] findActive(TenantId tenantId);
   void save(CleansingRule rule);
   void update(CleansingRule rule);
-  void remove(RuleId id, TenantId tenantId);
+  void remove(RuleId tenantId, id tenantId);
 }

@@ -149,7 +149,7 @@ class ValidationRuleController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.remove(id, tenantId);
+      auto result = uc.remove(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

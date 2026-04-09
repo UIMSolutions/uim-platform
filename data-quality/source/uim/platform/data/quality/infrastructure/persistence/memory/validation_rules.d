@@ -51,7 +51,7 @@ class MemoryValidationRuleRepository : ValidationRuleRepository {
     store[rule.id] = rule;
   }
 
-  void remove(RuleId id, TenantId tenantId) {
+  void remove(RuleId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

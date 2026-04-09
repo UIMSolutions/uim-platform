@@ -90,7 +90,7 @@ class SystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto sys = useCase.getSystem(id, tenantId);
+      auto sys = useCase.getSystem(tenantId, id);
       if (sys is null) {
         writeError(res, 404, "System not found");
         return;
@@ -142,7 +142,7 @@ class SystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteSystem(id, tenantId);
+      auto result = useCase.deleteSystem(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -162,7 +162,7 @@ class SystemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.testConnection(id, tenantId);
+      auto result = useCase.testConnection(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

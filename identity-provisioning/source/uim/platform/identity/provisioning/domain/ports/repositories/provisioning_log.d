@@ -10,13 +10,13 @@ import uim.platform.identity.provisioning.domain.entities.provisioning_log;
 
 interface ProvisioningLogRepository {
   ProvisioningLog[] findByTenant(TenantId tenantId);
-  ProvisioningLog* findById(ProvisioningLogId id, TenantId tenantId);
-  ProvisioningLog[] findByJob(ProvisioningJobId jobId, TenantId tenantId);
-  ProvisioningLog[] findByEntity(string entityId, TenantId tenantId);
+  ProvisioningLog* findById(ProvisioningLogId tenantId, id tenantId);
+  ProvisioningLog[] findByJob(ProvisioningJobId jobtenantId, id tenantId);
+  ProvisioningLog[] findByEntity(string entitytenantId, id tenantId);
   ProvisioningLog[] findByStatus(TenantId tenantId, LogStatus status);
-  long countByJob(ProvisioningJobId jobId, TenantId tenantId);
-  long countByJobAndStatus(ProvisioningJobId jobId, TenantId tenantId, LogStatus status);
+  long countByJob(ProvisioningJobId jobtenantId, id tenantId);
+  long countByJobAndStatus(ProvisioningJobId jobtenantId, id tenantId, LogStatus status);
   void save(ProvisioningLog entity);
-  void remove(ProvisioningLogId id, TenantId tenantId);
-  void removeByJob(ProvisioningJobId jobId, TenantId tenantId);
+  void remove(ProvisioningLogId tenantId, id tenantId);
+  void removeByJob(ProvisioningJobId jobtenantId, id tenantId);
 }

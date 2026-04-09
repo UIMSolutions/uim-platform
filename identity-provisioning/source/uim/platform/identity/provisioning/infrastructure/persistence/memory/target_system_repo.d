@@ -20,13 +20,13 @@ class MemoryTargetSystemRepository : TargetSystemRepository {
     store[entity.id] = entity;
   }
 
-  void remove(TargetSystemId id, TenantId tenantId) {
+  void remove(TargetSystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  TargetSystem* findById(TargetSystemId id, TenantId tenantId) {
+  TargetSystem* findById(TargetSystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

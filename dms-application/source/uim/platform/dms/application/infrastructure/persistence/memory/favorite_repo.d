@@ -25,14 +25,14 @@ class MemoryFavoriteRepository : IFavoriteRepository {
     return result;
   }
 
-  Favorite findById(FavoriteId id, TenantId tenantId) {
+  Favorite findById(FavoriteId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
     return null;
   }
 
-  Favorite[] findByUser(UserId userId, TenantId tenantId) {
+  Favorite[] findByUser(UserId usertenantId, id tenantId) {
     Favorite[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId)
@@ -40,7 +40,7 @@ class MemoryFavoriteRepository : IFavoriteRepository {
     return result;
   }
 
-  Favorite findByUserAndResource(UserId userId, string resourceId, TenantId tenantId) {
+  Favorite findByUserAndResource(UserId userId, string resourcetenantId, id tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId && e.resourceId == resourceId)
         return e;
@@ -51,11 +51,11 @@ class MemoryFavoriteRepository : IFavoriteRepository {
     store[fav.id] = fav;
   }
 
-  void remove(FavoriteId id, TenantId tenantId) {
+  void remove(FavoriteId tenantId, id tenantId) {
     store.remove(id);
   }
 
-  void removeByResource(string resourceId, TenantId tenantId) {
+  void removeByResource(string resourcetenantId, id tenantId) {
     string[] toRemove;
     foreach (k, ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId)

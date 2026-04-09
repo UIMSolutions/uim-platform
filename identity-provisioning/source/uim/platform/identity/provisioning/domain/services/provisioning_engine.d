@@ -40,16 +40,16 @@ class ProvisioningEngine {
   }
 
   /// Validate that a provisioning job can be started.
-  bool canRun(ProvisioningJobId jobId, TenantId tenantId) {
-    auto job = jobRepo.findById(jobId, tenantId);
+  bool canRun(ProvisioningJobId jobtenantId, id tenantId) {
+    auto job = jobRepo.findById(jobtenantId, id);
     if (job is null)
       return false;
 
-    auto src = sourceRepo.findById(job.sourceSystemId, tenantId);
+    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
     if (src is null || src.status != SystemStatus.active)
       return false;
 
-    auto tgt = targetRepo.findById(job.targetSystemId, tenantId);
+    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
     if (tgt is null || tgt.status != SystemStatus.active)
       return false;
 
@@ -57,8 +57,8 @@ class ProvisioningEngine {
   }
 
   /// Execute a provisioning job (simulated).
-  ProvisioningJob* runJob(ProvisioningJobId jobId, TenantId tenantId) {
-    auto job = jobRepo.findById(jobId, tenantId);
+  ProvisioningJob* runJob(ProvisioningJobId jobtenantId, id tenantId) {
+    auto job = jobRepo.findById(jobtenantId, id);
     if (job is null)
       return null;
 
@@ -69,8 +69,8 @@ class ProvisioningEngine {
     job.startedAt = now;
     jobRepo.update(*job);
 
-    auto src = sourceRepo.findById(job.sourceSystemId, tenantId);
-    auto tgt = targetRepo.findById(job.targetSystemId, tenantId);
+    auto src = sourceRepo.findById(job.sourceSystemtenantId, id);
+    auto tgt = targetRepo.findById(job.targetSystemtenantId, id);
     string srcName = src !is null ? src.name : job.sourceSystemId;
     string tgtName = tgt !is null ? tgt.name : job.targetSystemId;
 
@@ -100,8 +100,8 @@ class ProvisioningEngine {
   }
 
   /// Cancel a running or scheduled job.
-  bool cancelJob(ProvisioningJobId jobId, TenantId tenantId) {
-    auto job = jobRepo.findById(jobId, tenantId);
+  bool cancelJob(ProvisioningJobId jobtenantId, id tenantId) {
+    auto job = jobRepo.findById(jobtenantId, id);
     if (job is null)
       return false;
     if (job.status != JobStatus.running && job.status != JobStatus.scheduled)

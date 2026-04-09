@@ -85,7 +85,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto wf = useCase.getWorkflow(id, tenantId);
+      auto wf = useCase.getWorkflow(tenantId, id);
       if (wf is null) {
         writeError(res, 404, "Workflow not found");
         return;
@@ -101,7 +101,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.startWorkflow(id, tenantId);
+      auto result = useCase.startWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -122,7 +122,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.suspendWorkflow(id, tenantId);
+      auto result = useCase.suspendWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -143,7 +143,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.resumeWorkflow(id, tenantId);
+      auto result = useCase.resumeWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -164,7 +164,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.terminateWorkflow(id, tenantId);
+      auto result = useCase.terminateWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -185,7 +185,7 @@ class WorkflowController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteWorkflow(id, tenantId);
+      auto result = useCase.deleteWorkflow(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

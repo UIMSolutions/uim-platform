@@ -85,7 +85,7 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto entry = uc.get_(id, tenantId);
+      auto entry = uc.get_(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "App not found");
         return;
@@ -143,7 +143,7 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto result = uc.remove(id, tenantId);
+      auto result = uc.remove(tenantId, id);
       if (result.isSuccess())
         res.writeBody("", 204);
       else

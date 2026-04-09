@@ -20,13 +20,13 @@ class MemoryProxySystemRepository : ProxySystemRepository {
     store[entity.id] = entity;
   }
 
-  void remove(ProxySystemId id, TenantId tenantId) {
+  void remove(ProxySystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);
   }
 
-  ProxySystem* findById(ProxySystemId id, TenantId tenantId) {
+  ProxySystem* findById(ProxySystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -48,7 +48,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
     return result;
   }
 
-  ProxySystem[] findBySource(SourceSystemId sourceId, TenantId tenantId) {
+  ProxySystem[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProxySystem[] result;
     foreach (ref e; store)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
@@ -56,7 +56,7 @@ class MemoryProxySystemRepository : ProxySystemRepository {
     return result;
   }
 
-  ProxySystem[] findByTarget(TargetSystemId targetId, TenantId tenantId) {
+  ProxySystem[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProxySystem[] result;
     foreach (ref e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)

@@ -44,7 +44,7 @@ class VersionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
 
-      auto result = uc.checkOut(docId, tenantId, userId);
+      auto result = uc.checkOut(doctenantId, id, userId);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["documentId"] = Json(docId);
@@ -94,7 +94,7 @@ class VersionController : PlatformController {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.cancelCheckOut(docId, tenantId);
+      auto result = uc.cancelCheckOut(doctenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["documentId"] = Json(docId);
@@ -113,7 +113,7 @@ class VersionController : PlatformController {
     try {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto versions = uc.getAllVersions(docId, tenantId);
+      auto versions = uc.getAllVersions(doctenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref v; versions)
@@ -133,7 +133,7 @@ class VersionController : PlatformController {
     try {
       auto docId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ver = uc.getCurrentVersion(docId, tenantId);
+      auto ver = uc.getCurrentVersion(doctenantId, id);
       if (ver is null) {
         writeError(res, 404, "No current version found");
         return;

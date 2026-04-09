@@ -38,7 +38,7 @@ class StepController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workflowId = req.headers.get("X-Workflow-Id", "");
-      auto steps = useCase.listSteps(workflowId, tenantId);
+      auto steps = useCase.listSteps(workflowtenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref s; steps)
@@ -58,7 +58,7 @@ class StepController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto step = useCase.getStep(id, tenantId);
+      auto step = useCase.getStep(tenantId, id);
       if (step is null) {
         writeError(res, 404, "Step not found");
         return;
@@ -96,7 +96,7 @@ class StepController {
       TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "");
 
-      auto result = useCase.startStep(id, tenantId, userId);
+      auto result = useCase.startStep(tenantId, id, userId);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);

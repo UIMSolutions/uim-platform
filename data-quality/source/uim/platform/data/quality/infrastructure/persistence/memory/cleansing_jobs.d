@@ -19,7 +19,7 @@ class MemoryCleansingJobRepository : CleansingJobRepository {
     return store.byValue().filter!(j => j.tenantId == tenantId).array;
   }
 
-  CleansingJob findById(CleansingJobId id, TenantId tenantId) {
+  CleansingJob findById(CleansingJobId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;

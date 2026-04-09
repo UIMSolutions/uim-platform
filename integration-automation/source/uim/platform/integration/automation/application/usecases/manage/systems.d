@@ -55,8 +55,8 @@ class ManageSystemsUseCase : UIMUseCase {
     return CommandResult(sys.id, "");
   }
 
-  SystemConnection* getSystem(SystemId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  SystemConnection* getSystem(SystemId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   SystemConnection[] listSystems(TenantId tenantId) {
@@ -106,18 +106,18 @@ class ManageSystemsUseCase : UIMUseCase {
     return CommandResult(updated.id, "");
   }
 
-  CommandResult deleteSystem(SystemId id, TenantId tenantId) {
-    auto existing = repo.findById(id, tenantId);
+  CommandResult deleteSystem(SystemId tenantId, id tenantId) {
+    auto existing = repo.findById(tenantId, id);
     if (existing is null)
       return CommandResult("", "System not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 
   /// Test a system connection (simulated).
-  CommandResult testConnection(SystemId id, TenantId tenantId) {
-    auto sys = repo.findById(id, tenantId);
+  CommandResult testConnection(SystemId tenantId, id tenantId) {
+    auto sys = repo.findById(tenantId, id);
     if (sys is null)
       return CommandResult("", "System not found");
 

@@ -21,7 +21,7 @@ class MemorySystemRepository : SystemRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  SystemConnection* findById(SystemId id, TenantId tenantId) {
+  SystemConnection* findById(SystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -44,7 +44,7 @@ class MemorySystemRepository : SystemRepository {
     store[system.id] = system;
   }
 
-  void remove(SystemId id, TenantId tenantId) {
+  void remove(SystemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

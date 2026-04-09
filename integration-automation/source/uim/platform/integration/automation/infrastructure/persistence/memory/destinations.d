@@ -21,7 +21,7 @@ class MemoryDestinationRepository : DestinationRepository {
     return store.byValue().filter!(e => e.tenantId == tenantId).array;
   }
 
-  Destination* findById(DestinationId id, TenantId tenantId) {
+  Destination* findById(DestinationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -51,7 +51,7 @@ class MemoryDestinationRepository : DestinationRepository {
     store[destination.id] = destination;
   }
 
-  void remove(DestinationId id, TenantId tenantId) {
+  void remove(DestinationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

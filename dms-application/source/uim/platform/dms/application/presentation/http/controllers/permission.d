@@ -90,7 +90,7 @@ class PermissionController : PlatformController {
     try {
       auto userId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto items = uc.listByUser(userId, tenantId);
+      auto items = uc.listByUser(usertenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref p; items)
@@ -156,7 +156,7 @@ class PermissionController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = uc.revokePermission(id, tenantId);
+      auto result = uc.revokePermission(tenantId, id);
       if (result.isSuccess) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);

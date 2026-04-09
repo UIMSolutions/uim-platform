@@ -13,15 +13,15 @@ mixin(ShowModule!());
 @safe:
 interface IDocumentRepository {
   Document[] findByTenant(TenantId tenantId);
-  Document findById(DocumentId id, TenantId tenantId);
-  Document[] findByRepository(RepositoryId repositoryId, TenantId tenantId);
-  Document[] findByFolder(FolderId folderId, TenantId tenantId);
+  Document findById(DocumentId tenantId, id tenantId);
+  Document[] findByRepository(RepositoryId repositorytenantId, id tenantId);
+  Document[] findByFolder(FolderId foldertenantId, id tenantId);
   Document[] findByStatus(DocumentStatus status, TenantId tenantId);
   Document[] findByName(string name, TenantId tenantId);
-  long countByRepository(RepositoryId repositoryId, TenantId tenantId);
-  long countByFolder(FolderId folderId, TenantId tenantId);
+  long countByRepository(RepositoryId repositorytenantId, id tenantId);
+  long countByFolder(FolderId foldertenantId, id tenantId);
   void save(Document doc);
   void update(Document doc);
-  void remove(DocumentId id, TenantId tenantId);
-  void removeByFolder(FolderId folderId, TenantId tenantId);
+  void remove(DocumentId tenantId, id tenantId);
+  void removeByFolder(FolderId foldertenantId, id tenantId);
 }

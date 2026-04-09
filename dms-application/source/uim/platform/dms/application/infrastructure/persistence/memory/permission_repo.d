@@ -24,7 +24,7 @@ class MemoryPermissionRepository : IPermissionRepository {
     return result;
   }
 
-  Permission findById(PermissionId id, TenantId tenantId) {
+  Permission findById(PermissionId tenantId, id tenantId) {
     if (auto p = id in store)
       if ((*p).tenantId == tenantId)
         return *p;
@@ -39,7 +39,7 @@ class MemoryPermissionRepository : IPermissionRepository {
     return result;
   }
 
-  Permission[] findByUser(UserId userId, TenantId tenantId) {
+  Permission[] findByUser(UserId usertenantId, id tenantId) {
     Permission[] result;
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.userId == userId)
@@ -48,7 +48,7 @@ class MemoryPermissionRepository : IPermissionRepository {
   }
 
   Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
-      UserId userId, TenantId tenantId) {
+      UserId usertenantId, id tenantId) {
     foreach (ref e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId
           && e.resourceType == resourceType && e.userId == userId)
@@ -64,7 +64,7 @@ class MemoryPermissionRepository : IPermissionRepository {
     store[perm.id] = perm;
   }
 
-  void remove(PermissionId id, TenantId tenantId) {
+  void remove(PermissionId tenantId, id tenantId) {
     store.remove(id);
   }
 

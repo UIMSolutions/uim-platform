@@ -28,12 +28,12 @@ class ManageStepsUseCase : UIMUseCase {
     this.engine = engine;
   }
 
-  WorkflowStep[] listSteps(WorkflowId workflowId, TenantId tenantId) {
-    return repo.findByWorkflow(workflowId, tenantId);
+  WorkflowStep[] listSteps(WorkflowId workflowtenantId, id tenantId) {
+    return repo.findByWorkflow(workflowtenantId, id);
   }
 
-  WorkflowStep* getStep(StepId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  WorkflowStep* getStep(StepId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   WorkflowStep[] getMyTasks(TenantId tenantId, UserId userId) {
@@ -45,11 +45,11 @@ class ManageStepsUseCase : UIMUseCase {
   }
 
   /// Start a step (mark as in-progress).
-  CommandResult startStep(StepId id, TenantId tenantId, UserId userId) {
-    if (!engine.areDependenciesMet(*repo.findById(id, tenantId), tenantId))
+  CommandResult startStep(StepId tenantId, id tenantId, UserId userId) {
+    if (!engine.areDependenciesMet(*repo.findById(tenantId, id), tenantId))
       return CommandResult("", "Step dependencies are not yet met");
 
-    if (executor.startStep(id, tenantId, userId))
+    if (executor.startStep(tenantId, id, userId))
       return CommandResult(true, id.toString, "");
     return CommandResult("", "Cannot start step — not found or not in pending state");
   }

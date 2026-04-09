@@ -19,7 +19,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  DataProfile* findById(ProfileId id, TenantId tenantId) {
+  DataProfile* findById(ProfileId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -46,7 +46,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
     store[profile.id] = profile;
   }
 
-  void remove(ProfileId id, TenantId tenantId) {
+  void remove(ProfileId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

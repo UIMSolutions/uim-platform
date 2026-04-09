@@ -77,7 +77,7 @@ class ClientController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
 
-      auto c = uc.get_(id, tenantId);
+      auto c = uc.get_(tenantId, id);
       if (c.clientid.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
@@ -123,7 +123,7 @@ class ClientController : PlatformController {
       auto id = extractIdFromPath(req.requestURI.to!string);
       TenantId tenantId = req.getTenantId;
 
-      auto result = uc.remove(id, tenantId);
+      auto result = uc.remove(tenantId, id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
       } else {
