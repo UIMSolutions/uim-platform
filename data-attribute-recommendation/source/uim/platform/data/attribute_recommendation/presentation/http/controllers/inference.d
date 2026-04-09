@@ -20,7 +20,7 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class InferenceController : SAPController {
+class InferenceController : PlatformController {
   private ProcessInferenceUseCase uc;
 
   this(ProcessInferenceUseCase uc) {

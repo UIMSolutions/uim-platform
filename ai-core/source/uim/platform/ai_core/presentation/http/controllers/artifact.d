@@ -10,7 +10,7 @@ import uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core;
 
-class ArtifactController : SAPController {
+class ArtifactController : PlatformController {
   private ManageArtifactsUseCase uc;
 
   this(ManageArtifactsUseCase uc) {

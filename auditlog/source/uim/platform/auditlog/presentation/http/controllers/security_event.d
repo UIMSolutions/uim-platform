@@ -18,7 +18,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class SecurityEventController : SAPController {
+class SecurityEventController : PlatformController {
   private WriteSecurityEventUseCase useCase;
 
   this(WriteSecurityEventUseCase useCase) {

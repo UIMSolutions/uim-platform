@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DnsRecordController : SAPController {
+class DnsRecordController : PlatformController {
     private ManageDnsRecordsUseCase uc;
 
     this(ManageDnsRecordsUseCase uc) {

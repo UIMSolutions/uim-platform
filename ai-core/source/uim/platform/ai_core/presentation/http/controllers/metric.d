@@ -10,7 +10,7 @@ import uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core;
 
-class MetricController : SAPController {
+class MetricController : PlatformController {
   private GetMetricsUseCase uc;
 
   this(GetMetricsUseCase uc) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomDomainController : SAPController {
+class CustomDomainController : PlatformController {
     private ManageCustomDomainsUseCase uc;
 
     this(ManageCustomDomainsUseCase uc) {

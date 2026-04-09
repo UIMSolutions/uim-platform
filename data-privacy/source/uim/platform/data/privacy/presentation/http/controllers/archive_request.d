@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ArchiveRequestController : SAPController {
+class ArchiveRequestController : PlatformController {
   private ManageArchiveRequestsUseCase uc;
 
   this(ManageArchiveRequestsUseCase uc) {

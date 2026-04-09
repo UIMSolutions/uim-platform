@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DeletionController : SAPController {
+class DeletionController : PlatformController {
   private ManageDeletionRequestsUseCase uc;
 
   this(ManageDeletionRequestsUseCase uc) {

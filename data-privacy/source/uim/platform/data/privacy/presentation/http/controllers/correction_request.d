@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class CorrectionRequestController : SAPController {
+class CorrectionRequestController : PlatformController {
   private ManageCorrectionRequestsUseCase uc;
 
   this(ManageCorrectionRequestsUseCase uc) {

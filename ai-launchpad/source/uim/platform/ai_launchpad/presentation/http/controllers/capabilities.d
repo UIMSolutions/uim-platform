@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class CapabilitiesController : SAPController {
+class CapabilitiesController : PlatformController {
   private GetCapabilitiesUseCase uc;
 
   this(GetCapabilitiesUseCase uc) {

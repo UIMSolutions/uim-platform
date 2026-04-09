@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class WorkspaceController : SAPController {
+class WorkspaceController : PlatformController {
   private ManageWorkspacesUseCase uc;
 
   this(ManageWorkspacesUseCase uc) {

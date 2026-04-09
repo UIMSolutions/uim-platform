@@ -15,7 +15,7 @@ import uim.platform.abap_enviroment.application.dto;
 import uim.platform.abap_enviroment.domain.entities.transport_request;
 import uim.platform.abap_enviroment.domain.types;
 
-class TransportRequestController : SAPController {
+class TransportRequestController : PlatformController {
   private ManageTransportRequestsUseCase uc;
 
   this(ManageTransportRequestsUseCase uc) {

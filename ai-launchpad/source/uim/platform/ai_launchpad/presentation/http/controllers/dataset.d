@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class DatasetController : SAPController {
+class DatasetController : PlatformController {
   private ManageDatasetsUseCase uc;
 
   this(ManageDatasetsUseCase uc) {

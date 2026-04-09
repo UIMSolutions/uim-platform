@@ -16,7 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.service_instance;
 import uim.platform.foundry.domain.entities.service_binding;
 
-class ServiceController : SAPController {
+class ServiceController : PlatformController {
   private ManageServicesUseCase useCase;
 
   this(ManageServicesUseCase useCase) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DomainMappingController : SAPController {
+class DomainMappingController : PlatformController {
     private ManageDomainMappingsUseCase uc;
 
     this(ManageDomainMappingsUseCase uc) {

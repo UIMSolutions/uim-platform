@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.export_job;
 import uim.platform.content_agent.domain.types;
 
-class ExportController : SAPController {
+class ExportController : PlatformController {
   private ExportContentUseCase uc;
 
   this(ExportContentUseCase uc) {

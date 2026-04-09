@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class PromptCollectionController : SAPController {
+class PromptCollectionController : PlatformController {
   private ManagePromptCollectionsUseCase uc;
 
   this(ManagePromptCollectionsUseCase uc) {

@@ -15,7 +15,7 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.space;
 
-class SpaceController : SAPController {
+class SpaceController : PlatformController {
   private ManageSpacesUseCase useCase;
 
   this(ManageSpacesUseCase useCase) {

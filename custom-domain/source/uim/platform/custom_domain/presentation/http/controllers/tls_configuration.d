@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class TlsConfigurationController : SAPController {
+class TlsConfigurationController : PlatformController {
     private ManageTlsConfigurationsUseCase uc;
 
     this(ManageTlsConfigurationsUseCase uc) {

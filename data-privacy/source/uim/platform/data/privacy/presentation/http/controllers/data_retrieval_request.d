@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataRetrievalController : SAPController {
+class DataRetrievalController : PlatformController {
   private ManageDataRetrievalsUseCase uc;
 
   this(ManageDataRetrievalsUseCase uc) {

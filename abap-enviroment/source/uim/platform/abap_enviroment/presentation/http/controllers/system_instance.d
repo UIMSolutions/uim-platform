@@ -19,7 +19,7 @@ import uim.platform.abap_enviroment;
 
 mixin(ShowModule!());
 @safe:
-class SystemInstanceController : SAPController {
+class SystemInstanceController : PlatformController {
   private ManageSystemInstancesUseCase uc;
 
   this(ManageSystemInstancesUseCase uc) {

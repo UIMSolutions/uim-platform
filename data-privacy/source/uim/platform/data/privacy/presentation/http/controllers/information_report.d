@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class InformationReportController : SAPController {
+class InformationReportController : PlatformController {
   private ManageInformationReportsUseCase uc;
 
   this(ManageInformationReportsUseCase uc) {

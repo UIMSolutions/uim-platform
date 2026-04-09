@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class StatisticsController : SAPController {
+class StatisticsController : PlatformController {
   private GetUsageStatisticsUseCase uc;
 
   this(GetUsageStatisticsUseCase uc) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class KeyringController : SAPController {
+class KeyringController : PlatformController {
   private ManageKeyringsUseCase uc;
 
   this(ManageKeyringsUseCase uc) {

@@ -10,7 +10,7 @@ import uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core;
 
-class ResourceGroupController : SAPController {
+class ResourceGroupController : PlatformController {
   private ManageResourceGroupsUseCase uc;
 
   this(ManageResourceGroupsUseCase uc) {

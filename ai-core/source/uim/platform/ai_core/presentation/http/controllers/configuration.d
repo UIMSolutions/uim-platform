@@ -10,7 +10,7 @@ import uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core;
 
-class ConfigurationController : SAPController {
+class ConfigurationController : PlatformController {
   private ManageConfigurationsUseCase uc;
 
   this(ManageConfigurationsUseCase uc) {

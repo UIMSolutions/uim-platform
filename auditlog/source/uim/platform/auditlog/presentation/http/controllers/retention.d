@@ -20,7 +20,7 @@ import uim.platform.auditlog;
 mixin(ShowModule!());
 
 @safe:
-class RetentionController : SAPController {
+class RetentionController : PlatformController {
   private ManageRetentionUseCase useCase;
 
   this(ManageRetentionUseCase useCase) {

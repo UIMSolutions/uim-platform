@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CredentialController : SAPController {
+class CredentialController : PlatformController {
   private ManageCredentialsUseCase uc;
 
   this(ManageCredentialsUseCase uc) {

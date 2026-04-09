@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class OverviewController : SAPController {
+class OverviewController : PlatformController {
   private GetOverviewUseCase uc;
 
   this(GetOverviewUseCase uc) {

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessContextController : SAPController {
+class BusinessContextController : PlatformController {
   private ManageBusinessContextsUseCase uc;
 
   this(ManageBusinessContextsUseCase uc) {

@@ -20,7 +20,7 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
-class CommunicationArrangementController : SAPController {
+class CommunicationArrangementController : PlatformController {
   private ManageCommunicationArrangementsUseCase uc;
 
   this(ManageCommunicationArrangementsUseCase uc) {

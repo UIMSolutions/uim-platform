@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.content_provider;
 import uim.platform.content_agent.domain.types;
 
-class ProviderController : SAPController {
+class ProviderController : PlatformController {
   private ManageContentProvidersUseCase uc;
 
   this(ManageContentProvidersUseCase uc) {

@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BusinessSubprocessController : SAPController {
+class BusinessSubprocessController : PlatformController {
   private ManageBusinessSubprocessesUseCase uc;
 
   this(ManageBusinessSubprocessesUseCase uc) {

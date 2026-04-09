@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class ConsentController : SAPController {
+class ConsentController : PlatformController {
   private ManageConsentRecordsUseCase uc;
 
   this(ManageConsentRecordsUseCase uc) {

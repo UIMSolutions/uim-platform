@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class ScenarioController : SAPController {
+class ScenarioController : PlatformController {
   private ManageScenariosUseCase uc;
 
   this(ManageScenariosUseCase uc) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class EncryptionController : SAPController {
+class EncryptionController : PlatformController {
   private EncryptDekUseCase uc;
 
   this(EncryptDekUseCase uc) {

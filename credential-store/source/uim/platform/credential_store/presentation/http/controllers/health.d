@@ -7,7 +7,7 @@ module uim.platform.credential_store.presentation.http.controllers.health;
 
 import uim.platform.credential_store;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
   this() {
     super();
   }

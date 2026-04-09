@@ -15,7 +15,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PurposeRecordController : SAPController {
+class PurposeRecordController : PlatformController {
   private ManagePurposeRecordsUseCase uc;
 
   this(ManagePurposeRecordsUseCase uc) {

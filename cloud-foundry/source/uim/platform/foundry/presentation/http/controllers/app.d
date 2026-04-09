@@ -15,7 +15,7 @@ import uim.platform.foundry.application.dto;
 import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.application;
 
-class AppController : SAPController {
+class AppController : PlatformController {
   private ManageAppsUseCase useCase;
 
   this(ManageAppsUseCase useCase) {

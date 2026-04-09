@@ -18,7 +18,7 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class DatasetController : SAPController {
+class DatasetController : PlatformController {
   private ManageDatasetsUseCase uc;
 
   this(ManageDatasetsUseCase uc) {

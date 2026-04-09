@@ -19,7 +19,7 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class DeploymentController : SAPController {
+class DeploymentController : PlatformController {
   private ManageDeploymentsUseCase uc;
 
   this(ManageDeploymentsUseCase uc) {

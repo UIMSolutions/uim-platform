@@ -16,7 +16,7 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class AuditController : SAPController {
+class AuditController : PlatformController {
   private GetAuditLogsUseCase uc;
 
   this(GetAuditLogsUseCase uc) {

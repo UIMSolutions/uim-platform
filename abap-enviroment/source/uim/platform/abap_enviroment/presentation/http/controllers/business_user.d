@@ -20,7 +20,7 @@ import uim.platform.abap_enviroment.presentation.http;
 mixin(ShowModule!());
 
 @safe:
-class BusinessUserController : SAPController {
+class BusinessUserController : PlatformController {
   private ManageBusinessUsersUseCase uc;
 
   this(ManageBusinessUsersUseCase uc) {

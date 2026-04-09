@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataControllerGroupController : SAPController {
+class DataControllerGroupController : PlatformController {
   private ManageDataControllerGroupsUseCase uc;
 
   this(ManageDataControllerGroupsUseCase uc) {

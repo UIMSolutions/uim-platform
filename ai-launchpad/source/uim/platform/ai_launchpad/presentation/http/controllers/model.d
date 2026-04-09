@@ -10,7 +10,7 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
-class ModelController : SAPController {
+class ModelController : PlatformController {
   private ManageModelsUseCase uc;
 
   this(ManageModelsUseCase uc) {

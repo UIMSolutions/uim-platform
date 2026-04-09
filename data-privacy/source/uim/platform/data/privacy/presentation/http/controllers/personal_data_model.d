@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class PersonalDataModelController : SAPController {
+class PersonalDataModelController : PlatformController {
   private ManagePersonalDataModelsUseCase uc;
 
   this(ManagePersonalDataModelsUseCase uc) {

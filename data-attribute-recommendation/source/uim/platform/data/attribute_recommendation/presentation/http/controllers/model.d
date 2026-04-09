@@ -18,7 +18,7 @@ import uim.platform.data.attribute_recommendation;
 
 mixin(ShowModule!());
 @safe:
-class ModelController : SAPController {
+class ModelController : PlatformController {
   private ManageModelsUseCase uc;
 
   this(ManageModelsUseCase uc) {

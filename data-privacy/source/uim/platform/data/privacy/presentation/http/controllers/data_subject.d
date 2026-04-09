@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class DataSubjectController : SAPController {
+class DataSubjectController : PlatformController {
   private ManageDataSubjectsUseCase uc;
 
   this(ManageDataSubjectsUseCase uc) {

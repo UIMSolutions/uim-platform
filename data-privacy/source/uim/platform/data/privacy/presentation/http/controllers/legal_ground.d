@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class LegalGroundController : SAPController {
+class LegalGroundController : PlatformController {
   private ManageLegalGroundsUseCase uc;
 
   this(ManageLegalGroundsUseCase uc) {

@@ -17,7 +17,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.import_job;
 import uim.platform.content_agent.domain.types;
 
-class ImportController : SAPController {
+class ImportController : PlatformController {
   private ImportContentUseCase uc;
 
   this(ImportContentUseCase uc) {

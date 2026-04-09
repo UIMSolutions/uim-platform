@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RuleSetController : SAPController {
+class RuleSetController : PlatformController {
   private ManageRuleSetsUseCase uc;
 
   this(ManageRuleSetsUseCase uc) {

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BindingController : SAPController {
+class BindingController : PlatformController {
   private ManageServiceBindingsUseCase uc;
 
   this(ManageServiceBindingsUseCase uc) {

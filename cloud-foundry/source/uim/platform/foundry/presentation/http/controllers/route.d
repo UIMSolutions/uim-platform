@@ -16,7 +16,7 @@ import uim.platform.foundry.domain.types;
 import uim.platform.foundry.domain.entities.route;
 import uim.platform.foundry.domain.entities.cf_domain;
 
-class RouteController : SAPController {
+class RouteController : PlatformController {
   private ManageRoutesUseCase useCase;
 
   this(ManageRoutesUseCase useCase) {

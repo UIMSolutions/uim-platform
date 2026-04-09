@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class BlockingController : SAPController {
+class BlockingController : PlatformController {
   private ManageBlockingRequestsUseCase uc;
 
   this(ManageBlockingRequestsUseCase uc) {

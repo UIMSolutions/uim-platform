@@ -15,7 +15,7 @@ import uim.platform.content_agent.application.dto;
 import uim.platform.content_agent.domain.entities.transport_queue;
 import uim.platform.content_agent.domain.types;
 
-class QueueController : SAPController {
+class QueueController : PlatformController {
   private ManageTransportQueuesUseCase uc;
 
   this(ManageTransportQueuesUseCase uc) {

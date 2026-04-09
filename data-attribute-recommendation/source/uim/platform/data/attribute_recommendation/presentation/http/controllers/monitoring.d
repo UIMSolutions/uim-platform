@@ -18,7 +18,7 @@ import uim.platform.data.attribute_recommendation;
 mixin(ShowModule!());
 @safe:
 
-class MonitoringController : SAPController {
+class MonitoringController : PlatformController {
   private MonitorTrainingUseCase uc;
 
   this(MonitorTrainingUseCase uc) {

@@ -19,7 +19,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class RetentionRuleController : SAPController {
+class RetentionRuleController : PlatformController {
   private ManageRetentionRulesUseCase uc;
 
   this(ManageRetentionRulesUseCase uc) {

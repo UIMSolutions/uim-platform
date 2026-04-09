@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class PrivateKeyController : SAPController {
+class PrivateKeyController : PlatformController {
     private ManagePrivateKeysUseCase uc;
 
     this(ManagePrivateKeysUseCase uc) {

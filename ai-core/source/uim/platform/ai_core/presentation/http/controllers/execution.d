@@ -10,7 +10,7 @@ import uim.platform.ai_core.application.dto;
 
 import uim.platform.ai_core;
 
-class ExecutionController : SAPController {
+class ExecutionController : PlatformController {
   private ManageExecutionsUseCase uc;
 
   this(ManageExecutionsUseCase uc) {

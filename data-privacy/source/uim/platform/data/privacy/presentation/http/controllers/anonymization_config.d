@@ -14,7 +14,7 @@ import uim.platform.data.privacy;
 mixin(ShowModule!());
 
 @safe:
-class AnonymizationConfigController : SAPController {
+class AnonymizationConfigController : PlatformController {
   private ManageAnonymizationConfigsUseCase uc;
 
   this(ManageAnonymizationConfigsUseCase uc) {

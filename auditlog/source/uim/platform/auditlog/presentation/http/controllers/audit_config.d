@@ -19,7 +19,7 @@ import uim.platform.auditlog;
 
 mixin(ShowModule!());
 @safe:
-class AuditConfigController : SAPController {
+class AuditConfigController : PlatformController {
   private ManageAuditConfigUseCase useCase;
 
   this(ManageAuditConfigUseCase useCase) {

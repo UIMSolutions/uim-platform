@@ -14,7 +14,7 @@ import uim.platform.connectivity.application.usecases.manage.channels;
 import uim.platform.connectivity.application.dto;
 import uim.platform.connectivity.domain.entities.service_channel;
 
-class ChannelController : SAPController {
+class ChannelController : PlatformController {
   private ManageChannelsUseCase uc;
 
   this(ManageChannelsUseCase uc) {

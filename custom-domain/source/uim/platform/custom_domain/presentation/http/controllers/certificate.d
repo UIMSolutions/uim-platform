@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CertificateController : SAPController {
+class CertificateController : PlatformController {
     private ManageCertificatesUseCase uc;
 
     this(ManageCertificatesUseCase uc) {

@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class NamespaceController : SAPController {
+class NamespaceController : PlatformController {
   private ManageNamespacesUseCase uc;
 
   this(ManageNamespacesUseCase uc) {
