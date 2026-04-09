@@ -18,7 +18,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class DashboardController {
+class DashboardController : PlatformController {
   private GetDashboardUseCase uc;
 
   this(GetDashboardUseCase uc) {
@@ -26,6 +26,8 @@ class DashboardController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/dashboard", &handleDashboard);
   }
 

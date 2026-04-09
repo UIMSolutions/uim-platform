@@ -20,7 +20,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class AlertController {
+class AlertController : PlatformController {
   private ManageAlertsUseCase uc;
 
   this(ManageAlertsUseCase uc) {
@@ -28,6 +28,8 @@ class AlertController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/alerts", &handleList);
     router.get("/api/v1/alerts/*", &handleGetById);
     router.post("/api/v1/alerts/acknowledge", &handleAcknowledge);

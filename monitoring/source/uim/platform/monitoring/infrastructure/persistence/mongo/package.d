@@ -1,2 +1,2 @@
-module uim.platform.monitoring.application;
+module uim.platform.monitoring.infrastructure.persistence.mongo;
 

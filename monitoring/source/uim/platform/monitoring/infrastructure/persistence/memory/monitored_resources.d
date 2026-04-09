@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.infrastructure.persistence.memory.monitored_resource;
 
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.domain.entities.monitored_resource;
-import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.monitored_resource;
+// import uim.platform.monitoring.domain.ports.repositories.monitored_resources;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
   private MonitoredResource[MonitoredResourceId] store;
 

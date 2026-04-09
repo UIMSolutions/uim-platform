@@ -20,7 +20,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MetricDefinitionController {
+class MetricDefinitionController : PlatformController {
   private ManageMetricsUseCase uc;
 
   this(ManageMetricsUseCase uc) {
@@ -28,6 +28,8 @@ class MetricDefinitionController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+
     router.post("/api/v1/metric-definitions", &handleCreate);
     router.get("/api/v1/metric-definitions", &handleList);
     router.get("/api/v1/metric-definitions/*", &handleGetById);

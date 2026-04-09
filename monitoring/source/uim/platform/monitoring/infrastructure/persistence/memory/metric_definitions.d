@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.infrastructure.persistence.memory.metric_definition;
 
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.domain.entities.metric_definition;
-import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.metric_definition;
+// import uim.platform.monitoring.domain.ports.repositories.metric_definitions;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   private MetricDefinition[MetricDefinitionId] store;
 

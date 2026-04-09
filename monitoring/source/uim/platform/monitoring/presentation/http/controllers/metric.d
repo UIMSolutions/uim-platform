@@ -20,7 +20,7 @@ import uim.platform.monitoring;
 mixin(ShowModule!());
 
 @safe:
-class MetricController {
+class MetricController : PlatformController {
   private ManageMetricsUseCase uc;
 
   this(ManageMetricsUseCase uc) {
@@ -28,6 +28,8 @@ class MetricController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/metrics", &handlePush);
     router.post("/api/v1/metrics/batch", &handleBatchPush);
     router.get("/api/v1/metrics", &handleQuery);

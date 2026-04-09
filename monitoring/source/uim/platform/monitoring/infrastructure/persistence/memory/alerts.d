@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.infrastructure.persistence.memory.alert;
+module uim.platform.monitoring.infrastructure.persistence.memory.alerts;
 
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.domain.entities.alert;
-import uim.platform.monitoring.domain.ports.repositories.alerts;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.alert;
+// import uim.platform.monitoring.domain.ports.repositories.alerts;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryAlertRepository : AlertRepository {
   private Alert[AlertId] store;
 

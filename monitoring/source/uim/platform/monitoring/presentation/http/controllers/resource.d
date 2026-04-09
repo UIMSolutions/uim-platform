@@ -58,13 +58,10 @@ class ResourceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,10 +77,9 @@ class ResourceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) resources.length);
+      resp["totalCount"] = Json(cast(long)resources.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -97,8 +93,7 @@ class ResourceController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeResource(r), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -120,13 +115,10 @@ class ResourceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Resource not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -139,13 +131,10 @@ class ResourceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -162,7 +151,7 @@ class ResourceController : PlatformController {
     j["url"] = Json(r.url);
     j["runtime"] = Json(r.runtime);
     j["region"] = Json(r.region);
-    j["instanceCount"] = Json(cast(long) r.instanceCount);
+    j["instanceCount"] = Json(cast(long)r.instanceCount);
     j["tags"] = toJsonArray(r.tags);
     j["registeredBy"] = Json(r.registeredBy);
     j["registeredAt"] = Json(r.registeredAt);

@@ -3,15 +3,19 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.infrastructure.persistence.memory.health_check_result;
+module uim.platform.monitoring.infrastructure.persistence.memory.health_check_results;
 
-import uim.platform.monitoring.domain.types;
-import uim.platform.monitoring.domain.entities.health_check_result;
-import uim.platform.monitoring.domain.ports.repositories.health_check_results;
+// import uim.platform.monitoring.domain.types;
+// import uim.platform.monitoring.domain.entities.health_check_result;
+// import uim.platform.monitoring.domain.ports.repositories.health_check_results;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.monitoring;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   private HealthCheckResult[] store;
 
