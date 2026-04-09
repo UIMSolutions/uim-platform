@@ -222,3 +222,8 @@ long clockSeconds() {
 
   return MonoTime.currTime.ticks / 10_000_000;
 }
+
+  // private static long clockSeconds() {
+    // import std.datetime.systime : Clock;
+    // return Clock.currTime().toUnixTime();
+  // }

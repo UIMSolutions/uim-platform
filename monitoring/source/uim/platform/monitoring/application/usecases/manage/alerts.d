@@ -112,10 +112,7 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static AlertState parseAlertState(string s) {
     switch (s) {

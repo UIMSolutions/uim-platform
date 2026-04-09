@@ -161,11 +161,6 @@ class ManageContentPackagesUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
-
   private static ContentFormat parseContentFormat(string s) {
     switch (s) {
     case "zip":

@@ -35,48 +35,48 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     // import std.uuid : randomUUID;
     auto id = randomUUID().toString();
 
-    MonitoredResource r;
-    r.id = randomUUID();
-    r.tenantId = req.tenantId;
-    r.subaccountId = req.subaccountId;
-    r.name = req.name;
-    r.description = req.description;
-    r.resourceType = parseResourceType(req.resourceType);
-    r.state = ResourceState.unknown;
-    r.url = req.url;
-    r.runtime = req.runtime;
-    r.region = req.region;
-    r.instanceCount = req.instanceCount;
-    r.tags = req.tags;
-    r.registeredBy = req.registeredBy;
-    r.registeredAt = clockSeconds();
-    r.lastSeenAt = r.registeredAt;
+    MonitoredResource resource;
+    resource.id = randomUUID();
+    resource.tenantId = req.tenantId;
+    resource.subaccountId = req.subaccountId;
+    resource.name = req.name;
+    resource.description = req.description;
+    resource.resourceType = parseResourceType(req.resourceType);
+    resource.state = ResourceState.unknown;
+    resource.url = req.url;
+    resource.runtime = req.runtime;
+    resource.region = req.region;
+    resource.instanceCount = req.instanceCount;
+    resource.tags = req.tags;
+    resource.registeredBy = req.registeredBy;
+    resource.registeredAt = clockSeconds();
+    resource.lastSeenAt = resource.registeredAt;
 
-    repo.save(r);
-    return CommandResult(true, id.toString, "");
+    repo.save(resource);
+    return CommandResult(true, resource.id.toString, "");
   }
 
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
-    auto r = repo.findById(id);
-    if (r.id.isEmpty)
+    auto resource = repo.findById(id);
+    if (resource.id.isEmpty)
       return CommandResult(false, "", "Resource not found");
 
     if (req.description.length > 0)
-      r.description = req.description;
+      resource.description = req.description;
     if (req.url.length > 0)
-      r.url = req.url;
+      resource.url = req.url;
     if (req.runtime.length > 0)
-      r.runtime = req.runtime;
+      resource.runtime = req.runtime;
     if (req.state.length > 0)
-      r.state = parseResourceState(req.state);
+      resource.state = parseResourceState(req.state);
     if (req.instanceCount > 0)
-      r.instanceCount = req.instanceCount;
+      resource.instanceCount = req.instanceCount;
     if (req.tags.length > 0)
-      r.tags = req.tags;
-    r.lastSeenAt = clockSeconds();
+      resource.tags = req.tags;
+    resource.lastSeenAt = clockSeconds();
 
-    repo.update(r);
-    return CommandResult(true, id.toString, "");
+    repo.update(resource);
+    return CommandResult(true, resource.id.toString, "");
   }
 
   MonitoredResource getResource(MonitoredResourceId id) {
@@ -92,18 +92,15 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
   }
 
   CommandResult removeResource(MonitoredResourceId id) {
-    auto r = repo.findById(id);
-    if (r.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Resource not found");
 
+    auto resource = repo.findById(id);
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, resource.id.toString, "");
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+
 
   private static ResourceType parseResourceType(string s) {
     switch (s) {

@@ -152,10 +152,7 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static CheckType parseCheckType(string s) {
     switch (s) {

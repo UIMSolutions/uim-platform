@@ -182,10 +182,7 @@ class ManageMetricsUseCase : UIMUseCase {
     return s;
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static MetricCategory parseCategory(string s) {
     switch (s) {

@@ -110,10 +110,7 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString(), "");
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static ThresholdOperator parseOperator(string s) {
     switch (s) {

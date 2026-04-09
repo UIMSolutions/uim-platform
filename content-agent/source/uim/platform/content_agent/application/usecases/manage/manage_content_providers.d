@@ -129,8 +129,5 @@ class ManageContentProvidersUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+
 }

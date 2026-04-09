@@ -150,10 +150,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     activityRepo.save(activity);
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static TransportMode parseTransportMode(string s) {
     switch (s) {

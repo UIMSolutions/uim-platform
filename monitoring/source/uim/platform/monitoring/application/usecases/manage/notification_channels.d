@@ -113,10 +113,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 
   private static ChannelType parseChannelType(string s) {
     switch (s) {

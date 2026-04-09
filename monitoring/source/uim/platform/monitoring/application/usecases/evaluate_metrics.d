@@ -88,8 +88,5 @@ class EvaluateMetricsUseCase : UIMUseCase {
     return false;
   }
 
-  private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    return Clock.currTime().toUnixTime();
-  }
+  
 }
