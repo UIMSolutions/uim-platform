@@ -5,39 +5,38 @@
 *****************************************************************************************************************/
 module uim.platform.monitoring.infrastructure.container;
 
-// import uim.platform.monitoring.infrastructure.config;
+import uim.platform.monitoring.infrastructure.config;
 
-// // Repositories
-// import uim.platform.monitoring.infrastructure.persistence.memory.monitored_resource;
-// import uim.platform.monitoring.infrastructure.persistence.memory.metric_definition;
-// import uim.platform.monitoring.infrastructure.persistence.memory.metric;
-// import uim.platform.monitoring.infrastructure.persistence.memory.health_check;
-// import uim.platform.monitoring.infrastructure.persistence.memory.health_check_result;
-// import uim.platform.monitoring.infrastructure.persistence.memory.alert_rule;
-// import uim.platform.monitoring.infrastructure.persistence.memory.alert;
-// import uim.platform.monitoring.infrastructure.persistence.memory.notification_channel;
+// Repositories
+import uim.platform.monitoring.infrastructure.persistence.memory.monitored_resources;
+import uim.platform.monitoring.infrastructure.persistence.memory.metric_definitions;
+import uim.platform.monitoring.infrastructure.persistence.memory.metrics;
+import uim.platform.monitoring.infrastructure.persistence.memory.health_checks;
+import uim.platform.monitoring.infrastructure.persistence.memory.health_check_results;
+import uim.platform.monitoring.infrastructure.persistence.memory.alert_rules;
+import uim.platform.monitoring.infrastructure.persistence.memory.alerts;
+import uim.platform.monitoring.infrastructure.persistence.memory.notification_channels;
 
-// // Use Cases
-// import uim.platform.monitoring.application.usecases.manage.monitored_resources;
-// import uim.platform.monitoring.application.usecases.manage.metrics;
-// import uim.platform.monitoring.application.usecases.manage.health_checks;
-// import uim.platform.monitoring.application.usecases.manage.alert_rules;
-// import uim.platform.monitoring.application.usecases.manage.alerts;
-// import uim.platform.monitoring.application.usecases.manage.notification_channels;
-// import uim.platform.monitoring.application.usecases.evaluate_metrics;
-// import uim.platform.monitoring.application.usecases.get_dashboard;
+// Use Cases
+import uim.platform.monitoring.application.usecases.manage.monitored_resources;
+import uim.platform.monitoring.application.usecases.manage.metrics;
+import uim.platform.monitoring.application.usecases.manage.health_checks;
+import uim.platform.monitoring.application.usecases.manage.alert_rules;
+import uim.platform.monitoring.application.usecases.manage.alerts;
+import uim.platform.monitoring.application.usecases.manage.notification_channels;
+import uim.platform.monitoring.application.usecases.evaluate_metrics;
+import uim.platform.monitoring.application.usecases.get_dashboard;
 
-// // Controllers
-// import uim.platform.monitoring.presentation.http.resource;
-// import uim.platform.monitoring.presentation.http.metric;
-// import uim.platform.monitoring.presentation.http.metric_definition;
-// import uim.platform.monitoring.presentation.http.check;
-// import uim.platform.monitoring.presentation.http.alert_rule;
-// import uim.platform.monitoring.presentation.http.alert;
-// import uim.platform.monitoring.presentation.http.channel;
-// import uim.platform.monitoring.presentation.http.dashboard;
-// import uim.platform.monitoring.presentation.http.health;
-import uim.platform.monitoring;
+// Controllers
+import uim.platform.monitoring.presentation.http.controllers.resource;
+import uim.platform.monitoring.presentation.http.controllers.metric;
+import uim.platform.monitoring.presentation.http.controllers.metric_definition;
+import uim.platform.monitoring.presentation.http.controllers.check;
+import uim.platform.monitoring.presentation.http.controllers.alert_rule;
+import uim.platform.monitoring.presentation.http.controllers.alert;
+import uim.platform.monitoring.presentation.http.controllers.channel;
+import uim.platform.monitoring.presentation.http.controllers.dashboard;
+// import uim.platform.monitoring;
 
 mixin(ShowModule!());
 
