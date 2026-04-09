@@ -17,38 +17,21 @@ import uim.platform.credential_store;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAuditLogRepository : AuditLogRepository {
-  private AuditLogEntry[] store;
-
-  AuditLogEntry findById(AuditLogEntryId id) {
-    foreach (ref e; store)
-      if (e.id == id)
-        return e;
-    return AuditLogEntry.init;
-  }
-
-  AuditLogEntry[] findByTenant(TenantId tenantId) {
-    return store.filter!(e => e.tenantId == tenantId).array;
-  }
-
+class MemoryAuditLogRepository : MemoryTenantRepository!(AuditLogEntry, AuditLogEntryId), AuditLogRepository {
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId) {
-    return store.filter!(e => e.tenantId == tenantId && e.namespaceId == namespaceId).array;
+    return findByTenant(tenantId).filter!(e => e.namespaceId == namespaceId).array;
   }
 
   AuditLogEntry[] findByResourceType(TenantId tenantId, ResourceType resourceType) {
-    return store.filter!(e => e.tenantId == tenantId && e.resourceType == resourceType).array;
+    return findByTenant(tenantId).filter!(e => e.resourceType == resourceType).array;
   }
 
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime) {
-    return store.filter!(e => e.tenantId == tenantId && e.timestamp >= startTime && e.timestamp <= endTime)
+    return findByTenant(tenantId).filter!(e => e.timestamp >= startTime && e.timestamp <= endTime)
       .array;
   }
 
-  void save(AuditLogEntry entry) {
-    store ~= entry;
-  }
-
-  long countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(e => e.tenantId == tenantId).array.length;
+  size_t countByTenant(TenantId tenantId) {
+    return findByTenant(tenantId).array.length;
   }
 }

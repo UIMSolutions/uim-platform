@@ -124,7 +124,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
     return resultRepo.findByDocument(docId, clientId);
   }
 
-  long count(ClientId clientId) {
+  size_t count(ClientId clientId) {
     return docRepo.countByClient(clientId);
   }
 

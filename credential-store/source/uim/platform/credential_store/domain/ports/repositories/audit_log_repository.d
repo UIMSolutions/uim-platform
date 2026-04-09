@@ -8,12 +8,9 @@ module uim.platform.credential_store.domain.ports.repositories.audit_logs;
 import uim.platform.credential_store.domain.entities.audit_log_entry;
 import uim.platform.credential_store.domain.types;
 
-interface AuditLogRepository {
-  AuditLogEntry findById(AuditLogEntryId id);
-  AuditLogEntry[] findByTenant(TenantId tenantId);
+interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogEntryId) {
   AuditLogEntry[] findByNamespace(TenantId tenantId, NamespaceId namespaceId);
   AuditLogEntry[] findByResourceType(TenantId tenantId, ResourceType resourceType);
   AuditLogEntry[] findByTimeRange(TenantId tenantId, long startTime, long endTime);
-  void save(AuditLogEntry entry);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

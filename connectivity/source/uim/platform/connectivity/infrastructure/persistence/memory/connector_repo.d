@@ -16,15 +16,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class MemoryConnectorRepository : ConnectorRepository {
-  private CloudConnector[ConnectorId] store;
-
-  CloudConnector findById(ConnectorId id) {
-    if (auto p = id in store)
-      return *p;
-    return CloudConnector.init;
-  }
-
+class MemoryConnectorRepository : MemoryTenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
   CloudConnector findByLocationId(SubaccountId subaccountId, string locationId) {
     foreach (ref e; store.byValue())
       if (e.subaccountId == subaccountId && e.locationId == locationId)
@@ -34,21 +26,5 @@ class MemoryConnectorRepository : ConnectorRepository {
 
   CloudConnector[] findBySubaccount(SubaccountId subaccountId) {
     return store.byValue().filter!(e => e.subaccountId == subaccountId).array;
-  }
-
-  CloudConnector[] findByTenant(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId).array;
-  }
-
-  void save(CloudConnector entity) {
-    store[entity.id] = entity;
-  }
-
-  void update(CloudConnector entity) {
-    store[entity.id] = entity;
-  }
-
-  void remove(ConnectorId id) {
-    store.remove(id);
   }
 }

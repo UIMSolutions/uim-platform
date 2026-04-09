@@ -103,7 +103,7 @@ class ManageClientsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  long countByTenant(TenantId tenantId) {
+  size_t countByTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
 }

@@ -111,7 +111,7 @@ class ManageEnrichmentDataUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  long count(ClientId clientId) {
+  size_t count(ClientId clientId) {
     return repo.countByClient(clientId);
   }
 }

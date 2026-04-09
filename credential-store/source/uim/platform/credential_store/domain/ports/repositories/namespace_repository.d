@@ -8,12 +8,7 @@ module uim.platform.credential_store.domain.ports.repositories.namespaces;
 import uim.platform.credential_store.domain.entities.namespace;
 import uim.platform.credential_store.domain.types;
 
-interface NamespaceRepository {
-  Namespace findById(NamespaceId id);
+interface NamespaceRepository : ITenantRepository!(Namespace, NamespaceId) {
   Namespace findByName(TenantId tenantId, string name);
-  Namespace[] findByTenant(TenantId tenantId);
-  void save(Namespace ns);
-  void update(Namespace ns);
-  void remove(NamespaceId id);
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
 }

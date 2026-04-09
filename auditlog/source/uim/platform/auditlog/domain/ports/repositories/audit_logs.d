@@ -15,8 +15,6 @@ mixin(ShowModule!());
 /// Port for persisting and querying audit log entries.
 @safe:
 interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
-  // AuditLogEntry[] findByTenant(TenantId tenantId);
-// 
   // bool existsById(TenantId tenantId, AuditLogId auditLogId);
   // AuditLogEntry findById(TenantId tenantId, AuditLogId auditLogId);
 
@@ -28,7 +26,7 @@ interface AuditLogRepository : ITenantRepository!(AuditLogEntry, AuditLogId) {
   AuditLogEntry[] search(TenantId tenantId, AuditCategory[] categories,
       long timeFrom, long timeTo, int limit, int offset);
 
-  long countByTenant(TenantId tenantId);
+  size_t countByTenant(TenantId tenantId);
   // void save(TenantId tenantId, AuditLogEntry entry);
   // void save(AuditLogEntry entry);
   // void update(AuditLogEntry entry);
