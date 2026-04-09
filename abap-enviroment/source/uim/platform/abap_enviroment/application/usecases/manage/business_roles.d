@@ -52,10 +52,10 @@ class ManageBusinessRolesUseCase : UIMUseCase {
   }
 
   CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req) {
-    auto role = repo.findById(id);
-    if (role is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Business role not found");
 
+    auto role = repo.findById(id);
     if (req.description.length > 0)
       role.description = req.description;
     if (req.roleType.length > 0)
@@ -80,13 +80,12 @@ class ManageBusinessRolesUseCase : UIMUseCase {
     return repo.findBySystem(systemId);
   }
 
-  CommandResult deleteRole(BusinessRoleId id) {
-    auto role = repo.findById(id);
-    if (role is null)
+  CommandResult deleteRole(BusinessRoleId roleId) {
+    if (!repo.existsById(roleId))
       return CommandResult("", "Business role not found");
 
-    repo.remove(id);
-    return CommandResult(id, "");
+    repo.remove(roleId);
+    return CommandResult(true, roleId.toString(), "");
   }
 }
 

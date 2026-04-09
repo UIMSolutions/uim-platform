@@ -49,10 +49,10 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
-    auto tr = repo.findById(requestId);
-    if (tr is null)
+    if (!repo.existsById(requestId))
       return CommandResult("", "Transport request not found");
 
+    auto tr = repo.findById(requestId);
     if (tr.status != TransportStatus.modifiable)
       return CommandResult("", "Transport request is not modifiable");
 
@@ -73,10 +73,10 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   CommandResult releaseTask(TransportRequestId requestId, string taskId) {
-    auto tr = repo.findById(requestId);
-    if (tr is null)
+    if (!repo.existsById(requestId))
       return CommandResult("", "Transport request not found");
 
+    auto tr = repo.findById(requestId);
     foreach (ref task; tr.tasks) {
       if (task.taskId == taskId) {
         auto validation = TransportReleaseValidator.validateTaskRelease(task);
@@ -102,10 +102,10 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   CommandResult releaseRequest(TransportRequestId id) {
-    auto tr = repo.findById(id);
-    if (tr is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Transport request not found");
 
+    auto tr = repo.findById(id);
     auto validation = TransportReleaseValidator.validateRelease(*tr);
     if (!validation.valid) {
       string msg;
@@ -139,10 +139,10 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 
   CommandResult deleteRequest(TransportRequestId id) {
-    auto tr = repo.findById(id);
-    if (tr is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Transport request not found");
 
+    auto tr = repo.findById(id);
     if (tr.status != TransportStatus.modifiable)
       return CommandResult("", "Only modifiable transport requests can be deleted");
 
@@ -151,8 +151,8 @@ class ManageTransportRequestsUseCase : UIMUseCase {
   }
 }
 
-private TransportType parseTransportType(string s) {
-  switch (s) {
+private TransportType parseTransportType(string type) {
+  switch (type) {
   case "workbench":
     return TransportType.workbench;
   case "customizing":
@@ -164,8 +164,8 @@ private TransportType parseTransportType(string s) {
   }
 }
 
-private TransportStatus parseTransportStatus(string s) {
-  switch (s) {
+private TransportStatus parseTransportStatus(string status) {
+  switch (status) {
   case "modifiable":
     return TransportStatus.modifiable;
   case "released":

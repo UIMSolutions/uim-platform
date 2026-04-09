@@ -94,10 +94,10 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   }
 
   CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
-    auto comp = repo.findById(id);
-    if (comp is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Software component not found");
 
+    auto comp = repo.findById(id);
     if (comp.status != ComponentStatus.cloned)
       return CommandResult("", "Component must be cloned before pulling");
 
@@ -132,8 +132,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   }
 
   CommandResult deleteComponent(SoftwareComponentId id) {
-    auto comp = repo.findById(id);
-    if (comp is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Software component not found");
 
     repo.remove(id);
@@ -141,8 +140,8 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   }
 }
 
-private ComponentType parseComponentType(string s) {
-  switch (s) {
+private ComponentType parseComponentType(string componentType) {
+  switch (componentType) {
   case "developmentPackage":
     return ComponentType.developmentPackage;
   case "businessConfiguration":
@@ -156,8 +155,8 @@ private ComponentType parseComponentType(string s) {
   }
 }
 
-private BranchStrategy parseBranchStrategy(string s) {
-  switch (s) {
+private BranchStrategy parseBranchStrategy(string branchStrategy) {
+  switch (branchStrategy) {
   case "main":
     return BranchStrategy.main;
   case "release":

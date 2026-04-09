@@ -70,10 +70,10 @@ class ManageBusinessUsersUseCase : UIMUseCase {
   }
 
   CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
-    auto user = repo.findById(id);
-    if (user is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Business user not found");
 
+    auto user = repo.findById(id);
     if (req.firstName.length > 0)
       user.firstName = req.firstName;
     if (req.lastName.length > 0)
@@ -87,9 +87,8 @@ class ManageBusinessUsersUseCase : UIMUseCase {
     if (req.roleIds.length > 0) {
       RoleAssignment[] assignments;
       foreach (roleId; req.roleIds) {
-        auto role = roleRepo.findById(roleId);
-        if (role !is null) {
-          // import std.datetime.systime : Clock;
+        if (roleRepo.existsById(roleId)) {
+          auto role = roleRepo.findById(roleId);
           assignments ~= RoleAssignment(roleId, role.name, Clock.currStdTime());
         }
       }
@@ -112,12 +111,11 @@ class ManageBusinessUsersUseCase : UIMUseCase {
   }
 
   CommandResult deleteUser(BusinessUserId id) {
-    auto user = repo.findById(id);
-    if (user is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Business user not found");
 
     repo.remove(id);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString(), "");
   }
 }
 

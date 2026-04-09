@@ -69,7 +69,7 @@ class DeploymentController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) deployments.length);
+      resp["count"] = Json(cast(long)deployments.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -80,6 +80,7 @@ class DeploymentController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -98,6 +99,7 @@ class DeploymentController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
@@ -138,7 +140,8 @@ class DeploymentController : PlatformController {
         auto rj = Json.emptyObject;
         rj["id"] = Json(result.id);
         rj["success"] = Json(result.success);
-        if (result.error.length > 0) rj["error"] = Json(result.error);
+        if (result.error.length > 0)
+          rj["error"] = Json(result.error);
         jarr ~= rj;
       }
 
@@ -153,6 +156,7 @@ class DeploymentController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -170,6 +174,7 @@ class DeploymentController : PlatformController {
   private Json serializeDeployment(Deployment d) {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
+
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["connectionId"] = Json(d.connectionId);
@@ -181,11 +186,11 @@ class DeploymentController : PlatformController {
     j["deploymentUrl"] = Json(d.deploymentUrl);
 
     auto sj = Json.emptyObject;
-    sj["minReplicas"] = Json(cast(long) d.scaling.minReplicas);
-    sj["maxReplicas"] = Json(cast(long) d.scaling.maxReplicas);
+    sj["minReplicas"] = Json(cast(long)d.scaling.minReplicas);
+    sj["maxReplicas"] = Json(cast(long)d.scaling.maxReplicas);
     j["scaling"] = sj;
 
-    j["ttl"] = Json(cast(long) d.ttl);
+    j["ttl"] = Json(cast(long)d.ttl);
     j["startedAt"] = Json(d.startedAt);
     j["stoppedAt"] = Json(d.stoppedAt);
     j["statusMessage"] = Json(d.statusMessage);

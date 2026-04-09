@@ -59,10 +59,10 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
 
   CommandResult updateArrangement(CommunicationArrangementId id,
     UpdateCommunicationArrangementRequest req) {
-    auto arr = repo.findById(id);
-    if (arr is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Communication arrangement not found");
 
+    auto arr = repo.findById(id);
     if (req.description.length > 0)
       arr.description = req.description;
     if (req.status.length > 0)
@@ -100,28 +100,27 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
   }
 
   CommandResult deleteArrangement(CommunicationArrangementId id) {
-    auto arr = repo.findById(id);
-    if (arr is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Communication arrangement not found");
 
     repo.remove(id);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString(), "");
   }
 }
 
-private CommunicationDirection parseDirection(string s) {
-  switch (s) {
-  case "inbound":
-    return CommunicationDirection.inbound;
-  case "outbound":
-    return CommunicationDirection.outbound;
-  default:
-    return CommunicationDirection.inbound;
-  }
+private CommunicationDirection parseDirection(string direction) {
+   switch (direction) {
+     case "inbound":
+       return CommunicationDirection.inbound;
+     case "outbound":
+       return CommunicationDirection.outbound;
+     default:
+       return CommunicationDirection.inbound;
+   }
 }
 
-private CommunicationAuthMethod parseAuthMethod(string s) {
-  switch (s) {
+private CommunicationAuthMethod parseAuthMethod(string method) {
+  switch (method) {
   case "basicAuthentication":
     return CommunicationAuthMethod.basicAuthentication;
   case "oauth2ClientCredentials":
@@ -137,8 +136,8 @@ private CommunicationAuthMethod parseAuthMethod(string s) {
   }
 }
 
-private ArrangementStatus parseArrangementStatus(string s) {
-  switch (s) {
+private ArrangementStatus parseArrangementStatus(string status) {
+  switch (status) {
   case "active":
     return ArrangementStatus.active;
   case "inactive":

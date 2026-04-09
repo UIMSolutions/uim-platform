@@ -21,7 +21,8 @@ class ManageConfigurationsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateConfigurationRequest r) {
-    if (r.name.length == 0) return CommandResult(false, "", "Configuration name is required");
+    if (r.name.length == 0)
+      return CommandResult(false, "", "Configuration name is required");
 
     Configuration c;
     c.id = randomUUID().to!string;
@@ -59,8 +60,9 @@ class ManageConfigurationsUseCase : UIMUseCase {
   }
 
   CommandResult remove(ConfigurationId id, ConnectionId connectionId) {
-    auto c = repo.findById(id, connectionId);
-    if (c.id.isEmpty) return CommandResult(false, "", "Configuration not found");
+    if (!repo.existsById(id, connectionId))
+      return CommandResult(false, "", "Configuration not found");
+
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

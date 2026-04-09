@@ -10,6 +10,9 @@ import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
+mixin(ShowModule!());
+
+@safe:
 class ModelController : PlatformController {
   private ManageModelsUseCase uc;
 
@@ -73,7 +76,7 @@ class ModelController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) models.length);
+      resp["count"] = Json(cast(long)models.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -84,6 +87,7 @@ class ModelController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -102,6 +106,7 @@ class ModelController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
@@ -128,6 +133,7 @@ class ModelController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -144,6 +150,7 @@ class ModelController : PlatformController {
 
   private Json serializeModel(Model m) {
     import std.conv : to;
+
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["connectionId"] = Json(m.connectionId);

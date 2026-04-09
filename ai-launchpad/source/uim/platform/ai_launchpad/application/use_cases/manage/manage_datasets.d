@@ -21,7 +21,8 @@ class ManageDatasetsUseCase : UIMUseCase {
   }
 
   CommandResult register(RegisterDatasetRequest r) {
-    if (r.name.length == 0) return CommandResult(false, "", "Dataset name is required");
+    if (r.name.length == 0)
+      return CommandResult(false, "", "Dataset name is required");
 
     Dataset d;
     d.id = randomUUID().to!string;
@@ -53,9 +54,12 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult patch(PatchDatasetRequest r) {
     auto d = repo.findById(r.datasetId, r.connectionId);
-    if (d.id.isEmpty) return CommandResult(false, "", "Dataset not found");
-    if (r.description.length > 0) d.description = r.description;
-    if (r.status == "archived") d.status = DatasetStatus.archived;
+    if (d.id.isEmpty)
+      return CommandResult(false, "", "Dataset not found");
+    if (r.description.length > 0)
+      d.description = r.description;
+    if (r.status == "archived")
+      d.status = DatasetStatus.archived;
     d.modifiedAt = "now";
     repo.save(d);
     return CommandResult(true, d.id, "");
@@ -63,7 +67,8 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult remove(DatasetId id, ConnectionId connectionId) {
     auto d = repo.findById(id, connectionId);
-    if (d.id.isEmpty) return CommandResult(false, "", "Dataset not found");
+    if (d.id.isEmpty)
+      return CommandResult(false, "", "Dataset not found");
     repo.remove(id, connectionId);
     return CommandResult(true, id.toString, "");
   }

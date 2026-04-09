@@ -20,6 +20,18 @@ import uim.platform.abap_enviroment;
 mixin(ShowModule!());
 @safe:
 
+/**
+  * HTTP controller for managing business roles in the ABAP environment.
+  * Provides endpoints for creating, listing, retrieving, updating, and deleting business roles.
+  *
+  * Endpoints:
+  * - POST /api/v1/business-roles: Create a new business role.
+  * - GET /api/v1/business-roles: List all business roles for a system instance.
+  * - GET /api/v1/business-roles/{id}: Get details of a specific business role by ID.
+  * - PUT /api/v1/business-roles/{id}: Update an existing business role.
+  * - DELETE /api/v1/business-roles/{id}: Delete a business role.
+  * Each endpoint expects and returns JSON data, and uses standard HTTP status codes to indicate success or failure.
+  */
 class BusinessRoleController : PlatformController {
   private ManageBusinessRolesUseCase uc;
 

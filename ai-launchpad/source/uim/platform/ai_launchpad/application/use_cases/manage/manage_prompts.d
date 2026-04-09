@@ -24,8 +24,10 @@ class ManagePromptsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreatePromptRequest r) {
-    if (r.name.length == 0) return CommandResult(false, "", "Prompt name is required");
-    if (r.modelName.length == 0) return CommandResult(false, "", "Model name is required");
+    if (r.name.length == 0)
+      return CommandResult(false, "", "Prompt name is required");
+    if (r.modelName.length == 0)
+      return CommandResult(false, "", "Model name is required");
 
     Prompt p;
     p.id = randomUUID().to!string;
@@ -40,8 +42,10 @@ class ManagePromptsUseCase : UIMUseCase {
     foreach (ref msg; r.messages) {
       if (msg.length >= 2) {
         PromptRole role = PromptRole.user;
-        if (msg[0] == "system") role = PromptRole.system;
-        else if (msg[0] == "assistant") role = PromptRole.assistant;
+        if (msg[0] == "system")
+          role = PromptRole.system;
+        else if (msg[0] == "assistant")
+          role = PromptRole.assistant;
         p.messages ~= PromptMessage(role, msg[1]);
       }
     }
@@ -77,20 +81,28 @@ class ManagePromptsUseCase : UIMUseCase {
 
   CommandResult patch(PatchPromptRequest r) {
     auto p = repo.findById(r.promptId);
-    if (p.id.isEmpty) return CommandResult(false, "", "Prompt not found");
-    if (r.name.length > 0) p.name = r.name;
-    if (r.status == "active") p.status = PromptStatus.active;
-    else if (r.status == "archived") p.status = PromptStatus.archived;
-    if (r.maxTokens > 0) p.parameters.maxTokens = r.maxTokens;
-    if (r.temperature > 0) p.parameters.temperature = r.temperature;
+    if (p.id.isEmpty)
+      return CommandResult(false, "", "Prompt not found");
+    if (r.name.length > 0)
+      p.name = r.name;
+    if (r.status == "active")
+      p.status = PromptStatus.active;
+    else if (r.status == "archived")
+      p.status = PromptStatus.archived;
+    if (r.maxTokens > 0)
+      p.parameters.maxTokens = r.maxTokens;
+    if (r.temperature > 0)
+      p.parameters.temperature = r.temperature;
 
     if (r.messages.length > 0) {
       p.messages = [];
       foreach (ref msg; r.messages) {
         if (msg.length >= 2) {
           PromptRole role = PromptRole.user;
-          if (msg[0] == "system") role = PromptRole.system;
-          else if (msg[0] == "assistant") role = PromptRole.assistant;
+          if (msg[0] == "system")
+            role = PromptRole.system;
+          else if (msg[0] == "assistant")
+            role = PromptRole.assistant;
           p.messages ~= PromptMessage(role, msg[1]);
         }
       }
@@ -103,7 +115,8 @@ class ManagePromptsUseCase : UIMUseCase {
 
   CommandResult remove(PromptId id) {
     auto p = repo.findById(id);
-    if (p.id.isEmpty) return CommandResult(false, "", "Prompt not found");
+    if (p.id.isEmpty)
+      return CommandResult(false, "", "Prompt not found");
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

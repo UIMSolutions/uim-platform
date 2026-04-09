@@ -14,14 +14,15 @@ import std.uuid : randomUUID;
 import std.conv : to;
 
 class ManagePromptCollectionsUseCase : UIMUseCase {
-  private IPromptCollectionRepository repo;
+  private IPromptCollectionRepository collectionRepository;
 
   this(IPromptCollectionRepository repo) {
-    this.repo = repo;
+    this.collectionRepository = repo;
   }
 
   CommandResult create(CreatePromptCollectionRequest r) {
-    if (r.name.length == 0) return CommandResult(false, "", "Collection name is required");
+    if (r.name.length == 0)
+      return CommandResult(false, "", "Collection name is required");
 
     PromptCollection pc;
     pc.id = randomUUID().to!string;
@@ -32,36 +33,41 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
     pc.promptCount = 0;
     pc.createdAt = "now";
     pc.modifiedAt = "now";
-    repo.save(pc);
+    collectionRepository.save(pc);
     return CommandResult(true, pc.id, "");
   }
 
   PromptCollection get_(PromptCollectionId id) {
-    return repo.findById(id);
+    return collectionRepository.findById(id);
   }
 
   PromptCollection[] listByWorkspace(WorkspaceId workspaceId) {
-    return repo.findByWorkspace(workspaceId);
+    return collectionRepository.findByWorkspace(workspaceId);
   }
 
   PromptCollection[] listAll() {
-    return repo.findAll();
+    return collectionRepository.findAll();
   }
 
   CommandResult patch(PatchPromptCollectionRequest r) {
-    auto pc = repo.findById(r.collectionId);
-    if (pc.id.isEmpty) return CommandResult(false, "", "Prompt collection not found");
-    if (r.name.length > 0) pc.name = r.name;
-    if (r.description.length > 0) pc.description = r.description;
+    if (!collectionRepository.existsById(r.collectionId))
+      return CommandResult(false, "", "Prompt collection not found");
+      
+    auto pc = collectionRepository.findById(r.collectionId);
+    if (r.name.length > 0)
+      pc.name = r.name;
+    if (r.description.length > 0)
+      pc.description = r.description;
     pc.modifiedAt = "now";
-    repo.save(pc);
+    collectionRepository.save(pc);
     return CommandResult(true, pc.id, "");
   }
 
   CommandResult remove(PromptCollectionId id) {
-    auto pc = repo.findById(id);
-    if (pc.id.isEmpty) return CommandResult(false, "", "Prompt collection not found");
-    repo.remove(id);
+    if (!collectionRepository.existsById(id))
+      return CommandResult(false, "", "Prompt collection not found");
+
+    collectionRepository.remove(id);
     return CommandResult(true, id.toString, "");
   }
 }

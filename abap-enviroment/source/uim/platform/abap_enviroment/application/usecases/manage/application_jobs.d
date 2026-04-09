@@ -54,10 +54,10 @@ class ManageApplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest req) {
-    auto job = repo.findById(id);
-    if (job is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Application job not found");
 
+    auto job = repo.findById(id);
     if (req.description.length > 0)
       job.description = req.description;
     if (req.frequency.length > 0)
@@ -78,10 +78,10 @@ class ManageApplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult cancelJob(ApplicationJobId id) {
-    auto job = repo.findById(id);
-    if (job is null)
+    if (!repo.existsById(id))
       return CommandResult("", "Application job not found");
 
+    auto job = repo.findById(id);
     if (job.status != JobStatus.scheduled && job.status != JobStatus.running)
       return CommandResult("", "Job can only be canceled when scheduled or running");
 
