@@ -79,7 +79,7 @@ class ShellPluginController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto p = useCase.getPlugin(id, tenantId);
+      auto p = useCase.getPlugin(tenantId, id);
       if (p is null) {
         writeError(res, 404, "Plugin not found");
         return;
@@ -117,7 +117,7 @@ class ShellPluginController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deletePlugin(id, tenantId);
+      auto result = useCase.deletePlugin(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

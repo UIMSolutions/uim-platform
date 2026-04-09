@@ -81,7 +81,7 @@ class UserProfileController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto p = useCase.getUserProfile(id, tenantId);
+      auto p = useCase.getUserProfile(tenantId, id);
       if (p is null) {
         writeError(res, 404, "User profile not found");
         return;
@@ -120,7 +120,7 @@ class UserProfileController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteUserProfile(id, tenantId);
+      auto result = useCase.deleteUserProfile(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

@@ -45,8 +45,8 @@ class ManageAppsUseCase : UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  AppRegistration* getApp(AppId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  AppRegistration* getApp(AppId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   AppRegistration[] listApps(TenantId tenantId) {
@@ -78,7 +78,7 @@ class ManageAppsUseCase : UIMUseCase {
     return CommandResult(app.id, "");
   }
 
-  void deleteApp(AppId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteApp(AppId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

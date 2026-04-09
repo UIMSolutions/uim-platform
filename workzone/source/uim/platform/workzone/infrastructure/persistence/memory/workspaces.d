@@ -19,7 +19,7 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
     return store.byValue().filter!(w => w.tenantId == tenantId).array;
   }
 
-  Workspace* findById(WorkspaceId id, TenantId tenantId) {
+  Workspace* findById(WorkspaceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -33,7 +33,7 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
     return null;
   }
 
-  Workspace[] findByMember(UserId userId, TenantId tenantId) {
+  Workspace[] findByMember(UserId usertenantId, id tenantId) {
     Workspace[] result;
     foreach (ref w; store.byValue()) {
       if (w.tenantId != tenantId)
@@ -56,7 +56,7 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
     store[workspace.id] = workspace;
   }
 
-  void remove(WorkspaceId id, TenantId tenantId) {
+  void remove(WorkspaceId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

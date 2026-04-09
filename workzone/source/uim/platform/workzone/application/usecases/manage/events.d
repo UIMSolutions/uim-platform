@@ -49,12 +49,12 @@ class ManageEventsUseCase : UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  Event* getEvent(EventId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Event* getEvent(EventId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  Event[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  Event[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
   CommandResult updateEvent(UpdateEventRequest req) {
@@ -77,12 +77,12 @@ class ManageEventsUseCase : UIMUseCase {
     return CommandResult(e.id, "");
   }
 
-  CommandResult deleteEvent(EventId id, TenantId tenantId) {
-    auto e = repo.findById(id, tenantId);
+  CommandResult deleteEvent(EventId tenantId, id tenantId) {
+    auto e = repo.findById(tenantId, id);
     if (e is null)
       return CommandResult("", "Event not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

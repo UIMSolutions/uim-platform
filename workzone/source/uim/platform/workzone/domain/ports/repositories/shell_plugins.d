@@ -10,10 +10,10 @@ import uim.platform.workzone.domain.entities.shell_plugin;
 
 interface ShellPluginRepository {
   ShellPlugin[] findByTenant(TenantId tenantId);
-  ShellPlugin* findById(ShellPluginId id, TenantId tenantId);
-  ShellPlugin[] findBySite(SiteId siteId, TenantId tenantId);
+  ShellPlugin* findById(ShellPluginId tenantId, id tenantId);
+  ShellPlugin[] findBySite(SiteId sitetenantId, id tenantId);
   ShellPlugin[] findByStatus(PluginStatus status, TenantId tenantId);
   void save(ShellPlugin plugin);
   void update(ShellPlugin plugin);
-  void remove(ShellPluginId id, TenantId tenantId);
+  void remove(ShellPluginId tenantId, id tenantId);
 }

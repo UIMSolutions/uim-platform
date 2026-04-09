@@ -15,18 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.tasks;
 class MemoryTaskRepository : TaskRepository {
   private Task[TaskId] store;
 
-  Task[] findByAssignee(UserId assigneeId, TenantId tenantId) {
+  Task[] findByAssignee(UserId assigneetenantId, id tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId && t.assigneeId == assigneeId).array;
   }
 
-  Task* findById(TaskId id, TenantId tenantId) {
+  Task* findById(TaskId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Task[] findByStatus(TaskStatus status, UserId assigneeId, TenantId tenantId) {
+  Task[] findByStatus(TaskStatus status, UserId assigneetenantId, id tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId
         && t.assigneeId == assigneeId && t.status == status).array;
   }
@@ -43,7 +43,7 @@ class MemoryTaskRepository : TaskRepository {
     store[task.id] = task;
   }
 
-  void remove(TaskId id, TenantId tenantId) {
+  void remove(TaskId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

@@ -9,10 +9,10 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.notification;
 
 interface NotificationRepository {
-  Notification[] findByRecipient(UserId recipientId, TenantId tenantId);
-  Notification* findById(NotificationId id, TenantId tenantId);
-  Notification[] findUnread(UserId recipientId, TenantId tenantId);
+  Notification[] findByRecipient(UserId recipienttenantId, id tenantId);
+  Notification* findById(NotificationId tenantId, id tenantId);
+  Notification[] findUnread(UserId recipienttenantId, id tenantId);
   void save(Notification notification);
   void update(Notification notification);
-  void remove(NotificationId id, TenantId tenantId);
+  void remove(NotificationId tenantId, id tenantId);
 }

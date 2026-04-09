@@ -15,19 +15,19 @@ import uim.platform.workzone.domain.ports.repositories.notifications;
 class MemoryNotificationRepository : NotificationRepository {
   private Notification[NotificationId] store;
 
-  Notification[] findByRecipient(UserId recipientId, TenantId tenantId) {
+  Notification[] findByRecipient(UserId recipienttenantId, id tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId && n.recipientId == recipientId)
       .array;
   }
 
-  Notification* findById(NotificationId id, TenantId tenantId) {
+  Notification* findById(NotificationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Notification[] findUnread(UserId recipientId, TenantId tenantId) {
+  Notification[] findUnread(UserId recipienttenantId, id tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId
         && n.recipientId == recipientId && n.status == NotificationStatus.unread).array;
   }
@@ -40,7 +40,7 @@ class MemoryNotificationRepository : NotificationRepository {
     store[notification.id] = notification;
   }
 
-  void remove(NotificationId id, TenantId tenantId) {
+  void remove(NotificationId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

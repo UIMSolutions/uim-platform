@@ -40,12 +40,12 @@ class ManageWorkpagesUseCase : UIMUseCase {
     return CommandResult(page.id, "");
   }
 
-  Workpage* getWorkpage(WorkpageId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Workpage* getWorkpage(WorkpageId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  Workpage[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  Workpage[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
   CommandResult updateWorkpage(UpdateWorkpageRequest req) {
@@ -65,7 +65,7 @@ class ManageWorkpagesUseCase : UIMUseCase {
     return CommandResult(page.id, "");
   }
 
-  void deleteWorkpage(WorkpageId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteWorkpage(WorkpageId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

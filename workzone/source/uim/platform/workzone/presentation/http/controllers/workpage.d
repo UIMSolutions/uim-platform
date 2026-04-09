@@ -60,7 +60,7 @@ class WorkpageController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto pages = useCase.listByWorkspace(workspaceId, tenantId);
+      auto pages = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref p; pages)
         arr ~= serializePage(p);
@@ -78,7 +78,7 @@ class WorkpageController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto page = useCase.getWorkpage(id, tenantId);
+      auto page = useCase.getWorkpage(tenantId, id);
       if (page is null) {
         writeError(res, 404, "Page not found");
         return;
@@ -121,7 +121,7 @@ class WorkpageController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteWorkpage(id, tenantId);
+      useCase.deleteWorkpage(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

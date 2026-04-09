@@ -10,10 +10,10 @@ import uim.platform.workzone.domain.entities.user_profile;
 
 interface UserProfileRepository {
   UserProfile[] findByTenant(TenantId tenantId);
-  UserProfile* findById(UserProfileId id, TenantId tenantId);
-  UserProfile* findByUserId(UserId userId, TenantId tenantId);
-  UserProfile[] findByGroup(GroupId groupId, TenantId tenantId);
+  UserProfile* findById(UserProfileId tenantId, id tenantId);
+  UserProfile* findByUserId(UserId usertenantId, id tenantId);
+  UserProfile[] findByGroup(GroupId grouptenantId, id tenantId);
   void save(UserProfile profile);
   void update(UserProfile profile);
-  void remove(UserProfileId id, TenantId tenantId);
+  void remove(UserProfileId tenantId, id tenantId);
 }

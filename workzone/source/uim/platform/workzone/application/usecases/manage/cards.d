@@ -42,8 +42,8 @@ class ManageCardsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  Card* getCard(CardId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Card* getCard(CardId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Card[] listCards(TenantId tenantId) {
@@ -76,7 +76,7 @@ class ManageCardsUseCase : UIMUseCase {
     return CommandResult(c.id, "");
   }
 
-  void deleteCard(CardId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteCard(CardId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

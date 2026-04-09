@@ -78,9 +78,9 @@ class NotificationController {
 
       Notification[] items;
       if (unreadOnly)
-        items = useCase.listUnread(recipientId, tenantId);
+        items = useCase.listUnread(recipienttenantId, id);
       else
-        items = useCase.listByRecipient(recipientId, tenantId);
+        items = useCase.listByRecipient(recipienttenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref n; items)
@@ -99,7 +99,7 @@ class NotificationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto n = useCase.getNotification(id, tenantId);
+      auto n = useCase.getNotification(tenantId, id);
       if (n is null) {
         writeError(res, 404, "Notification not found");
         return;
@@ -115,7 +115,7 @@ class NotificationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.markAsRead(id, tenantId);
+      auto result = useCase.markAsRead(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("read");
@@ -135,7 +135,7 @@ class NotificationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.dismiss(id, tenantId);
+      auto result = useCase.dismiss(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("dismissed");
@@ -155,7 +155,7 @@ class NotificationController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteNotification(id, tenantId);
+      useCase.deleteNotification(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

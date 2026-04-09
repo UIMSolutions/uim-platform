@@ -60,7 +60,7 @@ class RunLogController : PlatformController {
             auto jobId = extractJobId(path);
             TenantId tenantId = req.getTenantId;
 
-            auto logs = uc.listByJob(jobId, tenantId);
+            auto logs = uc.listByJob(jobtenantId, id);
 
             auto jarr = Json.emptyArray;
             foreach (ref l; logs) {

@@ -97,7 +97,7 @@ class WorkspaceController {
       }
 
       TenantId tenantId = req.getTenantId;
-      auto ws = useCase.getWorkspace(id, tenantId);
+      auto ws = useCase.getWorkspace(tenantId, id);
       if (ws is null) {
         writeError(res, 404, "Workspace not found");
         return;
@@ -140,7 +140,7 @@ class WorkspaceController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteWorkspace(id, tenantId);
+      useCase.deleteWorkspace(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

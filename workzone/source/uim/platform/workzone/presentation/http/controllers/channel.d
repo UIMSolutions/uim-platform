@@ -70,7 +70,7 @@ class ChannelController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto channels = useCase.listByWorkspace(workspaceId, tenantId);
+      auto channels = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref c; channels)
         arr ~= serializeChannel(c);
@@ -88,7 +88,7 @@ class ChannelController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ch = useCase.getChannel(id, tenantId);
+      auto ch = useCase.getChannel(tenantId, id);
       if (ch is null) {
         writeError(res, 404, "Channel not found");
         return;
@@ -131,7 +131,7 @@ class ChannelController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteChannel(id, tenantId);
+      useCase.deleteChannel(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

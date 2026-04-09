@@ -19,21 +19,21 @@ class MemoryUserProfileRepository : UserProfileRepository {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  UserProfile* findById(UserProfileId id, TenantId tenantId) {
+  UserProfile* findById(UserProfileId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  UserProfile* findByUserId(UserId userId, TenantId tenantId) {
+  UserProfile* findByUserId(UserId usertenantId, id tenantId) {
     foreach (ref p; store.byValue())
       if (p.tenantId == tenantId && p.userId == userId)
         return &p;
     return null;
   }
 
-  UserProfile[] findByGroup(GroupId groupId, TenantId tenantId) {
+  UserProfile[] findByGroup(GroupId grouptenantId, id tenantId) {
     UserProfile[] result;
     foreach (ref p; store.byValue()) {
       if (p.tenantId != tenantId)
@@ -56,7 +56,7 @@ class MemoryUserProfileRepository : UserProfileRepository {
     store[profile.id] = profile;
   }
 
-  void remove(UserProfileId id, TenantId tenantId) {
+  void remove(UserProfileId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

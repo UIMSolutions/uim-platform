@@ -9,11 +9,11 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.forum_topic;
 
 interface ForumTopicRepository {
-  ForumTopic[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  ForumTopic* findById(ForumTopicId id, TenantId tenantId);
-  ForumTopic[] findByAuthor(UserId authorId, TenantId tenantId);
+  ForumTopic[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  ForumTopic* findById(ForumTopicId tenantId, id tenantId);
+  ForumTopic[] findByAuthor(UserId authortenantId, id tenantId);
   ForumTopic[] findByTenant(TenantId tenantId);
   void save(ForumTopic topic);
   void update(ForumTopic topic);
-  void remove(ForumTopicId id, TenantId tenantId);
+  void remove(ForumTopicId tenantId, id tenantId);
 }

@@ -17,7 +17,7 @@ import uim.platform.portal.application.dto;
 // import std.algorithm : filter;
 // import std.array : array;
 
-class ManageSectionsUseCase : UIMUseCase{
+class ManageSectionsUseCase : UIMUseCase {
   private SectionRepository sectionRepo;
   private PageRepository pageRepo;
 

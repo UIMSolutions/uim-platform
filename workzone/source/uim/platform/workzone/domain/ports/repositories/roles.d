@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.role;
 
 interface RoleRepository {
   Role[] findByTenant(TenantId tenantId);
-  Role* findById(RoleId id, TenantId tenantId);
-  Role[] findByUser(UserId userId, TenantId tenantId);
+  Role* findById(RoleId tenantId, id tenantId);
+  Role[] findByUser(UserId usertenantId, id tenantId);
   void save(Role role);
   void update(Role role);
-  void remove(RoleId id, TenantId tenantId);
+  void remove(RoleId tenantId, id tenantId);
 }

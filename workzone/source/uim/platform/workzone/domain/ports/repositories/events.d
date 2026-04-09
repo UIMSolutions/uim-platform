@@ -9,11 +9,11 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.event;
 
 interface EventRepository {
-  Event[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  Event* findById(EventId id, TenantId tenantId);
-  Event[] findByOrganizer(UserId organizerId, TenantId tenantId);
+  Event[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  Event* findById(EventId tenantId, id tenantId);
+  Event[] findByOrganizer(UserId organizertenantId, id tenantId);
   Event[] findByTenant(TenantId tenantId);
   void save(Event event);
   void update(Event event);
-  void remove(EventId id, TenantId tenantId);
+  void remove(EventId tenantId, id tenantId);
 }

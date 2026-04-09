@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.feed_entry;
 
 interface FeedRepository {
-  FeedEntry[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  FeedEntry* findById(FeedEntryId id, TenantId tenantId);
-  FeedEntry[] findByActor(UserId actorId, TenantId tenantId);
+  FeedEntry[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  FeedEntry* findById(FeedEntryId tenantId, id tenantId);
+  FeedEntry[] findByActor(UserId actortenantId, id tenantId);
   void save(FeedEntry entry);
-  void remove(FeedEntryId id, TenantId tenantId);
+  void remove(FeedEntryId tenantId, id tenantId);
 }

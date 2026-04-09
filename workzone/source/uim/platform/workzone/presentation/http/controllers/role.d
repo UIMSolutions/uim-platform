@@ -76,7 +76,7 @@ class RoleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto r = useCase.getRole(id, tenantId);
+      auto r = useCase.getRole(tenantId, id);
       if (r is null) {
         writeError(res, 404, "Role not found");
         return;
@@ -113,7 +113,7 @@ class RoleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteRole(id, tenantId);
+      auto result = useCase.deleteRole(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

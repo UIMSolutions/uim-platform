@@ -9,14 +9,14 @@ import uim.platform.job_scheduling.domain.types;
 import uim.platform.job_scheduling.domain.entities.job;
 
 interface JobRepository {
-    Job findById(JobId id, TenantId tenantId);
+    Job findById(JobId tenantId, id tenantId);
     Job findByName(string name, TenantId tenantId);
     Job[] findByTenant(TenantId tenantId);
     Job[] findByStatus(JobStatus status, TenantId tenantId);
     Job[] search(string query, TenantId tenantId);
     void save(Job j);
     void update(Job j);
-    void remove(JobId id, TenantId tenantId);
+    void remove(JobId tenantId, id tenantId);
     long countByTenant(TenantId tenantId);
     long countActiveByTenant(TenantId tenantId);
     long countInactiveByTenant(TenantId tenantId);

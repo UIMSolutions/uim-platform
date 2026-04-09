@@ -62,7 +62,7 @@ class FeedController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto entries = useCase.listByWorkspace(workspaceId, tenantId);
+      auto entries = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref e; entries)
         arr ~= serializeFeed(e);
@@ -80,7 +80,7 @@ class FeedController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto entry = useCase.getEntry(id, tenantId);
+      auto entry = useCase.getEntry(tenantId, id);
       if (entry is null) {
         writeError(res, 404, "Feed entry not found");
         return;
@@ -96,7 +96,7 @@ class FeedController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteEntry(id, tenantId);
+      useCase.deleteEntry(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

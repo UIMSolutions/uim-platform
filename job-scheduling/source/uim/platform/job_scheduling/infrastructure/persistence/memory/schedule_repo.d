@@ -16,7 +16,7 @@ import std.uni : toLower;
 class MemoryScheduleRepository : ScheduleRepository {
     private Schedule[] store;
 
-    Schedule findById(ScheduleId id, JobId jobId, TenantId tenantId) {
+    Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId) {
         foreach (ref s; store) {
             if (s.id == id && s.jobId == jobId && s.tenantId == tenantId)
                 return s;
@@ -24,11 +24,11 @@ class MemoryScheduleRepository : ScheduleRepository {
         return Schedule.init;
     }
 
-    Schedule[] findByJob(JobId jobId, TenantId tenantId) {
+    Schedule[] findByJob(JobId jobtenantId, id tenantId) {
         return store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array;
     }
 
-    Schedule[] findByStatus(ScheduleStatus status, JobId jobId, TenantId tenantId) {
+    Schedule[] findByStatus(ScheduleStatus status, JobId jobtenantId, id tenantId) {
         return store.filter!(s => s.status == status && s.jobId == jobId && s.tenantId == tenantId).array;
     }
 
@@ -55,15 +55,15 @@ class MemoryScheduleRepository : ScheduleRepository {
         }
     }
 
-    void remove(ScheduleId id, JobId jobId, TenantId tenantId) {
+    void remove(ScheduleId id, JobId jobtenantId, id tenantId) {
         store = store.filter!(s => !(s.id == id && s.jobId == jobId && s.tenantId == tenantId)).array;
     }
 
-    void removeAllByJob(JobId jobId, TenantId tenantId) {
+    void removeAllByJob(JobId jobtenantId, id tenantId) {
         store = store.filter!(s => !(s.jobId == jobId && s.tenantId == tenantId)).array;
     }
 
-    long countByJob(JobId jobId, TenantId tenantId) {
+    long countByJob(JobId jobtenantId, id tenantId) {
         return cast(long) store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array.length;
     }
 }

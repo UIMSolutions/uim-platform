@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.external_content_provider;
 
 interface ExternalContentProviderRepository {
   ExternalContentProvider[] findByTenant(TenantId tenantId);
-  ExternalContentProvider* findById(ExternalContentProviderId id, TenantId tenantId);
+  ExternalContentProvider* findById(ExternalContentProviderId tenantId, id tenantId);
   ExternalContentProvider[] findByStatus(ProviderStatus status, TenantId tenantId);
   void save(ExternalContentProvider provider);
   void update(ExternalContentProvider provider);
-  void remove(ExternalContentProviderId id, TenantId tenantId);
+  void remove(ExternalContentProviderId tenantId, id tenantId);
 }

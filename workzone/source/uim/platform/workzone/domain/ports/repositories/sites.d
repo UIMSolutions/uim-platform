@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.site;
 
 interface SiteRepository {
   Site[] findByTenant(TenantId tenantId);
-  Site* findById(SiteId id, TenantId tenantId);
+  Site* findById(SiteId tenantId, id tenantId);
   Site* findByAlias(string alias_, TenantId tenantId);
   void save(Site site);
   void update(Site site);
-  void remove(SiteId id, TenantId tenantId);
+  void remove(SiteId tenantId, id tenantId);
 }

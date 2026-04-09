@@ -75,7 +75,7 @@ class ScheduleController : PlatformController {
             auto jobId = extractJobIdFromSchedulePath(path);
             TenantId tenantId = req.getTenantId;
 
-            auto schedules = uc.list(jobId, tenantId);
+            auto schedules = uc.list(jobtenantId, id);
 
             auto jarr = Json.emptyArray;
             foreach (ref s; schedules) {

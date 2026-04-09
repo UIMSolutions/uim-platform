@@ -39,8 +39,8 @@ class ManageGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  Group* getGroup(GroupId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Group* getGroup(GroupId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Group[] listGroups(TenantId tenantId) {
@@ -63,12 +63,12 @@ class ManageGroupsUseCase : UIMUseCase {
     return CommandResult(g.id, "");
   }
 
-  CommandResult deleteGroup(GroupId id, TenantId tenantId) {
-    auto g = repo.findById(id, tenantId);
+  CommandResult deleteGroup(GroupId tenantId, id tenantId) {
+    auto g = repo.findById(tenantId, id);
     if (g is null)
       return CommandResult("", "Group not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

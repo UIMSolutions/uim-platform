@@ -9,12 +9,12 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.content_item;
 
 interface ContentRepository {
-  ContentItem[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  ContentItem* findById(ContentId id, TenantId tenantId);
-  ContentItem[] findByAuthor(UserId authorId, TenantId tenantId);
-  ContentItem[] findByType(ContentType contentType, WorkspaceId workspaceId, TenantId tenantId);
+  ContentItem[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  ContentItem* findById(ContentId tenantId, id tenantId);
+  ContentItem[] findByAuthor(UserId authortenantId, id tenantId);
+  ContentItem[] findByType(ContentType contentType, WorkspaceId workspacetenantId, id tenantId);
   ContentItem[] findByTag(string tag, TenantId tenantId);
   void save(ContentItem item);
   void update(ContentItem item);
-  void remove(ContentId id, TenantId tenantId);
+  void remove(ContentId tenantId, id tenantId);
 }

@@ -19,7 +19,7 @@ class MemoryPageTemplateRepository : PageTemplateRepository {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  PageTemplate* findById(PageTemplateId id, TenantId tenantId) {
+  PageTemplate* findById(PageTemplateId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -45,7 +45,7 @@ class MemoryPageTemplateRepository : PageTemplateRepository {
     store[template_.id] = template_;
   }
 
-  void remove(PageTemplateId id, TenantId tenantId) {
+  void remove(PageTemplateId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

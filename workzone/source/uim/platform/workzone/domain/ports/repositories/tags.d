@@ -10,10 +10,10 @@ import uim.platform.workzone.domain.entities.tag;
 
 interface TagRepository {
   Tag[] findByTenant(TenantId tenantId);
-  Tag* findById(TagId id, TenantId tenantId);
+  Tag* findById(TagId tenantId, id tenantId);
   Tag* findByName(string name, TenantId tenantId);
-  Tag[] findByParent(TagId parentTagId, TenantId tenantId);
+  Tag[] findByParent(TagId parentTagtenantId, id tenantId);
   void save(Tag tag);
   void update(Tag tag);
-  void remove(TagId id, TenantId tenantId);
+  void remove(TagId tenantId, id tenantId);
 }

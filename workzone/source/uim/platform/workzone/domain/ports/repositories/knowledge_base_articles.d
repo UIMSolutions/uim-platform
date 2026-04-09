@@ -9,11 +9,11 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.knowledge_base_article;
 
 interface KnowledgeBaseArticleRepository {
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  KnowledgeBaseArticle* findById(KBArticleId id, TenantId tenantId);
+  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  KnowledgeBaseArticle* findById(KBArticleId tenantId, id tenantId);
   KnowledgeBaseArticle[] findByCategory(string category, TenantId tenantId);
   KnowledgeBaseArticle[] findByTenant(TenantId tenantId);
   void save(KnowledgeBaseArticle article);
   void update(KnowledgeBaseArticle article);
-  void remove(KBArticleId id, TenantId tenantId);
+  void remove(KBArticleId tenantId, id tenantId);
 }

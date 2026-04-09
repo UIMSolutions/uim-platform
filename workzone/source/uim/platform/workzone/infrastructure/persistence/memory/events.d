@@ -15,18 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.events;
 class MemoryEventRepository : EventRepository {
   private Event[EventId] store;
 
-  Event[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  Event[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId).array;
   }
 
-  Event* findById(EventId id, TenantId tenantId) {
+  Event* findById(EventId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Event[] findByOrganizer(UserId organizerId, TenantId tenantId) {
+  Event[] findByOrganizer(UserId organizertenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.organizerId == organizerId).array;
   }
 
@@ -42,7 +42,7 @@ class MemoryEventRepository : EventRepository {
     store[event.id] = event;
   }
 
-  void remove(EventId id, TenantId tenantId) {
+  void remove(EventId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

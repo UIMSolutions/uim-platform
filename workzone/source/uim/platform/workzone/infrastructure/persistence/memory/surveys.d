@@ -15,11 +15,11 @@ import uim.platform.workzone.domain.ports.repositories.surveys;
 class MemorySurveyRepository : SurveyRepository {
   private Survey[SurveyId] store;
 
-  Survey[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  Survey[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(s => s.tenantId == tenantId && s.workspaceId == workspaceId).array;
   }
 
-  Survey* findById(SurveyId id, TenantId tenantId) {
+  Survey* findById(SurveyId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -42,7 +42,7 @@ class MemorySurveyRepository : SurveyRepository {
     store[survey.id] = survey;
   }
 
-  void remove(SurveyId id, TenantId tenantId) {
+  void remove(SurveyId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

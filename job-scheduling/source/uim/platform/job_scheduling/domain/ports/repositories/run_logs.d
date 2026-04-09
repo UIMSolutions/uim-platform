@@ -10,9 +10,9 @@ import uim.platform.job_scheduling.domain.entities.run_log;
 
 interface RunLogRepository {
     RunLog findById(RunLogId id);
-    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobId, TenantId tenantId);
-    RunLog[] findByJob(JobId jobId, TenantId tenantId);
-    RunLog[] findByStatus(RunStatus status, JobId jobId, TenantId tenantId);
+    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId);
+    RunLog[] findByJob(JobId jobtenantId, id tenantId);
+    RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId);
     void save(RunLog r);
     void update(RunLog r);
     long countBySchedule(ScheduleId scheduleId);

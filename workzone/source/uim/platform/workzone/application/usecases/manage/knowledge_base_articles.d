@@ -46,12 +46,12 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  KnowledgeBaseArticle* getArticle(KBArticleId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  KnowledgeBaseArticle* getArticle(KBArticleId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  KnowledgeBaseArticle[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  KnowledgeBaseArticle[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
   KnowledgeBaseArticle[] listByCategory(string category, TenantId tenantId) {
@@ -79,12 +79,12 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
     return CommandResult(a.id, "");
   }
 
-  CommandResult deleteArticle(KBArticleId id, TenantId tenantId) {
-    auto a = repo.findById(id, tenantId);
+  CommandResult deleteArticle(KBArticleId tenantId, id tenantId) {
+    auto a = repo.findById(tenantId, id);
     if (a is null)
       return CommandResult("", "Article not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.card;
 
 interface CardRepository {
   Card[] findByTenant(TenantId tenantId);
-  Card* findById(CardId id, TenantId tenantId);
+  Card* findById(CardId tenantId, id tenantId);
   Card[] findByType(CardType cardType, TenantId tenantId);
   void save(Card card);
   void update(Card card);
-  void remove(CardId id, TenantId tenantId);
+  void remove(CardId tenantId, id tenantId);
 }

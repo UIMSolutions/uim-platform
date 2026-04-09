@@ -15,11 +15,11 @@ import uim.platform.workzone.domain.ports.repositories.knowledge_base_articles;
 class MemoryKnowledgeBaseArticleRepository : KnowledgeBaseArticleRepository {
   private KnowledgeBaseArticle[KBArticleId] store;
 
-  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  KnowledgeBaseArticle[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(a => a.tenantId == tenantId && a.workspaceId == workspaceId).array;
   }
 
-  KnowledgeBaseArticle* findById(KBArticleId id, TenantId tenantId) {
+  KnowledgeBaseArticle* findById(KBArticleId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -42,7 +42,7 @@ class MemoryKnowledgeBaseArticleRepository : KnowledgeBaseArticleRepository {
     store[article.id] = article;
   }
 
-  void remove(KBArticleId id, TenantId tenantId) {
+  void remove(KBArticleId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

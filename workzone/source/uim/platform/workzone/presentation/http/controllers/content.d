@@ -81,9 +81,9 @@ class ContentController {
       auto query = req.params.get("q", "");
       ContentItem[] items;
       if (query.length > 0)
-        items = useCase.searchContent(workspaceId, tenantId, query);
+        items = useCase.searchContent(workspacetenantId, id, query);
       else
-        items = useCase.listByWorkspace(workspaceId, tenantId);
+        items = useCase.listByWorkspace(workspacetenantId, id);
 
       auto arr = Json.emptyArray;
       foreach (ref c; items)
@@ -102,7 +102,7 @@ class ContentController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto item = useCase.getContent(id, tenantId);
+      auto item = useCase.getContent(tenantId, id);
       if (item is null) {
         writeError(res, 404, "Content not found");
         return;
@@ -154,7 +154,7 @@ class ContentController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteContent(id, tenantId);
+      useCase.deleteContent(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {
@@ -166,7 +166,7 @@ class ContentController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.publishContent(id, tenantId);
+      auto result = useCase.publishContent(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("published");

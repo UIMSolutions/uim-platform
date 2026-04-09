@@ -19,14 +19,14 @@ class MemoryRoleRepository : RoleRepository {
     return store.byValue().filter!(r => r.tenantId == tenantId).array;
   }
 
-  Role* findById(RoleId id, TenantId tenantId) {
+  Role* findById(RoleId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  Role[] findByUser(UserId userId, TenantId tenantId) {
+  Role[] findByUser(UserId usertenantId, id tenantId) {
     Role[] result;
     foreach (ref r; store.byValue()) {
       if (r.tenantId != tenantId)
@@ -49,7 +49,7 @@ class MemoryRoleRepository : RoleRepository {
     store[role.id] = role;
   }
 
-  void remove(RoleId id, TenantId tenantId) {
+  void remove(RoleId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

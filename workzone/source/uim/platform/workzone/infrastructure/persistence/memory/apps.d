@@ -19,7 +19,7 @@ class MemoryAppRepository : AppRepository {
     return store.byValue().filter!(a => a.tenantId == tenantId).array;
   }
 
-  AppRegistration* findById(AppId id, TenantId tenantId) {
+  AppRegistration* findById(AppId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -38,7 +38,7 @@ class MemoryAppRepository : AppRepository {
     store[app.id] = app;
   }
 
-  void remove(AppId id, TenantId tenantId) {
+  void remove(AppId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

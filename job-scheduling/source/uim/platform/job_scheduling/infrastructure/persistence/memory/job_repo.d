@@ -16,7 +16,7 @@ import std.uni : toLower;
 class MemoryJobRepository : JobRepository {
     private Job[][string] store; // keyed by tenantId
 
-    Job findById(JobId id, TenantId tenantId) {
+    Job findById(JobId tenantId, id tenantId) {
         if (auto t = tenantId in store) {
             foreach (ref j; *t) {
                 if (j.id == id)
@@ -71,7 +71,7 @@ class MemoryJobRepository : JobRepository {
         }
     }
 
-    void remove(JobId id, TenantId tenantId) {
+    void remove(JobId tenantId, id tenantId) {
         if (auto t = tenantId in store) {
             *t = (*t).filter!(j => j.id != id).array;
         }

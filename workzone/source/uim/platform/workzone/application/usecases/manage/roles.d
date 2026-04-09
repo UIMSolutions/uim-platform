@@ -39,8 +39,8 @@ class ManageRolesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  Role* getRole(RoleId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Role* getRole(RoleId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Role[] listRoles(TenantId tenantId) {
@@ -63,12 +63,12 @@ class ManageRolesUseCase : UIMUseCase {
     return CommandResult(r.id, "");
   }
 
-  CommandResult deleteRole(RoleId id, TenantId tenantId) {
-    auto r = repo.findById(id, tenantId);
+  CommandResult deleteRole(RoleId tenantId, id tenantId) {
+    auto r = repo.findById(tenantId, id);
     if (r is null)
       return CommandResult("", "Role not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

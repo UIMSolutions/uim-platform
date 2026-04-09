@@ -76,7 +76,7 @@ class TagController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = useCase.getTag(id, tenantId);
+      auto t = useCase.getTag(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Tag not found");
         return;
@@ -114,7 +114,7 @@ class TagController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteTag(id, tenantId);
+      auto result = useCase.deleteTag(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

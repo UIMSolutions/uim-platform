@@ -15,19 +15,19 @@ import uim.platform.workzone.domain.ports.repositories.feeds;
 class MemoryFeedRepository : FeedRepository {
   private FeedEntry[FeedEntryId] store;
 
-  FeedEntry[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  FeedEntry[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.workspaceId == workspaceId)
       .array;
   }
 
-  FeedEntry* findById(FeedEntryId id, TenantId tenantId) {
+  FeedEntry* findById(FeedEntryId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  FeedEntry[] findByActor(UserId actorId, TenantId tenantId) {
+  FeedEntry[] findByActor(UserId actortenantId, id tenantId) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.actorId == actorId).array;
   }
 
@@ -35,7 +35,7 @@ class MemoryFeedRepository : FeedRepository {
     store[entry.id] = entry;
   }
 
-  void remove(FeedEntryId id, TenantId tenantId) {
+  void remove(FeedEntryId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

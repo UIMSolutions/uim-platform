@@ -15,12 +15,12 @@ import uim.platform.workzone.domain.ports.repositories.channels;
 class MemoryChannelRepository : ChannelRepository {
   private Channel[ChannelId] store;
 
-  Channel[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  Channel[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(c => c.tenantId == tenantId && c.workspaceId == workspaceId)
       .array;
   }
 
-  Channel* findById(ChannelId id, TenantId tenantId) {
+  Channel* findById(ChannelId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -35,7 +35,7 @@ class MemoryChannelRepository : ChannelRepository {
     store[channel.id] = channel;
   }
 
-  void remove(ChannelId id, TenantId tenantId) {
+  void remove(ChannelId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

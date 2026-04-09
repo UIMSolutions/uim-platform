@@ -40,12 +40,12 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(ch.id, "");
   }
 
-  Channel* getChannel(ChannelId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Channel* getChannel(ChannelId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  Channel[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  Channel[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
   CommandResult updateChannel(UpdateChannelRequest req) {
@@ -65,7 +65,7 @@ class ManageChannelsUseCase : UIMUseCase {
     return CommandResult(ch.id, "");
   }
 
-  void deleteChannel(ChannelId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteChannel(ChannelId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

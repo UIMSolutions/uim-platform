@@ -160,14 +160,14 @@ The Task Center Service provides a **unified task federation and processing** ca
 
 | Entity | Key Fields | Lifecycle States |
 |--------|-----------|-----------------|
-| Task | id, tenantId, taskDefinitionId, providerId | open, inProgress, completed, cancelled, failed, forwarded, reserved |
-| TaskDefinition | id, tenantId, providerId, name | isActive: true/false |
-| TaskProvider | id, tenantId, providerType | active, inactive, error, syncing |
-| SubstitutionRule | id, tenantId, userId, substituteId | active, inactive, expired, pending |
-| TaskComment | id, tenantId, taskId, author | Created/Deleted |
-| TaskAttachment | id, tenantId, taskId, fileName | uploaded, processing, available, deleted |
-| TaskAction | id, tenantId, taskId, actionType | Immutable audit record |
-| UserTaskFilter | id, tenantId, userId, name | isDefault: true/false |
+| Task | tenantId, id, taskDefinitionId, providerId | open, inProgress, completed, cancelled, failed, forwarded, reserved |
+| TaskDefinition | tenantId, id, providerId, name | isActive: true/false |
+| TaskProvider | tenantId, id, providerType | active, inactive, error, syncing |
+| SubstitutionRule | tenantId, id, userId, substituteId | active, inactive, expired, pending |
+| TaskComment | tenantId, id, taskId, author | Created/Deleted |
+| TaskAttachment | tenantId, id, taskId, fileName | uploaded, processing, available, deleted |
+| TaskAction | tenantId, id, taskId, actionType | Immutable audit record |
+| UserTaskFilter | tenantId, id, userId, name | isDefault: true/false |
 
 ## 6. Deployment View
 

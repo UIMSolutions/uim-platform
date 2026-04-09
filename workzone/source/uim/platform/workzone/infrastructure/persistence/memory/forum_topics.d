@@ -15,18 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.forum_topics;
 class MemoryForumTopicRepository : ForumTopicRepository {
   private ForumTopic[ForumTopicId] store;
 
-  ForumTopic[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  ForumTopic[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId && t.workspaceId == workspaceId).array;
   }
 
-  ForumTopic* findById(ForumTopicId id, TenantId tenantId) {
+  ForumTopic* findById(ForumTopicId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ForumTopic[] findByAuthor(UserId authorId, TenantId tenantId) {
+  ForumTopic[] findByAuthor(UserId authortenantId, id tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId && t.authorId == authorId).array;
   }
 
@@ -42,7 +42,7 @@ class MemoryForumTopicRepository : ForumTopicRepository {
     store[topic.id] = topic;
   }
 
-  void remove(ForumTopicId id, TenantId tenantId) {
+  void remove(ForumTopicId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

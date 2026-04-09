@@ -43,8 +43,8 @@ class ManageShellPluginsUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  ShellPlugin* getPlugin(ShellPluginId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ShellPlugin* getPlugin(ShellPluginId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   ShellPlugin[] listPlugins(TenantId tenantId) {
@@ -69,12 +69,12 @@ class ManageShellPluginsUseCase : UIMUseCase {
     return CommandResult(p.id, "");
   }
 
-  CommandResult deletePlugin(ShellPluginId id, TenantId tenantId) {
-    auto p = repo.findById(id, tenantId);
+  CommandResult deletePlugin(ShellPluginId tenantId, id tenantId) {
+    auto p = repo.findById(tenantId, id);
     if (p is null)
       return CommandResult("", "Plugin not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -19,7 +19,7 @@ class MemoryTagRepository : TagRepository {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  Tag* findById(TagId id, TenantId tenantId) {
+  Tag* findById(TagId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -33,7 +33,7 @@ class MemoryTagRepository : TagRepository {
     return null;
   }
 
-  Tag[] findByParent(TagId parentTagId, TenantId tenantId) {
+  Tag[] findByParent(TagId parentTagtenantId, id tenantId) {
     return store.byValue().filter!(t => t.tenantId == tenantId && t.parentTagId == parentTagId).array;
   }
 
@@ -45,7 +45,7 @@ class MemoryTagRepository : TagRepository {
     store[tag.id] = tag;
   }
 
-  void remove(TagId id, TenantId tenantId) {
+  void remove(TagId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

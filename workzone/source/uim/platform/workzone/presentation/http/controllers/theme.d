@@ -79,7 +79,7 @@ class ThemeController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = useCase.getTheme(id, tenantId);
+      auto t = useCase.getTheme(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Theme not found");
         return;
@@ -118,7 +118,7 @@ class ThemeController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteTheme(id, tenantId);
+      auto result = useCase.deleteTheme(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

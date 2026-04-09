@@ -46,16 +46,16 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  ContentItem* getContent(ContentId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  ContentItem* getContent(ContentId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  ContentItem[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  ContentItem[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
-  ContentItem[] searchContent(WorkspaceId workspaceId, TenantId tenantId, string query) {
-    auto items = repo.findByWorkspace(workspaceId, tenantId);
+  ContentItem[] searchContent(WorkspaceId workspacetenantId, id tenantId, string query) {
+    auto items = repo.findByWorkspace(workspacetenantId, id);
     return ContentSearchService.search(items, query);
   }
 
@@ -82,8 +82,8 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  CommandResult publishContent(ContentId id, TenantId tenantId) {
-    auto item = repo.findById(id, tenantId);
+  CommandResult publishContent(ContentId tenantId, id tenantId) {
+    auto item = repo.findById(tenantId, id);
     if (item is null)
       return CommandResult("", "Content not found");
 
@@ -94,7 +94,7 @@ class ManageContentUseCase : UIMUseCase {
     return CommandResult(item.id, "");
   }
 
-  void deleteContent(ContentId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteContent(ContentId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

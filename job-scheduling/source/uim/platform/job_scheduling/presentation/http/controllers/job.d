@@ -108,7 +108,7 @@ class JobController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
 
-            auto job = jobUc.get_(id, tenantId);
+            auto job = jobUc.get_(tenantId, id);
             if (job.id.isEmpty) {
                 writeError(res, 404, "Job not found");
                 return;
@@ -159,9 +159,9 @@ class JobController : PlatformController {
             TenantId tenantId = req.getTenantId;
 
             // Delete all schedules first
-            scheduleUc.removeAllByJob(id, tenantId);
+            scheduleUc.removeAllByJob(tenantId, id);
 
-            auto result = jobUc.remove(id, tenantId);
+            auto result = jobUc.remove(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
             } ) {

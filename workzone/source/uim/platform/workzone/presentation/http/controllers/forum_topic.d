@@ -61,7 +61,7 @@ class ForumTopicController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto topics = useCase.listByWorkspace(workspaceId, tenantId);
+      auto topics = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref t; topics)
         arr ~= serializeForumTopic(t);
@@ -79,7 +79,7 @@ class ForumTopicController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = useCase.getForumTopic(id, tenantId);
+      auto t = useCase.getForumTopic(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Forum topic not found");
         return;
@@ -118,7 +118,7 @@ class ForumTopicController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteForumTopic(id, tenantId);
+      auto result = useCase.deleteForumTopic(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.workpage;
 
 interface WorkpageRepository {
-  Workpage[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  Workpage* findById(WorkpageId id, TenantId tenantId);
+  Workpage[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  Workpage* findById(WorkpageId tenantId, id tenantId);
   void save(Workpage page);
   void update(Workpage page);
-  void remove(WorkpageId id, TenantId tenantId);
+  void remove(WorkpageId tenantId, id tenantId);
 }

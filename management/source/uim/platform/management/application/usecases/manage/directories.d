@@ -30,10 +30,6 @@ class ManageDirectoriesUseCase : UIMUseCase {
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
-
     Directory d;
     d.id = randomUUID();
     d.globalAccountId = req.globalAccountId;

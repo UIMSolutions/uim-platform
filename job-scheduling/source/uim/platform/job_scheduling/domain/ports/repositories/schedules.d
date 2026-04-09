@@ -9,14 +9,14 @@ import uim.platform.job_scheduling.domain.types;
 import uim.platform.job_scheduling.domain.entities.schedule;
 
 interface ScheduleRepository {
-    Schedule findById(ScheduleId id, JobId jobId, TenantId tenantId);
-    Schedule[] findByJob(JobId jobId, TenantId tenantId);
-    Schedule[] findByStatus(ScheduleStatus status, JobId jobId, TenantId tenantId);
+    Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId);
+    Schedule[] findByJob(JobId jobtenantId, id tenantId);
+    Schedule[] findByStatus(ScheduleStatus status, JobId jobtenantId, id tenantId);
     Schedule[] findActiveByTenant(TenantId tenantId);
     Schedule[] search(string query, TenantId tenantId);
     void save(Schedule s);
     void update(Schedule s);
-    void remove(ScheduleId id, JobId jobId, TenantId tenantId);
-    void removeAllByJob(JobId jobId, TenantId tenantId);
-    long countByJob(JobId jobId, TenantId tenantId);
+    void remove(ScheduleId id, JobId jobtenantId, id tenantId);
+    void removeAllByJob(JobId jobtenantId, id tenantId);
+    long countByJob(JobId jobtenantId, id tenantId);
 }

@@ -42,8 +42,8 @@ class ManageSitesUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  Site* getSite(SiteId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Site* getSite(SiteId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Site[] listSites(TenantId tenantId) {
@@ -68,12 +68,12 @@ class ManageSitesUseCase : UIMUseCase {
     return CommandResult(s.id, "");
   }
 
-  CommandResult deleteSite(SiteId id, TenantId tenantId) {
-    auto s = repo.findById(id, tenantId);
+  CommandResult deleteSite(SiteId tenantId, id tenantId) {
+    auto s = repo.findById(tenantId, id);
     if (s is null)
       return CommandResult("", "Site not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

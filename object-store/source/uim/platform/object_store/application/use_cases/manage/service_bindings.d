@@ -35,10 +35,8 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID();
     auto accessKeyId = randomUUID();
     auto secretKey = randomUUID();
-    auto ts = currentTimestamp();
 
     auto binding = new ServiceBinding();
     binding.id = randomUUID();
@@ -51,10 +49,10 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     binding.status = BindingStatus.active;
     binding.expiresAt = req.expiresAt;
     binding.createdBy = req.createdBy;
-    binding.createdAt = ts;
+    binding.createdAt = currentTimestamp();
 
     bindingRepo.save(binding);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, binding.id.toString, "");
   }
 
   ServiceBinding getBinding(ServiceBindingId id) {
@@ -72,7 +70,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
     binding.status = BindingStatus.revoked;
     bindingRepo.update(binding);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, binding.id.toString, "");
   }
 
   CommandResult deleteBinding(ServiceBindingId id) {

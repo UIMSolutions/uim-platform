@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.group;
 
 interface GroupRepository {
   Group[] findByTenant(TenantId tenantId);
-  Group* findById(GroupId id, TenantId tenantId);
-  Group[] findByMember(UserId userId, TenantId tenantId);
+  Group* findById(GroupId tenantId, id tenantId);
+  Group[] findByMember(UserId usertenantId, id tenantId);
   void save(Group group);
   void update(Group group);
-  void remove(GroupId id, TenantId tenantId);
+  void remove(GroupId tenantId, id tenantId);
 }

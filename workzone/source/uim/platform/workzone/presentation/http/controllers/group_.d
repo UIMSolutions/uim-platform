@@ -74,7 +74,7 @@ class GroupController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto g = useCase.getGroup(id, tenantId);
+      auto g = useCase.getGroup(tenantId, id);
       if (g is null) {
         writeError(res, 404, "Group not found");
         return;
@@ -112,7 +112,7 @@ class GroupController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteGroup(id, tenantId);
+      auto result = useCase.deleteGroup(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

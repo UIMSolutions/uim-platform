@@ -19,7 +19,7 @@ class MemoryCardRepository : CardRepository {
     return store.byValue().filter!(c => c.tenantId == tenantId).array;
   }
 
-  Card* findById(CardId id, TenantId tenantId) {
+  Card* findById(CardId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -38,7 +38,7 @@ class MemoryCardRepository : CardRepository {
     store[card.id] = card;
   }
 
-  void remove(CardId id, TenantId tenantId) {
+  void remove(CardId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

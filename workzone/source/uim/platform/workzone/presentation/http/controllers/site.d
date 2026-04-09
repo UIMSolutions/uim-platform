@@ -77,7 +77,7 @@ class SiteController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto s = useCase.getSite(id, tenantId);
+      auto s = useCase.getSite(tenantId, id);
       if (s is null) {
         writeError(res, 404, "Site not found");
         return;
@@ -114,7 +114,7 @@ class SiteController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteSite(id, tenantId);
+      auto result = useCase.deleteSite(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

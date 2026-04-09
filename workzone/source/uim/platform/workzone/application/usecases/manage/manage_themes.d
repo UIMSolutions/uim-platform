@@ -43,8 +43,8 @@ class ManageThemesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  Theme* getTheme(ThemeId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Theme* getTheme(ThemeId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
   Theme[] listThemes(TenantId tenantId) {
@@ -70,12 +70,12 @@ class ManageThemesUseCase : UIMUseCase {
     return CommandResult(t.id, "");
   }
 
-  CommandResult deleteTheme(ThemeId id, TenantId tenantId) {
-    auto t = repo.findById(id, tenantId);
+  CommandResult deleteTheme(ThemeId tenantId, id tenantId) {
+    auto t = repo.findById(tenantId, id);
     if (t is null)
       return CommandResult("", "Theme not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

@@ -19,14 +19,14 @@ class MemoryShellPluginRepository : ShellPluginRepository {
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  ShellPlugin* findById(ShellPluginId id, TenantId tenantId) {
+  ShellPlugin* findById(ShellPluginId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ShellPlugin[] findBySite(SiteId siteId, TenantId tenantId) {
+  ShellPlugin[] findBySite(SiteId sitetenantId, id tenantId) {
     ShellPlugin[] result;
     foreach (ref p; store.byValue()) {
       if (p.tenantId != tenantId)
@@ -53,7 +53,7 @@ class MemoryShellPluginRepository : ShellPluginRepository {
     store[plugin.id] = plugin;
   }
 
-  void remove(ShellPluginId id, TenantId tenantId) {
+  void remove(ShellPluginId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

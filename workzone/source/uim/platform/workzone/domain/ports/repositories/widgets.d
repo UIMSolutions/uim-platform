@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.widget;
 
 interface WidgetRepository {
-  Widget[] findByPage(WorkpageId pageId, TenantId tenantId);
-  Widget* findById(WidgetId id, TenantId tenantId);
+  Widget[] findByPage(WorkpageId pagetenantId, id tenantId);
+  Widget* findById(WidgetId tenantId, id tenantId);
   void save(Widget widget);
   void update(Widget widget);
-  void remove(WidgetId id, TenantId tenantId);
+  void remove(WidgetId tenantId, id tenantId);
 }

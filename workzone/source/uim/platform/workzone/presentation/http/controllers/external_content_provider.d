@@ -78,7 +78,7 @@ class ExternalContentProviderController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto p = useCase.getProvider(id, tenantId);
+      auto p = useCase.getProvider(tenantId, id);
       if (p is null) {
         writeError(res, 404, "Provider not found");
         return;
@@ -116,7 +116,7 @@ class ExternalContentProviderController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteProvider(id, tenantId);
+      auto result = useCase.deleteProvider(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

@@ -15,23 +15,23 @@ import uim.platform.workzone.domain.ports.repositories.contents;
 class MemoryContentRepository : ContentRepository {
   private ContentItem[ContentId] store;
 
-  ContentItem[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
+  ContentItem[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(c => c.tenantId == tenantId && c.workspaceId == workspaceId)
       .array;
   }
 
-  ContentItem* findById(ContentId id, TenantId tenantId) {
+  ContentItem* findById(ContentId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  ContentItem[] findByAuthor(UserId authorId, TenantId tenantId) {
+  ContentItem[] findByAuthor(UserId authortenantId, id tenantId) {
     return store.byValue().filter!(c => c.tenantId == tenantId && c.authorId == authorId).array;
   }
 
-  ContentItem[] findByType(ContentType contentType, WorkspaceId workspaceId, TenantId tenantId) {
+  ContentItem[] findByType(ContentType contentType, WorkspaceId workspacetenantId, id tenantId) {
     return store.byValue().filter!(c => c.tenantId == tenantId
         && c.workspaceId == workspaceId && c.contentType == contentType).array;
   }
@@ -48,7 +48,7 @@ class MemoryContentRepository : ContentRepository {
     store[item.id] = item;
   }
 
-  void remove(ContentId id, TenantId tenantId) {
+  void remove(ContentId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

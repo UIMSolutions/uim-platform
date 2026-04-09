@@ -19,7 +19,7 @@ class MemoryThemeRepository : ThemeRepository {
     return store.byValue().filter!(t => t.tenantId == tenantId).array;
   }
 
-  Theme* findById(ThemeId id, TenantId tenantId) {
+  Theme* findById(ThemeId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemoryThemeRepository : ThemeRepository {
     store[theme.id] = theme;
   }
 
-  void remove(ThemeId id, TenantId tenantId) {
+  void remove(ThemeId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

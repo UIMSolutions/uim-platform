@@ -77,7 +77,7 @@ class PageTemplateController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = useCase.getPageTemplate(id, tenantId);
+      auto t = useCase.getPageTemplate(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Page template not found");
         return;
@@ -116,7 +116,7 @@ class PageTemplateController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deletePageTemplate(id, tenantId);
+      auto result = useCase.deletePageTemplate(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

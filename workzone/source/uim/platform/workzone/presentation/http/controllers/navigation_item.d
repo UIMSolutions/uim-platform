@@ -64,7 +64,7 @@ class NavigationItemController {
     try {
       TenantId tenantId = req.getTenantId;
       auto siteId = req.params.get("siteId", "");
-      auto items = useCase.listBySite(siteId, tenantId);
+      auto items = useCase.listBySite(sitetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref n; items)
         arr ~= serializeNavigationItem(n);
@@ -82,7 +82,7 @@ class NavigationItemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto n = useCase.getNavigationItem(id, tenantId);
+      auto n = useCase.getNavigationItem(tenantId, id);
       if (n is null) {
         writeError(res, 404, "Navigation item not found");
         return;
@@ -122,7 +122,7 @@ class NavigationItemController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteNavigationItem(id, tenantId);
+      auto result = useCase.deleteNavigationItem(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

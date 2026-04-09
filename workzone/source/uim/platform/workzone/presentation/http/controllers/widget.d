@@ -74,7 +74,7 @@ class WidgetController {
     try {
       TenantId tenantId = req.getTenantId;
       auto pageId = req.params.get("pageId", "");
-      auto widgets = useCase.listByPage(pageId, tenantId);
+      auto widgets = useCase.listByPage(pagetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref w; widgets)
         arr ~= serializeWidget(w);
@@ -92,7 +92,7 @@ class WidgetController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto w = useCase.getWidget(id, tenantId);
+      auto w = useCase.getWidget(tenantId, id);
       if (w is null) {
         writeError(res, 404, "Widget not found");
         return;
@@ -147,7 +147,7 @@ class WidgetController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteWidget(id, tenantId);
+      useCase.deleteWidget(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

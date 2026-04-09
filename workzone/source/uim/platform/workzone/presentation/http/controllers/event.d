@@ -67,7 +67,7 @@ class EventController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto events = useCase.listByWorkspace(workspaceId, tenantId);
+      auto events = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref e; events)
         arr ~= serializeEvent(e);
@@ -85,7 +85,7 @@ class EventController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto ev = useCase.getEvent(id, tenantId);
+      auto ev = useCase.getEvent(tenantId, id);
       if (ev is null) {
         writeError(res, 404, "Event not found");
         return;
@@ -126,7 +126,7 @@ class EventController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteEvent(id, tenantId);
+      auto result = useCase.deleteEvent(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

@@ -46,12 +46,12 @@ class ManageNavigationItemsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  NavigationItem* getNavigationItem(NavigationItemId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  NavigationItem* getNavigationItem(NavigationItemId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  NavigationItem[] listBySite(SiteId siteId, TenantId tenantId) {
-    return repo.findBySite(siteId, tenantId);
+  NavigationItem[] listBySite(SiteId sitetenantId, id tenantId) {
+    return repo.findBySite(sitetenantId, id);
   }
 
   CommandResult updateNavigationItem(UpdateNavigationItemRequest req) {
@@ -72,12 +72,12 @@ class ManageNavigationItemsUseCase : UIMUseCase {
     return CommandResult(n.id, "");
   }
 
-  CommandResult deleteNavigationItem(NavigationItemId id, TenantId tenantId) {
-    auto n = repo.findById(id, tenantId);
+  CommandResult deleteNavigationItem(NavigationItemId tenantId, id tenantId) {
+    auto n = repo.findById(tenantId, id);
     if (n is null)
       return CommandResult("", "Navigation item not found");
 
-    repo.remove(id, tenantId);
+    repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
   }
 }

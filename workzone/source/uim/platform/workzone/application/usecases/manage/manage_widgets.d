@@ -41,12 +41,12 @@ class ManageWidgetsUseCase : UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  Widget* getWidget(WidgetId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  Widget* getWidget(WidgetId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  Widget[] listByPage(WorkpageId pageId, TenantId tenantId) {
-    return repo.findByPage(pageId, tenantId);
+  Widget[] listByPage(WorkpageId pagetenantId, id tenantId) {
+    return repo.findByPage(pagetenantId, id);
   }
 
   CommandResult updateWidget(UpdateWidgetRequest req) {
@@ -68,7 +68,7 @@ class ManageWidgetsUseCase : UIMUseCase {
     return CommandResult(w.id, "");
   }
 
-  void deleteWidget(WidgetId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteWidget(WidgetId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

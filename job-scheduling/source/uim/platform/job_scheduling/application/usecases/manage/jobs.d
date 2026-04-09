@@ -53,8 +53,8 @@ class ManageJobsUseCase : UIMUseCase {
         return CommandResult(true, j.id, "");
     }
 
-    Job get_(JobId id, TenantId tenantId) {
-        return repo.findById(id, tenantId);
+    Job get_(JobId tenantId, id tenantId) {
+        return repo.findById(tenantId, id);
     }
 
     Job getByName(string name, TenantId tenantId) {
@@ -94,12 +94,12 @@ class ManageJobsUseCase : UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    CommandResult remove(JobId id, TenantId tenantId) {
-        auto existing = repo.findById(id, tenantId);
+    CommandResult remove(JobId tenantId, id tenantId) {
+        auto existing = repo.findById(tenantId, id);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Job not found");
 
-        repo.remove(id, tenantId);
+        repo.remove(tenantId, id);
         return CommandResult(true, id.toString, "");
     }
 

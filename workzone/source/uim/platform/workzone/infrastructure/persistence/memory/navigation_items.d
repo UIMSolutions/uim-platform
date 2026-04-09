@@ -15,18 +15,18 @@ import uim.platform.workzone.domain.ports.repositories.navigation_items;
 class MemoryNavigationItemRepository : NavigationItemRepository {
   private NavigationItem[NavigationItemId] store;
 
-  NavigationItem[] findBySite(SiteId siteId, TenantId tenantId) {
+  NavigationItem[] findBySite(SiteId sitetenantId, id tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId && n.siteId == siteId).array;
   }
 
-  NavigationItem* findById(NavigationItemId id, TenantId tenantId) {
+  NavigationItem* findById(NavigationItemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
     return null;
   }
 
-  NavigationItem[] findByParent(NavigationItemId parentId, TenantId tenantId) {
+  NavigationItem[] findByParent(NavigationItemId parenttenantId, id tenantId) {
     return store.byValue().filter!(n => n.tenantId == tenantId && n.parentId == parentId).array;
   }
 
@@ -42,7 +42,7 @@ class MemoryNavigationItemRepository : NavigationItemRepository {
     store[item.id] = item;
   }
 
-  void remove(NavigationItemId id, TenantId tenantId) {
+  void remove(NavigationItemId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

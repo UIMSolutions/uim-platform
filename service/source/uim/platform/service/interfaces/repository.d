@@ -10,12 +10,12 @@ interface IBaseRepository(TEntity, TId) {
   bool existsByTenant(TenantId tenantId);
   TEntity[] findByTenant(TenantId tenantId);
  
-  bool existsById(TId id, TenantId tenantId);
-  TEntity findById(TId id, TenantId tenantId);
+  bool existsById(TId tenantId, id tenantId);
+  TEntity findById(TId tenantId, id tenantId);
 
   void save(TEntity entity);
   void update(TEntity entity);
-  void remove(TId id, TenantId tenantId);
+  void remove(TId tenantId, id tenantId);
 }
 
 interface ITenantRepository(TEntity, TId) {

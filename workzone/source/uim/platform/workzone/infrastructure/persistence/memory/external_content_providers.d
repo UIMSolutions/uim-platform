@@ -19,7 +19,7 @@ class MemoryExternalContentProviderRepository : ExternalContentProviderRepositor
     return store.byValue().filter!(p => p.tenantId == tenantId).array;
   }
 
-  ExternalContentProvider* findById(ExternalContentProviderId id, TenantId tenantId) {
+  ExternalContentProvider* findById(ExternalContentProviderId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -38,7 +38,7 @@ class MemoryExternalContentProviderRepository : ExternalContentProviderRepositor
     store[provider.id] = provider;
   }
 
-  void remove(ExternalContentProviderId id, TenantId tenantId) {
+  void remove(ExternalContentProviderId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

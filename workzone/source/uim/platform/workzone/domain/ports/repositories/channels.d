@@ -9,9 +9,9 @@ import uim.platform.workzone.domain.types;
 import uim.platform.workzone.domain.entities.channel;
 
 interface ChannelRepository {
-  Channel[] findByWorkspace(WorkspaceId workspaceId, TenantId tenantId);
-  Channel* findById(ChannelId id, TenantId tenantId);
+  Channel[] findByWorkspace(WorkspaceId workspacetenantId, id tenantId);
+  Channel* findById(ChannelId tenantId, id tenantId);
   void save(Channel channel);
   void update(Channel channel);
-  void remove(ChannelId id, TenantId tenantId);
+  void remove(ChannelId tenantId, id tenantId);
 }

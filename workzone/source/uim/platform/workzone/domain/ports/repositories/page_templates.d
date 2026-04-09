@@ -10,10 +10,10 @@ import uim.platform.workzone.domain.entities.page_template;
 
 interface PageTemplateRepository {
   PageTemplate[] findByTenant(TenantId tenantId);
-  PageTemplate* findById(PageTemplateId id, TenantId tenantId);
+  PageTemplate* findById(PageTemplateId tenantId, id tenantId);
   PageTemplate* findDefault(TenantId tenantId);
   PageTemplate[] findPublic();
   void save(PageTemplate template_);
   void update(PageTemplate template_);
-  void remove(PageTemplateId id, TenantId tenantId);
+  void remove(PageTemplateId tenantId, id tenantId);
 }

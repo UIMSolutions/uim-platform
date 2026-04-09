@@ -77,7 +77,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto app = useCase.getApp(id, tenantId);
+      auto app = useCase.getApp(tenantId, id);
       if (app is null) {
         writeError(res, 404, "App not found");
         return;
@@ -125,7 +125,7 @@ class AppController : PlatformController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteApp(id, tenantId);
+      useCase.deleteApp(tenantId, id);
       res.writeBody("", 204);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

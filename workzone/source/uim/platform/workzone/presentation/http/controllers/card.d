@@ -79,7 +79,7 @@ class CardController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto c = useCase.getCard(id, tenantId);
+      auto c = useCase.getCard(tenantId, id);
       if (c is null) {
         writeError(res, 404, "Card not found");
         return;
@@ -125,7 +125,7 @@ class CardController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteCard(id, tenantId);
+      useCase.deleteCard(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

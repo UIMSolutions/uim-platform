@@ -23,16 +23,16 @@ class MemoryRunLogRepository : RunLogRepository {
         return RunLog.init;
     }
 
-    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
+    RunLog[] findBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
         return store.filter!(r => r.scheduleId == scheduleId
             && r.jobId == jobId && r.tenantId == tenantId).array;
     }
 
-    RunLog[] findByJob(JobId jobId, TenantId tenantId) {
+    RunLog[] findByJob(JobId jobtenantId, id tenantId) {
         return store.filter!(r => r.jobId == jobId && r.tenantId == tenantId).array;
     }
 
-    RunLog[] findByStatus(RunStatus status, JobId jobId, TenantId tenantId) {
+    RunLog[] findByStatus(RunStatus status, JobId jobtenantId, id tenantId) {
         return store.filter!(r => r.status == status
             && r.jobId == jobId && r.tenantId == tenantId).array;
     }

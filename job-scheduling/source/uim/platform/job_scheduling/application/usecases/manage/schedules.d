@@ -60,12 +60,12 @@ class ManageSchedulesUseCase : UIMUseCase {
         return CommandResult(true, s.id, "");
     }
 
-    Schedule get_(ScheduleId id, JobId jobId, TenantId tenantId) {
-        return repo.findById(id, jobId, tenantId);
+    Schedule get_(ScheduleId id, JobId jobtenantId, id tenantId) {
+        return repo.findById(id, jobtenantId, id);
     }
 
-    Schedule[] list(JobId jobId, TenantId tenantId) {
-        return repo.findByJob(jobId, tenantId);
+    Schedule[] list(JobId jobtenantId, id tenantId) {
+        return repo.findByJob(jobtenantId, id);
     }
 
     Schedule[] search(string query, TenantId tenantId) {
@@ -104,17 +104,17 @@ class ManageSchedulesUseCase : UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    CommandResult remove(ScheduleId id, JobId jobId, TenantId tenantId) {
-        auto existing = repo.findById(id, jobId, tenantId);
+    CommandResult remove(ScheduleId id, JobId jobtenantId, id tenantId) {
+        auto existing = repo.findById(id, jobtenantId, id);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
-        repo.remove(id, jobId, tenantId);
+        repo.remove(id, jobtenantId, id);
         return CommandResult(true, id.toString, "");
     }
 
-    CommandResult removeAllByJob(JobId jobId, TenantId tenantId) {
-        repo.removeAllByJob(jobId, tenantId);
+    CommandResult removeAllByJob(JobId jobtenantId, id tenantId) {
+        repo.removeAllByJob(jobtenantId, id);
         return CommandResult(true, jobId, "");
     }
 

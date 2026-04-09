@@ -64,7 +64,7 @@ class KnowledgeBaseArticleController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto articles = useCase.listByWorkspace(workspaceId, tenantId);
+      auto articles = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref a; articles)
         arr ~= serializeKBArticle(a);
@@ -82,7 +82,7 @@ class KnowledgeBaseArticleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto a = useCase.getArticle(id, tenantId);
+      auto a = useCase.getArticle(tenantId, id);
       if (a is null) {
         writeError(res, 404, "Article not found");
         return;
@@ -122,7 +122,7 @@ class KnowledgeBaseArticleController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteArticle(id, tenantId);
+      auto result = useCase.deleteArticle(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

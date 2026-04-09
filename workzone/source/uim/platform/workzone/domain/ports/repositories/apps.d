@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.app_registration;
 
 interface AppRepository {
   AppRegistration[] findByTenant(TenantId tenantId);
-  AppRegistration* findById(AppId id, TenantId tenantId);
+  AppRegistration* findById(AppId tenantId, id tenantId);
   AppRegistration[] findByStatus(AppStatus status, TenantId tenantId);
   void save(AppRegistration app);
   void update(AppRegistration app);
-  void remove(AppId id, TenantId tenantId);
+  void remove(AppId tenantId, id tenantId);
 }

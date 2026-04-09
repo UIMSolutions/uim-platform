@@ -10,10 +10,10 @@ import uim.platform.workzone.domain.entities.workspace;
 
 interface WorkspaceRepository {
   Workspace[] findByTenant(TenantId tenantId);
-  Workspace* findById(WorkspaceId id, TenantId tenantId);
+  Workspace* findById(WorkspaceId tenantId, id tenantId);
   Workspace* findByAlias(string alias_, TenantId tenantId);
-  Workspace[] findByMember(UserId userId, TenantId tenantId);
+  Workspace[] findByMember(UserId usertenantId, id tenantId);
   void save(Workspace workspace);
   void update(Workspace workspace);
-  void remove(WorkspaceId id, TenantId tenantId);
+  void remove(WorkspaceId tenantId, id tenantId);
 }

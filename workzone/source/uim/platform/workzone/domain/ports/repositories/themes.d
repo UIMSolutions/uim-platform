@@ -10,9 +10,9 @@ import uim.platform.workzone.domain.entities.theme;
 
 interface ThemeRepository {
   Theme[] findByTenant(TenantId tenantId);
-  Theme* findById(ThemeId id, TenantId tenantId);
+  Theme* findById(ThemeId tenantId, id tenantId);
   Theme* findDefault(TenantId tenantId);
   void save(Theme theme);
   void update(Theme theme);
-  void remove(ThemeId id, TenantId tenantId);
+  void remove(ThemeId tenantId, id tenantId);
 }

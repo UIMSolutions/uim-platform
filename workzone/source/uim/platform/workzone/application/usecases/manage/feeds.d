@@ -38,15 +38,15 @@ class ManageFeedsUseCase : UIMUseCase {
     return CommandResult(entry.id, "");
   }
 
-  FeedEntry* getEntry(FeedEntryId id, TenantId tenantId) {
-    return repo.findById(id, tenantId);
+  FeedEntry* getEntry(FeedEntryId tenantId, id tenantId) {
+    return repo.findById(tenantId, id);
   }
 
-  FeedEntry[] listByWorkspace(WorkspaceId workspaceId, TenantId tenantId) {
-    return repo.findByWorkspace(workspaceId, tenantId);
+  FeedEntry[] listByWorkspace(WorkspaceId workspacetenantId, id tenantId) {
+    return repo.findByWorkspace(workspacetenantId, id);
   }
 
-  void deleteEntry(FeedEntryId id, TenantId tenantId) {
-    repo.remove(id, tenantId);
+  void deleteEntry(FeedEntryId tenantId, id tenantId) {
+    repo.remove(tenantId, id);
   }
 }

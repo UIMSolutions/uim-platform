@@ -78,7 +78,7 @@ class TaskController {
     try {
       TenantId tenantId = req.getTenantId;
       auto assigneeId = req.params.get("assigneeId", "");
-      auto tasks = useCase.listByAssignee(assigneeId, tenantId);
+      auto tasks = useCase.listByAssignee(assigneetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref t; tasks)
         arr ~= serializeTask(t);
@@ -96,7 +96,7 @@ class TaskController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto t = useCase.getTask(id, tenantId);
+      auto t = useCase.getTask(tenantId, id);
       if (t is null) {
         writeError(res, 404, "Task not found");
         return;
@@ -158,7 +158,7 @@ class TaskController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.completeTask(id, tenantId);
+      auto result = useCase.completeTask(tenantId, id);
       if (result.isSuccess()) {
         auto resp = Json.emptyObject;
         resp["status"] = Json("completed");
@@ -178,7 +178,7 @@ class TaskController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      useCase.deleteTask(id, tenantId);
+      useCase.deleteTask(tenantId, id);
       res.writeBody("", 204);
     }
     catch (Exception e) {

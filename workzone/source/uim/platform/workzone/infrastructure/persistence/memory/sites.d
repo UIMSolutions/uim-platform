@@ -19,7 +19,7 @@ class MemorySiteRepository : SiteRepository {
     return store.byValue().filter!(s => s.tenantId == tenantId).array;
   }
 
-  Site* findById(SiteId id, TenantId tenantId) {
+  Site* findById(SiteId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         return p;
@@ -41,7 +41,7 @@ class MemorySiteRepository : SiteRepository {
     store[site.id] = site;
   }
 
-  void remove(SiteId id, TenantId tenantId) {
+  void remove(SiteId tenantId, id tenantId) {
     if (auto p = id in store)
       if (p.tenantId == tenantId)
         store.remove(id);

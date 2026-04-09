@@ -64,7 +64,7 @@ class SurveyController {
     try {
       TenantId tenantId = req.getTenantId;
       auto workspaceId = req.params.get("workspaceId", "");
-      auto surveys = useCase.listByWorkspace(workspaceId, tenantId);
+      auto surveys = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
       foreach (ref s; surveys)
         arr ~= serializeSurvey(s);
@@ -82,7 +82,7 @@ class SurveyController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto s = useCase.getSurvey(id, tenantId);
+      auto s = useCase.getSurvey(tenantId, id);
       if (s is null) {
         writeError(res, 404, "Survey not found");
         return;
@@ -118,7 +118,7 @@ class SurveyController {
     try {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto result = useCase.deleteSurvey(id, tenantId);
+      auto result = useCase.deleteSurvey(tenantId, id);
       if (result.isSuccess())
         res.writeJsonBody(Json.emptyObject, 204);
       else

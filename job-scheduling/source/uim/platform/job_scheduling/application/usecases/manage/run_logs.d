@@ -27,15 +27,15 @@ class ManageRunLogsUseCase : UIMUseCase {
         return repo.findById(id);
     }
 
-    RunLog[] listBySchedule(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
-        return repo.findBySchedule(scheduleId, jobId, tenantId);
+    RunLog[] listBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
+        return repo.findBySchedule(scheduleId, jobtenantId, id);
     }
 
-    RunLog[] listByJob(JobId jobId, TenantId tenantId) {
-        return repo.findByJob(jobId, tenantId);
+    RunLog[] listByJob(JobId jobtenantId, id tenantId) {
+        return repo.findByJob(jobtenantId, id);
     }
 
-    CommandResult createRunLog(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
+    CommandResult createRunLog(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
         import std.uuid : randomUUID;
         auto id = randomUUID().to!string;
 

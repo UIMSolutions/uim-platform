@@ -54,7 +54,7 @@ package "Domain Layer\n(Business Core)" as domain #E8F5E9 {
     }
 
     package "Value Types" as types {
-        component [JobId, ScheduleId,\nRunLogId, TenantId] as IDs #A5D6A7
+        component [JobId, ScheduleId,\nRunLogtenantId, id] as IDs #A5D6A7
         component [JobStatus, RunStatus,\nScheduleType, ScheduleFormat,\nHttpMethod, JobType] as Enums #A5D6A7
     }
 
