@@ -30,7 +30,6 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     if (req.sourceSystemid.isEmpty)
       return CommandResult("", "Source system ID is required");
 
-    auto id = randomUUID();
     TransportRequest tr;
     tr.id = randomUUID();
     tr.tenantId = req.tenantId;

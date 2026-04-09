@@ -45,8 +45,6 @@ class ManageChannelsUseCase : UIMUseCase {
 
     // import std.uuid : randomUUID;
 
-    auto id = randomUUID();
-
     ServiceChannel ch;
     ch.id = randomUUID();
     ch.connectorId = req.connectorId;

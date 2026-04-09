@@ -32,9 +32,6 @@ class ManageTransportQueuesUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Queue name is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     TransportQueue queue;
     queue.id = randomUUID();
     queue.tenantId = req.tenantId;

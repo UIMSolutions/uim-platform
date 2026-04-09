@@ -34,9 +34,6 @@ class ManageContentProvidersUseCase : UIMUseCase {
     if (req.endpoint.length == 0)
       return CommandResult(false, "", "Provider endpoint is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     ContentProvider provider;
     provider.id = randomUUID();
     provider.tenantId = req.tenantId;

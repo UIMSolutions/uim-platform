@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_activity;
 
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// Audit record for a content operation.
 struct ContentActivity {
-  ContentActivityId id;
   TenantId tenantId;
+  ContentActivityId id;
   ActivityType activityType;
   ActivitySeverity severity = ActivitySeverity.info;
   string entityId;

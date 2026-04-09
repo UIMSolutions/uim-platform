@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.content_package;
 
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// A single content item within a package.
 struct ContentItem {
   string id;
@@ -20,8 +24,8 @@ struct ContentItem {
 
 /// A package containing bundled content for transport across landscapes.
 struct ContentPackage {
-  ContentPackageId id;
   TenantId tenantId;
+  ContentPackageId id;
   SubaccountId subaccountId;
   string name;
   string description;

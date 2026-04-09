@@ -27,16 +27,14 @@ class ManageAccessRulesUseCase : UIMUseCase {
 
   CommandResult createRule(CreateAccessRuleRequest req) {
     // Validate connector exists
-    auto cc = connectorRepo.findById(req.connectorId);
-    if (cc.id.isEmpty)
+    if (!connectorRepo.existsById(req.connectorId))
       return CommandResult(false, "", "Connector not found");
 
+    auto cc = connectorRepo.findById(req.connectorId);
     if (req.virtualHost.length == 0)
       return CommandResult(false, "", "Virtual host is required");
 
     // import std.uuid : randomUUID;
-
-    auto id = randomUUID();
 
     AccessRule rule;
     rule.id = randomUUID();

@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.export_job;
 
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// An export operation that packages and ships content to a transport queue or file.
 struct ExportJob {
-  ExportJobId id;
   TenantId tenantId;
+  ExportJobId id;
   ContentPackageId packageId;
   TransportRequestId transportRequestId;
   TransportQueueId queueId;

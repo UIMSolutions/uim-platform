@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.entities.transport_request;
 
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// A request to transport one or more content packages between landscapes.
 struct TransportRequest {
-  TransportRequestId id;
   TenantId tenantId;
+  TransportRequestId id;
   SubaccountId sourceSubaccount;
   SubaccountId targetSubaccount;
   string description;

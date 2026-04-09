@@ -32,7 +32,6 @@ class ManageBusinessRolesUseCase : UIMUseCase {
     if (existing !is null)
       return CommandResult("", "Business role '" ~ req.name ~ "' already exists");
 
-    auto id = randomUUID();
     BusinessRole role;
     role.id = randomUUID();
     role.tenantId = req.tenantId;

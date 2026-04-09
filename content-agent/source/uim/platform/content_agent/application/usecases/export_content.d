@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.application.usecases.export_content;
 
-import uim.platform.content_agent.application.dto;
-import uim.platform.content_agent.domain.entities.export_job;
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.entities.content_activity;
-import uim.platform.content_agent.domain.ports.repositories.export_jobs;
-import uim.platform.content_agent.domain.ports.repositories.content_packages;
-import uim.platform.content_agent.domain.ports.repositories.content_activitys;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.application.dto;
+// import uim.platform.content_agent.domain.entities.export_job;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.entities.content_activity;
+// import uim.platform.content_agent.domain.ports.repositories.export_jobs;
+// import uim.platform.content_agent.domain.ports.repositories.content_packages;
+// import uim.platform.content_agent.domain.ports.repositories.content_activitys;
+// import uim.platform.content_agent.domain.types;
 
-// import std.conv : to;
+import uim.platform.content_agent;
+
+mixin(ShowModule!());
+
+@safe:
 
 /// Application service for exporting content packages.
 class ExportContentUseCase : UIMUseCase {
@@ -30,15 +34,12 @@ class ExportContentUseCase : UIMUseCase {
   }
 
   CommandResult startExport(StartExportRequest req) {
-    auto pkg = packageRepo.findById(req.packageId);
-    if (pkg.id.isEmpty)
+    if (!packageRepo.existsById(req.packageId))
       return CommandResult(false, "", "Package not found");
 
+    auto pkg = packageRepo.findById(req.packageId);
     if (pkg.status != PackageStatus.assembled)
       return CommandResult(false, "", "Package must be assembled before export");
-
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     ExportJob job;
     job.id = randomUUID();
@@ -87,7 +88,6 @@ class ExportContentUseCase : UIMUseCase {
 
   private void recordActivity(TenantId tenantId, ActivityType actType,
     string entityId, string entityName, string desc, string by) {
-    // import std.uuid : randomUUID;
     ContentActivity activity;
     activity.id = randomUUID();
     activity.tenantId = tenantId;
