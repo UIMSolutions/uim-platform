@@ -163,6 +163,6 @@ class ManageDocumentsUseCase : UIMUseCase {
     // Cascade delete versions
     versionRepo.removeByDocument(id, tenantId);
     docRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

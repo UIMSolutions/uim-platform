@@ -105,7 +105,7 @@ class BrowseContentUseCase : UIMUseCase {
       return CommandResult("", "Favorite not found");
 
     favRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

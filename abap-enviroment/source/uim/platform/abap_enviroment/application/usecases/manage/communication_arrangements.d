@@ -54,7 +54,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
     arr.updatedAt = arr.createdAt;
 
     repo.save(arr);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateArrangement(CommunicationArrangementId id,
@@ -88,7 +88,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
     arr.updatedAt = Clock.currStdTime();
 
     repo.update(*arr);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommunicationArrangement* getArrangement(CommunicationArrangementId id) {

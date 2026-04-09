@@ -90,7 +90,7 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     sys.status = SystemStatus.active;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Deactivate a source system.
@@ -102,7 +102,7 @@ class ManageSourceSystemsUseCase : UIMUseCase {
     sys.status = SystemStatus.inactive;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteSourceSystem(SourceSystemId id, TenantId tenantId) {
@@ -111,6 +111,6 @@ class ManageSourceSystemsUseCase : UIMUseCase {
       return CommandResult("", "Source system not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

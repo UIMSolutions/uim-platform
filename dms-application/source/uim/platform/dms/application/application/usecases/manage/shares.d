@@ -79,6 +79,6 @@ class ManageSharesUseCase : UIMUseCase {
       return CommandResult("", "Share not found");
 
     shareRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

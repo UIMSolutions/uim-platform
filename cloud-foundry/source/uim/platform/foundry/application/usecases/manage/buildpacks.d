@@ -99,6 +99,6 @@ class ManageBuildpacksUseCase : UIMUseCase {
       return CommandResult("", "Cannot delete a locked buildpack");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

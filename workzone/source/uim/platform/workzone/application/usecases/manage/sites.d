@@ -74,6 +74,6 @@ class ManageSitesUseCase : UIMUseCase {
       return CommandResult("", "Site not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

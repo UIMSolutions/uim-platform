@@ -50,7 +50,7 @@ class ManageStepsUseCase : UIMUseCase {
       return CommandResult("", "Step dependencies are not yet met");
 
     if (executor.startStep(id, tenantId, userId))
-      return CommandResult(id, "");
+      return CommandResult(true, id.toString, "");
     return CommandResult("", "Cannot start step — not found or not in pending state");
   }
 

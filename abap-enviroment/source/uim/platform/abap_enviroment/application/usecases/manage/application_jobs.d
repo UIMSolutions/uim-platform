@@ -21,60 +21,59 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
-  CommandResult createJob(CreateApplicationJobRequest req) {
-    if (req.name.length == 0)
+  CommandResult createJob(CreateApplicationJobRequest request) {
+    if (request.name.length == 0)
       return CommandResult("", "Job name is required");
-    if (req.jobTemplateName.length == 0)
+    if (request.jobTemplateName.length == 0)
       return CommandResult("", "Job template name is required");
 
-    if (req.systemInstanceid.isEmpty)
+    if (request.systemInstanceId.isEmpty)
       return CommandResult("", "System instance ID is required");
 
-    auto id = randomUUID();
     ApplicationJob job;
     job.id = randomUUID();
-    job.tenantId = req.tenantId;
-    job.systemInstanceId = req.systemInstanceId;
-    job.name = req.name;
-    job.description = req.description;
-    job.jobTemplateName = req.jobTemplateName;
-    job.frequency = parseFrequency(req.frequency);
-    job.scheduledAt = req.scheduledAt;
-    job.cronExpression = req.cronExpression;
+    job.tenantId = request.tenantId;
+    job.systemInstanceId = request.systemInstanceId;
+    job.name = request.name;
+    job.description = request.description;
+    job.jobTemplateName = request.jobTemplateName;
+    job.frequency = parseFrequency(request.frequency);
+    job.scheduledAt = request.scheduledAt;
+    job.cronExpression = request.cronExpression;
     job.active = true;
     job.status = JobStatus.scheduled;
-    job.jobParameters = req.jobParameters;
+    job.jobParameters = request.jobParameters;
 
     // import std.datetime.systime : Clock;
     job.createdAt = Clock.currStdTime();
     job.updatedAt = job.createdAt;
 
     repo.save(job);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
-  CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest req) {
+  CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest request) {
     if (!repo.existsById(id))
       return CommandResult("", "Application job not found");
 
     auto job = repo.findById(id);
-    if (req.description.length > 0)
-      job.description = req.description;
-    if (req.frequency.length > 0)
-      job.frequency = parseFrequency(req.frequency);
-    if (req.scheduledAt > 0)
-      job.scheduledAt = req.scheduledAt;
-    if (req.cronExpression.length > 0)
-      job.cronExpression = req.cronExpression;
-    job.active = req.active;
-    if (req.jobParameters.length > 0)
-      job.jobParameters = req.jobParameters;
+    if (request.description.length > 0)
+      job.description = request.description;
+    if (request.frequency.length > 0)
+      job.frequency = parseFrequency(request.frequency);
+    if (request.scheduledAt > 0)
+      job.scheduledAt = request.scheduledAt;
+    if (request.cronExpression.length > 0)
+      job.cronExpression = request.cronExpression;
+    job.active = request.active;
+    if (request.jobParameters.length > 0)
+      job.jobParameters = request.jobParameters;
 
     // import std.datetime.systime : Clock;
     job.updatedAt = Clock.currStdTime();
 
-    repo.update(*job);
-    return CommandResult(id, "");
+    repo.update(job);
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult cancelJob(ApplicationJobId id) {
@@ -91,11 +90,11 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     // import std.datetime.systime : Clock;
     job.updatedAt = Clock.currStdTime();
 
-    repo.update(*job);
-    return CommandResult(id, "");
+    repo.update(job);
+    return CommandResult(true, id.toString, "");
   }
 
-  ApplicationJob* getJob(ApplicationJobId id) {
+  ApplicationJob getJob(ApplicationJobId id) {
     return repo.findById(id);
   }
 
@@ -109,7 +108,7 @@ class ManageApplicationJobsUseCase : UIMUseCase {
       return CommandResult("", "Application job not found");
 
     repo.remove(id);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

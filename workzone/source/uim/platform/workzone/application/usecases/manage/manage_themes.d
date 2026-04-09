@@ -76,6 +76,6 @@ class ManageThemesUseCase : UIMUseCase {
       return CommandResult("", "Theme not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

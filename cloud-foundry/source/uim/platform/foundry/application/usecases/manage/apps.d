@@ -128,19 +128,19 @@ class ManageAppsUseCase : UIMUseCase {
     if (!lifecycle.startApp(id, tenantId))
       return CommandResult("", "Failed to start application");
 
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult stopApp(AppId id, TenantId tenantId) {
     if (!lifecycle.stopApp(id, tenantId))
       return CommandResult("", "Cannot stop application");
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult restartApp(AppId id, TenantId tenantId) {
     if (!lifecycle.restartApp(id, tenantId))
       return CommandResult("", "Cannot restart application");
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult scaleApp(ScaleAppRequest req) {
@@ -169,7 +169,7 @@ class ManageAppsUseCase : UIMUseCase {
     app.environmentVariables = envJson;
     app.updatedAt = Clock.currStdTime();
     repo.update(*app);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteApp(AppId id, TenantId tenantId) {
@@ -178,6 +178,6 @@ class ManageAppsUseCase : UIMUseCase {
       return CommandResult("", "Application not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

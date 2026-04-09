@@ -101,7 +101,7 @@ class ManageCleansingRulesUseCase : UIMUseCase {
       return CommandResult("", "Tenant mismatch");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CleansingRule getById(RuleId id) {

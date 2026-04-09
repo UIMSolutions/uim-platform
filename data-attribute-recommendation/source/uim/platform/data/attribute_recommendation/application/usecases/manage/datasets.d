@@ -103,7 +103,7 @@ class ManageDatasetsUseCase : UIMUseCase {
     ds.updatedAt = now;
 
     repo.update(*ds);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Process a dataset (simulate data preparation).
@@ -120,7 +120,7 @@ class ManageDatasetsUseCase : UIMUseCase {
     ds.updatedAt = now;
 
     repo.update(*ds);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteDataset(DatasetId id, TenantId tenantId) {
@@ -131,6 +131,6 @@ class ManageDatasetsUseCase : UIMUseCase {
     // Cascade delete records
     recordRepo.removeByDataset(id, tenantId);
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

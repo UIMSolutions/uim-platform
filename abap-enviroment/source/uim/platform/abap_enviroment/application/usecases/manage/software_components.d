@@ -59,7 +59,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     comp.updatedAt = comp.createdAt;
 
     repo.save(comp);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
@@ -90,7 +90,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(*comp);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
@@ -120,7 +120,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     comp.commitHistory ~= commit;
 
     repo.update(*comp);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   SoftwareComponent* getComponent(SoftwareComponentId id) {
@@ -136,7 +136,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
       return CommandResult("", "Software component not found");
 
     repo.remove(id);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

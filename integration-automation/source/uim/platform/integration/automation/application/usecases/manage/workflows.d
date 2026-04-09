@@ -130,7 +130,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     workflowRepo.update(*wf);
 
     engine.advanceWorkflow(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Suspend an in-progress workflow.
@@ -144,7 +144,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     wf.status = WorkflowStatus.suspended;
     wf.updatedAt = Clock.currStdTime();
     workflowRepo.update(*wf);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Resume a suspended workflow.
@@ -160,7 +160,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     workflowRepo.update(*wf);
 
     engine.advanceWorkflow(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Terminate a workflow.
@@ -175,7 +175,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     wf.completedAt = Clock.currStdTime();
     wf.updatedAt = wf.completedAt;
     workflowRepo.update(*wf);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteWorkflow(WorkflowId id, TenantId tenantId) {
@@ -185,6 +185,6 @@ class ManageWorkflowsUseCase : UIMUseCase {
 
     stepRepo.removeByWorkflow(id, tenantId);
     workflowRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

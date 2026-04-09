@@ -89,7 +89,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     sys.status = SystemStatus.active;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deactivateSystem(TargetSystemId id, TenantId tenantId) {
@@ -100,7 +100,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
     sys.status = SystemStatus.inactive;
     sys.updatedAt = Clock.currStdTime();
     repo.update(*sys);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteTargetSystem(TargetSystemId id, TenantId tenantId) {
@@ -109,6 +109,6 @@ class ManageTargetSystemsUseCase : UIMUseCase {
       return CommandResult("", "Target system not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

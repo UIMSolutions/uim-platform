@@ -83,6 +83,6 @@ class ManageEventsUseCase : UIMUseCase {
       return CommandResult("", "Event not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

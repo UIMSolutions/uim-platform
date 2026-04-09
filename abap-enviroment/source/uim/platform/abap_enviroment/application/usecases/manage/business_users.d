@@ -66,7 +66,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
     user.updatedAt = user.createdAt;
 
     repo.save(user);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
@@ -99,7 +99,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
     user.updatedAt = Clock.currStdTime();
 
     repo.update(*user);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   BusinessUser* getUser(BusinessUserId id) {

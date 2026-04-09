@@ -22,6 +22,7 @@ class ModelController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.post("/api/v1/models", &handleRegister);
     router.get("/api/v1/models", &handleList);
     router.get("/api/v1/models/*", &handleGet);

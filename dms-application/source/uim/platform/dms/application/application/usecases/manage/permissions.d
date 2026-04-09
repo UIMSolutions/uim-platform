@@ -86,6 +86,6 @@ class ManagePermissionsUseCase : UIMUseCase {
       return CommandResult("", "Permission not found");
 
     permRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

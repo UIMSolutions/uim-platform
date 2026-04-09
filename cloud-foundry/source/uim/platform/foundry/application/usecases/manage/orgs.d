@@ -102,7 +102,7 @@ class ManageOrgsUseCase : UIMUseCase {
     org.status = OrgStatus.suspended;
     org.updatedAt = Clock.currStdTime();
     repo.update(*org);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult activateOrg(OrgId id, TenantId tenantId) {
@@ -115,7 +115,7 @@ class ManageOrgsUseCase : UIMUseCase {
     org.status = OrgStatus.active;
     org.updatedAt = Clock.currStdTime();
     repo.update(*org);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deleteOrg(OrgId id, TenantId tenantId) {
@@ -126,6 +126,6 @@ class ManageOrgsUseCase : UIMUseCase {
     // Cascade: remove all spaces in this org
     spaceRepo.removeByOrg(id, tenantId);
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

@@ -69,6 +69,6 @@ class ManageRolesUseCase : UIMUseCase {
       return CommandResult("", "Role not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

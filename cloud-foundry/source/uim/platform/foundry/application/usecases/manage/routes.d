@@ -86,7 +86,7 @@ class ManageRoutesUseCase : UIMUseCase {
       return CommandResult("", "Route not found");
 
     routeRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   /// Map an application to a route.
@@ -158,6 +158,6 @@ class ManageRoutesUseCase : UIMUseCase {
       routeRepo.remove(r.id, tenantId);
 
     domainRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

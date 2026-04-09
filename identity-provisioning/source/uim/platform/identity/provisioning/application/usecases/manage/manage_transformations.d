@@ -102,6 +102,6 @@ class ManageTransformationsUseCase : UIMUseCase {
       return CommandResult("", "Transformation not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

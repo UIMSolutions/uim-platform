@@ -130,7 +130,7 @@ class ManageFoldersUseCase : UIMUseCase {
       return CommandResult("", "Folder not found");
 
     folderRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long lastIndexOf(string s, char c) {

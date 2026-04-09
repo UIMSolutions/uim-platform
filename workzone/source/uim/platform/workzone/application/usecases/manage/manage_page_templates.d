@@ -73,6 +73,6 @@ class ManagePageTemplatesUseCase : UIMUseCase {
       return CommandResult("", "Page template not found");
 
     repo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

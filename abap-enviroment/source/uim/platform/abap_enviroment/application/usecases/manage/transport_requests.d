@@ -45,7 +45,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     tr.createdAt = Clock.currStdTime();
 
     repo.save(tr);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
@@ -123,7 +123,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     tr.releasedAt = Clock.currStdTime();
 
     repo.update(*tr);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   TransportRequest* getRequest(TransportRequestId id) {
@@ -147,7 +147,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
       return CommandResult("", "Only modifiable transport requests can be deleted");
 
     repo.remove(id);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

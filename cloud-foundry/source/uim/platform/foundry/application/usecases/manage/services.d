@@ -109,7 +109,7 @@ class ManageServicesUseCase : UIMUseCase {
       bindingRepo.remove(b.id, tenantId);
 
     instanceRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   // --- Service Bindings ---
@@ -157,6 +157,6 @@ class ManageServicesUseCase : UIMUseCase {
       return CommandResult("", "Service binding not found");
 
     bindingRepo.remove(id, tenantId);
-    return CommandResult(id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
