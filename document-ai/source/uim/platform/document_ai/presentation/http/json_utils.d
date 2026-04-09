@@ -7,15 +7,15 @@ module uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-string jsonStr(Json j, string key) {
+string jsonStr(Json j, string key, string default_ = "") {
   if (!j.isObject)
-    return "";
+    return default_;
   auto v = key in j;
   if (v is null)
-    return "";
+    return default_;
   if ((*v).isString)
     return (*v).get!string;
-  return "";
+  return default_;
 }
 
 bool jsonBool(Json j, string key, bool default_ = false) {

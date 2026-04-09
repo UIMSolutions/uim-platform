@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.document_type;
 import uim.platform.document_ai.domain.ports.repositories.document_types;
 
-import std.algorithm : filter;
+import std.algorithm : filter, remove;
 import std.array : array;
 
 class MemoryDocumentTypeRepository : DocumentTypeRepository {
@@ -54,7 +54,7 @@ class MemoryDocumentTypeRepository : DocumentTypeRepository {
 
   void remove(DocumentTypeId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(dt => dt.id != id).array;
+      *cl = (*cl).remove!(dt => dt.id == id);
     }
   }
 

@@ -9,7 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.extraction_result;
 import uim.platform.document_ai.domain.ports.repositories.extraction_results;
 
-import std.algorithm : filter;
+import std.algorithm : filter, remove;
 import std.array : array;
 
 class MemoryExtractionResultRepository : ExtractionResultRepository {
@@ -64,7 +64,7 @@ class MemoryExtractionResultRepository : ExtractionResultRepository {
 
   void remove(ExtractionResultId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      *cl = (*cl).filter!(r => r.id != id).array;
+      *cl = (*cl).remove!(r => r.id == id);
     }
   }
 

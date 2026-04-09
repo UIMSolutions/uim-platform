@@ -9,8 +9,7 @@ import uim.platform.document_ai.domain.types;
 import uim.platform.document_ai.domain.entities.client;
 import uim.platform.document_ai.domain.ports.repositories.clients;
 
-import std.algorithm : filter;
-import std.array : array;
+import std.algorithm : filter, count, remove;
 
 class MemoryClientRepository : ClientRepository {
   private Client[] store;
@@ -24,6 +23,7 @@ class MemoryClientRepository : ClientRepository {
   }
 
   Client[] findByTenant(TenantId tenantId) {
+    import std.array : array;
     return store.filter!(c => c.tenantId == tenantId).array;
   }
 
@@ -41,10 +41,10 @@ class MemoryClientRepository : ClientRepository {
   }
 
   void remove(ClientId id) {
-    store = store.filter!(c => c.id != id).array;
+    store = store.remove!(c => c.id == id);
   }
 
   long countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(c => c.tenantId == tenantId).array.length;
+    return cast(long) store.count!(c => c.tenantId == tenantId);
   }
 }
