@@ -19,7 +19,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class CleansingRuleController : SAPController {
+class CleansingRuleController : PlatformController {
   private ManageCleansingRulesUseCase uc;
 
   this(ManageCleansingRulesUseCase uc) {

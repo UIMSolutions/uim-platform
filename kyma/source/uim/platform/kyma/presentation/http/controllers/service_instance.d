@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ServiceInstanceController : SAPController {
+class ServiceInstanceController : PlatformController {
   private ManageServiceInstancesUseCase uc;
 
   this(ManageServiceInstancesUseCase uc) {

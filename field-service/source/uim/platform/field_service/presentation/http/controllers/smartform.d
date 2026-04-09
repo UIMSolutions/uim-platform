@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SmartformController : SAPController {
+class SmartformController : PlatformController {
     private ManageSmartformsUseCase uc;
 
     this(ManageSmartformsUseCase uc) {

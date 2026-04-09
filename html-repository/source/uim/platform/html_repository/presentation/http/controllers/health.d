@@ -11,7 +11,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
   private string serviceName;
 
   this(string serviceName = "html5-application-repository") {

@@ -23,7 +23,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class BrowseController : SAPController {
+class BrowseController : PlatformController {
   private BrowseContentUseCase uc;
 
   this(BrowseContentUseCase uc) {

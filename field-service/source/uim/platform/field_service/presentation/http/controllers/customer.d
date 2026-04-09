@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class CustomerController : SAPController {
+class CustomerController : PlatformController {
     private ManageCustomersUseCase uc;
 
     this(ManageCustomersUseCase uc) {

@@ -401,7 +401,7 @@ F-JS-04: Configuration Management
 | D Language (DMD/LDC) | Runtime | LDC 1.40.1 | Primary language |
 | vibe-d | Framework | 0.10.3 | HTTP server, routing, JSON |
 | uim-framework | Library | 26.4.1 | Platform base classes |
-| uim-platform:service | Library | internal | Shared service base (SAPController, UIMUseCase) |
+| uim-platform:service | Library | internal | Shared service base (PlatformController, UIMUseCase) |
 
 ### 10.2 Infrastructure Resources
 

@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class EventSubscriptionController : SAPController {
+class EventSubscriptionController : PlatformController {
   private ManageEventSubscriptionsUseCase uc;
 
   this(ManageEventSubscriptionsUseCase uc) {

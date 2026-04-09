@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class RemoteTableController : SAPController {
+class RemoteTableController : PlatformController {
   private ManageRemoteTablesUseCase uc;
 
   this(ManageRemoteTablesUseCase uc) {

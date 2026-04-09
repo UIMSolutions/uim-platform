@@ -7,7 +7,7 @@ module uim.platform.document_ai.presentation.http.controllers.health;
 
 import uim.platform.document_ai;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
     router.get("/api/v1/health", &handleHealth);

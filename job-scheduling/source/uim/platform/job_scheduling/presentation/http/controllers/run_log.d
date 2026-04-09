@@ -11,7 +11,7 @@ import uim.platform.job_scheduling.presentation.http.json_utils;
 
 import uim.platform.job_scheduling;
 
-class RunLogController : SAPController {
+class RunLogController : PlatformController {
     private ManageRunLogsUseCase uc;
 
     this(ManageRunLogsUseCase uc) {

@@ -18,7 +18,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FindController : SAPController {
+class FindController : PlatformController {
   private FindDestinationUseCase uc;
 
   this(FindDestinationUseCase uc) {

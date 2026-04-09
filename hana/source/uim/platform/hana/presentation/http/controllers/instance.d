@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class InstanceController : SAPController {
+class InstanceController : PlatformController {
   private ManageInstancesUseCase uc;
 
   this(ManageInstancesUseCase uc) {

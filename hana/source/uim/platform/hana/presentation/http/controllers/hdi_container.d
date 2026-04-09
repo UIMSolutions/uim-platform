@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class HDIContainerController : SAPController {
+class HDIContainerController : PlatformController {
   private ManageHDIContainersUseCase uc;
 
   this(ManageHDIContainersUseCase uc) {

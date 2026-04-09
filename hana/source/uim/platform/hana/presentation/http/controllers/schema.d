@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SchemaController : SAPController {
+class SchemaController : PlatformController {
   private ManageSchemasUseCase uc;
 
   this(ManageSchemasUseCase uc) {

@@ -21,7 +21,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class RepositoryController : SAPController {
+class RepositoryController : PlatformController {
   private ManageRepositoriesUseCase uc;
 
   this(ManageRepositoriesUseCase uc) {

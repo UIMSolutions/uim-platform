@@ -20,7 +20,7 @@ import uim.platform.dms.application;
 
 mixin(ShowModule!());
 @safe:
-class PermissionController : SAPController {
+class PermissionController : PlatformController {
   private ManagePermissionsUseCase uc;
 
   this(ManagePermissionsUseCase uc) {

@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ActivityController : SAPController {
+class ActivityController : PlatformController {
     private ManageActivitiesUseCase uc;
 
     this(ManageActivitiesUseCase uc) {

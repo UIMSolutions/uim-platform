@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AlertController : SAPController {
+class AlertController : PlatformController {
   private ManageAlertsUseCase uc;
 
   this(ManageAlertsUseCase uc) {

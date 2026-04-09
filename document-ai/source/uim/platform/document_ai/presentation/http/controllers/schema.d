@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class SchemaController : SAPController {
+class SchemaController : PlatformController {
   private ManageSchemasUseCase uc;
 
   this(ManageSchemasUseCase uc) {

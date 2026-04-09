@@ -18,7 +18,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for application (service provider) management.
-class ApplicationController : SAPController {
+class ApplicationController : PlatformController {
   private ManageApplicationsUseCase useCase;
 
   this(ManageApplicationsUseCase useCase) {

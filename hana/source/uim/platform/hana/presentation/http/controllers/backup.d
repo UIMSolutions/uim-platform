@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class BackupController : SAPController {
+class BackupController : PlatformController {
   private ManageBackupsUseCase uc;
 
   this(ManageBackupsUseCase uc) {

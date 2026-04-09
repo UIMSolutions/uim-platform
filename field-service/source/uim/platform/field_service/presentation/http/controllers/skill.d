@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class SkillController : SAPController {
+class SkillController : PlatformController {
     private ManageSkillsUseCase uc;
 
     this(ManageSkillsUseCase uc) {

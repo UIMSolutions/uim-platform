@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class TemplateController : SAPController {
+class TemplateController : PlatformController {
   private ManageTemplatesUseCase uc;
 
   this(ManageTemplatesUseCase uc) {

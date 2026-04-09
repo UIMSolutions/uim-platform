@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ServiceCallController : SAPController {
+class ServiceCallController : PlatformController {
     private ManageServiceCallsUseCase uc;
 
     this(ManageServiceCallsUseCase uc) {

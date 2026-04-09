@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class SpaceController : SAPController {
+class SpaceController : PlatformController {
   private ManageSpacesUseCase uc;
 
   this(ManageSpacesUseCase uc) {

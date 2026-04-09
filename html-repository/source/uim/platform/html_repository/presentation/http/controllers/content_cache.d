@@ -13,7 +13,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class ContentCacheController : SAPController {
+class ContentCacheController : PlatformController {
   private ManageContentCacheUseCase uc;
 
   this(ManageContentCacheUseCase uc) {

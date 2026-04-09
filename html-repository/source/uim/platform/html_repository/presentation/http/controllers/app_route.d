@@ -13,7 +13,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class AppRouteController : SAPController {
+class AppRouteController : PlatformController {
   private ManageAppRoutesUseCase uc;
 
   this(ManageAppRoutesUseCase uc) {

@@ -20,7 +20,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class DestinationController : SAPController {
+class DestinationController : PlatformController {
   private ManageDestinationsUseCase uc;
 
   this(ManageDestinationsUseCase uc) {

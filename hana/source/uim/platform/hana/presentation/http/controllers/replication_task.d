@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class ReplicationTaskController : SAPController {
+class ReplicationTaskController : PlatformController {
   private ManageReplicationTasksUseCase uc;
 
   this(ManageReplicationTasksUseCase uc) {

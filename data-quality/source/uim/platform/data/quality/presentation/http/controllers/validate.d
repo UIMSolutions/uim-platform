@@ -19,7 +19,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class ValidateController : SAPController {
+class ValidateController : PlatformController {
   private ValidateDataUseCase uc;
 
   this(ValidateDataUseCase uc) {

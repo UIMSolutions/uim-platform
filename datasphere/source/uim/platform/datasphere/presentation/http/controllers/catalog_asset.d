@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class CatalogAssetController : SAPController {
+class CatalogAssetController : PlatformController {
   private ManageCatalogAssetsUseCase uc;
 
   this(ManageCatalogAssetsUseCase uc) {

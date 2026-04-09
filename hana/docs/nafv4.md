@@ -686,7 +686,7 @@ cancelled → [*]
 | D Language (LDC) | Compiler/Runtime | 1.40.1 | Primary language |
 | vibe-d | HTTP Framework | 0.10.x | HTTP server, routing, JSON |
 | uim-framework | Library | 26.4.1 | Platform base classes |
-| uim-platform:service | Library | internal | SAPController, UIMUseCase base |
+| uim-platform:service | Library | internal | PlatformController, UIMUseCase base |
 
 ### 10.2 Infrastructure Resources
 

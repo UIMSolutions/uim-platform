@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class TaskController : SAPController {
+class TaskController : PlatformController {
   private ManageTasksUseCase uc;
 
   this(ManageTasksUseCase uc) {

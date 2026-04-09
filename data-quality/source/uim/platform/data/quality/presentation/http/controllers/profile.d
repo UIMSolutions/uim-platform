@@ -19,7 +19,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class ProfileController : SAPController {
+class ProfileController : PlatformController {
   private ProfileDataUseCase uc;
 
   this(ProfileDataUseCase uc) {

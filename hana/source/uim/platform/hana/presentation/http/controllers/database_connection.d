@@ -14,7 +14,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseConnectionController : SAPController {
+class DatabaseConnectionController : PlatformController {
   private ManageDatabaseConnectionsUseCase uc;
 
   this(ManageDatabaseConnectionsUseCase uc) {

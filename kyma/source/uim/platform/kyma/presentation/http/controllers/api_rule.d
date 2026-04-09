@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ApiRuleController : SAPController {
+class ApiRuleController : PlatformController {
   private ManageApiRulesUseCase uc;
 
   this(ManageApiRulesUseCase uc) {

@@ -21,7 +21,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class VersionController : SAPController {
+class VersionController : PlatformController {
   private ManageVersionsUseCase uc;
 
   this(ManageVersionsUseCase uc) {

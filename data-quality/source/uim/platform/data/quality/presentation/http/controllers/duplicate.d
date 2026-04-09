@@ -20,7 +20,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class DuplicateController : SAPController {
+class DuplicateController : PlatformController {
   private DetectDuplicatesUseCase uc;
 
   this(DetectDuplicatesUseCase uc) {

@@ -21,7 +21,7 @@ import uim.platform.dms.application;
 mixin(ShowModule!());
 @safe:
 
-class FolderController : SAPController {
+class FolderController : PlatformController {
   private ManageFoldersUseCase uc;
 
   this(ManageFoldersUseCase uc) {

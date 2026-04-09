@@ -14,7 +14,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class DeploymentController : SAPController {
+class DeploymentController : PlatformController {
   private DeployApplicationUseCase deployApp;
   private GetDeploymentHistoryUseCase getHistory;
 

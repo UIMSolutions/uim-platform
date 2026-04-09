@@ -19,7 +19,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class AddressController : SAPController {
+class AddressController : PlatformController {
   private CleanseAddressesUseCase uc;
 
   this(CleanseAddressesUseCase uc) {

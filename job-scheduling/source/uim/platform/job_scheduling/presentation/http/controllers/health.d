@@ -7,7 +7,7 @@ module uim.platform.job_scheduling.presentation.http.controllers.health;
 
 import uim.platform.job_scheduling;
 
-class HealthController : SAPController {
+class HealthController : PlatformController {
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
         router.get("/api/v1/health", &handleHealth);

@@ -20,7 +20,7 @@ import uim.platform.destination;
 mixin(ShowModule!());
 
 @safe:
-class FragmentController : SAPController {
+class FragmentController : PlatformController {
   private ManageFragmentsUseCase uc;
 
   this(ManageFragmentsUseCase uc) {

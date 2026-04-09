@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class TrainingJobController : SAPController {
+class TrainingJobController : PlatformController {
   private ManageTrainingJobsUseCase uc;
 
   this(ManageTrainingJobsUseCase uc) {

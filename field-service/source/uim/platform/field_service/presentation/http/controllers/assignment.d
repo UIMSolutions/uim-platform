@@ -11,7 +11,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class AssignmentController : SAPController {
+class AssignmentController : PlatformController {
     private ManageAssignmentsUseCase uc;
 
     this(ManageAssignmentsUseCase uc) {

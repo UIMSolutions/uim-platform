@@ -12,7 +12,7 @@ import uim.platform.job_scheduling.presentation.http.json_utils;
 
 import uim.platform.job_scheduling;
 
-class JobController : SAPController {
+class JobController : PlatformController {
     private ManageJobsUseCase jobUc;
     private ManageSchedulesUseCase scheduleUc;
 

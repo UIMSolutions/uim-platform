@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class EnrichmentDataController : SAPController {
+class EnrichmentDataController : PlatformController {
   private ManageEnrichmentDataUseCase uc;
 
   this(ManageEnrichmentDataUseCase uc) {

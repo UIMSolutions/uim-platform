@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class ViewController : SAPController {
+class ViewController : PlatformController {
   private ManageViewsUseCase uc;
 
   this(ManageViewsUseCase uc) {

@@ -11,7 +11,7 @@ import uim.platform.job_scheduling.presentation.http.json_utils;
 
 import uim.platform.job_scheduling;
 
-class ScheduleController : SAPController {
+class ScheduleController : PlatformController {
     private ManageSchedulesUseCase uc;
 
     this(ManageSchedulesUseCase uc) {

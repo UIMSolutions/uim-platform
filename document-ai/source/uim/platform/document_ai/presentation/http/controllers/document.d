@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class DocumentController : SAPController {
+class DocumentController : PlatformController {
   private ProcessDocumentsUseCase uc;
 
   this(ProcessDocumentsUseCase uc) {

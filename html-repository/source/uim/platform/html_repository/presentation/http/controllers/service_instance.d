@@ -13,7 +13,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class ServiceInstanceController : SAPController {
+class ServiceInstanceController : PlatformController {
   private ManageServiceInstancesUseCase uc;
 
   this(ManageServiceInstancesUseCase uc) {

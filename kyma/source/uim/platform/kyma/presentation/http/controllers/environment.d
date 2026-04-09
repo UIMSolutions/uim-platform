@@ -20,7 +20,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class EnvironmentController : SAPController{
+class EnvironmentController : PlatformController{
   private ManageEnvironmentsUseCase uc;
 
   this(ManageEnvironmentsUseCase uc) {

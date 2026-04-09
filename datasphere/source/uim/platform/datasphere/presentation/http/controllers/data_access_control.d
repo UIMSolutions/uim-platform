@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class DataAccessControlController : SAPController {
+class DataAccessControlController : PlatformController {
   private ManageDataAccessControlsUseCase uc;
 
   this(ManageDataAccessControlsUseCase uc) {

@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DataLakeController : SAPController {
+class DataLakeController : PlatformController {
   private ManageDataLakesUseCase uc;
 
   this(ManageDataLakesUseCase uc) {

@@ -14,7 +14,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class ContentController : SAPController {
+class ContentController : PlatformController {
   private ManageAppFilesUseCase fileUc;
   private ManageContentCacheUseCase cacheUc;
 

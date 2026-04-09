@@ -13,7 +13,7 @@ import uim.platform.htmls;
 
 import std.conv : to;
 
-class HtmlAppController : SAPController {
+class HtmlAppController : PlatformController {
   private ManageHtmlAppsUseCase uc;
 
   this(ManageHtmlAppsUseCase uc) {

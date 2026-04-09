@@ -19,7 +19,7 @@ import uim.platform.data.quality;
 mixin(ShowModule!());
 
 @safe:
-class DashboardController : SAPController {
+class DashboardController : PlatformController {
   private ComputeDashboardUseCase uc;
 
   this(ComputeDashboardUseCase uc) {

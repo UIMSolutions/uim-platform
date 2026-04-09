@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class ConnectionController : SAPController {
+class ConnectionController : PlatformController {
   private ManageConnectionsUseCase uc;
 
   this(ManageConnectionsUseCase uc) {

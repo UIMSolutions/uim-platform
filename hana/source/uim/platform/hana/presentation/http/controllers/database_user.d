@@ -15,7 +15,7 @@ mixin(ShowModule!());
 
 @safe:
 
-class DatabaseUserController : SAPController {
+class DatabaseUserController : PlatformController {
   private ManageDatabaseUsersUseCase uc;
 
   this(ManageDatabaseUsersUseCase uc) {

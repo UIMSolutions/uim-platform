@@ -13,7 +13,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class ClientController : SAPController {
+class ClientController : PlatformController {
   private ManageClientsUseCase uc;
 
   this(ManageClientsUseCase uc) {

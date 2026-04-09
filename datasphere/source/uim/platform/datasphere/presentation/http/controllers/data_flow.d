@@ -11,7 +11,7 @@ import uim.platform.datasphere.presentation.http.json_utils;
 
 import uim.platform.datasphere;
 
-class DataFlowController : SAPController {
+class DataFlowController : PlatformController {
   private ManageDataFlowsUseCase uc;
 
   this(ManageDataFlowsUseCase uc) {

@@ -10,7 +10,7 @@ import uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-class CapabilitiesController : SAPController {
+class CapabilitiesController : PlatformController {
   private GetCapabilitiesUseCase uc;
 
   this(GetCapabilitiesUseCase uc) {

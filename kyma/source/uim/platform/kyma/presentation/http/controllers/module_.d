@@ -21,7 +21,7 @@ import uim.platform.kyma;
 mixin(ShowModule!());
 
 @safe:
-class ModuleController : SAPController {
+class ModuleController : PlatformController {
   private ManageModulesUseCase uc;
 
   this(ManageModulesUseCase uc) {

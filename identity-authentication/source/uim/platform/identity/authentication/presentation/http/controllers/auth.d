@@ -17,7 +17,7 @@ import uim.platform.identity_authentication;
 mixin(ShowModule!());
 @safe:
 /// HTTP controller for authentication endpoints.
-class AuthController : SAPController {
+class AuthController : PlatformController {
   private AuthenticateUserUseCase authUseCase;
   private IssueTokenUseCase tokenUseCase;
 
