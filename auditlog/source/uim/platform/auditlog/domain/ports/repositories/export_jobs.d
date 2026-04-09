@@ -14,13 +14,13 @@ mixin(ShowModule!());
 
 /// Port for persisting export job records.
 @safe:
-interface ExportJobRepository {
-  ExportJob[] findByTenant(TenantId tenantId);
+interface ExportJobRepository : ITenantRepository!(ExportJob,ExportJobId) {
+  // ExportJob[] findByTenant(TenantId tenantId);
 
-  bool existsById(TenantId tenantId, ExportJobId id);
+  /* bool existsById(TenantId tenantId, ExportJobId id);
   ExportJob findById(TenantId tenantId, ExportJobId id);
 
   void save(ExportJob job);
   void update(ExportJob job);
-  void remove(TenantId tenantId, ExportJobId id);
+  void remove(TenantId tenantId, ExportJobId id);*/
 }
