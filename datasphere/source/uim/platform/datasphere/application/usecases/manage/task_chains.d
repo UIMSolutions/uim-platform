@@ -73,6 +73,6 @@ class ManageTaskChainsUseCase : UIMUseCase {
       return CommandResult(false, "", "Task chain not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

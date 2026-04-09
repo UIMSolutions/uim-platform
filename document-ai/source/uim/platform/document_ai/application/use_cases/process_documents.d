@@ -117,7 +117,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
       return CommandResult(false, "", "Document not found");
 
     docRepo.remove(id, clientId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ExtractionResult getExtractionResult(DocumentId docId, ClientId clientId) {

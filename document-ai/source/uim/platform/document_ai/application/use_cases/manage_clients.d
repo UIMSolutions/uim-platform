@@ -100,7 +100,7 @@ class ManageClientsUseCase : UIMUseCase {
       return CommandResult(false, "", "Client not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long countByTenant(TenantId tenantId) {

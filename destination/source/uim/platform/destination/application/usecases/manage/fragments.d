@@ -59,7 +59,7 @@ class ManageFragmentsUseCase : UIMUseCase {
     f.modifiedAt = f.createdAt;
 
     repo.save(f);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {

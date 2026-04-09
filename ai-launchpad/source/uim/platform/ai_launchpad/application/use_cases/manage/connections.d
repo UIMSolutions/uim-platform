@@ -76,6 +76,6 @@ class ManageConnectionsUseCase : UIMUseCase {
     auto c = repo.findById(id);
     if (c.id.isEmpty) return CommandResult(false, "", "Connection not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

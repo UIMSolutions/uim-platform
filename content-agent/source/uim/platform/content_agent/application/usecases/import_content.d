@@ -74,7 +74,7 @@ class ImportContentUseCase : UIMUseCase {
     recordActivity(req.tenantId, ActivityType.importCompleted, id, pkg.name,
         "Import completed for package: " ~ pkg.name, req.startedBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ImportJob getImportJob(ImportJobId id) {

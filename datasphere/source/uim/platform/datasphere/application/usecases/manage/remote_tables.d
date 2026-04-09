@@ -65,6 +65,6 @@ class ManageRemoteTablesUseCase : UIMUseCase {
       return CommandResult(false, "", "Remote table not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

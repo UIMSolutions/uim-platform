@@ -116,7 +116,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
       return CommandResult(false, "", "Cannot delete running training job");
 
     jobRepo.remove(id, clientId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ClientId clientId) {

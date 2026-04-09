@@ -86,7 +86,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     d.modifiedAt = d.createdAt;
 
     repo.save(d);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {

@@ -58,7 +58,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     ch.updatedAt = ch.createdAt;
 
     repo.save(ch);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateChannel(NotificationChannelId id, UpdateNotificationChannelRequest req) {
@@ -85,7 +85,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     ch.updatedAt = clockSeconds();
 
     repo.update(ch);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   NotificationChannel getChannel(NotificationChannelId id) {
@@ -110,7 +110,7 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
       return CommandResult(false, "", "Notification channel not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long clockSeconds() {

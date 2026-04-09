@@ -52,7 +52,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     recordActivity(req.tenantId, ActivityType.providerRegistered, id, req.name,
         "Provider registered", req.registeredBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateProvider(ContentProviderId id, UpdateProviderRequest req) {
@@ -68,7 +68,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
       provider.authToken = req.authToken;
 
     providerRepo.update(provider);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult deregisterProvider(ContentProviderId id) {
@@ -82,7 +82,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     recordActivity(provider.tenantId, ActivityType.providerDeregistered, id,
         provider.name, "Provider deregistered", "");
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult syncProvider(ContentProviderId id) {
@@ -98,7 +98,7 @@ class ManageContentProvidersUseCase : UIMUseCase {
     provider.lastSyncAt = clockSeconds();
     providerRepo.update(provider);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ContentProvider getProvider(ContentProviderId id) {

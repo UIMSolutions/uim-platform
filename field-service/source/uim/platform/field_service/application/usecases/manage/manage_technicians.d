@@ -81,6 +81,6 @@ class ManageTechniciansUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Technician not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

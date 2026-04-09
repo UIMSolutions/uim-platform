@@ -118,7 +118,7 @@ class ManageSchemasUseCase : UIMUseCase {
       return CommandResult(false, "", "Schema not found");
 
     repo.remove(id, clientId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ClientId clientId) {

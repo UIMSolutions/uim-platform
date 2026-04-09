@@ -101,7 +101,7 @@ class ManageArtifactsUseCase : UIMUseCase {
       return CommandResult(false, "", "Artifact not found");
 
     repo.remove(id, rgId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ResourceGroupId rgId) {

@@ -70,7 +70,7 @@ class ExportContentUseCase : UIMUseCase {
     recordActivity(req.tenantId, ActivityType.exportCompleted, id, pkg.name,
         "Export completed for package: " ~ pkg.name, req.startedBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   ExportJob getExportJob(ExportJobId id) {

@@ -85,6 +85,6 @@ class ManageViewsUseCase : UIMUseCase {
       return CommandResult(false, "", "View not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

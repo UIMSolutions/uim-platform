@@ -77,7 +77,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     }
 
     repo.save(dest);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
@@ -128,7 +128,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     }
 
     repo.update(dest);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   Destination getDestination(DestinationId id) {
@@ -149,7 +149,7 @@ class ManageDestinationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Destination not found");
 
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }
 

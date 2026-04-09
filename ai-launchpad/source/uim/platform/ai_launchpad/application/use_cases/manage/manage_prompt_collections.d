@@ -62,6 +62,6 @@ class ManagePromptCollectionsUseCase : UIMUseCase {
     auto pc = repo.findById(id);
     if (pc.id.isEmpty) return CommandResult(false, "", "Prompt collection not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

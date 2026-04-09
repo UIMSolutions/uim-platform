@@ -105,7 +105,7 @@ class ManageExecutionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Execution not found");
 
     execRepo.remove(id, rgId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ResourceGroupId rgId) {

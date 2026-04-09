@@ -76,6 +76,6 @@ class ManageSmartformsUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Smartform not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

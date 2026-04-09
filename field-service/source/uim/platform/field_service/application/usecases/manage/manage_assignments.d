@@ -74,6 +74,6 @@ class ManageAssignmentsUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Assignment not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

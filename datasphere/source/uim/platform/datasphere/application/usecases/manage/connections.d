@@ -83,6 +83,6 @@ class ManageConnectionsUseCase : UIMUseCase {
       return CommandResult(false, "", "Connection not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

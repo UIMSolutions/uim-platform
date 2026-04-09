@@ -65,6 +65,6 @@ class ManageDatasetsUseCase : UIMUseCase {
     auto d = repo.findById(id, connectionId);
     if (d.id.isEmpty) return CommandResult(false, "", "Dataset not found");
     repo.remove(id, connectionId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

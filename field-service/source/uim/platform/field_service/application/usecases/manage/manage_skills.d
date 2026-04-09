@@ -75,6 +75,6 @@ class ManageSkillsUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Skill not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

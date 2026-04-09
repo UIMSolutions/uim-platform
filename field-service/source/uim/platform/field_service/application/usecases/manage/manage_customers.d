@@ -76,6 +76,6 @@ class ManageCustomersUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Customer not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

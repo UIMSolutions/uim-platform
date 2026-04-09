@@ -116,7 +116,7 @@ class ManageTemplatesUseCase : UIMUseCase {
       return CommandResult(false, "", "Template not found");
 
     repo.remove(id, clientId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ClientId clientId) {

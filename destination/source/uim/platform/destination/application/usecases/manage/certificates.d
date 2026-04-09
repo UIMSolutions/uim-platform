@@ -63,7 +63,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     c.status = validation.status;
 
     repo.save(c);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {

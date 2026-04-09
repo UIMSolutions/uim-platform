@@ -74,6 +74,6 @@ class ManageDataFlowsUseCase : UIMUseCase {
       return CommandResult(false, "", "Data flow not found");
 
     repo.remove(id, spaceId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

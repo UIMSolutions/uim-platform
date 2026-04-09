@@ -81,6 +81,6 @@ class ManageActivitiesUseCase : UIMUseCase {
         if (existing is null)
             return CommandResult(false, "", "Activity not found");
         repo.remove(id);
-        return CommandResult(true, id, "");
+        return CommandResult(true, id.toString, "");
     }
 }

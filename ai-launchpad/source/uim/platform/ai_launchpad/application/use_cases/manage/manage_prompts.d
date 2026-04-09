@@ -105,6 +105,6 @@ class ManagePromptsUseCase : UIMUseCase {
     auto p = repo.findById(id);
     if (p.id.isEmpty) return CommandResult(false, "", "Prompt not found");
     repo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 }

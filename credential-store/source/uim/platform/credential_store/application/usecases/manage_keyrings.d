@@ -144,7 +144,7 @@ class ManageKeyringsUseCase : UIMUseCase {
 
     versionRepo.removeByKeyring(id);
     credRepo.remove(id);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static long currentTimestamp() {

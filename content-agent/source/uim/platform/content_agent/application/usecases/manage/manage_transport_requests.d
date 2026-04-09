@@ -87,7 +87,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     recordActivity(req.tenantId, ActivityType.transportCreated, id,
         req.description, "Transport request created", req.createdBy);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   CommandResult releaseTransport(ReleaseTransportRequest req) {
@@ -118,7 +118,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
     tr.updatedAt = clockSeconds();
     requestRepo.update(tr);
 
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   TransportRequest getTransportRequest(TransportRequestId id) {

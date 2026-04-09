@@ -87,7 +87,7 @@ class ManageConfigurationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Configuration not found");
 
     repo.remove(id, rgId);
-    return CommandResult(true, id, "");
+    return CommandResult(true, id.toString, "");
   }
 
   long count(ResourceGroupId rgId) {
