@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.presentation.http.metric;
+module uim.platform.monitoring.presentation.http.controllers.metric;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -29,7 +29,7 @@ class MetricController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/metrics", &handlePush);
     router.post("/api/v1/metrics/batch", &handleBatchPush);
     router.get("/api/v1/metrics", &handleQuery);

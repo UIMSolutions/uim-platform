@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.presentation.http.alert_rule;
+module uim.platform.monitoring.presentation.http.controllers.alert_rule;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -29,7 +29,7 @@ class AlertRuleController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/alert-rules", &handleCreate);
     router.get("/api/v1/alert-rules", &handleList);
     router.get("/api/v1/alert-rules/*", &handleGetById);

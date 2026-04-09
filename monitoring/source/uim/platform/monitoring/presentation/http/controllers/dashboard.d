@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.monitoring.presentation.http.dashboard;
+module uim.platform.monitoring.presentation.http.controllers.dashboard;
 
 // import vibe.http.server;
 // import vibe.http.router;
@@ -27,7 +27,7 @@ class DashboardController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/dashboard", &handleDashboard);
   }
 
