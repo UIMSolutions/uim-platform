@@ -6,15 +6,95 @@
 module uim.platform.data.attribute_recommendation.domain.types;
 
 // --- Type aliases ---
-alias DatasetId = string;
-alias DataRecordId = string;
-alias ModelConfigId = string;
-alias TrainingJobId = string;
-alias DeploymentId = string;
-alias InferenceRequestId = string;
-alias InferenceResultId = string;
-alias TenantId = string;
-alias UserId = string;
+struct DatasetId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DataRecordId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ModelConfigId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TrainingJobId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DeploymentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct InferenceRequestId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct InferenceResultId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // --- Enums ---
 

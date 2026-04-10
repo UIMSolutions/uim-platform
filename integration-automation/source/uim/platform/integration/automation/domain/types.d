@@ -6,15 +6,95 @@
 module uim.platform.integration.automation.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias ScenarioId = string;
-alias WorkflowId = string;
-alias StepId = string;
-alias SystemId = string;
-alias DestinationId = string;
-alias TaskAssignmentId = string;
-alias ExecutionLogId = string;
-alias TenantId = string;
-alias UserId = string;
+struct ScenarioId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct WorkflowId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct StepId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SystemId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DestinationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TaskAssignmentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ExecutionLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Integration scenario lifecycle status.
 enum ScenarioStatus {

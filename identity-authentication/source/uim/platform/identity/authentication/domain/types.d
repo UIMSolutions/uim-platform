@@ -6,13 +6,75 @@
 module uim.platform.identity_authentication.domain.types;
 
 /// Unique identifier type alias for type safety.
-alias UserId = string;
-alias GroupId = string;
-alias TenantId = string;
-alias ApplicationId = string;
-alias PolicyId = string;
-alias SessionId = string;
-alias TokenId = string;
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct GroupId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ApplicationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PolicyId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SessionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TokenId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Authentication method supported by the platform.
 enum AuthMethod {

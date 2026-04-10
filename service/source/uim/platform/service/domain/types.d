@@ -6,8 +6,6 @@ mixin(ShowModule!());
 
 @safe:
 
-// alias TenantId = string;
-
 struct TenantId {
   string value;
 

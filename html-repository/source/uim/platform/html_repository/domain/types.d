@@ -6,15 +6,95 @@
 module uim.platform.html_repository.domain.types;
 
 // ID aliases
-alias HtmlAppId = string;
-alias AppVersionId = string;
-alias AppFileId = string;
-alias ServiceInstanceId = string;
-alias DeploymentRecordId = string;
-alias AppRouteId = string;
-alias ContentCacheId = string;
-alias TenantId = string;
-alias SpaceId = string;
+struct HtmlAppId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AppVersionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AppFileId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ServiceInstanceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DeploymentRecordId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AppRouteId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ContentCacheId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SpaceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // Application visibility
 enum AppVisibility {

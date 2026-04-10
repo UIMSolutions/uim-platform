@@ -6,29 +6,127 @@
 module uim.platform.data.privacy.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias DataSubjectId = string;
-alias PersonalDataModelId = string;
-alias DeletionRequestId = string;
-alias BlockingRequestId = string;
-alias LegalGroundId = string;
-alias RetentionRuleId = string;
-alias ConsentRecordId = string;
-alias DataRetrievalRequestId = string;
-alias DataControllerId = string;
-alias DataControllerGroupId = string;
-alias BusinessContextId = string;
-alias BusinessProcessId = string;
-alias BusinessSubprocessId = string;
-alias CorrectionRequestId = string;
-alias ArchiveRequestId = string;
-alias DestructionRequestId = string;
-alias PurposeRecordId = string;
-alias ConsentPurposeId = string;
-alias RuleSetId = string;
-alias InformationReportId = string;
-alias AnonymizationConfigId = string;
-alias TenantId = string;
-alias UserId = string;
+struct DataSubjectId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PersonalDataModelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DeletionRequestId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct BlockingRequestId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct LegalGroundId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct RetentionRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ConsentRecordId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DataRetrievalRequestId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DataControllerId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DataControllerGroupId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct BusinessContextId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct BusinessProcessId = string;
+struct BusinessSubprocessId = string;
+struct CorrectionRequestId = string;
+struct ArchiveRequestId = string;
+struct DestructionRequestId = string;
+struct PurposeRecordId = string;
+struct ConsentPurposeId = string;
+struct RuleSetId = string;
+struct InformationReportId = string;
+struct AnonymizationConfigId = string;
+struct TenantId = string;
+struct UserId = string;
 
 /// Type of data subject whose personal data is processed.
 enum DataSubjectType {

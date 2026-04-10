@@ -6,15 +6,68 @@
 module uim.platform.dms.application.domain.types;
 
 // --- ID type aliases ---
-alias RepositoryId = string;
-alias FolderId = string;
-alias DocumentId = string;
-alias DocumentVersionId = string;
-alias ShareId = string;
-alias PermissionId = string;
-alias FavoriteId = string;
-alias TenantId = string;
-alias UserId = string;
+struct RepositoryId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct FolderId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DocumentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DocumentVersionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ShareId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PermissionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct FavoriteId = string;
+struct TenantId = string;
+struct UserId = string;
 
 // --- Enumerations ---
 

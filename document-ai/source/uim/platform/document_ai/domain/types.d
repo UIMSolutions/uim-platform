@@ -6,16 +6,69 @@
 module uim.platform.document_ai.domain.types;
 
 // ID aliases
-alias DocumentId = string;
-alias SchemaId = string;
-alias TemplateId = string;
-alias DocumentTypeId = string;
-alias ExtractionResultId = string;
-alias EnrichmentDataId = string;
-alias TrainingJobId = string;
-alias ClientId = string;
-alias TenantId = string;
-alias ResourceGroupId = string;
+struct DocumentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SchemaId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TemplateId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DocumentTypeId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ExtractionResultId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct EnrichmentDataId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct TrainingJobId = string;
+struct ClientId = string;
+struct TenantId = string;
+struct ResourceGroupId = string;
 
 // Document processing status
 enum DocumentStatus {

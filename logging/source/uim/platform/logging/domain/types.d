@@ -5,20 +5,118 @@
 *****************************************************************************************************************/
 module uim.platform.logging.domain.types;
 
-alias LogEntryId = string;
-alias LogStreamId = string;
-alias TraceId = string;
-alias SpanId = string;
-alias DashboardId = string;
-alias PanelId = string;
-alias RetentionPolicyId = string;
-alias AlertRuleId = string;
-alias AlertId = string;
-alias NotificationChannelId = string;
-alias PipelineId = string;
-alias IngestionTokenId = string;
-alias TenantId = string;
-alias SubaccountId = string;
+struct LogEntryId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct LogStreamId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TraceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SpanId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DashboardId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PanelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct RetentionPolicyId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AlertRuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AlertId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct NotificationChannelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PipelineId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct IngestionTokenId = string;
+struct TenantId = string;
+struct SubaccountId = string;
 
 enum LogLevel {
   trace,

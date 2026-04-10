@@ -6,15 +6,95 @@
 module uim.platform.identity.provisioning.domain.types;
 
 // --- Type Aliases ---
-alias SourceSystemId = string;
-alias TargetSystemId = string;
-alias ProxySystemId = string;
-alias TransformationId = string;
-alias ProvisioningJobId = string;
-alias ProvisioningLogId = string;
-alias ProvisionedEntityId = string;
-alias TenantId = string;
-alias UserId = string;
+struct SourceSystemId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TargetSystemId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ProxySystemId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TransformationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ProvisioningJobId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ProvisioningLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ProvisionedEntityId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // --- Enums ---
 

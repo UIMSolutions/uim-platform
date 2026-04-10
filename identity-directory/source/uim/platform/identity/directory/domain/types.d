@@ -6,12 +6,65 @@
 module uim.platform.identity.directory.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias UserId = string;
-alias GroupId = string;
-alias TenantId = string;
-alias SchemaId = string;
-alias AttributeId = string;
-alias ApiClientId = string;
+struct UserId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct GroupId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SchemaId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AttributeId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ApiClientId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// SCIM 2.0 user status.
 enum UserStatus {

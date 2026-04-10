@@ -6,16 +6,105 @@
 module uim.platform.content_agent.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias ContentPackageId = string;
-alias ContentTypeId = string;
-alias ContentProviderId = string;
-alias TransportRequestId = string;
-alias ExportJobId = string;
-alias ImportJobId = string;
-alias TransportQueueId = string;
-alias ContentActivityId = string;
-alias TenantId = string;
-alias SubaccountId = string;
+struct ContentPackageId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ContentTypeId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ContentProviderId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TransportRequestId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ExportJobId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ImportJobId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TransportQueueId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ContentActivityId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Status of a content package.
 enum PackageStatus {

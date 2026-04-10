@@ -1,16 +1,70 @@
 module uim.platform.custom_domain.domain.types;
 
 // ID aliases
-alias CustomDomainId = string;
-alias PrivateKeyId = string;
-alias CertificateId = string;
-alias TlsConfigurationId = string;
-alias DomainMappingId = string;
-alias TrustedCertificateId = string;
-alias DnsRecordId = string;
-alias DomainDashboardId = string;
-alias TenantId = string;
-alias UserId = string;
+struct CustomDomainId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct PrivateKeyId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct CertificateId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct TlsConfigurationId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct DomainMappingId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct TrustedCertificateId {
+    string value;
+
+    this(string value) {
+        this.value = value;
+    }
+
+    mixin DomainId;
+}
+
+struct DnsRecordId = string;
+struct DomainDashboardId = string;
+struct TenantId = string;
+struct UserId = string;
 
 // --- Custom Domain ---
 

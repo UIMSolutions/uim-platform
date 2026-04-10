@@ -6,12 +6,65 @@
 module uim.platform.credential_store.domain.types;
 
 // ID aliases
-alias NamespaceId = string;
-alias CredentialId = string;
-alias KeyringVersionId = string;
-alias ServiceBindingId = string;
-alias AuditLogEntryId = string;
-alias TenantId = string;
+struct NamespaceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct CredentialId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct KeyringVersionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ServiceBindingId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct AuditLogEntryId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // Credential types: password (text), key (binary), keyring (KEK for DEK encryption)
 enum CredentialType {
