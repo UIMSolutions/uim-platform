@@ -6,12 +6,12 @@
 module uim.platform.management.infrastructure.persistence.memory;
 
 public {
-  import uim.platform.management.infrastructure.persistence.memory.directory;
-  import uim.platform.management.infrastructure.persistence.memory.entitlement;
-  import uim.platform.management.infrastructure.persistence.memory.environment_instance;
-  import uim.platform.management.infrastructure.persistence.memory.label;
-  import uim.platform.management.infrastructure.persistence.memory.platform_event;
-  import uim.platform.management.infrastructure.persistence.memory.service_plan;
-  import uim.platform.management.infrastructure.persistence.memory.subaccount;
-  import uim.platform.management.infrastructure.persistence.memory.subscription;
+  import uim.platform.management.infrastructure.persistence.memory.directories;
+  import uim.platform.management.infrastructure.persistence.memory.entitlements;
+  import uim.platform.management.infrastructure.persistence.memory.environment_instances;
+  import uim.platform.management.infrastructure.persistence.memory.labels;
+  import uim.platform.management.infrastructure.persistence.memory.platform_events;
+  import uim.platform.management.infrastructure.persistence.memory.service_plans;
+  import uim.platform.management.infrastructure.persistence.memory.subaccounts;
+  import uim.platform.management.infrastructure.persistence.memory.subscriptions;
 }

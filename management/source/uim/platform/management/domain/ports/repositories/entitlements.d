@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.entitlements;
 
-import uim.platform.management.domain.entities.entitlement;
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.entities.entitlement;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — entitlement persistence.
 interface EntitlementRepository {
   bool existsById(EntitlementId id);

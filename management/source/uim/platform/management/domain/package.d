@@ -6,4 +6,8 @@
 module uim.platform.management.domain;
 
 public {
+    import uim.platform.management.domain.entities;
+    import uim.platform.management.domain.ports;
+    import uim.platform.management.domain.services;
+    import uim.platform.management.domain.types;
 }

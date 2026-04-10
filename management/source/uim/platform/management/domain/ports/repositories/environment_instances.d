@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.ports.repositories.environment_instances;
 
-import uim.platform.management.domain.entities.environment_instance;
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.entities.environment_instance;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing — environment instance persistence.
 interface EnvironmentInstanceRepository {
   bool existsById(EnvironmentInstanceId id);
