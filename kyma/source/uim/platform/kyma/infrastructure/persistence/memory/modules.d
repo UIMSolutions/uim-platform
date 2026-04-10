@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.modules;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.kyma_module;
-import uim.platform.kyma.domain.ports.repositories.modules;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.kyma_module;
+// import uim.platform.kyma.domain.ports.repositories.modules;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryModuleRepository : ModuleRepository {
   private KymaModule[ModuleId] store;
 

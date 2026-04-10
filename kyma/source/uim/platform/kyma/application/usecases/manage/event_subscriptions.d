@@ -30,12 +30,8 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     if (req.eventTypes.length == 0)
       return CommandResult(false, "", "At least one event type is required");
 
-    auto existing = subscriptionRepository.findByName(req.namespaceId, req.name);
-    if (existing.id.length > 0)
+    if (subscriptionRepository.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Subscription '" ~ req.name ~ "' already exists");
-
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     EventSubscription sub;
     sub.id = randomUUID();
@@ -60,7 +56,7 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     sub.modifiedAt = sub.createdAt;
 
     subscriptionRepository.save(sub);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, sub.id.toString, "");
   }
 
   CommandResult updateSubscription(EventSubscriptionId subscriptionId, UpdateEventSubscriptionRequest request) {
@@ -137,8 +133,8 @@ class ManageEventSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, subscriptionId.toString(), "");
   }
 
-  private EventTypeEncoding parseTypeEncoding(string s) {
-    switch (s) {
+  private EventTypeEncoding parseTypeEncoding(string encoding) {
+    switch (encoding) {
     case "exact":
       return EventTypeEncoding.exact;
     case "prefix":

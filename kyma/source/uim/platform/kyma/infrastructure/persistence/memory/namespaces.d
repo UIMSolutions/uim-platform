@@ -19,15 +19,23 @@ mixin(ShowModule!());
 class MemoryNamespaceRepository : NamespaceRepository {
   private Namespace[NamespaceId] store;
 
+  bool existsById(NamespaceId id) {
+    return (id in store) ? true : false;
+  }
+
   Namespace findById(NamespaceId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return Namespace.init;
   }
 
+  bool existsByName(KymaEnvironmentId envId, string name) {
+    return findByEnvironment(envId).any!(e => e.name == name);
+  }
+
   Namespace findByName(KymaEnvironmentId envId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.environmentId == envId && e.name == name)
+    foreach (ref e; findByEnvironment(envId))
+      if (e.name == name)
         return e;
     return Namespace.init;
   }

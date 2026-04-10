@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.kyma.infrastructure.persistence.memory.event_subscriptions;
 
-import uim.platform.kyma.domain.types;
-import uim.platform.kyma.domain.entities.event_subscription;
-import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
+// import uim.platform.kyma.domain.types;
+// import uim.platform.kyma.domain.entities.event_subscription;
+// import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.kyma;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   private EventSubscription[EventSubscriptionId] store;
 

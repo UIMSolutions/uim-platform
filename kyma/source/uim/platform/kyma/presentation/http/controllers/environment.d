@@ -152,27 +152,26 @@ class EnvironmentController : PlatformController{
   }
 
   private Json serializeEnv(ref KymaEnvironment e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["subaccountId"] = Json(e.subaccountId);
-    j["clusterId"] = Json(e.clusterId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["plan"] = Json(e.plan.to!string);
-    j["region"] = Json(e.region);
-    j["kubernetesVersion"] = Json(e.kubernetesVersion);
-    j["status"] = Json(e.status.to!string);
-    j["machineCount"] = Json(cast(long) e.machineCount);
-    j["machineType"] = Json(e.machineType);
-    j["autoScalerMin"] = Json(cast(long) e.autoScalerMin);
-    j["autoScalerMax"] = Json(cast(long) e.autoScalerMax);
-    j["shootDomain"] = Json(e.shootDomain);
-    j["kubeApiServerUrl"] = Json(e.kubeApiServerUrl);
-    j["administrators"] = serializeStrArray(e.administrators);
-    j["createdBy"] = Json(e.createdBy);
-    j["createdAt"] = Json(e.createdAt);
-    j["modifiedAt"] = Json(e.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", Json(e.id))
+    .set("tenantId", Json(e.tenantId))
+    .set("subaccountId", Json(e.subaccountId))
+    .set("clusterId", Json(e.clusterId))
+    .set("name", Json(e.name))
+    .set("description", Json(e.description))
+    .set("plan", Json(e.plan.to!string))
+    .set("region", Json(e.region))
+    .set("kubernetesVersion", Json(e.kubernetesVersion))
+    .set("status", Json(e.status.to!string))
+    .set("machineCount", Json(cast(long) e.machineCount))
+    .set("machineType", Json(e.machineType))
+    .set("autoScalerMin", Json(cast(long) e.autoScalerMin))
+    .set("autoScalerMax", Json(cast(long) e.autoScalerMax))
+    .set("shootDomain", Json(e.shootDomain))
+    .set("kubeApiServerUrl", Json(e.kubeApiServerUrl))
+    .set("administrators", serializeStrArray(e.administrators))
+    .set("createdBy", Json(e.createdBy))
+    .set("createdAt", Json(e.createdAt))
+    .set("modifiedAt", Json(e.modifiedAt));
   }
 }

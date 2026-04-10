@@ -188,27 +188,26 @@ class EventSubscriptionController : PlatformController {
   }
 
   private Json serializeSub(ref EventSubscription sub) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(sub.id);
-    j["namespaceId"] = Json(sub.namespaceId);
-    j["environmentId"] = Json(sub.environmentId);
-    j["tenantId"] = Json(sub.tenantId);
-    j["name"] = Json(sub.name);
-    j["description"] = Json(sub.description);
-    j["status"] = Json(sub.status.to!string);
-    j["source"] = Json(sub.source);
-    j["eventTypes"] = serializeStrArray(sub.eventTypes);
-    j["typeEncoding"] = Json(sub.typeEncoding.to!string);
-    j["sinkUrl"] = Json(sub.sinkUrl);
-    j["sinkServiceName"] = Json(sub.sinkServiceName);
-    j["sinkServicePort"] = Json(cast(long) sub.sinkServicePort);
-    j["maxInFlightMessages"] = Json(cast(long) sub.maxInFlightMessages);
-    j["exactTypeMatching"] = Json(sub.exactTypeMatching);
-    j["filterAttributes"] = serializeStrMap(sub.filterAttributes);
-    j["labels"] = serializeStrMap(sub.labels);
-    j["createdBy"] = Json(sub.createdBy);
-    j["createdAt"] = Json(sub.createdAt);
-    j["modifiedAt"] = Json(sub.modifiedAt);
-    return j;
+    auto j = Json.emptyObject
+    .set("id", sub.id)
+    .set("namespaceId", sub.namespaceId)
+    .set("environmentId", sub.environmentId)
+    .set("tenantId", sub.tenantId)
+    .set("name", sub.name)
+    .set("description", sub.description)
+    .set("status", sub.status.to!string)
+    .set("source", sub.source)
+    .set("eventTypes", lizeStrArray(sub.eventTypes))
+    .set("typeEncoding", sub.typeEncoding.to!string)
+    .set("sinkUrl", sub.sinkUrl)
+    .set("sinkServiceName", sub.sinkServiceName)
+    .set("sinkServicePort", cast(long) sub.sinkServicePort)
+    .set("maxInFlightMessages", cast(long) sub.maxInFlightMessages)
+    .set("exactTypeMatching", sub.exactTypeMatching)
+    .set("filterAttributes", sub.filterAttributes.toJson)
+    .set("labels", sub.labels.toJson)  
+    .set("createdBy", sub.createdBy)
+    .set("createdAt", sub.createdAt)
+    .set("modifiedAt", sub.modifiedAt);
   }
 }

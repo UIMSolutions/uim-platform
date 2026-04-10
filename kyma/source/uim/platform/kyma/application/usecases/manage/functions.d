@@ -31,8 +31,7 @@ class ManageFunctionsUseCase : UIMUseCase {
     if (request.namespaceId.isEmpty)
       return CommandResult(false, "", "Namespace ID is required");
 
-    auto existing = functionRepository.findByName(request.namespaceId, request.name);
-    if (!existing.namespaceId.isEmpty)
+    if (functionRepository.existsByName(request.namespaceId, request.name))
       return CommandResult(false, "",
           "Function '" ~ request.name ~ "' already exists in this namespace");
 
@@ -70,7 +69,7 @@ class ManageFunctionsUseCase : UIMUseCase {
       return CommandResult(false, "", validationErr);
 
     functionRepository.save(serverlessFunction);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, serverlessFunction.functionId.toString, "");
   }
 
   CommandResult updateFunction(FunctionId functionId, UpdateFunctionRequest req) {
@@ -135,7 +134,7 @@ class ManageFunctionsUseCase : UIMUseCase {
 
     auto fn = functionRepository.findById(functionId);
     functionRepository.remove(functionId);
-    return CommandResult(true, functionId.toString(), "");
+    return CommandResult(true, fn.functionId.toString(), "");
   }
 
   private FunctionRuntime parseRuntime(string runtimeName) {

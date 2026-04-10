@@ -28,12 +28,8 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     if (req.serviceInstanceid.isEmpty)
       return CommandResult(false, "", "Service instance ID is required");
 
-    auto existing = repo.findByName(req.namespaceId, req.name);
-    if (existing.id.length > 0)
+    if (repo.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Binding '" ~ req.name ~ "' already exists");
-
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     ServiceBinding binding;
     binding.id = randomUUID();
@@ -53,14 +49,14 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     binding.modifiedAt = binding.createdAt;
 
     repo.save(binding);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, binding.id.toString, "");
   }
 
   CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
-    auto binding = repo.findById(id);
-    if (binding.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
 
+    auto binding = repo.findById(id);
     if (req.description.length > 0)
       binding.description = req.description;
     if (req.secretName.length > 0)
@@ -88,9 +84,9 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   }
 
   CommandResult deleteBinding(ServiceBindingId id) {
-    auto binding = repo.findById(id);
-    if (binding.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
+      
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

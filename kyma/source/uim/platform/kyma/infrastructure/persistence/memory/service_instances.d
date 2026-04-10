@@ -19,15 +19,23 @@ mixin(ShowModule!());
 class MemoryServiceInstanceRepository : ServiceInstanceRepository {
   private ServiceInstance[ServiceInstanceId] store;
 
+  bool existsById(ServiceInstanceId id) {
+    return (id in store) ? true : false;
+  }
+
   ServiceInstance findById(ServiceInstanceId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return ServiceInstance.init;
   }
 
+  bool existsByName(NamespaceId nsId, string name) {
+    return findByNamespace(nsId).any!(e => e.name == name);
+  }
+
   ServiceInstance findByName(NamespaceId nsId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.namespaceId == nsId && e.name == name)
+    foreach (ref e; findByNamespace(nsId))
+      if (e.name == name)
         return e;
     return ServiceInstance.init;
   }

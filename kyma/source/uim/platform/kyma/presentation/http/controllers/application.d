@@ -209,40 +209,38 @@ class ApplicationController : PlatformController {
   }
 
   private Json serializeApp(ref Application app) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(app.id);
-    j["environmentId"] = Json(app.environmentId);
-    j["tenantId"] = Json(app.tenantId);
-    j["name"] = Json(app.name);
-    j["description"] = Json(app.description);
-    j["status"] = Json(app.status.to!string);
-    j["registrationType"] = Json(app.registrationType.to!string);
-    j["connectorUrl"] = Json(app.connectorUrl);
-    j["boundNamespaces"] = serializeStrArray(app.boundNamespaces);
-    j["labels"] = serializeStrMap(app.labels);
-    j["createdBy"] = Json(app.createdBy);
-    j["createdAt"] = Json(app.createdAt);
-    j["modifiedAt"] = Json(app.modifiedAt);
+    auto j = Json.emptyObject
+    .set("id", app.id)
+    .set("environmentId", app.environmentId)
+    .set("tenantId", app.tenantId)
+    .set("name", app.name)
+    .set("description", app.description)
+    .set("status", app.status.to!string)
+    .set("registrationType", app.registrationType.to!string)
+    .set("connectorUrl", app.connectorUrl)
+    .set("boundNamespaces", serializeStrArray(app.boundNamespaces))
+    .set("labels", serializeStrMap(app.labels))
+    .set("createdBy", app.createdBy)
+    .set("createdAt", app.createdAt)
+    .set("modifiedAt", app.modifiedAt);
 
     auto apisArr = Json.emptyArray;
     foreach (ref a; app.apis) {
-      auto aj = Json.emptyObject;
-      aj["name"] = Json(a.name);
-      aj["description"] = Json(a.description);
-      aj["targetUrl"] = Json(a.targetUrl);
-      aj["specUrl"] = Json(a.specUrl);
-      aj["authType"] = Json(a.authType);
-      apisArr ~= aj;
+      apisArr ~= Json.emptyObject
+      .set("name", a.name)
+      .set("description", a.description)
+      .set("targetUrl", a.targetUrl)
+      .set("specUrl", a.specUrl)
+      .set("authType", a.authType);
     }
     j["apis"] = apisArr;
 
     auto eventsArr = Json.emptyArray;
     foreach (ref e; app.events) {
-      auto ej = Json.emptyObject;
-      ej["name"] = Json(e.name);
-      ej["description"] = Json(e.description);
-      ej["version"] = Json(e.version_);
-      eventsArr ~= ej;
+      eventsArr ~= Json.emptyObject
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("version", e.version_);
     }
     j["events"] = eventsArr;
 

@@ -30,12 +30,8 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     if (req.servicePlanName.length == 0)
       return CommandResult(false, "", "Service plan name is required");
 
-    auto existing = repo.findByName(req.namespaceId, req.name);
-    if (existing.id.length > 0)
+    if (repo.existsByName(req.namespaceId, req.name))
       return CommandResult(false, "", "Service instance '" ~ req.name ~ "' already exists");
-
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
 
     ServiceInstance inst;
     inst.id = randomUUID();
@@ -56,14 +52,14 @@ class ManageServiceInstancesUseCase : UIMUseCase {
     inst.modifiedAt = inst.createdAt;
 
     repo.save(inst);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, inst.id.toString, "");
   }
 
   CommandResult updateServiceInstance(ServiceInstanceId id, UpdateServiceInstanceRequest req) {
-    auto inst = repo.findById(id);
-    if (inst.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service instance not found");
 
+    auto inst = repo.findById(id);
     if (req.description.length > 0)
       inst.description = req.description;
     if (req.servicePlanName.length > 0)
@@ -94,9 +90,9 @@ class ManageServiceInstancesUseCase : UIMUseCase {
   }
 
   CommandResult deleteServiceInstance(ServiceInstanceId id) {
-    auto inst = repo.findById(id);
-    if (inst.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service instance not found");
+      
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

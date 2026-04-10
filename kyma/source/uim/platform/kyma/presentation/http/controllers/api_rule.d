@@ -180,37 +180,37 @@ class ApiRuleController : PlatformController {
   }
 
   private Json serializeRule(ref ApiRule rule) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(rule.id);
-    j["namespaceId"] = Json(rule.namespaceId);
-    j["environmentId"] = Json(rule.environmentId);
-    j["tenantId"] = Json(rule.tenantId);
-    j["name"] = Json(rule.name);
-    j["description"] = Json(rule.description);
-    j["status"] = Json(rule.status.to!string);
-    j["serviceName"] = Json(rule.serviceName);
-    j["servicePort"] = Json(cast(long) rule.servicePort);
-    j["gateway"] = Json(rule.gateway);
-    j["host"] = Json(rule.host);
-    j["tlsEnabled"] = Json(rule.tlsEnabled);
-    j["corsEnabled"] = Json(rule.corsEnabled);
-    j["labels"] = serializeStrMap(rule.labels);
-    j["createdBy"] = Json(rule.createdBy);
-    j["createdAt"] = Json(rule.createdAt);
-    j["modifiedAt"] = Json(rule.modifiedAt);
+    auto json = Json.emptyObject
+    .set("id", rule.id)
+    .set("namespaceId", rule.namespaceId)
+    .set("environmentId", rule.environmentId)
+    .set("tenantId", rule.tenantId)
+    .set("name", rule.name)
+    .set("description", rule.description)
+    .set("status", rule.status.to!string)
+    .set("serviceName", rule.serviceName)
+    .set("servicePort", cast(long) rule.servicePort)
+    .set("gateway", rule.gateway)
+    .set("host", rule.host)
+    .set("tlsEnabled", rule.tlsEnabled)
+    .set("corsEnabled", rule.corsEnabled)
+    .set("labels", serializeStrMap(rule.labels))
+    .set("createdBy", rule.createdBy)
+    .set("createdAt", rule.createdAt)
+    .set("modifiedAt", rule.modifiedAt);
 
     auto rulesArr = Json.emptyArray;
     foreach (ref entry; rule.rules) {
-      auto ej = Json.emptyObject;
-      ej["path"] = Json(entry.path);
-      ej["accessStrategy"] = Json(entry.accessStrategy.to!string);
-      ej["requiredScopes"] = serializeStrArray(entry.requiredScopes);
-      ej["audiences"] = serializeStrArray(entry.audiences);
-
       auto mArr = Json.emptyArray;
       foreach (ref m; entry.methods)
         mArr ~= Json(m.to!string);
-      ej["methods"] = mArr;
+
+      auto ej = Json.emptyObject
+      .set("path", entry.path)
+      .set("accessStrategy", entry.accessStrategy.to!string)
+      .set("requiredScopes", entry.requiredScopes.toJson)
+      .set("audiences", entry.audiences.toJson)
+      .set("methods", mArr);
 
       rulesArr ~= ej;
     }

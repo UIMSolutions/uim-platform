@@ -30,14 +30,11 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     KymaEnvironment env;
     env.id = randomUUID();
     env.tenantId = req.tenantId;
     env.subaccountId = req.subaccountId;
-    env.clusterId = "cluster-" ~ id[0 .. 8];
+    env.clusterId = "cluster-" ~ id.value[0 .. 8];
     env.name = req.name;
     env.description = req.description;
     env.plan = parsePlan(req.plan);
