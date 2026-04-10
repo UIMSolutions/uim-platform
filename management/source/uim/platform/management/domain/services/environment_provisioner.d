@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.management.domain.services.environment_provisioner;
 
-import uim.platform.management.domain.entities.environment_instance;
-import uim.platform.management.domain.entities.subaccount;
-import uim.platform.management.domain.types;
+// import uim.platform.management.domain.entities.environment_instance;
+// import uim.platform.management.domain.entities.subaccount;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service: validates environment provisioning constraints.
 class EnvironmentProvisioner {
   /// Validate that an environment can be provisioned in the given subaccount.
   ProvisionValidation validateProvisioning(EnvironmentType envType,
-      string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances) {
+    string planName, Subaccount subaccount, EnvironmentInstance[] existingInstances) {
     ProvisionValidation v;
     v.valid = true;
 
@@ -28,8 +32,7 @@ class EnvironmentProvisioner {
     if (envType == EnvironmentType.cloudFoundry) {
       foreach (ref inst; existingInstances) {
         if (inst.environmentType == EnvironmentType.cloudFoundry
-            && inst.status != EnvironmentStatus.deleting && inst.status != EnvironmentStatus.error)
-        {
+          && inst.status != EnvironmentStatus.deleting && inst.status != EnvironmentStatus.error) {
           v.valid = false;
           v.reason = "Only one Cloud Foundry environment allowed per subaccount";
           return v;

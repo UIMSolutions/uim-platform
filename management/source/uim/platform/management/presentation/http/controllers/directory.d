@@ -55,11 +55,9 @@ class DirectoryController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -80,10 +78,9 @@ class DirectoryController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -96,8 +93,7 @@ class DirectoryController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDirectory(d), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -116,8 +112,7 @@ class DirectoryController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -129,30 +124,28 @@ class DirectoryController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
 private Json serializeDirectory(ref Directory d) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(d.id);
-  j["globalAccountId"] = Json(d.globalAccountId);
-  j["parentDirectoryId"] = Json(d.parentDirectoryId);
-  j["displayName"] = Json(d.displayName);
-  j["description"] = Json(d.description);
-  j["status"] = Json(enumStr(d.status));
-  j["manageEntitlements"] = Json(d.manageEntitlements);
-  j["manageAuthorizations"] = Json(d.manageAuthorizations);
-  j["createdBy"] = Json(d.createdBy);
-  j["createdAt"] = Json(d.createdAt);
-  j["modifiedAt"] = Json(d.modifiedAt);
-  j["labels"] = serializeStrMap(d.labels);
-  j["customProperties"] = serializeStrMap(d.customProperties);
-  j["subaccounts"] = serializeStrArray(d.subaccounts);
-  j["subdirectories"] = serializeStrArray(d.subdirectories);
-  return j;
+  auto j = Json.emptyObject
+    .set("id", d.id)
+    .set("globalAccountId", d.globalAccountId)
+    .set("parentDirectoryId", d.parentDirectoryId)
+    .set("displayName", d.displayName)
+    .set("description", d.description)
+    .set("status", enumStr(d.status))
+    .set("manageEntitlements", d.manageEntitlements)
+    .set("manageAuthorizations", d.manageAuthorizations)
+    .set("createdBy", d.createdBy)
+    .set("createdAt", d.createdAt)
+    .set("modifiedAt", d.modifiedAt)
+    .set("labels", serializeStrMap(d.labels))
+    .set("customProperties", serializeStrMap(d.customProperties))
+    .set("subaccounts", serializeStrArray(d.subaccounts))
+    .set("subdirectories", serializeStrArray(d.subdirectories));
 }
 
 private string enumStr(E)(E val) {

@@ -12,6 +12,7 @@ mixin(ShowModule!());
 @safe:
 
 /// Unique identifier type aliases for type safety.
+  ;
 struct GlobalAccountId {
   string value;
 

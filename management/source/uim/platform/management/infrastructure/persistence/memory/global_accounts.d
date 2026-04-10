@@ -37,11 +37,11 @@ class MemoryGlobalAccountRepository : GlobalAccountRepository {
   }
 
   void save(GlobalAccount account) {
-    store[account.id] = account;
+    store[account.globalAccountId] = account;
   }
 
   void update(GlobalAccount account) {
-    store[account.id] = account;
+    store[account.globalAccountId] = account;
   }
 
   void remove(GlobalAccountId id) {

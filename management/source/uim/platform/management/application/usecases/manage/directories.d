@@ -25,47 +25,51 @@ class ManageDirectoriesUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDirectoryRequest req) {
-    if (req.globalAccountid.isEmpty)
+    if (req.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
 
-    Directory d;
-    d.id = randomUUID();
-    d.globalAccountId = req.globalAccountId;
-    d.parentDirectoryId = req.parentDirectoryId;
-    d.displayName = req.displayName;
-    d.description = req.description;
-    d.features = parseFeatures(req.features);
-    d.manageEntitlements = req.manageEntitlements;
-    d.manageAuthorizations = req.manageAuthorizations;
-    d.createdBy = req.createdBy;
-    d.createdAt = clockSeconds();
-    d.modifiedAt = d.createdAt;
-    d.labels = req.labels;
-    d.customProperties = req.customProperties;
+    Directory directory;
+    directory.id = randomUUID();
+    directory.globalAccountId = req.globalAccountId;
+    directory.parentDirectoryId = req.parentDirectoryId;
+    directory.displayName = req.displayName;
+    directory.description = req.description;
+    directory.features = parseFeatures(req.features);
+    directory.manageEntitlements = req.manageEntitlements;
+    directory.manageAuthorizations = req.manageAuthorizations;
+    directory.createdBy = req.createdBy;
+    directory.createdAt = clockSeconds();
+    directory.modifiedAt = directory.createdAt;
+    directory.labels = req.labels;
+    directory.customProperties = req.customProperties;
 
-    repo.save(d);
-    return CommandResult(true, id.toString, "");
+    repo.save(directory);
+    return CommandResult(true, directory.id.toString, "");
   }
 
   CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
-    auto d = repo.findById(id);
-    if (d.id.isEmpty)
+    auto directory = repo.findById(id);
+    if (directory.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
 
     if (req.displayName.length > 0)
-      d.displayName = req.displayName;
+      directory.displayName = req.displayName;
     if (req.description.length > 0)
-      d.description = req.description;
+      directory.description = req.description;
     if (req.labels.length > 0)
-      d.labels = req.labels;
+      directory.labels = req.labels;
     if (req.customProperties.length > 0)
-      d.customProperties = req.customProperties;
-    d.modifiedAt = clockSeconds();
+      directory.customProperties = req.customProperties;
+    directory.modifiedAt = clockSeconds();
 
-    repo.update(d);
-    return CommandResult(true, id.toString, "");
+    repo.update(directory);
+    return CommandResult(true, directory.id.toString, "");
+  }
+
+  Directory getById(string id) {
+    return repo.findById(DirectoryId(id));
   }
 
   Directory getById(DirectoryId id) {
@@ -76,18 +80,22 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return repo.findByGlobalAccount(gaId);
   }
 
+  Directory[] listByParent(string parentId) {
+    return repo.findByParent(DirectoryId(parentId));
+  }
+
   Directory[] listByParent(DirectoryId parentId) {
     return repo.findByParent(parentId);
   }
 
   CommandResult remove(DirectoryId id) {
-    auto d = repo.findById(id);
-    if (d.id.isEmpty)
+    auto directory = repo.findById(id);
+    if (directory.id.isEmpty)
       return CommandResult(false, "", "Directory not found");
-    if (d.subaccounts.length > 0 || d.subdirectories.length > 0)
+    if (directory.subaccounts.length > 0 || directory.subdirectories.length > 0)
       return CommandResult(false, "", "Cannot delete directory with children");
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, directory.id.toString, "");
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {

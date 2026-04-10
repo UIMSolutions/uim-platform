@@ -26,81 +26,81 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  CommandResult subscribe(CreateSubscriptionRequest req) {
-    if (req.subaccountid.isEmpty)
+  CommandResult subscribe(CreateSubscriptionRequest request) {
+    if (request.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
-    if (req.appName.length == 0)
+    if (request.appName.length == 0)
       return CommandResult(false, "", "Application name is required");
 
     // Check for existing subscription to same app
-    auto existing = repo.findByApp(req.subaccountId, req.appName);
+    auto existing = repo.findByApp(request.subaccountId, request.appName);
     foreach (ref e; existing) {
       if (e.status == SubscriptionStatus.subscribed || e.status == SubscriptionStatus.subscribing)
-        return CommandResult(false, "", "Already subscribed to application '" ~ req.appName ~ "'");
+        return CommandResult(false, "", "Already subscribed to application '" ~ request.appName ~ "'");
     }
 
-    Subscription sub;
-    sub.id = randomUUID();
-    sub.subaccountId = req.subaccountId;
-    sub.globalAccountId = req.globalAccountId;
-    sub.appName = req.appName;
-    sub.planName = req.planName;
-    sub.status = SubscriptionStatus.subscribing;
-    sub.subscribedAt = clockSeconds();
-    sub.modifiedAt = sub.subscribedAt;
-    sub.subscribedBy = req.subscribedBy;
-    sub.parameters = req.parameters;
-    sub.labels = req.labels;
+    Subscription subscription;
+    subscription.id = randomUUID();
+    subscription.subaccountId = request.subaccountId;
+    subscription.globalAccountId = request.globalAccountId;
+    subscription.appName = request.appName;
+    subscription.planName = request.planName;
+    subscription.status = SubscriptionStatus.subscribing;
+    subscription.subscribedAt = clockSeconds();
+    subscription.modifiedAt = subscription.subscribedAt;
+    subscription.subscribedBy = request.subscribedBy;
+    subscription.parameters = request.parameters;
+    subscription.labels = request.labels;
 
-    repo.save(sub);
+    repo.save(subscription);
 
     // Complete subscription (simulated)
-    sub.status = SubscriptionStatus.subscribed;
-    sub.isSubscriptionDone = true;
-    sub.appUrl = "/apps/" ~ req.appName ~ "/" ~ id;
-    sub.tenantId = "tenant-" ~ id[0 .. 8];
-    repo.update(sub);
+    subscription.status = SubscriptionStatus.subscribed;
+    subscription.isSubscriptionDone = true;
+    subscription.appUrl = "/apps/" ~ request.appName ~ "/" ~ subscription.id.toString;
+    subscription.tenantId = "tenant-" ~ subscription.id.toString[0 .. 8];
+    repo.update(subscription);
 
-    emitEvent(req.globalAccountId, req.subaccountId, PlatformEventCategory.subscriptionLifecycle,
-        "subscription.created", "Subscribed to " ~ req.appName, req.subscribedBy);
+    emitEvent(request.globalAccountId.toString, request.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+        "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, subscription.id.toString, "");
   }
 
   CommandResult unsubscribe(SubscriptionId id) {
-    auto sub = repo.findById(id);
-    if (sub.id.isEmpty)
+    auto subscription = repo.findById(id);
+    if (subscription.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
-    if (sub.status != SubscriptionStatus.subscribed)
+    if (subscription.status != SubscriptionStatus.subscribed)
       return CommandResult(false, "", "Subscription must be in subscribed status");
 
-    sub.status = SubscriptionStatus.unsubscribing;
-    sub.modifiedAt = clockSeconds();
-    repo.update(sub);
+    subscription.status = SubscriptionStatus.unsubscribing;
+    subscription.modifiedAt = clockSeconds();
+    repo.update(subscription);
 
     // Complete unsubscription
-    sub.status = SubscriptionStatus.unsubscribed;
-    repo.update(sub);
+    subscription.status = SubscriptionStatus.unsubscribed;
+    repo.update(subscription);
 
-    emitEvent(sub.globalAccountId, sub.subaccountId, PlatformEventCategory.subscriptionLifecycle,
-        "subscription.deleted", "Unsubscribed from " ~ sub.appName, "system");
+    emitEvent(subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+        "subscription.deleted", "Unsubscribed from " ~ subscription.appName, "system");
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, subscription.id.toString, "");
   }
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
-    auto sub = repo.findById(id);
-    if (sub.id.isEmpty)
+    auto subscription = repo.findById(id);
+    if (subscription.id.isEmpty)
       return CommandResult(false, "", "Subscription not found");
 
     if (req.planName.length > 0)
-      sub.planName = req.planName;
+      subscription.planName = req.planName;
     if (req.parameters.length > 0)
-      sub.parameters = req.parameters;
-    sub.modifiedAt = clockSeconds();
+      subscription.parameters = req.parameters;
+    subscription.modifiedAt = clockSeconds();
 
-    repo.update(sub);
-    return CommandResult(true, id.toString, "");
+    repo.update(subscription);
+    return CommandResult(true, subscription.id.toString, "");
   }
 
   Subscription getById(SubscriptionId id) {
@@ -115,17 +115,17 @@ class ManageSubscriptionsUseCase : UIMUseCase {
       string eventType, string desc, string initiatedBy) {
     // import std.uuid : randomUUID;
 
-    PlatformEvent ev;
-    ev.id = randomUUID();
-    ev.globalAccountId = gaId;
-    ev.subaccountId = subId;
-    ev.category = cat;
-    ev.severity = PlatformEventSeverity.info;
-    ev.eventType = eventType;
-    ev.description = desc;
-    ev.initiatedBy = initiatedBy;
-    ev.sourceService = "cloud-management";
-    ev.timestamp = clockSeconds();
-    eventRepo.save(ev);
+    PlatformEvent event;
+    event.id = randomUUID();
+    event.globalAccountId = gaId;
+    event.subaccountId = subId;
+    event.category = cat;
+    event.severity = PlatformEventSeverity.info;
+    event.eventType = eventType;
+    event.description = desc;
+    event.initiatedBy = initiatedBy;
+    event.sourceService = "cloud-management";
+    event.timestamp = clockSeconds();
+    eventRepo.save(event);
   }
 }

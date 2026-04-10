@@ -30,29 +30,29 @@ class ManageLabelsUseCase : UIMUseCase {
     if (req.values.length == 0)
       return CommandResult(false, "", "At least one label value is required");
 
-    Label lbl;
-    lbl.id = randomUUID();
-    lbl.resourceType = parseResourceType(req.resourceType);
-    lbl.resourceId = req.resourceId;
-    lbl.key = req.key;
-    lbl.values = req.values;
-    lbl.createdBy = req.createdBy;
-    lbl.createdAt = clockSeconds();
-    lbl.modifiedAt = lbl.createdAt;
+    Label label;
+    label.id = randomUUID();
+    label.resourceType = parseResourceType(req.resourceType);
+    label.resourceId = req.resourceId;
+    label.key = req.key;
+    label.values = req.values;
+    label.createdBy = req.createdBy;
+    label.createdAt = clockSeconds();
+    label.modifiedAt = label.createdAt;
 
-    repo.save(lbl);
-    return CommandResult(true, id.toString, "");
+    repo.save(label);
+    return CommandResult(true, label.id.toString, "");
   }
 
   CommandResult update(LabelId id, UpdateLabelRequest req) {
-    auto lbl = repo.findById(id);
-    if (lbl.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Label not found");
 
-    lbl.values = req.values;
-    lbl.modifiedAt = clockSeconds();
-    repo.update(lbl);
-    return CommandResult(true, id.toString, "");
+    auto label = repo.findById(id);
+    label.values = req.values;
+    label.modifiedAt = clockSeconds();
+    repo.update(label);
+    return CommandResult(true, label.id.toString, "");
   }
 
   Label getById(LabelId id) {
@@ -68,9 +68,9 @@ class ManageLabelsUseCase : UIMUseCase {
   }
 
   CommandResult remove(LabelId id) {
-    auto lbl = repo.findById(id);
-    if (lbl.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Label not found");
+
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

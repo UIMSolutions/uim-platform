@@ -33,7 +33,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     GlobalAccount ga;
-    ga.id = randomUUID();
+    ga.globalAccountId = randomUUID();
     ga.displayName = req.displayName;
     ga.description = req.description;
     ga.contractNumber = req.contractNumber;
@@ -50,17 +50,17 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     ga.customProperties = req.customProperties;
 
     repo.save(ga);
-    emitEvent(id, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(ga.globalAccountId, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, ga.globalAccountId.toString, "");
   }
 
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
-    auto ga = repo.findById(id);
-    if (ga.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
 
+    auto ga = repo.findById(id);
     if (req.displayName.length > 0)
       ga.displayName = req.displayName;
     if (req.description.length > 0)
@@ -77,10 +77,11 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult suspend(GlobalAccountId id) {
-    auto ga = repo.findById(id);
-    if (ga.id.isEmpty)
+  CommandResult suspend(GlobalAccountId accountId) {
+    if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
+
+    auto ga = repo.findById(accountId);
     if (ga.status != GlobalAccountStatus.active)
       return CommandResult(false, "", "Only active accounts can be suspended");
 
@@ -88,26 +89,27 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     ga.modifiedAt = clockSeconds();
     repo.update(ga);
 
-    emitEvent(id, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(accountId, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.suspended", "Global account suspended", "system");
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, accountId.toString, "");
   }
-
-  CommandResult reactivate(GlobalAccountId id) {
-    auto ga = repo.findById(id);
-    if (ga.id.isEmpty)
+  
+  CommandResult reactivate(GlobalAccountId accountId) {
+    if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
+
+    auto ga = repo.findById(accountId);
     if (ga.status != GlobalAccountStatus.suspended)
       return CommandResult(false, "", "Only suspended accounts can be reactivated");
 
     ga.status = GlobalAccountStatus.active;
     ga.modifiedAt = clockSeconds();
     repo.update(ga);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, accountId.toString, "");
   }
 
-  GlobalAccount getById(GlobalAccountId id) {
-    return repo.findById(id);
+  GlobalAccount getById(GlobalAccountId accountId) {
+    return repo.findById(accountId);
   }
 
   GlobalAccount[] listAll() {
@@ -118,30 +120,30 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return repo.findByStatus(parseGlobalAccountStatus(status));
   }
 
-  CommandResult remove(GlobalAccountId id) {
-    auto ga = repo.findById(id);
-    if (ga.id.isEmpty)
+  CommandResult remove(GlobalAccountId accountId) {
+    if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
-    repo.remove(id);
-    return CommandResult(true, id.toString, "");
+
+    repo.remove(accountId);
+    return CommandResult(true, accountId.toString, "");
   }
 
   private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
       string eventType, string desc, string initiatedBy) {
     // import std.uuid : randomUUID;
 
-    PlatformEvent ev;
-    ev.id = randomUUID();
-    ev.globalAccountId = gaId;
-    ev.subaccountId = subId;
-    ev.category = cat;
-    ev.severity = PlatformEventSeverity.info;
-    ev.eventType = eventType;
-    ev.description = desc;
-    ev.initiatedBy = initiatedBy;
-    ev.sourceService = "cloud-management";
-    ev.timestamp = clockSeconds();
-    eventRepo.save(ev);
+    PlatformEvent event;
+    event.id = randomUUID();
+    event.globalAccountId = gaId;
+    event.subaccountId = subId;
+    event.category = cat;
+    event.severity = PlatformEventSeverity.info;
+    event.eventType = eventType;
+    event.description = desc;
+    event.initiatedBy = initiatedBy;
+    event.sourceService = "cloud-management";
+    event.timestamp = clockSeconds();
+    eventRepo.save(event);
   }
 
 

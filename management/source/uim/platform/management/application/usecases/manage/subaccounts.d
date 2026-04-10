@@ -18,16 +18,16 @@ mixin(ShowModule!());
 @safe:
 /// Use case: manage subaccount lifecycle within global accounts.
 class ManageSubaccountsUseCase : UIMUseCase {
-  private SubaccountRepository repo;
+  private SubaccountRepository repository;
   private PlatformEventRepository eventRepo;
 
-  this(SubaccountRepository repo, PlatformEventRepository eventRepo) {
-    this.repo = repo;
+  this(SubaccountRepository repository, PlatformEventRepository eventRepo) {
+    this.repository = repository;
     this.eventRepo = eventRepo;
   }
 
   CommandResult create(CreateSubaccountRequest req) {
-    if (req.globalAccountid.isEmpty)
+    if (req.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
     if (req.displayName.length == 0)
       return CommandResult(false, "", "Display name is required");
@@ -37,83 +37,83 @@ class ManageSubaccountsUseCase : UIMUseCase {
       return CommandResult(false, "", "Region is required");
 
     // Check subdomain uniqueness
-    auto existing = repo.findBySubdomain(req.subdomain);
-    if (existing.id.length > 0)
+    if (repository.existsBySubdomain(req.subdomain))
       return CommandResult(false, "", "Subdomain '" ~ req.subdomain ~ "' is already taken");
 
-    Subaccount sub;
-    sub.id = randomUUID();
-    sub.globalAccountId = req.globalAccountId;
-    sub.parentDirectoryId = req.parentDirectoryId;
-    sub.displayName = req.displayName;
-    sub.description = req.description;
-    sub.subdomain = req.subdomain;
-    sub.region = req.region;
-    sub.usage = parseUsage(req.usage);
-    sub.betaEnabled = req.betaEnabled;
-    sub.usedForProduction = req.usedForProduction;
-    sub.status = SubaccountStatus.creating;
-    sub.createdAt = clockSeconds();
-    sub.modifiedAt = sub.createdAt;
-    sub.createdBy = req.createdBy;
-    sub.labels = req.labels;
-    sub.customProperties = req.customProperties;
+    Subaccount subaccount;
+    subaccount.id = randomUUID();
+    subaccount.globalAccountId = req.globalAccountId;
+    subaccount.parentDirectoryId = req.parentDirectoryId;
+    subaccount.displayName = req.displayName;
+    subaccount.description = req.description;
+    subaccount.subdomain = req.subdomain;
+    subaccount.region = req.region;
+    subaccount.usage = parseUsage(req.usage);
+    subaccount.betaEnabled = req.betaEnabled;
+    subaccount.usedForProduction = req.usedForProduction;
+    subaccount.status = SubaccountStatus.creating;
+    subaccount.createdAt = clockSeconds();
+    subaccount.modifiedAt = subaccount.createdAt;
+    subaccount.createdBy = req.createdBy;
+    subaccount.labels = req.labels;
+    subaccount.customProperties = req.customProperties;
 
-    repo.save(sub);
+    repository.save(subaccount);
 
     // Transition to active
-    sub.status = SubaccountStatus.active;
-    repo.update(sub);
+    subaccount.status = SubaccountStatus.active;
+    repository.update(subaccount);
 
-    emitEvent(req.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(req.globalAccountId, subaccount.id, PlatformEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, subaccount.id.toString, "");
   }
 
   CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
-    auto sub = repo.findById(id);
-    if (sub.id.isEmpty)
+    auto subaccount = repository.findById(id);
+    if (subaccount.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
 
     if (req.displayName.length > 0)
-      sub.displayName = req.displayName;
+      subaccount.displayName = req.displayName;
     if (req.description.length > 0)
-      sub.description = req.description;
+      subaccount.description = req.description;
     if (req.usage.length > 0)
-      sub.usage = parseUsage(req.usage);
-    sub.betaEnabled = req.betaEnabled;
-    sub.usedForProduction = req.usedForProduction;
+      subaccount.usage = parseUsage(req.usage);
+    subaccount.betaEnabled = req.betaEnabled;
+    subaccount.usedForProduction = req.usedForProduction;
     if (req.labels.length > 0)
-      sub.labels = req.labels;
+      subaccount.labels = req.labels;
     if (req.customProperties.length > 0)
-      sub.customProperties = req.customProperties;
-    sub.modifiedAt = clockSeconds();
+      subaccount.customProperties = req.customProperties;
+    subaccount.modifiedAt = clockSeconds();
 
-    repo.update(sub);
+    repository.update(sub);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
-    auto sub = repo.findById(id);
-    if (sub.id.isEmpty)
+    if (!repository.exitsById(id))
       return CommandResult(false, "", "Subaccount not found");
+
+    auto sub = repository.findById(id);
     if (sub.status != SubaccountStatus.active)
       return CommandResult(false, "", "Subaccount must be active to move");
 
     sub.status = SubaccountStatus.moveInProgress;
     sub.parentDirectoryId = req.targetDirectoryId;
     sub.modifiedAt = clockSeconds();
-    repo.update(sub);
+    repository.update(sub);
 
     // Complete move
     sub.status = SubaccountStatus.active;
-    repo.update(sub);
+    repository.update(sub);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult suspend(SubaccountId id) {
-    auto sub = repo.findById(id);
+    auto sub = repository.findById(id);
     if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     if (sub.status != SubaccountStatus.active)
@@ -121,12 +121,12 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
     sub.status = SubaccountStatus.suspended;
     sub.modifiedAt = clockSeconds();
-    repo.update(sub);
+    repository.update(sub);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult reactivate(SubaccountId id) {
-    auto sub = repo.findById(id);
+    auto sub = repository.findById(id);
     if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
     if (sub.status != SubaccountStatus.suspended)
@@ -134,31 +134,31 @@ class ManageSubaccountsUseCase : UIMUseCase {
 
     sub.status = SubaccountStatus.active;
     sub.modifiedAt = clockSeconds();
-    repo.update(sub);
+    repository.update(sub);
     return CommandResult(true, id.toString, "");
   }
 
   Subaccount getById(SubaccountId id) {
-    return repo.findById(id);
+    return repository.findById(id);
   }
 
   Subaccount[] listByGlobalAccount(GlobalAccountId gaId) {
-    return repo.findByGlobalAccount(gaId);
+    return repository.findByGlobalAccount(gaId);
   }
 
   Subaccount[] listByDirectory(DirectoryId dirId) {
-    return repo.findByDirectory(dirId);
+    return repository.findByDirectory(dirId);
   }
 
   Subaccount[] listByRegion(GlobalAccountId gaId, string region) {
-    return repo.findByRegion(gaId, region);
+    return repository.findByRegion(gaId, region);
   }
 
   CommandResult remove(SubaccountId id) {
-    auto sub = repo.findById(id);
+    auto sub = repository.findById(id);
     if (sub.id.isEmpty)
       return CommandResult(false, "", "Subaccount not found");
-    repo.remove(id);
+    repository.remove(id);
     emitEvent(sub.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,
         "subaccount.deleted", "Subaccount deleted: " ~ sub.displayName, "system");
     return CommandResult(true, id.toString, "");

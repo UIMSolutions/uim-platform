@@ -25,52 +25,52 @@ class ManageEntitlementsUseCase : UIMUseCase {
     this.evaluator = evaluator;
   }
 
-  CommandResult assign(AssignEntitlementRequest req) {
-    if (req.globalAccountid.isEmpty)
+  CommandResult assign(AssignEntitlementRequest request) {
+    if (request.globalAccountId.isEmpty)
       return CommandResult(false, "", "Global account ID is required");
-    if (req.servicePlanid.isEmpty)
+    if (request.servicePlanId.isEmpty)
       return CommandResult(false, "", "Service plan ID is required");
-    if (req.serviceName.length == 0)
+    if (request.serviceName.length == 0)
       return CommandResult(false, "", "Service name is required");
 
     // Check current quota usage for this plan in the global account
-    auto existing = repo.findByServicePlan(req.globalAccountId, req.servicePlanId);
+    auto existing = repo.findByServicePlan(request.globalAccountId, request.servicePlanId);
     int currentlyAssigned = 0;
     foreach (ref e; existing)
       currentlyAssigned += e.quotaAssigned;
 
     Entitlement ent;
     ent.id = randomUUID();
-    ent.globalAccountId = req.globalAccountId;
-    ent.directoryId = req.directoryId;
-    ent.subaccountId = req.subaccountId;
-    ent.servicePlanId = req.servicePlanId;
-    ent.serviceName = req.serviceName;
-    ent.planName = req.planName;
-    ent.quotaAssigned = req.quotaAssigned;
-    ent.quotaRemaining = req.quotaAssigned;
-    ent.unlimited = req.unlimited;
-    ent.autoAssign = req.autoAssign;
+    ent.globalAccountId = request.globalAccountId;
+    ent.directoryId = request.directoryId;
+    ent.subaccountId = request.subaccountId;
+    ent.servicePlanId = request.servicePlanId;
+    ent.serviceName = request.serviceName;
+    ent.planName = request.planName;
+    ent.quotaAssigned = request.quotaAssigned;
+    ent.quotaRemaining = request.quotaAssigned;
+    ent.unlimited = request.unlimited;
+    ent.autoAssign = request.autoAssign;
     ent.status = EntitlementStatus.active;
     ent.assignedAt = clockSeconds();
     ent.modifiedAt = ent.assignedAt;
-    ent.assignedBy = req.assignedBy;
+    ent.assignedBy = request.assignedBy;
 
     repo.save(ent);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, ent.id.toString, "");
   }
 
-  CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
+  CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest request) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
 
     auto ent = repo.findById(id);
-    ent.quotaAssigned = req.quotaAssigned;
-    ent.unlimited = req.unlimited;
-    ent.quotaRemaining = evaluator.calculateRemaining(req.quotaAssigned, ent.quotaUsed);
+    ent.quotaAssigned = request.quotaAssigned;
+    ent.unlimited = request.unlimited;
+    ent.quotaRemaining = evaluator.calculateRemaining(request.quotaAssigned, ent.quotaUsed);
     ent.modifiedAt = clockSeconds();
     repo.update(ent);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, ent.id.toString, "");
   }
 
   CommandResult revoke(EntitlementId id) {
@@ -81,7 +81,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     ent.status = EntitlementStatus.revoked;
     ent.modifiedAt = clockSeconds();
     repo.update(ent);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, ent.id.toString, "");
   }
 
   Entitlement getById(EntitlementId id) {

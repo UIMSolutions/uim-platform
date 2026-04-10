@@ -36,31 +36,31 @@ class ManageCertificatesUseCase : UIMUseCase {
     if (!existing.id.isEmpty)
       return CommandResult(false, "", "Certificate '" ~ req.name ~ "' already exists");
 
-    Certificate c;
-    c.id = randomUUID();
-    c.tenantId = req.tenantId;
-    c.subaccountId = req.subaccountId;
-    c.name = req.name;
-    c.description = req.description;
-    c.certificateType = parseCertType(req.certificateType);
-    c.format_ = parseCertFormat(req.format_);
-    c.content = req.content;
-    c.password = req.password;
-    c.subject = req.subject;
-    c.issuer = req.issuer;
-    c.serialNumber = req.serialNumber;
-    c.validFrom = req.validFrom;
-    c.validTo = req.validTo;
-    c.uploadedBy = req.uploadedBy;
-    c.uploadedAt = clockSeconds();
-    c.modifiedAt = c.uploadedAt;
+    Certificate certificate;
+    certificate.id = randomUUID();
+    certificate.tenantId = req.tenantId;
+    certificate.subaccountId = req.subaccountId;
+    certificate.name = req.name;
+    certificate.description = req.description;
+    certificate.certificateType = parseCertType(req.certificateType);
+    certificate.format_ = parseCertFormat(req.format_);
+    certificate.content = req.content;
+    certificate.password = req.password;
+    certificate.subject = req.subject;
+    certificate.issuer = req.issuer;
+    certificate.serialNumber = req.serialNumber;
+    certificate.validFrom = req.validFrom;
+    certificate.validTo = req.validTo;
+    certificate.uploadedBy = req.uploadedBy;
+    certificate.uploadedAt = clockSeconds();
+    certificate.modifiedAt = certificate.uploadedAt;
 
     // Validate and set status
-    auto validation = CertificateValidator.validate(c);
-    c.status = validation.status;
+    auto validation = CertificateValidator.validate(certificate);
+    certificate.status = validation.status;
 
-    repo.save(c);
-    return CommandResult(true, id.toString, "");
+    repo.save(certificate);
+    return CommandResult(true, certificate.id.toString, "");
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
@@ -84,9 +84,13 @@ class ManageCertificatesUseCase : UIMUseCase {
     c.status = validation.status;
 
     repo.update(c);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, c.id.toString, "");
   }
 
+  Certificate getCertificate(string id) {
+    return repo.getCertificate(CertificateId(id));
+  }
+  
   Certificate getCertificate(CertificateId id) {
     return repo.findById(id);
   }
@@ -104,9 +108,10 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   ValidationResult validateCertificate(CertificateId id) {
-    auto c = repo.findById(id);
-    if (c.id.isEmpty)
+    if (!repo.existsById(id))
       return ValidationResult(false, CertificateStatus.invalid_, "Certificate not found", 0);
+
+    auto c = repo.findById(id);
     return CertificateValidator.validate(c);
   }
 
@@ -115,7 +120,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     if (c.id.isEmpty)
       return CommandResult(false, "", "Certificate not found");
     repo.remove(id);
-    return CommandResult(true, id.value, "");
+    return CommandResult(true, c.id.toString, "");
   }
 
   private static long clockSeconds() {

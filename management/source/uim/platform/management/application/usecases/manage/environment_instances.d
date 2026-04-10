@@ -31,7 +31,7 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateEnvironmentInstanceRequest req) {
-    if (req.subaccountid.isEmpty)
+    if (req.subaccountId.isEmpty)
       return CommandResult(false, "", "Subaccount ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Environment name is required");
