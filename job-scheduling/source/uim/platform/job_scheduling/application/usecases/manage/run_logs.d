@@ -27,16 +27,17 @@ class ManageRunLogsUseCase : UIMUseCase {
         return repo.findById(id);
     }
 
-    RunLog[] listBySchedule(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
-        return repo.findBySchedule(scheduleId, jobtenantId, id);
+    RunLog[] listBySchedule(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
+        return repo.findBySchedule(scheduleId, jobId, tenantId);
     }
 
-    RunLog[] listByJob(JobId jobtenantId, id tenantId) {
-        return repo.findByJob(jobtenantId, id);
+    RunLog[] listByJob(TenantId tenantId, JobId jobId) {
+        return repo.findByJob(tenantId, jobId);
     }
 
-    CommandResult createRunLog(ScheduleId scheduleId, JobId jobtenantId, id tenantId) {
+    CommandResult createRunLog(ScheduleId scheduleId, JobId jobId, TenantId tenantId) {
         import std.uuid : randomUUID;
+
         auto id = randomUUID();
 
         RunLog r;
@@ -47,6 +48,7 @@ class ManageRunLogsUseCase : UIMUseCase {
         r.status = RunStatus.scheduled;
 
         import core.time : MonoTime;
+
         auto now = MonoTime.currTime.ticks;
         r.scheduledAt = now;
         r.createdAt = now;
@@ -56,10 +58,10 @@ class ManageRunLogsUseCase : UIMUseCase {
     }
 
     CommandResult updateStatus(UpdateRunLogRequest req) {
-        auto existing = repo.findById(req.runLogId);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(req.runLogId))
             return CommandResult(false, "", "Run log not found");
 
+        auto existing = repo.findById(req.runLogId);
         auto targetStatus = parseRunStatus(req.status);
         if (!RunTracker.canTransition(existing.status, targetStatus))
             return CommandResult(false, "", "Invalid status transition");
@@ -73,6 +75,7 @@ class ManageRunLogsUseCase : UIMUseCase {
 
         if (targetStatus == RunStatus.triggered) {
             import core.time : MonoTime;
+
             existing.triggeredAt = MonoTime.currTime.ticks;
         }
 
@@ -80,14 +83,20 @@ class ManageRunLogsUseCase : UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    private static RunStatus parseRunStatus(string s) {
-        switch (s) {
-            case "triggered": return RunStatus.triggered;
-            case "running": return RunStatus.running;
-            case "completed": return RunStatus.completed;
-            case "failed": return RunStatus.failed;
-            case "deadLettered": return RunStatus.deadLettered;
-            default: return RunStatus.scheduled;
+    private static RunStatus parseRunStatus(string status) {
+        switch (status) {
+        case "triggered":
+            return RunStatus.triggered;
+        case "running":
+            return RunStatus.running;
+        case "completed":
+            return RunStatus.completed;
+        case "failed":
+            return RunStatus.failed;
+        case "deadLettered":
+            return RunStatus.deadLettered;
+        default:
+            return RunStatus.scheduled;
         }
     }
 }

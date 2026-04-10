@@ -32,50 +32,50 @@ class ManageJobsUseCase : UIMUseCase {
 
         auto id = randomUUID();
 
-        Job j;
-        j.id = id;
-        j.tenantId = r.tenantId;
-        j.name = r.name;
-        j.description = r.description;
-        j.actionUrl = r.actionUrl;
-        j.httpMethod = parseHttpMethod(r.httpMethod);
-        j.type = parseJobType(r.type);
-        j.status = r.active ? JobStatus.active : JobStatus.inactive;
-        j.active = r.active;
-        j.startTime = r.startTime;
-        j.endTime = r.endTime;
+        Job job;
+        job.id = id;
+        job.tenantId = r.tenantId;
+        job.name = r.name;
+        job.description = r.description;
+        job.actionUrl = r.actionUrl;
+        job.httpMethod = parseHttpMethod(r.httpMethod);
+        job.type = parseJobType(r.type);
+        job.status = r.active ? JobStatus.active : JobStatus.inactive;
+        job.active = r.active;
+        job.startTime = r.startTime;
+        job.endTime = r.endTime;
 
         import core.time : MonoTime;
 
         auto now = MonoTime.currTime.ticks;
-        j.createdAt = now;
-        j.modifiedAt = now;
+        job.createdAt = now;
+        job.modifiedAt = now;
 
-        repo.save(j);
-        return CommandResult(true, j.id, "");
+        repo.save(job);
+        return CommandResult(true, job.id.toString, "");
     }
 
-    Job get_(JobId tenantId, id tenantId) {
+    Job get_(TenantId tenantId, JobId id) {
         return repo.findById(tenantId, id);
     }
 
-    Job getByName(string name, TenantId tenantId) {
-        return repo.findByName(name, tenantId);
+    Job getByName(TenantId tenantId, string name) {
+        return repo.findByName(tenantId, name);
     }
 
     Job[] list(TenantId tenantId) {
         return repo.findByTenant(tenantId);
     }
 
-    Job[] search(string query, TenantId tenantId) {
-        return repo.search(query, tenantId);
+    Job[] search(TenantId tenantId, string query) {
+        return repo.search(tenantId, query);
     }
 
     CommandResult update(UpdateJobRequest r) {
-        auto existing = repo.findById(r.jobId, r.tenantId);
-        if (existing.id.isEmpty)
+        if (!repo.existsById(r.tenantId, r.jobId))
             return CommandResult(false, "", "Job not found");
 
+        auto existing = repo.findById(r.tenantId, r.jobId);
         if (r.name.length > 0)
             existing.name = r.name;
         if (r.description.length > 0)
@@ -94,12 +94,11 @@ class ManageJobsUseCase : UIMUseCase {
         existing.modifiedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
-        return CommandResult(true, existing.id, "");
+        return CommandResult(true, existing.id.toString, "");
     }
 
-    CommandResult remove(JobId tenantId, id tenantId) {
-        auto existing = repo.findById(tenantId, id);
-        if (existing.id.isEmpty)
+    CommandResult remove(TenantId tenantId, JobId id) {
+        if (!repo.existsById(tenantId, id))
             return CommandResult(false, "", "Job not found");
 
         repo.remove(tenantId, id);
@@ -118,8 +117,8 @@ class ManageJobsUseCase : UIMUseCase {
         return repo.countInactiveByTenant(tenantId);
     }
 
-    private static HttpMethod parseHttpMethod(string s) {
-        switch (s) {
+    private static HttpMethod parseHttpMethod(string method) {
+        switch (method) {
         case "GET":
             return HttpMethod.get;
         case "POST":
@@ -135,8 +134,8 @@ class ManageJobsUseCase : UIMUseCase {
         }
     }
 
-    private static JobType parseJobType(string s) {
-        switch (s) {
+    private static JobType parseJobType(string type) {
+        switch (type) {
         case "cloudFoundryTask":
             return JobType.cloudFoundryTask;
         default:

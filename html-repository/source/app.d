@@ -19,16 +19,18 @@ version (unittest) {
     auto router = new URLRouter();
 
     // Register all controller routes (driving adapters)
-    container.htmlAppController.registerRoutes(router);
-    container.appVersionController.registerRoutes(router);
-    container.appFileController.registerRoutes(router);
-    container.serviceInstanceController.registerRoutes(router);
-    container.deploymentController.registerRoutes(router);
-    container.appRouteController.registerRoutes(router);
-    container.contentCacheController.registerRoutes(router);
-    container.contentController.registerRoutes(router);
-    container.overviewController.registerRoutes(router);
-    container.healthController.registerRoutes(router);
+    with (container) {
+      htmlAppController.registerRoutes(router);
+      appVersionController.registerRoutes(router);
+      appFileController.registerRoutes(router);
+      serviceInstanceController.registerRoutes(router);
+      deploymentController.registerRoutes(router);
+      appRouteController.registerRoutes(router);
+      contentCacheController.registerRoutes(router);
+      contentController.registerRoutes(router);
+      overviewController.registerRoutes(router);
+      healthController.registerRoutes(router);
+    }
 
     auto settings = new HTTPServerSettings();
     settings.port = config.port;

@@ -23,12 +23,12 @@ class ManageSchedulesUseCase : UIMUseCase {
         this.repo = repo;
     }
 
-    CommandResult create(CreateScheduleRequest r) {
-        if (r.jobid.isEmpty)
+    CommandResult create(CreateScheduleRequest request) {
+        if (request.jobId.isEmpty)
             return CommandResult(false, "", "Job ID is required");
 
         // Validate cron if provided
-        if (r.cronExpression.length > 0 && !ScheduleValidator.isValidCron(r.cronExpression))
+        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
         import std.uuid : randomUUID;
@@ -36,20 +36,20 @@ class ManageSchedulesUseCase : UIMUseCase {
 
         Schedule s;
         s.id = id;
-        s.jobId = r.jobId;
-        s.tenantId = r.tenantId;
-        s.description = r.description;
-        s.type = parseScheduleType(r.type);
-        s.format = parseScheduleFormat(r.format);
-        s.status = r.active ? ScheduleStatus.active : ScheduleStatus.inactive;
-        s.active = r.active;
-        s.cronExpression = r.cronExpression;
-        s.humanReadableSchedule = r.humanReadableSchedule;
-        s.repeatInterval = r.repeatInterval;
-        s.repeatAt = r.repeatAt;
-        s.time = r.time;
-        s.startTime = r.startTime;
-        s.endTime = r.endTime;
+        s.jobId = request.jobId;
+        s.tenantId = request.tenantId;
+        s.description = request.description;
+        s.type = parseScheduleType(request.type);
+        s.format = parseScheduleFormat(request.format);
+        s.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        s.active = request.active;
+        s.cronExpression = request.cronExpression;
+        s.humanReadableSchedule = request.humanReadableSchedule;
+        s.repeatInterval = request.repeatInterval;
+        s.repeatAt = request.repeatAt;
+        s.time = request.time;
+        s.startTime = request.startTime;
+        s.endTime = request.endTime;
 
         import core.time : MonoTime;
         auto now = MonoTime.currTime.ticks;
@@ -60,42 +60,42 @@ class ManageSchedulesUseCase : UIMUseCase {
         return CommandResult(true, s.id, "");
     }
 
-    Schedule get_(ScheduleId id, JobId jobtenantId, id tenantId) {
-        return repo.findById(id, jobtenantId, id);
+    Schedule get_(ScheduleId id, JobId jobId, TenantId tenantId) {
+        return repo.findById(id, jobId, tenantId);
     }
 
-    Schedule[] list(JobId jobtenantId, id tenantId) {
-        return repo.findByJob(jobtenantId, id);
+    Schedule[] list(TenantId tenantId, JobId jobId) {
+        return repo.findByJob(jobId, tenantId);
     }
 
-    Schedule[] search(string query, TenantId tenantId) {
+    Schedule[] search(TenantId tenantId, string query) {
         return repo.search(query, tenantId);
     }
 
-    CommandResult update(UpdateScheduleRequest r) {
-        auto existing = repo.findById(r.scheduleId, r.jobId, r.tenantId);
+    CommandResult update(UpdateScheduleRequest request) {
+        auto existing = repo.findById(request.scheduleId, request.jobId, request.tenantId);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
-        if (r.cronExpression.length > 0 && !ScheduleValidator.isValidCron(r.cronExpression))
+        if (request.cronExpression.length > 0 && !ScheduleValidator.isValidCron(request.cronExpression))
             return CommandResult(false, "", "Invalid cron expression");
 
-        if (r.description.length > 0)
-            existing.description = r.description;
-        existing.active = r.active;
-        existing.status = r.active ? ScheduleStatus.active : ScheduleStatus.inactive;
-        if (r.cronExpression.length > 0)
-            existing.cronExpression = r.cronExpression;
-        if (r.humanReadableSchedule.length > 0)
-            existing.humanReadableSchedule = r.humanReadableSchedule;
-        if (r.repeatInterval > 0)
-            existing.repeatInterval = r.repeatInterval;
-        if (r.repeatAt.length > 0)
-            existing.repeatAt = r.repeatAt;
-        if (r.time.length > 0)
-            existing.time = r.time;
-        existing.startTime = r.startTime;
-        existing.endTime = r.endTime;
+        if (request.description.length > 0)
+            existing.description = request.description;
+        existing.active = request.active;
+        existing.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+        if (request.cronExpression.length > 0)
+            existing.cronExpression = request.cronExpression;
+        if (request.humanReadableSchedule.length > 0)
+            existing.humanReadableSchedule = request.humanReadableSchedule;
+        if (request.repeatInterval > 0)
+            existing.repeatInterval = request.repeatInterval;
+        if (request.repeatAt.length > 0)
+            existing.repeatAt = request.repeatAt;
+        if (request.time.length > 0)
+            existing.time = request.time;
+        existing.startTime = request.startTime;
+        existing.endTime = request.endTime;
 
         import core.time : MonoTime;
         existing.modifiedAt = MonoTime.currTime.ticks;
@@ -104,30 +104,30 @@ class ManageSchedulesUseCase : UIMUseCase {
         return CommandResult(true, existing.id, "");
     }
 
-    CommandResult remove(ScheduleId id, JobId jobtenantId, id tenantId) {
-        auto existing = repo.findById(id, jobtenantId, id);
+    CommandResult remove(ScheduleId id, JobId jobId, TenantId tenantId) {
+        auto existing = repo.findById(id, jobId, tenantId);
         if (existing.id.isEmpty)
             return CommandResult(false, "", "Schedule not found");
 
-        repo.remove(id, jobtenantId, id);
+        repo.remove(id, jobId, tenantId);
         return CommandResult(true, id.toString, "");
     }
 
-    CommandResult removeAllByJob(JobId jobtenantId, id tenantId) {
-        repo.removeAllByJob(jobtenantId, id);
+    CommandResult removeAllByJob(TenantId tenantId, JobId jobId) {
+        repo.removeAllByJob(jobId, tenantId);
         return CommandResult(true, jobId, "");
     }
 
-    CommandResult activateAll(ActivateAllSchedulesRequest r) {
-        auto schedules = repo.findByJob(r.jobId, r.tenantId);
+    CommandResult activateAll(ActivateAllSchedulesRequest request) {
+        auto schedules = repo.findByJob(request.jobId, request.tenantId);
         foreach (ref s; schedules) {
-            s.active = r.active;
-            s.status = r.active ? ScheduleStatus.active : ScheduleStatus.inactive;
+            s.active = request.active;
+            s.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
             import core.time : MonoTime;
             s.modifiedAt = MonoTime.currTime.ticks;
             repo.update(s);
         }
-        return CommandResult(true, r.jobId, "");
+        return CommandResult(true, request.jobId, "");
     }
 
     private static ScheduleType parseScheduleType(string s) {
