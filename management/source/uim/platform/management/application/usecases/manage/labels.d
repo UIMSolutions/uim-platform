@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.labels;
 
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.label;
-import uim.platform.management.domain.ports.repositories.labels;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.label;
+// import uim.platform.management.domain.ports.repositories.labels;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Use case: manage labels (tags) on BTP resources.
 class ManageLabelsUseCase : UIMUseCase {
   private LabelRepository repo;

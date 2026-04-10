@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.environment_instances;
 
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.environment_instance;
-import uim.platform.management.domain.entities.subaccount;
-import uim.platform.management.domain.ports.repositories.environment_instances;
-import uim.platform.management.domain.ports.repositories.subaccounts;
-import uim.platform.management.domain.services.environment_provisioner;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.environment_instance;
+// import uim.platform.management.domain.entities.subaccount;
+// import uim.platform.management.domain.ports.repositories.environment_instances;
+// import uim.platform.management.domain.ports.repositories.subaccounts;
+// import uim.platform.management.domain.services.environment_provisioner;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Use case: manage environment instance lifecycle (CF, Kyma, ABAP).
 class ManageEnvironmentInstancesUseCase : UIMUseCase {
   private EnvironmentInstanceRepository repo;
@@ -75,10 +79,10 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   }
 
   CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
-    auto inst = repo.findById(id);
-    if (inst.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
+    auto inst = repo.findById(id);
     if (req.description.length > 0)
       inst.description = req.description;
     if (req.memoryQuotaMb > 0)
@@ -98,9 +102,10 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
   }
 
   CommandResult deprovision(EnvironmentInstanceId id) {
-    auto inst = repo.findById(id);
-    if (inst.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
+
+    auto inst = repo.findById(id);
     if (!provisioner.canDelete(inst))
       return CommandResult(false, "", "Environment cannot be deleted in current status");
 
@@ -125,8 +130,8 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
     return repo.findByType(subId, parseEnvironmentType(envType));
   }
 
-  private EnvironmentType parseEnvironmentType(string s) {
-    switch (s) {
+  private EnvironmentType parseEnvironmentType(string envType) {
+    switch (envType.toLower()) {
     case "cloudFoundry":
       return EnvironmentType.cloudFoundry;
     case "kyma":

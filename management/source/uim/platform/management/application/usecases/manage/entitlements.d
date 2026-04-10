@@ -5,12 +5,16 @@
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.entitlements;
 
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.entitlement;
-import uim.platform.management.domain.ports.repositories.entitlements;
-import uim.platform.management.domain.services.entitlement_evaluator;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.entitlement;
+// import uim.platform.management.domain.ports.repositories.entitlements;
+// import uim.platform.management.domain.services.entitlement_evaluator;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Use case: manage service plan entitlements and quota assignments.
 class ManageEntitlementsUseCase : UIMUseCase {
   private EntitlementRepository repo;
@@ -57,10 +61,10 @@ class ManageEntitlementsUseCase : UIMUseCase {
   }
 
   CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest req) {
-    auto ent = repo.findById(id);
-    if (ent.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
 
+    auto ent = repo.findById(id);
     ent.quotaAssigned = req.quotaAssigned;
     ent.unlimited = req.unlimited;
     ent.quotaRemaining = evaluator.calculateRemaining(req.quotaAssigned, ent.quotaUsed);
@@ -70,10 +74,10 @@ class ManageEntitlementsUseCase : UIMUseCase {
   }
 
   CommandResult revoke(EntitlementId id) {
-    auto ent = repo.findById(id);
-    if (ent.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
 
+    auto ent = repo.findById(id);
     ent.status = EntitlementStatus.revoked;
     ent.modifiedAt = clockSeconds();
     repo.update(ent);
@@ -97,9 +101,9 @@ class ManageEntitlementsUseCase : UIMUseCase {
   }
 
   CommandResult remove(EntitlementId id) {
-    auto ent = repo.findById(id);
-    if (ent.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
+      
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }

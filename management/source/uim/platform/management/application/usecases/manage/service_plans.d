@@ -5,11 +5,15 @@
 *****************************************************************************************************************/
 module uim.platform.management.application.usecases.manage.service_plans;
 
-import uim.platform.management.application.dto;
-import uim.platform.management.domain.entities.service_plan;
-import uim.platform.management.domain.ports.repositories.service_plans;
-import uim.platform.management.domain.types;
+// import uim.platform.management.application.dto;
+// import uim.platform.management.domain.entities.service_plan;
+// import uim.platform.management.domain.ports.repositories.service_plans;
+// import uim.platform.management.domain.types;
+import uim.platform.management;
 
+mixin(ShowModule!());
+
+@safe:
 /// Use case: manage the service plan catalog.
 class ManageServicePlansUseCase : UIMUseCase {
   private ServicePlanRepository repo;
