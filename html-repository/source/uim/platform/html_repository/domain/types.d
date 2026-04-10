@@ -76,15 +76,7 @@ struct ContentCacheId {
   mixin DomainId;
 }
 
-struct TenantId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct SpaceId {
   string value;

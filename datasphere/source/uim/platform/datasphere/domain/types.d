@@ -96,15 +96,7 @@ struct CatalogAssetId {
   mixin DomainId;
 }
 
-struct TenantId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 // Connection types
 enum ConnectionType {

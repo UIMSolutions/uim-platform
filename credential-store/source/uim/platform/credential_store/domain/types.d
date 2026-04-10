@@ -56,15 +56,7 @@ struct AuditLogEntryId {
   mixin DomainId;
 }
 
-struct TenantId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 // Credential types: password (text), key (binary), keyring (KEK for DEK encryption)
 enum CredentialType {
