@@ -56,11 +56,9 @@ class EnvironmentController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -81,10 +79,9 @@ class EnvironmentController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -97,8 +94,7 @@ class EnvironmentController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeEnvironment(inst), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -119,8 +115,7 @@ class EnvironmentController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -132,34 +127,32 @@ class EnvironmentController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
 private Json serializeEnvironment(ref EnvironmentInstance inst) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(inst.id);
-  j["subaccountId"] = Json(inst.subaccountId);
-  j["globalAccountId"] = Json(inst.globalAccountId);
-  j["name"] = Json(inst.name);
-  j["description"] = Json(inst.description);
-  j["environmentType"] = Json(enumStr(inst.environmentType));
-  j["status"] = Json(enumStr(inst.status));
-  j["planName"] = Json(inst.planName);
-  j["landscapeLabel"] = Json(inst.landscapeLabel);
-  j["technicalKey"] = Json(inst.technicalKey);
-  j["dashboardUrl"] = Json(inst.dashboardUrl);
-  j["memoryQuotaMb"] = Json(cast(long) inst.memoryQuotaMb);
-  j["routeQuota"] = Json(cast(long) inst.routeQuota);
-  j["serviceQuota"] = Json(cast(long) inst.serviceQuota);
-  j["createdBy"] = Json(inst.createdBy);
-  j["createdAt"] = Json(inst.createdAt);
-  j["modifiedAt"] = Json(inst.modifiedAt);
-  j["parameters"] = serializeStrMap(inst.parameters);
-  j["labels"] = serializeStrMap(inst.labels);
-  return j;
+  auto j = Json.emptyObject
+    .set("id", inst.id)
+    .set("subaccountId", inst.subaccountId)
+    .set("globalAccountId", inst.globalAccountId)
+    .set("name", inst.name)
+    .set("description", inst.description)
+    .set("environmentType", enumStr(inst.environmentType))
+    .set("status", to!string(inst.status))
+    .set("planName", inst.planName)
+    .set("landscapeLabel", inst.landscapeLabel)
+    .set("technicalKey", inst.technicalKey)
+    .set("dashboardUrl", inst.dashboardUrl)
+    .set("memoryQuotaMb", inst.memoryQuotaMb)
+    .set("routeQuota", inst.routeQuota)
+    .set("serviceQuota", inst.serviceQuota)
+    .set("createdBy", inst.createdBy)
+    .set("createdAt", inst.createdAt)
+    .set("modifiedAt", inst.modifiedAt)
+    .set("parameters", inst.parameters)
+    .set("labels", inst.labels);
 }
 
 private string enumStr(E)(E val) {

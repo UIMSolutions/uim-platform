@@ -23,7 +23,7 @@ class ManageLabelsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateLabelRequest req) {
-    if (req.resourceid.isEmpty)
+    if (req.resourceId.isEmpty)
       return CommandResult(false, "", "Resource ID is required");
     if (req.key.length == 0)
       return CommandResult(false, "", "Label key is required");
@@ -48,7 +48,7 @@ class ManageLabelsUseCase : UIMUseCase {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Label not found");
 
-    auto label = repo.findById(id);
+    Label label = repo.findById(id);
     label.values = req.values;
     label.modifiedAt = clockSeconds();
     repo.update(label);

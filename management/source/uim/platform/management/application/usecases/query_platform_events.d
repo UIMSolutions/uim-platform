@@ -27,16 +27,32 @@ class QueryPlatformEventsUseCase : UIMUseCase {
     return repo.findById(id);
   }
 
+  PlatformEvent[] listByGlobalAccount(string gaId) {
+    return listByGlobalAccount(GlobalAccountId(gaId));
+  }
+
   PlatformEvent[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
+  }
+
+  PlatformEvent[] listBySubaccount(string subId) {
+    return listBySubaccount(SubaccountId(subId));
   }
 
   PlatformEvent[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
+  PlatformEvent[] listByCategory(string gaId, string category) {
+    return listByCategory(GlobalAccountId(gaId), category);
+  }
+
   PlatformEvent[] listByCategory(GlobalAccountId gaId, string category) {
     return repo.findByCategory(gaId, parseCategory(category));
+  }
+
+  PlatformEvent[] listBySeverity(string gaId, string severity) {
+    return listBySeverity(GlobalAccountId(gaId), severity);
   }
 
   PlatformEvent[] listBySeverity(GlobalAccountId gaId, string severity) {

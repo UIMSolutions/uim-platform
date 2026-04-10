@@ -17,7 +17,9 @@ interface SubaccountRepository {
   bool existsById(SubaccountId id);
   Subaccount findById(SubaccountId id);
 
+  bool existsBySubdomain(string subdomain);
   Subaccount findBySubdomain(string subdomain);
+
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Subaccount[] findByDirectory(DirectoryId directoryId);
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region);

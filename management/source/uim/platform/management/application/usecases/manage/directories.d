@@ -76,6 +76,10 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return repo.findById(id);
   }
 
+  Directory[] listByGlobalAccount(string gaId) {
+    return listByGlobalAccount(GlobalAccountId(gaId));
+  }
+
   Directory[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }

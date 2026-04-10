@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.connectivity.application.usecases.monitor_connectivity;
+module uim.platform.connectivity.application.usecases.monitor.connectivity;
 
 // import uim.platform.connectivity.domain.entities.connectivity_log;
 // import uim.platform.connectivity.domain.ports.repositories.connectivity_logs;

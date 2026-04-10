@@ -32,48 +32,48 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     if (req.region.length == 0)
       return CommandResult(false, "", "Region is required");
 
-    GlobalAccount ga;
-    ga.globalAccountId = randomUUID();
-    ga.displayName = req.displayName;
-    ga.description = req.description;
-    ga.contractNumber = req.contractNumber;
-    ga.licenseType = parseLicenseType(req.licenseType);
-    ga.region = req.region;
-    ga.costCenter = req.costCenter;
-    ga.companyName = req.companyName;
-    ga.contactEmail = req.contactEmail;
-    ga.maxSubaccounts = req.maxSubaccounts > 0 ? req.maxSubaccounts : 100;
-    ga.maxDirectories = req.maxDirectories > 0 ? req.maxDirectories : 20;
-    ga.createdAt = clockSeconds();
-    ga.modifiedAt = ga.createdAt;
-    ga.createdBy = req.createdBy;
-    ga.customProperties = req.customProperties;
+    GlobalAccount globalAccount;
+    globalAccount.globalAccountId = randomUUID();
+    globalAccount.displayName = req.displayName;
+    globalAccount.description = req.description;
+    globalAccount.contractNumber = req.contractNumber;
+    globalAccount.licenseType = parseLicenseType(req.licenseType);
+    globalAccount.region = req.region;
+    globalAccount.costCenter = req.costCenter;
+    globalAccount.companyName = req.companyName;
+    globalAccount.contactEmail = req.contactEmail;
+    globalAccount.maxSubaccounts = req.maxSubaccounts > 0 ? req.maxSubaccounts : 100;
+    globalAccount.maxDirectories = req.maxDirectories > 0 ? req.maxDirectories : 20;
+    globalAccount.createdAt = clockSeconds();
+    globalAccount.modifiedAt = globalAccount.createdAt;
+    globalAccount.createdBy = req.createdBy;
+    globalAccount.customProperties = req.customProperties;
 
-    repo.save(ga);
-    emitEvent(ga.globalAccountId, "", PlatformEventCategory.globalAccountChange,
+    repo.save(globalAccount);
+    emitEvent(globalAccount.globalAccountId.toString, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
-    return CommandResult(true, ga.globalAccountId.toString, "");
+    return CommandResult(true, globalAccount.globalAccountId.toString, "");
   }
 
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
 
-    auto ga = repo.findById(id);
+    auto globalAccount = repo.findById(id);
     if (req.displayName.length > 0)
-      ga.displayName = req.displayName;
+      globalAccount.displayName = req.displayName;
     if (req.description.length > 0)
-      ga.description = req.description;
+      globalAccount.description = req.description;
     if (req.costCenter.length > 0)
-      ga.costCenter = req.costCenter;
+      globalAccount.costCenter = req.costCenter;
     if (req.contactEmail.length > 0)
-      ga.contactEmail = req.contactEmail;
+      globalAccount.contactEmail = req.contactEmail;
     if (req.customProperties.length > 0)
-      ga.customProperties = req.customProperties;
-    ga.modifiedAt = clockSeconds();
+      globalAccount.customProperties = req.customProperties;
+    globalAccount.modifiedAt = clockSeconds();
 
-    repo.update(ga);
+    repo.update(globalAccount);
     return CommandResult(true, id.toString, "");
   }
 
@@ -81,13 +81,13 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
-    auto ga = repo.findById(accountId);
-    if (ga.status != GlobalAccountStatus.active)
+    auto globalAccount = repo.findById(accountId);
+    if (globalAccount.status != GlobalAccountStatus.active)
       return CommandResult(false, "", "Only active accounts can be suspended");
 
-    ga.status = GlobalAccountStatus.suspended;
-    ga.modifiedAt = clockSeconds();
-    repo.update(ga);
+    globalAccount.status = GlobalAccountStatus.suspended;
+    globalAccount.modifiedAt = clockSeconds();
+    repo.update(globalAccount);
 
     emitEvent(accountId, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.suspended", "Global account suspended", "system");
@@ -98,13 +98,13 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
-    auto ga = repo.findById(accountId);
-    if (ga.status != GlobalAccountStatus.suspended)
+    auto globalAccount = repo.findById(accountId);
+    if (globalAccount.status != GlobalAccountStatus.suspended)
       return CommandResult(false, "", "Only suspended accounts can be reactivated");
 
-    ga.status = GlobalAccountStatus.active;
-    ga.modifiedAt = clockSeconds();
-    repo.update(ga);
+    globalAccount.status = GlobalAccountStatus.active;
+    globalAccount.modifiedAt = clockSeconds();
+    repo.update(globalAccount);
     return CommandResult(true, accountId.toString, "");
   }
 

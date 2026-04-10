@@ -70,6 +70,10 @@ class ManageSubaccountsUseCase : UIMUseCase {
     return CommandResult(true, subaccount.id.toString, "");
   }
 
+  CommandResult update(string id, UpdateSubaccountRequest req) {
+    return update(SubaccountId(id), req);
+  }
+
   CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
     auto subaccount = repository.findById(id);
     if (subaccount.id.isEmpty)
@@ -93,6 +97,10 @@ class ManageSubaccountsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult moveSubaccount(string id, MoveSubaccountRequest req) {
+    return moveSubaccount(SubaccountId(id), req);
+  }
+
   CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
@@ -112,6 +120,10 @@ class ManageSubaccountsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult suspend(string id) {
+    return suspend(SubaccountId(id));
+  }
+
   CommandResult suspend(SubaccountId id) {
     if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
@@ -124,6 +136,10 @@ class ManageSubaccountsUseCase : UIMUseCase {
     subaccount.modifiedAt = clockSeconds();
     repository.update(subaccount);
     return CommandResult(true, id.toString, "");
+  }
+
+  CommandResult reactivate(string id) {
+    return reactivate(SubaccountId(id));
   }
 
   CommandResult reactivate(SubaccountId id) {
@@ -140,20 +156,40 @@ class ManageSubaccountsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  Subaccount getById(string id) {
+    return getById(SubaccountId(id));
+  }
+
   Subaccount getById(SubaccountId id) {
     return repository.findById(id);
+  }
+
+  Subaccount[] listByGlobalAccount(string gaId) {
+    return listByGlobalAccount(GlobalAccountId(gaId));
   }
 
   Subaccount[] listByGlobalAccount(GlobalAccountId gaId) {
     return repository.findByGlobalAccount(gaId);
   }
 
+  Subaccount[] listByDirectory(string dirId) {
+    return listByDirectory(DirectoryId(dirId));
+  }
+
   Subaccount[] listByDirectory(DirectoryId dirId) {
     return repository.findByDirectory(dirId);
   }
 
+  Subaccount[] listByRegion(string gaId, string region) {
+    return listByRegion(GlobalAccountId(gaId), region);
+  }
+
   Subaccount[] listByRegion(GlobalAccountId gaId, string region) {
     return repository.findByRegion(gaId, region);
+  }
+
+  CommandResult remove(string id) {
+    return remove(SubaccountId(id));
   }
 
   CommandResult remove(SubaccountId id) {
@@ -185,8 +221,8 @@ class ManageSubaccountsUseCase : UIMUseCase {
     eventRepo.save(event);
   }
 
-  private SubaccountUsage parseUsage(string s) {
-    switch (s) {
+  private SubaccountUsage parseUsage(string usage) {
+    switch (usage) {
     case "production":
       return SubaccountUsage.production;
     case "development":

@@ -72,13 +72,11 @@ class DirectoryController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = Json.emptyArray;
-      foreach (ref d; items)
-        arr ~= serializeDirectory(d);
+      auto arr = items.map!(d => serializeDirectory(d)).array;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -101,13 +99,13 @@ class DirectoryController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
-      UpdateDirectoryRequest r;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.labels = jsonStrMap(j, "labels");
-      r.customProperties = jsonStrMap(j, "customProperties");
+      UpdateDirectoryRequest request;
+      request.displayName = j.getString("displayName");
+      request.description = j.getString("description");
+      request.labels = jsonStrMap(j, "labels");
+      request.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.update(id, r);
+      auto result = uc.update(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -118,8 +116,7 @@ class DirectoryController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.remove(id);
+      auto result = uc.remove(extractId(req.requestURI));
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else
@@ -129,7 +126,7 @@ class DirectoryController : PlatformController {
   }
 }
 
-private Json serializeDirectory(ref Directory d) {
+private Json serializeDirectory(Directory d) {
   auto j = Json.emptyObject
     .set("id", d.id)
     .set("globalAccountId", d.globalAccountId)
