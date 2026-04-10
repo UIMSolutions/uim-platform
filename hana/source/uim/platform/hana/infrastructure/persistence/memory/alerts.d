@@ -16,47 +16,16 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-class MemoryAlertRepository : AlertRepository {
-  private Alert[] store;
-
-  Alert findById(AlertId id) {
-    foreach (ref a; store) {
-      if (a.id == id)
-        return a;
-    }
-    return Alert.init;
-  }
-
-  Alert[] findByTenant(TenantId tenantId) {
-    return store.filter!(a => a.tenantId == tenantId).array;
-  }
-
-  Alert[] findByInstance(InstanceId instanceId) {
-    return store.filter!(a => a.instanceId == instanceId).array;
+class MemoryAlertRepository : MemoryTenantRepository!(Alert, AlertId), AlertRepository {
+  Alert[] findByInstance(TenantId tenantId, InstanceId instanceId) {
+    return findByTenant(tenantId).filter!(a => a.instanceId == instanceId).array;
   }
 
   Alert[] findActive(TenantId tenantId) {
-    return store.filter!(a => a.tenantId == tenantId && a.status == AlertStatus.active).array;
-  }
-
-  void save(Alert a) {
-    store ~= a;
-  }
-
-  void update(Alert a) {
-    foreach (ref existing; store) {
-      if (existing.id == a.id) {
-        existing = a;
-        return;
-      }
-    }
-  }
-
-  void remove(AlertId id) {
-    store = store.filter!(a => a.id != id).array;
+    return findByTenant(tenantId).filter!(a => a.status == AlertStatus.active).array;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(a => a.tenantId == tenantId).array.length;
+    return findByTenant(tenantId).length;
   }
 }

@@ -24,14 +24,18 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   ServerlessFunction findById(FunctionId functionId) {
-    if (auto p = functionId in store)
-      return *p;
+    if (existsById(functionId))
+      return store[functionId];
     return ServerlessFunction.init;
   }
 
+  bool existsByName(NamespaceId namespaceId, string name) {
+    return findByNamespace(namespaceId).any!(e => e.name == name);
+  }
+
   ServerlessFunction findByName(NamespaceId namespaceId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.namespaceId == namespaceId && e.name == name)
+    foreach (ref e; findByNamespace(namespaceId))
+      if (e.name == name)
         return e;
     return ServerlessFunction.init;
   }

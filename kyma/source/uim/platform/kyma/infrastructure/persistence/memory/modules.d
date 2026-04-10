@@ -28,8 +28,8 @@ class MemoryModuleRepository : ModuleRepository {
   }
 
   KymaModule findByName(KymaEnvironmentId environmentId, string name) {
-    foreach (enviroment; store.byValue())
-      if (enviroment.environmentId == environmentId && enviroment.name == name)
+    foreach (enviroment; findByEnvironment(environmentId))
+      if (enviroment.name == name)
         return enviroment;
     return KymaModule.init;
   }

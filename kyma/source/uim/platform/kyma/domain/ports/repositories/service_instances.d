@@ -14,11 +14,16 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — service instance persistence.
 interface ServiceInstanceRepository {
+  bool existsById(ServiceInstanceId id);
   ServiceInstance findById(ServiceInstanceId id);
+
+  bool existsByName(NamespaceId nsId, string name);
   ServiceInstance findByName(NamespaceId nsId, string name);
+
   ServiceInstance[] findByNamespace(NamespaceId nsId);
   ServiceInstance[] findByEnvironment(KymaEnvironmentId envId);
   ServiceInstance[] findByOffering(string offeringName);
+  
   void save(ServiceInstance inst);
   void update(ServiceInstance inst);
   void remove(ServiceInstanceId id);

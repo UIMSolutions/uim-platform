@@ -14,11 +14,16 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — API rule persistence.
 interface ApiRuleRepository {
+  bool existsById(ApiRuleId ruleId);
   ApiRule findById(ApiRuleId ruleId);
+
+  bool existsByName(NamespaceId nsId, string name);
   ApiRule findByName(NamespaceId nsId, string name);
+
   ApiRule[] findByNamespace(NamespaceId nsId);
   ApiRule[] findByEnvironment(KymaEnvironmentId envId);
   ApiRule[] findByStatus(ApiRuleStatus status);
+
   void save(ApiRule rule);
   void update(ApiRule rule);
   void remove(ApiRuleId ruleId);

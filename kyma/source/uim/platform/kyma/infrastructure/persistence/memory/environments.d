@@ -19,9 +19,13 @@ mixin(ShowModule!());
 class MemoryEnvironmentRepository : EnvironmentRepository {
   private KymaEnvironment[KymaEnvironmentId] store;
 
+  bool existsById(KymaEnvironmentId id) {
+    return (id in store) ? true : false;
+  }
+
   KymaEnvironment findById(KymaEnvironmentId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return KymaEnvironment.init;
   }
 

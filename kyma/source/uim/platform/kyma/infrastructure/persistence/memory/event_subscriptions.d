@@ -15,15 +15,23 @@ import uim.platform.kyma.domain.ports.repositories.event_subscriptions;
 class MemoryEventSubscriptionRepository : EventSubscriptionRepository {
   private EventSubscription[EventSubscriptionId] store;
 
+  bool existsById(EventSubscriptionId id) {
+    return (id in store) ? true : false;
+  }
+
   EventSubscription findById(EventSubscriptionId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return EventSubscription.init;
   }
 
+  bool existsByName(NamespaceId nsId, string name) {
+    return findByNamespace(nsId).any!(e => e.name == name);
+  }
+
   EventSubscription findByName(NamespaceId nsId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.namespaceId == nsId && e.name == name)
+    foreach (ref e; findByNamespace(nsId))
+      if (e.name == name)
         return e;
     return EventSubscription.init;
   }

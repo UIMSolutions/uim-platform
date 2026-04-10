@@ -19,15 +19,23 @@ mixin(ShowModule!());
 class MemoryApiRuleRepository : ApiRuleRepository {
   private ApiRule[ApiRuleId] store;
 
+  bool existsById(ApiRuleId id) {
+    return (id in store) ? true : false;
+  }
+
   ApiRule findById(ApiRuleId id) {
-    if (id in store)
+    if (existsById(id))
       return store[id];
     return ApiRule.init;
   }
 
+  bool existsByName(NamespaceId nsId, string name) {
+    return findByNamespace(nsId).any!(e => e.name == name);
+  }
+
   ApiRule findByName(NamespaceId nsId, string name) {
-    foreach (e; findByNamespace)
-      if (e.namespaceId == nsId && e.name == name)
+    foreach (e; findByNamespace(nsId))
+      if (e.name == name)
         return e;
     return ApiRule.init;
   }
@@ -49,12 +57,12 @@ class MemoryApiRuleRepository : ApiRuleRepository {
   }
 
   void update(ApiRule rule) {
-    if (ruleId in store)
+    if (existsById(rule.ruleId))
       store[rule.ruleId] = rule;
   }
 
   void remove(ApiRuleId ruleId) {
-    if (ruleId in store)
+    if (existsById(ruleId))
       store.remove(ruleId);
   }
 }

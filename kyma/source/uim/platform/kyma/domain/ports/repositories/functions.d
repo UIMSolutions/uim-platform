@@ -17,7 +17,9 @@ interface FunctionRepository {
   bool existsById(FunctionId functionId);
   ServerlessFunction findById(FunctionId functionId);
   
+  bool existsByName(NamespaceId namespaceId, string name);
   ServerlessFunction findByName(NamespaceId namespaceId, string name);
+  
   ServerlessFunction[] findByNamespace(NamespaceId namespaceId);
   ServerlessFunction[] findByEnvironment(KymaEnvironmentId environmentId);
   ServerlessFunction[] findByStatus(FunctionStatus status);

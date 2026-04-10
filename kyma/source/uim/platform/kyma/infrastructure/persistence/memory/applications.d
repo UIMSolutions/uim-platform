@@ -19,15 +19,23 @@ mixin(ShowModule!());
 class MemoryApplicationRepository : ApplicationRepository {
   private Application[ApplicationId] store;
 
+  bool existsById(ApplicationId id) {
+    return (id in store) ? true : false;
+  }
+
   Application findById(ApplicationId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return Application.init;
   }
 
+  bool existsByName(KymaEnvironmentId envId, string name) {
+    return findByEnvironment(envId).any!(e => e.name == name);
+  }
+
   Application findByName(KymaEnvironmentId envId, string name) {
-    foreach (ref e; store.byValue())
-      if (e.environmentId == envId && e.name == name)
+    foreach (e; findByEnvironment(envId))
+      if (e.name == name)
         return e;
     return Application.init;
   }
@@ -49,10 +57,12 @@ class MemoryApplicationRepository : ApplicationRepository {
   }
 
   void update(Application app) {
-    store[app.id] = app;
+    if (existsById(app.id))
+      store[app.id] = app;
   }
 
   void remove(ApplicationId id) {
-    store.remove(id);
+    if (existsById(id))
+      store.remove(id);
   }
 }

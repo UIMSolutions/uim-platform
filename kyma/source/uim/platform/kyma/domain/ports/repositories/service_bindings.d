@@ -14,10 +14,15 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — service binding persistence.
 interface ServiceBindingRepository {
+  bool existsById(ServiceBindingId id);
   ServiceBinding findById(ServiceBindingId id);
+
+  bool existsByName(NamespaceId nsId, string name);
   ServiceBinding findByName(NamespaceId nsId, string name);
+
   ServiceBinding[] findByNamespace(NamespaceId nsId);
   ServiceBinding[] findByServiceInstance(ServiceInstanceId instanceId);
+
   void save(ServiceBinding binding);
   void update(ServiceBinding binding);
   void remove(ServiceBindingId id);
