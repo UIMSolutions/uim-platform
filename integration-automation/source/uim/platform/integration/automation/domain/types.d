@@ -78,15 +78,7 @@ struct ExecutionLogId {
 
 
 
-struct UserId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 /// Integration scenario lifecycle status.
 enum ScenarioStatus {

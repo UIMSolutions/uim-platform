@@ -88,15 +88,7 @@ struct BuildpackId {
 
 
 
-struct UserId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 /// Organization lifecycle status.
 enum OrgStatus {

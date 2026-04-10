@@ -51,15 +51,7 @@ struct ExportJobId {
   mixin DomainId;
 }
 
-struct UserId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct ServiceId {
   string value;

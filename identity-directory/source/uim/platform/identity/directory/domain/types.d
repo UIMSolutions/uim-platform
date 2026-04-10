@@ -6,15 +6,7 @@
 module uim.platform.identity.directory.domain.types;
 
 /// Unique identifier type aliases for type safety.
-struct UserId {
-  string value;
 
-  this(string value) {
-    this.value = value;
-  }
-
-  mixin DomainId;
-}
 
 struct GroupId {
   string value;
