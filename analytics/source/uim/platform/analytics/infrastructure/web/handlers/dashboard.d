@@ -83,19 +83,3 @@ class DashboardHandler {
   }
 }
 
-private string extractId(scope HTTPServerRequest req) {
-  // import std.conv : to;
-  // import std.string : split;
-  auto path = req.requestURI;
-  auto parts = path.split("/");
-  // /api/v1/dashboards/{id}...
-  foreach (i, part; parts) {
-    if (part == "dashboards" && i + 1 < parts.length) {
-      auto candidate = parts[i + 1];
-      // Skip sub-resource keywords
-      if (candidate != "publish" && candidate != "pages" && candidate.length > 0)
-        return candidate;
-    }
-  }
-  return "";
-}

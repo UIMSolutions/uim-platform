@@ -241,3 +241,32 @@ string[string] jsonStrMap(Json j, string key) {
   }
   return result;
 }
+
+string extractId(string uri) {
+  // import std.string : lastIndexOf;
+  auto idx = uri.lastIndexOf('/');
+  if (idx >= 0 && idx + 1 < uri.length)
+    return uri[idx + 1 .. $];
+  return "";
+}
+
+/*
+
+private string extractId(scope HTTPServerRequest req) {
+  // import std.conv : to;
+  // import std.string : split;
+  auto path = req.requestURI;
+  auto parts = path.split("/");
+  // /api/v1/dashboards/{id}...
+  foreach (i, part; parts) {
+    if (part == "dashboards" && i + 1 < parts.length) {
+      auto candidate = parts[i + 1];
+      // Skip sub-resource keywords
+      if (candidate != "publish" && candidate != "pages" && candidate.length > 0)
+        return candidate;
+    }
+  }
+  return "";
+}
+
+*/

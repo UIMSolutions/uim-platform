@@ -95,6 +95,10 @@ class ManageCertificatesUseCase : UIMUseCase {
     return repo.findById(id);
   }
 
+  Certificate[] listBySubaccount(string tenantId, string subaccountId) {
+    return listBySubaccount(TenantId(tenantId), SubaccountId(subaccountId));
+  }
+
   Certificate[] listBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
     return repo.findBySubaccount(tenantId, subaccountId);
   }
@@ -105,6 +109,10 @@ class ManageCertificatesUseCase : UIMUseCase {
 
   Certificate[] listExpiring(TenantId tenantId, long beforeTimestamp) {
     return repo.findExpiring(tenantId, beforeTimestamp);
+  }
+
+  ValidationResult validateCertificate(string id) {
+    return validateCertificate(CertificateId(id));
   }
 
   ValidationResult validateCertificate(CertificateId id) {

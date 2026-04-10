@@ -39,17 +39,6 @@ mixin(ShowModule!());
 //   return result;
 // }
 
-// /// Extract the last path segment as ID from a URI.
-// string extractId(string uri) {
-//   // import std.string : lastIndexOf;
-
-//   auto qIdx = uri.lastIndexOf('?');
-//   auto path = qIdx >= 0 ? uri[0 .. qIdx] : uri;
-//   auto idx = path.lastIndexOf('/');
-//   if (idx < 0)
-//     return path;
-//   return path[idx + 1 .. $];
-// }
 
 // /// Serialize a string-to-string map to Json.
 // Json serializeStrMap(string[string] map) {
