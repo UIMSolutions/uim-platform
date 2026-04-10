@@ -13,9 +13,14 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — token persistence.
 interface TokenRepository {
+  bool existsById(TokenId id);
   Token findById(TokenId id);
+
+  bool existsByValue(string tokenValue);
   Token findByValue(string tokenValue);
+
   Token[] findByUser(UserId userId);
+  
   void save(Token token);
   void revoke(TokenId id);
   void revokeAllForUser(UserId userId);

@@ -88,6 +88,10 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return repo.findByParent(parentId);
   }
 
+  CommandResult remove(string id) {
+    return remove(DirectoryId(id));
+  }
+
   CommandResult remove(DirectoryId id) {
     auto directory = repo.findById(id);
     if (directory.id.isEmpty)
@@ -99,20 +103,16 @@ class ManageDirectoriesUseCase : UIMUseCase {
   }
 
   private DirectoryFeature[] parseFeatures(string[] features) {
-    DirectoryFeature[] result;
-    foreach (f; features) {
-      switch (f) {
-      case "entitlements":
-        result ~= DirectoryFeature.entitlements;
-        break;
-      case "authorizations":
-        result ~= DirectoryFeature.authorizations;
-        break;
-      default:
-        result ~= DirectoryFeature.default_;
-        break;
-      }
+    return features.map!(f => parseFeature(f)).array;
+  }
+
+  private DirectoryFeature parseFeature(string feature) {
+    switch (feature) {
+    case "entitlements":
+      return DirectoryFeature.entitlements;
+    case "authorizations":
+      return DirectoryFeature.authorizations;
     }
-    return result;
+    return DirectoryFeature.default_;
   }
 }

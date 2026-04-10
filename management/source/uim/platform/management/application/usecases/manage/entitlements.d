@@ -73,6 +73,10 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, ent.id.toString, "");
   }
 
+  CommandResult revoke(string id) {
+    return revoke(EntitlementId(id));
+  }
+
   CommandResult revoke(EntitlementId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Entitlement not found");
@@ -84,20 +88,40 @@ class ManageEntitlementsUseCase : UIMUseCase {
     return CommandResult(true, ent.id.toString, "");
   }
 
+  Entitlement getById(string id) {
+    return getById(EntitlementId(id));
+  }
+
   Entitlement getById(EntitlementId id) {
     return repo.findById(id);
+  }
+
+  Entitlement[] listByGlobalAccount(string gaId) {
+    return listByGlobalAccount(GlobalAccountId(gaId));
   }
 
   Entitlement[] listByGlobalAccount(GlobalAccountId gaId) {
     return repo.findByGlobalAccount(gaId);
   }
 
+  Entitlement[] listBySubaccount(string subId) {
+    return listBySubaccount(SubaccountId(subId));
+  }
+
   Entitlement[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
   }
 
+  Entitlement[] listByDirectory(string dirId) {
+    return listByDirectory(DirectoryId(dirId));
+  }
+
   Entitlement[] listByDirectory(DirectoryId dirId) {
     return repo.findByDirectory(dirId);
+  }
+
+  CommandResult remove(string id) {
+    return remove(EntitlementId(id));
   }
 
   CommandResult remove(EntitlementId id) {

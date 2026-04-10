@@ -17,9 +17,13 @@ mixin(ShowModule!());
 class MemoryTokenRepository : TokenRepository {
   private Token[TokenId] store;
 
+  bool existsById(TokenId id) {
+    return (id in store) ? true : false;
+  }
+
   Token findById(TokenId id) {
-    if (auto p = id in store)
-      return *p;
+    if (existsById(id))
+      return store[id];
     return Token.init;
   }
 
@@ -45,9 +49,10 @@ class MemoryTokenRepository : TokenRepository {
   }
 
   void revoke(TokenId id) {
-    if (auto p = id in store) {
-      p.revoked = true;
-      store[id] = *p;
+    if (existsById(id)) {
+      auto updated = store[id];
+      updated.revoked = true;
+      store[id] = updated;
     }
   }
 

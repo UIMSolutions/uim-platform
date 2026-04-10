@@ -13,8 +13,11 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — session persistence.
 interface SessionRepository {
+  bool existsById(SessionId id);
   IdaSession findById(SessionId id);
+
   IdaSession[] findByUser(UserId userId);
+  
   void save(IdaSession session);
   void revoke(SessionId id);
   void revokeAllForUser(UserId userId);

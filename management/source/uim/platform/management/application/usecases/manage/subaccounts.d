@@ -89,52 +89,54 @@ class ManageSubaccountsUseCase : UIMUseCase {
       subaccount.customProperties = req.customProperties;
     subaccount.modifiedAt = clockSeconds();
 
-    repository.update(sub);
+    repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult moveSubaccount(SubaccountId id, MoveSubaccountRequest req) {
-    if (!repository.exitsById(id))
+    if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
-    auto sub = repository.findById(id);
-    if (sub.status != SubaccountStatus.active)
+    auto subaccount = repository.findById(id);
+    if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Subaccount must be active to move");
 
-    sub.status = SubaccountStatus.moveInProgress;
-    sub.parentDirectoryId = req.targetDirectoryId;
-    sub.modifiedAt = clockSeconds();
-    repository.update(sub);
+    subaccount.status = SubaccountStatus.moveInProgress;
+    subaccount.parentDirectoryId = req.targetDirectoryId;
+    subaccount.modifiedAt = clockSeconds();
+    repository.update(subaccount);
 
     // Complete move
-    sub.status = SubaccountStatus.active;
-    repository.update(sub);
+    subaccount.status = SubaccountStatus.active;
+    repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult suspend(SubaccountId id) {
-    auto sub = repository.findById(id);
-    if (sub.id.isEmpty)
+    if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
-    if (sub.status != SubaccountStatus.active)
+
+    auto subaccount = repository.findById(id);
+    if (subaccount.status != SubaccountStatus.active)
       return CommandResult(false, "", "Only active subaccounts can be suspended");
 
-    sub.status = SubaccountStatus.suspended;
-    sub.modifiedAt = clockSeconds();
-    repository.update(sub);
+    subaccount.status = SubaccountStatus.suspended;
+    subaccount.modifiedAt = clockSeconds();
+    repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }
 
   CommandResult reactivate(SubaccountId id) {
-    auto sub = repository.findById(id);
-    if (sub.id.isEmpty)
+    if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
-    if (sub.status != SubaccountStatus.suspended)
+
+    auto subaccount = repository.findById(id);
+    if (subaccount.status != SubaccountStatus.suspended)
       return CommandResult(false, "", "Only suspended subaccounts can be reactivated");
 
-    sub.status = SubaccountStatus.active;
-    sub.modifiedAt = clockSeconds();
-    repository.update(sub);
+    subaccount.status = SubaccountStatus.active;
+    subaccount.modifiedAt = clockSeconds();
+    repository.update(subaccount);
     return CommandResult(true, id.toString, "");
   }
 
@@ -155,12 +157,13 @@ class ManageSubaccountsUseCase : UIMUseCase {
   }
 
   CommandResult remove(SubaccountId id) {
-    auto sub = repository.findById(id);
-    if (sub.id.isEmpty)
+    if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
+
+    auto subaccount = repository.findById(id);
     repository.remove(id);
-    emitEvent(sub.globalAccountId, id, PlatformEventCategory.subaccountLifecycle,
-        "subaccount.deleted", "Subaccount deleted: " ~ sub.displayName, "system");
+    emitEvent(subaccount.globalAccountId.toString, id.toString, PlatformEventCategory.subaccountLifecycle,
+        "subaccount.deleted", "Subaccount deleted: " ~ subaccount.displayName, "system");
     return CommandResult(true, id.toString, "");
   }
 
@@ -168,18 +171,18 @@ class ManageSubaccountsUseCase : UIMUseCase {
       string eventType, string desc, string initiatedBy) {
     // import std.uuid : randomUUID;
 
-    PlatformEvent ev;
-    ev.id = randomUUID();
-    ev.globalAccountId = gaId;
-    ev.subaccountId = subId;
-    ev.category = cat;
-    ev.severity = PlatformEventSeverity.info;
-    ev.eventType = eventType;
-    ev.description = desc;
-    ev.initiatedBy = initiatedBy;
-    ev.sourceService = "cloud-management";
-    ev.timestamp = clockSeconds();
-    eventRepo.save(ev);
+    PlatformEvent event;
+    event.id = randomUUID();
+    event.globalAccountId = gaId;
+    event.subaccountId = subId;
+    event.category = cat;
+    event.severity = PlatformEventSeverity.info;
+    event.eventType = eventType;
+    event.description = desc;
+    event.initiatedBy = initiatedBy;
+    event.sourceService = "cloud-management";
+    event.timestamp = clockSeconds();
+    eventRepo.save(event);
   }
 
   private SubaccountUsage parseUsage(string s) {

@@ -142,10 +142,10 @@ private Json serializeDirectory(ref Directory d) {
     .set("createdBy", d.createdBy)
     .set("createdAt", d.createdAt)
     .set("modifiedAt", d.modifiedAt)
-    .set("labels", serializeStrMap(d.labels))
-    .set("customProperties", serializeStrMap(d.customProperties))
-    .set("subaccounts", serializeStrArray(d.subaccounts))
-    .set("subdirectories", serializeStrArray(d.subdirectories));
+    .set("labels", d.labels)
+    .set("customProperties", d.customProperties)
+    .set("subaccounts", d.subaccounts)
+    .set("subdirectories", d.subdirectories);
 }
 
 private string enumStr(E)(E val) {

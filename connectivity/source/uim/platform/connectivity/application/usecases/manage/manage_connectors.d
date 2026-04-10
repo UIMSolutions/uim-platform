@@ -69,6 +69,10 @@ class ManageConnectorsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult disconnect(string id) {
+    return disconnect(ConnectorId(id));
+  }
+
   CommandResult disconnect(ConnectorId id) {
     auto cc = repo.findById(id);
     if (cc.id.isEmpty)
@@ -83,16 +87,32 @@ class ManageConnectorsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CloudConnector getConnector(string id) {
+    return repo.findById(ConnectorId(id));
+  }
+  
   CloudConnector getConnector(ConnectorId id) {
     return repo.findById(id);
+  }
+
+  CloudConnector[] listBySubaccount(string subaccountId) {
+    return repo.findBySubaccount(SubaccountId(subaccountId));
   }
 
   CloudConnector[] listBySubaccount(SubaccountId subaccountId) {
     return repo.findBySubaccount(subaccountId);
   }
 
+  CloudConnector[] listByTenant(string tenantId) {
+    return repo.findByTenant(TenantId(tenantId));
+  }
+
   CloudConnector[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
+  }
+
+  CommandResult unregister(string id) {
+    return unregister(ConnectorId(id));
   }
 
   CommandResult unregister(ConnectorId id) {

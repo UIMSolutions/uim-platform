@@ -27,7 +27,7 @@ class EntitlementController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/entitlements", &handleAssign);
     router.get("/api/v1/entitlements", &handleList);
     router.get("/api/v1/entitlements/*", &handleGet);
@@ -56,11 +56,9 @@ class EntitlementController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -84,10 +82,9 @@ class EntitlementController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -100,8 +97,7 @@ class EntitlementController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeEntitlement(ent), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -109,17 +105,16 @@ class EntitlementController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
-      UpdateEntitlementQuotaRequest r;
-      r.quotaAssigned = j.getInteger("quotaAssigned");
-      r.unlimited = j.getBoolean("unlimited");
+      UpdateEntitlementQuotaRequest request;
+      request.quotaAssigned = j.getInteger("quotaAssigned");
+      request.unlimited = j.getBoolean("unlimited");
 
-      auto result = uc.updateQuota(id, r);
+      auto result = uc.updateQuota(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -131,8 +126,7 @@ class EntitlementController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -144,33 +138,31 @@ class EntitlementController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
 private Json serializeEntitlement(ref Entitlement e) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(e.id);
-  j["globalAccountId"] = Json(e.globalAccountId);
-  j["directoryId"] = Json(e.directoryId);
-  j["subaccountId"] = Json(e.subaccountId);
-  j["servicePlanId"] = Json(e.servicePlanId);
-  j["serviceName"] = Json(e.serviceName);
-  j["planName"] = Json(e.planName);
-  j["planDisplayName"] = Json(e.planDisplayName);
-  j["category"] = Json(enumStr(e.category));
-  j["status"] = Json(enumStr(e.status));
-  j["quotaAssigned"] = Json(cast(long) e.quotaAssigned);
-  j["quotaUsed"] = Json(cast(long) e.quotaUsed);
-  j["quotaRemaining"] = Json(cast(long) e.quotaRemaining);
-  j["unlimited"] = Json(e.unlimited);
-  j["autoAssign"] = Json(e.autoAssign);
-  j["assignedAt"] = Json(e.assignedAt);
-  j["modifiedAt"] = Json(e.modifiedAt);
-  j["assignedBy"] = Json(e.assignedBy);
-  return j;
+  return Json.emptyObject
+    .set("id", e.id)
+    .set("globalAccountId", e.globalAccountId)
+    .set("directoryId", e.directoryId)
+    .set("subaccountId", e.subaccountId)
+    .set("servicePlanId", e.servicePlanId)
+    .set("serviceName", e.serviceName)
+    .set("planName", e.planName)
+    .set("planDisplayName", e.planDisplayName)
+    .set("category", enumStr(e.category))
+    .set("status", enumStr(e.status))
+    .set("quotaAssigned", e.quotaAssigned)
+    .set("quotaUsed", e.quotaUsed)
+    .set("quotaRemaining", e.quotaRemaining)
+    .set("unlimited", e.unlimited)
+    .set("autoAssign", e.autoAssign)
+    .set("assignedAt", e.assignedAt)
+    .set("modifiedAt", e.modifiedAt)
+    .set("assignedBy", e.assignedBy);
 }
 
 private string enumStr(E)(E val) {
