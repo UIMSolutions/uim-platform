@@ -31,14 +31,14 @@ class ProcessInferenceUseCase : UIMUseCase {
   /// Submit an inference request and get immediate prediction.
   CommandResult submitInference(SubmitInferenceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.deploymentid.isEmpty)
-      return CommandResult("", "Deployment ID is required");
+      return CommandResult(false, "", "Deployment ID is required");
     if (req.inputData.length == 0)
-      return CommandResult("", "Input data is required");
+      return CommandResult(false, "", "Input data is required");
 
     if (!engine.isDeploymentReady(req.deploymentId, req.tenantId))
-      return CommandResult("", "Deployment is not active");
+      return CommandResult(false, "", "Deployment is not active");
 
     auto now = Clock.currStdTime();
     auto request = InferenceRequest();
@@ -54,7 +54,7 @@ class ProcessInferenceUseCase : UIMUseCase {
     // Process immediately
     auto result = engine.predict(request.id, req.tenantId);
     if (result is null)
-      return CommandResult("", "Inference processing failed");
+      return CommandResult(false, "", "Inference processing failed");
 
     return CommandResult(result.id, "");
   }

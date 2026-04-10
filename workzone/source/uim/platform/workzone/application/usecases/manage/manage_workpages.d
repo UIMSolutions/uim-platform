@@ -22,7 +22,7 @@ class ManageWorkpagesUseCase : UIMUseCase {
 
   CommandResult createWorkpage(CreateWorkpageRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Page title is required");
+      return CommandResult(false, "", "Page title is required");
 
     auto now = Clock.currStdTime();
     auto page = Workpage();
@@ -51,7 +51,7 @@ class ManageWorkpagesUseCase : UIMUseCase {
   CommandResult updateWorkpage(UpdateWorkpageRequest req) {
     auto page = repo.findById(req.id, req.tenantId);
     if (page is null)
-      return CommandResult("", "Page not found");
+      return CommandResult(false, "", "Page not found");
 
     if (req.title.length > 0)
       page.title = req.title;

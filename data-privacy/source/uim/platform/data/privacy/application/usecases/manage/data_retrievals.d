@@ -33,13 +33,13 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
 
   CommandResult createRequest(CreateDataRetrievalRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
     if (subject is null)
-      return CommandResult("", "Data subject not found");
+      return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
     // Deadline: 30 days from now (GDPR Art. 12(3))
@@ -98,7 +98,7 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
   CommandResult updateStatus(UpdateRetrievalStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
     if (request is null)
-      return CommandResult("", "Data retrieval request not found");
+      return CommandResult(false, "", "Data retrieval request not found");
 
     request.status = req.status;
     if (req.downloadUrl.length > 0)

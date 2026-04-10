@@ -22,7 +22,7 @@ class ManageNavigationItemsUseCase : UIMUseCase {
 
   CommandResult createNavigationItem(CreateNavigationItemRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Navigation item title is required");
+      return CommandResult(false, "", "Navigation item title is required");
 
     auto now = Clock.currStdTime();
     auto n = NavigationItem();
@@ -57,7 +57,7 @@ class ManageNavigationItemsUseCase : UIMUseCase {
   CommandResult updateNavigationItem(UpdateNavigationItemRequest req) {
     auto n = repo.findById(req.id, req.tenantId);
     if (n is null)
-      return CommandResult("", "Navigation item not found");
+      return CommandResult(false, "", "Navigation item not found");
 
     if (req.title.length > 0)
       n.title = req.title;
@@ -75,7 +75,7 @@ class ManageNavigationItemsUseCase : UIMUseCase {
   CommandResult deleteNavigationItem(NavigationItemId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
     if (n is null)
-      return CommandResult("", "Navigation item not found");
+      return CommandResult(false, "", "Navigation item not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

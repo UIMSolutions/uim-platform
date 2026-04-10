@@ -22,7 +22,7 @@ class ManageSurveysUseCase : UIMUseCase {
 
   CommandResult createSurvey(CreateSurveyRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Survey title is required");
+      return CommandResult(false, "", "Survey title is required");
 
     auto now = Clock.currStdTime();
     auto s = Survey();
@@ -57,7 +57,7 @@ class ManageSurveysUseCase : UIMUseCase {
   CommandResult updateSurvey(UpdateSurveyRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
     if (s is null)
-      return CommandResult("", "Survey not found");
+      return CommandResult(false, "", "Survey not found");
 
     if (req.title.length > 0)
       s.title = req.title;
@@ -73,7 +73,7 @@ class ManageSurveysUseCase : UIMUseCase {
   CommandResult deleteSurvey(SurveyId tenantId, id tenantId) {
     auto s = repo.findById(tenantId, id);
     if (s is null)
-      return CommandResult("", "Survey not found");
+      return CommandResult(false, "", "Survey not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

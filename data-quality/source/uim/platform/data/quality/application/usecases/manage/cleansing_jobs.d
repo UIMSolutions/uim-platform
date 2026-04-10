@@ -26,9 +26,9 @@ class ManageCleansingJobsUseCase : UIMUseCase {
 
   CommandResult create(CreateCleansingJobRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetId.isEmpty)
-      return CommandResult("", "Dataset ID is required");
+      return CommandResult(false, "", "Dataset ID is required");
 
     auto job = CleansingJob();
     job.id = randomUUID();

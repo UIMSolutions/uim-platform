@@ -27,22 +27,22 @@ class ManageDestinationsUseCase : UIMUseCase {
 
   CommandResult createDestination(CreateDestinationRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Destination name is required");
+      return CommandResult(false, "", "Destination name is required");
     if (req.url.length == 0)
-      return CommandResult("", "URL is required");
+      return CommandResult(false, "", "URL is required");
 
     // Ensure unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Destination with this name already exists");
+      return CommandResult(false, "", "Destination with this name already exists");
 
     // Validate linked system if provided
     if (req.systemId.length > 0) {
       auto sys = systemRepo.findById(req.systemId, req.tenantId);
       if (sys is null)
-        return CommandResult("", "Linked system not found");
+        return CommandResult(false, "", "Linked system not found");
     }
 
     auto now = Clock.currStdTime();
@@ -90,13 +90,13 @@ class ManageDestinationsUseCase : UIMUseCase {
 
   CommandResult updateDestination(UpdateDestinationRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Destination ID is required");
+      return CommandResult(false, "", "Destination ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Destination not found");
+      return CommandResult(false, "", "Destination not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -132,7 +132,7 @@ class ManageDestinationsUseCase : UIMUseCase {
   CommandResult deleteDestination(DestinationId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Destination not found");
+      return CommandResult(false, "", "Destination not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

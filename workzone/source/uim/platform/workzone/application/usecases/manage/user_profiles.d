@@ -22,7 +22,7 @@ class ManageUserProfilesUseCase : UIMUseCase {
 
   CommandResult createUserProfile(CreateUserProfileRequest req) {
     if (req.displayName.length == 0)
-      return CommandResult("", "Display name is required");
+      return CommandResult(false, "", "Display name is required");
 
     auto now = Clock.currStdTime();
     auto p = UserProfile();
@@ -60,7 +60,7 @@ class ManageUserProfilesUseCase : UIMUseCase {
   CommandResult updateUserProfile(UpdateUserProfileRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
-      return CommandResult("", "User profile not found");
+      return CommandResult(false, "", "User profile not found");
 
     if (req.displayName.length > 0)
       p.displayName = req.displayName;
@@ -79,7 +79,7 @@ class ManageUserProfilesUseCase : UIMUseCase {
   CommandResult deleteUserProfile(UserProfileId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
     if (p is null)
-      return CommandResult("", "User profile not found");
+      return CommandResult(false, "", "User profile not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

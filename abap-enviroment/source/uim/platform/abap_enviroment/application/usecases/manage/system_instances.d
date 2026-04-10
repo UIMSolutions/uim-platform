@@ -24,23 +24,23 @@ class ManageSystemInstancesUseCase : UIMUseCase {
 
   CommandResult createInstance(CreateSystemInstanceRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "System instance name is required");
+      return CommandResult(false, "", "System instance name is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.adminEmail.length == 0)
-      return CommandResult("", "Admin email is required");
+      return CommandResult(false, "", "Admin email is required");
 
     // Validate SID
     if (req.sapSystemId.length > 0) {
       auto sidResult = SystemLifecycleValidator.validateSid(req.sapSystemId);
       if (!sidResult.valid)
-        return CommandResult("", sidResult.error);
+        return CommandResult(false, "", sidResult.error);
     }
 
     // Unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "System instance '" ~ req.name ~ "' already exists");
+      return CommandResult(false, "", "System instance '" ~ req.name ~ "' already exists");
 
     SystemInstance inst;
     inst.id = randomUUID();
@@ -69,7 +69,7 @@ class ManageSystemInstancesUseCase : UIMUseCase {
   CommandResult updateInstance(SystemInstanceId id, UpdateSystemInstanceRequest req) {
     auto inst = repo.findById(id);
     if (inst is null)
-      return CommandResult("", "System instance not found");
+      return CommandResult(false, "", "System instance not found");
 
     if (req.description.length > 0)
       inst.description = req.description;
@@ -85,7 +85,7 @@ class ManageSystemInstancesUseCase : UIMUseCase {
       auto newStatus = parseStatus(req.status);
       auto validation = SystemLifecycleValidator.validateTransition(inst.status, newStatus);
       if (!validation.valid)
-        return CommandResult("", validation.error);
+        return CommandResult(false, "", validation.error);
       inst.status = newStatus;
     }
 
@@ -107,11 +107,11 @@ class ManageSystemInstancesUseCase : UIMUseCase {
   CommandResult deleteInstance(SystemInstanceId id) {
     auto inst = repo.findById(id);
     if (inst is null)
-      return CommandResult("", "System instance not found");
+      return CommandResult(false, "", "System instance not found");
 
     if (inst.status != SystemStatus.active && inst.status != SystemStatus.error
       && inst.status != SystemStatus.suspended)
-      return CommandResult("", "System must be in active, suspended, or error status to delete");
+      return CommandResult(false, "", "System must be in active, suspended, or error status to delete");
 
     inst.status = SystemStatus.deleting;
     repo.update(*inst);

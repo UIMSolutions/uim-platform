@@ -102,7 +102,7 @@ class BrowseContentUseCase : UIMUseCase {
   CommandResult removeFavorite(FavoriteId tenantId, id tenantId) {
     auto fav = favRepo.findById(tenantId, id);
     if (fav is null)
-      return CommandResult("", "Favorite not found");
+      return CommandResult(false, "", "Favorite not found");
 
     favRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

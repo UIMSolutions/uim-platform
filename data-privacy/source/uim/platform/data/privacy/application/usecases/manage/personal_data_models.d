@@ -26,11 +26,11 @@ class ManagePersonalDataModelsUseCase : UIMUseCase {
 
   CommandResult createModel(CreatePersonalDataModelRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.fieldName.length == 0)
-      return CommandResult("", "Field name is required");
+      return CommandResult(false, "", "Field name is required");
     if (req.sourceSystem.length == 0)
-      return CommandResult("", "Source system is required");
+      return CommandResult(false, "", "Source system is required");
 
     auto now = Clock.currStdTime();
     auto model = PersonalDataModel();
@@ -71,7 +71,7 @@ class ManagePersonalDataModelsUseCase : UIMUseCase {
   CommandResult updateModel(UpdatePersonalDataModelRequest req) {
     auto model = repo.findById(req.id, req.tenantId);
     if (model is null)
-      return CommandResult("", "Personal data model not found");
+      return CommandResult(false, "", "Personal data model not found");
 
     if (req.fieldName.length > 0)
       model.fieldName = req.fieldName;

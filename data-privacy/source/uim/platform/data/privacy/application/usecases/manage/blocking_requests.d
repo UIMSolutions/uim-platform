@@ -30,13 +30,13 @@ class ManageBlockingRequestsUseCase : UIMUseCase {
 
   CommandResult createRequest(CreateBlockingRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
     if (subject is null)
-      return CommandResult("", "Data subject not found");
+      return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
     auto request = BlockingRequest();
@@ -69,7 +69,7 @@ class ManageBlockingRequestsUseCase : UIMUseCase {
   CommandResult updateStatus(UpdateBlockingStatusRequest req) {
     auto request = repo.findById(req.id, req.tenantId);
     if (request is null)
-      return CommandResult("", "Blocking request not found");
+      return CommandResult(false, "", "Blocking request not found");
 
     request.status = req.status;
     if (req.status == BlockingStatus.active)

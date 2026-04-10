@@ -19,9 +19,9 @@ class ManageRuleSetsUseCase : UIMUseCase {
 
   CommandResult createRuleSet(CreateRuleSetRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto rs = RuleSet();
@@ -54,7 +54,7 @@ class ManageRuleSetsUseCase : UIMUseCase {
   CommandResult updateRuleSet(UpdateRuleSetRequest req) {
     auto rs = repo.findById(req.id, req.tenantId);
     if (rs is null)
-      return CommandResult("", "Rule set not found");
+      return CommandResult(false, "", "Rule set not found");
 
     if (req.name.length > 0) rs.name = req.name;
     if (req.description.length > 0) rs.description = req.description;
@@ -68,7 +68,7 @@ class ManageRuleSetsUseCase : UIMUseCase {
   CommandResult activateRuleSet(RuleSetId tenantId, id tenantId) {
     auto rs = repo.findById(tenantId, id);
     if (rs is null)
-      return CommandResult("", "Rule set not found");
+      return CommandResult(false, "", "Rule set not found");
 
     rs.status = RuleSetStatus.active;
     rs.activatedAt = Clock.currStdTime();

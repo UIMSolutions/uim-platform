@@ -23,14 +23,14 @@ class ManageBusinessRolesUseCase : UIMUseCase {
 
   CommandResult createRole(CreateBusinessRoleRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Role name is required");
+      return CommandResult(false, "", "Role name is required");
 
     if (req.systemInstanceId.isEmpty())
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     auto existing = repo.findByName(req.systemInstanceId, req.name);
     if (existing !is null)
-      return CommandResult("", "Business role '" ~ req.name ~ "' already exists");
+      return CommandResult(false, "", "Business role '" ~ req.name ~ "' already exists");
 
     BusinessRole role;
     role.id = randomUUID();
@@ -52,7 +52,7 @@ class ManageBusinessRolesUseCase : UIMUseCase {
 
   CommandResult updateRole(BusinessRoleId id, UpdateBusinessRoleRequest req) {
     if (!repo.existsById(id))
-      return CommandResult("", "Business role not found");
+      return CommandResult(false, "", "Business role not found");
 
     auto role = repo.findById(id);
     if (req.description.length > 0)
@@ -81,7 +81,7 @@ class ManageBusinessRolesUseCase : UIMUseCase {
 
   CommandResult deleteRole(BusinessRoleId roleId) {
     if (!repo.existsById(roleId))
-      return CommandResult("", "Business role not found");
+      return CommandResult(false, "", "Business role not found");
 
     repo.remove(roleId);
     return CommandResult(true, roleId.toString(), "");

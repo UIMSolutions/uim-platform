@@ -19,9 +19,9 @@ class ManageBusinessProcessesUseCase : UIMUseCase {
 
   CommandResult createProcess(CreateBusinessProcessRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto p = BusinessProcess();
@@ -52,7 +52,7 @@ class ManageBusinessProcessesUseCase : UIMUseCase {
   CommandResult updateProcess(UpdateBusinessProcessRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
-      return CommandResult("", "Business process not found");
+      return CommandResult(false, "", "Business process not found");
 
     if (req.name.length > 0) p.name = req.name;
     if (req.description.length > 0) p.description = req.description;

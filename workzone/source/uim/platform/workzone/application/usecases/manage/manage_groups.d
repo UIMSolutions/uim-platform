@@ -22,7 +22,7 @@ class ManageGroupsUseCase : UIMUseCase {
 
   CommandResult createGroup(CreateGroupRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Group name is required");
+      return CommandResult(false, "", "Group name is required");
 
     auto now = Clock.currStdTime();
     auto g = Group();
@@ -50,7 +50,7 @@ class ManageGroupsUseCase : UIMUseCase {
   CommandResult updateGroup(UpdateGroupRequest req) {
     auto g = repo.findById(req.id, req.tenantId);
     if (g is null)
-      return CommandResult("", "Group not found");
+      return CommandResult(false, "", "Group not found");
 
     if (req.name.length > 0)
       g.name = req.name;
@@ -66,7 +66,7 @@ class ManageGroupsUseCase : UIMUseCase {
   CommandResult deleteGroup(GroupId tenantId, id tenantId) {
     auto g = repo.findById(tenantId, id);
     if (g is null)
-      return CommandResult("", "Group not found");
+      return CommandResult(false, "", "Group not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

@@ -22,7 +22,7 @@ class ManageNotificationsUseCase : UIMUseCase {
 
   CommandResult createNotification(CreateNotificationRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Notification title is required");
+      return CommandResult(false, "", "Notification title is required");
 
     auto n = Notification();
     n.id = randomUUID();
@@ -58,7 +58,7 @@ class ManageNotificationsUseCase : UIMUseCase {
   CommandResult markAsRead(NotificationId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
     if (n is null)
-      return CommandResult("", "Notification not found");
+      return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.read_;
     n.readAt = Clock.currStdTime();
@@ -69,7 +69,7 @@ class ManageNotificationsUseCase : UIMUseCase {
   CommandResult dismiss(NotificationId tenantId, id tenantId) {
     auto n = repo.findById(tenantId, id);
     if (n is null)
-      return CommandResult("", "Notification not found");
+      return CommandResult(false, "", "Notification not found");
 
     n.status = NotificationStatus.dismissed;
     repo.update(*n);

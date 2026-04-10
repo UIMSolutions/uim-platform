@@ -22,11 +22,11 @@ class ManageTagsUseCase : UIMUseCase {
 
   CommandResult createTag(CreateTagRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Tag name is required");
+      return CommandResult(false, "", "Tag name is required");
 
     auto existing = repo.findByName(req.name, req.tenantId);
     if (existing !is null)
-      return CommandResult("", "Tag with this name already exists");
+      return CommandResult(false, "", "Tag with this name already exists");
 
     auto now = Clock.currStdTime();
     auto t = Tag();
@@ -53,7 +53,7 @@ class ManageTagsUseCase : UIMUseCase {
   CommandResult updateTag(UpdateTagRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
-      return CommandResult("", "Tag not found");
+      return CommandResult(false, "", "Tag not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -69,7 +69,7 @@ class ManageTagsUseCase : UIMUseCase {
   CommandResult deleteTag(TagId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
     if (t is null)
-      return CommandResult("", "Tag not found");
+      return CommandResult(false, "", "Tag not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

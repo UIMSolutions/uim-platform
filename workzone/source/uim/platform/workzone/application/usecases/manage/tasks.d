@@ -22,7 +22,7 @@ class ManageTasksUseCase : UIMUseCase {
 
   CommandResult createTask(CreateTaskRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Task title is required");
+      return CommandResult(false, "", "Task title is required");
 
     auto now = Clock.currStdTime();
     auto t = Task();
@@ -64,7 +64,7 @@ class ManageTasksUseCase : UIMUseCase {
   CommandResult updateTask(UpdateTaskRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
-      return CommandResult("", "Task not found");
+      return CommandResult(false, "", "Task not found");
 
     if (req.title.length > 0)
       t.title = req.title;
@@ -86,7 +86,7 @@ class ManageTasksUseCase : UIMUseCase {
   CommandResult completeTask(TaskId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
     if (t is null)
-      return CommandResult("", "Task not found");
+      return CommandResult(false, "", "Task not found");
 
     t.status = TaskStatus.completed;
     t.completedAt = Clock.currStdTime();

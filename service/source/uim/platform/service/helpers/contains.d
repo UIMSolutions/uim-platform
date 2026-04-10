@@ -16,7 +16,8 @@ bool containsTenant(string[] values, string tenantId) {
 }
 
 bool containsTenant(string[] values, UUID tenantId) {
-  return values.any!(v => v == tenantId.toString);
+  auto id = tenantId.toString;
+  return values.any!(v => v == id);
 }
 
 bool containsTenant(UUID[] ids, UUID tenantId) {

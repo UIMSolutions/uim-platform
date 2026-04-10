@@ -19,11 +19,11 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
 
   CommandResult createSubprocess(CreateBusinessSubprocessRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.parentProcessid.isEmpty)
-      return CommandResult("", "Parent process ID is required");
+      return CommandResult(false, "", "Parent process ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto sp = BusinessSubprocess();
@@ -58,7 +58,7 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
   CommandResult updateSubprocess(UpdateBusinessSubprocessRequest req) {
     auto sp = repo.findById(req.id, req.tenantId);
     if (sp is null)
-      return CommandResult("", "Business subprocess not found");
+      return CommandResult(false, "", "Business subprocess not found");
 
     if (req.name.length > 0) sp.name = req.name;
     if (req.description.length > 0) sp.description = req.description;

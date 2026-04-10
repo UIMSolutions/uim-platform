@@ -27,11 +27,11 @@ class ManageLegalGroundsUseCase : UIMUseCase {
 
   CommandResult createGround(CreateLegalGroundRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
     if (req.description.length == 0)
-      return CommandResult("", "Description is required");
+      return CommandResult(false, "", "Description is required");
 
     auto now = Clock.currStdTime();
     auto ground = LegalGround();
@@ -75,7 +75,7 @@ class ManageLegalGroundsUseCase : UIMUseCase {
   CommandResult updateGround(UpdateLegalGroundRequest req) {
     auto ground = repo.findById(req.id, req.tenantId);
     if (ground is null)
-      return CommandResult("", "Legal ground not found");
+      return CommandResult(false, "", "Legal ground not found");
 
     if (req.description.length > 0)
       ground.description = req.description;

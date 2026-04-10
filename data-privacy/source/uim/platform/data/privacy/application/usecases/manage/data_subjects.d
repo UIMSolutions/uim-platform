@@ -26,15 +26,15 @@ class ManageDataSubjectsUseCase : UIMUseCase {
 
   CommandResult createSubject(CreateDataSubjectRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.displayName.length == 0)
-      return CommandResult("", "Display name is required");
+      return CommandResult(false, "", "Display name is required");
 
     // Check for duplicate external ID
     if (req.externalId.length > 0) {
       auto existing = repo.findByExternalId(req.externalId, req.tenantId);
       if (existing !is null)
-        return CommandResult("", "Data subject with this external ID already exists");
+        return CommandResult(false, "", "Data subject with this external ID already exists");
     }
 
     auto now = Clock.currStdTime();
@@ -70,7 +70,7 @@ class ManageDataSubjectsUseCase : UIMUseCase {
   CommandResult updateSubject(UpdateDataSubjectRequest req) {
     auto subject = repo.findById(req.id, req.tenantId);
     if (subject is null)
-      return CommandResult("", "Data subject not found");
+      return CommandResult(false, "", "Data subject not found");
 
     if (req.displayName.length > 0)
       subject.displayName = req.displayName;

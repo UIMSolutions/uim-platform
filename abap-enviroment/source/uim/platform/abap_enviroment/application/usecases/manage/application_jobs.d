@@ -23,12 +23,12 @@ class ManageApplicationJobsUseCase : UIMUseCase {
 
   CommandResult createJob(CreateApplicationJobRequest request) {
     if (request.name.length == 0)
-      return CommandResult("", "Job name is required");
+      return CommandResult(false, "", "Job name is required");
     if (request.jobTemplateName.length == 0)
-      return CommandResult("", "Job template name is required");
+      return CommandResult(false, "", "Job template name is required");
 
     if (request.systemInstanceId.isEmpty)
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     ApplicationJob job;
     job.id = randomUUID();
@@ -54,7 +54,7 @@ class ManageApplicationJobsUseCase : UIMUseCase {
 
   CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest request) {
     if (!repo.existsById(id))
-      return CommandResult("", "Application job not found");
+      return CommandResult(false, "", "Application job not found");
 
     auto job = repo.findById(id);
     if (request.description.length > 0)
@@ -78,11 +78,11 @@ class ManageApplicationJobsUseCase : UIMUseCase {
 
   CommandResult cancelJob(ApplicationJobId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Application job not found");
+      return CommandResult(false, "", "Application job not found");
 
     auto job = repo.findById(id);
     if (job.status != JobStatus.scheduled && job.status != JobStatus.running)
-      return CommandResult("", "Job can only be canceled when scheduled or running");
+      return CommandResult(false, "", "Job can only be canceled when scheduled or running");
 
     job.status = JobStatus.canceled;
     job.active = false;
@@ -105,7 +105,7 @@ class ManageApplicationJobsUseCase : UIMUseCase {
   CommandResult deleteJob(ApplicationJobId id) {
     auto job = repo.findById(id);
     if (job is null)
-      return CommandResult("", "Application job not found");
+      return CommandResult(false, "", "Application job not found");
 
     repo.remove(id);
     return CommandResult(true, id.toString, "");

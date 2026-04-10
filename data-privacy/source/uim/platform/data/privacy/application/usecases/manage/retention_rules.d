@@ -26,11 +26,11 @@ class ManageRetentionRulesUseCase : UIMUseCase {
 
   CommandResult createRule(CreateRetentionRuleRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Rule name is required");
+      return CommandResult(false, "", "Rule name is required");
     if (req.retentionDays <= 0)
-      return CommandResult("", "Retention days must be positive");
+      return CommandResult(false, "", "Retention days must be positive");
 
     auto now = Clock.currStdTime();
     auto rule = RetentionRule();
@@ -66,7 +66,7 @@ class ManageRetentionRulesUseCase : UIMUseCase {
   CommandResult updateRule(UpdateRetentionRuleRequest req) {
     auto rule = repo.findById(req.id, req.tenantId);
     if (rule is null)
-      return CommandResult("", "Retention rule not found");
+      return CommandResult(false, "", "Retention rule not found");
 
     if (req.name.length > 0)
       rule.name = req.name;

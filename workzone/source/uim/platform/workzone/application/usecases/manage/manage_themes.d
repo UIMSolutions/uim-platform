@@ -22,7 +22,7 @@ class ManageThemesUseCase : UIMUseCase {
 
   CommandResult createTheme(CreateThemeRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Theme name is required");
+      return CommandResult(false, "", "Theme name is required");
 
     auto now = Clock.currStdTime();
     auto t = Theme();
@@ -54,7 +54,7 @@ class ManageThemesUseCase : UIMUseCase {
   CommandResult updateTheme(UpdateThemeRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
-      return CommandResult("", "Theme not found");
+      return CommandResult(false, "", "Theme not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -73,7 +73,7 @@ class ManageThemesUseCase : UIMUseCase {
   CommandResult deleteTheme(ThemeId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
     if (t is null)
-      return CommandResult("", "Theme not found");
+      return CommandResult(false, "", "Theme not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

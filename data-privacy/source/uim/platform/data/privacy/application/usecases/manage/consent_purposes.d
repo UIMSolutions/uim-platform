@@ -19,9 +19,9 @@ class ManageConsentPurposesUseCase : UIMUseCase {
 
   CommandResult createPurpose(CreateConsentPurposeRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto cp = ConsentPurpose();
@@ -60,7 +60,7 @@ class ManageConsentPurposesUseCase : UIMUseCase {
   CommandResult updatePurpose(UpdateConsentPurposeRequest req) {
     auto cp = repo.findById(req.id, req.tenantId);
     if (cp is null)
-      return CommandResult("", "Consent purpose not found");
+      return CommandResult(false, "", "Consent purpose not found");
 
     if (req.name.length > 0) cp.name = req.name;
     if (req.description.length > 0) cp.description = req.description;

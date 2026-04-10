@@ -23,9 +23,9 @@ class ManageServiceBindingsUseCase : UIMUseCase {
 
   CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Service binding name is required");
+      return CommandResult(false, "", "Service binding name is required");
     if (req.systemInstanceid.isEmpty)
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     ServiceBinding binding;
     binding.id = randomUUID();
@@ -53,7 +53,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
     auto binding = repo.findById(id);
     if (binding is null)
-      return CommandResult("", "Service binding not found");
+      return CommandResult(false, "", "Service binding not found");
 
     if (req.description.length > 0)
       binding.description = req.description;
@@ -80,7 +80,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   CommandResult deleteBinding(ServiceBindingId id) {
     auto binding = repo.findById(id);
     if (binding is null)
-      return CommandResult("", "Service binding not found");
+      return CommandResult(false, "", "Service binding not found");
 
     repo.remove(id);
     return CommandResult(true, id.toString, "");

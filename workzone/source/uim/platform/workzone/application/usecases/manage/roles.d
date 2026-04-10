@@ -22,7 +22,7 @@ class ManageRolesUseCase : UIMUseCase {
 
   CommandResult createRole(CreateRoleRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Role name is required");
+      return CommandResult(false, "", "Role name is required");
 
     auto now = Clock.currStdTime();
     auto r = Role();
@@ -50,7 +50,7 @@ class ManageRolesUseCase : UIMUseCase {
   CommandResult updateRole(UpdateRoleRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
     if (r is null)
-      return CommandResult("", "Role not found");
+      return CommandResult(false, "", "Role not found");
 
     if (req.name.length > 0)
       r.name = req.name;
@@ -66,7 +66,7 @@ class ManageRolesUseCase : UIMUseCase {
   CommandResult deleteRole(RoleId tenantId, id tenantId) {
     auto r = repo.findById(tenantId, id);
     if (r is null)
-      return CommandResult("", "Role not found");
+      return CommandResult(false, "", "Role not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

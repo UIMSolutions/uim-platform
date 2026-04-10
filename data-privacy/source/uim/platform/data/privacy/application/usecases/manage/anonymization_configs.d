@@ -19,9 +19,9 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
 
   CommandResult createConfig(CreateAnonymizationConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto c = AnonymizationConfig();
@@ -50,7 +50,7 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
   CommandResult updateConfig(UpdateAnonymizationConfigRequest req) {
     auto c = repo.findById(req.tenantId, req.id);
     if (c is null)
-      return CommandResult("", "Anonymization config not found");
+      return CommandResult(false, "", "Anonymization config not found");
 
     if (req.name.length > 0) c.name = req.name;
     if (req.description.length > 0) c.description = req.description;
@@ -65,7 +65,7 @@ class ManageAnonymizationConfigsUseCase : UIMUseCase {
   CommandResult activateConfig(TenantId tenantId, AnonymizationConfigId id) {
     auto c = repo.findById(tenantId, id);
     if (c is null)
-      return CommandResult("", "Anonymization config not found");
+      return CommandResult(false, "", "Anonymization config not found");
 
     c.status = AnonymizationConfigStatus.active;
     c.updatedAt = Clock.currStdTime();

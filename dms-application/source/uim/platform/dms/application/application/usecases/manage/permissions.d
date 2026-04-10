@@ -29,9 +29,9 @@ class ManagePermissionsUseCase : UIMUseCase {
 
   CommandResult grantPermission(CreatePermissionRequest r) {
     if (r.resourceid.isEmpty)
-      return CommandResult("", "Resource ID is required");
+      return CommandResult(false, "", "Resource ID is required");
     if (r.userid.isEmpty)
-      return CommandResult("", "User ID is required");
+      return CommandResult(false, "", "User ID is required");
 
     // Check if permission already exists for this user+resource
     auto existing = permRepo.findByResourceAndUser(r.resourceId,
@@ -73,7 +73,7 @@ class ManagePermissionsUseCase : UIMUseCase {
   CommandResult updatePermission(UpdatePermissionRequest r) {
     auto entity = permRepo.findById(r.id, r.tenantId);
     if (entity is null)
-      return CommandResult("", "Permission not found");
+      return CommandResult(false, "", "Permission not found");
 
     entity.level = r.level;
     permRepo.update(entity);
@@ -83,7 +83,7 @@ class ManagePermissionsUseCase : UIMUseCase {
   CommandResult revokePermission(PermissionId tenantId, id tenantId) {
     auto entity = permRepo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Permission not found");
+      return CommandResult(false, "", "Permission not found");
 
     permRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

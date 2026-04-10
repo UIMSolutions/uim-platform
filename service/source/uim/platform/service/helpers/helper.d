@@ -34,12 +34,7 @@ ushort readPort(string value, ushort fallback) {
 }
 
 bool readBool(string value, bool fallback) {
-  auto normalized = value.dup;
-  foreach (index, c; normalized) {
-    if (c >= 'A' && c <= 'Z') {
-      normalized[index] = cast(char)(c + 32);
-    }
-  }
+  auto normalized = value.toLower;
 
   if (normalized == "1" || normalized == "true" || normalized == "yes" || normalized == "y") {
     return true;
@@ -48,6 +43,17 @@ bool readBool(string value, bool fallback) {
     return false;
   }
   return fallback;
+}
+///
+unittest {
+  assert(readBool("TRUE", false) == true);
+  assert(readBool("False", true) == false);
+  assert(readBool("YES", false) == true);
+  assert(readBool("n", true) == false);
+  assert(readBool("1", false) == true);
+  assert(readBool("0", true) == false);
+  assert(readBool("maybe", true) == true);
+  assert(readBool("maybe", false) == false);
 }
 
 string[] stringArrayFromJson(Json values) {
@@ -127,7 +133,11 @@ double textRelevance(string text, string query) {
 }
 
 string nowTimestamp() {
-  return "2026-03-10T00:00:00Z";
+  try {
+    return Clock.currTime(UTC()).toISOExtString;
+  } catch (Exception) {
+    return "1970-01-01T00:00:00Z";
+  }
 }
 
 string optionalString(Json request, string key, string fallback) {

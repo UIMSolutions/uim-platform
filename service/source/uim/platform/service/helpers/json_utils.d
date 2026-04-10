@@ -67,12 +67,15 @@ string[] jsonStrArray(Json json, string key) {
   if (!v.isArray)
     return null;
 
-  string[] result;
-  foreach (item; v.toArray) {
+  auto arr = v.toArray;
+  auto result = appender!(string[]);
+  result.reserve(arr.length);
+
+  foreach (item; arr) {
     if (item.isString)
       result ~= item.get!string;
   }
-  return result;
+  return result[];
 }
 
 string[][] jsonKeyValuePairs(Json json, string key) {
@@ -80,38 +83,37 @@ string[][] jsonKeyValuePairs(Json json, string key) {
     return null;
 
   auto v = json[key];
-  if (v == Json(null))
-    return null;
-  if (!v.isArray)
+  if (v == Json(null) || !v.isArray)
     return null;
 
-  string[][] result;
-  foreach (item; v.toArray) {
+  auto arr = v.toArray;
+  auto result = appender!(string[][]);
+  result.reserve(arr.length);
+
+  foreach (item; arr) {
     if (item.isObject) {
       if (!item.hasKey("key") || !item.hasKey("value"))
         continue;
 
-      auto k = item["key"];
-      auto val = item["value"];
-      result ~= [k.get!string, val.get!string];
+      result ~= [item["key"].get!string, item["value"].get!string];
     } else if (item.isArray) {
-      string[] pair;
-      foreach (elem; item.toArray) {
+      auto elems = item.toArray;
+      auto pair = appender!(string[]);
+      pair.reserve(elems.length);
+      foreach (elem; elems) {
         if (elem.isString)
           pair ~= elem.get!string;
       }
-      if (pair.length >= 2)
-        result ~= pair;
+      if (pair[].length >= 2)
+        result ~= pair[];
     }
   }
-  return result;
+  return result[];
 }
 
+/// Convert a string array to a Json array. Alias for toJsonArray.
 Json stringsToJsonArray(string[] arr) {
-  auto jarr = Json.emptyArray;
-  foreach (s; arr)
-    jarr ~= Json(s);
-  return jarr;
+  return toJsonArray(arr);
 }
 
 string[][] jsonPairArray(Json j, string key) {
@@ -120,8 +122,10 @@ string[][] jsonPairArray(Json j, string key) {
   auto v = j[key];
   if (!v.isArray)
     return [];
-  string[][] result;
-  foreach (elem; v.toArray) {
+  auto arr = v.toArray;
+  auto result = appender!(string[][]);
+  result.reserve(arr.length);
+  foreach (elem; arr) {
     if (elem.isObject) {
       auto k = "key" in elem;
       auto val = "value" in elem;
@@ -129,16 +133,18 @@ string[][] jsonPairArray(Json j, string key) {
         result ~= [(*k).get!string, (*val).get!string];
       }
     } else if (elem.isArray) {
-      string[] pair;
-      foreach (item; elem.toArray) {
+      auto items = elem.toArray;
+      auto pair = appender!(string[]);
+      pair.reserve(items.length);
+      foreach (item; items) {
         if (item.isString)
           pair ~= item.get!string;
       }
-      if (pair.length >= 2)
-        result ~= pair;
+      if (pair[].length >= 2)
+        result ~= pair[];
     }
   }
-  return result;
+  return result[];
 }
 
 string[][] jsonMessageArray(Json j, string key) {
@@ -148,8 +154,10 @@ string[][] jsonMessageArray(Json j, string key) {
   if (!v.isArray)
     return null;
 
-  string[][] result;
-  foreach (elem; v.toArray) {
+  auto arr = v.toArray;
+  auto result = appender!(string[][]);
+  result.reserve(arr.length);
+  foreach (elem; arr) {
     if (elem.isObject) {
       auto role = "role" in elem;
       auto content = "content" in elem;
@@ -158,18 +166,14 @@ string[][] jsonMessageArray(Json j, string key) {
       }
     }
   }
-  return result;
+  return result[];
 }
 /// Extract the last path segment from a URI (for wildcard routes).
 string extractIdFromPath(string uri) {
+  import std.string : lastIndexOf, indexOf;
+
   // Strip query string
-  long qpos = -1;
-  foreach (i, c; uri) {
-    if (c == '?') {
-      qpos = cast(long)i;
-      break;
-    }
-  }
+  auto qpos = uri.indexOf('?');
   string path = qpos >= 0 ? uri[0 .. qpos] : uri;
 
   // Strip trailing slash
@@ -181,13 +185,6 @@ string extractIdFromPath(string uri) {
   if (spos >= 0 && spos + 1 < path.length)
     return path[spos + 1 .. $];
   return path;
-}
-
-long lastIndexOf(string s, char c) {
-  for (long i = cast(long)s.length - 1; i >= 0; --i)
-    if (s[cast(size_t)i] == c)
-      return i;
-  return -1;
 }
 
 /// Write a JSON error response.
@@ -207,21 +204,26 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   res.writeJsonBody(j, status);
 } */
 
+/// Alias for extractIdFromPath (without query-string stripping).
 string extractIdFromPath2(string path) {
-  import std.string : lastIndexOf;
+  return extractIdFromPath(path);
+}
+///
+unittest {
+  assert(extractIdFromPath("/v1/tenants/abc123") == "abc123");
+  assert(extractIdFromPath("/v1/tenants/abc123/") == "abc123");
+  assert(extractIdFromPath("/v1/tenants/abc123?foo=bar") == "abc123");
+  assert(extractIdFromPath("single") == "single");
 
-  auto idx = path.lastIndexOf('/');
-  if (idx >= 0 && idx + 1 < path.length)
-    return path[idx + 1 .. $];
-  return "";
+  assert(jsonStr(parseJsonString(`{"name": "test"}`), "name") == "test");
+  assert(jsonStr(parseJsonString(`{"name": "test"}`), "missing") == "");
+
+  assert(jsonStrArray(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == ["a", "b"]);
+  assert(jsonStrArray(parseJsonString(`{}`), "tags") is null);
 }
 
 Json toJsonArray(string[] arr) {
-  auto jarr = Json.emptyArray;
-  foreach (ref s; arr) {
-    jarr ~= Json(s);
-  }
-  return jarr;
+  return arr.map!(s => Json(s)).array.Json;
 }
 
 string[string] jsonStrMap(Json j, string key) {

@@ -25,16 +25,16 @@ class ManageTransformationsUseCase : UIMUseCase {
 
   CommandResult createTransformation(CreateTransformationRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.systemid.isEmpty)
-      return CommandResult("", "System ID is required");
+      return CommandResult(false, "", "System ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Transformation name is required");
+      return CommandResult(false, "", "Transformation name is required");
     if (req.mappingRules.length == 0)
-      return CommandResult("", "Mapping rules are required");
+      return CommandResult(false, "", "Mapping rules are required");
 
     if (!engine.validateRules(req.mappingRules))
-      return CommandResult("", "Invalid mapping rules format");
+      return CommandResult(false, "", "Invalid mapping rules format");
 
     auto now = Clock.currStdTime();
     auto t = Transformation();
@@ -67,20 +67,20 @@ class ManageTransformationsUseCase : UIMUseCase {
 
   CommandResult updateTransformation(UpdateTransformationRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Transformation ID is required");
+      return CommandResult(false, "", "Transformation ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Transformation not found");
+      return CommandResult(false, "", "Transformation not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
       updated.name = req.name;
     if (req.mappingRules.length > 0) {
       if (!engine.validateRules(req.mappingRules))
-        return CommandResult("", "Invalid mapping rules format");
+        return CommandResult(false, "", "Invalid mapping rules format");
       updated.mappingRules = req.mappingRules;
     }
     if (req.conditions.length > 0)
@@ -99,7 +99,7 @@ class ManageTransformationsUseCase : UIMUseCase {
   CommandResult deleteTransformation(TransformationId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Transformation not found");
+      return CommandResult(false, "", "Transformation not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

@@ -22,7 +22,7 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
 
   CommandResult createProvider(CreateExternalContentProviderRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Provider name is required");
+      return CommandResult(false, "", "Provider name is required");
 
     auto now = Clock.currStdTime();
     auto p = ExternalContentProvider();
@@ -55,7 +55,7 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
   CommandResult updateProvider(UpdateExternalContentProviderRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
-      return CommandResult("", "Provider not found");
+      return CommandResult(false, "", "Provider not found");
 
     if (req.name.length > 0)
       p.name = req.name;
@@ -73,7 +73,7 @@ class ManageExternalContentProvidersUseCase : UIMUseCase {
   CommandResult deleteProvider(ExternalContentProviderId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
     if (p is null)
-      return CommandResult("", "Provider not found");
+      return CommandResult(false, "", "Provider not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

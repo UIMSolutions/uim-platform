@@ -21,13 +21,13 @@ class ManageInformationReportsUseCase : UIMUseCase {
 
   CommandResult createReport(CreateInformationReportRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
     if (subject is null)
-      return CommandResult("", "Data subject not found");
+      return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
     auto r = InformationReport();
@@ -62,7 +62,7 @@ class ManageInformationReportsUseCase : UIMUseCase {
   CommandResult updateStatus(UpdateInformationReportStatusRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
     if (r is null)
-      return CommandResult("", "Information report not found");
+      return CommandResult(false, "", "Information report not found");
 
     r.status = req.status;
     if (req.downloadUrl.length > 0) r.downloadUrl = req.downloadUrl;

@@ -19,9 +19,9 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
 
   CommandResult createRecord(CreatePurposeRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
 
     auto now = Clock.currStdTime();
     auto r = PurposeRecord();
@@ -62,9 +62,9 @@ class ManagePurposeRecordsUseCase : UIMUseCase {
   CommandResult deactivateRecord(DeactivatePurposeRecordRequest req) {
     auto r = repo.findById(req.id, req.tenantId);
     if (r is null)
-      return CommandResult("", "Purpose record not found");
+      return CommandResult(false, "", "Purpose record not found");
     if (r.status == PurposeRecordStatus.deactivated)
-      return CommandResult("", "Purpose record already deactivated");
+      return CommandResult(false, "", "Purpose record already deactivated");
 
     r.status = PurposeRecordStatus.deactivated;
     r.deactivatedAt = Clock.currStdTime();

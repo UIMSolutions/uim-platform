@@ -22,7 +22,7 @@ class ManageForumTopicsUseCase : UIMUseCase {
 
   CommandResult createForumTopic(CreateForumTopicRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Forum topic title is required");
+      return CommandResult(false, "", "Forum topic title is required");
 
     auto now = Clock.currStdTime();
     auto t = ForumTopic();
@@ -53,7 +53,7 @@ class ManageForumTopicsUseCase : UIMUseCase {
   CommandResult updateForumTopic(UpdateForumTopicRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
-      return CommandResult("", "Forum topic not found");
+      return CommandResult(false, "", "Forum topic not found");
 
     if (req.title.length > 0)
       t.title = req.title;
@@ -71,7 +71,7 @@ class ManageForumTopicsUseCase : UIMUseCase {
   CommandResult deleteForumTopic(ForumTopicId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
     if (t is null)
-      return CommandResult("", "Forum topic not found");
+      return CommandResult(false, "", "Forum topic not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

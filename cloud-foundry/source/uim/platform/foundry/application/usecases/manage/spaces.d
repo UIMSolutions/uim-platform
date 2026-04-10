@@ -27,23 +27,23 @@ class ManageSpacesUseCase : UIMUseCase {
 
   CommandResult createSpace(CreateSpaceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.orgid.isEmpty)
-      return CommandResult("", "Organization ID is required");
+      return CommandResult(false, "", "Organization ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Space name is required");
+      return CommandResult(false, "", "Space name is required");
 
     // Validate org exists
     auto org = orgRepo.findById(req.orgId, req.tenantId);
     if (org is null)
-      return CommandResult("", "Organization not found");
+      return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
-      return CommandResult("", "Organization is suspended");
+      return CommandResult(false, "", "Organization is suspended");
 
     // Unique name within org
     auto existing = repo.findByName(req.orgId, req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Space with this name already exists in org");
+      return CommandResult(false, "", "Space with this name already exists in org");
 
     auto now = Clock.currStdTime();
     auto space = Space();
@@ -75,13 +75,13 @@ class ManageSpacesUseCase : UIMUseCase {
 
   CommandResult updateSpace(UpdateSpaceRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Space ID is required");
+      return CommandResult(false, "", "Space ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Space not found");
+      return CommandResult(false, "", "Space not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -97,7 +97,7 @@ class ManageSpacesUseCase : UIMUseCase {
   CommandResult deleteSpace(SpaceId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Space not found");
+      return CommandResult(false, "", "Space not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

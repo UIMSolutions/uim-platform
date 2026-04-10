@@ -29,20 +29,20 @@ class ManageModelsUseCase : UIMUseCase {
 
   CommandResult createModelConfig(CreateModelConfigRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetid.isEmpty)
-      return CommandResult("", "Dataset ID is required");
+      return CommandResult(false, "", "Dataset ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Model name is required");
+      return CommandResult(false, "", "Model name is required");
 
     // Verify dataset exists
     auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
     if (ds is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Model configuration with this name already exists");
+      return CommandResult(false, "", "Model configuration with this name already exists");
 
     auto now = Clock.currStdTime();
     auto config = ModelConfiguration();
@@ -74,16 +74,16 @@ class ManageModelsUseCase : UIMUseCase {
 
   CommandResult updateModelConfig(UpdateModelConfigRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Model configuration ID is required");
+      return CommandResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Model configuration not found");
+      return CommandResult(false, "", "Model configuration not found");
 
     if (existing.status != ModelConfigStatus.draft)
-      return CommandResult("", "Only draft configurations can be updated");
+      return CommandResult(false, "", "Only draft configurations can be updated");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -107,13 +107,13 @@ class ManageModelsUseCase : UIMUseCase {
   CommandResult activateConfig(ModelConfigId tenantId, id tenantId) {
     auto config = repo.findById(tenantId, id);
     if (config is null)
-      return CommandResult("", "Model configuration not found");
+      return CommandResult(false, "", "Model configuration not found");
 
     if (config.status != ModelConfigStatus.draft)
-      return CommandResult("", "Only draft configurations can be activated");
+      return CommandResult(false, "", "Only draft configurations can be activated");
 
     if (config.targetColumns.length == 0 || config.featureColumns.length == 0)
-      return CommandResult("", "Target and feature columns must be defined");
+      return CommandResult(false, "", "Target and feature columns must be defined");
 
     config.status = ModelConfigStatus.ready;
     config.updatedAt = Clock.currStdTime();
@@ -124,9 +124,9 @@ class ManageModelsUseCase : UIMUseCase {
   /// Start training on a model configuration.
   CommandResult startTraining(StartTrainingRequest req) {
     if (req.modelConfigid.isEmpty)
-      return CommandResult("", "Model configuration ID is required");
+      return CommandResult(false, "", "Model configuration ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto job = trainer.startTraining(req.modelConfigId, req.tenantId, req.createdBy);
     if (job is null)
@@ -139,10 +139,10 @@ class ManageModelsUseCase : UIMUseCase {
   CommandResult deleteModelConfig(ModelConfigId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Model configuration not found");
+      return CommandResult(false, "", "Model configuration not found");
 
     if (existing.status == ModelConfigStatus.training)
-      return CommandResult("", "Cannot delete a configuration that is currently training");
+      return CommandResult(false, "", "Cannot delete a configuration that is currently training");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

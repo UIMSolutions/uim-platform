@@ -24,11 +24,11 @@ class ManageSystemsUseCase : UIMUseCase {
 
   CommandResult createSystem(CreateSystemRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "System name is required");
+      return CommandResult(false, "", "System name is required");
     if (req.host.length == 0)
-      return CommandResult("", "Host is required");
+      return CommandResult(false, "", "Host is required");
 
     auto now = Clock.currStdTime();
 
@@ -69,13 +69,13 @@ class ManageSystemsUseCase : UIMUseCase {
 
   CommandResult updateSystem(UpdateSystemRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "System ID is required");
+      return CommandResult(false, "", "System ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "System not found");
+      return CommandResult(false, "", "System not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -109,7 +109,7 @@ class ManageSystemsUseCase : UIMUseCase {
   CommandResult deleteSystem(SystemId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "System not found");
+      return CommandResult(false, "", "System not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");
@@ -119,7 +119,7 @@ class ManageSystemsUseCase : UIMUseCase {
   CommandResult testConnection(SystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
     if (sys is null)
-      return CommandResult("", "System not found");
+      return CommandResult(false, "", "System not found");
 
     // Simulate connection test — in production, would actually ping the system
     sys.status = ConnectionStatus.active;

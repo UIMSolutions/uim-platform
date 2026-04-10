@@ -22,7 +22,7 @@ class ManageEventsUseCase : UIMUseCase {
 
   CommandResult createEvent(CreateEventRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Event title is required");
+      return CommandResult(false, "", "Event title is required");
 
     auto now = Clock.currStdTime();
     auto e = Event();
@@ -60,7 +60,7 @@ class ManageEventsUseCase : UIMUseCase {
   CommandResult updateEvent(UpdateEventRequest req) {
     auto e = repo.findById(req.id, req.tenantId);
     if (e is null)
-      return CommandResult("", "Event not found");
+      return CommandResult(false, "", "Event not found");
 
     if (req.title.length > 0)
       e.title = req.title;
@@ -80,7 +80,7 @@ class ManageEventsUseCase : UIMUseCase {
   CommandResult deleteEvent(EventId tenantId, id tenantId) {
     auto e = repo.findById(tenantId, id);
     if (e is null)
-      return CommandResult("", "Event not found");
+      return CommandResult(false, "", "Event not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

@@ -24,11 +24,11 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult createRequest(CreateTransportRequestRequest req) {
     if (req.description.length == 0)
-      return CommandResult("", "Transport request description is required");
+      return CommandResult(false, "", "Transport request description is required");
     if (req.owner.length == 0)
-      return CommandResult("", "Owner is required");
+      return CommandResult(false, "", "Owner is required");
     if (req.sourceSystemid.isEmpty)
-      return CommandResult("", "Source system ID is required");
+      return CommandResult(false, "", "Source system ID is required");
 
     TransportRequest tr;
     tr.id = randomUUID();
@@ -49,11 +49,11 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult addTask(TransportRequestId requestId, AddTransportTaskRequest req) {
     if (!repo.existsById(requestId))
-      return CommandResult("", "Transport request not found");
+      return CommandResult(false, "", "Transport request not found");
 
     auto tr = repo.findById(requestId);
     if (tr.status != TransportStatus.modifiable)
-      return CommandResult("", "Transport request is not modifiable");
+      return CommandResult(false, "", "Transport request is not modifiable");
 
     auto taskId = randomUUID().toString()[0 .. 8];
     TransportTask task;
@@ -73,7 +73,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult releaseTask(TransportRequestId requestId, string taskId) {
     if (!repo.existsById(requestId))
-      return CommandResult("", "Transport request not found");
+      return CommandResult(false, "", "Transport request not found");
 
     auto tr = repo.findById(requestId);
     foreach (ref task; tr.tasks) {
@@ -86,7 +86,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
               msg ~= "; ";
             msg ~= e;
           }
-          return CommandResult("", msg);
+          return CommandResult(false, "", msg);
         }
         task.status = TransportStatus.released;
 
@@ -97,12 +97,12 @@ class ManageTransportRequestsUseCase : UIMUseCase {
         return CommandResult(taskId, "");
       }
     }
-    return CommandResult("", "Task not found");
+    return CommandResult(false, "", "Task not found");
   }
 
   CommandResult releaseRequest(TransportRequestId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Transport request not found");
+      return CommandResult(false, "", "Transport request not found");
 
     auto tr = repo.findById(id);
     auto validation = TransportReleaseValidator.validateRelease(*tr);
@@ -113,7 +113,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
           msg ~= "; ";
         msg ~= e;
       }
-      return CommandResult("", msg);
+      return CommandResult(false, "", msg);
     }
 
     tr.status = TransportStatus.released;
@@ -139,11 +139,11 @@ class ManageTransportRequestsUseCase : UIMUseCase {
 
   CommandResult deleteRequest(TransportRequestId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Transport request not found");
+      return CommandResult(false, "", "Transport request not found");
 
     auto tr = repo.findById(id);
     if (tr.status != TransportStatus.modifiable)
-      return CommandResult("", "Only modifiable transport requests can be deleted");
+      return CommandResult(false, "", "Only modifiable transport requests can be deleted");
 
     repo.remove(id);
     return CommandResult(true, id.toString, "");

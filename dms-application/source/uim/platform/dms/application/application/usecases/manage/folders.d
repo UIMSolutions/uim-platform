@@ -29,21 +29,21 @@ class ManageFoldersUseCase : UIMUseCase {
 
   CommandResult createFolder(CreateFolderRequest r) {
     if (r.name.length == 0)
-      return CommandResult("", "Folder name is required");
+      return CommandResult(false, "", "Folder name is required");
     if (r.repositoryid.isEmpty)
-      return CommandResult("", "Repository ID is required");
+      return CommandResult(false, "", "Repository ID is required");
 
     // Validate repository exists
     auto repository = repoRepo.findById(r.repositoryId, r.tenantId);
     if (repository is null)
-      return CommandResult("", "Repository not found");
+      return CommandResult(false, "", "Repository not found");
 
     // Build path
     string path = "/" ~ r.name;
     if (r.parentFolderId.length > 0) {
       auto parent = folderRepo.findById(r.parentFolderId, r.tenantId);
       if (parent is null)
-        return CommandResult("", "Parent folder not found");
+        return CommandResult(false, "", "Parent folder not found");
       path = parent.path ~ "/" ~ r.name;
     }
 
@@ -82,7 +82,7 @@ class ManageFoldersUseCase : UIMUseCase {
   CommandResult updateFolder(UpdateFolderRequest r) {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
-      return CommandResult("", "Folder not found");
+      return CommandResult(false, "", "Folder not found");
 
     if (r.name.length > 0) {
       entity.name = r.name;
@@ -104,12 +104,12 @@ class ManageFoldersUseCase : UIMUseCase {
   CommandResult moveFolder(MoveFolderRequest r) {
     auto entity = folderRepo.findById(r.id, r.tenantId);
     if (entity is null)
-      return CommandResult("", "Folder not found");
+      return CommandResult(false, "", "Folder not found");
 
     if (r.newParentFolderId.length > 0) {
       auto newParent = folderRepo.findById(r.newParentFolderId, r.tenantId);
       if (newParent is null)
-        return CommandResult("", "New parent folder not found");
+        return CommandResult(false, "", "New parent folder not found");
       entity.parentFolderId = r.newParentFolderId;
       entity.path = newParent.path ~ "/" ~ entity.name;
     }
@@ -127,7 +127,7 @@ class ManageFoldersUseCase : UIMUseCase {
   CommandResult deleteFolder(FolderId tenantId, id tenantId) {
     auto entity = folderRepo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Folder not found");
+      return CommandResult(false, "", "Folder not found");
 
     folderRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

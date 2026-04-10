@@ -24,9 +24,9 @@ class ManageScenariosUseCase : UIMUseCase {
 
   CommandResult createScenario(CreateScenarioRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Scenario name is required");
+      return CommandResult(false, "", "Scenario name is required");
 
     auto scenario = IntegrationScenario();
     scenario.id = randomUUID();
@@ -66,13 +66,13 @@ class ManageScenariosUseCase : UIMUseCase {
 
   CommandResult updateScenario(UpdateScenarioRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Scenario ID is required");
+      return CommandResult(false, "", "Scenario ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Scenario not found");
+      return CommandResult(false, "", "Scenario not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -98,7 +98,7 @@ class ManageScenariosUseCase : UIMUseCase {
   CommandResult deleteScenario(ScenarioId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Scenario not found");
+      return CommandResult(false, "", "Scenario not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

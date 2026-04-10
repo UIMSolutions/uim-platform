@@ -22,7 +22,7 @@ class ManagePageTemplatesUseCase : UIMUseCase {
 
   CommandResult createPageTemplate(CreatePageTemplateRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Page template name is required");
+      return CommandResult(false, "", "Page template name is required");
 
     auto now = Clock.currStdTime();
     auto t = PageTemplate();
@@ -52,7 +52,7 @@ class ManagePageTemplatesUseCase : UIMUseCase {
   CommandResult updatePageTemplate(UpdatePageTemplateRequest req) {
     auto t = repo.findById(req.id, req.tenantId);
     if (t is null)
-      return CommandResult("", "Page template not found");
+      return CommandResult(false, "", "Page template not found");
 
     if (req.name.length > 0)
       t.name = req.name;
@@ -70,7 +70,7 @@ class ManagePageTemplatesUseCase : UIMUseCase {
   CommandResult deletePageTemplate(PageTemplateId tenantId, id tenantId) {
     auto t = repo.findById(tenantId, id);
     if (t is null)
-      return CommandResult("", "Page template not found");
+      return CommandResult(false, "", "Page template not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

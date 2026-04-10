@@ -34,15 +34,15 @@ class ManageDocumentsUseCase : UIMUseCase {
 
   CommandResult createDocument(CreateDocumentRequest r) {
     if (r.name.length == 0)
-      return CommandResult("", "Document name is required");
+      return CommandResult(false, "", "Document name is required");
     if (r.repositoryid.isEmpty)
-      return CommandResult("", "Repository ID is required");
+      return CommandResult(false, "", "Repository ID is required");
 
     // Validate folder exists if provided
     if (r.folderId.length > 0) {
       auto folder = folderRepo.findById(r.folderId, r.tenantId);
       if (folder is null)
-        return CommandResult("", "Folder not found");
+        return CommandResult(false, "", "Folder not found");
     }
 
     auto now = Clock.currStdTime();
@@ -111,7 +111,7 @@ class ManageDocumentsUseCase : UIMUseCase {
   CommandResult updateDocument(UpdateDocumentRequest r) {
     auto doc = docRepo.findById(r.id, r.tenantId);
     if (doc is null)
-      return CommandResult("", "Document not found");
+      return CommandResult(false, "", "Document not found");
 
     if (r.name.length > 0)
       doc.name = r.name;
@@ -130,12 +130,12 @@ class ManageDocumentsUseCase : UIMUseCase {
   CommandResult moveDocument(MoveDocumentRequest r) {
     auto doc = docRepo.findById(r.id, r.tenantId);
     if (doc is null)
-      return CommandResult("", "Document not found");
+      return CommandResult(false, "", "Document not found");
 
     if (r.newFolderId.length > 0) {
       auto folder = folderRepo.findById(r.newFolderId, r.tenantId);
       if (folder is null)
-        return CommandResult("", "Target folder not found");
+        return CommandResult(false, "", "Target folder not found");
     }
 
     doc.folderId = r.newFolderId;
@@ -147,7 +147,7 @@ class ManageDocumentsUseCase : UIMUseCase {
   CommandResult archiveDocument(DocumentId tenantId, id tenantId) {
     auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
-      return CommandResult("", "Document not found");
+      return CommandResult(false, "", "Document not found");
 
     doc.status = DocumentStatus.archived;
     doc.updatedAt = Clock.currStdTime();
@@ -158,7 +158,7 @@ class ManageDocumentsUseCase : UIMUseCase {
   CommandResult deleteDocument(DocumentId tenantId, id tenantId) {
     auto doc = docRepo.findById(tenantId, id);
     if (doc is null)
-      return CommandResult("", "Document not found");
+      return CommandResult(false, "", "Document not found");
 
     // Cascade delete versions
     versionRepo.removeByDocument(tenantId, id);

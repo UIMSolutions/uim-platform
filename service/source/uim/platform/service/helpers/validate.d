@@ -71,12 +71,14 @@ bool validateAuth(HTTPServerRequest req, IUIMConfig cfg) {
 // }
 
 string[] segments(string path) {
-  auto parts = path.split("/");
-  string[] segs;
-  foreach (p; parts)
-    if (p.length > 0)
-      segs ~= p;
-  return segs;
+  return path.split("/").filter!(p => p.length > 0).array;
+}
+///
+unittest {
+  assert(segments("/v1/tenants/123") == ["v1", "tenants", "123"]);
+  assert(segments("") == []);
+  assert(segments("/") == []);
+  assert(segments("foo") == ["foo"]);
 }
 
 bool validateString(string value, string fieldName) {

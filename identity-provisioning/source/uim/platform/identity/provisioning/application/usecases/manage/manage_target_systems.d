@@ -22,13 +22,13 @@ class ManageTargetSystemsUseCase : UIMUseCase {
 
   CommandResult createTargetSystem(CreateTargetSystemRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "System name is required");
+      return CommandResult(false, "", "System name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Target system with this name already exists");
+      return CommandResult(false, "", "Target system with this name already exists");
 
     auto now = Clock.currStdTime();
     auto sys = TargetSystem();
@@ -57,13 +57,13 @@ class ManageTargetSystemsUseCase : UIMUseCase {
 
   CommandResult updateTargetSystem(UpdateTargetSystemRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "System ID is required");
+      return CommandResult(false, "", "System ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Target system not found");
+      return CommandResult(false, "", "Target system not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -81,10 +81,10 @@ class ManageTargetSystemsUseCase : UIMUseCase {
   CommandResult activateSystem(TargetSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
     if (sys is null)
-      return CommandResult("", "Target system not found");
+      return CommandResult(false, "", "Target system not found");
 
     if (sys.connectionConfig.length == 0)
-      return CommandResult("", "Connection configuration is required before activation");
+      return CommandResult(false, "", "Connection configuration is required before activation");
 
     sys.status = SystemStatus.active;
     sys.updatedAt = Clock.currStdTime();
@@ -95,7 +95,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
   CommandResult deactivateSystem(TargetSystemId tenantId, id tenantId) {
     auto sys = repo.findById(tenantId, id);
     if (sys is null)
-      return CommandResult("", "Target system not found");
+      return CommandResult(false, "", "Target system not found");
 
     sys.status = SystemStatus.inactive;
     sys.updatedAt = Clock.currStdTime();
@@ -106,7 +106,7 @@ class ManageTargetSystemsUseCase : UIMUseCase {
   CommandResult deleteTargetSystem(TargetSystemId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Target system not found");
+      return CommandResult(false, "", "Target system not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

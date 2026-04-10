@@ -27,14 +27,14 @@ class ManageOrgsUseCase : UIMUseCase {
 
   CommandResult createOrg(CreateOrgRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Organization name is required");
+      return CommandResult(false, "", "Organization name is required");
 
     // Unique name per tenant
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Organization with this name already exists");
+      return CommandResult(false, "", "Organization with this name already exists");
 
     auto now = Clock.currStdTime();
     auto org = Organization();
@@ -65,13 +65,13 @@ class ManageOrgsUseCase : UIMUseCase {
 
   CommandResult updateOrg(UpdateOrgRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Organization ID is required");
+      return CommandResult(false, "", "Organization ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Organization not found");
+      return CommandResult(false, "", "Organization not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -95,9 +95,9 @@ class ManageOrgsUseCase : UIMUseCase {
   CommandResult suspendOrg(OrgId tenantId, id tenantId) {
     auto org = repo.findById(tenantId, id);
     if (org is null)
-      return CommandResult("", "Organization not found");
+      return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.suspended)
-      return CommandResult("", "Organization is already suspended");
+      return CommandResult(false, "", "Organization is already suspended");
 
     org.status = OrgStatus.suspended;
     org.updatedAt = Clock.currStdTime();
@@ -108,9 +108,9 @@ class ManageOrgsUseCase : UIMUseCase {
   CommandResult activateOrg(OrgId tenantId, id tenantId) {
     auto org = repo.findById(tenantId, id);
     if (org is null)
-      return CommandResult("", "Organization not found");
+      return CommandResult(false, "", "Organization not found");
     if (org.status == OrgStatus.active)
-      return CommandResult("", "Organization is already active");
+      return CommandResult(false, "", "Organization is already active");
 
     org.status = OrgStatus.active;
     org.updatedAt = Clock.currStdTime();
@@ -121,7 +121,7 @@ class ManageOrgsUseCase : UIMUseCase {
   CommandResult deleteOrg(OrgId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Organization not found");
+      return CommandResult(false, "", "Organization not found");
 
     // Cascade: remove all spaces in this org
     spaceRepo.removeByOrg(tenantId, id);

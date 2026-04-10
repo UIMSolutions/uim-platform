@@ -30,19 +30,19 @@ class ManageServicesUseCase : UIMUseCase {
 
   CommandResult createInstance(CreateServiceInstanceRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.spaceid.isEmpty)
-      return CommandResult("", "Space ID is required");
+      return CommandResult(false, "", "Space ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Service instance name is required");
+      return CommandResult(false, "", "Service instance name is required");
     if (req.serviceName.length == 0)
-      return CommandResult("", "Service name is required");
+      return CommandResult(false, "", "Service name is required");
     if (req.servicePlanName.length == 0)
-      return CommandResult("", "Service plan name is required");
+      return CommandResult(false, "", "Service plan name is required");
 
     auto existing = instanceRepo.findByName(req.spaceId, req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Service instance with this name already exists in space");
+      return CommandResult(false, "", "Service instance with this name already exists in space");
 
     auto now = Clock.currStdTime();
     auto si = ServiceInstance();
@@ -77,13 +77,13 @@ class ManageServicesUseCase : UIMUseCase {
 
   CommandResult updateInstance(UpdateServiceInstanceRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Service instance ID is required");
+      return CommandResult(false, "", "Service instance ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = instanceRepo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Service instance not found");
+      return CommandResult(false, "", "Service instance not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -100,7 +100,7 @@ class ManageServicesUseCase : UIMUseCase {
 
   CommandResult deleteInstance(TenantId tenantId, ServiceInstanceId id) {
     if (!instanceRepo.existsById(tenantId, id))
-      return CommandResult("", "Service instance not found");
+      return CommandResult(false, "", "Service instance not found");
 
     // Remove all bindings for this instance
     auto bindings = bindingRepo.findByServiceInstance(tenantId, id);
@@ -115,16 +115,16 @@ class ManageServicesUseCase : UIMUseCase {
 
   CommandResult createBinding(CreateServiceBindingRequest request) {
     if (request.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (request.appId.isEmpty)
-      return CommandResult("", "Application ID is required");
+      return CommandResult(false, "", "Application ID is required");
     if (request.serviceInstanceId.isEmpty)
-      return CommandResult("", "Service instance ID is required");
+      return CommandResult(false, "", "Service instance ID is required");
 
     // Verify instance exists
     auto instance = instanceRepo.findById(request.serviceInstanceId, request.tenantId);
     if (instance is null)
-      return CommandResult("", "Service instance not found");
+      return CommandResult(false, "", "Service instance not found");
 
     auto binding = ServiceBinding();
     binding.id = randomUUID();
@@ -153,7 +153,7 @@ class ManageServicesUseCase : UIMUseCase {
   CommandResult deleteBinding(ServiceBindingId bindingId, TenantId tenantId) {
     auto existing = bindingRepo.findById(bindingId, tenantId);
     if (existing is null)
-      return CommandResult("", "Service binding not found");
+      return CommandResult(false, "", "Service binding not found");
 
     bindingRepo.remove(bindingId, tenantId);
     return CommandResult(true, bindingId.toString, "");

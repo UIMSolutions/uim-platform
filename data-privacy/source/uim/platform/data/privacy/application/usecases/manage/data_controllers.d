@@ -19,9 +19,9 @@ class ManageDataControllersUseCase : UIMUseCase {
 
   CommandResult createController(CreateDataControllerRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Name is required");
+      return CommandResult(false, "", "Name is required");
 
     auto now = Clock.currStdTime();
     auto c = DataController();
@@ -55,7 +55,7 @@ class ManageDataControllersUseCase : UIMUseCase {
   CommandResult updateController(UpdateDataControllerRequest req) {
     auto c = repo.findById(req.id, req.tenantId);
     if (c is null)
-      return CommandResult("", "Data controller not found");
+      return CommandResult(false, "", "Data controller not found");
 
     if (req.name.length > 0) c.name = req.name;
     if (req.description.length > 0) c.description = req.description;

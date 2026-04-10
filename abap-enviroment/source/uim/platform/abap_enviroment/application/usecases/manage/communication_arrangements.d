@@ -23,11 +23,11 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
 
   CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Arrangement name is required");
+      return CommandResult(false, "", "Arrangement name is required");
     if (req.scenarioid.isEmpty)
-      return CommandResult("", "Communication scenario ID is required");
+      return CommandResult(false, "", "Communication scenario ID is required");
     if (req.systemInstanceid.isEmpty)
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     CommunicationArrangement arr;
     arr.id = randomUUID();
@@ -59,7 +59,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
   CommandResult updateArrangement(CommunicationArrangementId id,
     UpdateCommunicationArrangementRequest req) {
     if (!repo.existsById(id))
-      return CommandResult("", "Communication arrangement not found");
+      return CommandResult(false, "", "Communication arrangement not found");
 
     auto arr = repo.findById(id);
     if (req.description.length > 0)
@@ -100,7 +100,7 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
 
   CommandResult deleteArrangement(CommunicationArrangementId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Communication arrangement not found");
+      return CommandResult(false, "", "Communication arrangement not found");
 
     repo.remove(id);
     return CommandResult(true, id.toString(), "");

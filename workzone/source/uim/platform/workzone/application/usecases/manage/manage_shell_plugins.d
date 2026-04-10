@@ -22,7 +22,7 @@ class ManageShellPluginsUseCase : UIMUseCase {
 
   CommandResult createPlugin(CreateShellPluginRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Plugin name is required");
+      return CommandResult(false, "", "Plugin name is required");
 
     auto now = Clock.currStdTime();
     auto p = ShellPlugin();
@@ -54,7 +54,7 @@ class ManageShellPluginsUseCase : UIMUseCase {
   CommandResult updatePlugin(UpdateShellPluginRequest req) {
     auto p = repo.findById(req.id, req.tenantId);
     if (p is null)
-      return CommandResult("", "Plugin not found");
+      return CommandResult(false, "", "Plugin not found");
 
     if (req.name.length > 0)
       p.name = req.name;
@@ -72,7 +72,7 @@ class ManageShellPluginsUseCase : UIMUseCase {
   CommandResult deletePlugin(ShellPluginId tenantId, id tenantId) {
     auto p = repo.findById(tenantId, id);
     if (p is null)
-      return CommandResult("", "Plugin not found");
+      return CommandResult(false, "", "Plugin not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

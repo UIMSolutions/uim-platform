@@ -24,7 +24,7 @@ class ManageVersionsUseCase : UIMUseCase {
   CommandResult checkOut(DocumentId doctenantId, id tenantId, UserId userId) {
     auto ok = versioningService.checkOut(doctenantId, id, userId);
     if (!ok)
-      return CommandResult("", "Cannot check out document (not found or already locked)");
+      return CommandResult(false, "", "Cannot check out document (not found or already locked)");
     return CommandResult(docId, "");
   }
 
@@ -33,14 +33,14 @@ class ManageVersionsUseCase : UIMUseCase {
         r.isMajor, r.comment, r.fileName, r.mimeType, r.fileSize, r.checksum);
 
     if (ver is null)
-      return CommandResult("", "Cannot check in document (not found or not locked)");
+      return CommandResult(false, "", "Cannot check in document (not found or not locked)");
     return CommandResult(ver.id, "");
   }
 
   CommandResult cancelCheckOut(DocumentId doctenantId, id tenantId) {
     auto ok = versioningService.cancelCheckOut(doctenantId, id);
     if (!ok)
-      return CommandResult("", "Cannot cancel checkout (not found or not locked)");
+      return CommandResult(false, "", "Cannot cancel checkout (not found or not locked)");
     return CommandResult(docId, "");
   }
 

@@ -29,15 +29,15 @@ class ManageConsentRecordsUseCase : UIMUseCase {
 
   CommandResult grantConsent(CreateConsentRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.dataSubjectid.isEmpty)
-      return CommandResult("", "Data subject ID is required");
+      return CommandResult(false, "", "Data subject ID is required");
     if (req.consentText.length == 0)
-      return CommandResult("", "Consent text is required");
+      return CommandResult(false, "", "Consent text is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);
     if (subject is null)
-      return CommandResult("", "Data subject not found");
+      return CommandResult(false, "", "Data subject not found");
 
     auto now = Clock.currStdTime();
     auto record = ConsentRecord();
@@ -82,9 +82,9 @@ class ManageConsentRecordsUseCase : UIMUseCase {
   CommandResult revokeConsent(RevokeConsentRequest req) {
     auto record = repo.findById(req.id, req.tenantId);
     if (record is null)
-      return CommandResult("", "Consent record not found");
+      return CommandResult(false, "", "Consent record not found");
     if (record.status == ConsentStatus.revoked)
-      return CommandResult("", "Consent already revoked");
+      return CommandResult(false, "", "Consent already revoked");
 
     record.status = ConsentStatus.revoked;
     record.revokedAt = Clock.currStdTime();

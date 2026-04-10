@@ -38,20 +38,20 @@ class ManageWorkflowsUseCase : UIMUseCase {
   /// Create a new workflow instance from a scenario template.
   CommandResult createWorkflow(CreateWorkflowRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.scenarioid.isEmpty)
-      return CommandResult("", "Scenario ID is required");
+      return CommandResult(false, "", "Scenario ID is required");
 
     // Enforce SAP limit: max 15 active workflows per tenant
     if (engine.isWorkflowLimitReached(req.tenantId))
-      return CommandResult("", "Active workflow limit (15) reached for this tenant");
+      return CommandResult(false, "", "Active workflow limit (15) reached for this tenant");
 
     // Validate scenario exists and is active
     auto scenario = scenarioRepo.findById(req.scenarioId, req.tenantId);
     if (scenario is null)
-      return CommandResult("", "Scenario not found");
+      return CommandResult(false, "", "Scenario not found");
     if (scenario.status != ScenarioStatus.active)
-      return CommandResult("", "Scenario is not active");
+      return CommandResult(false, "", "Scenario is not active");
 
     auto now = Clock.currStdTime();
 
@@ -120,9 +120,9 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult startWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf is null)
-      return CommandResult("", "Workflow not found");
+      return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.planned)
-      return CommandResult("", "Workflow is not in planned state");
+      return CommandResult(false, "", "Workflow is not in planned state");
 
     wf.status = WorkflowStatus.inProgress;
     wf.startedAt = Clock.currStdTime();
@@ -137,9 +137,9 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult suspendWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf is null)
-      return CommandResult("", "Workflow not found");
+      return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.inProgress)
-      return CommandResult("", "Workflow is not in progress");
+      return CommandResult(false, "", "Workflow is not in progress");
 
     wf.status = WorkflowStatus.suspended;
     wf.updatedAt = Clock.currStdTime();
@@ -151,9 +151,9 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult resumeWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf is null)
-      return CommandResult("", "Workflow not found");
+      return CommandResult(false, "", "Workflow not found");
     if (wf.status != WorkflowStatus.suspended)
-      return CommandResult("", "Workflow is not suspended");
+      return CommandResult(false, "", "Workflow is not suspended");
 
     wf.status = WorkflowStatus.inProgress;
     wf.updatedAt = Clock.currStdTime();
@@ -167,9 +167,9 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult terminateWorkflow(WorkflowId tenantId, id tenantId) {
     auto wf = workflowRepo.findById(tenantId, id);
     if (wf is null)
-      return CommandResult("", "Workflow not found");
+      return CommandResult(false, "", "Workflow not found");
     if (wf.status == WorkflowStatus.completed || wf.status == WorkflowStatus.terminated)
-      return CommandResult("", "Workflow is already finished");
+      return CommandResult(false, "", "Workflow is already finished");
 
     wf.status = WorkflowStatus.terminated;
     wf.completedAt = Clock.currStdTime();
@@ -181,7 +181,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult deleteWorkflow(WorkflowId tenantId, id tenantId) {
     auto existing = workflowRepo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Workflow not found");
+      return CommandResult(false, "", "Workflow not found");
 
     stepRepo.removeByWorkflow(tenantId, id);
     workflowRepo.remove(tenantId, id);

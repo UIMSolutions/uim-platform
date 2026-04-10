@@ -22,7 +22,7 @@ class ManageSitesUseCase : UIMUseCase {
 
   CommandResult createSite(CreateSiteRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Site name is required");
+      return CommandResult(false, "", "Site name is required");
 
     auto now = Clock.currStdTime();
     auto s = Site();
@@ -53,7 +53,7 @@ class ManageSitesUseCase : UIMUseCase {
   CommandResult updateSite(UpdateSiteRequest req) {
     auto s = repo.findById(req.id, req.tenantId);
     if (s is null)
-      return CommandResult("", "Site not found");
+      return CommandResult(false, "", "Site not found");
 
     if (req.name.length > 0)
       s.name = req.name;
@@ -71,7 +71,7 @@ class ManageSitesUseCase : UIMUseCase {
   CommandResult deleteSite(SiteId tenantId, id tenantId) {
     auto s = repo.findById(tenantId, id);
     if (s is null)
-      return CommandResult("", "Site not found");
+      return CommandResult(false, "", "Site not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

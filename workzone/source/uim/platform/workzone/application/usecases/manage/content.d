@@ -23,7 +23,7 @@ class ManageContentUseCase : UIMUseCase {
 
   CommandResult createContent(CreateContentRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Content title is required");
+      return CommandResult(false, "", "Content title is required");
 
     auto now = Clock.currStdTime();
     auto item = ContentItem();
@@ -62,7 +62,7 @@ class ManageContentUseCase : UIMUseCase {
   CommandResult updateContent(UpdateContentRequest req) {
     auto item = repo.findById(req.id, req.tenantId);
     if (item is null)
-      return CommandResult("", "Content not found");
+      return CommandResult(false, "", "Content not found");
 
     if (req.title.length > 0)
       item.title = req.title;
@@ -85,7 +85,7 @@ class ManageContentUseCase : UIMUseCase {
   CommandResult publishContent(ContentId tenantId, id tenantId) {
     auto item = repo.findById(tenantId, id);
     if (item is null)
-      return CommandResult("", "Content not found");
+      return CommandResult(false, "", "Content not found");
 
     item.status = ContentStatus.published;
     item.publishedAt = Clock.currStdTime();

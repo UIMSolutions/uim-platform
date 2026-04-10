@@ -24,13 +24,13 @@ class ManageBuildpacksUseCase : UIMUseCase {
 
   CommandResult createBuildpack(CreateBuildpackRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Buildpack name is required");
+      return CommandResult(false, "", "Buildpack name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Buildpack with this name already exists");
+      return CommandResult(false, "", "Buildpack with this name already exists");
 
     auto now = Clock.currStdTime();
     auto bp = Buildpack();
@@ -65,13 +65,13 @@ class ManageBuildpacksUseCase : UIMUseCase {
 
   CommandResult updateBuildpack(UpdateBuildpackRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Buildpack ID is required");
+      return CommandResult(false, "", "Buildpack ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Buildpack not found");
+      return CommandResult(false, "", "Buildpack not found");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -93,10 +93,10 @@ class ManageBuildpacksUseCase : UIMUseCase {
   CommandResult deleteBuildpack(BuildpackId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Buildpack not found");
+      return CommandResult(false, "", "Buildpack not found");
 
     if (existing.locked)
-      return CommandResult("", "Cannot delete a locked buildpack");
+      return CommandResult(false, "", "Cannot delete a locked buildpack");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

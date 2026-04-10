@@ -29,11 +29,11 @@ class ManageSharesUseCase : UIMUseCase {
 
   CommandResult createShare(CreateShareRequest r) {
     if (r.documentid.isEmpty)
-      return CommandResult("", "Document ID is required");
+      return CommandResult(false, "", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.tenantId);
     if (doc is null)
-      return CommandResult("", "Document not found");
+      return CommandResult(false, "", "Document not found");
 
     auto entity = new Share();
     entity.id = randomUUID();
@@ -66,7 +66,7 @@ class ManageSharesUseCase : UIMUseCase {
   CommandResult revokeShare(ShareId tenantId, id tenantId) {
     auto entity = shareRepo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Share not found");
+      return CommandResult(false, "", "Share not found");
 
     entity.status = ShareStatus.revoked;
     shareRepo.update(entity);
@@ -76,7 +76,7 @@ class ManageSharesUseCase : UIMUseCase {
   CommandResult deleteShare(ShareId tenantId, id tenantId) {
     auto entity = shareRepo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Share not found");
+      return CommandResult(false, "", "Share not found");
 
     shareRepo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

@@ -26,18 +26,18 @@ class ManageDataRecordsUseCase : UIMUseCase {
 
   CommandResult createRecord(CreateDataRecordRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.datasetid.isEmpty)
-      return CommandResult("", "Dataset ID is required");
+      return CommandResult(false, "", "Dataset ID is required");
     if (req.attributes.length == 0)
-      return CommandResult("", "Attributes are required");
+      return CommandResult(false, "", "Attributes are required");
 
     // Verify dataset exists and is still mutable
     auto ds = datasetRepo.findById(req.datasetId, req.tenantId);
     if (ds is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
     if (ds.status != DatasetStatus.draft && ds.status != DatasetStatus.ready)
-      return CommandResult("", "Cannot add records to a processed or completed dataset");
+      return CommandResult(false, "", "Cannot add records to a processed or completed dataset");
 
     auto record = DataRecord();
     record.id = randomUUID();
@@ -64,7 +64,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
   CommandResult validateRecord(DataRecordId tenantId, id tenantId) {
     auto record = repo.findById(tenantId, id);
     if (record is null)
-      return CommandResult("", "Record not found");
+      return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.validated;
     repo.update(*record);
@@ -74,7 +74,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
   CommandResult rejectRecord(DataRecordId tenantId, id tenantId) {
     auto record = repo.findById(tenantId, id);
     if (record is null)
-      return CommandResult("", "Record not found");
+      return CommandResult(false, "", "Record not found");
 
     record.status = RecordStatus.rejected;
     repo.update(*record);
@@ -84,7 +84,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
   CommandResult deleteRecord(DataRecordId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Record not found");
+      return CommandResult(false, "", "Record not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

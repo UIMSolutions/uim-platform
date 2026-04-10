@@ -22,7 +22,7 @@ class ManageAppsUseCase : UIMUseCase {
 
   CommandResult createApp(CreateAppRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "App name is required");
+      return CommandResult(false, "", "App name is required");
 
     auto now = Clock.currStdTime();
     auto app = AppRegistration();
@@ -60,7 +60,7 @@ class ManageAppsUseCase : UIMUseCase {
   CommandResult updateApp(UpdateAppRequest req) {
     auto app = repo.findById(req.id, req.tenantId);
     if (app is null)
-      return CommandResult("", "App not found");
+      return CommandResult(false, "", "App not found");
 
     if (req.name.length > 0)
       app.name = req.name;

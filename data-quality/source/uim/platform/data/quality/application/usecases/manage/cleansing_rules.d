@@ -26,11 +26,11 @@ class ManageCleansingRulesUseCase : UIMUseCase {
 
   CommandResult create(CreateCleansingRuleRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Rule name is required");
+      return CommandResult(false, "", "Rule name is required");
     if (req.fieldName.length == 0)
-      return CommandResult("", "Field name is required");
+      return CommandResult(false, "", "Field name is required");
 
     auto rule = CleansingRule();
     rule.id = randomUUID();
@@ -61,13 +61,13 @@ class ManageCleansingRulesUseCase : UIMUseCase {
 
   CommandResult update(UpdateCleansingRuleRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Rule ID is required");
+      return CommandResult(false, "", "Rule ID is required");
 
     auto existing = repo.findById(req.id);
     if (existing is null)
-      return CommandResult("", "Cleansing rule not found");
+      return CommandResult(false, "", "Cleansing rule not found");
     if (existing.tenantId != req.tenantId)
-      return CommandResult("", "Tenant mismatch");
+      return CommandResult(false, "", "Tenant mismatch");
 
     auto rule = *existing;
     rule.name = req.name;
@@ -96,9 +96,9 @@ class ManageCleansingRulesUseCase : UIMUseCase {
   CommandResult remove(TenantId tenantId, RuleId id) {
     auto existing = repo.findById(id);
     if (existing is null)
-      return CommandResult("", "Cleansing rule not found");
+      return CommandResult(false, "", "Cleansing rule not found");
     if (existing.tenantId != tenantId)
-      return CommandResult("", "Tenant mismatch");
+      return CommandResult(false, "", "Tenant mismatch");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

@@ -25,13 +25,13 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult createDataset(CreateDatasetRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
-      return CommandResult("", "Dataset name is required");
+      return CommandResult(false, "", "Dataset name is required");
 
     auto existing = repo.findByName(req.tenantId, req.name);
     if (existing !is null)
-      return CommandResult("", "Dataset with this name already exists");
+      return CommandResult(false, "", "Dataset with this name already exists");
 
     auto now = Clock.currStdTime();
     auto ds = Dataset();
@@ -60,16 +60,16 @@ class ManageDatasetsUseCase : UIMUseCase {
 
   CommandResult updateDataset(UpdateDatasetRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Dataset ID is required");
+      return CommandResult(false, "", "Dataset ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findById(req.id, req.tenantId);
     if (existing is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
 
     if (existing.status != DatasetStatus.draft)
-      return CommandResult("", "Only draft datasets can be updated");
+      return CommandResult(false, "", "Only draft datasets can be updated");
 
     auto updated = *existing;
     if (req.name.length > 0)
@@ -88,13 +88,13 @@ class ManageDatasetsUseCase : UIMUseCase {
   CommandResult validateDataset(DatasetId tenantId, id tenantId) {
     auto ds = repo.findById(tenantId, id);
     if (ds is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.draft)
-      return CommandResult("", "Only draft datasets can be validated");
+      return CommandResult(false, "", "Only draft datasets can be validated");
 
     if (ds.columnDefinitions.length == 0)
-      return CommandResult("", "Column definitions are required before validation");
+      return CommandResult(false, "", "Column definitions are required before validation");
 
     auto now = Clock.currStdTime();
     ds.rowCount = recordRepo.countByDataset(tenantId, id);
@@ -110,10 +110,10 @@ class ManageDatasetsUseCase : UIMUseCase {
   CommandResult processDataset(DatasetId tenantId, id tenantId) {
     auto ds = repo.findById(tenantId, id);
     if (ds is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
 
     if (ds.status != DatasetStatus.ready)
-      return CommandResult("", "Dataset must be in 'ready' status to process");
+      return CommandResult(false, "", "Dataset must be in 'ready' status to process");
 
     auto now = Clock.currStdTime();
     ds.status = DatasetStatus.completed;
@@ -126,7 +126,7 @@ class ManageDatasetsUseCase : UIMUseCase {
   CommandResult deleteDataset(DatasetId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Dataset not found");
+      return CommandResult(false, "", "Dataset not found");
 
     // Cascade delete records
     recordRepo.removeByDataset(tenantId, id);

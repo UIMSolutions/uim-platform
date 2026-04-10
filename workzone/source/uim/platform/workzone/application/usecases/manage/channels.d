@@ -22,7 +22,7 @@ class ManageChannelsUseCase : UIMUseCase {
 
   CommandResult createChannel(CreateChannelRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Channel name is required");
+      return CommandResult(false, "", "Channel name is required");
 
     auto now = Clock.currStdTime();
     auto ch = Channel();
@@ -51,7 +51,7 @@ class ManageChannelsUseCase : UIMUseCase {
   CommandResult updateChannel(UpdateChannelRequest req) {
     auto ch = repo.findById(req.id, req.tenantId);
     if (ch is null)
-      return CommandResult("", "Channel not found");
+      return CommandResult(false, "", "Channel not found");
 
     if (req.name.length > 0)
       ch.name = req.name;

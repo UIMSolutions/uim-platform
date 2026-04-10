@@ -22,7 +22,7 @@ class ManageCardsUseCase : UIMUseCase {
 
   CommandResult createCard(CreateCardRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Card title is required");
+      return CommandResult(false, "", "Card title is required");
 
     auto now = Clock.currStdTime();
     auto c = Card();
@@ -57,7 +57,7 @@ class ManageCardsUseCase : UIMUseCase {
   CommandResult updateCard(UpdateCardRequest req) {
     auto c = repo.findById(req.id, req.tenantId);
     if (c is null)
-      return CommandResult("", "Card not found");
+      return CommandResult(false, "", "Card not found");
 
     if (req.title.length > 0)
       c.title = req.title;

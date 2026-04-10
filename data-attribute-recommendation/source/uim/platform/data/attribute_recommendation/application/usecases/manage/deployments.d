@@ -30,21 +30,21 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult createDeployment(CreateDeploymentRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.trainingJobid.isEmpty)
-      return CommandResult("", "Training job ID is required");
+      return CommandResult(false, "", "Training job ID is required");
 
     // Verify training job completed successfully
     auto job = jobRepo.findById(req.trainingJobId, req.tenantId);
     if (job is null)
-      return CommandResult("", "Training job not found");
+      return CommandResult(false, "", "Training job not found");
     if (job.status != JobStatus.completed)
-      return CommandResult("", "Training job must be completed before deployment");
+      return CommandResult(false, "", "Training job must be completed before deployment");
 
     // Check no active deployment exists for this job
     auto existingDep = repo.findByTrainingJob(req.trainingJobId, req.tenantId);
     if (existingDep !is null && existingDep.status == DeploymentStatus.active)
-      return CommandResult("", "An active deployment already exists for this training job");
+      return CommandResult(false, "", "An active deployment already exists for this training job");
 
     auto now = Clock.currStdTime();
     auto dep = ModelDeployment();
@@ -81,10 +81,10 @@ class ManageDeploymentsUseCase : UIMUseCase {
   CommandResult activateDeployment(DeploymentId tenantId, id tenantId) {
     auto dep = repo.findById(tenantId, id);
     if (dep is null)
-      return CommandResult("", "Deployment not found");
+      return CommandResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.deploying && dep.status != DeploymentStatus.inactive)
-      return CommandResult("", "Deployment cannot be activated from current state");
+      return CommandResult(false, "", "Deployment cannot be activated from current state");
 
     dep.status = DeploymentStatus.active;
     dep.updatedAt = Clock.currStdTime();
@@ -96,10 +96,10 @@ class ManageDeploymentsUseCase : UIMUseCase {
   CommandResult deactivateDeployment(DeploymentId tenantId, id tenantId) {
     auto dep = repo.findById(tenantId, id);
     if (dep is null)
-      return CommandResult("", "Deployment not found");
+      return CommandResult(false, "", "Deployment not found");
 
     if (dep.status != DeploymentStatus.active)
-      return CommandResult("", "Only active deployments can be deactivated");
+      return CommandResult(false, "", "Only active deployments can be deactivated");
 
     dep.status = DeploymentStatus.inactive;
     dep.updatedAt = Clock.currStdTime();
@@ -110,7 +110,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
   CommandResult deleteDeployment(DeploymentId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Deployment not found");
+      return CommandResult(false, "", "Deployment not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

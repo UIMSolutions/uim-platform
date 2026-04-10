@@ -51,7 +51,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
   CommandResult resolve(ResolveDuplicateRequest req) {
     auto group = repo.findById(req.groupId, req.tenantId);
     if (group is null)
-      return CommandResult("", "Match group not found");
+      return CommandResult(false, "", "Match group not found");
 
     auto g = *group;
     g.survivorRecordId = req.survivorRecordId;

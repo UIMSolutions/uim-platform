@@ -22,7 +22,7 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
 
   CommandResult createArticle(CreateKBArticleRequest req) {
     if (req.title.length == 0)
-      return CommandResult("", "Article title is required");
+      return CommandResult(false, "", "Article title is required");
 
     auto now = Clock.currStdTime();
     auto a = KnowledgeBaseArticle();
@@ -61,7 +61,7 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
   CommandResult updateArticle(UpdateKBArticleRequest req) {
     auto a = repo.findById(req.id, req.tenantId);
     if (a is null)
-      return CommandResult("", "Article not found");
+      return CommandResult(false, "", "Article not found");
 
     if (req.title.length > 0)
       a.title = req.title;
@@ -82,7 +82,7 @@ class ManageKnowledgeBaseArticlesUseCase : UIMUseCase {
   CommandResult deleteArticle(KBArticleId tenantId, id tenantId) {
     auto a = repo.findById(tenantId, id);
     if (a is null)
-      return CommandResult("", "Article not found");
+      return CommandResult(false, "", "Article not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

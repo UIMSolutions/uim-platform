@@ -26,19 +26,19 @@ class ManageBusinessUsersUseCase : UIMUseCase {
 
   CommandResult createUser(CreateBusinessUserRequest req) {
     if (req.username.length == 0)
-      return CommandResult("", "Username is required");
+      return CommandResult(false, "", "Username is required");
     if (req.email.length == 0)
-      return CommandResult("", "Email is required");
+      return CommandResult(false, "", "Email is required");
     if (req.systemInstanceid.isEmpty)
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     auto existing = repo.findByUsername(req.systemInstanceId, req.username);
     if (existing !is null)
-      return CommandResult("", "Username '" ~ req.username ~ "' already exists");
+      return CommandResult(false, "", "Username '" ~ req.username ~ "' already exists");
 
     auto emailCheck = repo.findByEmail(req.systemInstanceId, req.email);
     if (emailCheck !is null)
-      return CommandResult("", "Email '" ~ req.email ~ "' already in use");
+      return CommandResult(false, "", "Email '" ~ req.email ~ "' already in use");
 
     BusinessUser user;
     user.id = randomUUID();
@@ -70,7 +70,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
 
   CommandResult updateUser(BusinessUserId id, UpdateBusinessUserRequest req) {
     if (!repo.existsById(id))
-      return CommandResult("", "Business user not found");
+      return CommandResult(false, "", "Business user not found");
 
     auto user = repo.findById(id);
     if (req.firstName.length > 0)
@@ -111,7 +111,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
 
   CommandResult deleteUser(BusinessUserId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Business user not found");
+      return CommandResult(false, "", "Business user not found");
 
     repo.remove(id);
     return CommandResult(true, id.toString(), "");

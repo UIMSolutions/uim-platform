@@ -25,13 +25,13 @@ class ManageRepositoriesUseCase : UIMUseCase {
 
   CommandResult createRepository(CreateRepositoryRequest r) {
     if (r.name.length == 0)
-      return CommandResult("", "Repository name is required");
+      return CommandResult(false, "", "Repository name is required");
     if (r.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     auto existing = repo.findByName(r.name, r.tenantId);
     if (existing !is null)
-      return CommandResult("", "Repository with this name already exists");
+      return CommandResult(false, "", "Repository with this name already exists");
 
     auto entity = new Repository();
     entity.id = randomUUID();
@@ -60,7 +60,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
   CommandResult updateRepository(UpdateRepositoryRequest r) {
     auto entity = repo.findById(r.id, r.tenantId);
     if (entity is null)
-      return CommandResult("", "Repository not found");
+      return CommandResult(false, "", "Repository not found");
 
     if (r.name.length > 0)
       entity.name = r.name;
@@ -79,7 +79,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
   CommandResult archiveRepository(RepositoryId tenantId, id tenantId) {
     auto entity = repo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Repository not found");
+      return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.archived;
     entity.updatedAt = Clock.currStdTime();
@@ -90,7 +90,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
   CommandResult activateRepository(RepositoryId tenantId, id tenantId) {
     auto entity = repo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Repository not found");
+      return CommandResult(false, "", "Repository not found");
 
     entity.status = RepositoryStatus.active;
     entity.updatedAt = Clock.currStdTime();
@@ -101,7 +101,7 @@ class ManageRepositoriesUseCase : UIMUseCase {
   CommandResult deleteRepository(RepositoryId tenantId, id tenantId) {
     auto entity = repo.findById(tenantId, id);
     if (entity is null)
-      return CommandResult("", "Repository not found");
+      return CommandResult(false, "", "Repository not found");
 
     repo.remove(tenantId, id);
     return CommandResult(true, id.toString, "");

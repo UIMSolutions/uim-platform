@@ -36,19 +36,19 @@ class RunProvisioningJobsUseCase : UIMUseCase {
 
   CommandResult createJob(CreateProvisioningJobRequest req) {
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
     if (req.sourceSystemid.isEmpty)
-      return CommandResult("", "Source system ID is required");
+      return CommandResult(false, "", "Source system ID is required");
     if (req.targetSystemid.isEmpty)
-      return CommandResult("", "Target system ID is required");
+      return CommandResult(false, "", "Target system ID is required");
 
     // Verify systems exist
     auto src = sourceRepo.findById(req.sourceSystemId, req.tenantId);
     if (src is null)
-      return CommandResult("", "Source system not found");
+      return CommandResult(false, "", "Source system not found");
     auto tgt = targetRepo.findById(req.targetSystemId, req.tenantId);
     if (tgt is null)
-      return CommandResult("", "Target system not found");
+      return CommandResult(false, "", "Target system not found");
 
     auto now = Clock.currStdTime();
     auto job = ProvisioningJob();
@@ -74,7 +74,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
 
     auto result = engine.runJob(tenantId, id);
     if (result is null)
-      return CommandResult("", "Failed to execute provisioning job");
+      return CommandResult(false, "", "Failed to execute provisioning job");
 
     return CommandResult(result.id, "");
   }
@@ -90,7 +90,7 @@ class RunProvisioningJobsUseCase : UIMUseCase {
 
   CommandResult cancelJob(ProvisioningJobId tenantId, id tenantId) {
     if (!engine.cancelJob(tenantId, id))
-      return CommandResult("", "Job cannot be cancelled");
+      return CommandResult(false, "", "Job cannot be cancelled");
 
     return CommandResult(true, id.toString, "");
   }
@@ -110,10 +110,10 @@ class RunProvisioningJobsUseCase : UIMUseCase {
   CommandResult deleteJob(ProvisioningJobId tenantId, id tenantId) {
     auto existing = repo.findById(tenantId, id);
     if (existing is null)
-      return CommandResult("", "Provisioning job not found");
+      return CommandResult(false, "", "Provisioning job not found");
 
     if (existing.status == JobStatus.running)
-      return CommandResult("", "Cannot delete a running job");
+      return CommandResult(false, "", "Cannot delete a running job");
 
     // Cascade delete logs
     logRepo.removeByJob(tenantId, id);

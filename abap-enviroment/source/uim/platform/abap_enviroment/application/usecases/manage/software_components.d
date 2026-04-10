@@ -26,19 +26,19 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
 
   CommandResult createComponent(CreateSoftwareComponentRequest req) {
     if (req.name.length == 0)
-      return CommandResult("", "Component name is required");
+      return CommandResult(false, "", "Component name is required");
     if (req.systemInstanceId.isEmpty)
-      return CommandResult("", "System instance ID is required");
+      return CommandResult(false, "", "System instance ID is required");
 
     auto system = systemRepo.findById(req.systemInstanceId);
     if (system is null)
-      return CommandResult("", "System instance not found");
+      return CommandResult(false, "", "System instance not found");
     if (system.status != SystemStatus.active)
-      return CommandResult("", "System instance must be active");
+      return CommandResult(false, "", "System instance must be active");
 
     auto existing = repo.findByName(req.systemInstanceId, req.name);
     if (existing !is null)
-      return CommandResult("", "Software component '" ~ req.name ~ "' already exists in this system");
+      return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
     SoftwareComponent comp;
     comp.id = randomUUID();
@@ -64,10 +64,10 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
   CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
     auto comp = repo.findById(id);
     if (comp is null)
-      return CommandResult("", "Software component not found");
+      return CommandResult(false, "", "Software component not found");
 
     if (comp.status != ComponentStatus.notCloned && comp.status != ComponentStatus.error)
-      return CommandResult("", "Component is already cloned or cloning in progress");
+      return CommandResult(false, "", "Component is already cloned or cloning in progress");
 
     comp.status = ComponentStatus.cloning;
     if (req.branch.length > 0)
@@ -94,11 +94,11 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
 
   CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
     if (!repo.existsById(id))
-      return CommandResult("", "Software component not found");
+      return CommandResult(false, "", "Software component not found");
 
     auto comp = repo.findById(id);
     if (comp.status != ComponentStatus.cloned)
-      return CommandResult("", "Component must be cloned before pulling");
+      return CommandResult(false, "", "Component must be cloned before pulling");
 
     comp.status = ComponentStatus.pulling;
 
@@ -132,7 +132,7 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
 
   CommandResult deleteComponent(SoftwareComponentId id) {
     if (!repo.existsById(id))
-      return CommandResult("", "Software component not found");
+      return CommandResult(false, "", "Software component not found");
 
     repo.remove(id);
     return CommandResult(true, id.toString, "");

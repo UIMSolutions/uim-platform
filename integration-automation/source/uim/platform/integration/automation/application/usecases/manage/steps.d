@@ -47,22 +47,22 @@ class ManageStepsUseCase : UIMUseCase {
   /// Start a step (mark as in-progress).
   CommandResult startStep(StepId tenantId, id tenantId, UserId userId) {
     if (!engine.areDependenciesMet(*repo.findById(tenantId, id), tenantId))
-      return CommandResult("", "Step dependencies are not yet met");
+      return CommandResult(false, "", "Step dependencies are not yet met");
 
     if (executor.startStep(tenantId, id, userId))
       return CommandResult(true, id.toString, "");
-    return CommandResult("", "Cannot start step — not found or not in pending state");
+    return CommandResult(false, "", "Cannot start step — not found or not in pending state");
   }
 
   /// Complete a step and advance the workflow.
   CommandResult completeStep(CompleteStepRequest req) {
     if (req.id.isEmpty)
-      return CommandResult("", "Step ID is required");
+      return CommandResult(false, "", "Step ID is required");
     if (req.tenantId.isEmpty)
-      return CommandResult("", "Tenant ID is required");
+      return CommandResult(false, "", "Tenant ID is required");
 
     if (!executor.completeStep(req.id, req.tenantId, req.completedBy, req.result))
-      return CommandResult("", "Cannot complete step — not found or not in progress");
+      return CommandResult(false, "", "Cannot complete step — not found or not in progress");
 
     // Try to advance the workflow
     auto step = repo.findById(req.id, req.tenantId);
@@ -75,14 +75,14 @@ class ManageStepsUseCase : UIMUseCase {
   /// Mark a step as failed.
   CommandResult failStep(FailStepRequest req) {
     if (!executor.failStep(req.id, req.tenantId, req.reportedBy, req.errorMessage))
-      return CommandResult("", "Cannot fail step — not found");
+      return CommandResult(false, "", "Cannot fail step — not found");
     return CommandResult(req.id, "");
   }
 
   /// Skip a step and advance the workflow.
   CommandResult skipStep(SkipStepRequest req) {
     if (!executor.skipStep(req.id, req.tenantId, req.skippedBy, req.reason))
-      return CommandResult("", "Cannot skip step — not found");
+      return CommandResult(false, "", "Cannot skip step — not found");
 
     auto step = repo.findById(req.id, req.tenantId);
     if (step !is null)
@@ -95,7 +95,7 @@ class ManageStepsUseCase : UIMUseCase {
   CommandResult assignStep(AssignStepRequest req) {
     auto step = repo.findById(req.id, req.tenantId);
     if (step is null)
-      return CommandResult("", "Step not found");
+      return CommandResult(false, "", "Step not found");
 
     step.assignedTo = req.assignedTo;
     if (req.assignedRole.length > 0)
