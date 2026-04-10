@@ -10,12 +10,15 @@ import uim.platform.management.domain.types;
 
 /// Port: outgoing — subaccount persistence.
 interface SubaccountRepository {
+  bool existsById(SubaccountId id);
   Subaccount findById(SubaccountId id);
+
   Subaccount findBySubdomain(string subdomain);
   Subaccount[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Subaccount[] findByDirectory(DirectoryId directoryId);
   Subaccount[] findByRegion(GlobalAccountId globalAccountId, string region);
   Subaccount[] findByStatus(GlobalAccountId globalAccountId, SubaccountStatus status);
+  
   void save(Subaccount sub);
   void update(Subaccount sub);
   void remove(SubaccountId id);

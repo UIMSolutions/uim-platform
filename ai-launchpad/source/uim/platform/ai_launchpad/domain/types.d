@@ -6,19 +6,123 @@
 module uim.platform.ai_launchpad.domain.types;
 
 // ID aliases
-alias ConnectionId = string;
-alias WorkspaceId = string;
-alias ScenarioId = string;
-alias ConfigurationId = string;
-alias ExecutionId = string;
-alias DeploymentId = string;
-alias ModelId = string;
-alias DatasetId = string;
-alias PromptId = string;
-alias PromptCollectionId = string;
-alias ResourceGroupId = string;
-alias StatisticsId = string;
-alias TenantId = string;
+struct ConnectionId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct WorkspaceId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ScenarioId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ConfigurationId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ExecutionId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DeploymentId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ModelId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct DatasetId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct PromptId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct PromptCollectionId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ResourceGroupId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct StatisticsId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct TenantId {
+      string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 // Connection to an AI runtime instance
 enum ConnectionStatus { active, inactive, error, pending }

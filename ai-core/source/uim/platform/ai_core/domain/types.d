@@ -6,17 +6,71 @@
 module uim.platform.ai_core.domain.types;
 
 // ID aliases
-alias ScenarioId = string;
-alias ExecutableId = string;
-alias ConfigurationId = string;
-alias ExecutionId = string;
-alias DeploymentId = string;
-alias ArtifactId = string;
-alias ResourceGroupId = string;
-alias MetricId = string;
-alias TenantId = string;
-alias DockerRegistrySecretId = string;
-alias ObjectStoreSecretId = string;
+struct ScenarioId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ExecutableId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ConfigurationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ExecutionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DeploymentId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ArtifactId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ResourceGroupId = string;
+struct MetricId = string;
+struct TenantId = string;
+struct DockerRegistrySecretId = string;
+struct ObjectStoreSecretId = string;
 
 // Executable types: workflow (batch), serving (inference)
 enum ExecutableType {

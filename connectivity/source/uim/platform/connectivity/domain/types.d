@@ -6,14 +6,68 @@
 module uim.platform.connectivity.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias DestinationId = string;
-alias ConnectorId = string;
-alias ChannelId = string;
-alias RuleId = string;
-alias CertificateId = string;
-alias ConnectivityLogId = string;
-alias TenantId = string;
-alias SubaccountId = string;
+struct DestinationId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ConnectorId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ChannelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct RuleId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct CertificateId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ConnectivityLogId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct TenantId = string;
+struct SubaccountId = string;
 
 /// Destination protocol type.
 enum DestinationType {

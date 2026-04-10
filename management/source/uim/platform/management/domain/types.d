@@ -6,16 +6,95 @@
 module uim.platform.management.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias GlobalAccountId = string;
-alias DirectoryId = string;
-alias SubaccountId = string;
-alias EntitlementId = string;
-alias EnvironmentInstanceId = string;
-alias SubscriptionId = string;
-alias ServicePlanId = string;
-alias PlatformEventId = string;
-alias LabelId = string;
-alias TenantId = string;
+struct GlobalAccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct DirectoryId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SubaccountId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct EntitlementId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct EnvironmentInstanceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct SubscriptionId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct ServicePlanId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct PlatformEventId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+
+struct LabelId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Status of a global account.
 enum GlobalAccountStatus {

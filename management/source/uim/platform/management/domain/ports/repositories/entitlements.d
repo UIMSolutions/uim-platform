@@ -10,12 +10,14 @@ import uim.platform.management.domain.types;
 
 /// Port: outgoing — entitlement persistence.
 interface EntitlementRepository {
+  bool existsById(EntitlementId id);
   Entitlement findById(EntitlementId id);
-  Entitlement findById(EntitlementId id);
+  
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId);
   Entitlement[] findBySubaccount(SubaccountId subaccountId);
   Entitlement[] findByDirectory(DirectoryId directoryId);
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId);
+  
   void save(Entitlement ent);
   void update(Entitlement ent);
   void remove(EntitlementId id);
