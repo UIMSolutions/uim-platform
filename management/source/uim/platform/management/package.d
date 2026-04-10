@@ -7,4 +7,10 @@ module uim.platform.management;
 
 public {
   import uim.platform.service;
+
+  import uim.platform.management.domain;
+  import uim.platform.management.infrastructure;
+  import uim.platform.management.presentation;
+  import uim.platform.management.application;
+  import uim.platform.management.helpers;
 }

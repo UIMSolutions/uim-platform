@@ -6,4 +6,5 @@
 module uim.platform.management.presentation.http;
 
 public {
+    import uim.platform.management.presentation.http.controllers;
 }
