@@ -12,13 +12,13 @@ import uim.platform.hana;
 mixin(ShowModule!());
 
 @safe:
-interface AlertRepository {
-  Alert findById(AlertId id);
-  Alert[] findByTenant(TenantId tenantId);
+interface AlertRepository : ITenantRepository!(Alert, AlertId){
+  // Alert findById(AlertId id);
+  // Alert[] findByTenant(TenantId tenantId);
   Alert[] findByInstance(InstanceId instanceId);
   Alert[] findActive(TenantId tenantId);
-  void save(Alert a);
-  void update(Alert a);
-  void remove(AlertId id);
+  // void save(Alert a);
+  // void update(Alert a);
+  // void remove(AlertId id);
   size_t countByTenant(TenantId tenantId);
 }
