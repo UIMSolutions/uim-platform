@@ -32,9 +32,6 @@ class ManageApplicationsUseCase : UIMUseCase {
     if (existing.id.isEmpty)
       return CommandResult(false, "", "Application '" ~ req.name ~ "' is already registered");
 
-    // import std.uuid : randomUUID;
-    auto id = randomUUID();
-
     Application app;
     app.id = randomUUID();
     app.environmentId = req.environmentId;
@@ -78,11 +75,15 @@ class ManageApplicationsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  CommandResult updateApplication(ApplicationId id, UpdateApplicationRequest req) {
-    if (!appRepository.existsById(id))
+  CommandResult updateApplication(string appId, UpdateApplicationRequest req) {
+    return updateApplication(ApplicationId(appId), req);
+  }
+
+  CommandResult updateApplication(ApplicationId appId, UpdateApplicationRequest req) {
+    if (!appRepository.existsById(appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(id);
+    auto app = appRepository.findById(appId);
     if (req.description.length > 0)
       app.description = req.description;
     if (req.connectorUrl.length > 0)
@@ -120,33 +121,45 @@ class ManageApplicationsUseCase : UIMUseCase {
 
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, appId.toString(), "");
   }
 
-  CommandResult connectApplication(ApplicationId id) {
-    if (!appRepository.existsById(id))
+  CommandResult connectApplication(string appId) {
+    return connectApplication(ApplicationId(appId));
+  }
+
+  CommandResult connectApplication(ApplicationId appId) {
+    if (!appRepository.existsById(appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(id);
+    auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.connected;
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, appId.toString(), "");
   }
 
-  CommandResult disconnectApplication(ApplicationId id) {
-    if (!appRepository.existsById(id))
+  CommandResult disconnectApplication(string appId) {
+    return disconnectApplication(ApplicationId(appId));
+  }
+
+  CommandResult disconnectApplication(ApplicationId appId) {
+    if (!appRepository.existsById(appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(id);
+    auto app = appRepository.findById(appId);
     app.status = AppConnectivityStatus.disconnected;
     app.modifiedAt = clockSeconds();
     appRepository.update(app);
-    return CommandResult(true, id.toString(), "");
+    return CommandResult(true, appId.toString(), "");
   }
 
-  Application getApplication(ApplicationId id) {
-    return appRepository.findById(id);
+  Application getApplication(string appId) {
+    return getApplication(ApplicationId(appId));
+  }
+
+  Application getApplication(ApplicationId appId) {
+    return appRepository.findById(appId);
   }
 
   Application[] listByEnvironment(KymaEnvironmentId envId) {
@@ -157,13 +170,17 @@ class ManageApplicationsUseCase : UIMUseCase {
     return appRepository.findByTenant(tenantId);
   }
 
-  CommandResult deleteApplication(ApplicationId id) {
-    if (!appRepository.existsById(id))
+  CommandResult deleteApplication(string appId) {
+    return deleteApplication(ApplicationId(appId));
+  }
+
+  CommandResult deleteApplication(ApplicationId appId) {
+    if (!appRepository.existsById(appId))
       return CommandResult(false, "", "Application not found");
 
-    auto app = appRepository.findById(id);
-    appRepository.remove(id);
-    return CommandResult(true, id.toString(), "");
+    auto app = appRepository.findById(appId);
+    appRepository.remove(appId);
+    return CommandResult(true, appId.toString(), "");
   }
 
   private AppRegistrationType parseRegistrationType(string type) {

@@ -73,7 +73,7 @@ class ApplicationController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto envId = req.params.get("environmentId");
+      EnvironmentId envId = req.params.get("environmentId");
       TenantId tenantId = req.getTenantId;
 
       Application[] items;
@@ -98,7 +98,7 @@ class ApplicationController : PlatformController {
 
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      ApplicationId id = extractIdFromPath(req.requestURI);
       auto app = uc.getApplication(id);
       if (app.id.isEmpty) {
         writeError(res, 404, "Application not found");
@@ -113,7 +113,7 @@ class ApplicationController : PlatformController {
 
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      ApplicationId id = extractIdFromPath(req.requestURI);
       auto j = req.json;
       UpdateApplicationRequest r;
       r.description = j.getString("description");
@@ -136,7 +136,7 @@ class ApplicationController : PlatformController {
 
   private void handleConnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
+      ApplicationId id = extractIdFromPath(req.requestURI);
       auto result = uc.connectApplication(id);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
@@ -150,8 +150,7 @@ class ApplicationController : PlatformController {
 
   private void handleDisconnect(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.disconnectApplication(id);
+      auto result = uc.disconnectApplication(extractIdFromPath(req.requestURI));
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -164,8 +163,7 @@ class ApplicationController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteApplication(id);
+      auto result = uc.deleteApplication(extractIdFromPath(req.requestURI));
       if (result.success)
         res.writeBody("", 204);
       else

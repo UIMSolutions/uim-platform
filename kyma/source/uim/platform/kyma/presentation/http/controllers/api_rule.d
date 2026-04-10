@@ -214,8 +214,8 @@ class ApiRuleController : PlatformController {
 
       rulesArr ~= ej;
     }
-    j["rules"] = rulesArr;
+    json["rules"] = rulesArr;
 
-    return j;
+    return json;
   }
 }

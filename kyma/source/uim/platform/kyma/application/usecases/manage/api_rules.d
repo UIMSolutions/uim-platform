@@ -84,6 +84,10 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult updateApiRule(string id, UpdateApiRuleRequest req) {
+    return updateApiRule(ApiRuleId(id), req);
+  }
+
   CommandResult updateApiRule(ApiRuleId id, UpdateApiRuleRequest req) {
     auto rule = ruleRepository.findById(id);
     if (rule.ruleId.isEmpty)
@@ -133,16 +137,32 @@ class ManageApiRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  ApiRule getApiRule(string id) {
+    return getApiRule(ApiRuleId(id));
+  }
+
   ApiRule getApiRule(ApiRuleId id) {
     return ruleRepository.findById(id);
+  }
+
+  ApiRule[] listByNamespace(string nsId) {
+    return listByNamespace(NamespaceId(nsId));
   }
 
   ApiRule[] listByNamespace(NamespaceId nsId) {
     return ruleRepository.findByNamespace(nsId);
   }
 
+  ApiRule[] listByEnvironment(string envId) {
+    return listByEnvironment(KymaEnvironmentId(envId));
+  }
+
   ApiRule[] listByEnvironment(KymaEnvironmentId envId) {
     return ruleRepository.findByEnvironment(envId);
+  }
+
+  CommandResult deleteApiRule(string id) {
+    return deleteApiRule(ApiRuleId(id));
   }
 
   CommandResult deleteApiRule(ApiRuleId id) {

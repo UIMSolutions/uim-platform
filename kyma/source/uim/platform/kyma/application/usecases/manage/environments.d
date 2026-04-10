@@ -84,16 +84,32 @@ class ManageEnvironmentsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  KymaEnvironment getEnvironment(string id) {
+    return getEnvironment(KymaEnvironmentId(id));
+  }
+
   KymaEnvironment getEnvironment(KymaEnvironmentId id) {
     return repo.findById(id);
+  }
+
+  KymaEnvironment[] listByTenant(string tenantId) {
+    return listByTenant(TenantId(tenantId));
   }
 
   KymaEnvironment[] listByTenant(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  KymaEnvironment[] listBySubaccount(string tenantId, string subId) {
+    return listBySubaccount(TenantId(tenantId), SubaccountId(subId));
+  }
+
   KymaEnvironment[] listBySubaccount(TenantId tenantId, SubaccountId subId) {
     return repo.findBySubaccount(tenantId, subId);
+  }
+
+  CommandResult deleteEnvironment(string id) {
+    return deleteEnvironment(KymaEnvironmentId(id));
   }
 
   CommandResult deleteEnvironment(KymaEnvironmentId id) {

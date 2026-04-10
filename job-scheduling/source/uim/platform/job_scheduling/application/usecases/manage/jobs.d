@@ -29,6 +29,7 @@ class ManageJobsUseCase : UIMUseCase {
             return CommandResult(false, "", "Action URL is required for HTTP jobs");
 
         import std.uuid : randomUUID;
+
         auto id = randomUUID();
 
         Job j;
@@ -45,6 +46,7 @@ class ManageJobsUseCase : UIMUseCase {
         j.endTime = r.endTime;
 
         import core.time : MonoTime;
+
         auto now = MonoTime.currTime.ticks;
         j.createdAt = now;
         j.modifiedAt = now;
@@ -88,6 +90,7 @@ class ManageJobsUseCase : UIMUseCase {
         existing.endTime = r.endTime;
 
         import core.time : MonoTime;
+
         existing.modifiedAt = MonoTime.currTime.ticks;
 
         repo.update(existing);
@@ -117,19 +120,27 @@ class ManageJobsUseCase : UIMUseCase {
 
     private static HttpMethod parseHttpMethod(string s) {
         switch (s) {
-            case "GET": return HttpMethod.get;
-            case "POST": return HttpMethod.post;
-            case "PUT": return HttpMethod.put;
-            case "DELETE": return HttpMethod.delete_;
-            case "PATCH": return HttpMethod.patch;
-            default: return HttpMethod.get;
+        case "GET":
+            return HttpMethod.get;
+        case "POST":
+            return HttpMethod.post;
+        case "PUT":
+            return HttpMethod.put;
+        case "DELETE":
+            return HttpMethod.delete_;
+        case "PATCH":
+            return HttpMethod.patch;
+        default:
+            return HttpMethod.get;
         }
     }
 
     private static JobType parseJobType(string s) {
         switch (s) {
-            case "cloudFoundryTask": return JobType.cloudFoundryTask;
-            default: return JobType.httpEndpoint;
+        case "cloudFoundryTask":
+            return JobType.cloudFoundryTask;
+        default:
+            return JobType.httpEndpoint;
         }
     }
 }
