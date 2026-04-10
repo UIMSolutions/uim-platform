@@ -9,6 +9,7 @@ public {
   import uim.platform.management.infrastructure.persistence.memory.directories;
   import uim.platform.management.infrastructure.persistence.memory.entitlements;
   import uim.platform.management.infrastructure.persistence.memory.environment_instances;
+  import uim.platform.management.infrastructure.persistence.memory.global_accounts;
   import uim.platform.management.infrastructure.persistence.memory.labels;
   import uim.platform.management.infrastructure.persistence.memory.platform_events;
   import uim.platform.management.infrastructure.persistence.memory.service_plans;

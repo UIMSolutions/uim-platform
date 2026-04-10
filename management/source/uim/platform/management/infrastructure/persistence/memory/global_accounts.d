@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemoryGlobalAccountRepository : GlobalAccountRepository {
   private GlobalAccount[GlobalAccountId] store;
 
+  bool existsById(GlobalAccountId id) {
+    return (id in store) ? true : false;
+  }
+
   GlobalAccount findById(GlobalAccountId id) {
-    if (auto p = id in store)
-      return *p;
-    return GlobalAccount.init;
+    return existsById(id) ? store[id] : GlobalAccount.init;
   }
 
   GlobalAccount[] findByStatus(GlobalAccountStatus status) {

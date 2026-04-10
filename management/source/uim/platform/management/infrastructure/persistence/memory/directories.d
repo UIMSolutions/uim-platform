@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryDirectoryRepository : DirectoryRepository {
   private Directory[DirectoryId] store;
 
+  bool existsById(DirectoryId id) {
+    return (id in store) ? true : false;
+  }
+
   Directory findById(DirectoryId id) {
-    if (auto p = id in store)
-      return *p;
-    return Directory.init;
+    return existsById(id) ? store[id] : Directory.init;
   }
 
   Directory[] findByGlobalAccount(GlobalAccountId globalAccountId) {

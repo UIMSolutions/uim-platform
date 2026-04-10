@@ -17,7 +17,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EventController {
+class EventController : PlatformController {
   private QueryPlatformEventsUseCase uc;
 
   this(QueryPlatformEventsUseCase uc) {
@@ -25,6 +25,8 @@ class EventController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.get("/api/v1/events", &handleList);
     router.get("/api/v1/events/*", &handleGet);
   }

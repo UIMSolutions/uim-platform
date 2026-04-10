@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemorySubscriptionRepository : SubscriptionRepository {
   private Subscription[SubscriptionId] store;
 
+  bool existsById(SubscriptionId id) {
+    return (id in store) ? true : false;
+  }
+
   Subscription findById(SubscriptionId id) {
-    if (auto p = id in store)
-      return *p;
-    return Subscription.init;
+    return existsById(id) ? store[id] : Subscription.init;
   }
 
   Subscription[] findBySubaccount(SubaccountId subaccountId) {
@@ -31,12 +33,11 @@ class MemorySubscriptionRepository : SubscriptionRepository {
   }
 
   Subscription[] findByApp(SubaccountId subaccountId, string appName) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId && e.appName == appName)
-      .array;
+    return findBySubaccount(subaccountId).filter!(e => e.appName == appName).array;
   }
 
   Subscription[] findByStatus(SubaccountId subaccountId, SubscriptionStatus status) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId && e.status == status).array;
+    return findBySubaccount(subaccountId).filter!(e => e.status == status).array;
   }
 
   void save(Subscription sub) {

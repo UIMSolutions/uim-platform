@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class LabelController {
+class LabelController : PlatformController {
   private ManageLabelsUseCase uc;
 
   this(ManageLabelsUseCase uc) {
@@ -26,6 +26,8 @@ class LabelController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/labels", &handleCreate);
     router.get("/api/v1/labels", &handleList);
     router.get("/api/v1/labels/*", &handleGet);

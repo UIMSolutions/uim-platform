@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
   private EnvironmentInstance[EnvironmentInstanceId] store;
 
+  bool existsById(EnvironmentInstanceId id) {
+    return (id in store) ? true : false;
+  }
+
   EnvironmentInstance findById(EnvironmentInstanceId id) {
-    if (auto p = id in store)
-      return *p;
-    return EnvironmentInstance.init;
+    return existsById(id) ? store[id] : EnvironmentInstance.init;
   }
 
   EnvironmentInstance[] findBySubaccount(SubaccountId subaccountId) {
@@ -31,12 +33,11 @@ class MemoryEnvironmentInstanceRepository : EnvironmentInstanceRepository {
   }
 
   EnvironmentInstance[] findByType(SubaccountId subaccountId, EnvironmentType envType) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId
-        && e.environmentType == envType).array;
+    return findBySubaccount(subaccountId).filter!(e => e.environmentType == envType).array;
   }
 
   EnvironmentInstance[] findByStatus(SubaccountId subaccountId, EnvironmentStatus status) {
-    return store.byValue().filter!(e => e.subaccountId == subaccountId && e.status == status).array;
+    return findBySubaccount(subaccountId).filter!(e => e.status == status).array;
   }
 
   void save(EnvironmentInstance inst) {

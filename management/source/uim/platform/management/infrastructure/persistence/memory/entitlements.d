@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemoryEntitlementRepository : EntitlementRepository {
   private Entitlement[EntitlementId] store;
 
+  bool existsById(EntitlementId id) {
+    return (id in store) ? true : false;
+  }
+
   Entitlement findById(EntitlementId id) {
-    if (auto p = id in store)
-      return *p;
-    return Entitlement.init;
+    return existsById(id) ? store[id] : Entitlement.init;
   }
 
   Entitlement[] findByGlobalAccount(GlobalAccountId globalAccountId) {
@@ -39,8 +41,7 @@ class MemoryEntitlementRepository : EntitlementRepository {
   }
 
   Entitlement[] findByServicePlan(GlobalAccountId globalAccountId, ServicePlanId planId) {
-    return store.byValue().filter!(e => e.globalAccountId == globalAccountId
-        && e.servicePlanId == planId).array;
+    return findByGlobalAccount(globalAccountId).filter!(e => e.servicePlanId == planId).array;
   }
 
   void save(Entitlement ent) {

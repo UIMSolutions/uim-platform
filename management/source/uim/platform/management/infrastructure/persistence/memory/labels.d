@@ -20,24 +20,28 @@ mixin(ShowModule!());
 class MemoryLabelRepository : LabelRepository {
   private Label[LabelId] store;
 
+  bool existsById(LabelId id) {
+    return (id in store) ? true : false;
+  }
+
   Label findById(LabelId id) {
-    if (auto p = id in store)
-      return *p;
-    return Label.init;
+    return existsById(id) ? store[id] : Label.init;
+  }
+
+  Label[] findByResourceType(LabeledResourceType resourceType) {
+    return store.byValue().filter!(e => e.resourceType == resourceType).array;
   }
 
   Label[] findByResource(LabeledResourceType resourceType, string resourceId) {
-    return store.byValue().filter!(e => e.resourceType == resourceType
-        && e.resourceId == resourceId).array;
+    return findByResourceType(resourceType).filter!(e => e.resourceId == resourceId).array;
   }
 
   Label[] findByKey(LabeledResourceType resourceType, string key) {
-    return store.byValue().filter!(e => e.resourceType == resourceType && e.key == key).array;
+    return findByResourceType(resourceType).filter!(e => e.key == key).array;
   }
 
   Label[] findByKeyValue(LabeledResourceType resourceType, string key, string value) {
-    return store.byValue().filter!(e => e.resourceType == resourceType
-        && e.key == key && e.values.canFind(value)).array;
+    return findByResourceType(resourceType).filter!(e => e.key == key && e.values.canFind(value)).array;
   }
 
   void save(Label lbl) {

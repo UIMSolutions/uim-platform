@@ -20,10 +20,16 @@ mixin(ShowModule!());
 class MemorySubaccountRepository : SubaccountRepository {
   private Subaccount[SubaccountId] store;
 
+  bool existsById(SubaccountId id) {
+    return (id in store) ? true : false;
+  }
+  
   Subaccount findById(SubaccountId id) {
-    if (auto p = id in store)
-      return *p;
-    return Subaccount.init;
+    return existsById(id) ? store[id] : Subaccount.init;
+  }
+
+  bool existsBySubdomain(string subdomain) {
+    return store.byValue().any!(s => s.subdomain == subdomain);
   }
 
   Subaccount findBySubdomain(string subdomain) {

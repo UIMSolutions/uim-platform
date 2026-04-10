@@ -18,7 +18,7 @@ import uim.platform.management;
 
 mixin(ShowModule!());
 @safe:
-class EntitlementController {
+class EntitlementController : PlatformController {
   private ManageEntitlementsUseCase uc;
 
   this(ManageEntitlementsUseCase uc) {
@@ -26,6 +26,8 @@ class EntitlementController {
   }
 
   override void registerRoutes(URLRouter router) {
+    super.registerRoutes(router);
+    
     router.post("/api/v1/entitlements", &handleAssign);
     router.get("/api/v1/entitlements", &handleList);
     router.get("/api/v1/entitlements/*", &handleGet);

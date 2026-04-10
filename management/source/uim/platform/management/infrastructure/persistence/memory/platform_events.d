@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryPlatformEventRepository : PlatformEventRepository {
   private PlatformEvent[PlatformEventId] store;
 
+  bool existsById(PlatformEventId id) {
+    return (id in store) ? true : false;
+  }
+
   PlatformEvent findById(PlatformEventId id) {
-    if (auto p = id in store)
-      return *p;
-    return PlatformEvent.init;
+    return existsById(id) ? store[id] : PlatformEvent.init;
   }
 
   PlatformEvent[] findByGlobalAccount(GlobalAccountId globalAccountId) {

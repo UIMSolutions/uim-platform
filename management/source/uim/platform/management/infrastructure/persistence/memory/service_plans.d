@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemoryServicePlanRepository : ServicePlanRepository {
   private ServicePlan[ServicePlanId] store;
 
+  bool existsById(ServicePlanId id) {
+    return (id in store) ? true : false;
+  }
+
   ServicePlan findById(ServicePlanId id) {
-    if (auto p = id in store)
-      return *p;
-    return ServicePlan.init;
+    return existsById(id) ? store[id] : ServicePlan.init;
   }
 
   ServicePlan[] findByService(string serviceName) {
