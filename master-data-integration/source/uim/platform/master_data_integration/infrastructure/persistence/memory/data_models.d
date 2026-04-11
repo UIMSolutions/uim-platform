@@ -30,7 +30,7 @@ class MemoryDataModelRepository : DataModelRepository {
   }
 
   DataModel findByName(TenantId tenantId, string name) {
-    foreach (ref m; store.byValue()) {
+    foreach (m; store.byValue()) {
       if (m.tenantId == tenantId && m.name == name)
         return m;
     }

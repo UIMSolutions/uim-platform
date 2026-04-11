@@ -70,7 +70,7 @@ class PipelineController : PlatformController {
       auto pipelines = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref p; pipelines) {
+      foreach (p; pipelines) {
         auto pj = Json.emptyObject;
         pj["id"] = Json(p.id);
         pj["name"] = Json(p.name);

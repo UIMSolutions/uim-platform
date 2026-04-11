@@ -59,7 +59,7 @@ class StreamController : PlatformController {
       auto streams = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; streams) {
+      foreach (s; streams) {
         auto sj = Json.emptyObject;
         sj["id"] = Json(s.id);
         sj["name"] = Json(s.name);

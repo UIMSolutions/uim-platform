@@ -49,7 +49,7 @@ class WorkflowEngine {
 
     // Count completed
     int completed = 0;
-    foreach (ref s; steps)
+    foreach (s; steps)
       if (s.status == StepStatus.completed || s.status == StepStatus.skipped)
         completed++;
 
@@ -70,7 +70,7 @@ class WorkflowEngine {
     auto sorted = steps.dup;
     sorted.sort!((a, b) => a.sequenceNumber < b.sequenceNumber);
 
-    foreach (ref s; sorted) {
+    foreach (s; sorted) {
       if (s.status == StepStatus.pending && areDependenciesMet(s, tenantId)) {
         wf.currentStepIndex = s.sequenceNumber;
         workflowRepo.update(*wf);

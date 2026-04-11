@@ -71,7 +71,7 @@ class LabelController : PlatformController {
         items = uc.listByKey(resourceType, key);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; items)
+      foreach (l; items)
         arr ~= serializeLabel(l);
 
       auto resp = Json.emptyObject;
@@ -128,7 +128,7 @@ class LabelController : PlatformController {
   }
 }
 
-private Json serializeLabel(ref Label l) {
+private Json serializeLabel(Label l) {
   auto j = Json.emptyObject;
   j["id"] = Json(l.id);
   j["resourceType"] = Json(enumStr(l.resourceType));

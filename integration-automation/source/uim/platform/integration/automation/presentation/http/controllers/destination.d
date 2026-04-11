@@ -74,7 +74,7 @@ class DestinationController {
       auto destinations = useCase.listDestinations(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; destinations)
+      foreach (d; destinations)
         arr ~= serializeDestination(d);
 
       auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class DestinationController {
     }
   }
 
-  private static Json serializeDestination(ref const Destination d) {
+  private static Json serializeDestination(const Destination d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

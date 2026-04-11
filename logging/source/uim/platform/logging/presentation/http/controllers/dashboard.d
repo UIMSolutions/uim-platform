@@ -74,7 +74,7 @@ class DashboardController : PlatformController {
       auto dashboards = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; dashboards) {
+      foreach (d; dashboards) {
         auto dj = Json.emptyObject;
         dj["id"] = Json(d.id);
         dj["name"] = Json(d.name);
@@ -112,7 +112,7 @@ class DashboardController : PlatformController {
       dj["isDefault"] = Json(d.isDefault);
 
       auto parr = Json.emptyArray;
-      foreach (ref p; d.panels) {
+      foreach (p; d.panels) {
         auto pj = Json.emptyObject;
         pj["id"] = Json(p.id);
         pj["title"] = Json(p.title);

@@ -74,7 +74,7 @@ class FilterRuleController : PlatformController {
         rules = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; rules)
+      foreach (r; rules)
         arr ~= serializeRule(r);
 
       auto resp = Json.emptyObject;
@@ -137,7 +137,7 @@ class FilterRuleController : PlatformController {
   private FilterConditionDto[] parseConditions(Json j) {
     FilterConditionDto[] conditions;
     auto condsArr = jsonObjArray(j, "conditions");
-    foreach (ref cj; condsArr) {
+    foreach (cj; condsArr) {
       FilterConditionDto c;
       c.fieldName = cj.getString("fieldName");
       c.operator = cj.getString("operator");
@@ -150,7 +150,7 @@ class FilterRuleController : PlatformController {
     return conditions;
   }
 
-  private Json serializeRule(ref FilterRule r) {
+  private Json serializeRule(FilterRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -163,7 +163,7 @@ class FilterRuleController : PlatformController {
     j["isActive"] = Json(r.isActive);
 
     auto condsArr = Json.emptyArray;
-    foreach (ref c; r.conditions) {
+    foreach (c; r.conditions) {
       auto cj = Json.emptyObject;
       cj["fieldName"] = Json(c.fieldName);
       cj["operator"] = Json(c.operator.to!string);

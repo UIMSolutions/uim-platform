@@ -24,7 +24,7 @@ class MemoryAlertRepository : AlertRepository {
 
   Alert[] findByTenant(TenantId tenantId) {
     Alert[] result;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId)
         result ~= a;
     return result;
@@ -32,7 +32,7 @@ class MemoryAlertRepository : AlertRepository {
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
     Alert[] result;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId && a.state == state)
         result ~= a;
     return result;
@@ -40,7 +40,7 @@ class MemoryAlertRepository : AlertRepository {
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
     Alert[] result;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId && a.severity == severity)
         result ~= a;
     return result;
@@ -48,7 +48,7 @@ class MemoryAlertRepository : AlertRepository {
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
     Alert[] result;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId && a.ruleId == ruleId)
         result ~= a;
     return result;
@@ -68,7 +68,7 @@ class MemoryAlertRepository : AlertRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId)
         count++;
     return count;
@@ -76,7 +76,7 @@ class MemoryAlertRepository : AlertRepository {
 
   size_t countByState(TenantId tenantId, AlertState state) {
     size_t count;
-    foreach (ref a; store)
+    foreach (a; store)
       if (a.tenantId == tenantId && a.state == state)
         count++;
     return count;

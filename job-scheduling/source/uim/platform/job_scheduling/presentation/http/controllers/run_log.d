@@ -39,7 +39,7 @@ class RunLogController : PlatformController {
             auto logs = uc.listBySchedule(ids[1], ids[0], tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref l; logs) {
+            foreach (l; logs) {
                 jarr ~= runLogToJson(l);
             }
 
@@ -127,7 +127,7 @@ class RunLogController : PlatformController {
         return ids;
     }
 
-    private static Json runLogToJson(ref uim.platform.job_scheduling.domain.entities.run_log.RunLog l) {
+    private static Json runLogToJson(uim.platform.job_scheduling.domain.entities.run_log.RunLog l) {
         auto j = Json.emptyObject;
         j["runLogId"] = Json(l.id);
         j["scheduleId"] = Json(l.scheduleId);

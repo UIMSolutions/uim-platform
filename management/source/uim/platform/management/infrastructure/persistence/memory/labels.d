@@ -58,7 +58,7 @@ class MemoryLabelRepository : LabelRepository {
 
   void removeByResource(LabeledResourceType resourceType, string resourceId) {
     LabelId[] toRemove;
-    foreach (ref kv; store.byKeyValue()) {
+    foreach (kv; store.byKeyValue()) {
       if (kv.value.resourceType == resourceType && kv.value.resourceId == resourceId)
         toRemove ~= kv.key;
     }

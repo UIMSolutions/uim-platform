@@ -91,7 +91,7 @@ class ManageDataModelsUseCase : UIMUseCase {
 
   private FieldDefinition[] toFieldDefs(FieldDefinitionDto[] dtos) {
     FieldDefinition[] result;
-    foreach (ref dto; dtos) {
+    foreach (dto; dtos) {
       FieldDefinition fd;
       fd.name = dto.name;
       fd.displayName = dto.displayName;

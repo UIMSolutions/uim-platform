@@ -34,7 +34,7 @@ class MemoryNamespaceRepository : NamespaceRepository {
   }
 
   Namespace findByName(KymaEnvironmentId envId, string name) {
-    foreach (ref e; findByEnvironment(envId))
+    foreach (e; findByEnvironment(envId))
       if (e.name == name)
         return e;
     return Namespace.init;

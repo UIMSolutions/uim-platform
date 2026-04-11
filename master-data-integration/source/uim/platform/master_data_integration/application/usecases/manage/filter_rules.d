@@ -89,7 +89,7 @@ class ManageFilterRulesUseCase : UIMUseCase {
 
   private FilterCondition[] toConditions(FilterConditionDto[] dtos) {
     FilterCondition[] result;
-    foreach (ref dto; dtos) {
+    foreach (dto; dtos) {
       FilterCondition cond;
       cond.fieldName = dto.fieldName;
       cond.operator = parseOperator(dto.operator);

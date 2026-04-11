@@ -34,7 +34,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding findByName(NamespaceId nsId, string name) {
-    foreach (ref e; findByNamespace(nsId))
+    foreach (e; findByNamespace(nsId))
       if (e.name == name)
         return e;
     return ServiceBinding.init;

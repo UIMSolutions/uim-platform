@@ -20,14 +20,14 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
 
   RetentionPolicy[] findByTenant(TenantId tenantId) {
     RetentionPolicy[] result;
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId)
         result ~= p;
     return result;
   }
 
   RetentionPolicy findDefault(TenantId tenantId) {
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId && p.isDefault)
         return p;
     return RetentionPolicy.init;
@@ -35,7 +35,7 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
 
   RetentionPolicy[] findByDataType(TenantId tenantId, DataType dt) {
     RetentionPolicy[] result;
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId && (p.dataType == dt || p.dataType == DataType.all))
         result ~= p;
     return result;

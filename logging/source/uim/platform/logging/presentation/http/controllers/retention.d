@@ -59,7 +59,7 @@ class RetentionController : PlatformController {
       auto policies = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref p; policies) {
+      foreach (p; policies) {
         auto pj = Json.emptyObject;
         pj["id"] = Json(p.id);
         pj["name"] = Json(p.name);

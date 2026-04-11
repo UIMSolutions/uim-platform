@@ -46,7 +46,7 @@ class MemoryStepRepository : StepRepository {
   }
 
   WorkflowStep* findBySequence(WorkflowId workflowtenantId, id tenantId, int sequenceNumber) {
-    foreach (ref s; store.byValue())
+    foreach (s; store.byValue())
       if (s.workflowId == workflowId && s.tenantId == tenantId && s.sequenceNumber == sequenceNumber)
         return &s;
     return null;
@@ -68,7 +68,7 @@ class MemoryStepRepository : StepRepository {
 
   void removeByWorkflow(WorkflowId workflowtenantId, id tenantId) {
     StepId[] toRemove;
-    foreach (ref kv; store.byKeyValue())
+    foreach (kv; store.byKeyValue())
       if (kv.value.workflowId == workflowId && kv.value.tenantId == tenantId)
         toRemove ~= kv.key;
     foreach (id; toRemove)

@@ -120,7 +120,7 @@ class ManageSchedulesUseCase : UIMUseCase {
 
     CommandResult activateAll(ActivateAllSchedulesRequest request) {
         auto schedules = repo.findByJob(request.jobId, request.tenantId);
-        foreach (ref s; schedules) {
+        foreach (s; schedules) {
             s.active = request.active;
             s.status = request.active ? ScheduleStatus.active : ScheduleStatus.inactive;
             import core.time : MonoTime;

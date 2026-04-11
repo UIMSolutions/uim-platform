@@ -91,7 +91,7 @@ class EventSubscriptionController : PlatformController {
         items = [];
 
       auto arr = Json.emptyArray;
-      foreach (ref sub; items)
+      foreach (sub; items)
         arr ~= serializeSub(sub);
 
       auto resp = Json.emptyObject;
@@ -187,7 +187,7 @@ class EventSubscriptionController : PlatformController {
     }
   }
 
-  private Json serializeSub(ref EventSubscription sub) {
+  private Json serializeSub(EventSubscription sub) {
     auto j = Json.emptyObject
     .set("id", sub.id)
     .set("namespaceId", sub.namespaceId)

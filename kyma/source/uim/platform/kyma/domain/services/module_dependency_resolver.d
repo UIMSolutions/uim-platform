@@ -18,7 +18,7 @@ class ModuleDependencyResolver {
   bool canEnable(KymaModule mod, KymaModule[] allModules) {
     foreach (reqName; mod.requiredModules) {
       bool found = false;
-      foreach (ref existing; allModules) {
+      foreach (existing; allModules) {
         if (existing.name == reqName && existing.status == ModuleStatus.enabled)
         {
           found = true;
@@ -34,7 +34,7 @@ class ModuleDependencyResolver {
   /// Find modules that depend on a given module (for safe disable checks).
   string[] findDependents(string moduleName, KymaModule[] allModules) {
     string[] dependents;
-    foreach (ref m; allModules) {
+    foreach (m; allModules) {
       if (m.status != ModuleStatus.enabled)
         continue;
       foreach (dep; m.requiredModules) {
@@ -53,7 +53,7 @@ class ModuleDependencyResolver {
     string[] missing;
     foreach (reqName; mod.requiredModules) {
       bool found = false;
-      foreach (ref existing; allModules) {
+      foreach (existing; allModules) {
         if (existing.name == reqName && existing.status == ModuleStatus.enabled)
         {
           found = true;

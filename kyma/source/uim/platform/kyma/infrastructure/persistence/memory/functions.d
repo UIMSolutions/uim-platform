@@ -34,7 +34,7 @@ class MemoryFunctionRepository : FunctionRepository {
   }
 
   ServerlessFunction findByName(NamespaceId namespaceId, string name) {
-    foreach (ref e; findByNamespace(namespaceId))
+    foreach (e; findByNamespace(namespaceId))
       if (e.name == name)
         return e;
     return ServerlessFunction.init;

@@ -41,7 +41,7 @@ class StepController {
       auto steps = useCase.listSteps(workflowtenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; steps)
+      foreach (s; steps)
         arr ~= serializeStep(s);
 
       auto resp = Json.emptyObject;
@@ -77,7 +77,7 @@ class StepController {
       auto tasks = useCase.getMyTasks(tenantId, userId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; tasks)
+      foreach (s; tasks)
         arr ~= serializeStep(s);
 
       auto resp = Json.emptyObject;
@@ -220,7 +220,7 @@ class StepController {
     }
   }
 
-  private static Json serializeStep(ref const WorkflowStep s) {
+  private static Json serializeStep(const WorkflowStep s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["workflowId"] = Json(s.workflowId);

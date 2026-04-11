@@ -42,7 +42,7 @@ class IngestTracesUseCase : UIMUseCase {
     s.attributes = cast(string[string]) req.attributes;
     s.resourceAttributes = cast(string[string]) req.resourceAttributes;
 
-    foreach (ref ev; req.events) {
+    foreach (ev; req.events) {
       SpanEvent se;
       se.name = ev.name;
       se.timestamp = ev.timestamp;
@@ -61,7 +61,7 @@ class IngestTracesUseCase : UIMUseCase {
 
   CommandResult ingestSpanBatch(IngestSpanBatchRequest req) {
     int count = 0;
-    foreach (ref spanReq; req.spans) {
+    foreach (spanReq; req.spans) {
       if (spanReq.tenantId.isEmpty)
         spanReq.tenantId = req.tenantId;
       auto result = ingestSpan(spanReq);

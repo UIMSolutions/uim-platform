@@ -24,7 +24,7 @@ class MemoryAlertRuleRepository : AlertRuleRepository {
 
   AlertRule[] findByTenant(TenantId tenantId) {
     AlertRule[] result;
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.tenantId == tenantId)
         result ~= r;
     return result;
@@ -32,7 +32,7 @@ class MemoryAlertRuleRepository : AlertRuleRepository {
 
   AlertRule[] findEnabled(TenantId tenantId) {
     AlertRule[] result;
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.tenantId == tenantId && r.isEnabled)
         result ~= r;
     return result;

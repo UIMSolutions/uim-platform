@@ -71,7 +71,7 @@ class KeyMappingController : PlatformController {
         mappings = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref m; mappings)
+      foreach (m; mappings)
         arr ~= serializeMapping(m);
 
       auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class KeyMappingController : PlatformController {
   private KeyMappingEntryDto[] parseEntries(Json j) {
     KeyMappingEntryDto[] entries;
     auto entriesArr = jsonObjArray(j, "entries");
-    foreach (ref ej; entriesArr) {
+    foreach (ej; entriesArr) {
       KeyMappingEntryDto e;
       e.clientId = ej.getString("clientId");
       e.systemId = ej.getString("systemId");
@@ -173,7 +173,7 @@ class KeyMappingController : PlatformController {
     return entries;
   }
 
-  private Json serializeMapping(ref KeyMapping m) {
+  private Json serializeMapping(KeyMapping m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["tenantId"] = Json(m.tenantId);
@@ -182,7 +182,7 @@ class KeyMappingController : PlatformController {
     j["objectType"] = Json(m.objectType);
 
     auto entriesArr = Json.emptyArray;
-    foreach (ref e; m.entries) {
+    foreach (e; m.entries) {
       auto ej = Json.emptyObject;
       ej["clientId"] = Json(e.clientId);
       ej["systemId"] = Json(e.systemId);

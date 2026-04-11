@@ -17,7 +17,7 @@ class MemoryScheduleRepository : ScheduleRepository {
     private Schedule[] store;
 
     Schedule findById(ScheduleId id, JobId jobtenantId, id tenantId) {
-        foreach (ref s; store) {
+        foreach (s; store) {
             if (s.id == id && s.jobId == jobId && s.tenantId == tenantId)
                 return s;
         }
@@ -47,7 +47,7 @@ class MemoryScheduleRepository : ScheduleRepository {
     }
 
     void update(Schedule s) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == s.id && existing.jobId == s.jobId) {
                 existing = s;
                 return;

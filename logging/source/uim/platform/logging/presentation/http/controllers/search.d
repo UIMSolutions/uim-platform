@@ -57,7 +57,7 @@ class SearchController : PlatformController {
       auto entries = uc.search(r);
 
       auto jarr = Json.emptyArray;
-      foreach (ref e; entries) {
+      foreach (e; entries) {
         auto ej = Json.emptyObject;
         ej["id"] = Json(e.id);
         ej["timestamp"] = Json(e.timestamp);

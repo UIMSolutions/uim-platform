@@ -75,7 +75,7 @@ class MasterDataController : PlatformController {
         objs = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref o; objs)
+      foreach (o; objs)
         arr ~= serializeObj(o);
 
       auto resp = Json.emptyObject;
@@ -155,7 +155,7 @@ class MasterDataController : PlatformController {
     }
   }
 
-  private Json serializeObj(ref MasterDataObject o) {
+  private Json serializeObj(MasterDataObject o) {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);

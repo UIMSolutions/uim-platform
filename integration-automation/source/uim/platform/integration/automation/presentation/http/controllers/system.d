@@ -73,7 +73,7 @@ class SystemController {
       auto systems = useCase.listSystems(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; systems)
+      foreach (s; systems)
         arr ~= serializeSystem(s);
 
       auto resp = Json.emptyObject;
@@ -179,7 +179,7 @@ class SystemController {
     }
   }
 
-  private static Json serializeSystem(ref const SystemConnection s) {
+  private static Json serializeSystem(const SystemConnection s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

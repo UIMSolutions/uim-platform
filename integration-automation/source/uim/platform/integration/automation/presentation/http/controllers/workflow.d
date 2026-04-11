@@ -68,7 +68,7 @@ class WorkflowController {
       auto workflows = useCase.listWorkflows(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref w; workflows)
+      foreach (w; workflows)
         arr ~= serializeWorkflow(w);
 
       auto resp = Json.emptyObject;
@@ -201,7 +201,7 @@ class WorkflowController {
     }
   }
 
-  private static Json serializeWorkflow(ref const Workflow w) {
+  private static Json serializeWorkflow(const Workflow w) {
     auto j = Json.emptyObject;
     j["id"] = Json(w.id);
     j["tenantId"] = Json(w.tenantId);

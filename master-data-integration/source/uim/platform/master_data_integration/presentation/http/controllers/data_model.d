@@ -50,7 +50,7 @@ class DataModelController : PlatformController {
       // Parse field definitions
       auto fieldsArr = jsonObjArray(j, "fields");
       FieldDefinitionDto[] fields;
-      foreach (ref fj; fieldsArr) {
+      foreach (fj; fieldsArr) {
         FieldDefinitionDto fd;
         fd.name = fj.getString("name");
         fd.displayName = fj.getString("displayName");
@@ -89,7 +89,7 @@ class DataModelController : PlatformController {
         models = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref m; models)
+      foreach (m; models)
         arr ~= serializeModel(m);
 
       auto resp = Json.emptyObject;
@@ -127,7 +127,7 @@ class DataModelController : PlatformController {
 
       auto fieldsArr = jsonObjArray(j, "fields");
       FieldDefinitionDto[] fields;
-      foreach (ref fj; fieldsArr) {
+      foreach (fj; fieldsArr) {
         FieldDefinitionDto fd;
         fd.name = fj.getString("name");
         fd.displayName = fj.getString("displayName");
@@ -165,7 +165,7 @@ class DataModelController : PlatformController {
     }
   }
 
-  private Json serializeModel(ref DataModel m) {
+  private Json serializeModel(DataModel m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["tenantId"] = Json(m.tenantId);
@@ -179,7 +179,7 @@ class DataModelController : PlatformController {
     j["requiredFields"] = serializeStrArray(m.requiredFields);
 
     auto fieldsArr = Json.emptyArray;
-    foreach (ref fd; m.fields) {
+    foreach (fd; m.fields) {
       auto fj = Json.emptyObject;
       fj["name"] = Json(fd.name);
       fj["displayName"] = Json(fd.displayName);

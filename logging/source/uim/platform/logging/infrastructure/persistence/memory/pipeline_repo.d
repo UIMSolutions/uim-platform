@@ -20,7 +20,7 @@ class MemoryPipelineRepository : PipelineRepository {
 
   Pipeline[] findByTenant(TenantId tenantId) {
     Pipeline[] result;
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId)
         result ~= p;
     return result;
@@ -28,7 +28,7 @@ class MemoryPipelineRepository : PipelineRepository {
 
   Pipeline[] findActive(TenantId tenantId) {
     Pipeline[] result;
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId && p.isActive)
         result ~= p;
     return result;
@@ -36,7 +36,7 @@ class MemoryPipelineRepository : PipelineRepository {
 
   Pipeline[] findBySource(TenantId tenantId, PipelineSourceType sourceType) {
     Pipeline[] result;
-    foreach (ref p; store)
+    foreach (p; store)
       if (p.tenantId == tenantId && p.sourceType == sourceType)
         result ~= p;
     return result;

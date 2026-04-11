@@ -84,7 +84,7 @@ class EnvironmentController : PlatformController{
         envs = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; envs)
+      foreach (e; envs)
         arr ~= serializeEnv(e);
 
       auto resp = Json.emptyObject;
@@ -151,7 +151,7 @@ class EnvironmentController : PlatformController{
     }
   }
 
-  private Json serializeEnv(ref KymaEnvironment e) {
+  private Json serializeEnv(KymaEnvironment e) {
     return Json.emptyObject
     .set("id", Json(e.id))
     .set("tenantId", Json(e.tenantId))

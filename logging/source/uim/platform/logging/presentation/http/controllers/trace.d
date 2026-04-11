@@ -103,7 +103,7 @@ class TraceController : PlatformController {
       auto spans = uc.getTrace(tenantId, traceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; spans) {
+      foreach (s; spans) {
         auto sj = Json.emptyObject;
         sj["id"] = Json(s.id);
         sj["traceId"] = Json(s.traceId);

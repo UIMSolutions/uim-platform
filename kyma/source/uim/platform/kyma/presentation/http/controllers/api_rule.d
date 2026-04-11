@@ -90,7 +90,7 @@ class ApiRuleController : PlatformController {
         items = [];
 
       auto arr = Json.emptyArray;
-      foreach (ref rule; items)
+      foreach (rule; items)
         arr ~= serializeRule(rule);
 
       auto resp = Json.emptyObject;
@@ -179,7 +179,7 @@ class ApiRuleController : PlatformController {
     return entries;
   }
 
-  private Json serializeRule(ref ApiRule rule) {
+  private Json serializeRule(ApiRule rule) {
     auto json = Json.emptyObject
     .set("id", rule.id)
     .set("namespaceId", rule.namespaceId)
@@ -200,9 +200,9 @@ class ApiRuleController : PlatformController {
     .set("modifiedAt", rule.modifiedAt);
 
     auto rulesArr = Json.emptyArray;
-    foreach (ref entry; rule.rules) {
+    foreach (entry; rule.rules) {
       auto mArr = Json.emptyArray;
-      foreach (ref m; entry.methods)
+      foreach (m; entry.methods)
         mArr ~= Json(m.to!string);
 
       auto ej = Json.emptyObject

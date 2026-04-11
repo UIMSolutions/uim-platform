@@ -83,7 +83,7 @@ class ApplicationController : PlatformController {
         items = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref app; items)
+      foreach (app; items)
         arr ~= serializeApp(app);
 
       auto resp = Json.emptyObject;
@@ -206,7 +206,7 @@ class ApplicationController : PlatformController {
     return entries;
   }
 
-  private Json serializeApp(ref Application app) {
+  private Json serializeApp(Application app) {
     auto j = Json.emptyObject
     .set("id", app.id)
     .set("environmentId", app.environmentId)
@@ -223,7 +223,7 @@ class ApplicationController : PlatformController {
     .set("modifiedAt", app.modifiedAt);
 
     auto apisArr = Json.emptyArray;
-    foreach (ref a; app.apis) {
+    foreach (a; app.apis) {
       apisArr ~= Json.emptyObject
       .set("name", a.name)
       .set("description", a.description)
@@ -234,7 +234,7 @@ class ApplicationController : PlatformController {
     j["apis"] = apisArr;
 
     auto eventsArr = Json.emptyArray;
-    foreach (ref e; app.events) {
+    foreach (e; app.events) {
       eventsArr ~= Json.emptyObject
       .set("name", e.name)
       .set("description", e.description)

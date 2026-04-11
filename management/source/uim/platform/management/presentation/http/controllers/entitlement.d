@@ -77,7 +77,7 @@ class EntitlementController : PlatformController {
         items = uc.listByGlobalAccount(gaId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serializeEntitlement(e);
 
       auto resp = Json.emptyObject;
@@ -143,7 +143,7 @@ class EntitlementController : PlatformController {
   }
 }
 
-private Json serializeEntitlement(ref Entitlement e) {
+private Json serializeEntitlement(Entitlement e) {
   return Json.emptyObject
     .set("id", e.id)
     .set("globalAccountId", e.globalAccountId)

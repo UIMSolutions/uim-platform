@@ -50,7 +50,7 @@ class ChangeLogController : PlatformController {
       auto entries = uc.query(r);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; entries)
+      foreach (e; entries)
         arr ~= serializeEntry(e);
 
       auto resp = Json.emptyObject;
@@ -81,7 +81,7 @@ class ChangeLogController : PlatformController {
     }
   }
 
-  private Json serializeEntry(ref ChangeLogEntry e) {
+  private Json serializeEntry(ChangeLogEntry e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

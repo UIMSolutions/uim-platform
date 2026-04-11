@@ -74,7 +74,7 @@ class ModuleController : PlatformController {
 
       auto items = uc.listByEnvironment(envId);
       auto arr = Json.emptyArray;
-      foreach (ref m; items)
+      foreach (m; items)
         arr ~= serializeModule(m);
 
       auto resp = Json.emptyObject;
@@ -151,7 +151,7 @@ class ModuleController : PlatformController {
     }
   }
 
-  private Json serializeModule(ref KymaModule m) {
+  private Json serializeModule(KymaModule m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["environmentId"] = Json(m.environmentId);

@@ -33,7 +33,7 @@ class MemoryDestinationRepository : DestinationRepository {
   }
 
   Destination* findByName(TenantId tenantId, string name) {
-    foreach (ref d; store.byValue())
+    foreach (d; store.byValue())
       if (d.tenantId == tenantId && d.name == name)
         return &d;
     return null;

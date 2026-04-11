@@ -30,7 +30,7 @@ class EnvironmentProvisioner {
 
     // Check for duplicate environment types (only one CF org per subaccount)
     if (envType == EnvironmentType.cloudFoundry) {
-      foreach (ref inst; existingInstances) {
+      foreach (inst; existingInstances) {
         if (inst.environmentType == EnvironmentType.cloudFoundry
           && inst.status != EnvironmentStatus.deleting && inst.status != EnvironmentStatus.error) {
           v.valid = false;

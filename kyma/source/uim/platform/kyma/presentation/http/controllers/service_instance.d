@@ -82,7 +82,7 @@ class ServiceInstanceController : PlatformController {
         items = [];
 
       auto arr = Json.emptyArray;
-      foreach (ref inst; items)
+      foreach (inst; items)
         arr ~= serializeInst(inst);
 
       auto resp = Json.emptyObject;
@@ -146,7 +146,7 @@ class ServiceInstanceController : PlatformController {
     }
   }
 
-  private Json serializeInst(ref ServiceInstance inst) {
+  private Json serializeInst(ServiceInstance inst) {
     auto j = Json.emptyObject;
     j["id"] = Json(inst.id);
     j["namespaceId"] = Json(inst.namespaceId);

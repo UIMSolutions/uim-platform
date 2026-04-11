@@ -21,7 +21,7 @@ class MemoryLogEntryRepository : LogEntryRepository {
   private LogEntry[] store;
 
   LogEntry findById(LogEntryId id) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.id == id)
         return e;
     return LogEntry.init;

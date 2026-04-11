@@ -77,7 +77,7 @@ class ReplicationController : PlatformController {
         jobs = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref j; jobs)
+      foreach (j; jobs)
         arr ~= serializeJob(j);
 
       auto resp = Json.emptyObject;
@@ -155,7 +155,7 @@ class ReplicationController : PlatformController {
     }
   }
 
-  private Json serializeJob(ref ReplicationJob j) {
+  private Json serializeJob(ReplicationJob j) {
     auto o = Json.emptyObject;
     o["id"] = Json(j.id);
     o["tenantId"] = Json(j.tenantId);
@@ -166,7 +166,7 @@ class ReplicationController : PlatformController {
     o["trigger"] = Json(j.trigger.to!string);
 
     auto catsArr = Json.emptyArray;
-    foreach (ref cat; j.categories)
+    foreach (cat; j.categories)
       catsArr ~= Json(cat.to!string);
     o["categories"] = catsArr;
 

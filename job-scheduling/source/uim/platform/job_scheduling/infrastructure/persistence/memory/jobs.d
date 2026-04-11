@@ -73,7 +73,7 @@ class MemoryJobRepository : JobRepository {
 
     void update(Job j) {
         if (auto t = j.tenantId in store) {
-            foreach (ref existing; *t) {
+            foreach (existing; *t) {
                 if (existing.id == j.id) {
                     existing = j;
                     return;

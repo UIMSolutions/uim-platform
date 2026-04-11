@@ -20,7 +20,7 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
 
   NotificationChannel[] findByTenant(TenantId tenantId) {
     NotificationChannel[] result;
-    foreach (ref ch; store)
+    foreach (ch; store)
       if (ch.tenantId == tenantId)
         result ~= ch;
     return result;
@@ -28,7 +28,7 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
 
   NotificationChannel[] findActive(TenantId tenantId) {
     NotificationChannel[] result;
-    foreach (ref ch; store)
+    foreach (ch; store)
       if (ch.tenantId == tenantId && ch.state == ChannelState.active)
         result ~= ch;
     return result;
@@ -48,7 +48,7 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (ref ch; store)
+    foreach (ch; store)
       if (ch.tenantId == tenantId)
         count++;
     return count;

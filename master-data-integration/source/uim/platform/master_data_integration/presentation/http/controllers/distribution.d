@@ -76,7 +76,7 @@ class DistributionController : PlatformController {
         models = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref m; models)
+      foreach (m; models)
         arr ~= serializeModel(m);
 
       auto resp = Json.emptyObject;
@@ -166,7 +166,7 @@ class DistributionController : PlatformController {
     }
   }
 
-  private Json serializeModel(ref DistributionModel m) {
+  private Json serializeModel(DistributionModel m) {
     auto j = Json.emptyObject;
     j["id"] = Json(m.id);
     j["tenantId"] = Json(m.tenantId);
@@ -178,7 +178,7 @@ class DistributionController : PlatformController {
     j["targetClientIds"] = serializeStrArray(m.targetClientIds);
 
     auto catsArr = Json.emptyArray;
-    foreach (ref cat; m.categories)
+    foreach (cat; m.categories)
       catsArr ~= Json(cat.to!string);
     j["categories"] = catsArr;
 

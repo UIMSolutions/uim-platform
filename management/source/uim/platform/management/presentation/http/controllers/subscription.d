@@ -69,7 +69,7 @@ class SubscriptionController : PlatformController {
         items = uc.listBySubaccount(subId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeSubscription(s);
 
       auto resp = Json.emptyObject;
@@ -127,7 +127,7 @@ class SubscriptionController : PlatformController {
   }
 }
 
-private Json serializeSubscription(ref Subscription s) {
+private Json serializeSubscription(Subscription s) {
   auto j = Json.emptyObject;
   j["id"] = Json(s.id);
   j["subaccountId"] = Json(s.subaccountId);

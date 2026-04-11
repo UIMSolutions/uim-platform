@@ -41,7 +41,7 @@ class ManagePipelinesUseCase : UIMUseCase {
     p.createdBy = req.createdBy;
     p.createdAt = clockSeconds();
 
-    foreach (ref proc; req.processors) {
+    foreach (proc; req.processors) {
       PipelineProcessor pp;
       pp.type = parseProcessorType(proc.type);
       pp.name = proc.name;
@@ -70,7 +70,7 @@ class ManagePipelinesUseCase : UIMUseCase {
 
     if (req.processors.length > 0) {
       p.processors = [];
-      foreach (ref proc; req.processors) {
+      foreach (proc; req.processors) {
         PipelineProcessor pp;
         pp.type = parseProcessorType(proc.type);
         pp.name = proc.name;

@@ -45,7 +45,7 @@ class MemoryChangeLogRepository : ChangeLogRepository {
   ChangeLogEntry[] findSinceDeltaToken(TenantId tenantId, string deltaToken) {
     // Find the timestamp associated with the delta token
     long tokenTimestamp = 0;
-    foreach (ref entry; store.byValue()) {
+    foreach (entry; store.byValue()) {
       if (entry.tenantId == tenantId && entry.deltaToken == deltaToken) {
         tokenTimestamp = entry.timestamp;
         break;

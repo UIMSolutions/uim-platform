@@ -78,7 +78,7 @@ class ScheduleController : PlatformController {
             auto schedules = uc.list(jobtenantId, id);
 
             auto jarr = Json.emptyArray;
-            foreach (ref s; schedules) {
+            foreach (s; schedules) {
                 jarr ~= scheduleToJson(s);
             }
 
@@ -196,7 +196,7 @@ class ScheduleController : PlatformController {
             auto schedules = uc.search(query, tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref s; schedules) {
+            foreach (s; schedules) {
                 jarr ~= scheduleToJson(s);
             }
 

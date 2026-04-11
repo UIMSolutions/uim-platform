@@ -24,14 +24,14 @@ class MemoryIngestionTokenRepository : IngestionTokenRepository {
 
   IngestionToken[] findByTenant(TenantId tenantId) {
     IngestionToken[] result;
-    foreach (ref t; store)
+    foreach (t; store)
       if (t.tenantId == tenantId)
         result ~= t;
     return result;
   }
 
   IngestionToken findByHash(string tokenHash) {
-    foreach (ref t; store)
+    foreach (t; store)
       if (t.tokenHash == tokenHash)
         return t;
     return IngestionToken.init;

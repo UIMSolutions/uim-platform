@@ -64,7 +64,7 @@ class ManageApiRulesUseCase : UIMUseCase {
 
     // Convert rule entry DTOs
     ApiRuleEntry[] entries;
-    foreach (ref r; req.rules) {
+    foreach (r; req.rules) {
       ApiRuleEntry entry;
       entry.path = r.path;
       entry.accessStrategy = parseAccessStrategy(r.accessStrategy);
@@ -116,7 +116,7 @@ class ManageApiRulesUseCase : UIMUseCase {
 
     if (req.rules.length > 0) {
       ApiRuleEntry[] entries;
-      foreach (ref r; req.rules) {
+      foreach (r; req.rules) {
         ApiRuleEntry entry;
         entry.path = r.path;
         entry.accessStrategy = parseAccessStrategy(r.accessStrategy);

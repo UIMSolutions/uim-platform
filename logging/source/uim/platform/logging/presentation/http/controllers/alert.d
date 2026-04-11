@@ -35,7 +35,7 @@ class AlertController : PlatformController {
       auto alerts = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref a; alerts) {
+      foreach (a; alerts) {
         auto aj = Json.emptyObject;
         aj["id"] = Json(a.id);
         aj["ruleId"] = Json(a.ruleId);

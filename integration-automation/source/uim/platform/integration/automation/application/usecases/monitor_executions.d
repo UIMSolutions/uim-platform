@@ -54,7 +54,7 @@ class MonitorExecutionsUseCase : UIMUseCase {
 
     auto steps = stepRepo.findByWorkflow(workflowtenantId, id);
     int pending, inProg, completed, failed, skipped;
-    foreach (ref s; steps) {
+    foreach (s; steps) {
       final switch (s.status) {
       case StepStatus.pending:
         pending++;

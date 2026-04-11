@@ -24,14 +24,14 @@ class MemoryDashboardRepository : DashboardRepository {
 
   Dashboard[] findByTenant(TenantId tenantId) {
     Dashboard[] result;
-    foreach (ref d; store)
+    foreach (d; store)
       if (d.tenantId == tenantId)
         result ~= d;
     return result;
   }
 
   Dashboard findDefault(TenantId tenantId) {
-    foreach (ref d; store)
+    foreach (d; store)
       if (d.tenantId == tenantId && d.isDefault)
         return d;
     return Dashboard.init;
@@ -51,7 +51,7 @@ class MemoryDashboardRepository : DashboardRepository {
 
   size_t countByTenant(TenantId tenantId) {
     size_t count;
-    foreach (ref d; store)
+    foreach (d; store)
       if (d.tenantId == tenantId)
         count++;
     return count;

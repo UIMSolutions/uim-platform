@@ -63,7 +63,7 @@ class ChannelController : PlatformController {
       auto channels = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ch; channels) {
+      foreach (ch; channels) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(ch.id);
         cj["name"] = Json(ch.name);

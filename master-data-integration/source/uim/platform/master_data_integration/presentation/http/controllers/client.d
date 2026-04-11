@@ -82,7 +82,7 @@ class ClientController : PlatformController {
         clients = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; clients)
+      foreach (c; clients)
         arr ~= serializeClient(c);
 
       auto resp = Json.emptyObject;
@@ -173,7 +173,7 @@ class ClientController : PlatformController {
     }
   }
 
-  private Json serializeClient(ref Client c) {
+  private Json serializeClient(Client c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);
@@ -186,7 +186,7 @@ class ClientController : PlatformController {
     j["communicationArrangement"] = Json(c.communicationArrangement);
 
     auto catsArr = Json.emptyArray;
-    foreach (ref cat; c.supportedCategories)
+    foreach (cat; c.supportedCategories)
       catsArr ~= Json(cat.to!string);
     j["supportedCategories"] = catsArr;
 

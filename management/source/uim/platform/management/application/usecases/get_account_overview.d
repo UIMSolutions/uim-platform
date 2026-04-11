@@ -46,7 +46,7 @@ class GetAccountOverviewUseCase : UIMUseCase {
     ov.totalSubaccounts = cast(long) subaccounts.length;
 
     int activeCount = 0;
-    foreach (ref s; subaccounts) {
+    foreach (s; subaccounts) {
       if (s.status == SubaccountStatus.active)
         activeCount++;
     }
@@ -61,7 +61,7 @@ class GetAccountOverviewUseCase : UIMUseCase {
     // Count environments across all subaccounts
     int envCount = 0;
     int subCount = 0;
-    foreach (ref s; subaccounts) {
+    foreach (s; subaccounts) {
       auto envs = environmentRepo.findBySubaccount(s.id);
       envCount += cast(int) envs.length;
       auto subs = subscriptionRepo.findBySubaccount(s.id);

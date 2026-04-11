@@ -77,7 +77,7 @@ class NamespaceController : PlatformController {
 
       auto items = uc.listByEnvironment(envId);
       auto arr = Json.emptyArray;
-      foreach (ref ns; items)
+      foreach (ns; items)
         arr ~= serializeNs(ns);
 
       auto resp = Json.emptyObject;
@@ -146,7 +146,7 @@ class NamespaceController : PlatformController {
     }
   }
 
-  private Json serializeNs(ref Namespace ns) {
+  private Json serializeNs(Namespace ns) {
     auto j = Json.emptyObject;
     j["id"] = Json(ns.id);
     j["environmentId"] = Json(ns.environmentId);

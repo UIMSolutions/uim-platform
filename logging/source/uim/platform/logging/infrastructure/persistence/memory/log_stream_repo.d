@@ -24,14 +24,14 @@ class MemoryLogStreamRepository : LogStreamRepository {
 
   LogStream[] findByTenant(TenantId tenantId) {
     LogStream[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   LogStream findByName(TenantId tenantId, string name) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.name == name)
         return s;
     return LogStream.init;

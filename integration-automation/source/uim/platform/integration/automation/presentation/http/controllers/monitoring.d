@@ -36,7 +36,7 @@ class MonitoringController {
       auto logs = useCase.getAllLogs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -56,7 +56,7 @@ class MonitoringController {
       auto logs = useCase.getWorkflowLogs(workflowtenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -76,7 +76,7 @@ class MonitoringController {
       auto logs = useCase.getStepLogs(steptenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -95,7 +95,7 @@ class MonitoringController {
       auto logs = useCase.getFailures(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -132,7 +132,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeLog(ref const ExecutionLog l) {
+  private static Json serializeLog(const ExecutionLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["workflowId"] = Json(l.workflowId);

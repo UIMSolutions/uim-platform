@@ -12,7 +12,7 @@ import uim.platform.master_data_integration.domain.types;
 class KeyMappingResolver {
   /// Find the local key for a specific client within a key mapping.
   string resolveLocalKey(KeyMapping mapping, ClientId clientId) {
-    foreach (ref entry; mapping.entries) {
+    foreach (entry; mapping.entries) {
       if (entry.clientId == clientId)
         return entry.localKey;
     }
@@ -21,7 +21,7 @@ class KeyMappingResolver {
 
   /// Find the primary key entry within a mapping.
   KeyMappingEntry findPrimaryEntry(KeyMapping mapping) {
-    foreach (ref entry; mapping.entries) {
+    foreach (entry; mapping.entries) {
       if (entry.isPrimary)
         return entry;
     }
@@ -30,7 +30,7 @@ class KeyMappingResolver {
 
   /// Check if a mapping contains a given client.
   bool hasClientMapping(KeyMapping mapping, ClientId clientId) {
-    foreach (ref entry; mapping.entries) {
+    foreach (entry; mapping.entries) {
       if (entry.clientId == clientId)
         return true;
     }
@@ -43,7 +43,7 @@ class KeyMappingResolver {
       return false;
 
     bool hasPrimary = false;
-    foreach (ref entry; mapping.entries) {
+    foreach (entry; mapping.entries) {
       if (entry.isPrimary) {
         if (hasPrimary)
           return false; // Only one primary allowed

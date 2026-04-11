@@ -68,7 +68,7 @@ class ScenarioController {
       auto scenarios = useCase.listScenarios(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; scenarios)
+      foreach (s; scenarios)
         arr ~= serializeScenario(s);
 
       auto resp = Json.emptyObject;
@@ -150,7 +150,7 @@ class ScenarioController {
     }
   }
 
-  private static Json serializeScenario(ref const IntegrationScenario s) {
+  private static Json serializeScenario(const IntegrationScenario s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);
@@ -168,7 +168,7 @@ class ScenarioController {
 
     if (s.stepTemplates.length > 0) {
       auto steps = Json.emptyArray;
-      foreach (ref t; s.stepTemplates) {
+      foreach (t; s.stepTemplates) {
         auto sj = Json.emptyObject;
         sj["name"] = Json(t.name);
         sj["description"] = Json(t.description);

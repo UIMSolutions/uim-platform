@@ -35,10 +35,10 @@ class MemoryKeyMappingRepository : KeyMappingRepository {
   }
 
   KeyMapping findByClientKey(TenantId tenantId, ClientId clientId, string localKey) {
-    foreach (ref mapping; store.byValue()) {
+    foreach (mapping; store.byValue()) {
       if (mapping.tenantId != tenantId)
         continue;
-      foreach (ref entry; mapping.entries) {
+      foreach (entry; mapping.entries) {
         if (entry.clientId == clientId && entry.localKey == localKey)
           return mapping;
       }

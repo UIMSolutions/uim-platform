@@ -89,7 +89,7 @@ class JobController : PlatformController {
             auto jobs = jobUc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref job; jobs) {
+            foreach (job; jobs) {
                 jarr ~= jobToJson(job);
             }
 
@@ -195,7 +195,7 @@ class JobController : PlatformController {
             auto jobs = jobUc.search(query, tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref job; jobs) {
+            foreach (job; jobs) {
                 jarr ~= jobToJson(job);
             }
 
@@ -208,7 +208,7 @@ class JobController : PlatformController {
         }
     }
 
-    private static Json jobToJson(ref uim.platform.job_scheduling.domain.entities.job.Job job) {
+    private static Json jobToJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
         auto j = Json.emptyObject;
         j["jobId"] = Json(job.id);
         j["name"] = Json(job.name);
@@ -219,7 +219,7 @@ class JobController : PlatformController {
         return j;
     }
 
-    private static Json jobToDetailJson(ref uim.platform.job_scheduling.domain.entities.job.Job job) {
+    private static Json jobToDetailJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
         auto j = Json.emptyObject;
         j["jobId"] = Json(job.id);
         j["name"] = Json(job.name);

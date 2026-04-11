@@ -67,7 +67,7 @@ class DistributionEvaluator {
 
     bool isAnd = (rule.logicOperator != "OR");
 
-    foreach (ref cond; rule.conditions) {
+    foreach (cond; rule.conditions) {
       bool match = evaluateCondition(cond, obj);
       if (isAnd && !match)
         return false;

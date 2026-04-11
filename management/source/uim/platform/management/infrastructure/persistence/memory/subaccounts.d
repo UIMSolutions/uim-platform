@@ -33,7 +33,7 @@ class MemorySubaccountRepository : SubaccountRepository {
   }
 
   Subaccount findBySubdomain(string subdomain) {
-    foreach (ref s; store.byValue()) {
+    foreach (s; store.byValue()) {
       if (s.subdomain == subdomain)
         return s;
     }

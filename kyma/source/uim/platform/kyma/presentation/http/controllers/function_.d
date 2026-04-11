@@ -90,7 +90,7 @@ class FunctionController : PlatformController {
         items = [];
 
       auto arr = Json.emptyArray;
-      foreach (ref fn; items)
+      foreach (fn; items)
         arr ~= serializeFn(fn);
 
       auto resp = Json.emptyObject;
@@ -163,7 +163,7 @@ class FunctionController : PlatformController {
     }
   }
 
-  private Json serializeFn(ref ServerlessFunction fn) {
+  private Json serializeFn(ServerlessFunction fn) {
     auto j = Json.emptyObject;
     j["id"] = Json(fn.id);
     j["namespaceId"] = Json(fn.namespaceId);

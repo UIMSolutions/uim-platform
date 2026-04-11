@@ -81,7 +81,7 @@ class ServiceBindingController : PlatformController {
         items = [];
 
       auto arr = Json.emptyArray;
-      foreach (ref b; items)
+      foreach (b; items)
         arr ~= serializeBinding(b);
 
       auto resp = Json.emptyObject;
@@ -144,7 +144,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private Json serializeBinding(ref ServiceBinding b) {
+  private Json serializeBinding(ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["serviceInstanceId"] = Json(b.serviceInstanceId);

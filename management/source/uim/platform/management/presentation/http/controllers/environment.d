@@ -74,7 +74,7 @@ class EnvironmentController : PlatformController {
         items = uc.listBySubaccount(subId);
 
       auto arr = Json.emptyArray;
-      foreach (ref inst; items)
+      foreach (inst; items)
         arr ~= serializeEnvironment(inst);
 
       auto resp = Json.emptyObject;
@@ -132,7 +132,7 @@ class EnvironmentController : PlatformController {
   }
 }
 
-private Json serializeEnvironment(ref EnvironmentInstance inst) {
+private Json serializeEnvironment(EnvironmentInstance inst) {
   auto j = Json.emptyObject
     .set("id", inst.id)
     .set("subaccountId", inst.subaccountId)

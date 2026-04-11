@@ -95,7 +95,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
 
   private KeyMappingEntry[] toEntries(KeyMappingEntryDto[] dtos) {
     KeyMappingEntry[] result;
-    foreach (ref dto; dtos) {
+    foreach (dto; dtos) {
       KeyMappingEntry e;
       e.clientId = dto.clientId;
       e.systemId = dto.systemId;

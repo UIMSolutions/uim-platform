@@ -74,7 +74,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
     workflowRepo.save(wf);
 
     // Instantiate workflow steps from scenario templates
-    foreach (ref tmpl; scenario.stepTemplates) {
+    foreach (tmpl; scenario.stepTemplates) {
       auto step = WorkflowStep();
       step.id = randomUUID();
       step.workflowId = wf.id;

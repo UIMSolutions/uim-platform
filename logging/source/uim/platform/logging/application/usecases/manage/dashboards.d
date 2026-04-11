@@ -38,7 +38,7 @@ class ManageDashboardsUseCase : UIMUseCase {
     d.createdBy = req.createdBy;
     d.createdAt = clockSeconds();
 
-    foreach (ref p; req.panels) {
+    foreach (p; req.panels) {
       DashboardPanel panel;
       panel.id = (p.id.length > 0) ? p.id : randomUUID().to!string;
       panel.title = p.title;
@@ -69,7 +69,7 @@ class ManageDashboardsUseCase : UIMUseCase {
 
     if (req.panels.length > 0) {
       d.panels = [];
-      foreach (ref p; req.panels) {
+      foreach (p; req.panels) {
         import std.uuid : randomUUID;
 
         DashboardPanel panel;
