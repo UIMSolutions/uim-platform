@@ -45,7 +45,7 @@ class ProfileDataUseCase : UIMUseCase {
     profile.tenantId = req.tenantId;
     profile.datasetId = req.datasetId;
     profile.datasetName = req.datasetName;
-    profile.totalRecords = cast(long)req.records.length;
+    profile.totalRecords = req.records.length;
     profile.profiledRecords = profile.totalRecords;
     profile.columns = columns;
 
@@ -85,7 +85,7 @@ class ProfileDataUseCase : UIMUseCase {
   private ColumnProfile profileColumn(string fieldName, ProfileRecordInput[] records) {
     ColumnProfile cp;
     cp.fieldName = fieldName;
-    cp.totalValues = cast(long)records.length;
+    cp.totalValues = records.length;
 
     long nullCount = 0;
     long emptyCount = 0;
@@ -110,7 +110,7 @@ class ProfileDataUseCase : UIMUseCase {
       values ~= val;
       freqMap[val] = freqMap.get(val, 0) + 1;
 
-      auto len = cast(long)val.length;
+      auto len = val.length;
       if (len < minLen)
         minLen = len;
       if (len > maxLen)
@@ -120,8 +120,8 @@ class ProfileDataUseCase : UIMUseCase {
 
     cp.nullCount = nullCount;
     cp.emptyCount = emptyCount;
-    cp.uniqueCount = cast(long)freqMap.length;
-    cp.duplicateCount = cast(long)values.length - cp.uniqueCount;
+    cp.uniqueCount = freqMap.length;
+    cp.duplicateCount = values.length - cp.uniqueCount;
 
     auto nonNull = cp.totalValues - nullCount;
     cp.completeness = cp.totalValues > 0 ? (cast(double)nonNull / cp.totalValues) * 100.0 : 100.0;
@@ -205,7 +205,7 @@ class ProfileDataUseCase : UIMUseCase {
     // import std.string : indexOf;
 
     auto at = s.indexOf('@');
-    return at > 0 && at < cast(long)s.length - 1 && s.indexOf('.', at) > at;
+    return at > 0 && at < s.length - 1 && s.indexOf('.', at) > at;
   }
 
   private static string[] topN(int[string] freqMap, int n) {

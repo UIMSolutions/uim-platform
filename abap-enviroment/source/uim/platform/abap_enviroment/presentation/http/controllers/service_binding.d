@@ -70,7 +70,7 @@ class ServiceBindingController : PlatformController {
         arr ~= serializeBinding(b);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)bindings.length);
+      resp["totalCount"] = Json(bindings.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

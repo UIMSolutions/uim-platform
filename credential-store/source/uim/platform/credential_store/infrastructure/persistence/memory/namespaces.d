@@ -46,6 +46,6 @@ class MemoryNamespaceRepository : NamespaceRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long)store.values.filter!(ns => ns.tenantId == tenantId).array.length;
+    return store.values.filter!(ns => ns.tenantId == tenantId).array.length;
   }
 }

@@ -72,13 +72,13 @@ class MemoryExecutionRepository : ExecutionRepository {
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return cast(long)(*rg).length;
+      return (*rg).length;
     return 0;
   }
 
   size_t countByStatus(ExecutionStatus status, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return cast(long)(*rg).filter!(e => e.status == status).array.length;
+      return (*rg).filter!(e => e.status == status).array.length;
     return 0;
   }
 }

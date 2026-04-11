@@ -66,7 +66,7 @@ class TileController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto tiles = useCase.listTiles(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)tiles.length);
+      response["totalResults"] = Json(tiles.length);
       response["resources"] = toJsonArray(tiles);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
@@ -80,7 +80,7 @@ class TileController : PlatformController {
       auto query = req.headers.get("X-Search-Query", "");
       auto tiles = useCase.searchTiles(tenantId, query);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)tiles.length);
+      response["totalResults"] = Json(tiles.length);
       response["resources"] = toJsonArray(tiles);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

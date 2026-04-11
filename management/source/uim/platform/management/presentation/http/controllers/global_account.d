@@ -80,7 +80,7 @@ class GlobalAccountController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -158,7 +158,7 @@ class GlobalAccountController : PlatformController {
 
 private Json serializeGlobalAccount(GlobalAccount ga) {
   return Json.emptyObject
-    .set("id", ga.id)
+    .set("id", ga.globalAccountId)
     .set("displayName", ga.displayName)
     .set("description", ga.description)
     .set("contractNumber", ga.contractNumber)
@@ -168,12 +168,12 @@ private Json serializeGlobalAccount(GlobalAccount ga) {
     .set("costCenter", ga.costCenter)
     .set("companyName", ga.companyName)
     .set("contactEmail", ga.contactEmail)
-    .set("maxSubaccounts", cast(long)ga.maxSubaccounts)
-    .set("currentSubaccounts", cast(long)ga.currentSubaccounts)
-    .set("maxDirectories", cast(long)ga.maxDirectories)
-    .set("currentDirectories", cast(long)ga.currentDirectories)
+    .set("maxSubaccounts", ga.maxSubaccounts)
+    .set("currentSubaccounts", ga.currentSubaccounts)
+    .set("maxDirectories", ga.maxDirectories)
+    .set("currentDirectories", ga.currentDirectories)
     .set("createdAt", ga.createdAt)
     .set("modifiedAt", ga.modifiedAt)
     .set("createdBy", ga.createdBy)
-    .set("customProperties", customProperties);
+    .set("customProperties", ga.customProperties.toJson);
 }

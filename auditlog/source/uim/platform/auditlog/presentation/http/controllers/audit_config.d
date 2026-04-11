@@ -173,7 +173,7 @@ class AuditConfigController : PlatformController {
       .set("logConfigurationChanges", c.logConfigurationChanges.toJson)
       .set("enableDataMasking", c.enableDataMasking.toJson)
       .set("minimumSeverity", c.minimumSeverity.to!string.toJson)
-      .set("rateLimitPerSecond", cast(long)c.rateLimitPerSecond.toJson)
+      .set("rateLimitPerSecond", c.rateLimitPerSecond.toJson)
       .set("createdAt", c.createdAt.toJson)
       .set("updatedAt", c.updatedAt.toJson);
 

@@ -90,19 +90,19 @@ class MemoryJobRepository : JobRepository {
 
     size_t countByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
-            return cast(long)(*t).length;
+            return (*t).length;
         return 0;
     }
 
     size_t countActiveByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
-            return cast(long)(*t).filter!(j => j.active).array.length;
+            return (*t).filter!(j => j.active).array.length;
         return 0;
     }
 
     size_t countInactiveByTenant(TenantId tenantId) {
         if (auto t = tenantId in store)
-            return cast(long)(*t).filter!(j => !j.active).array.length;
+            return (*t).filter!(j => !j.active).array.length;
         return 0;
     }
 }

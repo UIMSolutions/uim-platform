@@ -88,7 +88,7 @@ class ServicePlanController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -155,9 +155,9 @@ private Json serializeServicePlan(ServicePlan plan) {
     .set("isFree", plan.isFree)
     .set("isBeta", plan.isBeta)
     .set("availableRegions", plan.availableRegions.toJson)
-    .set("maxQuota", cast(long)plan.maxQuota)
+    .set("maxQuota", plan.maxQuota)
     .set("unit", plan.unit)
-    .set("supportedPlatforms", plan.supportedPlatforms)
+    .set("supportedPlatforms", plan.supportedPlatforms.toJson)
     .set("providerDisplayName", plan.providerDisplayName)
     .set("provisionable", plan.provisionable)
     .set("createdAt", plan.createdAt)

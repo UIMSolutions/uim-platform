@@ -77,7 +77,7 @@ class ResourceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)resources.length);
+      resp["totalCount"] = Json(resources.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -151,7 +151,7 @@ class ResourceController : PlatformController {
     j["url"] = Json(r.url);
     j["runtime"] = Json(r.runtime);
     j["region"] = Json(r.region);
-    j["instanceCount"] = Json(cast(long)r.instanceCount);
+    j["instanceCount"] = Json(r.instanceCount);
     j["tags"] = toJsonArray(r.tags);
     j["registeredBy"] = Json(r.registeredBy);
     j["registeredAt"] = Json(r.registeredAt);

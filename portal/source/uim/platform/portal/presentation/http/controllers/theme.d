@@ -62,7 +62,7 @@ class ThemeController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)themes.length);
+      response["totalResults"] = Json(themes.length);
       response["resources"] = toJsonArray(themes);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

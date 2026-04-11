@@ -39,18 +39,18 @@ class MetaController : PlatformController {
 
     auto limits = Json.emptyObject;
     auto deplLimits = Json.emptyObject;
-    deplLimits["maxRunningCount"] = Json(cast(long)-1);
+    deplLimits["maxRunningCount"] = Json(-1);
     limits["deployments"] = deplLimits;
 
     auto execLimits = Json.emptyObject;
-    execLimits["maxRunningCount"] = Json(cast(long)-1);
+    execLimits["maxRunningCount"] = Json(-1);
     limits["executions"] = execLimits;
 
     limits["minimumFrequencyHour"] = Json(1);
 
     auto ttlLimits = Json.emptyObject;
     ttlLimits["minimum"] = Json("10m");
-    ttlLimits["maximum"] = Json(cast(long)-1);
+    ttlLimits["maximum"] = Json(-1);
     limits["timeToLiveDeployments"] = ttlLimits;
 
     aiApi["limits"] = limits;

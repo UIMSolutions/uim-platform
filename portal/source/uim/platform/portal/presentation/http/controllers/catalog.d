@@ -61,7 +61,7 @@ class CatalogController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto catalogs = useCase.listCatalogs(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)catalogs.length);
+      response["totalResults"] = Json(catalogs.length);
       response["resources"] = toJsonArray(catalogs);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

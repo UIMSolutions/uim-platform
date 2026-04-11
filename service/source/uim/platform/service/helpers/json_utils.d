@@ -192,7 +192,7 @@ void writeError(scope HTTPServerResponse res, int status, string message) {
   auto error = Json.emptyObject;
   error["error"] = Json(message);
   error["status"] = Json(status);
-  // j["code"] = Json(cast(long)code);
+  // j["code"] = Json(code);
   res.writeJsonBody(error, status);
 }
 

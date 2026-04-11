@@ -72,13 +72,13 @@ class MemoryDocumentRepository : DocumentRepository {
 
   size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
-      return cast(long)(*cl).length;
+      return (*cl).length;
     return 0;
   }
 
   size_t countByStatus(DocumentStatus status, ClientId clientId) {
     if (auto cl = clientId in store)
-      return cast(long)(*cl).filter!(d => d.status == status).array.length;
+      return (*cl).filter!(d => d.status == status).array.length;
     return 0;
   }
 }

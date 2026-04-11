@@ -61,7 +61,7 @@ class ProviderController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)providers.length);
+      response["totalResults"] = Json(providers.length);
       response["resources"] = toJsonArray(providers);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

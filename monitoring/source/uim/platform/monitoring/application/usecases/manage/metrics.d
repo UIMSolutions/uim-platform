@@ -158,7 +158,7 @@ class ManageMetricsUseCase : UIMUseCase {
     s.resourceId = resourceId;
     s.windowStartTime = startTime;
     s.windowEndTime = endTime;
-    s.dataPointCount = cast(long)metrics.length;
+    s.dataPointCount = metrics.length;
 
     if (metrics.length == 0)
       return s;

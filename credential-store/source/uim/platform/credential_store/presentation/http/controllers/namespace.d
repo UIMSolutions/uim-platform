@@ -70,7 +70,7 @@ class NamespaceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long)namespaces.length);
+      resp["totalCount"] = Json(namespaces.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

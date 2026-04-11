@@ -97,7 +97,7 @@ class AuditLogController : PlatformController {
 
       auto resp = Json.emptyObject
       .set("items", arr)
-      .set("totalCount", Json(cast(long)entries.length));
+      .set("totalCount", Json(entries.length));
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

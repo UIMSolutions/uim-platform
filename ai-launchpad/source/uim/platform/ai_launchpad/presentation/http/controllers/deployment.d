@@ -69,7 +69,7 @@ class DeploymentController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long)deployments.length);
+      resp["count"] = Json(deployments.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -186,11 +186,11 @@ class DeploymentController : PlatformController {
     j["deploymentUrl"] = Json(d.deploymentUrl);
 
     auto sj = Json.emptyObject;
-    sj["minReplicas"] = Json(cast(long)d.scaling.minReplicas);
-    sj["maxReplicas"] = Json(cast(long)d.scaling.maxReplicas);
+    sj["minReplicas"] = Json(d.scaling.minReplicas);
+    sj["maxReplicas"] = Json(d.scaling.maxReplicas);
     j["scaling"] = sj;
 
-    j["ttl"] = Json(cast(long)d.ttl);
+    j["ttl"] = Json(d.ttl);
     j["startedAt"] = Json(d.startedAt);
     j["stoppedAt"] = Json(d.stoppedAt);
     j["statusMessage"] = Json(d.statusMessage);

@@ -63,7 +63,7 @@ class SiteController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)sites.length);
+      response["totalResults"] = Json(sites.length);
       response["resources"] = toJsonArray(sites);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

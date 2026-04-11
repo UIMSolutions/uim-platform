@@ -66,7 +66,7 @@ class AppController : PlatformController {
       auto arr = apps.map!(a => serializeApp(a)).array.toJson;
       auto response = Json.emptyObject;
       response["items"] = arr;
-      response["totalCount"] = Json(cast(long)apps.length);
+      response["totalCount"] = Json(apps.length);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -75,7 +75,7 @@ class SystemInstanceController : PlatformController {
         arr ~= serializeInstance(inst);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)instances.length);
+      resp["totalCount"] = Json(instances.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

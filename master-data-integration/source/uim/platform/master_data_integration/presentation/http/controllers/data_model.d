@@ -94,7 +94,7 @@ class DataModelController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)models.length);
+      resp["totalCount"] = Json(models.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -187,7 +187,7 @@ class DataModelController : PlatformController {
       fj["isRequired"] = Json(fd.isRequired);
       fj["isKey"] = Json(fd.isKey);
       fj["defaultValue"] = Json(fd.defaultValue);
-      fj["maxLength"] = Json(cast(long)fd.maxLength);
+      fj["maxLength"] = Json(fd.maxLength);
       fj["referenceModel"] = Json(fd.referenceModel);
       fj["description"] = Json(fd.description);
       fieldsArr ~= fj;

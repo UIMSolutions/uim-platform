@@ -63,7 +63,7 @@ class MenuItemController : PlatformController {
       auto siteId = req.headers.get("X-Site-Id", "");
       auto items = useCase.listMenuItems(siteId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)items.length);
+      response["totalResults"] = Json(items.length);
       response["resources"] = toJsonArray(items);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

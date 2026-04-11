@@ -60,7 +60,7 @@ class SectionController : PlatformController {
       auto pageId = req.headers.get("X-Page-Id", "");
       auto sections = useCase.listSections(pageId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)sections.length);
+      response["totalResults"] = Json(sections.length);
       response["resources"] = toJsonArray(sections);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

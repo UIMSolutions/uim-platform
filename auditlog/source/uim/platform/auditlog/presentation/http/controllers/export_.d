@@ -76,7 +76,7 @@ class ExportController : PlatformController {
       auto arr = jobs.map!(j => serializeJob(j)).array.toJson;
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(cast(long)jobs.length));
+        .set("totalCount", Json(jobs.length));
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

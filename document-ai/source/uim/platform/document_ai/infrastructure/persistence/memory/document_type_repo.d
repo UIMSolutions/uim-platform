@@ -60,7 +60,7 @@ class MemoryDocumentTypeRepository : DocumentTypeRepository {
 
   size_t countByClient(ClientId clientId) {
     if (auto cl = clientId in store)
-      return cast(long)(*cl).length;
+      return (*cl).length;
     return 0;
   }
 }

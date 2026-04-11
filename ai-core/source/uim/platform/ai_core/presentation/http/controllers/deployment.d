@@ -62,7 +62,7 @@ class DeploymentController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long)deployments.length);
+      resp["count"] = Json(deployments.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -146,7 +146,7 @@ class DeploymentController : PlatformController {
       .set("status", d.status.to!string)
       .set("statusMessage", d.statusMessage)
       .set("deploymentUrl", d.deploymentUrl)
-      .set("ttl", cast(long)d.ttl)
+      .set("ttl", d.ttl)
       .set("createdAt", d.createdAt)
       .set("modifiedAt", d.modifiedAt)
       .set("startedAt", d.startedAt)

@@ -70,7 +70,7 @@ class RetentionController : PlatformController {
         arr ~= serializePolicy(p);
       auto resp = Json.emptyObject
         .set("items", arr)
-        .set("totalCount", Json(cast(long)policies.length));
+        .set("totalCount", Json(policies.length));
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -143,7 +143,7 @@ class RetentionController : PlatformController {
       .set("tenantId", policy.tenantId)
       .set("name", policy.name)
       .set("description", policy.description)
-      .set("retentionDays", cast(long)policy.retentionDays)
+      .set("retentionDays", policy.retentionDays)
       .set("status", policy.status.to!string)
       .set("isDefault", policy.isDefault)
       .set("createdAt", policy.createdAt)

@@ -73,7 +73,7 @@ class ApplicationJobController : PlatformController {
         arr ~= serializeJob(job);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)jobs.length);
+      resp["totalCount"] = Json(jobs.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -175,7 +175,7 @@ class ApplicationJobController : PlatformController {
           .set("startedAt", ex.startedAt)
           .set("finishedAt", ex.finishedAt)
           .set("message", ex.message)
-          .set("returnCode", cast(long)ex.returnCode);
+          .set("returnCode", ex.returnCode);
       }
       j["executionHistory"] = hist;
     }

@@ -60,7 +60,7 @@ class MemoryExecutableRepository : ExecutableRepository {
 
   size_t countByScenario(ScenarioId scenarioId, ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return cast(long)(*rg).filter!(e => e.scenarioId == scenarioId).array.length;
+      return (*rg).filter!(e => e.scenarioId == scenarioId).array.length;
     return 0;
   }
 }

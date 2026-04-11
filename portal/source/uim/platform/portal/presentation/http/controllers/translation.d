@@ -69,7 +69,7 @@ class TranslationController : PlatformController {
         translations = useCase.listTranslations(tenantId, language);
 
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)translations.length);
+      response["totalResults"] = Json(translations.length);
       response["resources"] = toJsonArray(translations);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

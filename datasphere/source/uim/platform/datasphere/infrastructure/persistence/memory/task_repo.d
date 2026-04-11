@@ -66,7 +66,7 @@ class MemoryTaskRepository : TaskRepository {
 
   size_t countBySpace(SpaceId spaceId) {
     if (auto sp = spaceId in store)
-      return cast(long)(*sp).length;
+      return (*sp).length;
     return 0;
   }
 }

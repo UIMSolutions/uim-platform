@@ -64,7 +64,7 @@ class PageController : PlatformController {
       auto siteIdParam = req.headers.get("X-Site-Id", "");
       auto pages = useCase.listPages(siteIdParam);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)pages.length);
+      response["totalResults"] = Json(pages.length);
       response["resources"] = toJsonArray(pages);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {

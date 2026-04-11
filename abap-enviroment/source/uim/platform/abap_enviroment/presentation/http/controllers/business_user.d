@@ -71,7 +71,7 @@ class BusinessUserController : PlatformController {
         arr ~= serializeUser(u);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)users.length);
+      resp["totalCount"] = Json(users.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

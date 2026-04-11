@@ -55,7 +55,7 @@ class ChangeLogController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)entries.length);
+      resp["totalCount"] = Json(entries.length);
 
       // Provide the last delta token for incremental polling
       if (entries.length > 0)

@@ -67,7 +67,7 @@ class TransportRequestController : PlatformController {
         arr ~= serializeRequest(tr);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long)requests.length);
+      resp["totalCount"] = Json(requests.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

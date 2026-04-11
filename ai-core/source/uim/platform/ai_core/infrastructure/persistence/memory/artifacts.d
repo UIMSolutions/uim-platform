@@ -72,7 +72,7 @@ class MemoryArtifactRepository : ArtifactRepository {
 
   size_t countByResourceGroup(ResourceGroupId rgId) {
     if (auto rg = rgId in store)
-      return cast(long)(*rg).length;
+      return (*rg).length;
     return 0;
   }
 }

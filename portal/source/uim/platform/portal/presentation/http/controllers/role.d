@@ -61,7 +61,7 @@ class RoleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long)roles.length);
+      response["totalResults"] = Json(roles.length);
       response["resources"] = toJsonArray(roles);
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
