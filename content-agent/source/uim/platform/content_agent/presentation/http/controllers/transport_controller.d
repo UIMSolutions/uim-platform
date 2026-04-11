@@ -144,21 +144,20 @@ class TransportController : PlatformController {
   }
 
   private static Json serializeTransport(const TransportRequest t) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(t.id);
-    j["tenantId"] = Json(t.tenantId);
-    j["sourceSubaccount"] = Json(t.sourceSubaccount);
-    j["targetSubaccount"] = Json(t.targetSubaccount);
-    j["description"] = Json(t.description);
-    j["status"] = Json(t.status.to!string);
-    j["mode"] = Json(t.mode.to!string);
-    j["queueId"] = Json(t.queueId);
-    j["createdBy"] = Json(t.createdBy);
-    j["createdAt"] = Json(t.createdAt);
-    j["updatedAt"] = Json(t.updatedAt);
-    j["releasedAt"] = Json(t.releasedAt);
-    j["errorMessage"] = Json(t.errorMessage);
-    j["packageIds"] = toJsonArray(t.packageIds);
-    return j;
+    return Json.emptyObject
+    .set("id", t.id)
+    .set("tenantId", t.tenantId)
+    .set("sourceSubaccount", t.sourceSubaccount)
+    .set("targetSubaccount", t.targetSubaccount)
+    .set("description", t.description)
+    .set("status", t.status.to!string)
+    .set("mode", t.mode.to!string)
+    .set("queueId", t.queueId)
+    .set("createdBy", t.createdBy)
+    .set("createdAt", t.createdAt)
+    .set("updatedAt", t.updatedAt)
+    .set("releasedAt", t.releasedAt)
+    .set("errorMessage", t.errorMessage)
+    .set("packageIds", toJsonArray(t.packageIds));
   }
 }

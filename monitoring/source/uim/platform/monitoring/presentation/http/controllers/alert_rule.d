@@ -61,13 +61,10 @@ class AlertRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -77,16 +74,14 @@ class AlertRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listRules(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; rules)
-        arr ~= serializeRule(r);
+      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(rules.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", rules.length);
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -100,8 +95,7 @@ class AlertRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRule(r), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -125,13 +119,10 @@ class AlertRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Alert rule not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -141,16 +132,14 @@ class AlertRuleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

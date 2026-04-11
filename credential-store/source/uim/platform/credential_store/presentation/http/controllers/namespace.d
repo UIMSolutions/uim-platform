@@ -89,14 +89,15 @@ class NamespaceController : PlatformController {
         return;
       }
 
-      auto nj = Json.emptyObject;
-      nj["id"] = Json(ns.id);
-      nj["tenantId"] = Json(ns.tenantId);
-      nj["name"] = Json(ns.name);
-      nj["description"] = Json(ns.description);
-      nj["createdAt"] = Json(ns.createdAt);
-      nj["updatedAt"] = Json(ns.updatedAt);
-      nj["createdBy"] = Json(ns.createdBy);
+      auto nj = Json.emptyObject
+        .set("id", ns.id)
+        .set("tenantId", ns.tenantId)
+        .set("name", ns.name)
+        .set("description", ns.description)
+        .set("createdAt", ns.createdAt)
+        .set("updatedAt", ns.updatedAt)
+        .set("createdBy", ns.createdBy);
+        
       res.writeJsonBody(nj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

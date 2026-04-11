@@ -5,8 +5,6 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.presentation.http.controllers.import_controller;
 
-
-
 // import vibe.http.server;
 // import vibe.http.router;
 // import vibe.data.json;
@@ -26,7 +24,7 @@ class ImportController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/imports", &handleStartImport);
     router.get("/api/v1/imports", &handleList);
     router.get("/api/v1/imports/*", &handleGetById);
@@ -48,13 +46,10 @@ class ImportController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -72,8 +67,7 @@ class ImportController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,26 +81,24 @@ class ImportController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeImportJob(job), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeImportJob(const ImportJob imp) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(imp.id);
-    j["tenantId"] = Json(imp.tenantId);
-    j["packageId"] = Json(imp.packageId);
-    j["transportRequestId"] = Json(imp.transportRequestId);
-    j["status"] = Json(imp.status.to!string);
-    j["sourceFilePath"] = Json(imp.sourceFilePath);
-    j["importedSizeBytes"] = Json(imp.importedSizeBytes);
-    j["createdBy"] = Json(imp.createdBy);
-    j["startedAt"] = Json(imp.startedAt);
-    j["completedAt"] = Json(imp.completedAt);
-    j["errorMessage"] = Json(imp.errorMessage);
-    j["deployedItems"] = toJsonArray(imp.deployedItems);
-    return j;
+    return Json.emptyObject
+      .set("id", imp.id)
+      .set("tenantId", imp.tenantId)
+      .set("packageId", imp.packageId)
+      .set("transportRequestId", imp.transportRequestId)
+      .set("sourceFilePath", imp.sourceFilePath)
+      .set("status", imp.status.to!string)
+      .set("importedSizeBytes", imp.importedSizeBytes)
+      .set("createdBy", imp.createdBy)
+      .set("startedAt", imp.startedAt)
+      .set("completedAt", imp.completedAt)
+      .set("errorMessage", imp.errorMessage)
+      .set("deployedItems", imp.deployedItems);
   }
 }

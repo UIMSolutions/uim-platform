@@ -62,24 +62,23 @@ class CustomDomainController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (d; domains) {
-                auto dj = Json.emptyObject;
-                dj["id"] = Json(d.id);
-                dj["domainName"] = Json(d.domainName);
-                dj["status"] = Json(d.status.to!string);
-                dj["organizationId"] = Json(d.organizationId);
-                dj["spaceId"] = Json(d.spaceId);
-                dj["activeCertificateId"] = Json(d.activeCertificateId);
-                dj["isShared"] = Json(d.isShared);
-                dj["clientAuthEnabled"] = Json(d.clientAuthEnabled);
-                dj["createdBy"] = Json(d.createdBy);
-                dj["createdAt"] = Json(d.createdAt);
-                jarr ~= dj;
+                jarr ~= Json.emptyObject
+                    .set("id", d.id)
+                    .set("domainName", d.domainName)
+                    .set("status", d.status.to!string)
+                    .set("organizationId", d.organizationId)
+                    .set("spaceId", d.spaceId)
+                    .set("activeCertificateId", d.activeCertificateId)
+                    .set("isShared", d.isShared)
+                    .set("clientAuthEnabled", d.clientAuthEnabled)
+                    .set("createdBy", d.createdBy)
+                    .set("createdAt", d.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(domains.length);
-            resp["resources"] = jarr;
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject;
+            response["count"] = Json(domains.length);
+            response["resources"] = jarr;
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -103,23 +102,24 @@ class CustomDomainController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(d.id);
-            resp["domainName"] = Json(d.domainName);
-            resp["status"] = Json(d.status.to!string);
-            resp["environment"] = Json(d.environment.to!string);
-            resp["organizationId"] = Json(d.organizationId);
-            resp["spaceId"] = Json(d.spaceId);
-            resp["activeCertificateId"] = Json(d.activeCertificateId);
-            resp["tlsConfigurationId"] = Json(d.tlsConfigurationId);
-            resp["isShared"] = Json(d.isShared);
-            resp["sharedWithOrgs"] = Json(d.sharedWithOrgs);
-            resp["clientAuthEnabled"] = Json(d.clientAuthEnabled);
-            resp["createdBy"] = Json(d.createdBy);
-            resp["modifiedBy"] = Json(d.modifiedBy);
-            resp["createdAt"] = Json(d.createdAt);
-            resp["modifiedAt"] = Json(d.modifiedAt);
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject
+                .set("id", d.id)
+                .set("domainName", d.domainName)
+                .set("status", d.status.to!string)
+                .set("environment", d.environment.to!string)
+                .set("organizationId", d.organizationId)
+                .set("spaceId", d.spaceId)
+                .set("activeCertificateId", d.activeCertificateId)
+                .set("tlsConfigurationId", d.tlsConfigurationId)
+                .set("isShared", d.isShared)
+                .set("sharedWithOrgs", d.sharedWithOrgs)
+                .set("clientAuthEnabled", d.clientAuthEnabled)
+                .set("createdBy", d.createdBy)
+                .set("modifiedBy", d.modifiedBy)
+                .set("createdAt", d.createdAt)
+                .set("modifiedAt", d.modifiedAt);
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -142,10 +142,11 @@ class CustomDomainController : PlatformController {
 
             auto result = uc.update(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Custom domain updated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject;
+                response["id"] = Json(result.id);
+                response["message"] = Json("Custom domain updated");
+
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -166,10 +167,10 @@ class CustomDomainController : PlatformController {
 
             auto result = uc.activate(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Custom domain activated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject;
+                response["id"] = Json(result.id);
+                response["message"] = Json("Custom domain activated");
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -188,10 +189,10 @@ class CustomDomainController : PlatformController {
 
             auto result = uc.deactivate(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Custom domain deactivated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject;
+                response["id"] = Json(result.id);
+                response["message"] = Json("Custom domain deactivated");
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -207,10 +208,11 @@ class CustomDomainController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Custom domain deleted");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Custom domain deleted");
+                    
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }

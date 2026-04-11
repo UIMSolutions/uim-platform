@@ -25,7 +25,7 @@ class AuditController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/audit-logs", &handleList);
     router.get("/api/v1/audit-logs/*", &handleGetById);
   }
@@ -49,20 +49,19 @@ class AuditController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (e; entries) {
-        auto ej = Json.emptyObject;
-        ej["id"] = Json(e.id);
-        ej["namespaceId"] = Json(e.namespaceId);
-        ej["resourceName"] = Json(e.resourceName);
-        ej["performedBy"] = Json(e.performedBy);
-        ej["timestamp"] = Json(e.timestamp);
-        ej["details"] = Json(e.details);
-        ej["success"] = Json(e.success);
-        jarr ~= ej;
+        jarr ~= Json.emptyObject
+          .set("id", e.id)
+          .set("namespaceId", e.namespaceId)
+          .set("resourceName", e.resourceName)
+          .set("performedBy", e.performedBy)
+          .set("timestamp", e.timestamp)
+          .set("details", e.details)
+          .set("success", e.success);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(entries.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", entries.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

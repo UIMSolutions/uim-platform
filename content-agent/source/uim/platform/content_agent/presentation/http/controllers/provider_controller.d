@@ -161,26 +161,25 @@ class ProviderController : PlatformController {
 
   private static Json serializeProvider(const ContentProvider p) {
     auto j = Json.emptyObject;
-    j["id"] = Json(p.id);
-    j["tenantId"] = Json(p.tenantId);
-    j["name"] = Json(p.name);
-    j["description"] = Json(p.description);
-    j["endpoint"] = Json(p.endpoint);
-    j["status"] = Json(p.status.to!string);
-    j["createdBy"] = Json(p.createdBy);
-    j["registeredAt"] = Json(p.registeredAt);
-    j["lastSyncAt"] = Json(p.lastSyncAt);
+    .set("id", p.id)
+    .set("tenantId", p.tenantId)
+    .set("name", p.name)
+    .set("description", p.description)
+    .set("endpoint", p.endpoint)
+    .set("status", p.status.to!string)
+    .set("createdBy", p.createdBy)
+    .set("registeredAt", p.registeredAt)
+    .set("lastSyncAt", p.lastSyncAt);
 
     if (p.contentTypes.length > 0) {
       auto arr = Json.emptyArray;
       foreach (ct; p.contentTypes) {
-        auto ctj = Json.emptyObject;
-        ctj["typeId"] = Json(ct.typeId);
-        ctj["name"] = Json(ct.name);
-        ctj["category"] = Json(ct.category.to!string);
-        ctj["description"] = Json(ct.description);
-        ctj["version"] = Json(ct.version_);
-        arr ~= ctj;
+        arr ~= Json.emptyObject
+        .set("typeId", ct.typeId)
+        .set("name", ct.name)
+        .set("category", ct.category.to!string)
+        .set("description", ct.description)
+        .set("version", ct.version_);
       }
       j["contentTypes"] = arr;
     }

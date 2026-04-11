@@ -63,17 +63,16 @@ class KeyringController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (k; keyrings) {
-        auto kj = Json.emptyObject;
-        kj["id"] = Json(k.id);
-        kj["name"] = Json(k.name);
-        kj["metadata"] = Json(k.metadata);
-        kj["version"] = Json(k.version_);
-        jarr ~= kj;
+        jarr ~= Json.emptyObject
+          .set("id", k.id)
+          .set("name", k.name)
+          .set("metadata", k.metadata)
+          .set("version", k.version_);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(keyrings.length);
+      auto resp = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", keyrings.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -94,24 +93,23 @@ class KeyringController : PlatformController {
 
       auto versions = uc.getVersions(k.id);
 
-      auto kj = Json.emptyObject;
-      kj["id"] = Json(k.id);
-      kj["name"] = Json(k.name);
-      kj["metadata"] = Json(k.metadata);
-      kj["version"] = Json(k.version_);
-      kj["createdAt"] = Json(k.createdAt);
-      kj["updatedAt"] = Json(k.updatedAt);
-
       auto varr = Json.emptyArray;
       foreach (v; versions) {
-        auto vj = Json.emptyObject;
-        vj["id"] = Json(v.id);
-        vj["versionNumber"] = Json(v.versionNumber);
-        vj["isActive"] = Json(v.isActive);
-        vj["createdAt"] = Json(v.createdAt);
-        varr ~= vj;
+        varr ~= Json.emptyObject
+          .set("id", v.id)
+          .set("versionNumber", v.versionNumber)
+          .set("isActive", v.isActive)
+          .set("createdAt", v.createdAt);
       }
-      kj["versions"] = varr;
+      
+      auto kj = Json.emptyObject
+        .set("id", k.id)
+        .set("name", k.name)
+        .set("metadata", k.metadata)
+        .set("version", k.version_)
+        .set("createdAt", k.createdAt)
+        .set("updatedAt", k.updatedAt)
+        .set("versions", varr);
 
       res.writeJsonBody(kj, 200);
     } catch (Exception e) {

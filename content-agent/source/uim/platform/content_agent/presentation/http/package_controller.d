@@ -52,13 +52,10 @@ class PackageController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -76,8 +73,7 @@ class PackageController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(packages.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -91,8 +87,7 @@ class PackageController : PlatformController {
         return;
       }
       res.writeJsonBody(serializePackage(pkg), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -112,13 +107,10 @@ class PackageController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Package not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -131,13 +123,10 @@ class PackageController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -156,13 +145,10 @@ class PackageController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("assembled");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -235,33 +221,32 @@ class PackageController : PlatformController {
   }
 
   private static Json serializePackage(const ContentPackage p) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(p.id);
-    j["tenantId"] = Json(p.tenantId);
-    j["subaccountId"] = Json(p.subaccountId);
-    j["name"] = Json(p.name);
-    j["description"] = Json(p.description);
-    j["version"] = Json(p.version_);
-    j["status"] = Json(p.status.to!string);
-    j["format"] = Json(p.format.to!string);
-    j["createdBy"] = Json(p.createdBy);
-    j["createdAt"] = Json(p.createdAt);
-    j["updatedAt"] = Json(p.updatedAt);
-    j["assembledAt"] = Json(p.assembledAt);
-    j["packageSizeBytes"] = Json(p.packageSizeBytes);
+    auto j = Json.emptyObject
+      .set("id", p.id)
+      .set("tenantId", p.tenantId)
+      .set("subaccountId", p.subaccountId)
+      .set("name", p.name)
+      .set("description", p.description)
+      .set("version", p.version_)
+      .set("status", p.status.to!string)
+      .set("format", p.format.to!string)
+      .set("createdBy", p.createdBy)
+      .set("createdAt", p.createdAt)
+      .set("updatedAt", p.updatedAt)
+      .set("assembledAt", p.assembledAt)
+      .set("packageSizeBytes", p.packageSizeBytes);
 
     if (p.items.length > 0) {
       auto arr = Json.emptyArray;
       foreach (item; p.items) {
-        auto ij = Json.emptyObject;
-        ij["id"] = Json(item.id);
-        ij["name"] = Json(item.name);
-        ij["category"] = Json(item.category.to!string);
-        ij["providerId"] = Json(item.providerId);
-        ij["version"] = Json(item.version_);
-        ij["description"] = Json(item.description);
-        ij["dependencies"] = toJsonArray(item.dependencies);
-        arr ~= ij;
+        arr ~= Json.emptyObject
+          .set("id", item.id)
+          .set("name", item.name)
+          .set("category", item.category.to!string)
+          .set("providerId", item.providerId)
+          .set("version", item.version_)
+          .set("description", item.description)
+          .set("dependencies", item.dependencies);
       }
       j["items"] = arr;
     }

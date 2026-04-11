@@ -60,23 +60,23 @@ class CertificateController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
-                auto cj = Json.emptyObject;
-                cj["id"] = Json(c.id);
-                cj["keyId"] = Json(c.keyId);
-                cj["type"] = Json(c.type.to!string);
-                cj["status"] = Json(c.status.to!string);
-                cj["subjectDn"] = Json(c.subjectDn);
-                cj["issuerDn"] = Json(c.issuerDn);
-                cj["validFrom"] = Json(c.validFrom);
-                cj["validTo"] = Json(c.validTo);
-                cj["createdBy"] = Json(c.createdBy);
-                cj["createdAt"] = Json(c.createdAt);
-                jarr ~= cj;
+                jarr ~= Json.emptyObject
+                    .set("id", c.id)
+                    .set("keyId", c.keyId)
+                    .set("type", c.type.to!string)
+                    .set("status", c.status.to!string)
+                    .set("subjectDn", c.subjectDn)
+                    .set("issuerDn", c.issuerDn)
+                    .set("validFrom", c.validFrom)
+                    .set("validTo", c.validTo)
+                    .set("createdBy", c.createdBy)
+                    .set("createdAt", c.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(certs.length);
-            resp["resources"] = jarr;
+            auto resp = Json.emptyObject
+                .set("count", Json(certs.length))
+                .set("resources", jarr);
+
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
@@ -102,20 +102,20 @@ class CertificateController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(c.id);
-            resp["keyId"] = Json(c.keyId);
-            resp["type"] = Json(c.type.to!string);
-            resp["status"] = Json(c.status.to!string);
-            resp["subjectDn"] = Json(c.subjectDn);
-            resp["issuerDn"] = Json(c.issuerDn);
-            resp["serialNumber"] = Json(c.serialNumber);
-            resp["fingerprint"] = Json(c.fingerprint);
-            resp["validFrom"] = Json(c.validFrom);
-            resp["validTo"] = Json(c.validTo);
-            resp["createdBy"] = Json(c.createdBy);
-            resp["createdAt"] = Json(c.createdAt);
-            resp["activatedAt"] = Json(c.activatedAt);
+            auto resp = Json.emptyObject
+                .set("id", c.id)
+                .set("keyId", c.keyId)
+                .set("type", c.type.to!string)
+                .set("status", c.status.to!string)
+                .set("subjectDn", c.subjectDn)
+                .set("issuerDn", c.issuerDn)
+                .set("serialNumber", c.serialNumber)
+                .set("fingerprint", c.fingerprint)
+                .set("validFrom", c.validFrom)
+                .set("validTo", c.validTo)
+                .set("createdBy", c.createdBy)
+                .set("createdAt", c.createdAt)
+                .set("activatedAt", c.activatedAt);
 
             auto domainsArr = Json.emptyArray;
             foreach (d; c.activatedDomains)
@@ -149,10 +149,11 @@ class CertificateController : PlatformController {
 
             auto result = uc.uploadChain(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Certificate chain uploaded");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Certificate chain uploaded");
+
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 400, result.error);
             }
@@ -177,10 +178,10 @@ class CertificateController : PlatformController {
 
             auto result = uc.activate(r);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Certificate activated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Certificate activated");
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 400, result.error);
             }
@@ -199,10 +200,11 @@ class CertificateController : PlatformController {
 
             auto result = uc.deactivate(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Certificate deactivated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Certificate deactivated");
+
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -218,10 +220,11 @@ class CertificateController : PlatformController {
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Certificate deleted");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject
+                    .set("id", result.id)
+                    .set("message", "Certificate deleted");
+                    
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }

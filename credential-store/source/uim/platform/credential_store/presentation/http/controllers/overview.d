@@ -31,14 +31,14 @@ class OverviewController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalNamespaces"] = Json(summary.totalNamespaces);
-      j["totalCredentials"] = Json(summary.totalCredentials);
-      j["totalPasswords"] = Json(summary.totalPasswords);
-      j["totalKeys"] = Json(summary.totalKeys);
-      j["totalKeyrings"] = Json(summary.totalKeyrings);
-      j["totalBindings"] = Json(summary.totalBindings);
-      j["totalAuditEntries"] = Json(summary.totalAuditEntries);
+      auto j = Json.emptyObject
+        .set("totalNamespaces", summary.totalNamespaces)
+        .set("totalCredentials", summary.totalCredentials)
+        .set("totalPasswords", summary.totalPasswords)
+        .set("totalKeys", summary.totalKeys)
+        .set("totalKeyrings", summary.totalKeyrings)
+        .set("totalBindings", summary.totalBindings)
+        .set("totalAuditEntries", summary.totalAuditEntries);
 
       res.writeJsonBody(j, 200);
     } catch (Exception e) {

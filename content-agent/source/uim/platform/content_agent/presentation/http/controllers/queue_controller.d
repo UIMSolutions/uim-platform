@@ -141,17 +141,16 @@ class QueueController : PlatformController {
   }
 
   private static Json serializeQueue(const TransportQueue q) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(q.id);
-    j["tenantId"] = Json(q.tenantId);
-    j["name"] = Json(q.name);
-    j["description"] = Json(q.description);
-    j["queueType"] = Json(q.queueType.to!string);
-    j["endpoint"] = Json(q.endpoint);
-    j["isDefault"] = Json(q.isDefault);
-    j["createdBy"] = Json(q.createdBy);
-    j["createdAt"] = Json(q.createdAt);
-    j["updatedAt"] = Json(q.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", q.id)
+    .set("tenantId", q.tenantId)
+    .set("name", q.name)
+    .set("description", q.description)
+    .set("queueType", q.queueType.to!string)
+    .set("endpoint", q.endpoint)
+    .set("isDefault", q.isDefault)
+    .set("createdBy", q.createdBy)
+    .set("createdAt", q.createdAt)
+    .set("updatedAt", q.updatedAt);
   }
 }

@@ -61,17 +61,16 @@ class DnsRecordController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (r; records) {
-                auto rj = Json.emptyObject;
-                rj["id"] = Json(r.id);
-                rj["customDomainId"] = Json(r.customDomainId);
-                rj["recordType"] = Json(r.recordType.to!string);
-                rj["hostname"] = Json(r.hostname);
-                rj["value"] = Json(r.value);
-                rj["ttl"] = Json(r.ttl);
-                rj["validationStatus"] = Json(r.validationStatus.to!string);
-                rj["createdBy"] = Json(r.createdBy);
-                rj["createdAt"] = Json(r.createdAt);
-                jarr ~= rj;
+                jarr ~= Json.emptyObject
+                .set("id", r.id)
+                .set("customDomainId", r.customDomainId)
+                .set("recordType", r.recordType.to!string)
+                .set("hostname", r.hostname)
+                .set("value", r.value)
+                .set("ttl", r.ttl)
+                .set("validationStatus", r.validationStatus.to!string)
+                .set("createdBy", r.createdBy)
+                .set("createdAt", r.createdAt);
             }
 
             auto resp = Json.emptyObject;

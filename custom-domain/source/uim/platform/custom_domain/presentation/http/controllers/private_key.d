@@ -59,15 +59,14 @@ class PrivateKeyController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (k; keys) {
-                auto kj = Json.emptyObject;
-                kj["id"] = Json(k.id);
-                kj["subject"] = Json(k.subject);
-                kj["algorithm"] = Json(k.algorithm.to!string);
-                kj["status"] = Json(k.status.to!string);
-                kj["keySize"] = Json(k.keySize);
-                kj["createdBy"] = Json(k.createdBy);
-                kj["createdAt"] = Json(k.createdAt);
-                jarr ~= kj;
+                jarr ~= Json.emptyObject
+                .set("id", k.id)
+                .set("subject", k.subject)
+                .set("algorithm", k.algorithm.to!string)
+                .set("status", k.status.to!string)
+                .set("keySize", k.keySize)
+                .set("createdBy", k.createdBy)
+                .set("createdAt", k.createdAt);
             }
 
             auto resp = Json.emptyObject;
