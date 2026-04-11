@@ -154,7 +154,7 @@ private Json serializeServicePlan(ServicePlan plan) {
     .set("pricingModel", to!string(plan.pricingModel))
     .set("isFree", plan.isFree)
     .set("isBeta", plan.isBeta)
-    .set("availableRegions", plan.availableRegions)
+    .set("availableRegions", plan.availableRegions.toJson)
     .set("maxQuota", cast(long)plan.maxQuota)
     .set("unit", plan.unit)
     .set("supportedPlatforms", plan.supportedPlatforms)

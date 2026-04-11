@@ -168,14 +168,14 @@ class ExecutionController : PlatformController {
   private Json serializeExecution(Execution ex) {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.execution : OutputArtifact;
-    auto j = Json.emptyObject;
-    j["id"] = Json(ex.id);
-    j["connectionId"] = Json(ex.connectionId);
-    j["configurationId"] = Json(ex.configurationId);
-    j["scenarioId"] = Json(ex.scenarioId);
-    j["resourceGroupId"] = Json(ex.resourceGroupId);
-    j["status"] = Json(ex.status.to!string);
-    j["targetStatus"] = Json(ex.targetStatus);
+    auto j = Json.emptyObject
+    .set("id", ex.id)
+    .set("connectionId", ex.connectionId)
+    .set("configurationId", ex.configurationId)
+    .set("scenarioId", ex.scenarioId)
+    .set("resourceGroupId", ex.resourceGroupId)
+    .set("status", ex.status.to!string)
+    .set("targetStatus", ex.targetStatus);
 
     auto artifacts = Json.emptyArray;
     foreach (a; ex.outputArtifacts) {

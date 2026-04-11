@@ -111,16 +111,15 @@ class ScenarioController : PlatformController {
   }
 
   private Json serializeScenario(Scenario s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["connectionId"] = Json(s.connectionId);
-    j["name"] = Json(s.name);
-    j["description"] = Json(s.description);
-    j["labels"] = toJsonArray(s.labels);
-    j["executionCount"] = Json(s.executionCount);
-    j["deploymentCount"] = Json(s.deploymentCount);
-    j["createdAt"] = Json(s.createdAt);
-    j["modifiedAt"] = Json(s.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", s.id)
+      .set("connectionId", s.connectionId)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("labels", toJsonArray(s.labels))
+      .set("executionCount", s.executionCount)
+      .set("deploymentCount", s.deploymentCount)
+      .set("createdAt", s.createdAt)
+      .set("modifiedAt", s.modifiedAt);
   }
 }

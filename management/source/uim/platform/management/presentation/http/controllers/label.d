@@ -134,7 +134,7 @@ private Json serializeLabel(Label label) {
   .set("resourceType", to!string(label.resourceType))
   .set("resourceId", label.resourceId)
   .set("key", label.key)
-  .set("values", label.values)
+  .set("values", label.values.toJson)
   .set("createdBy", label.createdBy)
   .set("createdAt", label.createdAt)
   .set("modifiedAt", label.modifiedAt);

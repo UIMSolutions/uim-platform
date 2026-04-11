@@ -143,18 +143,17 @@ class DatasetController : PlatformController {
 
   private Json serializeDataset(Dataset d) {
     import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["connectionId"] = Json(d.connectionId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["scenarioId"] = Json(d.scenarioId);
-    j["url"] = Json(d.url);
-    j["size"] = Json(d.size);
-    j["status"] = Json(d.status.to!string);
-    j["labels"] = toJsonArray(d.labels);
-    j["createdAt"] = Json(d.createdAt);
-    j["modifiedAt"] = Json(d.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("connectionId", d.connectionId)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("scenarioId", d.scenarioId)
+      .set("url", d.url)
+      .set("size", d.size)
+      .set("status", d.status.to!string)
+      .set("labels", toJsonArray(d.labels))
+      .set("createdAt", d.createdAt)
+      .set("modifiedAt", d.modifiedAt);
   }
 }

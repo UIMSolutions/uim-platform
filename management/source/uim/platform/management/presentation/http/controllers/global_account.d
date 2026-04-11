@@ -89,11 +89,12 @@ class GlobalAccountController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractId(req.requestURI);
-      auto ga = uc.getById(id);
-      if (ga.id.isEmpty) {
+      if (!uc.existsById(id)) {
         writeError(res, 404, "Global account not found");
         return;
       }
+      
+      auto ga = uc.getById(id);
       res.writeJsonBody(serializeGlobalAccount(ga), 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -103,14 +104,14 @@ class GlobalAccountController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
-      UpdateGlobalAccountRequest r;
-      r.displayName = j.getString("displayName");
-      r.description = j.getString("description");
-      r.costCenter = j.getString("costCenter");
-      r.contactEmail = j.getString("contactEmail");
-      r.customProperties = jsonStrMap(j, "customProperties");
+      UpdateGlobalAccountRequest request;
+      request.displayName = j.getString("displayName");
+      request.description = j.getString("description");
+      request.costCenter = j.getString("costCenter");
+      request.contactEmail = j.getString("contactEmail");
+      request.customProperties = jsonStrMap(j, "customProperties");
 
-      auto result = uc.update(id, r);
+      auto result = uc.update(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -145,8 +146,7 @@ class GlobalAccountController : PlatformController {
 
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto id = extractId(req.requestURI);
-      auto result = uc.remove(id);
+      auto result = uc.remove(extractId(req.requestURI));
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 204);
       else

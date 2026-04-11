@@ -139,21 +139,20 @@ class ConnectionController : PlatformController {
 
   private Json serializeConnection(Connection c) {
     import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["name"] = Json(c.name);
-    j["type"] = Json(c.type.to!string);
-    j["url"] = Json(c.url);
-    j["authUrl"] = Json(c.authUrl);
-    j["clientId"] = Json(c.clientId);
-    j["clientSecretMasked"] = Json(c.clientSecretMasked);
-    j["status"] = Json(c.status.to!string);
-    j["statusMessage"] = Json(c.statusMessage);
-    j["workspaceId"] = Json(c.workspaceId);
-    j["defaultResourceGroupId"] = Json(c.defaultResourceGroupId);
-    j["description"] = Json(c.description);
-    j["createdAt"] = Json(c.createdAt);
-    j["modifiedAt"] = Json(c.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", c.id)
+    .set("name", c.name)
+    .set("type", c.type.to!string)
+    .set("url", c.url)
+    .set("authUrl", c.authUrl)
+    .set("clientId", c.clientId)
+    .set("clientSecretMasked", c.clientSecretMasked)
+    .set("status", c.status.to!string)
+    .set("statusMessage", c.statusMessage)
+    .set("workspaceId", c.workspaceId)
+    .set("defaultResourceGroupId", c.defaultResourceGroupId)
+    .set("description", c.description)
+    .set("createdAt", c.createdAt)
+    .set("modifiedAt", c.modifiedAt);
   }
 }

@@ -56,17 +56,17 @@ class ResourceGroupController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (rg; groups) {
-        auto rgj = Json.emptyObject;
-        rgj["resourceGroupId"] = Json(rg.id);
-        rgj["tenantId"] = Json(rg.tenantId);
-        rgj["status"] = Json(rg.status);
-        rgj["createdAt"] = Json(rg.createdAt);
+        auto rgj = Json.emptyObject
+          .set("resourceGroupId", rg.id)
+          .set("tenantId", rg.tenantId)
+          .set("status", rg.status)
+          .set("createdAt", rg.createdAt);
 
         auto lArr = Json.emptyArray;
         foreach (lbl; rg.labels) {
-          auto lj = Json.emptyObject;
-          lj["key"] = Json(lbl.key);
-          lj["value"] = Json(lbl.value);
+          auto lj = Json.emptyObject
+            .set("key", lbl.key)
+            .set("value", lbl.value);
           lArr ~= lj;
         }
         rgj["labels"] = lArr;

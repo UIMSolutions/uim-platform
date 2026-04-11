@@ -49,7 +49,7 @@ class PromptController : PlatformController {
         resp["id"] = Json(result.id);
         resp["message"] = Json("Prompt created");
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -84,6 +84,7 @@ class PromptController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
 
       auto p = uc.get_(id);
@@ -101,6 +102,7 @@ class PromptController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
 
@@ -117,7 +119,7 @@ class PromptController : PlatformController {
         auto resp = Json.emptyObject;
         resp["message"] = Json("Prompt updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -128,12 +130,13 @@ class PromptController : PlatformController {
   private Json serializePrompt(Prompt p) {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.prompt : PromptMessage, PromptParameters;
-    auto j = Json.emptyObject;
-    j["id"] = Json(p.id);
-    j["collectionId"] = Json(p.collectionId);
-    j["name"] = Json(p.name);
-    j["modelName"] = Json(p.modelName);
-    j["modelVersion"] = Json(p.modelVersion);
+
+    auto j = Json.emptyObject
+      .set("id", p.id)
+      .set("collectionId", p.collectionId)
+      .set("name", p.name)
+      .set("modelName", p.modelName)
+      .set("modelVersion", p.modelVersion);
 
     auto msgs = Json.emptyArray;
     foreach (m; p.messages) {

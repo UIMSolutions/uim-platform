@@ -63,26 +63,24 @@ class MetricController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (m; metrics) {
-        auto mj = Json.emptyObject;
-        mj["id"] = Json(m.id);
-        mj["executionId"] = Json(m.executionId);
-        mj["createdAt"] = Json(m.createdAt);
+        auto mj = Json.emptyObject
+        .set("id", m.id)
+        .set("executionId", m.executionId)
+        .set("createdAt", m.createdAt);
 
         auto vArr = Json.emptyArray;
         foreach (v; m.metrics) {
-          auto vj = Json.emptyObject;
-          vj["name"] = Json(v.name);
-          vj["value"] = Json(v.value);
-          vArr ~= vj;
+          vArr ~= Json.emptyObject
+            .set("name", v.name)
+            .set("value", v.value);
         }
         mj["metrics"] = vArr;
 
         auto tArr = Json.emptyArray;
         foreach (t; m.tags) {
-          auto tj = Json.emptyObject;
-          tj["key"] = Json(t.key);
-          tj["value"] = Json(t.value);
-          tArr ~= tj;
+          tArr ~= Json.emptyObject
+            .set("key", t.key)
+            .set("value", t.value);
         }
         mj["tags"] = tArr;
 

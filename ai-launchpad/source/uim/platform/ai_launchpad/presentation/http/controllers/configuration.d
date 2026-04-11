@@ -115,28 +115,26 @@ class ConfigurationController : PlatformController {
 
   private Json serializeConfiguration(Configuration c) {
     import uim.platform.ai_launchpad.domain.entities.configuration : ParameterBinding, InputArtifactBinding;
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["connectionId"] = Json(c.connectionId);
-    j["scenarioId"] = Json(c.scenarioId);
-    j["executableId"] = Json(c.executableId);
-    j["name"] = Json(c.name);
+    auto j = Json.emptyObject
+      .set("id", c.id)
+      .set("connectionId", c.connectionId)
+      .set("scenarioId", c.scenarioId)
+      .set("executableId", c.executableId)
+      .set("name", c.name);
 
     auto params = Json.emptyArray;
     foreach (p; c.parameters) {
-      auto pj = Json.emptyObject;
-      pj["key"] = Json(p.key);
-      pj["value"] = Json(p.value);
-      params ~= pj;
+      params ~= Json.emptyObject
+        .set("key", p.key)
+        .set("value", p.value);
     }
     j["parameters"] = params;
 
     auto artifacts = Json.emptyArray;
     foreach (a; c.inputArtifacts) {
-      auto aj = Json.emptyObject;
-      aj["key"] = Json(a.key);
-      aj["artifactId"] = Json(a.artifactId);
-      artifacts ~= aj;
+      artifacts ~= Json.emptyObject
+        .set("key", a.key)
+        .set("artifactId", a.artifactId);
     }
     j["inputArtifacts"] = artifacts;
 
