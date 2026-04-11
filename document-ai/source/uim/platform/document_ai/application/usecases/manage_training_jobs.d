@@ -32,7 +32,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
     // Count confirmed documents available for training
     auto docs = docRepo.findByDocumentType(r.documentTypeId, r.clientId);
     int confirmedCount = 0;
-    foreach (ref d; docs) {
+    foreach (d; docs) {
       if (d.status == DocumentStatus.confirmed)
         confirmedCount++;
     }

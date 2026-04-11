@@ -17,35 +17,35 @@ class MemoryAssignmentRepository : AssignmentRepository {
     Assignment[] findAll() { return store; }
 
     Assignment* findById(AssignmentId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Assignment[] findByTenant(TenantId tenantId) {
         Assignment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Assignment[] findByActivity(ActivityId activityId) {
         Assignment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.activityId == activityId) result ~= e;
         return result;
     }
 
     Assignment[] findByTechnician(TechnicianId technicianId) {
         Assignment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.technicianId == technicianId) result ~= e;
         return result;
     }
 
     Assignment[] findByStatus(AssignmentStatus status) {
         Assignment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
@@ -53,7 +53,7 @@ class MemoryAssignmentRepository : AssignmentRepository {
     void save(Assignment assignment) { store ~= assignment; }
 
     void update(Assignment assignment) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == assignment.id) { e = assignment; return; }
     }
 

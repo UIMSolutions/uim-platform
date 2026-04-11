@@ -18,7 +18,7 @@ class MemoryRepositoryRepository : IRepositoryRepository {
 
   Repository[] findByTenant(TenantId tenantId) {
     Repository[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -32,7 +32,7 @@ class MemoryRepositoryRepository : IRepositoryRepository {
   }
 
   Repository findByName(string name, TenantId tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return null;
@@ -40,7 +40,7 @@ class MemoryRepositoryRepository : IRepositoryRepository {
 
   Repository[] findByStatus(RepositoryStatus status, TenantId tenantId) {
     Repository[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

@@ -64,7 +64,7 @@ class TransformationController {
       auto items = uc.listTransformations(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref t; items)
+      foreach (t; items)
         arr ~= serializeTransformation(t);
 
       auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class TransformationController {
     }
   }
 
-  private static Json serializeTransformation(ref const Transformation t) {
+  private static Json serializeTransformation(const Transformation t) {
     auto j = Json.emptyObject;
     j["id"] = Json(t.id);
     j["tenantId"] = Json(t.tenantId);

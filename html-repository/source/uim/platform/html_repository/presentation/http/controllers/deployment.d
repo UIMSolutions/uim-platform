@@ -58,7 +58,7 @@ class DeploymentController : PlatformController {
       auto items = getHistory.getByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items) {
+      foreach (e; items) {
         auto obj = Json.emptyObject;
         obj["id"] = Json(e.id);
         obj["appId"] = Json(e.appId);

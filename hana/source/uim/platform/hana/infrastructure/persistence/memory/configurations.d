@@ -21,7 +21,7 @@ class MemoryConfigurationRepository : ConfigurationRepository {
   private Configuration[] store;
 
   Configuration findById(ConfigurationId id) {
-    foreach (ref c; store) {
+    foreach (c; store) {
       if (c.id == id)
         return c;
     }
@@ -45,7 +45,7 @@ class MemoryConfigurationRepository : ConfigurationRepository {
   }
 
   void update(Configuration c) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == c.id) {
         existing = c;
         return;

@@ -18,7 +18,7 @@ class MemoryFolderRepository : IFolderRepository {
 
   Folder[] findByTenant(TenantId tenantId) {
     Folder[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -33,7 +33,7 @@ class MemoryFolderRepository : IFolderRepository {
 
   Folder[] findByRepository(RepositoryId repositorytenantId, id tenantId) {
     Folder[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
         result ~= e;
     return result;
@@ -41,14 +41,14 @@ class MemoryFolderRepository : IFolderRepository {
 
   Folder[] findByParent(FolderId parentFoldertenantId, id tenantId) {
     Folder[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.parentFolderId == parentFolderId)
         result ~= e;
     return result;
   }
 
   Folder findByPath(string path, RepositoryId repositorytenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId && e.path == path)
         return e;
     return null;

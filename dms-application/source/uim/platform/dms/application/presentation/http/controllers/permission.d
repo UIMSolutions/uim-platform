@@ -73,7 +73,7 @@ class PermissionController : PlatformController {
       auto items = uc.listByResource(resourceId, resourceType, tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref p; items)
+      foreach (p; items)
         arr ~= serializePerm(p);
 
       auto resp = Json.emptyObject;
@@ -93,7 +93,7 @@ class PermissionController : PlatformController {
       auto items = uc.listByUser(usertenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref p; items)
+      foreach (p; items)
         arr ~= serializePerm(p);
 
       auto resp = Json.emptyObject;
@@ -170,7 +170,7 @@ class PermissionController : PlatformController {
     }
   }
 
-  private static Json serializePerm(ref const Permission p) {
+  private static Json serializePerm(const Permission p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);

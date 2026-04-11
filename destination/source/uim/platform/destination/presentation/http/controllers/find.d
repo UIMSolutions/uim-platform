@@ -56,13 +56,13 @@ class FindController : PlatformController {
       j["properties"] = propsJson;
 
       auto fragArr = Json.emptyArray;
-      foreach (ref s; result.appliedFragments)
+      foreach (s; result.appliedFragments)
         fragArr ~= Json(s);
       j["appliedFragments"] = fragArr;
 
       // Auth tokens
       auto tokenArr = Json.emptyArray;
-      foreach (ref t; result.authTokens) {
+      foreach (t; result.authTokens) {
         auto tj = Json.emptyObject;
         tj["type"] = Json(t.type_);
         tj["value"] = Json(t.value_);
@@ -74,7 +74,7 @@ class FindController : PlatformController {
 
       // Certificates
       auto certArr = Json.emptyArray;
-      foreach (ref c; result.certificates) {
+      foreach (c; result.certificates) {
         auto cj = Json.emptyObject;
         cj["name"] = Json(c.name);
         cj["type"] = Json(c.type_);

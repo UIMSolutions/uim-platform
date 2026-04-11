@@ -20,7 +20,7 @@ class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
   private DatabaseConnection[] store;
 
   DatabaseConnection findById(DatabaseConnectionId id) {
-    foreach (ref c; store) {
+    foreach (c; store) {
       if (c.id == id)
         return c;
     }
@@ -40,7 +40,7 @@ class MemoryDatabaseConnectionRepository : DatabaseConnectionRepository {
   }
 
   void update(DatabaseConnection c) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == c.id) {
         existing = c;
         return;

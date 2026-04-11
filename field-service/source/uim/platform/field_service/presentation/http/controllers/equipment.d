@@ -31,7 +31,7 @@ class EquipmentController : PlatformController {
         try {
             auto items = uc.list();
             auto jarr = Json.emptyArray;
-            foreach (ref e; items) jarr ~= equipmentToJson(e);
+            foreach (e; items) jarr ~= equipmentToJson(e);
             auto resp = Json.emptyObject;
             resp["count"] = Json(cast(long) items.length);
             resp["resources"] = jarr;

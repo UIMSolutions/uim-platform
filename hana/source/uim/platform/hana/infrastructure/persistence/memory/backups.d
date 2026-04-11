@@ -20,7 +20,7 @@ class MemoryBackupRepository : BackupRepository {
   private Backup[] store;
 
   Backup findById(BackupId id) {
-    foreach (ref b; store) {
+    foreach (b; store) {
       if (b.id == id)
         return b;
     }
@@ -40,7 +40,7 @@ class MemoryBackupRepository : BackupRepository {
   }
 
   void update(Backup b) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == b.id) {
         existing = b;
         return;

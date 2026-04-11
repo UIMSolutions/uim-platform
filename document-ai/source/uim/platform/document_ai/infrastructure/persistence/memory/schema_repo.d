@@ -17,7 +17,7 @@ class MemorySchemaRepository : SchemaRepository {
 
   Schema findById(SchemaId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref s; *cl) {
+      foreach (s; *cl) {
         if (s.id == id)
           return s;
       }
@@ -49,7 +49,7 @@ class MemorySchemaRepository : SchemaRepository {
 
   void update(Schema s) {
     if (auto cl = s.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == s.id) {
           existing = s;
           return;

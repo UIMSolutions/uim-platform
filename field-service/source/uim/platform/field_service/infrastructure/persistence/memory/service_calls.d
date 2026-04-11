@@ -19,35 +19,35 @@ class MemoryServiceCallRepository : ServiceCallRepository {
     ServiceCall[] findAll() { return store; }
 
     ServiceCall* findById(ServiceCallId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     ServiceCall[] findByTenant(TenantId tenantId) {
         ServiceCall[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     ServiceCall[] findByStatus(ServiceCallStatus status) {
         ServiceCall[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
 
     ServiceCall[] findByPriority(ServiceCallPriority priority) {
         ServiceCall[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.priority == priority) result ~= e;
         return result;
     }
 
     ServiceCall[] findByCustomer(CustomerId customerId) {
         ServiceCall[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.customerId == customerId) result ~= e;
         return result;
     }
@@ -55,7 +55,7 @@ class MemoryServiceCallRepository : ServiceCallRepository {
     void save(ServiceCall serviceCall) { store ~= serviceCall; }
 
     void update(ServiceCall serviceCall) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == serviceCall.id) { e = serviceCall; return; }
     }
 

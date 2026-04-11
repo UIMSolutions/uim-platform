@@ -81,7 +81,7 @@ class FragmentController : PlatformController {
       auto fragments = uc.listBySubaccount(tenantId, subaccountId);
 
       auto arr = Json.emptyArray;
-      foreach (ref f; fragments)
+      foreach (f; fragments)
         arr ~= serializeFragment(f);
 
       auto resp = Json.emptyObject;

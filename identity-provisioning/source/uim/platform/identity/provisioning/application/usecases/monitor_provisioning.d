@@ -62,7 +62,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
   JobSummary[] listJobSummaries(TenantId tenantId) {
     auto jobs = jobRepo.findByTenant(tenantId);
     JobSummary[] result;
-    foreach (ref j; jobs)
+    foreach (j; jobs)
       result ~= buildJobSummary(j, tenantId);
     return result;
   }
@@ -91,19 +91,19 @@ class MonitorProvisioningUseCase : UIMUseCase {
 
     auto sources = sourceRepo.findByTenant(tenantId);
     s.totalSourceSystems = cast(int) sources.length;
-    foreach (ref src; sources)
+    foreach (src; sources)
       if (src.status == SystemStatus.active)
         s.activeSourceSystems++;
 
     auto targets = targetRepo.findByTenant(tenantId);
     s.totalTargetSystems = cast(int) targets.length;
-    foreach (ref tgt; targets)
+    foreach (tgt; targets)
       if (tgt.status == SystemStatus.active)
         s.activeTargetSystems++;
 
     auto jobs = jobRepo.findByTenant(tenantId);
     s.totalJobs = cast(int) jobs.length;
-    foreach (ref j; jobs) {
+    foreach (j; jobs) {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
       else if (j.status == JobStatus.failed)
@@ -118,7 +118,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
     return s;
   }
 
-  private JobSummary buildJobSummary(ref ProvisioningJob job, TenantId tenantId) {
+  private JobSummary buildJobSummary(ProvisioningJob job, TenantId tenantId) {
     JobSummary s;
     s.jobId = job.id;
     s.jobType = job.jobType;

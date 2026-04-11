@@ -19,7 +19,7 @@ class MemoryFavoriteRepository : IFavoriteRepository {
 
   Favorite[] findByTenant(TenantId tenantId) {
     Favorite[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -34,14 +34,14 @@ class MemoryFavoriteRepository : IFavoriteRepository {
 
   Favorite[] findByUser(UserId usertenantId, id tenantId) {
     Favorite[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.userId == userId)
         result ~= e;
     return result;
   }
 
   Favorite findByUserAndResource(UserId userId, string resourcetenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.userId == userId && e.resourceId == resourceId)
         return e;
     return null;

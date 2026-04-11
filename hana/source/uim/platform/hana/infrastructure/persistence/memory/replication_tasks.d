@@ -20,7 +20,7 @@ class MemoryReplicationTaskRepository : ReplicationTaskRepository {
   private ReplicationTask[] store;
 
   ReplicationTask findById(ReplicationTaskId id) {
-    foreach (ref t; store) {
+    foreach (t; store) {
       if (t.id == id)
         return t;
     }
@@ -40,7 +40,7 @@ class MemoryReplicationTaskRepository : ReplicationTaskRepository {
   }
 
   void update(ReplicationTask t) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == t.id) {
         existing = t;
         return;

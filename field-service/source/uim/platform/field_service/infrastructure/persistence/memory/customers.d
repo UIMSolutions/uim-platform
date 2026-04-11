@@ -17,28 +17,28 @@ class MemoryCustomerRepository : CustomerRepository {
     Customer[] findAll() { return store; }
 
     Customer* findById(CustomerId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Customer[] findByTenant(TenantId tenantId) {
         Customer[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Customer[] findByType(CustomerType customerType) {
         Customer[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.customerType == customerType) result ~= e;
         return result;
     }
 
     Customer[] findByStatus(CustomerStatus status) {
         Customer[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
@@ -46,7 +46,7 @@ class MemoryCustomerRepository : CustomerRepository {
     void save(Customer customer) { store ~= customer; }
 
     void update(Customer customer) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == customer.id) { e = customer; return; }
     }
 

@@ -70,7 +70,7 @@ class ShareController : PlatformController {
       auto items = uc.listShares(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeShare(s);
 
       auto resp = Json.emptyObject;

@@ -17,28 +17,28 @@ class MemoryTechnicianRepository : TechnicianRepository {
     Technician[] findAll() { return store; }
 
     Technician* findById(TechnicianId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Technician[] findByTenant(TenantId tenantId) {
         Technician[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Technician[] findByStatus(TechnicianStatus status) {
         Technician[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
 
     Technician[] findByRegion(string region) {
         Technician[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.region == region) result ~= e;
         return result;
     }
@@ -46,7 +46,7 @@ class MemoryTechnicianRepository : TechnicianRepository {
     void save(Technician technician) { store ~= technician; }
 
     void update(Technician technician) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == technician.id) { e = technician; return; }
     }
 

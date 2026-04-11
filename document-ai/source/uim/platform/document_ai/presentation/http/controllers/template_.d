@@ -61,7 +61,7 @@ class TemplateController : PlatformController {
       auto templates = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref t; templates) {
+      foreach (t; templates) {
         jarr ~= templateToJson(t);
       }
 
@@ -140,7 +140,7 @@ class TemplateController : PlatformController {
     }
   }
 
-  private Json templateToJson(ref Template t) {
+  private Json templateToJson(Template t) {
     import std.conv : to;
 
     auto tj = Json.emptyObject;
@@ -154,7 +154,7 @@ class TemplateController : PlatformController {
     tj["modifiedAt"] = Json(t.modifiedAt);
 
     auto rArr = Json.emptyArray;
-    foreach (ref r; t.regions) {
+    foreach (r; t.regions) {
       auto rj = Json.emptyObject;
       rj["fieldName"] = Json(r.fieldName);
       rj["page"] = Json(cast(long) r.page);

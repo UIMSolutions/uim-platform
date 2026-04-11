@@ -61,7 +61,7 @@ class EnrichmentDataController : PlatformController {
       auto data = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ed; data) {
+      foreach (ed; data) {
         jarr ~= enrichmentToJson(ed);
       }
 
@@ -140,7 +140,7 @@ class EnrichmentDataController : PlatformController {
     }
   }
 
-  private Json enrichmentToJson(ref EnrichmentData ed) {
+  private Json enrichmentToJson(EnrichmentData ed) {
     auto ej = Json.emptyObject;
     ej["id"] = Json(ed.id);
     ej["documentTypeId"] = Json(ed.documentTypeId);
@@ -151,7 +151,7 @@ class EnrichmentDataController : PlatformController {
     ej["modifiedAt"] = Json(ed.modifiedAt);
 
     auto fArr = Json.emptyArray;
-    foreach (ref f; ed.fields) {
+    foreach (f; ed.fields) {
       auto fj = Json.emptyObject;
       fj["key"] = Json(f.key);
       fj["value"] = Json(f.value);

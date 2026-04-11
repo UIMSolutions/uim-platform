@@ -71,7 +71,7 @@ class FolderController : PlatformController {
       auto items = uc.listFolders(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref f; items)
+      foreach (f; items)
         arr ~= serializeFolder(f);
 
       auto resp = Json.emptyObject;
@@ -160,7 +160,7 @@ class FolderController : PlatformController {
       auto items = uc.listChildren(parenttenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref f; items)
+      foreach (f; items)
         arr ~= serializeFolder(f);
 
       auto resp = Json.emptyObject;

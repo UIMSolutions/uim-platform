@@ -57,7 +57,7 @@ class VersioningService {
     int nextVersion = cast(int) existingVersions.length + 1;
 
     // Mark existing current version as superseded
-    foreach (ref v; existingVersions) {
+    foreach (v; existingVersions) {
       if (v.status == VersionStatus.current) {
         v.status = VersionStatus.superseded;
         versionRepo.update(v);

@@ -66,7 +66,7 @@ class DocumentController : PlatformController {
       auto docs = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; docs) {
+      foreach (d; docs) {
         jarr ~= documentToJson(d);
       }
 
@@ -167,7 +167,7 @@ class DocumentController : PlatformController {
       rj["processedAt"] = Json(result.processedAt);
 
       auto hArr = Json.emptyArray;
-      foreach (ref f; result.headerFields) {
+      foreach (f; result.headerFields) {
         auto fj = Json.emptyObject;
         fj["name"] = Json(f.name);
         fj["value"] = Json(f.value);
@@ -179,11 +179,11 @@ class DocumentController : PlatformController {
       rj["headerFields"] = hArr;
 
       auto liArr = Json.emptyArray;
-      foreach (ref li; result.lineItems) {
+      foreach (li; result.lineItems) {
         auto lij = Json.emptyObject;
         lij["rowIndex"] = Json(cast(long) li.rowIndex);
         auto liFields = Json.emptyArray;
-        foreach (ref f; li.fields) {
+        foreach (f; li.fields) {
           auto fj = Json.emptyObject;
           fj["name"] = Json(f.name);
           fj["value"] = Json(f.value);
@@ -202,7 +202,7 @@ class DocumentController : PlatformController {
     }
   }
 
-  private Json documentToJson(ref Document d) {
+  private Json documentToJson(Document d) {
     import std.conv : to;
 
     auto dj = Json.emptyObject;
@@ -224,7 +224,7 @@ class DocumentController : PlatformController {
     dj["modifiedAt"] = Json(d.modifiedAt);
 
     auto lArr = Json.emptyArray;
-    foreach (ref lbl; d.labels) {
+    foreach (lbl; d.labels) {
       auto lj = Json.emptyObject;
       lj["key"] = Json(lbl.key);
       lj["value"] = Json(lbl.value);

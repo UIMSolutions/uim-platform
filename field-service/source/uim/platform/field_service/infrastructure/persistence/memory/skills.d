@@ -17,28 +17,28 @@ class MemorySkillRepository : SkillRepository {
     Skill[] findAll() { return store; }
 
     Skill* findById(SkillId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Skill[] findByTenant(TenantId tenantId) {
         Skill[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Skill[] findByTechnician(TechnicianId technicianId) {
         Skill[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.technicianId == technicianId) result ~= e;
         return result;
     }
 
     Skill[] findByCategory(SkillCategory category) {
         Skill[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.category == category) result ~= e;
         return result;
     }
@@ -46,7 +46,7 @@ class MemorySkillRepository : SkillRepository {
     void save(Skill skill) { store ~= skill; }
 
     void update(Skill skill) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == skill.id) { e = skill; return; }
     }
 

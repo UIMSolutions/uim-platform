@@ -64,7 +64,7 @@ class TargetSystemController {
       auto items = uc.listTargetSystems(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeSystem(s);
 
       auto resp = Json.emptyObject;
@@ -180,7 +180,7 @@ class TargetSystemController {
     }
   }
 
-  private static Json serializeSystem(ref const TargetSystem s) {
+  private static Json serializeSystem(const TargetSystem s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

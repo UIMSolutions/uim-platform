@@ -47,11 +47,11 @@ class BrowseController : PlatformController {
       auto contents = uc.browseFolderContents(foldertenantId, id);
 
       auto fArr = Json.emptyArray;
-      foreach (ref f; contents.subfolders)
+      foreach (f; contents.subfolders)
         fArr ~= serializeFolder(f);
 
       auto dArr = Json.emptyArray;
-      foreach (ref d; contents.documents)
+      foreach (d; contents.documents)
         dArr ~= serializeDoc(d);
 
       auto resp = Json.emptyObject;
@@ -120,7 +120,7 @@ class BrowseController : PlatformController {
       auto items = uc.getFavorites(usertenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref f; items)
+      foreach (f; items)
         arr ~= serializeFavorite(f);
 
       auto resp = Json.emptyObject;
@@ -151,7 +151,7 @@ class BrowseController : PlatformController {
     }
   }
 
-  private static Json serializeFolder(ref const Folder f) {
+  private static Json serializeFolder(const Folder f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["name"] = Json(f.name);
@@ -160,7 +160,7 @@ class BrowseController : PlatformController {
     return j;
   }
 
-  private static Json serializeDoc(ref const Document d) {
+  private static Json serializeDoc(const Document d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["name"] = Json(d.name);
@@ -170,7 +170,7 @@ class BrowseController : PlatformController {
     return j;
   }
 
-  private static Json serializeFavorite(ref const Favorite f) {
+  private static Json serializeFavorite(const Favorite f) {
     auto j = Json.emptyObject;
     j["id"] = Json(f.id);
     j["userId"] = Json(f.userId);

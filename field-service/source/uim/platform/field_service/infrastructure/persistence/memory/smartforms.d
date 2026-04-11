@@ -17,35 +17,35 @@ class MemorySmartformRepository : SmartformRepository {
     Smartform[] findAll() { return store; }
 
     Smartform* findById(SmartformId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Smartform[] findByTenant(TenantId tenantId) {
         Smartform[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Smartform[] findByServiceCall(ServiceCallId serviceCallId) {
         Smartform[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.serviceCallId == serviceCallId) result ~= e;
         return result;
     }
 
     Smartform[] findByActivity(ActivityId activityId) {
         Smartform[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.activityId == activityId) result ~= e;
         return result;
     }
 
     Smartform[] findByStatus(SmartformStatus status) {
         Smartform[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
@@ -53,7 +53,7 @@ class MemorySmartformRepository : SmartformRepository {
     void save(Smartform smartform) { store ~= smartform; }
 
     void update(Smartform smartform) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == smartform.id) { e = smartform; return; }
     }
 

@@ -18,7 +18,7 @@ struct DestinationResolver {
   static Destination applyFragments(Destination dest, const DestinationFragment[] fragments) {
     Destination result = dest;
 
-    foreach (ref frag; fragments) {
+    foreach (frag; fragments) {
       // Fragment overrides only non-empty fields
       if (frag.url.length > 0)
         result.url = frag.url;

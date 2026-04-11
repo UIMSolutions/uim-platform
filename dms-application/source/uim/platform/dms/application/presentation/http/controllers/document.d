@@ -76,7 +76,7 @@ class DocumentController : PlatformController {
       auto items = uc.listDocuments(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
+      foreach (d; items)
         arr ~= serializeDoc(d);
 
       auto resp = Json.emptyObject;
@@ -110,7 +110,7 @@ class DocumentController : PlatformController {
       auto items = uc.searchByName(query, tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
+      foreach (d; items)
         arr ~= serializeDoc(d);
 
       auto resp = Json.emptyObject;

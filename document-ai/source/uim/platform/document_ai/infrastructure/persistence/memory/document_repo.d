@@ -17,7 +17,7 @@ class MemoryDocumentRepository : DocumentRepository {
 
   Document findById(DocumentId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref d; *cl) {
+      foreach (d; *cl) {
         if (d.id == id)
           return d;
       }
@@ -55,7 +55,7 @@ class MemoryDocumentRepository : DocumentRepository {
 
   void update(Document d) {
     if (auto cl = d.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == d.id) {
           existing = d;
           return;

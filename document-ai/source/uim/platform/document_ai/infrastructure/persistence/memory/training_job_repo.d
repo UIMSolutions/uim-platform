@@ -17,7 +17,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   TrainingJob findById(TrainingJobId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref tj; *cl) {
+      foreach (tj; *cl) {
         if (tj.id == id)
           return tj;
       }
@@ -49,7 +49,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   void update(TrainingJob tj) {
     if (auto cl = tj.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == tj.id) {
           existing = tj;
           return;

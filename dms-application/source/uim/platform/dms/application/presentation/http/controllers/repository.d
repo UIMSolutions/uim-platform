@@ -71,7 +71,7 @@ class RepositoryController : PlatformController {
       auto items = uc.listRepositories(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; items)
+      foreach (r; items)
         arr ~= serializeRepo(r);
 
       auto resp = Json.emptyObject;

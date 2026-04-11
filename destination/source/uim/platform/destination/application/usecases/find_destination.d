@@ -107,7 +107,7 @@ class FindDestinationUseCase : UIMUseCase {
       resp.authTokens ~= td;
     }
 
-    foreach (ref c; certs) {
+    foreach (c; certs) {
       CertificateDto cd;
       cd.name = c.name;
       cd.type_ = c.certificateType.to!string;

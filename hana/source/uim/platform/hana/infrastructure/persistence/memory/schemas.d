@@ -20,7 +20,7 @@ class MemorySchemaRepository : SchemaRepository {
   private Schema[] store;
 
   Schema findById(SchemaId id) {
-    foreach (ref s; store) {
+    foreach (s; store) {
       if (s.id == id)
         return s;
     }
@@ -40,7 +40,7 @@ class MemorySchemaRepository : SchemaRepository {
   }
 
   void update(Schema s) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == s.id) {
         existing = s;
         return;

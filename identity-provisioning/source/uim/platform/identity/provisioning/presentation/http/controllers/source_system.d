@@ -64,7 +64,7 @@ class SourceSystemController {
       auto items = uc.listSourceSystems(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeSystem(s);
 
       auto resp = Json.emptyObject;
@@ -180,7 +180,7 @@ class SourceSystemController {
     }
   }
 
-  private static Json serializeSystem(ref const SourceSystem s) {
+  private static Json serializeSystem(const SourceSystem s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

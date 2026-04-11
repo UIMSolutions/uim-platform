@@ -116,7 +116,7 @@ class VersionController : PlatformController {
       auto versions = uc.getAllVersions(doctenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref v; versions)
+      foreach (v; versions)
         arr ~= serializeVersion(v);
 
       auto resp = Json.emptyObject;

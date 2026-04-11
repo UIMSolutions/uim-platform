@@ -35,7 +35,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
 
   ProvisioningJob[] findByTenant(TenantId tenantId) {
     ProvisioningJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -43,7 +43,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
 
   ProvisioningJob[] findBySource(SourceSystemId sourcetenantId, id tenantId) {
     ProvisioningJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.sourceSystemId == sourceId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -51,7 +51,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
 
   ProvisioningJob[] findByTarget(TargetSystemId targettenantId, id tenantId) {
     ProvisioningJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.targetSystemId == targetId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -59,7 +59,7 @@ class MemoryProvisioningJobRepository : ProvisioningJobRepository {
 
   ProvisioningJob[] findByStatus(TenantId tenantId, JobStatus status) {
     ProvisioningJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

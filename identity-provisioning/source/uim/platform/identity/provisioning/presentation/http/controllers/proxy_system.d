@@ -66,7 +66,7 @@ class ProxySystemController {
       auto items = uc.listProxySystems(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeSystem(s);
 
       auto resp = Json.emptyObject;
@@ -182,7 +182,7 @@ class ProxySystemController {
     }
   }
 
-  private static Json serializeSystem(ref const ProxySystem s) {
+  private static Json serializeSystem(const ProxySystem s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["tenantId"] = Json(s.tenantId);

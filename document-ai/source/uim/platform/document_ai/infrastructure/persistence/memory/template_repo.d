@@ -17,7 +17,7 @@ class MemoryTemplateRepository : TemplateRepository {
 
   Template findById(TemplateId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref t; *cl) {
+      foreach (t; *cl) {
         if (t.id == id)
           return t;
       }
@@ -55,7 +55,7 @@ class MemoryTemplateRepository : TemplateRepository {
 
   void update(Template t) {
     if (auto cl = t.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == t.id) {
           existing = t;
           return;

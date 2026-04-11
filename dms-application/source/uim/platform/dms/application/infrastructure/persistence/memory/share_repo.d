@@ -18,7 +18,7 @@ class MemoryShareRepository : IShareRepository {
 
   Share[] findByTenant(TenantId tenantId) {
     Share[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -33,7 +33,7 @@ class MemoryShareRepository : IShareRepository {
 
   Share[] findByDocument(DocumentId documenttenantId, id tenantId) {
     Share[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
         result ~= e;
     return result;
@@ -41,7 +41,7 @@ class MemoryShareRepository : IShareRepository {
 
   Share[] findBySharedWith(string sharedWith, TenantId tenantId) {
     Share[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.sharedWith == sharedWith)
         result ~= e;
     return result;
@@ -49,7 +49,7 @@ class MemoryShareRepository : IShareRepository {
 
   Share[] findByStatus(ShareStatus status, TenantId tenantId) {
     Share[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

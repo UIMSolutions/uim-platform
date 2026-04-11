@@ -63,7 +63,7 @@ class DataLakeController : PlatformController {
       auto lakes = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; lakes) {
+      foreach (d; lakes) {
         auto dj = Json.emptyObject;
         dj["id"] = Json(d.id);
         dj["instanceId"] = Json(d.instanceId);

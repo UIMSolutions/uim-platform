@@ -17,35 +17,35 @@ class MemoryActivityRepository : ActivityRepository {
     Activity[] findAll() { return store; }
 
     Activity* findById(ActivityId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Activity[] findByTenant(TenantId tenantId) {
         Activity[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Activity[] findByServiceCall(ServiceCallId serviceCallId) {
         Activity[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.serviceCallId == serviceCallId) result ~= e;
         return result;
     }
 
     Activity[] findByTechnician(TechnicianId technicianId) {
         Activity[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.technicianId == technicianId) result ~= e;
         return result;
     }
 
     Activity[] findByStatus(ActivityStatus status) {
         Activity[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
@@ -53,7 +53,7 @@ class MemoryActivityRepository : ActivityRepository {
     void save(Activity activity) { store ~= activity; }
 
     void update(Activity activity) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == activity.id) { e = activity; return; }
     }
 

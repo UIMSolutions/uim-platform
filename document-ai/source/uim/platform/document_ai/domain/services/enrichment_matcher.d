@@ -24,14 +24,14 @@ EnrichmentMatchResult matchEnrichmentData(ExtractionResult result, EnrichmentDat
   best.status = EnrichmentMatchStatus.unmatched;
   best.matchScore = 0.0;
 
-  foreach (ref candidate; candidates) {
+  foreach (candidate; candidates) {
     double score = 0.0;
     string[] matched;
     int totalFields = 0;
 
-    foreach (ref ef; candidate.fields) {
+    foreach (ef; candidate.fields) {
       totalFields++;
-      foreach (ref hf; result.headerFields) {
+      foreach (hf; result.headerFields) {
         if (hf.name == ef.key && hf.value == ef.value) {
           score += 1.0;
           matched ~= ef.key;

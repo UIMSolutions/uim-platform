@@ -19,7 +19,7 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
 
   DocumentVersion[] findByTenant(TenantId tenantId) {
     DocumentVersion[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -34,14 +34,14 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
 
   DocumentVersion[] findByDocument(DocumentId documenttenantId, id tenantId) {
     DocumentVersion[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
         result ~= e;
     return result;
   }
 
   DocumentVersion findLatest(DocumentId documenttenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId && e.status == VersionStatus.current)
         return e;
     return null;
@@ -49,7 +49,7 @@ class MemoryDocumentVersionRepository : IDocumentVersionRepository {
 
   size_t countByDocument(DocumentId documenttenantId, id tenantId) {
     size_t count;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.documentId == documentId)
         ++count;
     return count;

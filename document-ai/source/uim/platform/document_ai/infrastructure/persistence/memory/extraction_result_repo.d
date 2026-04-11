@@ -17,7 +17,7 @@ class MemoryExtractionResultRepository : ExtractionResultRepository {
 
   ExtractionResult findById(ExtractionResultId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref r; *cl) {
+      foreach (r; *cl) {
         if (r.id == id)
           return r;
       }
@@ -27,7 +27,7 @@ class MemoryExtractionResultRepository : ExtractionResultRepository {
 
   ExtractionResult findByDocument(DocumentId docId, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref r; *cl) {
+      foreach (r; *cl) {
         if (r.documentId == docId)
           return r;
       }
@@ -53,7 +53,7 @@ class MemoryExtractionResultRepository : ExtractionResultRepository {
 
   void update(ExtractionResult r) {
     if (auto cl = r.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == r.id) {
           existing = r;
           return;

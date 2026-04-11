@@ -58,7 +58,7 @@ class ContentCacheController : PlatformController {
       auto items = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items) {
+      foreach (e; items) {
         auto obj = Json.emptyObject;
         obj["id"] = Json(e.id);
         obj["fileId"] = Json(e.fileId);

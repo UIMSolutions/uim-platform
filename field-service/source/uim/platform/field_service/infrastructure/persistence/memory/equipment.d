@@ -17,35 +17,35 @@ class MemoryEquipmentRepository : EquipmentRepository {
     Equipment[] findAll() { return store; }
 
     Equipment* findById(EquipmentId id) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == id) return &e;
         return null;
     }
 
     Equipment[] findByTenant(TenantId tenantId) {
         Equipment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.tenantId == tenantId) result ~= e;
         return result;
     }
 
     Equipment[] findByCustomer(CustomerId customerId) {
         Equipment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.customerId == customerId) result ~= e;
         return result;
     }
 
     Equipment[] findByType(EquipmentType equipmentType) {
         Equipment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.equipmentType == equipmentType) result ~= e;
         return result;
     }
 
     Equipment[] findByStatus(EquipmentStatus status) {
         Equipment[] result;
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.status == status) result ~= e;
         return result;
     }
@@ -53,7 +53,7 @@ class MemoryEquipmentRepository : EquipmentRepository {
     void save(Equipment equipment) { store ~= equipment; }
 
     void update(Equipment equipment) {
-        foreach (ref e; store)
+        foreach (e; store)
             if (e.id == equipment.id) { e = equipment; return; }
     }
 

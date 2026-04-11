@@ -18,7 +18,7 @@ class MemoryPermissionRepository : IPermissionRepository {
 
   Permission[] findByTenant(TenantId tenantId) {
     Permission[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -33,7 +33,7 @@ class MemoryPermissionRepository : IPermissionRepository {
 
   Permission[] findByResource(string resourceId, ResourceType resourceType, TenantId tenantId) {
     Permission[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId && e.resourceType == resourceType)
         result ~= e;
     return result;
@@ -41,7 +41,7 @@ class MemoryPermissionRepository : IPermissionRepository {
 
   Permission[] findByUser(UserId usertenantId, id tenantId) {
     Permission[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.userId == userId)
         result ~= e;
     return result;
@@ -49,7 +49,7 @@ class MemoryPermissionRepository : IPermissionRepository {
 
   Permission findByResourceAndUser(string resourceId, ResourceType resourceType,
       UserId usertenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.resourceId == resourceId
           && e.resourceType == resourceType && e.userId == userId)
         return e;

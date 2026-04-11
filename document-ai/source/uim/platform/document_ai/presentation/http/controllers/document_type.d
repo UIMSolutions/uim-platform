@@ -61,7 +61,7 @@ class DocumentTypeController : PlatformController {
       auto types = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref dt; types) {
+      foreach (dt; types) {
         jarr ~= docTypeToJson(dt);
       }
 
@@ -141,7 +141,7 @@ class DocumentTypeController : PlatformController {
     }
   }
 
-  private Json docTypeToJson(ref DocumentType dt) {
+  private Json docTypeToJson(DocumentType dt) {
     import std.conv : to;
 
     auto dj = Json.emptyObject;

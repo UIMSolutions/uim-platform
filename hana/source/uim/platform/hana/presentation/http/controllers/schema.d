@@ -62,7 +62,7 @@ class SchemaController : PlatformController {
       auto schemas = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; schemas) {
+      foreach (s; schemas) {
         auto sj = Json.emptyObject;
         sj["id"] = Json(s.id);
         sj["instanceId"] = Json(s.instanceId);

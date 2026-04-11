@@ -62,7 +62,7 @@ class HDIContainerController : PlatformController {
       auto containers = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; containers) {
+      foreach (c; containers) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(c.id);
         cj["instanceId"] = Json(c.instanceId);

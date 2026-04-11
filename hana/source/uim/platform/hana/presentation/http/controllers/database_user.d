@@ -66,7 +66,7 @@ class DatabaseUserController : PlatformController {
       auto users = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref u; users) {
+      foreach (u; users) {
         auto uj = Json.emptyObject;
         uj["id"] = Json(u.id);
         uj["userName"] = Json(u.userName);

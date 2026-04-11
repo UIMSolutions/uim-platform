@@ -60,7 +60,7 @@ class TrainingJobController : PlatformController {
       auto jobs = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref tj; jobs) {
+      foreach (tj; jobs) {
         jarr ~= jobToJson(tj);
       }
 
@@ -137,7 +137,7 @@ class TrainingJobController : PlatformController {
     }
   }
 
-  private Json jobToJson(ref TrainingJob tj) {
+  private Json jobToJson(TrainingJob tj) {
     import std.conv : to;
 
     auto jj = Json.emptyObject;
@@ -157,7 +157,7 @@ class TrainingJobController : PlatformController {
     jj["modifiedAt"] = Json(tj.modifiedAt);
 
     auto mArr = Json.emptyArray;
-    foreach (ref m; tj.metrics) {
+    foreach (m; tj.metrics) {
       auto mj = Json.emptyObject;
       mj["name"] = Json(m.name);
       mj["value"] = Json(m.value);

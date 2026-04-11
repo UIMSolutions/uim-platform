@@ -62,7 +62,7 @@ class SchemaController : PlatformController {
       auto schemas = uc.list(clientId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; schemas) {
+      foreach (s; schemas) {
         jarr ~= schemaToJson(s);
       }
 
@@ -141,7 +141,7 @@ class SchemaController : PlatformController {
     }
   }
 
-  private Json schemaToJson(ref Schema s) {
+  private Json schemaToJson(Schema s) {
     import std.conv : to;
 
     auto sj = Json.emptyObject;
@@ -154,7 +154,7 @@ class SchemaController : PlatformController {
     sj["modifiedAt"] = Json(s.modifiedAt);
 
     auto hArr = Json.emptyArray;
-    foreach (ref f; s.headerFields) {
+    foreach (f; s.headerFields) {
       auto fj = Json.emptyObject;
       fj["name"] = Json(f.name);
       fj["label"] = Json(f.label);
@@ -165,7 +165,7 @@ class SchemaController : PlatformController {
     sj["headerFields"] = hArr;
 
     auto liArr = Json.emptyArray;
-    foreach (ref f; s.lineItemFields) {
+    foreach (f; s.lineItemFields) {
       auto fj = Json.emptyObject;
       fj["name"] = Json(f.name);
       fj["label"] = Json(f.label);

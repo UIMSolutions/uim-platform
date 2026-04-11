@@ -65,7 +65,7 @@ class ProvisioningJobController {
       auto items = uc.listJobs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref j; items)
+      foreach (j; items)
         arr ~= serializeJob(j);
 
       auto resp = Json.emptyObject;
@@ -179,7 +179,7 @@ class ProvisioningJobController {
     }
   }
 
-  private static Json serializeJob(ref const ProvisioningJob j) {
+  private static Json serializeJob(const ProvisioningJob j) {
     auto o = Json.emptyObject;
     o["id"] = Json(j.id);
     o["tenantId"] = Json(j.tenantId);

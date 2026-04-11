@@ -70,7 +70,7 @@ class DatabaseConnectionController : PlatformController {
       auto conns = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; conns) {
+      foreach (c; conns) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(c.id);
         cj["instanceId"] = Json(c.instanceId);

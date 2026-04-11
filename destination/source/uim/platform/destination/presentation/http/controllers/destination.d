@@ -106,7 +106,7 @@ class DestinationController : PlatformController {
         destinations = uc.listBySubaccount(tenantId, subaccountId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; destinations)
+      foreach (d; destinations)
         arr ~= serializeDestination(d);
 
       auto resp = Json.emptyObject;
@@ -218,7 +218,7 @@ class DestinationController : PlatformController {
     j["properties"] = propsJson;
 
     auto fragArr = Json.emptyArray;
-    foreach (ref fid; d.fragmentIds)
+    foreach (fid; d.fragmentIds)
       fragArr ~= fid.toJson();
     j["fragmentIds"] = fragArr;
 

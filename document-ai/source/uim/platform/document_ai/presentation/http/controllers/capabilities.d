@@ -31,25 +31,25 @@ class CapabilitiesController : PlatformController {
       resp["serviceVersion"] = Json(caps.serviceVersion);
 
       auto extArr = Json.emptyArray;
-      foreach (ref m; caps.extractionMethods) {
+      foreach (m; caps.extractionMethods) {
         extArr ~= Json(m);
       }
       resp["extractionMethods"] = extArr;
 
       auto ftArr = Json.emptyArray;
-      foreach (ref f; caps.supportedFileTypes) {
+      foreach (f; caps.supportedFileTypes) {
         ftArr ~= Json(f);
       }
       resp["supportedFileTypes"] = ftArr;
 
       auto fvArr = Json.emptyArray;
-      foreach (ref fv; caps.fieldValueTypes) {
+      foreach (fv; caps.fieldValueTypes) {
         fvArr ~= Json(fv);
       }
       resp["fieldValueTypes"] = fvArr;
 
       auto fArr = Json.emptyArray;
-      foreach (ref feat; caps.features) {
+      foreach (feat; caps.features) {
         fArr ~= Json(feat);
       }
       resp["features"] = fArr;

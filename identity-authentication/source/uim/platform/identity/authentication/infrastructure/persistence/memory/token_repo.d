@@ -57,7 +57,7 @@ class MemoryTokenRepository : TokenRepository {
   }
 
   void revokeAllForUser(UserId userId) {
-    foreach (ref t; store.byValue()) {
+    foreach (t; store.byValue()) {
       if (t.userId == userId) {
         auto updated = t;
         updated.revoked = true;

@@ -65,7 +65,7 @@ class BackupController : PlatformController {
       auto backups = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref b; backups) {
+      foreach (b; backups) {
         auto bj = Json.emptyObject;
         bj["id"] = Json(b.id);
         bj["instanceId"] = Json(b.instanceId);

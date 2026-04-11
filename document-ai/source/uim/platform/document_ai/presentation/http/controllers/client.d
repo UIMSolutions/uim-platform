@@ -57,7 +57,7 @@ class ClientController : PlatformController {
       auto clients = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; clients) {
+      foreach (c; clients) {
         jarr ~= clientToJson(c);
       }
 
@@ -134,7 +134,7 @@ class ClientController : PlatformController {
     }
   }
 
-  private Json clientToJson(ref Client c) {
+  private Json clientToJson(Client c) {
     auto jj = Json.emptyObject;
     jj["clientId"] = Json(c.clientId);
     jj["tenantId"] = Json(c.tenantId);

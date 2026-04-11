@@ -37,7 +37,7 @@ class MonitoringController {
       auto items = uc.listJobSummaries(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeJobSummary(s);
 
       auto resp = Json.emptyObject;
@@ -73,7 +73,7 @@ class MonitoringController {
       auto logs = uc.getJobLogs(jobtenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -92,7 +92,7 @@ class MonitoringController {
       auto items = uc.listProvisionedEntities(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serializeEntity(e);
 
       auto resp = Json.emptyObject;
@@ -127,7 +127,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeJobSummary(ref const JobSummary s) {
+  private static Json serializeJobSummary(const JobSummary s) {
     auto j = Json.emptyObject;
     j["jobId"] = Json(s.jobId);
     j["sourceName"] = Json(s.sourceName);
@@ -142,7 +142,7 @@ class MonitoringController {
     return j;
   }
 
-  private static Json serializeLog(ref const ProvisioningLog l) {
+  private static Json serializeLog(const ProvisioningLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["jobId"] = Json(l.jobId);
@@ -157,7 +157,7 @@ class MonitoringController {
     return j;
   }
 
-  private static Json serializeEntity(ref const ProvisionedEntity e) {
+  private static Json serializeEntity(const ProvisionedEntity e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["externalId"] = Json(e.externalId);

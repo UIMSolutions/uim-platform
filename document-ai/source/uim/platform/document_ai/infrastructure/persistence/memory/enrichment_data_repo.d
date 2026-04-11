@@ -17,7 +17,7 @@ class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
 
   EnrichmentData findById(EnrichmentDataId id, ClientId clientId) {
     if (auto cl = clientId in store) {
-      foreach (ref ed; *cl) {
+      foreach (ed; *cl) {
         if (ed.id == id)
           return ed;
       }
@@ -49,7 +49,7 @@ class MemoryEnrichmentDataRepository : EnrichmentDataRepository {
 
   void update(EnrichmentData ed) {
     if (auto cl = ed.clientId in store) {
-      foreach (ref existing; *cl) {
+      foreach (existing; *cl) {
         if (existing.id == ed.id) {
           existing = ed;
           return;

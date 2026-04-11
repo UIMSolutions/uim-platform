@@ -19,7 +19,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   Document[] findByTenant(TenantId tenantId) {
     Document[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -34,7 +34,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   Document[] findByRepository(RepositoryId repositorytenantId, id tenantId) {
     Document[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
         result ~= e;
     return result;
@@ -42,7 +42,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   Document[] findByFolder(FolderId foldertenantId, id tenantId) {
     Document[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
         result ~= e;
     return result;
@@ -50,7 +50,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   Document[] findByStatus(DocumentStatus status, TenantId tenantId) {
     Document[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
@@ -62,7 +62,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
     Document[] result;
     auto lowerName = name.toLower();
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.name.toLower().canFind(lowerName))
         result ~= e;
     return result;
@@ -70,7 +70,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   size_t countByRepository(RepositoryId repositorytenantId, id tenantId) {
     size_t count;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.repositoryId == repositoryId)
         ++count;
     return count;
@@ -78,7 +78,7 @@ class MemoryDocumentRepository : IDocumentRepository {
 
   size_t countByFolder(FolderId foldertenantId, id tenantId) {
     size_t count;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.folderId == folderId)
         ++count;
     return count;
