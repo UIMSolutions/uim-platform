@@ -61,14 +61,14 @@ class ManageDomainDashboardsUseCase : UIMUseCase {
             dashboard.id = r.tenantId ~ "-dashboard";
 
         dashboard.tenantId = r.tenantId;
-        dashboard.totalDomains = cast(long) domains.length;
+        dashboard.totalDomains = domains.length;
         dashboard.activeDomains = activeDomains;
-        dashboard.totalCertificates = cast(long) certs.length;
+        dashboard.totalCertificates = certs.length;
         dashboard.activeCertificates = activeCerts;
-        dashboard.totalMappings = cast(long) mappings.length;
+        dashboard.totalMappings = mappings.length;
         dashboard.activeMappings = activeMappings;
 
-        if (activeDomains == cast(long) domains.length && domains.length > 0)
+        if (activeDomains == domains.length && domains.length > 0)
             dashboard.overallHealth = HealthStatus.healthy;
         else if (activeDomains > 0)
             dashboard.overallHealth = HealthStatus.warning;

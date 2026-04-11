@@ -40,6 +40,6 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   size_t countByExecution(ExecutionId execId, ResourceGroupId rgId) {
-    return cast(long) store.filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
+    return store.filter!(m => m.executionId == execId && m.resourceGroupId == rgId).array.length;
   }
 }

@@ -48,6 +48,6 @@ class MemoryDnsRecordRepository : DnsRecordRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(r => r.tenantId == tenantId).array.length;
+        return store.filter!(r => r.tenantId == tenantId).array.length;
     }
 }

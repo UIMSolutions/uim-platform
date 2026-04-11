@@ -67,7 +67,7 @@ class BusinessContextController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -146,7 +146,7 @@ class BusinessContextController : PlatformController {
     j["description"] = Json(e.description);
     j["controllerGroupId"] = Json(e.controllerGroupId);
     j["status"] = Json(e.status.to!string);
-    j["version"] = Json(cast(long) e.version_);
+    j["version"] = Json(e.version_);
     j["isCrossRoleEnabled"] = Json(e.isCrossRoleEnabled);
     j["createdAt"] = Json(e.createdAt);
     j["updatedAt"] = Json(e.updatedAt);

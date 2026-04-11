@@ -71,7 +71,7 @@ class ConnectionController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) connections.length);
+      resp["count"] = Json(connections.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

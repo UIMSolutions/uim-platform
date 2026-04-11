@@ -72,7 +72,7 @@ class DatasetController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) datasets.length);
+      resp["count"] = Json(datasets.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

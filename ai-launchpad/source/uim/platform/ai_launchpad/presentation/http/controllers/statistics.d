@@ -42,7 +42,7 @@ class StatisticsController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) stats.length);
+      resp["count"] = Json(stats.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -57,8 +57,8 @@ class StatisticsController : PlatformController {
     j["scenarioId"] = Json(s.scenarioId);
     j["connectionId"] = Json(s.connectionId);
     j["period"] = Json(s.period.to!string);
-    j["executionCount"] = Json(cast(long) s.executionCount);
-    j["deploymentCount"] = Json(cast(long) s.deploymentCount);
+    j["executionCount"] = Json(s.executionCount);
+    j["deploymentCount"] = Json(s.deploymentCount);
     j["totalTrainingHours"] = Json(s.totalTrainingHours);
     j["totalInferenceRequests"] = Json(s.totalInferenceRequests);
     j["estimatedCost"] = Json(s.estimatedCost);

@@ -71,7 +71,7 @@ class ConnectorController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) conns.length);
+      resp["totalCount"] = Json(conns.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -153,7 +153,7 @@ class ConnectorController : PlatformController {
     j["description"] = Json(c.description);
     j["connectorVersion"] = Json(c.connectorVersion);
     j["host"] = Json(c.host);
-    j["port"] = Json(cast(long) c.port);
+    j["port"] = Json(c.port);
     j["status"] = Json(c.status.to!string);
     j["tunnelEndpoint"] = Json(c.tunnelEndpoint);
     j["lastHeartbeat"] = Json(c.lastHeartbeat);

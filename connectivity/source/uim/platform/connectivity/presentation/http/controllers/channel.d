@@ -72,7 +72,7 @@ class ChannelController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) channels.length);
+      resp["totalCount"] = Json(channels.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -173,9 +173,9 @@ class ChannelController : PlatformController {
     j["type"] = Json(ch.channelType.to!string);
     j["status"] = Json(ch.status.to!string);
     j["virtualHost"] = Json(ch.virtualHost);
-    j["virtualPort"] = Json(cast(long) ch.virtualPort);
+    j["virtualPort"] = Json(ch.virtualPort);
     j["backendHost"] = Json(ch.backendHost);
-    j["backendPort"] = Json(cast(long) ch.backendPort);
+    j["backendPort"] = Json(ch.backendPort);
     j["openedAt"] = Json(ch.openedAt);
     j["closedAt"] = Json(ch.closedAt);
     j["createdAt"] = Json(ch.createdAt);

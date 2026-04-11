@@ -67,7 +67,7 @@ class ScenarioController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) scenarios.length);
+      resp["count"] = Json(scenarios.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -117,8 +117,8 @@ class ScenarioController : PlatformController {
     j["name"] = Json(s.name);
     j["description"] = Json(s.description);
     j["labels"] = toJsonArray(s.labels);
-    j["executionCount"] = Json(cast(long) s.executionCount);
-    j["deploymentCount"] = Json(cast(long) s.deploymentCount);
+    j["executionCount"] = Json(s.executionCount);
+    j["deploymentCount"] = Json(s.deploymentCount);
     j["createdAt"] = Json(s.createdAt);
     j["modifiedAt"] = Json(s.modifiedAt);
     return j;

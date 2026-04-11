@@ -43,7 +43,7 @@ class MemoryAppRepository : AppRepository {
   }
 
   size_t countBySpace(SpaceId spacetenantId, id tenantId) {
-    return cast(long) findBySpace(spacetenantId, id).length;
+    return findBySpace(spacetenantId, id).length;
   }
 
   void save(Application app) {

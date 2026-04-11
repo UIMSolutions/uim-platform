@@ -78,7 +78,7 @@ class SoftwareComponentController : PlatformController {
         arr ~= serializeComponent(comp);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) components.length);
+      resp["totalCount"] = Json(components.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -168,33 +168,32 @@ class SoftwareComponentController : PlatformController {
   }
 
   private static Json serializeComponent(const SoftwareComponent comp) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(comp.id);
-    j["tenantId"] = Json(comp.tenantId);
-    j["systemInstanceId"] = Json(comp.systemInstanceId);
-    j["name"] = Json(comp.name);
-    j["description"] = Json(comp.description);
-    j["componentType"] = Json(comp.componentType.to!string);
-    j["status"] = Json(comp.status.to!string);
-    j["repositoryUrl"] = Json(comp.repositoryUrl);
-    j["branch"] = Json(comp.branch);
-    j["branchStrategy"] = Json(comp.branchStrategy.to!string);
-    j["currentCommitId"] = Json(comp.currentCommitId);
-    j["namespace"] = Json(comp.namespace);
-    j["clonedAt"] = Json(comp.clonedAt);
-    j["lastPulledAt"] = Json(comp.lastPulledAt);
-    j["createdAt"] = Json(comp.createdAt);
-    j["updatedAt"] = Json(comp.updatedAt);
+    auto j = Json.emptyObject
+    .set("id", comp.id)
+    .set("tenantId", comp.tenantId)
+    .set("systemInstanceId", comp.systemInstanceId)
+    .set("name", comp.name)
+    .set("description", comp.description)
+    .set("componentType", comp.componentType.to!string)
+    .set("status", comp.status.to!string)
+    .set("repositoryUrl", comp.repositoryUrl)
+    .set("branch", comp.branch)
+    .set("branchStrategy", comp.branchStrategy.to!string)
+    .set("currentCommitId", comp.currentCommitId)
+    .set("namespace", comp.namespace)
+    .set("clonedAt", comp.clonedAt)
+    .set("lastPulledAt", comp.lastPulledAt)
+    .set("createdAt", comp.createdAt)
+    .set("updatedAt", comp.updatedAt);
 
     if (comp.commitHistory.length > 0) {
       auto hist = Json.emptyArray;
       foreach (c; comp.commitHistory) {
-        auto hj = Json.emptyObject;
-        hj["commitId"] = Json(c.commitId);
-        hj["message"] = Json(c.message);
-        hj["author"] = Json(c.author);
-        hj["timestamp"] = Json(c.timestamp);
-        hist ~= hj;
+        hist ~= Json.emptyObject
+        .set("commitId", c.commitId)
+        .set("message", c.message)
+        .set("author", c.author)
+        .set("timestamp", c.timestamp);
       }
       j["commitHistory"] = hist;
     }

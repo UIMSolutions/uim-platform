@@ -77,7 +77,7 @@ class DomainMappingController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) mappings.length);
+            resp["count"] = Json(mappings.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

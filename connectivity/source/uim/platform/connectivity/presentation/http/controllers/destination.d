@@ -81,7 +81,7 @@ class DestinationController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) dests.length);
+      resp["totalCount"] = Json(dests.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -50,13 +50,10 @@ class TransportRequestController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,10 +67,9 @@ class TransportRequestController : PlatformController {
         arr ~= serializeRequest(tr);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) requests.length);
+      resp["totalCount"] = Json(cast(long)requests.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +83,7 @@ class TransportRequestController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRequest(*tr), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -107,13 +102,10 @@ class TransportRequestController : PlatformController {
         auto resp = Json.emptyObject;
         resp["taskId"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -126,13 +118,10 @@ class TransportRequestController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("released");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -148,13 +137,10 @@ class TransportRequestController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("released");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -167,44 +153,41 @@ class TransportRequestController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRequest(const TransportRequest tr) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(tr.id);
-    j["tenantId"] = Json(tr.tenantId);
-    j["sourceSystemId"] = Json(tr.sourceSystemId);
-    j["targetSystemId"] = Json(tr.targetSystemId);
-    j["description"] = Json(tr.description);
-    j["owner"] = Json(tr.owner);
-    j["transportType"] = Json(tr.transportType.to!string);
-    j["status"] = Json(tr.status.to!string);
-    j["createdAt"] = Json(tr.createdAt);
-    j["releasedAt"] = Json(tr.releasedAt);
-    j["importedAt"] = Json(tr.importedAt);
+    auto j = Json.emptyObject
+      .set("id", tr.id)
+      .set("tenantId", tr.tenantId)
+      .set("sourceSystemId", tr.sourceSystemId)
+      .set("targetSystemId", tr.targetSystemId)
+      .set("description", tr.description)
+      .set("owner", tr.owner)
+      .set("transportType", tr.transportType.to!string)
+      .set("status", tr.status.to!string)
+      .set("createdAt", tr.createdAt)
+      .set("releasedAt", tr.releasedAt)
+      .set("importedAt", tr.importedAt);
 
     if (tr.tasks.length > 0) {
       auto tasks = Json.emptyArray;
       foreach (t; tr.tasks) {
         auto tj = Json.emptyObject;
-        tj["taskId"] = Json(t.taskId);
-        tj["owner"] = Json(t.owner);
-        tj["status"] = Json(t.status.to!string);
-        tj["description"] = Json(t.description);
-        tj["createdAt"] = Json(t.createdAt);
-        tj["releasedAt"] = Json(t.releasedAt);
+        
+        .set("taskId", t.taskId)
+          .set("owner", t.owner)
+          .set("status", t.status.to!string)
+          .set("description", t.description)
+          .set("createdAt", t.createdAt)
+          .set("releasedAt", t.releasedAt);
 
-        if (t.objectList.length > 0)
-        {
+        if (t.objectList.length > 0) {
           auto ol = Json.emptyArray;
           foreach (o; t.objectList)
             ol ~= Json(o);

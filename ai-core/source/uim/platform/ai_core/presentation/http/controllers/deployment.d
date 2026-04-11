@@ -19,7 +19,7 @@ class DeploymentController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v2/lm/deployments", &handleCreate);
     router.get("/api/v2/lm/deployments", &handleList);
     router.get("/api/v2/lm/deployments/*", &handleGet);
@@ -62,7 +62,7 @@ class DeploymentController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) deployments.length);
+      resp["count"] = Json(cast(long)deployments.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -138,19 +138,18 @@ class DeploymentController : PlatformController {
   private Json deploymentToJson(Deployment d) {
     import std.conv : to;
 
-    auto dj = Json.emptyObject;
-    dj["id"] = Json(d.id);
-    dj["configurationId"] = Json(d.configurationId);
-    dj["scenarioId"] = Json(d.scenarioId);
-    dj["executableId"] = Json(d.executableId);
-    dj["status"] = Json(d.status.to!string);
-    dj["statusMessage"] = Json(d.statusMessage);
-    dj["deploymentUrl"] = Json(d.deploymentUrl);
-    dj["ttl"] = Json(cast(long) d.ttl);
-    dj["createdAt"] = Json(d.createdAt);
-    dj["modifiedAt"] = Json(d.modifiedAt);
-    dj["startedAt"] = Json(d.startedAt);
-    dj["completedAt"] = Json(d.completedAt);
-    return dj;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("configurationId", d.configurationId)
+      .set("scenarioId", d.scenarioId)
+      .set("executableId", d.executableId)
+      .set("status", d.status.to!string)
+      .set("statusMessage", d.statusMessage)
+      .set("deploymentUrl", d.deploymentUrl)
+      .set("ttl", cast(long)d.ttl)
+      .set("createdAt", d.createdAt)
+      .set("modifiedAt", d.modifiedAt)
+      .set("startedAt", d.startedAt)
+      .set("completedAt", d.completedAt);
   }
 }

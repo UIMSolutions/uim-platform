@@ -72,7 +72,7 @@ class OrgController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) orgs.length);
+      resp["totalCount"] = Json(orgs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

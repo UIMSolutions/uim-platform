@@ -90,7 +90,7 @@ class MetricController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) metrics.length);
+      resp["count"] = Json(metrics.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

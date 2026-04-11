@@ -73,7 +73,7 @@ class PromptController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) prompts.length);
+      resp["count"] = Json(prompts.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -146,7 +146,7 @@ class PromptController : PlatformController {
 
     auto params = Json.emptyObject;
     params["temperature"] = Json(p.parameters.temperature);
-    params["maxTokens"] = Json(cast(long) p.parameters.maxTokens);
+    params["maxTokens"] = Json(p.parameters.maxTokens);
     params["topP"] = Json(p.parameters.topP);
     params["frequencyPenalty"] = Json(p.parameters.frequencyPenalty);
     params["presencePenalty"] = Json(p.parameters.presencePenalty);

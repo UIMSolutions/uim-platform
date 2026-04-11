@@ -45,7 +45,7 @@ class MonitoringController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -59,11 +59,11 @@ class MonitoringController : PlatformController {
       auto summary = uc.getSummary(tenantId);
 
       auto j = Json.emptyObject;
-      j["totalEvents"] = Json(cast(long) summary.totalEvents);
-      j["info"] = Json(cast(long) summary.infoCount);
-      j["warning"] = Json(cast(long) summary.warningCount);
-      j["error"] = Json(cast(long) summary.errorCount);
-      j["critical"] = Json(cast(long) summary.criticalCount);
+      j["totalEvents"] = Json(summary.totalEvents);
+      j["info"] = Json(summary.infoCount);
+      j["warning"] = Json(summary.warningCount);
+      j["error"] = Json(summary.errorCount);
+      j["critical"] = Json(summary.criticalCount);
       res.writeJsonBody(j, 200);
     }
     catch (Exception e) {
@@ -81,7 +81,7 @@ class MonitoringController : PlatformController {
     j["sourceType"] = Json(l.sourceType);
     j["message"] = Json(l.message);
     j["remoteHost"] = Json(l.remoteHost);
-    j["remotePort"] = Json(cast(long) l.remotePort);
+    j["remotePort"] = Json(l.remotePort);
     j["timestamp"] = Json(l.timestamp);
     return j;
   }

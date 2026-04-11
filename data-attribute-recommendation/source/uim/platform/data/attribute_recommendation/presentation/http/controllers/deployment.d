@@ -72,7 +72,7 @@ class DeploymentController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -168,7 +168,7 @@ class DeploymentController : PlatformController {
     j["status"] = Json(d.status.to!string);
     j["endpointUrl"] = Json(d.endpointUrl);
     j["version"] = Json(d.version_);
-    j["replicas"] = Json(cast(long) d.replicas);
+    j["replicas"] = Json(d.replicas);
     j["createdBy"] = Json(d.createdBy);
     j["createdAt"] = Json(d.createdAt);
     j["updatedAt"] = Json(d.updatedAt);

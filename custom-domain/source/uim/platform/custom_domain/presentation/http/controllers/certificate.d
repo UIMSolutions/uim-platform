@@ -75,7 +75,7 @@ class CertificateController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) certs.length);
+            resp["count"] = Json(certs.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

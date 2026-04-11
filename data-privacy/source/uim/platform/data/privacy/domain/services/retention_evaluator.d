@@ -75,7 +75,7 @@ class RetentionEvaluator {
     }
 
     // Check if data is past retention
-    long cutoff = now - (cast(long) result.maxRetentionDays * 24 * 60 * 60 * 10_000_000L);
+    long cutoff = now - (result.maxRetentionDays * 24 * 60 * 60 * 10_000_000L);
     result.isExpired = dataTimestamp < cutoff;
 
     if (result.isExpired) {

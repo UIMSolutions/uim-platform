@@ -85,7 +85,7 @@ class BusinessRoleController : PlatformController {
         arr ~= serializeRole(role);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) roles.length);
+      resp["totalCount"] = Json(roles.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -153,15 +153,15 @@ class BusinessRoleController : PlatformController {
   }
 
   private static Json serializeRole(const BusinessRole role) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(role.id);
-    j["tenantId"] = Json(role.tenantId);
-    j["systemInstanceId"] = Json(role.systemInstanceId);
-    j["name"] = Json(role.name);
-    j["description"] = Json(role.description);
-    j["roleType"] = Json(role.roleType.to!string);
-    j["createdAt"] = Json(role.createdAt);
-    j["updatedAt"] = Json(role.updatedAt);
+    auto j = Json.emptyObject
+    .set("id", role.id)
+    .set("tenantId", role.tenantId)
+    .set("systemInstanceId", role.systemInstanceId)
+    .set("name", role.name)
+    .set("description", role.description)
+    .set("roleType", role.roleType.to!string)
+    .set("createdAt", role.createdAt)
+    .set("updatedAt", role.updatedAt);
 
     if (role.restrictionTypes.length > 0) {
       auto rt = Json.emptyArray;
@@ -173,10 +173,9 @@ class BusinessRoleController : PlatformController {
     if (role.assignedCatalogs.length > 0) {
       auto cats = Json.emptyArray;
       foreach (c; role.assignedCatalogs) {
-        auto cj = Json.emptyObject;
-        cj["catalogId"] = Json(c.catalogId);
-        cj["catalogName"] = Json(c.catalogName);
-        cats ~= cj;
+        cats ~= Json.emptyObject
+        .set("catalogId", c.catalogId)
+        .set("catalogName", c.catalogName);
       }
       j["assignedCatalogs"] = cats;
     }

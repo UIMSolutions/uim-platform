@@ -71,7 +71,7 @@ class ProviderController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) providers.length);
+      resp["totalCount"] = Json(providers.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -125,7 +125,7 @@ class CredentialController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) creds.length);
+      resp["totalCount"] = Json(creds.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

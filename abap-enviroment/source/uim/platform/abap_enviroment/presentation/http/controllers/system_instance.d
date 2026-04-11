@@ -58,13 +58,10 @@ class SystemInstanceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -78,10 +75,9 @@ class SystemInstanceController : PlatformController {
         arr ~= serializeInstance(inst);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) instances.length);
+      resp["totalCount"] = Json(cast(long)instances.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -95,8 +91,7 @@ class SystemInstanceController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeInstance(*inst), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -117,13 +112,10 @@ class SystemInstanceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -136,36 +128,32 @@ class SystemInstanceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleting");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeInstance(const SystemInstance inst) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(inst.id);
-    j["tenantId"] = Json(inst.tenantId);
-    j["subaccountId"] = Json(inst.subaccountId);
-    j["name"] = Json(inst.name);
-    j["description"] = Json(inst.description);
-    j["plan"] = Json(inst.plan.to!string);
-    j["status"] = Json(inst.status.to!string);
-    j["region"] = Json(inst.region);
-    j["sapSystemId"] = Json(inst.sapSystemId);
-    j["adminEmail"] = Json(inst.adminEmail);
-    j["abapRuntimeSize"] = Json(cast(long) inst.abapRuntimeSize);
-    j["hanaMemorySize"] = Json(cast(long) inst.hanaMemorySize);
-    j["serviceUrl"] = Json(inst.serviceUrl);
-    j["softwareVersion"] = Json(inst.softwareVersion);
-    j["stackVersion"] = Json(inst.stackVersion);
-    j["createdAt"] = Json(inst.createdAt);
-    j["updatedAt"] = Json(inst.updatedAt);
-    return j;
+  private static Json serializeInstance(const SystemInstance instance) {
+    return Json.emptyObject
+      .set("id", instance.id)
+      .set("tenantId", instance.tenantId)
+      .set("subaccountId", instance.subaccountId)
+      .set("name", instance.name)
+      .set("description", instance.description)
+      .set("plan", instance.plan.to!string)
+      .set("status", instance.status.to!string)
+      .set("region", instance.region)
+      .set("sapSystemId", instance.sapSystemId)
+      .set("adminEmail", instance.adminEmail)
+      .set("abapRuntimeSize", instance.abapRuntimeSize)
+      .set("hanaMemorySize", instance.hanaMemorySize)
+      .set("serviceUrl", instance.serviceUrl)
+      .set("softwareVersion", instance.softwareVersion)
+      .set("stackVersion", instance.stackVersion)
+      .set("createdAt", instance.createdAt)
+      .set("updatedAt", instance.updatedAt);
   }
 }

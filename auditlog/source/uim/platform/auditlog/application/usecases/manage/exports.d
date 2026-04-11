@@ -49,7 +49,7 @@ class ManageExportsUseCase : UIMUseCase {
     // Simulate immediate export completion
     auto logs = auditRepo.search(req.tenantId, req.categories, req.timeFrom,
         req.timeTo, int.max, 0);
-    job.totalRecords = cast(long) logs.length;
+    job.totalRecords = logs.length;
     job.status = ExportStatus.completed;
     job.completedAt = Clock.currStdTime();
     job.downloadUrl = "/api/v1/exports/" ~ job.id.toString() ~ "/download";

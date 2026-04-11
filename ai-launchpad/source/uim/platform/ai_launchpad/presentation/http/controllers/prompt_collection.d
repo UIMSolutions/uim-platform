@@ -66,7 +66,7 @@ class PromptCollectionController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) collections.length);
+      resp["count"] = Json(collections.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -138,7 +138,7 @@ class PromptCollectionController : PlatformController {
     j["description"] = Json(c.description);
     j["scenarioId"] = Json(c.scenarioId);
     j["workspaceId"] = Json(c.workspaceId);
-    j["promptCount"] = Json(cast(long) c.promptCount);
+    j["promptCount"] = Json(c.promptCount);
     j["createdAt"] = Json(c.createdAt);
     j["modifiedAt"] = Json(c.modifiedAt);
     return j;

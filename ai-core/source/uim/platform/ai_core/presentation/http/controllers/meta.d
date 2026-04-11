@@ -46,7 +46,7 @@ class MetaController : PlatformController {
     execLimits["maxRunningCount"] = Json(cast(long)-1);
     limits["executions"] = execLimits;
 
-    limits["minimumFrequencyHour"] = Json(cast(long) 1);
+    limits["minimumFrequencyHour"] = Json(1);
 
     auto ttlLimits = Json.emptyObject;
     ttlLimits["minimum"] = Json("10m");

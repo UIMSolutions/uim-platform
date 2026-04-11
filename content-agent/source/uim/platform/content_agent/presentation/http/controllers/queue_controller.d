@@ -72,7 +72,7 @@ class QueueController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) queues.length);
+      resp["totalCount"] = Json(queues.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

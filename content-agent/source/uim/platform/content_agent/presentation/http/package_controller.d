@@ -74,7 +74,7 @@ class PackageController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) packages.length);
+      resp["totalCount"] = Json(packages.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -78,7 +78,7 @@ class RetentionRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e)
@@ -143,7 +143,7 @@ class RetentionRuleController : PlatformController {
     j["name"] = Json(e.name);
     j["description"] = Json(e.description);
     j["purpose"] = Json(e.purpose.to!string);
-    j["retentionDays"] = Json(cast(long) e.retentionDays);
+    j["retentionDays"] = Json(e.retentionDays);
     j["legalReference"] = Json(e.legalReference);
     j["status"] = Json(e.status.to!string);
     j["isDefault"] = Json(e.isDefault);

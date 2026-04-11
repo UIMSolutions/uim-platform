@@ -73,7 +73,7 @@ class InferenceController : PlatformController {
 
         auto resp = Json.emptyObject;
         resp["items"] = arr;
-        resp["totalCount"] = Json(cast(long) requests.length);
+        resp["totalCount"] = Json(requests.length);
         res.writeJsonBody(resp, 200);
         return;
       }
@@ -116,7 +116,7 @@ class InferenceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -142,7 +142,7 @@ class InferenceController : PlatformController {
     j["requestId"] = Json(r.requestId);
     j["predictions"] = Json(r.predictions);
     j["confidenceScores"] = Json(r.confidenceScores);
-    j["processingTimeMs"] = Json(cast(long) r.processingTimeMs);
+    j["processingTimeMs"] = Json(r.processingTimeMs);
     j["createdAt"] = Json(r.createdAt);
     return j;
   }

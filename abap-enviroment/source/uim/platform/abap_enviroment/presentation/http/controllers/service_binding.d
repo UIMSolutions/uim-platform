@@ -29,7 +29,7 @@ class ServiceBindingController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/service-bindings", &handleCreate);
     router.get("/api/v1/service-bindings", &handleList);
     router.get("/api/v1/service-bindings/*", &handleGetById);
@@ -53,13 +53,10 @@ class ServiceBindingController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -73,10 +70,9 @@ class ServiceBindingController : PlatformController {
         arr ~= serializeBinding(b);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) bindings.length);
+      resp["totalCount"] = Json(cast(long)bindings.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,8 +86,7 @@ class ServiceBindingController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeBinding(*binding), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,13 +104,10 @@ class ServiceBindingController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,41 +120,37 @@ class ServiceBindingController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeBinding(const ServiceBinding b) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(b.id);
-    j["tenantId"] = Json(b.tenantId);
-    j["systemInstanceId"] = Json(b.systemInstanceId);
-    j["serviceDefinitionId"] = Json(b.serviceDefinitionId);
-    j["name"] = Json(b.name);
-    j["description"] = Json(b.description);
-    j["bindingType"] = Json(b.bindingType.to!string);
-    j["status"] = Json(b.status.to!string);
-    j["serviceUrl"] = Json(b.serviceUrl);
-    j["metadataUrl"] = Json(b.metadataUrl);
-    j["createdAt"] = Json(b.createdAt);
-    j["updatedAt"] = Json(b.updatedAt);
+    auto j = Json.emptyObject
+      .set("id", b.id)
+      .set("tenantId", b.tenantId)
+      .set("systemInstanceId", b.systemInstanceId)
+      .set("serviceDefinitionId", b.serviceDefinitionId)
+      .set("name", b.name)
+      .set("description", b.description)
+      .set("bindingType", b.bindingType.to!string)
+      .set("status", b.status.to!string)
+      .set("serviceUrl", b.serviceUrl)
+      .set("metadataUrl", b.metadataUrl)
+      .set("createdAt", b.createdAt)
+      .set("updatedAt", b.updatedAt);
 
     if (b.endpoints.length > 0) {
       auto eps = Json.emptyArray;
       foreach (ep; b.endpoints) {
-        auto ej = Json.emptyObject;
-        ej["path"] = Json(ep.path);
-        ej["serviceName"] = Json(ep.serviceName);
-        ej["serviceVersion"] = Json(ep.serviceVersion);
-        ej["requiresAuth"] = Json(ep.requiresAuth);
-        eps ~= ej;
+        eps ~= Json.emptyObject
+        .set("path", ep.path)
+        .set("serviceName", ep.serviceName)
+        .set("serviceVersion", ep.serviceVersion)
+        .set("requiresAuth", ep.requiresAuth);
       }
       j["endpoints"] = eps;
     }

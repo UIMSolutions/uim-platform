@@ -54,10 +54,10 @@ class MemoryCredentialRepository : CredentialRepository {
   }
 
   size_t countByNamespace(NamespaceId namespaceId) {
-    return cast(long) store.values.filter!(c => c.namespaceId == namespaceId).array.length;
+    return store.values.filter!(c => c.namespaceId == namespaceId).array.length;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(c => c.tenantId == tenantId).array.length;
+    return store.values.filter!(c => c.tenantId == tenantId).array.length;
   }
 }

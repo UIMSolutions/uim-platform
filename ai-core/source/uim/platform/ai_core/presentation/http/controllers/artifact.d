@@ -19,7 +19,7 @@ class ArtifactController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v2/lm/artifacts", &handleCreate);
     router.get("/api/v2/lm/artifacts", &handleList);
     router.get("/api/v2/lm/artifacts/*", &handleGet);
@@ -70,7 +70,7 @@ class ArtifactController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) artifacts.length);
+      resp["count"] = Json(cast(long)artifacts.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -118,17 +118,6 @@ class ArtifactController : PlatformController {
   private Json artifactToJson(Artifact a) {
     import std.conv : to;
 
-    auto aj = Json.emptyObject;
-    aj["id"] = Json(a.id);
-    aj["scenarioId"] = Json(a.scenarioId);
-    aj["executionId"] = Json(a.executionId);
-    aj["name"] = Json(a.name);
-    aj["description"] = Json(a.description);
-    aj["kind"] = Json(a.kind.to!string);
-    aj["url"] = Json(a.url);
-    aj["createdAt"] = Json(a.createdAt);
-    aj["modifiedAt"] = Json(a.modifiedAt);
-
     auto lArr = Json.emptyArray;
     foreach (lbl; a.labels) {
       auto lj = Json.emptyObject;
@@ -136,8 +125,17 @@ class ArtifactController : PlatformController {
       lj["value"] = Json(lbl.value);
       lArr ~= lj;
     }
-    aj["labels"] = lArr;
 
-    return aj;
+    return Json.emptyObject
+      .set("id", a.id)
+      .set("scenarioId", a.scenarioId)
+      .set("executionId", a.executionId)
+      .set("name", a.name)
+      .set("description", a.description)
+      .set("kind", a.kind.to!string)
+      .set("url", a.url)
+      .set("createdAt", a.createdAt)
+      .set("modifiedAt", a.modifiedAt)
+      .set("labels", lArr);
   }
 }

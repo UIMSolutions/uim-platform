@@ -81,7 +81,7 @@ class ExecutableController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) executables.length);
+      resp["count"] = Json(executables.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

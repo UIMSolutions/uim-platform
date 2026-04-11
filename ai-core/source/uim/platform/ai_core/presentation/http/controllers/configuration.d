@@ -96,7 +96,7 @@ class ConfigurationController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) configs.length);
+      resp["count"] = Json(configs.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

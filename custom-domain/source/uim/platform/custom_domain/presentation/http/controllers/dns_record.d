@@ -67,7 +67,7 @@ class DnsRecordController : PlatformController {
                 rj["recordType"] = Json(r.recordType.to!string);
                 rj["hostname"] = Json(r.hostname);
                 rj["value"] = Json(r.value);
-                rj["ttl"] = Json(cast(long) r.ttl);
+                rj["ttl"] = Json(r.ttl);
                 rj["validationStatus"] = Json(r.validationStatus.to!string);
                 rj["createdBy"] = Json(r.createdBy);
                 rj["createdAt"] = Json(r.createdAt);
@@ -75,7 +75,7 @@ class DnsRecordController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) records.length);
+            resp["count"] = Json(records.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -100,7 +100,7 @@ class DnsRecordController : PlatformController {
             resp["recordType"] = Json(r.recordType.to!string);
             resp["hostname"] = Json(r.hostname);
             resp["value"] = Json(r.value);
-            resp["ttl"] = Json(cast(long) r.ttl);
+            resp["ttl"] = Json(r.ttl);
             resp["validationStatus"] = Json(r.validationStatus.to!string);
             resp["lastValidatedAt"] = Json(r.lastValidatedAt);
             resp["createdBy"] = Json(r.createdBy);

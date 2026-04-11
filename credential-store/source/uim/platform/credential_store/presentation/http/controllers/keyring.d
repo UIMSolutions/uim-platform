@@ -73,7 +73,7 @@ class KeyringController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) keyrings.length);
+      resp["totalCount"] = Json(keyrings.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

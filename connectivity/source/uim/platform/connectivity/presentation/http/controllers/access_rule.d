@@ -76,7 +76,7 @@ class AccessRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) rules.length);
+      resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -152,7 +152,7 @@ class AccessRuleController : PlatformController {
     j["description"] = Json(r.description);
     j["protocol"] = Json(r.protocol.to!string);
     j["virtualHost"] = Json(r.virtualHost);
-    j["virtualPort"] = Json(cast(long) r.virtualPort);
+    j["virtualPort"] = Json(r.virtualPort);
     j["urlPathPrefix"] = Json(r.urlPathPrefix);
     j["policy"] = Json(r.policy.to!string);
     j["principalPropagation"] = Json(r.principalPropagation);

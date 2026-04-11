@@ -64,7 +64,7 @@ class RuleSetController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -139,7 +139,7 @@ class RuleSetController : PlatformController {
     j["name"] = Json(e.name);
     j["description"] = Json(e.description);
     j["status"] = Json(e.status.to!string);
-    j["priority"] = Json(cast(long) e.priority);
+    j["priority"] = Json(e.priority);
     j["createdAt"] = Json(e.createdAt);
     j["updatedAt"] = Json(e.updatedAt);
     j["activatedAt"] = Json(e.activatedAt);

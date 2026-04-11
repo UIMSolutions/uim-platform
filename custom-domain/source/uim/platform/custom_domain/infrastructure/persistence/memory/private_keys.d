@@ -44,6 +44,6 @@ class MemoryPrivateKeyRepository : PrivateKeyRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(k => k.tenantId == tenantId).array.length;
+        return store.filter!(k => k.tenantId == tenantId).array.length;
     }
 }

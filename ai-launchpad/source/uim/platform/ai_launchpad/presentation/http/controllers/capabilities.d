@@ -36,7 +36,7 @@ class CapabilitiesController : PlatformController {
       resp["promptManagement"] = Json(cap.promptManagement);
       resp["usageStatistics"] = Json(cap.usageStatistics);
       resp["bulkOperations"] = Json(cap.bulkOperations);
-      resp["maxConnections"] = Json(cast(long) cap.maxConnections);
+      resp["maxConnections"] = Json(cap.maxConnections);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

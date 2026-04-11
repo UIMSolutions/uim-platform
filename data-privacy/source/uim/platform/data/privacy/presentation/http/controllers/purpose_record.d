@@ -68,7 +68,7 @@ class PurposeRecordController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -124,8 +124,8 @@ class PurposeRecordController : PlatformController {
     j["purpose"] = Json(e.purpose);
     j["status"] = Json(e.status.to!string);
     j["legalBasis"] = Json(e.legalBasis);
-    j["residenceDays"] = Json(cast(long) e.residenceDays);
-    j["retentionDays"] = Json(cast(long) e.retentionDays);
+    j["residenceDays"] = Json(e.residenceDays);
+    j["retentionDays"] = Json(e.retentionDays);
     j["validFrom"] = Json(e.validFrom);
     j["validUntil"] = Json(e.validUntil);
     j["createdAt"] = Json(e.createdAt);

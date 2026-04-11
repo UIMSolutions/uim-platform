@@ -66,7 +66,7 @@ class ResourceGroupController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) groups.length);
+      resp["count"] = Json(groups.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

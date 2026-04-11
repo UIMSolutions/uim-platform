@@ -77,7 +77,7 @@ class CustomDomainController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) domains.length);
+            resp["count"] = Json(domains.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

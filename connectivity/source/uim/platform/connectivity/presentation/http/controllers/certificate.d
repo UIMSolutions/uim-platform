@@ -78,7 +78,7 @@ class CertificateController :PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) certs.length);
+      resp["totalCount"] = Json(certs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

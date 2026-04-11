@@ -38,6 +38,6 @@ class MemoryResourceGroupRepository : ResourceGroupRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(rg => rg.tenantId == tenantId).array.length;
+    return store.values.filter!(rg => rg.tenantId == tenantId).array.length;
   }
 }

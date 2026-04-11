@@ -64,7 +64,7 @@ class WorkspaceController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) workspaces.length);
+      resp["count"] = Json(workspaces.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -138,7 +138,7 @@ class WorkspaceController : PlatformController {
     j["description"] = Json(w.description);
     j["tenantId"] = Json(w.tenantId);
     j["status"] = Json(w.status.to!string);
-    j["connectionCount"] = Json(cast(long) w.connectionCount);
+    j["connectionCount"] = Json(w.connectionCount);
     j["createdAt"] = Json(w.createdAt);
     j["modifiedAt"] = Json(w.modifiedAt);
     return j;

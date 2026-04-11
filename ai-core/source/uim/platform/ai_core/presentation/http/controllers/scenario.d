@@ -69,7 +69,7 @@ class ScenarioController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) scenarios.length);
+      resp["count"] = Json(scenarios.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

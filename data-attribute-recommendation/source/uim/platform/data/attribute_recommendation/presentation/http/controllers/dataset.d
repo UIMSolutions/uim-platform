@@ -73,7 +73,7 @@ class DatasetController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -196,7 +196,7 @@ class DatasetController : PlatformController {
     j["status"] = Json(d.status.to!string);
     j["dataType"] = Json(d.dataType.to!string);
     j["columnDefinitions"] = Json(d.columnDefinitions);
-    j["rowCount"] = Json(cast(long) d.rowCount);
+    j["rowCount"] = Json(d.rowCount);
     j["validationMessage"] = Json(d.validationMessage);
     j["createdBy"] = Json(d.createdBy);
     j["createdAt"] = Json(d.createdAt);

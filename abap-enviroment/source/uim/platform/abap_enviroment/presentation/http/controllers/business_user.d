@@ -54,13 +54,10 @@ class BusinessUserController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -74,10 +71,9 @@ class BusinessUserController : PlatformController {
         arr ~= serializeUser(u);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) users.length);
+      resp["totalCount"] = Json(cast(long)users.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -91,8 +87,7 @@ class BusinessUserController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeUser(*user), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,13 +108,10 @@ class BusinessUserController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -132,40 +124,36 @@ class BusinessUserController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeUser(const BusinessUser u) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(u.id);
-    j["tenantId"] = Json(u.tenantId);
-    j["systemInstanceId"] = Json(u.systemInstanceId);
-    j["username"] = Json(u.username);
-    j["firstName"] = Json(u.firstName);
-    j["lastName"] = Json(u.lastName);
-    j["email"] = Json(u.email);
-    j["status"] = Json(u.status.to!string);
-    j["passwordChangeRequired"] = Json(u.passwordChangeRequired);
-    j["lastLoginAt"] = Json(u.lastLoginAt);
-    j["createdAt"] = Json(u.createdAt);
-    j["updatedAt"] = Json(u.updatedAt);
+    auto j = Json.emptyObject
+      .set("id", u.id)
+      .set("tenantId", u.tenantId)
+      .set("systemInstanceId", u.systemInstanceId)
+      .set("username", u.username)
+      .set("firstName", u.firstName)
+      .set("lastName", u.lastName)
+      .set("email", u.email)
+      .set("status", u.status.to!string)
+      .set("passwordChangeRequired", u.passwordChangeRequired)
+      .set("lastLoginAt", u.lastLoginAt)
+      .set("createdAt", u.createdAt)
+      .set("updatedAt", u.updatedAt);
 
     if (u.roleAssignments.length > 0) {
       auto roles = Json.emptyArray;
       foreach (ra; u.roleAssignments) {
-        auto rj = Json.emptyObject;
-        rj["roleId"] = Json(ra.roleId);
-        rj["roleName"] = Json(ra.roleName);
-        rj["assignedAt"] = Json(ra.assignedAt);
-        roles ~= rj;
+        roles ~= Json.emptyObject
+        .set("roleId", ra.roleId)
+        .set("roleName", ra.roleName)
+        .set("assignedAt", ra.assignedAt);
       }
       j["roleAssignments"] = roles;
     }

@@ -42,7 +42,7 @@ class MonitorActivitiesUseCase : UIMUseCase {
     auto all = activityRepo.findRecent(tenantId, 1000);
 
     ActivitySummary summary;
-    summary.totalCount = cast(long) all.length;
+    summary.totalCount = all.length;
 
     foreach (a; all) {
       final switch (a.severity) {

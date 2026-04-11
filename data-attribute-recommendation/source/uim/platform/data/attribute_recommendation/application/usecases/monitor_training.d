@@ -108,7 +108,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     }
 
     auto inferences = inferenceRepo.findByTenant(tenantId);
-    s.totalInferenceRequests = cast(long) inferences.length;
+    s.totalInferenceRequests = inferences.length;
 
     return s;
   }
@@ -144,7 +144,7 @@ class MonitorTrainingUseCase : UIMUseCase {
       s.modelName = config.name;
 
     auto reqs = inferenceRepo.findByDeployment(dep.tenantId, id);
-    s.inferenceCount = cast(long) reqs.length;
+    s.inferenceCount = reqs.length;
 
     return s;
   }

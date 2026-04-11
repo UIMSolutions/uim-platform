@@ -20,7 +20,7 @@ struct KeyringManager {
 
   // Check if auto-rotation is due
   static bool isRotationDue(long lastRotatedAt, long currentTime, int rotationPeriodDays) {
-    auto periodMs = cast(long) rotationPeriodDays * 24 * 60 * 60 * 1000L;
+    auto periodMs = rotationPeriodDays * 24 * 60 * 60 * 1000L;
     return (currentTime - lastRotatedAt) >= periodMs;
   }
 

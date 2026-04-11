@@ -46,6 +46,6 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(b => b.tenantId == tenantId).array.length;
+    return store.values.filter!(b => b.tenantId == tenantId).array.length;
   }
 }

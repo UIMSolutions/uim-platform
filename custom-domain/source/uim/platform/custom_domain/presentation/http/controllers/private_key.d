@@ -64,14 +64,14 @@ class PrivateKeyController : PlatformController {
                 kj["subject"] = Json(k.subject);
                 kj["algorithm"] = Json(k.algorithm.to!string);
                 kj["status"] = Json(k.status.to!string);
-                kj["keySize"] = Json(cast(long) k.keySize);
+                kj["keySize"] = Json(k.keySize);
                 kj["createdBy"] = Json(k.createdBy);
                 kj["createdAt"] = Json(k.createdAt);
                 jarr ~= kj;
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) keys.length);
+            resp["count"] = Json(keys.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -95,7 +95,7 @@ class PrivateKeyController : PlatformController {
             resp["subject"] = Json(k.subject);
             resp["algorithm"] = Json(k.algorithm.to!string);
             resp["status"] = Json(k.status.to!string);
-            resp["keySize"] = Json(cast(long) k.keySize);
+            resp["keySize"] = Json(k.keySize);
             resp["publicKeyFingerprint"] = Json(k.publicKeyFingerprint);
             resp["createdBy"] = Json(k.createdBy);
             resp["createdAt"] = Json(k.createdAt);

@@ -69,7 +69,7 @@ class ExecutionController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) executions.length);
+      resp["count"] = Json(executions.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

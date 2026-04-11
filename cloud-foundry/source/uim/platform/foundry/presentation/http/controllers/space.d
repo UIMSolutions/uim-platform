@@ -67,7 +67,7 @@ class SpaceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) spaces.length);
+      resp["totalCount"] = Json(spaces.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
