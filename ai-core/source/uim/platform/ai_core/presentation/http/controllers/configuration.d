@@ -75,20 +75,18 @@ class ConfigurationController : PlatformController {
         // Parameter bindings
         auto pbArr = Json.emptyArray;
         foreach (pv; c.parameterValues) {
-          auto pvj = Json.emptyObject;
-          pvj["key"] = Json(pv.key);
-          pvj["value"] = Json(pv.value);
-          pbArr ~= pvj;
+          pbArr ~= Json.emptyObject
+          .set("key", pv.key)
+          .set("value", pv.value);
         }
         cj["parameterBindings"] = pbArr;
 
         // Input artifact bindings
         auto iaArr = Json.emptyArray;
         foreach (ia; c.inputArtifacts) {
-          auto iaj = Json.emptyObject;
-          iaj["key"] = Json(ia.key);
-          iaj["artifactId"] = Json(ia.artifactId);
-          iaArr ~= iaj;
+          iaArr ~= Json.emptyObject
+          .set("key", ia.key)
+          .set("artifactId", ia.artifactId);
         }
         cj["inputArtifactBindings"] = iaArr;
 

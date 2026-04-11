@@ -164,9 +164,3 @@ private Json serializeEntitlement(Entitlement e) {
     .set("modifiedAt", e.modifiedAt)
     .set("assignedBy", e.assignedBy);
 }
-
-private string to!string(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}

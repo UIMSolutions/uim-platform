@@ -155,8 +155,4 @@ private Json serializeEnvironment(EnvironmentInstance inst) {
     .set("labels", inst.labels);
 }
 
-private string to!string(E)(E val) {
-  // import std.conv : to;
 
-  return val.to!string;
-}

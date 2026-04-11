@@ -153,19 +153,18 @@ class CommunicationArrangementController : PlatformController {
   }
 
   private static Json serializeArrangement(const CommunicationArrangement a) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(a.id);
-    j["tenantId"] = Json(a.tenantId);
-    j["systemInstanceId"] = Json(a.systemInstanceId);
-    j["scenarioId"] = Json(a.scenarioId);
-    j["name"] = Json(a.name);
-    j["description"] = Json(a.description);
-    j["direction"] = Json(a.direction.to!string);
-    j["status"] = Json(a.status.to!string);
-    j["authMethod"] = Json(a.authMethod.to!string);
-    j["communicationUser"] = Json(a.communicationUser);
-    j["createdAt"] = Json(a.createdAt);
-    j["updatedAt"] = Json(a.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", a.id)
+    .set("tenantId", a.tenantId)
+    .set("systemInstanceId", a.systemInstanceId)
+    .set("scenarioId", a.scenarioId)
+    .set("name", a.name)
+    .set("description", a.description)
+    .set("direction", a.direction.to!string)
+    .set("status", a.status.to!string)
+    .set("authMethod", a.authMethod.to!string)
+    .set("communicationUser", a.communicationUser)
+    .set("createdAt", a.createdAt)
+    .set("updatedAt", a.updatedAt);
   }
 }

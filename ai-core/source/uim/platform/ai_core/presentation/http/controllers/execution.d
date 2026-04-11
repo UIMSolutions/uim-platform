@@ -135,17 +135,16 @@ class ExecutionController : PlatformController {
   private Json executionToJson(Execution ex) {
     import std.conv : to;
 
-    auto ej = Json.emptyObject;
-    ej["id"] = Json(ex.id);
-    ej["configurationId"] = Json(ex.configurationId);
-    ej["scenarioId"] = Json(ex.scenarioId);
-    ej["executableId"] = Json(ex.executableId);
-    ej["status"] = Json(ex.status.to!string);
-    ej["statusMessage"] = Json(ex.statusMessage);
-    ej["createdAt"] = Json(ex.createdAt);
-    ej["modifiedAt"] = Json(ex.modifiedAt);
-    ej["startedAt"] = Json(ex.startedAt);
-    ej["completedAt"] = Json(ex.completedAt);
-    return ej;
+    return Json.emptyObject
+    .set("id", ex.id)
+    .set("configurationId", ex.configurationId)
+    .set("scenarioId", ex.scenarioId)
+    .set("executableId", ex.executableId)
+    .set("status", ex.status.to!string)
+    .set("statusMessage", ex.statusMessage)
+    .set("createdAt", ex.createdAt)
+    .set("modifiedAt", ex.modifiedAt)
+    .set("startedAt", ex.startedAt)
+    .set("completedAt", ex.completedAt);
   }
 }

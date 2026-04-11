@@ -128,21 +128,14 @@ class LabelController : PlatformController {
   }
 }
 
-private Json serializeLabel(Label l) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(l.id);
-  j["resourceType"] = Json(to!string(l.resourceType));
-  j["resourceId"] = Json(l.resourceId);
-  j["key"] = Json(l.key);
-  j["values"] = serializeStrArray(l.values);
-  j["createdBy"] = Json(l.createdBy);
-  j["createdAt"] = Json(l.createdAt);
-  j["modifiedAt"] = Json(l.modifiedAt);
-  return j;
-}
-
-private string to!string(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
+private Json serializeLabel(Label label) {
+  return Json.emptyObject
+  .set("id", label.id)
+  .set("resourceType", to!string(label.resourceType))
+  .set("resourceId", label.resourceId)
+  .set("key", label.key)
+  .set("values", label.values)
+  .set("createdBy", label.createdBy)
+  .set("createdAt", label.createdAt)
+  .set("modifiedAt", label.modifiedAt);
 }

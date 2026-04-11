@@ -67,17 +67,16 @@ class ExecutableController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (e; executables) {
-        auto ej = Json.emptyObject;
-        ej["id"] = Json(e.id);
-        ej["scenarioId"] = Json(e.scenarioId);
-        ej["name"] = Json(e.name);
-        ej["description"] = Json(e.description);
-        ej["type"] = Json(e.type == ExecutableType.serving ? "serving" : "workflow");
-        ej["versionId"] = Json(e.versionId);
-        ej["deployable"] = Json(e.deployable);
-        ej["createdAt"] = Json(e.createdAt);
-        ej["modifiedAt"] = Json(e.modifiedAt);
-        jarr ~= ej;
+        jarr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("scenarioId", e.scenarioId)
+        .set("name", e.name)
+        .set("description", e.description)
+        .set("type", e.type == ExecutableType.serving ? "serving" : "workflow")
+        .set("versionId", e.versionId)
+        .set("deployable", e.deployable)
+        .set("createdAt", e.createdAt)
+        .set("modifiedAt", e.modifiedAt);
       }
 
       auto resp = Json.emptyObject;

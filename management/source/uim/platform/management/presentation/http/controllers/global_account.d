@@ -177,9 +177,3 @@ private Json serializeGlobalAccount(GlobalAccount ga) {
     .set("createdBy", ga.createdBy)
     .set("customProperties", customProperties);
 }
-
-private string to!string(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}

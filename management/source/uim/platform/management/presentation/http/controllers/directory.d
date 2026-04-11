@@ -144,9 +144,3 @@ private Json serializeDirectory(Directory d) {
     .set("subaccounts", d.subaccounts)
     .set("subdirectories", d.subdirectories);
 }
-
-private string to!string(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}

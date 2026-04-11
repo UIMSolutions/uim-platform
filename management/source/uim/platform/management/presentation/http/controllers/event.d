@@ -92,8 +92,3 @@ private Json serializeEvent(PlatformEvent ev) {
     .set("details", ev.details);
 }
 
-private string to!string(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}
