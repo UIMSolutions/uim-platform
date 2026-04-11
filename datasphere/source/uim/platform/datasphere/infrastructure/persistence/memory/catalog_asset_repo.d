@@ -18,7 +18,7 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
 
   CatalogAsset findById(CatalogAssetId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref ca; *sp) {
+      foreach (ca; *sp) {
         if (ca.id == id)
           return ca;
       }
@@ -56,7 +56,7 @@ class MemoryCatalogAssetRepository : CatalogAssetRepository {
 
   void update(CatalogAsset ca) {
     if (auto sp = ca.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == ca.id) {
           existing = ca;
           return;

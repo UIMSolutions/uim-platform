@@ -32,13 +32,13 @@ class QualityScorer {
     int totalViolations = 0;
     int[4] severityCounts; // info, warning, error, critical
 
-    foreach (ref r; results) {
+    foreach (r; results) {
       if (r.violations.length == 0)
         ++valid;
       else
         ++invalid;
 
-      foreach (ref v; r.violations) {
+      foreach (v; r.violations) {
         ++totalViolations;
         final switch (v.severity)
         {
@@ -102,7 +102,7 @@ class QualityScorer {
     if (columns.length == 0)
       return 100.0;
     double total = 0.0;
-    foreach (ref c; columns)
+    foreach (c; columns)
       total += c.completeness;
     return total / columns.length;
   }
@@ -111,7 +111,7 @@ class QualityScorer {
     if (columns.length == 0)
       return 100.0;
     double total = 0.0;
-    foreach (ref c; columns)
+    foreach (c; columns)
       total += c.uniqueness;
     return total / columns.length;
   }

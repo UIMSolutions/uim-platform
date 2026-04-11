@@ -18,14 +18,14 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
 
   BusinessContext[] findByTenant(TenantId tenantId) {
     BusinessContext[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   BusinessContext* findById(BusinessContextId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
 
   BusinessContext[] findByStatus(TenantId tenantId, BusinessContextStatus status) {
     BusinessContext[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
 
   BusinessContext[] findByControllerGroup(TenantId tenantId, DataControllerGroupId groupId) {
     BusinessContext[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.controllerGroupId == groupId)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
   }
 
   void update(BusinessContext entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -61,7 +61,7 @@ class MemoryBusinessContextRepository : BusinessContextRepository {
 
   void remove(BusinessContextId tenantId, id tenantId) {
     BusinessContext[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

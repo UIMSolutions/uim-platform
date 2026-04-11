@@ -57,7 +57,7 @@ class TaskChainController : PlatformController {
       auto chains = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref tc; chains) {
+      foreach (tc; chains) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(tc.id);
         cj["name"] = Json(tc.name);

@@ -59,7 +59,7 @@ class RemoteTableController : PlatformController {
       auto tables = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref rt; tables) {
+      foreach (rt; tables) {
         auto rj = Json.emptyObject;
         rj["id"] = Json(rt.id);
         rj["name"] = Json(rt.name);

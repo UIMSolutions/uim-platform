@@ -62,7 +62,7 @@ class CatalogAssetController : PlatformController {
       auto assets = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ca; assets) {
+      foreach (ca; assets) {
         auto aj = Json.emptyObject;
         aj["id"] = Json(ca.id);
         aj["name"] = Json(ca.name);
@@ -92,7 +92,7 @@ class CatalogAssetController : PlatformController {
       auto assets = uc.search(query, spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ca; assets) {
+      foreach (ca; assets) {
         auto aj = Json.emptyObject;
         aj["id"] = Json(ca.id);
         aj["name"] = Json(ca.name);

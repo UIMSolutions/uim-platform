@@ -59,7 +59,7 @@ class AnonymizationConfigController : PlatformController {
       auto items = uc.listConfigs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -132,7 +132,7 @@ class AnonymizationConfigController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const AnonymizationConfig e) {
+  private static Json serialize(const AnonymizationConfig e) {
     auto j = Json.emptyObject
       .set("id", Json(e.id))
       .set("tenantId", Json(e.tenantId))
@@ -144,7 +144,7 @@ class AnonymizationConfigController : PlatformController {
       .set("updatedAt", Json(e.updatedAt));
 
     auto systems = Json.emptyArray;
-    foreach (ref s; e.targetSystems)
+    foreach (s; e.targetSystems)
       systems ~= Json(s);
     j["targetSystems"] = systems;
 

@@ -29,7 +29,7 @@ class MemoryDataProfileRepository : DataProfileRepository {
   DataProfile* findLatestByDataset(TenantId tenantId, DatasetId datasetId) {
     DataProfile* latest;
     long latestTime = 0;
-    foreach (ref p; store.byValue()) {
+    foreach (p; store.byValue()) {
       if (p.tenantId == tenantId && p.datasetId == datasetId && p.profiledAt > latestTime) {
         latest = &p;
         latestTime = p.profiledAt;

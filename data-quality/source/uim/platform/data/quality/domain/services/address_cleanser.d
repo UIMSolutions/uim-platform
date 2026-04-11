@@ -95,7 +95,7 @@ class AddressCleanser {
     return record;
   }
 
-  private AddressQuality assessQuality(ref const AddressRecord r) {
+  private AddressQuality assessQuality(const AddressRecord r) {
     // Simple quality heuristic
     if (r.line1.length > 0 && r.city.length > 0 && r.postalCode.length > 0 && r.country.length > 0)
       return AddressQuality.corrected;

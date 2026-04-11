@@ -17,7 +17,7 @@ class MemoryViewRepository : ViewRepository {
 
   View findById(ViewId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref v; *sp) {
+      foreach (v; *sp) {
         if (v.id == id)
           return v;
       }
@@ -49,7 +49,7 @@ class MemoryViewRepository : ViewRepository {
 
   void update(View v) {
     if (auto sp = v.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == v.id) {
           existing = v;
           return;

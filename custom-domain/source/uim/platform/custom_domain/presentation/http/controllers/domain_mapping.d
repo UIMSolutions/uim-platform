@@ -62,7 +62,7 @@ class DomainMappingController : PlatformController {
             auto mappings = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref m; mappings) {
+            foreach (m; mappings) {
                 auto mj = Json.emptyObject;
                 mj["id"] = Json(m.id);
                 mj["customDomainId"] = Json(m.customDomainId);

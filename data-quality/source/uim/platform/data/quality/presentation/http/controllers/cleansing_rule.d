@@ -79,7 +79,7 @@ class CleansingRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref r; rules)
+      foreach (r; rules)
         arr ~= serializeRule(r);
 
       auto resp = Json.emptyObject;
@@ -162,7 +162,7 @@ class CleansingRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(ref const CleansingRule r) {
+  private static Json serializeRule(const CleansingRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

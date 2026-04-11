@@ -57,7 +57,7 @@ class TrustedCertificateController : PlatformController {
             auto certs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref c; certs) {
+            foreach (c; certs) {
                 auto cj = Json.emptyObject;
                 cj["id"] = Json(c.id);
                 cj["customDomainId"] = Json(c.customDomainId);

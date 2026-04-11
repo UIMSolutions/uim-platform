@@ -36,7 +36,7 @@ class MemoryValidationResultRepository : ValidationResultRepository {
 
   void removeByDataset(TenantId tenantId, DatasetId datasetId) {
     RecordId[] toRemove;
-    foreach (ref r; store.byValue())
+    foreach (r; store.byValue())
       if (r.tenantId == tenantId && r.datasetId == datasetId)
         toRemove ~= r.recordId;
     foreach (id; toRemove)

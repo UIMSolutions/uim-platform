@@ -69,7 +69,7 @@ class BindingController : PlatformController {
       auto bindings = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref b; bindings) {
+      foreach (b; bindings) {
         auto bj = Json.emptyObject;
         bj["id"] = Json(b.id);
         bj["name"] = Json(b.name);

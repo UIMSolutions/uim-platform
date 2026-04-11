@@ -18,14 +18,14 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findByTenant(TenantId tenantId) {
     PersonalDataModel[] result;
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.tenantId == tenantId)
         result ~= m;
     return result;
   }
 
   PersonalDataModel* findById(PersonalDataModelId tenantId, id tenantId) {
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.id == id && m.tenantId == tenantId)
         return &m;
     return null;
@@ -33,7 +33,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findByCategory(TenantId tenantId, PersonalDataCategory category) {
     PersonalDataModel[] result;
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.tenantId == tenantId && m.category == category)
         result ~= m;
     return result;
@@ -41,7 +41,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     PersonalDataModel[] result;
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.tenantId == tenantId && m.sourceSystem == sourceSystem)
         result ~= m;
     return result;
@@ -49,7 +49,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findBySubjectType(TenantId tenantId, DataSubjectType subjectType) {
     PersonalDataModel[] result;
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.tenantId == tenantId && m.subjectType == subjectType)
         result ~= m;
     return result;
@@ -57,7 +57,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   PersonalDataModel[] findSpecialCategories(TenantId tenantId) {
     PersonalDataModel[] result;
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.tenantId == tenantId && m.isSpecialCategory)
         result ~= m;
     return result;
@@ -68,7 +68,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
   }
 
   void update(PersonalDataModel model) {
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.id == model.id && m.tenantId == model.tenantId) {
         m = model;
         return;
@@ -77,7 +77,7 @@ class MemoryPersonalDataModelRepository : PersonalDataModelRepository {
 
   void remove(PersonalDataModelId tenantId, id tenantId) {
     PersonalDataModel[] kept;
-    foreach (ref m; store)
+    foreach (m; store)
       if (!(m.id == id && m.tenantId == tenantId))
         kept ~= m;
     store = kept;

@@ -63,7 +63,7 @@ class DataControllerController : PlatformController {
       auto items = uc.listControllers(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -125,7 +125,7 @@ class DataControllerController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DataController e) {
+  private static Json serialize(const DataController e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

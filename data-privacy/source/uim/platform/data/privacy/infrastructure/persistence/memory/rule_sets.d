@@ -18,14 +18,14 @@ class MemoryRuleSetRepository : RuleSetRepository {
 
   RuleSet[] findByTenant(TenantId tenantId) {
     RuleSet[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   RuleSet* findById(RuleSetId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
 
   RuleSet[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     RuleSet[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.businessContextId == contextId)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
 
   RuleSet[] findByStatus(TenantId tenantId, RuleSetStatus status) {
     RuleSet[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
   }
 
   void update(RuleSet entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -61,7 +61,7 @@ class MemoryRuleSetRepository : RuleSetRepository {
 
   void remove(RuleSetId tenantId, id tenantId) {
     RuleSet[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

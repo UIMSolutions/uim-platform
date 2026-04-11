@@ -18,21 +18,21 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   DataSubject[] findByTenant(TenantId tenantId) {
     DataSubject[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   DataSubject* findById(DataSubjectId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
   }
 
   DataSubject* findByExternalId(string externaltenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.externalId == externalId && s.tenantId == tenantId)
         return &s;
     return null;
@@ -40,7 +40,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   DataSubject[] findByType(TenantId tenantId, DataSubjectType subjectType) {
     DataSubject[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.subjectType == subjectType)
         result ~= s;
     return result;
@@ -48,7 +48,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   DataSubject[] findBySourceSystem(TenantId tenantId, string sourceSystem) {
     DataSubject[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.sourceSystem == sourceSystem)
         result ~= s;
     return result;
@@ -59,7 +59,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
   }
 
   void update(DataSubject subject) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == subject.id && s.tenantId == subject.tenantId) {
         s = subject;
         return;
@@ -68,7 +68,7 @@ class MemoryDataSubjectRepository : DataSubjectRepository {
 
   void remove(DataSubjectId tenantId, id tenantId) {
     DataSubject[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

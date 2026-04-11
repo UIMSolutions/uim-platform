@@ -68,7 +68,7 @@ class DatasetController : PlatformController {
       auto items = uc.listDatasets(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
+      foreach (d; items)
         arr ~= serializeDataset(d);
 
       auto resp = Json.emptyObject;
@@ -187,7 +187,7 @@ class DatasetController : PlatformController {
     }
   }
 
-  private static Json serializeDataset(ref const Dataset d) {
+  private static Json serializeDataset(const Dataset d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

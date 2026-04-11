@@ -63,7 +63,7 @@ class PurposeRecordController : PlatformController {
       auto items = uc.listRecords(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -115,7 +115,7 @@ class PurposeRecordController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const PurposeRecord e) {
+  private static Json serialize(const PurposeRecord e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

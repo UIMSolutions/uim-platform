@@ -40,7 +40,7 @@ class MonitoringController : PlatformController {
       auto jobs = uc.listTrainingJobs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref j; jobs)
+      foreach (j; jobs)
         arr ~= serializeJobSummary(j);
 
       auto resp = Json.emptyObject;
@@ -75,7 +75,7 @@ class MonitoringController : PlatformController {
       auto deps = uc.listDeploymentSummaries(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; deps)
+      foreach (d; deps)
         arr ~= serializeDeploymentSummary(d);
 
       auto resp = Json.emptyObject;
@@ -108,7 +108,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private static Json serializeJobSummary(ref const TrainingJobSummary s) {
+  private static Json serializeJobSummary(const TrainingJobSummary s) {
     auto j = Json.emptyObject;
     j["jobId"] = Json(s.jobId);
     j["modelConfigId"] = Json(s.modelConfigId);
@@ -122,7 +122,7 @@ class MonitoringController : PlatformController {
     return j;
   }
 
-  private static Json serializeDeploymentSummary(ref const DeploymentSummary s) {
+  private static Json serializeDeploymentSummary(const DeploymentSummary s) {
     auto j = Json.emptyObject;
     j["deploymentId"] = Json(s.deploymentId);
     j["deploymentName"] = Json(s.deploymentName);

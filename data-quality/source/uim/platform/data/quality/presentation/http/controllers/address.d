@@ -83,7 +83,7 @@ class AddressController : PlatformController {
 
       auto results = uc.cleanseBatch(batchReq);
       auto arr = Json.emptyArray;
-      foreach (ref r; results)
+      foreach (r; results)
         arr ~= serializeAddress(r);
 
       auto resp = Json.emptyObject;
@@ -101,7 +101,7 @@ class AddressController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto records = uc.getByTenant(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref r; records)
+      foreach (r; records)
         arr ~= serializeAddress(r);
 
       auto resp = Json.emptyObject;
@@ -114,7 +114,7 @@ class AddressController : PlatformController {
     }
   }
 
-  private static Json serializeAddress(ref const AddressRecord r) {
+  private static Json serializeAddress(const AddressRecord r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

@@ -62,7 +62,7 @@ class BusinessContextController : PlatformController {
       auto items = uc.listContexts(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -138,7 +138,7 @@ class BusinessContextController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const BusinessContext e) {
+  private static Json serialize(const BusinessContext e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -153,11 +153,11 @@ class BusinessContextController : PlatformController {
     j["activatedAt"] = Json(e.activatedAt);
 
     auto cats = Json.emptyArray;
-    foreach (ref c; e.dataCategories) cats ~= Json(c);
+    foreach (c; e.dataCategories) cats ~= Json(c);
     j["dataCategories"] = cats;
 
     auto purps = Json.emptyArray;
-    foreach (ref p; e.purposes) purps ~= Json(p);
+    foreach (p; e.purposes) purps ~= Json(p);
     j["purposes"] = purps;
 
     return j;

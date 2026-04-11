@@ -76,7 +76,7 @@ class ConsentController : PlatformController {
         items = uc.listConsents(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -99,7 +99,7 @@ class ConsentController : PlatformController {
         items = uc.listConsents(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -152,7 +152,7 @@ class ConsentController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const ConsentRecord e) {
+  private static Json serialize(const ConsentRecord e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -169,7 +169,7 @@ class ConsentController : PlatformController {
     j["createdAt"] = Json(e.createdAt);
 
     auto cats = Json.emptyArray;
-    foreach (ref c; e.categories)
+    foreach (c; e.categories)
       cats ~= Json(c.to!string);
     j["categories"] = cats;
 

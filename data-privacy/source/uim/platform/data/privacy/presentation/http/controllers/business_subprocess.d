@@ -60,7 +60,7 @@ class BusinessSubprocessController : PlatformController {
       auto items = uc.listSubprocesses(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -118,7 +118,7 @@ class BusinessSubprocessController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const BusinessSubprocess e) {
+  private static Json serialize(const BusinessSubprocess e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -131,11 +131,11 @@ class BusinessSubprocessController : PlatformController {
     j["updatedAt"] = Json(e.updatedAt);
 
     auto purps = Json.emptyArray;
-    foreach (ref p; e.purposes) purps ~= Json(p);
+    foreach (p; e.purposes) purps ~= Json(p);
     j["purposes"] = purps;
 
     auto cats = Json.emptyArray;
-    foreach (ref c; e.dataCategories) cats ~= Json(c);
+    foreach (c; e.dataCategories) cats ~= Json(c);
     j["dataCategories"] = cats;
 
     return j;

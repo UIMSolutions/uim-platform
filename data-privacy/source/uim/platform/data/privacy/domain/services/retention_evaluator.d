@@ -55,7 +55,7 @@ class RetentionEvaluator {
       // Use the longest applicable retention rule
       int maxDays = 0;
       string ruleName;
-      foreach (ref r; rules) {
+      foreach (r; rules) {
         if (r.status == RetentionRuleStatus.active && r.retentionDays > maxDays)
         {
           maxDays = r.retentionDays;

@@ -59,7 +59,7 @@ class DataAccessControlController : PlatformController {
       auto controls = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref dac; controls) {
+      foreach (dac; controls) {
         auto dj = Json.emptyObject;
         dj["id"] = Json(dac.id);
         dj["name"] = Json(dac.name);

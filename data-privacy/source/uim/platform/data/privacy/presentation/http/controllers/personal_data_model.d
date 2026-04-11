@@ -77,7 +77,7 @@ class PersonalDataModelController : PlatformController {
         items = uc.listModels(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -95,7 +95,7 @@ class PersonalDataModelController : PlatformController {
       auto items = uc.listSpecialCategories(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -161,7 +161,7 @@ class PersonalDataModelController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const PersonalDataModel e) {
+  private static Json serialize(const PersonalDataModel e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

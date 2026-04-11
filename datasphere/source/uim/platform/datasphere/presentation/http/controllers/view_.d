@@ -60,7 +60,7 @@ class ViewController : PlatformController {
       auto views = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref v; views) {
+      foreach (v; views) {
         auto vj = Json.emptyObject;
         vj["id"] = Json(v.id);
         vj["name"] = Json(v.name);

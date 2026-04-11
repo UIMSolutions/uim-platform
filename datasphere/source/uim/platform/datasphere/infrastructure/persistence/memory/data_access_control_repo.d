@@ -17,7 +17,7 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
 
   DataAccessControl findById(DataAccessControlId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref dac; *sp) {
+      foreach (dac; *sp) {
         if (dac.id == id)
           return dac;
       }
@@ -43,7 +43,7 @@ class MemoryDataAccessControlRepository : DataAccessControlRepository {
 
   void update(DataAccessControl dac) {
     if (auto sp = dac.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == dac.id) {
           existing = dac;
           return;

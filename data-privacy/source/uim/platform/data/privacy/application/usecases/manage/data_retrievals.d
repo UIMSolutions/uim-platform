@@ -61,7 +61,7 @@ class ManageDataRetrievalsUseCase : UIMUseCase {
     // Simulate retrieval: count matching personal data fields
     auto models = modelRepo.findByTenant(req.tenantId);
     long fieldCount = 0;
-    foreach (ref m; models) {
+    foreach (m; models) {
       if (req.targetSystems.length > 0) {
         bool systemMatch = false;
         foreach (s; req.targetSystems)

@@ -28,7 +28,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
 
   void removeByDataset(DatasetId datasettenantId, id tenantId) {
     string[] toRemove;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         toRemove ~= e.id;
     foreach (id; toRemove)
@@ -44,7 +44,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
 
   DataRecord[] findByDataset(DatasetId datasettenantId, id tenantId) {
     DataRecord[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -52,7 +52,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
 
   DataRecord[] findByStatus(DatasetId datasettenantId, id tenantId, RecordStatus status) {
     DataRecord[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
@@ -60,7 +60,7 @@ class MemoryDataRecordRepository : DataRecordRepository {
 
   size_t countByDataset(DatasetId datasettenantId, id tenantId) {
     size_t count;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.datasetId == datasetId && e.tenantId == tenantId)
         count++;
     return count;

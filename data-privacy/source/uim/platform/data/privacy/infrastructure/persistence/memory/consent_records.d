@@ -39,7 +39,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
       return null;
 
     ConsentRecord[] result;
-    foreach (ref c; store[tenantId].byValue)
+    foreach (c; store[tenantId].byValue)
       if (c.dataSubjectId == dataSubjectId)
         result ~= c;
     return result;
@@ -50,7 +50,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
       return null;
 
     ConsentRecord[] result;
-    foreach (ref c; store[tenantId].byValue)
+    foreach (c; store[tenantId].byValue)
       if (c.purpose == purpose)
         result ~= c;
     return result;
@@ -61,7 +61,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
       return null;
 
     ConsentRecord[] result;
-    foreach (ref c; store[tenantId].byValue)
+    foreach (c; store[tenantId].byValue)
       if (c.status == status)
         result ~= c;
     return result;
@@ -72,7 +72,7 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
       return null;
 
     ConsentRecord[] result;
-    foreach (ref c; store[tenantId].byValue)
+    foreach (c; store[tenantId].byValue)
       if (c.dataSubjectId == dataSubjectId && c.status == ConsentStatus.granted)
         result ~= c;
     return result;

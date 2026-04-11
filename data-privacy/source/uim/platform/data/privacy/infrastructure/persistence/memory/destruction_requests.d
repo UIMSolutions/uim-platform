@@ -18,14 +18,14 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
 
   DestructionRequest[] findByTenant(TenantId tenantId) {
     DestructionRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   DestructionRequest* findById(DestructionRequestId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
 
   DestructionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     DestructionRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
 
   DestructionRequest[] findByStatus(TenantId tenantId, DestructionStatus status) {
     DestructionRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
   }
 
   void update(DestructionRequest entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -61,7 +61,7 @@ class MemoryDestructionRequestRepository : DestructionRequestRepository {
 
   void remove(DestructionRequestId tenantId, id tenantId) {
     DestructionRequest[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

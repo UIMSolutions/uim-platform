@@ -18,14 +18,14 @@ class MemoryDataControllerRepository : DataControllerRepository {
 
   DataController[] findByTenant(TenantId tenantId) {
     DataController[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   DataController* findById(DataControllerId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryDataControllerRepository : DataControllerRepository {
 
   DataController[] findByCountry(TenantId tenantId, string country) {
     DataController[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.country == country)
         result ~= s;
     return result;
@@ -44,7 +44,7 @@ class MemoryDataControllerRepository : DataControllerRepository {
   }
 
   void update(DataController entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -53,7 +53,7 @@ class MemoryDataControllerRepository : DataControllerRepository {
 
   void remove(DataControllerId tenantId, id tenantId) {
     DataController[] kept;
-    foreach (ref s; findByTenant(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (!(s.id == id))
         kept ~= s;
     store = kept;

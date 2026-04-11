@@ -23,7 +23,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
       return null;
 
     ArchiveRequest[] result;
-    foreach (ref s; store[tenantId].byValue)
+    foreach (s; store[tenantId].byValue)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
@@ -33,7 +33,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
     if (!existsByTenant(tenantId))
       return null;
 
-    foreach (ref s; store[tenantId].byValue)
+    foreach (s; store[tenantId].byValue)
       if (s.id == id)
         return &s;
     return null;
@@ -41,7 +41,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
 
   ArchiveRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     ArchiveRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
         result ~= s;
     return result;
@@ -49,7 +49,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
 
   ArchiveRequest[] findByStatus(TenantId tenantId, ArchiveStatus status) {
     ArchiveRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -60,7 +60,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
   }
 
   void update(ArchiveRequest entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -69,7 +69,7 @@ class MemoryArchiveRequestRepository : ArchiveRequestRepository {
 
   void remove(ArchiveRequestId tenantId, id tenantId) {
     ArchiveRequest[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

@@ -61,7 +61,7 @@ class CustomDomainController : PlatformController {
             auto domains = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref d; domains) {
+            foreach (d; domains) {
                 auto dj = Json.emptyObject;
                 dj["id"] = Json(d.id);
                 dj["domainName"] = Json(d.domainName);

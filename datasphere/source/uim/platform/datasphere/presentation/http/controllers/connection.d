@@ -61,7 +61,7 @@ class ConnectionController : PlatformController {
       auto connections = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; connections) {
+      foreach (c; connections) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(c.id);
         cj["name"] = Json(c.name);

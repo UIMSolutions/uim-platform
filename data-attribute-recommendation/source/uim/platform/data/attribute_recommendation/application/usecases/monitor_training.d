@@ -64,7 +64,7 @@ class MonitorTrainingUseCase : UIMUseCase {
   TrainingJobSummary[] listTrainingJobs(TenantId tenantId) {
     auto jobs = jobRepo.findByTenant(tenantId);
     TrainingJobSummary[] result;
-    foreach (ref job; jobs)
+    foreach (job; jobs)
       result ~= buildJobSummary(job, tenantId);
     return result;
   }
@@ -79,7 +79,7 @@ class MonitorTrainingUseCase : UIMUseCase {
   DeploymentSummary[] listDeploymentSummaries(TenantId tenantId) {
     auto deps = deploymentRepo.findByTenant(tenantId);
     DeploymentSummary[] result;
-    foreach (ref dep; deps)
+    foreach (dep; deps)
       result ~= buildDeploymentSummary(dep, tenantId);
     return result;
   }
@@ -89,18 +89,18 @@ class MonitorTrainingUseCase : UIMUseCase {
 
     auto configs = configRepo.findByTenant(tenantId);
     s.totalModels = cast(int) configs.length;
-    foreach (ref c; configs)
+    foreach (c; configs)
       if (c.status == ModelConfigStatus.trained)
         s.trainedModels++;
 
     auto deps = deploymentRepo.findByTenant(tenantId);
-    foreach (ref d; deps)
+    foreach (d; deps)
       if (d.status == DeploymentStatus.active)
         s.activeDeployments++;
 
     auto jobs = jobRepo.findByTenant(tenantId);
     s.totalTrainingJobs = cast(int) jobs.length;
-    foreach (ref j; jobs) {
+    foreach (j; jobs) {
       if (j.status == JobStatus.completed)
         s.completedJobs++;
       else if (j.status == JobStatus.failed)
@@ -113,7 +113,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     return s;
   }
 
-  private TrainingJobSummary buildJobSummary(ref TrainingJob job, TenantId tenantId) {
+  private TrainingJobSummary buildJobSummary(TrainingJob job, TenantId tenantId) {
     TrainingJobSummary s;
     s.jobId = job.id;
     s.modelConfigId = job.modelConfigId;
@@ -131,7 +131,7 @@ class MonitorTrainingUseCase : UIMUseCase {
     return s;
   }
 
-  private DeploymentSummary buildDeploymentSummary(ref ModelDeployment dep, TenantId tenantId) {
+  private DeploymentSummary buildDeploymentSummary(ModelDeployment dep, TenantId tenantId) {
     DeploymentSummary s;
     s.deploymentId = dep.id;
     s.deploymentName = dep.name;

@@ -15,7 +15,7 @@ class MemoryCustomDomainRepository : CustomDomainRepository {
     private CustomDomain[] store;
 
     CustomDomain findById(CustomDomainId id) {
-        foreach (ref d; store) {
+        foreach (d; store) {
             if (d.id == id)
                 return d;
         }
@@ -23,7 +23,7 @@ class MemoryCustomDomainRepository : CustomDomainRepository {
     }
 
     CustomDomain findByDomainName(TenantId tenantId, string domainName) {
-        foreach (ref d; store) {
+        foreach (d; store) {
             if (d.tenantId == tenantId && d.domainName == domainName)
                 return d;
         }
@@ -43,7 +43,7 @@ class MemoryCustomDomainRepository : CustomDomainRepository {
     }
 
     void update(CustomDomain d) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == d.id) {
                 existing = d;
                 return;

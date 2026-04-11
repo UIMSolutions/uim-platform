@@ -18,14 +18,14 @@ class MemoryInformationReportRepository : InformationReportRepository {
 
   InformationReport[] findByTenant(TenantId tenantId) {
     InformationReport[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   InformationReport* findById(InformationReportId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
 
   InformationReport[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     InformationReport[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
 
   InformationReport[] findByStatus(TenantId tenantId, InformationReportStatus status) {
     InformationReport[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
   }
 
   void update(InformationReport entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -61,7 +61,7 @@ class MemoryInformationReportRepository : InformationReportRepository {
 
   void remove(InformationReportId tenantId, id tenantId) {
     InformationReport[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

@@ -22,7 +22,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
   }
 
   ServiceBinding findByClientId(string clientId) {
-    foreach (ref b; store) {
+    foreach (b; store) {
       if (b.clientId == clientId)
         return b;
     }

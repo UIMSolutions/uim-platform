@@ -15,7 +15,7 @@ class MemoryPrivateKeyRepository : PrivateKeyRepository {
     private PrivateKey[] store;
 
     PrivateKey findById(PrivateKeyId id) {
-        foreach (ref k; store) {
+        foreach (k; store) {
             if (k.id == id)
                 return k;
         }
@@ -31,7 +31,7 @@ class MemoryPrivateKeyRepository : PrivateKeyRepository {
     }
 
     void update(PrivateKey k) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == k.id) {
                 existing = k;
                 return;

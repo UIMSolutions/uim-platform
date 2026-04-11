@@ -31,7 +31,7 @@ class ProfileDataUseCase : UIMUseCase {
 
     // Discover all field names
     string[string] fieldIndex;
-    foreach (ref rec; req.records)
+    foreach (rec; req.records)
       foreach (key; rec.fieldValues.byKey())
         fieldIndex[key] = key;
 
@@ -52,7 +52,7 @@ class ProfileDataUseCase : UIMUseCase {
     // Overall quality from column completeness and uniqueness
     if (columns.length > 0) {
       double totalComp = 0.0;
-      foreach (ref c; columns)
+      foreach (c; columns)
         totalComp += c.completeness;
       profile.overallQualityScore = totalComp / columns.length;
     } else {
@@ -95,7 +95,7 @@ class ProfileDataUseCase : UIMUseCase {
     long maxLen = 0;
     long totalLen = 0;
 
-    foreach (ref rec; records) {
+    foreach (rec; records) {
       auto v = fieldName in rec.fieldValues;
       if (v is null) {
         ++nullCount;

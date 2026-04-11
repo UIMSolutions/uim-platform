@@ -17,7 +17,7 @@ class MemoryConnectionRepository : ConnectionRepository {
 
   Connection findById(ConnectionId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref c; *sp) {
+      foreach (c; *sp) {
         if (c.id == id)
           return c;
       }
@@ -43,7 +43,7 @@ class MemoryConnectionRepository : ConnectionRepository {
 
   void update(Connection c) {
     if (auto sp = c.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == c.id) {
           existing = c;
           return;

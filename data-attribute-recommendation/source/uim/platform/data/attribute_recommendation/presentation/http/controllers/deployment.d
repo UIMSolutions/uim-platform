@@ -67,7 +67,7 @@ class DeploymentController : PlatformController {
       auto items = uc.listDeployments(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
+      foreach (d; items)
         arr ~= serializeDeployment(d);
 
       auto resp = Json.emptyObject;
@@ -158,7 +158,7 @@ class DeploymentController : PlatformController {
     }
   }
 
-  private static Json serializeDeployment(ref const ModelDeployment d) {
+  private static Json serializeDeployment(const ModelDeployment d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);

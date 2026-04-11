@@ -112,7 +112,7 @@ class CredentialController : PlatformController {
       }
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; creds) {
+      foreach (c; creds) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(c.id);
         cj["name"] = Json(c.name);

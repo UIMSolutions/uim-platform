@@ -62,7 +62,7 @@ class KeyringController : PlatformController {
       auto keyrings = uc.listByNamespace(namespaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref k; keyrings) {
+      foreach (k; keyrings) {
         auto kj = Json.emptyObject;
         kj["id"] = Json(k.id);
         kj["name"] = Json(k.name);
@@ -103,7 +103,7 @@ class KeyringController : PlatformController {
       kj["updatedAt"] = Json(k.updatedAt);
 
       auto varr = Json.emptyArray;
-      foreach (ref v; versions) {
+      foreach (v; versions) {
         auto vj = Json.emptyObject;
         vj["id"] = Json(v.id);
         vj["versionNumber"] = Json(v.versionNumber);

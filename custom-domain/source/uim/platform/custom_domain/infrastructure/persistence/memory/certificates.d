@@ -15,7 +15,7 @@ class MemoryCertificateRepository : CertificateRepository {
     private Certificate[] store;
 
     Certificate findById(CertificateId id) {
-        foreach (ref c; store) {
+        foreach (c; store) {
             if (c.id == id)
                 return c;
         }
@@ -39,7 +39,7 @@ class MemoryCertificateRepository : CertificateRepository {
     }
 
     void update(Certificate c) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == c.id) {
                 existing = c;
                 return;

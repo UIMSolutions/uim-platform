@@ -35,7 +35,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   TrainingJob[] findByTenant(TenantId tenantId) {
     TrainingJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -43,7 +43,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   TrainingJob[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
     TrainingJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.modelConfigId == configId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -51,7 +51,7 @@ class MemoryTrainingJobRepository : TrainingJobRepository {
 
   TrainingJob[] findByStatus(TenantId tenantId, JobStatus status) {
     TrainingJob[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;

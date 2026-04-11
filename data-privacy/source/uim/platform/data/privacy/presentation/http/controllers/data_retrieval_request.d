@@ -72,7 +72,7 @@ class DataRetrievalController : PlatformController {
         items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -133,7 +133,7 @@ class DataRetrievalController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DataRetrievalRequest e) {
+  private static Json serialize(const DataRetrievalRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -149,12 +149,12 @@ class DataRetrievalController : PlatformController {
     j["deadline"] = Json(e.deadline);
 
     auto systems = Json.emptyArray;
-    foreach (ref s; e.targetSystems)
+    foreach (s; e.targetSystems)
       systems ~= Json(s);
     j["targetSystems"] = systems;
 
     auto cats = Json.emptyArray;
-    foreach (ref c; e.categories)
+    foreach (c; e.categories)
       cats ~= Json(c.to!string);
     j["categories"] = cats;
 

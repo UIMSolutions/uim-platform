@@ -62,7 +62,7 @@ class DuplicateController : PlatformController {
 
       auto groups = uc.detect(r);
       auto arr = Json.emptyArray;
-      foreach (ref g; groups)
+      foreach (g; groups)
         arr ~= serializeGroup(g);
 
       auto resp = Json.emptyObject;
@@ -105,7 +105,7 @@ class DuplicateController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto groups = uc.getUnresolved(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref g; groups)
+      foreach (g; groups)
         arr ~= serializeGroup(g);
 
       auto resp = Json.emptyObject;
@@ -134,7 +134,7 @@ class DuplicateController : PlatformController {
     }
   }
 
-  private static Json serializeGroup(ref const MatchGroup g) {
+  private static Json serializeGroup(const MatchGroup g) {
     auto j = Json.emptyObject;
     j["id"] = Json(g.id);
     j["tenantId"] = Json(g.tenantId);
@@ -145,7 +145,7 @@ class DuplicateController : PlatformController {
     j["detectedAt"] = Json(g.detectedAt);
 
     auto candidates = Json.emptyArray;
-    foreach (ref c; g.candidates) {
+    foreach (c; g.candidates) {
       auto cj = Json.emptyObject;
       cj["recordId"] = Json(c.recordId);
       cj["score"] = Json(c.score);

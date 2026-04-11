@@ -60,7 +60,7 @@ class InformationReportController : PlatformController {
       auto items = uc.listReports(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -116,7 +116,7 @@ class InformationReportController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const InformationReport e) {
+  private static Json serialize(const InformationReport e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

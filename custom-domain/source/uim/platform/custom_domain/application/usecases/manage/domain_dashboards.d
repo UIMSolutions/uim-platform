@@ -38,19 +38,19 @@ class ManageDomainDashboardsUseCase : UIMUseCase {
         auto mappings = mappingRepo.findByTenant(r.tenantId);
 
         long activeDomains = 0;
-        foreach (ref d; domains) {
+        foreach (d; domains) {
             if (d.status == DomainStatus.active)
                 activeDomains++;
         }
 
         long activeCerts = 0;
-        foreach (ref c; certs) {
+        foreach (c; certs) {
             if (c.status == CertificateStatus.active)
                 activeCerts++;
         }
 
         long activeMappings = 0;
-        foreach (ref m; mappings) {
+        foreach (m; mappings) {
             if (m.status == MappingStatus.active)
                 activeMappings++;
         }

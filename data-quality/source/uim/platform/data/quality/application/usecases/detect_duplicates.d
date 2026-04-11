@@ -30,7 +30,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
   MatchGroup[] detect(DetectDuplicatesRequest req) {
     // Convert DTO records to domain RecordEntry
     RecordEntry[] entries;
-    foreach (ref r; req.records) {
+    foreach (r; req.records) {
       RecordEntry entry;
       entry.recordId = r.recordId;
       entry.fields = r.fieldValues;
@@ -41,7 +41,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
         req.strategy, req.threshold, entries);
 
     // Persist all match groups
-    foreach (ref g; groups)
+    foreach (g; groups)
       repo.save(g);
 
     return groups;
@@ -59,7 +59,7 @@ class DetectDuplicatesUseCase : UIMUseCase {
     g.resolvedAt = Clock.currStdTime();
 
     // Mark the chosen survivor
-    foreach (ref c; g.candidates)
+    foreach (c; g.candidates)
       c.isSurvivor = (c.recordId == req.survivorRecordId);
 
     repo.update(g);

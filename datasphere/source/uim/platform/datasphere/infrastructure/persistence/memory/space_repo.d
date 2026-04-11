@@ -16,7 +16,7 @@ class MemorySpaceRepository : SpaceRepository {
   private Space[] store;
 
   Space findById(SpaceId id) {
-    foreach (ref s; store) {
+    foreach (s; store) {
       if (s.id == id)
         return s;
     }
@@ -32,7 +32,7 @@ class MemorySpaceRepository : SpaceRepository {
   }
 
   void update(Space s) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == s.id) {
         existing = s;
         return;

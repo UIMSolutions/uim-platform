@@ -18,21 +18,21 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
 
   RetentionRule[] findByTenant(TenantId tenantId) {
     RetentionRule[] result;
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.tenantId == tenantId)
         result ~= r;
     return result;
   }
 
   RetentionRule* findById(RetentionRuleId tenantId, id tenantId) {
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.id == id && r.tenantId == tenantId)
         return &r;
     return null;
   }
 
   RetentionRule* findDefault(TenantId tenantId) {
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.tenantId == tenantId && r.isDefault && r.status == RetentionRuleStatus.active)
         return &r;
     return null;
@@ -40,7 +40,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
 
   RetentionRule[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     RetentionRule[] result;
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.tenantId == tenantId && r.purpose == purpose)
         result ~= r;
     return result;
@@ -51,7 +51,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
   }
 
   void update(RetentionRule rule) {
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.id == rule.id && r.tenantId == rule.tenantId) {
         r = rule;
         return;
@@ -60,7 +60,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
 
   void remove(RetentionRuleId tenantId, id tenantId) {
     RetentionRule[] kept;
-    foreach (ref r; store)
+    foreach (r; store)
       if (!(r.id == id && r.tenantId == tenantId))
         kept ~= r;
     store = kept;

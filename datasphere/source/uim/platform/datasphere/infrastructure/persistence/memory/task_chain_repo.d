@@ -17,7 +17,7 @@ class MemoryTaskChainRepository : TaskChainRepository {
 
   TaskChain findById(TaskChainId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref tc; *sp) {
+      foreach (tc; *sp) {
         if (tc.id == id)
           return tc;
       }
@@ -43,7 +43,7 @@ class MemoryTaskChainRepository : TaskChainRepository {
 
   void update(TaskChain tc) {
     if (auto sp = tc.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == tc.id) {
           existing = tc;
           return;

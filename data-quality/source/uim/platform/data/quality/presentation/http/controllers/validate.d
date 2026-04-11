@@ -74,7 +74,7 @@ class ValidateController : PlatformController {
 
       auto results = uc.validateBatch(r);
       auto arr = Json.emptyArray;
-      foreach (ref res_; results)
+      foreach (res_; results)
         arr ~= serializeResult(res_);
 
       auto resp = Json.emptyObject;
@@ -103,7 +103,7 @@ class ValidateController : PlatformController {
     }
   }
 
-  private static Json serializeResult(ref const ValidationResult r) {
+  private static Json serializeResult(const ValidationResult r) {
     auto j = Json.emptyObject;
     j["recordId"] = Json(r.recordId);
     j["tenantId"] = Json(r.tenantId);
@@ -116,7 +116,7 @@ class ValidateController : PlatformController {
 
     if (r.violations.length > 0) {
       auto violations = Json.emptyArray;
-      foreach (ref v; r.violations) {
+      foreach (v; r.violations) {
         auto vj = Json.emptyObject;
         vj["ruleId"] = Json(v.ruleId);
         vj["ruleName"] = Json(v.ruleName);

@@ -59,7 +59,7 @@ class RuleSetController : PlatformController {
       auto items = uc.listRuleSets(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -131,7 +131,7 @@ class RuleSetController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const RuleSet e) {
+  private static Json serialize(const RuleSet e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

@@ -74,7 +74,7 @@ class DeletionController : PlatformController {
         items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -134,7 +134,7 @@ class DeletionController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DeletionRequest e) {
+  private static Json serialize(const DeletionRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -149,12 +149,12 @@ class DeletionController : PlatformController {
     j["deadline"] = Json(e.deadline);
 
     auto systems = Json.emptyArray;
-    foreach (ref s; e.targetSystems)
+    foreach (s; e.targetSystems)
       systems ~= Json(s);
     j["targetSystems"] = systems;
 
     auto cats = Json.emptyArray;
-    foreach (ref c; e.categories)
+    foreach (c; e.categories)
       cats ~= Json(c.to!string);
     j["categories"] = cats;
 

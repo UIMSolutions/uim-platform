@@ -60,7 +60,7 @@ class DnsRecordController : PlatformController {
             auto records = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; records) {
+            foreach (r; records) {
                 auto rj = Json.emptyObject;
                 rj["id"] = Json(r.id);
                 rj["customDomainId"] = Json(r.customDomainId);

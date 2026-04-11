@@ -58,7 +58,7 @@ class PrivateKeyController : PlatformController {
             auto keys = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref k; keys) {
+            foreach (k; keys) {
                 auto kj = Json.emptyObject;
                 kj["id"] = Json(k.id);
                 kj["subject"] = Json(k.subject);
@@ -101,7 +101,7 @@ class PrivateKeyController : PlatformController {
             resp["createdAt"] = Json(k.createdAt);
 
             auto domainsArr = Json.emptyArray;
-            foreach (ref d; k.domains)
+            foreach (d; k.domains)
                 domainsArr ~= Json(d);
             resp["domains"] = domainsArr;
 

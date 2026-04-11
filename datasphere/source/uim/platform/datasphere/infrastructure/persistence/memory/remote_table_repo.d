@@ -17,7 +17,7 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
 
   RemoteTable findById(RemoteTableId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref rt; *sp) {
+      foreach (rt; *sp) {
         if (rt.id == id)
           return rt;
       }
@@ -43,7 +43,7 @@ class MemoryRemoteTableRepository : RemoteTableRepository {
 
   void update(RemoteTable rt) {
     if (auto sp = rt.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == rt.id) {
           existing = rt;
           return;

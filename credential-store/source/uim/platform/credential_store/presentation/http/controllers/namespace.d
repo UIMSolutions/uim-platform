@@ -59,7 +59,7 @@ class NamespaceController : PlatformController {
       auto namespaces = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ns; namespaces) {
+      foreach (ns; namespaces) {
         auto nj = Json.emptyObject;
         nj["id"] = Json(ns.id);
         nj["name"] = Json(ns.name);

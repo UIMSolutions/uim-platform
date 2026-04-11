@@ -78,7 +78,7 @@ class ValidationRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref r; rules)
+      foreach (r; rules)
         arr ~= serializeRule(r);
 
       auto resp = Json.emptyObject;
@@ -160,7 +160,7 @@ class ValidationRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(ref const ValidationRule r) {
+  private static Json serializeRule(const ValidationRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

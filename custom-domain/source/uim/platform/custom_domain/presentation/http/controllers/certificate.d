@@ -59,7 +59,7 @@ class CertificateController : PlatformController {
             auto certs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref c; certs) {
+            foreach (c; certs) {
                 auto cj = Json.emptyObject;
                 cj["id"] = Json(c.id);
                 cj["keyId"] = Json(c.keyId);
@@ -118,12 +118,12 @@ class CertificateController : PlatformController {
             resp["activatedAt"] = Json(c.activatedAt);
 
             auto domainsArr = Json.emptyArray;
-            foreach (ref d; c.activatedDomains)
+            foreach (d; c.activatedDomains)
                 domainsArr ~= Json(d);
             resp["activatedDomains"] = domainsArr;
 
             auto sansArr = Json.emptyArray;
-            foreach (ref s; c.subjectAlternativeNames)
+            foreach (s; c.subjectAlternativeNames)
                 sansArr ~= Json(s);
             resp["subjectAlternativeNames"] = sansArr;
 

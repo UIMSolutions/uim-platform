@@ -71,7 +71,7 @@ class ModelController : PlatformController {
       auto items = uc.listModelConfigs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; items)
+      foreach (c; items)
         arr ~= serializeConfig(c);
 
       auto resp = Json.emptyObject;
@@ -197,7 +197,7 @@ class ModelController : PlatformController {
     }
   }
 
-  private static Json serializeConfig(ref const ModelConfiguration c) {
+  private static Json serializeConfig(const ModelConfiguration c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

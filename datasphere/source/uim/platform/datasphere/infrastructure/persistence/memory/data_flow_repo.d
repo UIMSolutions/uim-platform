@@ -17,7 +17,7 @@ class MemoryDataFlowRepository : DataFlowRepository {
 
   DataFlow findById(DataFlowId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref df; *sp) {
+      foreach (df; *sp) {
         if (df.id == id)
           return df;
       }
@@ -43,7 +43,7 @@ class MemoryDataFlowRepository : DataFlowRepository {
 
   void update(DataFlow df) {
     if (auto sp = df.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == df.id) {
           existing = df;
           return;

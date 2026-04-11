@@ -58,7 +58,7 @@ class DataFlowController : PlatformController {
       auto flows = uc.list(spaceId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref df; flows) {
+      foreach (df; flows) {
         auto fj = Json.emptyObject;
         fj["id"] = Json(df.id);
         fj["name"] = Json(df.name);

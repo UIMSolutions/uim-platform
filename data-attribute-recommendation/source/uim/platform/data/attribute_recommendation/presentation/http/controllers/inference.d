@@ -68,7 +68,7 @@ class InferenceController : PlatformController {
       auto requests = uc.listByDeployment(tenantId, id);
       if (requests.length > 0) {
         auto arr = Json.emptyArray;
-        foreach (ref r; requests)
+        foreach (r; requests)
           arr ~= serializeRequest(r);
 
         auto resp = Json.emptyObject;
@@ -111,7 +111,7 @@ class InferenceController : PlatformController {
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; items)
+      foreach (r; items)
         arr ~= serializeRequest(r);
 
       auto resp = Json.emptyObject;
@@ -124,7 +124,7 @@ class InferenceController : PlatformController {
     }
   }
 
-  private static Json serializeRequest(ref const InferenceRequest r) {
+  private static Json serializeRequest(const InferenceRequest r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);
@@ -135,7 +135,7 @@ class InferenceController : PlatformController {
     return j;
   }
 
-  private static Json serializeResult(ref const InferenceResult r) {
+  private static Json serializeResult(const InferenceResult r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["tenantId"] = Json(r.tenantId);

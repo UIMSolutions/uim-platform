@@ -61,7 +61,7 @@ class CorrectionRequestController : PlatformController {
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -115,7 +115,7 @@ class CorrectionRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const CorrectionRequest e) {
+  private static Json serialize(const CorrectionRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

@@ -18,14 +18,14 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   PurposeRecord[] findByTenant(TenantId tenantId) {
     PurposeRecord[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   PurposeRecord* findById(PurposeRecordId tenantId, id tenantId) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == id && s.tenantId == tenantId)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   PurposeRecord[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     PurposeRecord[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.dataSubjectId == subjectId)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   PurposeRecord[] findByStatus(TenantId tenantId, PurposeRecordStatus status) {
     PurposeRecord[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.status == status)
         result ~= s;
     return result;
@@ -49,7 +49,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   PurposeRecord[] findByBusinessContext(TenantId tenantId, BusinessContextId contextId) {
     PurposeRecord[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId && s.businessContextId == contextId)
         result ~= s;
     return result;
@@ -60,7 +60,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
   }
 
   void update(PurposeRecord entity) {
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.id == entity.id && s.tenantId == entity.tenantId) {
         s = entity;
         return;
@@ -69,7 +69,7 @@ class MemoryPurposeRecordRepository : PurposeRecordRepository {
 
   void remove(PurposeRecordId tenantId, id tenantId) {
     PurposeRecord[] kept;
-    foreach (ref s; store)
+    foreach (s; store)
       if (!(s.id == id && s.tenantId == tenantId))
         kept ~= s;
     store = kept;

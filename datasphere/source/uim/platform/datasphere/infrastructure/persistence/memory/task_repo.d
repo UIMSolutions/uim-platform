@@ -17,7 +17,7 @@ class MemoryTaskRepository : TaskRepository {
 
   Task findById(TaskId id, SpaceId spaceId) {
     if (auto sp = spaceId in store) {
-      foreach (ref t; *sp) {
+      foreach (t; *sp) {
         if (t.id == id)
           return t;
       }
@@ -49,7 +49,7 @@ class MemoryTaskRepository : TaskRepository {
 
   void update(Task t) {
     if (auto sp = t.spaceId in store) {
-      foreach (ref existing; *sp) {
+      foreach (existing; *sp) {
         if (existing.id == t.id) {
           existing = t;
           return;

@@ -35,7 +35,7 @@ class MemoryInferenceResultRepository : InferenceResultRepository {
   }
 
   InferenceResult* findByRequest(InferenceRequestId requesttenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.requestId == requestId && e.tenantId == tenantId)
         return &e;
     return null;
@@ -43,7 +43,7 @@ class MemoryInferenceResultRepository : InferenceResultRepository {
 
   InferenceResult[] findByTenant(TenantId tenantId) {
     InferenceResult[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;

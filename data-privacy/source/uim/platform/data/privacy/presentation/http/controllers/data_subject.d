@@ -73,7 +73,7 @@ class DataSubjectController : PlatformController {
         items = uc.listSubjects(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -137,7 +137,7 @@ class DataSubjectController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DataSubject e) {
+  private static Json serialize(const DataSubject e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

@@ -15,7 +15,7 @@ class MemoryDnsRecordRepository : DnsRecordRepository {
     private DnsRecord[] store;
 
     DnsRecord findById(DnsRecordId id) {
-        foreach (ref r; store) {
+        foreach (r; store) {
             if (r.id == id)
                 return r;
         }
@@ -35,7 +35,7 @@ class MemoryDnsRecordRepository : DnsRecordRepository {
     }
 
     void update(DnsRecord r) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == r.id) {
                 existing = r;
                 return;

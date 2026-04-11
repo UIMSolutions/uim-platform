@@ -63,7 +63,7 @@ class TlsConfigurationController : PlatformController {
             auto configs = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref c; configs) {
+            foreach (c; configs) {
                 auto cj = Json.emptyObject;
                 cj["id"] = Json(c.id);
                 cj["name"] = Json(c.name);

@@ -22,7 +22,7 @@ class MemoryNamespaceRepository : NamespaceRepository {
   }
 
   Namespace findByName(TenantId tenantId, string name) {
-    foreach (ref ns; store) {
+    foreach (ns; store) {
       if (ns.tenantId == tenantId && ns.name == name)
         return ns;
     }

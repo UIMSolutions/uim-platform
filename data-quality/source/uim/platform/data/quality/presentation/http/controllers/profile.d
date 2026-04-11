@@ -69,7 +69,7 @@ class ProfileController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto profiles = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; profiles)
+      foreach (p; profiles)
         arr ~= serializeProfile(p);
 
       auto resp = Json.emptyObject;
@@ -98,7 +98,7 @@ class ProfileController : PlatformController {
     }
   }
 
-  private static Json serializeProfile(ref const DataProfile p) {
+  private static Json serializeProfile(const DataProfile p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);
@@ -112,7 +112,7 @@ class ProfileController : PlatformController {
     j["duration"] = Json(p.duration);
 
     auto cols = Json.emptyArray;
-    foreach (ref c; p.columns) {
+    foreach (c; p.columns) {
       auto cj = Json.emptyObject;
       cj["fieldName"] = Json(c.fieldName);
       cj["detectedType"] = Json(c.detectedType.to!string);

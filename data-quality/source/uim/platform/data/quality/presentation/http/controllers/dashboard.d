@@ -48,7 +48,7 @@ class DashboardController : PlatformController {
     }
   }
 
-  private static Json serializeDashboard(ref const QualityDashboard d) {
+  private static Json serializeDashboard(const QualityDashboard d) {
     auto j = Json.emptyObject;
     j["tenantId"] = Json(d.tenantId);
     j["datasetId"] = Json(d.datasetId);
@@ -78,7 +78,7 @@ class DashboardController : PlatformController {
 
     // Violations by severity
     auto sevArr = Json.emptyArray;
-    foreach (ref s; d.violationsBySeverity) {
+    foreach (s; d.violationsBySeverity) {
       auto sj = Json.emptyObject;
       sj["severity"] = Json(s.severity.to!string);
       sj["count"] = Json(s.count);

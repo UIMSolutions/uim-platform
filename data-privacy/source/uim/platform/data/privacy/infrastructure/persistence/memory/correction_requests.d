@@ -18,14 +18,14 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   CorrectionRequest[] findByTenant(TenantId tenantId) {
     CorrectionRequest[] result;
-    foreach (ref s; store)
+    foreach (s; store)
       if (s.tenantId == tenantId)
         result ~= s;
     return result;
   }
 
   CorrectionRequest* findById(CorrectionRequestId tenantId, id tenantId) {
-    foreach (ref s; findByTenant(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.id == id)
         return &s;
     return null;
@@ -33,7 +33,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   CorrectionRequest[] findByDataSubject(TenantId tenantId, DataSubjectId subjectId) {
     CorrectionRequest[] result;
-    foreach (ref s; findByTenant(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.dataSubjectId == subjectId)
         result ~= s;
     return result;
@@ -41,7 +41,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   CorrectionRequest[] findByStatus(TenantId tenantId, CorrectionStatus status) {
     CorrectionRequest[] result;
-    foreach (ref s; findByTenant(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (s.status == status)
         result ~= s;
     return result;
@@ -52,7 +52,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
   }
 
   void update(CorrectionRequest entity) {
-    foreach (ref s; findByTenant(entity.tenantId))
+    foreach (s; findByTenant(entity.tenantId))
       if (s.id == entity.id) {
         s = entity;
         return;
@@ -61,7 +61,7 @@ class MemoryCorrectionRequestRepository : CorrectionRequestRepository {
 
   void remove(CorrectionRequestId tenantId, id tenantId) {
     CorrectionRequest[] kept;
-    foreach (ref s; findByTenant(tenantId))
+    foreach (s; findByTenant(tenantId))
       if (!(s.id == id))
         kept ~= s;
     store = kept;

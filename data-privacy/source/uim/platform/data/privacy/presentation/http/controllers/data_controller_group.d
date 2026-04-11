@@ -57,7 +57,7 @@ class DataControllerGroupController : PlatformController {
       auto items = uc.listGroups(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -113,7 +113,7 @@ class DataControllerGroupController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const DataControllerGroup e) {
+  private static Json serialize(const DataControllerGroup e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);
@@ -124,7 +124,7 @@ class DataControllerGroupController : PlatformController {
     j["updatedAt"] = Json(e.updatedAt);
 
     auto ids = Json.emptyArray;
-    foreach (ref cid; e.controllerIds)
+    foreach (cid; e.controllerIds)
       ids ~= Json(cid);
     j["controllerIds"] = ids;
 

@@ -62,7 +62,7 @@ class ArchiveRequestController : PlatformController {
       auto items = uc.listRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref e; items)
+      foreach (e; items)
         arr ~= serialize(e);
 
       auto resp = Json.emptyObject;
@@ -116,7 +116,7 @@ class ArchiveRequestController : PlatformController {
       writeError(res, 500, "Internal server error");
   }
 
-  private static Json serialize(ref const ArchiveRequest e) {
+  private static Json serialize(const ArchiveRequest e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

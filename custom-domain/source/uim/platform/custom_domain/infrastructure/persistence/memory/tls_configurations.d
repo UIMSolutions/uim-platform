@@ -15,7 +15,7 @@ class MemoryTlsConfigurationRepository : TlsConfigurationRepository {
     private TlsConfiguration[] store;
 
     TlsConfiguration findById(TlsConfigurationId id) {
-        foreach (ref c; store) {
+        foreach (c; store) {
             if (c.id == id)
                 return c;
         }
@@ -31,7 +31,7 @@ class MemoryTlsConfigurationRepository : TlsConfigurationRepository {
     }
 
     void update(TlsConfiguration c) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == c.id) {
                 existing = c;
                 return;

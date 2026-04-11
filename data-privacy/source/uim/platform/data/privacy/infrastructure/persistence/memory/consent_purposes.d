@@ -40,7 +40,7 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
       return null;
 
     ConsentPurpose[] result;
-    foreach (ref s; store[tenantId].byValue)
+    foreach (s; store[tenantId].byValue)
       if (s.controllerId == controllerId)
         result ~= s;
     return result;
@@ -51,7 +51,7 @@ class MemoryConsentPurposeRepository : ConsentPurposeRepository {
       return null;
 
     ConsentPurpose[] result;
-    foreach (ref s; store[tenantId].byValue)
+    foreach (s; store[tenantId].byValue)
       if (s.status == status)
         result ~= s;
     return result;

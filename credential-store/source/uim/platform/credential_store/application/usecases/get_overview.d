@@ -33,7 +33,7 @@ class GetOverviewUseCase : UIMUseCase {
 
     // Count by type
     auto allCreds = credRepo.findByTenant(tenantId);
-    foreach (ref c; allCreds) {
+    foreach (c; allCreds) {
       final switch (c.type) {
       case CredentialType.password:
         s.totalPasswords++;

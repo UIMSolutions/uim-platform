@@ -39,7 +39,7 @@ class LegalBasisEvaluator {
 
     // Check legal grounds
     auto grounds = groundRepo.findActive(tenantId, subjectId);
-    foreach (ref g; grounds) {
+    foreach (g; grounds) {
       if (g.purpose == purpose && g.isActive) {
         // Check validity period
         if (g.validUntil > 0 && g.validUntil < now)
@@ -52,7 +52,7 @@ class LegalBasisEvaluator {
 
     // Check active consents for consent-based processing
     auto consents = consentRepo.findActiveConsents(tenantId, subjectId);
-    foreach (ref c; consents) {
+    foreach (c; consents) {
       if (c.purpose == purpose && c.status == ConsentStatus.granted) {
         if (c.expiresAt > 0 && c.expiresAt < now)
           continue;

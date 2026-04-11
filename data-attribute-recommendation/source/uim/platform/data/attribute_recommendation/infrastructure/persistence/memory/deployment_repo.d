@@ -35,7 +35,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   ModelDeployment[] findByTenant(TenantId tenantId) {
     ModelDeployment[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -43,7 +43,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   ModelDeployment[] findByModelConfig(ModelConfigId configtenantId, id tenantId) {
     ModelDeployment[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.modelConfigId == configId && e.tenantId == tenantId)
         result ~= e;
     return result;
@@ -51,14 +51,14 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   ModelDeployment[] findByStatus(TenantId tenantId, DeploymentStatus status) {
     ModelDeployment[] result;
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.tenantId == tenantId && e.status == status)
         result ~= e;
     return result;
   }
 
   ModelDeployment* findByTrainingJob(TrainingJobId jobtenantId, id tenantId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.trainingJobId == jobId && e.tenantId == tenantId)
         return &e;
     return null;

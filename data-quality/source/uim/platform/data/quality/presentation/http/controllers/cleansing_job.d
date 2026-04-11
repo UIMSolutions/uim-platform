@@ -62,7 +62,7 @@ class CleansingJobController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto jobs = uc.listByTenant(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref j_; jobs)
+      foreach (j_; jobs)
         arr ~= serializeJob(j_);
 
       auto resp = Json.emptyObject;
@@ -89,7 +89,7 @@ class CleansingJobController : PlatformController {
     }
   }
 
-  private static Json serializeJob(ref const CleansingJob j) {
+  private static Json serializeJob(const CleansingJob j) {
     auto r = Json.emptyObject;
     r["id"] = Json(j.id);
     r["tenantId"] = Json(j.tenantId);

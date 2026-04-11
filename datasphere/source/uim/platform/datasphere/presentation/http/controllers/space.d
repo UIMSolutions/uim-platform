@@ -58,7 +58,7 @@ class SpaceController : PlatformController {
       auto spaces = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; spaces) {
+      foreach (s; spaces) {
         auto sj = Json.emptyObject;
         sj["id"] = Json(s.id);
         sj["name"] = Json(s.name);

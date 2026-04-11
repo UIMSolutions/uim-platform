@@ -22,7 +22,7 @@ class MemoryCredentialRepository : CredentialRepository {
   }
 
   Credential findByName(NamespaceId namespaceId, string name, CredentialType type) {
-    foreach (ref c; store) {
+    foreach (c; store) {
       if (c.namespaceId == namespaceId && c.name == name && c.type == type)
         return c;
     }

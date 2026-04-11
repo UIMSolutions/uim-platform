@@ -18,14 +18,14 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findByTenant(TenantId tenantId) {
     LegalGround[] result;
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.tenantId == tenantId)
         result ~= g;
     return result;
   }
 
   LegalGround* findById(LegalGroundId tenantId, id tenantId) {
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.id == id && g.tenantId == tenantId)
         return &g;
     return null;
@@ -33,7 +33,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findByDataSubject(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId)
         result ~= g;
     return result;
@@ -41,7 +41,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findByBasis(TenantId tenantId, LegalBasis basis) {
     LegalGround[] result;
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.tenantId == tenantId && g.basis == basis)
         result ~= g;
     return result;
@@ -49,7 +49,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findByPurpose(TenantId tenantId, ProcessingPurpose purpose) {
     LegalGround[] result;
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.tenantId == tenantId && g.purpose == purpose)
         result ~= g;
     return result;
@@ -57,7 +57,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   LegalGround[] findActive(TenantId tenantId, DataSubjectId dataSubjectId) {
     LegalGround[] result;
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.tenantId == tenantId && g.dataSubjectId == dataSubjectId && g.isActive)
         result ~= g;
     return result;
@@ -68,7 +68,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
   }
 
   void update(LegalGround ground) {
-    foreach (ref g; store)
+    foreach (g; store)
       if (g.id == ground.id && g.tenantId == ground.tenantId) {
         g = ground;
         return;
@@ -77,7 +77,7 @@ class MemoryLegalGroundRepository : LegalGroundRepository {
 
   void remove(LegalGroundId tenantId, id tenantId) {
     LegalGround[] kept;
-    foreach (ref g; store)
+    foreach (g; store)
       if (!(g.id == id && g.tenantId == tenantId))
         kept ~= g;
     store = kept;

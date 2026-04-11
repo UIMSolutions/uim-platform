@@ -31,7 +31,7 @@ class ValidationEngine {
     int passed = 0;
     int failed = 0;
 
-    foreach (ref rule; rules) {
+    foreach (rule; rules) {
       if (rule.status != RuleStatus.active)
         continue;
 
@@ -64,7 +64,7 @@ class ValidationEngine {
     return result;
   }
 
-  private RuleViolation evaluateRule(ref const ValidationRule rule,
+  private RuleViolation evaluateRule(const ValidationRule rule,
       string fieldValue, string[string] allFields) {
     RuleViolation empty;
 
@@ -161,7 +161,7 @@ class ValidationEngine {
     return empty;
   }
 
-  private static RuleViolation makeViolation(ref const ValidationRule rule,
+  private static RuleViolation makeViolation(const ValidationRule rule,
       string fieldValue, string message) {
     RuleViolation v;
     v.ruleId = rule.id;
