@@ -49,7 +49,7 @@ class ManageServicePlansUseCase : UIMUseCase {
     plan.metadata = req.metadata;
 
     repo.save(plan);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, plan.id.toString, "");
   }
 
   CommandResult update(string id, UpdateServicePlanRequest req) {

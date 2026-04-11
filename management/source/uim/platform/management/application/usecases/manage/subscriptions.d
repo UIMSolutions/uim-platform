@@ -61,7 +61,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     subscription.tenantId = "tenant-" ~ subscription.id.toString[0 .. 8];
     repo.update(subscription);
 
-    emitEvent(request.globalAccountId.toString, request.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, request.globalAccountId.toString, request.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
       "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
     return CommandResult(true, subscription.id.toString, "");
@@ -86,7 +86,7 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     subscription.status = SubscriptionStatus.unsubscribed;
     repo.update(subscription);
 
-    emitEvent(subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
+    emitEvent(eventRepo, subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
       "subscription.deleted", "Unsubscribed from " ~ subscription.appName, "system");
 
     return CommandResult(true, subscription.id.toString, "");

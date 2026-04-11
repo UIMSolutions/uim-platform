@@ -10,4 +10,5 @@ public {
     import uim.platform.management.domain.ports;
     import uim.platform.management.domain.services;
     import uim.platform.management.domain.types;
+    import uim.platform.management.domain.enumerations;
 }

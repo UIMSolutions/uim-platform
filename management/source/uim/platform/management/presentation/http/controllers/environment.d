@@ -102,15 +102,15 @@ class EnvironmentController : PlatformController {
     try {
       auto id = extractId(req.requestURI);
       auto j = req.json;
-      UpdateEnvironmentInstanceRequest r;
-      r.description = j.getString("description");
-      r.memoryQuotaMb = j.getInteger("memoryQuotaMb");
-      r.routeQuota = j.getInteger("routeQuota");
-      r.serviceQuota = j.getInteger("serviceQuota");
-      r.parameters = jsonStrMap(j, "parameters");
-      r.labels = jsonStrMap(j, "labels");
+      UpdateEnvironmentInstanceRequest request;
+      request.description = j.getString("description");
+      request.memoryQuotaMb = j.getInteger("memoryQuotaMb");
+      request.routeQuota = j.getInteger("routeQuota");
+      request.serviceQuota = j.getInteger("serviceQuota");
+      request.parameters = jsonStrMap(j, "parameters");
+      request.labels = jsonStrMap(j, "labels");
 
-      auto result = uc.update(id, r);
+      auto result = uc.update(id, request);
       if (result.success)
         res.writeJsonBody(Json.emptyObject, 200);
       else
@@ -133,7 +133,7 @@ class EnvironmentController : PlatformController {
 }
 
 private Json serializeEnvironment(EnvironmentInstance inst) {
-  auto j = Json.emptyObject
+  return Json.emptyObject
     .set("id", inst.id)
     .set("subaccountId", inst.subaccountId)
     .set("globalAccountId", inst.globalAccountId)

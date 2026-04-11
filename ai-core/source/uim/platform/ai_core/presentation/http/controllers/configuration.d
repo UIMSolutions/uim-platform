@@ -65,32 +65,18 @@ class ConfigurationController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["scenarioId"] = Json(c.scenarioId);
-        cj["executableId"] = Json(c.executableId);
-        cj["name"] = Json(c.name);
-        cj["createdAt"] = Json(c.createdAt);
-
         // Parameter bindings
-        auto pbArr = Json.emptyArray;
-        foreach (pv; c.parameterValues) {
-          pbArr ~= Json.emptyObject
-          .set("key", pv.key)
-          .set("value", pv.value);
-        }
-        cj["parameterBindings"] = pbArr;
+        auto pbArr = c.parameterValues.map!(pv => Json.emptyObject.set("key", pv.key).set("value", pv.value)).array.toJson;
+        auto iaArr = c.inputArtifacts.map!(ia => Json.emptyObject.set("key", ia.key).set("artifactId", ia.artifactId)).array.toJson;
 
-        // Input artifact bindings
-        auto iaArr = Json.emptyArray;
-        foreach (ia; c.inputArtifacts) {
-          iaArr ~= Json.emptyObject
-          .set("key", ia.key)
-          .set("artifactId", ia.artifactId);
-        }
-        cj["inputArtifactBindings"] = iaArr;
-
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+        .set("id", c.id)
+        .set("scenarioId", c.scenarioId)
+        .set("executableId", c.executableId)
+        .set("name", c.name)
+        .set("createdAt", c.createdAt)
+        .set("parameterBindings", pbArr)
+        .set("inputArtifactBindings", iaArr);
       }
 
       auto resp = Json.emptyObject;

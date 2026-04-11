@@ -120,10 +120,9 @@ class ArtifactController : PlatformController {
 
     auto lArr = Json.emptyArray;
     foreach (lbl; a.labels) {
-      auto lj = Json.emptyObject;
-      lj["key"] = Json(lbl.key);
-      lj["value"] = Json(lbl.value);
-      lArr ~= lj;
+      lArr ~= Json.emptyObject
+        .set("key", Json(lbl.key))
+        .set("value", Json(lbl.value));
     }
 
     return Json.emptyObject

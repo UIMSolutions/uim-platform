@@ -23,6 +23,10 @@ class QueryPlatformEventsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
+  PlatformEvent getById(string id) {
+    return getById(PlatformEventId(id));
+  }
+
   PlatformEvent getById(PlatformEventId id) {
     return repo.findById(id);
   }
@@ -59,12 +63,16 @@ class QueryPlatformEventsUseCase : UIMUseCase {
     return repo.findBySeverity(gaId, parseSeverity(severity));
   }
 
+  PlatformEvent[] listSince(string gaId, long sinceTimestamp) {
+    return listSince(GlobalAccountId(gaId), sinceTimestamp);
+  }
+
   PlatformEvent[] listSince(GlobalAccountId gaId, long sinceTimestamp) {
     return repo.findSince(gaId, sinceTimestamp);
   }
 
-  private PlatformEventCategory parseCategory(string s) {
-    switch (s) {
+  private PlatformEventCategory parseCategory(string category) {
+    switch (category) {
     case "subaccountLifecycle":
       return PlatformEventCategory.subaccountLifecycle;
     case "entitlementChange":
@@ -86,8 +94,8 @@ class QueryPlatformEventsUseCase : UIMUseCase {
     }
   }
 
-  private PlatformEventSeverity parseSeverity(string s) {
-    switch (s) {
+  private PlatformEventSeverity parseSeverity(string severity) {
+    switch (severity) {
     case "info":
       return PlatformEventSeverity.info;
     case "warning":

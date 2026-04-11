@@ -39,10 +39,14 @@ class GetAccountOverviewUseCase : UIMUseCase {
     this.eventRepo = eventRepo;
   }
 
-  AccountOverview getOverview(GlobalAccountId gaId) {
+  AccountOverview getOverview(string globalAccountId) {
+    return getOverview(GlobalAccountId(globalAccountId));
+  }
+
+  AccountOverview getOverview(GlobalAccountId globalAccountId) {
     AccountOverview ov;
 
-    auto subaccounts = subaccountRepo.findByGlobalAccount(gaId);
+    auto subaccounts = subaccountRepo.findByGlobalAccount(globalAccountId);
     ov.totalSubaccounts = subaccounts.length;
 
     int activeCount = 0;
@@ -52,10 +56,10 @@ class GetAccountOverviewUseCase : UIMUseCase {
     }
     ov.activeSubaccounts = activeCount;
 
-    auto dirs = directoryRepo.findByGlobalAccount(gaId);
+    auto dirs = directoryRepo.findByGlobalAccount(globalAccountId);
     ov.totalDirectories = dirs.length;
 
-    auto ents = entitlementRepo.findByGlobalAccount(gaId);
+    auto ents = entitlementRepo.findByGlobalAccount(globalAccountId);
     ov.totalEntitlements = ents.length;
 
     // Count environments across all subaccounts
@@ -70,7 +74,7 @@ class GetAccountOverviewUseCase : UIMUseCase {
     ov.totalEnvironments = envCount;
     ov.totalSubscriptions = subCount;
 
-    auto events = eventRepo.findByGlobalAccount(gaId);
+    auto events = eventRepo.findByGlobalAccount(globalAccountId);
     ov.recentEventsCount = events.length;
 
     return ov;

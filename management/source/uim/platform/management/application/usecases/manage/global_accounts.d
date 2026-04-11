@@ -50,7 +50,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     globalAccount.customProperties = req.customProperties;
 
     repo.save(globalAccount);
-    emitEvent(globalAccount.globalAccountId.toString, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, globalAccount.globalAccountId.toString, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.created", "Global account created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, globalAccount.globalAccountId.toString, "");
@@ -97,7 +97,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     globalAccount.modifiedAt = clockSeconds();
     repo.update(globalAccount);
 
-    emitEvent(accountId, "", PlatformEventCategory.globalAccountChange,
+    emitEvent(eventRepo, accountId.toString, "", PlatformEventCategory.globalAccountChange,
         "globalAccount.suspended", "Global account suspended", "system");
     return CommandResult(true, accountId.toString, "");
   }
@@ -107,7 +107,6 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
   }
 
   CommandResult reactivate(GlobalAccountId accountId) {
-
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
@@ -119,6 +118,14 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     globalAccount.modifiedAt = clockSeconds();
     repo.update(globalAccount);
     return CommandResult(true, accountId.toString, "");
+  }
+
+  bool existsById(string id) {
+    return existsById(GlobalAccountId(id));
+  }
+
+  bool existsById(GlobalAccountId accountId) {
+    return repo.existsById(accountId);
   }
 
   GlobalAccount getById(string id) {
@@ -149,23 +156,7 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, accountId.toString, "");
   }
 
-  private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-      string eventType, string desc, string initiatedBy) {
-    // import std.uuid : randomUUID;
 
-    PlatformEvent event;
-    event.id = randomUUID();
-    event.globalAccountId = gaId;
-    event.subaccountId = subId;
-    event.category = cat;
-    event.severity = PlatformEventSeverity.info;
-    event.eventType = eventType;
-    event.description = desc;
-    event.initiatedBy = initiatedBy;
-    event.sourceService = "cloud-management";
-    event.timestamp = clockSeconds();
-    eventRepo.save(event);
-  }
 
 
 

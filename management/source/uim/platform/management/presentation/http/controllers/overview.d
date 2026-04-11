@@ -32,21 +32,22 @@ class OverviewController : PlatformController {
   private void handleOverview(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto gaId = req.params.get("globalAccountId");
-      if (gaid.isEmpty) {
+      if (gaId.isEmpty) {
         writeError(res, 400, "globalAccountId query parameter is required");
         return;
       }
 
       auto ov = uc.getOverview(gaId);
 
-      auto j = Json.emptyObject;
-      j["totalSubaccounts"] = Json(ov.totalSubaccounts);
-      j["activeSubaccounts"] = Json(ov.activeSubaccounts);
-      j["totalDirectories"] = Json(ov.totalDirectories);
-      j["totalEntitlements"] = Json(ov.totalEntitlements);
-      j["totalEnvironments"] = Json(ov.totalEnvironments);
-      j["totalSubscriptions"] = Json(ov.totalSubscriptions);
-      j["recentEventsCount"] = Json(ov.recentEventsCount);
+      auto j = Json.emptyObject
+      .set("totalSubaccounts", ov.totalSubaccounts)
+      .set("activeSubaccounts", ov.activeSubaccounts)
+      .set("totalDirectories", ov.totalDirectories)
+      .set("totalEntitlements", ov.totalEntitlements)
+      .set("totalEnvironments", ov.totalEnvironments)
+      .set("totalSubscriptions", ov.totalSubscriptions)
+      .set("recentEventsCount", ov.recentEventsCount);
+
       res.writeJsonBody(j, 200);
     }
     catch (Exception e)

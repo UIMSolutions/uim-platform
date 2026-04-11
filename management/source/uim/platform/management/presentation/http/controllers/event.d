@@ -74,21 +74,21 @@ class EventController : PlatformController {
   }
 }
 
-private Json serializeEvent(PlatformEvent ev) {
-  auto j = Json.emptyObject
-    .set("id", ev.id)
-    .set("globalAccountId", ev.globalAccountId)
-    .set("subaccountId", ev.subaccountId)
-    .set("directoryId", ev.directoryId)
-    .set("category", to!string(ev.category))
-    .set("severity", to!string(ev.severity))
-    .set("eventType", ev.eventType)
-    .set("description", ev.description)
-    .set("resourceId", ev.resourceId)
-    .set("resourceType", ev.resourceType)
-    .set("initiatedBy", ev.initiatedBy)
-    .set("sourceService", ev.sourceService)
-    .set("timestamp", ev.timestamp)
-    .set("details", ev.details);
+private Json serializeEvent(PlatformEvent event) {
+  return Json.emptyObject
+    .set("id", event.id)
+    .set("globalAccountId", event.globalAccountId)
+    .set("subaccountId", event.subaccountId)
+    .set("directoryId", event.directoryId)
+    .set("category", to!string(event.category))
+    .set("severity", to!string(event.severity))
+    .set("eventType", event.eventType)
+    .set("description", event.description)
+    .set("resourceId", event.resourceId)
+    .set("resourceType", event.resourceType)
+    .set("initiatedBy", event.initiatedBy)
+    .set("sourceService", event.sourceService)
+    .set("timestamp", event.timestamp)
+    .set("details", event.details);
 }
 

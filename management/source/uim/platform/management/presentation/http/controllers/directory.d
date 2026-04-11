@@ -72,11 +72,12 @@ class DirectoryController : PlatformController {
       else if (gaId.length > 0)
         items = uc.listByGlobalAccount(gaId);
 
-      auto arr = items.map!(d => serializeDirectory(d)).array;
+      auto arr = items.map!(d => serializeDirectory(d)).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
         .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -126,21 +127,21 @@ class DirectoryController : PlatformController {
   }
 }
 
-private Json serializeDirectory(Directory d) {
-  auto j = Json.emptyObject
-    .set("id", d.id)
-    .set("globalAccountId", d.globalAccountId)
-    .set("parentDirectoryId", d.parentDirectoryId)
-    .set("displayName", d.displayName)
-    .set("description", d.description)
-    .set("status", to!string(d.status))
-    .set("manageEntitlements", d.manageEntitlements)
-    .set("manageAuthorizations", d.manageAuthorizations)
-    .set("createdBy", d.createdBy)
-    .set("createdAt", d.createdAt)
-    .set("modifiedAt", d.modifiedAt)
-    .set("labels", d.labels)
-    .set("customProperties", d.customProperties)
-    .set("subaccounts", d.subaccounts)
-    .set("subdirectories", d.subdirectories);
+private Json serializeDirectory(Directory directory) {
+  return Json.emptyObject
+    .set("id", directory.id)
+    .set("globalAccountId", directory.globalAccountId)
+    .set("parentDirectoryId", directory.parentDirectoryId)
+    .set("displayName", directory.displayName)
+    .set("description", directory.description)
+    .set("status", to!string(directory.status))
+    .set("manageEntitlements", directory.manageEntitlements)
+    .set("manageAuthorizations", directory.manageAuthorizations)
+    .set("createdBy", directory.createdBy)
+    .set("createdAt", directory.createdAt)
+    .set("modifiedAt", directory.modifiedAt)
+    .set("labels", directory.labels)
+    .set("customProperties", directory.customProperties.toJson)
+    .set("subaccounts", directory.subaccounts.toJson)
+    .set("subdirectories", directory.subdirectories.toJson);
 }
