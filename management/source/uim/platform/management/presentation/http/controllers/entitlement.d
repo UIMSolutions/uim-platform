@@ -153,8 +153,8 @@ private Json serializeEntitlement(Entitlement e) {
     .set("serviceName", e.serviceName)
     .set("planName", e.planName)
     .set("planDisplayName", e.planDisplayName)
-    .set("category", enumStr(e.category))
-    .set("status", enumStr(e.status))
+    .set("category", to!string(e.category))
+    .set("status", to!string(e.status))
     .set("quotaAssigned", e.quotaAssigned)
     .set("quotaUsed", e.quotaUsed)
     .set("quotaRemaining", e.quotaRemaining)
@@ -165,7 +165,7 @@ private Json serializeEntitlement(Entitlement e) {
     .set("assignedBy", e.assignedBy);
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

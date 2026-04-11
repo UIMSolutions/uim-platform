@@ -52,6 +52,10 @@ class ManageServicePlansUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult update(string id, UpdateServicePlanRequest req) {
+    return update(ServicePlanId(id), req);
+  }
+
   CommandResult update(ServicePlanId id, UpdateServicePlanRequest req) {
     auto plan = repo.findById(id);
     if (plan.id.isEmpty)
@@ -75,6 +79,10 @@ class ManageServicePlansUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  ServicePlan getById(string id) {
+    return getById(ServicePlanId(id));
+  }
+
   ServicePlan getById(ServicePlanId id) {
     return repo.findById(id);
   }
@@ -93,6 +101,10 @@ class ManageServicePlansUseCase : UIMUseCase {
 
   ServicePlan[] listByRegion(string region) {
     return repo.findByRegion(region);
+  }
+
+  CommandResult remove(string id) {
+    return remove(ServicePlanId(id));
   }
 
   CommandResult remove(ServicePlanId id) {

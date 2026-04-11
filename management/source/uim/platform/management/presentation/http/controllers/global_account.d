@@ -162,8 +162,8 @@ private Json serializeGlobalAccount(GlobalAccount ga) {
     .set("displayName", ga.displayName)
     .set("description", ga.description)
     .set("contractNumber", ga.contractNumber)
-    .set("licenseType", enumStr(ga.licenseType))
-    .set("status", enumStr(ga.status))
+    .set("licenseType", to!string(ga.licenseType))
+    .set("status", to!string(ga.status))
     .set("region", ga.region)
     .set("costCenter", ga.costCenter)
     .set("companyName", ga.companyName)
@@ -178,7 +178,7 @@ private Json serializeGlobalAccount(GlobalAccount ga) {
     .set("customProperties", customProperties);
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

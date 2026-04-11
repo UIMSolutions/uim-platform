@@ -56,13 +56,10 @@ class ApplicationJobController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -76,10 +73,9 @@ class ApplicationJobController : PlatformController {
         arr ~= serializeJob(job);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) jobs.length);
+      resp["totalCount"] = Json(cast(long)jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -93,8 +89,7 @@ class ApplicationJobController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeJob(*job), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -115,13 +110,10 @@ class ApplicationJobController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -134,13 +126,10 @@ class ApplicationJobController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("canceled");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -153,44 +142,40 @@ class ApplicationJobController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("deleted");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeJob(const ApplicationJob job) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(job.id);
-    j["tenantId"] = Json(job.tenantId);
-    j["systemInstanceId"] = Json(job.systemInstanceId);
-    j["name"] = Json(job.name);
-    j["description"] = Json(job.description);
-    j["jobTemplateName"] = Json(job.jobTemplateName);
-    j["frequency"] = Json(job.frequency.to!string);
-    j["scheduledAt"] = Json(job.scheduledAt);
-    j["cronExpression"] = Json(job.cronExpression);
-    j["active"] = Json(job.active);
-    j["status"] = Json(job.status.to!string);
-    j["createdAt"] = Json(job.createdAt);
-    j["updatedAt"] = Json(job.updatedAt);
+    auto json = Json.emptyObject
+      .set("id", job.id)
+      .set("tenantId", job.tenantId)
+      .set("systemInstanceId", job.systemInstanceId)
+      .set("name", job.name)
+      .set("description", job.description)
+      .set("jobTemplateName", job.jobTemplateName)
+      .set("frequency", job.frequency.to!string)
+      .set("scheduledAt", job.scheduledAt)
+      .set("cronExpression", job.cronExpression)
+      .set("active", job.active)
+      .set("status", job.status.to!string)
+      .set("createdAt", job.createdAt)
+      .set("updatedAt", job.updatedAt);
 
     if (job.executionHistory.length > 0) {
       auto hist = Json.emptyArray;
       foreach (ex; job.executionHistory) {
-        auto ej = Json.emptyObject;
-        ej["executionId"] = Json(ex.executionId);
-        ej["status"] = Json(ex.status.to!string);
-        ej["startedAt"] = Json(ex.startedAt);
-        ej["finishedAt"] = Json(ex.finishedAt);
-        ej["message"] = Json(ex.message);
-        ej["returnCode"] = Json(cast(long) ex.returnCode);
-        hist ~= ej;
+        hist ~= Json.emptyObject
+          .set("executionId", ex.executionId)
+          .set("status", ex.status.to!string)
+          .set("startedAt", ex.startedAt)
+          .set("finishedAt", ex.finishedAt)
+          .set("message", ex.message)
+          .set("returnCode", cast(long)ex.returnCode);
       }
       j["executionHistory"] = hist;
     }

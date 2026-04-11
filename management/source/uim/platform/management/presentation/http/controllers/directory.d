@@ -133,7 +133,7 @@ private Json serializeDirectory(Directory d) {
     .set("parentDirectoryId", d.parentDirectoryId)
     .set("displayName", d.displayName)
     .set("description", d.description)
-    .set("status", enumStr(d.status))
+    .set("status", to!string(d.status))
     .set("manageEntitlements", d.manageEntitlements)
     .set("manageAuthorizations", d.manageAuthorizations)
     .set("createdBy", d.createdBy)
@@ -145,7 +145,7 @@ private Json serializeDirectory(Directory d) {
     .set("subdirectories", d.subdirectories);
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

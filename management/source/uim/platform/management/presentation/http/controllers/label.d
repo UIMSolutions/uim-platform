@@ -131,7 +131,7 @@ class LabelController : PlatformController {
 private Json serializeLabel(Label l) {
   auto j = Json.emptyObject;
   j["id"] = Json(l.id);
-  j["resourceType"] = Json(enumStr(l.resourceType));
+  j["resourceType"] = Json(to!string(l.resourceType));
   j["resourceId"] = Json(l.resourceId);
   j["key"] = Json(l.key);
   j["values"] = serializeStrArray(l.values);
@@ -141,7 +141,7 @@ private Json serializeLabel(Label l) {
   return j;
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

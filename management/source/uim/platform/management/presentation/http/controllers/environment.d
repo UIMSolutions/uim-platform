@@ -139,7 +139,7 @@ private Json serializeEnvironment(EnvironmentInstance inst) {
     .set("globalAccountId", inst.globalAccountId)
     .set("name", inst.name)
     .set("description", inst.description)
-    .set("environmentType", enumStr(inst.environmentType))
+    .set("environmentType", to!string(inst.environmentType))
     .set("status", to!string(inst.status))
     .set("planName", inst.planName)
     .set("landscapeLabel", inst.landscapeLabel)
@@ -155,7 +155,7 @@ private Json serializeEnvironment(EnvironmentInstance inst) {
     .set("labels", inst.labels);
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;

@@ -62,9 +62,13 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     repo.update(subscription);
 
     emitEvent(request.globalAccountId.toString, request.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
-        "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
+      "subscription.created", "Subscribed to " ~ request.appName, request.subscribedBy);
 
     return CommandResult(true, subscription.id.toString, "");
+  }
+
+  CommandResult unsubscribe(string id) {
+    return unsubscribe(SubscriptionId(id));
   }
 
   CommandResult unsubscribe(SubscriptionId id) {
@@ -83,9 +87,13 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     repo.update(subscription);
 
     emitEvent(subscription.globalAccountId.toString, subscription.subaccountId.toString, PlatformEventCategory.subscriptionLifecycle,
-        "subscription.deleted", "Unsubscribed from " ~ subscription.appName, "system");
+      "subscription.deleted", "Unsubscribed from " ~ subscription.appName, "system");
 
     return CommandResult(true, subscription.id.toString, "");
+  }
+
+  CommandResult updatePlan(string id, UpdateSubscriptionRequest req) {
+    return updatePlan(SubscriptionId(id), req);
   }
 
   CommandResult updatePlan(SubscriptionId id, UpdateSubscriptionRequest req) {
@@ -103,29 +111,19 @@ class ManageSubscriptionsUseCase : UIMUseCase {
     return CommandResult(true, subscription.id.toString, "");
   }
 
+  Subscription getById(string id) {
+    return getById(SubscriptionId(id));
+  }
+
   Subscription getById(SubscriptionId id) {
     return repo.findById(id);
   }
 
-  Subscription[] listBySubaccount(SubaccountId subId) {
-    return repo.findBySubaccount(subId);
+  Subscription[] listBySubaccount(string subId) {
+    return listBySubaccount(SubaccountId(subId));
   }
 
-  private void emitEvent(string gaId, string subId, PlatformEventCategory cat,
-      string eventType, string desc, string initiatedBy) {
-    // import std.uuid : randomUUID;
-
-    PlatformEvent event;
-    event.id = randomUUID();
-    event.globalAccountId = gaId;
-    event.subaccountId = subId;
-    event.category = cat;
-    event.severity = PlatformEventSeverity.info;
-    event.eventType = eventType;
-    event.description = desc;
-    event.initiatedBy = initiatedBy;
-    event.sourceService = "cloud-management";
-    event.timestamp = clockSeconds();
-    eventRepo.save(event);
+  Subscription[] listBySubaccount(SubaccountId subId) {
+    return repo.findBySubaccount(subId);
   }
 }

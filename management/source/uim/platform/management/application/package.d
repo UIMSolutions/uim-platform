@@ -7,5 +7,6 @@ module uim.platform.management.application;
 
 public {
     import uim.platform.management.application.dto;
+    import uim.platform.management.application.helpers;
     import uim.platform.management.application.usecases;
 }

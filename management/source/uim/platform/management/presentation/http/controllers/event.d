@@ -80,8 +80,8 @@ private Json serializeEvent(PlatformEvent ev) {
     .set("globalAccountId", ev.globalAccountId)
     .set("subaccountId", ev.subaccountId)
     .set("directoryId", ev.directoryId)
-    .set("category", enumStr(ev.category))
-    .set("severity", enumStr(ev.severity))
+    .set("category", to!string(ev.category))
+    .set("severity", to!string(ev.severity))
     .set("eventType", ev.eventType)
     .set("description", ev.description)
     .set("resourceId", ev.resourceId)
@@ -92,7 +92,7 @@ private Json serializeEvent(PlatformEvent ev) {
     .set("details", ev.details);
 }
 
-private string enumStr(E)(E val) {
+private string to!string(E)(E val) {
   // import std.conv : to;
 
   return val.to!string;
