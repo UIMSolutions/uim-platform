@@ -131,13 +131,6 @@ class PromptController : PlatformController {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.prompt : PromptMessage, PromptParameters;
 
-    auto j = Json.emptyObject
-      .set("id", p.id)
-      .set("collectionId", p.collectionId)
-      .set("name", p.name)
-      .set("modelName", p.modelName)
-      .set("modelVersion", p.modelVersion);
-
     auto msgs = Json.emptyArray;
     foreach (m; p.messages) {
       auto mj = Json.emptyObject;
@@ -145,7 +138,6 @@ class PromptController : PlatformController {
       mj["content"] = Json(m.content);
       msgs ~= mj;
     }
-    j["messages"] = msgs;
 
     auto params = Json.emptyObject;
     params["temperature"] = Json(p.parameters.temperature);
@@ -153,14 +145,20 @@ class PromptController : PlatformController {
     params["topP"] = Json(p.parameters.topP);
     params["frequencyPenalty"] = Json(p.parameters.frequencyPenalty);
     params["presencePenalty"] = Json(p.parameters.presencePenalty);
-    j["parameters"] = params;
 
-    j["inputParams"] = toJsonArray(p.inputParams);
-    j["lastOutput"] = Json(p.lastOutput);
-    j["status"] = Json(p.status.to!string);
-    j["createdBy"] = Json(p.createdBy);
-    j["createdAt"] = Json(p.createdAt);
-    j["modifiedAt"] = Json(p.modifiedAt);
-    return j;
+    auto j = Json.emptyObject
+      .set("id", p.id)
+      .set("collectionId", p.collectionId)
+      .set("name", p.name)
+      .set("modelName", p.modelName)
+      .set("modelVersion", p.modelVersion)
+      .set("messages", msgs)
+      .set("parameters", params)
+      .set("inputParams", toJsonArray(p.inputParams))
+      .set("lastOutput", Json(p.lastOutput))
+      .set("status", Json(p.status.to!string))
+      .set("createdBy", Json(p.createdBy))
+      .set("createdAt", Json(p.createdAt))
+      .set("modifiedAt", Json(p.modifiedAt));
   }
 }

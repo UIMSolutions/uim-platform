@@ -168,32 +168,30 @@ class ExecutionController : PlatformController {
   private Json serializeExecution(Execution ex) {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.execution : OutputArtifact;
-    auto j = Json.emptyObject
+
+    auto artifacts = Json.emptyArray;
+    foreach (a; ex.outputArtifacts) {
+      artifacts ~= Json.emptyObject
+        .set("name", a.name)
+        .set("artifactId", a.artifactId)
+        .set("artifactUrl", a.artifactUrl);
+    }
+
+    return Json.emptyObject
     .set("id", ex.id)
     .set("connectionId", ex.connectionId)
     .set("configurationId", ex.configurationId)
     .set("scenarioId", ex.scenarioId)
     .set("resourceGroupId", ex.resourceGroupId)
     .set("status", ex.status.to!string)
-    .set("targetStatus", ex.targetStatus);
-
-    auto artifacts = Json.emptyArray;
-    foreach (a; ex.outputArtifacts) {
-      auto aj = Json.emptyObject;
-      aj["name"] = Json(a.name);
-      aj["artifactId"] = Json(a.artifactId);
-      aj["artifactUrl"] = Json(a.artifactUrl);
-      artifacts ~= aj;
-    }
-    j["outputArtifacts"] = artifacts;
-
-    j["startedAt"] = Json(ex.startedAt);
-    j["completedAt"] = Json(ex.completedAt);
-    j["duration"] = Json(ex.duration);
-    j["logsUrl"] = Json(ex.logsUrl);
-    j["statusMessage"] = Json(ex.statusMessage);
-    j["createdAt"] = Json(ex.createdAt);
-    j["modifiedAt"] = Json(ex.modifiedAt);
-    return j;
+    .set("targetStatus", ex.targetStatus)
+    .set("outputArtifacts", artifacts)
+    .set("startedAt", ex.startedAt)
+    .set("completedAt", ex.completedAt)
+    .set("duration", ex.duration)
+    .set("logsUrl", ex.logsUrl)
+    .set("statusMessage", ex.statusMessage)
+    .set("createdAt", ex.createdAt)
+    .set("modifiedAt", ex.modifiedAt);
   }
 }

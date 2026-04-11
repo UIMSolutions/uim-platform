@@ -46,13 +46,10 @@ class ExportController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,8 +67,7 @@ class ExportController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -85,26 +81,24 @@ class ExportController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeExportJob(job), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
-  private static Json serializeExportJob(const ExportJob e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["packageId"] = Json(e.packageId);
-    j["transportRequestId"] = Json(e.transportRequestId);
-    j["queueId"] = Json(e.queueId);
-    j["status"] = Json(e.status.to!string);
-    j["exportedFilePath"] = Json(e.exportedFilePath);
-    j["exportedSizeBytes"] = Json(e.exportedSizeBytes);
-    j["createdBy"] = Json(e.createdBy);
-    j["startedAt"] = Json(e.startedAt);
-    j["completedAt"] = Json(e.completedAt);
-    j["errorMessage"] = Json(e.errorMessage);
-    return j;
+  private static Json serializeExportJob(const ExportJob job) {
+    return Json.emptyObject
+      .set("id", job.id)
+      .set("tenantId", job.tenantId)
+      .set("packageId", job.packageId)
+      .set("transportRequestId", job.transportRequestId)
+      .set("queueId", job.queueId)
+      .set("status", job.status.to!string)
+      .set("exportedFilePath", job.exportedFilePath)
+      .set("exportedSizeBytes", job.exportedSizeBytes)
+      .set("createdBy", job.createdBy)
+      .set("startedAt", job.startedAt)
+      .set("completedAt", job.completedAt)
+      .set("errorMessage", job.errorMessage);
   }
 }

@@ -52,7 +52,7 @@ class MonitoringController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto h = useCase.getAppHealth(tenantId, id);
-      if (h.appid.isEmpty) {
+      if (h.appId.isEmpty) {
         writeError(res, 404, "Application not found");
         return;
       }
@@ -67,18 +67,18 @@ class MonitoringController {
     try {
       auto spaceId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto u = useCase.getSpaceUsage(spacetenantId, id);
+      auto u = useCase.getSpaceUsage(tenantId, spaceId);
 
-      auto j = Json.emptyObject;
-      j["spaceId"] = Json(u.spaceId);
-      j["totalApps"] = Json(u.totalApps);
-      j["runningApps"] = Json(u.runningApps);
-      j["stoppedApps"] = Json(u.stoppedApps);
-      j["crashedApps"] = Json(u.crashedApps);
-      j["totalMemoryUsedMb"] = Json(u.totalMemoryUsedMb);
-      j["totalDiskUsedMb"] = Json(u.totalDiskUsedMb);
-      j["totalServiceInstances"] = Json(u.totalServiceInstances);
-      j["totalRoutes"] = Json(u.totalRoutes);
+      auto j = Json.emptyObject
+        .set("spaceId", u.spaceId)
+        .set("totalApps", u.totalApps)
+        .set("runningApps", u.runningApps)
+        .set("stoppedApps", u.stoppedApps)
+        .set("crashedApps", u.crashedApps)
+        .set("totalMemoryUsedMb", u.totalMemoryUsedMb)
+        .set("totalDiskUsedMb", u.totalDiskUsedMb)
+        .set("totalServiceInstances", u.totalServiceInstances)
+        .set("totalRoutes", u.totalRoutes);
       res.writeJsonBody(j, 200);
     }
     catch (Exception e) {
@@ -87,15 +87,14 @@ class MonitoringController {
   }
 
   private static Json serializeHealth(const AppHealthSummary h) {
-    auto j = Json.emptyObject;
-    j["appId"] = Json(h.appId);
-    j["appName"] = Json(h.appName);
-    j["state"] = Json(h.state.to!string);
-    j["requestedInstances"] = Json(h.requestedInstances);
-    j["runningInstances"] = Json(h.runningInstances);
-    j["crashedInstances"] = Json(h.crashedInstances);
-    j["totalMemoryMb"] = Json(h.totalMemoryMb);
-    j["totalDiskMb"] = Json(h.totalDiskMb);
-    return j;
+    return Json.emptyObject
+    .set("appId", Json(h.appId))
+    .set("appName", Json(h.appName))
+    .set("state", Json(h.state.to!string))
+    .set("requestedInstances", Json(h.requestedInstances))
+    .set("runningInstances", Json(h.runningInstances))
+    .set("crashedInstances", Json(h.crashedInstances))
+    .set("totalMemoryMb", Json(h.totalMemoryMb))
+    .set("totalDiskMb", Json(h.totalDiskMb));
   }
 }

@@ -72,17 +72,16 @@ class MonitoringController : PlatformController {
   }
 
   private static Json serializeLog(const ConnectivityLog l) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(l.id);
-    j["tenantId"] = Json(l.tenantId);
-    j["eventType"] = Json(l.eventType.to!string);
-    j["severity"] = Json(l.severity.to!string);
-    j["sourceId"] = Json(l.sourceId);
-    j["sourceType"] = Json(l.sourceType);
-    j["message"] = Json(l.message);
-    j["remoteHost"] = Json(l.remoteHost);
-    j["remotePort"] = Json(l.remotePort);
-    j["timestamp"] = Json(l.timestamp);
-    return j;
+    return Json.emptyObject
+      .set("id", l.id)
+      .set("tenantId", l.tenantId)
+      .set("eventType", l.eventType.to!string)
+      .set("severity", l.severity.to!string)
+      .set("sourceId", l.sourceId)
+      .set("sourceType", l.sourceType)
+      .set("message", l.message)
+      .set("remoteHost", l.remoteHost)
+      .set("remotePort", l.remotePort)
+      .set("timestamp", l.timestamp);
   }
 }

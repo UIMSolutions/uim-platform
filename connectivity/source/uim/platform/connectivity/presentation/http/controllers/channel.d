@@ -165,22 +165,21 @@ class ChannelController : PlatformController {
   }
 
   private static Json serializeChannel(const ServiceChannel ch) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(ch.id);
-    j["connectorId"] = Json(ch.connectorId);
-    j["tenantId"] = Json(ch.tenantId);
-    j["name"] = Json(ch.name);
-    j["type"] = Json(ch.channelType.to!string);
-    j["status"] = Json(ch.status.to!string);
-    j["virtualHost"] = Json(ch.virtualHost);
-    j["virtualPort"] = Json(ch.virtualPort);
-    j["backendHost"] = Json(ch.backendHost);
-    j["backendPort"] = Json(ch.backendPort);
-    j["openedAt"] = Json(ch.openedAt);
-    j["closedAt"] = Json(ch.closedAt);
-    j["createdAt"] = Json(ch.createdAt);
-    j["updatedAt"] = Json(ch.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", ch.id)
+      .set("connectorId", ch.connectorId)
+      .set("tenantId", ch.tenantId)
+      .set("name", ch.name)
+      .set("type", ch.channelType.to!string)
+      .set("status", ch.status.to!string)
+      .set("virtualHost", ch.virtualHost)
+      .set("virtualPort", ch.virtualPort)
+      .set("backendHost", ch.backendHost)
+      .set("backendPort", ch.backendPort)
+      .set("openedAt", ch.openedAt)
+      .set("closedAt", ch.closedAt)
+      .set("createdAt", ch.createdAt)
+      .set("updatedAt", ch.updatedAt);
   }
 
   private static string[] splitPath(string uri) {

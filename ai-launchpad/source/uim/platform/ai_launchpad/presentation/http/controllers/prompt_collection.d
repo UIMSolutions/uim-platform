@@ -132,15 +132,14 @@ class PromptCollectionController : PlatformController {
   }
 
   private Json serializeCollection(PromptCollection c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["scenarioId"] = Json(c.scenarioId);
-    j["workspaceId"] = Json(c.workspaceId);
-    j["promptCount"] = Json(c.promptCount);
-    j["createdAt"] = Json(c.createdAt);
-    j["modifiedAt"] = Json(c.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", Json(c.id))
+      .set("name", Json(c.name))
+      .set("description", Json(c.description))
+      .set("scenarioId", Json(c.scenarioId))
+      .set("workspaceId", Json(c.workspaceId))
+      .set("promptCount", Json(c.promptCount))
+      .set("createdAt", Json(c.createdAt))
+      .set("modifiedAt", Json(c.modifiedAt));
   }
 }

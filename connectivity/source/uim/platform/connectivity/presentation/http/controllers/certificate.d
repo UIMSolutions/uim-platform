@@ -18,7 +18,7 @@ import uim.platform.connectivity;
 mixin(ShowModule!());
 
 @safe:
-class CertificateController :PlatformController {
+class CertificateController : PlatformController {
   private ManageCertificatesUseCase uc;
 
   this(ManageCertificatesUseCase uc) {
@@ -56,13 +56,10 @@ class CertificateController :PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,8 +77,7 @@ class CertificateController :PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(certs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -95,8 +91,7 @@ class CertificateController :PlatformController {
         return;
       }
       res.writeJsonBody(serializeCert(cert), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,13 +109,10 @@ class CertificateController :PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Certificate not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -133,34 +125,30 @@ class CertificateController :PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeCert(const Certificate c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["type"] = Json(c.certType.to!string);
-    j["usage"] = Json(c.usage.to!string);
-    j["subjectDN"] = Json(c.subjectDN);
-    j["issuerDN"] = Json(c.issuerDN);
-    j["serialNumber"] = Json(c.serialNumber);
-    j["fingerprint"] = Json(c.fingerprint);
-    j["validFrom"] = Json(c.validFrom);
-    j["validTo"] = Json(c.validTo);
-    j["active"] = Json(c.active);
-    j["createdAt"] = Json(c.createdAt);
-    j["updatedAt"] = Json(c.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", Json(c.id))
+      .set("tenantId", Json(c.tenantId))
+      .set("name", Json(c.name))
+      .set("description", Json(c.description))
+      .set("type", Json(c.certType.to!string))
+      .set("usage", Json(c.usage.to!string))
+      .set("subjectDN", Json(c.subjectDN))
+      .set("issuerDN", Json(c.issuerDN))
+      .set("serialNumber", Json(c.serialNumber))
+      .set("fingerprint", Json(c.fingerprint))
+      .set("validFrom", Json(c.validFrom))
+      .set("validTo", Json(c.validTo))
+      .set("active", Json(c.active))
+      .set("createdAt", Json(c.createdAt))
+      .set("updatedAt", Json(c.updatedAt));
   }
 }

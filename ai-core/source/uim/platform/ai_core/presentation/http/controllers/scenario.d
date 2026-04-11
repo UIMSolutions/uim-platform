@@ -58,14 +58,13 @@ class ScenarioController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (s; scenarios) {
-        auto sj = Json.emptyObject;
-        sj["id"] = Json(s.id);
-        sj["name"] = Json(s.name);
-        sj["description"] = Json(s.description);
-        sj["labels"] = toJsonArray(s.labels);
-        sj["createdAt"] = Json(s.createdAt);
-        sj["modifiedAt"] = Json(s.modifiedAt);
-        jarr ~= sj;
+        jarr ~= Json.emptyObject
+        .set("id", s.id)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("labels", s.labels)
+        .set("createdAt", s.createdAt)
+        .set("modifiedAt", s.modifiedAt);
       }
 
       auto resp = Json.emptyObject;

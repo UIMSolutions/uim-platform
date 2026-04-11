@@ -41,8 +41,7 @@ class ActivityController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(activities.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -52,30 +51,28 @@ class ActivityController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalCount"] = Json(summary.totalCount);
-      j["infoCount"] = Json(summary.infoCount);
-      j["warningCount"] = Json(summary.warningCount);
-      j["errorCount"] = Json(summary.errorCount);
+      auto j = Json.emptyObject
+        .set("totalCount", summary.totalCount)
+        .set("infoCount", summary.infoCount)
+        .set("warningCount", summary.warningCount)
+        .set("errorCount", summary.errorCount);
       res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeActivity(const ContentActivity a) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(a.id);
-    j["tenantId"] = Json(a.tenantId);
-    j["activityType"] = Json(a.activityType.to!string);
-    j["severity"] = Json(a.severity.to!string);
-    j["entityId"] = Json(a.entityId);
-    j["entityName"] = Json(a.entityName);
-    j["description"] = Json(a.description);
-    j["performedBy"] = Json(a.performedBy);
-    j["timestamp"] = Json(a.timestamp);
-    j["details"] = Json(a.details);
-    return j;
+    return Json.emptyObject
+      .set("id", a.id)
+      .set("tenantId", a.tenantId)
+      .set("activityType", a.activityType.to!string)
+      .set("severity", a.severity.to!string)
+      .set("entityId", a.entityId)
+      .set("entityName", a.entityName)
+      .set("description", a.description)
+      .set("performedBy", a.performedBy)
+      .set("timestamp", a.timestamp)
+      .set("details", a.details);
   }
 }

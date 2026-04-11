@@ -161,16 +161,16 @@ class DestinationController : PlatformController {
   }
 
   private static Json serializeDest(const Destination d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["url"] = Json(d.url);
-    j["type"] = Json(d.destinationType.to!string);
-    j["authentication"] = Json(d.authType.to!string);
-    j["proxyType"] = Json(d.proxyType.to!string);
-    j["cloudConnectorLocationId"] = Json(d.cloudConnectorLocationId);
+    auto j = Json.emptyObject
+    .set("id", d.id)
+    .set("tenantId", d.tenantId)
+    .set("name", d.name)
+    .set("description", d.description)
+    .set("url", d.url)
+    .set("type", d.destinationType.to!string)
+    .set("authentication", d.authType.to!string)
+    .set("proxyType", d.proxyType.to!string)
+    .set("cloudConnectorLocationId", d.cloudConnectorLocationId);
 
     if (d.properties.length > 0) {
       auto props = Json.emptyArray;

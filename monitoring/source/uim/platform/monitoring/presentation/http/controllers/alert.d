@@ -153,8 +153,8 @@ class AlertController : PlatformController {
     return Json.emptyObject
       .set("id", a.id)
       .set("tenantId", a.tenantId)
-      .set("ruleId", a.ruleId)
-      .set("resourceId", a.resourceId)
+      .set("ruleId", a.ruleId.value)
+      .set("resourceId", a.resourceId.value)
       .set("ruleName", a.ruleName)
       .set("metricName", a.metricName)
       .set("currentValue", a.currentValue)

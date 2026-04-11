@@ -199,35 +199,33 @@ class ServiceController : PlatformController {
   // --- Serializers ---
 
   private static Json serializeInstance(const ServiceInstance si) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(si.id);
-    j["spaceId"] = Json(si.spaceId);
-    j["tenantId"] = Json(si.tenantId);
-    j["name"] = Json(si.name);
-    j["serviceName"] = Json(si.serviceName);
-    j["servicePlanName"] = Json(si.servicePlanName);
-    j["status"] = Json(si.status.to!string);
-    j["parameters"] = Json(si.parameters);
-    j["dashboardUrl"] = Json(si.dashboardUrl);
-    j["tags"] = Json(si.tags);
-    j["createdBy"] = Json(si.createdBy);
-    j["createdAt"] = Json(si.createdAt);
-    j["updatedAt"] = Json(si.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", si.id)
+      .set("spaceId", si.spaceId)
+      .set("tenantId", si.tenantId)
+      .set("name", si.name)
+      .set("serviceName", si.serviceName)
+      .set("servicePlanName", si.servicePlanName)
+      .set("status", si.status.to!string)
+      .set("parameters", si.parameters)
+      .set("dashboardUrl", si.dashboardUrl)
+      .set("tags", si.tags)
+      .set("createdBy", si.createdBy)
+      .set("createdAt", si.createdAt)
+      .set("updatedAt", si.updatedAt);
   }
 
   private static Json serializeBinding(const ServiceBinding b) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(b.id);
-    j["appId"] = Json(b.appId);
-    j["serviceInstanceId"] = Json(b.serviceInstanceId);
-    j["tenantId"] = Json(b.tenantId);
-    j["name"] = Json(b.name);
-    j["status"] = Json(b.status.to!string);
-    j["credentials"] = Json(b.credentials);
-    j["bindingOptions"] = Json(b.bindingOptions);
-    j["createdBy"] = Json(b.createdBy);
-    j["createdAt"] = Json(b.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", b.id)
+      .set("appId", b.appId)
+      .set("serviceInstanceId", b.serviceInstanceId)
+      .set("tenantId", b.tenantId)
+      .set("name", b.name)
+      .set("status", b.status.to!string)
+      .set("credentials", b.credentials)
+      .set("bindingOptions", b.bindingOptions)
+      .set("createdBy", b.createdBy)
+      .set("createdAt", b.createdAt);
   }
 }

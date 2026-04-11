@@ -145,22 +145,21 @@ class ConnectorController : PlatformController {
   }
 
   private static Json serializeConnector(const CloudConnector c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["subaccountId"] = Json(c.subaccountId);
-    j["tenantId"] = Json(c.tenantId);
-    j["locationId"] = Json(c.locationId);
-    j["description"] = Json(c.description);
-    j["connectorVersion"] = Json(c.connectorVersion);
-    j["host"] = Json(c.host);
-    j["port"] = Json(c.port);
-    j["status"] = Json(c.status.to!string);
-    j["tunnelEndpoint"] = Json(c.tunnelEndpoint);
-    j["lastHeartbeat"] = Json(c.lastHeartbeat);
-    j["connectedSince"] = Json(c.connectedSince);
-    j["createdAt"] = Json(c.createdAt);
-    j["updatedAt"] = Json(c.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", c.id)
+      .set("subaccountId", c.subaccountId)
+      .set("tenantId", c.tenantId)
+      .set("locationId", c.locationId)
+      .set("description", c.description)
+      .set("connectorVersion", c.connectorVersion)
+      .set("host", c.host)
+      .set("port", c.port)
+      .set("status", c.status.to!string)
+      .set("tunnelEndpoint", c.tunnelEndpoint)
+      .set("lastHeartbeat", c.lastHeartbeat)
+      .set("connectedSince", c.connectedSince)
+      .set("createdAt", c.createdAt)
+      .set("updatedAt", c.updatedAt);
   }
 
   private static string[] splitPath(string uri) {
