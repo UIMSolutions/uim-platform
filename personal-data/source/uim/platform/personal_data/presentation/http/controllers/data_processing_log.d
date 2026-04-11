@@ -78,7 +78,7 @@ class DataProcessingLogController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) logs.length);
+            resp["count"] = Json(logs.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

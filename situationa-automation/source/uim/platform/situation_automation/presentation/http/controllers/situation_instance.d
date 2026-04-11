@@ -84,7 +84,7 @@ class SituationInstanceController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) instances.length);
+            resp["count"] = Json(instances.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -114,7 +114,7 @@ class SituationInstanceController : PlatformController {
             resp["assignedTo"] = Json(i.assignedTo);
             resp["sourceSystem"] = Json(i.sourceSystem);
             resp["sourceInstanceId"] = Json(i.sourceInstanceId);
-            resp["retryCount"] = Json(cast(long) i.retryCount);
+            resp["retryCount"] = Json(i.retryCount);
             resp["detectedAt"] = Json(i.detectedAt);
             resp["dueAt"] = Json(i.dueAt);
             resp["modifiedAt"] = Json(i.modifiedAt);

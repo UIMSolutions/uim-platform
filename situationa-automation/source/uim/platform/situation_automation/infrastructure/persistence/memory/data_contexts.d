@@ -55,6 +55,6 @@ class MemoryDataContextRepository : DataContextRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(d => d.tenantId == tenantId).array.length;
+        return store.filter!(d => d.tenantId == tenantId).array.length;
     }
 }

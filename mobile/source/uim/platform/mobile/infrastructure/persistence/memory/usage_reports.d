@@ -50,10 +50,10 @@ class MemoryUsageReportRepository : UsageReportRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(r => r.appId == appId).array.length;
+    return store.values.filter!(r => r.appId == appId).array.length;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(r => r.tenantId == tenantId).array.length;
+    return store.values.filter!(r => r.tenantId == tenantId).array.length;
   }
 }

@@ -75,7 +75,7 @@ class SubstitutionRuleController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) rules.length);
+            resp["count"] = Json(rules.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

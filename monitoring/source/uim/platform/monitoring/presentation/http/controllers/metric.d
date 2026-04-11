@@ -90,7 +90,7 @@ class MetricController : PlatformController {
 
       auto result = uc.pushMetricBatch(batchReq);
       auto resp = Json.emptyObject;
-      resp["accepted"] = Json(cast(long) batchReq.metrics.length);
+      resp["accepted"] = Json(batchReq.metrics.length);
       res.writeJsonBody(resp, 201);
     }
     catch (Exception e) {
@@ -117,7 +117,7 @@ class MetricController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) metrics.length);
+      resp["totalCount"] = Json(metrics.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

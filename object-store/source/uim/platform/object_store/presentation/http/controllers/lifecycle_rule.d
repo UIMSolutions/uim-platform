@@ -79,7 +79,7 @@ class LifecycleRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) rules.length);
+      resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -158,10 +158,10 @@ class LifecycleRuleController : PlatformController {
     j["name"] = Json(r.name);
     j["prefix"] = Json(r.prefix);
     j["status"] = Json(r.status.to!string);
-    j["expirationDays"] = Json(cast(long) r.expirationDays);
-    j["transitionDays"] = Json(cast(long) r.transitionDays);
+    j["expirationDays"] = Json(r.expirationDays);
+    j["transitionDays"] = Json(r.transitionDays);
     j["transitionStorageClass"] = Json(r.transitionStorageClass.to!string);
-    j["abortIncompleteUploadDays"] = Json(cast(long) r.abortIncompleteUploadDays);
+    j["abortIncompleteUploadDays"] = Json(r.abortIncompleteUploadDays);
     j["createdBy"] = Json(r.createdBy);
     j["createdAt"] = Json(r.createdAt);
     j["updatedAt"] = Json(r.updatedAt);

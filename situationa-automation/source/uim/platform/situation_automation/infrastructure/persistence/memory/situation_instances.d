@@ -55,10 +55,10 @@ class MemorySituationInstanceRepository : SituationInstanceRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(i => i.tenantId == tenantId).array.length;
+        return store.filter!(i => i.tenantId == tenantId).array.length;
     }
 
     size_t countByStatus(TenantId tenantId, InstanceStatus status) {
-        return cast(long) store.filter!(i => i.tenantId == tenantId && i.status == status).array.length;
+        return store.filter!(i => i.tenantId == tenantId && i.status == status).array.length;
     }
 }

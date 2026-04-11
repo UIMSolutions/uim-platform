@@ -55,7 +55,7 @@ string queryParam(scope HTTPServerRequest req, string key) {
 }
 
 private long lastIndexOfChar(string s, char c) {
-  for (long i = cast(long) s.length - 1; i >= 0; i--)
+  for (long i = s.length - 1; i >= 0; i--)
     if (s[cast(size_t) i] == c)
       return i;
   return -1;

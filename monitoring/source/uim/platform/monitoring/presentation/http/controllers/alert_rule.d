@@ -83,7 +83,7 @@ class AlertRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) rules.length);
+      resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -167,8 +167,8 @@ class AlertRuleController : PlatformController {
     j["operator"] = Json(r.operator_.to!string);
     j["warningThreshold"] = Json(r.warningThreshold);
     j["criticalThreshold"] = Json(r.criticalThreshold);
-    j["evaluationPeriodSeconds"] = Json(cast(long) r.evaluationPeriodSeconds);
-    j["consecutiveBreaches"] = Json(cast(long) r.consecutiveBreaches);
+    j["evaluationPeriodSeconds"] = Json(r.evaluationPeriodSeconds);
+    j["consecutiveBreaches"] = Json(r.consecutiveBreaches);
     j["severity"] = Json(r.severity.to!string);
     j["isEnabled"] = Json(r.isEnabled);
     j["channelIds"] = toJsonArray(r.channelIds);

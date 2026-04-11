@@ -51,6 +51,6 @@ class MemoryArtifactRepository : ArtifactRepository {
     }
 
     size_t countAll() {
-        return cast(long) store.length;
+        return store.length;
     }
 }

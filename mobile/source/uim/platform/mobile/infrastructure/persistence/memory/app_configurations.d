@@ -54,6 +54,6 @@ class MemoryAppConfigurationRepository : AppConfigurationRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(c => c.appId == appId).array.length;
+    return store.values.filter!(c => c.appId == appId).array.length;
   }
 }

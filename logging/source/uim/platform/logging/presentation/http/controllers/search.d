@@ -74,7 +74,7 @@ class SearchController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) entries.length);
+      resp["totalCount"] = Json(entries.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -81,7 +81,7 @@ class PersonalDataRecordController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) records.length);
+            resp["count"] = Json(records.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

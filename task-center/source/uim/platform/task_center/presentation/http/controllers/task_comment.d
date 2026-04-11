@@ -70,7 +70,7 @@ class TaskCommentController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) comments.length);
+            resp["count"] = Json(comments.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

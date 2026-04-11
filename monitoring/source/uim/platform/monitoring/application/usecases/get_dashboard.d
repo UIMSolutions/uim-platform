@@ -46,7 +46,7 @@ class GetDashboardUseCase : UIMUseCase {
 
     // Resources
     auto resources = resourceRepo.findByTenant(tenantId);
-    summary.totalResources = cast(long) resources.length;
+    summary.totalResources = resources.length;
     foreach (r; resources) {
       if (r.state == ResourceState.started)
         summary.healthyResources++;
@@ -56,7 +56,7 @@ class GetDashboardUseCase : UIMUseCase {
 
     // Alerts
     auto alerts = alertRepo.findByTenant(tenantId);
-    summary.totalAlerts = cast(long) alerts.length;
+    summary.totalAlerts = alerts.length;
     foreach (a; alerts) {
       if (a.state == AlertState.open)
         summary.openAlerts++;
@@ -66,7 +66,7 @@ class GetDashboardUseCase : UIMUseCase {
 
     // Checks
     auto checks = checkRepo.findByTenant(tenantId);
-    summary.totalChecks = cast(long) checks.length;
+    summary.totalChecks = checks.length;
     foreach (c; checks) {
       if (c.isEnabled) {
         auto latest = checkResultRepo.findLatestByCheck(tenantId, c.id);
@@ -78,11 +78,11 @@ class GetDashboardUseCase : UIMUseCase {
 
     // Metric definitions
     auto defs = metricDefRepo.findByTenant(tenantId);
-    summary.totalMetricDefinitions = cast(long) defs.length;
+    summary.totalMetricDefinitions = defs.length;
 
     // Channels
     auto channels = channelRepo.findByTenant(tenantId);
-    summary.totalChannels = cast(long) channels.length;
+    summary.totalChannels = channels.length;
 
     return summary;
   }

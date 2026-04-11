@@ -55,6 +55,6 @@ class MemoryNotificationRepository : NotificationRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(n => n.tenantId == tenantId).array.length;
+        return store.filter!(n => n.tenantId == tenantId).array.length;
     }
 }

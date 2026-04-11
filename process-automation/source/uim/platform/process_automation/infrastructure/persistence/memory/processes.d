@@ -51,6 +51,6 @@ class MemoryProcessRepository : ProcessRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(p => p.tenantId == tenantId).array.length;
+        return store.filter!(p => p.tenantId == tenantId).array.length;
     }
 }

@@ -78,7 +78,7 @@ class BucketController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) buckets.length);
+      resp["totalCount"] = Json(buckets.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

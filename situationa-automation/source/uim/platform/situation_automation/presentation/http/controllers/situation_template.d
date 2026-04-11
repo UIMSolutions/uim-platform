@@ -85,7 +85,7 @@ class SituationTemplateController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) templates.length);
+            resp["count"] = Json(templates.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -114,7 +114,7 @@ class SituationTemplateController : PlatformController {
             resp["entityTypeId"] = Json(t.entityTypeId);
             resp["sourceSystem"] = Json(t.sourceSystem);
             resp["sourceTemplateId"] = Json(t.sourceTemplateId);
-            resp["autoResolveTimeoutMinutes"] = Json(cast(long) t.autoResolveTimeoutMinutes);
+            resp["autoResolveTimeoutMinutes"] = Json(t.autoResolveTimeoutMinutes);
             resp["escalationEnabled"] = Json(t.escalationEnabled);
             resp["escalationTargetUserId"] = Json(t.escalationTargetUserId);
             resp["createdBy"] = Json(t.createdBy);

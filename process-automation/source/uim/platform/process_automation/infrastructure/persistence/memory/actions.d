@@ -47,6 +47,6 @@ class MemoryActionRepository : ActionRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(a => a.tenantId == tenantId).array.length;
+        return store.filter!(a => a.tenantId == tenantId).array.length;
     }
 }

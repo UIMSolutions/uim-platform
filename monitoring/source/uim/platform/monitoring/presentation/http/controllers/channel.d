@@ -82,7 +82,7 @@ class ChannelController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) channels.length);
+      resp["totalCount"] = Json(channels.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -168,7 +168,7 @@ class ChannelController : PlatformController {
     j["webhookUrl"] = Json(ch.webhookUrl);
     j["webhookMethod"] = Json(ch.webhookMethod);
     j["onPremiseHost"] = Json(ch.onPremiseHost);
-    j["onPremisePort"] = Json(cast(long) ch.onPremisePort);
+    j["onPremisePort"] = Json(ch.onPremisePort);
     j["onPremiseProtocol"] = Json(ch.onPremiseProtocol);
     j["createdBy"] = Json(ch.createdBy);
     j["createdAt"] = Json(ch.createdAt);

@@ -64,7 +64,7 @@ class TagController {
         arr ~= serializeTag(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) tags.length);
+      resp["totalCount"] = Json(tags.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

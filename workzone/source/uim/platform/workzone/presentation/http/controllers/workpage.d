@@ -66,7 +66,7 @@ class WorkpageController {
         arr ~= serializePage(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) pages.length);
+      resp["totalCount"] = Json(pages.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -71,7 +71,7 @@ class UserTaskFilterController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) filters.length);
+            resp["count"] = Json(filters.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

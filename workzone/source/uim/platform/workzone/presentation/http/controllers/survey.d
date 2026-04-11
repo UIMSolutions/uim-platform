@@ -70,7 +70,7 @@ class SurveyController {
         arr ~= serializeSurvey(s);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) surveys.length);
+      resp["totalCount"] = Json(surveys.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

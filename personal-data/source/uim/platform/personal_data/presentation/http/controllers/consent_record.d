@@ -76,7 +76,7 @@ class ConsentRecordController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) consents.length);
+            resp["count"] = Json(consents.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

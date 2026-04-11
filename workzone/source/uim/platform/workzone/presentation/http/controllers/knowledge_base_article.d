@@ -70,7 +70,7 @@ class KnowledgeBaseArticleController {
         arr ~= serializeKBArticle(a);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) articles.length);
+      resp["totalCount"] = Json(articles.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

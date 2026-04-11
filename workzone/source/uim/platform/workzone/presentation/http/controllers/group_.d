@@ -62,7 +62,7 @@ class GroupController {
         arr ~= serializeGroup(g);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) groups.length);
+      resp["totalCount"] = Json(groups.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

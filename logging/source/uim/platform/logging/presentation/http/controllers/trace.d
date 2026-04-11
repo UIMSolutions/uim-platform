@@ -119,7 +119,7 @@ class TraceController : PlatformController {
       auto resp = Json.emptyObject;
       resp["traceId"] = Json(traceId);
       resp["spans"] = jarr;
-      resp["totalSpans"] = Json(cast(long) spans.length);
+      resp["totalSpans"] = Json(spans.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

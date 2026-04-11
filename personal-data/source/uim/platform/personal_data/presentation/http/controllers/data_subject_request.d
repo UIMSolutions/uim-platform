@@ -83,7 +83,7 @@ class DataSubjectRequestController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) requests.length);
+            resp["count"] = Json(requests.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

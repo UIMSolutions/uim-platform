@@ -70,7 +70,7 @@ class StreamController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) streams.length);
+      resp["totalCount"] = Json(streams.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

@@ -60,6 +60,6 @@ class MemoryAppVersionRepository : AppVersionRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(v => v.appId == appId).array.length;
+    return store.values.filter!(v => v.appId == appId).array.length;
   }
 }

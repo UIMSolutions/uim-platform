@@ -67,7 +67,7 @@ class ThemeController {
         arr ~= serializeTheme(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) themes.length);
+      resp["totalCount"] = Json(themes.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

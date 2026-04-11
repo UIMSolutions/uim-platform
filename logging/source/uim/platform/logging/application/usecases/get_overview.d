@@ -46,13 +46,13 @@ class GetOverviewUseCase : UIMUseCase {
 
     s.totalLogEntries = logRepo.countByTenant(tenantId);
     s.totalSpans = spanRepo.countByTenant(tenantId);
-    s.totalStreams = cast(long) streamRepo.findByTenant(tenantId).length;
+    s.totalStreams = streamRepo.findByTenant(tenantId).length;
     s.totalDashboards = dashboardRepo.countByTenant(tenantId);
     s.totalAlerts = alertRepo.countByTenant(tenantId);
     s.openAlerts = alertRepo.countByState(tenantId, AlertState.open);
-    s.criticalAlerts = cast(long) alertRepo.findBySeverity(tenantId, AlertSeverity.critical).length;
-    s.totalPipelines = cast(long) pipelineRepo.findByTenant(tenantId).length;
-    s.activePipelines = cast(long) pipelineRepo.findActive(tenantId).length;
+    s.criticalAlerts = alertRepo.findBySeverity(tenantId, AlertSeverity.critical).length;
+    s.totalPipelines = pipelineRepo.findByTenant(tenantId).length;
+    s.activePipelines = pipelineRepo.findActive(tenantId).length;
     s.totalChannels = channelRepo.countByTenant(tenantId);
 
     return s;

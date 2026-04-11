@@ -79,7 +79,7 @@ class NotificationController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) notifications.length);
+            resp["count"] = Json(notifications.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

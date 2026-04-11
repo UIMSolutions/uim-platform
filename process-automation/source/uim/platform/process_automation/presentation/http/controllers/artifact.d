@@ -76,7 +76,7 @@ class ArtifactController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) artifacts.length);
+            resp["count"] = Json(artifacts.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

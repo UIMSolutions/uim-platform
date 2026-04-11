@@ -76,7 +76,7 @@ class ProcessController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) processes.length);
+            resp["count"] = Json(processes.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

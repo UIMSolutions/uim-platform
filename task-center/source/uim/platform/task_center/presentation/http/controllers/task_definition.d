@@ -75,7 +75,7 @@ class TaskDefinitionController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) defs.length);
+            resp["count"] = Json(defs.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

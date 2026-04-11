@@ -46,10 +46,10 @@ class MemoryClientLogRepository : ClientLogRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(e => e.appId == appId).array.length;
+    return store.values.filter!(e => e.appId == appId).array.length;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(e => e.tenantId == tenantId).array.length;
+    return store.values.filter!(e => e.tenantId == tenantId).array.length;
   }
 }

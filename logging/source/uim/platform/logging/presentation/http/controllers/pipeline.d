@@ -81,7 +81,7 @@ class PipelineController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) pipelines.length);
+      resp["totalCount"] = Json(pipelines.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

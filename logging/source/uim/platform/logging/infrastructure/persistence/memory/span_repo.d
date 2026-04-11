@@ -52,6 +52,6 @@ class MemorySpanRepository : SpanRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(s => s.tenantId == tenantId).array.length;
+    return store.filter!(s => s.tenantId == tenantId).array.length;
   }
 }

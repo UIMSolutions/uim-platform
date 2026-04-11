@@ -77,7 +77,7 @@ class TriggerController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) triggers.length);
+            resp["count"] = Json(triggers.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

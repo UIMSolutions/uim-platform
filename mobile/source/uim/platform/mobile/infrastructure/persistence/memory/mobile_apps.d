@@ -50,6 +50,6 @@ class MemoryMobileAppRepository : MobileAppRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(a => a.tenantId == tenantId).array.length;
+    return store.values.filter!(a => a.tenantId == tenantId).array.length;
   }
 }

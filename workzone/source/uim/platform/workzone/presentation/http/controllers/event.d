@@ -73,7 +73,7 @@ class EventController {
         arr ~= serializeEvent(e);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) events.length);
+      resp["totalCount"] = Json(events.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

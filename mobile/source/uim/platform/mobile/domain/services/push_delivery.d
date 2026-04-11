@@ -28,7 +28,7 @@ struct PushDeliveryService {
       maxSize = 4096;
       break;
     }
-    return cast(long) payload.length <= maxSize;
+    return payload.length <= maxSize;
   }
 
   // Determine provider from platform

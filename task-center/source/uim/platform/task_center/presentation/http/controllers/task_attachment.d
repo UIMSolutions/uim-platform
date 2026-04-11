@@ -71,7 +71,7 @@ class TaskAttachmentController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) attachments.length);
+            resp["count"] = Json(attachments.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

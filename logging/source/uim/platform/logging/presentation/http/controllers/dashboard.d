@@ -80,13 +80,13 @@ class DashboardController : PlatformController {
         dj["name"] = Json(d.name);
         dj["description"] = Json(d.description);
         dj["isDefault"] = Json(d.isDefault);
-        dj["panelCount"] = Json(cast(long) d.panels.length);
+        dj["panelCount"] = Json(d.panels.length);
         jarr ~= dj;
       }
 
       auto resp = Json.emptyObject;
       resp["items"] = jarr;
-      resp["totalCount"] = Json(cast(long) dashboards.length);
+      resp["totalCount"] = Json(dashboards.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

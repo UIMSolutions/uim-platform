@@ -71,7 +71,7 @@ class AutomationRuleController : PlatformController {
                 rj["status"] = Json(r.status.to!string);
                 rj["priority"] = Json(r.priority.to!string);
                 rj["enabled"] = Json(r.enabled);
-                rj["executionOrder"] = Json(cast(long) r.executionOrder);
+                rj["executionOrder"] = Json(r.executionOrder);
                 rj["triggerCount"] = Json(r.triggerCount);
                 rj["successCount"] = Json(r.successCount);
                 rj["failureCount"] = Json(r.failureCount);
@@ -80,7 +80,7 @@ class AutomationRuleController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) rules.length);
+            resp["count"] = Json(rules.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -107,7 +107,7 @@ class AutomationRuleController : PlatformController {
             resp["status"] = Json(r.status.to!string);
             resp["priority"] = Json(r.priority.to!string);
             resp["enabled"] = Json(r.enabled);
-            resp["executionOrder"] = Json(cast(long) r.executionOrder);
+            resp["executionOrder"] = Json(r.executionOrder);
             resp["createdBy"] = Json(r.createdBy);
             resp["modifiedBy"] = Json(r.modifiedBy);
             resp["createdAt"] = Json(r.createdAt);

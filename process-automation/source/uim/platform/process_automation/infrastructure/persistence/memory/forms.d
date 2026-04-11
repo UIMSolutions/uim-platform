@@ -47,6 +47,6 @@ class MemoryFormRepository : FormRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(f => f.tenantId == tenantId).array.length;
+        return store.filter!(f => f.tenantId == tenantId).array.length;
     }
 }

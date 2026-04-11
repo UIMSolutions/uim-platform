@@ -65,7 +65,7 @@ class PageTemplateController {
         arr ~= serializePageTemplate(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) templates.length);
+      resp["totalCount"] = Json(templates.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

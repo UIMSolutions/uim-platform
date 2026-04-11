@@ -80,7 +80,7 @@ class WidgetController {
         arr ~= serializeWidget(w);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) widgets.length);
+      resp["totalCount"] = Json(widgets.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

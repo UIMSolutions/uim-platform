@@ -68,7 +68,7 @@ class RegisteredApplicationController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) apps.length);
+            resp["count"] = Json(apps.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

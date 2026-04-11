@@ -54,10 +54,10 @@ class MemoryUserSessionRepository : UserSessionRepository {
   }
 
   size_t countActive(MobileAppId appId) {
-    return cast(long) store.values.filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
+    return store.values.filter!(s => s.appId == appId && s.status == SessionStatus.active).array.length;
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.values.filter!(s => s.tenantId == tenantId).array.length;
+    return store.values.filter!(s => s.tenantId == tenantId).array.length;
   }
 }

@@ -79,7 +79,7 @@ class WorkspaceController {
         arr ~= serializeWorkspace(w);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) workspaces.length);
+      resp["totalCount"] = Json(workspaces.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -76,7 +76,7 @@ class ChannelController {
         arr ~= serializeChannel(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) channels.length);
+      resp["totalCount"] = Json(channels.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

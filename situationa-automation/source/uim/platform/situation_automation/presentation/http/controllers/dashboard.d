@@ -68,13 +68,13 @@ class DashboardController : PlatformController {
                 dj["name"] = Json(d.name);
                 dj["description"] = Json(d.description);
                 dj["type"] = Json(d.type.to!string);
-                dj["refreshIntervalSeconds"] = Json(cast(long) d.refreshIntervalSeconds);
+                dj["refreshIntervalSeconds"] = Json(d.refreshIntervalSeconds);
                 dj["createdAt"] = Json(d.createdAt);
                 jarr ~= dj;
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) dashboards.length);
+            resp["count"] = Json(dashboards.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -98,7 +98,7 @@ class DashboardController : PlatformController {
             resp["name"] = Json(d.name);
             resp["description"] = Json(d.description);
             resp["type"] = Json(d.type.to!string);
-            resp["refreshIntervalSeconds"] = Json(cast(long) d.refreshIntervalSeconds);
+            resp["refreshIntervalSeconds"] = Json(d.refreshIntervalSeconds);
             resp["createdBy"] = Json(d.createdBy);
             resp["modifiedBy"] = Json(d.modifiedBy);
             resp["createdAt"] = Json(d.createdAt);

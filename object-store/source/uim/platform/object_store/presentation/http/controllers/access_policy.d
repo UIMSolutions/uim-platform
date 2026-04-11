@@ -77,7 +77,7 @@ class AccessPolicyController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) policies.length);
+      resp["totalCount"] = Json(policies.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -67,7 +67,7 @@ class CardController {
         arr ~= serializeCard(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) cards.length);
+      resp["totalCount"] = Json(cards.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

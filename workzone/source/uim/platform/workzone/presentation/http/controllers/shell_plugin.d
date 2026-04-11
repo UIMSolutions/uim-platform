@@ -67,7 +67,7 @@ class ShellPluginController {
         arr ~= serializeShellPlugin(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) plugins.length);
+      resp["totalCount"] = Json(plugins.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

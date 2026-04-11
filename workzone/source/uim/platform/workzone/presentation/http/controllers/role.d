@@ -64,7 +64,7 @@ class RoleController {
         arr ~= serializeRole(r);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) roles.length);
+      resp["totalCount"] = Json(roles.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

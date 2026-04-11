@@ -69,7 +69,7 @@ class CorsRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) rules.length);
+      resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -147,7 +147,7 @@ class CorsRuleController : PlatformController {
     j["allowedMethods"] = Json(r.allowedMethods);
     j["allowedHeaders"] = Json(r.allowedHeaders);
     j["exposedHeaders"] = Json(r.exposedHeaders);
-    j["maxAgeSeconds"] = Json(cast(long) r.maxAgeSeconds);
+    j["maxAgeSeconds"] = Json(r.maxAgeSeconds);
     j["createdAt"] = Json(r.createdAt);
     j["updatedAt"] = Json(r.updatedAt);
     return j;

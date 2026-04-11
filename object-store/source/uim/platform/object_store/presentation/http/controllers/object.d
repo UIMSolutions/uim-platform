@@ -88,7 +88,7 @@ class ObjectController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) objects.length);
+      resp["totalCount"] = Json(objects.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -200,7 +200,7 @@ class ObjectController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) versions.length);
+      resp["totalCount"] = Json(versions.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

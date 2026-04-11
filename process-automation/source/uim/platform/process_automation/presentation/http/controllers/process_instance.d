@@ -73,7 +73,7 @@ class ProcessInstanceController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) instances.length);
+            resp["count"] = Json(instances.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -101,7 +101,7 @@ class ProcessInstanceController : PlatformController {
             resp["startedBy"] = Json(i.startedBy);
             resp["currentStepId"] = Json(i.currentStepId);
             resp["errorMessage"] = Json(i.errorMessage);
-            resp["retryCount"] = Json(cast(long) i.retryCount);
+            resp["retryCount"] = Json(i.retryCount);
             resp["startedAt"] = Json(i.startedAt);
             resp["completedAt"] = Json(i.completedAt);
             resp["dueDate"] = Json(i.dueDate);

@@ -78,7 +78,7 @@ class DataContextController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) contexts.length);
+            resp["count"] = Json(contexts.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

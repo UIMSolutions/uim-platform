@@ -43,20 +43,20 @@ class GetAccountOverviewUseCase : UIMUseCase {
     AccountOverview ov;
 
     auto subaccounts = subaccountRepo.findByGlobalAccount(gaId);
-    ov.totalSubaccounts = cast(long) subaccounts.length;
+    ov.totalSubaccounts = subaccounts.length;
 
     int activeCount = 0;
     foreach (s; subaccounts) {
       if (s.status == SubaccountStatus.active)
         activeCount++;
     }
-    ov.activeSubaccounts = cast(long) activeCount;
+    ov.activeSubaccounts = activeCount;
 
     auto dirs = directoryRepo.findByGlobalAccount(gaId);
-    ov.totalDirectories = cast(long) dirs.length;
+    ov.totalDirectories = dirs.length;
 
     auto ents = entitlementRepo.findByGlobalAccount(gaId);
-    ov.totalEntitlements = cast(long) ents.length;
+    ov.totalEntitlements = ents.length;
 
     // Count environments across all subaccounts
     int envCount = 0;
@@ -67,11 +67,11 @@ class GetAccountOverviewUseCase : UIMUseCase {
       auto subs = subscriptionRepo.findBySubaccount(s.id);
       subCount += cast(int) subs.length;
     }
-    ov.totalEnvironments = cast(long) envCount;
-    ov.totalSubscriptions = cast(long) subCount;
+    ov.totalEnvironments = envCount;
+    ov.totalSubscriptions = subCount;
 
     auto events = eventRepo.findByGlobalAccount(gaId);
-    ov.recentEventsCount = cast(long) events.length;
+    ov.recentEventsCount = events.length;
 
     return ov;
   }

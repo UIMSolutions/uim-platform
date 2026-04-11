@@ -43,6 +43,6 @@ class MemoryVisibilityRepository : VisibilityRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(v => v.tenantId == tenantId).array.length;
+        return store.filter!(v => v.tenantId == tenantId).array.length;
     }
 }

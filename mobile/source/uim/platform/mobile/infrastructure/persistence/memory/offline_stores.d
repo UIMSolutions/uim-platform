@@ -50,6 +50,6 @@ class MemoryOfflineStoreRepository : OfflineStoreRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(s => s.appId == appId).array.length;
+    return store.values.filter!(s => s.appId == appId).array.length;
   }
 }

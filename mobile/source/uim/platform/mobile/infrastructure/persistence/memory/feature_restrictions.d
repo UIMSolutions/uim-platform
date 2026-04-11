@@ -54,6 +54,6 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   size_t countByApp(MobileAppId appId) {
-    return cast(long) store.values.filter!(r => r.appId == appId).array.length;
+    return store.values.filter!(r => r.appId == appId).array.length;
   }
 }

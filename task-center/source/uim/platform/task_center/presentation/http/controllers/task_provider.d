@@ -70,7 +70,7 @@ class TaskProviderController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) providers.length);
+            resp["count"] = Json(providers.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

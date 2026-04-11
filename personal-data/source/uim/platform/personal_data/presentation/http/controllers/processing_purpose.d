@@ -66,7 +66,7 @@ class ProcessingPurposeController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) purposes.length);
+            resp["count"] = Json(purposes.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

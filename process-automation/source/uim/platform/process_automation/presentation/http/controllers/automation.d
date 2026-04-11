@@ -76,7 +76,7 @@ class AutomationController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) automations.length);
+            resp["count"] = Json(automations.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

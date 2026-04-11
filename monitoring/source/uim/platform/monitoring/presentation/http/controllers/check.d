@@ -88,7 +88,7 @@ class CheckController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) checks.length);
+      resp["totalCount"] = Json(checks.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -201,7 +201,7 @@ class CheckController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) results.length);
+      resp["totalCount"] = Json(results.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -218,7 +218,7 @@ class CheckController : PlatformController {
     j["description"] = Json(c.description);
     j["checkType"] = Json(c.checkType.to!string);
     j["isEnabled"] = Json(c.isEnabled);
-    j["intervalSeconds"] = Json(cast(long) c.intervalSeconds);
+    j["intervalSeconds"] = Json(c.intervalSeconds);
     j["url"] = Json(c.url);
     j["expectedStatus"] = Json(c.expectedStatus);
     j["mbeanName"] = Json(c.mbeanName);
@@ -242,8 +242,8 @@ class CheckController : PlatformController {
     j["status"] = Json(r.status.to!string);
     j["value"] = Json(r.value_);
     j["message"] = Json(r.message);
-    j["responseTimeMs"] = Json(cast(long) r.responseTimeMs);
-    j["httpStatusCode"] = Json(cast(long) r.httpStatusCode);
+    j["responseTimeMs"] = Json(r.responseTimeMs);
+    j["httpStatusCode"] = Json(r.httpStatusCode);
     j["executedAt"] = Json(r.executedAt);
     return j;
   }

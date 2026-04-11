@@ -67,7 +67,7 @@ class ForumTopicController {
         arr ~= serializeForumTopic(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) topics.length);
+      resp["totalCount"] = Json(topics.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -55,6 +55,6 @@ class MemoryTaskRepository : TaskRepository {
     }
 
     size_t countByTenant(TenantId tenantId) {
-        return cast(long) store.filter!(t => t.tenantId == tenantId).array.length;
+        return store.filter!(t => t.tenantId == tenantId).array.length;
     }
 }

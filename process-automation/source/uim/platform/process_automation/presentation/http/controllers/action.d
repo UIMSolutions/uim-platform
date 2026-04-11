@@ -80,7 +80,7 @@ class ActionController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) actions.length);
+            resp["count"] = Json(actions.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
