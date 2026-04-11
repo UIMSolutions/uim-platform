@@ -53,11 +53,9 @@ class DatasetController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,8 +73,7 @@ class DatasetController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -91,8 +88,7 @@ class DatasetController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDataset(*ds), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,14 +109,11 @@ class DatasetController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -135,14 +128,11 @@ class DatasetController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("ready");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -157,14 +147,11 @@ class DatasetController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Dataset not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -178,29 +165,26 @@ class DatasetController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeDataset(const Dataset d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["status"] = Json(d.status.to!string);
-    j["dataType"] = Json(d.dataType.to!string);
-    j["columnDefinitions"] = Json(d.columnDefinitions);
-    j["rowCount"] = Json(d.rowCount);
-    j["validationMessage"] = Json(d.validationMessage);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("tenantId", d.tenantId)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("status", d.status.to!string)
+      .set("dataType", d.dataType.to!string)
+      .set("columnDefinitions", d.columnDefinitions)
+      .set("rowCount", d.rowCount)
+      .set("validationMessage", d.validationMessage)
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt)
+      .set("updatedAt", d.updatedAt);
   }
 }

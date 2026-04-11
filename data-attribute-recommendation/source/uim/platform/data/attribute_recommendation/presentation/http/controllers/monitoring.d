@@ -47,8 +47,7 @@ class MonitoringController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(jobs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,8 +62,7 @@ class MonitoringController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeJobSummary(job), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -82,8 +80,7 @@ class MonitoringController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(deps.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -93,44 +90,42 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getPipelineSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalModels"] = Json(summary.totalModels);
-      j["trainedModels"] = Json(summary.trainedModels);
-      j["activeDeployments"] = Json(summary.activeDeployments);
-      j["totalTrainingJobs"] = Json(summary.totalTrainingJobs);
-      j["completedJobs"] = Json(summary.completedJobs);
-      j["failedJobs"] = Json(summary.failedJobs);
-      j["totalInferenceRequests"] = Json(summary.totalInferenceRequests);
-      res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+      auto response = Json.emptyObject
+        .set("totalModels", summary.totalModels)
+        .set("trainedModels", summary.trainedModels)
+        .set("activeDeployments", summary.activeDeployments)
+        .set("totalTrainingJobs", summary.totalTrainingJobs)
+        .set("completedJobs", summary.completedJobs)
+        .set("failedJobs", summary.failedJobs)
+        .set("totalInferenceRequests", summary.totalInferenceRequests);
+
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeJobSummary(const TrainingJobSummary s) {
-    auto j = Json.emptyObject;
-    j["jobId"] = Json(s.jobId);
-    j["modelConfigId"] = Json(s.modelConfigId);
-    j["modelName"] = Json(s.modelName);
-    j["status"] = Json(s.status.to!string);
-    j["metrics"] = Json(s.metrics);
-    j["epochsCompleted"] = Json(s.epochsCompleted);
-    j["totalEpochs"] = Json(s.totalEpochs);
-    j["startedAt"] = Json(s.startedAt);
-    j["completedAt"] = Json(s.completedAt);
-    return j;
+    return Json.emptyObject
+      .set("jobId", s.jobId)
+      .set("modelConfigId", s.modelConfigId)
+      .set("modelName", s.modelName)
+      .set("status", s.status.to!string)
+      .set("metrics", s.metrics)
+      .set("epochsCompleted", s.epochsCompleted)
+      .set("totalEpochs", s.totalEpochs)
+      .set("startedAt", s.startedAt)
+      .set("completedAt", s.completedAt);
   }
 
   private static Json serializeDeploymentSummary(const DeploymentSummary s) {
-    auto j = Json.emptyObject;
-    j["deploymentId"] = Json(s.deploymentId);
-    j["deploymentName"] = Json(s.deploymentName);
-    j["status"] = Json(s.status.to!string);
-    j["modelName"] = Json(s.modelName);
-    j["version"] = Json(s.version_);
-    j["replicas"] = Json(s.replicas);
-    j["inferenceCount"] = Json(s.inferenceCount);
-    return j;
+    return Json.emptyObject
+      .set("deploymentId", s.deploymentId)
+      .set("deploymentName", s.deploymentName)
+      .set("status", s.status.to!string)
+      .set("modelName", s.modelName)
+      .set("version", s.version_)
+      .set("replicas", s.replicas)
+      .set("inferenceCount", s.inferenceCount);
   }
 }

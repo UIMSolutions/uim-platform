@@ -23,7 +23,7 @@ class BusinessSubprocessController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/business-subprocesses", &handleCreate);
     router.get("/api/v1/business-subprocesses", &handleList);
     router.get("/api/v1/business-subprocesses/*", &handleGetById);
@@ -119,25 +119,25 @@ class BusinessSubprocessController : PlatformController {
   }
 
   private static Json serialize(const BusinessSubprocess e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["parentProcessId"] = Json(e.parentProcessId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["owner"] = Json(e.owner);
-    j["isActive"] = Json(e.isActive);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-
     auto purps = Json.emptyArray;
-    foreach (p; e.purposes) purps ~= Json(p);
-    j["purposes"] = purps;
+    foreach (p; e.purposes)
+      purps ~= Json(p);
 
     auto cats = Json.emptyArray;
-    foreach (c; e.dataCategories) cats ~= Json(c);
-    j["dataCategories"] = cats;
+    foreach (c; e.dataCategories)
+      cats ~= Json(c);
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("parentProcessId", e.parentProcessId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("owner", e.owner)
+      .set("isActive", e.isActive)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("purposes", purps)
+      .set("dataCategories", cats);
   }
 }

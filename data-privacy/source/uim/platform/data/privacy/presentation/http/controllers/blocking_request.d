@@ -28,7 +28,7 @@ class BlockingController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/blocking-requests", &handleCreate);
     router.get("/api/v1/blocking-requests", &handleList);
     router.get("/api/v1/blocking-requests/*", &handleGetById);
@@ -51,11 +51,9 @@ class BlockingController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -78,8 +76,7 @@ class BlockingController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -93,8 +90,7 @@ class BlockingController : PlatformController {
         return;
       }
       res.writeJsonBody(serialize(*entry), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -111,11 +107,9 @@ class BlockingController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -125,38 +119,31 @@ class BlockingController : PlatformController {
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private static Json serialize(const BlockingRequest e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["status"] = Json(e.status.to!string);
-    j["reason"] = Json(e.reason);
-    j["requestedAt"] = Json(e.requestedAt);
-    j["activatedAt"] = Json(e.activatedAt);
-    j["releasedAt"] = Json(e.releasedAt);
+    auto systems = e.targetSystems.map!(s => Json(s)).array.toJson;
 
-    auto systems = Json.emptyArray;
-    foreach (s; e.targetSystems)
-      systems ~= Json(s);
-    j["targetSystems"] = systems;
+    auto cats = e.categories.map!(c => Json(c.to!string)).array.toJson;
 
-    auto cats = Json.emptyArray;
-    foreach (c; e.categories)
-      cats ~= Json(c.to!string);
-    j["categories"] = cats;
-
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("requestedBy", e.requestedBy)
+      .set("status", e.status.to!string)
+      .set("reason", e.reason)
+      .set("requestedAt", e.requestedAt)
+      .set("activatedAt", e.activatedAt)
+      .set("releasedAt", e.releasedAt)
+      .set("targetSystems", systems)
+      .set("categories", cats);
   }
 
-  private static BlockingStatus parseBlockingStatus(string s) {
-    switch (s) {
+  private static BlockingStatus parseBlockingStatus(string status) {
+    switch (status) {
     case "active":
       return BlockingStatus.active;
     case "released":

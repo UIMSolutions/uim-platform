@@ -63,17 +63,16 @@ class DomainMappingController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (m; mappings) {
-                auto mj = Json.emptyObject;
-                mj["id"] = Json(m.id);
-                mj["customDomainId"] = Json(m.customDomainId);
-                mj["standardRoute"] = Json(m.standardRoute);
-                mj["customRoute"] = Json(m.customRoute);
-                mj["mappingType"] = Json(m.mappingType.to!string);
-                mj["status"] = Json(m.status.to!string);
-                mj["applicationName"] = Json(m.applicationName);
-                mj["createdBy"] = Json(m.createdBy);
-                mj["createdAt"] = Json(m.createdAt);
-                jarr ~= mj;
+                jarr ~= Json.emptyObject
+                .set("id", m.id)
+                .set("customDomainId", m.customDomainId)
+                .set("standardRoute", m.standardRoute)
+                .set("customRoute", m.customRoute)
+                .set("mappingType", m.mappingType.to!string)
+                .set("status", m.status.to!string)
+                .set("applicationName", m.applicationName)
+                .set("createdBy", m.createdBy)
+                .set("createdAt", m.createdAt);
             }
 
             auto resp = Json.emptyObject;

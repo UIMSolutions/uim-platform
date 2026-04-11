@@ -23,7 +23,7 @@ class BusinessProcessController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/business-processes", &handleCreate);
     router.get("/api/v1/business-processes", &handleList);
     router.get("/api/v1/business-processes/*", &handleGetById);
@@ -119,25 +119,25 @@ class BusinessProcessController : PlatformController {
   }
 
   private static Json serialize(const BusinessProcess e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["controllerId"] = Json(e.controllerId);
-    j["owner"] = Json(e.owner);
-    j["isActive"] = Json(e.isActive);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-
     auto purps = Json.emptyArray;
-    foreach (p; e.purposes) purps ~= Json(p);
-    j["purposes"] = purps;
+    foreach (p; e.purposes)
+      purps ~= Json(p);
 
     auto bases = Json.emptyArray;
-    foreach (b; e.legalBases) bases ~= Json(b);
-    j["legalBases"] = bases;
+    foreach (b; e.legalBases)
+      bases ~= Json(b);
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("controllerId", e.controllerId)
+      .set("owner", e.owner)
+      .set("isActive", e.isActive)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("purposes", purps)
+      .set("legalBases", bases);
   }
 }

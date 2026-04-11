@@ -153,31 +153,29 @@ class ConsentController : PlatformController {
   }
 
   private static Json serialize(const ConsentRecord e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["purpose"] = Json(e.purpose.to!string);
-    j["status"] = Json(e.status.to!string);
-    j["channel"] = Json(e.channel);
-    j["consentText"] = Json(e.consentText);
-    j["version"] = Json(e.version_);
-    j["ipAddress"] = Json(e.ipAddress);
-    j["grantedAt"] = Json(e.grantedAt);
-    j["revokedAt"] = Json(e.revokedAt);
-    j["expiresAt"] = Json(e.expiresAt);
-    j["createdAt"] = Json(e.createdAt);
-
     auto cats = Json.emptyArray;
     foreach (c; e.categories)
       cats ~= Json(c.to!string);
-    j["categories"] = cats;
-
-    return j;
+    
+    return Json.emptyObject
+    .set("id", e.id)
+    .set("tenantId", e.tenantId)
+    .set("dataSubjectId", e.dataSubjectId)
+    .set("purpose", e.purpose.to!string)
+    .set("status", e.status.to!string)
+    .set("channel", e.channel)
+    .set("consentText", e.consentText)
+    .set("version", e.version_)
+    .set("ipAddress", e.ipAddress)
+    .set("grantedAt", e.grantedAt)
+    .set("revokedAt", e.revokedAt)
+    .set("expiresAt", e.expiresAt)
+    .set("createdAt", e.createdAt)
+    .set("categories", cats);
   }
 
-  private static ProcessingPurpose parsePurpose(string s) {
-    switch (s) {
+  private static ProcessingPurpose parsePurpose(string purpose) {
+    switch (purpose) {
     case "serviceDelivery":
       return ProcessingPurpose.serviceDelivery;
     case "marketing":

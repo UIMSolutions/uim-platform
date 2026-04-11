@@ -23,7 +23,7 @@ class ArchiveRequestController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/archive-requests", &handleCreate);
     router.get("/api/v1/archive-requests", &handleList);
     router.get("/api/v1/archive-requests/*", &handleGetById);
@@ -117,27 +117,30 @@ class ArchiveRequestController : PlatformController {
   }
 
   private static Json serialize(const ArchiveRequest e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["status"] = Json(e.status.to!string);
-    j["archiveLocation"] = Json(e.archiveLocation);
-    j["reason"] = Json(e.reason);
-    j["isTestMode"] = Json(e.isTestMode);
-    j["scheduledAt"] = Json(e.scheduledAt);
-    j["startedAt"] = Json(e.startedAt);
-    j["completedAt"] = Json(e.completedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("requestedBy", e.requestedBy)
+      .set("status", e.status.to!string)
+      .set("archiveLocation", e.archiveLocation)
+      .set("reason", e.reason)
+      .set("isTestMode", e.isTestMode)
+      .set("scheduledAt", e.scheduledAt)
+      .set("startedAt", e.startedAt)
+      .set("completedAt", e.completedAt);
   }
 
-  private static ArchiveStatus parseArchiveStatus(string s) {
+  private static ArchiveStatus parseArchiveStatus(string status) {
     switch (s) {
-      case "inProgress": return ArchiveStatus.inProgress;
-      case "completed": return ArchiveStatus.completed;
-      case "failed": return ArchiveStatus.failed;
-      default: return ArchiveStatus.scheduled;
+    case "inProgress":
+      return ArchiveStatus.inProgress;
+    case "completed":
+      return ArchiveStatus.completed;
+    case "failed":
+      return ArchiveStatus.failed;
+    default:
+      return ArchiveStatus.scheduled;
     }
   }
 }

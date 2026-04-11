@@ -125,25 +125,23 @@ class InferenceController : PlatformController {
   }
 
   private static Json serializeRequest(const InferenceRequest r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["deploymentId"] = Json(r.deploymentId);
-    j["inputData"] = Json(r.inputData);
-    j["status"] = Json(r.status.to!string);
-    j["createdAt"] = Json(r.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("deploymentId", r.deploymentId)
+      .set("inputData", r.inputData)
+      .set("status", r.status.to!string)
+      .set("createdAt", r.createdAt);
   }
 
   private static Json serializeResult(const InferenceResult r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["requestId"] = Json(r.requestId);
-    j["predictions"] = Json(r.predictions);
-    j["confidenceScores"] = Json(r.confidenceScores);
-    j["processingTimeMs"] = Json(r.processingTimeMs);
-    j["createdAt"] = Json(r.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("requestId", r.requestId)
+      .set("predictions", r.predictions)
+      .set("confidenceScores", r.confidenceScores)
+      .set("processingTimeMs", r.processingTimeMs)
+      .set("createdAt", r.createdAt);
   }
 }

@@ -139,27 +139,27 @@ class BusinessContextController : PlatformController {
   }
 
   private static Json serialize(const BusinessContext e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["controllerGroupId"] = Json(e.controllerGroupId);
-    j["status"] = Json(e.status.to!string);
-    j["version"] = Json(e.version_);
-    j["isCrossRoleEnabled"] = Json(e.isCrossRoleEnabled);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    j["activatedAt"] = Json(e.activatedAt);
-
     auto cats = Json.emptyArray;
-    foreach (c; e.dataCategories) cats ~= Json(c);
-    j["dataCategories"] = cats;
+    foreach (c; e.dataCategories)
+      cats ~= Json(c);
 
     auto purps = Json.emptyArray;
-    foreach (p; e.purposes) purps ~= Json(p);
-    j["purposes"] = purps;
+    foreach (p; e.purposes)
+      purps ~= Json(p);
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("controllerGroupId", e.controllerGroupId)
+      .set("status", e.status.to!string)
+      .set("version", e.version_)
+      .set("isCrossRoleEnabled", e.isCrossRoleEnabled)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("activatedAt", e.activatedAt)
+      .set("dataCategories", cats)
+      .set("purposes", purps);
   }
 }

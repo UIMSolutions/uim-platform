@@ -159,19 +159,18 @@ class DeploymentController : PlatformController {
   }
 
   private static Json serializeDeployment(const ModelDeployment d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["trainingJobId"] = Json(d.trainingJobId);
-    j["modelConfigId"] = Json(d.modelConfigId);
-    j["name"] = Json(d.name);
-    j["status"] = Json(d.status.to!string);
-    j["endpointUrl"] = Json(d.endpointUrl);
-    j["version"] = Json(d.version_);
-    j["replicas"] = Json(d.replicas);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("tenantId", d.tenantId)
+      .set("trainingJobId", d.trainingJobId)
+      .set("modelConfigId", d.modelConfigId)
+      .set("name", d.name)
+      .set("status", d.status.to!string)
+      .set("endpointUrl", d.endpointUrl)
+      .set("version", d.version_)
+      .set("replicas", d.replicas)
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt)
+      .set("updatedAt", d.updatedAt);
   }
 }

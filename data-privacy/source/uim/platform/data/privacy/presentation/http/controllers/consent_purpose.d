@@ -23,7 +23,7 @@ class ConsentPurposeController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/consent-purposes", &handleCreate);
     router.get("/api/v1/consent-purposes", &handleList);
     router.get("/api/v1/consent-purposes/*", &handleGetById);
@@ -123,26 +123,25 @@ class ConsentPurposeController : PlatformController {
   }
 
   private static Json serialize(const ConsentPurpose e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["controllerId"] = Json(e.controllerId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["purpose"] = Json(e.purpose);
-    j["status"] = Json(e.status.to!string);
-    j["consentFormTemplate"] = Json(e.consentFormTemplate);
-    j["version"] = Json(e.version_);
-    j["requiresExplicitConsent"] = Json(e.requiresExplicitConsent);
-    j["validFrom"] = Json(e.validFrom);
-    j["validUntil"] = Json(e.validUntil);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-
     auto cats = Json.emptyArray;
-    foreach (c; e.dataCategories) cats ~= Json(c);
-    j["dataCategories"] = cats;
+    foreach (c; e.dataCategories)
+      cats ~= Json(c);
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("controllerId", e.controllerId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("purpose", e.purpose)
+      .set("status", e.status.to!string)
+      .set("consentFormTemplate", e.consentFormTemplate)
+      .set("version", e.version_)
+      .set("requiresExplicitConsent", e.requiresExplicitConsent)
+      .set("validFrom", e.validFrom)
+      .set("validUntil", e.validUntil)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("dataCategories", cats);
   }
 }

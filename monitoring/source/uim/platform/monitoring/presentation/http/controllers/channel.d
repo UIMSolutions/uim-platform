@@ -122,9 +122,10 @@ class ChannelController : PlatformController {
 
       auto result = uc.updateChannel(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        res.writeJsonBody(resp, 200);
+        auto response = Json.emptyObject
+        .set("id", result.id);
+        
+        res.writeJsonBody(response, 200);
       }
       else
       {
