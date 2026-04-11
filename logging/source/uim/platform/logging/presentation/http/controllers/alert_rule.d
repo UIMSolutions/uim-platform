@@ -20,6 +20,7 @@ class AlertRuleController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+
     router.post("/api/v1/alert-rules", &handleCreate);
     router.get("/api/v1/alert-rules", &handleList);
     router.get("/api/v1/alert-rules/*", &handleGet);
@@ -42,7 +43,7 @@ class AlertRuleController : PlatformController {
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
       r.severity = j.getString("severity");
-      r.channelIds = jsonStrArray(j, "channelIds");
+      r.channelIds = j.getArray("channelIds").map!(v => v.to!string).array;
       r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
@@ -50,7 +51,7 @@ class AlertRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -65,18 +66,18 @@ class AlertRuleController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (r; rules) {
-        auto rj = Json.emptyObject;
-        rj["id"] = Json(r.id);
-        rj["name"] = Json(r.name);
-        rj["description"] = Json(r.description);
-        rj["isEnabled"] = Json(r.isEnabled);
-        jarr ~= rj;
+        jarr ~= Json.emptyObject
+          .set("id", r.id)
+          .set("name", r.name)
+          .set("description", r.description)
+          .set("isEnabled", r.isEnabled);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(rules.length);
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject
+        .set("items", jarr)
+        .set("totalCount", Json(rules.length));
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -93,15 +94,16 @@ class AlertRuleController : PlatformController {
         return;
       }
 
-      auto rj = Json.emptyObject;
-      rj["id"] = Json(r.id);
-      rj["name"] = Json(r.name);
-      rj["description"] = Json(r.description);
-      rj["query"] = Json(r.query);
-      rj["field"] = Json(r.field);
-      rj["pattern"] = Json(r.pattern);
-      rj["isEnabled"] = Json(r.isEnabled);
-      res.writeJsonBody(rj, 200);
+      auto response = Json.emptyObject
+        .set("id", r.id)
+        .set("name", r.name)
+        .set("description", r.description)
+        .set("query", r.query)
+        .set("field", r.field)
+        .set("pattern", r.pattern)      
+        .set("isEnabled", r.isEnabled);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -131,7 +133,7 @@ class AlertRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      } else {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

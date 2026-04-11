@@ -113,14 +113,13 @@ class CredentialController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; creds) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["name"] = Json(c.name);
-        cj["metadata"] = Json(c.metadata);
-        cj["format"] = Json(c.format);
-        cj["status"] = Json(c.status == CredentialStatus.active ? "active" : "disabled");
-        cj["version"] = Json(c.version_);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+        .set("id", c.id)
+        .set("name", c.name)
+        .set("metadata", c.metadata)
+        .set("format", c.format)
+        .set("status", c.status == CredentialStatus.active ? "active" : "disabled")
+        .set("version", c.version_);
       }
 
       auto resp = Json.emptyObject;
@@ -159,17 +158,18 @@ class CredentialController : PlatformController {
         }
       }
 
-      auto cj = Json.emptyObject;
-      cj["id"] = Json(c.id);
-      cj["name"] = Json(c.name);
-      cj["value"] = Json(c.value);
-      cj["metadata"] = Json(c.metadata);
-      cj["format"] = Json(c.format);
-      cj["username"] = Json(c.username);
-      cj["version"] = Json(c.version_);
-      cj["createdAt"] = Json(c.createdAt);
-      cj["updatedAt"] = Json(c.updatedAt);
-      res.writeJsonBody(cj, 200);
+      auto response = Json.emptyObject
+        .set("id", c.id)
+        .set("name", c.name)
+        .set("value", c.value)
+        .set("metadata", c.metadata)
+        .set("format", c.format)
+        .set("username", c.username)
+        .set("version", c.version_)
+        .set("createdAt", c.createdAt)
+        .set("updatedAt", c.updatedAt);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

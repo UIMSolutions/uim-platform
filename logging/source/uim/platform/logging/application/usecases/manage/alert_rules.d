@@ -121,8 +121,8 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static AlertCondition parseCondition(string s) {
-    switch (s) {
+  private static AlertCondition parseCondition(string condition) {
+    switch (condition) {
     case "contains":
       return AlertCondition.contains;
     case "regex":

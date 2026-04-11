@@ -23,16 +23,32 @@ class ManageAlertsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
+  Alert get_(string id) {
+    return get_(AlertId(id));
+  }
+
   Alert get_(AlertId id) {
     return repo.findById(id);
+  }
+
+  Alert[] list(string tenantId) {
+    return list(TenantId(tenantId));
   }
 
   Alert[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  Alert[] listByState(string tenantId, AlertState state) {
+    return listByState(TenantId(tenantId), state);
+  }
+
   Alert[] listByState(TenantId tenantId, AlertState state) {
     return repo.findByState(tenantId, state);
+  }
+
+  Alert[] listBySeverity(string tenantId, AlertSeverity severity) {
+    return listBySeverity(TenantId(tenantId), severity);
   }
 
   Alert[] listBySeverity(TenantId tenantId, AlertSeverity severity) {
@@ -83,6 +99,10 @@ class ManageAlertsUseCase : UIMUseCase {
 
     repo.save(a);
     return CommandResult(true, a.id, "");
+  }
+
+  CommandResult remove(string id) {
+    return remove(AlertId(id));
   }
 
   CommandResult remove(AlertId id) {

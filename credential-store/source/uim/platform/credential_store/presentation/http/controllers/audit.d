@@ -80,17 +80,18 @@ class AuditController : PlatformController {
         return;
       }
 
-      auto ej = Json.emptyObject;
-      ej["id"] = Json(e.id);
-      ej["tenantId"] = Json(e.tenantId);
-      ej["namespaceId"] = Json(e.namespaceId);
-      ej["resourceName"] = Json(e.resourceName);
-      ej["performedBy"] = Json(e.performedBy);
-      ej["timestamp"] = Json(e.timestamp);
-      ej["details"] = Json(e.details);
-      ej["sourceIp"] = Json(e.sourceIp);
-      ej["success"] = Json(e.success);
-      res.writeJsonBody(ej, 200);
+      auto response = Json.emptyObject
+        .set("id", e.id)
+        .set("tenantId", e.tenantId)
+        .set("namespaceId", e.namespaceId)
+        .set("resourceName", e.resourceName)
+        .set("performedBy", e.performedBy)
+        .set("timestamp", e.timestamp)
+        .set("details", e.details)
+        .set("sourceIp", e.sourceIp)
+        .set("success", e.success);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -134,6 +134,10 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, "", "");
   }
 
+  Metric[] getMetrics(string tenantId, string resourceId) {
+    return getMetrics(TenantId(tenantId), MonitoredResourceId(resourceId));
+  }
+
   Metric[] getMetrics(TenantId tenantId, MonitoredResourceId resourceId) {
     return metricRepo.findByResource(tenantId, resourceId);
   }
@@ -142,7 +146,7 @@ class ManageMetricsUseCase : UIMUseCase {
     if (req.startTime > 0 && req.endTime > 0)
       return metricRepo.findInTimeRange(req.tenantId, req.resourceId,
         req.metricName, req.startTime, req.endTime);
-    if (req.metricName.length > 0 && req.resourceId.length > 0)
+    if (req.metricName.length > 0 && req.resourceId.value.length > 0)
       return metricRepo.findByResourceAndName(req.tenantId, req.resourceId, req.metricName);
     if (req.metricName.length > 0)
       return metricRepo.findByName(req.tenantId, req.metricName);
@@ -205,8 +209,8 @@ class ManageMetricsUseCase : UIMUseCase {
     }
   }
 
-  private static MetricUnit parseUnit(string s) {
-    switch (s) {
+  private static MetricUnit parseUnit(string unit) {
+    switch (unit) {
     case "percent":
       return MetricUnit.percent;
     case "bytes":
@@ -232,8 +236,8 @@ class ManageMetricsUseCase : UIMUseCase {
     }
   }
 
-  private static AggregationMethod parseAggregation(string s) {
-    switch (s) {
+  private static AggregationMethod parseAggregation(string method) {
+    switch (method) {
     case "sum":
       return AggregationMethod.sum;
     case "min":

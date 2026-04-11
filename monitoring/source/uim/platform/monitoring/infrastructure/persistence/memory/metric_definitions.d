@@ -19,9 +19,22 @@ mixin(ShowModule!());
 class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   private MetricDefinition[MetricDefinitionId] store;
 
+  bool existsById(MetricDefinitionId id) {
+    return (id in store) ? true : false;
+  }
+
   MetricDefinition findById(MetricDefinitionId id) {
-    if (auto p = id in store)
-      return *p;
+    return existsById(id) ? store[id] : MetricDefinition.init;
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
+    return findByTenant(tenantId).any!(e => e.name == name);
+  }
+  
+  MetricDefinition findByName(TenantId tenantId, string name) {
+    foreach (e; findByTenant(tenantId))
+      if (e.name == name)
+        return e;
     return MetricDefinition.init;
   }
 
@@ -30,14 +43,7 @@ class MemoryMetricDefinitionRepository : MetricDefinitionRepository {
   }
 
   MetricDefinition[] findByCategory(TenantId tenantId, MetricCategory category) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.category == category).array;
-  }
-
-  MetricDefinition findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
-        return e;
-    return MetricDefinition.init;
+    return findByTenant(tenantId).filter!(e => e.category == category).array;
   }
 
   void save(MetricDefinition def) {

@@ -116,8 +116,9 @@ class AlertRuleController : PlatformController {
 
       auto result = uc.updateRule(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+        .set("id", Json(result.id));
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Alert rule not found" ? 404 : 400, result.error);
@@ -144,26 +145,25 @@ class AlertRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(const ref AlertRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["resourceId"] = Json(r.resourceId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["metricName"] = Json(r.metricName);
-    j["metricDefinitionId"] = Json(r.metricDefinitionId);
-    j["operator"] = Json(r.operator_.to!string);
-    j["warningThreshold"] = Json(r.warningThreshold);
-    j["criticalThreshold"] = Json(r.criticalThreshold);
-    j["evaluationPeriodSeconds"] = Json(r.evaluationPeriodSeconds);
-    j["consecutiveBreaches"] = Json(r.consecutiveBreaches);
-    j["severity"] = Json(r.severity.to!string);
-    j["isEnabled"] = Json(r.isEnabled);
-    j["channelIds"] = toJsonArray(r.channelIds);
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+  private static Json serializeRule(const AlertRule rule) {
+    return Json.emptyObject
+      .set("id", rule.id)
+      .set("tenantId", rule.tenantId)
+      .set("resourceId", rule.resourceId)
+      .set("name", rule.name)
+      .set("description", rule.description)
+      .set("metricName", rule.metricName)
+      .set("metricDefinitionId", rule.metricDefinitionId)
+      .set("operator", rule.operator_.to!string)
+      .set("warningThreshold", rule.warningThreshold)
+      .set("criticalThreshold", rule.criticalThreshold)
+      .set("evaluationPeriodSeconds", rule.evaluationPeriodSeconds)
+      .set("consecutiveBreaches", rule.consecutiveBreaches)
+      .set("severity", rule.severity.to!string)
+      .set("isEnabled", rule.isEnabled)
+      .set("channelIds", rule.channelIds.toJson)
+      .set("createdBy", rule.createdBy)
+      .set("createdAt", rule.createdAt)
+      .set("updatedAt", rule.updatedAt);
   }
 }
