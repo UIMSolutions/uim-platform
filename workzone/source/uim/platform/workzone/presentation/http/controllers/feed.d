@@ -64,7 +64,7 @@ class FeedController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto entries = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref e; entries)
+      foreach (e; entries)
         arr ~= serializeFeed(e);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -105,7 +105,7 @@ class FeedController {
   }
 }
 
-private Json serializeFeed(ref FeedEntry e) {
+private Json serializeFeed(FeedEntry e) {
   auto j = Json.emptyObject;
   j["id"] = Json(e.id);
   j["workspaceId"] = Json(e.workspaceId);

@@ -83,7 +83,7 @@ class CheckController : PlatformController {
       auto checks = uc.listChecks(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; checks)
+      foreach (c; checks)
         arr ~= serializeCheck(c);
 
       auto resp = Json.emptyObject;
@@ -196,7 +196,7 @@ class CheckController : PlatformController {
       auto results = uc.getResults(tenantId, checkId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; results)
+      foreach (r; results)
         arr ~= serializeResult(r);
 
       auto resp = Json.emptyObject;

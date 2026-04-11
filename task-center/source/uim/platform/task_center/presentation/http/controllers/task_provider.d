@@ -65,7 +65,7 @@ class TaskProviderController : PlatformController {
             auto providers = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref p; providers) {
+            foreach (p; providers) {
                 jarr ~= providerToJson(p);
             }
 
@@ -212,7 +212,7 @@ class TaskProviderController : PlatformController {
         }
     }
 
-    private Json providerToJson(ref TaskProvider p) {
+    private Json providerToJson(TaskProvider p) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(p.id);

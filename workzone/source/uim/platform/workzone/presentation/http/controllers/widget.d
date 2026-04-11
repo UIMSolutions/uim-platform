@@ -76,7 +76,7 @@ class WidgetController {
       auto pageId = req.params.get("pageId", "");
       auto widgets = useCase.listByPage(pagetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref w; widgets)
+      foreach (w; widgets)
         arr ~= serializeWidget(w);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -171,7 +171,7 @@ private WidgetConfig parseWidgetConfig(Json j) {
   return cfg;
 }
 
-private Json serializeWidget(ref Widget w) {
+private Json serializeWidget(Widget w) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(w.id);

@@ -12,7 +12,7 @@ import uim.platform.workzone.domain.entities.workspace;
 struct WorkspaceAccessService {
   /// Check whether a user is a member of the given workspace.
   static bool isMember(const ref Workspace ws, UserId userId) {
-    foreach (ref m; ws.members)
+    foreach (m; ws.members)
       if (m.userId == userId)
         return true;
     return false;
@@ -20,7 +20,7 @@ struct WorkspaceAccessService {
 
   /// Check whether a user has at least the given role in a workspace.
   static bool hasRole(const ref Workspace ws, UserId userId, MemberRole requiredRole) {
-    foreach (ref m; ws.members) {
+    foreach (m; ws.members) {
       if (m.userId == userId && m.role >= requiredRole)
         return true;
     }

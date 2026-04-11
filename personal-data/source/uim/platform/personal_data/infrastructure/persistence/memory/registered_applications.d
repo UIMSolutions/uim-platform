@@ -21,20 +21,20 @@ class MemoryRegisteredApplicationRepository : RegisteredApplicationRepository {
 
     RegisteredApplication[] findByTenant(TenantId tenantId) {
         RegisteredApplication[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     RegisteredApplication findByName(string name) {
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.name == name) return v;
         return RegisteredApplication.init;
     }
 
     RegisteredApplication[] findByStatus(ApplicationStatus status) {
         RegisteredApplication[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.status == status) result ~= v;
         return result;
     }

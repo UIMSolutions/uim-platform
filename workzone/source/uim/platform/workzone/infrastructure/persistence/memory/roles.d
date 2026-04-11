@@ -28,10 +28,10 @@ class MemoryRoleRepository : RoleRepository {
 
   Role[] findByUser(UserId usertenantId, id tenantId) {
     Role[] result;
-    foreach (ref r; store.byValue()) {
+    foreach (r; store.byValue()) {
       if (r.tenantId != tenantId)
         continue;
-      foreach (ref uid; r.assignedUserIds)
+      foreach (uid; r.assignedUserIds)
         if (uid == userId)
         {
           result ~= r;

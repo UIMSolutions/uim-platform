@@ -66,7 +66,7 @@ class TaskController : PlatformController {
             auto tasks = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref t; tasks) {
+            foreach (t; tasks) {
                 auto tj = Json.emptyObject;
                 tj["id"] = Json(t.id);
                 tj["name"] = Json(t.name);

@@ -61,7 +61,7 @@ class PageTemplateController {
       TenantId tenantId = req.getTenantId;
       auto templates = useCase.listPageTemplates(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref t; templates)
+      foreach (t; templates)
         arr ~= serializePageTemplate(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

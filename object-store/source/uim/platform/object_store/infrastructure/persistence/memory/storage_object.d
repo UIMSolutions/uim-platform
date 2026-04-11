@@ -22,7 +22,7 @@ class MemoryStorageObjectRepository : StorageObjectRepository {
   }
 
   StorageObject findByKey(BucketId bucketId, string key) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
         return e;
     return null;

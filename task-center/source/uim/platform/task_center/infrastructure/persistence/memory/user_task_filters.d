@@ -16,7 +16,7 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
 
     UserTaskFilter findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref f; *arr)
+            foreach (f; *arr)
                 if (f.id == id) return f;
         return UserTaskFilter.init;
     }
@@ -29,14 +29,14 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
     UserTaskFilter[] findByUser(string tenantId, string userId) {
         UserTaskFilter[] result;
         if (auto arr = tenantId in store)
-            foreach (ref f; *arr)
+            foreach (f; *arr)
                 if (f.userId == userId) result ~= f;
         return result;
     }
 
     UserTaskFilter findDefault(string tenantId, string userId) {
         if (auto arr = tenantId in store)
-            foreach (ref f; *arr)
+            foreach (f; *arr)
                 if (f.userId == userId && f.isDefault) return f;
         return UserTaskFilter.init;
     }
@@ -47,14 +47,14 @@ class MemoryUserTaskFilterRepository : UserTaskFilterRepository {
 
     void update(string tenantId, UserTaskFilter entity) {
         if (auto arr = tenantId in store)
-            foreach (ref f; *arr)
+            foreach (f; *arr)
                 if (f.id == entity.id) { f = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             UserTaskFilter[] filtered;
-            foreach (ref f; *arr)
+            foreach (f; *arr)
                 if (f.id != id) filtered ~= f;
             store[tenantId] = filtered;
         }

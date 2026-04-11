@@ -72,7 +72,7 @@ class ChannelController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto channels = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref c; channels)
+      foreach (c; channels)
         arr ~= serializeChannel(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -156,7 +156,7 @@ private ChannelConfig parseChannelConfig(Json j) {
   return cfg;
 }
 
-private Json serializeChannel(ref Channel c) {
+private Json serializeChannel(Channel c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);

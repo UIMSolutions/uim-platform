@@ -86,7 +86,7 @@ class TaskController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref t; tasks) {
+            foreach (t; tasks) {
                 jarr ~= taskToJson(t);
             }
 
@@ -288,7 +288,7 @@ class TaskController : PlatformController {
                path.endsWith("/cancel");
     }
 
-    private Json taskToJson(ref Task t) {
+    private Json taskToJson(Task t) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(t.id);

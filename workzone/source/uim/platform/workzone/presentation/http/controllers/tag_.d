@@ -60,7 +60,7 @@ class TagController {
       TenantId tenantId = req.getTenantId;
       auto tags = useCase.listTags(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref t; tags)
+      foreach (t; tags)
         arr ~= serializeTag(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

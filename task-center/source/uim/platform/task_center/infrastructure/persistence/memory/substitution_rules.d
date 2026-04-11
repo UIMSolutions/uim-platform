@@ -16,7 +16,7 @@ class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
 
     SubstitutionRule findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.id == id) return r;
         return SubstitutionRule.init;
     }
@@ -29,7 +29,7 @@ class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
     SubstitutionRule[] findByUser(string tenantId, string userId) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.userId == userId) result ~= r;
         return result;
     }
@@ -37,7 +37,7 @@ class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
     SubstitutionRule[] findBySubstitute(string tenantId, string substituteId) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.substituteId == substituteId) result ~= r;
         return result;
     }
@@ -45,7 +45,7 @@ class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
     SubstitutionRule[] findByStatus(string tenantId, SubstitutionStatus status) {
         SubstitutionRule[] result;
         if (auto arr = tenantId in store)
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.status == status) result ~= r;
         return result;
     }
@@ -56,14 +56,14 @@ class MemorySubstitutionRuleRepository : SubstitutionRuleRepository {
 
     void update(string tenantId, SubstitutionRule entity) {
         if (auto arr = tenantId in store)
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.id == entity.id) { r = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             SubstitutionRule[] filtered;
-            foreach (ref r; *arr)
+            foreach (r; *arr)
                 if (r.id != id) filtered ~= r;
             store[tenantId] = filtered;
         }

@@ -22,7 +22,7 @@ class MemoryFeatureRestrictionRepository : FeatureRestrictionRepository {
   }
 
   FeatureRestriction findByKey(MobileAppId appId, string featureKey) {
-    foreach (ref r; store) {
+    foreach (r; store) {
       if (r.appId == appId && r.featureKey == featureKey)
         return r;
     }

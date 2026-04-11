@@ -60,7 +60,7 @@ class ArtifactController : PlatformController {
             auto artifacts = uc.list();
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; artifacts) {
+            foreach (a; artifacts) {
                 auto aj = Json.emptyObject;
                 aj["id"] = Json(a.id);
                 aj["name"] = Json(a.name);

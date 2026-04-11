@@ -16,7 +16,7 @@ class MemoryTaskRepository : TaskRepository {
 
     Task findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.id == id) return t;
         return Task.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskRepository : TaskRepository {
     Task[] findByAssignee(string tenantId, string assignee) {
         Task[] result;
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.assignee == assignee) result ~= t;
         return result;
     }
@@ -37,7 +37,7 @@ class MemoryTaskRepository : TaskRepository {
     Task[] findByStatus(string tenantId, TaskStatus status) {
         Task[] result;
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.status == status) result ~= t;
         return result;
     }
@@ -45,7 +45,7 @@ class MemoryTaskRepository : TaskRepository {
     Task[] findByProvider(string tenantId, string providerId) {
         Task[] result;
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.providerId == providerId) result ~= t;
         return result;
     }
@@ -53,7 +53,7 @@ class MemoryTaskRepository : TaskRepository {
     Task[] findByCategory(string tenantId, TaskCategory category) {
         Task[] result;
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.category == category) result ~= t;
         return result;
     }
@@ -61,7 +61,7 @@ class MemoryTaskRepository : TaskRepository {
     Task[] findByPriority(string tenantId, TaskPriority priority) {
         Task[] result;
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.priority == priority) result ~= t;
         return result;
     }
@@ -72,14 +72,14 @@ class MemoryTaskRepository : TaskRepository {
 
     void update(string tenantId, Task entity) {
         if (auto arr = tenantId in store)
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.id == entity.id) { t = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             Task[] filtered;
-            foreach (ref t; *arr)
+            foreach (t; *arr)
                 if (t.id != id) filtered ~= t;
             store[tenantId] = filtered;
         }

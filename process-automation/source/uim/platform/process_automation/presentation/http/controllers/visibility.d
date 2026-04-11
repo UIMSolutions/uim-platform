@@ -60,7 +60,7 @@ class VisibilityController : PlatformController {
             auto dashboards = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref v; dashboards) {
+            foreach (v; dashboards) {
                 auto vj = Json.emptyObject;
                 vj["id"] = Json(v.id);
                 vj["name"] = Json(v.name);

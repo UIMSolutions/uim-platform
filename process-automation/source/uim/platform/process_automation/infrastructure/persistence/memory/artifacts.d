@@ -14,7 +14,7 @@ class MemoryArtifactRepository : ArtifactRepository {
     private Artifact[] store;
 
     Artifact findById(ArtifactId id) {
-        foreach (ref a; store) {
+        foreach (a; store) {
             if (a.id == id)
                 return a;
         }
@@ -38,7 +38,7 @@ class MemoryArtifactRepository : ArtifactRepository {
     }
 
     void update(Artifact a) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == a.id) {
                 existing = a;
                 return;

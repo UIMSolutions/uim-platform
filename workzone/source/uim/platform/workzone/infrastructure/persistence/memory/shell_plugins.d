@@ -28,10 +28,10 @@ class MemoryShellPluginRepository : ShellPluginRepository {
 
   ShellPlugin[] findBySite(SiteId sitetenantId, id tenantId) {
     ShellPlugin[] result;
-    foreach (ref p; store.byValue()) {
+    foreach (p; store.byValue()) {
       if (p.tenantId != tenantId)
         continue;
-      foreach (ref sid; p.assignedSiteIds)
+      foreach (sid; p.assignedSiteIds)
         if (sid == siteId)
         {
           result ~= p;

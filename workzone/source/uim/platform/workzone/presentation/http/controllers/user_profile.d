@@ -65,7 +65,7 @@ class UserProfileController {
       TenantId tenantId = req.getTenantId;
       auto profiles = useCase.listProfiles(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; profiles)
+      foreach (p; profiles)
         arr ~= serializeUserProfile(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

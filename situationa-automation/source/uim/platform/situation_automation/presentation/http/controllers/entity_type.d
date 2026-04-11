@@ -62,7 +62,7 @@ class EntityTypeController : PlatformController {
             auto types = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref et; types) {
+            foreach (et; types) {
                 auto ej = Json.emptyObject;
                 ej["id"] = Json(et.id);
                 ej["name"] = Json(et.name);

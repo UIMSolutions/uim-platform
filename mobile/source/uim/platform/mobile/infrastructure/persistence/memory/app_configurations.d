@@ -22,7 +22,7 @@ class MemoryAppConfigurationRepository : AppConfigurationRepository {
   }
 
   AppConfiguration findByKey(MobileAppId appId, string key) {
-    foreach (ref c; store) {
+    foreach (c; store) {
       if (c.appId == appId && c.key == key)
         return c;
     }

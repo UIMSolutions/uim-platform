@@ -24,7 +24,7 @@ class MemoryAppVersionRepository : AppVersionRepository {
   AppVersion findLatest(MobileAppId appId, AppPlatform platform) {
     AppVersion latest = AppVersion.init;
     bool found = false;
-    foreach (ref v; store) {
+    foreach (v; store) {
       if (v.appId == appId && v.platform == platform) {
         if (!found || v.publishedAt > latest.publishedAt) {
           latest = v;

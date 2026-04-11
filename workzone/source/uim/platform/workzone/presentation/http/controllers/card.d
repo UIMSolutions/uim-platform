@@ -63,7 +63,7 @@ class CardController {
       TenantId tenantId = req.getTenantId;
       auto cards = useCase.listCards(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref c; cards)
+      foreach (c; cards)
         arr ~= serializeCard(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -189,7 +189,7 @@ private CardManifest parseManifest(Json j) {
   return m;
 }
 
-private Json serializeCard(ref Card c) {
+private Json serializeCard(Card c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);

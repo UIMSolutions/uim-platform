@@ -115,7 +115,7 @@ class ManageMetricsUseCase : UIMUseCase {
 
   CommandResult pushMetricBatch(PushMetricBatchRequest req) {
     Metric[] metrics;
-    foreach (ref r; req.metrics) {
+    foreach (r; req.metrics) {
       // import std.uuid : randomUUID;
       Metric m;
       m.id = randomUUID();
@@ -166,7 +166,7 @@ class ManageMetricsUseCase : UIMUseCase {
     s.minValue = metrics[0].value_;
     s.maxValue = metrics[0].value_;
     double sum = 0;
-    foreach (ref m; metrics) {
+    foreach (m; metrics) {
       if (m.value_ < s.minValue)
         s.minValue = m.value_;
       if (m.value_ > s.maxValue)

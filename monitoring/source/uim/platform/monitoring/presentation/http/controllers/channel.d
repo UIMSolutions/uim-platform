@@ -77,7 +77,7 @@ class ChannelController : PlatformController {
       auto channels = uc.listChannels(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref ch; channels)
+      foreach (ch; channels)
         arr ~= serializeChannel(ch);
 
       auto resp = Json.emptyObject;

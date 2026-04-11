@@ -36,7 +36,7 @@ class EvaluateMetricsUseCase : UIMUseCase {
     auto rules = ruleRepo.findEnabled(tenantId);
     int triggered = 0;
 
-    foreach (ref rule; rules) {
+    foreach (rule; rules) {
       auto now = clockSeconds();
       auto windowStart = now - rule.evaluationPeriodSeconds;
 

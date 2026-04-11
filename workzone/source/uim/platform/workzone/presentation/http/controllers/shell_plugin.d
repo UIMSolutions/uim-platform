@@ -63,7 +63,7 @@ class ShellPluginController {
       TenantId tenantId = req.getTenantId;
       auto plugins = useCase.listPlugins(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; plugins)
+      foreach (p; plugins)
         arr ~= serializeShellPlugin(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

@@ -14,7 +14,7 @@ class MemoryNotificationRepository : NotificationRepository {
     private Notification[] store;
 
     Notification findById(NotificationId id) {
-        foreach (ref n; store) {
+        foreach (n; store) {
             if (n.id == id)
                 return n;
         }
@@ -42,7 +42,7 @@ class MemoryNotificationRepository : NotificationRepository {
     }
 
     void update(Notification n) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == n.id) {
                 existing = n;
                 return;

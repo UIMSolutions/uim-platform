@@ -27,7 +27,7 @@ class MemorySiteRepository : SiteRepository {
   }
 
   Site* findByAlias(string alias_, TenantId tenantId) {
-    foreach (ref s; store.byValue())
+    foreach (s; store.byValue())
       if (s.tenantId == tenantId && s.alias_ == alias_)
         return &s;
     return null;

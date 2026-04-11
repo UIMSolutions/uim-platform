@@ -60,7 +60,7 @@ class RoleController {
       TenantId tenantId = req.getTenantId;
       auto roles = useCase.listRoles(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref r; roles)
+      foreach (r; roles)
         arr ~= serializeRole(r);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

@@ -59,7 +59,7 @@ class ProcessInstanceController : PlatformController {
             auto instances = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref i; instances) {
+            foreach (i; instances) {
                 auto ij = Json.emptyObject;
                 ij["id"] = Json(i.id);
                 ij["processId"] = Json(i.processId);

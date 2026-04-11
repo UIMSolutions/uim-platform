@@ -62,7 +62,7 @@ class ExternalContentProviderController {
       TenantId tenantId = req.getTenantId;
       auto providers = useCase.listProviders(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; providers)
+      foreach (p; providers)
         arr ~= serializeExternalProvider(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

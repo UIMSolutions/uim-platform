@@ -27,7 +27,7 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
   }
 
   Workspace* findByAlias(string alias_, TenantId tenantId) {
-    foreach (ref w; store.byValue())
+    foreach (w; store.byValue())
       if (w.tenantId == tenantId && w.alias_ == alias_)
         return &w;
     return null;
@@ -35,10 +35,10 @@ class MemoryWorkspaceRepository : WorkspaceRepository {
 
   Workspace[] findByMember(UserId usertenantId, id tenantId) {
     Workspace[] result;
-    foreach (ref w; store.byValue()) {
+    foreach (w; store.byValue()) {
       if (w.tenantId != tenantId)
         continue;
-      foreach (ref m; w.members)
+      foreach (m; w.members)
         if (m.userId == userId)
         {
           result ~= w;

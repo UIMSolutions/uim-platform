@@ -70,7 +70,7 @@ class TaskDefinitionController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref d; defs) {
+            foreach (d; defs) {
                 jarr ~= defToJson(d);
             }
 
@@ -194,7 +194,7 @@ class TaskDefinitionController : PlatformController {
         }
     }
 
-    private Json defToJson(ref TaskDefinition d) {
+    private Json defToJson(TaskDefinition d) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(d.id);

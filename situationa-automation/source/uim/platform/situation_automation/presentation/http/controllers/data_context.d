@@ -64,7 +64,7 @@ class DataContextController : PlatformController {
             auto contexts = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref d; contexts) {
+            foreach (d; contexts) {
                 auto dj = Json.emptyObject;
                 dj["id"] = Json(d.id);
                 dj["instanceId"] = Json(d.instanceId);

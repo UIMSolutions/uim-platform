@@ -14,7 +14,7 @@ class MemoryProcessInstanceRepository : ProcessInstanceRepository {
     private ProcessInstance[] store;
 
     ProcessInstance findById(ProcessInstanceId id) {
-        foreach (ref i; store) {
+        foreach (i; store) {
             if (i.id == id)
                 return i;
         }
@@ -38,7 +38,7 @@ class MemoryProcessInstanceRepository : ProcessInstanceRepository {
     }
 
     void update(ProcessInstance i) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == i.id) {
                 existing = i;
                 return;

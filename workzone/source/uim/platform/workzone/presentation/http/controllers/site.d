@@ -61,7 +61,7 @@ class SiteController {
       TenantId tenantId = req.getTenantId;
       auto sites = useCase.listSites(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref s; sites)
+      foreach (s; sites)
         arr ~= serializeSite(s);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

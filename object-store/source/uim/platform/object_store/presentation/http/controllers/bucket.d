@@ -73,7 +73,7 @@ class BucketController : PlatformController {
       auto buckets = uc.listBuckets(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref b; buckets)
+      foreach (b; buckets)
         arr ~= serializeBucket(b);
 
       auto resp = Json.emptyObject;

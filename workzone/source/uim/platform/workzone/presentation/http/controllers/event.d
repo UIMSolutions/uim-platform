@@ -69,7 +69,7 @@ class EventController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto events = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref e; events)
+      foreach (e; events)
         arr ~= serializeEvent(e);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

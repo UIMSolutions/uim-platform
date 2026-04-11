@@ -52,7 +52,7 @@ class AlertController : PlatformController {
         alerts = uc.listAlerts(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref a; alerts)
+      foreach (a; alerts)
         arr ~= serializeAlert(a);
 
       auto resp = Json.emptyObject;

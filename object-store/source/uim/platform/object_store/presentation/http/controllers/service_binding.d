@@ -63,7 +63,7 @@ class ServiceBindingController {
       auto bindings = uc.listBindings(bucketId);
 
       auto arr = Json.emptyArray;
-      foreach (ref b; bindings)
+      foreach (b; bindings)
         arr ~= serializeBinding(b);
 
       auto resp = Json.emptyObject;

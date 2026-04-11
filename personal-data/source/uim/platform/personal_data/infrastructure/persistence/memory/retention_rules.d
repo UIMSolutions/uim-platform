@@ -21,7 +21,7 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
 
     RetentionRule[] findByTenant(TenantId tenantId) {
         RetentionRule[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
@@ -29,14 +29,14 @@ class MemoryRetentionRuleRepository : RetentionRuleRepository {
     RetentionRule[] findByApplication(RegisteredApplicationId applicationId) {
         import std.algorithm : canFind;
         RetentionRule[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.applicationIds.canFind(applicationId)) result ~= v;
         return result;
     }
 
     RetentionRule[] findByStatus(RetentionRuleStatus status) {
         RetentionRule[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.status == status) result ~= v;
         return result;
     }

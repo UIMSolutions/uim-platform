@@ -62,7 +62,7 @@ class WorkpageController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto pages = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref p; pages)
+      foreach (p; pages)
         arr ~= serializePage(p);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -130,7 +130,7 @@ class WorkpageController {
   }
 }
 
-private Json serializePage(ref Workpage p) {
+private Json serializePage(Workpage p) {
   auto j = Json.emptyObject;
   j["id"] = Json(p.id);
   j["workspaceId"] = Json(p.workspaceId);

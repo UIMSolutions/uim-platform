@@ -14,7 +14,7 @@ class MemoryDecisionRepository : DecisionRepository {
     private Decision[] store;
 
     Decision findById(DecisionId id) {
-        foreach (ref d; store) {
+        foreach (d; store) {
             if (d.id == id)
                 return d;
         }
@@ -34,7 +34,7 @@ class MemoryDecisionRepository : DecisionRepository {
     }
 
     void update(Decision d) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == d.id) {
                 existing = d;
                 return;

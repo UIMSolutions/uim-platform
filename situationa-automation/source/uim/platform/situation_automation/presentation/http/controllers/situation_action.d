@@ -69,7 +69,7 @@ class SituationActionController : PlatformController {
             auto actions = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; actions) {
+            foreach (a; actions) {
                 auto aj = Json.emptyObject;
                 aj["id"] = Json(a.id);
                 aj["name"] = Json(a.name);

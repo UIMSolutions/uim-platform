@@ -72,7 +72,7 @@ class MetricDefinitionController : PlatformController {
       auto defs = uc.listDefinitions(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; defs)
+      foreach (d; defs)
         arr ~= serializeDefinition(d);
 
       auto resp = Json.emptyObject;

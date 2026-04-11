@@ -27,7 +27,7 @@ class MemoryTagRepository : TagRepository {
   }
 
   Tag* findByName(string name, TenantId tenantId) {
-    foreach (ref t; store.byValue())
+    foreach (t; store.byValue())
       if (t.tenantId == tenantId && t.name == name)
         return &t;
     return null;

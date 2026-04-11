@@ -21,14 +21,14 @@ struct ContentSearchService {
 
     string q = query.toLower();
 
-    return items.filter!((ref ContentItem c) {
+    return items.filter!((ContentItem c) {
       if (c.title.toLower().canFind(q))
         return true;
       if (c.summary.toLower().canFind(q))
         return true;
       if (c.body_.toLower().canFind(q))
         return true;
-      foreach (ref t; c.tags)
+      foreach (t; c.tags)
         if (t.toLower().canFind(q))
           return true;
       return false;

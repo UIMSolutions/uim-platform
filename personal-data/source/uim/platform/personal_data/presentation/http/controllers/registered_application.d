@@ -63,7 +63,7 @@ class RegisteredApplicationController : PlatformController {
             auto apps = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; apps) {
+            foreach (a; apps) {
                 jarr ~= appToJson(a);
             }
 
@@ -188,7 +188,7 @@ class RegisteredApplicationController : PlatformController {
         }
     }
 
-    private Json appToJson(ref RegisteredApplication a) {
+    private Json appToJson(RegisteredApplication a) {
         auto j = Json.emptyObject;
         j["id"] = Json(a.id);
         j["name"] = Json(a.name);

@@ -21,28 +21,28 @@ class MemoryPersonalDataRecordRepository : PersonalDataRecordRepository {
 
     PersonalDataRecord[] findByTenant(TenantId tenantId) {
         PersonalDataRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     PersonalDataRecord[] findByDataSubject(DataSubjectId dataSubjectId) {
         PersonalDataRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
 
     PersonalDataRecord[] findByApplication(RegisteredApplicationId applicationId) {
         PersonalDataRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.applicationId == applicationId) result ~= v;
         return result;
     }
 
     PersonalDataRecord[] findByDataSubjectAndApplication(DataSubjectId dataSubjectId, RegisteredApplicationId applicationId) {
         PersonalDataRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.dataSubjectId == dataSubjectId && v.applicationId == applicationId) result ~= v;
         return result;
     }

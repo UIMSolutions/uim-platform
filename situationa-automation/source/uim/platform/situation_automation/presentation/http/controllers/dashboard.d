@@ -62,7 +62,7 @@ class DashboardController : PlatformController {
             auto dashboards = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref d; dashboards) {
+            foreach (d; dashboards) {
                 auto dj = Json.emptyObject;
                 dj["id"] = Json(d.id);
                 dj["name"] = Json(d.name);

@@ -83,7 +83,7 @@ class NotificationController {
         items = useCase.listByRecipient(recipienttenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref n; items)
+      foreach (n; items)
         arr ~= serializeNotification(n);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -164,7 +164,7 @@ class NotificationController {
   }
 }
 
-private Json serializeNotification(ref Notification n) {
+private Json serializeNotification(Notification n) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(n.id);

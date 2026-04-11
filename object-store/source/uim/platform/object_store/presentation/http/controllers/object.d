@@ -83,7 +83,7 @@ class ObjectController : PlatformController {
         objects = uc.listObjects(bucketId);
 
       auto arr = Json.emptyArray;
-      foreach (ref o; objects)
+      foreach (o; objects)
         arr ~= serializeObject(o);
 
       auto resp = Json.emptyObject;
@@ -195,7 +195,7 @@ class ObjectController : PlatformController {
       auto versions = uc.listVersions(objectId);
 
       auto arr = Json.emptyArray;
-      foreach (ref v; versions)
+      foreach (v; versions)
         arr ~= serializeVersion(v);
 
       auto resp = Json.emptyObject;

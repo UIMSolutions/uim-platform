@@ -66,7 +66,7 @@ class TaskAttachmentController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; attachments) {
+            foreach (a; attachments) {
                 jarr ~= attachmentToJson(a);
             }
 
@@ -114,7 +114,7 @@ class TaskAttachmentController : PlatformController {
         }
     }
 
-    private Json attachmentToJson(ref TaskAttachment a) {
+    private Json attachmentToJson(TaskAttachment a) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(a.id);

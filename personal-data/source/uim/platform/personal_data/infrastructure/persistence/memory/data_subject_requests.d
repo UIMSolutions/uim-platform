@@ -21,28 +21,28 @@ class MemoryDataSubjectRequestRepository : DataSubjectRequestRepository {
 
     DataSubjectRequest[] findByTenant(TenantId tenantId) {
         DataSubjectRequest[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     DataSubjectRequest[] findByDataSubject(DataSubjectId dataSubjectId) {
         DataSubjectRequest[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
 
     DataSubjectRequest[] findByStatus(RequestStatus status) {
         DataSubjectRequest[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.status == status) result ~= v;
         return result;
     }
 
     DataSubjectRequest[] findByAssignee(string assignedTo) {
         DataSubjectRequest[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.assignedTo == assignedTo) result ~= v;
         return result;
     }

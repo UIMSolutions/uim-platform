@@ -72,7 +72,7 @@ class AccessPolicyController : PlatformController {
       auto policies = uc.listPolicies(bucketId);
 
       auto arr = Json.emptyArray;
-      foreach (ref p; policies)
+      foreach (p; policies)
         arr ~= serializePolicy(p);
 
       auto resp = Json.emptyObject;

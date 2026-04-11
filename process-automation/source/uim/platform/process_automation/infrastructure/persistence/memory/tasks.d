@@ -14,7 +14,7 @@ class MemoryTaskRepository : TaskRepository {
     private Task[] store;
 
     Task findById(TaskId id) {
-        foreach (ref t; store) {
+        foreach (t; store) {
             if (t.id == id)
                 return t;
         }
@@ -42,7 +42,7 @@ class MemoryTaskRepository : TaskRepository {
     }
 
     void update(Task t) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == t.id) {
                 existing = t;
                 return;

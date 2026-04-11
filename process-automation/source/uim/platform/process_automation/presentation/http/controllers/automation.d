@@ -61,7 +61,7 @@ class AutomationController : PlatformController {
             auto automations = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; automations) {
+            foreach (a; automations) {
                 auto aj = Json.emptyObject;
                 aj["id"] = Json(a.id);
                 aj["name"] = Json(a.name);

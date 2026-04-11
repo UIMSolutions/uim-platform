@@ -62,7 +62,7 @@ class RetentionRuleController : PlatformController {
             auto rules = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; rules) {
+            foreach (r; rules) {
                 jarr ~= ruleToJson(r);
             }
 
@@ -139,7 +139,7 @@ class RetentionRuleController : PlatformController {
         }
     }
 
-    private Json ruleToJson(ref RetentionRule r) {
+    private Json ruleToJson(RetentionRule r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["name"] = Json(r.name);

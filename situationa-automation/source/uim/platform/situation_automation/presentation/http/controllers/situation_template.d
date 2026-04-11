@@ -68,7 +68,7 @@ class SituationTemplateController : PlatformController {
             auto templates = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref t; templates) {
+            foreach (t; templates) {
                 auto tj = Json.emptyObject;
                 tj["id"] = Json(t.id);
                 tj["name"] = Json(t.name);

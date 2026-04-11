@@ -78,7 +78,7 @@ class DataSubjectRequestController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; requests) {
+            foreach (r; requests) {
                 jarr ~= requestToJson(r);
             }
 
@@ -154,7 +154,7 @@ class DataSubjectRequestController : PlatformController {
         }
     }
 
-    private Json requestToJson(ref DataSubjectRequest r) {
+    private Json requestToJson(DataSubjectRequest r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["dataSubjectId"] = Json(r.dataSubjectId);

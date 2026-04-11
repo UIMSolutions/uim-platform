@@ -66,7 +66,7 @@ class KnowledgeBaseArticleController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto articles = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref a; articles)
+      foreach (a; articles)
         arr ~= serializeKBArticle(a);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

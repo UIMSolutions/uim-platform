@@ -58,7 +58,7 @@ class GroupController {
       TenantId tenantId = req.getTenantId;
       auto groups = useCase.listGroups(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref g; groups)
+      foreach (g; groups)
         arr ~= serializeGroup(g);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

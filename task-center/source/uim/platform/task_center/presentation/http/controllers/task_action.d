@@ -66,7 +66,7 @@ class TaskActionController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref a; actions) {
+            foreach (a; actions) {
                 jarr ~= actionToJson(a);
             }
 
@@ -114,7 +114,7 @@ class TaskActionController : PlatformController {
         }
     }
 
-    private Json actionToJson(ref TaskAction a) {
+    private Json actionToJson(TaskAction a) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(a.id);

@@ -20,7 +20,7 @@ class MemoryMetricRepository : MetricRepository {
   private Metric[] store;
 
   Metric findById(MetricId id) {
-    foreach (ref m; store)
+    foreach (m; store)
       if (m.id == id)
         return m;
     return Metric.init;
@@ -51,7 +51,7 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   void saveAll(Metric[] metrics) {
-    foreach (ref m; metrics)
+    foreach (m; metrics)
       store ~= m;
   }
 

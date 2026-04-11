@@ -64,7 +64,7 @@ class NotificationController : PlatformController {
             auto notifications = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref n; notifications) {
+            foreach (n; notifications) {
                 auto nj = Json.emptyObject;
                 nj["id"] = Json(n.id);
                 nj["instanceId"] = Json(n.instanceId);

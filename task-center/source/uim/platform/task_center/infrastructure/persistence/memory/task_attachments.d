@@ -16,7 +16,7 @@ class MemoryTaskAttachmentRepository : TaskAttachmentRepository {
 
     TaskAttachment findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.id == id) return a;
         return TaskAttachment.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskAttachmentRepository : TaskAttachmentRepository {
     TaskAttachment[] findByTask(string tenantId, string taskId) {
         TaskAttachment[] result;
         if (auto arr = tenantId in store)
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.taskId == taskId) result ~= a;
         return result;
     }
@@ -41,7 +41,7 @@ class MemoryTaskAttachmentRepository : TaskAttachmentRepository {
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskAttachment[] filtered;
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.id != id) filtered ~= a;
             store[tenantId] = filtered;
         }

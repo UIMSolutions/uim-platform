@@ -14,7 +14,7 @@ class MemoryAutomationRuleRepository : AutomationRuleRepository {
     private AutomationRule[] store;
 
     AutomationRule findById(AutomationRuleId id) {
-        foreach (ref r; store) {
+        foreach (r; store) {
             if (r.id == id)
                 return r;
         }
@@ -38,7 +38,7 @@ class MemoryAutomationRuleRepository : AutomationRuleRepository {
     }
 
     void update(AutomationRule r) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == r.id) {
                 existing = r;
                 return;

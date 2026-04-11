@@ -75,7 +75,7 @@ class WorkspaceController {
       TenantId tenantId = req.getTenantId;
       auto workspaces = useCase.listWorkspaces(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref w; workspaces)
+      foreach (w; workspaces)
         arr ~= serializeWorkspace(w);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -200,7 +200,7 @@ private WorkspaceSettings parseWorkspaceSettings(Json j) {
   return s;
 }
 
-private Json serializeWorkspace(ref Workspace w) {
+private Json serializeWorkspace(Workspace w) {
   // import std.conv : to;
 
   auto j = Json.emptyObject;
@@ -218,7 +218,7 @@ private Json serializeWorkspace(ref Workspace w) {
 
   // Members
   auto members = Json.emptyArray;
-  foreach (ref m; w.members) {
+  foreach (m; w.members) {
     auto mj = Json.emptyObject;
     mj["userId"] = Json(m.userId);
     mj["displayName"] = Json(m.displayName);

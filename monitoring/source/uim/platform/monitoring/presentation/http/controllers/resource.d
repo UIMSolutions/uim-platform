@@ -72,7 +72,7 @@ class ResourceController : PlatformController {
       auto resources = uc.listResources(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; resources)
+      foreach (r; resources)
         arr ~= serializeResource(r);
 
       auto resp = Json.emptyObject;

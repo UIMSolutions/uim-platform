@@ -76,7 +76,7 @@ class PersonalDataRecordController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; records) {
+            foreach (r; records) {
                 jarr ~= recordToJson(r);
             }
 
@@ -122,7 +122,7 @@ class PersonalDataRecordController : PlatformController {
         }
     }
 
-    private Json recordToJson(ref PersonalDataRecord r) {
+    private Json recordToJson(PersonalDataRecord r) {
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);
         j["dataSubjectId"] = Json(r.dataSubjectId);

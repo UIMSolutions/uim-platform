@@ -66,7 +66,7 @@ class UserTaskFilterController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref f; filters) {
+            foreach (f; filters) {
                 jarr ~= filterToJson(f);
             }
 
@@ -165,7 +165,7 @@ class UserTaskFilterController : PlatformController {
         }
     }
 
-    private Json filterToJson(ref UserTaskFilter f) {
+    private Json filterToJson(UserTaskFilter f) {
         auto j = Json.emptyObject;
         j["id"] = Json(f.id);
         j["tenantId"] = Json(f.tenantId);

@@ -16,7 +16,7 @@ class MemoryTaskProviderRepository : TaskProviderRepository {
 
     TaskProvider findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.id == id) return p;
         return TaskProvider.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskProviderRepository : TaskProviderRepository {
     TaskProvider[] findByName(string tenantId, string name) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.name == name) result ~= p;
         return result;
     }
@@ -37,7 +37,7 @@ class MemoryTaskProviderRepository : TaskProviderRepository {
     TaskProvider[] findByStatus(string tenantId, ProviderStatus status) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.status == status) result ~= p;
         return result;
     }
@@ -45,7 +45,7 @@ class MemoryTaskProviderRepository : TaskProviderRepository {
     TaskProvider[] findByType(string tenantId, ProviderType ptype) {
         TaskProvider[] result;
         if (auto arr = tenantId in store)
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.providerType == ptype) result ~= p;
         return result;
     }
@@ -56,14 +56,14 @@ class MemoryTaskProviderRepository : TaskProviderRepository {
 
     void update(string tenantId, TaskProvider entity) {
         if (auto arr = tenantId in store)
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.id == entity.id) { p = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskProvider[] filtered;
-            foreach (ref p; *arr)
+            foreach (p; *arr)
                 if (p.id != id) filtered ~= p;
             store[tenantId] = filtered;
         }

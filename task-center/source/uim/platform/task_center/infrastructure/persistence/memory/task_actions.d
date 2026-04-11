@@ -16,7 +16,7 @@ class MemoryTaskActionRepository : TaskActionRepository {
 
     TaskAction findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.id == id) return a;
         return TaskAction.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskActionRepository : TaskActionRepository {
     TaskAction[] findByTask(string tenantId, string taskId) {
         TaskAction[] result;
         if (auto arr = tenantId in store)
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.taskId == taskId) result ~= a;
         return result;
     }
@@ -37,7 +37,7 @@ class MemoryTaskActionRepository : TaskActionRepository {
     TaskAction[] findByPerformer(string tenantId, string performerId) {
         TaskAction[] result;
         if (auto arr = tenantId in store)
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.performedBy == performerId) result ~= a;
         return result;
     }
@@ -49,7 +49,7 @@ class MemoryTaskActionRepository : TaskActionRepository {
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskAction[] filtered;
-            foreach (ref a; *arr)
+            foreach (a; *arr)
                 if (a.id != id) filtered ~= a;
             store[tenantId] = filtered;
         }

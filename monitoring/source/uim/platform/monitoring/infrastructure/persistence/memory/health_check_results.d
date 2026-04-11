@@ -20,7 +20,7 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   private HealthCheckResult[] store;
 
   HealthCheckResult findById(HealthCheckResultId id) {
-    foreach (ref r; store)
+    foreach (r; store)
       if (r.id == id)
         return r;
     return HealthCheckResult.init;
@@ -36,7 +36,7 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
-    foreach (ref r; store) {
+    foreach (r; store) {
       if (r.tenantId == tenantId && r.checkId == checkId) {
         if (latest.id.isEmpty || r.executedAt > latest.executedAt)
           latest = r;

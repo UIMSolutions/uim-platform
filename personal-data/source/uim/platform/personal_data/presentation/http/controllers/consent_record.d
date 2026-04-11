@@ -71,7 +71,7 @@ class ConsentRecordController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref c; consents) {
+            foreach (c; consents) {
                 jarr ~= consentToJson(c);
             }
 
@@ -149,7 +149,7 @@ class ConsentRecordController : PlatformController {
         }
     }
 
-    private Json consentToJson(ref ConsentRecord c) {
+    private Json consentToJson(ConsentRecord c) {
         auto j = Json.emptyObject;
         j["id"] = Json(c.id);
         j["dataSubjectId"] = Json(c.dataSubjectId);

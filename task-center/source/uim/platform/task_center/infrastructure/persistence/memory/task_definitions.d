@@ -16,7 +16,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
 
     TaskDefinition findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.id == id) return d;
         return TaskDefinition.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
     TaskDefinition[] findByProvider(string tenantId, string providerId) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.providerId == providerId) result ~= d;
         return result;
     }
@@ -37,7 +37,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
     TaskDefinition[] findByCategory(string tenantId, TaskCategory category) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.category == category) result ~= d;
         return result;
     }
@@ -45,7 +45,7 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
     TaskDefinition[] findByName(string tenantId, string name) {
         TaskDefinition[] result;
         if (auto arr = tenantId in store)
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.name == name) result ~= d;
         return result;
     }
@@ -56,14 +56,14 @@ class MemoryTaskDefinitionRepository : TaskDefinitionRepository {
 
     void update(string tenantId, TaskDefinition entity) {
         if (auto arr = tenantId in store)
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.id == entity.id) { d = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskDefinition[] filtered;
-            foreach (ref d; *arr)
+            foreach (d; *arr)
                 if (d.id != id) filtered ~= d;
             store[tenantId] = filtered;
         }

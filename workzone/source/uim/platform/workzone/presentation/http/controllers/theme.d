@@ -63,7 +63,7 @@ class ThemeController {
       TenantId tenantId = req.getTenantId;
       auto themes = useCase.listThemes(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref t; themes)
+      foreach (t; themes)
         arr ~= serializeTheme(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

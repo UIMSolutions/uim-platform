@@ -30,7 +30,7 @@ class MemoryObjectVersionRepository : ObjectVersionRepository {
   }
 
   ObjectVersion findLatest(ObjectId objectId) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.objectId == objectId && e.isLatest)
         return e;
     return null;
@@ -46,7 +46,7 @@ class MemoryObjectVersionRepository : ObjectVersionRepository {
 
   void removeByObject(ObjectId objectId) {
     ObjectVersionId[] toRemove;
-    foreach (ref kv; store.byKeyValue())
+    foreach (kv; store.byKeyValue())
       if (kv.value.objectId == objectId)
         toRemove ~= kv.key;
     foreach (id; toRemove)

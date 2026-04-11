@@ -65,7 +65,7 @@ class TaskCommentController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref c; comments) {
+            foreach (c; comments) {
                 jarr ~= commentToJson(c);
             }
 
@@ -137,7 +137,7 @@ class TaskCommentController : PlatformController {
         }
     }
 
-    private Json commentToJson(ref TaskComment c) {
+    private Json commentToJson(TaskComment c) {
         auto j = Json.emptyObject;
         j["id"] = Json(c.id);
         j["tenantId"] = Json(c.tenantId);

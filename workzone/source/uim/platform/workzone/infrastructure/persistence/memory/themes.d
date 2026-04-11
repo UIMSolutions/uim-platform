@@ -27,7 +27,7 @@ class MemoryThemeRepository : ThemeRepository {
   }
 
   Theme* findDefault(TenantId tenantId) {
-    foreach (ref t; store.byValue())
+    foreach (t; store.byValue())
       if (t.tenantId == tenantId && t.isDefault)
         return &t;
     return null;

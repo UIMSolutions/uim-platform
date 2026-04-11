@@ -150,7 +150,7 @@ private AppConfig parseAppConfig(Json j) {
   return cfg;
 }
 
-private Json serializeApp(ref AppRegistration a) {
+private Json serializeApp(AppRegistration a) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(a.id);
@@ -166,12 +166,12 @@ private Json serializeApp(ref AppRegistration a) {
   j["updatedAt"] = Json(a.updatedAt);
 
   auto platforms = Json.emptyArray;
-  foreach (ref p; a.supportedPlatforms)
+  foreach (p; a.supportedPlatforms)
     platforms ~= Json(p);
   j["supportedPlatforms"] = platforms;
 
   auto tags = Json.emptyArray;
-  foreach (ref t; a.tags)
+  foreach (t; a.tags)
     tags ~= Json(t);
   j["tags"] = tags;
 

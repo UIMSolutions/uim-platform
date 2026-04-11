@@ -21,27 +21,27 @@ class MemoryConsentRecordRepository : ConsentRecordRepository {
 
     ConsentRecord[] findByTenant(TenantId tenantId) {
         ConsentRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.tenantId == tenantId) result ~= v;
         return result;
     }
 
     ConsentRecord[] findByDataSubject(DataSubjectId dataSubjectId) {
         ConsentRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.dataSubjectId == dataSubjectId) result ~= v;
         return result;
     }
 
     ConsentRecord[] findByPurpose(ProcessingPurposeId purposeId) {
         ConsentRecord[] result;
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.purposeId == purposeId) result ~= v;
         return result;
     }
 
     ConsentRecord findByDataSubjectAndPurpose(DataSubjectId dataSubjectId, ProcessingPurposeId purposeId) {
-        foreach (ref v; store)
+        foreach (v; store)
             if (v.dataSubjectId == dataSubjectId && v.purposeId == purposeId) return v;
         return ConsentRecord.init;
     }

@@ -47,7 +47,7 @@ class GetDashboardUseCase : UIMUseCase {
     // Resources
     auto resources = resourceRepo.findByTenant(tenantId);
     summary.totalResources = cast(long) resources.length;
-    foreach (ref r; resources) {
+    foreach (r; resources) {
       if (r.state == ResourceState.started)
         summary.healthyResources++;
       else if (r.state == ResourceState.error || r.state == ResourceState.stopped)
@@ -57,7 +57,7 @@ class GetDashboardUseCase : UIMUseCase {
     // Alerts
     auto alerts = alertRepo.findByTenant(tenantId);
     summary.totalAlerts = cast(long) alerts.length;
-    foreach (ref a; alerts) {
+    foreach (a; alerts) {
       if (a.state == AlertState.open)
         summary.openAlerts++;
       if (a.severity == AlertSeverity.critical || a.severity == AlertSeverity.fatal)
@@ -67,7 +67,7 @@ class GetDashboardUseCase : UIMUseCase {
     // Checks
     auto checks = checkRepo.findByTenant(tenantId);
     summary.totalChecks = cast(long) checks.length;
-    foreach (ref c; checks) {
+    foreach (c; checks) {
       if (c.isEnabled) {
         auto latest = checkResultRepo.findLatestByCheck(tenantId, c.id);
         if (!latest.id.isEmpty && (latest.status == CheckStatus.critical

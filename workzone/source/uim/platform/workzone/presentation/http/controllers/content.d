@@ -86,7 +86,7 @@ class ContentController {
         items = useCase.listByWorkspace(workspacetenantId, id);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; items)
+      foreach (c; items)
         arr ~= serializeContent(c);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -183,7 +183,7 @@ class ContentController {
   }
 }
 
-private Json serializeContent(ref ContentItem c) {
+private Json serializeContent(ContentItem c) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(c.id);
@@ -206,7 +206,7 @@ private Json serializeContent(ref ContentItem c) {
   j["updatedAt"] = Json(c.updatedAt);
 
   auto tags = Json.emptyArray;
-  foreach (ref t; c.tags)
+  foreach (t; c.tags)
     tags ~= Json(t);
   j["tags"] = tags;
 

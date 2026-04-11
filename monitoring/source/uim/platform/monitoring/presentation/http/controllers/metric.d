@@ -112,7 +112,7 @@ class MetricController : PlatformController {
       auto metrics = uc.queryMetrics(qr);
 
       auto arr = Json.emptyArray;
-      foreach (ref m; metrics)
+      foreach (m; metrics)
         arr ~= serializeMetric(m);
 
       auto resp = Json.emptyObject;

@@ -61,7 +61,7 @@ class ProcessingPurposeController : PlatformController {
             auto purposes = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref p; purposes) {
+            foreach (p; purposes) {
                 jarr ~= purposeToJson(p);
             }
 
@@ -137,7 +137,7 @@ class ProcessingPurposeController : PlatformController {
         }
     }
 
-    private Json purposeToJson(ref ProcessingPurpose p) {
+    private Json purposeToJson(ProcessingPurpose p) {
         auto j = Json.emptyObject;
         j["id"] = Json(p.id);
         j["name"] = Json(p.name);

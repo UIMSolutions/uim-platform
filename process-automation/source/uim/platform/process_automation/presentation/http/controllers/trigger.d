@@ -63,7 +63,7 @@ class TriggerController : PlatformController {
             auto triggers = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref t; triggers) {
+            foreach (t; triggers) {
                 auto tj = Json.emptyObject;
                 tj["id"] = Json(t.id);
                 tj["name"] = Json(t.name);

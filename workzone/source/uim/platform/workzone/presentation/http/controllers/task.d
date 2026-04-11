@@ -80,7 +80,7 @@ class TaskController {
       auto assigneeId = req.params.get("assigneeId", "");
       auto tasks = useCase.listByAssignee(assigneetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref t; tasks)
+      foreach (t; tasks)
         arr ~= serializeTask(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -187,7 +187,7 @@ class TaskController {
   }
 }
 
-private Json serializeTask(ref Task t) {
+private Json serializeTask(Task t) {
   // import std.conv : to;
   auto j = Json.emptyObject;
   j["id"] = Json(t.id);
@@ -210,7 +210,7 @@ private Json serializeTask(ref Task t) {
   j["updatedAt"] = Json(t.updatedAt);
 
   auto tags = Json.emptyArray;
-  foreach (ref tag; t.tags)
+  foreach (tag; t.tags)
     tags ~= Json(tag);
   j["tags"] = tags;
 

@@ -66,7 +66,7 @@ class SurveyController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto surveys = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref s; surveys)
+      foreach (s; surveys)
         arr ~= serializeSurvey(s);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

@@ -66,7 +66,7 @@ class NavigationItemController {
       auto siteId = req.params.get("siteId", "");
       auto items = useCase.listBySite(sitetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref n; items)
+      foreach (n; items)
         arr ~= serializeNavigationItem(n);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

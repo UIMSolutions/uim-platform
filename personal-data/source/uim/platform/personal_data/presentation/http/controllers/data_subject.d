@@ -67,7 +67,7 @@ class DataSubjectController : PlatformController {
             auto subjects = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref s; subjects) {
+            foreach (s; subjects) {
                 jarr ~= subjectToJson(s);
             }
 
@@ -97,7 +97,7 @@ class DataSubjectController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref s; results) {
+            foreach (s; results) {
                 jarr ~= subjectToJson(s);
             }
 
@@ -223,7 +223,7 @@ class DataSubjectController : PlatformController {
         }
     }
 
-    private Json subjectToJson(ref DataSubject s) {
+    private Json subjectToJson(DataSubject s) {
         auto j = Json.emptyObject;
         j["id"] = Json(s.id);
         j["subjectType"] = Json(s.subjectType.to!string);

@@ -61,7 +61,7 @@ class DecisionController : PlatformController {
             auto decisions = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref d; decisions) {
+            foreach (d; decisions) {
                 auto dj = Json.emptyObject;
                 dj["id"] = Json(d.id);
                 dj["name"] = Json(d.name);

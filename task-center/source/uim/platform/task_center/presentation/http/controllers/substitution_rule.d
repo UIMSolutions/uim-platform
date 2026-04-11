@@ -70,7 +70,7 @@ class SubstitutionRuleController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; rules) {
+            foreach (r; rules) {
                 jarr ~= ruleToJson(r);
             }
 
@@ -194,7 +194,7 @@ class SubstitutionRuleController : PlatformController {
         }
     }
 
-    private Json ruleToJson(ref SubstitutionRule r) {
+    private Json ruleToJson(SubstitutionRule r) {
         import std.conv : to;
         auto j = Json.emptyObject;
         j["id"] = Json(r.id);

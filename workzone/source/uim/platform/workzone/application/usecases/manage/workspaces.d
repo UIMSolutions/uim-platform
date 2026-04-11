@@ -83,7 +83,7 @@ class ManageWorkspacesUseCase : UIMUseCase {
       return CommandResult(false, "", "Workspace not found");
 
     // Check duplicate
-    foreach (ref m; ws.members)
+    foreach (m; ws.members)
       if (m.userId == req.userId)
         return CommandResult(false, "", "User is already a member");
 

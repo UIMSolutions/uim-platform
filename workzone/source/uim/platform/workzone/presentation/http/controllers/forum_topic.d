@@ -63,7 +63,7 @@ class ForumTopicController {
       auto workspaceId = req.params.get("workspaceId", "");
       auto topics = useCase.listByWorkspace(workspacetenantId, id);
       auto arr = Json.emptyArray;
-      foreach (ref t; topics)
+      foreach (t; topics)
         arr ~= serializeForumTopic(t);
       auto resp = Json.emptyObject;
       resp["items"] = arr;

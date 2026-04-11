@@ -59,7 +59,7 @@ class FormController : PlatformController {
             auto forms = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref f; forms) {
+            foreach (f; forms) {
                 auto fj = Json.emptyObject;
                 fj["id"] = Json(f.id);
                 fj["name"] = Json(f.name);

@@ -61,7 +61,7 @@ struct ThresholdEvaluator {
       return 0;
 
     double sum = 0;
-    foreach (ref m; metrics)
+    foreach (m; metrics)
       sum += m.value_;
     return sum / cast(double) metrics.length;
   }

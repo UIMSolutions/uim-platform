@@ -14,7 +14,7 @@ class MemoryActionRepository : ActionRepository {
     private Action[] store;
 
     Action findById(ActionId id) {
-        foreach (ref a; store) {
+        foreach (a; store) {
             if (a.id == id)
                 return a;
         }
@@ -34,7 +34,7 @@ class MemoryActionRepository : ActionRepository {
     }
 
     void update(Action a) {
-        foreach (ref existing; store) {
+        foreach (existing; store) {
             if (existing.id == a.id) {
                 existing = a;
                 return;

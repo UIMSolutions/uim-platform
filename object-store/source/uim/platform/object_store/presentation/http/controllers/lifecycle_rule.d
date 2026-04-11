@@ -74,7 +74,7 @@ class LifecycleRuleController : PlatformController {
       auto rules = uc.listRules(bucketId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; rules)
+      foreach (r; rules)
         arr ~= serializeRule(r);
 
       auto resp = Json.emptyObject;

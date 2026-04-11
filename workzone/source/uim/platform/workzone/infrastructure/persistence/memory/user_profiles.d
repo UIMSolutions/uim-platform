@@ -27,7 +27,7 @@ class MemoryUserProfileRepository : UserProfileRepository {
   }
 
   UserProfile* findByUserId(UserId usertenantId, id tenantId) {
-    foreach (ref p; store.byValue())
+    foreach (p; store.byValue())
       if (p.tenantId == tenantId && p.userId == userId)
         return &p;
     return null;
@@ -35,10 +35,10 @@ class MemoryUserProfileRepository : UserProfileRepository {
 
   UserProfile[] findByGroup(GroupId grouptenantId, id tenantId) {
     UserProfile[] result;
-    foreach (ref p; store.byValue()) {
+    foreach (p; store.byValue()) {
       if (p.tenantId != tenantId)
         continue;
-      foreach (ref gid; p.groupIds)
+      foreach (gid; p.groupIds)
         if (gid == groupId)
         {
           result ~= p;

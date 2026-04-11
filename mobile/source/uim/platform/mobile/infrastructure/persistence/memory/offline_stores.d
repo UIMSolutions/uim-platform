@@ -22,7 +22,7 @@ class MemoryOfflineStoreRepository : OfflineStoreRepository {
   }
 
   OfflineStore findByName(MobileAppId appId, string name) {
-    foreach (ref s; store) {
+    foreach (s; store) {
       if (s.appId == appId && s.name == name)
         return s;
     }

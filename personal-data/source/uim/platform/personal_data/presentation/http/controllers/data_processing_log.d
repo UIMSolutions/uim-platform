@@ -73,7 +73,7 @@ class DataProcessingLogController : PlatformController {
             }
 
             auto jarr = Json.emptyArray;
-            foreach (ref l; logs) {
+            foreach (l; logs) {
                 jarr ~= logToJson(l);
             }
 
@@ -119,7 +119,7 @@ class DataProcessingLogController : PlatformController {
         }
     }
 
-    private Json logToJson(ref DataProcessingLog l) {
+    private Json logToJson(DataProcessingLog l) {
         auto j = Json.emptyObject;
         j["id"] = Json(l.id);
         j["dataSubjectId"] = Json(l.dataSubjectId);

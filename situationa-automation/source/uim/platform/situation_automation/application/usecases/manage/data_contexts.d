@@ -68,7 +68,7 @@ class ManageDataContextsUseCase : UIMUseCase {
 
     CommandResult removePersonalData(TenantId tenantId) {
         auto items = repo.findPersonalData(tenantId);
-        foreach (ref item; items) {
+        foreach (item; items) {
             repo.remove(item.id);
         }
         return CommandResult(true, "", "");

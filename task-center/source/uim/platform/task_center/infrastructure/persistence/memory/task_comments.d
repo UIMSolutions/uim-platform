@@ -16,7 +16,7 @@ class MemoryTaskCommentRepository : TaskCommentRepository {
 
     TaskComment findById(string tenantId, string id) {
         if (auto arr = tenantId in store)
-            foreach (ref c; *arr)
+            foreach (c; *arr)
                 if (c.id == id) return c;
         return TaskComment.init;
     }
@@ -29,7 +29,7 @@ class MemoryTaskCommentRepository : TaskCommentRepository {
     TaskComment[] findByTask(string tenantId, string taskId) {
         TaskComment[] result;
         if (auto arr = tenantId in store)
-            foreach (ref c; *arr)
+            foreach (c; *arr)
                 if (c.taskId == taskId) result ~= c;
         return result;
     }
@@ -40,14 +40,14 @@ class MemoryTaskCommentRepository : TaskCommentRepository {
 
     void update(string tenantId, TaskComment entity) {
         if (auto arr = tenantId in store)
-            foreach (ref c; *arr)
+            foreach (c; *arr)
                 if (c.id == entity.id) { c = entity; return; }
     }
 
     void remove(string tenantId, string id) {
         if (auto arr = tenantId in store) {
             TaskComment[] filtered;
-            foreach (ref c; *arr)
+            foreach (c; *arr)
                 if (c.id != id) filtered ~= c;
             store[tenantId] = filtered;
         }

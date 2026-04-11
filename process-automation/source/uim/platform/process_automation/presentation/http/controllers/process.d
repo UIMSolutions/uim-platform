@@ -61,7 +61,7 @@ class ProcessController : PlatformController {
             auto processes = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref p; processes) {
+            foreach (p; processes) {
                 auto pj = Json.emptyObject;
                 pj["id"] = Json(p.id);
                 pj["name"] = Json(p.name);

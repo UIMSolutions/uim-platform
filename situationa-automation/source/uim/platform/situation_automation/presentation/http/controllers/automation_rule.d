@@ -63,7 +63,7 @@ class AutomationRuleController : PlatformController {
             auto rules = uc.list(tenantId);
 
             auto jarr = Json.emptyArray;
-            foreach (ref r; rules) {
+            foreach (r; rules) {
                 auto rj = Json.emptyObject;
                 rj["id"] = Json(r.id);
                 rj["name"] = Json(r.name);
