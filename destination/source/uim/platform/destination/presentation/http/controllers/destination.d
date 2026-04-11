@@ -82,13 +82,10 @@ class DestinationController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -113,8 +110,7 @@ class DestinationController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(destinations.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,8 +124,7 @@ class DestinationController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeDestination(d), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -166,13 +161,10 @@ class DestinationController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Destination not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -185,32 +177,29 @@ class DestinationController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeDestination(const ref Destination d) {
-    auto j = Json.emptyObject;
-    j["id"] = d.id.toJson();
-    j["tenantId"] = d.tenantId.toJson();
-    j["subaccountId"] = d.subaccountId.toJson();
-    j["serviceInstanceId"] = d.serviceInstanceId.toJson();
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["type"] = Json(d.destinationType.to!string);
-    j["url"] = Json(d.url);
-    j["authentication"] = Json(d.authenticationType.to!string);
-    j["proxyType"] = Json(d.proxyType.to!string);
-    j["level"] = Json(d.level.to!string);
-    j["status"] = Json(d.status.to!string);
-    j["locationId"] = Json(d.locationId);
+    auto j = Json.emptyObject
+      .set("id", d.id.toJson())
+      .set("tenantId", d.tenantId.toJson())
+      .set("subaccountId", d.subaccountId.toJson())
+      .set("serviceInstanceId", d.serviceInstanceId.toJson())
+      .set("name", Json(d.name))
+      .set("description", Json(d.description))
+      .set("type", Json(d.destinationType.to!string))
+      .set("url", Json(d.url))
+      .set("authentication", Json(d.authenticationType.to!string))
+      .set("proxyType", Json(d.proxyType.to!string))
+      .set("level", Json(d.level.to!string))
+      .set("status", Json(d.status.to!string))
+      .set("locationId", Json(d.locationId));
 
     auto propsJson = Json.emptyObject;
     foreach (k, v; d.properties)

@@ -99,34 +99,34 @@ class ProfileController : PlatformController {
   }
 
   private static Json serializeProfile(const DataProfile p) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(p.id);
-    j["tenantId"] = Json(p.tenantId);
-    j["datasetId"] = Json(p.datasetId);
-    j["datasetName"] = Json(p.datasetName);
-    j["totalRecords"] = Json(p.totalRecords);
-    j["profiledRecords"] = Json(p.profiledRecords);
-    j["overallQualityScore"] = Json(p.overallQualityScore);
-    j["rating"] = Json(p.rating.to!string);
-    j["profiledAt"] = Json(p.profiledAt);
-    j["duration"] = Json(p.duration);
+    auto j = Json.emptyObject
+    .set("id", p.id)
+    .set("tenantId", p.tenantId)
+    .set("datasetId", p.datasetId)
+    .set("datasetName", p.datasetName)
+    .set("totalRecords", p.totalRecords)
+    .set("profiledRecords", p.profiledRecords)
+    .set("overallQualityScore", p.overallQualityScore)
+    .set("rating", p.rating.to!string)
+    .set("profiledAt", p.profiledAt)
+    .set("duration", p.duration);
 
     auto cols = Json.emptyArray;
     foreach (c; p.columns) {
-      auto cj = Json.emptyObject;
-      cj["fieldName"] = Json(c.fieldName);
-      cj["detectedType"] = Json(c.detectedType.to!string);
-      cj["totalValues"] = Json(c.totalValues);
-      cj["nullCount"] = Json(c.nullCount);
-      cj["emptyCount"] = Json(c.emptyCount);
-      cj["uniqueCount"] = Json(c.uniqueCount);
-      cj["duplicateCount"] = Json(c.duplicateCount);
-      cj["completeness"] = Json(c.completeness);
-      cj["uniqueness"] = Json(c.uniqueness);
-      cj["validity"] = Json(c.validity);
-      cj["minLength"] = Json(c.minLength);
-      cj["maxLength"] = Json(c.maxLength);
-      cj["avgLength"] = Json(c.avgLength);
+      auto cj = Json.emptyObject
+      .set("fieldName", c.fieldName)
+      .set("detectedType", c.detectedType.to!string)
+      .set("totalValues", c.totalValues)
+      .set("nullCount", c.nullCount)
+      .set("emptyCount", c.emptyCount)
+      .set("uniqueCount", c.uniqueCount)
+      .set("duplicateCount", c.duplicateCount)
+      .set("completeness", c.completeness)
+      .set("uniqueness", c.uniqueness)
+      .set("validity", c.validity)
+      .set("minLength", c.minLength)
+      .set("maxLength", c.maxLength)
+      .set("avgLength", c.avgLength);
 
       if (c.topValues.length > 0) {
         auto tv = Json.emptyArray;

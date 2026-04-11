@@ -61,16 +61,15 @@ class ViewController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (v; views) {
-        auto vj = Json.emptyObject;
-        vj["id"] = Json(v.id);
-        vj["name"] = Json(v.name);
-        vj["description"] = Json(v.description);
-        vj["businessName"] = Json(v.businessName);
-        vj["isExposed"] = Json(v.isExposed);
-        vj["isPersisted"] = Json(v.isPersisted);
-        vj["rowCount"] = Json(v.rowCount);
-        vj["createdAt"] = Json(v.createdAt);
-        jarr ~= vj;
+        jarr ~= Json.emptyObject
+          .set("id", v.id)
+          .set("name", v.name)
+          .set("description", v.description)
+          .set("businessName", v.businessName)
+          .set("isExposed", v.isExposed)
+          .set("isPersisted", v.isPersisted)
+          .set("rowCount", v.rowCount)
+          .set("createdAt", v.createdAt);
       }
 
       auto resp = Json.emptyObject;
@@ -85,6 +84,7 @@ class ViewController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -114,6 +114,7 @@ class ViewController : PlatformController {
   private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto j = req.json;
 
       UpdateViewRequest r;
@@ -144,6 +145,7 @@ class ViewController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

@@ -44,7 +44,7 @@ class BrowseController : PlatformController {
     try {
       auto folderId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto contents = uc.browseFolderContents(foldertenantId, id);
+      auto contents = uc.browseFolderContents(tenantId, folderId);
 
       auto fArr = Json.emptyArray;
       foreach (f; contents.subfolders)
@@ -60,8 +60,7 @@ class BrowseController : PlatformController {
       resp["totalSubfolders"] = Json(contents.subfolders.length);
       resp["totalDocuments"] = Json(contents.documents.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,22 +69,22 @@ class BrowseController : PlatformController {
     try {
       auto repoId = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
-      auto summary = uc.getRepositorySummary(repotenantId, id);
+      auto summary = uc.getRepositorySummary(tenantId, repoId);
 
-      if (summary.repositoryid.isEmpty) {
+      if (summary.repositoryId.isEmpty) {
         writeError(res, 404, "Repository not found");
         return;
       }
 
       auto j = Json.emptyObject;
-      j["repositoryId"] = Json(summary.repositoryId);
-      j["name"] = Json(summary.name);
-      j["totalDocuments"] = Json(summary.totalDocuments);
-      j["totalFolders"] = Json(summary.totalFolders);
-      j["status"] = Json(summary.status.to!string);
+      .set("repositoryId", summary.repositoryId)
+      .set("name", summary.name)
+      .set("totalDocuments", summary.totalDocuments)
+      .set("totalFolders", summary.totalFolders)
+      .set("status", summary.status.to!string);
+      
       res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -104,11 +103,9 @@ class BrowseController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -117,7 +114,7 @@ class BrowseController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto userId = req.headers.get("X-User-Id", "system");
-      auto items = uc.getFavorites(usertenantId, id);
+      auto items = uc.getFavorites(tenantId, userId);
 
       auto arr = Json.emptyArray;
       foreach (f; items)
@@ -127,8 +124,7 @@ class BrowseController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -142,41 +138,36 @@ class BrowseController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeFolder(const Folder f) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(f.id);
-    j["name"] = Json(f.name);
-    j["path"] = Json(f.path);
-    j["parentFolderId"] = Json(f.parentFolderId);
-    return j;
+    return Json.emptyObject
+      .set("id", f.id)
+      .set("name", f.name)
+      .set("path", f.path)
+      .set("parentFolderId", f.parentFolderId);
   }
 
   private static Json serializeDoc(const Document d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["name"] = Json(d.name);
-    j["mimeType"] = Json(d.mimeType);
-    j["fileSize"] = Json(d.fileSize);
-    j["status"] = Json(d.status.to!string);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("name", d.name)
+      .set("mimeType", d.mimeType)
+      .set("fileSize", d.fileSize)
+      .set("status", d.status.to!string);
   }
 
   private static Json serializeFavorite(const Favorite f) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(f.id);
-    j["userId"] = Json(f.userId);
-    j["resourceId"] = Json(f.resourceId);
-    j["resourceType"] = Json(f.resourceType.to!string);
-    j["createdAt"] = Json(f.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", f.id)
+      .set("userId", f.userId)
+      .set("resourceId", f.resourceId)
+      .set("resourceType", f.resourceType.to!string)
+      .set("createdAt", f.createdAt);
   }
 }

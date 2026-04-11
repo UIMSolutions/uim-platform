@@ -63,15 +63,14 @@ class CatalogAssetController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
-        auto aj = Json.emptyObject;
-        aj["id"] = Json(ca.id);
-        aj["name"] = Json(ca.name);
-        aj["description"] = Json(ca.description);
-        aj["businessName"] = Json(ca.businessName);
-        aj["owner"] = Json(ca.owner);
-        aj["accessCount"] = Json(ca.accessCount);
-        aj["createdAt"] = Json(ca.createdAt);
-        jarr ~= aj;
+        jarr ~= Json.emptyObject
+          .set("id", ca.id)
+          .set("name", ca.name)
+          .set("description", ca.description)
+          .set("businessName", ca.businessName)
+          .set("owner", ca.owner)
+          .set("accessCount", ca.accessCount)
+          .set("createdAt", ca.createdAt);
       }
 
       auto resp = Json.emptyObject;
@@ -86,6 +85,7 @@ class CatalogAssetController : PlatformController {
   private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto spaceId = req.headers.get("X-Space-Id", "");
       auto query = req.params.get("q", "");
 
@@ -114,6 +114,7 @@ class CatalogAssetController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -143,6 +144,7 @@ class CatalogAssetController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

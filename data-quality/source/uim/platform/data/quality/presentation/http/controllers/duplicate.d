@@ -48,10 +48,8 @@ class DuplicateController : PlatformController {
 
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
-        foreach (item; *recordsJson)
-        {
-          if (item.type == Json.Type.object)
-          {
+        foreach (item; *recordsJson) {
+          if (item.type == Json.Type.object) {
             DuplicateRecordInput dri;
             dri.recordId = item.getString("recordId");
             dri.fieldValues = jsonStrMap(item, "fieldValues");
@@ -69,8 +67,7 @@ class DuplicateController : PlatformController {
       resp["matchGroups"] = arr;
       resp["totalGroups"] = Json(groups.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -89,13 +86,10 @@ class DuplicateController : PlatformController {
         resp["id"] = Json(result.id);
         resp["resolved"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -112,8 +106,7 @@ class DuplicateController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(groups.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,21 +121,20 @@ class DuplicateController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeGroup(*group), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeGroup(const MatchGroup g) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(g.id);
-    j["tenantId"] = Json(g.tenantId);
-    j["datasetId"] = Json(g.datasetId);
-    j["strategy"] = Json(g.strategy.to!string);
-    j["survivorRecordId"] = Json(g.survivorRecordId);
-    j["resolved"] = Json(g.resolved);
-    j["detectedAt"] = Json(g.detectedAt);
+    auto json = Json.emptyObject
+      .set("id", g.id)
+      .set("tenantId", g.tenantId)
+      .set("datasetId", g.datasetId)
+      .set("strategy", g.strategy.to!string)
+      .set("survivorRecordId", g.survivorRecordId)
+      .set("resolved", g.resolved)
+      .set("detectedAt", g.detectedAt);
 
     auto candidates = Json.emptyArray;
     foreach (c; g.candidates) {

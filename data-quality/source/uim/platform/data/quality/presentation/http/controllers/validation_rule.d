@@ -161,23 +161,23 @@ class ValidationRuleController : PlatformController {
   }
 
   private static Json serializeRule(const ValidationRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["datasetPattern"] = Json(r.datasetPattern);
-    j["fieldName"] = Json(r.fieldName);
-    j["ruleType"] = Json(r.ruleType.to!string);
-    j["severity"] = Json(r.severity.to!string);
-    j["status"] = Json(r.status.to!string);
-    j["pattern"] = Json(r.pattern);
-    j["minValue"] = Json(r.minValue);
-    j["maxValue"] = Json(r.maxValue);
-    j["category"] = Json(r.category);
-    j["priority"] = Json(r.priority);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
+    auto j = Json.emptyObject
+    .set("id", r.id)
+    .set("tenantId", r.tenantId)
+    .set("name", r.name)
+    .set("description", r.description)
+    .set("datasetPattern", r.datasetPattern)
+    .set("fieldName", r.fieldName)
+    .set("ruleType", r.ruleType.to!string)
+    .set("severity", r.severity.to!string)
+    .set("status", r.status.to!string)
+    .set("pattern", r.pattern)
+    .set("minValue", r.minValue)
+    .set("maxValue", r.maxValue)
+    .set("category", r.category)
+    .set("priority", r.priority)
+    .set("createdAt", r.createdAt)
+    .set("updatedAt", r.updatedAt);
 
     if (r.allowedValues.length > 0) {
       auto arr = Json.emptyArray;

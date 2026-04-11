@@ -20,7 +20,7 @@ class DataFlowController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/datasphere/dataFlows", &handleList);
     router.get("/api/v1/datasphere/dataFlows/*", &handleGet);
     router.post("/api/v1/datasphere/dataFlows", &handleCreate);
@@ -59,14 +59,13 @@ class DataFlowController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (df; flows) {
-        auto fj = Json.emptyObject;
-        fj["id"] = Json(df.id);
-        fj["name"] = Json(df.name);
-        fj["description"] = Json(df.description);
-        fj["lastRunAt"] = Json(df.lastRunAt);
-        fj["lastRunDurationMs"] = Json(df.lastRunDurationMs);
-        fj["createdAt"] = Json(df.createdAt);
-        jarr ~= fj;
+        jarr ~= Json.emptyObject
+          .set("id", df.id)
+          .set("name", df.name)
+          .set("description", df.description)
+          .set("lastRunAt", df.lastRunAt)
+          .set("lastRunDurationMs", df.lastRunDurationMs)
+          .set("createdAt", df.createdAt);
       }
 
       auto resp = Json.emptyObject;
@@ -81,6 +80,7 @@ class DataFlowController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -109,6 +109,7 @@ class DataFlowController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

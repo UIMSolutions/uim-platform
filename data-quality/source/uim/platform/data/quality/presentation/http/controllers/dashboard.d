@@ -42,8 +42,7 @@ class DashboardController : PlatformController {
 
       auto dashboard = uc.compute(r);
       res.writeJsonBody(serializeDashboard(dashboard), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -69,24 +68,20 @@ class DashboardController : PlatformController {
     // Violations by severity
     auto sevArr = Json.emptyArray;
     foreach (s; d.violationsBySeverity) {
-      auto sj = Json.emptyObject;
-      sj["severity"] = Json(s.severity.to!string);
-      sj["count"] = Json(s.count);
-      sevArr ~= sj;
+      sevArr ~= Json.emptyObject
+        .set("severity", s.severity.to!string)
+        .set("count", s.count);
     }
 
-    auto j = Json.emptyObject;
-    j["tenantId"] = Json(d.tenantId);
-    j["datasetId"] = Json(d.datasetId);
-    j["datasetName"] = Json(d.datasetName);
-    j["records"] = records;
-    j["scores"] = scores;
-    j["rating"] = Json(d.rating.to!string);
-    j["violationCount"] = Json(d.violationCount);
-    j["violationsBySeverity"] = sevArr;
-
-    j["computedAt"] = Json(d.computedAt);
-
-    return j;
+    return Json.emptyObject
+      .set("tenantId", d.tenantId)
+      .set("datasetId", d.datasetId)
+      .set("datasetName", d.datasetName)
+      .set("records", records)
+      .set("scores", scores)
+      .set("rating", d.rating.to!string)
+      .set("violationCount", d.violationCount)
+      .set("violationsBySeverity", sevArr)
+      .set("computedAt", d.computedAt);
   }
 }
