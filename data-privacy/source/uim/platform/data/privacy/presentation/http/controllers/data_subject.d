@@ -138,22 +138,21 @@ class DataSubjectController : PlatformController {
   }
 
   private static Json serialize(const DataSubject e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["subjectType"] = Json(e.subjectType.to!string);
-    j["externalId"] = Json(e.externalId);
-    j["displayName"] = Json(e.displayName);
-    j["email"] = Json(e.email);
-    j["sourceSystem"] = Json(e.sourceSystem);
-    j["country"] = Json(e.country);
-    j["isActive"] = Json(e.isActive);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("subjectType", e.subjectType.to!string)
+      .set("externalId", e.externalId)
+      .set("displayName", e.displayName)
+      .set("email", e.email)
+      .set("sourceSystem", e.sourceSystem)
+      .set("country", e.country)
+      .set("isActive", e.isActive)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt);
   }
 
-  private static DataSubjectType parseSubjectType(string s) {
+  private static DataSubjectType parseSubjectType(string type) {
     switch (s) {
     case "employee":
       return DataSubjectType.employee;

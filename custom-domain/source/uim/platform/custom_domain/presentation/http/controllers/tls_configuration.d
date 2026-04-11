@@ -64,23 +64,23 @@ class TlsConfigurationController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (c; configs) {
-                auto cj = Json.emptyObject;
-                cj["id"] = Json(c.id);
-                cj["name"] = Json(c.name);
-                cj["description"] = Json(c.description);
-                cj["minProtocolVersion"] = Json(c.minProtocolVersion.to!string);
-                cj["maxProtocolVersion"] = Json(c.maxProtocolVersion.to!string);
-                cj["http2Enabled"] = Json(c.http2Enabled);
-                cj["hstsEnabled"] = Json(c.hstsEnabled);
-                cj["createdBy"] = Json(c.createdBy);
-                cj["createdAt"] = Json(c.createdAt);
-                jarr ~= cj;
+                jarr ~= Json.emptyObject
+                .set("id", c.id)
+                .set("name", c.name)
+                .set("description", c.description)
+                .set("minProtocolVersion", c.minProtocolVersion.to!string)
+                .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
+                .set("http2Enabled", c.http2Enabled)
+                .set("hstsEnabled", c.hstsEnabled)
+                .set("createdBy", c.createdBy)
+                .set("createdAt", c.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(configs.length);
-            resp["resources"] = jarr;
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject
+            .set("count", configs.length)
+            .set("resources", jarr);
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -97,21 +97,22 @@ class TlsConfigurationController : PlatformController {
                 return;
             }
 
-            auto resp = Json.emptyObject;
-            resp["id"] = Json(c.id);
-            resp["name"] = Json(c.name);
-            resp["description"] = Json(c.description);
-            resp["minProtocolVersion"] = Json(c.minProtocolVersion.to!string);
-            resp["maxProtocolVersion"] = Json(c.maxProtocolVersion.to!string);
-            resp["http2Enabled"] = Json(c.http2Enabled);
-            resp["hstsEnabled"] = Json(c.hstsEnabled);
-            resp["hstsMaxAge"] = Json(c.hstsMaxAge);
-            resp["hstsIncludeSubDomains"] = Json(c.hstsIncludeSubDomains);
-            resp["createdBy"] = Json(c.createdBy);
-            resp["modifiedBy"] = Json(c.modifiedBy);
-            resp["createdAt"] = Json(c.createdAt);
-            resp["modifiedAt"] = Json(c.modifiedAt);
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject
+            .set("id", c.id)
+            .set("name", c.name)
+            .set("description", c.description)
+            .set("minProtocolVersion", c.minProtocolVersion.to!string)
+            .set("maxProtocolVersion", c.maxProtocolVersion.to!string)
+            .set("http2Enabled", c.http2Enabled)
+            .set("hstsEnabled", c.hstsEnabled)
+            .set("hstsMaxAge", c.hstsMaxAge)
+            .set("hstsIncludeSubDomains", c.hstsIncludeSubDomains)
+            .set("createdBy", c.createdBy)
+            .set("modifiedBy", c.modifiedBy)
+            .set("createdAt", c.createdAt)
+            .set("modifiedAt", c.modifiedAt);
+
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

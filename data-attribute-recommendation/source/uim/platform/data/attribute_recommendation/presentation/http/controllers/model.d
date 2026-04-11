@@ -198,20 +198,19 @@ class ModelController : PlatformController {
   }
 
   private static Json serializeConfig(const ModelConfiguration c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["datasetId"] = Json(c.datasetId);
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["modelType"] = Json(c.modelType.to!string);
-    j["targetColumns"] = Json(c.targetColumns);
-    j["featureColumns"] = Json(c.featureColumns);
-    j["hyperparameters"] = Json(c.hyperparameters);
-    j["status"] = Json(c.status.to!string);
-    j["createdBy"] = Json(c.createdBy);
-    j["createdAt"] = Json(c.createdAt);
-    j["updatedAt"] = Json(c.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", c.id)
+    .set("tenantId", c.tenantId)
+    .set("datasetId", c.datasetId)
+    .set("name", c.name)
+    .set("description", c.description)
+    .set("modelType", c.modelType.to!string)
+    .set("targetColumns", c.targetColumns)
+    .set("featureColumns", c.featureColumns)
+    .set("hyperparameters", c.hyperparameters)
+    .set("status", c.status.to!string)
+    .set("createdBy", c.createdBy)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt);
   }
 }

@@ -137,29 +137,27 @@ class RetentionRuleController : PlatformController {
   }
 
   private static Json serialize(const RetentionRule e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["purpose"] = Json(e.purpose.to!string);
-    j["retentionDays"] = Json(e.retentionDays);
-    j["legalReference"] = Json(e.legalReference);
-    j["status"] = Json(e.status.to!string);
-    j["isDefault"] = Json(e.isDefault);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-
-    auto cats = Json.emptyArray;
+        auto cats = Json.emptyArray;
     foreach (c; e.categories)
       cats ~= Json(c.to!string);
-    j["categories"] = cats;
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("purpose", e.purpose.to!string)
+      .set("retentionDays", e.retentionDays)
+      .set("legalReference", e.legalReference)
+      .set("status", e.status.to!string)
+      .set("isDefault", e.isDefault)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("categories", cats);
   }
 
-  private static ProcessingPurpose parsePurpose(string s) {
-    switch (s) {
+  private static ProcessingPurpose parsePurpose(string purpose) {
+    switch (purpose) {
     case "serviceDelivery":
       return ProcessingPurpose.serviceDelivery;
     case "marketing":

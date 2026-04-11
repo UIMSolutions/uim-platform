@@ -118,13 +118,13 @@ class ChannelController : PlatformController {
       r.webhookSecret = j.getString("webhookSecret");
       r.onPremiseHost = j.getString("onPremiseHost");
       r.onPremisePort = j.getInteger("onPremisePort");
-      r.onPremiseProtocol = j.getString("onPremiseProtocol");
+      rManageNotificationChannelsUseCase.onPremiseProtocol = j.getString("onPremiseProtocol");
 
       auto result = uc.updateChannel(id, r);
       if (result.success) {
         auto response = Json.emptyObject
         .set("id", result.id);
-        
+
         res.writeJsonBody(response, 200);
       }
       else

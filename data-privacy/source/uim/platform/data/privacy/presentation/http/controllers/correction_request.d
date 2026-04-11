@@ -23,7 +23,7 @@ class CorrectionRequestController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/correction-requests", &handleCreate);
     router.get("/api/v1/correction-requests", &handleList);
     router.get("/api/v1/correction-requests/*", &handleGetById);
@@ -116,28 +116,31 @@ class CorrectionRequestController : PlatformController {
   }
 
   private static Json serialize(const CorrectionRequest e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["status"] = Json(e.status.to!string);
-    j["fieldName"] = Json(e.fieldName);
-    j["currentValue"] = Json(e.currentValue);
-    j["correctedValue"] = Json(e.correctedValue);
-    j["reason"] = Json(e.reason);
-    j["requestedAt"] = Json(e.requestedAt);
-    j["completedAt"] = Json(e.completedAt);
-    j["deadline"] = Json(e.deadline);
-    return j;
+    return Json.emptyObject
+    .set("id", e.id)
+    .set("tenantId", e.tenantId)
+    .set("dataSubjectId", e.dataSubjectId)
+    .set("requestedBy", e.requestedBy)
+    .set("status", e.status.to!string)
+    .set("fieldName", e.fieldName)
+    .set("currentValue", e.currentValue)
+    .set("correctedValue", e.correctedValue)
+    .set("reason", e.reason)
+    .set("requestedAt", e.requestedAt)
+    .set("completedAt", e.completedAt)
+    .set("deadline", e.deadline);
   }
 
-  private static CorrectionStatus parseCorrectionStatus(string s) {
-    switch (s) {
-      case "inProgress": return CorrectionStatus.inProgress;
-      case "completed": return CorrectionStatus.completed;
-      case "rejected": return CorrectionStatus.rejected;
-      default: return CorrectionStatus.requested;
+  private static CorrectionStatus parseCorrectionStatus(string status) {
+    switch (status) {
+    case "inProgress":
+      return CorrectionStatus.inProgress;
+    case "completed":
+      return CorrectionStatus.completed;
+    case "rejected":
+      return CorrectionStatus.rejected;
+    default:
+      return CorrectionStatus.requested;
     }
   }
 }

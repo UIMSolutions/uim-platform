@@ -163,27 +163,26 @@ class CleansingRuleController : PlatformController {
   }
 
   private static Json serializeRule(const CleansingRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["datasetPattern"] = Json(r.datasetPattern);
-    j["fieldName"] = Json(r.fieldName);
-    j["action"] = Json(r.action.to!string);
-    j["status"] = Json(r.status.to!string);
-    j["findPattern"] = Json(r.findPattern);
-    j["replaceWith"] = Json(r.replaceWith);
-    j["defaultValue"] = Json(r.defaultValue);
-    j["trimWhitespace"] = Json(r.trimWhitespace);
-    j["normalizeCase"] = Json(r.normalizeCase);
-    j["caseMode"] = Json(r.caseMode);
-    j["removeDiacritics"] = Json(r.removeDiacritics);
-    j["category"] = Json(r.category);
-    j["priority"] = Json(r.priority);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", r.id)
+    .set("tenantId", r.tenantId)
+    .set("name", r.name)
+    .set("description", r.description)
+    .set("datasetPattern", r.datasetPattern)
+    .set("fieldName", r.fieldName)
+    .set("action", Json(r.to!string)
+    .set("status", Json(r.to!string)
+    .set("findPattern", r.findPattern)
+    .set("replaceWith", r.replaceWith)
+    .set("defaultValue", r.defaultValue)
+    .set("trimWhitespace", r.trimWhitespace)
+    .set("normalizeCase", r.normalizeCase)
+    .set("caseMode", r.caseMode)
+    .set("removeDiacritics", r.removeDiacritics)
+    .set("category", r.category)
+    .set("priority", r.priority)
+    .set("createdAt", r.createdAt)
+    .set("updatedAt", r.updatedAt);
   }
 
   private static CleansingAction parseCleansingAction(string s) {

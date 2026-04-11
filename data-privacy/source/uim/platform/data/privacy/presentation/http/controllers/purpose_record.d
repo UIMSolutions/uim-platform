@@ -24,7 +24,7 @@ class PurposeRecordController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/purpose-records", &handleCreate);
     router.get("/api/v1/purpose-records", &handleList);
     router.get("/api/v1/purpose-records/*", &handleGetById);
@@ -41,8 +41,8 @@ class PurposeRecordController : PlatformController {
       r.businessContextId = j.getString("businessContextId");
       r.purpose = j.getString("purpose");
       r.legalBasis = j.getString("legalBasis");
-      r.residenceDays = cast(int) jsonLong(j, "residenceDays");
-      r.retentionDays = cast(int) jsonLong(j, "retentionDays");
+      r.residenceDays = cast(int)jsonLong(j, "residenceDays");
+      r.retentionDays = cast(int)jsonLong(j, "retentionDays");
       r.validFrom = jsonLong(j, "validFrom");
       r.validUntil = jsonLong(j, "validUntil");
 
@@ -116,21 +116,20 @@ class PurposeRecordController : PlatformController {
   }
 
   private static Json serialize(const PurposeRecord e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["businessContextId"] = Json(e.businessContextId);
-    j["purpose"] = Json(e.purpose);
-    j["status"] = Json(e.status.to!string);
-    j["legalBasis"] = Json(e.legalBasis);
-    j["residenceDays"] = Json(e.residenceDays);
-    j["retentionDays"] = Json(e.retentionDays);
-    j["validFrom"] = Json(e.validFrom);
-    j["validUntil"] = Json(e.validUntil);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    j["deactivatedAt"] = Json(e.deactivatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("businessContextId", e.businessContextId)
+      .set("purpose", e.purpose)
+      .set("status", e.status.to!string)
+      .set("legalBasis", e.legalBasis)
+      .set("residenceDays", e.residenceDays)
+      .set("retentionDays", e.retentionDays)
+      .set("validFrom", e.validFrom)
+      .set("validUntil", e.validUntil)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("deactivatedAt", e.deactivatedAt);
   }
 }

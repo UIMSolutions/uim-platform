@@ -28,7 +28,7 @@ class DataRetrievalController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/data-retrievals", &handleCreate);
     router.get("/api/v1/data-retrievals", &handleList);
     router.get("/api/v1/data-retrievals/*", &handleGetById);
@@ -51,11 +51,9 @@ class DataRetrievalController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -79,8 +77,7 @@ class DataRetrievalController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -94,8 +91,7 @@ class DataRetrievalController : PlatformController {
         return;
       }
       res.writeJsonBody(serialize(*entry), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -114,11 +110,9 @@ class DataRetrievalController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -128,41 +122,38 @@ class DataRetrievalController : PlatformController {
       TenantId tenantId = req.getTenantId;
       uc.deleteRequest(tenantId, id);
       res.writeJsonBody(Json.emptyObject, 204);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
   private static Json serialize(const DataRetrievalRequest e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["requestType"] = Json(e.requestType.to!string);
-    j["status"] = Json(e.status.to!string);
-    j["downloadUrl"] = Json(e.downloadUrl);
-    j["totalFields"] = Json(e.totalFields);
-    j["reason"] = Json(e.reason);
-    j["requestedAt"] = Json(e.requestedAt);
-    j["completedAt"] = Json(e.completedAt);
-    j["deadline"] = Json(e.deadline);
-
     auto systems = Json.emptyArray;
     foreach (s; e.targetSystems)
       systems ~= Json(s);
-    j["targetSystems"] = systems;
 
     auto cats = Json.emptyArray;
     foreach (c; e.categories)
       cats ~= Json(c.to!string);
-    j["categories"] = cats;
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("requestedBy", e.requestedBy)
+      .set("requestType", e.requestType.to!string)
+      .set("status", e.status.to!string)
+      .set("downloadUrl", e.downloadUrl)
+      .set("totalFields", e.totalFields)
+      .set("reason", e.reason)
+      .set("requestedAt", e.requestedAt)
+      .set("completedAt", e.completedAt)
+      .set("deadline", e.deadline)
+      .set("targetSystems", systems)
+      .set("categories", cats);
   }
 
-  private static RetrievalStatus parseRetrievalStatus(string s) {
-    switch (s) {
+  private static RetrievalStatus parseRetrievalStatus(string status) {
+    switch (status) {
     case "inProgress":
       return RetrievalStatus.inProgress;
     case "completed":

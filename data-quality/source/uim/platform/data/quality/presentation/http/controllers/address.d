@@ -28,7 +28,7 @@ class AddressController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/addresses/cleanse", &handleCleanse);
     router.post("/api/v1/addresses/cleanse/batch", &handleCleanseBatch);
     router.get("/api/v1/addresses", &handleList);
@@ -49,8 +49,7 @@ class AddressController : PlatformController {
 
       auto result = uc.cleanse(r);
       res.writeJsonBody(serializeAddress(result), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,10 +62,8 @@ class AddressController : PlatformController {
 
       auto addrJson = "addresses" in j;
       if (addrJson !is null && (*addrJson).type == Json.Type.array) {
-        foreach (item; *addrJson)
-        {
-          if (item.type == Json.Type.object)
-          {
+        foreach (item; *addrJson) {
+          if (item.type == Json.Type.object) {
             CleanseAddressRequest a;
             a.tenantId = batchReq.tenantId;
             a.sourceRecordId = item.getString("sourceRecordId");
@@ -90,8 +87,7 @@ class AddressController : PlatformController {
       resp["results"] = arr;
       resp["totalCount"] = Json(results.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -108,18 +104,12 @@ class AddressController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(records.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeAddress(const AddressRecord r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["sourceRecordId"] = Json(r.sourceRecordId);
-
     // Input
     auto input = Json.emptyObject;
     input["line1"] = Json(r.inputLine1);
@@ -128,30 +118,33 @@ class AddressController : PlatformController {
     input["region"] = Json(r.inputRegion);
     input["postalCode"] = Json(r.inputPostalCode);
     input["country"] = Json(r.inputCountry);
-    j["input"] = input;
 
     // Cleansed output
-    auto output = Json.emptyObject;
-    output["line1"] = Json(r.line1);
-    output["line2"] = Json(r.line2);
-    output["city"] = Json(r.city);
-    output["region"] = Json(r.region);
-    output["postalCode"] = Json(r.postalCode);
-    output["country"] = Json(r.country);
-    output["countryIso2"] = Json(r.countryIso2);
-    j["output"] = output;
-
-    j["addressType"] = Json(r.addressType.to!string);
-    j["quality"] = Json(r.quality.to!string);
+    auto output = Json.emptyObject
+      .set("line1", r.line1)
+      .set("line2", r.line2)
+      .set("city", r.city)
+      .set("region", r.region)
+      .set("postalCode", r.postalCode)
+      .set("country", r.country)
+      .set("countryIso2", r.countryIso2);
 
     // Geocoding
-    auto geo = Json.emptyObject;
-    geo["latitude"] = Json(r.latitude);
-    geo["longitude"] = Json(r.longitude);
-    geo["precision"] = Json(r.geocodePrecision.to!string);
-    j["geocoding"] = geo;
+    auto geo = Json.emptyObject
+      .set("latitude", r.latitude)
+      .set("longitude", r.longitude)
+      .set("precision", r.geocodePrecision.to!string);
 
-    j["cleansedAt"] = Json(r.cleansedAt);
+    auto j = Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("sourceRecordId", r.sourceRecordId)
+      .set("input", input)
+      .set("output", output)
+      .set("addressType", r.addressType.to!string)
+      .set("quality", r.quality.to!string)
+      .set("geocoding", geo)
+      .set("cleansedAt", r.cleansedAt);
 
     if (r.changeLog.length > 0) {
       auto changes = Json.emptyArray;

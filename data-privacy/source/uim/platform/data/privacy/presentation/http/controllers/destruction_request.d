@@ -117,23 +117,22 @@ class DestructionRequestController : PlatformController {
   }
 
   private static Json serialize(const DestructionRequest e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["status"] = Json(e.status.to!string);
-    j["archiveRequestId"] = Json(e.archiveRequestId);
-    j["blockingRequestId"] = Json(e.blockingRequestId);
-    j["reason"] = Json(e.reason);
-    j["scheduledAt"] = Json(e.scheduledAt);
-    j["startedAt"] = Json(e.startedAt);
-    j["completedAt"] = Json(e.completedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("requestedBy", e.requestedBy)
+      .set("status", e.status.to!string)
+      .set("archiveRequestId", e.archiveRequestId)
+      .set("blockingRequestId", e.blockingRequestId)
+      .set("reason", e.reason)
+      .set("scheduledAt", e.scheduledAt)
+      .set("startedAt", e.startedAt)
+      .set("completedAt", e.completedAt);
   }
 
-  private static DestructionStatus parseDestructionStatus(string s) {
-    switch (s) {
+  private static DestructionStatus parseDestructionStatus(string status) {
+    switch (status) {
       case "inProgress": return DestructionStatus.inProgress;
       case "completed": return DestructionStatus.completed;
       case "failed": return DestructionStatus.failed;

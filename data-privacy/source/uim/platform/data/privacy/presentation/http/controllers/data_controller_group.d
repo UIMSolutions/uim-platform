@@ -23,7 +23,7 @@ class DataControllerGroupController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/controller-groups", &handleCreate);
     router.get("/api/v1/controller-groups", &handleList);
     router.get("/api/v1/controller-groups/*", &handleGetById);
@@ -114,20 +114,16 @@ class DataControllerGroupController : PlatformController {
   }
 
   private static Json serialize(const DataControllerGroup e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["isActive"] = Json(e.isActive);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
+    auto ids = e.controllerIds.map!(cid => Json(cid)).array;
 
-    auto ids = Json.emptyArray;
-    foreach (cid; e.controllerIds)
-      ids ~= Json(cid);
-    j["controllerIds"] = ids;
-
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("isActive", e.isActive)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("controllerIds", ids);
   }
 }

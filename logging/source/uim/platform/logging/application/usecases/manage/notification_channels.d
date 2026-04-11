@@ -50,6 +50,10 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, ch.id, "");
   }
 
+  CommandResult update(string id, UpdateNotificationChannelRequest req) {
+    return update(NotificationChannelId(id), req);
+  }
+
   CommandResult update(NotificationChannelId id, UpdateNotificationChannelRequest req) {
     auto ch = repo.findById(id);
     if (ch.id.isEmpty)
@@ -77,12 +81,24 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  NotificationChannel get_(string id) {
+    return get_(NotificationChannelId(id));
+  }
+
   NotificationChannel get_(NotificationChannelId id) {
     return repo.findById(id);
   }
 
+  NotificationChannel[] list(string tenantId) {
+    return list(TenantId(tenantId));
+  }
+
   NotificationChannel[] list(TenantId tenantId) {
     return repo.findByTenant(tenantId);
+  }
+
+  CommandResult remove(string id) {
+    return remove(NotificationChannelId(id));
   }
 
   CommandResult remove(NotificationChannelId id) {
@@ -90,8 +106,8 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static ChannelType parseChannelType(string s) {
-    switch (s) {
+  private static ChannelType parseChannelType(string type) {
+    switch (type) {
     case "email":
       return ChannelType.email;
     case "webhook":
@@ -103,8 +119,8 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     }
   }
 
-  private static ChannelState parseChannelState(string s) {
-    switch (s) {
+  private static ChannelState parseChannelState(string state) {
+    switch (state) {
     case "active":
       return ChannelState.active;
     case "inactive":

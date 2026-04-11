@@ -49,11 +49,6 @@ class DashboardController : PlatformController {
   }
 
   private static Json serializeDashboard(const QualityDashboard d) {
-    auto j = Json.emptyObject;
-    j["tenantId"] = Json(d.tenantId);
-    j["datasetId"] = Json(d.datasetId);
-    j["datasetName"] = Json(d.datasetName);
-
     // Record metrics
     auto records = Json.emptyObject;
     records["total"] = Json(d.totalRecords);
@@ -61,7 +56,6 @@ class DashboardController : PlatformController {
     records["invalid"] = Json(d.invalidRecords);
     records["duplicates"] = Json(d.duplicateRecords);
     records["cleansed"] = Json(d.cleansedRecords);
-    j["records"] = records;
 
     // Scores
     auto scores = Json.emptyObject;
@@ -71,10 +65,6 @@ class DashboardController : PlatformController {
     scores["uniqueness"] = Json(d.uniquenessScore);
     scores["consistency"] = Json(d.consistencyScore);
     scores["accuracy"] = Json(d.accuracyScore);
-    j["scores"] = scores;
-
-    j["rating"] = Json(d.rating.to!string);
-    j["violationCount"] = Json(d.violationCount);
 
     // Violations by severity
     auto sevArr = Json.emptyArray;
@@ -84,6 +74,15 @@ class DashboardController : PlatformController {
       sj["count"] = Json(s.count);
       sevArr ~= sj;
     }
+
+    auto j = Json.emptyObject;
+    j["tenantId"] = Json(d.tenantId);
+    j["datasetId"] = Json(d.datasetId);
+    j["datasetName"] = Json(d.datasetName);
+    j["records"] = records;
+    j["scores"] = scores;
+    j["rating"] = Json(d.rating.to!string);
+    j["violationCount"] = Json(d.violationCount);
     j["violationsBySeverity"] = sevArr;
 
     j["computedAt"] = Json(d.computedAt);

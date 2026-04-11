@@ -132,17 +132,16 @@ class RuleSetController : PlatformController {
   }
 
   private static Json serialize(const RuleSet e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["businessContextId"] = Json(e.businessContextId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["status"] = Json(e.status.to!string);
-    j["priority"] = Json(e.priority);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    j["activatedAt"] = Json(e.activatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("businessContextId", e.businessContextId)
+      .set("name", e.name)
+      .set("description", e.description)
+      .set("status", e.status.to!string)
+      .set("priority", e.priority)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt)
+      .set("activatedAt", e.activatedAt);
   }
 }

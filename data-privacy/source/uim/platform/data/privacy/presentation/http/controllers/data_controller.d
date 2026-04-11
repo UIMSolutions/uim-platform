@@ -126,21 +126,20 @@ class DataControllerController : PlatformController {
   }
 
   private static Json serialize(const DataController e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["name"] = Json(e.name);
-    j["description"] = Json(e.description);
-    j["legalEntityName"] = Json(e.legalEntityName);
-    j["contactEmail"] = Json(e.contactEmail);
-    j["contactPhone"] = Json(e.contactPhone);
-    j["address"] = Json(e.address);
-    j["country"] = Json(e.country);
-    j["dpoName"] = Json(e.dpoName);
-    j["dpoEmail"] = Json(e.dpoEmail);
-    j["isActive"] = Json(e.isActive);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", e.id)
+    .set("tenantId", e.tenantId)
+    .set("name", e.name)
+    .set("description", e.description)
+    .set("legalEntityName", e.legalEntityName)
+    .set("contactEmail", e.contactEmail)
+    .set("contactPhone", e.contactPhone)
+    .set("address", e.address)
+    .set("country", e.country)
+    .set("dpoName", e.dpoName)
+    .set("dpoEmail", e.dpoEmail)
+    .set("isActive", e.isActive)
+    .set("createdAt", e.createdAt)
+    .set("updatedAt", e.updatedAt);
   }
 }

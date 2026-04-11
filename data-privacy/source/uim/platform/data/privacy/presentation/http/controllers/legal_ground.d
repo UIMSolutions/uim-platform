@@ -143,29 +143,27 @@ class LegalGroundController : PlatformController {
   }
 
   private static Json serialize(const LegalGround e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["basis"] = Json(e.basis.to!string);
-    j["purpose"] = Json(e.purpose.to!string);
-    j["description"] = Json(e.description);
-    j["legalReference"] = Json(e.legalReference);
-    j["isActive"] = Json(e.isActive);
-    j["validFrom"] = Json(e.validFrom);
-    j["validUntil"] = Json(e.validUntil);
-    j["createdAt"] = Json(e.createdAt);
-
     auto cats = Json.emptyArray;
     foreach (c; e.categories)
       cats ~= Json(c.to!string);
-    j["categories"] = cats;
 
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("basis", e.basis.to!string)
+      .set("purpose", e.purpose.to!string)
+      .set("description", e.description)
+      .set("legalReference", e.legalReference)
+      .set("isActive", e.isActive)
+      .set("validFrom", e.validFrom)
+      .set("validUntil", e.validUntil)
+      .set("createdAt", e.createdAt)
+      .set("categories", cats);
   }
 
-  private static LegalBasis parseLegalBasis(string s) {
-    switch (s) {
+  private static LegalBasis parseLegalBasis(string basis) {
+    switch (basis) {
     case "consent":
       return LegalBasis.consent;
     case "contract":

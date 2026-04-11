@@ -162,21 +162,20 @@ class PersonalDataModelController : PlatformController {
   }
 
   private static Json serialize(const PersonalDataModel e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["fieldName"] = Json(e.fieldName);
-    j["fieldDescription"] = Json(e.fieldDescription);
-    j["category"] = Json(e.category.to!string);
-    j["sensitivity"] = Json(e.sensitivity.to!string);
-    j["sourceSystem"] = Json(e.sourceSystem);
-    j["sourceEntity"] = Json(e.sourceEntity);
-    j["subjectType"] = Json(e.subjectType.to!string);
-    j["isSpecialCategory"] = Json(e.isSpecialCategory);
-    j["legalReference"] = Json(e.legalReference);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("fieldName", e.fieldName)
+      .set("fieldDescription", e.fieldDescription)
+      .set("category", e.category.to!string)
+      .set("sensitivity", e.sensitivity.to!string)
+      .set("sourceSystem", e.sourceSystem)
+      .set("sourceEntity", e.sourceEntity)
+      .set("subjectType", e.subjectType.to!string)
+      .set("isSpecialCategory", e.isSpecialCategory)
+      .set("legalReference", e.legalReference)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt);
   }
 
   private static PersonalDataCategory parseCategory(string s) {

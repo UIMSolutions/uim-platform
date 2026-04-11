@@ -155,15 +155,14 @@ class DataRecordController : PlatformController {
   }
 
   private static Json serializeRecord(const DataRecord r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["datasetId"] = Json(r.datasetId);
-    j["tenantId"] = Json(r.tenantId);
-    j["attributes"] = Json(r.attributes);
-    j["labels"] = Json(r.labels);
-    j["status"] = Json(r.status.to!string);
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("datasetId", r.datasetId)
+      .set("tenantId", r.tenantId)
+      .set("attributes", r.attributes)
+      .set("labels", r.labels)
+      .set("status", r.status.to!string)
+      .set("createdBy", r.createdBy)
+      .set("createdAt", r.createdAt);
   }
 }
