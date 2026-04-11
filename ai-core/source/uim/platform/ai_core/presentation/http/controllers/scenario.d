@@ -57,7 +57,7 @@ class ScenarioController : PlatformController {
       auto scenarios = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; scenarios) {
+      foreach (s; scenarios) {
         auto sj = Json.emptyObject;
         sj["id"] = Json(s.id);
         sj["name"] = Json(s.name);

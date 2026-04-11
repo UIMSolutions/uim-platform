@@ -120,7 +120,7 @@ class AuditLogController : PlatformController {
     }
   }
 
-  private static Json serializeEntry(ref const AuditLogEntry e) {
+  private static Json serializeEntry(const AuditLogEntry e) {
     auto j = Json.emptyObject
       .set("id", e.id)
       .set("tenantId", e.tenantId)
@@ -144,7 +144,7 @@ class AuditLogController : PlatformController {
 
     if (e.attributes.length > 0) {
       auto attrs = Json.emptyArray;
-      foreach (ref a; e.attributes) {
+      foreach (a; e.attributes) {
         auto aj = Json.emptyObject;
         aj["name"] = Json(a.name);
         aj["oldValue"] = Json(a.oldValue);

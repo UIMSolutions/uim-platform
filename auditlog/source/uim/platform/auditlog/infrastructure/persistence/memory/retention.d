@@ -35,7 +35,7 @@ class MemoryRetentionPolicyRepository : RetentionPolicyRepository {
   }
 
   RetentionPolicy findDefault(TenantId tenantId) {
-    foreach (ref p; findByTenant(tenantId))
+    foreach (p; findByTenant(tenantId))
       if (p.isDefault && p.status == RetentionStatus.active)
         return p;
     return RetentionPolicy.init;

@@ -17,7 +17,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   Deployment findById(DeploymentId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      foreach (ref d; *rg) {
+      foreach (d; *rg) {
         if (d.id == id)
           return d;
       }
@@ -55,7 +55,7 @@ class MemoryDeploymentRepository : DeploymentRepository {
 
   void update(Deployment d) {
     if (auto rg = d.resourceGroupId in store) {
-      foreach (ref existing; *rg) {
+      foreach (existing; *rg) {
         if (existing.id == d.id) {
           existing = d;
           return;

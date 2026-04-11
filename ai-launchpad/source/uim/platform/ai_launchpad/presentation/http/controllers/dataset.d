@@ -67,7 +67,7 @@ class DatasetController : PlatformController {
         datasets = uc.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; datasets) {
+      foreach (d; datasets) {
         jarr ~= serializeDataset(d);
       }
 

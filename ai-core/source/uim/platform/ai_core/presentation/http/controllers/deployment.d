@@ -57,7 +57,7 @@ class DeploymentController : PlatformController {
       auto deployments = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; deployments) {
+      foreach (d; deployments) {
         jarr ~= deploymentToJson(d);
       }
 
@@ -135,7 +135,7 @@ class DeploymentController : PlatformController {
     }
   }
 
-  private Json deploymentToJson(ref Deployment d) {
+  private Json deploymentToJson(Deployment d) {
     import std.conv : to;
 
     auto dj = Json.emptyObject;

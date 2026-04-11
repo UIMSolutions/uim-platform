@@ -13,7 +13,7 @@ class MemoryResourceGroupRepository : IResourceGroupRepository {
   private ResourceGroup[] store;
 
   void save(ResourceGroup rg) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == rg.id && existing.connectionId == rg.connectionId) {
         existing = rg;
         return;
@@ -23,7 +23,7 @@ class MemoryResourceGroupRepository : IResourceGroupRepository {
   }
 
   ResourceGroup findById(ResourceGroupId id, ConnectionId connectionId) {
-    foreach (ref rg; store) {
+    foreach (rg; store) {
       if (rg.id == id && rg.connectionId == connectionId) return rg;
     }
     return ResourceGroup.init;
@@ -31,7 +31,7 @@ class MemoryResourceGroupRepository : IResourceGroupRepository {
 
   ResourceGroup[] findByConnection(ConnectionId connectionId) {
     ResourceGroup[] result;
-    foreach (ref rg; store) {
+    foreach (rg; store) {
       if (rg.connectionId == connectionId) result ~= rg;
     }
     return result;
@@ -43,7 +43,7 @@ class MemoryResourceGroupRepository : IResourceGroupRepository {
 
   void remove(ResourceGroupId id, ConnectionId connectionId) {
     ResourceGroup[] filtered;
-    foreach (ref rg; store) {
+    foreach (rg; store) {
       if (!(rg.id == id && rg.connectionId == connectionId)) filtered ~= rg;
     }
     store = filtered;

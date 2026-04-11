@@ -58,7 +58,7 @@ class ManageExecutionsUseCase : UIMUseCase {
 
   CommandResult[] bulkPatch(BulkPatchExecutionRequest r) {
     CommandResult[] results;
-    foreach (ref eid; r.executionIds) {
+    foreach (eid; r.executionIds) {
       PatchExecutionRequest pr;
       pr.connectionId = r.connectionId;
       pr.executionId = eid;

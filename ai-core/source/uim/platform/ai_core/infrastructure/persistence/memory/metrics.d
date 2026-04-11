@@ -16,7 +16,7 @@ class MemoryMetricRepository : MetricRepository {
   private Metric[] store;
 
   Metric findById(MetricId id, ResourceGroupId rgId) {
-    foreach (ref m; store) {
+    foreach (m; store) {
       if (m.id == id && m.resourceGroupId == rgId)
         return m;
     }

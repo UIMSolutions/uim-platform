@@ -74,7 +74,7 @@ class SoftwareComponentController : PlatformController {
         systemId = req.headers.get("X-System-Id", "");
       auto components = uc.listComponents(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref comp; components)
+      foreach (comp; components)
         arr ~= serializeComponent(comp);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -167,7 +167,7 @@ class SoftwareComponentController : PlatformController {
     }
   }
 
-  private static Json serializeComponent(ref const SoftwareComponent comp) {
+  private static Json serializeComponent(const SoftwareComponent comp) {
     auto j = Json.emptyObject;
     j["id"] = Json(comp.id);
     j["tenantId"] = Json(comp.tenantId);
@@ -188,7 +188,7 @@ class SoftwareComponentController : PlatformController {
 
     if (comp.commitHistory.length > 0) {
       auto hist = Json.emptyArray;
-      foreach (ref c; comp.commitHistory) {
+      foreach (c; comp.commitHistory) {
         auto hj = Json.emptyObject;
         hj["commitId"] = Json(c.commitId);
         hj["message"] = Json(c.message);

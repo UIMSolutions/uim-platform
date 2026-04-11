@@ -56,7 +56,7 @@ class ExecutionController : PlatformController {
       auto executions = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref ex; executions) {
+      foreach (ex; executions) {
         jarr ~= executionToJson(ex);
       }
 
@@ -132,7 +132,7 @@ class ExecutionController : PlatformController {
     }
   }
 
-  private Json executionToJson(ref Execution ex) {
+  private Json executionToJson(Execution ex) {
     import std.conv : to;
 
     auto ej = Json.emptyObject;

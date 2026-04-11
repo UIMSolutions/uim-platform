@@ -65,7 +65,7 @@ class ArtifactController : PlatformController {
         artifacts = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref a; artifacts) {
+      foreach (a; artifacts) {
         jarr ~= artifactToJson(a);
       }
 
@@ -115,7 +115,7 @@ class ArtifactController : PlatformController {
     }
   }
 
-  private Json artifactToJson(ref Artifact a) {
+  private Json artifactToJson(Artifact a) {
     import std.conv : to;
 
     auto aj = Json.emptyObject;
@@ -130,7 +130,7 @@ class ArtifactController : PlatformController {
     aj["modifiedAt"] = Json(a.modifiedAt);
 
     auto lArr = Json.emptyArray;
-    foreach (ref lbl; a.labels) {
+    foreach (lbl; a.labels) {
       auto lj = Json.emptyObject;
       lj["key"] = Json(lbl.key);
       lj["value"] = Json(lbl.value);

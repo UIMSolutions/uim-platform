@@ -74,7 +74,7 @@ class SystemInstanceController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto instances = uc.listInstances(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref inst; instances)
+      foreach (inst; instances)
         arr ~= serializeInstance(inst);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -147,7 +147,7 @@ class SystemInstanceController : PlatformController {
     }
   }
 
-  private static Json serializeInstance(ref const SystemInstance inst) {
+  private static Json serializeInstance(const SystemInstance inst) {
     auto j = Json.emptyObject;
     j["id"] = Json(inst.id);
     j["tenantId"] = Json(inst.tenantId);

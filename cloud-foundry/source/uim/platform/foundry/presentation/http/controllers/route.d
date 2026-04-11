@@ -74,7 +74,7 @@ class RouteController : PlatformController {
       auto items = useCase.listRoutes(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; items)
+      foreach (r; items)
         arr ~= serializeRoute(r);
 
       auto resp = Json.emptyObject;
@@ -200,7 +200,7 @@ class RouteController : PlatformController {
       auto items = useCase.listDomains(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; items)
+      foreach (d; items)
         arr ~= serializeDomain(d);
 
       auto resp = Json.emptyObject;
@@ -233,7 +233,7 @@ class RouteController : PlatformController {
 
   // --- Serializers ---
 
-  private static Json serializeRoute(ref const Route r) {
+  private static Json serializeRoute(const Route r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["spaceId"] = Json(r.spaceId);
@@ -250,7 +250,7 @@ class RouteController : PlatformController {
     return j;
   }
 
-  private static Json serializeDomain(ref const CfDomain d) {
+  private static Json serializeDomain(const CfDomain d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["ownerOrgId"] = Json(d.ownerOrgId);

@@ -63,7 +63,7 @@ class ExportController : PlatformController {
       auto jobs = uc.listExportJobs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref j; jobs)
+      foreach (j; jobs)
         arr ~= serializeExportJob(j);
 
       auto resp = Json.emptyObject;
@@ -91,7 +91,7 @@ class ExportController : PlatformController {
     }
   }
 
-  private static Json serializeExportJob(ref const ExportJob e) {
+  private static Json serializeExportJob(const ExportJob e) {
     auto j = Json.emptyObject;
     j["id"] = Json(e.id);
     j["tenantId"] = Json(e.tenantId);

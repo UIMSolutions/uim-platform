@@ -66,7 +66,7 @@ class ConnectionController : PlatformController {
         connections = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; connections) {
+      foreach (c; connections) {
         jarr ~= serializeConnection(c);
       }
 

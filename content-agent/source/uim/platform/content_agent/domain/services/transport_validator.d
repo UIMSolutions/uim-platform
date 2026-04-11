@@ -37,15 +37,15 @@ struct TransportValidator {
 
     // Verify all referenced packages exist and are in assembled state
     bool[string] pkgIds;
-    foreach (ref p; packages)
+    foreach (p; packages)
       pkgIds[p.id] = true;
 
-    foreach (ref pid; request.packageIds) {
+    foreach (pid; request.packageIds) {
       if (pid !in pkgIds)
         errors ~= "Referenced package not found: " ~ pid;
     }
 
-    foreach (ref p; packages) {
+    foreach (p; packages) {
       if (p.status != PackageStatus.assembled && p.status != PackageStatus.exported)
         errors ~= "Package '" ~ p.name ~ "' is not in assembled/exported state";
     }

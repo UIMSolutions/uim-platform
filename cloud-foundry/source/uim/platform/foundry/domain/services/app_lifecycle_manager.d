@@ -128,9 +128,9 @@ class AppLifecycleManager {
 
     auto spaces = spaceRepo.findByOrg(orgtenantId, id);
     long totalUsed = 0;
-    foreach (ref s; spaces) {
+    foreach (s; spaces) {
       auto apps = appRepo.findBySpace(s.tenantId, id);
-      foreach (ref a; apps)
+      foreach (a; apps)
         totalUsed += a.instances * a.memoryMb;
     }
 

@@ -37,7 +37,7 @@ class StatisticsController : PlatformController {
         stats = uc.getAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; stats) {
+      foreach (s; stats) {
         jarr ~= serializeStatistic(s);
       }
 

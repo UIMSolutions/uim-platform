@@ -32,15 +32,15 @@ struct PackageAssembler {
 
     // Collect all item IDs in this package
     bool[string] itemIds;
-    foreach (ref item; pkg.items) {
+    foreach (item; pkg.items) {
       if (item.id in itemIds)
         errors ~= "Duplicate content item: " ~ item.name;
       itemIds[item.id] = true;
     }
 
     // Validate dependencies
-    foreach (ref item; pkg.items) {
-      foreach (ref dep; item.dependencies) {
+    foreach (item; pkg.items) {
+      foreach (dep; item.dependencies) {
         if (dep !in itemIds)
         {
           deps ~= dep;
@@ -50,16 +50,16 @@ struct PackageAssembler {
 
     // Validate provider references
     bool[string] providerIds;
-    foreach (ref p; providers)
+    foreach (p; providers)
       providerIds[p.id] = true;
 
-    foreach (ref item; pkg.items) {
+    foreach (item; pkg.items) {
       if (item.providerId.length > 0 && item.providerId !in providerIds)
         errors ~= "Item '" ~ item.name ~ "' references unknown provider: " ~ item.providerId;
     }
 
     long size = 0;
-    foreach (ref item; pkg.items)
+    foreach (item; pkg.items)
       size += 1024; // estimated per-item overhead
 
     return AssemblyResult(errors.length == 0, errors, deps, size);

@@ -55,7 +55,7 @@ class ResourceGroupController : PlatformController {
       auto groups = uc.list(tenantId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref rg; groups) {
+      foreach (rg; groups) {
         auto rgj = Json.emptyObject;
         rgj["resourceGroupId"] = Json(rg.id);
         rgj["tenantId"] = Json(rg.tenantId);
@@ -63,7 +63,7 @@ class ResourceGroupController : PlatformController {
         rgj["createdAt"] = Json(rg.createdAt);
 
         auto lArr = Json.emptyArray;
-        foreach (ref lbl; rg.labels) {
+        foreach (lbl; rg.labels) {
           auto lj = Json.emptyObject;
           lj["key"] = Json(lbl.key);
           lj["value"] = Json(lbl.value);

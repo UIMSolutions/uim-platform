@@ -34,7 +34,7 @@ class ActivityController : PlatformController {
       auto activities = uc.listActivities(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref a; activities)
+      foreach (a; activities)
         arr ~= serializeActivity(a);
 
       auto resp = Json.emptyObject;
@@ -64,7 +64,7 @@ class ActivityController : PlatformController {
     }
   }
 
-  private static Json serializeActivity(ref const ContentActivity a) {
+  private static Json serializeActivity(const ContentActivity a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);

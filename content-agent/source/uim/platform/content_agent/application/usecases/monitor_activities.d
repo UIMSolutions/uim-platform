@@ -44,7 +44,7 @@ class MonitorActivitiesUseCase : UIMUseCase {
     ActivitySummary summary;
     summary.totalCount = cast(long) all.length;
 
-    foreach (ref a; all) {
+    foreach (a; all) {
       final switch (a.severity) {
       case ActivitySeverity.info:
         summary.infoCount++;

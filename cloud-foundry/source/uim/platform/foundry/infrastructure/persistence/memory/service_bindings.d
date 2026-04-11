@@ -37,7 +37,7 @@ class MemoryServiceBindingRepository : ServiceBindingRepository {
 
   void removeByApp(AppId apptenantId, id tenantId) {
     ServiceBindingId[] toRemove;
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.appId == appId)
         toRemove ~= e.id;
     foreach (id; toRemove)

@@ -25,7 +25,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
     rg.connectionId = r.connectionId;
     rg.status = "active";
 
-    foreach (ref lbl; r.labels) {
+    foreach (lbl; r.labels) {
       if (lbl.length >= 2) {
         rg.labels ~= LabelPair(lbl[0], lbl[1]);
       }
@@ -55,7 +55,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
 
     if (r.labels.length > 0) {
       rg.labels = [];
-      foreach (ref lbl; r.labels) {
+      foreach (lbl; r.labels) {
         if (lbl.length >= 2) {
           rg.labels ~= LabelPair(lbl[0], lbl[1]);
         }

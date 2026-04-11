@@ -36,7 +36,7 @@ class MemorySoftwareComponentRepository : SoftwareComponentRepository {
   }
 
   bool existsName(SystemInstanceId systemId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.systemInstanceId == systemId && e.name == name)
         return true;
     return false;

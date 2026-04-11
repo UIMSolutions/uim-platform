@@ -76,7 +76,7 @@ class CommunicationArrangementController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto arrangements = uc.listArrangements(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref a; arrangements)
+      foreach (a; arrangements)
         arr ~= serializeArrangement(a);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -152,7 +152,7 @@ class CommunicationArrangementController : PlatformController {
     }
   }
 
-  private static Json serializeArrangement(ref const CommunicationArrangement a) {
+  private static Json serializeArrangement(const CommunicationArrangement a) {
     auto j = Json.emptyObject;
     j["id"] = Json(a.id);
     j["tenantId"] = Json(a.tenantId);

@@ -68,7 +68,7 @@ class PromptController : PlatformController {
         prompts = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref p; prompts) {
+      foreach (p; prompts) {
         jarr ~= serializePrompt(p);
       }
 
@@ -136,7 +136,7 @@ class PromptController : PlatformController {
     j["modelVersion"] = Json(p.modelVersion);
 
     auto msgs = Json.emptyArray;
-    foreach (ref m; p.messages) {
+    foreach (m; p.messages) {
       auto mj = Json.emptyObject;
       mj["role"] = Json(m.role.to!string);
       mj["content"] = Json(m.content);

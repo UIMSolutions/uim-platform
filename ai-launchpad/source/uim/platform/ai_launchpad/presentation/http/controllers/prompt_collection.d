@@ -61,7 +61,7 @@ class PromptCollectionController : PlatformController {
         collections = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; collections) {
+      foreach (c; collections) {
         jarr ~= serializeCollection(c);
       }
 

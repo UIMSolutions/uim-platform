@@ -27,7 +27,7 @@ class MemoryRouteRepository : RouteRepository {
   }
 
   Route* findByHostAndDomain(TenantId tenantId, string host, DomainId domainId) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.host == host && e.domainId == domainId)
         return &e;
     return null;

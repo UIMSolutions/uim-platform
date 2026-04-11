@@ -17,7 +17,7 @@ struct TransportValidation {
 /// Domain service: validates transport request release preconditions.
 struct TransportReleaseValidator {
   /// Validate that a transport request can be released.
-  static TransportValidation validateRelease(ref const TransportRequest request) {
+  static TransportValidation validateRelease(const TransportRequest request) {
     string[] errors;
 
     if (request.status != TransportStatus.modifiable)
@@ -30,7 +30,7 @@ struct TransportReleaseValidator {
       errors ~= "Transport request must have an owner";
 
     // All tasks must be released before the request
-    foreach (ref task; request.tasks) {
+    foreach (task; request.tasks) {
       if (task.status == TransportStatus.modifiable) {
         errors ~= "Task '" ~ task.taskId ~ "' is still modifiable - release all tasks first";
       }
@@ -40,7 +40,7 @@ struct TransportReleaseValidator {
   }
 
   /// Validate that a transport task can be released.
-  static TransportValidation validateTaskRelease(ref const TransportTask task) {
+  static TransportValidation validateTaskRelease(const TransportTask task) {
     string[] errors;
 
     if (task.status != TransportStatus.modifiable)

@@ -66,7 +66,7 @@ class RetentionController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto arr = Json.emptyArray;
-      foreach (ref p; policies)
+      foreach (p; policies)
         arr ~= serializePolicy(p);
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -137,7 +137,7 @@ class RetentionController : PlatformController {
     }
   }
 
-  private static Json serializePolicy(ref const RetentionPolicy policy) {
+  private static Json serializePolicy(const RetentionPolicy policy) {
     auto j = Json.emptyObject
       .set("id", policy.policyId)
       .set("tenantId", policy.tenantId)

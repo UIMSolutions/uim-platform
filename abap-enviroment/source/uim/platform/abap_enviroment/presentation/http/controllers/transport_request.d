@@ -66,7 +66,7 @@ class TransportRequestController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto requests = uc.listRequests(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref tr; requests)
+      foreach (tr; requests)
         arr ~= serializeRequest(tr);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -178,7 +178,7 @@ class TransportRequestController : PlatformController {
     }
   }
 
-  private static Json serializeRequest(ref const TransportRequest tr) {
+  private static Json serializeRequest(const TransportRequest tr) {
     auto j = Json.emptyObject;
     j["id"] = Json(tr.id);
     j["tenantId"] = Json(tr.tenantId);
@@ -194,7 +194,7 @@ class TransportRequestController : PlatformController {
 
     if (tr.tasks.length > 0) {
       auto tasks = Json.emptyArray;
-      foreach (ref t; tr.tasks) {
+      foreach (t; tr.tasks) {
         auto tj = Json.emptyObject;
         tj["taskId"] = Json(t.taskId);
         tj["owner"] = Json(t.owner);
@@ -206,7 +206,7 @@ class TransportRequestController : PlatformController {
         if (t.objectList.length > 0)
         {
           auto ol = Json.emptyArray;
-          foreach (ref o; t.objectList)
+          foreach (o; t.objectList)
             ol ~= Json(o);
           tj["objectList"] = ol;
         }

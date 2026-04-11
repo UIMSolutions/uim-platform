@@ -25,7 +25,7 @@ class MemoryDataAccessLogRepository : DataAccessLogRepository {
   }
 
   DataAccessLog findByAuditLogId(TenantId tenantId, AuditLogId auditLogId) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.auditLogId == auditLogId && e.tenantId == tenantId)
         return e;
     return DataAccessLog.init;

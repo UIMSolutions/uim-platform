@@ -64,7 +64,7 @@ class BuildpackController {
       auto items = useCase.listBuildpacks(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref bp; items)
+      foreach (bp; items)
         arr ~= serializeBuildpack(bp);
 
       auto resp = Json.emptyObject;
@@ -139,7 +139,7 @@ class BuildpackController {
     }
   }
 
-  private static Json serializeBuildpack(ref const Buildpack bp) {
+  private static Json serializeBuildpack(const Buildpack bp) {
     auto j = Json.emptyObject;
     j["id"] = Json(bp.id);
     j["tenantId"] = Json(bp.tenantId);

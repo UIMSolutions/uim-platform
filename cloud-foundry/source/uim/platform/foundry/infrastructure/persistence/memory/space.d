@@ -27,7 +27,7 @@ class MemorySpaceRepository : SpaceRepository {
   }
 
   Space* findByName(OrgId orgtenantId, id tenantId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.orgId == orgId && e.name == name)
         return &e;
     return null;
@@ -39,7 +39,7 @@ class MemorySpaceRepository : SpaceRepository {
 
   void removeByOrg(OrgId orgtenantId, id tenantId) {
     SpaceId[] toRemove;
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.orgId == orgId)
         toRemove ~= e.id;
     foreach (id; toRemove)

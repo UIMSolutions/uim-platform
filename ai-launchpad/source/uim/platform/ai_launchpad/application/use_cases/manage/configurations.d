@@ -31,12 +31,12 @@ class ManageConfigurationsUseCase : UIMUseCase {
     c.executableId = r.executableId;
     c.name = r.name;
 
-    foreach (ref pv; r.parameterValues) {
+    foreach (pv; r.parameterValues) {
       if (pv.length >= 2) {
         c.parameters ~= ParameterBinding(pv[0], pv[1]);
       }
     }
-    foreach (ref ia; r.inputArtifacts) {
+    foreach (ia; r.inputArtifacts) {
       if (ia.length >= 2) {
         c.inputArtifacts ~= InputArtifactBinding(ia[0], ia[1]);
       }

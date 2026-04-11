@@ -13,7 +13,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
   private Deployment[] store;
 
   void save(Deployment d) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == d.id && existing.connectionId == d.connectionId) {
         existing = d;
         return;
@@ -23,7 +23,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
   }
 
   Deployment findById(DeploymentId id, ConnectionId connectionId) {
-    foreach (ref d; store) {
+    foreach (d; store) {
       if (d.id == id && d.connectionId == connectionId) return d;
     }
     return Deployment.init;
@@ -31,7 +31,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
 
   Deployment[] findByConnection(ConnectionId connectionId) {
     Deployment[] result;
-    foreach (ref d; store) {
+    foreach (d; store) {
       if (d.connectionId == connectionId) result ~= d;
     }
     return result;
@@ -39,7 +39,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
 
   Deployment[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     Deployment[] result;
-    foreach (ref d; store) {
+    foreach (d; store) {
       if (d.scenarioId == scenarioId && d.connectionId == connectionId) result ~= d;
     }
     return result;
@@ -47,7 +47,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
 
   Deployment[] findByStatus(DeploymentStatus status, ConnectionId connectionId) {
     Deployment[] result;
-    foreach (ref d; store) {
+    foreach (d; store) {
       if (d.status == status && d.connectionId == connectionId) result ~= d;
     }
     return result;
@@ -59,7 +59,7 @@ class MemoryDeploymentRepository : IDeploymentRepository {
 
   void remove(DeploymentId id, ConnectionId connectionId) {
     Deployment[] filtered;
-    foreach (ref d; store) {
+    foreach (d; store) {
       if (!(d.id == id && d.connectionId == connectionId)) filtered ~= d;
     }
     store = filtered;

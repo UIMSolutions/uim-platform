@@ -23,7 +23,7 @@ class MemoryPromptRepository : IPromptRepository {
 
   Prompt[] findByCollection(PromptCollectionId collectionId) {
     Prompt[] result;
-    foreach (ref p; store) {
+    foreach (p; store) {
       if (p.collectionId == collectionId) result ~= p;
     }
     return result;
@@ -31,7 +31,7 @@ class MemoryPromptRepository : IPromptRepository {
 
   Prompt[] findByStatus(PromptStatus status) {
     Prompt[] result;
-    foreach (ref p; store) {
+    foreach (p; store) {
       if (p.status == status) result ~= p;
     }
     return result;

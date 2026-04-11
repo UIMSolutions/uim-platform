@@ -64,7 +64,7 @@ class ConfigurationController : PlatformController {
         configs = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; configs) {
+      foreach (c; configs) {
         auto cj = Json.emptyObject;
         cj["id"] = Json(c.id);
         cj["scenarioId"] = Json(c.scenarioId);
@@ -74,7 +74,7 @@ class ConfigurationController : PlatformController {
 
         // Parameter bindings
         auto pbArr = Json.emptyArray;
-        foreach (ref pv; c.parameterValues) {
+        foreach (pv; c.parameterValues) {
           auto pvj = Json.emptyObject;
           pvj["key"] = Json(pv.key);
           pvj["value"] = Json(pv.value);
@@ -84,7 +84,7 @@ class ConfigurationController : PlatformController {
 
         // Input artifact bindings
         auto iaArr = Json.emptyArray;
-        foreach (ref ia; c.inputArtifacts) {
+        foreach (ia; c.inputArtifacts) {
           auto iaj = Json.emptyObject;
           iaj["key"] = Json(ia.key);
           iaj["artifactId"] = Json(ia.artifactId);

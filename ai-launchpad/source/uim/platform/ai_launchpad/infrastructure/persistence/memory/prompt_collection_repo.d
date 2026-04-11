@@ -23,7 +23,7 @@ class MemoryPromptCollectionRepository : IPromptCollectionRepository {
 
   PromptCollection[] findByWorkspace(WorkspaceId workspaceId) {
     PromptCollection[] result;
-    foreach (ref pc; store) {
+    foreach (pc; store) {
       if (pc.workspaceId == workspaceId) result ~= pc;
     }
     return result;

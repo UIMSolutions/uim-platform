@@ -65,7 +65,7 @@ class ConfigurationController : PlatformController {
         configs = uc.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref c; configs) {
+      foreach (c; configs) {
         jarr ~= serializeConfiguration(c);
       }
 
@@ -123,7 +123,7 @@ class ConfigurationController : PlatformController {
     j["name"] = Json(c.name);
 
     auto params = Json.emptyArray;
-    foreach (ref p; c.parameters) {
+    foreach (p; c.parameters) {
       auto pj = Json.emptyObject;
       pj["key"] = Json(p.key);
       pj["value"] = Json(p.value);
@@ -132,7 +132,7 @@ class ConfigurationController : PlatformController {
     j["parameters"] = params;
 
     auto artifacts = Json.emptyArray;
-    foreach (ref a; c.inputArtifacts) {
+    foreach (a; c.inputArtifacts) {
       auto aj = Json.emptyObject;
       aj["key"] = Json(a.key);
       aj["artifactId"] = Json(a.artifactId);

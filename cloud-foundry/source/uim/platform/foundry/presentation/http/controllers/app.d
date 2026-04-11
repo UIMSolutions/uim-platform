@@ -78,7 +78,7 @@ class AppController : PlatformController {
       auto apps = useCase.listApps(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref a; apps)
+      foreach (a; apps)
         arr ~= serializeApp(a);
 
       auto resp = Json.emptyObject;

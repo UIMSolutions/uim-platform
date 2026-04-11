@@ -23,7 +23,7 @@ class MemoryWorkspaceRepository : IWorkspaceRepository {
 
   Workspace[] findByTenant(TenantId tenantId) {
     Workspace[] result;
-    foreach (ref w; store) {
+    foreach (w; store) {
       if (w.tenantId == tenantId) result ~= w;
     }
     return result;

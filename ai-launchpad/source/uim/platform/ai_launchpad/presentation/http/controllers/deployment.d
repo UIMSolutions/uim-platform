@@ -64,7 +64,7 @@ class DeploymentController : PlatformController {
         deployments = uc.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref d; deployments) {
+      foreach (d; deployments) {
         jarr ~= serializeDeployment(d);
       }
 
@@ -136,7 +136,7 @@ class DeploymentController : PlatformController {
 
       auto results = uc.bulkPatch(r);
       auto jarr = Json.emptyArray;
-      foreach (ref result; results) {
+      foreach (result; results) {
         auto rj = Json.emptyObject;
         rj["id"] = Json(result.id);
         rj["success"] = Json(result.success);

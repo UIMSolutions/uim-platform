@@ -62,14 +62,14 @@ class MetricController : PlatformController {
       auto metrics = uc.listByExecution(execId, rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref m; metrics) {
+      foreach (m; metrics) {
         auto mj = Json.emptyObject;
         mj["id"] = Json(m.id);
         mj["executionId"] = Json(m.executionId);
         mj["createdAt"] = Json(m.createdAt);
 
         auto vArr = Json.emptyArray;
-        foreach (ref v; m.metrics) {
+        foreach (v; m.metrics) {
           auto vj = Json.emptyObject;
           vj["name"] = Json(v.name);
           vj["value"] = Json(v.value);
@@ -78,7 +78,7 @@ class MetricController : PlatformController {
         mj["metrics"] = vArr;
 
         auto tArr = Json.emptyArray;
-        foreach (ref t; m.tags) {
+        foreach (t; m.tags) {
           auto tj = Json.emptyObject;
           tj["key"] = Json(t.key);
           tj["value"] = Json(t.value);

@@ -71,7 +71,7 @@ class ServiceController : PlatformController {
       auto items = useCase.listInstances(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref si; items)
+      foreach (si; items)
         arr ~= serializeInstance(si);
 
       auto resp = Json.emptyObject;
@@ -168,7 +168,7 @@ class ServiceController : PlatformController {
       auto items = useCase.listBindings(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref b; items)
+      foreach (b; items)
         arr ~= serializeBinding(b);
 
       auto resp = Json.emptyObject;
@@ -198,7 +198,7 @@ class ServiceController : PlatformController {
 
   // --- Serializers ---
 
-  private static Json serializeInstance(ref const ServiceInstance si) {
+  private static Json serializeInstance(const ServiceInstance si) {
     auto j = Json.emptyObject;
     j["id"] = Json(si.id);
     j["spaceId"] = Json(si.spaceId);
@@ -216,7 +216,7 @@ class ServiceController : PlatformController {
     return j;
   }
 
-  private static Json serializeBinding(ref const ServiceBinding b) {
+  private static Json serializeBinding(const ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["appId"] = Json(b.appId);

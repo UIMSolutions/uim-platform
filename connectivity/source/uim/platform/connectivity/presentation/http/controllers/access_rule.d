@@ -71,7 +71,7 @@ class AccessRuleController : PlatformController {
       auto rules = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref r; rules)
+      foreach (r; rules)
         arr ~= serializeRule(r);
 
       auto resp = Json.emptyObject;
@@ -144,7 +144,7 @@ class AccessRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(ref const AccessRule r) {
+  private static Json serializeRule(const AccessRule r) {
     auto j = Json.emptyObject;
     j["id"] = Json(r.id);
     j["connectorId"] = Json(r.connectorId);

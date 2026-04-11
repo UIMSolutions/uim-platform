@@ -40,7 +40,7 @@ class MonitoringController : PlatformController {
       auto logs = uc.listLogs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref l; logs)
+      foreach (l; logs)
         arr ~= serializeLog(l);
 
       auto resp = Json.emptyObject;
@@ -71,7 +71,7 @@ class MonitoringController : PlatformController {
     }
   }
 
-  private static Json serializeLog(ref const ConnectivityLog l) {
+  private static Json serializeLog(const ConnectivityLog l) {
     auto j = Json.emptyObject;
     j["id"] = Json(l.id);
     j["tenantId"] = Json(l.tenantId);

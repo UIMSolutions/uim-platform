@@ -18,7 +18,7 @@ mixin(ShowModule!());
 @safe:
 class MemoryConnectorRepository : MemoryTenantRepository!(CloudConnector, ConnectorId), ConnectorRepository {
   CloudConnector findByLocationId(SubaccountId subaccountId, string locationId) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.subaccountId == subaccountId && e.locationId == locationId)
         return e;
     return CloudConnector.init;

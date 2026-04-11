@@ -65,7 +65,7 @@ class ImportController : PlatformController {
       auto jobs = uc.listImportJobs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref j; jobs)
+      foreach (j; jobs)
         arr ~= serializeImportJob(j);
 
       auto resp = Json.emptyObject;
@@ -93,7 +93,7 @@ class ImportController : PlatformController {
     }
   }
 
-  private static Json serializeImportJob(ref const ImportJob imp) {
+  private static Json serializeImportJob(const ImportJob imp) {
     auto j = Json.emptyObject;
     j["id"] = Json(imp.id);
     j["tenantId"] = Json(imp.tenantId);

@@ -67,7 +67,7 @@ class OrgController : PlatformController {
       auto orgs = useCase.listOrgs(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref o; orgs)
+      foreach (o; orgs)
         arr ~= serializeOrg(o);
 
       auto resp = Json.emptyObject;
@@ -178,7 +178,7 @@ class OrgController : PlatformController {
     }
   }
 
-  private static Json serializeOrg(ref const Organization o) {
+  private static Json serializeOrg(const Organization o) {
     auto j = Json.emptyObject;
     j["id"] = Json(o.id);
     j["tenantId"] = Json(o.tenantId);

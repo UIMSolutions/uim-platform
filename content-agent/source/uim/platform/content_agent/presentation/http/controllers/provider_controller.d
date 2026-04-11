@@ -66,7 +66,7 @@ class ProviderController : PlatformController {
       auto providers = uc.listProviders(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref p; providers)
+      foreach (p; providers)
         arr ~= serializeProvider(p);
 
       auto resp = Json.emptyObject;
@@ -159,7 +159,7 @@ class ProviderController : PlatformController {
     }
   }
 
-  private static Json serializeProvider(ref const ContentProvider p) {
+  private static Json serializeProvider(const ContentProvider p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);
@@ -173,7 +173,7 @@ class ProviderController : PlatformController {
 
     if (p.contentTypes.length > 0) {
       auto arr = Json.emptyArray;
-      foreach (ref ct; p.contentTypes) {
+      foreach (ct; p.contentTypes) {
         auto ctj = Json.emptyObject;
         ctj["typeId"] = Json(ct.typeId);
         ctj["name"] = Json(ct.name);

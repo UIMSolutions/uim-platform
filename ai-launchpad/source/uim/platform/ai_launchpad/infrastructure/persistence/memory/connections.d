@@ -23,7 +23,7 @@ class MemoryConnectionRepository : IConnectionRepository {
 
   Connection[] findByWorkspace(WorkspaceId workspaceId) {
     Connection[] result;
-    foreach (ref c; store) {
+    foreach (c; store) {
       if (c.workspaceId == workspaceId) result ~= c;
     }
     return result;

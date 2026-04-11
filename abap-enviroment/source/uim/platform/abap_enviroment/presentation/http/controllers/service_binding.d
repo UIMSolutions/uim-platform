@@ -69,7 +69,7 @@ class ServiceBindingController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto bindings = uc.listBindings(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref b; bindings)
+      foreach (b; bindings)
         arr ~= serializeBinding(b);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -139,7 +139,7 @@ class ServiceBindingController : PlatformController {
     }
   }
 
-  private static Json serializeBinding(ref const ServiceBinding b) {
+  private static Json serializeBinding(const ServiceBinding b) {
     auto j = Json.emptyObject;
     j["id"] = Json(b.id);
     j["tenantId"] = Json(b.tenantId);
@@ -156,7 +156,7 @@ class ServiceBindingController : PlatformController {
 
     if (b.endpoints.length > 0) {
       auto eps = Json.emptyArray;
-      foreach (ref ep; b.endpoints) {
+      foreach (ep; b.endpoints) {
         auto ej = Json.emptyObject;
         ej["path"] = Json(ep.path);
         ej["serviceName"] = Json(ep.serviceName);

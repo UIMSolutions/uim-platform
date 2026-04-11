@@ -67,7 +67,7 @@ class QueueController : PlatformController {
       auto queues = uc.listQueues(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref q; queues)
+      foreach (q; queues)
         arr ~= serializeQueue(q);
 
       auto resp = Json.emptyObject;
@@ -140,7 +140,7 @@ class QueueController : PlatformController {
     }
   }
 
-  private static Json serializeQueue(ref const TransportQueue q) {
+  private static Json serializeQueue(const TransportQueue q) {
     auto j = Json.emptyObject;
     j["id"] = Json(q.id);
     j["tenantId"] = Json(q.tenantId);

@@ -17,7 +17,7 @@ class MemoryExecutableRepository : ExecutableRepository {
 
   Executable findById(ExecutableId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      foreach (ref e; *rg) {
+      foreach (e; *rg) {
         if (e.id == id)
           return e;
       }
@@ -43,7 +43,7 @@ class MemoryExecutableRepository : ExecutableRepository {
 
   void update(Executable e) {
     if (auto rg = e.resourceGroupId in store) {
-      foreach (ref existing; *rg) {
+      foreach (existing; *rg) {
         if (existing.id == e.id) {
           existing = e;
           return;

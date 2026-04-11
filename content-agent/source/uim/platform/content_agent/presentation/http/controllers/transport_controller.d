@@ -68,7 +68,7 @@ class TransportController : PlatformController {
       auto transports = uc.listTransportRequests(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref t; transports)
+      foreach (t; transports)
         arr ~= serializeTransport(t);
 
       auto resp = Json.emptyObject;
@@ -143,7 +143,7 @@ class TransportController : PlatformController {
     }
   }
 
-  private static Json serializeTransport(ref const TransportRequest t) {
+  private static Json serializeTransport(const TransportRequest t) {
     auto j = Json.emptyObject;
     j["id"] = Json(t.id);
     j["tenantId"] = Json(t.tenantId);

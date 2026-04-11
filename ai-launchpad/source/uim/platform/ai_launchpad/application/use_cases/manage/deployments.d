@@ -61,7 +61,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
 
   CommandResult[] bulkPatch(BulkPatchDeploymentRequest r) {
     CommandResult[] results;
-    foreach (ref did; r.deploymentIds) {
+    foreach (did; r.deploymentIds) {
       PatchDeploymentRequest pr;
       pr.connectionId = r.connectionId;
       pr.deploymentId = did;

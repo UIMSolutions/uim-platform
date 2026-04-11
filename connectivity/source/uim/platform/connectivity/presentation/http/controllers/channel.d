@@ -67,7 +67,7 @@ class ChannelController : PlatformController {
       auto channels = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref ch; channels)
+      foreach (ch; channels)
         arr ~= serializeChannel(ch);
 
       auto resp = Json.emptyObject;
@@ -164,7 +164,7 @@ class ChannelController : PlatformController {
     }
   }
 
-  private static Json serializeChannel(ref const ServiceChannel ch) {
+  private static Json serializeChannel(const ServiceChannel ch) {
     auto j = Json.emptyObject;
     j["id"] = Json(ch.id);
     j["connectorId"] = Json(ch.connectorId);

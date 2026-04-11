@@ -73,7 +73,7 @@ class CertificateController :PlatformController {
       auto certs = uc.listCertificates(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; certs)
+      foreach (c; certs)
         arr ~= serializeCert(c);
 
       auto resp = Json.emptyObject;
@@ -144,7 +144,7 @@ class CertificateController :PlatformController {
     }
   }
 
-  private static Json serializeCert(ref const Certificate c) {
+  private static Json serializeCert(const Certificate c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["tenantId"] = Json(c.tenantId);

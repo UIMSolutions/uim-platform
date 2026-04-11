@@ -59,7 +59,7 @@ class WorkspaceController : PlatformController {
         workspaces = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref w; workspaces) {
+      foreach (w; workspaces) {
         jarr ~= serializeWorkspace(w);
       }
 

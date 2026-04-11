@@ -62,7 +62,7 @@ class ScenarioController : PlatformController {
         scenarios = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref s; scenarios) {
+      foreach (s; scenarios) {
         jarr ~= serializeScenario(s);
       }
 

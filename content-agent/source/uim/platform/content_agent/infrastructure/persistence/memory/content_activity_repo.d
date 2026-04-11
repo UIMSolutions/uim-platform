@@ -16,7 +16,7 @@ class MemoryContentActivityRepository : ContentActivityRepository {
   private ContentActivity[] store;
 
   ContentActivity findById(ContentActivityId id) {
-    foreach (ref e; store)
+    foreach (e; store)
       if (e.id == id)
         return e;
     return ContentActivity.init;

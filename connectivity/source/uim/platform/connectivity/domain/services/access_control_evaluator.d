@@ -24,7 +24,7 @@ struct AccessControlEvaluator {
     AccessRule* bestMatch = null;
     size_t bestLen = 0;
 
-    foreach (ref rule; rules) {
+    foreach (rule; rules) {
       if (rule.virtualHost != virtualHost)
         continue;
       if (rule.virtualPort != virtualPort)

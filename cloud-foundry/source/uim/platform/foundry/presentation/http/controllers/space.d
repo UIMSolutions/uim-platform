@@ -62,7 +62,7 @@ class SpaceController : PlatformController {
       auto spaces = useCase.listSpaces(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; spaces)
+      foreach (s; spaces)
         arr ~= serializeSpace(s);
 
       auto resp = Json.emptyObject;
@@ -133,7 +133,7 @@ class SpaceController : PlatformController {
     }
   }
 
-  private static Json serializeSpace(ref const Space s) {
+  private static Json serializeSpace(const Space s) {
     auto j = Json.emptyObject;
     j["id"] = Json(s.id);
     j["orgId"] = Json(s.orgId);

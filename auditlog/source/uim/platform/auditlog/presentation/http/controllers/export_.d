@@ -112,7 +112,7 @@ class ExportController : PlatformController {
     }
   }
 
-  private static Json serializeJob(ref const ExportJob exportJob) {
+  private static Json serializeJob(const ExportJob exportJob) {
     auto json = Json.emptyObject
       .set("id", exportJob.id)
       .set("tenantId", exportJob.tenantId)

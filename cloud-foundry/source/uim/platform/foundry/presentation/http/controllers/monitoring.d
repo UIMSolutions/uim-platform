@@ -34,7 +34,7 @@ class MonitoringController {
       auto items = useCase.listAppHealth(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref h; items)
+      foreach (h; items)
         arr ~= serializeHealth(h);
 
       auto resp = Json.emptyObject;
@@ -86,7 +86,7 @@ class MonitoringController {
     }
   }
 
-  private static Json serializeHealth(ref const AppHealthSummary h) {
+  private static Json serializeHealth(const AppHealthSummary h) {
     auto j = Json.emptyObject;
     j["appId"] = Json(h.appId);
     j["appName"] = Json(h.appName);

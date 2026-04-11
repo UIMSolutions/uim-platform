@@ -26,14 +26,14 @@ class MemoryTransportQueueRepository : TransportQueueRepository {
   }
 
   TransportQueue findDefault(TenantId tenantId) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.isDefault)
         return e;
     return TransportQueue.init;
   }
 
   TransportQueue findByName(TenantId tenantId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return TransportQueue.init;

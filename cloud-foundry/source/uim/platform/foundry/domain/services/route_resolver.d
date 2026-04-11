@@ -66,7 +66,7 @@ class RouteResolver {
       return false;
 
     string[] updated;
-    foreach (ref id; route.mappedAppIds)
+    foreach (id; route.mappedAppIds)
       if (id != appId)
         updated ~= id;
 

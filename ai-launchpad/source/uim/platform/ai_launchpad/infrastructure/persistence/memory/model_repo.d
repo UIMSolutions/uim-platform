@@ -13,7 +13,7 @@ class MemoryModelRepository : IModelRepository {
   private Model[] store;
 
   void save(Model m) {
-    foreach (ref existing; store) {
+    foreach (existing; store) {
       if (existing.id == m.id && existing.connectionId == m.connectionId) {
         existing = m;
         return;
@@ -23,7 +23,7 @@ class MemoryModelRepository : IModelRepository {
   }
 
   Model findById(ModelId id, ConnectionId connectionId) {
-    foreach (ref m; store) {
+    foreach (m; store) {
       if (m.id == id && m.connectionId == connectionId) return m;
     }
     return Model.init;
@@ -31,7 +31,7 @@ class MemoryModelRepository : IModelRepository {
 
   Model[] findByConnection(ConnectionId connectionId) {
     Model[] result;
-    foreach (ref m; store) {
+    foreach (m; store) {
       if (m.connectionId == connectionId) result ~= m;
     }
     return result;
@@ -39,7 +39,7 @@ class MemoryModelRepository : IModelRepository {
 
   Model[] findByScenario(ScenarioId scenarioId, ConnectionId connectionId) {
     Model[] result;
-    foreach (ref m; store) {
+    foreach (m; store) {
       if (m.scenarioId == scenarioId && m.connectionId == connectionId) result ~= m;
     }
     return result;
@@ -51,7 +51,7 @@ class MemoryModelRepository : IModelRepository {
 
   void remove(ModelId id, ConnectionId connectionId) {
     Model[] filtered;
-    foreach (ref m; store) {
+    foreach (m; store) {
       if (!(m.id == id && m.connectionId == connectionId)) filtered ~= m;
     }
     store = filtered;

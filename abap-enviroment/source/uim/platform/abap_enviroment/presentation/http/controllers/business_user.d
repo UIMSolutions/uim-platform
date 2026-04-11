@@ -70,7 +70,7 @@ class BusinessUserController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto users = uc.listUsers(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref u; users)
+      foreach (u; users)
         arr ~= serializeUser(u);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -143,7 +143,7 @@ class BusinessUserController : PlatformController {
     }
   }
 
-  private static Json serializeUser(ref const BusinessUser u) {
+  private static Json serializeUser(const BusinessUser u) {
     auto j = Json.emptyObject;
     j["id"] = Json(u.id);
     j["tenantId"] = Json(u.tenantId);
@@ -160,7 +160,7 @@ class BusinessUserController : PlatformController {
 
     if (u.roleAssignments.length > 0) {
       auto roles = Json.emptyArray;
-      foreach (ref ra; u.roleAssignments) {
+      foreach (ra; u.roleAssignments) {
         auto rj = Json.emptyObject;
         rj["roleId"] = Json(ra.roleId);
         rj["roleName"] = Json(ra.roleName);

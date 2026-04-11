@@ -64,7 +64,7 @@ class ExecutionController : PlatformController {
         executions = uc.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref e; executions) {
+      foreach (e; executions) {
         jarr ~= serializeExecution(e);
       }
 
@@ -132,7 +132,7 @@ class ExecutionController : PlatformController {
 
       auto results = uc.bulkPatch(r);
       auto jarr = Json.emptyArray;
-      foreach (ref result; results) {
+      foreach (result; results) {
         auto rj = Json.emptyObject;
         rj["id"] = Json(result.id);
         rj["success"] = Json(result.success);
@@ -178,7 +178,7 @@ class ExecutionController : PlatformController {
     j["targetStatus"] = Json(ex.targetStatus);
 
     auto artifacts = Json.emptyArray;
-    foreach (ref a; ex.outputArtifacts) {
+    foreach (a; ex.outputArtifacts) {
       auto aj = Json.emptyObject;
       aj["name"] = Json(a.name);
       aj["artifactId"] = Json(a.artifactId);

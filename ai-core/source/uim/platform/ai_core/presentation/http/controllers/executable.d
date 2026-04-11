@@ -66,7 +66,7 @@ class ExecutableController : PlatformController {
         executables = uc.list(rgId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref e; executables) {
+      foreach (e; executables) {
         auto ej = Json.emptyObject;
         ej["id"] = Json(e.id);
         ej["scenarioId"] = Json(e.scenarioId);

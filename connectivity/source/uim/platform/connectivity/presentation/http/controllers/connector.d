@@ -66,7 +66,7 @@ class ConnectorController : PlatformController {
       auto conns = uc.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref c; conns)
+      foreach (c; conns)
         arr ~= serializeConnector(c);
 
       auto resp = Json.emptyObject;
@@ -144,7 +144,7 @@ class ConnectorController : PlatformController {
     }
   }
 
-  private static Json serializeConnector(ref const CloudConnector c) {
+  private static Json serializeConnector(const CloudConnector c) {
     auto j = Json.emptyObject;
     j["id"] = Json(c.id);
     j["subaccountId"] = Json(c.subaccountId);

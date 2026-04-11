@@ -72,7 +72,7 @@ class ApplicationJobController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto jobs = uc.listJobs(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref job; jobs)
+      foreach (job; jobs)
         arr ~= serializeJob(job);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -164,7 +164,7 @@ class ApplicationJobController : PlatformController {
     }
   }
 
-  private static Json serializeJob(ref const ApplicationJob job) {
+  private static Json serializeJob(const ApplicationJob job) {
     auto j = Json.emptyObject;
     j["id"] = Json(job.id);
     j["tenantId"] = Json(job.tenantId);
@@ -182,7 +182,7 @@ class ApplicationJobController : PlatformController {
 
     if (job.executionHistory.length > 0) {
       auto hist = Json.emptyArray;
-      foreach (ref ex; job.executionHistory) {
+      foreach (ex; job.executionHistory) {
         auto ej = Json.emptyObject;
         ej["executionId"] = Json(ex.executionId);
         ej["status"] = Json(ex.status.to!string);

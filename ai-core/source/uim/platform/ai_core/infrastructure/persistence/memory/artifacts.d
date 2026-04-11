@@ -17,7 +17,7 @@ class MemoryArtifactRepository : ArtifactRepository {
 
   Artifact findById(ArtifactId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      foreach (ref a; *rg) {
+      foreach (a; *rg) {
         if (a.id == id)
           return a;
       }
@@ -55,7 +55,7 @@ class MemoryArtifactRepository : ArtifactRepository {
 
   void update(Artifact a) {
     if (auto rg = a.resourceGroupId in store) {
-      foreach (ref existing; *rg) {
+      foreach (existing; *rg) {
         if (existing.id == a.id) {
           existing = a;
           return;

@@ -17,7 +17,7 @@ class MemoryConfigurationRepository : ConfigurationRepository {
 
   Configuration findById(ConfigurationId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      foreach (ref c; *rg) {
+      foreach (c; *rg) {
         if (c.id == id)
           return c;
       }

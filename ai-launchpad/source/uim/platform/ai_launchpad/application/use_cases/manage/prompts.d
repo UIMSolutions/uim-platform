@@ -39,7 +39,7 @@ class ManagePromptsUseCase : UIMUseCase {
     p.status = PromptStatus.draft;
     p.createdBy = r.createdBy;
 
-    foreach (ref msg; r.messages) {
+    foreach (msg; r.messages) {
       if (msg.length >= 2) {
         PromptRole role = PromptRole.user;
         if (msg[0] == "system")
@@ -96,7 +96,7 @@ class ManagePromptsUseCase : UIMUseCase {
 
     if (r.messages.length > 0) {
       p.messages = [];
-      foreach (ref msg; r.messages) {
+      foreach (msg; r.messages) {
         if (msg.length >= 2) {
           PromptRole role = PromptRole.user;
           if (msg[0] == "system")

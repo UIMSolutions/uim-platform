@@ -69,7 +69,7 @@ class PackageController : PlatformController {
       auto packages = uc.listPackages(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref p; packages)
+      foreach (p; packages)
         arr ~= serializePackage(p);
 
       auto resp = Json.emptyObject;
@@ -234,7 +234,7 @@ class PackageController : PlatformController {
     }
   }
 
-  private static Json serializePackage(ref const ContentPackage p) {
+  private static Json serializePackage(const ContentPackage p) {
     auto j = Json.emptyObject;
     j["id"] = Json(p.id);
     j["tenantId"] = Json(p.tenantId);
@@ -252,7 +252,7 @@ class PackageController : PlatformController {
 
     if (p.items.length > 0) {
       auto arr = Json.emptyArray;
-      foreach (ref item; p.items) {
+      foreach (item; p.items) {
         auto ij = Json.emptyObject;
         ij["id"] = Json(item.id);
         ij["name"] = Json(item.name);

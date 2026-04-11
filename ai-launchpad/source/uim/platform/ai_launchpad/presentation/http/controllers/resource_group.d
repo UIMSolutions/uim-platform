@@ -61,7 +61,7 @@ class ResourceGroupController : PlatformController {
         groups = uc.listAll();
 
       auto jarr = Json.emptyArray;
-      foreach (ref g; groups) {
+      foreach (g; groups) {
         jarr ~= serializeResourceGroup(g);
       }
 
@@ -141,7 +141,7 @@ class ResourceGroupController : PlatformController {
     j["connectionId"] = Json(g.connectionId);
 
     auto labels = Json.emptyArray;
-    foreach (ref l; g.labels) {
+    foreach (l; g.labels) {
       auto lj = Json.emptyObject;
       lj["key"] = Json(l.key);
       lj["value"] = Json(l.value);

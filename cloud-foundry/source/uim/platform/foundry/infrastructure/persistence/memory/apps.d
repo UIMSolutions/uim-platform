@@ -27,7 +27,7 @@ class MemoryAppRepository : AppRepository {
   }
 
   Application* findByName(SpaceId spacetenantId, id tenantId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.spaceId == spaceId && e.name == name)
         return &e;
     return null;

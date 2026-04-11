@@ -72,7 +72,7 @@ class ModelController : PlatformController {
         models = uc.listByConnection(connectionId);
 
       auto jarr = Json.emptyArray;
-      foreach (ref m; models) {
+      foreach (m; models) {
         jarr ~= serializeModel(m);
       }
 

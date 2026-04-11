@@ -76,7 +76,7 @@ class DestinationController : PlatformController {
       auto dests = uc.listDestinations(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ref d; dests)
+      foreach (d; dests)
         arr ~= serializeDest(d);
 
       auto resp = Json.emptyObject;
@@ -160,7 +160,7 @@ class DestinationController : PlatformController {
     }
   }
 
-  private static Json serializeDest(ref const Destination d) {
+  private static Json serializeDest(const Destination d) {
     auto j = Json.emptyObject;
     j["id"] = Json(d.id);
     j["tenantId"] = Json(d.tenantId);
@@ -174,7 +174,7 @@ class DestinationController : PlatformController {
 
     if (d.properties.length > 0) {
       auto props = Json.emptyArray;
-      foreach (ref p; d.properties) {
+      foreach (p; d.properties) {
         auto pj = Json.emptyObject;
         pj["key"] = Json(p.key);
         pj["value"] = Json(p.value);
@@ -185,7 +185,7 @@ class DestinationController : PlatformController {
 
     if (d.additionalHeaders.length > 0) {
       auto hdrs = Json.emptyArray;
-      foreach (ref h; d.additionalHeaders) {
+      foreach (h; d.additionalHeaders) {
         auto hj = Json.emptyObject;
         hj["key"] = Json(h.key);
         hj["value"] = Json(h.value);

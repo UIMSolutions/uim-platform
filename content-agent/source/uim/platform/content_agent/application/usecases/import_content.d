@@ -59,7 +59,7 @@ class ImportContentUseCase : UIMUseCase {
 
     // Record deployed items from package
     string[] deployed;
-    foreach (ref item; pkg.items)
+    foreach (item; pkg.items)
       deployed ~= item.name;
     job.deployedItems = deployed;
     job.importedSizeBytes = pkg.packageSizeBytes;

@@ -17,7 +17,7 @@ class MemoryScenarioRepository : ScenarioRepository {
 
   Scenario findById(ScenarioId id, ResourceGroupId rgId) {
     if (auto rg = rgId in store) {
-      foreach (ref s; *rg) {
+      foreach (s; *rg) {
         if (s.id == id)
           return s;
       }
@@ -34,7 +34,7 @@ class MemoryScenarioRepository : ScenarioRepository {
   Scenario[] findByTenant(TenantId tenantId) {
     Scenario[] result;
     foreach (rg; store.byValue) {
-      foreach (ref s; rg) {
+      foreach (s; rg) {
         if (s.tenantId == tenantId)
           result ~= s;
       }
@@ -48,7 +48,7 @@ class MemoryScenarioRepository : ScenarioRepository {
 
   void update(Scenario s) {
     if (auto rg = s.resourceGroupId in store) {
-      foreach (ref existing; *rg) {
+      foreach (existing; *rg) {
         if (existing.id == s.id) {
           existing = s;
           return;

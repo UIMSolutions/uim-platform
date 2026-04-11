@@ -161,7 +161,7 @@ class AuditConfigController : PlatformController {
     }
   }
 
-  private static Json serializeConfig(ref const AuditConfig c) {
+  private static Json serializeConfig(const AuditConfig c) {
     auto json = Json.emptyObject
       .set("id", c.id.toJson)
       .set("tenantId", c.tenantId.toJson)

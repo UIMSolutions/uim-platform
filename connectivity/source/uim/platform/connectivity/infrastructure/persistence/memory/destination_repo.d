@@ -26,7 +26,7 @@ class MemoryDestinationRepository : DestinationRepository {
   }
 
   Destination findByName(TenantId tenantId, string name) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
     return Destination.init;

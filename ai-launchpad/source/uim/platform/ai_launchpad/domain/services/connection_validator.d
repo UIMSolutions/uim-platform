@@ -14,7 +14,7 @@ struct ValidationResult {
 }
 
 class ConnectionValidator {
-  ValidationResult validate(ref Connection c) {
+  ValidationResult validate(Connection c) {
     if (c.name.length == 0) return ValidationResult(false, "Connection name is required");
     if (c.url.length == 0) return ValidationResult(false, "Connection URL is required");
     if (c.authUrl.length == 0) return ValidationResult(false, "Auth URL is required");

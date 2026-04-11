@@ -35,14 +35,14 @@ class MemoryBusinessUserRepository : BusinessUserRepository {
   }
 
   BusinessUser* findByUsername(SystemInstanceId systemId, string username) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.systemInstanceId == systemId && e.username == username)
         return &store[e.id];
     return null;
   }
 
   BusinessUser* findByEmail(SystemInstanceId systemId, string email) {
-    foreach (ref e; store.byValue())
+    foreach (e; store.byValue())
       if (e.systemInstanceId == systemId && e.email == email)
         return &store[e.id];
     return null;

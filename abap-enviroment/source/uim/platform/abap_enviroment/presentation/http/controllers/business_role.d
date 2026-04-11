@@ -81,7 +81,7 @@ class BusinessRoleController : PlatformController {
       auto systemId = req.headers.get("X-System-Id", "");
       auto roles = uc.listRoles(systemId);
       auto arr = Json.emptyArray;
-      foreach (ref role; roles)
+      foreach (role; roles)
         arr ~= serializeRole(role);
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -152,7 +152,7 @@ class BusinessRoleController : PlatformController {
     }
   }
 
-  private static Json serializeRole(ref const BusinessRole role) {
+  private static Json serializeRole(const BusinessRole role) {
     auto j = Json.emptyObject;
     j["id"] = Json(role.id);
     j["tenantId"] = Json(role.tenantId);
@@ -165,14 +165,14 @@ class BusinessRoleController : PlatformController {
 
     if (role.restrictionTypes.length > 0) {
       auto rt = Json.emptyArray;
-      foreach (ref r; role.restrictionTypes)
+      foreach (r; role.restrictionTypes)
         rt ~= Json(r);
       j["restrictionTypes"] = rt;
     }
 
     if (role.assignedCatalogs.length > 0) {
       auto cats = Json.emptyArray;
-      foreach (ref c; role.assignedCatalogs) {
+      foreach (c; role.assignedCatalogs) {
         auto cj = Json.emptyObject;
         cj["catalogId"] = Json(c.catalogId);
         cj["catalogName"] = Json(c.catalogName);
