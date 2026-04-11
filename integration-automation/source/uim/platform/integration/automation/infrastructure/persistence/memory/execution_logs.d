@@ -46,7 +46,7 @@ class MemoryExecutionLogRepository : ExecutionLogRepository {
   }
 
   size_t countByWorkflow(WorkflowId workflowtenantId, id tenantId) {
-    return cast(long) findByWorkflow(workflowtenantId, id).length;
+    return findByWorkflow(workflowtenantId, id).length;
   }
 
   void save(ExecutionLog log) {

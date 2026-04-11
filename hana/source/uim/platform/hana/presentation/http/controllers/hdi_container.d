@@ -68,14 +68,14 @@ class HDIContainerController : PlatformController {
         cj["instanceId"] = Json(c.instanceId);
         cj["name"] = Json(c.name);
         cj["status"] = Json(c.status.to!string);
-        cj["artifactCount"] = Json(cast(long) c.artifactCount);
+        cj["artifactCount"] = Json(c.artifactCount);
         cj["sizeBytes"] = Json(c.sizeBytes);
         cj["createdAt"] = Json(c.createdAt);
         jarr ~= cj;
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) containers.length);
+      resp["count"] = Json(containers.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -102,7 +102,7 @@ class HDIContainerController : PlatformController {
       resp["status"] = Json(c.status.to!string);
       resp["schemaName"] = Json(c.schemaName);
       resp["appUser"] = Json(c.appUser);
-      resp["artifactCount"] = Json(cast(long) c.artifactCount);
+      resp["artifactCount"] = Json(c.artifactCount);
       resp["sizeBytes"] = Json(c.sizeBytes);
       resp["grantedSchemas"] = stringsToJsonArray(c.grantedSchemas);
       resp["createdAt"] = Json(c.createdAt);

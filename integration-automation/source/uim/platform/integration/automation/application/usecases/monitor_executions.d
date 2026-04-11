@@ -80,7 +80,7 @@ class MonitorExecutionsUseCase : UIMUseCase {
     auto logs = logRepo.findByWorkflow(workflowtenantId, id);
 
     return WorkflowSummary(wf.id, wf.name, wf.status, wf.totalSteps, completed,
-        inProg, pending, failed, skipped, cast(long) logs.length);
+        inProg, pending, failed, skipped, logs.length);
   }
 }
 

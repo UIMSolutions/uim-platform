@@ -78,7 +78,7 @@ class DatabaseUserController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) users.length);
+      resp["count"] = Json(users.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -104,7 +104,7 @@ class DatabaseUserController : PlatformController {
       resp["defaultSchema"] = Json(u.defaultSchema);
       resp["isRestricted"] = Json(u.isRestricted);
       resp["forcePasswordChange"] = Json(u.forcePasswordChange);
-      resp["failedLoginAttempts"] = Json(cast(long) u.failedLoginAttempts);
+      resp["failedLoginAttempts"] = Json(u.failedLoginAttempts);
       resp["lastLoginAt"] = Json(u.lastLoginAt);
       resp["createdAt"] = Json(u.createdAt);
       resp["modifiedAt"] = Json(u.modifiedAt);

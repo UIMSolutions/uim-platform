@@ -64,13 +64,13 @@ class ContentCacheController : PlatformController {
         obj["fileId"] = Json(e.fileId);
         obj["filePath"] = Json(e.filePath);
         obj["status"] = Json(e.status);
-        obj["hitCount"] = Json(cast(long) e.hitCount);
+        obj["hitCount"] = Json(e.hitCount);
         arr ~= obj;
       }
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -98,7 +98,7 @@ class ContentCacheController : PlatformController {
       obj["etag"] = Json(entry.etag);
       obj["ttlSeconds"] = Json(entry.ttlSeconds);
       obj["status"] = Json(entry.status);
-      obj["hitCount"] = Json(cast(long) entry.hitCount);
+      obj["hitCount"] = Json(entry.hitCount);
       obj["createdAt"] = Json(entry.createdAt);
       obj["expiresAt"] = Json(entry.expiresAt);
       res.writeJsonBody(obj, 200);

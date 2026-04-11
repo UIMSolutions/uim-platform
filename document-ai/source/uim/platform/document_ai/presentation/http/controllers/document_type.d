@@ -66,7 +66,7 @@ class DocumentTypeController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) types.length);
+      resp["count"] = Json(types.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

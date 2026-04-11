@@ -53,6 +53,6 @@ class MemoryDatabaseUserRepository : DatabaseUserRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(u => u.tenantId == tenantId).array.length;
+    return store.filter!(u => u.tenantId == tenantId).array.length;
   }
 }

@@ -31,7 +31,7 @@ class ConfigurationController : PlatformController {
             auto config = uc.get_(tenantId);
 
             auto resp = Json.emptyObject;
-            resp["defaultRetries"] = Json(cast(long) config.defaultRetries);
+            resp["defaultRetries"] = Json(config.defaultRetries);
             resp["defaultRetryDelayMs"] = Json(config.defaultRetryDelayMs);
             resp["maxRunDurationMs"] = Json(config.maxRunDurationMs);
             resp["enableAsyncMode"] = Json(config.enableAsyncMode);

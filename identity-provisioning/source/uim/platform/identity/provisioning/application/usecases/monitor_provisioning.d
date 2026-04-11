@@ -113,7 +113,7 @@ class MonitorProvisioningUseCase : UIMUseCase {
     }
 
     auto entities = entityRepo.findByTenant(tenantId);
-    s.totalProvisionedEntities = cast(long) entities.length;
+    s.totalProvisionedEntities = entities.length;
 
     return s;
   }

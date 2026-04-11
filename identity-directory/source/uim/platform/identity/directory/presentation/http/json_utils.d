@@ -20,7 +20,7 @@ Json toJsonValue(T)(T val) {
       else static if (is(FT == bool))
         j[name] = Json(val.tupleof[i]);
       else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
-        j[name] = Json(cast(long) val.tupleof[i]);
+        j[name] = Json(val.tupleof[i]);
       else static if (is(FT == string[])) {
         auto arr = Json.emptyArray;
         foreach (s; val.tupleof[i])

@@ -74,7 +74,7 @@ class RemoteTableController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) tables.length);
+      resp["count"] = Json(tables.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

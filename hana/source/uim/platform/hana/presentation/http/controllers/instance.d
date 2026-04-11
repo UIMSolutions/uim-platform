@@ -84,7 +84,7 @@ class InstanceController : PlatformController {
         ij["version"] = Json(i.version_);
         ij["region"] = Json(i.region);
         ij["memoryGB"] = Json(i.resources.memoryGB);
-        ij["vcpus"] = Json(cast(long) i.resources.vcpus);
+        ij["vcpus"] = Json(i.resources.vcpus);
         ij["storageGB"] = Json(i.resources.storageGB);
         ij["createdAt"] = Json(i.createdAt);
         ij["modifiedAt"] = Json(i.modifiedAt);
@@ -92,7 +92,7 @@ class InstanceController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) instances.length);
+      resp["count"] = Json(instances.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -120,7 +120,7 @@ class InstanceController : PlatformController {
       resp["region"] = Json(i.region);
       resp["availabilityZone"] = Json(i.availabilityZone);
       resp["memoryGB"] = Json(i.resources.memoryGB);
-      resp["vcpus"] = Json(cast(long) i.resources.vcpus);
+      resp["vcpus"] = Json(i.resources.vcpus);
       resp["storageGB"] = Json(i.resources.storageGB);
       resp["usedStorageGB"] = Json(i.resources.usedStorageGB);
       resp["enableScriptServer"] = Json(i.enableScriptServer);

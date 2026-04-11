@@ -94,7 +94,7 @@ class JobController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) jobs.length);
+            resp["total"] = Json(jobs.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -200,7 +200,7 @@ class JobController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) jobs.length);
+            resp["total"] = Json(jobs.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

@@ -73,7 +73,7 @@ class WorkflowController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) workflows.length);
+      resp["totalCount"] = Json(workflows.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

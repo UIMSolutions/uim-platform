@@ -69,7 +69,7 @@ class BrowseContentUseCase : UIMUseCase {
     summary.repositoryId = repositoryId;
     summary.name = repo.name;
     summary.totalDocuments = docRepo.countByRepository(repositorytenantId, id);
-    summary.totalFolders = cast(long) folderRepo.findByRepository(repositorytenantId, id).length;
+    summary.totalFolders = folderRepo.findByRepository(repositorytenantId, id).length;
     summary.status = repo.status;
     return summary;
   }

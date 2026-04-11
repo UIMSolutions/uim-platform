@@ -33,7 +33,7 @@ class ActivityController : PlatformController {
             auto jarr = Json.emptyArray;
             foreach (e; items) jarr ~= activityToJson(e);
             auto resp = Json.emptyObject;
-            resp["count"] = Json(cast(long) items.length);
+            resp["count"] = Json(items.length);
             resp["resources"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

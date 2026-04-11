@@ -73,7 +73,7 @@ class TaskController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) tasks.length);
+      resp["count"] = Json(tasks.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -103,8 +103,8 @@ class TaskController : PlatformController {
       resp["completedAt"] = Json(t.completedAt);
       resp["lastRunDurationMs"] = Json(t.lastRunDurationMs);
       resp["lastRunMessage"] = Json(t.lastRunMessage);
-      resp["retryCount"] = Json(cast(long) t.retryCount);
-      resp["maxRetries"] = Json(cast(long) t.maxRetries);
+      resp["retryCount"] = Json(t.retryCount);
+      resp["maxRetries"] = Json(t.maxRetries);
       resp["createdAt"] = Json(t.createdAt);
       resp["modifiedAt"] = Json(t.modifiedAt);
       res.writeJsonBody(resp, 200);

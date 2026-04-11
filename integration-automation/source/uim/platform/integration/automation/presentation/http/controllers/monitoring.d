@@ -41,7 +41,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -61,7 +61,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -81,7 +81,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -100,7 +100,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

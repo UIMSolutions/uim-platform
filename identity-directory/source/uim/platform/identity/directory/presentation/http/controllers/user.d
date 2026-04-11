@@ -72,9 +72,9 @@ class UserController {
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;
       response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(cast(long) users.length);
+      response["totalResults"] = Json(users.length);
       response["startIndex"] = Json(1L);
-      response["itemsPerPage"] = Json(cast(long) users.length);
+      response["itemsPerPage"] = Json(users.length);
       response["Resources"] = serializeUsers(users);
       res.writeJsonBody(response, 200);
     }
@@ -173,7 +173,7 @@ class UserController {
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;
       response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(cast(long) users.length);
+      response["totalResults"] = Json(users.length);
       response["Resources"] = serializeUsers(users);
       res.writeJsonBody(response, 200);
     }
@@ -230,8 +230,8 @@ private Json serializeUser(User user) {
   // Meta
   auto meta = Json.emptyObject;
   meta["resourceType"] = Json("User");
-  meta["created"] = Json(cast(long) user.createdAt);
-  meta["lastModified"] = Json(cast(long) user.updatedAt);
+  meta["created"] = Json(user.createdAt);
+  meta["lastModified"] = Json(user.updatedAt);
   j["meta"] = meta;
 
   return j;

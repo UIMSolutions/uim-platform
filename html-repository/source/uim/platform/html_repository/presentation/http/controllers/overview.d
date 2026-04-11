@@ -34,15 +34,15 @@ class OverviewController : PlatformController {
         return;
       }
       auto obj = Json.emptyObject;
-      obj["totalApps"] = Json(cast(long) summary.totalApps);
-      obj["totalVersions"] = Json(cast(long) summary.totalVersions);
-      obj["totalFiles"] = Json(cast(long) summary.totalFiles);
-      obj["totalInstances"] = Json(cast(long) summary.totalInstances);
-      obj["totalDeployments"] = Json(cast(long) summary.totalDeployments);
-      obj["totalRoutes"] = Json(cast(long) summary.totalRoutes);
-      obj["totalCacheEntries"] = Json(cast(long) summary.totalCacheEntries);
+      obj["totalApps"] = Json(summary.totalApps);
+      obj["totalVersions"] = Json(summary.totalVersions);
+      obj["totalFiles"] = Json(summary.totalFiles);
+      obj["totalInstances"] = Json(summary.totalInstances);
+      obj["totalDeployments"] = Json(summary.totalDeployments);
+      obj["totalRoutes"] = Json(summary.totalRoutes);
+      obj["totalCacheEntries"] = Json(summary.totalCacheEntries);
       obj["cacheHitRate"] = Json(summary.cacheHitRate);
-      obj["totalStorageBytes"] = Json(cast(long) summary.totalStorageBytes);
+      obj["totalStorageBytes"] = Json(summary.totalStorageBytes);
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

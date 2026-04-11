@@ -64,14 +64,14 @@ class SpaceController : PlatformController {
         sj["name"] = Json(s.name);
         sj["description"] = Json(s.description);
         sj["businessName"] = Json(s.businessName);
-        sj["priority"] = Json(cast(long) s.priority);
+        sj["priority"] = Json(s.priority);
         sj["createdAt"] = Json(s.createdAt);
         sj["modifiedAt"] = Json(s.modifiedAt);
         jarr ~= sj;
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) spaces.length);
+      resp["count"] = Json(spaces.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -94,7 +94,7 @@ class SpaceController : PlatformController {
       resp["name"] = Json(s.name);
       resp["description"] = Json(s.description);
       resp["businessName"] = Json(s.businessName);
-      resp["priority"] = Json(cast(long) s.priority);
+      resp["priority"] = Json(s.priority);
       resp["enableAuditLog"] = Json(s.enableAuditLog);
       resp["createdAt"] = Json(s.createdAt);
       resp["modifiedAt"] = Json(s.modifiedAt);

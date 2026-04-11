@@ -70,14 +70,14 @@ class DataLakeController : PlatformController {
         dj["name"] = Json(d.name);
         dj["description"] = Json(d.description);
         dj["status"] = Json(d.status.to!string);
-        dj["computeNodes"] = Json(cast(long) d.computeNodes);
+        dj["computeNodes"] = Json(d.computeNodes);
         dj["createdAt"] = Json(d.createdAt);
         dj["modifiedAt"] = Json(d.modifiedAt);
         jarr ~= dj;
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) lakes.length);
+      resp["count"] = Json(lakes.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -102,7 +102,7 @@ class DataLakeController : PlatformController {
       resp["name"] = Json(d.name);
       resp["description"] = Json(d.description);
       resp["status"] = Json(d.status.to!string);
-      resp["computeNodes"] = Json(cast(long) d.computeNodes);
+      resp["computeNodes"] = Json(d.computeNodes);
       resp["createdAt"] = Json(d.createdAt);
       resp["modifiedAt"] = Json(d.modifiedAt);
       res.writeJsonBody(resp, 200);

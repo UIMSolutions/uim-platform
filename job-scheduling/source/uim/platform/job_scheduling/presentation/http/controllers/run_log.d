@@ -44,7 +44,7 @@ class RunLogController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) logs.length);
+            resp["total"] = Json(logs.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -64,7 +64,7 @@ class RunLogController : PlatformController {
 
             auto jarr = logs.map!(log => runLogToJson(log)).array.toJson;
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) logs.length);
+            resp["total"] = Json(logs.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -134,7 +134,7 @@ class RunLogController : PlatformController {
         j["jobId"] = Json(l.jobId);
         j["status"] = Json(runStatusStr(l.status));
         j["statusMessage"] = Json(l.statusMessage);
-        j["httpStatus"] = Json(cast(long) l.httpStatus);
+        j["httpStatus"] = Json(l.httpStatus);
         j["scheduledAt"] = Json(l.scheduledAt);
         j["triggeredAt"] = Json(l.triggeredAt);
         j["completedAt"] = Json(l.completedAt);

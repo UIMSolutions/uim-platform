@@ -31,7 +31,7 @@ class AuditController {
       TenantId tenantId = req.getTenantId;
       auto events = useCase.listEvents(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) events.length);
+      response["totalResults"] = Json(events.length);
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }
@@ -47,7 +47,7 @@ class AuditController {
       auto actorId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByActor(actorId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) events.length);
+      response["totalResults"] = Json(events.length);
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }
@@ -63,7 +63,7 @@ class AuditController {
       auto targetId = extractIdFromPath(req.requestURI);
       auto events = useCase.findByTarget(targetId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) events.length);
+      response["totalResults"] = Json(events.length);
       response["resources"] = toJsonArray(events);
       res.writeJsonBody(response, 200);
     }

@@ -62,7 +62,7 @@ class ClientController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) clients.length);
+      resp["count"] = Json(clients.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -74,7 +74,7 @@ class ProfileController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) profiles.length);
+      resp["totalCount"] = Json(profiles.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

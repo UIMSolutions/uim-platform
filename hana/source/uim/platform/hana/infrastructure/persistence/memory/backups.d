@@ -53,6 +53,6 @@ class MemoryBackupRepository : BackupRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(b => b.tenantId == tenantId).array.length;
+    return store.filter!(b => b.tenantId == tenantId).array.length;
   }
 }

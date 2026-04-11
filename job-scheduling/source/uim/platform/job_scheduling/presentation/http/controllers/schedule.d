@@ -83,7 +83,7 @@ class ScheduleController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) schedules.length);
+            resp["total"] = Json(schedules.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {
@@ -201,7 +201,7 @@ class ScheduleController : PlatformController {
             }
 
             auto resp = Json.emptyObject;
-            resp["total"] = Json(cast(long) schedules.length);
+            resp["total"] = Json(schedules.length);
             resp["results"] = jarr;
             res.writeJsonBody(resp, 200);
         } catch (Exception e) {

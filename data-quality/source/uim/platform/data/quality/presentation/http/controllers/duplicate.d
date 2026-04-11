@@ -67,7 +67,7 @@ class DuplicateController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["matchGroups"] = arr;
-      resp["totalGroups"] = Json(cast(long) groups.length);
+      resp["totalGroups"] = Json(groups.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -110,7 +110,7 @@ class DuplicateController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) groups.length);
+      resp["totalCount"] = Json(groups.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

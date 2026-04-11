@@ -45,6 +45,6 @@ class MemoryClientRepository : ClientRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) store.filter!(c => c.tenantId == tenantId).array.length;
+    return store.filter!(c => c.tenantId == tenantId).array.length;
   }
 }

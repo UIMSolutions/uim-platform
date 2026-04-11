@@ -88,7 +88,7 @@ class AddressController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["results"] = arr;
-      resp["totalCount"] = Json(cast(long) results.length);
+      resp["totalCount"] = Json(results.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -106,7 +106,7 @@ class AddressController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) records.length);
+      resp["totalCount"] = Json(records.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

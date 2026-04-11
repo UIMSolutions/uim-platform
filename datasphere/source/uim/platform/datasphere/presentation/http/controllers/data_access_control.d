@@ -70,7 +70,7 @@ class DataAccessControlController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) controls.length);
+      resp["count"] = Json(controls.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

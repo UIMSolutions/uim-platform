@@ -65,7 +65,7 @@ class PasswordPolicyController {
       TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) policies.length);
+      response["totalResults"] = Json(policies.length);
       response["resources"] = toJsonArray(policies);
       res.writeJsonBody(response, 200);
     }

@@ -41,11 +41,11 @@ class MemoryWorkflowRepository : WorkflowRepository {
   }
 
   size_t countByTenant(TenantId tenantId) {
-    return cast(long) findByTenant(tenantId).length;
+    return findByTenant(tenantId).length;
   }
 
   size_t countActiveByTenant(TenantId tenantId) {
-    return cast(long) store.byValue().filter!(e => e.tenantId == tenantId
+    return store.byValue().filter!(e => e.tenantId == tenantId
         && (e.status == WorkflowStatus.inProgress
           || e.status == WorkflowStatus.planned || e.status == WorkflowStatus.suspended))
       .array.length;

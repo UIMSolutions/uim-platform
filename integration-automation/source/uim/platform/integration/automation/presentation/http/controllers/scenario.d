@@ -73,7 +73,7 @@ class ScenarioController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) scenarios.length);
+      resp["totalCount"] = Json(scenarios.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

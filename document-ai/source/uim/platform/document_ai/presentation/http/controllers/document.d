@@ -71,7 +71,7 @@ class DocumentController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) docs.length);
+      resp["count"] = Json(docs.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -162,8 +162,8 @@ class DocumentController : PlatformController {
       rj["schemaId"] = Json(result.schemaId);
       rj["method"] = Json(result.method.to!string);
       rj["overallConfidence"] = Json(result.overallConfidence);
-      rj["extractedFieldCount"] = Json(cast(long) result.extractedFieldCount);
-      rj["totalPages"] = Json(cast(long) result.totalPages);
+      rj["extractedFieldCount"] = Json(result.extractedFieldCount);
+      rj["totalPages"] = Json(result.totalPages);
       rj["processedAt"] = Json(result.processedAt);
 
       auto hArr = Json.emptyArray;
@@ -173,7 +173,7 @@ class DocumentController : PlatformController {
         fj["value"] = Json(f.value);
         fj["type"] = Json(f.type.to!string);
         fj["confidence"] = Json(f.confidence);
-        fj["page"] = Json(cast(long) f.page);
+        fj["page"] = Json(f.page);
         hArr ~= fj;
       }
       rj["headerFields"] = hArr;
@@ -181,7 +181,7 @@ class DocumentController : PlatformController {
       auto liArr = Json.emptyArray;
       foreach (li; result.lineItems) {
         auto lij = Json.emptyObject;
-        lij["rowIndex"] = Json(cast(long) li.rowIndex);
+        lij["rowIndex"] = Json(li.rowIndex);
         auto liFields = Json.emptyArray;
         foreach (f; li.fields) {
           auto fj = Json.emptyObject;

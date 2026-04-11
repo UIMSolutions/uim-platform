@@ -57,7 +57,7 @@ class SchemaController {
       TenantId tenantId = req.getTenantId;
       auto schemas = useCase.listSchemas(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) schemas.length);
+      response["totalResults"] = Json(schemas.length);
       response["Resources"] = toJsonArray(schemas);
       res.writeJsonBody(response, 200);
     }

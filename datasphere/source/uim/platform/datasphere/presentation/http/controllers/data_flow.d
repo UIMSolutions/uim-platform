@@ -70,7 +70,7 @@ class DataFlowController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) flows.length);
+      resp["count"] = Json(flows.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

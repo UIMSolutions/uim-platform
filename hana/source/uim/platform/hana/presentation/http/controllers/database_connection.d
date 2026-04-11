@@ -78,13 +78,13 @@ class DatabaseConnectionController : PlatformController {
         cj["type"] = Json(c.type.to!string);
         cj["status"] = Json(c.status.to!string);
         cj["host"] = Json(c.host);
-        cj["port"] = Json(cast(long) c.port);
+        cj["port"] = Json(c.port);
         cj["createdAt"] = Json(c.createdAt);
         jarr ~= cj;
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) conns.length);
+      resp["count"] = Json(conns.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -111,7 +111,7 @@ class DatabaseConnectionController : PlatformController {
       resp["type"] = Json(c.type.to!string);
       resp["status"] = Json(c.status.to!string);
       resp["host"] = Json(c.host);
-      resp["port"] = Json(cast(long) c.port);
+      resp["port"] = Json(c.port);
       resp["database"] = Json(c.database);
       resp["user"] = Json(c.user);
       resp["useTls"] = Json(c.useTls);

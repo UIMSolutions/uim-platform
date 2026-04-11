@@ -96,7 +96,7 @@ class EventSubscriptionController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -201,8 +201,8 @@ class EventSubscriptionController : PlatformController {
     .set("typeEncoding", sub.typeEncoding.to!string)
     .set("sinkUrl", sub.sinkUrl)
     .set("sinkServiceName", sub.sinkServiceName)
-    .set("sinkServicePort", cast(long) sub.sinkServicePort)
-    .set("maxInFlightMessages", cast(long) sub.maxInFlightMessages)
+    .set("sinkServicePort", sub.sinkServicePort)
+    .set("maxInFlightMessages", sub.maxInFlightMessages)
     .set("exactTypeMatching", sub.exactTypeMatching)
     .set("filterAttributes", sub.filterAttributes.toJson)
     .set("labels", sub.labels.toJson)  

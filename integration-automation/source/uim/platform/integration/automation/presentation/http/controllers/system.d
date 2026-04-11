@@ -78,7 +78,7 @@ class SystemController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) systems.length);
+      resp["totalCount"] = Json(systems.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -187,7 +187,7 @@ class SystemController {
     j["description"] = Json(s.description);
     j["systemType"] = Json(s.systemType.to!string);
     j["host"] = Json(s.host);
-    j["port"] = Json(cast(long) s.port);
+    j["port"] = Json(s.port);
     j["client"] = Json(s.client);
     j["protocol"] = Json(s.protocol);
     j["status"] = Json(s.status.to!string);

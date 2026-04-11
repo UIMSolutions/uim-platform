@@ -65,7 +65,7 @@ class GroupController {
       auto response = Json.emptyObject;
       response["schemas"] = Json.emptyArray;
       response["schemas"] ~= Json("urn:ietf:params:scim:api:messages:2.0:ListResponse");
-      response["totalResults"] = Json(cast(long) groups.length);
+      response["totalResults"] = Json(groups.length);
       response["Resources"] = toJsonArray(groups);
       res.writeJsonBody(response, 200);
     }

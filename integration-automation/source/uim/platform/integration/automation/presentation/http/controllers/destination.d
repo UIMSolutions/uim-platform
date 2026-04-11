@@ -79,7 +79,7 @@ class DestinationController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) destinations.length);
+      resp["totalCount"] = Json(destinations.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

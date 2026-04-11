@@ -74,7 +74,7 @@ class ConnectionController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) connections.length);
+      resp["count"] = Json(connections.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -99,7 +99,7 @@ class ConnectionController : PlatformController {
       resp["name"] = Json(c.name);
       resp["description"] = Json(c.description);
       resp["host"] = Json(c.host);
-      resp["port"] = Json(cast(long) c.port);
+      resp["port"] = Json(c.port);
       resp["database"] = Json(c.database);
       resp["isValid"] = Json(c.isValid);
       resp["statusMessage"] = Json(c.statusMessage);

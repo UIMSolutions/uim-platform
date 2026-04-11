@@ -42,7 +42,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -78,7 +78,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) logs.length);
+      resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -97,7 +97,7 @@ class MonitoringController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -111,14 +111,14 @@ class MonitoringController {
       auto summary = uc.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject;
-      j["totalSourceSystems"] = Json(cast(long) summary.totalSourceSystems);
-      j["activeSourceSystems"] = Json(cast(long) summary.activeSourceSystems);
-      j["totalTargetSystems"] = Json(cast(long) summary.totalTargetSystems);
-      j["activeTargetSystems"] = Json(cast(long) summary.activeTargetSystems);
-      j["totalJobs"] = Json(cast(long) summary.totalJobs);
-      j["completedJobs"] = Json(cast(long) summary.completedJobs);
-      j["failedJobs"] = Json(cast(long) summary.failedJobs);
-      j["runningJobs"] = Json(cast(long) summary.runningJobs);
+      j["totalSourceSystems"] = Json(summary.totalSourceSystems);
+      j["activeSourceSystems"] = Json(summary.activeSourceSystems);
+      j["totalTargetSystems"] = Json(summary.totalTargetSystems);
+      j["activeTargetSystems"] = Json(summary.activeTargetSystems);
+      j["totalJobs"] = Json(summary.totalJobs);
+      j["completedJobs"] = Json(summary.completedJobs);
+      j["failedJobs"] = Json(summary.failedJobs);
+      j["runningJobs"] = Json(summary.runningJobs);
       j["totalProvisionedEntities"] = Json(summary.totalProvisionedEntities);
       res.writeJsonBody(j, 200);
     }

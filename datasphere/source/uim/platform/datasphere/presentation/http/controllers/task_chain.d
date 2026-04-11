@@ -69,7 +69,7 @@ class TaskChainController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) chains.length);
+      resp["count"] = Json(chains.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

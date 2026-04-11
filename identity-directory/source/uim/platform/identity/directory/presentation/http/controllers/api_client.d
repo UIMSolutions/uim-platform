@@ -33,7 +33,7 @@ class ApiClientController {
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
           j.getString("name"), j.getString("description"), jsonStrArray(j,
-            "scopes"), cast(long) jsonLong(j, "expiresAt"),);
+            "scopes"), jsonLong(j, "expiresAt"),);
 
       auto result = useCase.createClient(createReq);
       auto response = Json.emptyObject;
@@ -61,7 +61,7 @@ class ApiClientController {
       TenantId tenantId = req.getTenantId;
       auto clients = useCase.listClients(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) clients.length);
+      response["totalResults"] = Json(clients.length);
 
       // Serialize without clientSecret
       auto arr = Json.emptyArray;

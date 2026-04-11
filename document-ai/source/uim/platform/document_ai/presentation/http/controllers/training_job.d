@@ -65,7 +65,7 @@ class TrainingJobController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) jobs.length);
+      resp["count"] = Json(jobs.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -149,7 +149,7 @@ class TrainingJobController : PlatformController {
     jj["modelVersion"] = Json(tj.modelVersion);
     jj["status"] = Json(tj.status.to!string);
     jj["statusMessage"] = Json(tj.statusMessage);
-    jj["documentCount"] = Json(cast(long) tj.documentCount);
+    jj["documentCount"] = Json(tj.documentCount);
     jj["accuracy"] = Json(tj.accuracy);
     jj["startedAt"] = Json(tj.startedAt);
     jj["completedAt"] = Json(tj.completedAt);

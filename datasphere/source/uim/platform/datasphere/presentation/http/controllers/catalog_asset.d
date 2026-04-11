@@ -75,7 +75,7 @@ class CatalogAssetController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) assets.length);
+      resp["count"] = Json(assets.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -103,7 +103,7 @@ class CatalogAssetController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) assets.length);
+      resp["count"] = Json(assets.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

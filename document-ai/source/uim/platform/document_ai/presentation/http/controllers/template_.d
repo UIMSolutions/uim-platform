@@ -66,7 +66,7 @@ class TemplateController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) templates.length);
+      resp["count"] = Json(templates.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
@@ -157,7 +157,7 @@ class TemplateController : PlatformController {
     foreach (r; t.regions) {
       auto rj = Json.emptyObject;
       rj["fieldName"] = Json(r.fieldName);
-      rj["page"] = Json(cast(long) r.page);
+      rj["page"] = Json(r.page);
       rj["x"] = Json(r.x);
       rj["y"] = Json(r.y);
       rj["width"] = Json(r.width);

@@ -67,7 +67,7 @@ class SchemaController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) schemas.length);
+      resp["count"] = Json(schemas.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

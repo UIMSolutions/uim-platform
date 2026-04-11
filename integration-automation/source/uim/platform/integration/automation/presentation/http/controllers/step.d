@@ -46,7 +46,7 @@ class StepController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) steps.length);
+      resp["totalCount"] = Json(steps.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -82,7 +82,7 @@ class StepController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) tasks.length);
+      resp["totalCount"] = Json(tasks.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

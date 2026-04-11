@@ -75,7 +75,7 @@ class PolicyController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto policies = useCase.listPolicies(tenantId);
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) policies.length);
+      response["totalResults"] = Json(policies.length);
       auto arr = Json.emptyArray;
       foreach (p; policies)
         arr ~= toJsonValue(p);

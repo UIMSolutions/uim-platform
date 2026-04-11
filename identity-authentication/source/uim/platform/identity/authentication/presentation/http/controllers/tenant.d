@@ -65,7 +65,7 @@ class TenantController : PlatformController {
     try {
       auto tenants = useCase.listTenants();
       auto response = Json.emptyObject;
-      response["totalResults"] = Json(cast(long) tenants.length);
+      response["totalResults"] = Json(tenants.length);
       response["resources"] = toJsonArray(tenants);
       res.writeJsonBody(response, 200);
     }

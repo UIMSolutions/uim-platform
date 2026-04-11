@@ -57,8 +57,8 @@ class BrowseController : PlatformController {
       auto resp = Json.emptyObject;
       resp["subfolders"] = fArr;
       resp["documents"] = dArr;
-      resp["totalSubfolders"] = Json(cast(long) contents.subfolders.length);
-      resp["totalDocuments"] = Json(cast(long) contents.documents.length);
+      resp["totalSubfolders"] = Json(contents.subfolders.length);
+      resp["totalDocuments"] = Json(contents.documents.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -125,7 +125,7 @@ class BrowseController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

@@ -25,7 +25,7 @@ class QualityScorer {
     d.tenantId = tenantId;
     d.datasetId = datasetId;
     d.datasetName = datasetName;
-    d.totalRecords = cast(long) results.length;
+    d.totalRecords = results.length;
 
     long valid = 0;
     long invalid = 0;

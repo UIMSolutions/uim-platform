@@ -63,13 +63,13 @@ class ServiceInstanceController : PlatformController {
         obj["name"] = Json(e.name);
         obj["plan"] = Json(e.plan);
         obj["status"] = Json(e.status);
-        obj["appCount"] = Json(cast(long) e.appCount);
+        obj["appCount"] = Json(e.appCount);
         arr ~= obj;
       }
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -95,7 +95,7 @@ class ServiceInstanceController : PlatformController {
       obj["spaceId"] = Json(entry.spaceId);
       obj["plan"] = Json(entry.plan);
       obj["status"] = Json(entry.status);
-      obj["appCount"] = Json(cast(long) entry.appCount);
+      obj["appCount"] = Json(entry.appCount);
       obj["createdBy"] = Json(entry.createdBy);
       obj["createdAt"] = Json(entry.createdAt);
       obj["modifiedBy"] = Json(entry.modifiedBy);

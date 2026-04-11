@@ -95,7 +95,7 @@ class FunctionController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -175,15 +175,15 @@ class FunctionController : PlatformController {
     j["status"] = Json(fn.status.to!string);
     j["handler"] = Json(fn.handler);
     j["scalingType"] = Json(fn.scalingType.to!string);
-    j["minReplicas"] = Json(cast(long) fn.minReplicas);
-    j["maxReplicas"] = Json(cast(long) fn.maxReplicas);
+    j["minReplicas"] = Json(fn.minReplicas);
+    j["maxReplicas"] = Json(fn.maxReplicas);
     j["cpuRequest"] = Json(fn.cpuRequest);
     j["cpuLimit"] = Json(fn.cpuLimit);
     j["memoryRequest"] = Json(fn.memoryRequest);
     j["memoryLimit"] = Json(fn.memoryLimit);
     j["envVars"] = serializeStrMap(fn.envVars);
     j["labels"] = serializeStrMap(fn.labels);
-    j["timeoutSeconds"] = Json(cast(long) fn.timeoutSeconds);
+    j["timeoutSeconds"] = Json(fn.timeoutSeconds);
     j["createdBy"] = Json(fn.createdBy);
     j["createdAt"] = Json(fn.createdAt);
     j["modifiedAt"] = Json(fn.modifiedAt);

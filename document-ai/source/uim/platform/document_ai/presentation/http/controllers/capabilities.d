@@ -54,8 +54,8 @@ class CapabilitiesController : PlatformController {
       }
       resp["features"] = fArr;
 
-      resp["maxDocumentSizeMb"] = Json(cast(long) caps.maxDocumentSizeMb);
-      resp["maxPagesPerDocument"] = Json(cast(long) caps.maxPagesPerDocument);
+      resp["maxDocumentSizeMb"] = Json(caps.maxDocumentSizeMb);
+      resp["maxPagesPerDocument"] = Json(caps.maxPagesPerDocument);
 
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

@@ -79,7 +79,7 @@ class ReplicationTaskController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) tasks.length);
+      resp["count"] = Json(tasks.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {

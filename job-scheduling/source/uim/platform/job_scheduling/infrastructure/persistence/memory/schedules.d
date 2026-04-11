@@ -64,6 +64,6 @@ class MemoryScheduleRepository : ScheduleRepository {
     }
 
     size_t countByJob(JobId jobtenantId, id tenantId) {
-        return cast(long) store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array.length;
+        return store.filter!(s => s.jobId == jobId && s.tenantId == tenantId).array.length;
     }
 }

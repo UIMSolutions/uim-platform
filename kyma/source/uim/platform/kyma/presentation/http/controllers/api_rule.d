@@ -95,7 +95,7 @@ class ApiRuleController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -189,7 +189,7 @@ class ApiRuleController : PlatformController {
     .set("description", rule.description)
     .set("status", rule.status.to!string)
     .set("serviceName", rule.serviceName)
-    .set("servicePort", cast(long) rule.servicePort)
+    .set("servicePort", rule.servicePort)
     .set("gateway", rule.gateway)
     .set("host", rule.host)
     .set("tlsEnabled", rule.tlsEnabled)

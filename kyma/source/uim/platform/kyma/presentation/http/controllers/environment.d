@@ -89,7 +89,7 @@ class EnvironmentController : PlatformController{
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) envs.length);
+      resp["totalCount"] = Json(envs.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -163,10 +163,10 @@ class EnvironmentController : PlatformController{
     .set("region", Json(e.region))
     .set("kubernetesVersion", Json(e.kubernetesVersion))
     .set("status", Json(e.status.to!string))
-    .set("machineCount", Json(cast(long) e.machineCount))
+    .set("machineCount", Json(e.machineCount))
     .set("machineType", Json(e.machineType))
-    .set("autoScalerMin", Json(cast(long) e.autoScalerMin))
-    .set("autoScalerMax", Json(cast(long) e.autoScalerMax))
+    .set("autoScalerMin", Json(e.autoScalerMin))
+    .set("autoScalerMax", Json(e.autoScalerMax))
     .set("shootDomain", Json(e.shootDomain))
     .set("kubeApiServerUrl", Json(e.kubeApiServerUrl))
     .set("administrators", serializeStrArray(e.administrators))

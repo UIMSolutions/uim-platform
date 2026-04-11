@@ -82,7 +82,7 @@ class NamespaceController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {
@@ -158,7 +158,7 @@ class NamespaceController : PlatformController {
     j["memoryLimit"] = Json(ns.memoryLimit);
     j["cpuRequest"] = Json(ns.cpuRequest);
     j["memoryRequest"] = Json(ns.memoryRequest);
-    j["podLimit"] = Json(cast(long) ns.podLimit);
+    j["podLimit"] = Json(ns.podLimit);
     j["quotaEnforcement"] = Json(ns.quotaEnforcement.to!string);
     j["istioInjection"] = Json(ns.istioInjection);
     j["labels"] = serializeStrMap(ns.labels);

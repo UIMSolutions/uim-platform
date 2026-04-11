@@ -86,7 +86,7 @@ class FragmentController : PlatformController {
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) fragments.length);
+      resp["totalCount"] = Json(fragments.length);
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

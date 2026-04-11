@@ -81,7 +81,7 @@ class AlertController : PlatformController {
       }
 
       auto resp = Json.emptyObject;
-      resp["count"] = Json(cast(long) alerts.length);
+      resp["count"] = Json(alerts.length);
       resp["resources"] = jarr;
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
