@@ -134,16 +134,15 @@ class SpaceController : PlatformController {
   }
 
   private static Json serializeSpace(const Space s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["orgId"] = Json(s.orgId);
-    j["tenantId"] = Json(s.tenantId);
-    j["name"] = Json(s.name);
-    j["status"] = Json(s.status.to!string);
-    j["allowSsh"] = Json(s.allowSsh);
-    j["createdBy"] = Json(s.createdBy);
-    j["createdAt"] = Json(s.createdAt);
-    j["updatedAt"] = Json(s.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", s.id)
+      .set("orgId", s.orgId)
+      .set("tenantId", s.tenantId)
+      .set("name", s.name)
+      .set("status", s.status.to!string)
+      .set("allowSsh", s.allowSsh)
+      .set("createdBy", s.createdBy)
+      .set("createdAt", s.createdAt)
+      .set("updatedAt", s.updatedAt);
   }
 }

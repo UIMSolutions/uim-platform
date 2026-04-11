@@ -131,16 +131,14 @@ class WorkspaceController : PlatformController {
   }
 
   private Json serializeWorkspace(Workspace w) {
-    import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(w.id);
-    j["name"] = Json(w.name);
-    j["description"] = Json(w.description);
-    j["tenantId"] = Json(w.tenantId);
-    j["status"] = Json(w.status.to!string);
-    j["connectionCount"] = Json(w.connectionCount);
-    j["createdAt"] = Json(w.createdAt);
-    j["modifiedAt"] = Json(w.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", w.id)
+      .set("name", w.name)
+      .set("description", w.description)
+      .set("tenantId", w.tenantId)
+      .set("status", w.status.to!string)
+      .set("connectionCount", w.connectionCount)
+      .set("createdAt", w.createdAt)
+      .set("modifiedAt", w.modifiedAt);
   }
 }

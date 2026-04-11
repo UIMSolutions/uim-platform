@@ -19,6 +19,7 @@ class StatisticsController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
+    
     router.get("/api/v1/statistics", &handleGet);
   }
 
@@ -41,9 +42,9 @@ class StatisticsController : PlatformController {
         jarr ~= serializeStatistic(s);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(stats.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", stats.length)
+        .set("resources", jarr);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -51,18 +52,16 @@ class StatisticsController : PlatformController {
   }
 
   private Json serializeStatistic(UsageStatistic s) {
-    import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["scenarioId"] = Json(s.scenarioId);
-    j["connectionId"] = Json(s.connectionId);
-    j["period"] = Json(s.period.to!string);
-    j["executionCount"] = Json(s.executionCount);
-    j["deploymentCount"] = Json(s.deploymentCount);
-    j["totalTrainingHours"] = Json(s.totalTrainingHours);
-    j["totalInferenceRequests"] = Json(s.totalInferenceRequests);
-    j["estimatedCost"] = Json(s.estimatedCost);
-    j["computedAt"] = Json(s.computedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", s.id)
+      .set("scenarioId", s.scenarioId)
+      .set("connectionId", s.connectionId)
+      .set("period", s.period.to!string)
+      .set("executionCount", s.executionCount)
+      .set("deploymentCount", s.deploymentCount)
+      .set("totalTrainingHours", s.totalTrainingHours)
+      .set("totalInferenceRequests", s.totalInferenceRequests)
+      .set("estimatedCost", s.estimatedCost)
+      .set("computedAt", s.computedAt);
   }
 }

@@ -179,19 +179,18 @@ class OrgController : PlatformController {
   }
 
   private static Json serializeOrg(const Organization o) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(o.id);
-    j["tenantId"] = Json(o.tenantId);
-    j["name"] = Json(o.name);
-    j["status"] = Json(o.status.to!string);
-    j["memoryQuotaMb"] = Json(o.memoryQuotaMb);
-    j["instanceMemoryLimitMb"] = Json(o.instanceMemoryLimitMb);
-    j["totalRoutes"] = Json(o.totalRoutes);
-    j["totalServices"] = Json(o.totalServices);
-    j["totalAppInstances"] = Json(o.totalAppInstances);
-    j["createdBy"] = Json(o.createdBy);
-    j["createdAt"] = Json(o.createdAt);
-    j["updatedAt"] = Json(o.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", o.id)
+      .set("tenantId", o.tenantId)
+      .set("name", o.name)
+      .set("status", o.status.to!string)
+      .set("memoryQuotaMb", o.memoryQuotaMb)
+      .set("instanceMemoryLimitMb", o.instanceMemoryLimitMb)
+      .set("totalRoutes", o.totalRoutes)
+      .set("totalServices", o.totalServices)
+      .set("totalAppInstances", o.totalAppInstances)
+      .set("createdBy", o.createdBy)
+      .set("createdAt", o.createdAt)
+      .set("updatedAt", o.updatedAt);
   }
 }

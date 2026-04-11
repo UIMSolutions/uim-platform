@@ -150,24 +150,23 @@ class AlertController : PlatformController {
   }
 
   private static Json serializeAlert(const ref Alert a) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(a.id);
-    j["tenantId"] = Json(a.tenantId);
-    j["ruleId"] = Json(a.ruleId);
-    j["resourceId"] = Json(a.resourceId);
-    j["ruleName"] = Json(a.ruleName);
-    j["metricName"] = Json(a.metricName);
-    j["currentValue"] = Json(a.currentValue);
-    j["thresholdValue"] = Json(a.thresholdValue);
-    j["operator"] = Json(a.operator_.to!string);
-    j["severity"] = Json(a.severity.to!string);
-    j["state"] = Json(a.state.to!string);
-    j["message"] = Json(a.message);
-    j["acknowledgedBy"] = Json(a.acknowledgedBy);
-    j["resolvedBy"] = Json(a.resolvedBy);
-    j["triggeredAt"] = Json(a.triggeredAt);
-    j["acknowledgedAt"] = Json(a.acknowledgedAt);
-    j["resolvedAt"] = Json(a.resolvedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", a.id)
+      .set("tenantId", a.tenantId)
+      .set("ruleId", a.ruleId)
+      .set("resourceId", a.resourceId)
+      .set("ruleName", a.ruleName)
+      .set("metricName", a.metricName)
+      .set("currentValue", a.currentValue)
+      .set("thresholdValue", a.thresholdValue)
+      .set("operator", a.operator_.to!string)
+      .set("severity", a.severity.to!string)
+      .set("state", a.state.to!string)
+      .set("message", a.message)
+      .set("acknowledgedBy", a.acknowledgedBy)
+      .set("resolvedBy", a.resolvedBy)
+      .set("triggeredAt", a.triggeredAt)
+      .set("acknowledgedAt", a.acknowledgedAt)
+      .set("resolvedAt", a.resolvedAt);
   }
 }

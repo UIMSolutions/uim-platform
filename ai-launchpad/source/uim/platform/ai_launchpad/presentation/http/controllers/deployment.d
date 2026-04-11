@@ -175,27 +175,25 @@ class DeploymentController : PlatformController {
     import std.conv : to;
     import uim.platform.ai_launchpad.domain.entities.deployment : ScalingConfig;
 
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["connectionId"] = Json(d.connectionId);
-    j["configurationId"] = Json(d.configurationId);
-    j["scenarioId"] = Json(d.scenarioId);
-    j["resourceGroupId"] = Json(d.resourceGroupId);
-    j["status"] = Json(d.status.to!string);
-    j["targetStatus"] = Json(d.targetStatus);
-    j["deploymentUrl"] = Json(d.deploymentUrl);
+    auto sj = Json.emptyObject
+      .set("minReplicas", d.scaling.minReplicas)
+      .set("maxReplicas", d.scaling.maxReplicas);
 
-    auto sj = Json.emptyObject;
-    sj["minReplicas"] = Json(d.scaling.minReplicas);
-    sj["maxReplicas"] = Json(d.scaling.maxReplicas);
-    j["scaling"] = sj;
-
-    j["ttl"] = Json(d.ttl);
-    j["startedAt"] = Json(d.startedAt);
-    j["stoppedAt"] = Json(d.stoppedAt);
-    j["statusMessage"] = Json(d.statusMessage);
-    j["createdAt"] = Json(d.createdAt);
-    j["modifiedAt"] = Json(d.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("connectionId", d.connectionId)
+      .set("configurationId", d.configurationId)
+      .set("scenarioId", d.scenarioId)
+      .set("resourceGroupId", d.resourceGroupId)
+      .set("status", d.status.to!string)
+      .set("targetStatus", d.targetStatus)
+      .set("deploymentUrl", d.deploymentUrl)
+      .set("scaling", sj)
+      .set("ttl", d.ttl)
+      .set("startedAt", d.startedAt)
+      .set("stoppedAt", d.stoppedAt)
+      .set("statusMessage", d.statusMessage)
+      .set("createdAt", d.createdAt)
+      .set("modifiedAt", d.modifiedAt);
   }
 }

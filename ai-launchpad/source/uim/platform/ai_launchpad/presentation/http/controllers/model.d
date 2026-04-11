@@ -5,8 +5,8 @@
 *****************************************************************************************************************/
 module uim.platform.ai_launchpad.presentation.http.controllers.model;
 
-import uim.platform.ai_launchpad.application.usecases.manage.models;
-import uim.platform.ai_launchpad.application.dto;
+// import uim.platform.ai_launchpad.application.usecases.manage.models;
+// import uim.platform.ai_launchpad.application.dto;
 
 import uim.platform.ai_launchpad;
 
@@ -22,7 +22,7 @@ class ModelController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/models", &handleRegister);
     router.get("/api/v1/models", &handleList);
     router.get("/api/v1/models/*", &handleGet);
@@ -150,22 +150,19 @@ class ModelController : PlatformController {
   }
 
   private Json serializeModel(Model m) {
-    import std.conv : to;
-
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["connectionId"] = Json(m.connectionId);
-    j["name"] = Json(m.name);
-    j["version"] = Json(m.version_);
-    j["description"] = Json(m.description);
-    j["scenarioId"] = Json(m.scenarioId);
-    j["executionId"] = Json(m.executionId);
-    j["url"] = Json(m.url);
-    j["size"] = Json(m.size);
-    j["status"] = Json(m.status.to!string);
-    j["labels"] = toJsonArray(m.labels);
-    j["createdAt"] = Json(m.createdAt);
-    j["modifiedAt"] = Json(m.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", m.id)
+      .set("connectionId", m.connectionId)
+      .set("name", m.name)
+      .set("version", m.version_)
+      .set("description", m.description)
+      .set("scenarioId", m.scenarioId)
+      .set("executionId", m.executionId)
+      .set("url", m.url)
+      .set("size", m.size)
+      .set("status", m.status.to!string)
+      .set("labels", m.labels)
+      .set("createdAt", m.createdAt)
+      .set("modifiedAt", m.modifiedAt);
   }
 }

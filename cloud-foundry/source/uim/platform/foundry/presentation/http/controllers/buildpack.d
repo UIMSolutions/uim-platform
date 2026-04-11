@@ -140,19 +140,18 @@ class BuildpackController {
   }
 
   private static Json serializeBuildpack(const Buildpack bp) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(bp.id);
-    j["tenantId"] = Json(bp.tenantId);
-    j["name"] = Json(bp.name);
-    j["type"] = Json(bp.type_.to!string);
-    j["position"] = Json(bp.position);
-    j["stack"] = Json(bp.stack);
-    j["filename"] = Json(bp.filename);
-    j["enabled"] = Json(bp.enabled);
-    j["locked"] = Json(bp.locked);
-    j["createdBy"] = Json(bp.createdBy);
-    j["createdAt"] = Json(bp.createdAt);
-    j["updatedAt"] = Json(bp.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", bp.id)
+      .set("tenantId", bp.tenantId)
+      .set("name", bp.name)
+      .set("type", bp.type_.to!string)
+      .set("position", bp.position)
+      .set("stack", bp.stack)
+      .set("filename", bp.filename)
+      .set("enabled", bp.enabled)
+      .set("locked", bp.locked)
+      .set("createdBy", bp.createdBy)
+      .set("createdAt", bp.createdAt)
+      .set("updatedAt", bp.updatedAt);
   }
 }

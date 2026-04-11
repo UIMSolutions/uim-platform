@@ -54,13 +54,10 @@ class AccessRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -78,8 +75,7 @@ class AccessRuleController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -93,8 +89,7 @@ class AccessRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,13 +109,10 @@ class AccessRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Access rule not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -133,31 +125,27 @@ class AccessRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRule(const AccessRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["connectorId"] = Json(r.connectorId);
-    j["tenantId"] = Json(r.tenantId);
-    j["description"] = Json(r.description);
-    j["protocol"] = Json(r.protocol.to!string);
-    j["virtualHost"] = Json(r.virtualHost);
-    j["virtualPort"] = Json(r.virtualPort);
-    j["urlPathPrefix"] = Json(r.urlPathPrefix);
-    j["policy"] = Json(r.policy.to!string);
-    j["principalPropagation"] = Json(r.principalPropagation);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("connectorId", r.connectorId)
+      .set("tenantId", r.tenantId)
+      .set("description", r.description)
+      .set("protocol", r.protocol.to!string)
+      .set("virtualHost", r.virtualHost)
+      .set("virtualPort", r.virtualPort)
+      .set("urlPathPrefix", r.urlPathPrefix)
+      .set("policy", r.policy.to!string)
+      .set("principalPropagation", r.principalPropagation)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt);
   }
 }

@@ -234,33 +234,31 @@ class RouteController : PlatformController {
   // --- Serializers ---
 
   private static Json serializeRoute(const Route r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["spaceId"] = Json(r.spaceId);
-    j["domainId"] = Json(r.domainId);
-    j["tenantId"] = Json(r.tenantId);
-    j["host"] = Json(r.host);
-    j["path"] = Json(r.path);
-    j["port"] = Json(r.port);
-    j["protocol"] = Json(r.protocol.to!string);
-    j["mappedAppIds"] = toJsonArray(r.mappedAppIds);
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("spaceId", r.spaceId)
+      .set("domainId", r.domainId)
+      .set("tenantId", r.tenantId)
+      .set("host", r.host)
+      .set("path", r.path)
+      .set("port", r.port)
+      .set("protocol", r.protocol.to!string)
+      .set("mappedAppIds", toJsonArray(r.mappedAppIds))
+      .set("createdBy", r.createdBy)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt);
   }
 
   private static Json serializeDomain(const CfDomain d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["ownerOrgId"] = Json(d.ownerOrgId);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["scope"] = Json(d.scope_.to!string);
-    j["isInternal"] = Json(d.isInternal);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("ownerOrgId", d.ownerOrgId)
+      .set("tenantId", d.tenantId)
+      .set("name", d.name)
+      .set("scope", d.scope_.to!string)
+      .set("isInternal", d.isInternal)
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt)
+      .set("updatedAt", d.updatedAt);
   }
 }
