@@ -64,7 +64,7 @@ class ManageSubaccountsUseCase : UIMUseCase {
     subaccount.status = SubaccountStatus.active;
     repository.update(subaccount);
 
-    emitEvent(req.globalAccountId, subaccount.id, PlatformEventCategory.subaccountLifecycle,
+    emitEvent(req.globalAccountId.toString, subaccount.id.toString, PlatformEventCategory.subaccountLifecycle,
         "subaccount.created", "Subaccount created: " ~ req.displayName, req.createdBy);
 
     return CommandResult(true, subaccount.id.toString, "");
@@ -75,10 +75,10 @@ class ManageSubaccountsUseCase : UIMUseCase {
   }
 
   CommandResult update(SubaccountId id, UpdateSubaccountRequest req) {
-    auto subaccount = repository.findById(id);
-    if (subaccount.id.isEmpty)
+    if (!repository.existsById(id))
       return CommandResult(false, "", "Subaccount not found");
 
+    auto subaccount = repository.findById(id);
     if (req.displayName.length > 0)
       subaccount.displayName = req.displayName;
     if (req.description.length > 0)

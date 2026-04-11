@@ -26,7 +26,7 @@ class EventController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.get("/api/v1/events", &handleList);
     router.get("/api/v1/events/*", &handleGet);
   }
@@ -49,15 +49,14 @@ class EventController : PlatformController {
         items = uc.listByGlobalAccount(gaId);
 
       auto arr = Json.emptyArray;
-      foreach (ref ev; items)
+      foreach (ev; items)
         arr ~= serializeEvent(ev);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -70,29 +69,27 @@ class EventController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeEvent(ev), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
-private Json serializeEvent(ref PlatformEvent ev) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(ev.id);
-  j["globalAccountId"] = Json(ev.globalAccountId);
-  j["subaccountId"] = Json(ev.subaccountId);
-  j["directoryId"] = Json(ev.directoryId);
-  j["category"] = Json(enumStr(ev.category));
-  j["severity"] = Json(enumStr(ev.severity));
-  j["eventType"] = Json(ev.eventType);
-  j["description"] = Json(ev.description);
-  j["resourceId"] = Json(ev.resourceId);
-  j["resourceType"] = Json(ev.resourceType);
-  j["initiatedBy"] = Json(ev.initiatedBy);
-  j["sourceService"] = Json(ev.sourceService);
-  j["timestamp"] = Json(ev.timestamp);
-  j["details"] = serializeStrMap(ev.details);
-  return j;
+private Json serializeEvent(PlatformEvent ev) {
+  auto j = Json.emptyObject
+    .set("id", ev.id)
+    .set("globalAccountId", ev.globalAccountId)
+    .set("subaccountId", ev.subaccountId)
+    .set("directoryId", ev.directoryId)
+    .set("category", enumStr(ev.category))
+    .set("severity", enumStr(ev.severity))
+    .set("eventType", ev.eventType)
+    .set("description", ev.description)
+    .set("resourceId", ev.resourceId)
+    .set("resourceType", ev.resourceType)
+    .set("initiatedBy", ev.initiatedBy)
+    .set("sourceService", ev.sourceService)
+    .set("timestamp", ev.timestamp)
+    .set("details", ev.details);
 }
 
 private string enumStr(E)(E val) {

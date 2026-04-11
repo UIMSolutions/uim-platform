@@ -56,6 +56,10 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, globalAccount.globalAccountId.toString, "");
   }
 
+  CommandResult update(string id, UpdateGlobalAccountRequest req) {
+    return update(GlobalAccountId(id), req);
+  }
+
   CommandResult update(GlobalAccountId id, UpdateGlobalAccountRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Global account not found");
@@ -77,6 +81,10 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult suspend(string id) {
+    return suspend(GlobalAccountId(id));
+  }
+
   CommandResult suspend(GlobalAccountId accountId) {
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
@@ -94,7 +102,12 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, accountId.toString, "");
   }
   
+  CommandResult reactivate(string id) {
+    return reactivate(GlobalAccountId(id));
+  }
+
   CommandResult reactivate(GlobalAccountId accountId) {
+
     if (!repo.existsById(accountId))
       return CommandResult(false, "", "Global account not found");
 
@@ -108,6 +121,10 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
     return CommandResult(true, accountId.toString, "");
   }
 
+  GlobalAccount getById(string id) {
+    return getById(GlobalAccountId(id));
+  }
+
   GlobalAccount getById(GlobalAccountId accountId) {
     return repo.findById(accountId);
   }
@@ -118,6 +135,10 @@ class ManageGlobalAccountsUseCase : UIMUseCase {
 
   GlobalAccount[] listByStatus(string status) {
     return repo.findByStatus(parseGlobalAccountStatus(status));
+  }
+
+  CommandResult remove(string id) {
+    return remove(GlobalAccountId(id));
   }
 
   CommandResult remove(GlobalAccountId accountId) {

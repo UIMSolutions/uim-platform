@@ -27,7 +27,7 @@ class GlobalAccountController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/accounts", &handleCreate);
     router.get("/api/v1/accounts", &handleList);
     router.get("/api/v1/accounts/*", &handleGet);
@@ -59,11 +59,9 @@ class GlobalAccountController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -77,15 +75,14 @@ class GlobalAccountController : PlatformController {
         items = uc.listAll();
 
       auto arr = Json.emptyArray;
-      foreach (ref ga; items)
+      foreach (ga; items)
         arr ~= serializeGlobalAccount(ga);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -98,8 +95,7 @@ class GlobalAccountController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeGlobalAccount(ga), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -119,8 +115,7 @@ class GlobalAccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -132,8 +127,7 @@ class GlobalAccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -145,8 +139,7 @@ class GlobalAccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -158,33 +151,31 @@ class GlobalAccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
-private Json serializeGlobalAccount(ref GlobalAccount ga) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(ga.id);
-  j["displayName"] = Json(ga.displayName);
-  j["description"] = Json(ga.description);
-  j["contractNumber"] = Json(ga.contractNumber);
-  j["licenseType"] = Json(enumStr(ga.licenseType));
-  j["status"] = Json(enumStr(ga.status));
-  j["region"] = Json(ga.region);
-  j["costCenter"] = Json(ga.costCenter);
-  j["companyName"] = Json(ga.companyName);
-  j["contactEmail"] = Json(ga.contactEmail);
-  j["maxSubaccounts"] = Json(cast(long) ga.maxSubaccounts);
-  j["currentSubaccounts"] = Json(cast(long) ga.currentSubaccounts);
-  j["maxDirectories"] = Json(cast(long) ga.maxDirectories);
-  j["currentDirectories"] = Json(cast(long) ga.currentDirectories);
-  j["createdAt"] = Json(ga.createdAt);
-  j["modifiedAt"] = Json(ga.modifiedAt);
-  j["createdBy"] = Json(ga.createdBy);
-  j["customProperties"] = serializeStrMap(ga.customProperties);
-  return j;
+private Json serializeGlobalAccount(GlobalAccount ga) {
+  return Json.emptyObject
+    .set("id", ga.id)
+    .set("displayName", ga.displayName)
+    .set("description", ga.description)
+    .set("contractNumber", ga.contractNumber)
+    .set("licenseType", enumStr(ga.licenseType))
+    .set("status", enumStr(ga.status))
+    .set("region", ga.region)
+    .set("costCenter", ga.costCenter)
+    .set("companyName", ga.companyName)
+    .set("contactEmail", ga.contactEmail)
+    .set("maxSubaccounts", cast(long)ga.maxSubaccounts)
+    .set("currentSubaccounts", cast(long)ga.currentSubaccounts)
+    .set("maxDirectories", cast(long)ga.maxDirectories)
+    .set("currentDirectories", cast(long)ga.currentDirectories)
+    .set("createdAt", ga.createdAt)
+    .set("modifiedAt", ga.modifiedAt)
+    .set("createdBy", ga.createdBy)
+    .set("customProperties", customProperties);
 }
 
 private string enumStr(E)(E val) {

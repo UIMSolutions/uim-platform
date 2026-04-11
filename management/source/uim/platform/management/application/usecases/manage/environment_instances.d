@@ -71,59 +71,79 @@ class ManageEnvironmentInstancesUseCase : UIMUseCase {
 
     // Transition to active (simulated provisioning)
     inst.status = EnvironmentStatus.active;
-    inst.dashboardUrl = "/environments/" ~ id ~ "/dashboard";
-    inst.technicalKey = "env-" ~ id[0 .. 8];
+    inst.dashboardUrl = "/environments/" ~ inst.id.toString ~ "/dashboard";
+    inst.technicalKey = "env-" ~ inst.id.toString[0 .. 8];
     repo.update(inst);
 
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, inst.id.toString, "");
+  }
+
+  CommandResult update(string id, UpdateEnvironmentInstanceRequest req) {
+    return update(EnvironmentInstanceId(id), req);
   }
 
   CommandResult update(EnvironmentInstanceId id, UpdateEnvironmentInstanceRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
-    auto inst = repo.findById(id);
+    auto instance = repo.findById(id);
     if (req.description.length > 0)
-      inst.description = req.description;
+      instance.description = req.description;
     if (req.memoryQuotaMb > 0)
-      inst.memoryQuotaMb = req.memoryQuotaMb;
+      instance.memoryQuotaMb = req.memoryQuotaMb;
     if (req.routeQuota > 0)
-      inst.routeQuota = req.routeQuota;
+      instance.routeQuota = req.routeQuota;
     if (req.serviceQuota > 0)
-      inst.serviceQuota = req.serviceQuota;
+      instance.serviceQuota = req.serviceQuota;
     if (req.parameters.length > 0)
-      inst.parameters = req.parameters;
+      instance.parameters = req.parameters;
     if (req.labels.length > 0)
-      inst.labels = req.labels;
-    inst.modifiedAt = clockSeconds();
+      instance.labels = req.labels;
+    instance.modifiedAt = clockSeconds();
 
-    repo.update(inst);
-    return CommandResult(true, id.toString, "");
+    repo.update(instance);
+    return CommandResult(true, instance.id.toString, "");
+  }
+
+  CommandResult deprovision(string id) {
+    return deprovision(EnvironmentInstanceId(id));
   }
 
   CommandResult deprovision(EnvironmentInstanceId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Environment instance not found");
 
-    auto inst = repo.findById(id);
-    if (!provisioner.canDelete(inst))
+    auto instance = repo.findById(id);
+    if (!provisioner.canDelete(instance))
       return CommandResult(false, "", "Environment cannot be deleted in current status");
 
-    inst.status = EnvironmentStatus.deleting;
-    inst.modifiedAt = clockSeconds();
-    repo.update(inst);
+    instance.status = EnvironmentStatus.deleting;
+    instance.modifiedAt = clockSeconds();
+    repo.update(instance);
 
     // Complete deletion
     repo.remove(id);
     return CommandResult(true, id.toString, "");
   }
 
+  EnvironmentInstance getById(string id) {
+    return getById(EnvironmentInstanceId(id));
+  }
+
   EnvironmentInstance getById(EnvironmentInstanceId id) {
     return repo.findById(id);
   }
 
+  EnvironmentInstance[] listBySubaccount(string subId) {
+    return listBySubaccount(SubaccountId(subId));
+  }
+
   EnvironmentInstance[] listBySubaccount(SubaccountId subId) {
     return repo.findBySubaccount(subId);
+  }
+
+  EnvironmentInstance[] listByType(string subId, string envType) {
+    return listByType(SubaccountId(subId), envType);
   }
 
   EnvironmentInstance[] listByType(SubaccountId subId, string envType) {

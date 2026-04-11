@@ -60,11 +60,9 @@ class SubaccountController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -83,15 +81,14 @@ class SubaccountController : PlatformController {
         items = uc.listByGlobalAccount(gaId);
 
       auto arr = Json.emptyArray;
-      foreach (ref s; items)
+      foreach (s; items)
         arr ~= serializeSubaccount(s);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -104,8 +101,7 @@ class SubaccountController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeSubaccount(s), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -127,8 +123,7 @@ class SubaccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -144,8 +139,7 @@ class SubaccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -157,8 +151,7 @@ class SubaccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -170,8 +163,7 @@ class SubaccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -183,36 +175,29 @@ class SubaccountController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
-private Json serializeSubaccount(ref Subaccount s) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(s.id);
-  j["globalAccountId"] = Json(s.globalAccountId);
-  j["parentDirectoryId"] = Json(s.parentDirectoryId);
-  j["displayName"] = Json(s.displayName);
-  j["description"] = Json(s.description);
-  j["subdomain"] = Json(s.subdomain);
-  j["region"] = Json(s.region);
-  j["status"] = Json(enumStr(s.status));
-  j["usage"] = Json(enumStr(s.usage));
-  j["betaEnabled"] = Json(s.betaEnabled);
-  j["usedForProduction"] = Json(s.usedForProduction);
-  j["tenantId"] = Json(s.tenantId);
-  j["createdAt"] = Json(s.createdAt);
-  j["modifiedAt"] = Json(s.modifiedAt);
-  j["createdBy"] = Json(s.createdBy);
-  j["labels"] = serializeStrMap(s.labels);
-  j["customProperties"] = serializeStrMap(s.customProperties);
-  return j;
+private Json serializeSubaccount(Subaccount subaccount) {
+  return Json.emptyObject
+    .set("id", subaccount.id)
+    .set("globalAccountId", subaccount.globalAccountId)
+    .set("parentDirectoryId", subaccount.parentDirectoryId)
+    .set("displayName", subaccount.displayName)
+    .set("description", subaccount.description)
+    .set("subdomain", subaccount.subdomain)
+    .set("region", subaccount.region)
+    .set("status", to!string(subaccount.status))
+    .set("usage", to!string(subaccount.usage))
+    .set("betaEnabled", subaccount.betaEnabled)
+    .set("usedForProduction", subaccount.usedForProduction)
+    .set("tenantId", subaccount.tenantId)
+    .set("createdAt", subaccount.createdAt)
+    .set("modifiedAt", subaccount.modifiedAt)
+    .set("createdBy", subaccount.createdBy)
+    .set("labels", subaccount.labels)
+    .set("customProperties", subaccount.customProperties);
 }
 
-private string enumStr(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}

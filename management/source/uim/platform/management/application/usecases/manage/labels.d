@@ -44,6 +44,10 @@ class ManageLabelsUseCase : UIMUseCase {
     return CommandResult(true, label.id.toString, "");
   }
 
+  CommandResult update(string id, UpdateLabelRequest req) {
+    return update(LabelId(id), req);
+  }
+
   CommandResult update(LabelId id, UpdateLabelRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Label not found");
@@ -53,6 +57,10 @@ class ManageLabelsUseCase : UIMUseCase {
     label.modifiedAt = clockSeconds();
     repo.update(label);
     return CommandResult(true, label.id.toString, "");
+  }
+
+  Label getById(string id) {
+    return getById(LabelId(id));
   }
 
   Label getById(LabelId id) {
@@ -65,6 +73,10 @@ class ManageLabelsUseCase : UIMUseCase {
 
   Label[] listByKey(string resourceType, string key) {
     return repo.findByKey(parseResourceType(resourceType), key);
+  }
+
+  CommandResult remove(string id) {
+    return remove(LabelId(id));
   }
 
   CommandResult remove(LabelId id) {
@@ -80,8 +92,8 @@ class ManageLabelsUseCase : UIMUseCase {
     return CommandResult(true, "", "");
   }
 
-  private LabeledResourceType parseResourceType(string s) {
-    switch (s) {
+  private LabeledResourceType parseResourceType(string resourceType) {
+    switch (resourceType) {
     case "globalAccount":
       return LabeledResourceType.globalAccount;
     case "directory":

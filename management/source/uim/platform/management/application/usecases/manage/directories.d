@@ -49,6 +49,10 @@ class ManageDirectoriesUseCase : UIMUseCase {
     return CommandResult(true, directory.id.toString, "");
   }
 
+  CommandResult update(string id, UpdateDirectoryRequest req) {
+    return update(DirectoryId(id), req);
+  }
+
   CommandResult update(DirectoryId id, UpdateDirectoryRequest req) {
     auto directory = repo.findById(id);
     if (directory.id.isEmpty)
@@ -116,7 +120,8 @@ class ManageDirectoriesUseCase : UIMUseCase {
       return DirectoryFeature.entitlements;
     case "authorizations":
       return DirectoryFeature.authorizations;
-    }
+    default:
     return DirectoryFeature.default_;
+    }
   }
 }

@@ -60,11 +60,9 @@ class ServicePlanController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -85,15 +83,14 @@ class ServicePlanController : PlatformController {
         items = uc.listAll();
 
       auto arr = Json.emptyArray;
-      foreach (ref p; items)
+      foreach (p; items)
         arr ~= serializeServicePlan(p);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
-      resp["totalCount"] = Json(cast(long) items.length);
+      resp["totalCount"] = Json(cast(long)items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -106,8 +103,7 @@ class ServicePlanController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeServicePlan(p), 200);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -129,8 +125,7 @@ class ServicePlanController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 
@@ -142,38 +137,31 @@ class ServicePlanController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e)
+    } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
 }
 
-private Json serializeServicePlan(ref ServicePlan p) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(p.id);
-  j["serviceName"] = Json(p.serviceName);
-  j["serviceDisplayName"] = Json(p.serviceDisplayName);
-  j["planName"] = Json(p.planName);
-  j["planDisplayName"] = Json(p.planDisplayName);
-  j["description"] = Json(p.description);
-  j["category"] = Json(enumStr(p.category));
-  j["pricingModel"] = Json(enumStr(p.pricingModel));
-  j["isFree"] = Json(p.isFree);
-  j["isBeta"] = Json(p.isBeta);
-  j["availableRegions"] = serializeStrArray(p.availableRegions);
-  j["maxQuota"] = Json(cast(long) p.maxQuota);
-  j["unit"] = Json(p.unit);
-  j["supportedPlatforms"] = serializeStrArray(p.supportedPlatforms);
-  j["providerDisplayName"] = Json(p.providerDisplayName);
-  j["provisionable"] = Json(p.provisionable);
-  j["createdAt"] = Json(p.createdAt);
-  j["modifiedAt"] = Json(p.modifiedAt);
-  j["metadata"] = serializeStrMap(p.metadata);
-  return j;
+private Json serializeServicePlan(ServicePlan plan) {
+  return Json.emptyObject
+    .set("id", plan.id)
+    .set("serviceName", plan.serviceName)
+    .set("serviceDisplayName", plan.serviceDisplayName)
+    .set("planName", plan.planName)
+    .set("planDisplayName", plan.planDisplayName)
+    .set("description", plan.description)
+    .set("category", to!string(plan.category))
+    .set("pricingModel", to!string(plan.pricingModel))
+    .set("isFree", plan.isFree)
+    .set("isBeta", plan.isBeta)
+    .set("availableRegions", plan.availableRegions)
+    .set("maxQuota", cast(long)plan.maxQuota)
+    .set("unit", plan.unit)
+    .set("supportedPlatforms", plan.supportedPlatforms)
+    .set("providerDisplayName", plan.providerDisplayName)
+    .set("provisionable", plan.provisionable)
+    .set("createdAt", plan.createdAt)
+    .set("modifiedAt", plan.modifiedAt)
+    .set("metadata", plan.metadata);
 }
 
-private string enumStr(E)(E val) {
-  // import std.conv : to;
-
-  return val.to!string;
-}

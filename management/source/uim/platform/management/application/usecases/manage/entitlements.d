@@ -36,7 +36,7 @@ class ManageEntitlementsUseCase : UIMUseCase {
     // Check current quota usage for this plan in the global account
     auto existing = repo.findByServicePlan(request.globalAccountId, request.servicePlanId);
     int currentlyAssigned = 0;
-    foreach (ref e; existing)
+    foreach (e; existing)
       currentlyAssigned += e.quotaAssigned;
 
     Entitlement ent;
@@ -58,6 +58,10 @@ class ManageEntitlementsUseCase : UIMUseCase {
 
     repo.save(ent);
     return CommandResult(true, ent.id.toString, "");
+  }
+
+  CommandResult updateQuota(string id, UpdateEntitlementQuotaRequest request) {
+    return updateQuota(EntitlementId(id), request);
   }
 
   CommandResult updateQuota(EntitlementId id, UpdateEntitlementQuotaRequest request) {
