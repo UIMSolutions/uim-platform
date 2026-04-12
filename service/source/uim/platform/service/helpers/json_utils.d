@@ -11,11 +11,6 @@ mixin(ShowModule!());
 
 @safe:
 
-/// Extract a string field from a Json object.
-string jsonStr(Json j, string key) {
-  return j.getString(key, "");
-}
-
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
@@ -215,8 +210,8 @@ unittest {
   assert(extractIdFromPath("/v1/tenants/abc123?foo=bar") == "abc123");
   assert(extractIdFromPath("single") == "single");
 
-  assert(jsonStr(parseJsonString(`{"name": "test"}`), "name") == "test");
-  assert(jsonStr(parseJsonString(`{"name": "test"}`), "missing") == "");
+  assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
+  assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
   assert(jsonStrArray(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == ["a", "b"]);
   assert(jsonStrArray(parseJsonString(`{}`), "tags") is null);

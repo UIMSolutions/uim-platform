@@ -43,9 +43,9 @@ class PipelineController : PlatformController {
       if (processorsVal !is null && (*processorsVal).type == Json.Type.array) {
         foreach (pj; *processorsVal) {
           ProcessorDTO p;
-          p.type = jsonStr(pj, "type");
-          p.name = jsonStr(pj, "name");
-          p.config = jsonStr(pj, "config");
+          p.type = getString(pj, "type");
+          p.name = getString(pj, "name");
+          p.config = getString(pj, "config");
           p.order_ = jsonInt(pj, "order");
           r.processors ~= p;
         }

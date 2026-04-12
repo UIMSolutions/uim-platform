@@ -69,14 +69,14 @@ class TraceController : PlatformController {
         foreach (sj; *spansVal) {
           IngestSpanRequest r;
           r.tenantId = tenantId;
-          r.traceId = jsonStr(sj, "traceId");
-          r.parentSpanId = jsonStr(sj, "parentSpanId");
-          r.operationName = jsonStr(sj, "operationName");
-          r.serviceName = jsonStr(sj, "serviceName");
+          r.traceId = getString(sj, "traceId");
+          r.parentSpanId = getString(sj, "parentSpanId");
+          r.operationName = getString(sj, "operationName");
+          r.serviceName = getString(sj, "serviceName");
           r.startTime = jsonLong(sj, "startTime");
           r.endTime = jsonLong(sj, "endTime");
-          r.status = jsonStr(sj, "status");
-          r.kind = jsonStr(sj, "kind");
+          r.status = getString(sj, "status");
+          r.kind = getString(sj, "kind");
           r.attributes = jsonStrMap(sj, "attributes");
           r.resourceAttributes = jsonStrMap(sj, "resourceAttributes");
           batchReq.spans ~= r;

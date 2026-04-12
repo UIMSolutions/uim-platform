@@ -7,7 +7,7 @@ module uim.platform.document_ai.presentation.http.json_utils;
 
 import uim.platform.document_ai;
 
-string jsonStr(Json j, string key) {
+string getString(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;

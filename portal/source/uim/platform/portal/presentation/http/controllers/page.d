@@ -59,7 +59,7 @@ class PageController : PlatformController {
 
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
-      auto siteId = jsonStr(Json(req.headers.get("X-Site-Id", "")), "");
+      auto siteId = getString(Json(req.headers.get("X-Site-Id", "")), "");
       // Use query param for site filter
       auto siteIdParam = req.headers.get("X-Site-Id", "");
       auto pages = useCase.listPages(siteIdParam);

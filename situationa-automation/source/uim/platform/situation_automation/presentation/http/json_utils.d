@@ -7,7 +7,7 @@ module uim.platform.situation_automation.presentation.http.json_utils;
 
 import uim.platform.situation_automation;
 /*
-string jsonStr(Json j, string key) {
+string getString(Json j, string key) {
     if (!j.isObject)
         return "";
     auto v = key in j;

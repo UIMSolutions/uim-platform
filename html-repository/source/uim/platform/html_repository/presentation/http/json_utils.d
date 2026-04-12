@@ -7,7 +7,7 @@ module uim.platform.html_repository.presentation.http.json_utils;
 
 import uim.platform.htmls;
 
-string jsonStr(Json j, string key) {
+string getString(Json j, string key) {
   if (!j.isObject)
     return "";
   auto v = key in j;

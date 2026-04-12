@@ -50,7 +50,7 @@ Json toJsonArray(T)(T[] items) {
 }
 
 /// Read a string field from JSON, or return default.
-string jsonStr(Json j, string key) {
+string getString(Json j, string key) {
   if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null && (*val).isString)

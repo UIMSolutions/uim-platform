@@ -43,10 +43,10 @@ class DashboardController : PlatformController {
       if (panelsVal !is null && (*panelsVal).type == Json.Type.array) {
         foreach (pj; *panelsVal) {
           PanelDTO p;
-          p.id = jsonStr(pj, "id");
-          p.title = jsonStr(pj, "title");
-          p.panelType = jsonStr(pj, "panelType");
-          p.query = jsonStr(pj, "query");
+          p.id = getString(pj, "id");
+          p.title = getString(pj, "title");
+          p.panelType = getString(pj, "panelType");
+          p.query = getString(pj, "query");
           p.positionX = jsonInt(pj, "positionX");
           p.positionY = jsonInt(pj, "positionY");
           p.width = jsonInt(pj, "width");

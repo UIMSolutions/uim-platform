@@ -159,8 +159,8 @@ class SiteController : PlatformController {
     if (settingsJson is null || (*settingsJson).type != Json.Type.object)
       return SiteSettings.init;
     auto s = *settingsJson;
-    return SiteSettings(jsonStr(s, "logoUrl"), jsonStr(s, "faviconUrl"),
-      jsonStr(s, "footerText"), jsonStr(s, "copyrightText"), jsonStr(s, "defaultLanguage"), jsonStrArray(s,
+    return SiteSettings(getString(s, "logoUrl"), getString(s, "faviconUrl"),
+      getString(s, "footerText"), getString(s, "copyrightText"), getString(s, "defaultLanguage"), jsonStrArray(s,
         "supportedLanguages"), getBoolean(s, "showPersonalization", false), getBoolean(s,
         "showNotifications", false), getBoolean(s, "showSearch", true),
       getBoolean(s, "showUserActions", true),);

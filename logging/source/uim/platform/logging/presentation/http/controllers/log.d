@@ -71,16 +71,16 @@ class LogController : PlatformController {
         foreach (ej; *entriesVal) {
           IngestLogRequest r;
           r.tenantId = tenantId;
-          r.streamId = jsonStr(ej, "streamId");
-          r.level = jsonStr(ej, "level");
-          r.source = jsonStr(ej, "source");
-          r.message = jsonStr(ej, "message");
+          r.streamId = getString(ej, "streamId");
+          r.level = getString(ej, "level");
+          r.source = getString(ej, "source");
+          r.message = getString(ej, "message");
           r.structuredData = jsonStrMap(ej, "structuredData");
-          r.traceId = jsonStr(ej, "traceId");
-          r.spanId = jsonStr(ej, "spanId");
-          r.requestId = jsonStr(ej, "requestId");
-          r.correlationId = jsonStr(ej, "correlationId");
-          r.componentName = jsonStr(ej, "componentName");
+          r.traceId = getString(ej, "traceId");
+          r.spanId = getString(ej, "spanId");
+          r.requestId = getString(ej, "requestId");
+          r.correlationId = getString(ej, "correlationId");
+          r.componentName = getString(ej, "componentName");
           r.tags = jsonStrArray(ej, "tags");
           batchReq.entries ~= r;
         }

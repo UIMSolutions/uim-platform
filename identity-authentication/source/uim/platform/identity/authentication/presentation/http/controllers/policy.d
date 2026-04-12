@@ -42,8 +42,8 @@ class PolicyController : PlatformController {
       if (rulesJson !is null && (*rulesJson).type == Json.Type.array) {
         foreach (rj; *rulesJson)
         {
-          rules ~= PolicyRule(jsonStr(rj, "attribute"), jsonStr(rj,
-              "operator"), jsonStr(rj, "value"));
+          rules ~= PolicyRule(getString(rj, "attribute"), getString(rj,
+              "operator"), getString(rj, "value"));
         }
       }
 

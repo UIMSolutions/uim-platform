@@ -146,7 +146,7 @@ class ThemeController : PlatformController {
     if (fontsJson is null || (*fontsJson).type != Json.Type.object)
       return ThemeFonts.init;
     auto f = *fontsJson;
-    return ThemeFonts(jsonStr(f, "headingFamily"), jsonStr(f, "bodyFamily"),
-      jsonStr(f, "baseSizePx"), jsonStr(f, "lineHeight"),);
+    return ThemeFonts(getString(f, "headingFamily"), getString(f, "bodyFamily"),
+      getString(f, "baseSizePx"), getString(f, "lineHeight"),);
   }
 }

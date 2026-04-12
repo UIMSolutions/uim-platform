@@ -195,7 +195,7 @@ private WorkspaceSettings parseWorkspaceSettings(Json j) {
     s.enableWiki = getBoolean(sj, "enableWiki", true);
     s.enableKnowledgeBase = getBoolean(sj, "enableKnowledgeBase", true);
     s.enableForum = getBoolean(sj, "enableForum");
-    s.defaultLanguage = jsonStr(sj, "defaultLanguage");
+    s.defaultLanguage = getString(sj, "defaultLanguage");
   }
   return s;
 }
