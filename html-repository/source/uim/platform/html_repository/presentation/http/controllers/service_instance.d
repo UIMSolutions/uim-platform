@@ -58,13 +58,12 @@ class ServiceInstanceController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(e.id);
-        obj["name"] = Json(e.name);
-        obj["plan"] = Json(e.plan);
-        obj["status"] = Json(e.status);
-        obj["appCount"] = Json(e.appCount);
-        arr ~= obj;
+        arr ~= Json.emptyObject
+          .set("id", e.id)
+          .set("name", e.name)
+          .set("plan", e.plan)
+          .set("status", e.status)
+          .set("appCount", e.appCount);
       }
 
       auto resp = Json.emptyObject;

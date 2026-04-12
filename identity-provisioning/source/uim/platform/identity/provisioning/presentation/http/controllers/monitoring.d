@@ -143,18 +143,17 @@ class MonitoringController {
   }
 
   private static Json serializeLog(const ProvisioningLog l) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(l.id);
-    j["jobId"] = Json(l.jobId);
-    j["entityType"] = Json(l.entityType.to!string);
-    j["entityId"] = Json(l.entityId);
-    j["operation"] = Json(l.operation.to!string);
-    j["status"] = Json(l.status.to!string);
-    j["sourceSystem"] = Json(l.sourceSystem);
-    j["targetSystem"] = Json(l.targetSystem);
-    j["details"] = Json(l.details);
-    j["createdAt"] = Json(l.createdAt);
-    return j;
+    return Json.emptyObject
+    .set("id", l.id)
+    .set("jobId", l.jobId)
+    .set("entityType", l.entityType.to!string)
+    .set("entityId", l.entityId)
+    .set("operation", l.operation.to!string)
+    .set("status", l.status.to!string)
+    .set("sourceSystem", l.sourceSystem)
+    .set("targetSystem", l.targetSystem)
+    .set("details", l.details)
+    .set("createdAt", l.createdAt);
   }
 
   private static Json serializeEntity(const ProvisionedEntity e) {

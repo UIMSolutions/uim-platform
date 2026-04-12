@@ -180,30 +180,29 @@ class SystemController {
   }
 
   private static Json serializeSystem(const SystemConnection s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["tenantId"] = Json(s.tenantId);
-    j["name"] = Json(s.name);
-    j["description"] = Json(s.description);
-    j["systemType"] = Json(s.systemType.to!string);
-    j["host"] = Json(s.host);
-    j["port"] = Json(s.port);
-    j["client"] = Json(s.client);
-    j["protocol"] = Json(s.protocol);
-    j["status"] = Json(s.status.to!string);
-    j["environment"] = Json(s.environment);
-    j["region"] = Json(s.region);
-    j["systemId"] = Json(s.systemId);
-    j["tenant"] = Json(s.tenant);
-    j["createdBy"] = Json(s.createdBy);
-    j["createdAt"] = Json(s.createdAt);
-    j["updatedAt"] = Json(s.updatedAt);
-    return j;
+    return Json.emptyObject
+     .set("id", s.id)
+     .set("tenantId", s.tenantId)
+     .set("name", s.name)
+     .set("description", s.description)
+     .set("systemType", s.systemType.to!string)
+     .set("host", s.host)
+     .set("port", s.port)
+     .set("client", s.client)
+     .set("protocol", s.protocol)
+     .set("status", s.status.to!string)
+     .set("environment", s.environment)
+     .set("region", s.region)
+     .set("systemId", s.systemId)
+     .set("tenant", s.tenant)
+     .set("createdBy", s.createdBy)
+     .set("createdAt", s.createdAt)
+     .set("updatedAt", s.updatedAt);
   }
 }
 
-ConnectionStatus parseConnectionStatus(string s) {
-  switch (s) {
+ConnectionStatus parseConnectionStatus(string status) {
+  switch (status.toLower()) {
   case "active":
     return ConnectionStatus.active;
   case "inactive":

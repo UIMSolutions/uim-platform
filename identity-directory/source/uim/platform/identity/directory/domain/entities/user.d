@@ -78,8 +78,7 @@ struct User {
   long updatedAt;
 
   /// SCIM displayName or formatted name.
-  string getDisplayName() const
-  {
+  string getDisplayName() const {
     if (displayName.length > 0)
       return displayName;
     if (name.formatted.length > 0)
@@ -87,18 +86,75 @@ struct User {
     return name.givenName ~ " " ~ name.familyName;
   }
 
-  bool isActive() const
-  {
+  bool isActive() const {
     return status == UserStatus.active && active;
   }
 
   /// Primary email address.
-  string primaryEmail() const
-  {
+  string primaryEmail() const {
     foreach (e; emails) {
       if (e.primary)
         return e.value;
     }
     return emails.length > 0 ? emails[0].value : "";
   }
+
+  Json toJson() {
+    auto nameJson = Json.emptyObject
+      .set("formatted", name.formatted)
+      .set("familyName", name.familyName)
+      .set("givenName", name.givenName)
+      .set("middleName", name.middleName)
+      .set("honorificPrefix", name.honorificPrefix)
+      .set("honorificSuffix", name.honorificSuffix);
+
+    auto j = Json.emptyObject
+      .set("id", id)
+      .set("externalId", externalId)
+      .set("userName", userName)
+      .set("displayName", getDisplayName())
+      .set("userType", userType)
+      .set("active", isActive())
+      .set("preferredLanguage", preferredLanguage)
+      .set("locale", locale)
+      .set("timezone", timezone);
+
+    // Name
+    j["name"] = nameJson;
+
+    // Emails
+    j["emails"] = toJsonArray(emails);
+
+    // Phone numbers
+    j["phoneNumbers"] = toJsonArray(phoneNumbers);
+
+    // Groups
+    auto groups = Json.emptyArray;
+    foreach (gid; groupIds) {
+      auto g = Json.emptyObject;
+      g["value"] = Json(gid);
+      groups ~= g;
+    }
+    j["groups"] = groups;
+
+    // Schemas
+    auto schemas = Json.emptyArray;
+    schemas ~= Json("urn:ietf:params:scim:schemas:core:2.0:User");
+    foreach (s; schemas)
+      schemas ~= Json(s);
+    j["schemas"] = schemas;
+
+    // Meta
+    auto meta = Json.emptyObject;
+    meta["resourceType"] = Json("User");
+    meta["created"] = Json(createdAt);
+    meta["lastModified"] = Json(updatedAt);
+    j["meta"] = meta;
+
+    return j;
+  }
+}
+
+Json serializeUsers(User[] users) {
+  return users.map!(u => serializeUser(u)).array.toJson;
 }

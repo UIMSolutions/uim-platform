@@ -51,13 +51,10 @@ class ScenarioController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -75,8 +72,7 @@ class ScenarioController {
       resp["items"] = arr;
       resp["totalCount"] = Json(scenarios.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -91,8 +87,7 @@ class ScenarioController {
         return;
       }
       res.writeJsonBody(serializeScenario(*scenario), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -119,13 +114,10 @@ class ScenarioController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -139,32 +131,29 @@ class ScenarioController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeScenario(const IntegrationScenario s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["tenantId"] = Json(s.tenantId);
-    j["name"] = Json(s.name);
-    j["description"] = Json(s.description);
-    j["category"] = Json(s.category.to!string);
-    j["version"] = Json(s.version_);
-    j["status"] = Json(s.status.to!string);
-    j["sourceSystemType"] = Json(s.sourceSystemType.to!string);
-    j["targetSystemType"] = Json(s.targetSystemType.to!string);
-    j["prerequisites"] = toJsonArray(s.prerequisites);
-    j["createdBy"] = Json(s.createdBy);
-    j["createdAt"] = Json(s.createdAt);
-    j["updatedAt"] = Json(s.updatedAt);
+    auto j = Json.emptyObject
+      .set("id", s.id)
+      .set("tenantId", s.tenantId)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("category", s.category.to!string)
+      .set("version", s.version_)
+      .set("status", s.status.to!string)
+      .set("sourceSystemType", s.sourceSystemType.to!string)
+      .set("targetSystemType", s.targetSystemType.to!string)
+      .set("prerequisites", s.prerequisites)
+      .set("createdBy", s.createdBy)
+      .set("createdAt", s.createdAt)
+      .set("updatedAt", s.updatedAt);
 
     if (s.stepTemplates.length > 0) {
       auto steps = Json.emptyArray;

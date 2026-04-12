@@ -60,18 +60,18 @@ class HtmlAppController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(e.id);
-        obj["name"] = Json(e.name);
-        obj["namespace"] = Json(e.namespace_);
-        obj["visibility"] = Json(e.visibility);
-        obj["status"] = Json(e.status);
-        arr ~= obj;
+        arr ~= Json.emptyObject
+          .set("id", e.id)
+          .set("name", e.name)
+          .set("namespace", e.namespace_)
+          .set("visibility", e.visibility)
+          .set("status", e.status);
       }
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
@@ -90,19 +90,20 @@ class HtmlAppController : PlatformController {
         writeError(res, 404, "App not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["name"] = Json(entry.name);
-      obj["namespace"] = Json(entry.namespace_);
-      obj["description"] = Json(entry.description);
-      obj["spaceId"] = Json(entry.spaceId);
-      obj["serviceInstanceId"] = Json(entry.serviceInstanceId);
-      obj["visibility"] = Json(entry.visibility);
-      obj["status"] = Json(entry.status);
-      obj["createdBy"] = Json(entry.createdBy);
-      obj["createdAt"] = Json(entry.createdAt);
-      obj["modifiedBy"] = Json(entry.modifiedBy);
-      obj["modifiedAt"] = Json(entry.modifiedAt);
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("name", entry.name)
+        .set("namespace", entry.namespace_)
+        .set("description", entry.description)
+        .set("spaceId", entry.spaceId)
+        .set("serviceInstanceId", entry.serviceInstanceId)
+        .set("visibility", entry.visibility)
+        .set("status", entry.status)
+        .set("createdBy", entry.createdBy)
+        .set("createdAt", entry.createdAt)
+        .set("modifiedBy", entry.modifiedBy)
+        .set("modifiedAt", entry.modifiedAt);
+
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

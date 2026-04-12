@@ -162,26 +162,25 @@ class DestinationController {
   }
 
   private static Json serializeDestination(const Destination d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["systemId"] = Json(d.systemId);
-    j["destinationType"] = Json(d.destinationType.to!string);
-    j["url"] = Json(d.url);
-    j["authenticationType"] = Json(d.authenticationType.to!string);
-    j["proxyType"] = Json(d.proxyType.to!string);
-    j["cloudConnectorLocationId"] = Json(d.cloudConnectorLocationId);
-    j["user"] = Json(d.user);
-    j["tokenServiceUrl"] = Json(d.tokenServiceUrl);
-    j["audience"] = Json(d.audience);
-    j["scope"] = Json(d.scope_);
-    j["isEnabled"] = Json(d.isEnabled);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", d.id)
+    .set("tenantId", d.tenantId)
+    .set("name", d.name)
+    .set("description", d.description)
+    .set("systemId", d.systemId)
+    .set("destinationType", d.destinationType.to!string)
+    .set("url", d.url)
+    .set("authenticationType", d.authenticationType.to!string)
+    .set("proxyType", d.proxyType.to!string)
+    .set("cloudConnectorLocationId", d.cloudConnectorLocationId)
+    .set("user", d.user)
+    .set("tokenServiceUrl", d.tokenServiceUrl)
+    .set("audience", d.audience)
+    .set("scope", d.scope_)
+    .set("isEnabled", d.isEnabled)
+    .set("createdBy", d.createdBy)
+    .set("createdAt", d.createdAt)
+    .set("updatedAt", d.updatedAt);
   }
 }
 

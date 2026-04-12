@@ -202,23 +202,22 @@ class WorkflowController {
   }
 
   private static Json serializeWorkflow(const Workflow w) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(w.id);
-    j["tenantId"] = Json(w.tenantId);
-    j["scenarioId"] = Json(w.scenarioId);
-    j["name"] = Json(w.name);
-    j["description"] = Json(w.description);
-    j["status"] = Json(w.status.to!string);
-    j["currentStepIndex"] = Json(w.currentStepIndex);
-    j["totalSteps"] = Json(w.totalSteps);
-    j["completedSteps"] = Json(w.completedSteps);
-    j["sourceSystemId"] = Json(w.sourceSystemId);
-    j["targetSystemId"] = Json(w.targetSystemId);
-    j["createdBy"] = Json(w.createdBy);
-    j["startedAt"] = Json(w.startedAt);
-    j["completedAt"] = Json(w.completedAt);
-    j["createdAt"] = Json(w.createdAt);
-    j["updatedAt"] = Json(w.updatedAt);
-    return j;
+    return Json.emptyObject
+     .set("id", w.id)
+     .set("tenantId", w.tenantId)
+     .set("scenarioId", w.scenarioId)
+     .set("name", w.name)
+     .set("description", w.description)
+     .set("status", w.status.to!string)
+     .set("currentStepIndex", w.currentStepIndex)
+     .set("totalSteps", w.totalSteps)
+     .set("completedSteps", w.completedSteps)
+     .set("sourceSystemId", w.sourceSystemId)
+     .set("targetSystemId", w.targetSystemId)
+     .set("createdBy", w.createdBy)
+     .set("startedAt", w.startedAt)
+     .set("completedAt", w.completedAt)
+     .set("createdAt", w.createdAt)
+     .set("updatedAt", w.updatedAt);
   }
 }
