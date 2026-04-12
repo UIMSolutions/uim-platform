@@ -64,19 +64,18 @@ class AutomationRuleController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (r; rules) {
-                auto rj = Json.emptyObject;
-                rj["id"] = Json(r.id);
-                rj["name"] = Json(r.name);
-                rj["templateId"] = Json(r.templateId);
-                rj["status"] = Json(r.status.to!string);
-                rj["priority"] = Json(r.priority.to!string);
-                rj["enabled"] = Json(r.enabled);
-                rj["executionOrder"] = Json(r.executionOrder);
-                rj["triggerCount"] = Json(r.triggerCount);
-                rj["successCount"] = Json(r.successCount);
-                rj["failureCount"] = Json(r.failureCount);
-                rj["createdAt"] = Json(r.createdAt);
-                jarr ~= rj;
+                jarr ~= Json.emptyObject
+                .set("id", r.id)
+                .set("name", r.name)
+                .set("templateId", r.templateId)
+                .set("status", r.status.to!string)
+                .set("priority", r.priority.to!string)
+                .set("enabled", r.enabled)
+                .set("executionOrder", r.executionOrder)
+                .set("triggerCount", r.triggerCount)
+                .set("successCount", r.successCount)
+                .set("failureCount", r.failureCount)
+                .set("createdAt", r.createdAt);
             }
 
             auto resp = Json.emptyObject;

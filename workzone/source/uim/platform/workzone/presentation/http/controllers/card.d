@@ -213,11 +213,11 @@ private Json serializeCard(Card c) {
   j["dataSource"] = ds;
 
   // Manifest
-  auto mj = Json.emptyObject;
-  mj["type"] = Json(c.manifest.type);
-  mj["version"] = Json(c.manifest.version_);
-  mj["headerTitle"] = Json(c.manifest.headerTitle);
-  mj["maxItems"] = Json(c.manifest.maxItems);
+  auto mj = Json.emptyObject
+  .set("type", c.manifest.type)
+  .set("version", c.manifest.version_)
+  .set("headerTitle", c.manifest.headerTitle)
+  .set("maxItems", c.manifest.maxItems);
   j["manifest"] = mj;
 
   return j;

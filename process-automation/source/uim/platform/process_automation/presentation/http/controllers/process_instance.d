@@ -60,16 +60,15 @@ class ProcessInstanceController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
-                auto ij = Json.emptyObject;
-                ij["id"] = Json(i.id);
-                ij["processId"] = Json(i.processId);
-                ij["processName"] = Json(i.processName);
-                ij["status"] = Json(i.status.to!string);
-                ij["priority"] = Json(i.priority.to!string);
-                ij["startedBy"] = Json(i.startedBy);
-                ij["startedAt"] = Json(i.startedAt);
-                ij["completedAt"] = Json(i.completedAt);
-                jarr ~= ij;
+                jarr ~= Json.emptyObject
+                .set("id", i.id)
+                .set("processId", i.processId)
+                .set("processName", i.processName)
+                .set("status", i.status.to!string)
+                .set("priority", i.priority.to!string)
+                .set("startedBy", i.startedBy)
+                .set("startedAt", i.startedAt)
+                .set("completedAt", i.completedAt);
             }
 
             auto resp = Json.emptyObject;

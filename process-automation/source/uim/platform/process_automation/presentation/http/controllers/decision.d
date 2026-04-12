@@ -47,7 +47,7 @@ class DecisionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Decision created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -62,16 +62,15 @@ class DecisionController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (d; decisions) {
-                auto dj = Json.emptyObject;
-                dj["id"] = Json(d.id);
-                dj["name"] = Json(d.name);
-                dj["description"] = Json(d.description);
-                dj["status"] = Json(d.status.to!string);
-                dj["type"] = Json(d.type.to!string);
-                dj["version"] = Json(d.version_);
-                dj["createdAt"] = Json(d.createdAt);
-                dj["modifiedAt"] = Json(d.modifiedAt);
-                jarr ~= dj;
+                jarr ~= Json.emptyObject
+                    .set("id", d.id)
+                    .set("name", d.name)
+                    .set("description", d.description)
+                    .set("status", d.status.to!string)
+                    .set("type", d.type.to!string)
+                    .set("version", d.version_)
+                    .set("createdAt", d.createdAt)
+                    .set("modifiedAt", d.modifiedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -133,7 +132,7 @@ class DecisionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Decision updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -152,7 +151,7 @@ class DecisionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Decision deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

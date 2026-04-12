@@ -195,19 +195,17 @@ class TaskDefinitionController : PlatformController {
     }
 
     private Json defToJson(TaskDefinition d) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(d.id);
-        j["tenantId"] = Json(d.tenantId);
-        j["providerId"] = Json(d.providerId);
-        j["name"] = Json(d.name);
-        j["description"] = Json(d.description);
-        j["category"] = Json(d.category.to!string);
-        j["taskSchema"] = Json(d.taskSchema);
-        j["isActive"] = Json(d.isActive);
-        j["requiresClaim"] = Json(d.requiresClaim);
-        j["createdBy"] = Json(d.createdBy);
-        j["createdAt"] = Json(d.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", d.id)
+        .set("tenantId", d.tenantId)
+        .set("providerId", d.providerId)
+        .set("name", d.name)
+        .set("description", d.description)
+        .set("category", d.category.to!string)
+        .set("taskSchema", d.taskSchema)
+        .set("isActive", d.isActive)
+        .set("requiresClaim", d.requiresClaim)
+        .set("createdBy", d.createdBy)
+        .set("createdAt", d.createdAt);
     }
 }

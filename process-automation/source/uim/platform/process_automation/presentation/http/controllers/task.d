@@ -52,7 +52,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -67,17 +67,16 @@ class TaskController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (t; tasks) {
-                auto tj = Json.emptyObject;
-                tj["id"] = Json(t.id);
-                tj["name"] = Json(t.name);
-                tj["type"] = Json(t.type.to!string);
-                tj["status"] = Json(t.status.to!string);
-                tj["priority"] = Json(t.priority.to!string);
-                tj["assignee"] = Json(t.assignee);
-                tj["processInstanceId"] = Json(t.processInstanceId);
-                tj["createdAt"] = Json(t.createdAt);
-                tj["dueDate"] = Json(t.dueDate);
-                jarr ~= tj;
+                jarr ~= Json.emptyObject
+                    .set("id", t.id)
+                    .set("name", t.name)
+                    .set("type", t.type.to!string)
+                    .set("status", t.status.to!string)
+                    .set("priority", t.priority.to!string)
+                    .set("assignee", t.assignee)
+                    .set("processInstanceId", t.processInstanceId)
+                    .set("createdAt", t.createdAt)
+                    .set("dueDate", t.dueDate);
             }
 
             auto resp = Json.emptyObject;
@@ -144,7 +143,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -178,7 +177,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task claimed");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -214,7 +213,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task completed");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -233,7 +232,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

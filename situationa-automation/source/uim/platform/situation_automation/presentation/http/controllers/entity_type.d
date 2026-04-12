@@ -63,14 +63,13 @@ class EntityTypeController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (et; types) {
-                auto ej = Json.emptyObject;
-                ej["id"] = Json(et.id);
-                ej["name"] = Json(et.name);
-                ej["description"] = Json(et.description);
-                ej["category"] = Json(et.category.to!string);
-                ej["sourceSystem"] = Json(et.sourceSystem);
-                ej["createdAt"] = Json(et.createdAt);
-                jarr ~= ej;
+                jarr ~= Json.emptyObject
+                .set("id", et.id)
+                .set("name", et.name)
+                .set("description", et.description)
+                .set("category", et.category.to!string)
+                .set("sourceSystem", et.sourceSystem)
+                .set("createdAt", et.createdAt);
             }
 
             auto resp = Json.emptyObject;

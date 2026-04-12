@@ -189,17 +189,16 @@ class RegisteredApplicationController : PlatformController {
     }
 
     private Json appToJson(RegisteredApplication a) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(a.id);
-        j["name"] = Json(a.name);
-        j["description"] = Json(a.description);
-        j["status"] = Json(a.status.to!string);
-        j["endpointUrl"] = Json(a.endpointUrl);
-        j["apiVersion"] = Json(a.apiVersion);
-        j["contactEmail"] = Json(a.contactEmail);
-        j["contactName"] = Json(a.contactName);
-        j["createdBy"] = Json(a.createdBy);
-        j["createdAt"] = Json(a.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", a.id)
+        .set("name", a.name)
+        .set("description", a.description)
+        .set("status", a.status.to!string)
+        .set("endpointUrl", a.endpointUrl)
+        .set("apiVersion", a.apiVersion)
+        .set("contactEmail", a.contactEmail)
+        .set("contactName", a.contactName)
+        .set("createdBy", a.createdBy)
+        .set("createdAt", a.createdAt);
     }
 }

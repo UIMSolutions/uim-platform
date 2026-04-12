@@ -61,15 +61,14 @@ class VisibilityController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (v; dashboards) {
-                auto vj = Json.emptyObject;
-                vj["id"] = Json(v.id);
-                vj["name"] = Json(v.name);
-                vj["description"] = Json(v.description);
-                vj["status"] = Json(v.status.to!string);
-                vj["dashboardType"] = Json(v.dashboardType.to!string);
-                vj["createdAt"] = Json(v.createdAt);
-                vj["modifiedAt"] = Json(v.modifiedAt);
-                jarr ~= vj;
+                jarr ~= Json.emptyObject
+                .set("id", v.id)
+                .set("name", v.name)
+                .set("description", v.description)
+                .set("status", v.status.to!string)
+                .set("dashboardType", v.dashboardType.to!string)
+                .set("createdAt", v.createdAt)
+                .set("modifiedAt", v.modifiedAt);
             }
 
             auto resp = Json.emptyObject;

@@ -65,17 +65,16 @@ class NotificationController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (n; notifications) {
-                auto nj = Json.emptyObject;
-                nj["id"] = Json(n.id);
-                nj["instanceId"] = Json(n.instanceId);
-                nj["recipientId"] = Json(n.recipientId);
-                nj["title"] = Json(n.title);
-                nj["channel"] = Json(n.channel.to!string);
-                nj["status"] = Json(n.status.to!string);
-                nj["priority"] = Json(n.priority.to!string);
-                nj["createdAt"] = Json(n.createdAt);
-                nj["sentAt"] = Json(n.sentAt);
-                jarr ~= nj;
+                jarr ~= Json.emptyObject
+                .set("id", n.id)
+                .set("instanceId", n.instanceId)
+                .set("recipientId", n.recipientId)
+                .set("title", n.title)
+                .set("channel", n.channel.to!string)
+                .set("status", n.status.to!string)
+                .set("priority", n.priority.to!string)
+                .set("createdAt", n.createdAt)
+                .set("sentAt", n.sentAt);
             }
 
             auto resp = Json.emptyObject;

@@ -61,18 +61,17 @@ class ArtifactController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (a; artifacts) {
-                auto aj = Json.emptyObject;
-                aj["id"] = Json(a.id);
-                aj["name"] = Json(a.name);
-                aj["description"] = Json(a.description);
-                aj["type"] = Json(a.type.to!string);
-                aj["status"] = Json(a.status.to!string);
-                aj["version"] = Json(a.version_);
-                aj["author"] = Json(a.author);
-                aj["category"] = Json(a.category);
-                aj["downloadCount"] = Json(a.downloadCount);
-                aj["rating"] = Json(a.rating);
-                jarr ~= aj;
+                jarr ~= Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("type", a.type.to!string)
+                .set("status", a.status.to!string)
+                .set("version", a.version_)
+                .set("author", a.author)
+                .set("category", a.category)
+                .set("downloadCount", a.downloadCount)
+                .set("rating", a.rating);
             }
 
             auto resp = Json.emptyObject;

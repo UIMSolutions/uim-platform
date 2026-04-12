@@ -64,16 +64,15 @@ class TriggerController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (t; triggers) {
-                auto tj = Json.emptyObject;
-                tj["id"] = Json(t.id);
-                tj["name"] = Json(t.name);
-                tj["type"] = Json(t.type.to!string);
-                tj["status"] = Json(t.status.to!string);
-                tj["processId"] = Json(t.processId);
-                tj["eventType"] = Json(t.eventType);
-                tj["lastFiredAt"] = Json(t.lastFiredAt);
-                tj["fireCount"] = Json(t.fireCount);
-                jarr ~= tj;
+                jarr ~= Json.emptyObject
+                .set("id", t.id)
+                .set("name", t.name)
+                .set("type", t.type.to!string)
+                .set("status", t.status.to!string)
+                .set("processId", t.processId)
+                .set("eventType", t.eventType)
+                .set("lastFiredAt", t.lastFiredAt)
+                .set("fireCount", t.fireCount);
             }
 
             auto resp = Json.emptyObject;
