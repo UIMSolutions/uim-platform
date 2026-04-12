@@ -137,17 +137,16 @@ class ShareController : PlatformController {
   }
 
   private static Json serializeShare(const Share s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["tenantId"] = Json(s.tenantId);
-    j["documentId"] = Json(s.documentId);
-    j["shareType"] = Json(s.shareType.to!string);
-    j["sharedWith"] = Json(s.sharedWith);
-    j["permissionLevel"] = Json(s.permissionLevel.to!string);
-    j["status"] = Json(s.status.to!string);
-    j["expiresAt"] = Json(s.expiresAt);
-    j["createdBy"] = Json(s.createdBy);
-    j["createdAt"] = Json(s.createdAt);
-    return j;
+    return Json.emptyObject
+    .set("id", s.id)
+    .set("tenantId", s.tenantId)
+    .set("documentId", s.documentId)
+    .set("shareType", s.shareType.to!string)
+    .set("sharedWith", s.sharedWith)
+    .set("permissionLevel", s.permissionLevel.to!string)
+    .set("status", s.status.to!string)
+    .set("expiresAt", s.expiresAt)
+    .set("createdBy", s.createdBy)
+    .set("createdAt", s.createdAt);
   }
 }

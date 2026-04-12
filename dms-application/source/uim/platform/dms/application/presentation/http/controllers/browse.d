@@ -76,13 +76,13 @@ class BrowseController : PlatformController {
         return;
       }
 
-      auto j = Json.emptyObject;
-      .set("repositoryId", summary.repositoryId)
-      .set("name", summary.name)
-      .set("totalDocuments", summary.totalDocuments)
-      .set("totalFolders", summary.totalFolders)
-      .set("status", summary.status.to!string);
-      
+      auto j = Json.emptyObject
+        .set("repositoryId", summary.repositoryId)
+        .set("name", summary.name)
+        .set("totalDocuments", summary.totalDocuments)
+        .set("totalFolders", summary.totalFolders)
+        .set("status", summary.status.to!string);
+
       res.writeJsonBody(j, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

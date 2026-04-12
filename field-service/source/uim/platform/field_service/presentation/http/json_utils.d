@@ -174,24 +174,22 @@ Json customerToJson(Customer c) {
 }
 
 Json skillToJson(Skill s) {
-    import std.conv : to;
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["tenantId"] = Json(s.tenantId);
-    j["technicianId"] = Json(s.technicianId);
-    j["name"] = Json(s.name);
-    j["description"] = Json(s.description);
-    j["category"] = Json(s.category.to!string);
-    j["proficiencyLevel"] = Json(s.proficiencyLevel.to!string);
-    j["certificationDate"] = Json(s.certificationDate);
-    j["expirationDate"] = Json(s.expirationDate);
-    j["certificationNumber"] = Json(s.certificationNumber);
-    j["issuingAuthority"] = Json(s.issuingAuthority);
-    j["createdBy"] = Json(s.createdBy);
-    j["modifiedBy"] = Json(s.modifiedBy);
-    j["createdAt"] = Json(s.createdAt);
-    j["modifiedAt"] = Json(s.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", s.id)
+    .set("tenantId", s.tenantId)
+    .set("technicianId", s.technicianId)
+    .set("name", s.name)
+    .set("description", s.description)
+    .set("category", s.category.to!string)
+    .set("proficiencyLevel", s.proficiencyLevel.to!string)
+    .set("certificationDate", s.certificationDate)
+    .set("expirationDate", s.expirationDate)
+    .set("certificationNumber", s.certificationNumber)
+    .set("issuingAuthority", s.issuingAuthority)
+    .set("createdBy", s.createdBy)
+    .set("modifiedBy", s.modifiedBy)
+    .set("createdAt", s.createdAt)
+    .set("modifiedAt", s.modifiedAt);
 }
 
 Json smartformToJson(Smartform sf) {

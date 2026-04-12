@@ -192,17 +192,16 @@ class FolderController : PlatformController {
   }
 
   private static Json serializeFolder(const Folder f) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(f.id);
-    j["tenantId"] = Json(f.tenantId);
-    j["repositoryId"] = Json(f.repositoryId);
-    j["parentFolderId"] = Json(f.parentFolderId);
-    j["name"] = Json(f.name);
-    j["description"] = Json(f.description);
-    j["path"] = Json(f.path);
-    j["createdBy"] = Json(f.createdBy);
-    j["createdAt"] = Json(f.createdAt);
-    j["updatedAt"] = Json(f.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", f.id)
+    .set("tenantId", f.tenantId)
+    .set("repositoryId", f.repositoryId)
+    .set("parentFolderId", f.parentFolderId)
+    .set("name", f.name)
+    .set("description", f.description)
+    .set("path", f.path)
+    .set("createdBy", f.createdBy)
+    .set("createdAt", f.createdAt)
+    .set("updatedAt", f.updatedAt);
   }
 }

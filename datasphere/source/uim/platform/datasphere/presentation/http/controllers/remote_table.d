@@ -60,17 +60,16 @@ class RemoteTableController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (rt; tables) {
-        auto rj = Json.emptyObject;
-        rj["id"] = Json(rt.id);
-        rj["name"] = Json(rt.name);
-        rj["description"] = Json(rt.description);
-        rj["connectionId"] = Json(rt.connectionId);
-        rj["remoteSchema"] = Json(rt.remoteSchema);
-        rj["remoteObjectName"] = Json(rt.remoteObjectName);
-        rj["rowCount"] = Json(rt.rowCount);
-        rj["lastReplicatedAt"] = Json(rt.lastReplicatedAt);
-        rj["createdAt"] = Json(rt.createdAt);
-        jarr ~= rj;
+        jarr ~=  Json.emptyObject
+        .set("id", Json(rt.id))
+        .set("name", Json(rt.name))
+        .set("description", Json(rt.description))
+        .set("connectionId", Json(rt.connectionId))
+        .set("remoteSchema", Json(rt.remoteSchema))
+        .set("remoteObjectName", Json(rt.remoteObjectName))
+        .set("rowCount", Json(rt.rowCount))
+        .set("lastReplicatedAt", Json(rt.lastReplicatedAt))
+        .set("createdAt", Json(rt.createdAt));
       }
 
       auto resp = Json.emptyObject;

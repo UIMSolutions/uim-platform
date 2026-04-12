@@ -270,3 +270,17 @@ private string extractId(scope HTTPServerRequest req) {
 }
 
 */
+
+
+/// Extract a ushort field from a Json object.
+ushort jsonUshort(Json j, string key, ushort default_ = 0) {
+  return cast(ushort) jsonLong(j, key, default_);
+}
+
+/// Convert a string array to a Json array.
+Json toJsonArray(const(string[]) arr) {
+  auto j = Json.emptyArray;
+  foreach (s; arr)
+    j ~= Json(s);
+  return j;
+}

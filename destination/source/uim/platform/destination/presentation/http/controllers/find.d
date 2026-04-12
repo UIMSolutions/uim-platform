@@ -44,12 +44,13 @@ class FindController : PlatformController {
         return;
       }
 
-      auto j = Json.emptyObject;
-      j["destinationName"] = Json(result.destinationName);
-      j["url"] = Json(result.url);
-      j["authentication"] = Json(result.authenticationType);
-      j["proxyType"] = Json(result.proxyType);
-      j["type"] = Json(result.destinationType);
+      auto j = Json.emptyObject
+      .set("destinationName", result.destinationName)
+      .set("url", result.url)
+      .set("authentication", result.authenticationType)
+      .set("proxyType", result.proxyType)
+      .set("type", result.destinationType);
+
       auto propsJson = Json.emptyObject;
       foreach (k, v; result.properties)
         propsJson[k] = Json(v);
@@ -75,12 +76,11 @@ class FindController : PlatformController {
       // Certificates
       auto certArr = Json.emptyArray;
       foreach (c; result.certificates) {
-        auto cj = Json.emptyObject;
-        cj["name"] = Json(c.name);
-        cj["type"] = Json(c.type_);
-        cj["format"] = Json(c.format_);
-        cj["status"] = Json(c.status);
-        certArr ~= cj;
+        certArr ~= Json.emptyObject
+        .set("name", c.name)
+        .set("type", c.type_)
+        .set("format", c.format_)
+        .set("status", c.status);
       }
       j["certificates"] = certArr;
 

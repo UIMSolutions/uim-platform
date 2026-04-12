@@ -232,23 +232,22 @@ class DocumentController : PlatformController {
   }
 
   private static Json serializeDoc(const Document d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["repositoryId"] = Json(d.repositoryId);
-    j["folderId"] = Json(d.folderId);
-    j["name"] = Json(d.name);
-    j["description"] = Json(d.description);
-    j["contentCategory"] = Json(d.contentCategory.to!string);
-    j["mimeType"] = Json(d.mimeType);
-    j["fileSize"] = Json(d.fileSize);
-    j["status"] = Json(d.status.to!string);
-    j["currentVersionId"] = Json(d.currentVersionId);
-    j["tags"] = Json(d.tags);
-    j["properties"] = Json(d.properties);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", d.id)
+    .set("tenantId", d.tenantId)
+    .set("repositoryId", d.repositoryId)
+    .set("folderId", d.folderId)
+    .set("name", d.name)
+    .set("description", d.description)
+    .set("contentCategory", d.contentCategory.to!string)
+    .set("mimeType", d.mimeType)
+    .set("fileSize", d.fileSize)
+    .set("status", d.status.to!string)
+    .set("currentVersionId", d.currentVersionId)
+    .set("tags", d.tags)
+    .set("properties", d.properties)
+    .set("createdBy", d.createdBy)
+    .set("createdAt", d.createdAt)
+    .set("updatedAt", d.updatedAt);
   }
 }

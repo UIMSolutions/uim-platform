@@ -201,23 +201,22 @@ class CertificateController : PlatformController {
   }
 
   private static Json serializeCertificate(const ref Certificate c) {
-    auto j = Json.emptyObject;
-    j["id"] = c.id.toJson();
-    j["tenantId"] = c.tenantId.toJson();
-    j["subaccountId"] = c.subaccountId.toJson();
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["type"] = Json(c.certificateType.to!string);
-    j["format"] = Json(c.format_.to!string);
-    j["status"] = Json(c.status.to!string);
-    j["subject"] = Json(c.subject);
-    j["issuer"] = Json(c.issuer);
-    j["serialNumber"] = Json(c.serialNumber);
-    j["validFrom"] = Json(c.validFrom);
-    j["validTo"] = Json(c.validTo);
-    j["uploadedBy"] = Json(c.uploadedBy);
-    j["uploadedAt"] = Json(c.uploadedAt);
-    j["modifiedAt"] = Json(c.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", c.id.toJson())
+    .set("tenantId", c.tenantId.toJson())
+    .set("subaccountId", c.subaccountId.toJson())
+    .set("name", c.name)
+    .set("description", c.description)
+    .set("type", c.certificateType.to!string)
+    .set("format", c.format_.to!string)
+    .set("status", c.status.to!string)
+    .set("subject", c.subject)
+    .set("issuer", c.issuer)
+    .set("serialNumber", c.serialNumber)
+    .set("validFrom", c.validFrom)
+    .set("validTo", c.validTo)
+    .set("uploadedBy", c.uploadedBy)
+    .set("uploadedAt", c.uploadedAt)
+    .set("modifiedAt", c.modifiedAt);
   }
 }
