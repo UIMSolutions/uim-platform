@@ -32,4 +32,28 @@ struct Smartform {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json smartformToJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("serviceCallId", serviceCallId)
+            .set("activityId", activityId)
+            .set("name", name)
+            .set("description", description)
+            .set("formType", formType.to!string)
+            .set("status", status.to!string)
+            .set("templateId", templateId)
+            .set("submittedBy", submittedBy)
+            .set("submittedDate", submittedDate)
+            .set("approvedBy", approvedBy)
+            .set("approvedDate", approvedDate)
+            .set("formData", formData)
+            .set("safetyLabel", safetyLabel)
+            .set("signatureData", signatureData)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }

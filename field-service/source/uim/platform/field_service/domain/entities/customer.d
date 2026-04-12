@@ -31,4 +31,27 @@ struct Customer {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json customerToJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("name", name)
+            .set("description", description)
+            .set("customerType", customerType.to!string)
+            .set("status", status.to!string)
+            .set("contactPerson", contactPerson)
+            .set("email", email)
+            .set("phone", phone)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("website", website)
+            .set("industry", industry)
+            .set("accountNumber", accountNumber)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }

@@ -12,29 +12,58 @@ mixin(ShowModule!());
 @safe:
 
 struct ServiceCall {
-    ServiceCallId id;
-    TenantId tenantId;
-    CustomerId customerId;
-    EquipmentId equipmentId;
-    string subject;
-    string description;
-    ServiceCallStatus status = ServiceCallStatus.new_;
-    ServiceCallPriority priority = ServiceCallPriority.medium;
-    ServiceCallOrigin origin = ServiceCallOrigin.manual;
-    ServiceCallCategory category = ServiceCallCategory.repair;
-    string serviceType;
-    string contactPerson;
-    string contactPhone;
-    string contactEmail;
-    string reportedDate;
-    string dueDate;
-    string resolvedDate;
-    string resolution;
-    string address;
-    string latitude;
-    string longitude;
-    string createdBy;
-    string modifiedBy;
-    string createdAt;
-    string modifiedAt;
+  ServiceCallId id;
+  TenantId tenantId;
+  CustomerId customerId;
+  EquipmentId equipmentId;
+  string subject;
+  string description;
+  ServiceCallStatus status = ServiceCallStatus.new_;
+  ServiceCallPriority priority = ServiceCallPriority.medium;
+  ServiceCallOrigin origin = ServiceCallOrigin.manual;
+  ServiceCallCategory category = ServiceCallCategory.repair;
+  string serviceType;
+  string contactPerson;
+  string contactPhone;
+  string contactEmail;
+  string reportedDate;
+  string dueDate;
+  string resolvedDate;
+  string resolution;
+  string address;
+  string latitude;
+  string longitude;
+  string createdBy;
+  string modifiedBy;
+  string createdAt;
+  string modifiedAt;
+
+  Json serviceCallToJson() {
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("customerId", customerId)
+      .set("equipmentId", equipmentId)
+      .set("subject", subject)
+      .set("description", description)
+      .set("status", status.to!string)
+      .set("priority", priority.to!string)
+      .set("origin", origin.to!string)
+      .set("category", category.to!string)
+      .set("serviceType", serviceType)
+      .set("contactPerson", contactPerson)
+      .set("contactPhone", contactPhone)
+      .set("contactEmail", contactEmail)
+      .set("reportedDate", reportedDate)
+      .set("dueDate", dueDate)
+      .set("resolvedDate", resolvedDate)
+      .set("resolution", resolution)
+      .set("address", address)
+      .set("latitude", latitude)
+      .set("longitude", longitude)
+      .set("createdBy", createdBy)
+      .set("modifiedBy", modifiedBy)
+      .set("createdAt", createdAt)
+      .set("modifiedAt", modifiedAt);
+  }
 }

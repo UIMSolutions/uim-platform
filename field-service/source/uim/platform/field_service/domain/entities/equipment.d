@@ -34,4 +34,30 @@ struct Equipment {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json toJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("customerId", customerId)
+            .set("serialNumber", serialNumber)
+            .set("name", name)
+            .set("description", description)
+            .set("equipmentType", equipmentType.to!string)
+            .set("status", status.to!string)
+            .set("manufacturer", manufacturer)
+            .set("model", model)
+            .set("installationDate", installationDate)
+            .set("warrantyEndDate", warrantyEndDate)
+            .set("locationAddress", locationAddress)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("lastServiceDate", lastServiceDate)
+            .set("nextServiceDate", nextServiceDate)
+            .set("measuringPoint", measuringPoint)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }

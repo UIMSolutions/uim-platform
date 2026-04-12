@@ -12,14 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 class AssignmentController : PlatformController {
-    private ManageAssignmentsUseCase uc;
+    private ManageAssignmentsUseCase usecase;
 
-    this(ManageAssignmentsUseCase uc) {
-        this.uc = uc;
+    this(ManageAssignmentsUseCase usecase) {
+        this.usecase = usecase;
     }
 
     override void registerRoutes(URLRouter router) {
         super.registerRoutes(router);
+
         router.get("/api/v1/field-service/assignments", &handleList);
         router.get("/api/v1/field-service/assignments/*", &handleGet);
         router.post("/api/v1/field-service/assignments", &handleCreate);
@@ -29,13 +30,13 @@ class AssignmentController : PlatformController {
 
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
-            auto items = uc.list();
-            auto jarr = Json.emptyArray;
-            foreach (e; items) jarr ~= assignmentToJson(e);
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(items.length);
-            resp["resources"] = jarr;
-            res.writeJsonBody(resp, 200);
+            auto assignments = usecase.list();
+            auto jsonAssignments = assignments.map!(assignment => assignment.toJson).array;
+            auto response = Json.emptyObject
+                .set("count", assignments.length)
+                .set("resources", jsonAssignments);
+    
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -44,11 +45,15 @@ class AssignmentController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto e = uc.get_(id);
-            if (e is null) { writeError(res, 404, "Assignment not found"); return; }
-            res.writeJsonBody(assignmentToJson(*e), 200);
+            auto e = usecase.get_(id);
+            if (e is null) {
+                writeError(res, 404, "Assignment not found");
+                return;
+            }
+            res.writeJsonBody(e.toJson, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }
@@ -68,12 +73,12 @@ class AssignmentController : PlatformController {
             dto.notes = j.getString("notes");
             dto.createdBy = j.getString("createdBy");
 
-            auto result = uc.create(dto);
+            auto result = usecase.create(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Assignment created");
-                res.writeJsonBody(resp, 201);
+                auto response = Json.emptyObject;
+                response["id"] = Json(result.id);
+                response["message"] = Json("Assignment created");
+                res.writeJsonBody(response, 201);
             } else {
                 writeError(res, 400, result.error);
             }
@@ -85,6 +90,7 @@ class AssignmentController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto j = req.json;
             AssignmentDTO dto;
@@ -96,12 +102,12 @@ class AssignmentController : PlatformController {
             dto.notes = j.getString("notes");
             dto.modifiedBy = j.getString("modifiedBy");
 
-            auto result = uc.update(dto);
+            auto result = usecase.update(dto);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["id"] = Json(result.id);
-                resp["message"] = Json("Assignment updated");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject;
+                response["id"] = Json(result.id);
+                response["message"] = Json("Assignment updated");
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }
@@ -113,13 +119,14 @@ class AssignmentController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto id = extractIdFromPath(path);
-            auto result = uc.remove(id);
+            auto result = usecase.remove(id);
             if (result.success) {
-                auto resp = Json.emptyObject;
-                resp["message"] = Json("Assignment deleted");
-                res.writeJsonBody(resp, 200);
+                auto response = Json.emptyObject;
+                response["message"] = Json("Assignment deleted");
+                res.writeJsonBody(response, 200);
             } else {
                 writeError(res, 404, result.error);
             }

@@ -27,4 +27,24 @@ struct Skill {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json skillToJson() {
+  return Json.emptyObject
+    .set("id", id)
+    .set("tenantId", tenantId)
+    .set("technicianId", technicianId)
+    .set("name", name)
+    .set("description", description)
+    .set("category", category.to!string)
+    .set("proficiencyLevel", proficiencyLevel.to!string)
+    .set("certificationDate", certificationDate)
+    .set("expirationDate", expirationDate)
+    .set("certificationNumber", certificationNumber)
+    .set("issuingAuthority", issuingAuthority)
+    .set("createdBy", createdBy)
+    .set("modifiedBy", modifiedBy)
+    .set("createdAt", createdAt)
+    .set("modifiedAt", modifiedAt);
+}
+
 }

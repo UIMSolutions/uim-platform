@@ -32,4 +32,28 @@ struct Technician {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json technicianToJson() {
+        return Json.emptyObject
+        .set("id", id)
+        .set("tenantId", tenantId)
+        .set("firstName", firstName)
+        .set("lastName", lastName)
+        .set("email", email)
+        .set("phone", phone)
+        .set("status", status.to!string)
+        .set("region", region)
+        .set("address", address)
+        .set("latitude", latitude)
+        .set("longitude", longitude)
+        .set("availabilityStart", availabilityStart)
+        .set("availabilityEnd", availabilityEnd)
+        .set("maxWorkload", maxWorkload)
+        .set("currentWorkload", currentWorkload)
+        .set("travelRadius", travelRadius)
+        .set("createdBy", createdBy)
+        .set("modifiedBy", modifiedBy)
+        .set("createdAt", createdAt)
+        .set("modifiedAt", modifiedAt);
+    }
 }

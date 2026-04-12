@@ -35,4 +35,31 @@ struct Activity {
     string modifiedBy;
     string createdAt;
     string modifiedAt;
+
+    Json activityToJson() {
+        return Json.emptyObject
+            .set("id", id)
+            .set("tenantId", tenantId)
+            .set("serviceCallId", serviceCallId)
+            .set("technicianId", technicianId)
+            .set("subject", subject)
+            .set("description", description)
+            .set("activityType", activityType.to!string)
+            .set("status", status.to!string)
+            .set("plannedStart", plannedStart)
+            .set("plannedEnd", plannedEnd)
+            .set("actualStart", actualStart)
+            .set("actualEnd", actualEnd)
+            .set("travelTime", travelTime)
+            .set("workTime", workTime)
+            .set("address", address)
+            .set("latitude", latitude)
+            .set("longitude", longitude)
+            .set("notes", notes)
+            .set("feedbackCode", feedbackCode)
+            .set("createdBy", createdBy)
+            .set("modifiedBy", modifiedBy)
+            .set("createdAt", createdAt)
+            .set("modifiedAt", modifiedAt);
+    }
 }
