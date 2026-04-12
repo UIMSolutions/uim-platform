@@ -190,8 +190,23 @@ private CardManifest parseManifest(Json j) {
 }
 
 private Json serializeCard(Card c) {
+    // Data source
+  auto ds = Json.emptyObject
+  .set("url", c.dataSource.url)
+  .set("method", c.dataSource.method)
+  .set("path", c.dataSource.path)
+  .set("refreshIntervalSec", c.dataSource.refreshIntervalSec)
+  .set("authType", c.dataSource.authType);
+
+  // Manifest
+  auto mj = Json.emptyObject
+  .set("type", c.manifest.type)
+  .set("version", c.manifest.version_)
+  .set("headerTitle", c.manifest.headerTitle)
+  .set("maxItems", c.manifest.maxItems);
+
   // import std.conv : to;
-  auto j = Json.emptyObject
+  return Json.emptyObject
   .set("id", c.id)
   .set("tenantId", c.tenantId)
   .set("title", c.title)
@@ -201,24 +216,7 @@ private Json serializeCard(Card c) {
   .set("cardType", c.cardType.to!string)
   .set("active", c.active)
   .set("createdAt", c.createdAt)
-  .set("updatedAt", c.updatedAt);
-
-  // Data source
-  auto ds = Json.emptyObject
-  .set("url", c.dataSource.url)
-  .set("method", c.dataSource.method)
-  .set("path", c.dataSource.path)
-  .set("refreshIntervalSec", c.dataSource.refreshIntervalSec)
-  .set("authType", c.dataSource.authType);
-  j["dataSource"] = ds;
-
-  // Manifest
-  auto mj = Json.emptyObject
-  .set("type", c.manifest.type)
-  .set("version", c.manifest.version_)
-  .set("headerTitle", c.manifest.headerTitle)
-  .set("maxItems", c.manifest.maxItems);
-  j["manifest"] = mj;
-
-  return j;
+  .set("updatedAt", c.updatedAt)
+  .set("dataSource", ds)
+  .set("manifest", mj);
 }

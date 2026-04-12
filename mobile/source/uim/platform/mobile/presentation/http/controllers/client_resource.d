@@ -61,13 +61,12 @@ class ClientResourceController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["name"] = Json(item.name);
-        obj["type"] = Json(item.type);
-        obj["contentType"] = Json(item.contentType);
-        items ~= obj;
+        items ~= Json.emptyObject
+          .set("id", item.id)
+          .set("appId", item.appId)
+          .set("name", item.name)
+          .set("type", item.type)
+          .set("contentType", item.contentType);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

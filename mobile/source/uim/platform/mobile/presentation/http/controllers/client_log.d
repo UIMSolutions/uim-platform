@@ -63,13 +63,12 @@ class ClientLogController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["level"] = Json(item.level);
-        obj["source"] = Json(item.source);
-        obj["message"] = Json(item.message);
-        items ~= obj;
+        items ~= Json.emptyObject
+          .set("id", item.id)
+          .set("appId", item.appId)
+          .set("level", item.level)
+          .set("source", item.source)
+          .set("message", item.message);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

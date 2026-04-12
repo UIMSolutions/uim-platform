@@ -155,16 +155,15 @@ class MetricController : PlatformController {
   }
 
   private static Json serializeMetric(const ref Metric m) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["tenantId"] = Json(m.tenantId);
-    j["resourceId"] = Json(m.resourceId);
-    j["definitionId"] = Json(m.definitionId);
-    j["name"] = Json(m.name);
-    j["value"] = Json(m.value_);
-    j["unit"] = Json(m.unit.to!string);
-    j["category"] = Json(m.category.to!string);
-    j["timestamp"] = Json(m.timestamp);
-    return j;
+    return Json.emptyObject
+      .set("id", m.id)
+      .set("tenantId", m.tenantId)
+      .set("resourceId", m.resourceId)
+      .set("definitionId", m.definitionId)
+      .set("name", m.name)
+      .set("value", m.value_)
+      .set("unit", m.unit.to!string)
+      .set("category", m.category.to!string)
+      .set("timestamp", m.timestamp);
   }
 }

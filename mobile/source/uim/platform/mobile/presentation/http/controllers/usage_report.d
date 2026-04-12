@@ -47,7 +47,7 @@ class UsageReportController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -62,13 +62,12 @@ class UsageReportController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["metricType"] = Json(item.metricType);
-        obj["metricKey"] = Json(item.metricKey);
-        obj["metricValue"] = Json(item.metricValue);
-        items ~= obj;
+        items ~= Json.emptyObject
+          .set("id", item.id)
+          .set("appId", item.appId)
+          .set("metricType", item.metricType)
+          .set("metricKey", item.metricKey)
+          .set("metricValue", item.metricValue);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);
@@ -96,7 +95,7 @@ class UsageReportController : PlatformController {
         resp["appVersion"] = Json(result.data.appVersion);
         resp["timestamp"] = Json(result.data.timestamp);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

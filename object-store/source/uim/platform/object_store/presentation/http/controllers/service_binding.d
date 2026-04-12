@@ -135,19 +135,17 @@ class ServiceBindingController {
   }
 
   private static Json serializeBinding(ServiceBinding b) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(b.id);
-    j["tenantId"] = Json(b.tenantId);
-    j["name"] = Json(b.name);
-    j["bucketId"] = Json(b.bucketId);
-    j["accessKeyId"] = Json(b.accessKeyId);
-    // Never return the secret hash
-    j["permission"] = Json(b.permission.to!string);
-    j["status"] = Json(b.status.to!string);
-    j["expiresAt"] = Json(b.expiresAt);
-    j["createdBy"] = Json(b.createdBy);
-    j["createdAt"] = Json(b.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", b.id)
+      .set("tenantId", b.tenantId)
+      .set("name", b.name)
+      .set("bucketId", b.bucketId)
+      .set("accessKeyId", b.accessKeyId) // Never return the secret hash
+      .set("permission", b.permission.to!string)
+      .set("status", b.status.to!string)
+      .set("expiresAt", b.expiresAt)
+      .set("createdBy", b.createdBy)
+      .set("createdAt", b.createdAt);
   }
 
   private static string extractBucketIdFromBindingsPath(string uri) {

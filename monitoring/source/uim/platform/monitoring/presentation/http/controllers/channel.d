@@ -157,23 +157,22 @@ class ChannelController : PlatformController {
   }
 
   private static Json serializeChannel(const ref NotificationChannel ch) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(ch.id);
-    j["tenantId"] = Json(ch.tenantId);
-    j["name"] = Json(ch.name);
-    j["description"] = Json(ch.description);
-    j["channelType"] = Json(ch.channelType.to!string);
-    j["state"] = Json(ch.state.to!string);
-    j["emailRecipients"] = toJsonArray(ch.emailRecipients);
-    j["emailSubjectPrefix"] = Json(ch.emailSubjectPrefix);
-    j["webhookUrl"] = Json(ch.webhookUrl);
-    j["webhookMethod"] = Json(ch.webhookMethod);
-    j["onPremiseHost"] = Json(ch.onPremiseHost);
-    j["onPremisePort"] = Json(ch.onPremisePort);
-    j["onPremiseProtocol"] = Json(ch.onPremiseProtocol);
-    j["createdBy"] = Json(ch.createdBy);
-    j["createdAt"] = Json(ch.createdAt);
-    j["updatedAt"] = Json(ch.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", ch.id)
+      .set("tenantId", ch.tenantId)
+      .set("name", ch.name)
+      .set("description", ch.description)
+      .set("channelType", ch.channelType.to!string)
+      .set("state", ch.state.to!string)
+      .set("emailRecipients", toJsonArray(ch.emailRecipients))
+      .set("emailSubjectPrefix", ch.emailSubjectPrefix)
+      .set("webhookUrl", ch.webhookUrl)
+      .set("webhookMethod", ch.webhookMethod)
+      .set("onPremiseHost", ch.onPremiseHost)
+      .set("onPremisePort", ch.onPremisePort)
+      .set("onPremiseProtocol", ch.onPremiseProtocol)
+      .set("createdBy", ch.createdBy)
+      .set("createdAt", ch.createdAt)
+      .set("updatedAt", ch.updatedAt);
   }
 }

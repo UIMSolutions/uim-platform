@@ -210,27 +210,26 @@ class CheckController : PlatformController {
   }
 
   private static Json serializeCheck(const ref HealthCheck c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["resourceId"] = Json(c.resourceId);
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["checkType"] = Json(c.checkType.to!string);
-    j["isEnabled"] = Json(c.isEnabled);
-    j["intervalSeconds"] = Json(c.intervalSeconds);
-    j["url"] = Json(c.url);
-    j["expectedStatus"] = Json(c.expectedStatus);
-    j["mbeanName"] = Json(c.mbeanName);
-    j["mbeanAttribute"] = Json(c.mbeanAttribute);
-    j["customUrl"] = Json(c.customUrl);
-    j["warningThreshold"] = Json(c.warningThreshold);
-    j["criticalThreshold"] = Json(c.criticalThreshold);
-    j["thresholdOperator"] = Json(c.thresholdOperator.to!string);
-    j["createdBy"] = Json(c.createdBy);
-    j["createdAt"] = Json(c.createdAt);
-    j["updatedAt"] = Json(c.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", c.id)
+    .set("tenantId", c.tenantId)
+    .set("resourceId", c.resourceId)
+    .set("name", c.name)
+    .set("description", c.description)
+    .set("checkType", c.checkType.to!string)
+    .set("isEnabled", c.isEnabled)
+    .set("intervalSeconds", c.intervalSeconds)
+    .set("url", c.url)
+    .set("expectedStatus", c.expectedStatus)
+    .set("mbeanName", c.mbeanName)
+    .set("mbeanAttribute", c.mbeanAttribute)
+    .set("customUrl", c.customUrl)
+    .set("warningThreshold", c.warningThreshold)
+    .set("criticalThreshold", c.criticalThreshold)
+    .set("thresholdOperator", c.thresholdOperator.to!string)
+    .set("createdBy", c.createdBy)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt);
   }
 
   private static Json serializeResult(const ref HealthCheckResult r) {

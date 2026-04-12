@@ -64,13 +64,12 @@ class MobileAppController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["name"] = Json(item.name);
-        obj["bundleId"] = Json(item.bundleId);
-        obj["platform"] = Json(item.platform);
-        obj["status"] = Json(item.status);
-        items ~= obj;
+        items ~= Json.emptyObject
+          .set("id", item.id)
+          .set("name", item.name)
+          .set("bundleId", item.bundleId)
+          .set("platform", item.platform)
+          .set("status", item.status);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

@@ -120,18 +120,17 @@ class DataProcessingLogController : PlatformController {
     }
 
     private Json logToJson(DataProcessingLog l) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(l.id);
-        j["dataSubjectId"] = Json(l.dataSubjectId);
-        j["requestId"] = Json(l.requestId);
-        j["applicationId"] = Json(l.applicationId);
-        j["entryType"] = Json(l.entryType.to!string);
-        j["severity"] = Json(l.severity.to!string);
-        j["action"] = Json(l.action);
-        j["details"] = Json(l.details);
-        j["ipAddress"] = Json(l.ipAddress);
-        j["createdBy"] = Json(l.createdBy);
-        j["createdAt"] = Json(l.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", l.id)
+        .set("dataSubjectId", l.dataSubjectId)
+        .set("requestId", l.requestId)
+        .set("applicationId", l.applicationId)
+        .set("entryType", l.entryType.to!string)
+        .set("severity", l.severity.to!string)
+        .set("action", l.action)
+        .set("details", l.details)
+        .set("ipAddress", l.ipAddress)
+        .set("createdBy", l.createdBy)
+        .set("createdAt", l.createdAt);
     }
 }

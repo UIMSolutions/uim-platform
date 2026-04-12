@@ -36,17 +36,17 @@ class DashboardController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalResources"] = Json(summary.totalResources);
-      j["healthyResources"] = Json(summary.healthyResources);
-      j["unhealthyResources"] = Json(summary.unhealthyResources);
-      j["totalAlerts"] = Json(summary.totalAlerts);
-      j["openAlerts"] = Json(summary.openAlerts);
-      j["criticalAlerts"] = Json(summary.criticalAlerts);
-      j["totalChecks"] = Json(summary.totalChecks);
-      j["failingChecks"] = Json(summary.failingChecks);
-      j["totalMetricDefinitions"] = Json(summary.totalMetricDefinitions);
-      j["totalChannels"] = Json(summary.totalChannels);
+      auto j = Json.emptyObject
+        .set("totalResources", summary.totalResources)
+        .set("healthyResources", summary.healthyResources)
+        .set("unhealthyResources", summary.unhealthyResources)
+        .set("totalAlerts", summary.totalAlerts)
+        .set("openAlerts", summary.openAlerts)
+        .set("criticalAlerts", summary.criticalAlerts)
+        .set("totalChecks", summary.totalChecks)
+        .set("failingChecks", summary.failingChecks)
+        .set("totalMetricDefinitions", summary.totalMetricDefinitions)
+        .set("totalChannels", summary.totalChannels);
 
       res.writeJsonBody(j, 200);
     }

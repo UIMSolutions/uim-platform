@@ -174,27 +174,24 @@ class KeyMappingController : PlatformController {
   }
 
   private Json serializeMapping(KeyMapping m) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["tenantId"] = Json(m.tenantId);
-    j["masterDataObjectId"] = Json(m.masterDataObjectId);
-    j["category"] = Json(m.category.to!string);
-    j["objectType"] = Json(m.objectType);
-
     auto entriesArr = Json.emptyArray;
     foreach (e; m.entries) {
-      auto ej = Json.emptyObject;
-      ej["clientId"] = Json(e.clientId);
-      ej["systemId"] = Json(e.systemId);
-      ej["localKey"] = Json(e.localKey);
-      ej["sourceType"] = Json(e.sourceType.to!string);
-      ej["isPrimary"] = Json(e.isPrimary);
-      entriesArr ~= ej;
+      entriesArr ~= Json.emptyObject
+        .set("clientId", e.clientId)
+        .set("systemId", e.systemId)
+        .set("localKey", e.localKey)
+        .set("sourceType", e.sourceType.to!string)
+        .set("isPrimary", e.isPrimary);
     }
-    j["entries"] = entriesArr;
 
-    j["createdAt"] = Json(m.createdAt);
-    j["modifiedAt"] = Json(m.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", m.id)
+      .set("tenantId", m.tenantId)
+      .set("masterDataObjectId", m.masterDataObjectId)
+      .set("category", m.category.to!string)
+      .set("objectType", m.objectType)
+      .set("entries", entriesArr)
+      .set("createdAt", Json(m.createdAt))
+      .set("modifiedAt", Json(m.modifiedAt));
   }
 }

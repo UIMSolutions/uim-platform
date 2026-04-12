@@ -146,19 +146,18 @@ class MetricDefinitionController : PlatformController {
   }
 
   private static Json serializeDefinition(const ref MetricDefinition d) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(d.id);
-    j["tenantId"] = Json(d.tenantId);
-    j["name"] = Json(d.name);
-    j["displayName"] = Json(d.displayName);
-    j["description"] = Json(d.description);
-    j["category"] = Json(d.category.to!string);
-    j["unit"] = Json(d.unit.to!string);
-    j["aggregation"] = Json(d.aggregation.to!string);
-    j["isCustom"] = Json(d.isCustom);
-    j["isEnabled"] = Json(d.isEnabled);
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", d.id)
+      .set("tenantId", d.tenantId)
+      .set("name", d.name)
+      .set("displayName", d.displayName)
+      .set("description", d.description)
+      .set("category", d.category.to!string)
+      .set("unit", d.unit.to!string)
+      .set("aggregation", d.aggregation.to!string)
+      .set("isCustom", d.isCustom)
+      .set("isEnabled", d.isEnabled)
+      .set("createdBy", d.createdBy)
+      .set("createdAt", d.createdAt);
   }
 }
