@@ -60,12 +60,11 @@ class StreamController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (s; streams) {
-        auto sj = Json.emptyObject;
-        sj["id"] = Json(s.id);
-        sj["name"] = Json(s.name);
-        sj["description"] = Json(s.description);
-        sj["isActive"] = Json(s.isActive);
-        jarr ~= sj;
+        jarr ~= Json.emptyObject
+        .set("id", s.id)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("isActive", s.isActive);
       }
 
       auto resp = Json.emptyObject;

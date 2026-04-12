@@ -87,18 +87,20 @@ class AppRouteController : PlatformController {
         writeError(res, 404, "Route not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["appId"] = Json(entry.appId);
-      obj["pathPrefix"] = Json(entry.pathPrefix);
-      obj["targetUrl"] = Json(entry.targetUrl);
-      obj["description"] = Json(entry.description);
-      obj["status"] = Json(entry.status);
-      obj["createdBy"] = Json(entry.createdBy);
-      obj["createdAt"] = Json(entry.createdAt);
-      obj["modifiedBy"] = Json(entry.modifiedBy);
-      obj["modifiedAt"] = Json(entry.modifiedAt);
-      res.writeJsonBody(obj, 200);
+      
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("appId", entry.appId)
+        .set("pathPrefix", entry.pathPrefix)
+        .set("targetUrl", entry.targetUrl)
+        .set("description", entry.description)
+        .set("status", entry.status)
+        .set("createdBy", entry.createdBy)
+        .set("createdAt", entry.createdAt)
+        .set("modifiedBy", entry.modifiedBy)
+        .set("modifiedAt", entry.modifiedAt);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

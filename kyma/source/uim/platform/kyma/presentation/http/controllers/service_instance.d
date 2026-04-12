@@ -147,24 +147,23 @@ class ServiceInstanceController : PlatformController {
   }
 
   private Json serializeInst(ServiceInstance inst) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(inst.id);
-    j["namespaceId"] = Json(inst.namespaceId);
-    j["environmentId"] = Json(inst.environmentId);
-    j["tenantId"] = Json(inst.tenantId);
-    j["name"] = Json(inst.name);
-    j["description"] = Json(inst.description);
-    j["status"] = Json(inst.status.to!string);
-    j["serviceOfferingName"] = Json(inst.serviceOfferingName);
-    j["servicePlanName"] = Json(inst.servicePlanName);
-    j["servicePlanId"] = Json(inst.servicePlanId);
-    j["externalName"] = Json(inst.externalName);
-    j["parameters"] = Json(inst.parametersJson);
-    j["labels"] = serializeStrMap(inst.labels);
-    j["bindingCount"] = Json(inst.bindingCount);
-    j["createdBy"] = Json(inst.createdBy);
-    j["createdAt"] = Json(inst.createdAt);
-    j["modifiedAt"] = Json(inst.modifiedAt);
-    return j;
+    return Json.emptyObject
+     .set("id", inst.id)
+     .set("namespaceId", inst.namespaceId)
+     .set("environmentId", inst.environmentId)
+     .set("tenantId", inst.tenantId)
+     .set("name", inst.name)
+     .set("description", inst.description)
+     .set("status", inst.status.to!string)
+     .set("serviceOfferingName", inst.serviceOfferingName)
+     .set("servicePlanName", inst.servicePlanName)
+     .set("servicePlanId", inst.servicePlanId)
+     .set("externalName", inst.externalName)
+     .set("parameters", inst.parametersJson)
+     .set("labels", serializeStrMap(inst.labels))
+     .set("bindingCount", inst.bindingCount)
+     .set("createdBy", inst.createdBy)
+     .set("createdAt", inst.createdAt)
+     .set("modifiedAt", inst.modifiedAt);
   }
 }

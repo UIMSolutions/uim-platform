@@ -152,22 +152,21 @@ class ModuleController : PlatformController {
   }
 
   private Json serializeModule(KymaModule m) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["environmentId"] = Json(m.environmentId);
-    j["tenantId"] = Json(m.tenantId);
-    j["name"] = Json(m.name);
-    j["description"] = Json(m.description);
-    j["moduleType"] = Json(m.moduleType.to!string);
-    j["status"] = Json(m.status.to!string);
-    j["version"] = Json(m.version_);
-    j["channel"] = Json(m.channel);
-    j["customResourcePolicy"] = Json(m.customResourcePolicy);
-    j["configuration"] = Json(m.configurationJson);
-    j["requiredModules"] = serializeStrArray(m.requiredModules);
-    j["enabledBy"] = Json(m.enabledBy);
-    j["enabledAt"] = Json(m.enabledAt);
-    j["modifiedAt"] = Json(m.modifiedAt);
-    return j;
+    return Json.emptyObject
+     .set("id", m.id)
+     .set("environmentId", m.environmentId)
+     .set("tenantId", m.tenantId)
+     .set("name", m.name)
+     .set("description", m.description)
+     .set("moduleType", m.moduleType.to!string)
+     .set("status", m.status.to!string)
+     .set("version", m.version_)
+     .set("channel", m.channel)
+     .set("customResourcePolicy", m.customResourcePolicy)
+     .set("configuration", m.configurationJson)
+     .set("requiredModules", serializeStrArray(m.requiredModules))
+     .set("enabledBy", m.enabledBy)
+     .set("enabledAt", m.enabledAt)
+     .set("modifiedAt", m.modifiedAt);
   }
 }

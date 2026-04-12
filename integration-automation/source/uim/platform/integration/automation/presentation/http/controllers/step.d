@@ -48,8 +48,7 @@ class StepController {
       resp["items"] = arr;
       resp["totalCount"] = Json(steps.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -64,8 +63,7 @@ class StepController {
         return;
       }
       res.writeJsonBody(serializeStep(*step), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -84,8 +82,7 @@ class StepController {
       resp["items"] = arr;
       resp["totalCount"] = Json(tasks.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -102,13 +99,10 @@ class StepController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("inProgress");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -129,13 +123,10 @@ class StepController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("completed");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -156,13 +147,10 @@ class StepController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("failed");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -183,13 +171,10 @@ class StepController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("skipped");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -209,40 +194,37 @@ class StepController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeStep(const WorkflowStep s) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(s.id);
-    j["workflowId"] = Json(s.workflowId);
-    j["tenantId"] = Json(s.tenantId);
-    j["name"] = Json(s.name);
-    j["description"] = Json(s.description);
-    j["type"] = Json(s.type_.to!string);
-    j["status"] = Json(s.status.to!string);
-    j["priority"] = Json(s.priority.to!string);
-    j["sequenceNumber"] = Json(s.sequenceNumber);
-    j["assignedTo"] = Json(s.assignedTo);
-    j["assignedRole"] = Json(s.assignedRole);
-    j["instructions"] = Json(s.instructions);
-    j["automationEndpoint"] = Json(s.automationEndpoint);
-    j["sourceSystemId"] = Json(s.sourceSystemId);
-    j["targetSystemId"] = Json(s.targetSystemId);
-    j["result"] = Json(s.result);
-    j["errorMessage"] = Json(s.errorMessage);
-    j["startedAt"] = Json(s.startedAt);
-    j["completedAt"] = Json(s.completedAt);
-    j["createdAt"] = Json(s.createdAt);
-    j["estimatedDurationMinutes"] = Json(s.estimatedDurationMinutes);
+    auto j = Json.emptyObject
+      .set("id", Json(s.id))
+      .set("workflowId", Json(s.workflowId))
+      .set("tenantId", Json(s.tenantId))
+      .set("name", Json(s.name))
+      .set("description", Json(s.description))
+      .set("type", Json(s.type_.to!string))
+      .set("status", Json(s.status.to!string))
+      .set("priority", Json(s.priority.to!string))
+      .set("sequenceNumber", Json(s.sequenceNumber))
+      .set("assignedTo", Json(s.assignedTo))
+      .set("assignedRole", Json(s.assignedRole))
+      .set("instructions", Json(s.instructions))
+      .set("automationEndpoint", Json(s.automationEndpoint))
+      .set("sourceSystemId", Json(s.sourceSystemId))
+      .set("targetSystemId", Json(s.targetSystemId))
+      .set("result", Json(s.result))
+      .set("errorMessage", Json(s.errorMessage))
+      .set("startedAt", Json(s.startedAt))
+      .set("completedAt", Json(s.completedAt))
+      .set("createdAt", Json(s.createdAt))
+      .set("estimatedDurationMinutes", Json(s.estimatedDurationMinutes));
 
     if (s.dependencies.length > 0)
       j["dependencies"] = toJsonArray(s.dependencies);

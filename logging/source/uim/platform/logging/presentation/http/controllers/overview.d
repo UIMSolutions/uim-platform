@@ -28,19 +28,19 @@ class OverviewController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalLogEntries"] = Json(summary.totalLogEntries);
-      j["totalSpans"] = Json(summary.totalSpans);
-      j["totalStreams"] = Json(summary.totalStreams);
-      j["totalDashboards"] = Json(summary.totalDashboards);
-      j["totalAlerts"] = Json(summary.totalAlerts);
-      j["openAlerts"] = Json(summary.openAlerts);
-      j["criticalAlerts"] = Json(summary.criticalAlerts);
-      j["totalPipelines"] = Json(summary.totalPipelines);
-      j["activePipelines"] = Json(summary.activePipelines);
-      j["totalChannels"] = Json(summary.totalChannels);
+      auto response = Json.emptyObject
+      .set("totalLogEntries", summary.totalLogEntries)
+      .set("totalSpans", summary.totalSpans)
+      .set("totalStreams", summary.totalStreams)
+      .set("totalDashboards", summary.totalDashboards)
+      .set("totalAlerts", summary.totalAlerts)
+      .set("openAlerts", summary.openAlerts)
+      .set("criticalAlerts", summary.criticalAlerts)
+      .set("totalPipelines", summary.totalPipelines)
+      .set("activePipelines", summary.activePipelines)
+      .set("totalChannels", summary.totalChannels);
 
-      res.writeJsonBody(j, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

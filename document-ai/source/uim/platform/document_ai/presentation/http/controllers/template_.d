@@ -143,14 +143,13 @@ class TemplateController : PlatformController {
   private Json templateToJson(Template t) {
     auto rArr = Json.emptyArray;
     foreach (r; t.regions) {
-      auto rj = Json.emptyObject;
-      rj["fieldName"] = Json(r.fieldName);
-      rj["page"] = Json(r.page);
-      rj["x"] = Json(r.x);
-      rj["y"] = Json(r.y);
-      rj["width"] = Json(r.width);
-      rj["height"] = Json(r.height);
-      rArr ~= rj;
+      rArr ~= Json.emptyObject
+        .set("fieldName", r.fieldName)
+        .set("page", r.page)
+        .set("x", r.x)
+        .set("y", r.y)
+        .set("width", r.width)
+        .set("height", r.height);
     }
 
     return Json.emptyObject

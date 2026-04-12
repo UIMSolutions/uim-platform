@@ -67,14 +67,13 @@ class DatabaseUserController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (u; users) {
-        auto uj = Json.emptyObject;
-        uj["id"] = Json(u.id);
-        uj["userName"] = Json(u.userName);
-        uj["status"] = Json(u.status.to!string);
-        uj["defaultSchema"] = Json(u.defaultSchema);
-        uj["isRestricted"] = Json(u.isRestricted);
-        uj["createdAt"] = Json(u.createdAt);
-        jarr ~= uj;
+        jarr ~= Json.emptyObject
+          .set("id", u.id)
+          .set("userName", u.userName)
+          .set("status", u.status.to!string)
+          .set("defaultSchema", u.defaultSchema)
+          .set("isRestricted", u.isRestricted)
+          .set("createdAt", u.createdAt);
       }
 
       auto resp = Json.emptyObject;

@@ -87,19 +87,21 @@ class ServiceInstanceController : PlatformController {
         writeError(res, 404, "Service instance not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["name"] = Json(entry.name);
-      obj["description"] = Json(entry.description);
-      obj["spaceId"] = Json(entry.spaceId);
-      obj["plan"] = Json(entry.plan);
-      obj["status"] = Json(entry.status);
-      obj["appCount"] = Json(entry.appCount);
-      obj["createdBy"] = Json(entry.createdBy);
-      obj["createdAt"] = Json(entry.createdAt);
-      obj["modifiedBy"] = Json(entry.modifiedBy);
-      obj["modifiedAt"] = Json(entry.modifiedAt);
-      res.writeJsonBody(obj, 200);
+      
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("name", entry.name)
+        .set("description", entry.description)
+        .set("spaceId", entry.spaceId)
+        .set("plan", entry.plan)
+        .set("status", entry.status)
+        .set("appCount", entry.appCount)
+        .set("createdBy", entry.createdBy)
+        .set("createdAt", entry.createdAt)
+        .set("modifiedBy", entry.modifiedBy)
+        .set("modifiedAt", entry.modifiedAt);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }

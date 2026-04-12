@@ -58,18 +58,17 @@ class SearchController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (e; entries) {
-        auto ej = Json.emptyObject;
-        ej["id"] = Json(e.id);
-        ej["timestamp"] = Json(e.timestamp);
-        ej["level"] = Json(LogParser.levelToString(e.level));
-        ej["source"] = Json(e.source);
-        ej["message"] = Json(e.message);
-        ej["traceId"] = Json(e.traceId);
-        ej["spanId"] = Json(e.spanId);
-        ej["correlationId"] = Json(e.correlationId);
-        ej["componentName"] = Json(e.componentName);
-        ej["streamId"] = Json(e.streamId);
-        jarr ~= ej;
+        jarr ~= Json.emptyObject
+          .set("id", e.id)
+          .set("timestamp", e.timestamp)
+          .set("level", LogParser.levelToString(e.level))
+          .set("source", e.source)
+          .set("message", e.message)
+          .set("traceId", e.traceId)
+          .set("spanId", e.spanId)
+          .set("correlationId", e.correlationId)
+          .set("componentName", e.componentName)
+          .set("streamId", e.streamId);
       }
 
       auto resp = Json.emptyObject;

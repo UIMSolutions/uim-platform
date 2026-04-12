@@ -93,13 +93,12 @@ class CatalogAssetController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (ca; assets) {
-        auto aj = Json.emptyObject;
-        aj["id"] = Json(ca.id);
-        aj["name"] = Json(ca.name);
-        aj["description"] = Json(ca.description);
-        aj["businessName"] = Json(ca.businessName);
-        aj["owner"] = Json(ca.owner);
-        jarr ~= aj;
+        jarr ~= Json.emptyObject
+        .set("id", ca.id)
+        .set("name", ca.name)
+        .set("description", ca.description)
+        .set("businessName", ca.businessName)
+        .set("owner", ca.owner);
       }
 
       auto resp = Json.emptyObject;

@@ -220,18 +220,17 @@ class JobController : PlatformController {
     }
 
     private static Json jobToDetailJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
-        auto j = Json.emptyObject;
-        j["jobId"] = Json(job.id);
-        j["name"] = Json(job.name);
-        j["description"] = Json(job.description);
-        j["action"] = Json(job.actionUrl);
-        j["httpMethod"] = Json(httpMethodStr(job.httpMethod));
-        j["active"] = Json(job.active);
-        j["startTime"] = Json(job.startTime);
-        j["endTime"] = Json(job.endTime);
-        j["createdAt"] = Json(job.createdAt);
-        j["modifiedAt"] = Json(job.modifiedAt);
-        return j;
+        return Json.emptyObject
+         .set("jobId", job.id)
+         .set("name", job.name)
+         .set("description", job.description)
+         .set("action", job.actionUrl)
+         .set("httpMethod", httpMethodStr(job.httpMethod))
+         .set("active", job.active)
+         .set("startTime", job.startTime)
+         .set("endTime", job.endTime)
+         .set("createdAt", job.createdAt)
+         .set("modifiedAt", job.modifiedAt);
     }
 
     private static string httpMethodStr(uim.platform.job_scheduling.domain.types.HttpMethod m) {

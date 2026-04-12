@@ -34,6 +34,7 @@ class ScheduleController : PlatformController {
     private void handleCreate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
             auto j = req.json;
@@ -60,7 +61,7 @@ class ScheduleController : PlatformController {
                 resp["jobId"] = Json(jobId);
                 resp["message"] = Json("Schedule created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -71,6 +72,7 @@ class ScheduleController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
             TenantId tenantId = req.getTenantId;
@@ -94,6 +96,7 @@ class ScheduleController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
@@ -113,6 +116,7 @@ class ScheduleController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             auto j = req.json;
@@ -137,7 +141,7 @@ class ScheduleController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Schedule updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -148,6 +152,7 @@ class ScheduleController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto ids = extractJobAndScheduleIds(path);
             TenantId tenantId = req.getTenantId;
@@ -155,7 +160,7 @@ class ScheduleController : PlatformController {
             auto result = uc.remove(ids[1], ids[0], tenantId);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -166,6 +171,7 @@ class ScheduleController : PlatformController {
     private void handleActivateAll(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto jobId = extractJobIdFromSchedulePath(path);
             auto j = req.json;
@@ -178,9 +184,10 @@ class ScheduleController : PlatformController {
             auto result = uc.activateAll(r);
             if (result.success) {
                 auto resp = Json.emptyObject;
-                resp["message"] = Json(r.active ? "All schedules activated" : "All schedules deactivated");
+                resp["message"] = Json(r.active ? "All schedules activated"
+                        : "All schedules deactivated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -212,6 +219,7 @@ class ScheduleController : PlatformController {
     // Extract jobId from path: /api/v1/scheduler/jobs/{jobId}/schedules
     private static string extractJobIdFromSchedulePath(string path) {
         import std.string : split;
+
         auto parts = path.split("/");
         // parts: ["", "api", "v1", "scheduler", "jobs", "{jobId}", "schedules", ...]
         foreach (i, p; parts) {
@@ -224,6 +232,7 @@ class ScheduleController : PlatformController {
     // Extract [jobId, scheduleId] from path: /api/v1/scheduler/jobs/{jobId}/schedules/{scheduleId}
     private static string[2] extractJobAndScheduleIds(string path) {
         import std.string : split;
+
         string[2] ids;
         auto parts = path.split("/");
         foreach (i, p; parts) {
@@ -236,7 +245,7 @@ class ScheduleController : PlatformController {
     }
 
     private static Json scheduleToJson(
-            ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
+        ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
         auto j = Json.emptyObject;
         j["scheduleId"] = Json(s.id);
         j["jobId"] = Json(s.jobId);
@@ -248,22 +257,21 @@ class ScheduleController : PlatformController {
     }
 
     private static Json scheduleToDetailJson(
-            ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
-        auto j = Json.emptyObject;
-        j["scheduleId"] = Json(s.id);
-        j["jobId"] = Json(s.jobId);
-        j["description"] = Json(s.description);
-        j["active"] = Json(s.active);
-        j["cron"] = Json(s.cronExpression);
-        j["humanReadableSchedule"] = Json(s.humanReadableSchedule);
-        j["repeatInterval"] = Json(s.repeatInterval);
-        j["repeatAt"] = Json(s.repeatAt);
-        j["time"] = Json(s.time);
-        j["startTime"] = Json(s.startTime);
-        j["endTime"] = Json(s.endTime);
-        j["nextRunAt"] = Json(s.nextRunAt);
-        j["createdAt"] = Json(s.createdAt);
-        j["modifiedAt"] = Json(s.modifiedAt);
-        return j;
+        ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
+        return Json.emptyObject
+            .set("scheduleId", s.id)
+            .set("jobId", s.jobId)
+            .set("description", s.description)
+            .set("active", s.active)
+            .set("cron", s.cronExpression)
+            .set("humanReadableSchedule", s.humanReadableSchedule)
+            .set("repeatInterval", s.repeatInterval)
+            .set("repeatAt", s.repeatAt)
+            .set("time", s.time)
+            .set("startTime", s.startTime)
+            .set("endTime", s.endTime)
+            .set("nextRunAt", s.nextRunAt)
+            .set("createdAt", s.createdAt)
+            .set("modifiedAt", s.modifiedAt);
     }
 }

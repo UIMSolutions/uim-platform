@@ -128,19 +128,18 @@ class RunLogController : PlatformController {
     }
 
     private static Json runLogToJson(uim.platform.job_scheduling.domain.entities.run_log.RunLog l) {
-        auto j = Json.emptyObject;
-        j["runLogId"] = Json(l.id);
-        j["scheduleId"] = Json(l.scheduleId);
-        j["jobId"] = Json(l.jobId);
-        j["status"] = Json(runStatusStr(l.status));
-        j["statusMessage"] = Json(l.statusMessage);
-        j["httpStatus"] = Json(l.httpStatus);
-        j["scheduledAt"] = Json(l.scheduledAt);
-        j["triggeredAt"] = Json(l.triggeredAt);
-        j["completedAt"] = Json(l.completedAt);
-        j["executionDurationMs"] = Json(l.executionDurationMs);
-        j["createdAt"] = Json(l.createdAt);
-        return j;
+        return Json.emptyObject
+         .set("runLogId", l.id)
+         .set("scheduleId", l.scheduleId)
+         .set("jobId", l.jobId)
+         .set("status", runStatusStr(l.status))
+         .set("statusMessage", l.statusMessage)
+         .set("httpStatus", l.httpStatus)
+         .set("scheduledAt", l.scheduledAt)
+         .set("triggeredAt", l.triggeredAt)
+         .set("completedAt", l.completedAt)
+         .set("executionDurationMs", l.executionDurationMs)
+         .set("createdAt", l.createdAt);
     }
 
     private static string runStatusStr(uim.platform.job_scheduling.domain.types.RunStatus s) {

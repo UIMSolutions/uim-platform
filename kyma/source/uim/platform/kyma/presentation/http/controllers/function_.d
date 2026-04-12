@@ -164,29 +164,28 @@ class FunctionController : PlatformController {
   }
 
   private Json serializeFn(ServerlessFunction fn) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(fn.id);
-    j["namespaceId"] = Json(fn.namespaceId);
-    j["environmentId"] = Json(fn.environmentId);
-    j["tenantId"] = Json(fn.tenantId);
-    j["name"] = Json(fn.name);
-    j["description"] = Json(fn.description);
-    j["runtime"] = Json(fn.runtime.to!string);
-    j["status"] = Json(fn.status.to!string);
-    j["handler"] = Json(fn.handler);
-    j["scalingType"] = Json(fn.scalingType.to!string);
-    j["minReplicas"] = Json(fn.minReplicas);
-    j["maxReplicas"] = Json(fn.maxReplicas);
-    j["cpuRequest"] = Json(fn.cpuRequest);
-    j["cpuLimit"] = Json(fn.cpuLimit);
-    j["memoryRequest"] = Json(fn.memoryRequest);
-    j["memoryLimit"] = Json(fn.memoryLimit);
-    j["envVars"] = serializeStrMap(fn.envVars);
-    j["labels"] = serializeStrMap(fn.labels);
-    j["timeoutSeconds"] = Json(fn.timeoutSeconds);
-    j["createdBy"] = Json(fn.createdBy);
-    j["createdAt"] = Json(fn.createdAt);
-    j["modifiedAt"] = Json(fn.modifiedAt);
-    return j;
+    return Json.emptyObject
+     .set("id", fn.id)
+     .set("namespaceId", fn.namespaceId)
+     .set("environmentId", fn.environmentId)
+     .set("tenantId", fn.tenantId)
+     .set("name", fn.name)
+     .set("description", fn.description)
+     .set("runtime", fn.runtime.to!string)
+     .set("status", fn.status.to!string)
+     .set("handler", fn.handler)
+     .set("scalingType", fn.scalingType.to!string)
+     .set("minReplicas", fn.minReplicas)
+     .set("maxReplicas", fn.maxReplicas)
+     .set("cpuRequest", fn.cpuRequest)
+     .set("cpuLimit", fn.cpuLimit)
+     .set("memoryRequest", fn.memoryRequest)
+     .set("memoryLimit", fn.memoryLimit)
+     .set("envVars", serializeStrMap(fn.envVars))
+     .set("labels", serializeStrMap(fn.labels))
+     .set("timeoutSeconds", fn.timeoutSeconds)
+     .set("createdBy", fn.createdBy)
+     .set("createdAt", fn.createdAt)
+     .set("modifiedAt", fn.modifiedAt);
   }
 }

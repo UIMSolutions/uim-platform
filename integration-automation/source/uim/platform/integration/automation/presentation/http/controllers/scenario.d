@@ -158,17 +158,16 @@ class ScenarioController {
     if (s.stepTemplates.length > 0) {
       auto steps = Json.emptyArray;
       foreach (t; s.stepTemplates) {
-        auto sj = Json.emptyObject;
-        sj["name"] = Json(t.name);
-        sj["description"] = Json(t.description);
-        sj["type"] = Json(t.type_.to!string);
-        sj["priority"] = Json(t.priority.to!string);
-        sj["sequenceNumber"] = Json(t.sequenceNumber);
-        sj["assignedRole"] = Json(t.assignedRole);
-        sj["instructions"] = Json(t.instructions);
-        sj["automationEndpoint"] = Json(t.automationEndpoint);
-        sj["estimatedDurationMinutes"] = Json(t.estimatedDurationMinutes);
-        steps ~= sj;
+        steps ~= Json.emptyObject
+        .set("name", t.name)
+        .set("description", t.description)
+        .set("type", t.type_.to!string)
+        .set("priority", t.priority.to!string)
+        .set("sequenceNumber", t.sequenceNumber)
+        .set("assignedRole", t.assignedRole)
+        .set("instructions", t.instructions)
+        .set("automationEndpoint", t.automationEndpoint)
+        .set("estimatedDurationMinutes", t.estimatedDurationMinutes);
       }
       j["stepTemplates"] = steps;
     }
@@ -193,8 +192,8 @@ class ScenarioController {
         t.instructions = item.getString("instructions");
         t.automationEndpoint = item.getString("automationEndpoint");
         t.automationPayload = item.getString("automationPayload");
-        t.requiresSourceSystem item.getBoolean("requiresSourceSystem");
-        t.requiresTargetSystem item.getBoolean("requiresTargetSystem");
+        t.requiresSourceSystem = item.getBoolean("requiresSourceSystem");
+        t.requiresTargetSystem = item.getBoolean("requiresTargetSystem");
         t.estimatedDurationMinutes = jsonInt(item, "estimatedDurationMinutes");
         result ~= t;
       }

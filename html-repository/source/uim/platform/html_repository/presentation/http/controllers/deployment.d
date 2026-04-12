@@ -59,13 +59,12 @@ class DeploymentController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(e.id);
-        obj["appId"] = Json(e.appId);
-        obj["versionId"] = Json(e.versionId);
-        obj["operation"] = Json(e.operation);
-        obj["status"] = Json(e.status);
-        arr ~= obj;
+        arr ~= Json.emptyObject
+          .set("id", e.id)
+          .set("appId", e.appId)
+          .set("versionId", e.versionId)
+          .set("operation", e.operation)
+          .set("status", e.status);
       }
 
       auto resp = Json.emptyObject;
@@ -101,7 +100,7 @@ class DeploymentController : PlatformController {
       .set("deployedAt", entry.deployedAt)
       .set("completedAt", entry.completedAt)
       .set("errorMessage", entry.errorMessage);
-      
+
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

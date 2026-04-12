@@ -61,11 +61,9 @@ class NamespaceController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -84,8 +82,7 @@ class NamespaceController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -99,8 +96,7 @@ class NamespaceController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeNs(ns), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -126,8 +122,7 @@ class NamespaceController : PlatformController {
         res.writeJsonBody(Json.emptyObject, 200);
       else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -140,32 +135,30 @@ class NamespaceController : PlatformController {
         res.writeBody("", 204);
       else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private Json serializeNs(Namespace ns) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(ns.id);
-    j["environmentId"] = Json(ns.environmentId);
-    j["tenantId"] = Json(ns.tenantId);
-    j["name"] = Json(ns.name);
-    j["description"] = Json(ns.description);
-    j["status"] = Json(ns.status.to!string);
-    j["cpuLimit"] = Json(ns.cpuLimit);
-    j["memoryLimit"] = Json(ns.memoryLimit);
-    j["cpuRequest"] = Json(ns.cpuRequest);
-    j["memoryRequest"] = Json(ns.memoryRequest);
-    j["podLimit"] = Json(ns.podLimit);
-    j["quotaEnforcement"] = Json(ns.quotaEnforcement.to!string);
-    j["istioInjection"] = Json(ns.istioInjection);
-    j["labels"] = serializeStrMap(ns.labels);
-    j["annotations"] = serializeStrMap(ns.annotations);
-    j["createdBy"] = Json(ns.createdBy);
-    j["createdAt"] = Json(ns.createdAt);
-    j["modifiedAt"] = Json(ns.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", ns.id)
+      .set("environmentId", ns.environmentId)
+      .set("tenantId", ns.tenantId)
+      .set("name", ns.name)
+      .set("description", ns.description)
+      .set("status", ns.status.to!string)
+      .set("cpuLimit", ns.cpuLimit)
+      .set("memoryLimit", ns.memoryLimit)
+      .set("cpuRequest", ns.cpuRequest)
+      .set("memoryRequest", ns.memoryRequest)
+      .set("podLimit", ns.podLimit)
+      .set("quotaEnforcement", ns.quotaEnforcement.to!string)
+      .set("istioInjection", ns.istioInjection)
+      .set("labels", serializeStrMap(ns.labels))
+      .set("annotations", serializeStrMap(ns.annotations))
+      .set("createdBy", ns.createdBy)
+      .set("createdAt", ns.createdAt)
+      .set("modifiedAt", ns.modifiedAt);
   }
 }

@@ -145,11 +145,10 @@ class AuditLogController : PlatformController {
     if (e.attributes.length > 0) {
       auto attrs = Json.emptyArray;
       foreach (a; e.attributes) {
-        auto aj = Json.emptyObject;
-        aj["name"] = Json(a.name);
-        aj["oldValue"] = Json(a.oldValue);
-        aj["newValue"] = Json(a.newValue);
-        attrs ~= aj;
+        attrs ~= Json.emptyObject
+        .set("name", a.name)
+        .set("oldValue", a.oldValue)
+        .set("newValue", a.newValue);
       }
       j["attributes"] = attrs;
     }

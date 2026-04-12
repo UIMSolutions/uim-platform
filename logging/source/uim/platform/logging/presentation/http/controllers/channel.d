@@ -49,7 +49,7 @@ class ChannelController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -64,11 +64,10 @@ class ChannelController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (ch; channels) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(ch.id);
-        cj["name"] = Json(ch.name);
-        cj["description"] = Json(ch.description);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+          .set("id", ch.id)
+          .set("name", ch.name)
+          .set("description", ch.description);
       }
 
       auto resp = Json.emptyObject;
@@ -122,7 +121,7 @@ class ChannelController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
