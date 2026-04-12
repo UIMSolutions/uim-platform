@@ -30,14 +30,14 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
-    auto system = systemRepo.findById(req.systemInstanceId);
-    if (system is null)
+    if (!systemRepo.existsById(req.systemInstanceId))
       return CommandResult(false, "", "System instance not found");
+ 
+    auto system = systemRepo.findById(req.systemInstanceId);
     if (system.status != SystemStatus.active)
       return CommandResult(false, "", "System instance must be active");
 
-    auto existing = repo.findByName(req.systemInstanceId, req.name);
-    if (existing !is null)
+    if (repo.existsByName(req.systemInstanceId, req.name))
       return CommandResult(false, "", "Software component '" ~ req.name ~ "' already exists in this system");
 
     SoftwareComponent comp;
@@ -58,7 +58,11 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     comp.updatedAt = comp.createdAt;
 
     repo.save(comp);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, comp.id.toString, "");
+  }
+
+  CommandResult cloneComponent(string id, CloneSoftwareComponentRequest req) {
+    return cloneComponent(SoftwareComponentId(id), req);
   }
 
   CommandResult cloneComponent(SoftwareComponentId id, CloneSoftwareComponentRequest req) {
@@ -88,8 +92,8 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     commit.timestamp = comp.clonedAt;
     comp.commitHistory ~= commit;
 
-    repo.update(*comp);
-    return CommandResult(true, id.toString, "");
+    repo.update(comp);
+    return CommandResult(true, comp.id.toString, "");
   }
 
   CommandResult pullComponent(SoftwareComponentId id, PullSoftwareComponentRequest req) {
@@ -118,8 +122,8 @@ class ManageSoftwareComponentsUseCase : UIMUseCase {
     commit.timestamp = now;
     comp.commitHistory ~= commit;
 
-    repo.update(*comp);
-    return CommandResult(true, id.toString, "");
+    repo.update(comp);
+    return CommandResult(true, comp.id.toString, "");
   }
 
   SoftwareComponent* getComponent(SoftwareComponentId id) {

@@ -80,13 +80,13 @@ class BusinessRoleController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto roles = uc.listRoles(systemId);
-      auto arr = Json.emptyArray;
-      foreach (role; roles)
-        arr ~= serializeRole(role);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(roles.length);
-      res.writeJsonBody(resp, 200);
+      auto arr = roles.map!(r => r.toJson).array.toJson;
+
+      auto response = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", roles.length);
+
+      res.writeJsonBody(response, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -96,12 +96,13 @@ class BusinessRoleController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto role = uc.getRole(id);
-      if (role is null) {
+      if (!uv.existsByRole(id)) {
         writeError(res, 404, "Business role not found");
         return;
       }
-      res.writeJsonBody(serializeRole(*role), 200);
+
+      auto role = uc.getRole(id);
+      res.writeJsonBody(role.toJson, 200);
     }
     catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -153,33 +154,6 @@ class BusinessRoleController : PlatformController {
   }
 
   private static Json serializeRole(const BusinessRole role) {
-    auto j = Json.emptyObject
-    .set("id", role.id)
-    .set("tenantId", role.tenantId)
-    .set("systemInstanceId", role.systemInstanceId)
-    .set("name", role.name)
-    .set("description", role.description)
-    .set("roleType", role.roleType.to!string)
-    .set("createdAt", role.createdAt)
-    .set("updatedAt", role.updatedAt);
-
-    if (role.restrictionTypes.length > 0) {
-      auto rt = Json.emptyArray;
-      foreach (r; role.restrictionTypes)
-        rt ~= Json(r);
-      j["restrictionTypes"] = rt;
-    }
-
-    if (role.assignedCatalogs.length > 0) {
-      auto cats = Json.emptyArray;
-      foreach (c; role.assignedCatalogs) {
-        cats ~= Json.emptyObject
-        .set("catalogId", c.catalogId)
-        .set("catalogName", c.catalogName);
-      }
-      j["assignedCatalogs"] = cats;
-    }
-
-    return j;
+    
   }
 }

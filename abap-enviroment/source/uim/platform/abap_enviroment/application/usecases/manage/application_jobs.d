@@ -52,6 +52,10 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult updateJob(string id, UpdateApplicationJobRequest request) {
+    return updateJob(ApplicationJobId(id), request);
+  }
+
   CommandResult updateJob(ApplicationJobId id, UpdateApplicationJobRequest request) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Application job not found");
@@ -76,6 +80,10 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  CommandResult cancelJob(string id) {
+    return cancelJob(ApplicationJobId(id));
+  }
+
   CommandResult cancelJob(ApplicationJobId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Application job not found");
@@ -94,12 +102,24 @@ class ManageApplicationJobsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  ApplicationJob getJob(string id) {
+    return getJob(ApplicationJobId(id));
+  }
+
   ApplicationJob getJob(ApplicationJobId id) {
     return repo.findById(id);
   }
 
+  ApplicationJob[] listJobs(string systemId) {
+    return listJobs(SystemInstanceId(systemId));
+  }
+
   ApplicationJob[] listJobs(SystemInstanceId systemId) {
     return repo.findBySystem(systemId);
+  }
+
+  CommandResult deleteJob(string id) {
+    return deleteJob(ApplicationJobId(id));
   }
 
   CommandResult deleteJob(ApplicationJobId id) {
@@ -112,8 +132,8 @@ class ManageApplicationJobsUseCase : UIMUseCase {
   }
 }
 
-private JobFrequency parseFrequency(string s) {
-  switch (s) {
+private JobFrequency parseFrequency(string frequency) {
+  switch (frequency) {
   case "once":
     return JobFrequency.once;
   case "hourly":

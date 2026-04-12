@@ -57,8 +57,8 @@ class CommunicationArrangementController : PlatformController {
 
       auto result = uc.createArrangement(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
         res.writeJsonBody(resp, 201);
       }
       else
@@ -78,9 +78,10 @@ class CommunicationArrangementController : PlatformController {
       auto arr = Json.emptyArray;
       foreach (a; arrangements)
         arr ~= serializeArrangement(a);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(arrangements.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", arrangements.length);
+        
       res.writeJsonBody(resp, 200);
     }
     catch (Exception e) {

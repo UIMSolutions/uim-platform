@@ -107,8 +107,9 @@ class ApplicationJobController : PlatformController {
 
       auto result = uc.updateJob(id, r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("updated");
+        auto resp = Json.emptyObject
+          .set("status", "updated");
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -123,8 +124,9 @@ class ApplicationJobController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.cancelJob(id);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("canceled");
+        auto resp = Json.emptyObject
+          .set("status", "canceled");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -148,38 +150,5 @@ class ApplicationJobController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeJob(const ApplicationJob job) {
-    auto json = Json.emptyObject
-      .set("id", job.id)
-      .set("tenantId", job.tenantId)
-      .set("systemInstanceId", job.systemInstanceId)
-      .set("name", job.name)
-      .set("description", job.description)
-      .set("jobTemplateName", job.jobTemplateName)
-      .set("frequency", job.frequency.to!string)
-      .set("scheduledAt", job.scheduledAt)
-      .set("cronExpression", job.cronExpression)
-      .set("active", job.active)
-      .set("status", job.status.to!string)
-      .set("createdAt", job.createdAt)
-      .set("updatedAt", job.updatedAt);
-
-    if (job.executionHistory.length > 0) {
-      auto hist = Json.emptyArray;
-      foreach (ex; job.executionHistory) {
-        hist ~= Json.emptyObject
-          .set("executionId", ex.executionId)
-          .set("status", ex.status.to!string)
-          .set("startedAt", ex.startedAt)
-          .set("finishedAt", ex.finishedAt)
-          .set("message", ex.message)
-          .set("returnCode", ex.returnCode);
-      }
-      j["executionHistory"] = hist;
-    }
-
-    return j;
   }
 }

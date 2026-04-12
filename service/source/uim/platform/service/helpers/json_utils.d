@@ -36,11 +36,6 @@ ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort)jsonLong(j, key, default_);
 }
 
-/// Extract a ushort field from a Json object.
-ushort getUshort(Json j, string key, ushort default_ = 0) {
-  return cast(ushort) jsonLong(j, key, default_);
-}
-
 double jsonDouble(Json j, string key) {
   if (!j.hasKey(key))
     return 0.0;

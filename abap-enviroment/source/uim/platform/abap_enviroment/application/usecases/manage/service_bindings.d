@@ -47,14 +47,18 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     binding.updatedAt = binding.createdAt;
 
     repo.save(binding);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, binding.id.toString, "");
+  }
+
+  CommandResult updateBinding(string id, UpdateServiceBindingRequest req) {
+    return updateBinding(ServiceBindingId(id), req);
   }
 
   CommandResult updateBinding(ServiceBindingId id, UpdateServiceBindingRequest req) {
-    auto binding = repo.findById(id);
-    if (binding is null)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Service binding not found");
 
+    auto binding = repo.findById(id);
     if (req.description.length > 0)
       binding.description = req.description;
     if (req.status.length > 0)
@@ -65,8 +69,8 @@ class ManageServiceBindingsUseCase : UIMUseCase {
     // import std.datetime.systime : Clock;
     binding.updatedAt = Clock.currStdTime();
 
-    repo.update(*binding);
-    return CommandResult(true, id.toString, "");
+    repo.update(binding);
+    return CommandResult(true, binding.id.toString, "");
   }
 
   ServiceBinding* getBinding(ServiceBindingId id) {
@@ -83,7 +87,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
       return CommandResult(false, "", "Service binding not found");
 
     repo.remove(id);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, binding.id.toString, "");
   }
 }
 
