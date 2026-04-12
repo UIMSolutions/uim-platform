@@ -167,28 +167,26 @@ class DistributionController : PlatformController {
   }
 
   private Json serializeModel(DistributionModel m) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["tenantId"] = Json(m.tenantId);
-    j["name"] = Json(m.name);
-    j["description"] = Json(m.description);
-    j["status"] = Json(m.status.to!string);
-    j["direction"] = Json(m.direction.to!string);
-    j["sourceClientId"] = Json(m.sourceClientId);
-    j["targetClientIds"] = serializeStrArray(m.targetClientIds);
-
     auto catsArr = Json.emptyArray;
     foreach (cat; m.categories)
       catsArr ~= Json(cat.to!string);
-    j["categories"] = catsArr;
 
-    j["dataModelIds"] = serializeStrArray(m.dataModelIds);
-    j["filterRuleIds"] = serializeStrArray(m.filterRuleIds);
-    j["autoReplicate"] = Json(m.autoReplicate);
-    j["cronSchedule"] = Json(m.cronSchedule);
-    j["createdBy"] = Json(m.createdBy);
-    j["createdAt"] = Json(m.createdAt);
-    j["modifiedAt"] = Json(m.modifiedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", m.id)
+      .set("tenantId", m.tenantId)
+      .set("name", m.name)
+      .set("description", m.description)
+      .set("status", m.status.to!string)
+      .set("direction", m.direction.to!string)
+      .set("sourceClientId", m.sourceClientId)
+      .set("targetClientIds", serializeStrArray(m.targetClientIds))
+      .set("categories", catsArr)
+      .set("dataModelIds", serializeStrArray(m.dataModelIds))
+      .set("filterRuleIds", serializeStrArray(m.filterRuleIds))
+      .set("autoReplicate", m.autoReplicate)
+      .set("cronSchedule", m.cronSchedule)
+      .set("createdBy", m.createdBy)
+      .set("createdAt", m.createdAt)
+      .set("modifiedAt", m.modifiedAt);
   }
 }

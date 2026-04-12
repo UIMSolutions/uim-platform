@@ -234,17 +234,16 @@ class CheckController : PlatformController {
   }
 
   private static Json serializeResult(const ref HealthCheckResult r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["checkId"] = Json(r.checkId);
-    j["resourceId"] = Json(r.resourceId);
-    j["status"] = Json(r.status.to!string);
-    j["value"] = Json(r.value_);
-    j["message"] = Json(r.message);
-    j["responseTimeMs"] = Json(r.responseTimeMs);
-    j["httpStatusCode"] = Json(r.httpStatusCode);
-    j["executedAt"] = Json(r.executedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", r.id)
+    .set("tenantId", r.tenantId)
+    .set("checkId", r.checkId)
+    .set("resourceId", r.resourceId)
+    .set("status", r.status.to!string)
+    .set("value", r.value_)
+    .set("message", r.message)
+    .set("responseTimeMs", r.responseTimeMs)
+    .set("httpStatusCode", r.httpStatusCode)
+    .set("executedAt", r.executedAt);
   }
 }

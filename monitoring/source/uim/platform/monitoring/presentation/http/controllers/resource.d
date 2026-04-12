@@ -140,22 +140,21 @@ class ResourceController : PlatformController {
   }
 
   private static Json serializeResource(const ref MonitoredResource r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["subaccountId"] = Json(r.subaccountId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["resourceType"] = Json(r.resourceType.to!string);
-    j["state"] = Json(r.state.to!string);
-    j["url"] = Json(r.url);
-    j["runtime"] = Json(r.runtime);
-    j["region"] = Json(r.region);
-    j["instanceCount"] = Json(r.instanceCount);
-    j["tags"] = toJsonArray(r.tags);
-    j["registeredBy"] = Json(r.registeredBy);
-    j["registeredAt"] = Json(r.registeredAt);
-    j["lastSeenAt"] = Json(r.lastSeenAt);
-    return j;
+    return Json.emptyObject
+    .set("id", r.id)
+    .set("tenantId", r.tenantId)
+    .set("subaccountId", r.subaccountId)
+    .set("name", r.name)
+    .set("description", r.description)
+    .set("resourceType", r.resourceType.to!string)
+    .set("state", r.state.to!string)
+    .set("url", r.url)
+    .set("runtime", r.runtime)
+    .set("region", r.region)
+    .set("instanceCount", r.instanceCount)
+    .set("tags", toJsonArray(r.tags))
+    .set("registeredBy", r.registeredBy)
+    .set("registeredAt", r.registeredAt)
+    .set("lastSeenAt", r.lastSeenAt);
   }
 }

@@ -166,37 +166,34 @@ class DataModelController : PlatformController {
   }
 
   private Json serializeModel(DataModel m) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(m.id);
-    j["tenantId"] = Json(m.tenantId);
-    j["name"] = Json(m.name);
-    j["namespace"] = Json(m.namespace);
-    j["version"] = Json(m.version_);
-    j["description"] = Json(m.description);
-    j["category"] = Json(m.category.to!string);
-    j["isActive"] = Json(m.isActive);
-    j["keyFields"] = serializeStrArray(m.keyFields);
-    j["requiredFields"] = serializeStrArray(m.requiredFields);
-
     auto fieldsArr = Json.emptyArray;
     foreach (fd; m.fields) {
-      auto fj = Json.emptyObject;
-      fj["name"] = Json(fd.name);
-      fj["displayName"] = Json(fd.displayName);
-      fj["type"] = Json(fd.type_.to!string);
-      fj["isRequired"] = Json(fd.isRequired);
-      fj["isKey"] = Json(fd.isKey);
-      fj["defaultValue"] = Json(fd.defaultValue);
-      fj["maxLength"] = Json(fd.maxLength);
-      fj["referenceModel"] = Json(fd.referenceModel);
-      fj["description"] = Json(fd.description);
-      fieldsArr ~= fj;
+      fieldsArr ~= Json.emptyObject
+        .set("name", fd.name)
+        .set("displayName", fd.displayName)
+        .set("type", fd.type_.to!string)
+        .set("isRequired", fd.isRequired)
+        .set("isKey", fd.isKey)
+        .set("defaultValue", fd.defaultValue)
+        .set("maxLength", fd.maxLength)
+        .set("referenceModel", fd.referenceModel)
+        .set("description", fd.description);
     }
-    j["fields"] = fieldsArr;
 
-    j["createdBy"] = Json(m.createdBy);
-    j["createdAt"] = Json(m.createdAt);
-    j["modifiedAt"] = Json(m.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", m.id)
+    .set("tenantId", m.tenantId)
+    .set("name", m.name)
+    .set("namespace", m.namespace)
+    .set("version", m.version_)
+    .set("description", m.description)
+    .set("category", m.category.to!string)
+    .set("isActive", m.isActive)
+    .set("keyFields", serializeStrArray(m.keyFields))
+    .set("requiredFields", serializeStrArray(m.requiredFields))
+    .set("fields", fieldsArr)
+    .set("createdBy", Json(m.createdBy))
+    .set("createdAt", Json(m.createdAt))
+    .set("modifiedAt", Json(m.modifiedAt));
   }
-}
+} 

@@ -64,13 +64,12 @@ class FeatureRestrictionController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["featureKey"] = Json(item.featureKey);
-        obj["type"] = Json(item.type);
-        obj["enabled"] = Json(item.enabled);
-        items ~= obj;
+        items ~= Json.emptyObject
+        .set("id", item.id)
+        .set("appId", item.appId)
+        .set("featureKey", item.featureKey)
+        .set("type", item.type)
+        .set("enabled", item.enabled);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

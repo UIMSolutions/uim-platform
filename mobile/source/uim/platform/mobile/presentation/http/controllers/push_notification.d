@@ -64,13 +64,12 @@ class PushNotificationController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["title"] = Json(item.title);
-        obj["provider"] = Json(item.provider);
-        obj["status"] = Json(item.status);
-        items ~= obj;
+        items ~= Json.emptyObject
+        .set("id", item.id)
+        .set("appId", item.appId)
+        .set("title", item.title)
+        .set("provider", item.provider)
+        .set("status", item.status);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

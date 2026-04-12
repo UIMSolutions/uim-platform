@@ -174,30 +174,26 @@ class ClientController : PlatformController {
   }
 
   private Json serializeClient(Client c) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(c.id);
-    j["tenantId"] = Json(c.tenantId);
-    j["name"] = Json(c.name);
-    j["description"] = Json(c.description);
-    j["clientType"] = Json(c.clientType.to!string);
-    j["status"] = Json(c.status.to!string);
-    j["systemUrl"] = Json(c.systemUrl);
-    j["destinationName"] = Json(c.destinationName);
-    j["communicationArrangement"] = Json(c.communicationArrangement);
+    auto catsArr = c.supportedCategories.map!(cat => Json(cat.to!string)).array.toJson;
 
-    auto catsArr = Json.emptyArray;
-    foreach (cat; c.supportedCategories)
-      catsArr ~= Json(cat.to!string);
-    j["supportedCategories"] = catsArr;
-
-    j["supportsInitialLoad"] = Json(c.supportsInitialLoad);
-    j["supportsDeltaReplication"] = Json(c.supportsDeltaReplication);
-    j["supportsKeyMapping"] = Json(c.supportsKeyMapping);
-    j["authType"] = Json(c.authType);
-    j["createdBy"] = Json(c.createdBy);
-    j["createdAt"] = Json(c.createdAt);
-    j["modifiedAt"] = Json(c.modifiedAt);
-    j["lastSyncAt"] = Json(c.lastSyncAt);
-    return j;
+    return Json.emptyObject
+      .set("id", Json(c.id))
+      .set("tenantId", Json(c.tenantId))
+      .set("name", Json(c.name))
+      .set("description", Json(c.description))
+      .set("clientType", Json(c.clientType.to!string))
+      .set("status", Json(c.status.to!string))
+      .set("systemUrl", Json(c.systemUrl))
+      .set("destinationName", Json(c.destinationName))
+      .set("communicationArrangement", Json(c.communicationArrangement))
+      .set("supportedCategories", catsArr)
+      .set("supportsInitialLoad", Json(c.supportsInitialLoad))
+      .set("supportsDeltaReplication", Json(c.supportsDeltaReplication))
+      .set("supportsKeyMapping", Json(c.supportsKeyMapping))
+      .set("authType", Json(c.authType))
+      .set("createdBy", Json(c.createdBy))
+      .set("createdAt", Json(c.createdAt))
+      .set("modifiedAt", Json(c.modifiedAt))
+      .set("lastSyncAt", Json(c.lastSyncAt));
   }
 }

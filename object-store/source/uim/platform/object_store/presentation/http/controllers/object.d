@@ -209,22 +209,21 @@ class ObjectController : PlatformController {
   }
 
   private static Json serializeObject(StorageObject o) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(o.id);
-    j["tenantId"] = Json(o.tenantId);
-    j["bucketId"] = Json(o.bucketId);
-    j["key"] = Json(o.key);
-    j["contentType"] = Json(o.contentType);
-    j["size"] = Json(o.size);
-    j["etag"] = Json(o.etag);
-    j["metadata"] = Json(o.metadata);
-    j["storageClass"] = Json(o.storageClass.to!string);
-    j["status"] = Json(o.status.to!string);
-    j["currentVersionId"] = Json(o.currentVersionId);
-    j["createdBy"] = Json(o.createdBy);
-    j["createdAt"] = Json(o.createdAt);
-    j["updatedAt"] = Json(o.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", o.id)
+    .set("tenantId", o.tenantId)
+    .set("bucketId", o.bucketId)
+    .set("key", o.key)
+    .set("contentType", o.contentType)
+    .set("size", o.size)
+    .set("etag", o.etag)
+    .set("metadata", o.metadata)
+    .set("storageClass", o.storageClass.to!string)
+    .set("status", o.status.to!string)
+    .set("currentVersionId", o.currentVersionId)
+    .set("createdBy", o.createdBy)
+    .set("createdAt", o.createdAt)
+    .set("updatedAt", o.updatedAt);
   }
 
   private static Json serializeVersion(ObjectVersion v) {

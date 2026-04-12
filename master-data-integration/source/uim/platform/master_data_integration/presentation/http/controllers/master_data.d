@@ -25,7 +25,7 @@ class MasterDataController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/master-data", &handleCreate);
     router.get("/api/v1/master-data", &handleList);
     router.get("/api/v1/master-data/lookup", &handleLookupByGlobalId);
@@ -156,26 +156,25 @@ class MasterDataController : PlatformController {
   }
 
   private Json serializeObj(MasterDataObject o) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(o.id);
-    j["tenantId"] = Json(o.tenantId);
-    j["dataModelId"] = Json(o.dataModelId);
-    j["category"] = Json(o.category.to!string);
-    j["status"] = Json(o.status.to!string);
-    j["objectType"] = Json(o.objectType);
-    j["displayName"] = Json(o.displayName);
-    j["description"] = Json(o.description);
-    j["currentVersion"] = Json(o.currentVersion);
-    j["versionNumber"] = Json(o.versionNumber);
-    j["localId"] = Json(o.localId);
-    j["globalId"] = Json(o.globalId);
-    j["attributes"] = serializeStrMap(o.attributes);
-    j["sourceSystem"] = Json(o.sourceSystem);
-    j["sourceClient"] = Json(o.sourceClient);
-    j["createdBy"] = Json(o.createdBy);
-    j["createdAt"] = Json(o.createdAt);
-    j["modifiedAt"] = Json(o.modifiedAt);
-    j["modifiedBy"] = Json(o.modifiedBy);
-    return j;
+    return Json.emptyObject
+      .set("id", Json(o.id))
+      .set("tenantId", Json(o.tenantId))
+      .set("dataModelId", Json(o.dataModelId))
+      .set("category", Json(o.category.to!string))
+      .set("status", Json(o.status.to!string))
+      .set("objectType", Json(o.objectType))
+      .set("displayName", Json(o.displayName))
+      .set("description", Json(o.description))
+      .set("currentVersion", Json(o.currentVersion))
+      .set("versionNumber", Json(o.versionNumber))
+      .set("localId", Json(o.localId))
+      .set("globalId", Json(o.globalId))
+      .set("attributes", serializeStrMap(o.attributes))
+      .set("sourceSystem", Json(o.sourceSystem))
+      .set("sourceClient", Json(o.sourceClient))
+      .set("createdBy", Json(o.createdBy))
+      .set("createdAt", Json(o.createdAt))
+      .set("modifiedAt", Json(o.modifiedAt))
+      .set("modifiedBy", Json(o.modifiedBy));
   }
 }
