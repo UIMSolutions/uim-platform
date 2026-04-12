@@ -58,20 +58,19 @@ class TaskChainController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (tc; chains) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(tc.id);
-        cj["name"] = Json(tc.name);
-        cj["description"] = Json(tc.description);
-        cj["lastRunAt"] = Json(tc.lastRunAt);
-        cj["lastRunDurationMs"] = Json(tc.lastRunDurationMs);
-        cj["createdAt"] = Json(tc.createdAt);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+          .set("id", tc.id)
+          .set("name", tc.name)
+          .set("description", tc.description)
+          .set("lastRunAt", tc.lastRunAt)
+          .set("lastRunDurationMs", tc.lastRunDurationMs)
+          .set("createdAt", tc.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(chains.length);
-      resp["resources"] = jarr;
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject
+        .set("count", Json(chains.length))
+        .set("resources", jarr);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -80,6 +79,7 @@ class TaskChainController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -108,6 +108,7 @@ class TaskChainController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

@@ -64,12 +64,11 @@ class FindController : PlatformController {
       // Auth tokens
       auto tokenArr = Json.emptyArray;
       foreach (t; result.authTokens) {
-        auto tj = Json.emptyObject;
-        tj["type"] = Json(t.type_);
-        tj["value"] = Json(t.value_);
-        tj["expiresAt"] = Json(t.expiresAt);
-        tj["httpHeaderSuggestion"] = Json(t.httpHeaderSuggestion);
-        tokenArr ~= tj;
+        tokenArr ~= Json.emptyObject
+          .set("type", t.type_)
+          .set("value", t.value_)
+          .set("expiresAt", t.expiresAt)
+          .set("httpHeaderSuggestion", t.httpHeaderSuggestion);
       }
       j["authTokens"] = tokenArr;
 

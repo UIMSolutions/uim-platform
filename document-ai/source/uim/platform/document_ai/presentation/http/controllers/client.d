@@ -135,14 +135,13 @@ class ClientController : PlatformController {
   }
 
   private Json clientToJson(Client c) {
-    auto jj = Json.emptyObject;
-    jj["clientId"] = Json(c.clientId);
-    jj["tenantId"] = Json(c.tenantId);
-    jj["clientName"] = Json(c.clientName);
-    jj["description"] = Json(c.description);
-    jj["isActive"] = Json(c.isActive);
-    jj["createdAt"] = Json(c.createdAt);
-    jj["modifiedAt"] = Json(c.modifiedAt);
-    return jj;
+    return Json.emptyObject
+      .set("clientId", Json(c.clientId))
+      .set("tenantId", Json(c.tenantId))
+      .set("clientName", Json(c.clientName))
+      .set("description", Json(c.description))
+      .set("isActive", Json(c.isActive))
+      .set("createdAt", Json(c.createdAt))
+      .set("modifiedAt", Json(c.modifiedAt));
   }
 }

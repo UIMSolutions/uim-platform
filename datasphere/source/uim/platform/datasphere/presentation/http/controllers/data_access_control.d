@@ -60,13 +60,12 @@ class DataAccessControlController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (dac; controls) {
-        auto dj = Json.emptyObject;
-        dj["id"] = Json(dac.id);
-        dj["name"] = Json(dac.name);
-        dj["description"] = Json(dac.description);
-        dj["isEnabled"] = Json(dac.isEnabled);
-        dj["createdAt"] = Json(dac.createdAt);
-        jarr ~= dj;
+        jarr ~= Json.emptyObject
+          .set("id", dac.id)
+          .set("name", dac.name)
+          .set("description", dac.description)
+          .set("isEnabled", dac.isEnabled)
+          .set("createdAt", dac.createdAt);
       }
 
       auto resp = Json.emptyObject;

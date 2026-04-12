@@ -99,16 +99,16 @@ class BindingController : PlatformController {
         return;
       }
 
-      auto bj = Json.emptyObject;
-      bj["id"] = Json(b.id);
-      bj["name"] = Json(b.name);
-      bj["description"] = Json(b.description);
-      bj["clientId"] = Json(b.clientId);
-      bj["allowedNamespaces"] = toJsonArray(b.allowedNamespaces);
-      bj["createdAt"] = Json(b.createdAt);
-      bj["expiresAt"] = Json(b.expiresAt);
+      auto response = Json.emptyObject
+      .set("id", b.id)
+      .set("name", b.name)
+      .set("description", b.description)
+      .set("clientId", b.clientId)
+      .set("allowedNamespaces", b.allowedNamespaces)
+      .set("createdAt", b.createdAt)
+      .set("expiresAt", b.expiresAt);
       // Note: clientSecret is NOT returned on GET (only on creation)
-      res.writeJsonBody(bj, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

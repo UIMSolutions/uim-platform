@@ -47,8 +47,7 @@ class MonitoringController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -58,15 +57,15 @@ class MonitoringController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalEvents"] = Json(summary.totalEvents);
-      j["info"] = Json(summary.infoCount);
-      j["warning"] = Json(summary.warningCount);
-      j["error"] = Json(summary.errorCount);
-      j["critical"] = Json(summary.criticalCount);
-      res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+      auto response = Json.emptyObject
+        .set("totalEvents", summary.totalEvents)
+        .set("info", summary.infoCount)
+        .set("warning", summary.warningCount)
+        .set("error", summary.errorCount)
+        .set("critical", summary.criticalCount);
+
+      res.writeJsonBody(response, 200);
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

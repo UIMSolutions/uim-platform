@@ -23,7 +23,7 @@ class InformationReportController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/information-reports", &handleCreate);
     router.get("/api/v1/information-reports", &handleList);
     router.get("/api/v1/information-reports/*", &handleGetById);
@@ -97,9 +97,10 @@ class InformationReportController : PlatformController {
 
       auto result = uc.updateStatus(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        res.writeJsonBody(resp, 200);
+        auto response = Json.emptyObject
+          .set("id", result.id);
+          
+        res.writeJsonBody(response, 200);
       } else
         writeError(res, 400, result.error);
     } catch (Exception e)
@@ -117,29 +118,32 @@ class InformationReportController : PlatformController {
   }
 
   private static Json serialize(const InformationReport e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["dataSubjectId"] = Json(e.dataSubjectId);
-    j["subjectRole"] = Json(e.subjectRole);
-    j["requestedBy"] = Json(e.requestedBy);
-    j["status"] = Json(e.status.to!string);
-    j["format"] = Json(e.format.to!string);
-    j["downloadUrl"] = Json(e.downloadUrl);
-    j["totalRecords"] = Json(e.totalRecords);
-    j["reason"] = Json(e.reason);
-    j["requestedAt"] = Json(e.requestedAt);
-    j["generatedAt"] = Json(e.generatedAt);
-    j["expiresAt"] = Json(e.expiresAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("dataSubjectId", e.dataSubjectId)
+      .set("subjectRole", e.subjectRole)
+      .set("requestedBy", e.requestedBy)
+      .set("status", e.status.to!string)
+      .set("format", e.format.to!string)
+      .set("downloadUrl", e.downloadUrl)
+      .set("totalRecords", e.totalRecords)
+      .set("reason", e.reason)
+      .set("requestedAt", e.requestedAt)
+      .set("generatedAt", e.generatedAt)
+      .set("expiresAt", e.expiresAt);
   }
 
-  private static InformationReportStatus parseReportStatus(string s) {
-    switch (s) {
-      case "generating": return InformationReportStatus.generating;
-      case "completed": return InformationReportStatus.completed;
-      case "failed": return InformationReportStatus.failed;
-      default: return InformationReportStatus.requested;
+  private static InformationReportStatus parseReportStatus(string status) {
+    switch (status) {
+    case "generating":
+      return InformationReportStatus.generating;
+    case "completed":
+      return InformationReportStatus.completed;
+    case "failed":
+      return InformationReportStatus.failed;
+    default:
+      return InformationReportStatus.requested;
     }
   }
 }

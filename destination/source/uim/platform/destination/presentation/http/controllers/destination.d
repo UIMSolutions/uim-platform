@@ -186,7 +186,15 @@ class DestinationController : PlatformController {
   }
 
   private static Json serializeDestination(const ref Destination d) {
-    auto j = Json.emptyObject
+    auto fragArr = Json.emptyArray;
+    foreach (fid; d.fragmentIds)
+      fragArr ~= fid.toJson();
+
+    auto propsJson = Json.emptyObject;
+    foreach (k, v; d.properties)
+      propsJson[k] = Json(v);
+
+    return Json.emptyObject
       .set("id", d.id.toJson())
       .set("tenantId", d.tenantId.toJson())
       .set("subaccountId", d.subaccountId.toJson())
@@ -199,21 +207,11 @@ class DestinationController : PlatformController {
       .set("proxyType", Json(d.proxyType.to!string))
       .set("level", Json(d.level.to!string))
       .set("status", Json(d.status.to!string))
-      .set("locationId", Json(d.locationId));
-
-    auto propsJson = Json.emptyObject;
-    foreach (k, v; d.properties)
-      propsJson[k] = Json(v);
-    j["properties"] = propsJson;
-
-    auto fragArr = Json.emptyArray;
-    foreach (fid; d.fragmentIds)
-      fragArr ~= fid.toJson();
-    j["fragmentIds"] = fragArr;
-
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["modifiedAt"] = Json(d.modifiedAt);
-    return j;
+      .set("locationId", Json(d.locationId))
+      .set("properties", propsJson)
+      .set("fragmentIds", fragArr)
+      .set("createdBy", Json(d.createdBy))
+      .set("createdAt", Json(d.createdAt))
+      .set("modifiedAt", Json(d.modifiedAt));
   }
 }

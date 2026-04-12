@@ -146,20 +146,19 @@ class VersionController : PlatformController {
   }
 
   private static Json serializeVersion(const DocumentVersion v) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(v.id);
-    j["tenantId"] = Json(v.tenantId);
-    j["documentId"] = Json(v.documentId);
-    j["versionNumber"] = Json(v.versionNumber);
-    j["isMajor"] = v.isMajor ? Json(true) : Json(false);
-    j["fileName"] = Json(v.fileName);
-    j["mimeType"] = Json(v.mimeType);
-    j["fileSize"] = Json(v.fileSize);
-    j["status"] = Json(v.status.to!string);
-    j["comment"] = Json(v.comment);
-    j["checksum"] = Json(v.checksum);
-    j["createdBy"] = Json(v.createdBy);
-    j["createdAt"] = Json(v.createdAt);
-    return j;
+    return Json.emptyObject
+      .set("id", Json(v.id))
+      .set("tenantId", Json(v.tenantId))
+      .set("documentId", Json(v.documentId))
+      .set("versionNumber", Json(v.versionNumber))
+      .set("isMajor", v.isMajor ? Json(true) : Json(false))
+      .set("fileName", Json(v.fileName))
+      .set("mimeType", Json(v.mimeType))
+      .set("fileSize", Json(v.fileSize))
+      .set("status", Json(v.status.to!string))
+      .set("comment", Json(v.comment))
+      .set("checksum", Json(v.checksum))
+      .set("createdBy", Json(v.createdBy))
+      .set("createdAt", Json(v.createdAt));
   }
 }

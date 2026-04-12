@@ -130,10 +130,11 @@ class DocumentController : PlatformController {
 
       auto result = uc.confirm(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["status"] = Json("confirmed");
-        resp["message"] = Json("Document confirmed for feedback");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("status", "confirmed")
+          .set("message", "Document confirmed for feedback");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);
@@ -156,25 +157,24 @@ class DocumentController : PlatformController {
         return;
       }
 
-      auto rj = Json.emptyObject;
-      rj["id"] = Json(result.id);
-      rj["documentId"] = Json(result.documentId);
-      rj["schemaId"] = Json(result.schemaId);
-      rj["method"] = Json(result.method.to!string);
-      rj["overallConfidence"] = Json(result.overallConfidence);
-      rj["extractedFieldCount"] = Json(result.extractedFieldCount);
-      rj["totalPages"] = Json(result.totalPages);
-      rj["processedAt"] = Json(result.processedAt);
+      auto rj = Json.emptyObject
+        .set("id", result.id)
+        .set("documentId", result.documentId)
+        .set("schemaId", result.schemaId)
+        .set("method", result.method.to!string)
+        .set("overallConfidence", result.overallConfidence)
+        .set("extractedFieldCount", result.extractedFieldCount)
+        .set("totalPages", result.totalPages)
+        .set("processedAt", result.processedAt);
 
       auto hArr = Json.emptyArray;
       foreach (f; result.headerFields) {
-        auto fj = Json.emptyObject;
-        fj["name"] = Json(f.name);
-        fj["value"] = Json(f.value);
-        fj["type"] = Json(f.type.to!string);
-        fj["confidence"] = Json(f.confidence);
-        fj["page"] = Json(f.page);
-        hArr ~= fj;
+        hArr ~= Json.emptyObject
+          .set("name", f.name)
+          .set("value", f.value)
+          .set("type", f.type.to!string)
+          .set("confidence", f.confidence)
+          .set("page", f.page);
       }
       rj["headerFields"] = hArr;
 
@@ -184,12 +184,11 @@ class DocumentController : PlatformController {
         lij["rowIndex"] = Json(li.rowIndex);
         auto liFields = Json.emptyArray;
         foreach (f; li.fields) {
-          auto fj = Json.emptyObject;
-          fj["name"] = Json(f.name);
-          fj["value"] = Json(f.value);
-          fj["type"] = Json(f.type.to!string);
-          fj["confidence"] = Json(f.confidence);
-          liFields ~= fj;
+          liFields ~= Json.emptyObject
+            .set("name", f.name)
+            .set("value", f.value)
+            .set("type", f.type.to!string)
+            .set("confidence", f.confidence);
         }
         lij["fields"] = liFields;
         liArr ~= lij;
@@ -205,30 +204,29 @@ class DocumentController : PlatformController {
   private Json documentToJson(Document d) {
     import std.conv : to;
 
-    auto dj = Json.emptyObject;
-    dj["id"] = Json(d.id);
-    dj["fileName"] = Json(d.fileName);
-    dj["fileType"] = Json(d.fileType.to!string);
-    dj["category"] = Json(d.category.to!string);
-    dj["documentTypeId"] = Json(d.documentTypeId);
-    dj["status"] = Json(d.status.to!string);
-    dj["language"] = Json(d.language);
-    dj["fileSize"] = Json(d.fileSize);
-    dj["mimeType"] = Json(d.mimeType);
-    dj["schemaId"] = Json(d.schemaId);
-    dj["templateId"] = Json(d.templateId);
-    dj["extractionMethod"] = Json(d.extractionMethod.to!string);
-    dj["uploadedAt"] = Json(d.uploadedAt);
-    dj["processedAt"] = Json(d.processedAt);
-    dj["createdAt"] = Json(d.createdAt);
-    dj["modifiedAt"] = Json(d.modifiedAt);
+    auto dj = Json.emptyObject
+      .set("id", d.id)
+      .set("fileName", d.fileName)
+      .set("fileType", d.fileType.to!string)
+      .set("category", d.category.to!string)
+      .set("documentTypeId", d.documentTypeId)
+      .set("status", d.status.to!string)
+      .set("language", d.language)
+      .set("fileSize", d.fileSize)
+      .set("mimeType", d.mimeType)
+      .set("schemaId", d.schemaId)
+      .set("templateId", d.templateId)
+      .set("extractionMethod", d.extractionMethod.to!string)
+      .set("uploadedAt", d.uploadedAt)
+      .set("processedAt", d.processedAt)
+      .set("createdAt", d.createdAt)
+      .set("modifiedAt", d.modifiedAt);
 
     auto lArr = Json.emptyArray;
     foreach (lbl; d.labels) {
-      auto lj = Json.emptyObject;
-      lj["key"] = Json(lbl.key);
-      lj["value"] = Json(lbl.value);
-      lArr ~= lj;
+      lArr ~= Json.emptyObject
+        .set("key", lbl.key)
+        .set("value", lbl.value);
     }
     dj["labels"] = lArr;
 

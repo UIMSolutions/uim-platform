@@ -58,24 +58,23 @@ class TrustedCertificateController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (c; certs) {
-                auto cj = Json.emptyObject;
-                cj["id"] = Json(c.id);
-                cj["customDomainId"] = Json(c.customDomainId);
-                cj["subjectDn"] = Json(c.subjectDn);
-                cj["issuerDn"] = Json(c.issuerDn);
-                cj["status"] = Json(c.status.to!string);
-                cj["authMode"] = Json(c.authMode.to!string);
-                cj["validFrom"] = Json(c.validFrom);
-                cj["validTo"] = Json(c.validTo);
-                cj["createdBy"] = Json(c.createdBy);
-                cj["createdAt"] = Json(c.createdAt);
-                jarr ~= cj;
+                jarr ~= Json.emptyObject
+                    .set("id", c.id)
+                    .set("customDomainId", c.customDomainId)
+                    .set("subjectDn", c.subjectDn)
+                    .set("issuerDn", c.issuerDn)
+                    .set("status", c.status.to!string)
+                    .set("authMode", c.authMode.to!string)
+                    .set("validFrom", c.validFrom)
+                    .set("validTo", c.validTo)
+                    .set("createdBy", c.createdBy)
+                    .set("createdAt", c.createdAt);
             }
 
-            auto resp = Json.emptyObject;
-            resp["count"] = Json(certs.length);
-            resp["resources"] = jarr;
-            res.writeJsonBody(resp, 200);
+            auto response = Json.emptyObject
+                .set("count", certs.length)
+                .set("resources", jarr);
+            res.writeJsonBody(response, 200);
         } catch (Exception e) {
             writeError(res, 500, "Internal server error");
         }

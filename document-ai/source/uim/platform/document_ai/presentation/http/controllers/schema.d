@@ -144,34 +144,32 @@ class SchemaController : PlatformController {
   private Json schemaToJson(Schema s) {
     import std.conv : to;
 
-    auto sj = Json.emptyObject;
-    sj["id"] = Json(s.id);
-    sj["documentTypeId"] = Json(s.documentTypeId);
-    sj["name"] = Json(s.name);
-    sj["description"] = Json(s.description);
-    sj["status"] = Json(s.status.to!string);
-    sj["createdAt"] = Json(s.createdAt);
-    sj["modifiedAt"] = Json(s.modifiedAt);
+    auto sj = Json.emptyObject
+      .set("id", s.id)
+      .set("documentTypeId", s.documentTypeId)
+      .set("name", s.name)
+      .set("description", s.description)
+      .set("status", s.status.to!string)
+      .set("createdAt", s.createdAt)
+      .set("modifiedAt", s.modifiedAt);
 
     auto hArr = Json.emptyArray;
     foreach (f; s.headerFields) {
-      auto fj = Json.emptyObject;
-      fj["name"] = Json(f.name);
-      fj["label"] = Json(f.label);
-      fj["type"] = Json(f.type.to!string);
-      fj["required"] = Json(f.required);
-      hArr ~= fj;
+      hArr ~= Json.emptyObject
+        .set("name", f.name)
+        .set("label", f.label)
+        .set("type", f.type.to!string)
+        .set("required", f.required);
     }
     sj["headerFields"] = hArr;
 
     auto liArr = Json.emptyArray;
     foreach (f; s.lineItemFields) {
-      auto fj = Json.emptyObject;
-      fj["name"] = Json(f.name);
-      fj["label"] = Json(f.label);
-      fj["type"] = Json(f.type.to!string);
-      fj["required"] = Json(f.required);
-      liArr ~= fj;
+      liArr ~= Json.emptyObject
+        .set("name", f.name)
+        .set("label", f.label)
+        .set("type", f.type.to!string)
+        .set("required", f.required);
     }
     sj["lineItemFields"] = liArr;
 

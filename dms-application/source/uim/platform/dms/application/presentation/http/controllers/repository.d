@@ -56,11 +56,9 @@ class RepositoryController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -78,8 +76,7 @@ class RepositoryController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +91,7 @@ class RepositoryController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRepo(repo), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -117,14 +113,11 @@ class RepositoryController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Repository not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -139,11 +132,9 @@ class RepositoryController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("active");
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -158,11 +149,9 @@ class RepositoryController : PlatformController {
         resp["id"] = Json(result.id);
         resp["status"] = Json("archived");
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -176,27 +165,24 @@ class RepositoryController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRepo(const Repository r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["status"] = Json(r.status.to!string);
-    j["maxFileSize"] = Json(r.maxFileSize);
-    j["allowedFileTypes"] = Json(r.allowedFileTypes);
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("name", r.name)
+      .set("description", r.description)
+      .set("status", r.status.to!string)
+      .set("maxFileSize", r.maxFileSize)
+      .set("allowedFileTypes", r.allowedFileTypes)
+      .set("createdBy", r.createdBy)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt);
   }
 }

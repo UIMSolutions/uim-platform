@@ -141,24 +141,20 @@ class EnrichmentDataController : PlatformController {
   }
 
   private Json enrichmentToJson(EnrichmentData ed) {
-    auto ej = Json.emptyObject;
-    ej["id"] = Json(ed.id);
-    ej["documentTypeId"] = Json(ed.documentTypeId);
-    ej["name"] = Json(ed.name);
-    ej["description"] = Json(ed.description);
-    ej["subtype"] = Json(ed.subtype);
-    ej["createdAt"] = Json(ed.createdAt);
-    ej["modifiedAt"] = Json(ed.modifiedAt);
-
     auto fArr = Json.emptyArray;
     foreach (f; ed.fields) {
-      auto fj = Json.emptyObject;
-      fj["key"] = Json(f.key);
-      fj["value"] = Json(f.value);
-      fArr ~= fj;
+      fArr ~= Json.emptyObject
+        .set("key", f.key)
+        .set("value", f.value);
     }
-    ej["fields"] = fArr;
 
-    return ej;
+    return Json.emptyObject
+      .set("id", ed.id)
+      .set("documentTypeId", ed.documentTypeId)
+      .set("name", ed.name)
+      .set("description", ed.description)
+      .set("subtype", ed.subtype)
+      .set("createdAt", ed.createdAt)
+      .set("fields", fArr);
   }
 }

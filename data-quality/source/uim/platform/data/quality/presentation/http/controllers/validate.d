@@ -28,7 +28,7 @@ class ValidateController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/validate", &handleValidate);
     router.post("/api/v1/validate/batch", &handleValidateBatch);
     router.get("/api/v1/validate/results/*", &handleGetResult);
@@ -45,8 +45,7 @@ class ValidateController : PlatformController {
 
       auto result = uc.validateRecord(r);
       res.writeJsonBody(serializeResult(result), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -60,10 +59,8 @@ class ValidateController : PlatformController {
 
       auto recordsJson = "records" in j;
       if (recordsJson !is null && (*recordsJson).type == Json.Type.array) {
-        foreach (item; *recordsJson)
-        {
-          if (item.type == Json.Type.object)
-          {
+        foreach (item; *recordsJson) {
+          if (item.type == Json.Type.object) {
             RecordFieldValues rfv;
             rfv.recordId = item.getString("recordId");
             rfv.fieldValues = jsonStrMap(item, "fieldValues");
@@ -81,8 +78,7 @@ class ValidateController : PlatformController {
       resp["results"] = arr;
       resp["totalCount"] = Json(results.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -97,35 +93,36 @@ class ValidateController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeResult(*result), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeResult(const ValidationResult r) {
-    auto j = Json.emptyObject;
-    j["recordId"] = Json(r.recordId);
-    j["tenantId"] = Json(r.tenantId);
-    j["datasetId"] = Json(r.datasetId);
-    j["totalRulesChecked"] = Json(r.totalRulesChecked);
-    j["passedRules"] = Json(r.passedRules);
-    j["failedRules"] = Json(r.failedRules);
-    j["qualityScore"] = Json(r.qualityScore);
-    j["validatedAt"] = Json(r.validatedAt);
+    auto j = Json.emptyObject
+      .set("recordId", r.recordId)
+      .set("tenantId", r.tenantId)
+      .set("datasetId", r.datasetId)
+      .set("totalRulesChecked", r.totalRulesChecked)
+      .set("passedRules", r.passedRules)
+      .set("failedRules", r.failedRules)
+      .set("qualityScore", r.qualityScore)
+      .set("validatedAt", r.validatedAt);
 
     if (r.violations.length > 0) {
       auto violations = Json.emptyArray;
       foreach (v; r.violations) {
-        auto vj = Json.emptyObject;
-        vj["ruleId"] = Json(v.ruleId);
-        vj["ruleName"] = Json(v.ruleName);
-        vj["fieldName"] = Json(v.fieldName);
-        vj["fieldValue"] = Json(v.fieldValue);
-        vj["severity"] = Json(v.severity.to!string);
-        vj["message"] = Json(v.message);
+        auto vj = Json.emptyObject
+          .set("ruleId", v.ruleId)
+          .set("ruleName", v.ruleName)
+          .set("fieldName", v.fieldName)
+          .set("fieldValue", v.fieldValue)
+          .set("severity", v.severity.to!string)
+          .set("message", v.message);
+
         if (v.suggestedValue.length > 0)
-          vj["suggestedValue"] = Json(v.suggestedValue);
+          vj = vj.set("suggestedValue", v.suggestedValue);
+        
         violations ~= vj;
       }
       j["violations"] = violations;
