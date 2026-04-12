@@ -89,19 +89,21 @@ class ContentCacheController : PlatformController {
         writeError(res, 404, "Cache entry not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["fileId"] = Json(entry.fileId);
-      obj["filePath"] = Json(entry.filePath);
-      obj["contentType"] = Json(entry.contentType);
-      obj["data"] = Json(entry.data);
-      obj["etag"] = Json(entry.etag);
-      obj["ttlSeconds"] = Json(entry.ttlSeconds);
-      obj["status"] = Json(entry.status);
-      obj["hitCount"] = Json(entry.hitCount);
-      obj["createdAt"] = Json(entry.createdAt);
-      obj["expiresAt"] = Json(entry.expiresAt);
-      res.writeJsonBody(obj, 200);
+      
+      auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("fileId", entry.fileId)
+      .set("filePath", entry.filePath)
+      .set("contentType", entry.contentType)
+      .set("data", entry.data)
+      .set("etag", entry.etag)
+      .set("ttlSeconds", entry.ttlSeconds)
+      .set("status", entry.status)
+      .set("hitCount", entry.hitCount)
+      .set("createdAt", entry.createdAt)
+      .set("expiresAt", entry.expiresAt);
+      
+      res.writeJsonBody(response, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");
   }
@@ -116,7 +118,7 @@ class ContentCacheController : PlatformController {
       }
       auto result = uc.invalidate(tenantId, id);
       if (result.isSuccess())
-        res.writeBody("", 204);
+        res.writeJsonBody(Json.emptyObject, 204);
       else
         writeError(res, 400, result.error);
     } catch (Exception e)

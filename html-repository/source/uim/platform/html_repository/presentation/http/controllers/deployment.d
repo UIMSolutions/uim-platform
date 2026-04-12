@@ -89,17 +89,19 @@ class DeploymentController : PlatformController {
         writeError(res, 404, "Deployment not found");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["id"] = Json(entry.id);
-      obj["appId"] = Json(entry.appId);
-      obj["versionId"] = Json(entry.versionId);
-      obj["serviceInstanceId"] = Json(entry.serviceInstanceId);
-      obj["operation"] = Json(entry.operation);
-      obj["status"] = Json(entry.status);
-      obj["deployedBy"] = Json(entry.deployedBy);
-      obj["deployedAt"] = Json(entry.deployedAt);
-      obj["completedAt"] = Json(entry.completedAt);
-      obj["errorMessage"] = Json(entry.errorMessage);
+      
+      auto response = Json.emptyObject
+      .set("id", entry.id)
+      .set("appId", entry.appId)
+      .set("versionId", entry.versionId)
+      .set("serviceInstanceId", entry.serviceInstanceId)
+      .set("operation", entry.operation)
+      .set("status", entry.status)
+      .set("deployedBy", entry.deployedBy)
+      .set("deployedAt", entry.deployedAt)
+      .set("completedAt", entry.completedAt)
+      .set("errorMessage", entry.errorMessage);
+      
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

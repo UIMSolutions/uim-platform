@@ -138,24 +138,6 @@ class TrainingJobController : PlatformController {
   }
 
   private Json jobToJson(TrainingJob tj) {
-    import std.conv : to;
-
-    auto jj = Json.emptyObject;
-    jj["id"] = Json(tj.id);
-    jj["documentTypeId"] = Json(tj.documentTypeId);
-    jj["schemaId"] = Json(tj.schemaId);
-    jj["name"] = Json(tj.name);
-    jj["description"] = Json(tj.description);
-    jj["modelVersion"] = Json(tj.modelVersion);
-    jj["status"] = Json(tj.status.to!string);
-    jj["statusMessage"] = Json(tj.statusMessage);
-    jj["documentCount"] = Json(tj.documentCount);
-    jj["accuracy"] = Json(tj.accuracy);
-    jj["startedAt"] = Json(tj.startedAt);
-    jj["completedAt"] = Json(tj.completedAt);
-    jj["createdAt"] = Json(tj.createdAt);
-    jj["modifiedAt"] = Json(tj.modifiedAt);
-
     auto mArr = Json.emptyArray;
     foreach (m; tj.metrics) {
       auto mj = Json.emptyObject;
@@ -164,8 +146,22 @@ class TrainingJobController : PlatformController {
       mj["timestamp"] = Json(m.timestamp);
       mArr ~= mj;
     }
-    jj["metrics"] = mArr;
 
-    return jj;
+    return Json.emptyObject
+      .set("id", tj.id)
+      .set("documentTypeId", tj.documentTypeId)
+      .set("schemaId", tj.schemaId)
+      .set("name", tj.name)
+      .set("description", tj.description)
+      .set("modelVersion", tj.modelVersion)
+      .set("status", tj.status.to!string)
+      .set("statusMessage", tj.statusMessage)
+      .set("documentCount", tj.documentCount)
+      .set("accuracy", tj.accuracy)
+      .set("startedAt", tj.startedAt)
+      .set("completedAt", tj.completedAt)
+      .set("createdAt", tj.createdAt)
+      .set("modifiedAt", tj.modifiedAt)
+      .set("metrics", mArr);
   }
 }

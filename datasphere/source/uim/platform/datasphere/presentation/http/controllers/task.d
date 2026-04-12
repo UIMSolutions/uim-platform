@@ -62,14 +62,13 @@ class TaskController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
-        auto tj = Json.emptyObject;
-        tj["id"] = Json(t.id);
-        tj["name"] = Json(t.name);
-        tj["description"] = Json(t.description);
-        tj["targetObjectId"] = Json(t.targetObjectId);
-        tj["lastRunDurationMs"] = Json(t.lastRunDurationMs);
-        tj["createdAt"] = Json(t.createdAt);
-        jarr ~= tj;
+        jarr ~= Json.emptyObject
+          .set("id", t.id)
+          .set("name", t.name)
+          .set("description", t.description)
+          .set("targetObjectId", t.targetObjectId)
+          .set("lastRunDurationMs", t.lastRunDurationMs)
+          .set("createdAt", t.createdAt);
       }
 
       auto resp = Json.emptyObject;
@@ -84,6 +83,7 @@ class TaskController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 
@@ -93,21 +93,22 @@ class TaskController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(t.id);
-      resp["name"] = Json(t.name);
-      resp["description"] = Json(t.description);
-      resp["targetObjectId"] = Json(t.targetObjectId);
-      resp["scheduleExpression"] = Json(t.scheduleExpression);
-      resp["startedAt"] = Json(t.startedAt);
-      resp["completedAt"] = Json(t.completedAt);
-      resp["lastRunDurationMs"] = Json(t.lastRunDurationMs);
-      resp["lastRunMessage"] = Json(t.lastRunMessage);
-      resp["retryCount"] = Json(t.retryCount);
-      resp["maxRetries"] = Json(t.maxRetries);
-      resp["createdAt"] = Json(t.createdAt);
-      resp["modifiedAt"] = Json(t.modifiedAt);
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject
+      .set("id", t.id)
+      .set("name", t.name)
+      .set("description", t.description)
+      .set("targetObjectId", t.targetObjectId)
+      .set("scheduleExpression", t.scheduleExpression)
+      .set("startedAt", t.startedAt)
+      .set("completedAt", t.completedAt)
+      .set("lastRunDurationMs", t.lastRunDurationMs)
+      .set("lastRunMessage", t.lastRunMessage)
+      .set("retryCount", t.retryCount)
+      .set("maxRetries", t.maxRetries)
+      .set("createdAt", t.createdAt)
+      .set("modifiedAt", t.modifiedAt);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -116,6 +117,7 @@ class TaskController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto spaceId = req.headers.get("X-Space-Id", "");
 

@@ -76,19 +76,18 @@ class InstanceController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (i; instances) {
-        auto ij = Json.emptyObject;
-        ij["id"] = Json(i.id);
-        ij["name"] = Json(i.name);
-        ij["description"] = Json(i.description);
-        ij["status"] = Json(i.status.to!string);
-        ij["version"] = Json(i.version_);
-        ij["region"] = Json(i.region);
-        ij["memoryGB"] = Json(i.resources.memoryGB);
-        ij["vcpus"] = Json(i.resources.vcpus);
-        ij["storageGB"] = Json(i.resources.storageGB);
-        ij["createdAt"] = Json(i.createdAt);
-        ij["modifiedAt"] = Json(i.modifiedAt);
-        jarr ~= ij;
+        jarr ~= Json.emptyObject
+          .set("id", i.id)
+          .set("name", i.name)
+          .set("description", i.description)
+          .set("status", i.status.to!string)
+          .set("version", i.version_)
+          .set("region", i.region)
+          .set("memoryGB", i.resources.memoryGB)
+          .set("vcpus", i.resources.vcpus)
+          .set("storageGB", i.resources.storageGB)
+          .set("createdAt", i.createdAt)
+          .set("modifiedAt", i.modifiedAt);
       }
 
       auto resp = Json.emptyObject;

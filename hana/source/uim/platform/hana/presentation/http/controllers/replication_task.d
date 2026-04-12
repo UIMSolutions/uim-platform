@@ -67,21 +67,21 @@ class ReplicationTaskController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (t; tasks) {
-        auto tj = Json.emptyObject;
-        tj["id"] = Json(t.id);
-        tj["instanceId"] = Json(t.instanceId);
-        tj["name"] = Json(t.name);
-        tj["mode"] = Json(t.mode.to!string);
-        tj["status"] = Json(t.status.to!string);
-        tj["rowsReplicated"] = Json(t.rowsReplicated);
-        tj["createdAt"] = Json(t.createdAt);
-        jarr ~= tj;
+        jarr ~= Json.emptyObject
+          .set("id", t.id)
+          .set("instanceId", t.instanceId)
+          .set("name", t.name)
+          .set("mode", t.mode.to!string)
+          .set("status", t.status.to!string)
+          .set("rowsReplicated", t.rowsReplicated)
+          .set("createdAt", t.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(tasks.length);
-      resp["resources"] = jarr;
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject;
+      response["count"] = Json(tasks.length);
+      response["resources"] = jarr;
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

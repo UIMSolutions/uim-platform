@@ -66,21 +66,21 @@ class BackupController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (b; backups) {
-        auto bj = Json.emptyObject;
-        bj["id"] = Json(b.id);
-        bj["instanceId"] = Json(b.instanceId);
-        bj["name"] = Json(b.name);
-        bj["status"] = Json(b.status.to!string);
-        bj["sizeBytes"] = Json(b.sizeBytes);
-        bj["encrypted"] = Json(b.encrypted);
-        bj["createdAt"] = Json(b.createdAt);
-        jarr ~= bj;
+        jarr ~= Json.emptyObject
+        .set("id", b.id)
+        .set("instanceId", b.instanceId)
+        .set("name", b.name)
+        .set("status", b.status.to!string)
+        .set("sizeBytes", b.sizeBytes)
+        .set("encrypted", b.encrypted)
+        .set("createdAt", b.createdAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(backups.length);
-      resp["resources"] = jarr;
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject;
+      response["count"] = Json(backups.length);
+      response["resources"] = jarr;
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

@@ -141,18 +141,6 @@ class TemplateController : PlatformController {
   }
 
   private Json templateToJson(Template t) {
-    import std.conv : to;
-
-    auto tj = Json.emptyObject;
-    tj["id"] = Json(t.id);
-    tj["schemaId"] = Json(t.schemaId);
-    tj["documentTypeId"] = Json(t.documentTypeId);
-    tj["name"] = Json(t.name);
-    tj["description"] = Json(t.description);
-    tj["status"] = Json(t.status.to!string);
-    tj["createdAt"] = Json(t.createdAt);
-    tj["modifiedAt"] = Json(t.modifiedAt);
-
     auto rArr = Json.emptyArray;
     foreach (r; t.regions) {
       auto rj = Json.emptyObject;
@@ -164,8 +152,16 @@ class TemplateController : PlatformController {
       rj["height"] = Json(r.height);
       rArr ~= rj;
     }
-    tj["regions"] = rArr;
 
-    return tj;
+    return Json.emptyObject
+      .set("id", t.id)
+      .set("schemaId", t.schemaId)
+      .set("documentTypeId", t.documentTypeId)
+      .set("name", t.name)
+      .set("description", t.description)
+      .set("status", t.status.to!string)
+      .set("createdAt", t.createdAt)
+      .set("modifiedAt", t.modifiedAt)
+      .set("regions", rArr);
   }
 }

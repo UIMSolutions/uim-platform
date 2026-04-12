@@ -71,16 +71,15 @@ class DatabaseConnectionController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; conns) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["instanceId"] = Json(c.instanceId);
-        cj["name"] = Json(c.name);
-        cj["type"] = Json(c.type.to!string);
-        cj["status"] = Json(c.status.to!string);
-        cj["host"] = Json(c.host);
-        cj["port"] = Json(c.port);
-        cj["createdAt"] = Json(c.createdAt);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+          .set("id", c.id)
+          .set("instanceId", c.instanceId)
+          .set("name", c.name)
+          .set("type", c.type.to!string)
+          .set("status", c.status.to!string)
+          .set("host", c.host)
+          .set("port", c.port)
+          .set("createdAt", c.createdAt);
       }
 
       auto resp = Json.emptyObject;

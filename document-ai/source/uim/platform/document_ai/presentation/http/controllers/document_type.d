@@ -142,17 +142,14 @@ class DocumentTypeController : PlatformController {
   }
 
   private Json docTypeToJson(DocumentType dt) {
-    import std.conv : to;
-
-    auto dj = Json.emptyObject;
-    dj["id"] = Json(dt.id);
-    dj["name"] = Json(dt.name);
-    dj["description"] = Json(dt.description);
-    dj["category"] = Json(dt.category.to!string);
-    dj["defaultSchemaId"] = Json(dt.defaultSchemaId);
-    dj["supportedFileTypes"] = toJsonArray(dt.supportedFileTypes);
-    dj["createdAt"] = Json(dt.createdAt);
-    dj["modifiedAt"] = Json(dt.modifiedAt);
-    return dj;
+    return Json.emptyObject
+      .set("id", dt.id)
+      .set("name", dt.name)
+      .set("description", dt.description)
+      .set("category", dt.category.to!string)
+      .set("defaultSchemaId", dt.defaultSchemaId)
+      .set("supportedFileTypes", toJsonArray(dt.supportedFileTypes))
+      .set("createdAt", dt.createdAt)
+      .set("modifiedAt", dt.modifiedAt);
   }
 }
