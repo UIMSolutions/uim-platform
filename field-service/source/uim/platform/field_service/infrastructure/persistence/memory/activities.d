@@ -14,40 +14,33 @@ mixin(ShowModule!());
 class MemoryActivityRepository : ActivityRepository {
     private Activity[] store;
 
-    Activity[] findAll() { return store; }
 
-    Activity* findById(ActivityId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(ActivityId id) {
+        return store.any!(e => e.id == id);
     }
 
-    Activity[] findByTenant(TenantId tenantId) {
-        Activity[] result;
+    Activity findById(ActivityId id) {
         foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+            if (e.id == id) return e;
+        return Activity.init; // or throw an exception
+    }
+
+    Activity[] findAll() { return store; }
+
+    Activity[] findByTenant(TenantId tenantId) {
+        return findAll.filter!(e => e.tenantId == tenantId).array;
     }
 
     Activity[] findByServiceCall(ServiceCallId serviceCallId) {
-        Activity[] result;
-        foreach (e; store)
-            if (e.serviceCallId == serviceCallId) result ~= e;
-        return result;
+        return findAll.filter!(e => e.serviceCallId == serviceCallId).array;
     }
 
     Activity[] findByTechnician(TechnicianId technicianId) {
-        Activity[] result;
-        foreach (e; store)
-            if (e.technicianId == technicianId) result ~= e;
-        return result;
+        return findAll.filter!(e => e.technicianId == technicianId).array;
     }
 
     Activity[] findByStatus(ActivityStatus status) {
-        Activity[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return findAll.filter!(e => e.status == status).array;
     }
 
     void save(Activity activity) { store ~= activity; }

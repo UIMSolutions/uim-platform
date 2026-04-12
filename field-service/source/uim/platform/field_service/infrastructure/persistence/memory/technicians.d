@@ -14,33 +14,28 @@ mixin(ShowModule!());
 class MemoryTechnicianRepository : TechnicianRepository {
     private Technician[] store;
 
-    Technician[] findAll() { return store; }
-
-    Technician* findById(TechnicianId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(TechnicianId id) {
+        return store.any!(e => e.id == id);
     }
 
-    Technician[] findByTenant(TenantId tenantId) {
-        Technician[] result;
+    Technician findById(TechnicianId id) {
         foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+            if (e.id == id) return e;
+        return Technician.init;
+    }
+
+    Technician[] findAll() { return store; }
+
+    Technician[] findByTenant(TenantId tenantId) {
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     Technician[] findByStatus(TechnicianStatus status) {
-        Technician[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return store.filter!(e => e.status == status).array;
     }
 
     Technician[] findByRegion(string region) {
-        Technician[] result;
-        foreach (e; store)
-            if (e.region == region) result ~= e;
-        return result;
+        return store.filter!(e => e.region == region).array;
     }
 
     void save(Technician technician) { store ~= technician; }

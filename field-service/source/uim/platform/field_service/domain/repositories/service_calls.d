@@ -12,12 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 interface ServiceCallRepository {
+    bool existsById(ServiceCallId id);
+    ServiceCall findById(ServiceCallId id);
+
     ServiceCall[] findAll();
-    ServiceCall* findById(ServiceCallId id);
     ServiceCall[] findByTenant(TenantId tenantId);
     ServiceCall[] findByStatus(ServiceCallStatus status);
     ServiceCall[] findByPriority(ServiceCallPriority priority);
     ServiceCall[] findByCustomer(CustomerId customerId);
+    
     void save(ServiceCall serviceCall);
     void update(ServiceCall serviceCall);
     void remove(ServiceCallId id);

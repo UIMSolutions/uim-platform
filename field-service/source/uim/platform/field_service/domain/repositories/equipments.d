@@ -12,12 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 interface EquipmentRepository {
+    bool existsById(EquipmentId id);
+    Equipment findById(EquipmentId id);
+
     Equipment[] findAll();
-    Equipment* findById(EquipmentId id);
     Equipment[] findByTenant(TenantId tenantId);
     Equipment[] findByCustomer(CustomerId customerId);
     Equipment[] findByType(EquipmentType equipmentType);
     Equipment[] findByStatus(EquipmentStatus status);
+
     void save(Equipment equipment);
     void update(Equipment equipment);
     void remove(EquipmentId id);

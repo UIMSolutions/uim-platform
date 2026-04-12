@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface SkillRepository {
+    bool existsById(SkillId id);
+    Skill findById(SkillId id);
+
     Skill[] findAll();
-    Skill* findById(SkillId id);
     Skill[] findByTenant(TenantId tenantId);
     Skill[] findByTechnician(TechnicianId technicianId);
     Skill[] findByCategory(SkillCategory category);
+
     void save(Skill skill);
     void update(Skill skill);
     void remove(SkillId id);

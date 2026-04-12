@@ -12,12 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 interface AssignmentRepository {
+    bool existsById(AssignmentId id);
+    Assignment findById(AssignmentId id);
+
     Assignment[] findAll();
-    Assignment* findById(AssignmentId id);
     Assignment[] findByTenant(TenantId tenantId);
     Assignment[] findByActivity(ActivityId activityId);
     Assignment[] findByTechnician(TechnicianId technicianId);
     Assignment[] findByStatus(AssignmentStatus status);
+
     void save(Assignment assignment);
     void update(Assignment assignment);
     void remove(AssignmentId id);

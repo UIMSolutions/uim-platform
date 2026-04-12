@@ -14,40 +14,32 @@ mixin(ShowModule!());
 class MemoryEquipmentRepository : EquipmentRepository {
     private Equipment[] store;
 
-    Equipment[] findAll() { return store; }
+    bool existsById(EquipmentId id) {
+        return store.any!(e => e.id == id);
+    }
 
-    Equipment* findById(EquipmentId id) {
+    Equipment findById(EquipmentId id) {
         foreach (e; store)
-            if (e.id == id) return &e;
+            if (e.id == id) return e;
         return null;
     }
 
+    Equipment[] findAll() { return store; }
+
     Equipment[] findByTenant(TenantId tenantId) {
-        Equipment[] result;
-        foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     Equipment[] findByCustomer(CustomerId customerId) {
-        Equipment[] result;
-        foreach (e; store)
-            if (e.customerId == customerId) result ~= e;
-        return result;
+        return store.filter!(e => e.customerId == customerId).array;
     }
 
     Equipment[] findByType(EquipmentType equipmentType) {
-        Equipment[] result;
-        foreach (e; store)
-            if (e.equipmentType == equipmentType) result ~= e;
-        return result;
+        return store.filter!(e => e.equipmentType == equipmentType).array;
     }
 
     Equipment[] findByStatus(EquipmentStatus status) {
-        Equipment[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return store.filter!(e => e.status == status).array;
     }
 
     void save(Equipment equipment) { store ~= equipment; }

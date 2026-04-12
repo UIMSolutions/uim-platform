@@ -14,40 +14,32 @@ mixin(ShowModule!());
 class MemorySmartformRepository : SmartformRepository {
     private Smartform[] store;
 
-    Smartform[] findAll() { return store; }
-
-    Smartform* findById(SmartformId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(SmartformId id) {
+        return store.any!(e => e.id == id);
     }
 
-    Smartform[] findByTenant(TenantId tenantId) {
-        Smartform[] result;
+    Smartform findById(SmartformId id) {
         foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+            if (e.id == id) return e;
+        return Smartform.init;
+    }
+
+    Smartform[] findAll() { return store; }
+
+    Smartform[] findByTenant(TenantId tenantId) {
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     Smartform[] findByServiceCall(ServiceCallId serviceCallId) {
-        Smartform[] result;
-        foreach (e; store)
-            if (e.serviceCallId == serviceCallId) result ~= e;
-        return result;
+        return store.filter!(e => e.serviceCallId == serviceCallId).array;
     }
 
     Smartform[] findByActivity(ActivityId activityId) {
-        Smartform[] result;
-        foreach (e; store)
-            if (e.activityId == activityId) result ~= e;
-        return result;
+        return store.filter!(e => e.activityId == activityId).array;
     }
 
     Smartform[] findByStatus(SmartformStatus status) {
-        Smartform[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return store.filter!(e => e.status == status).array;
     }
 
     void save(Smartform smartform) { store ~= smartform; }

@@ -13,11 +13,15 @@ mixin(ShowModule!());
 
 interface ActivityRepository {
     Activity[] findAll();
-    Activity* findById(ActivityId id);
+
+    bool findById(ActivityId id);
+    Activity findById(ActivityId id);
+
     Activity[] findByTenant(TenantId tenantId);
     Activity[] findByServiceCall(ServiceCallId serviceCallId);
     Activity[] findByTechnician(TechnicianId technicianId);
     Activity[] findByStatus(ActivityStatus status);
+    
     void save(Activity activity);
     void update(Activity activity);
     void remove(ActivityId id);

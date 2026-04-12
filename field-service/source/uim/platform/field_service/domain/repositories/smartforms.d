@@ -12,12 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 interface SmartformRepository {
+    bool existsById(SmartformId id);
+    Smartform findById(SmartformId id);
+
     Smartform[] findAll();
-    Smartform* findById(SmartformId id);
     Smartform[] findByTenant(TenantId tenantId);
     Smartform[] findByServiceCall(ServiceCallId serviceCallId);
     Smartform[] findByActivity(ActivityId activityId);
     Smartform[] findByStatus(SmartformStatus status);
+    
     void save(Smartform smartform);
     void update(Smartform smartform);
     void remove(SmartformId id);

@@ -14,33 +14,22 @@ mixin(ShowModule!());
 class MemoryCustomerRepository : CustomerRepository {
     private Customer[] store;
 
-    Customer[] findAll() { return store; }
-
-    Customer* findById(CustomerId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(CustomerId id) {
+        return store.any!(e => e.id == id);
     }
 
+    Customer[] findAll() { return store; }
+
     Customer[] findByTenant(TenantId tenantId) {
-        Customer[] result;
-        foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     Customer[] findByType(CustomerType customerType) {
-        Customer[] result;
-        foreach (e; store)
-            if (e.customerType == customerType) result ~= e;
-        return result;
+        return store.filter!(e => e.customerType == customerType).array;
     }
 
     Customer[] findByStatus(CustomerStatus status) {
-        Customer[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return store.filter!(e => e.status == status).array;
     }
 
     void save(Customer customer) { store ~= customer; }

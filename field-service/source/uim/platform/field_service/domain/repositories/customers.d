@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface CustomerRepository {
+    bool existsById(CustomerId id);
+    Customer findById(CustomerId id);
+    
     Customer[] findAll();
-    Customer* findById(CustomerId id);
     Customer[] findByTenant(TenantId tenantId);
     Customer[] findByType(CustomerType customerType);
     Customer[] findByStatus(CustomerStatus status);
+    
     void save(Customer customer);
     void update(Customer customer);
     void remove(CustomerId id);

@@ -14,40 +14,32 @@ mixin(ShowModule!());
 class MemoryAssignmentRepository : AssignmentRepository {
     private Assignment[] store;
 
-    Assignment[] findAll() { return store; }
-
-    Assignment* findById(AssignmentId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(AssignmentId id) {
+        return store.any!(e => e.id == id);
     }
 
-    Assignment[] findByTenant(TenantId tenantId) {
-        Assignment[] result;
+    Assignment findById(AssignmentId id) {
         foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+            if (e.id == id) return e;
+        return Assignment.init; // or throw an exception
+    }
+
+    Assignment[] findAll() { return store; }
+
+    Assignment[] findByTenant(TenantId tenantId) {
+        return findAll.filter!(e => e.tenantId == tenantId).array;
     }
 
     Assignment[] findByActivity(ActivityId activityId) {
-        Assignment[] result;
-        foreach (e; store)
-            if (e.activityId == activityId) result ~= e;
-        return result;
+        return findAll.filter!(e => e.activityId == activityId).array;
     }
 
     Assignment[] findByTechnician(TechnicianId technicianId) {
-        Assignment[] result;
-        foreach (e; store)
-            if (e.technicianId == technicianId) result ~= e;
-        return result;
+        return findAll.filter!(e => e.technicianId == technicianId).array;
     }
 
     Assignment[] findByStatus(AssignmentStatus status) {
-        Assignment[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return findAll.filter!(e => e.status == status).array;
     }
 
     void save(Assignment assignment) { store ~= assignment; }

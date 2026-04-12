@@ -1,5 +1,3 @@
-module uim.platform.field_service.infrastructure.persistence.memory.service_calls;
-
 /****************************************************************************************************************
 * Copyright: (c) 2018-2026 Ozan Nurettin Suel (aka UI-Manufaktur UG *R.I.P*)
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file.
@@ -16,40 +14,32 @@ mixin(ShowModule!());
 class MemoryServiceCallRepository : ServiceCallRepository {
     private ServiceCall[] store;
 
-    ServiceCall[] findAll() { return store; }
-
-    ServiceCall* findById(ServiceCallId id) {
-        foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+    bool existsById(ServiceCallId id) {
+        return store.any!(e => e.id == id);
     }
 
-    ServiceCall[] findByTenant(TenantId tenantId) {
-        ServiceCall[] result;
+    ServiceCall findById(ServiceCallId id) {
         foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+            if (e.id == id) return e;
+        return ServiceCall.init; // or throw an exception
+    }
+
+    ServiceCall[] findAll() { return store; }
+
+    ServiceCall[] findByTenant(TenantId tenantId) {
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     ServiceCall[] findByStatus(ServiceCallStatus status) {
-        ServiceCall[] result;
-        foreach (e; store)
-            if (e.status == status) result ~= e;
-        return result;
+        return store.filter!(e => e.status == status).array;
     }
 
     ServiceCall[] findByPriority(ServiceCallPriority priority) {
-        ServiceCall[] result;
-        foreach (e; store)
-            if (e.priority == priority) result ~= e;
-        return result;
+        return store.filter!(e => e.priority == priority).array;
     }
 
     ServiceCall[] findByCustomer(CustomerId customerId) {
-        ServiceCall[] result;
-        foreach (e; store)
-            if (e.customerId == customerId) result ~= e;
-        return result;
+        return store.filter!(e => e.customerId == customerId).array;
     }
 
     void save(ServiceCall serviceCall) { store ~= serviceCall; }

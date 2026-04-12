@@ -12,11 +12,14 @@ mixin(ShowModule!());
 @safe:
 
 interface TechnicianRepository {
+    bool existsById(TechnicianId id);
+    Technician findById(TechnicianId id);
+    
     Technician[] findAll();
-    Technician* findById(TechnicianId id);
     Technician[] findByTenant(TenantId tenantId);
     Technician[] findByStatus(TechnicianStatus status);
     Technician[] findByRegion(string region);
+    
     void save(Technician technician);
     void update(Technician technician);
     void remove(TechnicianId id);

@@ -14,44 +14,48 @@ mixin(ShowModule!());
 class MemorySkillRepository : SkillRepository {
     private Skill[] store;
 
-    Skill[] findAll() { return store; }
+    bool existsById(SkillId id) {
+        return store.any!(e => e.id == id);
+    }
 
-    Skill* findById(SkillId id) {
+    Skill findById(SkillId id) {
         foreach (e; store)
-            if (e.id == id) return &e;
-        return null;
+            if (e.id == id)
+                return e;
+        return Skill.init; // or throw an exception
+    }
+
+    Skill[] findAll() {
+        return store;
     }
 
     Skill[] findByTenant(TenantId tenantId) {
-        Skill[] result;
-        foreach (e; store)
-            if (e.tenantId == tenantId) result ~= e;
-        return result;
+        return store.filter!(e => e.tenantId == tenantId).array;
     }
 
     Skill[] findByTechnician(TechnicianId technicianId) {
-        Skill[] result;
-        foreach (e; store)
-            if (e.technicianId == technicianId) result ~= e;
-        return result;
+        return store.filter!(e => e.technicianId == technicianId).array;
     }
 
     Skill[] findByCategory(SkillCategory category) {
-        Skill[] result;
-        foreach (e; store)
-            if (e.category == category) result ~= e;
-        return result;
+        return store.filter!(e => e.category == category).array;
     }
 
-    void save(Skill skill) { store ~= skill; }
+    void save(Skill skill) {
+        store ~= skill;
+    }
 
     void update(Skill skill) {
         foreach (e; store)
-            if (e.id == skill.id) { e = skill; return; }
+            if (e.id == skill.id) {
+                e = skill;
+                return;
+            }
     }
 
     void remove(SkillId id) {
         import std.algorithm : remove;
+
         store = store.remove!(e => e.id == id);
     }
 }
