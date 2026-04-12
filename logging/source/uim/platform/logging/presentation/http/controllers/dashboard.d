@@ -36,7 +36,7 @@ class DashboardController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
       r.createdBy = j.getString("createdBy");
 
       auto panelsVal = "panels" in j;
@@ -113,15 +113,14 @@ class DashboardController : PlatformController {
 
       auto parr = Json.emptyArray;
       foreach (p; d.panels) {
-        auto pj = Json.emptyObject;
-        pj["id"] = Json(p.id);
-        pj["title"] = Json(p.title);
-        pj["query"] = Json(p.query);
-        pj["positionX"] = Json(p.positionX);
-        pj["positionY"] = Json(p.positionY);
-        pj["width"] = Json(p.width);
-        pj["height"] = Json(p.height);
-        parr ~= pj;
+        parr ~= Json.emptyObject
+        .set("id", p.id)
+        .set("title", p.title)
+        .set("query", p.query)
+        .set("positionX", p.positionX)
+        .set("positionY", p.positionY)
+        .set("width", p.width)
+        .set("height", p.height);
       }
       dj["panels"] = parr;
 
@@ -140,7 +139,7 @@ class DashboardController : PlatformController {
       UpdateDashboardRequest r;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
 
       auto result = uc.update(id, r);
       if (result.success) {

@@ -40,7 +40,7 @@ class ThemeController {
       r.logoUrl = j.getString("logoUrl");
       r.faviconUrl = j.getString("faviconUrl");
       r.customCss = j.getString("customCss");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createTheme(r);
       if (result.isSuccess()) {
@@ -101,7 +101,7 @@ class ThemeController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.customCss = j.getString("customCss");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.updateTheme(r);
       if (result.isSuccess())

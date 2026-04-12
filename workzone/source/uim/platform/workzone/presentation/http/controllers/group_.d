@@ -95,7 +95,7 @@ class GroupController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.active = jsonBool(j, "active", true);
+      r.active = j.getBoolean("active", true);
 
       auto result = useCase.updateGroup(r);
       if (result.isSuccess())

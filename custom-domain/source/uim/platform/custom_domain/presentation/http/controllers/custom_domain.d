@@ -135,9 +135,9 @@ class CustomDomainController : PlatformController {
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.activeCertificateId = j.getString("activeCertificateId");
             r.tlsConfigurationId = j.getString("tlsConfigurationId");
-            r.isShared = jsonBool(j, "isShared");
+            r.isShared = j.getBoolean("isShared");
             r.sharedWithOrgs = j.getString("sharedWithOrgs");
-            r.clientAuthEnabled = jsonBool(j, "clientAuthEnabled");
+            r.clientAuthEnabled = j.getBoolean("clientAuthEnabled");
             r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);

@@ -38,7 +38,7 @@ class ProcessingPurposeController : PlatformController {
             r.legalBasis = j.getString("legalBasis");
             r.retentionPeriod = j.getString("retentionPeriod");
             r.dataProtectionOfficer = j.getString("dataProtectionOfficer");
-            r.requiresConsent = jsonBool(j, "requiresConsent");
+            r.requiresConsent = j.getBoolean("requiresConsent");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
@@ -103,7 +103,7 @@ class ProcessingPurposeController : PlatformController {
             r.legalBasis = j.getString("legalBasis");
             r.retentionPeriod = j.getString("retentionPeriod");
             r.dataProtectionOfficer = j.getString("dataProtectionOfficer");
-            r.requiresConsent = jsonBool(j, "requiresConsent");
+            r.requiresConsent = j.getBoolean("requiresConsent");
             r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);

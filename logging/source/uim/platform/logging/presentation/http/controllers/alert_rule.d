@@ -125,7 +125,7 @@ class AlertRuleController : PlatformController {
       r.thresholdOperator = j.getString("thresholdOperator");
       r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
       r.severity = j.getString("severity");
-      r.isEnabled = jsonBool(j, "isEnabled", true);
+      r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = jsonStrArray(j, "channelIds");
 
       auto result = uc.update(id, r);

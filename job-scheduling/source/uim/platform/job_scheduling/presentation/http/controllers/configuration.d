@@ -51,8 +51,8 @@ class ConfigurationController : PlatformController {
             r.defaultRetries = jsonInt(j, "defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);
-            r.enableAsyncMode = jsonBool(j, "enableAsyncMode", true);
-            r.enableAlertNotifications = jsonBool(j, "enableAlertNotifications", false);
+            r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);
+            r.enableAlertNotifications = j.getBoolean("enableAlertNotifications", false);
 
             auto result = uc.update(r);
             if (result.success) {

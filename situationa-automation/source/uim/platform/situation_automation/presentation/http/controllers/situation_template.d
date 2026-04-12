@@ -44,7 +44,7 @@ class SituationTemplateController : PlatformController {
             r.sourceSystem = j.getString("sourceSystem");
             r.sourceTemplateId = j.getString("sourceTemplateId");
             r.autoResolveTimeoutMinutes = jsonInt(j, "autoResolveTimeoutMinutes");
-            r.escalationEnabled = jsonBool(j, "escalationEnabled");
+            r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.createdBy = j.getString("createdBy");
 
@@ -140,7 +140,7 @@ class SituationTemplateController : PlatformController {
             r.defaultSeverity = j.getString("defaultSeverity");
             r.entityTypeId = j.getString("entityTypeId");
             r.autoResolveTimeoutMinutes = jsonInt(j, "autoResolveTimeoutMinutes");
-            r.escalationEnabled = jsonBool(j, "escalationEnabled");
+            r.escalationEnabled = j.getBoolean("escalationEnabled");
             r.escalationTargetUserId = j.getString("escalationTargetUserId");
             r.modifiedBy = j.getString("modifiedBy");
 

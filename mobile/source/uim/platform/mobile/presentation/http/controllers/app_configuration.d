@@ -38,7 +38,7 @@ class AppConfigurationController : PlatformController {
       r.key = j.getString("key");
       r.value = j.getString("value");
       r.description = j.getString("description");
-      r.isSecret = jsonBool(j, "isSecret");
+      r.isSecret = j.getBoolean("isSecret");
       r.platform = j.getString("platform");
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
@@ -107,7 +107,7 @@ class AppConfigurationController : PlatformController {
       r.id = id;
       r.value = j.getString("value");
       r.description = j.getString("description");
-      r.isSecret = jsonBool(j, "isSecret");
+      r.isSecret = j.getBoolean("isSecret");
       r.platform = j.getString("platform");
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);

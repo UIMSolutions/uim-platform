@@ -38,7 +38,7 @@ class ViewController : PlatformController {
       r.businessName = j.getString("businessName");
       r.semantic = j.getString("semantic");
       r.sqlExpression = j.getString("sqlExpression");
-      r.isExposed = jsonBool(j, "isExposed", false);
+      r.isExposed = j.getBoolean("isExposed", false);
 
       auto result = uc.create(r);
       if (result.success) {
@@ -125,8 +125,8 @@ class ViewController : PlatformController {
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
       r.sqlExpression = j.getString("sqlExpression");
-      r.isExposed = jsonBool(j, "isExposed", false);
-      r.isPersisted = jsonBool(j, "isPersisted", false);
+      r.isExposed = j.getBoolean("isExposed", false);
+      r.isPersisted = j.getBoolean("isPersisted", false);
 
       auto result = uc.update(r);
       if (result.success) {

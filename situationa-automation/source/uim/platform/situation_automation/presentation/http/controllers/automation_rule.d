@@ -133,7 +133,7 @@ class AutomationRuleController : PlatformController {
             r.description = j.getString("description");
             r.priority = j.getString("priority");
             r.executionOrder = jsonInt(j, "executionOrder");
-            r.enabled = jsonBool(j, "enabled", true);
+            r.enabled = j.getBoolean("enabled", true);
             r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);

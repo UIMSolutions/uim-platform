@@ -42,7 +42,7 @@ class JobController : PlatformController {
             r.actionUrl = j.getString("action");
             r.httpMethod = j.getString("httpMethod");
             r.type = j.getString("type");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 
@@ -134,7 +134,7 @@ class JobController : PlatformController {
             r.description = j.getString("description");
             r.actionUrl = j.getString("action");
             r.httpMethod = j.getString("httpMethod");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.startTime = jsonLong(j, "startTime");
             r.endTime = jsonLong(j, "endTime");
 

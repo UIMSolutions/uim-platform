@@ -37,8 +37,8 @@ class RetentionRuleController : PlatformController {
             r.description = j.getString("description");
             r.retentionPeriod = j.getString("retentionPeriod");
             r.periodUnit = j.getString("periodUnit");
-            r.autoDelete = jsonBool(j, "autoDelete");
-            r.notifyBeforeExpiry = jsonBool(j, "notifyBeforeExpiry");
+            r.autoDelete = j.getBoolean("autoDelete");
+            r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
             r.createdBy = j.getString("createdBy");
 
@@ -102,8 +102,8 @@ class RetentionRuleController : PlatformController {
             r.description = j.getString("description");
             r.retentionPeriod = j.getString("retentionPeriod");
             r.periodUnit = j.getString("periodUnit");
-            r.autoDelete = jsonBool(j, "autoDelete");
-            r.notifyBeforeExpiry = jsonBool(j, "notifyBeforeExpiry");
+            r.autoDelete = j.getBoolean("autoDelete");
+            r.notifyBeforeExpiry = j.getBoolean("notifyBeforeExpiry");
             r.notifyDaysBefore = j.getString("notifyDaysBefore");
             r.modifiedBy = j.getString("modifiedBy");
 

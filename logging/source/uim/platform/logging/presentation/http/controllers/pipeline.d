@@ -56,7 +56,7 @@ class PipelineController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -71,12 +71,11 @@ class PipelineController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (p; pipelines) {
-        auto pj = Json.emptyObject;
-        pj["id"] = Json(p.id);
-        pj["name"] = Json(p.name);
-        pj["description"] = Json(p.description);
-        pj["isActive"] = Json(p.isActive);
-        jarr ~= pj;
+        jarr ~= Json.emptyObject
+          .set("id", p.id)
+          .set("name", p.name)
+          .set("description", p.description)
+          .set("isActive", p.isActive);
       }
 
       auto resp = Json.emptyObject;
@@ -99,12 +98,13 @@ class PipelineController : PlatformController {
         return;
       }
 
-      auto pj = Json.emptyObject;
-      pj["id"] = Json(p.id);
-      pj["name"] = Json(p.name);
-      pj["description"] = Json(p.description);
-      pj["isActive"] = Json(p.isActive);
-      pj["targetStreamId"] = Json(p.targetStreamId);
+      auto response = Json.emptyObject
+        .set("id", p.id)
+        .set("name", p.name)
+        .set("description", p.description)
+        .set("isActive", p.isActive)
+        .set("targetStreamId", p.targetStreamId);
+
       res.writeJsonBody(pj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -121,14 +121,14 @@ class PipelineController : PlatformController {
       r.description = j.getString("description");
       r.format = j.getString("format");
       r.targetStreamId = j.getString("targetStreamId");
-      r.isActive = jsonBool(j, "isActive", true);
+      r.isActive = j.getBoolean("isActive", true);
 
       auto result = uc.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

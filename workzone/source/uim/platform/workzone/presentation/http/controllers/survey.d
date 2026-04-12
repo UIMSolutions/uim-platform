@@ -39,8 +39,8 @@ class SurveyController {
       r.description = j.getString("description");
       r.creatorId = j.getString("creatorId");
       r.creatorName = j.getString("creatorName");
-      r.anonymous = jsonBool(j, "anonymous");
-      r.allowMultipleResponses = jsonBool(j, "allowMultipleResponses");
+      r.anonymous = j.getBoolean("anonymous");
+      r.allowMultipleResponses = j.getBoolean("allowMultipleResponses");
       r.startsAt = jsonLong(j, "startsAt");
       r.endsAt = jsonLong(j, "endsAt");
 

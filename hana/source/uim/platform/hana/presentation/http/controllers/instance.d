@@ -48,10 +48,10 @@ class InstanceController : PlatformController {
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = jsonInt(j, "vcpus");
       r.storageGB = jsonLong(j, "storageGB");
-      r.enableScriptServer = jsonBool(j, "enableScriptServer");
-      r.enableDocStore = jsonBool(j, "enableDocStore");
-      r.enableDataLake = jsonBool(j, "enableDataLake");
-      r.allowAllIpAccess = jsonBool(j, "allowAllIpAccess");
+      r.enableScriptServer = j.getBoolean("enableScriptServer");
+      r.enableDocStore = j.getBoolean("enableDocStore");
+      r.enableDataLake = j.getBoolean("enableDataLake");
+      r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
       r.whitelistedIps = jsonStrArray(j, "whitelistedIps");
       r.labels = jsonKeyValuePairs(j, "labels");
 
@@ -148,9 +148,9 @@ class InstanceController : PlatformController {
       r.memoryGB = jsonLong(j, "memoryGB");
       r.vcpus = jsonInt(j, "vcpus");
       r.storageGB = jsonLong(j, "storageGB");
-      r.enableScriptServer = jsonBool(j, "enableScriptServer");
-      r.enableDocStore = jsonBool(j, "enableDocStore");
-      r.allowAllIpAccess = jsonBool(j, "allowAllIpAccess");
+      r.enableScriptServer = j.getBoolean("enableScriptServer");
+      r.enableDocStore = j.getBoolean("enableDocStore");
+      r.allowAllIpAccess = j.getBoolean("allowAllIpAccess");
       r.whitelistedIps = jsonStrArray(j, "whitelistedIps");
 
       auto result = uc.update(r);

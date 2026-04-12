@@ -40,8 +40,8 @@ class MobileAppController : PlatformController {
       r.platform = j.getString("platform");
       r.securityConfig = j.getString("securityConfig");
       r.authProvider = j.getString("authProvider");
-      r.pushEnabled = jsonBool(j, "pushEnabled");
-      r.offlineEnabled = jsonBool(j, "offlineEnabled");
+      r.pushEnabled = j.getBoolean("pushEnabled");
+      r.offlineEnabled = j.getBoolean("offlineEnabled");
       r.iconUrl = j.getString("iconUrl");
       r.createdBy = j.getString("createdBy");
       auto result = uc.create(r);
@@ -116,8 +116,8 @@ class MobileAppController : PlatformController {
       r.securityConfig = j.getString("securityConfig");
       r.authProvider = j.getString("authProvider");
       r.status = j.getString("status");
-      r.pushEnabled = jsonBool(j, "pushEnabled");
-      r.offlineEnabled = jsonBool(j, "offlineEnabled");
+      r.pushEnabled = j.getBoolean("pushEnabled");
+      r.offlineEnabled = j.getBoolean("offlineEnabled");
       r.iconUrl = j.getString("iconUrl");
       r.modifiedBy = j.getString("modifiedBy");
       auto result = uc.update(r);

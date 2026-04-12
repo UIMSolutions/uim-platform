@@ -37,7 +37,7 @@ class RetentionController : PlatformController {
       r.dataType = j.getString("dataType");
       r.retentionDays = jsonInt(j, "retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
       r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);
@@ -45,7 +45,7 @@ class RetentionController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -60,14 +60,13 @@ class RetentionController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (p; policies) {
-        auto pj = Json.emptyObject;
-        pj["id"] = Json(p.id);
-        pj["name"] = Json(p.name);
-        pj["retentionDays"] = Json(p.retentionDays);
-        pj["maxSizeGB"] = Json(p.maxSizeGB);
-        pj["isDefault"] = Json(p.isDefault);
-        pj["isActive"] = Json(p.isActive);
-        jarr ~= pj;
+        jarr ~= Json.emptyObject
+          .set("id", p.id)
+          .set("name", p.name)
+          .set("retentionDays", p.retentionDays)
+          .set("maxSizeGB", p.maxSizeGB)
+          .set("isDefault", p.isDefault)
+          .set("isActive", p.isActive);
       }
 
       auto resp = Json.emptyObject;
@@ -90,14 +89,15 @@ class RetentionController : PlatformController {
         return;
       }
 
-      auto pj = Json.emptyObject;
-      pj["id"] = Json(p.id);
-      pj["name"] = Json(p.name);
-      pj["description"] = Json(p.description);
-      pj["retentionDays"] = Json(p.retentionDays);
-      pj["maxSizeGB"] = Json(p.maxSizeGB);
-      pj["isDefault"] = Json(p.isDefault);
-      pj["isActive"] = Json(p.isActive);
+      auto response = Json.emptyObject
+        .set("id", p.id)
+        .set("name", p.name)
+        .set("description", p.description)
+        .set("retentionDays", p.retentionDays)
+        .set("maxSizeGB", p.maxSizeGB)
+        .set("isDefault", p.isDefault)
+        .set("isActive", p.isActive);
+
       res.writeJsonBody(pj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -114,15 +114,15 @@ class RetentionController : PlatformController {
       r.description = j.getString("description");
       r.retentionDays = jsonInt(j, "retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
-      r.isDefault = jsonBool(j, "isDefault");
-      r.isActive = jsonBool(j, "isActive", true);
+      r.isDefault = j.getBoolean("isDefault");
+      r.isActive = j.getBoolean("isActive", true);
 
       auto result = uc.update(id, r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

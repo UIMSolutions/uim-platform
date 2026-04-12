@@ -41,7 +41,7 @@ class DataContextController : PlatformController {
             r.entityTypeId = j.getString("entityTypeId");
             r.data = jsonKeyValuePairs(j, "data");
             r.sourceSystem = j.getString("sourceSystem");
-            r.containsPersonalData = jsonBool(j, "containsPersonalData");
+            r.containsPersonalData = j.getBoolean("containsPersonalData");
             r.expiresAt = jsonLong(j, "expiresAt");
 
             auto result = uc.create(r);

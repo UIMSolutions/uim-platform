@@ -42,8 +42,8 @@ class DatabaseUserController : PlatformController {
       r.password = j.getString("password");
       r.authType = j.getString("authType");
       r.defaultSchema = j.getString("defaultSchema");
-      r.isRestricted = jsonBool(j, "isRestricted");
-      r.forcePasswordChange = jsonBool(j, "forcePasswordChange", true);
+      r.isRestricted = j.getBoolean("isRestricted");
+      r.forcePasswordChange = j.getBoolean("forcePasswordChange", true);
       r.roles = jsonStrArray(j, "roles");
 
       auto result = uc.create(r);
@@ -123,8 +123,8 @@ class DatabaseUserController : PlatformController {
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.password = j.getString("password");
       r.defaultSchema = j.getString("defaultSchema");
-      r.isRestricted = jsonBool(j, "isRestricted");
-      r.forcePasswordChange = jsonBool(j, "forcePasswordChange");
+      r.isRestricted = j.getBoolean("isRestricted");
+      r.forcePasswordChange = j.getBoolean("forcePasswordChange");
       r.roles = jsonStrArray(j, "roles");
 
       auto result = uc.update(r);

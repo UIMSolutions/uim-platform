@@ -45,7 +45,7 @@ class DatabaseConnectionController : PlatformController {
       r.database = j.getString("database");
       r.user = j.getString("user");
       r.password = j.getString("password");
-      r.useTls = jsonBool(j, "useTls", true);
+      r.useTls = j.getBoolean("useTls", true);
       r.minConnections = jsonInt(j, "minConnections", 1);
       r.maxConnections = jsonInt(j, "maxConnections", 10);
       r.properties = jsonKeyValuePairs(j, "properties");

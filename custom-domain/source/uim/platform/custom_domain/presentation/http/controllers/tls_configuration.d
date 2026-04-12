@@ -37,10 +37,10 @@ class TlsConfigurationController : PlatformController {
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
             r.maxProtocolVersion = j.getString("maxProtocolVersion");
-            r.http2Enabled = jsonBool(j, "http2Enabled");
-            r.hstsEnabled = jsonBool(j, "hstsEnabled");
+            r.http2Enabled = j.getBoolean("http2Enabled");
+            r.hstsEnabled = j.getBoolean("hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
-            r.hstsIncludeSubDomains = jsonBool(j, "hstsIncludeSubDomains");
+            r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
@@ -130,10 +130,10 @@ class TlsConfigurationController : PlatformController {
             r.description = j.getString("description");
             r.minProtocolVersion = j.getString("minProtocolVersion");
             r.maxProtocolVersion = j.getString("maxProtocolVersion");
-            r.http2Enabled = jsonBool(j, "http2Enabled");
-            r.hstsEnabled = jsonBool(j, "hstsEnabled");
+            r.http2Enabled = j.getBoolean("http2Enabled");
+            r.hstsEnabled = j.getBoolean("hstsEnabled");
             r.hstsMaxAge = jsonLong(j, "hstsMaxAge");
-            r.hstsIncludeSubDomains = jsonBool(j, "hstsIncludeSubDomains");
+            r.hstsIncludeSubDomains = j.getBoolean("hstsIncludeSubDomains");
             r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);

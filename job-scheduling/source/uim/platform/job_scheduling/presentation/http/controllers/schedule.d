@@ -45,7 +45,7 @@ class ScheduleController : PlatformController {
             r.description = j.getString("description");
             r.type = j.getString("type");
             r.format = j.getString("format");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.cronExpression = j.getString("cron");
             r.humanReadableSchedule = j.getString("humanReadableSchedule");
             r.repeatInterval = jsonLong(j, "repeatInterval");
@@ -126,7 +126,7 @@ class ScheduleController : PlatformController {
             r.jobId = ids[0];
             r.scheduleId = ids[1];
             r.description = j.getString("description");
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
             r.cronExpression = j.getString("cron");
             r.humanReadableSchedule = j.getString("humanReadableSchedule");
             r.repeatInterval = jsonLong(j, "repeatInterval");
@@ -179,7 +179,7 @@ class ScheduleController : PlatformController {
             ActivateAllSchedulesRequest r;
             r.tenantId = req.getTenantId;
             r.jobId = jobId;
-            r.active = jsonBool(j, "active", true);
+            r.active = j.getBoolean("active", true);
 
             auto result = uc.activateAll(r);
             if (result.success) {

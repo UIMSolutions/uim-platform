@@ -115,11 +115,12 @@ class TraceController : PlatformController {
           .set("durationMs", s.durationMs);
       }
 
-      auto resp = Json.emptyObject;
-      resp["traceId"] = Json(traceId);
-      resp["spans"] = jarr;
-      resp["totalSpans"] = Json(spans.length);
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject
+        .set("traceId", Json(traceId))
+        .set("spans", jarr)
+        .set("totalSpans", Json(spans.length));
+        
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

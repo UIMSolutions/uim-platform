@@ -37,8 +37,8 @@ class PageTemplateController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.thumbnailUrl = j.getString("thumbnailUrl");
-      r.isDefault = jsonBool(j, "isDefault");
-      r.isPublic = jsonBool(j, "isPublic");
+      r.isDefault = j.getBoolean("isDefault");
+      r.isPublic = j.getBoolean("isPublic");
 
       auto result = useCase.createPageTemplate(r);
       if (result.isSuccess()) {
@@ -98,8 +98,8 @@ class PageTemplateController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.isDefault = jsonBool(j, "isDefault");
-      r.isPublic = jsonBool(j, "isPublic");
+      r.isDefault = j.getBoolean("isDefault");
+      r.isPublic = j.getBoolean("isPublic");
 
       auto result = useCase.updatePageTemplate(r);
       if (result.isSuccess())

@@ -172,10 +172,11 @@ class FilterRuleController : PlatformController {
         .set("lowerBound", Json(c.lowerBound))
         .set("upperBound", Json(c.upperBound));
     }
-    j["conditions"] = condsArr;
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    j["modifiedAt"] = Json(r.modifiedAt);
+
     return j;
+    .set("conditions", condsArr)
+    .set("createdBy", r.createdBy)
+    .set("createdAt", r.createdAt)
+    .set("modifiedAt", r.modifiedAt);
   }
 }

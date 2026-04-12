@@ -41,7 +41,7 @@ class BackupController : PlatformController {
       r.name = j.getString("name");
       r.type = j.getString("type");
       r.destination = j.getString("destination");
-      r.encrypted = jsonBool(j, "encrypted");
+      r.encrypted = j.getBoolean("encrypted");
       r.cronExpression = j.getString("cronExpression");
       r.retentionDays = jsonInt(j, "retentionDays", 30);
 

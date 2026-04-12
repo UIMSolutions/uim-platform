@@ -111,7 +111,7 @@ class StreamController : PlatformController {
       UpdateLogStreamRequest r;
       r.description = j.getString("description");
       r.retentionPolicyId = j.getString("retentionPolicyId");
-      r.isActive = jsonBool(j, "isActive", true);
+      r.isActive = j.getBoolean("isActive", true);
 
       auto result = uc.update(id, r);
       if (result.success) {

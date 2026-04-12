@@ -41,7 +41,7 @@ class EventController {
       r.meetingUrl = j.getString("meetingUrl");
       r.organizerId = j.getString("organizerId");
       r.organizerName = j.getString("organizerName");
-      r.allDay = jsonBool(j, "allDay");
+      r.allDay = j.getBoolean("allDay");
       r.startTime = jsonLong(j, "startTime");
       r.endTime = jsonLong(j, "endTime");
       r.timezone = j.getString("timezone");

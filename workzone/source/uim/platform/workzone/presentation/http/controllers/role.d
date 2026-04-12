@@ -37,7 +37,7 @@ class RoleController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.permissions = jsonStrArray(j, "permissions");
-      r.isDefault = jsonBool(j, "isDefault");
+      r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createRole(r);
       if (result.isSuccess()) {

@@ -100,8 +100,8 @@ class ForumTopicController {
       r.tenantId = req.getTenantId;
       r.title = j.getString("title");
       r.body_ = j.getString("body");
-      r.pinned = jsonBool(j, "pinned");
-      r.locked = jsonBool(j, "locked");
+      r.pinned = j.getBoolean("pinned");
+      r.locked = j.getBoolean("locked");
 
       auto result = useCase.updateForumTopic(r);
       if (result.isSuccess())
