@@ -135,11 +135,6 @@ class ResourceGroupController : PlatformController {
   }
 
   private Json serializeResourceGroup(ResourceGroup g) {
-    import uim.platform.ai_launchpad.domain.entities.resource_group : LabelPair;
-    auto j = Json.emptyObject;
-    j["id"] = Json(g.id);
-    j["connectionId"] = Json(g.connectionId);
-
     auto labels = Json.emptyArray;
     foreach (l; g.labels) {
       auto lj = Json.emptyObject;
@@ -147,11 +142,13 @@ class ResourceGroupController : PlatformController {
       lj["value"] = Json(l.value);
       labels ~= lj;
     }
-    j["labels"] = labels;
-
-    j["status"] = Json(g.status);
-    j["createdAt"] = Json(g.createdAt);
-    j["modifiedAt"] = Json(g.modifiedAt);
-    return j;
+    
+    return Json.emptyObject
+    .set("id", g.id)
+    .set("connectionId", g.connectionId)
+    .set("labels", labels)
+    .set("status", g.status)
+    .set("createdAt", g.createdAt)
+    .set("modifiedAt", g.modifiedAt);
   }
 }

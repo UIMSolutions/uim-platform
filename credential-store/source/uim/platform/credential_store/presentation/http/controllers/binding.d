@@ -70,12 +70,11 @@ class BindingController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (b; bindings) {
-        auto bj = Json.emptyObject;
-        bj["id"] = Json(b.id);
-        bj["name"] = Json(b.name);
-        bj["clientId"] = Json(b.clientId);
-        bj["createdAt"] = Json(b.createdAt);
-        jarr ~= bj;
+        jarr ~= Json.emptyObject
+        .set("id", b.id)
+        .set("name", b.name)
+        .set("clientId", b.clientId)
+        .set("createdAt", b.createdAt);
       }
 
       auto resp = Json.emptyObject;

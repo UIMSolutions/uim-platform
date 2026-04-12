@@ -66,15 +66,14 @@ class ConfigurationController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; configs) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["instanceId"] = Json(c.instanceId);
-        cj["section"] = Json(c.section);
-        cj["key"] = Json(c.key);
-        cj["value"] = Json(c.value);
-        cj["isReadOnly"] = Json(c.isReadOnly);
-        cj["requiresRestart"] = Json(c.requiresRestart);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+          .set("id", c.id)
+          .set("instanceId", c.instanceId)
+          .set("section", c.section)
+          .set("key", c.key)
+          .set("value", c.value)
+          .set("isReadOnly", c.isReadOnly)
+          .set("requiresRestart", c.requiresRestart);
       }
 
       auto resp = Json.emptyObject;

@@ -63,16 +63,15 @@ class SchemaController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (s; schemas) {
-        auto sj = Json.emptyObject;
-        sj["id"] = Json(s.id);
-        sj["instanceId"] = Json(s.instanceId);
-        sj["name"] = Json(s.name);
-        sj["owner"] = Json(s.owner);
-        sj["tableCount"] = Json(s.tableCount);
-        sj["viewCount"] = Json(s.viewCount);
-        sj["sizeBytes"] = Json(s.sizeBytes);
-        sj["createdAt"] = Json(s.createdAt);
-        jarr ~= sj;
+        jarr ~= Json.emptyObject
+        .set("id", s.id)
+        .set("instanceId", s.instanceId)
+        .set("name", s.name)
+        .set("owner", s.owner)
+        .set("tableCount", s.tableCount)
+        .set("viewCount", s.viewCount)
+        .set("sizeBytes", s.sizeBytes)
+        .set("createdAt", s.createdAt);
       }
 
       auto resp = Json.emptyObject;

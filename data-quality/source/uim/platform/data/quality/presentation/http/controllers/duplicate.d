@@ -138,16 +138,15 @@ class DuplicateController : PlatformController {
 
     auto candidates = Json.emptyArray;
     foreach (c; g.candidates) {
-      auto cj = Json.emptyObject;
-      cj["recordId"] = Json(c.recordId);
-      cj["score"] = Json(c.score);
-      cj["confidence"] = Json(c.confidence.to!string);
-      cj["isSurvivor"] = Json(c.isSurvivor);
-      candidates ~= cj;
+      candidates ~= Json.emptyObject
+      .set("recordId", c.recordId)
+      .set("score", c.score)
+      .set("confidence", c.confidence.to!string)
+      .set("isSurvivor", c.isSurvivor);
     }
-    j["candidates"] = candidates;
+    json["candidates"] = candidates;
 
-    return j;
+    return json;
   }
 
   private static MatchStrategy parseStrategy(string s) {

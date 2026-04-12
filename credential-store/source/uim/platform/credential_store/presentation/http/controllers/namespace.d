@@ -60,12 +60,11 @@ class NamespaceController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (ns; namespaces) {
-        auto nj = Json.emptyObject;
-        nj["id"] = Json(ns.id);
-        nj["name"] = Json(ns.name);
-        nj["description"] = Json(ns.description);
-        nj["createdAt"] = Json(ns.createdAt);
-        jarr ~= nj;
+        jarr ~= Json.emptyObject
+          .set("id", ns.id)
+          .set("name", ns.name)
+          .set("description", ns.description)
+          .set("createdAt", ns.createdAt);
       }
 
       auto resp = Json.emptyObject;

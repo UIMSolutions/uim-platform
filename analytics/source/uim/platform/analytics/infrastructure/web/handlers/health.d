@@ -14,10 +14,10 @@ mixin(ShowModule!());
 
 class HealthHandler {
   void check(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto j = Json.emptyObject;
-    j["status"] = "healthy";
-    j["service"] = "analytics";
-    j["version"] = "1.0.0";
+    auto j = Json.emptyObject
+    .set("status", "healthy")
+    .set("service", "analytics")
+    .set("version", "1.0.0");
     res.writeJsonBody(j);
   }
 }

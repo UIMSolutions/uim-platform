@@ -69,15 +69,14 @@ class AlertController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (a; alerts) {
-        auto aj = Json.emptyObject;
-        aj["id"] = Json(a.id);
-        aj["instanceId"] = Json(a.instanceId);
-        aj["name"] = Json(a.name);
-        aj["severity"] = Json(a.severity.to!string);
-        aj["status"] = Json(a.status.to!string);
-        aj["category"] = Json(a.category.to!string);
-        aj["triggeredAt"] = Json(a.triggeredAt);
-        jarr ~= aj;
+        jarr ~= Json.emptyObject
+        .set("id", a.id)
+        .set("instanceId", a.instanceId)
+        .set("name", a.name)
+        .set("severity", a.severity.to!string)
+        .set("status", a.status.to!string)
+        .set("category", a.category.to!string)
+        .set("triggeredAt", a.triggeredAt);
       }
 
       auto resp = Json.emptyObject;

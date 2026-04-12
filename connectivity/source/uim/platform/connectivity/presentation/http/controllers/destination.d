@@ -175,10 +175,9 @@ class DestinationController : PlatformController {
     if (d.properties.length > 0) {
       auto props = Json.emptyArray;
       foreach (p; d.properties) {
-        auto pj = Json.emptyObject;
-        pj["key"] = Json(p.key);
-        pj["value"] = Json(p.value);
-        props ~= pj;
+        props ~= Json.emptyObject
+          .set("key", p.key)
+          .set("value", p.value);
       }
       j["properties"] = props;
     }
@@ -186,18 +185,17 @@ class DestinationController : PlatformController {
     if (d.additionalHeaders.length > 0) {
       auto hdrs = Json.emptyArray;
       foreach (h; d.additionalHeaders) {
-        auto hj = Json.emptyObject;
-        hj["key"] = Json(h.key);
-        hj["value"] = Json(h.value);
-        hdrs ~= hj;
+        hdrs ~= Json.emptyObject
+          .set("key", h.key)
+          .set("value", h.value);
       }
       j["additionalHeaders"] = hdrs;
     }
 
-    j["createdBy"] = Json(d.createdBy);
-    j["createdAt"] = Json(d.createdAt);
-    j["updatedAt"] = Json(d.updatedAt);
-    return j;
+    return j
+    .set("createdBy", d.createdBy)
+    .set("createdAt", d.createdAt)
+    .set("updatedAt", d.updatedAt);
   }
 
   private static DestinationProperty[] parseProperties(Json j) {

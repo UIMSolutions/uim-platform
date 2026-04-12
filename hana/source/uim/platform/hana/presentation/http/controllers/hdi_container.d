@@ -63,15 +63,14 @@ class HDIContainerController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; containers) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["instanceId"] = Json(c.instanceId);
-        cj["name"] = Json(c.name);
-        cj["status"] = Json(c.status.to!string);
-        cj["artifactCount"] = Json(c.artifactCount);
-        cj["sizeBytes"] = Json(c.sizeBytes);
-        cj["createdAt"] = Json(c.createdAt);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+        .set("id", c.id)
+        .set("instanceId", c.instanceId)
+        .set("name", c.name)
+        .set("status", c.status.to!string)
+        .set("artifactCount", c.artifactCount)
+        .set("sizeBytes", c.sizeBytes)
+        .set("createdAt", c.createdAt);
       }
 
       auto resp = Json.emptyObject;

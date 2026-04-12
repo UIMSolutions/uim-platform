@@ -62,15 +62,14 @@ class ConnectionController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (c; connections) {
-        auto cj = Json.emptyObject;
-        cj["id"] = Json(c.id);
-        cj["name"] = Json(c.name);
-        cj["description"] = Json(c.description);
-        cj["isValid"] = Json(c.isValid);
-        cj["statusMessage"] = Json(c.statusMessage);
-        cj["createdAt"] = Json(c.createdAt);
-        cj["modifiedAt"] = Json(c.modifiedAt);
-        jarr ~= cj;
+        jarr ~= Json.emptyObject
+        .set("id", c.id)
+        .set("name", c.name)
+        .set("description", c.description)
+        .set("isValid", c.isValid)
+        .set("statusMessage", c.statusMessage)
+        .set("createdAt", c.createdAt)
+        .set("modifiedAt", c.modifiedAt);
       }
 
       auto resp = Json.emptyObject;
