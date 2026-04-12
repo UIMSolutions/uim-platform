@@ -61,13 +61,12 @@ class DeviceRegistrationController : PlatformController {
       auto resp = Json.emptyObject;
       auto items = Json.emptyArray;
       foreach (item; results) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(item.id);
-        obj["appId"] = Json(item.appId);
-        obj["deviceModel"] = Json(item.deviceModel);
-        obj["platform"] = Json(item.platform);
-        obj["status"] = Json(item.status);
-        items ~= obj;
+        items ~= Json.emptyObject
+          .set("id", item.id)
+          .set("appId", item.appId)
+          .set("deviceModel", item.deviceModel)
+          .set("platform", item.platform)
+          .set("status", item.status);
       }
       resp["items"] = items;
       res.writeJsonBody(resp, 200);

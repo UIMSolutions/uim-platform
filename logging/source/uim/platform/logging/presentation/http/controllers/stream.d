@@ -45,7 +45,7 @@ class StreamController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -61,10 +61,10 @@ class StreamController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (s; streams) {
         jarr ~= Json.emptyObject
-        .set("id", s.id)
-        .set("name", s.name)
-        .set("description", s.description)
-        .set("isActive", s.isActive);
+          .set("id", s.id)
+          .set("name", s.name)
+          .set("description", s.description)
+          .set("isActive", s.isActive);
       }
 
       auto resp = Json.emptyObject;
@@ -88,14 +88,15 @@ class StreamController : PlatformController {
         return;
       }
 
-      auto sj = Json.emptyObject;
-      sj["id"] = Json(s.id);
-      sj["tenantId"] = Json(s.tenantId);
-      sj["name"] = Json(s.name);
-      sj["description"] = Json(s.description);
-      sj["isActive"] = Json(s.isActive);
-      sj["retentionPolicyId"] = Json(s.retentionPolicyId);
-      res.writeJsonBody(sj, 200);
+      auto response = Json.emptyObject
+        .set("id", s.id)
+        .set("tenantId", s.tenantId)
+        .set("name", s.name)
+        .set("description", s.description)
+        .set("isActive", s.isActive)
+        .set("retentionPolicyId", s.retentionPolicyId);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -117,7 +118,7 @@ class StreamController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

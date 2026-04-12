@@ -151,30 +151,28 @@ class FilterRuleController : PlatformController {
   }
 
   private Json serializeRule(FilterRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["name"] = Json(r.name);
-    j["description"] = Json(r.description);
-    j["category"] = Json(r.category.to!string);
-    j["dataModelId"] = Json(r.dataModelId);
-    j["objectType"] = Json(r.objectType);
-    j["logicOperator"] = Json(r.logicOperator);
-    j["isActive"] = Json(r.isActive);
+    auto j = Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("name", r.name)
+      .set("description", r.description)
+      .set("category", r.category.to!string)
+      .set("dataModelId", r.dataModelId)
+      .set("objectType", r.objectType)
+      .set("logicOperator", r.logicOperator)
+      .set("isActive", r.isActive);
 
     auto condsArr = Json.emptyArray;
     foreach (c; r.conditions) {
-      auto cj = Json.emptyObject;
-      cj["fieldName"] = Json(c.fieldName);
-      cj["operator"] = Json(c.operator.to!string);
-      cj["value"] = Json(c.value);
-      cj["valueList"] = serializeStrArray(c.valueList);
-      cj["lowerBound"] = Json(c.lowerBound);
-      cj["upperBound"] = Json(c.upperBound);
-      condsArr ~= cj;
+      condsArr ~= Json.emptyObject
+        .set("fieldName", Json(c.fieldName))
+        .set("operator", Json(c.operator.to!string))
+        .set("value", Json(c.value))
+        .set("valueList", serializeStrArray(c.valueList))
+        .set("lowerBound", Json(c.lowerBound))
+        .set("upperBound", Json(c.upperBound));
     }
     j["conditions"] = condsArr;
-
     j["createdBy"] = Json(r.createdBy);
     j["createdAt"] = Json(r.createdAt);
     j["modifiedAt"] = Json(r.modifiedAt);

@@ -92,26 +92,26 @@ class SearchController : PlatformController {
         return;
       }
 
-      auto ej = Json.emptyObject;
-      ej["id"] = Json(entry.id);
-      ej["tenantId"] = Json(entry.tenantId);
-      ej["streamId"] = Json(entry.streamId);
-      ej["timestamp"] = Json(entry.timestamp);
-      ej["level"] = Json(LogParser.levelToString(entry.level));
-      ej["source"] = Json(entry.source);
-      ej["message"] = Json(entry.message);
-      ej["traceId"] = Json(entry.traceId);
-      ej["spanId"] = Json(entry.spanId);
-      ej["requestId"] = Json(entry.requestId);
-      ej["correlationId"] = Json(entry.correlationId);
-      ej["componentName"] = Json(entry.componentName);
-      ej["spaceName"] = Json(entry.spaceName);
-      ej["orgName"] = Json(entry.orgName);
-      ej["resourceType"] = Json(entry.resourceType);
-      ej["resourceId"] = Json(entry.resourceId);
-      ej["tags"] = toJsonArray(entry.tags);
+      auto response = Json.emptyObject
+        .set("id", entry.id)
+        .set("tenantId", entry.tenantId)
+        .set("streamId", entry.streamId)
+        .set("timestamp", entry.timestamp)
+        .set("level", LogParser.levelToString(entry.level))
+        .set("source", entry.source)
+        .set("message", entry.message)
+        .set("traceId", entry.traceId)
+        .set("spanId", entry.spanId)
+        .set("requestId", entry.requestId)
+        .set("correlationId", entry.correlationId)
+        .set("componentName", entry.componentName)
+        .set("spaceName", entry.spaceName)
+        .set("orgName", entry.orgName)
+        .set("resourceType", entry.resourceType)
+        .set("resourceId", entry.resourceId)
+        .set("tags", toJsonArray(entry.tags));
 
-      res.writeJsonBody(ej, 200);
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

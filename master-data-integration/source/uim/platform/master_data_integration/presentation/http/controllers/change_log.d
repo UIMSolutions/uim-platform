@@ -82,24 +82,23 @@ class ChangeLogController : PlatformController {
   }
 
   private Json serializeEntry(ChangeLogEntry e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["tenantId"] = Json(e.tenantId);
-    j["objectId"] = Json(e.objectId);
-    j["dataModelId"] = Json(e.dataModelId);
-    j["category"] = Json(e.category.to!string);
-    j["changeType"] = Json(e.changeType.to!string);
-    j["objectType"] = Json(e.objectType);
-    j["changedFields"] = serializeStrArray(e.changedFields);
-    j["oldValues"] = serializeStrMap(e.oldValues);
-    j["newValues"] = serializeStrMap(e.newValues);
-    j["sourceSystem"] = Json(e.sourceSystem);
-    j["sourceClient"] = Json(e.sourceClient);
-    j["changedBy"] = Json(e.changedBy);
-    j["fromVersion"] = Json(e.fromVersion);
-    j["toVersion"] = Json(e.toVersion);
-    j["deltaToken"] = Json(e.deltaToken);
-    j["timestamp"] = Json(e.timestamp);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("tenantId", e.tenantId)
+      .set("objectId", e.objectId)
+      .set("dataModelId", e.dataModelId)
+      .set("category", e.category.to!string)
+      .set("changeType", e.changeType.to!string)
+      .set("objectType", e.objectType)
+      .set("changedFields", e.changedFields)
+      .set("oldValues", e.oldValues)
+      .set("newValues", e.newValues)
+      .set("sourceSystem", e.sourceSystem)
+      .set("sourceClient", e.sourceClient)
+      .set("changedBy", e.changedBy)
+      .set("fromVersion", e.fromVersion)
+      .set("toVersion", e.toVersion)
+      .set("deltaToken", e.deltaToken)
+      .set("timestamp", e.timestamp);
   }
 }

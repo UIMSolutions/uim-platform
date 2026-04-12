@@ -104,16 +104,15 @@ class TraceController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (s; spans) {
-        auto sj = Json.emptyObject;
-        sj["id"] = Json(s.id);
-        sj["traceId"] = Json(s.traceId);
-        sj["parentSpanId"] = Json(s.parentSpanId);
-        sj["operationName"] = Json(s.operationName);
-        sj["serviceName"] = Json(s.serviceName);
-        sj["startTime"] = Json(s.startTime);
-        sj["endTime"] = Json(s.endTime);
-        sj["durationMs"] = Json(s.durationMs);
-        jarr ~= sj;
+        jarr ~= Json.emptyObject
+          .set("id", s.id)
+          .set("traceId", s.traceId)
+          .set("parentSpanId", s.parentSpanId)
+          .set("operationName", s.operationName)
+          .set("serviceName", s.serviceName)
+          .set("startTime", s.startTime)
+          .set("endTime", s.endTime)
+          .set("durationMs", s.durationMs);
       }
 
       auto resp = Json.emptyObject;
