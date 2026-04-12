@@ -44,7 +44,7 @@ class TaskAttachmentController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Attachment created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +61,7 @@ class TaskAttachmentController : PlatformController {
             TaskAttachment[] attachments;
             if (taskId.length > 0) {
                 attachments = uc.listByTask(tenantId, taskId);
-            } ) {
+            }) {
                 attachments = [];
             }
 
@@ -82,6 +82,7 @@ class TaskAttachmentController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto a = uc.get_(tenantId, id);
@@ -98,6 +99,7 @@ class TaskAttachmentController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
@@ -106,7 +108,7 @@ class TaskAttachmentController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Attachment deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -115,17 +117,15 @@ class TaskAttachmentController : PlatformController {
     }
 
     private Json attachmentToJson(TaskAttachment a) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(a.id);
-        j["tenantId"] = Json(a.tenantId);
-        j["taskId"] = Json(a.taskId);
-        j["fileName"] = Json(a.fileName);
-        j["fileSize"] = Json(a.fileSize);
-        j["mimeType"] = Json(a.mimeType);
-        j["status"] = Json(a.status.to!string);
-        j["uploadedBy"] = Json(a.uploadedBy);
-        j["uploadedAt"] = Json(a.uploadedAt);
-        return j;
+        return Json.emptyObject
+            .set("id", a.id)
+            .set("tenantId", a.tenantId)
+            .set("taskId", a.taskId)
+            .set("fileName", a.fileName)
+            .set("fileSize", a.fileSize)
+            .set("mimeType", a.mimeType)
+            .set("status", a.status.to!string)
+            .set("uploadedBy", a.uploadedBy)
+            .set("uploadedAt", a.uploadedAt);
     }
 }

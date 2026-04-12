@@ -69,18 +69,17 @@ class SituationInstanceController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (i; instances) {
-                auto ij = Json.emptyObject;
-                ij["id"] = Json(i.id);
-                ij["templateId"] = Json(i.templateId);
-                ij["description"] = Json(i.description);
-                ij["status"] = Json(i.status.to!string);
-                ij["severity"] = Json(i.severity.to!string);
-                ij["entityId"] = Json(i.entityId);
-                ij["assignedTo"] = Json(i.assignedTo);
-                ij["detectedAt"] = Json(i.detectedAt);
-                ij["dueAt"] = Json(i.dueAt);
-                ij["modifiedAt"] = Json(i.modifiedAt);
-                jarr ~= ij;
+                jarr ~= Json.emptyObject
+                .set("id", i.id)
+                .set("templateId", i.templateId)
+                .set("description", i.description)
+                .set("status", i.status.to!string)
+                .set("severity", i.severity.to!string)
+                .set("entityId", i.entityId)
+                .set("assignedTo", i.assignedTo)
+                .set("detectedAt", i.detectedAt)
+                .set("dueAt", i.dueAt)
+                .set("modifiedAt", i.modifiedAt);
             }
 
             auto resp = Json.emptyObject;

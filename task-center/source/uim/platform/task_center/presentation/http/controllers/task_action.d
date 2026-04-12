@@ -115,16 +115,14 @@ class TaskActionController : PlatformController {
     }
 
     private Json actionToJson(TaskAction a) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(a.id);
-        j["tenantId"] = Json(a.tenantId);
-        j["taskId"] = Json(a.taskId);
-        j["actionType"] = Json(a.actionType.to!string);
-        j["performedBy"] = Json(a.performedBy);
-        j["forwardTo"] = Json(a.forwardTo);
-        j["comment"] = Json(a.comment);
-        j["performedAt"] = Json(a.performedAt);
-        return j;
+        return Json.emptyObject
+        .set("id", a.id)
+        .set("tenantId", a.tenantId)
+        .set("taskId", a.taskId)
+        .set("actionType", a.actionType.to!string)
+        .set("performedBy", a.performedBy)
+        .set("forwardTo", a.forwardTo)
+        .set("comment", a.comment)
+        .set("performedAt", a.performedAt);
     }
 }

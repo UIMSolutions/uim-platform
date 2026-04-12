@@ -191,17 +191,17 @@ private CardManifest parseManifest(Json j) {
 
 private Json serializeCard(Card c) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(c.id);
-  j["tenantId"] = Json(c.tenantId);
-  j["title"] = Json(c.title);
-  j["subtitle"] = Json(c.subtitle);
-  j["description"] = Json(c.description);
-  j["icon"] = Json(c.icon);
-  j["cardType"] = Json(c.cardType.to!string);
-  j["active"] = Json(c.active);
-  j["createdAt"] = Json(c.createdAt);
-  j["updatedAt"] = Json(c.updatedAt);
+  auto j = Json.emptyObject
+  .set("id", c.id)
+  .set("tenantId", c.tenantId)
+  .set("title", c.title)
+  .set("subtitle", c.subtitle)
+  .set("description", c.description)
+  .set("icon", c.icon)
+  .set("cardType", c.cardType.to!string)
+  .set("active", c.active)
+  .set("createdAt", c.createdAt)
+  .set("updatedAt", c.updatedAt);
 
   // Data source
   auto ds = Json.emptyObject

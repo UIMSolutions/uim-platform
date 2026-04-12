@@ -185,25 +185,25 @@ class ContentController {
 
 private Json serializeContent(ContentItem c) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(c.id);
-  j["workspaceId"] = Json(c.workspaceId);
-  j["tenantId"] = Json(c.tenantId);
-  j["title"] = Json(c.title);
-  j["body"] = Json(c.body_);
-  j["summary"] = Json(c.summary);
-  j["contentType"] = Json(c.contentType.to!string);
-  j["status"] = Json(c.status.to!string);
-  j["authorId"] = Json(c.authorId);
-  j["authorName"] = Json(c.authorName);
-  j["language"] = Json(c.language);
-  j["viewCount"] = Json(c.viewCount);
-  j["likeCount"] = Json(c.likeCount);
-  j["pinned"] = Json(c.pinned);
-  j["commentsEnabled"] = Json(c.commentsEnabled);
-  j["publishedAt"] = Json(c.publishedAt);
-  j["createdAt"] = Json(c.createdAt);
-  j["updatedAt"] = Json(c.updatedAt);
+  auto j = Json.emptyObject
+  .set("id", c.id)
+  .set("workspaceId", c.workspaceId)
+  .set("tenantId", c.tenantId)
+  .set("title", c.title)
+  .set("body", c.body_)
+  .set("summary", c.summary)
+  .set("contentType", c.contentType.to!string)
+  .set("status", c.status.to!string)
+  .set("authorId", c.authorId)
+  .set("authorName", c.authorName)
+  .set("language", c.language)
+  .set("viewCount", c.viewCount)
+  .set("likeCount", c.likeCount)
+  .set("pinned", c.pinned)
+  .set("commentsEnabled", c.commentsEnabled)
+  .set("publishedAt", c.publishedAt)
+  .set("createdAt", c.createdAt)
+  .set("updatedAt", c.updatedAt);
 
   auto tags = Json.emptyArray;
   foreach (t; c.tags)

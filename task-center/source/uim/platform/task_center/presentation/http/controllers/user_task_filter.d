@@ -44,7 +44,7 @@ class UserTaskFilterController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +61,7 @@ class UserTaskFilterController : PlatformController {
             UserTaskFilter[] filters;
             if (userId.length > 0) {
                 filters = uc.listByUser(tenantId, userId);
-            } ) {
+            }) {
                 filters = [];
             }
 
@@ -83,8 +83,10 @@ class UserTaskFilterController : PlatformController {
         try {
             import std.conv : to;
             import std.algorithm : endsWith;
+
             auto path = req.requestURI.to!string;
-            if (path.endsWith("/default")) return;
+            if (path.endsWith("/default"))
+                return;
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
@@ -102,6 +104,7 @@ class UserTaskFilterController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateUserTaskFilterRequest r;
@@ -116,7 +119,7 @@ class UserTaskFilterController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -127,6 +130,7 @@ class UserTaskFilterController : PlatformController {
     private void handleSetDefault(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/default"
             auto id = extractIdFromPath(stripped);
@@ -138,7 +142,7 @@ class UserTaskFilterController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter set as default");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -149,6 +153,7 @@ class UserTaskFilterController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(tenantId, id);
@@ -157,7 +162,7 @@ class UserTaskFilterController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Filter deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -166,15 +171,14 @@ class UserTaskFilterController : PlatformController {
     }
 
     private Json filterToJson(UserTaskFilter f) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(f.id);
-        j["tenantId"] = Json(f.tenantId);
-        j["userId"] = Json(f.userId);
-        j["name"] = Json(f.name);
-        j["description"] = Json(f.description);
-        j["isDefault"] = Json(f.isDefault);
-        j["createdAt"] = Json(f.createdAt);
-        j["modifiedAt"] = Json(f.modifiedAt);
-        return j;
+        return Json.emptyObject
+            .set("id", f.id)
+            .set("tenantId", f.tenantId)
+            .set("userId", f.userId)
+            .set("name", f.name)
+            .set("description", f.description)
+            .set("isDefault", f.isDefault)
+            .set("createdAt", f.createdAt)
+            .set("modifiedAt", f.modifiedAt);
     }
 }

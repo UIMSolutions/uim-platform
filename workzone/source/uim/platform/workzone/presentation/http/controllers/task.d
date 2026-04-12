@@ -189,25 +189,25 @@ class TaskController {
 
 private Json serializeTask(Task t) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(t.id);
-  j["tenantId"] = Json(t.tenantId);
-  j["assigneeId"] = Json(t.assigneeId);
-  j["assigneeName"] = Json(t.assigneeName);
-  j["creatorId"] = Json(t.creatorId);
-  j["creatorName"] = Json(t.creatorName);
-  j["title"] = Json(t.title);
-  j["description"] = Json(t.description);
-  j["status"] = Json(t.status.to!string);
-  j["priority"] = Json(t.priority.to!string);
-  j["sourceApp"] = Json(t.sourceApp);
-  j["sourceTaskId"] = Json(t.sourceTaskId);
-  j["actionUrl"] = Json(t.actionUrl);
-  j["category"] = Json(t.category);
-  j["dueDate"] = Json(t.dueDate);
-  j["completedAt"] = Json(t.completedAt);
-  j["createdAt"] = Json(t.createdAt);
-  j["updatedAt"] = Json(t.updatedAt);
+  auto j = Json.emptyObject
+  .set("id", t.id)
+  .set("tenantId", t.tenantId)
+  .set("assigneeId", t.assigneeId)
+  .set("assigneeName", t.assigneeName)
+  .set("creatorId", t.creatorId)
+  .set("creatorName", t.creatorName)
+  .set("title", t.title)
+  .set("description", t.description)
+  .set("status", t.status.to!string)
+  .set("priority", t.priority.to!string)
+  .set("sourceApp", t.sourceApp)
+  .set("sourceTaskId", t.sourceTaskId)
+  .set("actionUrl", t.actionUrl)
+  .set("category", t.category)
+  .set("dueDate", t.dueDate)
+  .set("completedAt", t.completedAt)
+  .set("createdAt", t.createdAt)
+  .set("updatedAt", t.updatedAt);
 
   auto tags = Json.emptyArray;
   foreach (tag; t.tags)

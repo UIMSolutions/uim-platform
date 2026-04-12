@@ -152,18 +152,18 @@ private AppConfig parseAppConfig(Json j) {
 
 private Json serializeApp(AppRegistration a) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(a.id);
-  j["tenantId"] = Json(a.tenantId);
-  j["name"] = Json(a.name);
-  j["description"] = Json(a.description);
-  j["launchUrl"] = Json(a.launchUrl);
-  j["icon"] = Json(a.icon);
-  j["vendor"] = Json(a.vendor);
-  j["version"] = Json(a.version_);
-  j["status"] = Json(a.status.to!string);
-  j["createdAt"] = Json(a.createdAt);
-  j["updatedAt"] = Json(a.updatedAt);
+  auto j = Json.emptyObject
+  .set("id", a.id)
+  .set("tenantId", a.tenantId)
+  .set("name", a.name)
+  .set("description", a.description)
+  .set("launchUrl", a.launchUrl)
+  .set("icon", a.icon)
+  .set("vendor", a.vendor)
+  .set("version", a.version_)
+  .set("status", a.status.to!string)
+  .set("createdAt", a.createdAt)
+  .set("updatedAt", a.updatedAt);
 
   auto platforms = Json.emptyArray;
   foreach (p; a.supportedPlatforms)

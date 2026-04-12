@@ -203,18 +203,18 @@ private WorkspaceSettings parseWorkspaceSettings(Json j) {
 private Json serializeWorkspace(Workspace w) {
   // import std.conv : to;
 
-  auto j = Json.emptyObject;
-  j["id"] = Json(w.id);
-  j["tenantId"] = Json(w.tenantId);
-  j["name"] = Json(w.name);
-  j["description"] = Json(w.description);
-  j["alias"] = Json(w.alias_);
-  j["type"] = Json(w.type.to!string);
-  j["status"] = Json(w.status.to!string);
-  j["imageUrl"] = Json(w.imageUrl);
-  j["createdAt"] = Json(w.createdAt);
-  j["updatedAt"] = Json(w.updatedAt);
-  j["createdBy"] = Json(w.createdBy);
+  auto j = Json.emptyObject
+  .set("id", w.id)
+  .set("tenantId", w.tenantId)
+  .set("name", w.name)
+  .set("description", w.description)
+  .set("alias", w.alias_)
+  .set("type", w.type.to!string)
+  .set("status", w.status.to!string)
+  .set("imageUrl", w.imageUrl)
+  .set("createdAt", w.createdAt)
+  .set("updatedAt", w.updatedAt)
+  .set("createdBy", w.createdBy);
 
   // Members
   auto members = Json.emptyArray;

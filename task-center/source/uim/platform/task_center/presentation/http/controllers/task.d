@@ -57,7 +57,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -68,6 +68,7 @@ class TaskController : PlatformController {
     private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto params = req.queryParams();
             auto assignee = params.get("assignee", "");
@@ -81,7 +82,7 @@ class TaskController : PlatformController {
                 tasks = uc.listByStatus(tenantId, status.to!TaskStatus);
             } else if (providerId.length > 0) {
                 tasks = uc.listByProvider(tenantId, providerId);
-            } ) {
+            }) {
                 tasks = uc.list(tenantId);
             }
 
@@ -102,8 +103,10 @@ class TaskController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
-            if (pathEndsWithAction(path)) return;
+            if (pathEndsWithAction(path))
+                return;
 
             TenantId tenantId = req.getTenantId;
             auto id = extractIdFromPath(path);
@@ -121,6 +124,7 @@ class TaskController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
             UpdateTaskRequest r;
@@ -139,7 +143,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -150,6 +154,7 @@ class TaskController : PlatformController {
     private void handleClaim(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 6]; // remove "/claim"
             auto id = extractIdFromPath(stripped);
@@ -163,7 +168,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task claimed");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -174,6 +179,7 @@ class TaskController : PlatformController {
     private void handleRelease(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/release"
             auto id = extractIdFromPath(stripped);
@@ -185,7 +191,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task released");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -196,6 +202,7 @@ class TaskController : PlatformController {
     private void handleForward(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 8]; // remove "/forward"
             auto id = extractIdFromPath(stripped);
@@ -210,7 +217,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task forwarded");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -221,6 +228,7 @@ class TaskController : PlatformController {
     private void handleComplete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 9]; // remove "/complete"
             auto id = extractIdFromPath(stripped);
@@ -232,7 +240,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task completed");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -243,6 +251,7 @@ class TaskController : PlatformController {
     private void handleCancel(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto path = req.requestURI.to!string;
             auto stripped = path[0 .. $ - 7]; // remove "/cancel"
             auto id = extractIdFromPath(stripped);
@@ -254,7 +263,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task cancelled");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -265,6 +274,7 @@ class TaskController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
             auto result = uc.remove(tenantId, id);
@@ -273,7 +283,7 @@ class TaskController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -283,34 +293,33 @@ class TaskController : PlatformController {
 
     private bool pathEndsWithAction(string path) {
         import std.algorithm : endsWith;
+
         return path.endsWith("/claim") || path.endsWith("/release") ||
-               path.endsWith("/forward") || path.endsWith("/complete") ||
-               path.endsWith("/cancel");
+            path.endsWith("/forward") || path.endsWith("/complete") ||
+            path.endsWith("/cancel");
     }
 
     private Json taskToJson(Task t) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(t.id);
-        j["tenantId"] = Json(t.tenantId);
-        j["taskDefinitionId"] = Json(t.taskDefinitionId);
-        j["providerId"] = Json(t.providerId);
-        j["externalTaskId"] = Json(t.externalTaskId);
-        j["title"] = Json(t.title);
-        j["description"] = Json(t.description);
-        j["status"] = Json(t.status.to!string);
-        j["priority"] = Json(t.priority.to!string);
-        j["category"] = Json(t.category.to!string);
-        j["assignee"] = Json(t.assignee);
-        j["creator"] = Json(t.creator);
-        j["processor"] = Json(t.processor);
-        j["sourceApplication"] = Json(t.sourceApplication);
-        j["isClaimed"] = Json(t.isClaimed);
-        j["claimedBy"] = Json(t.claimedBy);
-        j["dueDate"] = Json(t.dueDate);
-        j["completedAt"] = Json(t.completedAt);
-        j["createdBy"] = Json(t.createdBy);
-        j["createdAt"] = Json(t.createdAt);
-        return j;
+        return Json.emptyObject
+            .set("id", t.id)
+            .set("tenantId", t.tenantId)
+            .set("taskDefinitionId", t.taskDefinitionId)
+            .set("providerId", t.providerId)
+            .set("externalTaskId", t.externalTaskId)
+            .set("title", t.title)
+            .set("description", t.description)
+            .set("status", t.status.to!string)
+            .set("priority", t.priority.to!string)
+            .set("category", t.category.to!string)
+            .set("assignee", t.assignee)
+            .set("creator", t.creator)
+            .set("processor", t.processor)
+            .set("sourceApplication", t.sourceApplication)
+            .set("isClaimed", t.isClaimed)
+            .set("claimedBy", t.claimedBy)
+            .set("dueDate", t.dueDate)
+            .set("completedAt", t.completedAt)
+            .set("createdBy", t.createdBy)
+            .set("createdAt", t.createdAt);
     }
 }

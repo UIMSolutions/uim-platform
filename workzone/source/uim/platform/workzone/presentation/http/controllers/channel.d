@@ -55,13 +55,10 @@ class ChannelController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -78,8 +75,7 @@ class ChannelController {
       resp["items"] = arr;
       resp["totalCount"] = Json(channels.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -94,8 +90,7 @@ class ChannelController {
         return;
       }
       res.writeJsonBody(serializeChannel(*ch), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -116,13 +111,10 @@ class ChannelController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -133,8 +125,7 @@ class ChannelController {
       TenantId tenantId = req.getTenantId;
       useCase.deleteChannel(tenantId, id);
       res.writeBody("", 204);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -158,16 +149,16 @@ private ChannelConfig parseChannelConfig(Json j) {
 
 private Json serializeChannel(Channel c) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(c.id);
-  j["workspaceId"] = Json(c.workspaceId);
-  j["tenantId"] = Json(c.tenantId);
-  j["name"] = Json(c.name);
-  j["description"] = Json(c.description);
-  j["channelType"] = Json(c.channelType.to!string);
-  j["active"] = Json(c.active);
-  j["createdAt"] = Json(c.createdAt);
-  j["updatedAt"] = Json(c.updatedAt);
+  auto j = Json.emptyObject
+    .set("id", c.id)
+    .set("workspaceId", c.workspaceId)
+    .set("tenantId", c.tenantId)
+    .set("name", c.name)
+    .set("description", c.description)
+    .set("channelType", c.channelType.to!string)
+    .set("active", c.active)
+    .set("createdAt", c.createdAt)
+    .set("updatedAt", c.updatedAt);
 
   auto cfg = Json.emptyObject;
   cfg["sourceUrl"] = Json(c.config.sourceUrl);

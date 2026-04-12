@@ -129,7 +129,7 @@ class TaskCommentController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Comment deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -138,14 +138,13 @@ class TaskCommentController : PlatformController {
     }
 
     private Json commentToJson(TaskComment c) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(c.id);
-        j["tenantId"] = Json(c.tenantId);
-        j["taskId"] = Json(c.taskId);
-        j["author"] = Json(c.author);
-        j["content"] = Json(c.content);
-        j["createdAt"] = Json(c.createdAt);
-        j["modifiedAt"] = Json(c.modifiedAt);
-        return j;
+        return Json.emptyObject
+            .set("id", c.id)
+            .set("tenantId", c.tenantId)
+            .set("taskId", c.taskId)
+            .set("author", c.author)
+            .set("content", c.content)
+            .set("createdAt", c.createdAt)
+            .set("modifiedAt", c.modifiedAt);
     }
 }
