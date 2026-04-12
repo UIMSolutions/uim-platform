@@ -63,14 +63,13 @@ class DashboardController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (d; dashboards) {
-                auto dj = Json.emptyObject;
-                dj["id"] = Json(d.id);
-                dj["name"] = Json(d.name);
-                dj["description"] = Json(d.description);
-                dj["type"] = Json(d.type.to!string);
-                dj["refreshIntervalSeconds"] = Json(d.refreshIntervalSeconds);
-                dj["createdAt"] = Json(d.createdAt);
-                jarr ~= dj;
+                jarr ~= Json.emptyObject
+                .set("id", d.id)
+                .set("name", d.name)
+                .set("description", d.description)
+                .set("type", d.type.to!string)
+                .set("refreshIntervalSeconds", d.refreshIntervalSeconds)
+                .set("createdAt", d.createdAt);
             }
 
             auto resp = Json.emptyObject;

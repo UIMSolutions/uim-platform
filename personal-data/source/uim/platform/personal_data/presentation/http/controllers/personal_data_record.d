@@ -123,20 +123,19 @@ class PersonalDataRecordController : PlatformController {
     }
 
     private Json recordToJson(PersonalDataRecord r) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(r.id);
-        j["dataSubjectId"] = Json(r.dataSubjectId);
-        j["applicationId"] = Json(r.applicationId);
-        j["dataCategory"] = Json(r.dataCategory.to!string);
-        j["sensitivity"] = Json(r.sensitivity.to!string);
-        j["fieldName"] = Json(r.fieldName);
-        j["fieldValue"] = Json(r.fieldValue);
-        j["purposeId"] = Json(r.purposeId);
-        j["legalBasis"] = Json(r.legalBasis.to!string);
-        j["retentionRuleId"] = Json(r.retentionRuleId);
-        j["isAnonymized"] = Json(r.isAnonymized);
-        j["createdBy"] = Json(r.createdBy);
-        j["createdAt"] = Json(r.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", r.id)
+        .set("dataSubjectId", r.dataSubjectId)
+        .set("applicationId", r.applicationId)
+        .set("dataCategory", r.dataCategory.to!string)
+        .set("sensitivity", r.sensitivity.to!string)
+        .set("fieldName", r.fieldName)
+        .set("fieldValue", r.fieldValue)
+        .set("purposeId", r.purposeId)
+        .set("legalBasis", r.legalBasis.to!string)
+        .set("retentionRuleId", r.retentionRuleId)
+        .set("isAnonymized", r.isAnonymized)
+        .set("createdBy", r.createdBy)
+        .set("createdAt", r.createdAt);
     }
 }

@@ -131,16 +131,15 @@ class WorkpageController {
 }
 
 private Json serializePage(Workpage p) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(p.id);
-  j["workspaceId"] = Json(p.workspaceId);
-  j["tenantId"] = Json(p.tenantId);
-  j["title"] = Json(p.title);
-  j["description"] = Json(p.description);
-  j["sortOrder"] = Json(p.sortOrder);
-  j["visible"] = Json(p.visible);
-  j["isDefault"] = Json(p.isDefault);
-  j["createdAt"] = Json(p.createdAt);
-  j["updatedAt"] = Json(p.updatedAt);
-  return j;
+  return Json.emptyObject
+  .set("id", p.id)
+  .set("workspaceId", p.workspaceId)
+  .set("tenantId", p.tenantId)
+  .set("title", p.title)
+  .set("description", p.description)
+  .set("sortOrder", p.sortOrder)
+  .set("visible", p.visible)
+  .set("isDefault", p.isDefault)
+  .set("createdAt", p.createdAt)
+  .set("updatedAt", p.updatedAt);
 }

@@ -106,17 +106,16 @@ class FeedController {
 }
 
 private Json serializeFeed(FeedEntry e) {
-  auto j = Json.emptyObject;
-  j["id"] = Json(e.id);
-  j["workspaceId"] = Json(e.workspaceId);
-  j["tenantId"] = Json(e.tenantId);
-  j["actorId"] = Json(e.actorId);
-  j["actorName"] = Json(e.actorName);
-  j["action"] = Json(e.action);
-  j["objectType"] = Json(e.objectType);
-  j["objectId"] = Json(e.objectId);
-  j["objectTitle"] = Json(e.objectTitle);
-  j["message"] = Json(e.message);
-  j["createdAt"] = Json(e.createdAt);
-  return j;
+  return Json.emptyObject
+  .set("id", e.id)
+  .set("workspaceId", e.workspaceId)
+  .set("tenantId", e.tenantId)
+  .set("actorId", e.actorId)
+  .set("actorName", e.actorName)
+  .set("action", e.action)
+  .set("objectType", e.objectType)
+  .set("objectId", e.objectId)
+  .set("objectTitle", e.objectTitle)
+  .set("message", e.message)
+  .set("createdAt", e.createdAt);
 }

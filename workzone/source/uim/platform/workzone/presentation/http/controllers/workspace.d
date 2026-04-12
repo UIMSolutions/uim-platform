@@ -219,12 +219,11 @@ private Json serializeWorkspace(Workspace w) {
   // Members
   auto members = Json.emptyArray;
   foreach (m; w.members) {
-    auto mj = Json.emptyObject;
-    mj["userId"] = Json(m.userId);
-    mj["displayName"] = Json(m.displayName);
-    mj["role"] = Json(m.role.to!string);
-    mj["joinedAt"] = Json(m.joinedAt);
-    members ~= mj;
+    members ~= Json.emptyObject
+    .set("userId", m.userId)
+    .set("displayName", m.displayName)
+    .set("role", m.role.to!string)
+    .set("joinedAt", m.joinedAt);
   }
   j["members"] = members;
 

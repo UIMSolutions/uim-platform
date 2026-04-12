@@ -62,17 +62,16 @@ class ProcessController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (p; processes) {
-                auto pj = Json.emptyObject;
-                pj["id"] = Json(p.id);
-                pj["name"] = Json(p.name);
-                pj["description"] = Json(p.description);
-                pj["status"] = Json(p.status.to!string);
-                pj["category"] = Json(p.category.to!string);
-                pj["version"] = Json(p.version_);
-                pj["createdBy"] = Json(p.createdBy);
-                pj["createdAt"] = Json(p.createdAt);
-                pj["modifiedAt"] = Json(p.modifiedAt);
-                jarr ~= pj;
+                jarr ~= Json.emptyObject
+                .set("id", p.id)
+                .set("name", p.name)
+                .set("description", p.description)
+                .set("status", p.status.to!string)
+                .set("category", p.category.to!string)
+                .set("version", p.version_)
+                .set("createdBy", p.createdBy)
+                .set("createdAt", p.createdAt)
+                .set("modifiedAt", p.modifiedAt);
             }
 
             auto resp = Json.emptyObject;

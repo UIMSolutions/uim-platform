@@ -150,19 +150,18 @@ class ConsentRecordController : PlatformController {
     }
 
     private Json consentToJson(ConsentRecord c) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(c.id);
-        j["dataSubjectId"] = Json(c.dataSubjectId);
-        j["purposeId"] = Json(c.purposeId);
-        j["status"] = Json(c.status.to!string);
-        j["consentText"] = Json(c.consentText);
-        j["consentVersion"] = Json(c.consentVersion);
-        j["givenAt"] = Json(c.givenAt);
-        j["withdrawnAt"] = Json(c.withdrawnAt);
-        j["expiresAt"] = Json(c.expiresAt);
-        j["source"] = Json(c.source);
-        j["createdBy"] = Json(c.createdBy);
-        j["createdAt"] = Json(c.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", c.id)
+        .set("dataSubjectId", c.dataSubjectId)
+        .set("purposeId", c.purposeId)
+        .set("status", c.status.to!string)
+        .set("consentText", c.consentText)
+        .set("consentVersion", c.consentVersion)
+        .set("givenAt", c.givenAt)
+        .set("withdrawnAt", c.withdrawnAt)
+        .set("expiresAt", c.expiresAt)
+        .set("source", c.source)
+        .set("createdBy", c.createdBy)
+        .set("createdAt", c.createdAt);
     }
 }

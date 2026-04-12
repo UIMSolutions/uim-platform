@@ -140,18 +140,17 @@ class RetentionRuleController : PlatformController {
     }
 
     private Json ruleToJson(RetentionRule r) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(r.id);
-        j["name"] = Json(r.name);
-        j["description"] = Json(r.description);
-        j["status"] = Json(r.status.to!string);
-        j["retentionPeriod"] = Json(r.retentionPeriod);
-        j["periodUnit"] = Json(r.periodUnit.to!string);
-        j["autoDelete"] = Json(r.autoDelete);
-        j["notifyBeforeExpiry"] = Json(r.notifyBeforeExpiry);
-        j["notifyDaysBefore"] = Json(r.notifyDaysBefore);
-        j["createdBy"] = Json(r.createdBy);
-        j["createdAt"] = Json(r.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", r.id)
+        .set("name", r.name)
+        .set("description", r.description)
+        .set("status", r.status.to!string)
+        .set("retentionPeriod", r.retentionPeriod)
+        .set("periodUnit", r.periodUnit.to!string)
+        .set("autoDelete", r.autoDelete)
+        .set("notifyBeforeExpiry", r.notifyBeforeExpiry)
+        .set("notifyDaysBefore", r.notifyDaysBefore)
+        .set("createdBy", r.createdBy)
+        .set("createdAt", r.createdAt);
     }
 }

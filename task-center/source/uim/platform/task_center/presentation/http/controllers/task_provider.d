@@ -213,23 +213,21 @@ class TaskProviderController : PlatformController {
     }
 
     private Json providerToJson(TaskProvider p) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(p.id);
-        j["tenantId"] = Json(p.tenantId);
-        j["name"] = Json(p.name);
-        j["description"] = Json(p.description);
-        j["providerType"] = Json(p.providerType.to!string);
-        j["status"] = Json(p.status.to!string);
-        j["authType"] = Json(p.authType.to!string);
-        j["endpointUrl"] = Json(p.endpointUrl);
-        j["authEndpointUrl"] = Json(p.authEndpointUrl);
-        j["clientId"] = Json(p.clientId);
-        j["lastSyncAt"] = Json(p.lastSyncAt);
-        j["lastSyncError"] = Json(p.lastSyncError);
-        j["taskCount"] = Json(p.taskCount);
-        j["createdBy"] = Json(p.createdBy);
-        j["createdAt"] = Json(p.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", p.id)
+        .set("tenantId", p.tenantId)
+        .set("name", p.name)
+        .set("description", p.description)
+        .set("providerType", p.providerType.to!string)
+        .set("status", p.status.to!string)
+        .set("authType", p.authType.to!string)
+        .set("endpointUrl", p.endpointUrl)
+        .set("authEndpointUrl", p.authEndpointUrl)
+        .set("clientId", p.clientId)
+        .set("lastSyncAt", p.lastSyncAt)
+        .set("lastSyncError", p.lastSyncError)
+        .set("taskCount", p.taskCount)
+        .set("createdBy", p.createdBy)
+        .set("createdAt", p.createdAt);
     }
 }

@@ -60,15 +60,14 @@ class FormController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (f; forms) {
-                auto fj = Json.emptyObject;
-                fj["id"] = Json(f.id);
-                fj["name"] = Json(f.name);
-                fj["description"] = Json(f.description);
-                fj["status"] = Json(f.status.to!string);
-                fj["version"] = Json(f.version_);
-                fj["createdAt"] = Json(f.createdAt);
-                fj["modifiedAt"] = Json(f.modifiedAt);
-                jarr ~= fj;
+                jarr ~= Json.emptyObject
+                .set("id", f.id)
+                .set("name", f.name)
+                .set("description", f.description)
+                .set("status", f.status.to!string)
+                .set("version", f.version_)
+                .set("createdAt", f.createdAt);
+                .set("modifiedAt", f.modifiedAt);
             }
 
             auto resp = Json.emptyObject;

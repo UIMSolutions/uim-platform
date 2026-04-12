@@ -204,12 +204,12 @@ private Json serializeCard(Card c) {
   j["updatedAt"] = Json(c.updatedAt);
 
   // Data source
-  auto ds = Json.emptyObject;
-  ds["url"] = Json(c.dataSource.url);
-  ds["method"] = Json(c.dataSource.method);
-  ds["path"] = Json(c.dataSource.path);
-  ds["refreshIntervalSec"] = Json(c.dataSource.refreshIntervalSec);
-  ds["authType"] = Json(c.dataSource.authType);
+  auto ds = Json.emptyObject
+  .set("url", c.dataSource.url)
+  .set("method", c.dataSource.method)
+  .set("path", c.dataSource.path)
+  .set("refreshIntervalSec", c.dataSource.refreshIntervalSec)
+  .set("authType", c.dataSource.authType);
   j["dataSource"] = ds;
 
   // Manifest

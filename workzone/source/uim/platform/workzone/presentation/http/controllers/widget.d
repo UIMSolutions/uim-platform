@@ -173,20 +173,20 @@ private WidgetConfig parseWidgetConfig(Json j) {
 
 private Json serializeWidget(Widget w) {
   // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(w.id);
-  j["pageId"] = Json(w.pageId);
-  j["tenantId"] = Json(w.tenantId);
-  j["title"] = Json(w.title);
-  j["cardId"] = Json(w.cardId);
-  j["appId"] = Json(w.appId);
-  j["size"] = Json(w.size.to!string);
-  j["row"] = Json(w.row);
-  j["col"] = Json(w.col);
-  j["sortOrder"] = Json(w.sortOrder);
-  j["visible"] = Json(w.visible);
-  j["createdAt"] = Json(w.createdAt);
-  j["updatedAt"] = Json(w.updatedAt);
+  auto j = Json.emptyObject
+  .set("id", w.id)
+  .set("pageId", w.pageId)
+  .set("tenantId", w.tenantId)
+  .set("title", w.title)
+  .set("cardId", w.cardId)
+  .set("appId", w.appId)
+  .set("size", w.size.to!string)
+  .set("row", w.row)
+  .set("col", w.col)
+  .set("sortOrder", w.sortOrder)
+  .set("visible", w.visible)
+  .set("createdAt", w.createdAt)
+  .set("updatedAt", w.updatedAt);
 
   auto cfg = Json.emptyObject;
   cfg["customTitle"] = Json(w.config.customTitle);

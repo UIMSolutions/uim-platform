@@ -165,21 +165,19 @@ class NotificationController {
 }
 
 private Json serializeNotification(Notification n) {
-  // import std.conv : to;
-  auto j = Json.emptyObject;
-  j["id"] = Json(n.id);
-  j["tenantId"] = Json(n.tenantId);
-  j["recipientId"] = Json(n.recipientId);
-  j["title"] = Json(n.title);
-  j["body"] = Json(n.body_);
-  j["sourceApp"] = Json(n.sourceApp);
-  j["sourceObjectType"] = Json(n.sourceObjectType);
-  j["sourceObjectId"] = Json(n.sourceObjectId);
-  j["actionUrl"] = Json(n.actionUrl);
-  j["priority"] = Json(n.priority.to!string);
-  j["status"] = Json(n.status.to!string);
-  j["createdAt"] = Json(n.createdAt);
-  j["readAt"] = Json(n.readAt);
-  j["expiresAt"] = Json(n.expiresAt);
-  return j;
+  return Json.emptyObject
+  .set("id", n.id)
+  .set("tenantId", n.tenantId)
+  .set("recipientId", n.recipientId)
+  .set("title", n.title)
+  .set("body", n.body_)
+  .set("sourceApp", n.sourceApp)
+  .set("sourceObjectType", n.sourceObjectType)
+  .set("sourceObjectId", n.sourceObjectId)
+  .set("actionUrl", n.actionUrl)
+  .set("priority", n.priority.to!string)
+  .set("status", n.status.to!string)
+  .set("createdAt", n.createdAt)
+  .set("readAt", n.readAt)
+  .set("expiresAt", n.expiresAt);
 }

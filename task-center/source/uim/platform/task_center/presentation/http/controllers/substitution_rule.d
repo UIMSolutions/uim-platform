@@ -195,19 +195,17 @@ class SubstitutionRuleController : PlatformController {
     }
 
     private Json ruleToJson(SubstitutionRule r) {
-        import std.conv : to;
-        auto j = Json.emptyObject;
-        j["id"] = Json(r.id);
-        j["tenantId"] = Json(r.tenantId);
-        j["userId"] = Json(r.userId);
-        j["substituteId"] = Json(r.substituteId);
-        j["taskDefinitionId"] = Json(r.taskDefinitionId);
-        j["status"] = Json(r.status.to!string);
-        j["startDate"] = Json(r.startDate);
-        j["endDate"] = Json(r.endDate);
-        j["isAutoForward"] = Json(r.isAutoForward);
-        j["createdBy"] = Json(r.createdBy);
-        j["createdAt"] = Json(r.createdAt);
-        return j;
+        return Json.emptyObject
+        .set("id", r.id)
+        .set("tenantId", r.tenantId)
+        .set("userId", r.userId)
+        .set("substituteId", r.substituteId)
+        .set("taskDefinitionId", r.taskDefinitionId)
+        .set("status", r.status.to!string)
+        .set("startDate", r.startDate)
+        .set("endDate", r.endDate)
+        .set("isAutoForward", r.isAutoForward)
+        .set("createdBy", r.createdBy)
+        .set("createdAt", r.createdAt);
     }
 }

@@ -70,16 +70,15 @@ class SituationActionController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
-                auto aj = Json.emptyObject;
-                aj["id"] = Json(a.id);
-                aj["name"] = Json(a.name);
-                aj["description"] = Json(a.description);
-                aj["type"] = Json(a.type.to!string);
-                aj["status"] = Json(a.status.to!string);
-                aj["lastExecutedAt"] = Json(a.lastExecutedAt);
-                aj["executionCount"] = Json(a.executionCount);
-                aj["createdAt"] = Json(a.createdAt);
-                jarr ~= aj;
+                jarr ~= Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("type", a.type.to!string)
+                .set("status", a.status.to!string)
+                .set("lastExecutedAt", a.lastExecutedAt)
+                .set("executionCount", a.executionCount)
+                .set("createdAt", a.createdAt);
             }
 
             auto resp = Json.emptyObject;
