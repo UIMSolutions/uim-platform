@@ -48,8 +48,8 @@ class SystemInstanceController : PlatformController {
       request.region = j.getString("region");
       request.sapSystemId = j.getString("sapSystemId");
       request.adminEmail = j.getString("adminEmail");
-      request.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
-      request.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
+      request.abapRuntimeSize = getUshort(j, "abapRuntimeSize");
+      request.hanaMemorySize = getUshort(j, "hanaMemorySize");
       request.softwareVersion = j.getString("softwareVersion");
       request.stackVersion = j.getString("stackVersion");
 
@@ -103,8 +103,8 @@ class SystemInstanceController : PlatformController {
       UpdateSystemInstanceRequest r;
       r.description = j.getString("description");
       r.status = j.getString("status");
-      r.abapRuntimeSize = jsonUshort(j, "abapRuntimeSize");
-      r.hanaMemorySize = jsonUshort(j, "hanaMemorySize");
+      r.abapRuntimeSize = getUshort(j, "abapRuntimeSize");
+      r.hanaMemorySize = getUshort(j, "hanaMemorySize");
       r.softwareVersion = j.getString("softwareVersion");
 
       auto result = uc.updateInstance(id, r);

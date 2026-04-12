@@ -167,7 +167,7 @@ class KeyMappingController : PlatformController {
       e.systemId = ej.getString("systemId");
       e.localKey = ej.getString("localKey");
       e.sourceType = ej.getString("sourceType");
-      e.isPrimary = jsonBool(ej, "isPrimary");
+      e.isPrimary = getBoolean(ej, "isPrimary");
       entries ~= e;
     }
     return entries;

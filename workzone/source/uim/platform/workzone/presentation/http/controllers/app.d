@@ -142,7 +142,7 @@ private AppConfig parseAppConfig(Json j) {
     auto c = *v;
     cfg.authType = c.getString("authType");
     cfg.authEndpoint = c.getString("authEndpoint");
-    cfg.enableSso = jsonBool(c, "enableSso");
+    cfg.enableSso = getBoolean(c, "enableSso");
     cfg.sapSystemAlias = c.getString("sapSystemAlias");
     cfg.oDataServiceUrl = c.getString("oDataServiceUrl");
     cfg.componentId = c.getString("componentId");

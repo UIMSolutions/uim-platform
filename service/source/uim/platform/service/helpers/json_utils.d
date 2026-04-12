@@ -16,11 +16,6 @@ string jsonStr(Json j, string key) {
   return j.getString(key, "");
 }
 
-/// Extract a boolean field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false) {
-  return j.getBoolean(key, default_);
-}
-
 /// Extract an integer field from a Json object.
 long jsonLong(Json j, string key, long default_ = 0) {
   if (!j.isObject)
@@ -42,8 +37,13 @@ int jsonInt(Json j, string key, int default_ = 0) {
 }
 
 /// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
+ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort)jsonLong(j, key, default_);
+}
+
+/// Extract a ushort field from a Json object.
+ushort getUshort(Json j, string key, ushort default_ = 0) {
+  return cast(ushort) jsonLong(j, key, default_);
 }
 
 double jsonDouble(Json j, string key) {
@@ -272,10 +272,7 @@ private string extractId(scope HTTPServerRequest req) {
 */
 
 
-/// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
-  return cast(ushort) jsonLong(j, key, default_);
-}
+
 
 /// Convert a string array to a Json array.
 Json toJsonArray(const(string[]) arr) {

@@ -41,7 +41,7 @@ class ConnectorController : PlatformController {
       r.description = j.getString("description");
       r.connectorVersion = j.getString("connectorVersion");
       r.host = j.getString("host");
-      r.port = jsonUshort(j, "port");
+      r.port = getUshort(j, "port");
       r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
       auto result = uc.registerConnector(r);

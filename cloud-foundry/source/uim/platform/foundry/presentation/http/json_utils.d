@@ -20,7 +20,7 @@ import uim.platform.foundry.domain.types;
 /// Extract an int field from a Json object.
 
 /// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
+ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort) jsonLong(j, key, default_);
 }
 

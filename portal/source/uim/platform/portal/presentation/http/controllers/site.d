@@ -161,8 +161,8 @@ class SiteController : PlatformController {
     auto s = *settingsJson;
     return SiteSettings(jsonStr(s, "logoUrl"), jsonStr(s, "faviconUrl"),
       jsonStr(s, "footerText"), jsonStr(s, "copyrightText"), jsonStr(s, "defaultLanguage"), jsonStrArray(s,
-        "supportedLanguages"), jsonBool(s, "showPersonalization", false), jsonBool(s,
-        "showNotifications", false), jsonBool(s, "showSearch", true),
-      jsonBool(s, "showUserActions", true),);
+        "supportedLanguages"), getBoolean(s, "showPersonalization", false), getBoolean(s,
+        "showNotifications", false), getBoolean(s, "showSearch", true),
+      getBoolean(s, "showUserActions", true),);
   }
 }

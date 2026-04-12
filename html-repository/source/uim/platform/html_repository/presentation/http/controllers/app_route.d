@@ -58,12 +58,11 @@ class AppRouteController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(e.id);
-        obj["appId"] = Json(e.appId);
-        obj["pathPrefix"] = Json(e.pathPrefix);
-        obj["status"] = Json(e.status);
-        arr ~= obj;
+        arr ~= Json.emptyObject
+          .set("id", Json(e.id))
+          .set("appId", Json(e.appId))
+          .set("pathPrefix", Json(e.pathPrefix))
+          .set("status", Json(e.status));
       }
 
       auto resp = Json.emptyObject;

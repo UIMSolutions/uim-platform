@@ -62,7 +62,7 @@ class JobController : PlatformController {
                     sr.description = jsonStr(sj, "description");
                     sr.type = jsonStr(sj, "type");
                     sr.format = jsonStr(sj, "format");
-                    sr.active = jsonBool(sj, "active", true);
+                    sr.active = getBoolean(sj, "active", true);
                     sr.cronExpression = jsonStr(sj, "cron");
                     sr.humanReadableSchedule = jsonStr(sj, "humanReadableSchedule");
                     sr.repeatInterval = jsonLong(sj, "repeatInterval");

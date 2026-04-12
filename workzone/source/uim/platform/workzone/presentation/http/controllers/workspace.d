@@ -189,12 +189,12 @@ private WorkspaceSettings parseWorkspaceSettings(Json j) {
   auto sv = "settings" in j;
   if (sv !is null && (*sv).type == Json.Type.object) {
     auto sj = *sv;
-    s.allowExternalMembers = jsonBool(sj, "allowExternalMembers");
-    s.enableNotifications = jsonBool(sj, "enableNotifications", true);
-    s.enableFeeds = jsonBool(sj, "enableFeeds", true);
-    s.enableWiki = jsonBool(sj, "enableWiki", true);
-    s.enableKnowledgeBase = jsonBool(sj, "enableKnowledgeBase", true);
-    s.enableForum = jsonBool(sj, "enableForum");
+    s.allowExternalMembers = getBoolean(sj, "allowExternalMembers");
+    s.enableNotifications = getBoolean(sj, "enableNotifications", true);
+    s.enableFeeds = getBoolean(sj, "enableFeeds", true);
+    s.enableWiki = getBoolean(sj, "enableWiki", true);
+    s.enableKnowledgeBase = getBoolean(sj, "enableKnowledgeBase", true);
+    s.enableForum = getBoolean(sj, "enableForum");
     s.defaultLanguage = jsonStr(sj, "defaultLanguage");
   }
   return s;

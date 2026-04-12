@@ -8,7 +8,7 @@ module uim.platform.ai_core.presentation.http.json_utils;
 import uim.platform.ai_core;
 
 
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool getBoolean(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;

@@ -44,7 +44,7 @@ class AccessRuleController : PlatformController {
       r.description = j.getString("description");
       r.protocol = j.getString("protocol");
       r.virtualHost = j.getString("virtualHost");
-      r.virtualPort = jsonUshort(j, "virtualPort");
+      r.virtualPort = getUshort(j, "virtualPort");
       r.urlPathPrefix = j.getString("urlPathPrefix");
       r.policy = j.getString("policy");
       r.principalPropagation = j.getBoolean("principalPropagation");

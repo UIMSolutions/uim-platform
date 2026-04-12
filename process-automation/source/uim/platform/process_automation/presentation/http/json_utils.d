@@ -18,7 +18,7 @@ string jsonStr(Json j, string key) {
     return "";
 }
 
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool getBoolean(Json j, string key, bool default_ = false) {
     if (!j.isObject)
         return default_;
     auto v = key in j;

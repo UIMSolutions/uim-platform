@@ -41,9 +41,9 @@ class ChannelController : PlatformController {
       r.name = j.getString("name");
       r.channelType = j.getString("type");
       r.virtualHost = j.getString("virtualHost");
-      r.virtualPort = jsonUshort(j, "virtualPort");
+      r.virtualPort = getUshort(j, "virtualPort");
       r.backendHost = j.getString("backendHost");
-      r.backendPort = jsonUshort(j, "backendPort");
+      r.backendPort = getUshort(j, "backendPort");
 
       auto result = uc.createChannel(r);
       if (result.success) {

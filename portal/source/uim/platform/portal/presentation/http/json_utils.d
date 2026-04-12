@@ -68,7 +68,7 @@ string jsonStr(Json j, string key) {
 }
 
 /// Read a boolean field from JSON.
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool getBoolean(Json j, string key, bool default_ = false) {
   if (j.type == Json.Type.object) {
     auto val = key in j;
     if (val !is null) {

@@ -193,7 +193,7 @@ private Email[] parseEmails(Json j) {
   if (val is null || (*val).type != Json.Type.array)
     return result;
   foreach (item; *val) {
-    result ~= Email(item.getString("value"), item.getString("type"), jsonBool(item, "primary"),);
+    result ~= Email(item.getString("value"), item.getString("type"), getBoolean(item, "primary"),);
   }
   return result;
 }
@@ -207,7 +207,7 @@ private PhoneNumber[] parsePhoneNumbers(Json j) {
     return result;
   foreach (item; *val) {
     result ~= PhoneNumber(item.getString("value"), item.getString("type"),
-      jsonBool(item, "primary"),);
+      getBoolean(item, "primary"),);
   }
   return result;
 }
@@ -223,7 +223,7 @@ private Address[] parseAddresses(Json j) {
     result ~= Address(item.getString("formatted"), item.getString("streetAddress"),
       item.getString("locality"), item.getString("region"),
       item.getString("postalCode"), item.getString("country"),
-      item.getString("type"), jsonBool(item, "primary"),);
+      item.getString("type"), getBoolean(item, "primary"),);
   }
   return result;
 }

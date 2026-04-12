@@ -19,7 +19,7 @@ module uim.platform.identity_authentication.presentation.http.json_utils;
 
 
 /// Extract a ushort field from a Json object.
-ushort jsonUshort(Json j, string key, ushort default_ = 0) {
+ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort) jsonLong(j, key, default_);
 }
 

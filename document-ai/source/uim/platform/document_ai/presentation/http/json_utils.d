@@ -18,7 +18,7 @@ string jsonStr(Json j, string key) {
   return "";
 }
 
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool getBoolean(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
@@ -105,7 +105,7 @@ string[][] jsonFieldArray(Json j, string key) {
       auto name = item.getString("name");
       auto label = item.getString("label");
       auto type = item.getString("type");
-      auto req = jsonBool(item, "required") ? "true" : "false";
+      auto req = getBoolean(item, "required") ? "true" : "false";
       if (name.length > 0)
         result ~= [name, label, type, req];
     }

@@ -42,7 +42,7 @@ class SystemController {
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
       r.host = j.getString("host");
-      r.port = jsonUshort(j, "port");
+      r.port = getUshort(j, "port");
       r.client = j.getString("client");
       r.protocol = j.getString("protocol");
       r.environment = j.getString("environment");
@@ -113,7 +113,7 @@ class SystemController {
       r.description = j.getString("description");
       r.systemType = parseSystemType(j.getString("systemType"));
       r.host = j.getString("host");
-      r.port = jsonUshort(j, "port");
+      r.port = getUshort(j, "port");
       r.client = j.getString("client");
       r.protocol = j.getString("protocol");
       r.status = parseConnectionStatus(j.getString("status"));

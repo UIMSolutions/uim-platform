@@ -20,7 +20,7 @@ mixin(ShowModule!());
 
 
 /// Extract a bool field from a Json object.
-bool jsonBool(Json j, string key, bool default_ = false) {
+bool getBoolean(Json j, string key, bool default_ = false) {
   if (!j.isObject)
     return default_;
   auto v = key in j;
