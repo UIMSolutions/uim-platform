@@ -50,7 +50,7 @@ class DataContextController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data context created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -65,16 +65,15 @@ class DataContextController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (d; contexts) {
-                auto dj = Json.emptyObject;
-                dj["id"] = Json(d.id);
-                dj["instanceId"] = Json(d.instanceId);
-                dj["entityId"] = Json(d.entityId);
-                dj["entityTypeId"] = Json(d.entityTypeId);
-                dj["sourceSystem"] = Json(d.sourceSystem);
-                dj["containsPersonalData"] = Json(d.containsPersonalData);
-                dj["capturedAt"] = Json(d.capturedAt);
-                dj["expiresAt"] = Json(d.expiresAt);
-                jarr ~= dj;
+                jarr ~= Json.emptyObject
+                    .set("id", d.id)
+                    .set("instanceId", d.instanceId)
+                    .set("entityId", d.entityId)
+                    .set("entityTypeId", d.entityTypeId)
+                    .set("sourceSystem", d.sourceSystem)
+                    .set("containsPersonalData", d.containsPersonalData)
+                    .set("capturedAt", d.capturedAt)
+                    .set("expiresAt", d.expiresAt);
             }
 
             auto resp = Json.emptyObject;
@@ -123,7 +122,7 @@ class DataContextController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data context deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -139,7 +138,7 @@ class DataContextController : PlatformController {
                 auto resp = Json.emptyObject;
                 resp["message"] = Json("Personal data contexts deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

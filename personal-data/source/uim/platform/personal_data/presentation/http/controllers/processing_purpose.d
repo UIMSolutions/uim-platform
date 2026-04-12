@@ -47,7 +47,7 @@ class ProcessingPurposeController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Processing purpose created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -77,6 +77,7 @@ class ProcessingPurposeController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto p = uc.get_(id);
             if (p.id.isEmpty) {
@@ -111,7 +112,7 @@ class ProcessingPurposeController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Processing purpose updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -122,6 +123,7 @@ class ProcessingPurposeController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
@@ -129,7 +131,7 @@ class ProcessingPurposeController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Processing purpose deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -138,17 +140,16 @@ class ProcessingPurposeController : PlatformController {
     }
 
     private Json purposeToJson(ProcessingPurpose p) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(p.id);
-        j["name"] = Json(p.name);
-        j["description"] = Json(p.description);
-        j["status"] = Json(p.status.to!string);
-        j["legalBasis"] = Json(p.legalBasis.to!string);
-        j["retentionPeriod"] = Json(p.retentionPeriod);
-        j["dataProtectionOfficer"] = Json(p.dataProtectionOfficer);
-        j["requiresConsent"] = Json(p.requiresConsent);
-        j["createdBy"] = Json(p.createdBy);
-        j["createdAt"] = Json(p.createdAt);
-        return j;
+        return Json.emptyObject
+            .set("id", p.id)
+            .set("name", p.name)
+            .set("description", p.description)
+            .set("status", p.status.to!string)
+            .set("legalBasis", p.legalBasis.to!string)
+            .set("retentionPeriod", p.retentionPeriod)
+            .set("dataProtectionOfficer", p.dataProtectionOfficer)
+            .set("requiresConsent", p.requiresConsent)
+            .set("createdBy", p.createdBy)
+            .set("createdAt", p.createdAt);
     }
 }

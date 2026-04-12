@@ -49,13 +49,10 @@ class CorsRuleController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -71,8 +68,7 @@ class CorsRuleController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(rules.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -86,8 +82,7 @@ class CorsRuleController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeRule(rule), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,16 +100,14 @@ class CorsRuleController : PlatformController {
 
       auto result = uc.updateRule(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "CORS rule not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -124,33 +117,30 @@ class CorsRuleController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteRule(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeRule(CorsRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["bucketId"] = Json(r.bucketId);
-    j["allowedOrigins"] = Json(r.allowedOrigins);
-    j["allowedMethods"] = Json(r.allowedMethods);
-    j["allowedHeaders"] = Json(r.allowedHeaders);
-    j["exposedHeaders"] = Json(r.exposedHeaders);
-    j["maxAgeSeconds"] = Json(r.maxAgeSeconds);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("bucketId", r.bucketId)
+      .set("allowedOrigins", r.allowedOrigins)
+      .set("allowedMethods", r.allowedMethods)
+      .set("allowedHeaders", r.allowedHeaders)
+      .set("exposedHeaders", r.exposedHeaders)
+      .set("maxAgeSeconds", r.maxAgeSeconds)
+      .set("createdAt", r.createdAt)
+      .set("updatedAt", r.updatedAt);
   }
 
   private static string extractBucketIdFromCorsPath(string uri) {

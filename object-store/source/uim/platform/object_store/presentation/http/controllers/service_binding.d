@@ -46,13 +46,10 @@ class ServiceBindingController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -70,8 +67,7 @@ class ServiceBindingController {
       resp["items"] = arr;
       resp["totalCount"] = Json(bindings.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -88,8 +84,7 @@ class ServiceBindingController {
         return;
       }
       res.writeJsonBody(serializeBinding(binding), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -114,13 +109,10 @@ class ServiceBindingController {
         auto resp = Json.emptyObject;
         resp["revoked"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -130,16 +122,14 @@ class ServiceBindingController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteBinding(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
-        res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+        auto response = Json.emptyObject
+          .set("deleted", true);
+
+        res.writeJsonBody(response, 200);
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

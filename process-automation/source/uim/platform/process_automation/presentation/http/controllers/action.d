@@ -66,17 +66,16 @@ class ActionController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (a; actions) {
-                auto aj = Json.emptyObject;
-                aj["id"] = Json(a.id);
-                aj["name"] = Json(a.name);
-                aj["description"] = Json(a.description);
-                aj["status"] = Json(a.status.to!string);
-                aj["type"] = Json(a.type.to!string);
-                aj["baseUrl"] = Json(a.baseUrl);
-                aj["version"] = Json(a.version_);
-                aj["createdAt"] = Json(a.createdAt);
-                aj["modifiedAt"] = Json(a.modifiedAt);
-                jarr ~= aj;
+                jarr ~= Json.emptyObject
+                .set("id", a.id)
+                .set("name", a.name)
+                .set("description", a.description)
+                .set("status", a.status.to!string)
+                .set("type", a.type.to!string)
+                .set("baseUrl", a.baseUrl)
+                .set("version", a.version_)
+                .set("createdAt", a.createdAt)
+                .set("modifiedAt", a.modifiedAt);
             }
 
             auto resp = Json.emptyObject;

@@ -54,7 +54,7 @@ class SituationTemplateController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation template created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -69,19 +69,18 @@ class SituationTemplateController : PlatformController {
 
             auto jarr = Json.emptyArray;
             foreach (t; templates) {
-                auto tj = Json.emptyObject;
-                tj["id"] = Json(t.id);
-                tj["name"] = Json(t.name);
-                tj["description"] = Json(t.description);
-                tj["category"] = Json(t.category.to!string);
-                tj["defaultSeverity"] = Json(t.defaultSeverity.to!string);
-                tj["status"] = Json(t.status.to!string);
-                tj["entityTypeId"] = Json(t.entityTypeId);
-                tj["sourceSystem"] = Json(t.sourceSystem);
-                tj["createdBy"] = Json(t.createdBy);
-                tj["createdAt"] = Json(t.createdAt);
-                tj["modifiedAt"] = Json(t.modifiedAt);
-                jarr ~= tj;
+                jarr ~= Json.emptyObject
+                    .set("id", t.id)
+                    .set("name", t.name)
+                    .set("description", t.description)
+                    .set("category", t.category.to!string)
+                    .set("defaultSeverity", t.defaultSeverity.to!string)
+                    .set("status", t.status.to!string)
+                    .set("entityTypeId", t.entityTypeId)
+                    .set("sourceSystem", t.sourceSystem)
+                    .set("createdBy", t.createdBy)
+                    .set("createdAt", t.createdAt)
+                    .set("modifiedAt", t.modifiedAt);
             }
 
             auto resp = Json.emptyObject;
@@ -151,7 +150,7 @@ class SituationTemplateController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation template updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -170,7 +169,7 @@ class SituationTemplateController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation template deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

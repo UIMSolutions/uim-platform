@@ -151,21 +151,20 @@ class LifecycleRuleController : PlatformController {
   }
 
   private static Json serializeRule(LifecycleRule r) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(r.id);
-    j["tenantId"] = Json(r.tenantId);
-    j["bucketId"] = Json(r.bucketId);
-    j["name"] = Json(r.name);
-    j["prefix"] = Json(r.prefix);
-    j["status"] = Json(r.status.to!string);
-    j["expirationDays"] = Json(r.expirationDays);
-    j["transitionDays"] = Json(r.transitionDays);
-    j["transitionStorageClass"] = Json(r.transitionStorageClass.to!string);
-    j["abortIncompleteUploadDays"] = Json(r.abortIncompleteUploadDays);
-    j["createdBy"] = Json(r.createdBy);
-    j["createdAt"] = Json(r.createdAt);
-    j["updatedAt"] = Json(r.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", r.id)
+    .set("tenantId", r.tenantId)
+    .set("bucketId", r.bucketId)
+    .set("name", r.name)
+    .set("prefix", r.prefix)
+    .set("status", r.status.to!string)
+    .set("expirationDays", r.expirationDays)
+    .set("transitionDays", r.transitionDays)
+    .set("transitionStorageClass", r.transitionStorageClass.to!string)
+    .set("abortIncompleteUploadDays", r.abortIncompleteUploadDays)
+    .set("createdBy", r.createdBy)
+    .set("createdAt", r.createdAt)
+    .set("updatedAt", r.updatedAt);
   }
 
   private static string extractBucketIdFromRulesPath(string uri) {

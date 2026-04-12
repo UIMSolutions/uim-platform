@@ -155,22 +155,21 @@ class BucketController : PlatformController {
   }
 
   private static Json serializeBucket(Bucket b) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(b.id);
-    j["tenantId"] = Json(b.tenantId);
-    j["name"] = Json(b.name);
-    j["region"] = Json(b.region);
-    j["storageClass"] = Json(b.storageClass.to!string);
-    j["versioningEnabled"] = Json(b.versioningEnabled);
-    j["encryptionType"] = Json(b.encryptionType.to!string);
-    j["encryptionKeyId"] = Json(b.encryptionKeyId);
-    j["status"] = Json(b.status.to!string);
-    j["quotaBytes"] = Json(b.quotaBytes);
-    j["usedBytes"] = Json(b.usedBytes);
-    j["objectCount"] = Json(b.objectCount);
-    j["createdBy"] = Json(b.createdBy);
-    j["createdAt"] = Json(b.createdAt);
-    j["updatedAt"] = Json(b.updatedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", b.id)
+    .set("tenantId", b.tenantId)
+    .set("name", b.name)
+    .set("region", b.region)
+    .set("storageClass", b.storageClass.to!string)
+    .set("versioningEnabled", b.versioningEnabled)
+    .set("encryptionType", b.encryptionType.to!string)
+    .set("encryptionKeyId", b.encryptionKeyId)
+    .set("status", b.status.to!string)
+    .set("quotaBytes", b.quotaBytes)
+    .set("usedBytes", b.usedBytes)
+    .set("objectCount", b.objectCount)
+    .set("createdBy", b.createdBy)
+    .set("createdAt", b.createdAt)
+    .set("updatedAt", b.updatedAt);
   }
 }

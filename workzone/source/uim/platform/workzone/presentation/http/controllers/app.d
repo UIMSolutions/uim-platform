@@ -51,7 +51,7 @@ class AppController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -113,7 +113,7 @@ class AppController : PlatformController {
         auto resp = Json.emptyObject;
         resp["status"] = Json("updated");
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {
@@ -151,36 +151,28 @@ private AppConfig parseAppConfig(Json j) {
 }
 
 private Json serializeApp(AppRegistration a) {
-  // import std.conv : to;
-  auto j = Json.emptyObject
-  .set("id", a.id)
-  .set("tenantId", a.tenantId)
-  .set("name", a.name)
-  .set("description", a.description)
-  .set("launchUrl", a.launchUrl)
-  .set("icon", a.icon)
-  .set("vendor", a.vendor)
-  .set("version", a.version_)
-  .set("status", a.status.to!string)
-  .set("createdAt", a.createdAt)
-  .set("updatedAt", a.updatedAt);
+  auto platforms = a.supportedPlatforms.map!(p => Json(p)).array.toJson;
+  auto tags = a.tags.map!(t => Json(t)).array.toJson;
 
-  auto platforms = Json.emptyArray;
-  foreach (p; a.supportedPlatforms)
-    platforms ~= Json(p);
-  j["supportedPlatforms"] = platforms;
+  auto cfg = Json.emptyObject
+    .set("authType", a.appConfig.authType)
+    .set("enableSso", a.appConfig.enableSso)
+    .set("sapSystemAlias", a.appConfig.sapSystemAlias)
+    .set("componentId", a.appConfig.componentId);
 
-  auto tags = Json.emptyArray;
-  foreach (t; a.tags)
-    tags ~= Json(t);
-  j["tags"] = tags;
-
-  auto cfg = Json.emptyObject;
-  cfg["authType"] = Json(a.appConfig.authType);
-  cfg["enableSso"] = Json(a.appConfig.enableSso);
-  cfg["sapSystemAlias"] = Json(a.appConfig.sapSystemAlias);
-  cfg["componentId"] = Json(a.appConfig.componentId);
-  j["appConfig"] = cfg;
-
-  return j;
+  return Json.emptyObject
+    .set("id", a.id)
+    .set("tenantId", a.tenantId)
+    .set("name", a.name)
+    .set("description", a.description)
+    .set("launchUrl", a.launchUrl)
+    .set("icon", a.icon)
+    .set("vendor", a.vendor)
+    .set("version", a.version_)
+    .set("status", a.status.to!string)
+    .set("createdAt", a.createdAt)
+    .set("updatedAt", a.updatedAt)
+    .set("supportedPlatforms", platforms)
+    .set("tags", tags)
+    .set("appConfig", cfg);
 }

@@ -147,19 +147,18 @@ class AccessPolicyController : PlatformController {
   }
 
   private static Json serializePolicy(AccessPolicy p) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(p.id);
-    j["tenantId"] = Json(p.tenantId);
-    j["bucketId"] = Json(p.bucketId);
-    j["name"] = Json(p.name);
-    j["effect"] = Json(p.effect.to!string);
-    j["principal"] = Json(p.principal);
-    j["actions"] = Json(p.actions);
-    j["resources"] = Json(p.resources);
-    j["createdBy"] = Json(p.createdBy);
-    j["createdAt"] = Json(p.createdAt);
-    j["updatedAt"] = Json(p.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", p.id)
+      .set("tenantId", p.tenantId)
+      .set("bucketId", p.bucketId)
+      .set("name", p.name)
+      .set("effect", p.effect.to!string)
+      .set("principal", p.principal)
+      .set("actions", p.actions)
+      .set("resources", p.resources)
+      .set("createdBy", p.createdBy)
+      .set("createdAt", p.createdAt)
+      .set("updatedAt", p.updatedAt); 
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/access-policies

@@ -227,18 +227,17 @@ class ObjectController : PlatformController {
   }
 
   private static Json serializeVersion(ObjectVersion v) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(v.id);
-    j["objectId"] = Json(v.objectId);
-    j["versionTag"] = Json(v.versionTag);
-    j["size"] = Json(v.size);
-    j["etag"] = Json(v.etag);
-    j["contentType"] = Json(v.contentType);
-    j["isLatest"] = Json(v.isLatest);
-    j["isDeleteMarker"] = Json(v.isDeleteMarker);
-    j["createdBy"] = Json(v.createdBy);
-    j["createdAt"] = Json(v.createdAt);
-    return j;
+    return Json.emptyObject
+    .set("id", v.id)
+    .set("objectId", v.objectId)
+    .set("versionTag", v.versionTag)
+    .set("size", v.size)
+    .set("etag", v.etag)
+    .set("contentType", v.contentType)
+    .set("isLatest", v.isLatest)
+    .set("isDeleteMarker", v.isDeleteMarker)
+    .set("createdBy", v.createdBy)
+    .set("createdAt", v.createdAt);
   }
 
   /// Extract bucket ID from /api/v1/buckets/{id}/objects

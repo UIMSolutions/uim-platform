@@ -155,19 +155,18 @@ class DataSubjectRequestController : PlatformController {
     }
 
     private Json requestToJson(DataSubjectRequest r) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(r.id);
-        j["dataSubjectId"] = Json(r.dataSubjectId);
-        j["requestType"] = Json(r.requestType.to!string);
-        j["status"] = Json(r.status.to!string);
-        j["priority"] = Json(r.priority.to!string);
-        j["description"] = Json(r.description);
-        j["assignedTo"] = Json(r.assignedTo);
-        j["dueDate"] = Json(r.dueDate);
-        j["rejectionReason"] = Json(r.rejectionReason);
-        j["createdBy"] = Json(r.createdBy);
-        j["createdAt"] = Json(r.createdAt);
-        j["modifiedAt"] = Json(r.modifiedAt);
-        return j;
+        return Json.emptyObject
+        .set("id", r.id)
+        .set("dataSubjectId", r.dataSubjectId)
+        .set("requestType", r.requestType.to!string)
+        .set("status", r.status.to!string)
+        .set("priority", r.priority.to!string)
+        .set("description", r.description)
+        .set("assignedTo", r.assignedTo)
+        .set("dueDate", r.dueDate)
+        .set("rejectionReason", r.rejectionReason)
+        .set("createdBy", r.createdBy)
+        .set("createdAt", r.createdAt)
+        .set("modifiedAt", r.modifiedAt);
     }
 }

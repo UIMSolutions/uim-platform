@@ -53,7 +53,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            }) {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -83,6 +83,7 @@ class DataSubjectController : PlatformController {
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto params = req.queryParams();
             auto firstName = params.get("firstName", "");
             auto lastName = params.get("lastName", "");
@@ -91,8 +92,9 @@ class DataSubjectController : PlatformController {
             DataSubject[] results;
             if (email.length > 0) {
                 auto s = uc.findByEmail(email);
-                if (s.id.length > 0) results ~= s;
-            } ) {
+                if (s.id.length > 0)
+                    results ~= s;
+            }) {
                 results = uc.search(firstName, lastName);
             }
 
@@ -115,8 +117,10 @@ class DataSubjectController : PlatformController {
             import std.conv : to;
 
             auto path = req.requestURI.to!string;
-            if (path.length > 6 && path[$ - 6 .. $] == "/block") return;
-            if (path.length > 6 && path[$ - 6 .. $] == "/erase") return;
+            if (path.length > 6 && path[$ - 6 .. $] == "/block")
+                return;
+            if (path.length > 6 && path[$ - 6 .. $] == "/erase")
+                return;
 
             auto id = extractIdFromPath(path);
             auto s = uc.get_(id);
@@ -153,7 +157,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -175,7 +179,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject blocked");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -197,7 +201,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject erased (anonymized)");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -208,6 +212,7 @@ class DataSubjectController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto result = uc.remove(id);
             if (result.success) {
@@ -215,7 +220,7 @@ class DataSubjectController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Data subject deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -224,20 +229,19 @@ class DataSubjectController : PlatformController {
     }
 
     private Json subjectToJson(DataSubject s) {
-        auto j = Json.emptyObject;
-        j["id"] = Json(s.id);
-        j["subjectType"] = Json(s.subjectType.to!string);
-        j["status"] = Json(s.status.to!string);
-        j["firstName"] = Json(s.firstName);
-        j["lastName"] = Json(s.lastName);
-        j["email"] = Json(s.email);
-        j["phone"] = Json(s.phone);
-        j["dateOfBirth"] = Json(s.dateOfBirth);
-        j["organizationName"] = Json(s.organizationName);
-        j["organizationId"] = Json(s.organizationId);
-        j["externalId"] = Json(s.externalId);
-        j["createdBy"] = Json(s.createdBy);
-        j["createdAt"] = Json(s.createdAt);
-        return j;
+        return Json.emptyObject
+            .set("id", s.id)
+            .set("subjectType", s.subjectType.to!string)
+            .set("status", s.status.to!string)
+            .set("firstName", s.firstName)
+            .set("lastName", s.lastName)
+            .set("email", s.email)
+            .set("phone", s.phone)
+            .set("dateOfBirth", s.dateOfBirth)
+            .set("organizationName", s.organizationName)
+            .set("organizationId", s.organizationId)
+            .set("externalId", s.externalId)
+            .set("createdBy", s.createdBy)
+            .set("createdAt", s.createdAt);
     }
 }

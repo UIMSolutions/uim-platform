@@ -228,14 +228,15 @@ private Json serializeWorkspace(Workspace w) {
   j["members"] = members;
 
   // Settings
-  auto sj = Json.emptyObject;
-  sj["allowExternalMembers"] = Json(w.settings.allowExternalMembers);
-  sj["enableNotifications"] = Json(w.settings.enableNotifications);
-  sj["enableFeeds"] = Json(w.settings.enableFeeds);
-  sj["enableWiki"] = Json(w.settings.enableWiki);
-  sj["enableKnowledgeBase"] = Json(w.settings.enableKnowledgeBase);
-  sj["enableForum"] = Json(w.settings.enableForum);
-  sj["defaultLanguage"] = Json(w.settings.defaultLanguage);
+  auto sj = Json.emptyObject
+  .set("allowExternalMembers", w.settings.allowExternalMembers)
+  .set("enableNotifications", w.settings.enableNotifications)
+  .set("enableFeeds", w.settings.enableFeeds)
+  .set("enableWiki", w.settings.enableWiki)
+  .set("enableKnowledgeBase", w.settings.enableKnowledgeBase)
+  .set("enableForum", w.settings.enableForum)
+  .set("defaultLanguage", w.settings.defaultLanguage);
+  
   j["settings"] = sj;
 
   return j;
