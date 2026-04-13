@@ -34,7 +34,7 @@ class DeploymentController : PlatformController {
       r.tenantId = req.getTenantId;
       r.resourceGroupId = req.headers.get("AI-Resource-Group", "");
       r.configurationId = j.getString("configurationId");
-      r.ttl = jsonInt(j, "ttl");
+      r.ttl = j.getInteger("ttl");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -101,7 +101,7 @@ class DeploymentController : PlatformController {
       r.deploymentId = id;
       r.targetStatus = j.getString("targetStatus");
       r.configurationId = j.getString("configurationId");
-      r.ttl = jsonInt(j, "ttl");
+      r.ttl = j.getInteger("ttl");
 
       auto result = uc.patch(r);
       if (result.success) {

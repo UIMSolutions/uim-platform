@@ -37,7 +37,7 @@ class DnsRecordController : PlatformController {
             r.recordType = j.getString("recordType");
             r.hostname = j.getString("hostname");
             r.value = j.getString("value");
-            r.ttl = jsonInt(j, "ttl");
+            r.ttl = j.getInteger("ttl");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
@@ -120,7 +120,7 @@ class DnsRecordController : PlatformController {
             r.tenantId = req.getTenantId;
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.value = j.getString("value");
-            r.ttl = jsonInt(j, "ttl");
+            r.ttl = j.getInteger("ttl");
 
             auto result = uc.update(r);
             if (result.success) {

@@ -40,7 +40,7 @@ class SectionController : PlatformController {
       auto j = req.json;
       auto createReq = CreateSectionRequest(j.getString("pageId"),
         req.headers.get("X-Tenant-Id", ""), j.getString("title"), jsonInt(j,
-          "sortOrder"), j.getBoolean("visible", true), jsonInt(j, "columns", 3),);
+          "sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
 
       auto result = useCase.createSection(createReq);
       if (result.isSuccess()) {
@@ -87,7 +87,7 @@ class SectionController : PlatformController {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateSectionRequest(sectionId, j.getString("title"),
-        jsonInt(j, "sortOrder"), j.getBoolean("visible", true), jsonInt(j, "columns", 3),);
+        j.getInteger("sortOrder"), j.getBoolean("visible", true), j.getInteger("columns", 3),);
 
       auto error = useCase.updateSection(updateReq);
       if (error.length > 0)

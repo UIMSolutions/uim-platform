@@ -42,7 +42,7 @@ class PageController : PlatformController {
         req.headers.get("X-Tenant-Id", ""), j.getString("title"),
         j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
           "layout", PageLayout.freeform), jsonStrArray(j, "allowedRoleIds"),
-        jsonInt(j, "sortOrder"), j.getBoolean("visible", true),);
+        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createPage(createReq);
       if (result.isSuccess()) {
@@ -93,7 +93,7 @@ class PageController : PlatformController {
       auto updateReq = UpdatePageRequest(pageId, j.getString("title"),
         j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
           "layout", PageLayout.freeform), jsonStrArray(j, "allowedRoleIds"),
-        jsonInt(j, "sortOrder"), j.getBoolean("visible", true),);
+        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updatePage(updateReq);
       if (error.length > 0)

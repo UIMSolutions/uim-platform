@@ -41,13 +41,13 @@ class DatabaseConnectionController : PlatformController {
       r.description = j.getString("description");
       r.type = j.getString("type");
       r.host = j.getString("host");
-      r.port = jsonInt(j, "port", 443);
+      r.port = j.getInteger("port", 443);
       r.database = j.getString("database");
       r.user = j.getString("user");
       r.password = j.getString("password");
       r.useTls = j.getBoolean("useTls", true);
-      r.minConnections = jsonInt(j, "minConnections", 1);
-      r.maxConnections = jsonInt(j, "maxConnections", 10);
+      r.minConnections = j.getInteger("minConnections", 1);
+      r.maxConnections = j.getInteger("maxConnections", 10);
       r.properties = jsonKeyValuePairs(j, "properties");
 
       auto result = uc.create(r);
@@ -133,7 +133,7 @@ class DatabaseConnectionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.host = j.getString("host");
-      r.port = jsonInt(j, "port", 443);
+      r.port = j.getInteger("port", 443);
       r.database = j.getString("database");
       r.user = j.getString("user");
       r.password = j.getString("password");

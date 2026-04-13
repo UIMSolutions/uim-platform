@@ -35,7 +35,7 @@ class PrivateKeyController : PlatformController {
             r.subject = j.getString("subject");
             r.domains = jsonStrArray(j, "domains");
             r.algorithm = j.getString("algorithm");
-            r.keySize = jsonInt(j, "keySize");
+            r.keySize = j.getInteger("keySize");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);

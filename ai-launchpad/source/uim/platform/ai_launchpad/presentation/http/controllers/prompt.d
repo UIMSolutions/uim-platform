@@ -36,7 +36,7 @@ class PromptController : PlatformController {
       r.modelVersion = j.getString("modelVersion");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = jsonDouble(j, "temperature");
-      r.maxTokens = jsonInt(j, "maxTokens");
+      r.maxTokens = j.getInteger("maxTokens");
       r.topP = jsonDouble(j, "topP");
       r.frequencyPenalty = jsonDouble(j, "frequencyPenalty");
       r.presencePenalty = jsonDouble(j, "presencePenalty");
@@ -112,7 +112,7 @@ class PromptController : PlatformController {
       r.status = j.getString("status");
       r.messages = jsonMessageArray(j, "messages");
       r.temperature = jsonDouble(j, "temperature");
-      r.maxTokens = jsonInt(j, "maxTokens");
+      r.maxTokens = j.getInteger("maxTokens");
 
       auto result = uc.patch(r);
       if (result.success) {

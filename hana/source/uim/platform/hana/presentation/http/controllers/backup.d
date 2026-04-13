@@ -43,7 +43,7 @@ class BackupController : PlatformController {
       r.destination = j.getString("destination");
       r.encrypted = j.getBoolean("encrypted");
       r.cronExpression = j.getString("cronExpression");
-      r.retentionDays = jsonInt(j, "retentionDays", 30);
+      r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = uc.create(r);
       if (result.success) {
@@ -126,7 +126,7 @@ class BackupController : PlatformController {
       r.name = j.getString("name");
       r.destination = j.getString("destination");
       r.cronExpression = j.getString("cronExpression");
-      r.retentionDays = jsonInt(j, "retentionDays", 30);
+      r.retentionDays = j.getInteger("retentionDays", 30);
 
       auto result = uc.update(r);
       if (result.success) {

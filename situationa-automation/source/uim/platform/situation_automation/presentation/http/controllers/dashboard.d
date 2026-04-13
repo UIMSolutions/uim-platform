@@ -39,7 +39,7 @@ class DashboardController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.type = j.getString("type");
-            r.refreshIntervalSeconds = jsonInt(j, "refreshIntervalSeconds");
+            r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
@@ -118,7 +118,7 @@ class DashboardController : PlatformController {
             r.id = extractIdFromPath(req.requestURI.to!string);
             r.name = j.getString("name");
             r.description = j.getString("description");
-            r.refreshIntervalSeconds = jsonInt(j, "refreshIntervalSeconds");
+            r.refreshIntervalSeconds = j.getInteger("refreshIntervalSeconds");
             r.modifiedBy = j.getString("modifiedBy");
 
             auto result = uc.update(r);

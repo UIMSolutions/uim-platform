@@ -40,7 +40,7 @@ class KeyringController : PlatformController {
       r.name = j.getString("name");
       r.metadata = j.getString("metadata");
       r.format = j.getString("format");
-      r.rotationPeriodDays = jsonInt(j, "rotationPeriodDays", 90);
+      r.rotationPeriodDays = j.getInteger("rotationPeriodDays", 90);
       r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);

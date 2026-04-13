@@ -36,7 +36,7 @@ class SpaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
-      r.priority = jsonInt(j, "priority", 0);
+      r.priority = j.getInteger("priority", 0);
 
       auto result = uc.create(r);
       if (result.success) {
@@ -114,7 +114,7 @@ class SpaceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.businessName = j.getString("businessName");
-      r.priority = jsonInt(j, "priority", 0);
+      r.priority = j.getInteger("priority", 0);
 
       auto result = uc.update(r);
       if (result.success) {

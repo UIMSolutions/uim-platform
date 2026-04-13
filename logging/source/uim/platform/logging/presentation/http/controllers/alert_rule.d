@@ -41,7 +41,7 @@ class AlertRuleController : PlatformController {
       r.pattern = j.getString("pattern");
       r.thresholdValue = jsonDouble(j, "thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
-      r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
+      r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.channelIds = j.getArray("channelIds").map!(v => v.to!string).array;
       r.createdBy = j.getString("createdBy");
@@ -123,7 +123,7 @@ class AlertRuleController : PlatformController {
       r.pattern = j.getString("pattern");
       r.thresholdValue = jsonDouble(j, "thresholdValue");
       r.thresholdOperator = j.getString("thresholdOperator");
-      r.evaluationWindowSeconds = jsonInt(j, "evaluationWindowSeconds");
+      r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
       r.channelIds = jsonStrArray(j, "channelIds");

@@ -35,7 +35,7 @@ class RetentionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.dataType = j.getString("dataType");
-      r.retentionDays = jsonInt(j, "retentionDays");
+      r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.createdBy = j.getString("createdBy");
@@ -112,7 +112,7 @@ class RetentionController : PlatformController {
       auto j = req.json;
       UpdateRetentionPolicyRequest r;
       r.description = j.getString("description");
-      r.retentionDays = jsonInt(j, "retentionDays");
+      r.retentionDays = j.getInteger("retentionDays");
       r.maxSizeGB = jsonDouble(j, "maxSizeGB");
       r.isDefault = j.getBoolean("isDefault");
       r.isActive = j.getBoolean("isActive", true);

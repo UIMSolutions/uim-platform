@@ -36,7 +36,7 @@ class AppVersionController : PlatformController {
       r.tenantId = req.getTenantId;
       r.appId = j.getString("appId");
       r.versionCode = j.getString("versionCode");
-      r.buildNumber = jsonInt(j, "buildNumber");
+      r.buildNumber = j.getInteger("buildNumber");
       r.platform = j.getString("platform");
       r.releaseNotes = j.getString("releaseNotes");
       r.downloadUrl = j.getString("downloadUrl");

@@ -37,7 +37,7 @@ class ConnectionController : PlatformController {
       r.description = j.getString("description");
       r.type = j.getString("type");
       r.host = j.getString("host");
-      r.port = jsonInt(j, "port", 0);
+      r.port = j.getInteger("port", 0);
       r.database = j.getString("database");
       r.user = j.getString("user");
 

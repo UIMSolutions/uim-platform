@@ -48,7 +48,7 @@ class ConfigurationController : PlatformController {
 
             UpdateConfigurationRequest r;
             r.tenantId = req.getTenantId;
-            r.defaultRetries = jsonInt(j, "defaultRetries", 3);
+            r.defaultRetries = j.getInteger("defaultRetries", 3);
             r.defaultRetryDelayMs = jsonLong(j, "defaultRetryDelayMs", 30000);
             r.maxRunDurationMs = jsonLong(j, "maxRunDurationMs", 600000);
             r.enableAsyncMode = j.getBoolean("enableAsyncMode", true);

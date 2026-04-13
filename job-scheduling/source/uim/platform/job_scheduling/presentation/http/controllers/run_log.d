@@ -84,7 +84,7 @@ class RunLogController : PlatformController {
             r.tenantId = req.getTenantId;
             r.status = j.getString("status");
             r.statusMessage = j.getString("statusMessage");
-            r.httpStatus = jsonInt(j, "httpStatus");
+            r.httpStatus = j.getInteger("httpStatus");
             r.completedAt = jsonLong(j, "completedAt");
             r.executionDurationMs = jsonLong(j, "executionDurationMs");
 

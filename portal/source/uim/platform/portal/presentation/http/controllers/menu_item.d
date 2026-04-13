@@ -43,7 +43,7 @@ class MenuItemController : PlatformController {
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), jsonStrArray(j, "allowedRoleIds"),
-        jsonInt(j, "sortOrder"), j.getBoolean("visible", true),);
+        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createMenuItem(createReq);
       if (result.isSuccess()) {
@@ -93,7 +93,7 @@ class MenuItemController : PlatformController {
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
           NavigationTarget.inPlace), jsonStrArray(j, "allowedRoleIds"),
-        jsonInt(j, "sortOrder"), j.getBoolean("visible", true),);
+        j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updateMenuItem(updateReq);
       if (error.length > 0)

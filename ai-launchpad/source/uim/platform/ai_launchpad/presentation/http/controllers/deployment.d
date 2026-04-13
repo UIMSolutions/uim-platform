@@ -36,13 +36,14 @@ class DeploymentController : PlatformController {
       r.connectionId = connectionId;
       r.configurationId = j.getString("configurationId");
       r.resourceGroupId = j.getString("resourceGroupId");
-      r.ttl = jsonInt(j, "ttl");
+      r.ttl = j.getInteger("ttl");
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Deployment created");
+        auto resp = Json.emptyObject
+          .set("id", result.id)
+          .set("message", "Deployment created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -58,19 +59,15 @@ class DeploymentController : PlatformController {
       auto scenarioId = req.headers.get("X-Scenario-Id", "");
 
       typeof(uc.listByConnection(connectionId)) deployments;
-      if (scenarioId.length > 0)
-        deployments = uc.listByScenario(scenarioId, connectionId);
-      else
-        deployments = uc.listByConnection(connectionId);
+      deployments = scenarioId.length > 0
+        ? uc.listByScenario(scenarioId, connectionId) : uc.listByConnection(connectionId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; deployments) {
-        jarr ~= serializeDeployment(d);
-      }
+      auto jarr = deployments.map!(deploy => serializeDeployment(d)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(deployments.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", Json(deployments.length))
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -109,7 +106,7 @@ class DeploymentController : PlatformController {
       r.deploymentId = id;
       r.targetStatus = j.getString("targetStatus");
       r.configurationId = j.getString("configurationId");
-      r.ttl = jsonInt(j, "ttl");
+      r.ttl = j.getInteger("ttl");
 
       auto result = uc.patch(r);
       if (result.success) {
@@ -138,8 +135,8 @@ class DeploymentController : PlatformController {
       auto jarr = Json.emptyArray;
       foreach (result; results) {
         auto rj = Json.emptyObject
-        .set("id", Json(result.id))
-        .set("success", Json(result.success));
+          .set("id", Json(result.id))
+          .set("success", Json(result.success));
         if (result.error.length > 0)
           rj = rj.set("error", Json(result.error));
         jarr ~= rj;

@@ -43,9 +43,10 @@ class ConnectionController : PlatformController {
 
       auto result = uc.create(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Connection created");
+        auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Connection created");
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -110,8 +111,9 @@ class ConnectionController : PlatformController {
 
       auto result = uc.patch(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["message"] = Json("Connection updated");
+        auto resp = Json.emptyObject
+        .set("message", "Connection updated");
+        
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

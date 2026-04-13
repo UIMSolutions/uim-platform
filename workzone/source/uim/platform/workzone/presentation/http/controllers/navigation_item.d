@@ -41,7 +41,7 @@ class NavigationItemController {
       r.targetAppId = j.getString("targetAppId");
       r.targetPageId = j.getString("targetPageId");
       r.parentId = j.getString("parentId");
-      r.sortOrder = jsonInt(j, "sortOrder");
+      r.sortOrder = j.getInteger("sortOrder");
       r.openInNewWindow = j.getBoolean("openInNewWindow");
 
       auto result = useCase.createNavigationItem(r);
@@ -104,7 +104,7 @@ class NavigationItemController {
       r.title = j.getString("title");
       r.icon = j.getString("icon");
       r.targetUrl = j.getString("targetUrl");
-      r.sortOrder = jsonInt(j, "sortOrder");
+      r.sortOrder = j.getInteger("sortOrder");
       r.visible = j.getBoolean("visible", true);
 
       auto result = useCase.updateNavigationItem(r);

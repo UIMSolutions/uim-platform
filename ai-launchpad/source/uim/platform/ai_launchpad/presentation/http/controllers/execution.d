@@ -19,7 +19,7 @@ class ExecutionController : PlatformController {
 
   override void registerRoutes(URLRouter router) {
     super.registerRoutes(router);
-    
+
     router.post("/api/v1/executions", &handleCreate);
     router.get("/api/v1/executions", &handleList);
     router.get("/api/v1/executions/*", &handleGet);
@@ -68,9 +68,10 @@ class ExecutionController : PlatformController {
         jarr ~= serializeExecution(e);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(executions.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+        .set("count", executions.length)
+        .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -80,15 +81,16 @@ class ExecutionController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
-      auto ex = uc.get_(id, connectionId);
-      if (ex.id.isEmpty) {
+      if (!uc.existsById(id, connectionId)) {
         writeError(res, 404, "Execution not found");
         return;
       }
 
+      auto ex = uc.get_(id, connectionId);
       res.writeJsonBody(serializeExecution(ex), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -98,6 +100,7 @@ class ExecutionController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
@@ -136,7 +139,8 @@ class ExecutionController : PlatformController {
         auto rj = Json.emptyObject;
         rj["id"] = Json(result.id);
         rj["success"] = Json(result.success);
-        if (result.error.length > 0) rj["error"] = Json(result.error);
+        if (result.error.length > 0)
+          rj["error"] = Json(result.error);
         jarr ~= rj;
       }
 
@@ -151,6 +155,7 @@ class ExecutionController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -178,20 +183,20 @@ class ExecutionController : PlatformController {
     }
 
     return Json.emptyObject
-    .set("id", ex.id)
-    .set("connectionId", ex.connectionId)
-    .set("configurationId", ex.configurationId)
-    .set("scenarioId", ex.scenarioId)
-    .set("resourceGroupId", ex.resourceGroupId)
-    .set("status", ex.status.to!string)
-    .set("targetStatus", ex.targetStatus)
-    .set("outputArtifacts", artifacts)
-    .set("startedAt", ex.startedAt)
-    .set("completedAt", ex.completedAt)
-    .set("duration", ex.duration)
-    .set("logsUrl", ex.logsUrl)
-    .set("statusMessage", ex.statusMessage)
-    .set("createdAt", ex.createdAt)
-    .set("modifiedAt", ex.modifiedAt);
+      .set("id", ex.id)
+      .set("connectionId", ex.connectionId)
+      .set("configurationId", ex.configurationId)
+      .set("scenarioId", ex.scenarioId)
+      .set("resourceGroupId", ex.resourceGroupId)
+      .set("status", ex.status.to!string)
+      .set("targetStatus", ex.targetStatus)
+      .set("outputArtifacts", artifacts)
+      .set("startedAt", ex.startedAt)
+      .set("completedAt", ex.completedAt)
+      .set("duration", ex.duration)
+      .set("logsUrl", ex.logsUrl)
+      .set("statusMessage", ex.statusMessage)
+      .set("createdAt", ex.createdAt)
+      .set("modifiedAt", ex.modifiedAt);
   }
 }

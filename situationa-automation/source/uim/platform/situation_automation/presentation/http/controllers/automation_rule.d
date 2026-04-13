@@ -40,7 +40,7 @@ class AutomationRuleController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.priority = j.getString("priority");
-            r.executionOrder = jsonInt(j, "executionOrder");
+            r.executionOrder = j.getInteger("executionOrder");
             r.createdBy = j.getString("createdBy");
 
             auto result = uc.create(r);
@@ -132,7 +132,7 @@ class AutomationRuleController : PlatformController {
             r.name = j.getString("name");
             r.description = j.getString("description");
             r.priority = j.getString("priority");
-            r.executionOrder = jsonInt(j, "executionOrder");
+            r.executionOrder = j.getInteger("executionOrder");
             r.enabled = j.getBoolean("enabled", true);
             r.modifiedBy = j.getString("modifiedBy");
 

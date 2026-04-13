@@ -40,7 +40,7 @@ class DataLakeController : PlatformController {
       r.id = j.getString("id");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.computeNodes = jsonInt(j, "computeNodes", 1);
+      r.computeNodes = j.getInteger("computeNodes", 1);
       r.storage = jsonKeyValuePairs(j, "storage");
 
       auto result = uc.create(r);
@@ -122,7 +122,7 @@ class DataLakeController : PlatformController {
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.computeNodes = jsonInt(j, "computeNodes", 1);
+      r.computeNodes = j.getInteger("computeNodes", 1);
 
       auto result = uc.update(r);
       if (result.success) {

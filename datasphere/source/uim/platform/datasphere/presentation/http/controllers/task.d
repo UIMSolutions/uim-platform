@@ -39,7 +39,7 @@ class TaskController : PlatformController {
       r.targetObjectId = j.getString("targetObjectId");
       r.scheduleExpression = j.getString("scheduleExpression");
       r.scheduleFrequency = j.getString("scheduleFrequency");
-      r.maxRetries = jsonInt(j, "maxRetries", 3);
+      r.maxRetries = j.getInteger("maxRetries", 3);
 
       auto result = uc.create(r);
       if (result.success) {

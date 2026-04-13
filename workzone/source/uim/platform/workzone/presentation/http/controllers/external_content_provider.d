@@ -39,7 +39,7 @@ class ExternalContentProviderController {
       r.endpointUrl = j.getString("endpointUrl");
       r.authType = j.getString("authType");
       r.authConfig = j.getString("authConfig");
-      r.refreshIntervalSec = jsonInt(j, "refreshIntervalSec");
+      r.refreshIntervalSec = j.getInteger("refreshIntervalSec");
 
       auto result = useCase.createProvider(r);
       if (result.isSuccess()) {

@@ -67,7 +67,6 @@ class DatasetController : PlatformController {
         datasets = uc.listByConnection(connectionId);
 
       auto jarr = Json.datasets.map(ds => serializeDataset(d)).array.toJson;
-      }
 
       auto resp = Json.emptyObject
       .set("count", Json(datasets.length))

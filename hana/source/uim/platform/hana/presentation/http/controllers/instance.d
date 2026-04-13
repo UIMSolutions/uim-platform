@@ -46,7 +46,7 @@ class InstanceController : PlatformController {
       r.region = j.getString("region");
       r.availabilityZone = j.getString("availabilityZone");
       r.memoryGB = jsonLong(j, "memoryGB");
-      r.vcpus = jsonInt(j, "vcpus");
+      r.vcpus = j.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
       r.enableScriptServer = j.getBoolean("enableScriptServer");
       r.enableDocStore = j.getBoolean("enableDocStore");
@@ -146,7 +146,7 @@ class InstanceController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.memoryGB = jsonLong(j, "memoryGB");
-      r.vcpus = jsonInt(j, "vcpus");
+      r.vcpus = j.getInteger("vcpus");
       r.storageGB = jsonLong(j, "storageGB");
       r.enableScriptServer = j.getBoolean("enableScriptServer");
       r.enableDocStore = j.getBoolean("enableDocStore");
