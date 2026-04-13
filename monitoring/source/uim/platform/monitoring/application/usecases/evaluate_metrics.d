@@ -32,6 +32,10 @@ class EvaluateMetricsUseCase : UIMUseCase {
   }
 
   /// Evaluate all enabled alert rules for a tenant. Returns number of alerts triggered.
+  int evaluateAll(string tenantId) {
+    return evaluateAll(TenantId(tenantId));
+  }
+
   int evaluateAll(TenantId tenantId) {
     auto rules = ruleRepo.findEnabled(tenantId);
     int triggered = 0;
@@ -61,6 +65,10 @@ class EvaluateMetricsUseCase : UIMUseCase {
   }
 
   /// Evaluate a single rule by ID. Returns whether an alert was triggered.
+  bool evaluateRule(string tenantId, string ruleId) {
+    return evaluateRule(TenantId(tenantId), AlertRuleId(ruleId));
+  }
+
   bool evaluateRule(TenantId tenantId, AlertRuleId ruleId) {
     auto rule = ruleRepo.findById(ruleId);
     if (rule.id.isEmpty || !rule.isEnabled)

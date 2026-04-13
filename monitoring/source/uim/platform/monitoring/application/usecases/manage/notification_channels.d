@@ -91,12 +91,12 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  bool existsChannel(NotificationChannelId id) {
-    return repo.existsById(id);
-  }
-
   bool existsChannel(string id) {
     return existsChannel(NotificationChannelId(id));
+  }
+
+  bool existsChannel(NotificationChannelId id) {
+    return repo.existsById(id);
   }
 
   NotificationChannel getChannel(NotificationChannelId id) {

@@ -72,12 +72,24 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, id.toString(), "");
   }
 
+  MetricDefinition getDefinition(string id) {
+    return getDefinition(MetricDefinitionId(id));
+  }
+
   MetricDefinition getDefinition(MetricDefinitionId id) {
     return definitionRepo.findById(id);
   }
 
+  MetricDefinition[] listDefinitions(string tenantId) {
+    return listDefinitions(TenantId(tenantId));
+  }
+
   MetricDefinition[] listDefinitions(TenantId tenantId) {
     return definitionRepo.findByTenant(tenantId);
+  }
+
+  CommandResult removeDefinition(string id) {
+    return removeDefinition(MetricDefinitionId(id));
   }
 
   CommandResult removeDefinition(MetricDefinitionId id) {

@@ -41,6 +41,10 @@ class GetDashboardUseCase : UIMUseCase {
     this.channelRepo = channelRepo;
   }
 
+  DashboardSummary getSummary(string tenantId) {
+    return getSummary(TenantId(tenantId));
+  }
+
   DashboardSummary getSummary(TenantId tenantId) {
     DashboardSummary summary;
 

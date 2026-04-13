@@ -52,13 +52,10 @@ class MetricController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -71,12 +68,11 @@ class MetricController : PlatformController {
       PushMetricBatchRequest batchReq;
       batchReq.tenantId = tenantId;
 
-      auto metricsVal = "metrics" in j;
-      if (metricsVal !is null && (*metricsVal).type == Json.Type.array) {
-        foreach (mj; *metricsVal)
-        {
+      if (("metrics" in j) && (j["metrics"].isArray)) {
+        foreach (mj; j["metrics"].toArray) {
           if (!mj.isObject)
             continue;
+
           PushMetricRequest r;
           r.tenantId = tenantId;
           r.resourceId = mj.getString("resourceId");
@@ -92,8 +88,7 @@ class MetricController : PlatformController {
       auto resp = Json.emptyObject;
       resp["accepted"] = Json(batchReq.metrics.length);
       res.writeJsonBody(resp, 201);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -115,12 +110,12 @@ class MetricController : PlatformController {
       foreach (m; metrics)
         arr ~= serializeMetric(m);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(metrics.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(metrics.length));
+
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -148,8 +143,7 @@ class MetricController : PlatformController {
       resp["windowStartTime"] = Json(summary.windowStartTime);
       resp["windowEndTime"] = Json(summary.windowEndTime);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

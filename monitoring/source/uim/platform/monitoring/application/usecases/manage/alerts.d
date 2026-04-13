@@ -24,16 +24,40 @@ class ManageAlertsUseCase : UIMUseCase {
     this.repo = repo;
   }
 
+  bool existsAlert(string id) {
+    return existsById(AlertId(id));
+  }
+
+  bool existsAlert(AlertId id) {
+    return repo.existsById(id);
+  }
+
+  Alert getAlert(string id) {
+    return getAlert(AlertId(id));
+  }
+
   Alert getAlert(AlertId id) {
     return repo.findById(id);
+  }
+
+  Alert[] listAlerts(string tenantId) {
+    return listAlerts(TenantId(tenantId));
   }
 
   Alert[] listAlerts(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  Alert[] listByState(string tenantId, string stateStr) {
+    return listByState(TenantId(tenantId), stateStr);
+  }
+
   Alert[] listByState(TenantId tenantId, string stateStr) {
     return repo.findByState(tenantId, parseAlertState(stateStr));
+  }
+
+  Alert[] listBySeverity(string tenantId, string severityStr) {
+    return listBySeverity(TenantId(tenantId), severityStr);
   }
 
   Alert[] listBySeverity(TenantId tenantId, string severityStr) {
@@ -76,6 +100,10 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, req.alertId.toString, "");
   }
 
+  CommandResult deleteAlert(string id) {
+    return deleteAlert(AlertId(id));
+  }
+
   CommandResult deleteAlert(AlertId id) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Alert not found");
@@ -111,10 +139,8 @@ class ManageAlertsUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  
-
-  private static AlertState parseAlertState(string s) {
-    switch (s) {
+  private static AlertState parseAlertState(string state) {
+    switch (state) {
     case "acknowledged":
       return AlertState.acknowledged;
     case "resolved":
@@ -126,8 +152,8 @@ class ManageAlertsUseCase : UIMUseCase {
     }
   }
 
-  private static AlertSeverity parseSeverity(string s) {
-    switch (s) {
+  private static AlertSeverity parseSeverity(string severity) {
+    switch (severity) {
     case "info":
       return AlertSeverity.info;
     case "critical":

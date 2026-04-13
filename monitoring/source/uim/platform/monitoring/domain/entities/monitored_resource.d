@@ -28,4 +28,23 @@ struct MonitoredResource {
   string registeredBy;
   long registeredAt;
   long lastSeenAt;
+
+    Json toJson() {
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("subaccountId", subaccountId)
+      .set("name", name)
+      .set("description", description)
+      .set("resourceType", resourceType.to!string)
+      .set("state", state.to!string)
+      .set("url", url)
+      .set("runtime", runtime)
+      .set("region", region)
+      .set("instanceCount", instanceCount)
+      .set("tags", tags)
+      .set("registeredBy", registeredBy)
+      .set("registeredAt", registeredAt)
+      .set("lastSeenAt", lastSeenAt);
+  }
 }

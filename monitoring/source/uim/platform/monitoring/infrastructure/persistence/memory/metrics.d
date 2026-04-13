@@ -17,29 +17,82 @@ mixin(ShowModule!());
 
 @safe:
 class MemoryMetricRepository : MetricRepository {
-  private Metric[] store;
+  private Metric[MetricId][TenantId] store;
+
+  bool existsByTenant(string tenantId) {
+    return existsByTenant(TenantId(tenantId));
+  }
+
+  bool existsByTenant(TenantId tenantId) {
+    return (tenantId in store) ? true : false;
+  }
+
+  bool existsById(string id) {
+    return existsById(MetricId(id));
+  }
 
   bool existsById(MetricId id) {
-    return store.any!(m => m.id == id);
+    foreach (tenantId, metrics; store) {
+      if (id in metrics)
+        return true;
+    }
+    return false;
+  }
+
+  bool existsById(string tenantId, string id) {
+    return existsById(TenantId(tenantId), MetricId(id));
+  }
+
+  bool existsById(TenantId tenantId, MetricId id) {
+    return existsByTenant(tenantId) && id in store[tenantId];
+  }
+
+  Metric findById(string id) {
+    return findById(MetricId(id));
   }
 
   Metric findById(MetricId id) {
-    foreach (m; store)
-      if (m.id == id)
-        return m;
+    foreach (tenantId, metrics; store) {
+      if (id in metrics)
+        return metrics[id];
+    }
     return Metric.init;
   }
 
+  Metric findById(string tenantId, string id) {
+    return findById(TenantId(tenantId), MetricId(id));
+  }
+
+  Metric findById(TenantId tenantId, MetricId id) {
+    return existsById(tenantId, id) ? store[tenantId][id] : Metric.init;
+  }
+
+  Metric[] findByTenant(string tenantId) {
+    return findByTenant(TenantId(tenantId));
+  }
+
   Metric[] findByTenant(TenantId tenantId) {
-    return store.filter!(m => m.tenantId == tenantId).array;
+    return existsByTenant(tenantId) ? store[tenantId].byValue.array : null;
+  }
+
+  Metric[] findByResource(string tenantId, MonitoredResourceId resourceId) {
+    return findByResource(TenantId(tenantId), resourceId);
   }
 
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return findByTenant(tenantId).filter!(m => m.resourceId == resourceId).array;
   }
 
+  Metric[] findByName(string tenantId, string metricName) {
+    return findByName(TenantId(tenantId), metricName);
+  }
+
   Metric[] findByName(TenantId tenantId, string metricName) {
     return findByTenant(tenantId).filter!(m => m.name == metricName).array;
+  }
+
+  Metric[] findByResourceAndName(string tenantId, string resourceId, string metricName) {
+    return findByResourceAndName(TenantId(tenantId), MonitoredResourceId(resourceId), metricName);
   }
 
   Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
@@ -52,15 +105,28 @@ class MemoryMetricRepository : MetricRepository {
   }
 
   void save(Metric m) {
-    store ~= m;
+    if (!existsByTenant(m.tenantId)) {
+      Metric[MetricId] metrics;
+      store[m.tenantId] = metrics;
+    }
+    store[m.tenantId][m.id] = m;
   }
 
   void saveAll(Metric[] metrics) {
     foreach (m; metrics)
-      store ~= m;
+      save(m);
   }
 
   void removeOlderThan(TenantId tenantId, long beforeTimestamp) {
-    store = store.filter!(m => !(m.tenantId == tenantId && m.timestamp < beforeTimestamp)).array;
+    if (!existsByTenant(tenantId))
+      return;
+
+    auto metrics = store[tenantId];
+    foreach (id, metric; metrics) {
+      if (metric.timestamp < beforeTimestamp) {
+        metrics.remove(id);
+      }
+    }
+    store[tenantId] = metrics;
   }
 }

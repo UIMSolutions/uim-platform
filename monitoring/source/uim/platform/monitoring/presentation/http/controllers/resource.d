@@ -21,10 +21,10 @@ mixin(ShowModule!());
 
 @safe:
 class ResourceController : PlatformController {
-  private ManageMonitoredResourcesUseCase uc;
+  private ManageMonitoredResourcesUseCase usecase;
 
-  this(ManageMonitoredResourcesUseCase uc) {
-    this.uc = uc;
+  this(ManageMonitoredResourcesUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -53,7 +53,7 @@ class ResourceController : PlatformController {
       r.tags = jsonStrArray(j, "tags");
       r.registeredBy = req.headers.get("X-User-Id", "");
 
-      auto result = uc.register(r);
+      auto result = usecase.register(r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -69,16 +69,15 @@ class ResourceController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto resources = uc.listResources(tenantId);
+      auto resources = usecase.listResources(tenantId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; resources)
-        arr ~= serializeResource(r);
+      auto arr = resources.map!(resource => resource.toJson).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(resources.length);
-      res.writeJsonBody(resp, 200);
+      auto response = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", resources.length);
+
+      res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -87,12 +86,13 @@ class ResourceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto r = uc.getResource(id);
-      if (r.id.isEmpty) {
+      if (!usecase.existsById(id)) {
         writeError(res, 404, "Resource not found");
         return;
       }
-      res.writeJsonBody(serializeResource(r), 200);
+
+      auto resource = usecase.getResource(id);
+      res.writeJsonBody(resource.toJson, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
@@ -110,10 +110,11 @@ class ResourceController : PlatformController {
       r.instanceCount = j.getInteger("instanceCount");
       r.tags = jsonStrArray(j, "tags");
 
-      auto result = uc.updateResource(id, r);
+      auto result = usecase.updateResource(id, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, result.error == "Resource not found" ? 404 : 400, result.error);
@@ -126,10 +127,11 @@ class ResourceController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.removeResource(id);
+      auto result = usecase.removeResource(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+          
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);
@@ -137,24 +139,5 @@ class ResourceController : PlatformController {
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
-  }
-
-  private static Json serializeResource(const ref MonitoredResource r) {
-    return Json.emptyObject
-    .set("id", r.id)
-    .set("tenantId", r.tenantId)
-    .set("subaccountId", r.subaccountId)
-    .set("name", r.name)
-    .set("description", r.description)
-    .set("resourceType", r.resourceType.to!string)
-    .set("state", r.state.to!string)
-    .set("url", r.url)
-    .set("runtime", r.runtime)
-    .set("region", r.region)
-    .set("instanceCount", r.instanceCount)
-    .set("tags", toJsonArray(r.tags))
-    .set("registeredBy", r.registeredBy)
-    .set("registeredAt", r.registeredAt)
-    .set("lastSeenAt", r.lastSeenAt);
   }
 }
