@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.entities.service_channel;
 
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Tunnel / service channel between cloud and on-premise.
 struct ServiceChannel {
   ChannelId id;

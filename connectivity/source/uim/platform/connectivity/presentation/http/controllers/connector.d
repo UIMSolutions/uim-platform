@@ -10,15 +10,19 @@ module uim.platform.connectivity.presentation.http.controllers.connector;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.connectivity.application.usecases.manage.connectors;
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.cloud_connector;
+// import uim.platform.connectivity.application.usecases.manage.connectors;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.cloud_connector;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 class ConnectorController : PlatformController {
-  private ManageConnectorsUseCase uc;
+  private ManageConnectorsUseCase usecase;
 
-  this(ManageConnectorsUseCase uc) {
-    this.uc = uc;
+  this(ManageConnectorsUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -44,18 +48,16 @@ class ConnectorController : PlatformController {
       r.port = getUshort(j, "port");
       r.tunnelEndpoint = j.getString("tunnelEndpoint");
 
-      auto result = uc.registerConnector(r);
+      auto result = usecase.registerConnector(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -63,18 +65,17 @@ class ConnectorController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto conns = uc.listByTenant(tenantId);
+      auto conns = usecase.listByTenant(tenantId);
 
       auto arr = Json.emptyArray;
       foreach (c; conns)
         arr ~= serializeConnector(c);
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(conns.length);
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", Json(conns.length));
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -82,14 +83,13 @@ class ConnectorController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto cc = uc.getConnector(id);
+      auto cc = usecase.getConnector(id);
       if (cc.id.isEmpty) {
         writeError(res, 404, "Connector not found");
         return;
       }
       res.writeJsonBody(serializeConnector(cc), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,18 +109,16 @@ class ConnectorController : PlatformController {
       auto r = HeartbeatRequest();
       r.connectorVersion = j.getString("connectorVersion");
 
-      auto result = uc.heartbeat(connectorId, r);
+      auto result = usecase.heartbeat(connectorId, r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["status"] = Json("acknowledged");
+        auto resp = Json.emptyObject
+          .set("status", "acknowledged");
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -128,18 +126,16 @@ class ConnectorController : PlatformController {
   private void handleUnregister(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.unregister(id);
+      auto result = usecase.unregister(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }

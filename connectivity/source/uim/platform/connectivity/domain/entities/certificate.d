@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.entities.certificate;
 
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Certificate store entry for mTLS, SAML signing, etc.
 struct Certificate {
   CertificateId id;
@@ -26,14 +30,12 @@ struct Certificate {
   long updatedAt;
 
   /// Check if certificate is expired relative to the given timestamp.
-  bool isExpired(long now) const
-  {
+  bool isExpired(long now) const {
     return validTo > 0 && now > validTo;
   }
 
   /// Check if certificate expires within the given number of days.
-  bool expiresWithinDays(long now, uint days) const
-  {
+  bool expiresWithinDays(long now, uint days) const {
     enum secsPerDay = 86_400L;
     return validTo > 0 && (validTo - now) < (days * secsPerDay);
   }

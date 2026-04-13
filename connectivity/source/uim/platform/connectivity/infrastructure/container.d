@@ -5,33 +5,37 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.infrastructure.container;
 
-import uim.platform.connectivity.infrastructure.config;
+// import uim.platform.connectivity.infrastructure.config;
 
-// Repositories
-import uim.platform.connectivity.infrastructure.persistence.memory.destinations;
-import uim.platform.connectivity.infrastructure.persistence.memory.connectors;
-import uim.platform.connectivity.infrastructure.persistence.memory.channels;
-import uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
-import uim.platform.connectivity.infrastructure.persistence.memory.certificates;
-import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_logs;
+// // Repositories
+// import uim.platform.connectivity.infrastructure.persistence.memory.destinations;
+// import uim.platform.connectivity.infrastructure.persistence.memory.connectors;
+// import uim.platform.connectivity.infrastructure.persistence.memory.channels;
+// import uim.platform.connectivity.infrastructure.persistence.memory.access_rules;
+// import uim.platform.connectivity.infrastructure.persistence.memory.certificates;
+// import uim.platform.connectivity.infrastructure.persistence.memory.connectivity_logs;
 
-// Use Cases
-import uim.platform.connectivity.application.usecases.manage.destinations;
-import uim.platform.connectivity.application.usecases.manage.connectors;
-import uim.platform.connectivity.application.usecases.manage.channels;
-import uim.platform.connectivity.application.usecases.manage.access_rules;
-import uim.platform.connectivity.application.usecases.manage.certificates;
-import uim.platform.connectivity.application.usecases.monitor_connectivity;
+// // Use Cases
+// import uim.platform.connectivity.application.usecases.manage.destinations;
+// import uim.platform.connectivity.application.usecases.manage.connectors;
+// import uim.platform.connectivity.application.usecases.manage.channels;
+// import uim.platform.connectivity.application.usecases.manage.access_rules;
+// import uim.platform.connectivity.application.usecases.manage.certificates;
+// import uim.platform.connectivity.application.usecases.monitor_connectivity;
 
-// Controllers
-import uim.platform.connectivity.presentation.http.destination;
-import uim.platform.connectivity.presentation.http.connector;
-import uim.platform.connectivity.presentation.http.channel;
-import uim.platform.connectivity.presentation.http.access_rule;
-import uim.platform.connectivity.presentation.http.certificate;
-import uim.platform.connectivity.presentation.http.monitoring;
-import uim.platform.connectivity.presentation.http.health;
+// // Controllers
+// import uim.platform.connectivity.presentation.http.destination;
+// import uim.platform.connectivity.presentation.http.connector;
+// import uim.platform.connectivity.presentation.http.channel;
+// import uim.platform.connectivity.presentation.http.access_rule;
+// import uim.platform.connectivity.presentation.http.certificate;
+// import uim.platform.connectivity.presentation.http.monitoring;
+// import uim.platform.connectivity.presentation.http.health;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Dependency injection container - wires all layers together.
 struct Container {
   // Repositories (driven adapters)

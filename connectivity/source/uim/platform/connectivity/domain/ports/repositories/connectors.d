@@ -5,15 +5,25 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.ports.repositories.connectors;
 
-import uim.platform.connectivity.domain.entities.cloud_connector;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.cloud_connector;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - cloud connector persistence.
 interface ConnectorRepository {
+
+  bool existsById(ConnectorId id);
   CloudConnector findById(ConnectorId id);
+
+  bool existsByLocationId(SubaccountId subaccountId, string locationId);
   CloudConnector findByLocationId(SubaccountId subaccountId, string locationId);
+
   CloudConnector[] findBySubaccount(SubaccountId subaccountId);
   CloudConnector[] findByTenant(TenantId tenantId);
+  
   void save(CloudConnector connector);
   void update(CloudConnector connector);
   void remove(ConnectorId id);

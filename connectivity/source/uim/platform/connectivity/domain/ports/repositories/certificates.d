@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.ports.repositories.certificates;
 
-import uim.platform.connectivity.domain.entities.certificate;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.certificate;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - certificate store persistence.
 interface CertificateRepository {
   bool existsById(CertificateId id);

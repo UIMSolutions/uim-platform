@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.entities.cloud_connector;
 
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// On-premise Cloud Connector registration.
 struct CloudConnector {
   ConnectorId id;

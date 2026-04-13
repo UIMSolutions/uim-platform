@@ -10,6 +10,8 @@ import uim.platform.connectivity.domain.types;
 
 /// Port: outgoing - destination persistence.
 interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
+  bool existsByName(TenantId tenantId, string name);
   Destination findByName(TenantId tenantId, string name);
+  
   Destination[] findByProxyType(TenantId tenantId, ProxyType proxyType);
 }

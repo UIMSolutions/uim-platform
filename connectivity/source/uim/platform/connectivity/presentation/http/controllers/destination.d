@@ -10,10 +10,14 @@ module uim.platform.connectivity.presentation.http.controllers.destination;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.connectivity.application.usecases.manage.destinations;
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.destination;
+// import uim.platform.connectivity.application.usecases.manage.destinations;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.destination;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 class DestinationController : PlatformController {
   private ManageDestinationsUseCase uc;
 

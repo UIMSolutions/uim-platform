@@ -4,3 +4,8 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.application.usecases;
+
+public {
+  import uim.platform.connectivity.application.usecases.manage;
+  import uim.platform.connectivity.application.usecases.monitor;
+}

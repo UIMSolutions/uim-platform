@@ -3,16 +3,9 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.connectivity.domain.ports.repositories.access_rules;
+module uim.platform.connectivity.application;
 
-// import uim.platform.connectivity.domain.entities.access_rule;
-// import uim.platform.connectivity.domain.types;
-import uim.platform.connectivity;
-
-mixin(ShowModule!());
-
-@safe:
-/// Port: outgoing - access rule persistence.
-interface AccessRuleRepository : ITenantRepository!(AccessRule, RuleId) {
-  AccessRule[] findByConnector(ConnectorId connectorId);
+public {
+  import uim.platform.connectivity.application.dto;
+  import uim.platform.connectivity.application.usecases;
 }

@@ -20,10 +20,12 @@ mixin(ShowModule!());
 class MemoryAccessRuleRepository : AccessRuleRepository {
   private AccessRule[RuleId] store;
 
+  bool existsById(RuleId id) {
+    return (id in store) ? true : false;
+  }
+
   AccessRule findById(RuleId id) {
-    if (auto p = id in store)
-      return *p;
-    return AccessRule.init;
+    return existsById(id) ? store[id] : AccessRule.init;
   }
 
   AccessRule[] findByConnector(ConnectorId connectorId) {

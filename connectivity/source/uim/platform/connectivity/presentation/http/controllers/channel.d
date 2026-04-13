@@ -10,10 +10,14 @@ module uim.platform.connectivity.presentation.http.controllers.channel;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.connectivity.application.usecases.manage.channels;
-import uim.platform.connectivity.application.dto;
-import uim.platform.connectivity.domain.entities.service_channel;
+// import uim.platform.connectivity.application.usecases.manage.channels;
+// import uim.platform.connectivity.application.dto;
+// import uim.platform.connectivity.domain.entities.service_channel;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 class ChannelController : PlatformController {
   private ManageChannelsUseCase uc;
 

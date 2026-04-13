@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.services.access_control_evaluator;
 
-import uim.platform.connectivity.domain.entities.access_rule;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.access_rule;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Result of evaluating access control rules.
 struct AccessEvaluation {
   bool allowed;
