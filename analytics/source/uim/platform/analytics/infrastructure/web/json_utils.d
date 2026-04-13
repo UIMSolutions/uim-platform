@@ -26,10 +26,9 @@ Json toJsonArray(T)(T[] arr) if (is(T == struct)) {
 
 /// Helper: standard JSON error response body.
 Json errorJson(string message, int code = 400) {
-  auto j = Json.emptyObject;
-  j["error"] = message;
-  j["code"] = code;
-  return j;
+  return Json.emptyObject
+    .set("error", message)
+    .set("code", code);
 }
 
 /// Helper: envelope a result with metadata.

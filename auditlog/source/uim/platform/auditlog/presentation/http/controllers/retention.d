@@ -150,9 +150,7 @@ class RetentionController : PlatformController {
       .set("updatedAt", policy.updatedAt);
 
     if (policy.categories.length > 0) {
-      auto cats = Json.emptyArray;
-      foreach (c; policy.categories)
-        cats ~= categoryToString(c);
+      auto cats = policy.categories.map!(cat => categoryToString(cat)).array.toJson;
       j["categories"] = cats;
     }
     return j;
@@ -163,8 +161,8 @@ class RetentionController : PlatformController {
     return cats.map!(c => parseCategory(c)).array;
   }
 
-  private static AuditCategory parseCategory(string s) {
-    switch (s) {
+  private static AuditCategory parseCategory(string category) {
+    switch (category) {
     case "audit.security-events", "securityEvents":
       return AuditCategory.securityEvents;
     case "audit.configuration", "configuration":

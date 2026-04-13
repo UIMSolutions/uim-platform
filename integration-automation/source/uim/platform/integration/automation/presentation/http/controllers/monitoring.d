@@ -114,17 +114,18 @@ class MonitoringController {
       TenantId tenantId = req.getTenantId;
       auto summary = useCase.getWorkflowSummary(workflowtenantId, id);
 
-      auto j = Json.emptyObject;
-      j["workflowId"] = Json(summary.workflowId);
-      j["workflowName"] = Json(summary.workflowName);
-      j["status"] = Json(summary.status.to!string);
-      j["totalSteps"] = Json(summary.totalSteps);
-      j["completedSteps"] = Json(summary.completedSteps);
-      j["inProgressSteps"] = Json(summary.inProgressSteps);
-      j["pendingSteps"] = Json(summary.pendingSteps);
-      j["failedSteps"] = Json(summary.failedSteps);
-      j["skippedSteps"] = Json(summary.skippedSteps);
-      j["totalLogEntries"] = Json(summary.totalLogEntries);
+      auto j = Json.emptyObject
+      .set("workflowId", summary.workflowId)
+      .set("workflowName", summary.workflowName)
+      .set("status", summary.status.to!string)
+      .set("totalSteps", summary.totalSteps)
+      .set("completedSteps", summary.completedSteps)
+      .set("inProgressSteps", summary.inProgressSteps)
+      .set("pendingSteps", summary.pendingSteps)
+      .set("failedSteps", summary.failedSteps)
+      .set("skippedSteps", summary.skippedSteps)
+      .set("totalLogEntries", summary.totalLogEntries);
+      
       res.writeJsonBody(j, 200);
     }
     catch (Exception e) {
@@ -133,18 +134,17 @@ class MonitoringController {
   }
 
   private static Json serializeLog(const ExecutionLog l) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(l.id);
-    j["workflowId"] = Json(l.workflowId);
-    j["stepId"] = Json(l.stepId);
-    j["tenantId"] = Json(l.tenantId);
-    j["action"] = Json(l.action);
-    j["outcome"] = Json(l.outcome.to!string);
-    j["message"] = Json(l.message);
-    j["details"] = Json(l.details);
-    j["executedBy"] = Json(l.executedBy);
-    j["durationMs"] = Json(l.durationMs);
-    j["timestamp"] = Json(l.timestamp);
-    return j;
+    return Json.emptyObject
+    .set("id", l.id)
+    .set("workflowId", l.workflowId)
+    .set("stepId", l.stepId)
+    .set("tenantId", l.tenantId)
+    .set("action", l.action)
+    .set("outcome", l.outcome.to!string)
+    .set("message", l.message)
+    .set("details", l.details)
+    .set("executedBy", l.executedBy)
+    .set("durationMs", l.durationMs)
+    .set("timestamp", l.timestamp);
   }
 }

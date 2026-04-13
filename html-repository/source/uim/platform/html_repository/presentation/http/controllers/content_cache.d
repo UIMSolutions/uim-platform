@@ -59,18 +59,18 @@ class ContentCacheController : PlatformController {
 
       auto arr = Json.emptyArray;
       foreach (e; items) {
-        auto obj = Json.emptyObject;
-        obj["id"] = Json(e.id);
-        obj["fileId"] = Json(e.fileId);
-        obj["filePath"] = Json(e.filePath);
-        obj["status"] = Json(e.status);
-        obj["hitCount"] = Json(e.hitCount);
-        arr ~= obj;
+        arr ~= Json.emptyObject
+        .set("id", e.id)
+        .set("fileId", e.fileId)
+        .set("filePath", e.filePath)
+        .set("status", e.status)
+        .set("hitCount", e.hitCount);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(items.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", items.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

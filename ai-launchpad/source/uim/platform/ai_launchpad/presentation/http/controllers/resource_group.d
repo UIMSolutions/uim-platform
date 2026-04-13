@@ -77,6 +77,7 @@ class ResourceGroupController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -95,6 +96,7 @@ class ResourceGroupController : PlatformController {
   private void handlePatch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto j = req.json;
       auto connectionId = req.headers.get("X-Connection-Id", "");
@@ -120,6 +122,7 @@ class ResourceGroupController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       import std.conv : to;
+
       auto id = extractIdFromPath(req.requestURI.to!string);
       auto connectionId = req.headers.get("X-Connection-Id", "");
 
@@ -137,18 +140,17 @@ class ResourceGroupController : PlatformController {
   private Json serializeResourceGroup(ResourceGroup g) {
     auto labels = Json.emptyArray;
     foreach (l; g.labels) {
-      auto lj = Json.emptyObject;
-      lj["key"] = Json(l.key);
-      lj["value"] = Json(l.value);
-      labels ~= lj;
+      labels ~= Json.emptyObject
+        .set("key", l.key)
+        .set("value", l.value);
     }
-    
+
     return Json.emptyObject
-    .set("id", g.id)
-    .set("connectionId", g.connectionId)
-    .set("labels", labels)
-    .set("status", g.status)
-    .set("createdAt", g.createdAt)
-    .set("modifiedAt", g.modifiedAt);
+      .set("id", g.id)
+      .set("connectionId", g.connectionId)
+      .set("labels", labels)
+      .set("status", g.status)
+      .set("createdAt", g.createdAt)
+      .set("modifiedAt", g.modifiedAt);
   }
 }

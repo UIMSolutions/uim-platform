@@ -133,18 +133,17 @@ class PromptController : PlatformController {
 
     auto msgs = Json.emptyArray;
     foreach (m; p.messages) {
-      auto mj = Json.emptyObject;
-      mj["role"] = Json(m.role.to!string);
-      mj["content"] = Json(m.content);
-      msgs ~= mj;
+      msgs ~= Json.emptyObject
+      .set("role", m.role.to!string)
+      .set("content", m.content);
     }
 
-    auto params = Json.emptyObject;
-    params["temperature"] = Json(p.parameters.temperature);
-    params["maxTokens"] = Json(p.parameters.maxTokens);
-    params["topP"] = Json(p.parameters.topP);
-    params["frequencyPenalty"] = Json(p.parameters.frequencyPenalty);
-    params["presencePenalty"] = Json(p.parameters.presencePenalty);
+    auto params = Json.emptyObject
+    .set("temperature", p.parameters.temperature)
+    .set("maxTokens", p.parameters.maxTokens)
+    .set("topP", p.parameters.topP)
+    .set("frequencyPenalty", p.parameters.frequencyPenalty)
+    .set("presencePenalty", p.parameters.presencePenalty);
 
     auto j = Json.emptyObject
       .set("id", p.id)

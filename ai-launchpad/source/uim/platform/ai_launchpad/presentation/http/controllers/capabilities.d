@@ -26,17 +26,18 @@ class CapabilitiesController : PlatformController {
     try {
       auto cap = uc.get_();
 
-      auto resp = Json.emptyObject;
-      resp["serviceName"] = Json(cap.serviceName);
-      resp["serviceVersion"] = Json(cap.serviceVersion);
-      resp["supportedRuntimes"] = toJsonArray(cap.supportedRuntimes);
-      resp["features"] = toJsonArray(cap.features);
-      resp["multiTenant"] = Json(cap.multiTenant);
-      resp["genAiHub"] = Json(cap.genAiHub);
-      resp["promptManagement"] = Json(cap.promptManagement);
-      resp["usageStatistics"] = Json(cap.usageStatistics);
-      resp["bulkOperations"] = Json(cap.bulkOperations);
-      resp["maxConnections"] = Json(cap.maxConnections);
+      auto resp = Json.emptyObject
+      .set("serviceName", cap.serviceName)
+      .set("serviceVersion", cap.serviceVersion)
+      .set("supportedRuntimes", cap.supportedRuntimes)
+      .set("features", cap.features)
+      .set("multiTenant", cap.multiTenant)
+      .set("genAiHub", cap.genAiHub)
+      .set("promptManagement", cap.promptManagement)
+      .set("usageStatistics", cap.usageStatistics)
+      .set("bulkOperations", cap.bulkOperations)
+      .set("maxConnections", cap.maxConnections);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

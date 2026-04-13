@@ -185,7 +185,9 @@ class ContentController {
 
 private Json serializeContent(ContentItem c) {
   // import std.conv : to;
-  auto j = Json.emptyObject
+  auto tags = c.tags.map!(t => t.toJson).array.toJson;
+
+  return Json.emptyObject
   .set("id", c.id)
   .set("workspaceId", c.workspaceId)
   .set("tenantId", c.tenantId)
@@ -203,12 +205,6 @@ private Json serializeContent(ContentItem c) {
   .set("commentsEnabled", c.commentsEnabled)
   .set("publishedAt", c.publishedAt)
   .set("createdAt", c.createdAt)
-  .set("updatedAt", c.updatedAt);
-
-  auto tags = Json.emptyArray;
-  foreach (t; c.tags)
-    tags ~= Json(t);
-  j["tags"] = tags;
-
-  return j;
+  .set("updatedAt", c.updatedAt)
+  .set("tags", tags);
 }

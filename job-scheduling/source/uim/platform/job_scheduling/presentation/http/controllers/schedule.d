@@ -246,14 +246,13 @@ class ScheduleController : PlatformController {
 
     private static Json scheduleToJson(
         ref uim.platform.job_scheduling.domain.entities.schedule.Schedule s) {
-        auto j = Json.emptyObject;
-        j["scheduleId"] = Json(s.id);
-        j["jobId"] = Json(s.jobId);
-        j["description"] = Json(s.description);
-        j["active"] = Json(s.active);
-        j["nextRunAt"] = Json(s.nextRunAt);
-        j["createdAt"] = Json(s.createdAt);
-        return j;
+        return Json.emptyObject
+            .set("scheduleId", s.id)
+            .set("jobId", s.jobId)
+            .set("description", s.description)
+            .set("active", s.active)
+            .set("nextRunAt", s.nextRunAt)
+            .set("createdAt", s.createdAt);
     }
 
     private static Json scheduleToDetailJson(

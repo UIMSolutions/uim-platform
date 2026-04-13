@@ -66,14 +66,13 @@ class DatasetController : PlatformController {
       else
         datasets = uc.listByConnection(connectionId);
 
-      auto jarr = Json.emptyArray;
-      foreach (d; datasets) {
-        jarr ~= serializeDataset(d);
+      auto jarr = Json.datasets.map(ds => serializeDataset(d)).array.toJson;
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(datasets.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+      .set("count", Json(datasets.length))
+      .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

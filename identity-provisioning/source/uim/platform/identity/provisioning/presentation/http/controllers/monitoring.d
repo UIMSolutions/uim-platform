@@ -44,8 +44,7 @@ class MonitoringController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -60,8 +59,7 @@ class MonitoringController {
         return;
       }
       res.writeJsonBody(serializeJobSummary(summary), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -80,8 +78,7 @@ class MonitoringController {
       resp["items"] = arr;
       resp["totalCount"] = Json(logs.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -99,8 +96,7 @@ class MonitoringController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -111,19 +107,18 @@ class MonitoringController {
       auto summary = uc.getPipelineSummary(tenantId);
 
       auto j = Json.emptyObject
-      .set("totalSourceSystems", summary.totalSourceSystems)
-      .set("activeSourceSystems", summary.activeSourceSystems)
-      .set("totalTargetSystems", summary.totalTargetSystems)
-      .set("activeTargetSystems", summary.activeTargetSystems)
-      .set("totalJobs", summary.totalJobs)
-      .set("completedJobs", summary.completedJobs)
-      .set("failedJobs", summary.failedJobs)
-      .set("runningJobs", summary.runningJobs)
-      .set("totalProvisionedEntities", summary.totalProvisionedEntities);
-      
+        .set("totalSourceSystems", summary.totalSourceSystems)
+        .set("activeSourceSystems", summary.activeSourceSystems)
+        .set("totalTargetSystems", summary.totalTargetSystems)
+        .set("activeTargetSystems", summary.activeTargetSystems)
+        .set("totalJobs", summary.totalJobs)
+        .set("completedJobs", summary.completedJobs)
+        .set("failedJobs", summary.failedJobs)
+        .set("runningJobs", summary.runningJobs)
+        .set("totalProvisionedEntities", summary.totalProvisionedEntities);
+
       res.writeJsonBody(j, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -145,30 +140,29 @@ class MonitoringController {
 
   private static Json serializeLog(const ProvisioningLog l) {
     return Json.emptyObject
-    .set("id", l.id)
-    .set("jobId", l.jobId)
-    .set("entityType", l.entityType.to!string)
-    .set("entityId", l.entityId)
-    .set("operation", l.operation.to!string)
-    .set("status", l.status.to!string)
-    .set("sourceSystem", l.sourceSystem)
-    .set("targetSystem", l.targetSystem)
-    .set("details", l.details)
-    .set("createdAt", l.createdAt);
+      .set("id", l.id)
+      .set("jobId", l.jobId)
+      .set("entityType", l.entityType.to!string)
+      .set("entityId", l.entityId)
+      .set("operation", l.operation.to!string)
+      .set("status", l.status.to!string)
+      .set("sourceSystem", l.sourceSystem)
+      .set("targetSystem", l.targetSystem)
+      .set("details", l.details)
+      .set("createdAt", l.createdAt);
   }
 
   private static Json serializeEntity(const ProvisionedEntity e) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(e.id);
-    j["externalId"] = Json(e.externalId);
-    j["entityType"] = Json(e.entityType.to!string);
-    j["sourceSystemId"] = Json(e.sourceSystemId);
-    j["targetSystemId"] = Json(e.targetSystemId);
-    j["attributes"] = Json(e.attributes);
-    j["status"] = Json(e.status.to!string);
-    j["lastSyncAt"] = Json(e.lastSyncAt);
-    j["createdAt"] = Json(e.createdAt);
-    j["updatedAt"] = Json(e.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", e.id)
+      .set("externalId", e.externalId)
+      .set("entityType", e.entityType.to!string)
+      .set("sourceSystemId", e.sourceSystemId)
+      .set("targetSystemId", e.targetSystemId)
+      .set("attributes", e.attributes)
+      .set("status", e.status.to!string)
+      .set("lastSyncAt", e.lastSyncAt)
+      .set("createdAt", e.createdAt)
+      .set("updatedAt", e.updatedAt);
   }
 }

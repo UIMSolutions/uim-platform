@@ -148,7 +148,12 @@ private ChannelConfig parseChannelConfig(Json j) {
 }
 
 private Json serializeChannel(Channel c) {
-  // import std.conv : to;
+  auto cfg = Json.emptyObject
+    .set("sourceUrl", c.config.sourceUrl)
+    .set("pollIntervalSec", c.config.pollIntervalSec)
+    .set("authType", c.config.authType)
+    .set("maxItems", c.config.maxItems);
+
   auto j = Json.emptyObject
     .set("id", c.id)
     .set("workspaceId", c.workspaceId)
@@ -158,14 +163,8 @@ private Json serializeChannel(Channel c) {
     .set("channelType", c.channelType.to!string)
     .set("active", c.active)
     .set("createdAt", c.createdAt)
-    .set("updatedAt", c.updatedAt);
-
-  auto cfg = Json.emptyObject;
-  cfg["sourceUrl"] = Json(c.config.sourceUrl);
-  cfg["pollIntervalSec"] = Json(c.config.pollIntervalSec);
-  cfg["authType"] = Json(c.config.authType);
-  cfg["maxItems"] = Json(c.config.maxItems);
-  j["config"] = cfg;
+    .set("updatedAt", c.updatedAt)
+    .set("config", cfg);
 
   return j;
 }

@@ -95,11 +95,12 @@ class ResourceGroupController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["resourceGroupId"] = Json(rg.id);
-      resp["tenantId"] = Json(rg.tenantId);
-      resp["status"] = Json(rg.status);
-      resp["createdAt"] = Json(rg.createdAt);
+      auto resp = Json.emptyObject
+      .set("resourceGroupId", Json(rg.id))
+      .set("tenantId", Json(rg.tenantId))
+      .set("status", Json(rg.status))
+      .set("createdAt", Json(rg.createdAt));
+      
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

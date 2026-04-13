@@ -188,8 +188,9 @@ class TaskController {
 }
 
 private Json serializeTask(Task t) {
-  // import std.conv : to;
-  auto j = Json.emptyObject
+  auto tags = t.tags.map!(tag => Json(tag)).array.toJson;
+
+  return Json.emptyObject
   .set("id", t.id)
   .set("tenantId", t.tenantId)
   .set("assigneeId", t.assigneeId)
@@ -207,12 +208,6 @@ private Json serializeTask(Task t) {
   .set("dueDate", t.dueDate)
   .set("completedAt", t.completedAt)
   .set("createdAt", t.createdAt)
-  .set("updatedAt", t.updatedAt);
-
-  auto tags = Json.emptyArray;
-  foreach (tag; t.tags)
-    tags ~= Json(tag);
-  j["tags"] = tags;
-
-  return j;
+  .set("updatedAt", t.updatedAt)
+  .set("tags", tags);
 }
