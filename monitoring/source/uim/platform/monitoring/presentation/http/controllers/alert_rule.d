@@ -53,7 +53,7 @@ class AlertRuleController : PlatformController {
       r.evaluationPeriodSeconds = j.getInteger("evaluationPeriodSeconds");
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
-      r.channelIds = jsonStrArray(j, "channelIds");
+      r.channelIds = j["channelIds"].toArray.map!(c => c.to!string).array;
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.createRule(r);
@@ -112,7 +112,7 @@ class AlertRuleController : PlatformController {
       r.consecutiveBreaches = j.getInteger("consecutiveBreaches");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = jsonStrArray(j, "channelIds");
+      r.channelIds = j["channelIds"].toArray.map!(c => c.to!string).array;
 
       auto result = uc.updateRule(id, r);
       if (result.success) {
@@ -145,25 +145,4 @@ class AlertRuleController : PlatformController {
     }
   }
 
-  private static Json serializeRule(const AlertRule rule) {
-    return Json.emptyObject
-      .set("id", rule.id)
-      .set("tenantId", rule.tenantId)
-      .set("resourceId", rule.resourceId)
-      .set("name", rule.name)
-      .set("description", rule.description)
-      .set("metricName", rule.metricName)
-      .set("metricDefinitionId", rule.metricDefinitionId)
-      .set("operator", rule.operator_.to!string)
-      .set("warningThreshold", rule.warningThreshold)
-      .set("criticalThreshold", rule.criticalThreshold)
-      .set("evaluationPeriodSeconds", rule.evaluationPeriodSeconds)
-      .set("consecutiveBreaches", rule.consecutiveBreaches)
-      .set("severity", rule.severity.to!string)
-      .set("isEnabled", rule.isEnabled)
-      .set("channelIds", rule.channelIds.toJson)
-      .set("createdBy", rule.createdBy)
-      .set("createdAt", rule.createdAt)
-      .set("updatedAt", rule.updatedAt);
-  }
 }

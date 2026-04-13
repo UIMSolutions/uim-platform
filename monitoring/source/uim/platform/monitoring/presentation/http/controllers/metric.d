@@ -75,7 +75,7 @@ class MetricController : PlatformController {
       if (metricsVal !is null && (*metricsVal).type == Json.Type.array) {
         foreach (mj; *metricsVal)
         {
-          if (m!j.isObject)
+          if (!mj.isObject)
             continue;
           PushMetricRequest r;
           r.tenantId = tenantId;

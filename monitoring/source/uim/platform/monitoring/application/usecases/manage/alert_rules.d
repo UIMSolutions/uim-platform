@@ -56,6 +56,10 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, rule.id.toString(), "");
   }
 
+  CommandResult updateRule(string id, UpdateAlertRuleRequest req) {
+    return updateRule(AlertRuleId(id), req);
+  }
+
   CommandResult updateRule(AlertRuleId id, UpdateAlertRuleRequest req) {
     if (!repo.existsById(id))
       return CommandResult(false, "", "Alert rule not found");
@@ -82,20 +86,40 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, rule.id.toString(), "");
   }
 
+  AlertRule getRule(string id) {
+    return getRule(AlertRuleId(id));
+  }
+
   AlertRule getRule(AlertRuleId id) {
     return repo.findById(id);
+  }
+
+  AlertRule[] listRules(string tenantId) {
+    return listRules(TenantId(tenantId));
   }
 
   AlertRule[] listRules(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  AlertRule[] listByResource(string tenantId, string resourceId) {
+    return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
+  }
+
   AlertRule[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return repo.findByResource(tenantId, resourceId);
   }
 
+  AlertRule[] listEnabled(string tenantId) {
+    return listEnabled(TenantId(tenantId));
+  }
+  
   AlertRule[] listEnabled(TenantId tenantId) {
     return repo.findEnabled(tenantId);
+  }
+
+  CommandResult deleteRule(string id) {
+    return deleteRule(AlertRuleId(id));
   }
 
   CommandResult deleteRule(AlertRuleId id) {
@@ -107,10 +131,8 @@ class ManageAlertRulesUseCase : UIMUseCase {
     return CommandResult(true, id.toString(), "");
   }
 
-  
-
-  private static ThresholdOperator parseOperator(string s) {
-    switch (s) {
+  private static ThresholdOperator parseOperator(string thresholdOperator) {
+    switch (thresholdOperator) {
     case "greaterOrEqual":
       return ThresholdOperator.greaterOrEqual;
     case "lessThan":
@@ -126,8 +148,8 @@ class ManageAlertRulesUseCase : UIMUseCase {
     }
   }
 
-  private static AlertSeverity parseSeverity(string s) {
-    switch (s) {
+  private static AlertSeverity parseSeverity(string severity) {
+    switch (severity) {
     case "info":
       return AlertSeverity.info;
     case "critical":

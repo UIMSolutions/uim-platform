@@ -15,11 +15,14 @@ mixin(ShowModule!());
 /// Port: outgoing - alert persistence.
 interface AlertRepository {
   Alert findById(AlertId id);
+  bool existsById(AlertId id);
+
   Alert[] findByTenant(TenantId tenantId);
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
   Alert[] findByState(TenantId tenantId, AlertState state);
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity);
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId);
+  
   void save(Alert alert);
   void update(Alert alert);
   void remove(AlertId id);

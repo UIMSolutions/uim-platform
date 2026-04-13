@@ -34,8 +34,7 @@ class ManageMetricsUseCase : UIMUseCase {
     if (req.name.length == 0)
       return CommandResult(false, "", "Metric name is required");
 
-    auto existing = definitionRepo.findByName(req.tenantId, req.name);
-    if (existing.id.length > 0)
+    if (definitionRepo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Metric definition '" ~ req.name ~ "' already exists");
 
     MetricDefinition definition;

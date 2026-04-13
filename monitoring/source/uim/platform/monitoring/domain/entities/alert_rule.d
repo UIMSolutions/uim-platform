@@ -31,4 +31,27 @@ struct AlertRule {
   string createdBy;
   long createdAt;
   long updatedAt;
+
+
+  Json toJsaon() const {
+    return Json.emptyObject
+      .set("id", id)
+      .set("tenantId", tenantId)
+      .set("resourceId", resourceId)
+      .set("name", name)
+      .set("description", description)
+      .set("metricName", metricName)
+      .set("metricDefinitionId", metricDefinitionId)
+      .set("operator", operator_.to!string)
+      .set("warningThreshold", warningThreshold)
+      .set("criticalThreshold", criticalThreshold)
+      .set("evaluationPeriodSeconds", evaluationPeriodSeconds)
+      .set("consecutiveBreaches", consecutiveBreaches)
+      .set("severity", severity.to!string)
+      .set("isEnabled", isEnabled)
+      .set("channelIds", channelIds.toJson)
+      .set("createdBy", createdBy)
+      .set("createdAt", createdAt)
+      .set("updatedAt", updatedAt);
+  }
 }

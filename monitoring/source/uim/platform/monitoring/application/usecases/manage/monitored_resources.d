@@ -53,6 +53,10 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, resource.id.toString, "");
   }
 
+  CommandResult updateResource(string id, UpdateResourceRequest req) {
+    return updateResource(MonitoredResourceId(id), req);
+  }
+
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
     auto resource = repo.findById(id);
     if (resource.id.isEmpty)
@@ -76,16 +80,32 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, resource.id.toString, "");
   }
 
+  MonitoredResource getResource(string id) {
+    return getResource(MonitoredResourceId(id));
+  }
+
   MonitoredResource getResource(MonitoredResourceId id) {
     return repo.findById(id);
+  }
+
+  MonitoredResource[] listResources(string tenantId) {
+    return listResources(TenantId(tenantId));
   }
 
   MonitoredResource[] listResources(TenantId tenantId) {
     return repo.findByTenant(tenantId);
   }
 
+  MonitoredResource[] listByType(string tenantId, string typeStr) {
+    return listByType(TenantId(tenantId), typeStr);
+  }
+
   MonitoredResource[] listByType(TenantId tenantId, string typeStr) {
     return repo.findByType(tenantId, parseResourceType(typeStr));
+  }
+
+  CommandResult removeResource(string id) {
+    return removeResource(MonitoredResourceId(id));
   }
 
   CommandResult removeResource(MonitoredResourceId id) {
@@ -97,10 +117,8 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, resource.id.toString, "");
   }
 
-
-
-  private static ResourceType parseResourceType(string s) {
-    switch (s) {
+  private static ResourceType parseResourceType(string resourceType) {
+    switch (resourceType) {
     case "html5Application":
       return ResourceType.html5Application;
     case "hanaXsApplication":
@@ -118,8 +136,8 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     }
   }
 
-  private static ResourceState parseResourceState(string s) {
-    switch (s) {
+  private static ResourceState parseResourceState(string resourceState) {
+    switch (resourceState) {
     case "started":
       return ResourceState.started;
     case "stopped":

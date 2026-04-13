@@ -70,6 +70,10 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, check.id.toString, "");
   }
 
+  CommandResult updateCheck(string id, UpdateHealthCheckRequest req) {
+    return updateCheck(HealthCheckId(id), req);
+  }
+
   CommandResult updateCheck(HealthCheckId id, UpdateHealthCheckRequest req) {
     auto check = checkRepo.findById(id);
     if (check.id.isEmpty)
@@ -116,28 +120,56 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
+  HealthCheck getCheck(string id) {
+    return getCheck(HealthCheckId(id));
+  }
+
   HealthCheck getCheck(HealthCheckId id) {
     return checkRepo.findById(id);
+  }
+
+  HealthCheck[] listChecks(string tenantId) {
+    return listChecks(TenantId(tenantId));
   }
 
   HealthCheck[] listChecks(TenantId tenantId) {
     return checkRepo.findByTenant(tenantId);
   }
 
+  HealthCheck[] listByResource(string tenantId, string resourceId) {
+    return listByResource(TenantId(tenantId), MonitoredResourceId(resourceId));
+  }
+
   HealthCheck[] listByResource(TenantId tenantId, MonitoredResourceId resourceId) {
     return checkRepo.findByResource(tenantId, resourceId);
+  }
+
+  HealthCheck[] listByType(string tenantId, string typeStr) {
+    return listByType(TenantId(tenantId), typeStr);
   }
 
   HealthCheck[] listByType(TenantId tenantId, string typeStr) {
     return checkRepo.findByType(tenantId, parseCheckType(typeStr));
   }
 
+  HealthCheckResult[] getResults(string tenantId, string checkId) {
+    return getResults(TenantId(tenantId), HealthCheckId(checkId));
+  }
+
   HealthCheckResult[] getResults(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findByCheck(tenantId, checkId);
   }
 
+  HealthCheckResult getLatestResult(string tenantId, string checkId) {
+    return getLatestResult(TenantId(tenantId), HealthCheckId(checkId));
+  }
+
   HealthCheckResult getLatestResult(TenantId tenantId, HealthCheckId checkId) {
     return resultRepo.findLatestByCheck(tenantId, checkId);
+  }
+
+  CommandResult deleteCheck(string id) {
+    return deleteCheck(HealthCheckId(id));
   }
 
   CommandResult deleteCheck(HealthCheckId id) {
@@ -148,8 +180,8 @@ class ManageHealthChecksUseCase : UIMUseCase {
     return CommandResult(true, id.toString, "");
   }
 
-  private static CheckType parseCheckType(string s) {
-    switch (s) {
+  private static CheckType parseCheckType(string checkType) {
+    switch (checkType) {
     case "jmx":
       return CheckType.jmx;
     case "customHttp":

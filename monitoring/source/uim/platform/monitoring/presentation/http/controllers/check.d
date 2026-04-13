@@ -66,13 +66,10 @@ class CheckController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -90,8 +87,7 @@ class CheckController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(checks.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -105,8 +101,7 @@ class CheckController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeCheck(c), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -130,13 +125,10 @@ class CheckController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Health check not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -149,13 +141,10 @@ class CheckController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -178,13 +167,10 @@ class CheckController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -203,46 +189,45 @@ class CheckController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(results.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeCheck(const ref HealthCheck c) {
     return Json.emptyObject
-    .set("id", c.id)
-    .set("tenantId", c.tenantId)
-    .set("resourceId", c.resourceId)
-    .set("name", c.name)
-    .set("description", c.description)
-    .set("checkType", c.checkType.to!string)
-    .set("isEnabled", c.isEnabled)
-    .set("intervalSeconds", c.intervalSeconds)
-    .set("url", c.url)
-    .set("expectedStatus", c.expectedStatus)
-    .set("mbeanName", c.mbeanName)
-    .set("mbeanAttribute", c.mbeanAttribute)
-    .set("customUrl", c.customUrl)
-    .set("warningThreshold", c.warningThreshold)
-    .set("criticalThreshold", c.criticalThreshold)
-    .set("thresholdOperator", c.thresholdOperator.to!string)
-    .set("createdBy", c.createdBy)
-    .set("createdAt", c.createdAt)
-    .set("updatedAt", c.updatedAt);
+      .set("id", c.id)
+      .set("tenantId", c.tenantId)
+      .set("resourceId", c.resourceId)
+      .set("name", c.name)
+      .set("description", c.description)
+      .set("checkType", c.checkType.to!string)
+      .set("isEnabled", c.isEnabled)
+      .set("intervalSeconds", c.intervalSeconds)
+      .set("url", c.url)
+      .set("expectedStatus", c.expectedStatus)
+      .set("mbeanName", c.mbeanName)
+      .set("mbeanAttribute", c.mbeanAttribute)
+      .set("customUrl", c.customUrl)
+      .set("warningThreshold", c.warningThreshold)
+      .set("criticalThreshold", c.criticalThreshold)
+      .set("thresholdOperator", c.thresholdOperator.to!string)
+      .set("createdBy", c.createdBy)
+      .set("createdAt", c.createdAt)
+      .set("updatedAt", c.updatedAt);
   }
 
   private static Json serializeResult(const ref HealthCheckResult r) {
     return Json.emptyObject
-    .set("id", r.id)
-    .set("tenantId", r.tenantId)
-    .set("checkId", r.checkId)
-    .set("resourceId", r.resourceId)
-    .set("status", r.status.to!string)
-    .set("value", r.value_)
-    .set("message", r.message)
-    .set("responseTimeMs", r.responseTimeMs)
-    .set("httpStatusCode", r.httpStatusCode)
-    .set("executedAt", r.executedAt);
+      .set("id", r.id)
+      .set("tenantId", r.tenantId)
+      .set("checkId", r.checkId)
+      .set("resourceId", r.resourceId)
+      .set("status", r.status.to!string)
+      .set("value", r.value_)
+      .set("message", r.message)
+      .set("responseTimeMs", r.responseTimeMs)
+      .set("httpStatusCode", r.httpStatusCode)
+      .set("executedAt", r.executedAt);
   }
 }

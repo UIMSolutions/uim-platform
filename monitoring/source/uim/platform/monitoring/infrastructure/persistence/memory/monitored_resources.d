@@ -20,6 +20,9 @@ class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
   private MonitoredResource[MonitoredResourceId] store;
 
   MonitoredResource findById(MonitoredResourceId id) {
+  }
+  
+  MonitoredResource findById(MonitoredResourceId id) {
     if (auto p = id in store)
       return *p;
     return MonitoredResource.init;

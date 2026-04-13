@@ -60,13 +60,10 @@ class ChannelController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
-      {
+      } else {
         writeError(res, 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -84,8 +81,7 @@ class ChannelController : PlatformController {
       resp["items"] = arr;
       resp["totalCount"] = Json(channels.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -99,8 +95,7 @@ class ChannelController : PlatformController {
         return;
       }
       res.writeJsonBody(serializeChannel(ch), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -123,16 +118,13 @@ class ChannelController : PlatformController {
       auto result = uc.updateChannel(id, r);
       if (result.success) {
         auto response = Json.emptyObject
-        .set("id", result.id);
+          .set("id", result.id);
 
         res.writeJsonBody(response, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, result.error == "Notification channel not found" ? 404 : 400, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -145,13 +137,10 @@ class ChannelController : PlatformController {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         writeError(res, 404, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -164,7 +153,7 @@ class ChannelController : PlatformController {
       .set("description", ch.description)
       .set("channelType", ch.channelType.to!string)
       .set("state", ch.state.to!string)
-      .set("emailRecipients", toJsonArray(ch.emailRecipients))
+      .set("emailRecipients", ch.emailRecipients)
       .set("emailSubjectPrefix", ch.emailSubjectPrefix)
       .set("webhookUrl", ch.webhookUrl)
       .set("webhookMethod", ch.webhookMethod)

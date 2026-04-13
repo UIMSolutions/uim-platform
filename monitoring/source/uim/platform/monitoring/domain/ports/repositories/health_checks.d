@@ -14,10 +14,13 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing - health check configuration persistence.
 interface HealthCheckRepository {
+  bool existsById(HealthCheckId id);
   HealthCheck findById(HealthCheckId id);
+
   HealthCheck[] findByTenant(TenantId tenantId);
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId);
   HealthCheck[] findByType(TenantId tenantId, CheckType checkType);
+  
   void save(HealthCheck check);
   void update(HealthCheck check);
   void remove(HealthCheckId id);
