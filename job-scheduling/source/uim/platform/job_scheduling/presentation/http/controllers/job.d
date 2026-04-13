@@ -105,6 +105,7 @@ class JobController : PlatformController {
     private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
 
@@ -124,6 +125,7 @@ class JobController : PlatformController {
     private void handleUpdate(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             auto j = req.json;
 
@@ -144,7 +146,7 @@ class JobController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Job updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -155,6 +157,7 @@ class JobController : PlatformController {
     private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             auto id = extractIdFromPath(req.requestURI.to!string);
             TenantId tenantId = req.getTenantId;
 
@@ -164,7 +167,7 @@ class JobController : PlatformController {
             auto result = jobUc.remove(tenantId, id);
             if (result.success) {
                 res.writeJsonBody(Json.emptyObject, 204);
-            } ) {
+            }) {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -189,6 +192,7 @@ class JobController : PlatformController {
     private void handleSearch(scope HTTPServerRequest req, scope HTTPServerResponse res) {
         try {
             import std.conv : to;
+
             TenantId tenantId = req.getTenantId;
             auto query = req.params.get("q", "");
 
@@ -209,37 +213,41 @@ class JobController : PlatformController {
     }
 
     private static Json jobToJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
-        auto j = Json.emptyObject;
-        j["jobId"] = Json(job.id);
-        j["name"] = Json(job.name);
-        j["description"] = Json(job.description);
-        j["action"] = Json(job.actionUrl);
-        j["active"] = Json(job.active);
-        j["createdAt"] = Json(job.createdAt);
-        return j;
+        return Json.emptyObject
+            .set("jobId", job.id)
+            .set("name", job.name)
+            .set("description", job.description)
+            .set("action", job.actionUrl)
+            .set("active", job.active)
+            .set("createdAt", job.createdAt);
     }
 
     private static Json jobToDetailJson(uim.platform.job_scheduling.domain.entities.job.Job job) {
         return Json.emptyObject
-         .set("jobId", job.id)
-         .set("name", job.name)
-         .set("description", job.description)
-         .set("action", job.actionUrl)
-         .set("httpMethod", httpMethodStr(job.httpMethod))
-         .set("active", job.active)
-         .set("startTime", job.startTime)
-         .set("endTime", job.endTime)
-         .set("createdAt", job.createdAt)
-         .set("modifiedAt", job.modifiedAt);
+            .set("jobId", job.id)
+            .set("name", job.name)
+            .set("description", job.description)
+            .set("action", job.actionUrl)
+            .set("httpMethod", httpMethodStr(job.httpMethod))
+            .set("active", job.active)
+            .set("startTime", job.startTime)
+            .set("endTime", job.endTime)
+            .set("createdAt", job.createdAt)
+            .set("modifiedAt", job.modifiedAt);
     }
 
     private static string httpMethodStr(uim.platform.job_scheduling.domain.types.HttpMethod m) {
         final switch (m) {
-            case uim.platform.job_scheduling.domain.types.HttpMethod.get: return "GET";
-            case uim.platform.job_scheduling.domain.types.HttpMethod.post: return "POST";
-            case uim.platform.job_scheduling.domain.types.HttpMethod.put: return "PUT";
-            case uim.platform.job_scheduling.domain.types.HttpMethod.delete_: return "DELETE";
-            case uim.platform.job_scheduling.domain.types.HttpMethod.patch: return "PATCH";
+        case uim.platform.job_scheduling.domain.types.HttpMethod.get:
+            return "GET";
+        case uim.platform.job_scheduling.domain.types.HttpMethod.post:
+            return "POST";
+        case uim.platform.job_scheduling.domain.types.HttpMethod.put:
+            return "PUT";
+        case uim.platform.job_scheduling.domain.types.HttpMethod.delete_:
+            return "DELETE";
+        case uim.platform.job_scheduling.domain.types.HttpMethod.patch:
+            return "PATCH";
         }
     }
 }

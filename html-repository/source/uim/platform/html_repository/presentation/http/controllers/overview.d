@@ -33,16 +33,17 @@ class OverviewController : PlatformController {
         writeError(res, 404, "Overview not available");
         return;
       }
-      auto obj = Json.emptyObject;
-      obj["totalApps"] = Json(summary.totalApps);
-      obj["totalVersions"] = Json(summary.totalVersions);
-      obj["totalFiles"] = Json(summary.totalFiles);
-      obj["totalInstances"] = Json(summary.totalInstances);
-      obj["totalDeployments"] = Json(summary.totalDeployments);
-      obj["totalRoutes"] = Json(summary.totalRoutes);
-      obj["totalCacheEntries"] = Json(summary.totalCacheEntries);
-      obj["cacheHitRate"] = Json(summary.cacheHitRate);
-      obj["totalStorageBytes"] = Json(summary.totalStorageBytes);
+      auto obj = Json.emptyObject
+      .set("totalApps", summary.totalApps)
+      .set("totalVersions", summary.totalVersions)
+      .set("totalFiles", summary.totalFiles)
+      .set("totalInstances", summary.totalInstances)
+      .set("totalDeployments", summary.totalDeployments)
+      .set("totalRoutes", summary.totalRoutes)
+      .set("totalCacheEntries", summary.totalCacheEntries)
+      .set("cacheHitRate", summary.cacheHitRate)
+      .set("totalStorageBytes", summary.totalStorageBytes);
+      
       res.writeJsonBody(obj, 200);
     } catch (Exception e)
       writeError(res, 500, "Internal server error");

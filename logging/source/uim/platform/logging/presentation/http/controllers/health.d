@@ -32,9 +32,10 @@ class HealthController : PlatformController {
   }
 
   private void handleHealth(scope HTTPServerRequest req, scope HTTPServerResponse res) {
-    auto j = Json.emptyObject;
-    j["status"] = Json("UP");
-    j["service"] = Json(serviceName);
+    auto j = Json.emptyObject
+      .set("status", "UP")
+      .set("service", serviceName);
+      
     res.writeJsonBody(j, 200);
   }
 }

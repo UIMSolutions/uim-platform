@@ -36,19 +36,18 @@ class AlertController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (a; alerts) {
-        auto aj = Json.emptyObject;
-        aj["id"] = Json(a.id);
-        aj["ruleId"] = Json(a.ruleId);
-        aj["ruleName"] = Json(a.ruleName);
-        aj["message"] = Json(a.message);
-        aj["matchCount"] = Json(a.matchCount);
-        aj["triggeredAt"] = Json(a.triggeredAt);
-        jarr ~= aj;
+        jarr ~= Json.emptyObject
+          .set("id", a.id)
+          .set("ruleId", a.ruleId)
+          .set("ruleName", a.ruleName)
+          .set("message", a.message)
+          .set("matchCount", a.matchCount)
+          .set("triggeredAt", a.triggeredAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["items"] = jarr;
-      resp["totalCount"] = Json(alerts.length);
+      auto resp = Json.emptyObject
+      .set("items", jarr)
+      .set("totalCount", Json(alerts.length))
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -66,18 +65,19 @@ class AlertController : PlatformController {
         return;
       }
 
-      auto aj = Json.emptyObject;
-      aj["id"] = Json(a.id);
-      aj["ruleId"] = Json(a.ruleId);
-      aj["ruleName"] = Json(a.ruleName);
-      aj["message"] = Json(a.message);
-      aj["matchCount"] = Json(a.matchCount);
-      aj["sampleLogEntryId"] = Json(a.sampleLogEntryId);
-      aj["triggeredAt"] = Json(a.triggeredAt);
-      aj["acknowledgedAt"] = Json(a.acknowledgedAt);
-      aj["resolvedAt"] = Json(a.resolvedAt);
-      aj["acknowledgedBy"] = Json(a.acknowledgedBy);
-      aj["resolvedBy"] = Json(a.resolvedBy);
+      auto aj = Json.emptyObject
+        .set("id", a.id)
+        .set("ruleId", a.ruleId)
+        .set("ruleName", a.ruleName)
+        .set("message", a.message)
+        .set("matchCount", a.matchCount)
+        .set("sampleLogEntryId", a.sampleLogEntryId)
+        .set("triggeredAt", a.triggeredAt)
+        .set("acknowledgedAt", a.acknowledgedAt)
+        .set("resolvedAt", a.resolvedAt)
+        .set("acknowledgedBy", a.acknowledgedBy)
+        .set("resolvedBy", a.resolvedBy);
+
       res.writeJsonBody(aj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -97,7 +97,7 @@ class AlertController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -118,7 +118,7 @@ class AlertController : PlatformController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      } ) {
+      }) {
         writeError(res, 400, result.error);
       }
     } catch (Exception e) {

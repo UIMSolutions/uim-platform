@@ -79,6 +79,14 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
     return CommandResult(true, resource.id.toString, "");
   }
 
+  MonitoredResource existsResource(string id) {
+    return existsResource(MonitoredResourceId(id));
+  }
+
+  MonitoredResource existsResource(MonitoredResourceId id) {
+    return repo.existsById(id);
+  }
+
   MonitoredResource getResource(string id) {
     return getResource(MonitoredResourceId(id));
   }

@@ -49,11 +49,9 @@ class TransformationController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 201);
-      }
-      else
+      } else
         writeError(res, 400, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -71,8 +69,7 @@ class TransformationController {
       resp["items"] = arr;
       resp["totalCount"] = Json(items.length);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -87,8 +84,7 @@ class TransformationController {
         return;
       }
       res.writeJsonBody(serializeTransformation(*t), 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -109,14 +105,11 @@ class TransformationController {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
         res.writeJsonBody(resp, 200);
-      }
-      else
-      {
+      } else {
         auto status = result.error == "Transformation not found" ? 404 : 400;
         writeError(res, status, result.error);
       }
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -134,11 +127,10 @@ class TransformationController {
       }
 
       auto output = uc.testTransformation(inputAttributes, systemtenantId, id);
-      auto resp = Json.emptyObject;
-      resp["output"] = Json(output);
+      auto resp = Json.emptyObject
+      .set("output", output);
       res.writeJsonBody(resp, 200);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
@@ -149,30 +141,28 @@ class TransformationController {
       TenantId tenantId = req.getTenantId;
       auto result = uc.deleteTransformation(tenantId, id);
       if (result.isSuccess) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
+        auto resp = Json.emptyObject
+          .set("deleted", true);
+
         res.writeJsonBody(resp, 200);
-      }
-      else
+      } else
         writeError(res, 404, result.error);
-    }
-    catch (Exception e) {
+    } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }
   }
 
   private static Json serializeTransformation(const Transformation t) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(t.id);
-    j["tenantId"] = Json(t.tenantId);
-    j["systemId"] = Json(t.systemId);
-    j["systemRole"] = Json(t.systemRole.to!string);
-    j["name"] = Json(t.name);
-    j["mappingRules"] = Json(t.mappingRules);
-    j["conditions"] = Json(t.conditions);
-    j["createdBy"] = Json(t.createdBy);
-    j["createdAt"] = Json(t.createdAt);
-    j["updatedAt"] = Json(t.updatedAt);
-    return j;
+    return Json.emptyObject
+      .set("id", t.id)
+      .set("tenantId", t.tenantId)
+      .set("systemId", t.systemId)
+      .set("systemRole", t.systemRole.to!string)
+      .set("name", t.name)
+      .set("mappingRules", t.mappingRules)
+      .set("conditions", t.conditions)
+      .set("createdBy", t.createdBy)
+      .set("createdAt", t.createdAt)
+      .set("updatedAt", t.updatedAt);
   }
 }

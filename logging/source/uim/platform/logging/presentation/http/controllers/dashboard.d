@@ -75,13 +75,12 @@ class DashboardController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (d; dashboards) {
-        auto dj = Json.emptyObject;
-        dj["id"] = Json(d.id);
-        dj["name"] = Json(d.name);
-        dj["description"] = Json(d.description);
-        dj["isDefault"] = Json(d.isDefault);
-        dj["panelCount"] = Json(d.panels.length);
-        jarr ~= dj;
+        jarr ~= Json.emptyObject
+          .set("id", d.id)
+          .set("name", d.name)
+          .set("description", d.description)
+          .set("isDefault", d.isDefault)
+          .set("panelCount", d.panels.length);
       }
 
       auto resp = Json.emptyObject;
@@ -105,11 +104,11 @@ class DashboardController : PlatformController {
         return;
       }
 
-      auto dj = Json.emptyObject;
-      dj["id"] = Json(d.id);
-      dj["name"] = Json(d.name);
-      dj["description"] = Json(d.description);
-      dj["isDefault"] = Json(d.isDefault);
+      auto dj = Json.emptyObject
+      .set("id", d.id)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("isDefault", d.isDefault);
 
       auto parr = Json.emptyArray;
       foreach (p; d.panels) {

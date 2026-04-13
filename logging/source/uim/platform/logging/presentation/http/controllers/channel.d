@@ -90,10 +90,11 @@ class ChannelController : PlatformController {
         return;
       }
 
-      auto cj = Json.emptyObject;
-      cj["id"] = Json(ch.id);
-      cj["name"] = Json(ch.name);
-      cj["description"] = Json(ch.description);
+      auto cj = Json.emptyObject
+      .set("id", ch.id)
+      .set("name", ch.name)
+      .set("description", ch.description));
+
       res.writeJsonBody(cj, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

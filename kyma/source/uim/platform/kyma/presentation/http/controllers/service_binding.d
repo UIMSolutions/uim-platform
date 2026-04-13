@@ -145,22 +145,21 @@ class ServiceBindingController : PlatformController {
   }
 
   private Json serializeBinding(ServiceBinding b) {
-    auto j = Json.emptyObject;
-    j["id"] = Json(b.id);
-    j["serviceInstanceId"] = Json(b.serviceInstanceId);
-    j["namespaceId"] = Json(b.namespaceId);
-    j["environmentId"] = Json(b.environmentId);
-    j["tenantId"] = Json(b.tenantId);
-    j["name"] = Json(b.name);
-    j["description"] = Json(b.description);
-    j["status"] = Json(b.status.to!string);
-    j["secretName"] = Json(b.secretName);
-    j["secretNamespace"] = Json(b.secretNamespace);
-    j["parameters"] = Json(b.parametersJson);
-    j["labels"] = serializeStrMap(b.labels);
-    j["createdBy"] = Json(b.createdBy);
-    j["createdAt"] = Json(b.createdAt);
-    j["modifiedAt"] = Json(b.modifiedAt);
-    return j;
+    return Json.emptyObject
+    .set("id", b.id)
+    .set("serviceInstanceId", b.serviceInstanceId)
+    .set("namespaceId", b.namespaceId)
+    .set("environmentId", b.environmentId)
+    .set("tenantId", b.tenantId)
+    .set("name", b.name)
+    .set("description", b.description)
+    .set("status", b.status.to!string)
+    .set("secretName", b.secretName)
+    .set("secretNamespace", b.secretNamespace)
+    .set("parameters", b.parametersJson)
+    .set("labels", b.labels)
+    .set("createdBy", b.createdBy)
+    .set("createdAt", b.createdAt)
+    .set("modifiedAt", b.modifiedAt);
   }
 }

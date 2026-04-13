@@ -110,16 +110,17 @@ class MonitoringController {
       TenantId tenantId = req.getTenantId;
       auto summary = uc.getPipelineSummary(tenantId);
 
-      auto j = Json.emptyObject;
-      j["totalSourceSystems"] = Json(summary.totalSourceSystems);
-      j["activeSourceSystems"] = Json(summary.activeSourceSystems);
-      j["totalTargetSystems"] = Json(summary.totalTargetSystems);
-      j["activeTargetSystems"] = Json(summary.activeTargetSystems);
-      j["totalJobs"] = Json(summary.totalJobs);
-      j["completedJobs"] = Json(summary.completedJobs);
-      j["failedJobs"] = Json(summary.failedJobs);
-      j["runningJobs"] = Json(summary.runningJobs);
-      j["totalProvisionedEntities"] = Json(summary.totalProvisionedEntities);
+      auto j = Json.emptyObject
+      .set("totalSourceSystems", summary.totalSourceSystems)
+      .set("activeSourceSystems", summary.activeSourceSystems)
+      .set("totalTargetSystems", summary.totalTargetSystems)
+      .set("activeTargetSystems", summary.activeTargetSystems)
+      .set("totalJobs", summary.totalJobs)
+      .set("completedJobs", summary.completedJobs)
+      .set("failedJobs", summary.failedJobs)
+      .set("runningJobs", summary.runningJobs)
+      .set("totalProvisionedEntities", summary.totalProvisionedEntities);
+      
       res.writeJsonBody(j, 200);
     }
     catch (Exception e) {

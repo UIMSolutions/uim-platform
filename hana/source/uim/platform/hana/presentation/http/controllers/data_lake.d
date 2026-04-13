@@ -64,21 +64,21 @@ class DataLakeController : PlatformController {
 
       auto jarr = Json.emptyArray;
       foreach (d; lakes) {
-        auto dj = Json.emptyObject;
-        dj["id"] = Json(d.id);
-        dj["instanceId"] = Json(d.instanceId);
-        dj["name"] = Json(d.name);
-        dj["description"] = Json(d.description);
-        dj["status"] = Json(d.status.to!string);
-        dj["computeNodes"] = Json(d.computeNodes);
-        dj["createdAt"] = Json(d.createdAt);
-        dj["modifiedAt"] = Json(d.modifiedAt);
-        jarr ~= dj;
+        jarr ~= Json.emptyObject
+        .set("id", d.id)
+        .set("instanceId", d.instanceId)
+        .set("name", d.name)
+        .set("description", d.description)
+        .set("status", d.status.to!string)
+        .set("computeNodes", d.computeNodes)
+        .set("createdAt", d.createdAt)
+        .set("modifiedAt", d.modifiedAt);
       }
 
-      auto resp = Json.emptyObject;
-      resp["count"] = Json(lakes.length);
-      resp["resources"] = jarr;
+      auto resp = Json.emptyObject
+      .set("count", Json(lakes.length))
+      .set("resources", jarr);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -96,15 +96,16 @@ class DataLakeController : PlatformController {
         return;
       }
 
-      auto resp = Json.emptyObject;
-      resp["id"] = Json(d.id);
-      resp["instanceId"] = Json(d.instanceId);
-      resp["name"] = Json(d.name);
-      resp["description"] = Json(d.description);
-      resp["status"] = Json(d.status.to!string);
-      resp["computeNodes"] = Json(d.computeNodes);
-      resp["createdAt"] = Json(d.createdAt);
-      resp["modifiedAt"] = Json(d.modifiedAt);
+      auto resp = Json.emptyObject
+      .set("id", d.id)
+      .set("instanceId", d.instanceId)
+      .set("name", d.name)
+      .set("description", d.description)
+      .set("status", d.status.to!string)
+      .set("computeNodes", d.computeNodes)
+      .set("createdAt", d.createdAt)
+      .set("modifiedAt", d.modifiedAt);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -125,9 +126,10 @@ class DataLakeController : PlatformController {
 
       auto result = uc.update(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
-        resp["message"] = Json("Data lake updated");
+        auto resp = Json.emptyObject
+        .set("id", result.id)
+        .set("message", "Data lake updated");
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 404, result.error);

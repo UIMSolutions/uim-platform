@@ -181,13 +181,12 @@ class CheckController : PlatformController {
       auto checkId = extractIdFromPath(req.requestURI);
       auto results = uc.getResults(tenantId, checkId);
 
-      auto arr = Json.emptyArray;
-      foreach (r; results)
-        arr ~= serializeResult(r);
+      auto arr = results.map!(result => serializeResult(r)).array.toJson;
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(results.length);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(results.length));
+      
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
