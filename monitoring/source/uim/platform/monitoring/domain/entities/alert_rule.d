@@ -33,7 +33,7 @@ struct AlertRule {
   long updatedAt;
 
 
-  Json toJsaon() const {
+  Json toJson() const {
     return Json.emptyObject
       .set("id", id)
       .set("tenantId", tenantId)

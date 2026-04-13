@@ -134,9 +134,10 @@ class ChannelController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       auto result = uc.deleteChannel(id);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["deleted"] = Json(true);
-        res.writeJsonBody(resp, 200);
+        auto response = Json.emptyObject
+          .set("deleted", Json(true));
+
+        res.writeJsonBody(response, 200);
       } else {
         writeError(res, 404, result.error);
       }

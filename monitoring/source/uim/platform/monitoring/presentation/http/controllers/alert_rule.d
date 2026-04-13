@@ -74,7 +74,7 @@ class AlertRuleController : PlatformController {
       TenantId tenantId = req.getTenantId;
       auto rules = uc.listRules(tenantId);
 
-      auto arr = rules.map!(r => serializeRule(r)).array.toJson;
+      auto arr = rules.map!(r => r.toJson()).array.toJson;
 
       auto resp = Json.emptyObject
         .set("items", arr)
@@ -94,7 +94,7 @@ class AlertRuleController : PlatformController {
         writeError(res, 404, "Alert rule not found");
         return;
       }
-      res.writeJsonBody(serializeRule(r), 200);
+      res.writeJsonBody(r.toJson(), 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
     }

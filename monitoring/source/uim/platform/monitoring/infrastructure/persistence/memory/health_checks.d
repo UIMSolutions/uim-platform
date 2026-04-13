@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryHealthCheckRepository : HealthCheckRepository {
   private HealthCheck[HealthCheckId] store;
 
+  bool existsById(HealthCheckId id) {
+    return (id in store) ? true : false;
+  }
+
   HealthCheck findById(HealthCheckId id) {
-    if (auto p = id in store)
-      return *p;
-    return HealthCheck.init;
+    return existsById(id) ? store[id] : HealthCheck.init;
   }
 
   HealthCheck[] findByTenant(TenantId tenantId) {
@@ -30,11 +32,11 @@ class MemoryHealthCheckRepository : HealthCheckRepository {
   }
 
   HealthCheck[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.resourceId == resourceId).array;
+    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
   }
 
   HealthCheck[] findByType(TenantId tenantId, CheckType checkType) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.checkType == checkType).array;
+    return findByTenant(tenantId).filter!(e => e.checkType == checkType).array;
   }
 
   void save(HealthCheck check) {

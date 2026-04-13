@@ -19,6 +19,10 @@ mixin(ShowModule!());
 class MemoryMetricRepository : MetricRepository {
   private Metric[] store;
 
+  bool existsById(MetricId id) {
+    return store.any!(m => m.id == id);
+  }
+
   Metric findById(MetricId id) {
     foreach (m; store)
       if (m.id == id)
@@ -26,24 +30,25 @@ class MemoryMetricRepository : MetricRepository {
     return Metric.init;
   }
 
+  Metric[] findByTenant(TenantId tenantId) {
+    return store.filter!(m => m.tenantId == tenantId).array;
+  }
+
   Metric[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return store.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId).array;
+    return findByTenant(tenantId).filter!(m => m.resourceId == resourceId).array;
   }
 
   Metric[] findByName(TenantId tenantId, string metricName) {
-    return store.filter!(m => m.tenantId == tenantId && m.name == metricName).array;
+    return findByTenant(tenantId).filter!(m => m.name == metricName).array;
   }
 
-  Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId,
-      string metricName) {
-    return store.filter!(m => m.tenantId == tenantId
-        && m.resourceId == resourceId && m.name == metricName).array;
+  Metric[] findByResourceAndName(TenantId tenantId, MonitoredResourceId resourceId, string metricName) {
+    return findByResource(tenantId, resourceId).filter!(m => m.name == metricName).array;
   }
 
   Metric[] findInTimeRange(TenantId tenantId, MonitoredResourceId resourceId,
       string metricName, long startTime, long endTime) {
-    return store.filter!(m => m.tenantId == tenantId && m.resourceId == resourceId
-        && m.name == metricName && m.timestamp >= startTime && m.timestamp <= endTime).array;
+    return findByResourceAndName(tenantId, resourceId, metricName).filter!(m => m.timestamp >= startTime && m.timestamp <= endTime).array;
   }
 
   void save(Metric m) {

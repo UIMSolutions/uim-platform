@@ -25,8 +25,7 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
   }
 
   CommandResult register(RegisterResourceRequest req) {
-    auto existing = repo.findByName(req.tenantId, req.name);
-    if (existing.id.length > 0)
+    if (repo.existsByName(req.tenantId, req.name))
       return CommandResult(false, "", "Resource with name '" ~ req.name ~ "' already exists");
 
     if (req.name.length == 0)
@@ -58,10 +57,10 @@ class ManageMonitoredResourcesUseCase : UIMUseCase {
   }
 
   CommandResult updateResource(MonitoredResourceId id, UpdateResourceRequest req) {
-    auto resource = repo.findById(id);
-    if (resource.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Resource not found");
 
+    auto resource = repo.findById(id);
     if (req.description.length > 0)
       resource.description = req.description;
     if (req.url.length > 0)

@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryNotificationChannelRepository : NotificationChannelRepository {
   private NotificationChannel[NotificationChannelId] store;
 
+  bool existsById(NotificationChannelId id) {
+    return (id in store) ? true : false;
+  }
+
   NotificationChannel findById(NotificationChannelId id) {
-    if (auto p = id in store)
-      return *p;
-    return NotificationChannel.init;
+    return existsById(id) ? store[id] : NotificationChannel.init;
   }
 
   NotificationChannel[] findByTenant(TenantId tenantId) {
@@ -30,13 +32,11 @@ class MemoryNotificationChannelRepository : NotificationChannelRepository {
   }
 
   NotificationChannel[] findByType(TenantId tenantId, ChannelType channelType) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.channelType == channelType)
-      .array;
+    return findByTenant(tenantId).filter!(e => e.channelType == channelType).array;
   }
 
   NotificationChannel[] findActive(TenantId tenantId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.state == ChannelState.active).array;
+    return findByTenant(tenantId).filter!(e => e.state == ChannelState.active).array;
   }
 
   void save(NotificationChannel channel) {

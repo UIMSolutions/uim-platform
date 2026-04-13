@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryAlertRepository : AlertRepository {
   private Alert[AlertId] store;
 
+  bool existsById(AlertId id) {
+    return (id in store) ? true : false;
+  }
+
   Alert findById(AlertId id) {
-    if (auto p = id in store)
-      return *p;
-    return Alert.init;
+    return existsById(id) ? store[id] : Alert.init;
   }
 
   Alert[] findByTenant(TenantId tenantId) {
@@ -30,19 +32,19 @@ class MemoryAlertRepository : AlertRepository {
   }
 
   Alert[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.resourceId == resourceId).array;
+    return findByTenant(tenantId).filter!(e => e.resourceId == resourceId).array;
   }
 
   Alert[] findByState(TenantId tenantId, AlertState state) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.state == state).array;
+    return findByTenant(tenantId).filter!(e => e.state == state).array;
   }
 
   Alert[] findBySeverity(TenantId tenantId, AlertSeverity severity) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.severity == severity).array;
+    return findByTenant(tenantId).filter!(e => e.severity == severity).array;
   }
 
   Alert[] findByRule(TenantId tenantId, AlertRuleId ruleId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.ruleId == ruleId).array;
+    return findByTenant(tenantId).filter!(e => e.ruleId == ruleId).array;
   }
 
   void save(Alert alert) {

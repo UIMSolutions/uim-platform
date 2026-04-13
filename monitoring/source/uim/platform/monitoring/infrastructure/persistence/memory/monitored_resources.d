@@ -19,12 +19,22 @@ mixin(ShowModule!());
 class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
   private MonitoredResource[MonitoredResourceId] store;
 
-  MonitoredResource findById(MonitoredResourceId id) {
+  bool existsById(MonitoredResourceId id) {
+    return (id in store) ? true : false;
   }
-  
+
   MonitoredResource findById(MonitoredResourceId id) {
-    if (auto p = id in store)
-      return *p;
+    return (existsById(id)) ? store[id] : MonitoredResource.init;
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
+    return (findByTenant(tenantId).any!(e => e.name == name));
+  }
+
+  MonitoredResource findByName(TenantId tenantId, string name) {
+    foreach (e; store.byValue())
+      if (e.tenantId == tenantId && e.name == name)
+        return e;
     return MonitoredResource.init;
   }
 
@@ -34,13 +44,6 @@ class MemoryMonitoredResourceRepository : MonitoredResourceRepository {
 
   MonitoredResource[] findByType(TenantId tenantId, ResourceType type) {
     return store.byValue().filter!(e => e.tenantId == tenantId && e.resourceType == type).array;
-  }
-
-  MonitoredResource findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
-        return e;
-    return MonitoredResource.init;
   }
 
   void save(MonitoredResource resource) {

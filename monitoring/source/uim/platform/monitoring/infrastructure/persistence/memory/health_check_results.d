@@ -19,6 +19,10 @@ mixin(ShowModule!());
 class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   private HealthCheckResult[] store;
 
+  bool existsById(HealthCheckResultId id) {
+    return store.any!(r => r.id == id);
+  }
+
   HealthCheckResult findById(HealthCheckResultId id) {
     foreach (r; store)
       if (r.id == id)
@@ -26,29 +30,30 @@ class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
     return HealthCheckResult.init;
   }
 
+  HealthCheckResult[] findByTenant(TenantId tenantId) {
+    return store.filter!(r => r.tenantId == tenantId).array;
+  }
+
   HealthCheckResult[] findByCheck(TenantId tenantId, HealthCheckId checkId) {
-    return store.filter!(r => r.tenantId == tenantId && r.checkId == checkId).array;
+    return findByTenant(tenantId).filter!(r => r.checkId == checkId).array;
   }
 
   HealthCheckResult[] findByResource(TenantId tenantId, MonitoredResourceId resourceId) {
-    return store.filter!(r => r.tenantId == tenantId && r.resourceId == resourceId).array;
+    return findByTenant(tenantId).filter!(r => r.resourceId == resourceId).array;
   }
 
   HealthCheckResult findLatestByCheck(TenantId tenantId, HealthCheckId checkId) {
     HealthCheckResult latest;
-    foreach (r; store) {
-      if (r.tenantId == tenantId && r.checkId == checkId) {
-        if (latest.id.isEmpty || r.executedAt > latest.executedAt)
-          latest = r;
-      }
+    foreach (r; findByCheck(tenantId, checkId)) {
+      if (latest.id.isEmpty || r.executedAt > latest.executedAt)
+        latest = r;
     }
     return latest;
   }
 
   HealthCheckResult[] findInTimeRange(TenantId tenantId, HealthCheckId checkId,
       long startTime, long endTime) {
-    return store.filter!(r => r.tenantId == tenantId && r.checkId == checkId
-        && r.executedAt >= startTime && r.executedAt <= endTime).array;
+    return findByCheck(tenantId, checkId).filter!(r => r.executedAt >= startTime && r.executedAt <= endTime).array;
   }
 
   void save(HealthCheckResult result) {
