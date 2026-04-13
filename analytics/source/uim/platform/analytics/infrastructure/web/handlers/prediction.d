@@ -71,16 +71,3 @@ class PredictionHandler {
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }
-
-private string extractIdFromPath(string uri, string resource) {
-  // import std.string : split;
-
-  auto parts = uri.split("/");
-  foreach (i, part; parts)
-    if (part == resource && i + 1 < parts.length) {
-      auto c = parts[i + 1];
-      if (c.length > 0 && c != "train")
-        return c;
-    }
-  return "";
-}

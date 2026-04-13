@@ -177,6 +177,17 @@ string extractIdFromPath(string uri) {
   return path;
 }
 
+string extractIdFromPath(string uri, string resource) {
+  // import std.string : split;
+  auto parts = uri.split("/");
+  foreach (i, part; parts)
+    if (part == resource && i + 1 < parts.length) {
+      auto c = parts[i + 1];
+      if (c != "publish" && c.length > 0)
+        return c;
+    }
+  return "";
+}
 /// Write a JSON error response.
 void writeError(scope HTTPServerResponse res, int status, string message) {
   auto error = Json.emptyObject;
@@ -241,7 +252,6 @@ string extractId(string uri) {
 }
 
 /*
-
 private string extractId(scope HTTPServerRequest req) {
   // import std.conv : to;
   // import std.string : split;
@@ -258,11 +268,7 @@ private string extractId(scope HTTPServerRequest req) {
   }
   return "";
 }
-
 */
-
-
-
 
 /// Convert a string array to a Json array.
 Json toJsonArray(const(string[]) arr) {
@@ -270,4 +276,49 @@ Json toJsonArray(const(string[]) arr) {
   foreach (s; arr)
     j ~= Json(s);
   return j;
+}
+
+
+
+/// Extract a query parameter from the URI.
+string queryParam(scope HTTPServerRequest req, string key) {
+  auto val = req.headers.get("X-Query-" ~ key, "");
+  if (val.length > 0)
+    return val;
+
+  // Parse from query string
+  auto uri = req.requestURI;
+  // import std.string : indexOf;
+  auto qpos = uri.indexOf('?');
+  if (qpos < 0)
+    return "";
+
+  auto qs = uri[qpos + 1 .. $];
+  foreach (pair; splitBy(qs, '&')) {
+    auto epos = pair.indexOf('=');
+    if (epos > 0 && pair[0 .. epos] == key)
+      return pair[epos + 1 .. $];
+  }
+  return "";
+}
+
+private long lastIndexOfChar(string s, char c) {
+  for (long i = s.length - 1; i >= 0; i--)
+    if (s[cast(size_t) i] == c)
+      return i;
+  return -1;
+}
+
+private string[] splitBy(string s, char delim) {
+  string[] result;
+  size_t start = 0;
+  foreach (i, ch; s) {
+    if (ch == delim) {
+      result ~= s[start .. i];
+      start = i + 1;
+    }
+  }
+  if (start <= s.length)
+    result ~= s[start .. $];
+  return result;
 }

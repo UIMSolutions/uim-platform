@@ -66,12 +66,12 @@ class BusinessUserController : PlatformController {
     try {
       auto systemId = req.headers.get("X-System-Id", "");
       auto users = uc.listUsers(systemId);
-      auto arr = Json.emptyArray;
-      foreach (u; users)
-        arr ~= serializeUser(u);
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(users.length);
+      auto arr = users.map!(user => serializeUser(u)).array.toJson;
+
+      auto resp = Json.emptyObject
+        .set("items", arr)
+        .set("totalCount", users.length);
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

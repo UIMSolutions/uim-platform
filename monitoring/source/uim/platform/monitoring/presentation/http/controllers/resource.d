@@ -86,7 +86,7 @@ class ResourceController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      if (!usecase.existsById(id)) {
+      if (!usecase.existsResource(id)) {
         writeError(res, 404, "Resource not found");
         return;
       }

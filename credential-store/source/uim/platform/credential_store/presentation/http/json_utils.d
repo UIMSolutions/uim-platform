@@ -30,11 +30,11 @@ Json toJsonArray(string[] arr) {
   return jarr;
 }
 
-string extractIdFromPath(string path) {
-  import std.string : lastIndexOf;
+// string extractIdFromPath(string path) {
+//   import std.string : lastIndexOf;
 
-  auto idx = lastIndexOf(path, '/');
-  if (idx >= 0 && idx + 1 < path.length)
-    return path[idx + 1 .. $];
-  return "";
-}
+//   auto idx = lastIndexOf(path, '/');
+//   if (idx >= 0 && idx + 1 < path.length)
+//     return path[idx + 1 .. $];
+//   return "";
+// }

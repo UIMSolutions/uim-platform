@@ -74,8 +74,8 @@ class ChannelController : PlatformController {
       auto channels = uc.listChannels(tenantId);
 
       auto arr = Json.emptyArray;
-      foreach (ch; channels)
-        arr ~= serializeChannel(ch);
+      foreach (channel; channels)
+        arr ~= serializeChannel(channel);
 
       auto resp = Json.emptyObject;
       resp["items"] = arr;
@@ -146,23 +146,23 @@ class ChannelController : PlatformController {
     }
   }
 
-  private static Json serializeChannel(const ref NotificationChannel ch) {
+  private static Json serializeChannel(const ref NotificationChannel channel) {
     return Json.emptyObject
-      .set("id", ch.id)
-      .set("tenantId", ch.tenantId)
-      .set("name", ch.name)
-      .set("description", ch.description)
-      .set("channelType", ch.channelType.to!string)
-      .set("state", ch.state.to!string)
-      .set("emailRecipients", ch.emailRecipients)
-      .set("emailSubjectPrefix", ch.emailSubjectPrefix)
-      .set("webhookUrl", ch.webhookUrl)
-      .set("webhookMethod", ch.webhookMethod)
-      .set("onPremiseHost", ch.onPremiseHost)
-      .set("onPremisePort", ch.onPremisePort)
-      .set("onPremiseProtocol", ch.onPremiseProtocol)
-      .set("createdBy", ch.createdBy)
-      .set("createdAt", ch.createdAt)
-      .set("updatedAt", ch.updatedAt);
+      .set("id", channel.id)
+      .set("tenantId", channel.tenantId)
+      .set("name", channel.name)
+      .set("description", channel.description)
+      .set("channelType", channel.channelType.to!string)
+      .set("state", channel.state.to!string)
+      .set("emailRecipients", channel.emailRecipients)
+      .set("emailSubjectPrefix", channel.emailSubjectPrefix)
+      .set("webhookUrl", channel.webhookUrl)
+      .set("webhookMethod", channel.webhookMethod)
+      .set("onPremiseHost", channel.onPremiseHost)
+      .set("onPremisePort", channel.onPremisePort)
+      .set("onPremiseProtocol", channel.onPremiseProtocol)
+      .set("createdBy", channel.createdBy)
+      .set("createdAt", channel.createdAt)
+      .set("updatedAt", channel.updatedAt);
   }
 }

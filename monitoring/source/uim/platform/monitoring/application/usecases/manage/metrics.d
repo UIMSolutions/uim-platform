@@ -55,6 +55,10 @@ class ManageMetricsUseCase : UIMUseCase {
     return CommandResult(true, definition.id.toString, "");
   }
 
+  CommandResult updateDefinition(string id, UpdateMetricDefinitionRequest req) {
+    return updateDefinition(MetricDefinitionId(id), req);
+  }
+
   CommandResult updateDefinition(MetricDefinitionId id, UpdateMetricDefinitionRequest req) {
     if (!definitionRepo.existsById(id))
       return CommandResult(false, "", "Metric definition not found");

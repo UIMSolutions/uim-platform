@@ -53,8 +53,9 @@ class ApplicationJobController : PlatformController {
 
       auto result = uc.createJob(r);
       if (result.isSuccess()) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -74,6 +75,7 @@ class ApplicationJobController : PlatformController {
       auto resp = Json.emptyObject;
       resp["items"] = arr;
       resp["totalCount"] = Json(jobs.length);
+      
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -109,7 +111,7 @@ class ApplicationJobController : PlatformController {
       if (result.isSuccess()) {
         auto resp = Json.emptyObject
           .set("status", "updated");
-          
+
         res.writeJsonBody(resp, 200);
       } else {
         writeError(res, 400, result.error);

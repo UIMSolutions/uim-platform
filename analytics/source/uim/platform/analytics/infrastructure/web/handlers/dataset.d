@@ -59,12 +59,3 @@ class DatasetHandler {
     res.writeJsonBody(Json.emptyObject, HTTPStatus.noContent);
   }
 }
-
-private string extractIdFromPath(string uri, string resource) {
-  // import std.string : split;
-  auto parts = uri.split("/");
-  foreach (i, part; parts)
-    if (part == resource && i + 1 < parts.length && parts[i + 1].length > 0)
-      return parts[i + 1];
-  return "";
-}

@@ -25,6 +25,8 @@ module app;
 
 import uim.platform.analytics;
 
+mixin(ShowModule!());
+
 @safe:
 
 version (unittest) {

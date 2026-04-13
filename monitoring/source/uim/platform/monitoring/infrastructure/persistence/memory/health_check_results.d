@@ -19,8 +19,16 @@ mixin(ShowModule!());
 class MemoryHealthCheckResultRepository : HealthCheckResultRepository {
   private HealthCheckResult[] store;
 
+  bool existsById(string id) {
+    return existsById(HealthCheckResultId(id));
+  }
+
   bool existsById(HealthCheckResultId id) {
     return store.any!(r => r.id == id);
+  }
+
+  HealthCheckResult findById(string id) {
+    return findById(HealthCheckResultId(id));
   }
 
   HealthCheckResult findById(HealthCheckResultId id) {

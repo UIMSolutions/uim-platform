@@ -22,10 +22,10 @@ mixin(ShowModule!());
 
 @safe:
 class CheckController : PlatformController {
-  private ManageHealthChecksUseCase uc;
+  private ManageHealthChecksUseCase usecase;
 
-  this(ManageHealthChecksUseCase uc) {
-    this.uc = uc;
+  this(ManageHealthChecksUseCase usecase) {
+    this.usecase = usecase;
   }
 
   override void registerRoutes(URLRouter router) {
@@ -61,10 +61,11 @@ class CheckController : PlatformController {
       r.thresholdOperator = j.getString("thresholdOperator");
       r.createdBy = req.headers.get("X-User-Id", "");
 
-      auto result = uc.createCheck(r);
+      auto result = usecase.createCheck(r);
       if (result.success) {
-        auto resp = Json.emptyObject;
-        resp["id"] = Json(result.id);
+        auto resp = Json.emptyObject
+          .set("id", result.id);
+
         res.writeJsonBody(resp, 201);
       } else {
         writeError(res, 400, result.error);
@@ -77,15 +78,13 @@ class CheckController : PlatformController {
   private void handleList(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       TenantId tenantId = req.getTenantId;
-      auto checks = uc.listChecks(tenantId);
+      auto checks = usecase.listChecks(tenantId);
+      auto arr = checks.map!(c => serializeCheck(c)).array;
 
-      auto arr = Json.emptyArray;
-      foreach (c; checks)
-        arr ~= serializeCheck(c);
+      auto resp = Json.emptyObject
+      .set("items", arr)
+      .set("totalCount", Json(checks.length));
 
-      auto resp = Json.emptyObject;
-      resp["items"] = arr;
-      resp["totalCount"] = Json(checks.length);
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");
@@ -95,7 +94,7 @@ class CheckController : PlatformController {
   private void handleGetById(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto c = uc.getCheck(id);
+      auto c = usecase.getCheck(id);
       if (c.id.isEmpty) {
         writeError(res, 404, "Health check not found");
         return;
@@ -120,7 +119,7 @@ class CheckController : PlatformController {
       r.criticalThreshold = jsonDouble(j, "criticalThreshold");
       r.thresholdOperator = j.getString("thresholdOperator");
 
-      auto result = uc.updateCheck(id, r);
+      auto result = usecase.updateCheck(id, r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -136,7 +135,7 @@ class CheckController : PlatformController {
   private void handleDelete(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto id = extractIdFromPath(req.requestURI);
-      auto result = uc.deleteCheck(id);
+      auto result = usecase.deleteCheck(id);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["deleted"] = Json(true);
@@ -162,7 +161,7 @@ class CheckController : PlatformController {
       r.responseTimeMs = j.getInteger("responseTimeMs");
       r.httpStatusCode = j.getInteger("httpStatusCode");
 
-      auto result = uc.recordResult(r);
+      auto result = usecase.recordResult(r);
       if (result.success) {
         auto resp = Json.emptyObject;
         resp["id"] = Json(result.id);
@@ -179,14 +178,14 @@ class CheckController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto checkId = extractIdFromPath(req.requestURI);
-      auto results = uc.getResults(tenantId, checkId);
+      auto results = usecase.getResults(tenantId, checkId);
 
       auto arr = results.map!(result => serializeResult(r)).array.toJson;
 
       auto resp = Json.emptyObject
-      .set("items", arr)
-      .set("totalCount", Json(results.length));
-      
+        .set("items", arr)
+        .set("totalCount", Json(results.length));
+
       res.writeJsonBody(resp, 200);
     } catch (Exception e) {
       writeError(res, 500, "Internal server error");

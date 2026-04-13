@@ -66,9 +66,15 @@ struct ConnectivityLogId {
   mixin DomainId;
 }
 
-struct TenantId = string;
-struct SubaccountId = string;
+struct SubaccountId {
+  string value;
 
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 /// Destination protocol type.
 enum DestinationType {
   http,

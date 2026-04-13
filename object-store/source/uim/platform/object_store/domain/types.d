@@ -6,15 +6,78 @@
 module uim.platform.object_store.domain.types;
 
 // --- ID type aliases ---
-alias BucketId = string;
-alias ObjectId = string;
-alias ObjectVersionId = string;
-alias AccessPolicyId = string;
-alias LifecycleRuleId = string;
-alias CorsRuleId = string;
-alias ServiceBindingId = string;
-
-alias UserId = string;
+struct BucketId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct ObjectId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct ObjectVersionId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct AccessPolicyId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct LifecycleRuleId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct CorsRuleId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct ServiceBindingId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
+struct UserId {
+    string value;
+  
+    this(string value) {
+        this.value = value;
+    }
+  
+    mixin DomainId;
+}
 
 // --- Enumerations ---
 
