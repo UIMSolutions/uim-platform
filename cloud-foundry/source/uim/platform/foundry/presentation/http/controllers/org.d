@@ -10,10 +10,11 @@ module uim.platform.foundry.presentation.http.controllers.org;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.foundry.application.usecases.manage.orgs;
-import uim.platform.foundry.application.dto;
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.organization;
+// import uim.platform.foundry.application.usecases.manage.orgs;
+// import uim.platform.foundry.application.dto;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.organization;
+import uim.platform.connectivity;
 
 class OrgController : PlatformController {
   private ManageOrgsUseCase useCase;

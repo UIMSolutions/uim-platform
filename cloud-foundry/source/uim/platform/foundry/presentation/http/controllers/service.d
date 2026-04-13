@@ -10,11 +10,12 @@ module uim.platform.foundry.presentation.http.controllers.service;
 // import vibe.data.json;
 // import std.conv : to;
 
-import uim.platform.foundry.application.usecases.manage.services;
-import uim.platform.foundry.application.dto;
-import uim.platform.foundry.domain.types;
-import uim.platform.foundry.domain.entities.service_instance;
-import uim.platform.foundry.domain.entities.service_binding;
+// import uim.platform.foundry.application.usecases.manage.services;
+// import uim.platform.foundry.application.dto;
+// import uim.platform.foundry.domain.types;
+// import uim.platform.foundry.domain.entities.service_instance;
+// import uim.platform.foundry.domain.entities.service_binding;
+import uim.platform.connectivity;
 
 class ServiceController : PlatformController {
   private ManageServicesUseCase useCase;

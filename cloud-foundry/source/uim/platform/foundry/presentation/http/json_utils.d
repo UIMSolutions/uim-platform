@@ -24,13 +24,6 @@ ushort getUshort(Json j, string key, ushort default_ = 0) {
   return cast(ushort) jsonLong(j, key, default_);
 }
 
-
-
-
-
-
-
-
 /// Convert a string array to a Json array.
 Json toJsonArray(const(string[]) arr) {
   auto j = Json.emptyArray;
