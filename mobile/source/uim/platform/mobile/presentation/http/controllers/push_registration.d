@@ -37,7 +37,7 @@ class PushRegistrationController : PlatformController {
       r.deviceId = j.getString("deviceId");
       r.provider = j.getString("provider");
       r.pushToken = j.getString("pushToken");
-      r.topics = jsonStrArray(j, "topics");
+      r.topics = getStringArray(j, "topics");
       auto result = uc.register(r);
       if (result.success) {
         auto resp = Json.emptyObject;

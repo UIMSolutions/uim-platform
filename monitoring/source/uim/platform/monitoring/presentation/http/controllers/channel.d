@@ -45,7 +45,7 @@ class ChannelController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.channelType = j.getString("channelType");
-      r.emailRecipients = jsonStrArray(j, "emailRecipients");
+      r.emailRecipients = getStringArray(j, "emailRecipients");
       r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
       r.webhookUrl = j.getString("webhookUrl");
       r.webhookSecret = j.getString("webhookSecret");
@@ -107,7 +107,7 @@ class ChannelController : PlatformController {
       UpdateNotificationChannelRequest r;
       r.description = j.getString("description");
       r.state = j.getString("state");
-      r.emailRecipients = jsonStrArray(j, "emailRecipients");
+      r.emailRecipients = getStringArray(j, "emailRecipients");
       r.emailSubjectPrefix = j.getString("emailSubjectPrefix");
       r.webhookUrl = j.getString("webhookUrl");
       r.webhookSecret = j.getString("webhookSecret");

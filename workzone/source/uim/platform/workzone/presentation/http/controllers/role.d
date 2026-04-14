@@ -36,7 +36,7 @@ class RoleController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.permissions = jsonStrArray(j, "permissions");
+      r.permissions = getStringArray(j, "permissions");
       r.isDefault = j.getBoolean("isDefault");
 
       auto result = useCase.createRole(r);
@@ -96,7 +96,7 @@ class RoleController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.permissions = jsonStrArray(j, "permissions");
+      r.permissions = getStringArray(j, "permissions");
 
       auto result = useCase.updateRole(r);
       if (result.isSuccess())

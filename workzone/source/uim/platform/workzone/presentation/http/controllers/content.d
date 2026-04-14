@@ -41,7 +41,7 @@ class ContentController {
       r.summary = j.getString("summary");
       r.authorId = j.getString("authorId");
       r.authorName = j.getString("authorName");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.language = j.getString("language");
 
       auto ctStr = j.getString("contentType");
@@ -123,7 +123,7 @@ class ContentController {
       r.title = j.getString("title");
       r.body_ = j.getString("body");
       r.summary = j.getString("summary");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.pinned = j.getBoolean("pinned");
 
       auto statusStr = j.getString("status");

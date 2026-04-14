@@ -43,8 +43,8 @@ class DataModelController : PlatformController {
       r.version_ = j.getString("version");
       r.description = j.getString("description");
       r.category = j.getString("category");
-      r.keyFields = jsonStrArray(j, "keyFields");
-      r.requiredFields = jsonStrArray(j, "requiredFields");
+      r.keyFields = getStringArray(j, "keyFields");
+      r.requiredFields = getStringArray(j, "requiredFields");
       r.createdBy = req.headers.get("X-User-Id", "");
 
       // Parse field definitions
@@ -122,8 +122,8 @@ class DataModelController : PlatformController {
       UpdateDataModelRequest r;
       r.description = j.getString("description");
       r.version_ = j.getString("version");
-      r.keyFields = jsonStrArray(j, "keyFields");
-      r.requiredFields = jsonStrArray(j, "requiredFields");
+      r.keyFields = getStringArray(j, "keyFields");
+      r.requiredFields = getStringArray(j, "requiredFields");
 
       auto fieldsArr = jsonObjArray(j, "fields");
       FieldDefinitionDto[] fields;

@@ -48,10 +48,10 @@ class ServicePlanController : PlatformController {
       r.pricingModel = j.getString("pricingModel");
       r.isFree = j.getBoolean("isFree");
       r.isBeta = j.getBoolean("isBeta");
-      r.availableRegions = jsonStrArray(j, "availableRegions");
+      r.availableRegions = getStringArray(j, "availableRegions");
       r.maxQuota = j.getInteger("maxQuota");
       r.unit = j.getString("unit");
-      r.supportedPlatforms = jsonStrArray(j, "supportedPlatforms");
+      r.supportedPlatforms = getStringArray(j, "supportedPlatforms");
       r.providerDisplayName = j.getString("providerDisplayName");
       r.metadata = jsonStrMap(j, "metadata");
 
@@ -114,7 +114,7 @@ class ServicePlanController : PlatformController {
       UpdateServicePlanRequest r;
       r.planDisplayName = j.getString("planDisplayName");
       r.description = j.getString("description");
-      r.availableRegions = jsonStrArray(j, "availableRegions");
+      r.availableRegions = getStringArray(j, "availableRegions");
       r.maxQuota = j.getInteger("maxQuota");
       r.isBeta = j.getBoolean("isBeta");
       r.provisionable = j.getBoolean("provisionable", true);

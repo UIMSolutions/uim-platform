@@ -41,8 +41,8 @@ class TaskController : PlatformController {
             r.type = j.getString("type");
             r.priority = j.getString("priority");
             r.assignee = j.getString("assignee");
-            r.candidateUsers = jsonStrArray(j, "candidateUsers");
-            r.candidateGroups = jsonStrArray(j, "candidateGroups");
+            r.candidateUsers = getStringArray(j, "candidateUsers");
+            r.candidateGroups = getStringArray(j, "candidateGroups");
             r.formId = j.getString("formId");
             r.dueDate = jsonLong(j, "dueDate");
 

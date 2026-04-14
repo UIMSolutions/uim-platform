@@ -39,8 +39,8 @@ class PushNotificationController : PlatformController {
       r.payload = j.getString("payload");
       r.provider = j.getString("provider");
       r.priority = j.getString("priority");
-      r.targetDevices = jsonStrArray(j, "targetDevices");
-      r.targetTopics = jsonStrArray(j, "targetTopics");
+      r.targetDevices = getStringArray(j, "targetDevices");
+      r.targetTopics = getStringArray(j, "targetTopics");
       r.scheduledAt = jsonLong(j, "scheduledAt");
       r.expiresAt = jsonLong(j, "expiresAt");
       r.createdBy = j.getString("createdBy");

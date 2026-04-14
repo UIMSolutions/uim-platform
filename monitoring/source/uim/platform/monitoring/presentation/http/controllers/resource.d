@@ -50,7 +50,7 @@ class ResourceController : PlatformController {
       r.runtime = j.getString("runtime");
       r.region = j.getString("region");
       r.instanceCount = j.getInteger("instanceCount");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.registeredBy = req.headers.get("X-User-Id", "");
 
       auto result = usecase.register(r);
@@ -108,7 +108,7 @@ class ResourceController : PlatformController {
       r.runtime = j.getString("runtime");
       r.state = j.getString("state");
       r.instanceCount = j.getInteger("instanceCount");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
 
       auto result = usecase.updateResource(id, r);
       if (result.success) {

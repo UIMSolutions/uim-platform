@@ -46,7 +46,7 @@ class ClientController : PlatformController {
       r.systemUrl = j.getString("systemUrl");
       r.destinationName = j.getString("destinationName");
       r.communicationArrangement = j.getString("communicationArrangement");
-      r.supportedCategories = jsonStrArray(j, "supportedCategories");
+      r.supportedCategories = getStringArray(j, "supportedCategories");
       r.supportsInitialLoad = j.getBoolean("supportsInitialLoad");
       r.supportsDeltaReplication = j.getBoolean("supportsDeltaReplication");
       r.supportsKeyMapping = j.getBoolean("supportsKeyMapping");
@@ -119,7 +119,7 @@ class ClientController : PlatformController {
       r.systemUrl = j.getString("systemUrl");
       r.destinationName = j.getString("destinationName");
       r.communicationArrangement = j.getString("communicationArrangement");
-      r.supportedCategories = jsonStrArray(j, "supportedCategories");
+      r.supportedCategories = getStringArray(j, "supportedCategories");
       r.authType = j.getString("authType");
       r.clientIdRef = j.getString("clientIdRef");
       r.certificateRef = j.getString("certificateRef");

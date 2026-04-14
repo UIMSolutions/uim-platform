@@ -44,9 +44,9 @@ class ReplicationController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.trigger = j.getString("trigger");
-      r.categories = jsonStrArray(j, "categories");
+      r.categories = getStringArray(j, "categories");
       r.sourceClientId = j.getString("sourceClientId");
-      r.targetClientIds = jsonStrArray(j, "targetClientIds");
+      r.targetClientIds = getStringArray(j, "targetClientIds");
       r.isInitialLoad = j.getBoolean("isInitialLoad");
       r.createdBy = req.headers.get("X-User-Id", "");
 

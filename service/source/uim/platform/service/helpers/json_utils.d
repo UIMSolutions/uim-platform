@@ -12,18 +12,15 @@ mixin(ShowModule!());
 @safe:
 
 /// Extract an integer field from a Json object.
-long jsonLong(Json j, string key, long default_ = 0) {
+long jsonLong(Json j, string key, long defaultValue = 0) {
   if (!j.isObject)
-    return default_;
+    return defaultValue;
 
-  auto v = key in j;
-  if (v is null)
-    return default_;
+  if (key !in j)
+    return defaultValue;
 
-  if ((*v).type == Json.Type.int_)
-    return (*v).get!long;
-
-  return default_;
+  auto v = j[key];
+  return v.isInteger ? v.get!long : defaultValue;
 }
 
 /// Extract an int field from a Json object.
@@ -49,7 +46,7 @@ double jsonDouble(Json j, string key) {
   return 0.0;
 }
 /// Extract a string array from a Json object.
-string[] jsonStrArray(Json json, string key) {
+string[] getStringArray(Json json, string key) {
   if (!json.hasKey(key) || json[key] == Json(null))
     return null;
 
@@ -219,8 +216,10 @@ unittest {
   assert(getString(parseJsonString(`{"name": "test"}`), "name") == "test");
   assert(getString(parseJsonString(`{"name": "test"}`), "missing") == "");
 
-  assert(jsonStrArray(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == ["a", "b"]);
-  assert(jsonStrArray(parseJsonString(`{}`), "tags") is null);
+  assert(getStringArray(parseJsonString(`{"tags": ["a", "b"]}`), "tags") == [
+      "a", "b"
+    ]);
+  assert(getStringArray(parseJsonString(`{}`), "tags") is null);
 }
 
 Json toJsonArray(string[] arr) {
@@ -278,8 +277,6 @@ Json toJsonArray(const(string[]) arr) {
   return j;
 }
 
-
-
 /// Extract a query parameter from the URI.
 string queryParam(scope HTTPServerRequest req, string key) {
   auto val = req.headers.get("X-Query-" ~ key, "");
@@ -304,7 +301,7 @@ string queryParam(scope HTTPServerRequest req, string key) {
 
 private long lastIndexOfChar(string s, char c) {
   for (long i = s.length - 1; i >= 0; i--)
-    if (s[cast(size_t) i] == c)
+    if (s[cast(size_t)i] == c)
       return i;
   return -1;
 }
@@ -321,4 +318,94 @@ private string[] splitBy(string s, char delim) {
   if (start <= s.length)
     result ~= s[start .. $];
   return result;
+}
+
+/// Serialize a struct to JSON.
+Json toJsonValue(T)(T val) {
+  auto j = Json.emptyObject;
+  static foreach (i, field; T.tupleof) {
+    {
+      enum name = __traits(identifier, T.tupleof[i]);
+      alias FT = typeof(field);
+      static if (is(FT == string))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == bool))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == long) || is(FT == int) || is(FT == uint) || is(FT == ulong))
+        j[name] = Json(val.tupleof[i]);
+      else static if (is(FT == string[])) {
+        auto arr = Json.emptyArray;
+        foreach (s; val.tupleof[i])
+          arr ~= Json(s);
+        j[name] = arr;
+      } else static if (is(FT == enum)) {
+        // import std.conv : to;
+        j[name] = Json(val.tupleof[i].to!string);
+      } else static if (is(FT == string[string])) {
+        auto obj = Json.emptyObject;
+        foreach (k, v; val.tupleof[i])
+          obj[k] = Json(v);
+        j[name] = obj;
+      } else static if (isArray!FT && !is(FT == string)) {
+        auto arr = Json.emptyArray;
+        foreach (item; val.tupleof[i])
+          arr ~= toJsonValue(item);
+        j[name] = arr;
+      }
+    }
+  }
+  return j;
+}
+
+/// Serialize an array of structs.
+Json toJsonArray(T)(T[] items) {
+  auto arr = Json.emptyArray;
+  foreach (item; items)
+    arr ~= toJsonValue(item);
+  return arr;
+}
+
+/// Read a uint field from JSON.
+uint jsonUint(Json j, string key, uint default_ = 0) {
+  return cast(uint)jsonLong(j, key, default_);
+}
+
+/// Read an int field from JSON.
+
+/// Read a string array from JSON.
+string[] getStringArray(Json j, string key, string[] defaultArray = null) {
+  if (!j.isObject)
+    return defaultArray;
+
+  if (key !in j)
+    return defaultArray;
+
+  auto val = j[key];
+  if (!val.isArray)
+    return defaultArray;
+
+  return val.toArray
+    .filter!(item => item.isString)
+    .map!(item => item.get!string)
+    .array;
+}
+
+/// Parse an enum from a JSON string field.
+T jsonEnum(T)(Json j, string key, T default_ = T.init) {
+  auto str = j.getString(key);
+  if (str.length == 0)
+    return default_;
+  // import std.conv : to;
+  try
+    return str.to!T;
+  catch (Exception)
+    return default_;
+}
+
+/// Write a standard JSON error response.
+void writeApiError(scope HTTPServerResponse res, int status, string detail) {
+  auto response = Json.emptyObject;
+  response["error"] = Json(detail);
+  response["status"] = Json(status);
+  res.writeJsonBody(response, status);
 }

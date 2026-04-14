@@ -45,7 +45,7 @@ class TaskController {
       r.sourceTaskId = j.getString("sourceTaskId");
       r.actionUrl = j.getString("actionUrl");
       r.category = j.getString("category");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.dueDate = jsonLong(j, "dueDate");
 
       auto pStr = j.getString("priority");

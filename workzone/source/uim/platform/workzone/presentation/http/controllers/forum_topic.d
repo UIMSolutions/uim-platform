@@ -39,7 +39,7 @@ class ForumTopicController {
       r.body_ = j.getString("body");
       r.authorId = j.getString("authorId");
       r.authorName = j.getString("authorName");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
 
       auto result = useCase.createForumTopic(r);
       if (result.isSuccess()) {
