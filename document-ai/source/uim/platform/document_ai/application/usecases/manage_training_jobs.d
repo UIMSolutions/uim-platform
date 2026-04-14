@@ -24,9 +24,9 @@ class ManageTrainingJobsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateTrainingJobRequest r) {
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
-    if (r.documentTypeid.isEmpty)
+    if (r.documentTypeId.isEmpty)
       return CommandResult(false, "", "Document type ID is required");
 
     // Count confirmed documents available for training
@@ -59,7 +59,7 @@ class ManageTrainingJobsUseCase : UIMUseCase {
   }
 
   CommandResult patch(PatchTrainingJobRequest r) {
-    if (r.trainingJobid.isEmpty)
+    if (r.trainingJobId.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
     auto existing = jobRepo.findById(r.trainingJobId, r.clientId);

@@ -121,7 +121,7 @@ class TransformationController {
       auto systemId = j.getString("systemId");
       auto inputAttributes = j.getString("inputAttributes");
 
-      if (systemid.isEmpty || inputAttributes.length == 0) {
+      if (systemId.isEmpty || inputAttributes.length == 0) {
         writeError(res, 400, "systemId and inputAttributes are required");
         return;
       }

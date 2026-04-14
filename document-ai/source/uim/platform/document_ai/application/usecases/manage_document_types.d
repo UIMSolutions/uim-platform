@@ -23,7 +23,7 @@ class ManageDocumentTypesUseCase : UIMUseCase {
   CommandResult create(CreateDocumentTypeRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Document type name is required");
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     DocumentType dt;
@@ -47,7 +47,7 @@ class ManageDocumentTypesUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateDocumentTypeRequest r) {
-    if (r.documentTypeid.isEmpty)
+    if (r.documentTypeId.isEmpty)
       return CommandResult(false, "", "Document type ID is required");
 
     auto existing = repo.findById(r.documentTypeId, r.clientId);

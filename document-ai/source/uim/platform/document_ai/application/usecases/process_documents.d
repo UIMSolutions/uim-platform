@@ -28,7 +28,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
   CommandResult upload(UploadDocumentRequest r) {
     if (r.fileName.length == 0)
       return CommandResult(false, "", "File name is required");
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     auto validation = validateFileType(r.fileName);
@@ -77,7 +77,7 @@ class ProcessDocumentsUseCase : UIMUseCase {
   }
 
   CommandResult confirm(ConfirmDocumentRequest r) {
-    if (r.documentid.isEmpty)
+    if (r.documentId.isEmpty)
       return CommandResult(false, "", "Document ID is required");
 
     auto doc = docRepo.findById(r.documentId, r.clientId);

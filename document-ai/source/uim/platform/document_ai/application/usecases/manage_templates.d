@@ -23,9 +23,9 @@ class ManageTemplatesUseCase : UIMUseCase {
   CommandResult create(CreateTemplateRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Template name is required");
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
-    if (r.schemaid.isEmpty)
+    if (r.schemaId.isEmpty)
       return CommandResult(false, "", "Schema ID is required");
 
     Template t;
@@ -68,7 +68,7 @@ class ManageTemplatesUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateTemplateRequest r) {
-    if (r.templateid.isEmpty)
+    if (r.templateId.isEmpty)
       return CommandResult(false, "", "Template ID is required");
 
     auto existing = repo.findById(r.templateId, r.clientId);

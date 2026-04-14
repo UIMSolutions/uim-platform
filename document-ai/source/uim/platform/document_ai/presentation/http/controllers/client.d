@@ -78,7 +78,7 @@ class ClientController : PlatformController {
       TenantId tenantId = req.getTenantId;
 
       auto c = uc.get_(tenantId, id);
-      if (c.clientid.isEmpty) {
+      if (c.clientId.isEmpty) {
         writeError(res, 404, "Client not found");
         return;
       }

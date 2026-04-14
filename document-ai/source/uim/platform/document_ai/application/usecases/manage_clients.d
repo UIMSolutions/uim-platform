@@ -54,7 +54,7 @@ class ManageClientsUseCase : UIMUseCase {
   }
 
   CommandResult patch(PatchClientRequest r) {
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     auto existing = repo.findById(r.clientId);

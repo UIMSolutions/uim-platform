@@ -32,9 +32,9 @@ class ManageProxySystemsUseCase : UIMUseCase {
       return CommandResult(false, "", "Tenant ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "System name is required");
-    if (req.sourceSystemid.isEmpty)
+    if (req.sourceSystemId.isEmpty)
       return CommandResult(false, "", "Source system ID is required");
-    if (req.targetSystemid.isEmpty)
+    if (req.targetSystemId.isEmpty)
       return CommandResult(false, "", "Target system ID is required");
 
     // Verify source and target exist

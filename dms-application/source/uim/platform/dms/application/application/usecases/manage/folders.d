@@ -30,7 +30,7 @@ class ManageFoldersUseCase : UIMUseCase {
   CommandResult createFolder(CreateFolderRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Folder name is required");
-    if (r.repositoryid.isEmpty)
+    if (r.repositoryId.isEmpty)
       return CommandResult(false, "", "Repository ID is required");
 
     // Validate repository exists

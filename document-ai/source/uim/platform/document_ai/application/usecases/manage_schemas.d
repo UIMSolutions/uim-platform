@@ -23,7 +23,7 @@ class ManageSchemasUseCase : UIMUseCase {
   CommandResult create(CreateSchemaRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Schema name is required");
-    if (r.clientid.isEmpty)
+    if (r.clientId.isEmpty)
       return CommandResult(false, "", "Client ID is required");
 
     Schema s;
@@ -74,7 +74,7 @@ class ManageSchemasUseCase : UIMUseCase {
   }
 
   CommandResult update(UpdateSchemaRequest r) {
-    if (r.schemaid.isEmpty)
+    if (r.schemaId.isEmpty)
       return CommandResult(false, "", "Schema ID is required");
 
     auto existing = repo.findById(r.schemaId, r.clientId);
