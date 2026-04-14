@@ -51,7 +51,7 @@ import uim.platform.job_scheduling;
 //     return default_;
 // }
 
-// string[] jsonStrArray(Json j, string key) {
+// string[] getStringArray(Json j, string key) {
 //     if (!j.isObject)
 //         return [];
 //     auto v = key in j;

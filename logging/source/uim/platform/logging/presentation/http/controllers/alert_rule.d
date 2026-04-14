@@ -126,7 +126,7 @@ class AlertRuleController : PlatformController {
       r.evaluationWindowSeconds = j.getInteger("evaluationWindowSeconds");
       r.severity = j.getString("severity");
       r.isEnabled = j.getBoolean("isEnabled", true);
-      r.channelIds = jsonStrArray(j, "channelIds");
+      r.channelIds = getStringArray(j, "channelIds");
 
       auto result = uc.update(id, r);
       if (result.success) {

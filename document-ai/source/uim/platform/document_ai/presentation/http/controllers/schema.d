@@ -40,7 +40,7 @@ class SchemaController : PlatformController {
       r.description = j.getString("description");
       r.headerFields = jsonFieldArray(j, "headerFields");
       r.lineItemFields = jsonFieldArray(j, "lineItemFields");
-      r.supportedLanguages = jsonStrArray(j, "supportedLanguages");
+      r.supportedLanguages = getStringArray(j, "supportedLanguages");
 
       auto result = uc.create(r);
       if (result.success) {

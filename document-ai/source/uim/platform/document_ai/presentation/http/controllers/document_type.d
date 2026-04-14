@@ -39,7 +39,7 @@ class DocumentTypeController : PlatformController {
       r.description = j.getString("description");
       r.category = j.getString("category");
       r.defaultSchemaId = j.getString("defaultSchemaId");
-      r.supportedFileTypes = jsonStrArray(j, "supportedFileTypes");
+      r.supportedFileTypes = getStringArray(j, "supportedFileTypes");
 
       auto result = uc.create(r);
       if (result.success) {

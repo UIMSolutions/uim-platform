@@ -60,7 +60,7 @@ string getString(Json j, string key) {
 }
 
 /// Read a string array from JSON.
-string[] jsonStrArray(Json j, string key) {
+string[] getStringArray(Json j, string key) {
   string[] result;
   if (j.type == Json.Type.object) {
     auto val = key in j;

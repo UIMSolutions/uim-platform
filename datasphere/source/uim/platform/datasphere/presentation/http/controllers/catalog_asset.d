@@ -40,7 +40,7 @@ class CatalogAssetController : PlatformController {
       r.assetType = j.getString("assetType");
       r.sourceObjectId = j.getString("sourceObjectId");
       r.owner = j.getString("owner");
-      r.glossaryTerms = jsonStrArray(j, "glossaryTerms");
+      r.glossaryTerms = getStringArray(j, "glossaryTerms");
 
       auto result = uc.create(r);
       if (result.success) {

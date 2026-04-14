@@ -32,7 +32,7 @@ class ApiClientController {
     try {
       auto j = req.json;
       auto createReq = CreateApiClientRequest(req.headers.get("X-Tenant-Id", ""),
-          j.getString("name"), j.getString("description"), jsonStrArray(j,
+          j.getString("name"), j.getString("description"), getStringArray(j,
             "scopes"), jsonLong(j, "expiresAt"),);
 
       auto result = useCase.createClient(createReq);

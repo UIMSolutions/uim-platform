@@ -53,9 +53,9 @@ class ApiRuleController : PlatformController {
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = j.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = jsonStrArray(j, "corsAllowOrigins");
-      r.corsAllowMethods = jsonStrArray(j, "corsAllowMethods");
-      r.corsAllowHeaders = jsonStrArray(j, "corsAllowHeaders");
+      r.corsAllowOrigins = getStringArray(j, "corsAllowOrigins");
+      r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
+      r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
       r.createdBy = req.headers.get("X-User-Id", "");
 
@@ -130,9 +130,9 @@ class ApiRuleController : PlatformController {
       r.tlsEnabled = j.getBoolean("tlsEnabled", true);
       r.tlsSecretName = j.getString("tlsSecretName");
       r.corsEnabled = j.getBoolean("corsEnabled");
-      r.corsAllowOrigins = jsonStrArray(j, "corsAllowOrigins");
-      r.corsAllowMethods = jsonStrArray(j, "corsAllowMethods");
-      r.corsAllowHeaders = jsonStrArray(j, "corsAllowHeaders");
+      r.corsAllowOrigins = getStringArray(j, "corsAllowOrigins");
+      r.corsAllowMethods = getStringArray(j, "corsAllowMethods");
+      r.corsAllowHeaders = getStringArray(j, "corsAllowHeaders");
       r.labels = jsonStrMap(j, "labels");
       r.rules = parseRuleEntries(j);
 
@@ -169,11 +169,11 @@ class ApiRuleController : PlatformController {
     foreach (item; *v) {
       ApiRuleEntryDto entry;
       entry.path = item.getString("path");
-      entry.methods = jsonStrArray(item, "methods");
+      entry.methods = getStringArray(item, "methods");
       entry.accessStrategy = item.getString("accessStrategy");
-      entry.requiredScopes = jsonStrArray(item, "requiredScopes");
-      entry.audiences = jsonStrArray(item, "audiences");
-      entry.trustedIssuers = jsonStrArray(item, "trustedIssuers");
+      entry.requiredScopes = getStringArray(item, "requiredScopes");
+      entry.audiences = getStringArray(item, "audiences");
+      entry.trustedIssuers = getStringArray(item, "trustedIssuers");
       entries ~= entry;
     }
     return entries;

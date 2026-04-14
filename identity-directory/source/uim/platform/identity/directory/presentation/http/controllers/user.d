@@ -40,7 +40,7 @@ class UserController {
         j.getString("preferredLanguage"), j.getString("locale"),
         j.getString("timezone"), j.getString("password"), parseEmails(j),
         parsePhoneNumbers(j), parseAddresses(j), [], // extendedAttributes
-        jsonStrArray(j, "schemas"),);
+        getStringArray(j, "schemas"),);
 
       auto result = useCase.createUser(createReq);
       auto response = Json.emptyObject;

@@ -40,7 +40,7 @@ class HDIContainerController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.appUser = j.getString("appUser");
-      r.grantedSchemas = jsonStrArray(j, "grantedSchemas");
+      r.grantedSchemas = getStringArray(j, "grantedSchemas");
 
       auto result = uc.create(r);
       if (result.success) {
@@ -122,7 +122,7 @@ class HDIContainerController : PlatformController {
       r.id = extractIdFromPath(req.requestURI.to!string);
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.grantedSchemas = jsonStrArray(j, "grantedSchemas");
+      r.grantedSchemas = getStringArray(j, "grantedSchemas");
 
       auto result = uc.update(r);
       if (result.success) {

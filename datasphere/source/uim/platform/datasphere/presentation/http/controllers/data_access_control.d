@@ -36,8 +36,8 @@ class DataAccessControlController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.criteriaType = j.getString("criteriaType");
-      r.targetViewIds = jsonStrArray(j, "targetViewIds");
-      r.assignedUserIds = jsonStrArray(j, "assignedUserIds");
+      r.targetViewIds = getStringArray(j, "targetViewIds");
+      r.assignedUserIds = getStringArray(j, "assignedUserIds");
 
       auto result = uc.create(r);
       if (result.success) {

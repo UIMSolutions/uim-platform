@@ -53,9 +53,9 @@ class EnvironmentController : PlatformController{
       r.autoScalerMax = j.getInteger("autoScalerMax");
       r.oidcIssuerUrl = j.getString("oidcIssuerUrl");
       r.oidcClientId = j.getString("oidcClientId");
-      r.oidcGroupsClaim = jsonStrArray(j, "oidcGroupsClaim");
-      r.oidcUsernameClaim = jsonStrArray(j, "oidcUsernameClaim");
-      r.administrators = jsonStrArray(j, "administrators");
+      r.oidcGroupsClaim = getStringArray(j, "oidcGroupsClaim");
+      r.oidcUsernameClaim = getStringArray(j, "oidcUsernameClaim");
+      r.administrators = getStringArray(j, "administrators");
       r.createdBy = req.headers.get("X-User-Id", "");
 
       auto result = uc.create(r);
@@ -124,7 +124,7 @@ class EnvironmentController : PlatformController{
       r.autoScalerMax = j.getInteger("autoScalerMax");
       r.oidcIssuerUrl = j.getString("oidcIssuerUrl");
       r.oidcClientId = j.getString("oidcClientId");
-      r.administrators = jsonStrArray(j, "administrators");
+      r.administrators = getStringArray(j, "administrators");
 
       auto result = uc.updateEnvironment(id, r);
       if (result.success)

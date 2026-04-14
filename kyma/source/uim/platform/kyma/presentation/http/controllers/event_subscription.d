@@ -49,7 +49,7 @@ class EventSubscriptionController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.source = j.getString("source");
-      r.eventTypes = jsonStrArray(j, "eventTypes");
+      r.eventTypes = getStringArray(j, "eventTypes");
       r.typeEncoding = j.getString("typeEncoding");
       r.sinkUrl = j.getString("sinkUrl");
       r.sinkServiceName = j.getString("sinkServiceName");
@@ -125,7 +125,7 @@ class EventSubscriptionController : PlatformController {
       auto j = req.json;
       UpdateEventSubscriptionRequest r;
       r.description = j.getString("description");
-      r.eventTypes = jsonStrArray(j, "eventTypes");
+      r.eventTypes = getStringArray(j, "eventTypes");
       r.sinkUrl = j.getString("sinkUrl");
       r.sinkServiceName = j.getString("sinkServiceName");
       r.sinkServicePort = j.getInteger("sinkServicePort");

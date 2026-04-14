@@ -59,7 +59,7 @@ double jsonDouble(Json j, string key, double default_ = 0.0) {
   return default_;
 }
 
-string[] jsonStrArray(Json j, string key) {
+string[] getStringArray(Json j, string key) {
   if (!j.isObject)
     return null;
 
