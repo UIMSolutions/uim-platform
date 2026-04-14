@@ -64,10 +64,10 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   CommandResult updateCertificate(CertificateId id, UpdateCertificateRequest req) {
-    auto c = repo.findById(id);
-    if (c.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Certificate not found");
 
+    auto c = repo.findById(id);
     if (req.description.length > 0)
       c.description = req.description;
     if (req.content.length > 0)
@@ -88,7 +88,7 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   Certificate getCertificate(string id) {
-    return repo.getCertificate(CertificateId(id));
+    return getCertificate(CertificateId(id));
   }
   
   Certificate getCertificate(CertificateId id) {
@@ -124,11 +124,11 @@ class ManageCertificatesUseCase : UIMUseCase {
   }
 
   CommandResult removeCertificate(CertificateId id) {
-    auto c = repo.findById(id);
-    if (c.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Certificate not found");
+
     repo.remove(id);
-    return CommandResult(true, c.id.toString, "");
+    return CommandResult(true, id.toString, "");
   }
 
   private static CertificateType parseCertType(string s) {

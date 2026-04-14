@@ -22,7 +22,7 @@ class ManageCorrectionRequestsUseCase : UIMUseCase {
   CommandResult createRequest(CreateCorrectionRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectid.isEmpty)
+    if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
     if (req.fieldName.length == 0)
       return CommandResult(false, "", "Field name is required");

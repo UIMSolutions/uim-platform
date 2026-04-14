@@ -23,9 +23,9 @@ class ManageRemoteTablesUseCase : UIMUseCase {
   CommandResult create(CreateRemoteTableRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Remote table name is required");
-    if (r.spaceid.isEmpty)
+    if (r.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
-    if (r.connectionid.isEmpty)
+    if (r.connectionId.isEmpty)
       return CommandResult(false, "", "Connection ID is required");
 
     import std.uuid : randomUUID;

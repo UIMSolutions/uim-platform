@@ -28,7 +28,7 @@ class ManageLegalGroundsUseCase : UIMUseCase {
   CommandResult createGround(CreateLegalGroundRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectid.isEmpty)
+    if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
     if (req.description.length == 0)
       return CommandResult(false, "", "Description is required");

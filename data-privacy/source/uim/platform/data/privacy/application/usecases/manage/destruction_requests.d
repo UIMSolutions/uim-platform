@@ -22,7 +22,7 @@ class ManageDestructionRequestsUseCase : UIMUseCase {
   CommandResult createRequest(CreateDestructionRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.dataSubjectid.isEmpty)
+    if (req.dataSubjectId.isEmpty)
       return CommandResult(false, "", "Data subject ID is required");
 
     auto subject = subjectRepo.findById(req.dataSubjectId, req.tenantId);

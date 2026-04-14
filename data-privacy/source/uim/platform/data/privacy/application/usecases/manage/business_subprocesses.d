@@ -20,7 +20,7 @@ class ManageBusinessSubprocessesUseCase : UIMUseCase {
   CommandResult createSubprocess(CreateBusinessSubprocessRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.parentProcessid.isEmpty)
+    if (req.parentProcessId.isEmpty)
       return CommandResult(false, "", "Parent process ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Name is required");
