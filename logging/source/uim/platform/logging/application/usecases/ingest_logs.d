@@ -75,9 +75,5 @@ class IngestLogsUseCase : UIMUseCase {
     return CommandResult(true, "", format("Ingested %d log entries", count));
   }
 
-  private static long clockSeconds() {
-    import core.time : MonoTime;
 
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

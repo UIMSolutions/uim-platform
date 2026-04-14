@@ -131,10 +131,6 @@ class ManageCertificatesUseCase : UIMUseCase {
     return CommandResult(true, c.id.toString, "");
   }
 
-  private static long clockSeconds() {
-    return Clock.currTime().toUnixTime();
-  }
-
   private static CertificateType parseCertType(string s) {
     switch (s) {
     case "truststore":

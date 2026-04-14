@@ -117,10 +117,4 @@ class ManageAlertsUseCase : UIMUseCase {
   size_t countByTenant(TenantId tenantId) {
     return repo.countByTenant(tenantId);
   }
-
-  private static long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

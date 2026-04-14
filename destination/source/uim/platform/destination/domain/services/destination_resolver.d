@@ -163,7 +163,4 @@ struct DestinationResolver {
     }
   }
 
-  private static long clockSeconds() {
-    return Clock.currTime().toUnixTime();
-  }
 }

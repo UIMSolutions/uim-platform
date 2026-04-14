@@ -91,10 +91,4 @@ class ManageLogStreamsUseCase : UIMUseCase {
       return LogSourceType.custom;
     }
   }
-
-  private static long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

@@ -131,10 +131,4 @@ class ManageNotificationChannelsUseCase : UIMUseCase {
       return ChannelState.active;
     }
   }
-
-  private static long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

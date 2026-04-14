@@ -148,9 +148,5 @@ class ManagePipelinesUseCase : UIMUseCase {
     }
   }
 
-  private static long clockSeconds() {
-    import core.time : MonoTime;
 
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

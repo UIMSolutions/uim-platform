@@ -1,4 +1,4 @@
- module uim.platform.service.interfaces.repository;
+module uim.platform.service.interfaces.repository;
 
 import uim.platform.service;
 
@@ -17,7 +17,7 @@ interface IBaseRepository(TEntity, TId) {
   void remove(TId id);
 }
 
-interface ITenantRepository(TEntity, TId) : IBaseRepositiry!(TEntity, TId) {
+interface ITenantRepository(TEntity, TId) : IBaseRepository!(TEntity, TId) {
   bool existsByTenant(TenantId tenantId);
   TEntity[] findByTenant(TenantId tenantId);
   size_t countByTenant(TenantId tenantId);

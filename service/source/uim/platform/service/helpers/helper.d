@@ -237,3 +237,13 @@ long clockSeconds() {
     // import std.datetime.systime : Clock;
     // return Clock.currTime().toUnixTime();
   // }
+
+    // private static long clockSeconds() {
+    // // import core.time : MonoTime;
+
+    // return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
+  // }
+
+    private static string formatLong(long v) {
+    return format("%d", v);
+  }

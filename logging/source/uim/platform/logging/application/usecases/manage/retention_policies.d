@@ -96,10 +96,4 @@ class ManageRetentionPoliciesUseCase : UIMUseCase {
       return DataType.all;
     }
   }
-
-  private static long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

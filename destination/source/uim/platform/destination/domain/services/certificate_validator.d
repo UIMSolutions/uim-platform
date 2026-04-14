@@ -70,11 +70,5 @@ struct CertificateValidator {
     return result;
   }
 
-  private static long clockSeconds() {
-    return Clock.currTime().toUnixTime();
-  }
 
-  private static string formatLong(long v) {
-    return format("%d", v);
-  }
 }

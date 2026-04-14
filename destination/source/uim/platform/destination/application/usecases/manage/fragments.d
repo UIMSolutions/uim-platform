@@ -56,44 +56,44 @@ class ManageFragmentsUseCase : UIMUseCase {
     f.modifiedAt = f.createdAt;
 
     repo.save(f);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, f.id.toString, "");
   }
 
   CommandResult updateFragment(FragmentId id, UpdateFragmentRequest req) {
-    auto f = repo.findById(id);
-    if (f.id.isEmpty)
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Fragment not found");
 
+    auto fragment = repo.findById(id);
     if (req.description.length > 0)
-      f.description = req.description;
+      fragment.description = req.description;
     if (req.url.length > 0)
-      f.url = req.url;
+      fragment.url = req.url;
     if (req.authenticationType.length > 0)
-      f.authenticationType = req.authenticationType;
+      fragment.authenticationType = req.authenticationType;
     if (req.proxyType.length > 0)
-      f.proxyType = req.proxyType;
+      fragment.proxyType = req.proxyType;
     if (req.user.length > 0)
-      f.user = req.user;
+      fragment.user = req.user;
     if (req.password.length > 0)
-      f.password = req.password;
+      fragment.password = req.password;
     if (req.clientId.length > 0)
-      f.clientId = req.clientId;
+      fragment.clientId = req.clientId;
     if (req.clientSecret.length > 0)
-      f.clientSecret = req.clientSecret;
+      fragment.clientSecret = req.clientSecret;
     if (req.tokenServiceUrl.length > 0)
-      f.tokenServiceUrl = req.tokenServiceUrl;
+      fragment.tokenServiceUrl = req.tokenServiceUrl;
     if (req.locationId.length > 0)
-      f.locationId = req.locationId;
+      fragment.locationId = req.locationId;
     if (req.keystoreId.length > 0)
-      f.keystoreId = req.keystoreId;
+      fragment.keystoreId = req.keystoreId;
     if (req.truststoreId.length > 0)
-      f.truststoreId = req.truststoreId;
+      fragment.truststoreId = req.truststoreId;
     if (req.properties.length > 0)
-      f.properties = req.properties;
-    f.modifiedAt = clockSeconds();
+      fragment.properties = req.properties;
+    fragment.modifiedAt = clockSeconds();
 
-    repo.update(f);
-    return CommandResult(true, id.value, "");
+    repo.update(fragment);
+    return CommandResult(true, fragment.id.toString, "");
   }
 
   DestinationFragment getFragment(FragmentId id) {
@@ -105,15 +105,11 @@ class ManageFragmentsUseCase : UIMUseCase {
   }
 
   CommandResult removeFragment(FragmentId id) {
-    auto f = repo.findById(id);
-    if (f.id.isEmpty)
+    if (!repo.findById(id))
       return CommandResult(false, "", "Fragment not found");
+
     repo.remove(id);
     return CommandResult(true, id.value, "");
-  }
-
-  private static long clockSeconds() {
-    return Clock.currTime().toUnixTime();
   }
 
   private static DestinationLevel parseLevel(string s) {

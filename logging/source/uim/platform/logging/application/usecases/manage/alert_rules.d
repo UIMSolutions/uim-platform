@@ -171,10 +171,4 @@ class ManageAlertRulesUseCase : UIMUseCase {
       return AlertSeverity.warning;
     }
   }
-
-  private static long clockSeconds() {
-    import core.time : MonoTime;
-
-    return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  }
 }

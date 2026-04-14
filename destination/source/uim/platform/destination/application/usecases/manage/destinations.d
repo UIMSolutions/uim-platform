@@ -83,7 +83,7 @@ class ManageDestinationsUseCase : UIMUseCase {
     d.modifiedAt = d.createdAt;
 
     repo.save(d);
-    return CommandResult(true, id.toString, "");
+    return CommandResult(true, d.id.toString, "");
   }
 
   CommandResult updateDestination(DestinationId id, UpdateDestinationRequest req) {
@@ -164,10 +164,6 @@ class ManageDestinationsUseCase : UIMUseCase {
       return CommandResult(false, "", "Destination not found");
     repo.remove(id);
     return CommandResult(true, id.value, "");
-  }
-
-  private static long clockSeconds() {
-    return Clock.currTime().toUnixTime();
   }
 
   private static DestinationType parseDestType(string s) {
