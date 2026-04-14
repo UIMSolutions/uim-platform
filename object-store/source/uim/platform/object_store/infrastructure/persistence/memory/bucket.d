@@ -5,27 +5,40 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.bucket;
 
-import uim.platform.object_store.domain.types;
-import uim.platform.object_store.domain.entities.bucket;
-import uim.platform.object_store.domain.ports.repositories.bucket;
+// import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.bucket;
+// import uim.platform.object_store.domain.ports.repositories.bucket;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryBucketRepository : BucketRepository {
   private Bucket[BucketId] store;
 
-  Bucket findById(BucketId id) {
-    if (auto p = id in store)
-      return *p;
-    return null;
+  bool existsById(BucketId id) {
+    return (id in store) ? true : false;
   }
 
+  Bucket findById(BucketId id) {
+    return existsById(id) ? store[id] : Bucket.init;
+  }
+
+  bool existsByName(TenantId tenantId, string name) {
+    foreach (e; store.byValue())
+      if (e.tenantId == tenantId && e.name == name)
+        return true;
+    return false;
+  }
+  
   Bucket findByName(TenantId tenantId, string name) {
     foreach (e; store.byValue())
       if (e.tenantId == tenantId && e.name == name)
         return e;
-    return null;
+    return Bucket.init;
   }
 
   Bucket[] findByTenant(TenantId tenantId) {

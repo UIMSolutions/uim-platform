@@ -5,14 +5,21 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.domain.ports.repositories.object_version;
 
-import uim.platform.object_store.domain.entities.object_version;
-import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.object_version;
+// import uim.platform.object_store.domain.types;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - object version persistence.
 interface ObjectVersionRepository {
+  bool existsById(ObjectVersionId id);
   ObjectVersion findById(ObjectVersionId id);
+
   ObjectVersion[] findByObject(ObjectId objectId);
   ObjectVersion findLatest(ObjectId objectId);
+  
   void save(ObjectVersion ver);
   void remove(ObjectVersionId id);
   void removeByObject(ObjectId objectId);

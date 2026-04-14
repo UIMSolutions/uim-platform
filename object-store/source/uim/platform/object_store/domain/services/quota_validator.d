@@ -5,8 +5,12 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.domain.services.quota_validator;
 
-import uim.platform.object_store.domain.entities.bucket;
+// import uim.platform.object_store.domain.entities.bucket;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service: validates storage quota constraints.
 struct QuotaValidationResult {
   bool valid;

@@ -1,2 +1,1 @@
-module uim.platform.monitoring.application;
-
+module uim.platform.object_store.infrastructure.persistence.mongo;

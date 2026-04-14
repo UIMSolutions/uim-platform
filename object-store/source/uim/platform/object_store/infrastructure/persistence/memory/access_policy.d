@@ -5,20 +5,26 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.access_policy;
 
-import uim.platform.object_store.domain.types;
-import uim.platform.object_store.domain.entities.access_policy;
-import uim.platform.object_store.domain.ports.repositories.access_policy;
+// import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.access_policy;
+// import uim.platform.object_store.domain.ports.repositories.access_policy;
 
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryAccessPolicyRepository : AccessPolicyRepository {
   private AccessPolicy[AccessPolicyId] store;
 
+  bool existsById(AccessPolicyId id) {
+    return (id in store) ? true : false;
+  }
+
   AccessPolicy findById(AccessPolicyId id) {
-    if (auto p = id in store)
-      return *p;
-    return null;
+    return existsById(id) ? store[id] : AccessPolicy.init;
   }
 
   AccessPolicy[] findByBucket(BucketId bucketId) {

@@ -4,7 +4,11 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.config;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Service configuration.
 struct AppConfig {
   string host = "0.0.0.0";

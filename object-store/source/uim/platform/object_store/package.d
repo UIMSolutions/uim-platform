@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.object_store;
+
+public {
+  import uim.platform.object_store.domain;
+  import uim.platform.object_store.infrastructure;
+  import uim.platform.object_store.presentation;
+}

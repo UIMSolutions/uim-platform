@@ -5,13 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.domain.ports.repositories.lifecycle_rule;
 
-import uim.platform.object_store.domain.entities.lifecycle_rule;
-import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.lifecycle_rule;
+// import uim.platform.object_store.domain.types;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - lifecycle rule persistence.
 interface LifecycleRuleRepository {
+  bool existsById(LifecycleRuleId id);
   LifecycleRule findById(LifecycleRuleId id);
+
   LifecycleRule[] findByBucket(BucketId bucketId);
+  
   void save(LifecycleRule rule);
   void update(LifecycleRule rule);
   void remove(LifecycleRuleId id);

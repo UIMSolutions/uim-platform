@@ -19,21 +19,30 @@ mixin(ShowModule!());
 class MemoryObjectVersionRepository : ObjectVersionRepository {
   private ObjectVersion[ObjectVersionId] store;
 
-  ObjectVersion findById(ObjectVersionId id) {
-    if (auto p = id in store)
-      return *p;
-    return null;
+  bool existsById(ObjectVersionId id) {
+    return (id in store) ? true : false;
   }
 
-  ObjectVersion[] findByObject(ObjectId objectId) {
-    return store.byValue().filter!(e => e.objectId == objectId).array;
+  ObjectVersion findById(ObjectVersionId id) {
+    return existsById(id) ? store[id] : ObjectVersion.init;
+  }
+
+  bool existsLatest(ObjectId objectId) {
+    foreach (e; store.byValue())
+      if (e.objectId == objectId && e.isLatest)
+        return true;
+    return false;
   }
 
   ObjectVersion findLatest(ObjectId objectId) {
     foreach (e; store.byValue())
       if (e.objectId == objectId && e.isLatest)
         return e;
-    return null;
+    return ObjectVersion.init;
+  }
+
+  ObjectVersion[] findByObject(ObjectId objectId) {
+    return store.byValue().filter!(e => e.objectId == objectId).array;
   }
 
   void save(ObjectVersion entity) {

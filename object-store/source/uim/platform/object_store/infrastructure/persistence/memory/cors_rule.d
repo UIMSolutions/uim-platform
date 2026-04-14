@@ -19,10 +19,12 @@ mixin(ShowModule!());
 class MemoryCorsRuleRepository : CorsRuleRepository {
   private CorsRule[CorsRuleId] store;
 
+  bool existsById(CorsRuleId id) {
+    return (id in store) ? true : false;
+  }
+
   CorsRule findById(CorsRuleId id) {
-    if (auto p = id in store)
-      return *p;
-    return null;
+    return existsById(id) ? store[id] : CorsRule.init;
   }
 
   CorsRule[] findByBucket(BucketId bucketId) {

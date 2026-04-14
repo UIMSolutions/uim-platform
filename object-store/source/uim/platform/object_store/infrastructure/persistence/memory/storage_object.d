@@ -5,27 +5,37 @@
 *****************************************************************************************************************/
 module uim.platform.object_store.infrastructure.persistence.memory.storage_object;
 
-import uim.platform.object_store.domain.types;
-import uim.platform.object_store.domain.entities.storage_object;
-import uim.platform.object_store.domain.ports.repositories.storage_object;
+// import uim.platform.object_store.domain.types;
+// import uim.platform.object_store.domain.entities.storage_object;
+// import uim.platform.object_store.domain.ports.repositories.storage_object;
 
 // import std.algorithm : filter, startsWith;
 // import std.array : array;
+import uim.platform.object_store;
 
+mixin(ShowModule!());
+
+@safe:
 class MemoryStorageObjectRepository : StorageObjectRepository {
   private StorageObject[ObjectId] store;
 
+  bool existsById(ObjectId id) {
+    return (id in store) ? true : false;
+  }
+
   StorageObject findById(ObjectId id) {
-    if (auto p = id in store)
-      return *p;
-    return null;
+    return existsById(id) ? store[id] : StorageObject.init;
+  }
+
+  bool existsByKey(BucketId bucketId, string key) {
+    return store.byValue().any!(e => e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active);
   }
 
   StorageObject findByKey(BucketId bucketId, string key) {
     foreach (e; store.byValue())
       if (e.bucketId == bucketId && e.key == key && e.status == ObjectStatus.active)
         return e;
-    return null;
+    return StorageObject.init;
   }
 
   StorageObject[] findByBucket(BucketId bucketId) {
