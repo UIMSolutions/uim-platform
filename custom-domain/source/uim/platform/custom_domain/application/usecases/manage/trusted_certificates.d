@@ -23,7 +23,7 @@ class ManageTrustedCertificatesUseCase : UIMUseCase {
             return CommandResult(false, "", "ID is required");
         if (r.certificatePem.length == 0)
             return CommandResult(false, "", "Certificate PEM is required");
-        if (r.customDomainid.isEmpty)
+        if (r.customDomainId.isEmpty)
             return CommandResult(false, "", "Custom domain ID is required");
 
         auto existing = repo.findById(r.id);

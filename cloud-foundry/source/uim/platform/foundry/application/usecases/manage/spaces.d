@@ -28,7 +28,7 @@ class ManageSpacesUseCase : UIMUseCase {
   CommandResult createSpace(CreateSpaceRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.orgid.isEmpty)
+    if (req.orgId.isEmpty)
       return CommandResult(false, "", "Organization ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Space name is required");

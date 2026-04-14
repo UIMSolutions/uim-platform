@@ -28,7 +28,7 @@ class ManageAppsUseCase : UIMUseCase {
   CommandResult createApp(CreateAppRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.spaceid.isEmpty)
+    if (req.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Application name is required");

@@ -31,7 +31,7 @@ class ManageServicesUseCase : UIMUseCase {
   CommandResult createInstance(CreateServiceInstanceRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.spaceid.isEmpty)
+    if (req.spaceId.isEmpty)
       return CommandResult(false, "", "Space ID is required");
     if (req.name.length == 0)
       return CommandResult(false, "", "Service instance name is required");

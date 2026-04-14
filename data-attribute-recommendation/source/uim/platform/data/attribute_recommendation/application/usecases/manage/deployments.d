@@ -31,7 +31,7 @@ class ManageDeploymentsUseCase : UIMUseCase {
   CommandResult createDeployment(CreateDeploymentRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.trainingJobid.isEmpty)
+    if (req.trainingJobId.isEmpty)
       return CommandResult(false, "", "Training job ID is required");
 
     // Verify training job completed successfully

@@ -57,7 +57,7 @@ class MonitoringController : PlatformController {
       auto id = extractIdFromPath(req.requestURI);
       TenantId tenantId = req.getTenantId;
       auto job = uc.getTrainingJob(tenantId, id);
-      if (job.jobid.isEmpty) {
+      if (job.jobId.isEmpty) {
         writeError(res, 404, "Training job not found");
         return;
       }

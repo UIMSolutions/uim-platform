@@ -21,7 +21,7 @@ class ManageCertificatesUseCase : UIMUseCase {
     CommandResult create(CreateCertificateRequest r) {
         if (r.id.isEmpty)
             return CommandResult(false, "", "ID is required");
-        if (r.keyid.isEmpty)
+        if (r.keyId.isEmpty)
             return CommandResult(false, "", "Key ID is required");
 
         auto existing = repo.findById(r.id);

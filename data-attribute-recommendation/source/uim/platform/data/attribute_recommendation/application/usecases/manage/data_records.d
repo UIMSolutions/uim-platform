@@ -27,7 +27,7 @@ class ManageDataRecordsUseCase : UIMUseCase {
   CommandResult createRecord(CreateDataRecordRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.datasetid.isEmpty)
+    if (req.datasetId.isEmpty)
       return CommandResult(false, "", "Dataset ID is required");
     if (req.attributes.length == 0)
       return CommandResult(false, "", "Attributes are required");
