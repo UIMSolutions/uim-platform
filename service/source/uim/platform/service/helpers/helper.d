@@ -233,17 +233,17 @@ long clockSeconds() {
   return MonoTime.currTime.ticks / 10_000_000;
 }
 
-  // private static long clockSeconds() {
-    // import std.datetime.systime : Clock;
-    // return Clock.currTime().toUnixTime();
-  // }
+// private static long clockSeconds() {
+// import std.datetime.systime : Clock;
+// return Clock.currTime().toUnixTime();
+// }
 
-    // private static long clockSeconds() {
-    // // import core.time : MonoTime;
+// private static long clockSeconds() {
+// // import core.time : MonoTime;
 
-    // return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
-  // }
+// return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
+// }
 
-    string formatLong(long v) {
-    return format("%d", v);
-  }
+string formatLong(long v) {
+  return format("%d", v);
+}
