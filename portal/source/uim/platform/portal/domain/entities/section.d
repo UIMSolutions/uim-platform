@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 @safe:
 /// A section within a page — groups tiles together.
-struct Section {
+struct PortalSection {
   SectionId id;
   PageId pageId;
   TenantId tenantId;

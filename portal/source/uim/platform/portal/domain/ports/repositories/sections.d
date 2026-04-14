@@ -11,11 +11,11 @@ import uim.platform.portal.domain.types;
 /// Port: outgoing — section persistence.
 interface SectionRepository {
   bool existsById(SectionId id);
-  Section findById(SectionId id);
+  PortalSection findById(SectionId id);
 
-  Section[] findByPage(PageId pageId);
-  
-  void save(Section section);
-  void update(Section section);
+  PortalSection[] findByPage(PageId pageId);
+
+  void save(PortalSection section);
+  void update(PortalSection section);
   void remove(SectionId id);
 }

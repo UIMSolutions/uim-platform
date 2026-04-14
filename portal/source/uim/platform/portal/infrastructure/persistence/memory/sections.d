@@ -15,16 +15,16 @@ mixin(ShowModule!());
 
 @safe:
 class MemorySectionRepository : SectionRepository {
-  private Section[SectionId] store;
+  private PortalSection[SectionId] store;
 
-  Section findById(SectionId id) {
+  PortalSection findById(SectionId id) {
     if (auto p = id in store)
       return *p;
-    return Section.init;
+    return PortalSection.init;
   }
 
-  Section[] findByPage(PageId pageId) {
-    Section[] result;
+  PortalSection[] findByPage(PageId pageId) {
+    PortalSection[] result;
     foreach (s; store.byValue()) {
       if (s.pageId == pageId)
         result ~= s;
@@ -32,11 +32,11 @@ class MemorySectionRepository : SectionRepository {
     return result;
   }
 
-  void save(Section section) {
+  void save(PortalSection section) {
     store[section.id] = section;
   }
 
-  void update(Section section) {
+  void update(PortalSection section) {
     store[section.id] = section;
   }
 

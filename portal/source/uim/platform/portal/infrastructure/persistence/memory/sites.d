@@ -69,12 +69,7 @@ class MemorySiteRepository : SiteRepository {
     store.remove(id);
   }
 
-  usize_t countByTenant(TenantId tenantId) {
-    usize_t count;
-    foreach (s; store.byValue()) {
-      if (s.tenantId == tenantId)
-        count++;
-    }
-    return count;
+  size_t countByTenant(TenantId tenantId) {
+    return store.byValue().filter!(s => s.tenantId == tenantId).count;
   }
 }

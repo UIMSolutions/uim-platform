@@ -37,7 +37,7 @@ class ManageSectionsUseCase : UIMUseCase {
 
     auto now = Clock.currStdTime();
     auto id = randomUUID();
-    auto section = Section(id, req.pageId, req.tenantId, req.title, [], // tileIds
+    auto section = PortalSection(id, req.pageId, req.tenantId, req.title, [], // tileIds
       req.sortOrder, req.visible, req.columns > 0 ? req.columns : 3, now, now,);
     sectionRepo.save(section);
 
@@ -48,17 +48,17 @@ class ManageSectionsUseCase : UIMUseCase {
     return SectionResponse(id, "");
   }
 
-  Section getSection(SectionId id) {
+  PortalSection getSection(SectionId id) {
     return sectionRepo.findById(id);
   }
 
-  Section[] listSections(PageId pageId) {
+  PortalSection[] listSections(PageId pageId) {
     return sectionRepo.findByPage(pageId);
   }
 
   string updateSection(UpdateSectionRequest req) {
     auto section = sectionRepo.findById(req.sectionId);
-    if (section == Section.init)
+    if (section == PortalSection.init)
       return "Section not found";
 
     section.title = req.title.length > 0 ? req.title : section.title;
@@ -72,7 +72,7 @@ class ManageSectionsUseCase : UIMUseCase {
 
   string deleteSection(SectionId sectionId, PageId pageId) {
     auto section = sectionRepo.findById(sectionId);
-    if (section == Section.init)
+    if (section == PortalSection.init)
       return "Section not found";
 
     sectionRepo.remove(sectionId);

@@ -29,6 +29,6 @@ struct ResolvedPage {
 }
 
 struct ResolvedSection {
-  Section section;
+  PortalSection section;
   Tile[] tiles;
 }

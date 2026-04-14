@@ -12,6 +12,8 @@ module uim.platform.portal.application.usecases.manage.themes;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
+import uim.platform.portal.application.dto;
+import uim.platform.portal.domain.types;
 import uim.platform.portal;
 
 mixin(ShowModule!());

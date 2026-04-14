@@ -72,8 +72,8 @@ class SectionController : PlatformController {
     try {
       auto sectionId = extractIdFromPath(req.requestURI);
       auto section = useCase.getSection(sectionId);
-      if (section == Section.init) {
-        writeApiError(res, 404, "Section not found");
+      if (section == PortalSection.init) {
+        writeApiError(res, 404, "PortalSection not found");
         return;
       }
       res.writeJsonBody(toJsonValue(section), 200);
