@@ -9,10 +9,12 @@ module app;
 // import vibe.http.router;
 // import vibe.core.core : runApplication;
 
-import uim.platform.content_agent.infrastructure.config;
-import uim.platform.content_agent.infrastructure.container;
+// import uim.platform.content_agent.infrastructure.config;
+// import uim.platform.content_agent.infrastructure.container;
+import uim.platform.content_agent;
 
-// import std.stdio : writefln;
+mixin(ShowModule!());
+
 @safe:
 
 version (unittest) {
@@ -62,3 +64,4 @@ else {
 
     runApplication();
   }
+}

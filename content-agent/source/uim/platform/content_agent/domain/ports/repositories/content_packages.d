@@ -5,15 +5,23 @@
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports.repositories.content_packages;
 
-import uim.platform.content_agent.domain.entities.content_package;
-import uim.platform.content_agent.domain.types;
+// import uim.platform.content_agent.domain.entities.content_package;
+// import uim.platform.content_agent.domain.types;
+import uim.platform.content_agent;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - content package persistence.
 interface ContentPackageRepository {
+  bool existsById(ContentPackageId id);
   ContentPackage findById(ContentPackageId id);
+
+  bool existsByName(TenantId tenantId, string name);
+  ContentPackage findByName(TenantId tenantId, string name);
+
   ContentPackage[] findByTenant(TenantId tenantId);
   ContentPackage[] findByStatus(TenantId tenantId, PackageStatus status);
-  ContentPackage findByName(TenantId tenantId, string name);
   void save(ContentPackage pkg);
   void update(ContentPackage pkg);
   void remove(ContentPackageId id);

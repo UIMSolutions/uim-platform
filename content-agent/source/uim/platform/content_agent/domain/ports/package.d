@@ -4,3 +4,7 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.content_agent.domain.ports;
+
+public {
+    import uim.platform.content_agent.domain.ports.repositories;
+}

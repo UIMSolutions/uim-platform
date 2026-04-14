@@ -10,6 +10,7 @@ public {
 
     import uim.platform.content_agent.application;
     import uim.platform.content_agent.domain;
+    import uim.platform.content_agent.helpers;
     import uim.platform.content_agent.infrastructure;
     import uim.platform.content_agent.presentation;
 }
