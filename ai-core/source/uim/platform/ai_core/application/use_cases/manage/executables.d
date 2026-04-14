@@ -20,9 +20,9 @@ class ManageExecutablesUseCase : UIMUseCase {
     CommandResult create(CreateExecutableRequest r) {
         if (r.id.isEmpty)
             return CommandResult(false, "", "Executable ID is required");
-        if (r.scenarioid.isEmpty)
+        if (r.scenarioId.isEmpty)
             return CommandResult(false, "", "Scenario ID is required");
-        if (r.resourceGroupid.isEmpty)
+        if (r.resourceGroupId.isEmpty)
             return CommandResult(false, "", "Resource group ID is required");
 
         auto existing = repo.findById(r.id, r.resourceGroupId);

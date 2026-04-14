@@ -27,7 +27,7 @@ class ManageTransportRequestsUseCase : UIMUseCase {
       return CommandResult(false, "", "Transport request description is required");
     if (req.owner.length == 0)
       return CommandResult(false, "", "Owner is required");
-    if (req.sourceSystemid.isEmpty)
+    if (req.sourceSystemId.isEmpty)
       return CommandResult(false, "", "Source system ID is required");
 
     TransportRequest tr;

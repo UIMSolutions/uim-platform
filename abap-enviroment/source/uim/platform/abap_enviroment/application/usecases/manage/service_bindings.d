@@ -24,7 +24,7 @@ class ManageServiceBindingsUseCase : UIMUseCase {
   CommandResult createBinding(CreateServiceBindingRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Service binding name is required");
-    if (req.systemInstanceid.isEmpty)
+    if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
     ServiceBinding binding;

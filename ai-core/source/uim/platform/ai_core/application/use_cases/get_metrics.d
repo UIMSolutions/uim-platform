@@ -21,9 +21,9 @@ class GetMetricsUseCase : UIMUseCase {
   }
 
   CommandResult patch(PatchMetricsRequest r) {
-    if (r.executionid.isEmpty)
+    if (r.executionId.isEmpty)
       return CommandResult(false, "", "Execution ID is required");
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     Metric m;

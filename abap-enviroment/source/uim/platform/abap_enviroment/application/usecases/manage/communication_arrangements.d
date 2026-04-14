@@ -24,9 +24,9 @@ class ManageCommunicationArrangementsUseCase : UIMUseCase {
   CommandResult createArrangement(CreateCommunicationArrangementRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Arrangement name is required");
-    if (req.scenarioid.isEmpty)
+    if (req.scenarioId.isEmpty)
       return CommandResult(false, "", "Communication scenario ID is required");
-    if (req.systemInstanceid.isEmpty)
+    if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
     CommunicationArrangement arr;

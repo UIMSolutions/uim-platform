@@ -25,7 +25,7 @@ class ManageScenariosUseCase : UIMUseCase {
     if (err.length > 0)
       return CommandResult(false, "", err);
 
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     auto existing = repo.findById(r.id, r.resourceGroupId);

@@ -23,11 +23,11 @@ class ManageConfigurationsUseCase : UIMUseCase {
   CommandResult create(CreateConfigurationRequest r) {
     if (r.name.length == 0)
       return CommandResult(false, "", "Configuration name is required");
-    if (r.scenarioid.isEmpty)
+    if (r.scenarioId.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
-    if (r.executableid.isEmpty)
+    if (r.executableId.isEmpty)
       return CommandResult(false, "", "Executable ID is required");
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     Configuration c;

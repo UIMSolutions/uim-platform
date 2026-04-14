@@ -25,9 +25,9 @@ class ManageArtifactsUseCase : UIMUseCase {
       return CommandResult(false, "", "Artifact name is required");
     if (r.kind.length == 0)
       return CommandResult(false, "", "Artifact kind is required");
-    if (r.scenarioid.isEmpty)
+    if (r.scenarioId.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     Artifact a;

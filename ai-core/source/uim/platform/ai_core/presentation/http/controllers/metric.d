@@ -54,7 +54,7 @@ class MetricController : PlatformController {
       auto rgId = req.headers.get("AI-Resource-Group", "");
       auto execId = req.params.get("executionId", "");
 
-      if (execid.isEmpty) {
+      if (execId.isEmpty) {
         writeError(res, 400, "executionId query parameter is required");
         return;
       }

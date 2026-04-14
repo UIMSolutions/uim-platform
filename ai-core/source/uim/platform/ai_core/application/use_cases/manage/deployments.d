@@ -25,9 +25,9 @@ class ManageDeploymentsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateDeploymentRequest r) {
-    if (r.configurationid.isEmpty)
+    if (r.configurationId.isEmpty)
       return CommandResult(false, "", "Configuration ID is required");
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
 
     auto conf = confRepo.findById(r.configurationId, r.resourceGroupId);

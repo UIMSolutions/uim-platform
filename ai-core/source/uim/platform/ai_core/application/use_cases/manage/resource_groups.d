@@ -18,7 +18,7 @@ class ManageResourceGroupsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateResourceGroupRequest r) {
-    if (r.resourceGroupid.isEmpty)
+    if (r.resourceGroupId.isEmpty)
       return CommandResult(false, "", "Resource group ID is required");
     if (r.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");

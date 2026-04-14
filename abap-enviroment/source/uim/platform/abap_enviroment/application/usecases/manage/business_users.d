@@ -29,7 +29,7 @@ class ManageBusinessUsersUseCase : UIMUseCase {
       return CommandResult(false, "", "Username is required");
     if (req.email.length == 0)
       return CommandResult(false, "", "Email is required");
-    if (req.systemInstanceid.isEmpty)
+    if (req.systemInstanceId.isEmpty)
       return CommandResult(false, "", "System instance ID is required");
 
     auto existing = repo.findByUsername(req.systemInstanceId, req.username);
