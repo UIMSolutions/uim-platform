@@ -6,7 +6,7 @@
 module uim.platform.dms.application.infrastructure.persistence.memory.repository;
 
 // import uim.platform.dms.application.domain.entities.repository;
-// import uim.platform.dms.application.domain.ports.repositories.repositorys;
+// import uim.platform.dms.application.domain.ports.repositoriess;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;

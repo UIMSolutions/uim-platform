@@ -11,7 +11,7 @@ public {
   import uim.platform.dms.application.domain.ports.repositories.favorites;
   import uim.platform.dms.application.domain.ports.repositories.folders;
   import uim.platform.dms.application.domain.ports.repositories.permissions;
-  import uim.platform.dms.application.domain.ports.repositories.repositorys;
+  import uim.platform.dms.application.domain.ports.repositoriess;
   import uim.platform.dms.application.domain.ports.repositories.shares;
 
   // import uim.platform.dms.application.domain.ports.repositories.versions;

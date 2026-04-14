@@ -15,7 +15,7 @@ module uim.platform.dms.application.application.usecases.browse_content;
 // import uim.platform.dms.application.domain.ports.repositories.documents;
 // import uim.platform.dms.application.domain.ports.repositories.folders;
 // import uim.platform.dms.application.domain.ports.repositories.favorites;
-// import uim.platform.dms.application.domain.ports.repositories.repositorys;
+// import uim.platform.dms.application.domain.ports.repositoriess;
 // import uim.platform.dms.application.domain.types;
 
 import uim.platform.dms.application;
