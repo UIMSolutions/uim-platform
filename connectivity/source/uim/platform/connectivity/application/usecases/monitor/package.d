@@ -6,5 +6,5 @@
 module uim.platform.connectivity.application.usecases.monitor;
 
 public {
-  import uim.platform.connectivity.application.usecases.connectivity;
+  import uim.platform.connectivity.application.usecases.monitor.connectivity;
 }

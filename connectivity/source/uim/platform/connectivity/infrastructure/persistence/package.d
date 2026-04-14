@@ -4,3 +4,9 @@
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
 module uim.platform.connectivity.infrastructure.persistence;
+
+public {
+    import uim.platform.connectivity.infrastructure.persistence.files;
+    import uim.platform.connectivity.infrastructure.persistence.memory;
+    import uim.platform.connectivity.infrastructure.persistence.mongo;
+}

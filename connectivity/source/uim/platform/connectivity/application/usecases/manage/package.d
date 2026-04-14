@@ -6,6 +6,9 @@
 module uim.platform.connectivity.application.usecases.manage;
 
 public {
-  import uim.platform.connectivity.application.usecases.manage;
-  import uim.platform.connectivity.application.usecases.monitor;
+  import uim.platform.connectivity.application.usecases.manage.access_rules;
+  import uim.platform.connectivity.application.usecases.manage.certificates;
+  import uim.platform.connectivity.application.usecases.manage.channels;
+  import uim.platform.connectivity.application.usecases.manage.connectors;
+  import uim.platform.connectivity.application.usecases.manage.destinations;
 }

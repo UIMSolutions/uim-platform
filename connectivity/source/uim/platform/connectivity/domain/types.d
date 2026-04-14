@@ -79,3 +79,13 @@ struct SubaccountId {
 
   mixin DomainId;
 }
+
+struct SourceId {
+  string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}

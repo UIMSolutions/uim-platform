@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.connectivity.domain.ports.repositories.destinations;
 
-import uim.platform.connectivity.domain.entities.destination;
-import uim.platform.connectivity.domain.types;
+// import uim.platform.connectivity.domain.entities.destination;
+// import uim.platform.connectivity.domain.types;
+import uim.platform.connectivity;
 
+mixin(ShowModule!());
+
+@safe:
 /// Port: outgoing - destination persistence.
 interface DestinationRepository : ITenantRepository!(Destination, DestinationId) {
   bool existsByName(TenantId tenantId, string name);

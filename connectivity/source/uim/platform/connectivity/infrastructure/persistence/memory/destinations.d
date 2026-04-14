@@ -3,7 +3,7 @@
 * License: Subject to the terms of the Apache 2.0 license, as written in the included LICENSE.txt file. 
 * Authors: Ozan Nurettin Süel (aka UI-Manufaktur UG *R.I.P*)
 *****************************************************************************************************************/
-module uim.platform.connectivity.infrastructure.persistence.memory.destination;
+module uim.platform.connectivity.infrastructure.persistence.memory.destinations;
 
 // import uim.platform.connectivity.domain.types;
 // import uim.platform.connectivity.domain.entities.destination;
@@ -19,17 +19,32 @@ mixin(ShowModule!());
 class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
+  bool existsById(DestinationId id) {
+    return (id in store) ? true : false;
+  }
+
+  bool existsById(TenantId tenantId, DestinationId id) {
+    return (id in store) && (store[id].tenantId == tenantId);
+  }
+
+  bool existsByTenant(TenantId tenantId) {
+    return store.byValue().any!(e => e.tenantId == tenantId);
+  }
+
+  long countByTenant(TenantId tenantId) {
+    return store.byValue().filter!(e => e.tenantId == tenantId).length;
+  }
+
   Destination findById(DestinationId id) {
-    if (auto p = id in store)
-      return *p;
-    return Destination.init;
+    return existsById(id) ? store[id] : Destination.init;
   }
 
   Destination findByName(TenantId tenantId, string name) {
-    foreach (e; store.byValue())
-      if (e.tenantId == tenantId && e.name == name)
+    foreach (e; findByTenant(tenantId)) {
+      if (e.name == name)
         return e;
-    return Destination.init;
+      return Destination.init;
+    }
   }
 
   Destination[] findByTenant(TenantId tenantId) {
