@@ -31,7 +31,7 @@ class ManageObjectsUseCase : UIMUseCase {
   }
 
   CommandResult createObject(CreateObjectRequest req) {
-    if (req.bucketid.isEmpty)
+    if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
     if (req.key.length == 0)
       return CommandResult(false, "", "Object key is required");

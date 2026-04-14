@@ -20,7 +20,7 @@ class ManageDataSubjectRequestsUseCase : UIMUseCase {
 
     CommandResult create(CreateDataSubjectRequestRequest r) {
         if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectid.isEmpty) return CommandResult(false, "", "Data subject ID is required");
+        if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
         if (r.requestType.length == 0) return CommandResult(false, "", "Request type is required");
 
         import std.conv : to;

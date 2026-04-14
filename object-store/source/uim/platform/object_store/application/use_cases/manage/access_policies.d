@@ -24,7 +24,7 @@ class ManageAccessPoliciesUseCase : UIMUseCase {
   CommandResult createPolicy(CreateAccessPolicyRequest req) {
     if (req.name.length == 0)
       return CommandResult(false, "", "Policy name is required");
-    if (req.bucketid.isEmpty)
+    if (req.bucketId.isEmpty)
       return CommandResult(false, "", "Bucket ID is required");
 
     auto bucket = bucketRepo.findById(req.bucketId);

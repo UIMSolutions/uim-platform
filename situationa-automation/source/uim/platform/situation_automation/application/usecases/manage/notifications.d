@@ -20,7 +20,7 @@ class ManageNotificationsUseCase : UIMUseCase {
     CommandResult create(CreateNotificationRequest r) {
         if (r.id.isEmpty)
             return CommandResult(false, "", "Notification ID is required");
-        if (r.recipientid.isEmpty)
+        if (r.recipientId.isEmpty)
             return CommandResult(false, "", "Recipient ID is required");
 
         auto existing = repo.findById(r.id);

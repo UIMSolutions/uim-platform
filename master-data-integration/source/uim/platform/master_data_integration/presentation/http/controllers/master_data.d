@@ -91,7 +91,7 @@ class MasterDataController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto globalId = req.params.get("globalId", "");
-      if (globalid.isEmpty) {
+      if (globalId.isEmpty) {
         writeError(res, 400, "globalId query parameter is required");
         return;
       }

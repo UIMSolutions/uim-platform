@@ -13,7 +13,7 @@ mixin(ShowModule!());
 
 struct SituationEvaluator {
     static string validate(string id, string name) {
-        if (id.isEmpty)
+        if (Id.isEmpty)
             return "ID is required";
         if (name.length == 0)
             return "Name is required";

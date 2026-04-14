@@ -19,9 +19,9 @@ class ManageReplicationJobsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateReplicationJobRequest req) {
-    if (req.distributionModelid.isEmpty)
+    if (req.distributionModelId.isEmpty)
       return CommandResult(false, "", "Distribution model ID is required");
-    if (req.sourceClientid.isEmpty)
+    if (req.sourceClientId.isEmpty)
       return CommandResult(false, "", "Source client ID is required");
 
     ReplicationJob job;

@@ -20,7 +20,7 @@ class ManageDataContextsUseCase : UIMUseCase {
     CommandResult create(CreateDataContextRequest r) {
         if (r.id.isEmpty)
             return CommandResult(false, "", "Data context ID is required");
-        if (r.instanceid.isEmpty)
+        if (r.instanceId.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
 
         auto existing = repo.findById(r.id);

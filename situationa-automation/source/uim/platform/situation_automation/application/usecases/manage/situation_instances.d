@@ -20,7 +20,7 @@ class ManageSituationInstancesUseCase : UIMUseCase {
     CommandResult create(CreateSituationInstanceRequest r) {
         if (r.id.isEmpty)
             return CommandResult(false, "", "Instance ID is required");
-        if (r.templateid.isEmpty)
+        if (r.templateId.isEmpty)
             return CommandResult(false, "", "Template ID is required");
 
         auto existing = repo.findById(r.id);

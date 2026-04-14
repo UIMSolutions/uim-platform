@@ -22,7 +22,7 @@ class ManageKeyMappingsUseCase : UIMUseCase {
   }
 
   CommandResult create(CreateKeyMappingRequest req) {
-    if (req.masterDataObjectid.isEmpty)
+    if (req.masterDataObjectId.isEmpty)
       return CommandResult(false, "", "Master data object ID is required");
     if (req.entries.length == 0)
       return CommandResult(false, "", "At least one key mapping entry is required");

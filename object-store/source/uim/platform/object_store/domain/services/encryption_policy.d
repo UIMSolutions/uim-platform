@@ -18,7 +18,7 @@ struct EncryptionPolicy {
   static EncryptionValidationResult validate(const Bucket bucket) {
     if (bucket.encryptionType == EncryptionType.sse_kms
       || bucket.encryptionType == EncryptionType.sse_c) {
-      if (bucket.encryptionKeyid.isEmpty)
+      if (bucket.encryptionKeyId.isEmpty)
         return EncryptionValidationResult(false, "Encryption key ID is required for " ~ (
             bucket.encryptionType == EncryptionType.sse_kms ? "SSE-KMS" : "SSE-C"));
     }

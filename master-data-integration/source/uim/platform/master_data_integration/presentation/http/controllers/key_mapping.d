@@ -91,8 +91,8 @@ class KeyMappingController : PlatformController {
       r.sourceLocalKey = req.params.get("sourceLocalKey", "");
       r.targetClientId = req.params.get("targetClientId", "");
 
-      if (r.sourceClientid.isEmpty || r.sourceLocalKey.length == 0
-        || r.targetClientid.isEmpty) {
+      if (r.sourceClientId.isEmpty || r.sourceLocalKey.length == 0
+        || r.targetClientId.isEmpty) {
         writeError(res, 400, "sourceClientId, sourceLocalKey, and targetClientId are required");
         return;
       }

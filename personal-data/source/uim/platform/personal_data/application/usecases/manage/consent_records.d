@@ -20,8 +20,8 @@ class ManageConsentRecordsUseCase : UIMUseCase {
 
     CommandResult create(CreateConsentRecordRequest r) {
         if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectid.isEmpty) return CommandResult(false, "", "Data subject ID is required");
-        if (r.purposeid.isEmpty) return CommandResult(false, "", "Purpose ID is required");
+        if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
+        if (r.purposeId.isEmpty) return CommandResult(false, "", "Purpose ID is required");
 
         ConsentRecord cr;
         cr.id = r.id;

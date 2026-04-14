@@ -39,7 +39,7 @@ class ManageWorkflowsUseCase : UIMUseCase {
   CommandResult createWorkflow(CreateWorkflowRequest req) {
     if (req.tenantId.isEmpty)
       return CommandResult(false, "", "Tenant ID is required");
-    if (req.scenarioid.isEmpty)
+    if (req.scenarioId.isEmpty)
       return CommandResult(false, "", "Scenario ID is required");
 
     // Enforce SAP limit: max 15 active workflows per tenant

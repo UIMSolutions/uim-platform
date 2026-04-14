@@ -20,7 +20,7 @@ class ManagePersonalDataRecordsUseCase : UIMUseCase {
 
     CommandResult create(CreatePersonalDataRecordRequest r) {
         if (r.id.isEmpty) return CommandResult(false, "", "ID is required");
-        if (r.dataSubjectid.isEmpty) return CommandResult(false, "", "Data subject ID is required");
+        if (r.dataSubjectId.isEmpty) return CommandResult(false, "", "Data subject ID is required");
 
         import std.conv : to;
 
