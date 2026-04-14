@@ -41,15 +41,16 @@ class PageController : PlatformController {
       auto createReq = CreatePageRequest(j.getString("siteId"),
         req.headers.get("X-Tenant-Id", ""), j.getString("title"),
         j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
-          "layout", PageLayout.freeform), jsonStrArray(j, "allowedRoleIds"),
+          "layout", PageLayout.freeform), getStringArray(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createPage(createReq);
       if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.pageId);
+        auto response = Json.emptyObject
+          .set("id", result.pageId);
+
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -63,9 +64,10 @@ class PageController : PlatformController {
       // Use query param for site filter
       auto siteIdParam = req.headers.get("X-Site-Id", "");
       auto pages = useCase.listPages(siteIdParam);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(pages.length);
-      response["resources"] = toJsonArray(pages);
+      auto response = Json.emptyObject
+        .set("totalResults", pages.length)
+        .set("resources", pages);
+        
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -75,11 +77,12 @@ class PageController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto pageId = extractIdFromPath(req.requestURI);
-      auto page = useCase.getPage(pageId);
-      if (page == Page.init) {
+      if (useCase.existsPage(pageId)) {
         writeApiError(res, 404, "Page not found");
         return;
       }
+
+      auto page = useCase.getPage(pageId);
       res.writeJsonBody(toJsonValue(page), 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -92,7 +95,7 @@ class PageController : PlatformController {
       auto j = req.json;
       auto updateReq = UpdatePageRequest(pageId, j.getString("title"),
         j.getString("description"), j.getString("alias"), jsonEnum!PageLayout(j,
-          "layout", PageLayout.freeform), jsonStrArray(j, "allowedRoleIds"),
+          "layout", PageLayout.freeform), getStringArray(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updatePage(updateReq);

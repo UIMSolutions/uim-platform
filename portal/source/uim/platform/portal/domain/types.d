@@ -6,18 +6,105 @@
 module uim.platform.portal.domain.types;
 
 /// Unique identifier type aliases for type safety.
-alias SiteId = string;
-alias PageId = string;
-alias SectionId = string;
-alias TileId = string;
-alias CatalogId = string;
-alias GroupId = string;
-alias RoleId = string;
-alias ProviderId = string;
-alias ThemeId = string;
-alias MenuItemId = string;
+struct SiteId {
+    string value;
 
-alias TranslationId = string;
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct PageId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct SectionId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct TileId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct CatalogId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct GroupId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct RoleId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ProviderId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct ThemeId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct MenuItemId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
+struct TranslationId {
+    string value;
+
+  this(string value) {
+    this.value = value;
+  }
+
+  mixin DomainId;
+}
 
 /// Site status.
 enum SiteStatus {

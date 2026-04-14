@@ -50,7 +50,7 @@ class SiteController : PlatformController {
         auto response = Json.emptyObject;
         response["id"] = Json(result.siteId);
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -160,7 +160,7 @@ class SiteController : PlatformController {
       return SiteSettings.init;
     auto s = *settingsJson;
     return SiteSettings(getString(s, "logoUrl"), getString(s, "faviconUrl"),
-      getString(s, "footerText"), getString(s, "copyrightText"), getString(s, "defaultLanguage"), jsonStrArray(s,
+      getString(s, "footerText"), getString(s, "copyrightText"), getString(s, "defaultLanguage"), getStringArray(s,
         "supportedLanguages"), getBoolean(s, "showPersonalization", false), getBoolean(s,
         "showNotifications", false), getBoolean(s, "showSearch", true),
       getBoolean(s, "showUserActions", true),);

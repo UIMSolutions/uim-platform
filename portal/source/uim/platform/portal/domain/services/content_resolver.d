@@ -5,13 +5,17 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.services.content_resolver;
 
-import uim.platform.portal.domain.entities.site;
-import uim.platform.portal.domain.entities.page;
-import uim.platform.portal.domain.entities.section;
-import uim.platform.portal.domain.entities.tile;
-import uim.platform.portal.domain.entities.menu_item;
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.entities.site;
+// import uim.platform.portal.domain.entities.page;
+// import uim.platform.portal.domain.entities.section;
+// import uim.platform.portal.domain.entities.tile;
+// import uim.platform.portal.domain.entities.menu_item;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Resolved site tree — a fully expanded view of a site for rendering.
 struct ResolvedSite {
   Site site;

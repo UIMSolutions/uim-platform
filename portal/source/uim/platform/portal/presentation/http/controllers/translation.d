@@ -44,10 +44,11 @@ class TranslationController : PlatformController {
 
       auto result = useCase.createTranslation(createReq);
       if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.translationId);
+        auto response = Json.emptyObject
+        .set("id", result.translationId);
+        
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {

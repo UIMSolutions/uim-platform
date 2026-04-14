@@ -5,9 +5,13 @@
 *****************************************************************************************************************/
 module uim.platform.portal.domain.services.site_publisher;
 
-import uim.platform.portal.domain.entities.site;
-import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.entities.site;
+// import uim.platform.portal.domain.types;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 /// Domain service: validates whether a site is ready for publishing.
 struct PublishValidationResult {
   bool valid;

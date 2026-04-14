@@ -42,7 +42,7 @@ class MenuItemController : PlatformController {
         req.headers.get("X-Tenant-Id", ""), j.getString("title"),
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), jsonStrArray(j, "allowedRoleIds"),
+          NavigationTarget.inPlace), getStringArray(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto result = useCase.createMenuItem(createReq);
@@ -50,7 +50,7 @@ class MenuItemController : PlatformController {
         auto response = Json.emptyObject;
         response["id"] = Json(result.menuItemId);
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -62,9 +62,10 @@ class MenuItemController : PlatformController {
     try {
       auto siteId = req.headers.get("X-Site-Id", "");
       auto items = useCase.listMenuItems(siteId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(items.length);
-      response["resources"] = toJsonArray(items);
+      auto response = Json.emptyObject
+        .set("totalResults", items.length)
+        .set("resources", items);
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -74,11 +75,12 @@ class MenuItemController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto menuItemId = extractIdFromPath(req.requestURI);
-      auto item = useCase.getMenuItem(menuItemId);
-      if (item == MenuItem.init) {
+      if (!useCase.existsMenuItem(menuItemId)) {
         writeApiError(res, 404, "Menu item not found");
         return;
       }
+
+      auto item = useCase.getMenuItem(menuItemId);
       res.writeJsonBody(toJsonValue(item), 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -92,7 +94,7 @@ class MenuItemController : PlatformController {
       auto updateReq = UpdateMenuItemRequest(menuItemId, j.getString("title"),
         j.getString("icon"), j.getString("parentId"), j.getString("targetPageId"),
         j.getString("targetUrl"), jsonEnum!NavigationTarget(j, "navigationTarget",
-          NavigationTarget.inPlace), jsonStrArray(j, "allowedRoleIds"),
+          NavigationTarget.inPlace), getStringArray(j, "allowedRoleIds"),
         j.getInteger("sortOrder"), j.getBoolean("visible", true),);
 
       auto error = useCase.updateMenuItem(updateReq);

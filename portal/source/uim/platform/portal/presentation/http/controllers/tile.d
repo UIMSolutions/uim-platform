@@ -45,15 +45,15 @@ class TileController : PlatformController {
         jsonEnum!TileType(j, "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType
           .url),
         j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), jsonStrArray(j,
-          "keywords"), jsonStrArray(j, "allowedRoleIds"), parseTileConfig(j),);
+          "navigationTarget", NavigationTarget.inPlace), getStringArray(j,
+          "keywords"), getStringArray(j, "allowedRoleIds"), parseTileConfig(j),);
 
       auto result = useCase.createTile(createReq);
       if (result.isSuccess()) {
         auto response = Json.emptyObject;
         response["id"] = Json(result.tileId);
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -111,8 +111,8 @@ class TileController : PlatformController {
         j.getString("icon"), j.getString("info"), jsonEnum!TileType(j,
           "tileType", TileType.static_), jsonEnum!AppType(j, "appType", AppType.url),
         j.getString("url"), j.getString("appId"), jsonEnum!NavigationTarget(j,
-          "navigationTarget", NavigationTarget.inPlace), jsonStrArray(j,
-          "keywords"), jsonStrArray(j, "allowedRoleIds"), parseTileConfig(j),);
+          "navigationTarget", NavigationTarget.inPlace), getStringArray(j,
+          "keywords"), getStringArray(j, "allowedRoleIds"), parseTileConfig(j),);
 
       auto error = useCase.updateTile(updateReq);
       if (error.length > 0)

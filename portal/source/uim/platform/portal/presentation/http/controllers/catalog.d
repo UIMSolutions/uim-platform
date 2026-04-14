@@ -41,14 +41,15 @@ class CatalogController : PlatformController {
       auto j = req.json;
       auto createReq = CreateCatalogRequest(req.headers.get("X-Tenant-Id", ""),
         j.getString("title"), j.getString("description"), j.getString("providerId"),
-        jsonStrArray(j, "allowedRoleIds"), j.getBoolean("active", true),);
+        getStringArray(j, "allowedRoleIds"), j.getBoolean("active", true),);
 
       auto result = useCase.createCatalog(createReq);
       if (result.isSuccess()) {
-        auto response = Json.emptyObject;
-        response["id"] = Json(result.catalogId);
+        auto response = Json.emptyObject
+          .set("id", result.catalogId);
+
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -60,9 +61,10 @@ class CatalogController : PlatformController {
     try {
       TenantId tenantId = req.getTenantId;
       auto catalogs = useCase.listCatalogs(tenantId);
-      auto response = Json.emptyObject;
-      response["totalResults"] = Json(catalogs.length);
-      response["resources"] = toJsonArray(catalogs);
+      auto response = Json.emptyObject
+        .set("totalResults", catalogs.length)
+        .set("resources", catalogs);
+
       res.writeJsonBody(response, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
@@ -72,12 +74,13 @@ class CatalogController : PlatformController {
   private void handleGet(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto catalogId = extractIdFromPath(req.requestURI);
-      auto catalog = useCase.getCatalog(catalogId);
-      if (catalog == Catalog.init) {
+      if (!useCase.existsCatalog(catalogId)) {
         writeApiError(res, 404, "Catalog not found");
         return;
       }
-      res.writeJsonBody(toJsonValue(catalog), 200);
+
+      auto catalog = useCase.getCatalog(catalogId).toJson;
+      res.writeJsonBody(catalog, 200);
     } catch (Exception e) {
       writeApiError(res, 500, "Internal server error");
     }
@@ -88,7 +91,7 @@ class CatalogController : PlatformController {
       auto catalogId = extractIdFromPath(req.requestURI);
       auto j = req.json;
       auto updateReq = UpdateCatalogRequest(catalogId, j.getString("title"),
-        j.getString("description"), jsonStrArray(j, "allowedRoleIds"),
+        j.getString("description"), getStringArray(j, "allowedRoleIds"),
         j.getBoolean("active", true),);
 
       auto error = useCase.updateCatalog(updateReq);

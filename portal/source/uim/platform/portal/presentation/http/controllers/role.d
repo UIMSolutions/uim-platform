@@ -48,7 +48,7 @@ class RoleController : PlatformController {
         auto response = Json.emptyObject;
         response["id"] = Json(result.roleId);
         res.writeJsonBody(response, 201);
-      } ) {
+      } else {
         writeApiError(res, 400, result.error);
       }
     } catch (Exception e) {
@@ -103,8 +103,8 @@ class RoleController : PlatformController {
   private void handleAssign(scope HTTPServerRequest req, scope HTTPServerResponse res) {
     try {
       auto j = req.json;
-      auto assignReq = AssignRoleRequest(j.getString("roleId"), jsonStrArray(j,
-          "userIds"), jsonStrArray(j, "groupIds"),);
+      auto assignReq = AssignRoleRequest(j.getString("roleId"), getStringArray(j,
+          "userIds"), getStringArray(j, "groupIds"),);
 
       auto error = useCase.assignRole(assignReq);
       if (error.length > 0)
