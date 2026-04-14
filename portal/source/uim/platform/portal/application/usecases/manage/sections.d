@@ -5,18 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.sections;
 
-import uim.platform.portal.domain.entities.section;
-import uim.platform.portal.domain.entities.page;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.sections;
-import uim.platform.portal.domain.ports.repositories.pages;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.section;
+// import uim.platform.portal.domain.entities.page;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.sections;
+// import uim.platform.portal.domain.ports.repositories.pages;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSectionsUseCase : UIMUseCase {
   private SectionRepository sectionRepo;
   private PageRepository pageRepo;

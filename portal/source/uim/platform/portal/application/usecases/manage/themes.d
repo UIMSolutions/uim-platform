@@ -5,14 +5,18 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.themes;
 
-import uim.platform.portal.domain.entities.theme;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.themes;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.theme;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.themes;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageThemesUseCase : UIMUseCase {
   private ThemeRepository themeRepo;
 

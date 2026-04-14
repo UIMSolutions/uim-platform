@@ -10,9 +10,14 @@ import uim.platform.portal.domain.types;
 
 /// Port: outgoing — theme persistence.
 interface ThemeRepository {
+  bool existsById(ThemeId id);
   Theme findById(ThemeId id);
+
+  bool existsDefault(TenantId tenantId);
   Theme findDefault(TenantId tenantId);
+  
   Theme[] findByTenant(TenantId tenantId, uint offset = 0, uint limit = 100);
+
   void save(Theme theme);
   void update(Theme theme);
   void remove(ThemeId id);

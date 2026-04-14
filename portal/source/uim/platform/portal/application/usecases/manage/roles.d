@@ -5,16 +5,20 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.roles;
 
-import uim.platform.portal.domain.entities.role;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.roles;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.role;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.roles;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 // import std.algorithm : canFind, filter;
 // import std.array : array;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageRolesUseCase : UIMUseCase {
   private RoleRepository roleRepo;
 

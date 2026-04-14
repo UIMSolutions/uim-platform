@@ -14,9 +14,12 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — translation persistence.
 interface TranslationRepository {
+  bool existsById(TranslationId id);
   Translation findById(TranslationId id);
+
   Translation[] findByResource(string resourceType, string resourceId, string language = "");
   Translation[] findByLanguage(TenantId tenantId, string language, uint offset = 0, uint limit = 100);
+
   void save(Translation translation);
   void update(Translation translation);
   void remove(TranslationId id);

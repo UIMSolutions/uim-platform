@@ -5,18 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.menu_items;
 
-import uim.platform.portal.domain.entities.menu_item;
-import uim.platform.portal.domain.entities.site;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.menu_items;
-import uim.platform.portal.domain.ports.repositories.sites;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.menu_item;
+// import uim.platform.portal.domain.entities.site;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.menu_items;
+// import uim.platform.portal.domain.ports.repositories.sites;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 // import std.algorithm : filter;
 // import std.array : array;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageMenuItemsUseCase : UIMUseCase {
   private MenuItemRepository menuRepo;
   private SiteRepository siteRepo;

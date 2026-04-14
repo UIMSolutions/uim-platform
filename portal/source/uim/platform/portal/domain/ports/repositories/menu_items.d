@@ -14,9 +14,12 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — menu item persistence.
 interface MenuItemRepository {
+  bool existsById(MenuItemId id);
   MenuItem findById(MenuItemId id);
+
   MenuItem[] findBySite(SiteId siteId);
   MenuItem[] findChildren(MenuItemId parentId);
+
   void save(MenuItem item);
   void update(MenuItem item);
   void remove(MenuItemId id);

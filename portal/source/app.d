@@ -15,7 +15,9 @@ module app;
 // import std.stdio : writefln;
 import uim.platform.portal;
 
+mixin(ShowModule!());
 
+@safe:
 version (unittest) {
 }
 else {

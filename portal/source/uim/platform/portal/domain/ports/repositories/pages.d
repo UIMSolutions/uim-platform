@@ -10,9 +10,14 @@ import uim.platform.portal.domain.types;
 
 /// Port: outgoing — page persistence.
 interface PageRepository {
+  bool existsById(PageId id);
   Page findById(PageId id);
-  Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100);
+
+  bool existsByAlias(SiteId siteId, string alias_);
   Page findByAlias(SiteId siteId, string alias_);
+
+  Page[] findBySite(SiteId siteId, uint offset = 0, uint limit = 100);
+  
   void save(Page page);
   void update(Page page);
   void remove(PageId id);

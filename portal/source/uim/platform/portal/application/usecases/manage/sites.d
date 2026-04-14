@@ -5,15 +5,19 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.sites;
 
-import uim.platform.portal.domain.entities.site;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.sites;
-import uim.platform.portal.domain.services.site_publisher;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.site;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.sites;
+// import uim.platform.portal.domain.services.site_publisher;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManageSitesUseCase : UIMUseCase {
   private SiteRepository siteRepo;
 

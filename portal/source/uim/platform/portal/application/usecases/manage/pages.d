@@ -5,18 +5,22 @@
 *****************************************************************************************************************/
 module uim.platform.portal.application.usecases.manage.pages;
 
-import uim.platform.portal.domain.entities.page;
-import uim.platform.portal.domain.entities.site;
-import uim.platform.portal.domain.types;
-import uim.platform.portal.domain.ports.repositories.pages;
-import uim.platform.portal.domain.ports.repositories.sites;
-import uim.platform.portal.application.dto;
+// import uim.platform.portal.domain.entities.page;
+// import uim.platform.portal.domain.entities.site;
+// import uim.platform.portal.domain.types;
+// import uim.platform.portal.domain.ports.repositories.pages;
+// import uim.platform.portal.domain.ports.repositories.sites;
+// import uim.platform.portal.application.dto;
 
 // import std.uuid;
 // import std.datetime.systime : Clock;
 // import std.algorithm : filter, canFind;
 // import std.array : array;
+import uim.platform.portal;
 
+mixin(ShowModule!());
+
+@safe:
 class ManagePagesUseCase : UIMUseCase {
   private PageRepository pageRepo;
   private SiteRepository siteRepo;
