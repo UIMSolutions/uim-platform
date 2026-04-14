@@ -105,7 +105,7 @@ class ManageFragmentsUseCase : UIMUseCase {
   }
 
   CommandResult removeFragment(FragmentId id) {
-    if (!repo.findById(id))
+    if (!repo.existsById(id))
       return CommandResult(false, "", "Fragment not found");
 
     repo.remove(id);

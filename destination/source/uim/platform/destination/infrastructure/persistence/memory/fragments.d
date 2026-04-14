@@ -19,10 +19,18 @@ mixin(ShowModule!());
 class MemoryFragmentRepository : FragmentRepository {
   private DestinationFragment[FragmentId] store;
 
+  bool existsById(FragmentId id) {
+    return (id in store) ? true : false;
+  }
+
   DestinationFragment findById(FragmentId id) {
     if (auto p = id in store)
       return *p;
     return DestinationFragment.init;
+  }
+
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    return store.byValue().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
 
   DestinationFragment findByName(TenantId tenantId, SubaccountId subaccountId, string name) {

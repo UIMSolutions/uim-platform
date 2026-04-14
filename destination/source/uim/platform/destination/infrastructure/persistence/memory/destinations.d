@@ -19,10 +19,18 @@ mixin(ShowModule!());
 class MemoryDestinationRepository : DestinationRepository {
   private Destination[DestinationId] store;
 
+  bool existsById(DestinationId id) {
+    return (id in store) ? true : false;
+  }
+
   Destination findById(DestinationId id) {
     if (auto p = id in store)
       return *p;
     return Destination.init;
+  }
+
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    return store.byValue().any!(e => e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name);
   }
 
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name) {

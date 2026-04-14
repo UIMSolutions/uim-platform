@@ -19,10 +19,19 @@ mixin(ShowModule!());
 class MemoryCertificateRepository : CertificateRepository {
   private Certificate[CertificateId] store;
 
+  bool existsById(CertificateId id) {
+    return (id in store) ? true : false;
+  }
+
   Certificate findById(CertificateId id) {
-    if (auto p = id in store)
-      return *p;
-    return Certificate.init;
+    return existsById(id) ? store[id] : Certificate.init;
+  }
+
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name) {
+    foreach (e; store.byValue())
+      if (e.tenantId == tenantId && e.subaccountId == subaccountId && e.name == name)
+        return true;
+    return false;
   }
 
   Certificate findByName(TenantId tenantId, SubaccountId subaccountId, string name) {
@@ -37,18 +46,15 @@ class MemoryCertificateRepository : CertificateRepository {
   }
 
   Certificate[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId).array;
+    return findByTenant(tenantId).filter!(e => e.subaccountId == subaccountId).array;
   }
 
   Certificate[] findByType(TenantId tenantId, SubaccountId subaccountId, CertificateType type) {
-    return store.byValue().filter!(e => e.tenantId == tenantId
-        && e.subaccountId == subaccountId && e.certificateType == type).array;
+    return findBySubaccount(tenantId, subaccountId).filter!(e => e.certificateType == type).array;
   }
 
   Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp) {
-    return store.byValue().filter!(e => e.tenantId == tenantId && e.validTo > 0
-        && e.validTo <= beforeTimestamp).array;
+    return findByTenant(tenantId).filter!(e => e.validTo > 0 && e.validTo <= beforeTimestamp).array;
   }
 
   void save(Certificate cert) {

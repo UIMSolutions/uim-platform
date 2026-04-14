@@ -244,6 +244,6 @@ long clockSeconds() {
     // return MonoTime.currTime.ticks / MonoTime.ticksPerSecond;
   // }
 
-    private static string formatLong(long v) {
+    string formatLong(long v) {
     return format("%d", v);
   }

@@ -14,12 +14,17 @@ mixin(ShowModule!());
 @safe:
 /// Port: outgoing — destination configuration persistence.
 interface DestinationRepository {
+  bool existsById(DestinationId id);
   Destination findById(DestinationId id);
+
+  bool existsByName(TenantId tenantId, SubaccountId subaccountId, string name);
   Destination findByName(TenantId tenantId, SubaccountId subaccountId, string name);
+
   Destination[] findByTenant(TenantId tenantId);
   Destination[] findBySubaccount(TenantId tenantId, SubaccountId subaccountId);
   Destination[] findByServiceInstance(TenantId tenantId, ServiceInstanceId instanceId);
   Destination[] findByLevel(TenantId tenantId, SubaccountId subaccountId, DestinationLevel level);
+  
   void save(Destination dest);
   void update(Destination dest);
   void remove(DestinationId id);

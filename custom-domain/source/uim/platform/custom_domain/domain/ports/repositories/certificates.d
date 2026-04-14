@@ -12,12 +12,17 @@ mixin(ShowModule!());
 @safe:
 
 interface CertificateRepository {
+    bool existsById(CertificateId id);
     Certificate findById(CertificateId id);
+
     Certificate[] findByTenant(TenantId tenantId);
     Certificate[] findByKey(PrivateKeyId keyId);
     Certificate[] findExpiring(TenantId tenantId, long beforeTimestamp);
+
+    size_t countByTenant(TenantId tenantId);
+
     void save(Certificate c);
     void update(Certificate c);
     void remove(CertificateId id);
-    size_t countByTenant(TenantId tenantId);
+    
 }
