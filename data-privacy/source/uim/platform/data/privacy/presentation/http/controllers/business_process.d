@@ -39,8 +39,8 @@ class BusinessProcessController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerId = j.getString("controllerId");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.legalBases = jsonStrArray(j, "legalBases");
+      r.purposes = getStringArray(j, "purposes");
+      r.legalBases = getStringArray(j, "legalBases");
       r.owner = j.getString("owner");
 
       auto result = uc.createProcess(r);
@@ -93,8 +93,8 @@ class BusinessProcessController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.legalBases = jsonStrArray(j, "legalBases");
+      r.purposes = getStringArray(j, "purposes");
+      r.legalBases = getStringArray(j, "legalBases");
       r.owner = j.getString("owner");
 
       auto result = uc.updateProcess(r);

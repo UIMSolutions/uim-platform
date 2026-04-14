@@ -40,9 +40,9 @@ class BusinessContextController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.controllerGroupId = j.getString("controllerGroupId");
-      r.dataCategories = jsonStrArray(j, "dataCategories");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.dataCategoryAttributes = jsonStrArray(j, "dataCategoryAttributes");
+      r.dataCategories = getStringArray(j, "dataCategories");
+      r.purposes = getStringArray(j, "purposes");
+      r.dataCategoryAttributes = getStringArray(j, "dataCategoryAttributes");
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = uc.createContext(r);
@@ -95,9 +95,9 @@ class BusinessContextController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.dataCategories = jsonStrArray(j, "dataCategories");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.dataCategoryAttributes = jsonStrArray(j, "dataCategoryAttributes");
+      r.dataCategories = getStringArray(j, "dataCategories");
+      r.purposes = getStringArray(j, "purposes");
+      r.dataCategoryAttributes = getStringArray(j, "dataCategoryAttributes");
       r.isCrossRoleEnabled = j.getBoolean("isCrossRoleEnabled", false);
 
       auto result = uc.updateContext(r);

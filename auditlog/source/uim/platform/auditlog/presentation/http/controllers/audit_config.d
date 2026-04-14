@@ -47,8 +47,8 @@ class AuditConfigController : PlatformController {
       request.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
       request.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
       request.enableDataMasking = j.getBoolean("enableDataMasking");
-      request.maskedFields = jsonStrArray(j, "maskedFields");
-      request.excludedServices = jsonStrArray(j, "excludedServices");
+      request.maskedFields = getStringArray(j, "maskedFields");
+      request.excludedServices = getStringArray(j, "excludedServices");
 
       auto sevStr = j.getString("minimumSeverity");
       if (sevStr == "warning")
@@ -115,8 +115,8 @@ class AuditConfigController : PlatformController {
       r.logSecurityEvents = j.getBoolean("logSecurityEvents", true);
       r.logConfigurationChanges = j.getBoolean("logConfigurationChanges", true);
       r.enableDataMasking = j.getBoolean("enableDataMasking");
-      r.maskedFields = jsonStrArray(j, "maskedFields");
-      r.excludedServices = jsonStrArray(j, "excludedServices");
+      r.maskedFields = getStringArray(j, "maskedFields");
+      r.excludedServices = getStringArray(j, "excludedServices");
       r.rateLimitPerSecond = j.getInteger("rateLimitPerSecond", 8);
 
       auto statusStr = j.getString("status");

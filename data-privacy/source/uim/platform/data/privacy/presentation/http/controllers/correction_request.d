@@ -38,7 +38,7 @@ class CorrectionRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = jsonStrArray(j, "targetSystems");
+      r.targetSystems = getStringArray(j, "targetSystems");
       r.fieldName = j.getString("fieldName");
       r.currentValue = j.getString("currentValue");
       r.correctedValue = j.getString("correctedValue");

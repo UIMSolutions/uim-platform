@@ -128,7 +128,7 @@ class DeploymentController : PlatformController {
 
       BulkPatchDeploymentRequest r;
       r.connectionId = connectionId;
-      r.deploymentIds = jsonStrArray(j, "deploymentIds");
+      r.deploymentIds = getStringArray(j, "deploymentIds");
       r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);

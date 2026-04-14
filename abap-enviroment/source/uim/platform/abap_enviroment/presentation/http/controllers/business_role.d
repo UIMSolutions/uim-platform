@@ -58,7 +58,7 @@ class BusinessRoleController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.roleType = j.getString("roleType");
-      r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
+      r.restrictionTypes = getStringArray(j, "restrictionTypes");
 
       auto result = uc.createRole(r);
       if (result.isSuccess()) {
@@ -116,7 +116,7 @@ class BusinessRoleController : PlatformController {
       UpdateBusinessRoleRequest r;
       r.description = j.getString("description");
       r.roleType = j.getString("roleType");
-      r.restrictionTypes = jsonStrArray(j, "restrictionTypes");
+      r.restrictionTypes = getStringArray(j, "restrictionTypes");
 
       auto result = uc.updateRole(id, r);
       if (result.isSuccess()) {

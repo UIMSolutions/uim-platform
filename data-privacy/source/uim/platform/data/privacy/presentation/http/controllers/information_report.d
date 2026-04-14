@@ -39,8 +39,8 @@ class InformationReportController : PlatformController {
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
       r.format = j.getString("format");
-      r.targetSystems = jsonStrArray(j, "targetSystems");
-      r.categories = jsonStrArray(j, "categories");
+      r.targetSystems = getStringArray(j, "targetSystems");
+      r.categories = getStringArray(j, "categories");
       r.reason = j.getString("reason");
 
       auto result = uc.createReport(r);

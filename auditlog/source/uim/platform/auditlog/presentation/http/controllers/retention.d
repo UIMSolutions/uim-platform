@@ -157,7 +157,7 @@ class RetentionController : PlatformController {
   }
 
   private static AuditCategory[] parseCategoryArray(Json j) {
-    auto cats = jsonStrArray(j, "categories");
+    auto cats = getStringArray(j, "categories");
     return cats.map!(c => parseCategory(c)).array;
   }
 

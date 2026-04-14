@@ -174,7 +174,7 @@ class CertificateController : PlatformController {
             ActivateCertificateRequest r;
             r.tenantId = req.getTenantId;
             r.id = id;
-            r.domains = jsonStrArray(j, "domains");
+            r.domains = getStringArray(j, "domains");
 
             auto result = uc.activate(r);
             if (result.success) {

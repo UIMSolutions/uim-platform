@@ -41,7 +41,7 @@ class CleansingJobController : PlatformController {
       r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
       r.requestedBy = j.getString("requestedBy");
-      r.ruleIds = jsonStrArray(j, "ruleIds");
+      r.ruleIds = getStringArray(j, "ruleIds");
 
       auto result = uc.create(r);
       if (result.isSuccess()) {

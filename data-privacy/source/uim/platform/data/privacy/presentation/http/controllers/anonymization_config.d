@@ -40,7 +40,7 @@ class AnonymizationConfigController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = jsonStrArray(j, "targetSystems");
+      r.targetSystems = getStringArray(j, "targetSystems");
 
       auto result = uc.createConfig(r);
       if (result.isSuccess()) {
@@ -93,7 +93,7 @@ class AnonymizationConfigController : PlatformController {
       r.name = j.getString("name");
       r.description = j.getString("description");
       r.isReversible = j.getBoolean("isReversible", false);
-      r.targetSystems = jsonStrArray(j, "targetSystems");
+      r.targetSystems = getStringArray(j, "targetSystems");
 
       auto result = uc.updateConfig(r);
       if (result.isSuccess()) {

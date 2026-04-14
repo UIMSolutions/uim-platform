@@ -50,7 +50,7 @@ string[string] jsonStrMap(Json j, string key) {
 }
 
 /// Extract a string[][] (array of string arrays) from a Json object.
-string[][] jsonStrArrayArray(Json j, string key) {
+string[][] getStringArrayArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;

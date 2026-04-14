@@ -38,7 +38,7 @@ class DataControllerGroupController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = jsonStrArray(j, "controllerIds");
+      r.controllerIds = getStringArray(j, "controllerIds");
 
       auto result = uc.createGroup(r);
       if (result.isSuccess()) {
@@ -90,7 +90,7 @@ class DataControllerGroupController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.controllerIds = jsonStrArray(j, "controllerIds");
+      r.controllerIds = getStringArray(j, "controllerIds");
 
       auto result = uc.updateGroup(r);
       if (result.isSuccess()) {

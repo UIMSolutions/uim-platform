@@ -8,7 +8,7 @@ module uim.platform.auditlog.presentation.http.json_utils;
 import uim.platform.auditlog;
 
 // /// Extract a string array from a Json object.
-// string[] jsonStrArray(Json j, string key) {
+// string[] getStringArray(Json j, string key) {
 //   if (!j.isObject)
 //     return null;
 //   auto v = key in j;

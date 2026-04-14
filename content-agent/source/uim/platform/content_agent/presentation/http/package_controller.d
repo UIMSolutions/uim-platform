@@ -43,7 +43,7 @@ class PackageController : PlatformController {
       r.description = j.getString("description");
       r.version_ = j.getString("version");
       r.format = j.getString("format");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.createdBy = req.headers.get("X-User-Id", "");
       r.items = parseContentItems(j);
 
@@ -99,7 +99,7 @@ class PackageController : PlatformController {
       auto r = UpdatePackageRequest();
       r.description = j.getString("description");
       r.version_ = j.getString("version");
-      r.tags = jsonStrArray(j, "tags");
+      r.tags = getStringArray(j, "tags");
       r.items = parseContentItems(j);
 
       auto result = uc.updatePackage(id, r);
@@ -168,7 +168,7 @@ class PackageController : PlatformController {
       item.providerId = itemJson.getString("providerId");
       item.version_ = itemJson.getString("version");
       item.description = itemJson.getString("description");
-      item.dependencies = jsonStrArray(itemJson, "dependencies");
+      item.dependencies = getStringArray(itemJson, "dependencies");
 
       auto catStr = itemJson.getString("category");
       item.category = parseContentCategory(catStr);

@@ -43,7 +43,7 @@ class DataRetrievalController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = jsonStrArray(j, "targetSystems");
+      r.targetSystems = getStringArray(j, "targetSystems");
       r.reason = j.getString("reason");
 
       auto result = uc.createRequest(r);

@@ -38,8 +38,8 @@ class ArchiveRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = jsonStrArray(j, "targetSystems");
-      r.categories = jsonStrArray(j, "categories");
+      r.targetSystems = getStringArray(j, "targetSystems");
+      r.categories = getStringArray(j, "categories");
       r.archiveLocation = j.getString("archiveLocation");
       r.reason = j.getString("reason");
       r.isTestMode = j.getBoolean("isTestMode", false);

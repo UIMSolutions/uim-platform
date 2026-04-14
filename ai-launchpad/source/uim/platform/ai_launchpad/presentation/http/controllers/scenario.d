@@ -35,7 +35,7 @@ class ScenarioController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.labels = jsonStrArray(j, "labels");
+      r.labels = getStringArray(j, "labels");
 
       auto result = uc.sync(r);
       if (result.success) {

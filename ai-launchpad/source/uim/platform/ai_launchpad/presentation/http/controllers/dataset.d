@@ -39,7 +39,7 @@ class DatasetController : PlatformController {
       r.scenarioId = j.getString("scenarioId");
       r.url = j.getString("url");
       r.size = jsonLong(j, "size");
-      r.labels = jsonStrArray(j, "labels");
+      r.labels = getStringArray(j, "labels");
 
       auto result = uc.register(r);
       if (result.success) {

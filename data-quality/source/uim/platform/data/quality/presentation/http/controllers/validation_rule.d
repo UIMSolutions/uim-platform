@@ -50,7 +50,7 @@ class ValidationRuleController : PlatformController {
       r.pattern = j.getString("pattern");
       r.minValue = j.getString("minValue");
       r.maxValue = j.getString("maxValue");
-      r.allowedValues = jsonStrArray(j, "allowedValues");
+      r.allowedValues = getStringArray(j, "allowedValues");
       r.expression = j.getString("expression");
       r.referenceDataset = j.getString("referenceDataset");
       r.crossFieldName = j.getString("crossFieldName");
@@ -122,7 +122,7 @@ class ValidationRuleController : PlatformController {
       r.pattern = j.getString("pattern");
       r.minValue = j.getString("minValue");
       r.maxValue = j.getString("maxValue");
-      r.allowedValues = jsonStrArray(j, "allowedValues");
+      r.allowedValues = getStringArray(j, "allowedValues");
       r.expression = j.getString("expression");
       r.referenceDataset = j.getString("referenceDataset");
       r.crossFieldName = j.getString("crossFieldName");

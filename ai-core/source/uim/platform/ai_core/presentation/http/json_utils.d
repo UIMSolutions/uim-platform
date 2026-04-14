@@ -32,7 +32,7 @@ int jsonInt(Json j, string key, int default_ = 0) {
 
 
 
-string[] jsonStrArray(Json j, string key) {
+string[] getStringArray(Json j, string key) {
   if (!j.isObject)
     return [];
   auto v = key in j;

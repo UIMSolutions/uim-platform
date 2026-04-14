@@ -40,7 +40,7 @@ class PromptController : PlatformController {
       r.topP = jsonDouble(j, "topP");
       r.frequencyPenalty = jsonDouble(j, "frequencyPenalty");
       r.presencePenalty = jsonDouble(j, "presencePenalty");
-      r.inputParams = jsonStrArray(j, "inputParams");
+      r.inputParams = getStringArray(j, "inputParams");
       r.createdBy = j.getString("createdBy");
 
       auto result = uc.create(r);

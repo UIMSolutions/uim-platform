@@ -130,7 +130,7 @@ class ExecutionController : PlatformController {
 
       BulkPatchExecutionRequest r;
       r.connectionId = connectionId;
-      r.executionIds = jsonStrArray(j, "executionIds");
+      r.executionIds = getStringArray(j, "executionIds");
       r.targetStatus = j.getString("targetStatus");
 
       auto results = uc.bulkPatch(r);

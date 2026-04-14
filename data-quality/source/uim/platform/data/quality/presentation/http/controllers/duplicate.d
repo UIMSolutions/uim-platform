@@ -42,7 +42,7 @@ class DuplicateController : PlatformController {
       auto r = DetectDuplicatesRequest();
       r.tenantId = req.getTenantId;
       r.datasetId = j.getString("datasetId");
-      r.matchFields = jsonStrArrayArray(j, "matchFields");
+      r.matchFields = getStringArrayArray(j, "matchFields");
       r.strategy = parseStrategy(j.getString("strategy"));
       r.threshold = jsonDouble(j, "threshold", 70.0);
 

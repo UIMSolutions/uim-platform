@@ -95,7 +95,7 @@ class TransportRequestController : PlatformController {
       AddTransportTaskRequest r;
       r.owner = j.getString("owner");
       r.description = j.getString("description");
-      r.objectList = jsonStrArray(j, "objectList");
+      r.objectList = getStringArray(j, "objectList");
 
       auto result = uc.addTask(requestId, r);
       if (result.isSuccess()) {

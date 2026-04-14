@@ -39,7 +39,7 @@ class DestructionRequestController : PlatformController {
       r.tenantId = req.getTenantId;
       r.dataSubjectId = j.getString("dataSubjectId");
       r.requestedBy = j.getString("requestedBy");
-      r.targetSystems = jsonStrArray(j, "targetSystems");
+      r.targetSystems = getStringArray(j, "targetSystems");
       r.archiveRequestId = j.getString("archiveRequestId");
       r.blockingRequestId = j.getString("blockingRequestId");
       r.reason = j.getString("reason");

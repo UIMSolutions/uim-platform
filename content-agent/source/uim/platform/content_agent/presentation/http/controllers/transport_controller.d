@@ -42,7 +42,7 @@ class TransportController : PlatformController {
       r.targetSubaccount = j.getString("targetSubaccount");
       r.description = j.getString("description");
       r.mode = j.getString("mode");
-      r.packageIds = jsonStrArray(j, "packageIds");
+      r.packageIds = getStringArray(j, "packageIds");
       r.queueId = j.getString("queueId");
       r.createdBy = req.headers.get("X-User-Id", "");
 

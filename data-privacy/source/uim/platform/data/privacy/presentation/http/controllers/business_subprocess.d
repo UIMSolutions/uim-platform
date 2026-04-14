@@ -39,8 +39,8 @@ class BusinessSubprocessController : PlatformController {
       r.parentProcessId = j.getString("parentProcessId");
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.dataCategories = jsonStrArray(j, "dataCategories");
+      r.purposes = getStringArray(j, "purposes");
+      r.dataCategories = getStringArray(j, "dataCategories");
       r.owner = j.getString("owner");
 
       auto result = uc.createSubprocess(r);
@@ -93,8 +93,8 @@ class BusinessSubprocessController : PlatformController {
       r.tenantId = req.getTenantId;
       r.name = j.getString("name");
       r.description = j.getString("description");
-      r.purposes = jsonStrArray(j, "purposes");
-      r.dataCategories = jsonStrArray(j, "dataCategories");
+      r.purposes = getStringArray(j, "purposes");
+      r.dataCategories = getStringArray(j, "dataCategories");
       r.owner = j.getString("owner");
 
       auto result = uc.updateSubprocess(r);
