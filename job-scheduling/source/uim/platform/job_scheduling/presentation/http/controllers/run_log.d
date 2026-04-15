@@ -94,7 +94,7 @@ class RunLogController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Run log updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {

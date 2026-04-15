@@ -23,13 +23,13 @@ class UIMTenantMiddleware {
     auto tenant = tenantRepository.findById(tenantId);
     if (tenant !is null) {
     req.setUserData(tenant);
-    } ) {
+    } else {
     res.statusCode = HttpStatus.notFound;
     res.writeBody("Tenant not found");
     res.send();
     return;
     }
-  } ) {
+  } else {
     res.statusCode = HttpStatus.badRequest;
     res.writeBody("Missing Tenant ID");
     res.send();

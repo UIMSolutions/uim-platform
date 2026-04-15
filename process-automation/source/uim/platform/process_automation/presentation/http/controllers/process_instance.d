@@ -45,7 +45,7 @@ class ProcessInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process instance started");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -136,7 +136,7 @@ class ProcessInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Action performed: " ~ r.action);
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -155,7 +155,7 @@ class ProcessInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Process instance deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

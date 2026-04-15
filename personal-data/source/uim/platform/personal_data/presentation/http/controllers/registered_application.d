@@ -49,7 +49,7 @@ class RegisteredApplicationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Application registered");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -118,7 +118,7 @@ class RegisteredApplicationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Application updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -140,7 +140,7 @@ class RegisteredApplicationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Application activated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -162,7 +162,7 @@ class RegisteredApplicationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Application suspended");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -180,7 +180,7 @@ class RegisteredApplicationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Application deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

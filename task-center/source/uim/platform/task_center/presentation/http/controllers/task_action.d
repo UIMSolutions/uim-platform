@@ -44,7 +44,7 @@ class TaskActionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Action recorded");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -61,7 +61,7 @@ class TaskActionController : PlatformController {
             TaskAction[] actions;
             if (taskId.length > 0) {
                 actions = uc.listByTask(tenantId, taskId);
-            } ) {
+            } else {
                 actions = [];
             }
 
@@ -106,7 +106,7 @@ class TaskActionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Action deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

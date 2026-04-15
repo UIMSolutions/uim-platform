@@ -123,7 +123,7 @@ class PromptCollectionController : PlatformController {
       auto result = uc.remove(id);
       if (result.success) {
         res.writeJsonBody(Json.emptyObject, 204);
-      } ) {
+      } else {
         writeError(res, 404, result.error);
       }
     } catch (Exception e) {

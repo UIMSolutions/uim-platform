@@ -48,7 +48,7 @@ class TaskDefinitionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task definition created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -65,7 +65,7 @@ class TaskDefinitionController : PlatformController {
             TaskDefinition[] defs;
             if (providerId.length > 0) {
                 defs = uc.listByProvider(tenantId, providerId);
-            } ) {
+            } else {
                 defs = uc.list(tenantId);
             }
 
@@ -123,7 +123,7 @@ class TaskDefinitionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task definition updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -145,7 +145,7 @@ class TaskDefinitionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task definition activated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -167,7 +167,7 @@ class TaskDefinitionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task definition deactivated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -186,7 +186,7 @@ class TaskDefinitionController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Task definition deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

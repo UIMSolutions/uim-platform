@@ -46,7 +46,7 @@ class VisibilityController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Visibility dashboard created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -128,7 +128,7 @@ class VisibilityController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Visibility dashboard updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -147,7 +147,7 @@ class VisibilityController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Visibility dashboard deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

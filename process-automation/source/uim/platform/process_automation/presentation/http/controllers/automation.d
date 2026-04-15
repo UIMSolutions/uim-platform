@@ -47,7 +47,7 @@ class AutomationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Automation created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -134,7 +134,7 @@ class AutomationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Automation updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -153,7 +153,7 @@ class AutomationController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Automation deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

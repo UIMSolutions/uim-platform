@@ -54,7 +54,7 @@ class SituationInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation instance created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -151,7 +151,7 @@ class SituationInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation instance updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -189,7 +189,7 @@ class SituationInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation resolved");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -208,7 +208,7 @@ class SituationInstanceController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Situation instance deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {

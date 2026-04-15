@@ -103,7 +103,7 @@ private bool hasExcessiveRepeats(string s, uint maxRepeats) {
       count++;
       if (count > maxRepeats)
         return true;
-    } ) {
+    } else {
       count = 1;
     }
   }

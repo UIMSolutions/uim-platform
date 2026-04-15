@@ -49,7 +49,7 @@ class TriggerController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Trigger created");
                 res.writeJsonBody(resp, 201);
-            } ) {
+            } else {
                 writeError(res, 400, result.error);
             }
         } catch (Exception e) {
@@ -136,7 +136,7 @@ class TriggerController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Trigger updated");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
@@ -155,7 +155,7 @@ class TriggerController : PlatformController {
                 resp["id"] = Json(result.id);
                 resp["message"] = Json("Trigger deleted");
                 res.writeJsonBody(resp, 200);
-            } ) {
+            } else {
                 writeError(res, 404, result.error);
             }
         } catch (Exception e) {
